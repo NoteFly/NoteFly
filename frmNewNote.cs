@@ -13,7 +13,7 @@ namespace SimplePlainNote
     {
         public frmNewNote()
         {
-            InitializeComponent();
+            InitializeComponent();                       
         }
 
         private void btnAddNote_Click(object sender, EventArgs e)
@@ -33,14 +33,12 @@ namespace SimplePlainNote
             {
                 frmNote frmNote = new frmNote(tbTitle.Text, rtbNote.Text);
                 frmNote.Show();
-                this.Hide();
+
+                this.WindowState = FormWindowState.Minimized;
+                tbTitle.Text = "";
+                rtbNote.Text = "";
             }
 
-        }
-
-        private void frmNewNote_Shown(object sender, EventArgs e)
-        {
-            tbTitle.Text = DateTime.Now.ToString();
         }
 
         private void tbTitle_Enter(object sender, EventArgs e)
@@ -64,6 +62,23 @@ namespace SimplePlainNote
         private void tbTitle_Leave(object sender, EventArgs e)
         {
             tbTitle.BackColor = Color.Gold;
+        }
+
+        private void Trayicon_Click(object sender, EventArgs e)
+        {
+            //todo
+        }
+
+        private void createANewNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            Trayicon.Dispose();
+            Application.Exit();
         }
     }
 }

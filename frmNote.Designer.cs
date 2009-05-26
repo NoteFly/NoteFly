@@ -56,6 +56,9 @@
             this.pnlHead.Name = "pnlHead";
             this.pnlHead.Size = new System.Drawing.Size(292, 32);
             this.pnlHead.TabIndex = 1;
+            this.pnlHead.MouseLeave += new System.EventHandler(this.pnlHead_MouseLeave);
+            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
+            this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             // 
             // frmDeleteNote
             // 
@@ -75,12 +78,15 @@
             this.rtbNote.AccessibleRole = System.Windows.Forms.AccessibleRole.Document;
             this.rtbNote.BackColor = System.Drawing.Color.Gold;
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbNote.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.rtbNote.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.rtbNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbNote.ForeColor = System.Drawing.Color.Black;
             this.rtbNote.Location = new System.Drawing.Point(0, 38);
             this.rtbNote.Margin = new System.Windows.Forms.Padding(10);
             this.rtbNote.MaxLength = 1000000;
             this.rtbNote.Name = "rtbNote";
+            this.rtbNote.ReadOnly = true;
             this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNote.Size = new System.Drawing.Size(292, 235);
             this.rtbNote.TabIndex = 3;
@@ -96,12 +102,14 @@
             this.Controls.Add(this.rtbNote);
             this.Controls.Add(this.pnlHead);
             this.DoubleBuffered = true;
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Location = new System.Drawing.Point(100, 50);
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmNote";
-            this.Opacity = 0.9;
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Note";
             this.pnlHead.ResumeLayout(false);
