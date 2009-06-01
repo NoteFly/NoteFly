@@ -141,6 +141,9 @@ namespace SimplePlainNote
 
         private void listToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            frmManageNotes managenotes = new frmManageNotes(notes);
+            managenotes.Show();
+            /*
             string allnotes ="";
             for (int i = 0; i < notes.Count; i++)
             {
@@ -148,6 +151,7 @@ namespace SimplePlainNote
             }
             allnotes += "---------------------\r\nNumber notes: " + notes.Count;
             MessageBox.Show(allnotes);
+             */
         }
 
         private void tbTitle_KeyDown(object sender, KeyEventArgs e)
@@ -167,6 +171,13 @@ namespace SimplePlainNote
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 pnlHeadNewNote.BackColor = Color.Gold;
             }
+        }
+
+        private void frmNewNote_Shown(object sender, EventArgs e)
+        {
+            tbTitle.Focus();
+            tbTitle.BackColor = Color.LightYellow;
+            rtbNote.BackColor = Color.Gold;
         }
     }
 }

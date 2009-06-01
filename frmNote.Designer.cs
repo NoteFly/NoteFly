@@ -115,8 +115,7 @@
             this.pnlResizeWindow.Location = new System.Drawing.Point(277, 226);
             this.pnlResizeWindow.Name = "pnlResizeWindow";
             this.pnlResizeWindow.Size = new System.Drawing.Size(22, 22);
-            this.pnlResizeWindow.TabIndex = 4;
-            this.pnlResizeWindow.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlResizeWindow_Paint);
+            this.pnlResizeWindow.TabIndex = 4;            
             this.pnlResizeWindow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlResizeWindow_MouseDown);
             // 
             // frmNote
