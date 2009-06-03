@@ -10,7 +10,9 @@ using System.Runtime.InteropServices;
 namespace SimplePlainNote
 {
     public partial class frmNote : Form
-    {       
+    {
+        private bool transparency = true;
+
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
@@ -19,8 +21,7 @@ namespace SimplePlainNote
                          int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-
-        //private bool notemoving = false;
+        
         private int id;
         private string title;
         private frmNewNote fcn;
@@ -47,10 +48,11 @@ namespace SimplePlainNote
         }
 
         private void frmDeleteNote_Click(object sender, EventArgs e)
-        {            
-            fcn.DeleteNote(this.id);                                                  
+        {
+            transparency = false;
+            fcn.DeleteNote(this.id);            
             this.Close();
-            this.Dispose();   
+            
         }
 
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
@@ -66,11 +68,33 @@ namespace SimplePlainNote
 
         }
 
+        /// <summary>
+        /// Resize note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pnlResizeWindow_MouseDown(object sender, MouseEventArgs e)
         {            
-            Cursor = Cursors.SizeNWSE;
-            //todo
+            Cursor = Cursors.SizeNWSE;            
             //e.Location
+        }
+
+        private void frmNote_Deactivate(object sender, EventArgs e)
+        {
+            if (transparency)
+            {
+                this.Opacity = 0.9;
+                this.Refresh();
+            }
+        }
+
+        private void frmNote_Activated(object sender, EventArgs e)
+        {
+            if (transparency)
+            {
+                this.Opacity = 1.0;
+                this.Refresh();
+            }
         }
     }
 }

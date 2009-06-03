@@ -30,7 +30,7 @@
         {
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlHead = new System.Windows.Forms.Panel();
-            this.frmDeleteNote = new System.Windows.Forms.Button();
+            this.btnDeleteNote = new System.Windows.Forms.Button();
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.pnlNote = new System.Windows.Forms.Panel();
             this.pnlResizeWindow = new System.Windows.Forms.Panel();
@@ -52,7 +52,7 @@
             // 
             this.pnlHead.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHead.Controls.Add(this.frmDeleteNote);
+            this.pnlHead.Controls.Add(this.btnDeleteNote);
             this.pnlHead.Controls.Add(this.lblTitle);
             this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
@@ -61,18 +61,18 @@
             this.pnlHead.TabIndex = 1;
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             // 
-            // frmDeleteNote
+            // btnDeleteNote
             // 
-            this.frmDeleteNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.frmDeleteNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.frmDeleteNote.Location = new System.Drawing.Point(247, 4);
-            this.frmDeleteNote.Margin = new System.Windows.Forms.Padding(0);
-            this.frmDeleteNote.Name = "frmDeleteNote";
-            this.frmDeleteNote.Size = new System.Drawing.Size(31, 23);
-            this.frmDeleteNote.TabIndex = 1;
-            this.frmDeleteNote.Text = "X";
-            this.frmDeleteNote.UseVisualStyleBackColor = true;
-            this.frmDeleteNote.Click += new System.EventHandler(this.frmDeleteNote_Click);
+            this.btnDeleteNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteNote.Font = new System.Drawing.Font("Kartika", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteNote.Location = new System.Drawing.Point(247, 4);
+            this.btnDeleteNote.Margin = new System.Windows.Forms.Padding(0);
+            this.btnDeleteNote.Name = "btnDeleteNote";
+            this.btnDeleteNote.Size = new System.Drawing.Size(31, 23);
+            this.btnDeleteNote.TabIndex = 1;
+            this.btnDeleteNote.Text = "X";
+            this.btnDeleteNote.UseVisualStyleBackColor = true;
+            this.btnDeleteNote.Click += new System.EventHandler(this.frmDeleteNote_Click);
             // 
             // rtbNote
             // 
@@ -88,7 +88,7 @@
             this.rtbNote.Name = "rtbNote";
             this.rtbNote.ReadOnly = true;
             this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbNote.Size = new System.Drawing.Size(273, 224);
+            this.rtbNote.Size = new System.Drawing.Size(281, 224);
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
             this.rtbNote.Text = "[note]";
@@ -115,7 +115,7 @@
             this.pnlResizeWindow.Location = new System.Drawing.Point(277, 226);
             this.pnlResizeWindow.Name = "pnlResizeWindow";
             this.pnlResizeWindow.Size = new System.Drawing.Size(22, 22);
-            this.pnlResizeWindow.TabIndex = 4;            
+            this.pnlResizeWindow.TabIndex = 4;
             this.pnlResizeWindow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlResizeWindow_MouseDown);
             // 
             // frmNote
@@ -135,8 +135,11 @@
             this.Name = "frmNote";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Note";
+            this.Deactivate += new System.EventHandler(this.frmNote_Deactivate);
+            this.Activated += new System.EventHandler(this.frmNote_Activated);
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();
             this.pnlNote.ResumeLayout(false);
@@ -148,7 +151,7 @@
 
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel pnlHead;
-        private System.Windows.Forms.Button frmDeleteNote;
+        private System.Windows.Forms.Button btnDeleteNote;
         private System.Windows.Forms.RichTextBox rtbNote;
         private System.Windows.Forms.Panel pnlNote;
         private System.Windows.Forms.Panel pnlResizeWindow;

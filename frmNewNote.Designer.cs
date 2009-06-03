@@ -56,11 +56,11 @@
             this.rtbNote.EnableAutoDragDrop = true;
             this.rtbNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.rtbNote.Location = new System.Drawing.Point(6, 3);
+            this.rtbNote.Location = new System.Drawing.Point(3, 3);
             this.rtbNote.MaxLength = 999999;
             this.rtbNote.Name = "rtbNote";
             this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbNote.Size = new System.Drawing.Size(265, 203);
+            this.rtbNote.Size = new System.Drawing.Size(275, 203);
             this.rtbNote.TabIndex = 1;
             this.rtbNote.Text = "";
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -79,13 +79,14 @@
             "Meeting"});
             this.tbTitle.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbTitle.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbTitle.BackColor = System.Drawing.Color.LightYellow;
+            this.tbTitle.BackColor = System.Drawing.Color.Khaki;
+            this.tbTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbTitle.CausesValidation = false;
             this.tbTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbTitle.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.tbTitle.Location = new System.Drawing.Point(34, 6);
+            this.tbTitle.Location = new System.Drawing.Point(38, 6);
             this.tbTitle.Name = "tbTitle";
-            this.tbTitle.Size = new System.Drawing.Size(179, 22);
+            this.tbTitle.Size = new System.Drawing.Size(176, 22);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
             this.tbTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbTitle_KeyDown);
@@ -96,11 +97,11 @@
             // 
             this.lbTextTitle.AutoSize = true;
             this.lbTextTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTextTitle.Location = new System.Drawing.Point(3, 9);
+            this.lbTextTitle.Location = new System.Drawing.Point(0, 9);
             this.lbTextTitle.Name = "lbTextTitle";
-            this.lbTextTitle.Size = new System.Drawing.Size(31, 16);
+            this.lbTextTitle.Size = new System.Drawing.Size(37, 16);
             this.lbTextTitle.TabIndex = 2;
-            this.lbTextTitle.Text = "title:";
+            this.lbTextTitle.Text = "Title:";
             this.lbTextTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Trayicon
@@ -167,6 +168,11 @@
             this.btnCancel.BackgroundImage = global::SimplePlainNote.Properties.Resources.cancel;
             this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnCancel.CausesValidation = false;
+            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Location = new System.Drawing.Point(252, 5);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(27, 23);
@@ -181,6 +187,11 @@
             this.btnAddNote.BackgroundImage = global::SimplePlainNote.Properties.Resources.accept;
             this.btnAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnAddNote.CausesValidation = false;
+            this.btnAddNote.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnAddNote.FlatAppearance.BorderSize = 0;
+            this.btnAddNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.btnAddNote.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnAddNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddNote.Location = new System.Drawing.Point(219, 5);
             this.btnAddNote.Name = "btnAddNote";
             this.btnAddNote.Size = new System.Drawing.Size(27, 23);
@@ -215,8 +226,11 @@
             this.Name = "frmNewNote";
             this.ShowInTaskbar = false;
             this.Text = "New note";
+            this.TransparencyKey = System.Drawing.Color.Transparent;
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Shown += new System.EventHandler(this.frmNewNote_Shown);
+            this.Activated += new System.EventHandler(this.frmNewNote_Activated);
             this.ContextMenuTrayicon.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();

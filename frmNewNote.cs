@@ -11,6 +11,8 @@ namespace SimplePlainNote
 {
     public partial class frmNewNote : Form    
     {
+        private bool transparency = true;
+
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
@@ -26,6 +28,11 @@ namespace SimplePlainNote
         {
             InitializeComponent();
             notes = new List<frmNote>();            
+        }
+
+        public List<frmNote> getNotes
+        {
+            get { return this.notes; }
         }
 
         private void btnAddNote_Click(object sender, EventArgs e)
@@ -48,8 +55,6 @@ namespace SimplePlainNote
             }
 
         }
-
-
 
         private void tbTitle_Enter(object sender, EventArgs e)
         {
@@ -141,7 +146,7 @@ namespace SimplePlainNote
 
         private void listToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmManageNotes managenotes = new frmManageNotes(notes);
+            frmManageNotes managenotes = new frmManageNotes(this);
             managenotes.Show();
             /*
             string allnotes ="";
@@ -178,6 +183,24 @@ namespace SimplePlainNote
             tbTitle.Focus();
             tbTitle.BackColor = Color.LightYellow;
             rtbNote.BackColor = Color.Gold;
+        }
+
+        private void frmNewNote_Activated(object sender, EventArgs e)
+        {
+            if (transparency)
+            {
+                this.Opacity = 1.0;
+                this.Refresh();
+            }
+        }
+
+        private void frmNewNote_Deactivate(object sender, EventArgs e)
+        {
+            if (transparency)
+            {
+                this.Opacity = 0.9;
+                this.Refresh();
+            }
         }
     }
 }
