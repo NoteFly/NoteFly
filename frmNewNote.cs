@@ -9,9 +9,10 @@ using System.Runtime.InteropServices;
 
 namespace SimplePlainNote
 {
-    public partial class frmNewNote : Form    
+    public partial class frmNewNote : Form
     {
         private bool transparency = true;
+        private bool editmode = false;
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -22,38 +23,56 @@ namespace SimplePlainNote
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        private List<frmNote> notes;       
+        private List<frmNote> notes;
 
         public frmNewNote()
         {
             InitializeComponent();
-            notes = new List<frmNote>();            
+            notes = new List<frmNote>();
         }
-
         public List<frmNote> getNotes
         {
             get { return this.notes; }
         }
+        /*
+        public String FormState
+        {
+            get { return this.WindowState; }
+        }
+         * */
 
         private void btnAddNote_Click(object sender, EventArgs e)
         {
             if (tbTitle.Text == "")
             {
-                tbTitle.BackColor = Color.Red;                
-                tbTitle.Text = DateTime.Now.ToString();                
+                tbTitle.BackColor = Color.Red;
+                tbTitle.Text = DateTime.Now.ToString();
             }
             else if (rtbNote.Text == "")
             {
                 rtbNote.BackColor = Color.Red;
-                Console.Beep();
-                rtbNote.Text = "Please type any note.";
+                //Console.Beep();
+                rtbNote.Text = "Please type any text.";
             }
             else
             {
-                CreateNote(tbTitle.Text, rtbNote.Text);                
+                if (editmode)
+                {
+
+                }
+                else
+                {
+                    CreateNote(tbTitle.Text, rtbNote.Text);
+                }
                 CancelNote();
             }
 
+        }
+
+        private void editNote(int id)
+        {
+            this.tbTitle.Text = notes[id].Title;
+            this.rtbNote.Text = notes[id].Note;
         }
 
         private void tbTitle_Enter(object sender, EventArgs e)
@@ -70,7 +89,7 @@ namespace SimplePlainNote
             if (rtbNote.Focused)
             {
                 rtbNote.BackColor = Color.LightYellow;
-                tbTitle.BackColor = Color.Gold;                
+                tbTitle.BackColor = Color.Gold;
             }
         }
 
@@ -91,7 +110,7 @@ namespace SimplePlainNote
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
+        {
             Trayicon.Dispose();
             Application.Exit();
         }
@@ -120,7 +139,7 @@ namespace SimplePlainNote
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Error: creating note. \r\n"+exc.Message);
+                MessageBox.Show("Error: creating note. \r\n" + exc.Message);
             }
         }
 
@@ -142,6 +161,21 @@ namespace SimplePlainNote
                 notes[n].ID = n - 1;
             }
              */
+        }
+
+        public void EditNote(int noteID)
+        {
+            int notePos = noteID - 1;
+            try
+            {
+                this.tbTitle.Text = notes[notePos].Title;
+                this.rtbNote.Text = notes[notePos].Note;
+            }
+            catch (ArgumentOutOfRangeException ExcID)
+            {                
+                MessageBox.Show("Note not found. "+ExcID.Source);
+            }
+            editmode = true;
         }
 
         private void listToolStripMenuItem_Click(object sender, EventArgs e)
@@ -201,6 +235,12 @@ namespace SimplePlainNote
                 this.Opacity = 0.9;
                 this.Refresh();
             }
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmSettings settings = new frmSettings();
+            settings.Show();
         }
     }
 }

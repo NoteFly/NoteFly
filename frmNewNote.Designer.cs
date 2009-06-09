@@ -35,13 +35,14 @@
             this.lbTextTitle = new System.Windows.Forms.Label();
             this.Trayicon = new System.Windows.Forms.NotifyIcon(this.components);
             this.ContextMenuTrayicon = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.createANewNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
+            this.pnlNoteEdit = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddNote = new System.Windows.Forms.Button();
-            this.pnlNoteEdit = new System.Windows.Forms.Panel();
+            this.createANewNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuTrayicon.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.pnlNoteEdit.SuspendLayout();
@@ -117,32 +118,25 @@
             this.ContextMenuTrayicon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createANewNoteToolStripMenuItem,
             this.listToolStripMenuItem,
+            this.settingsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.ContextMenuTrayicon.Name = "contextMenuStrip1";
-            this.ContextMenuTrayicon.Size = new System.Drawing.Size(200, 70);
-            // 
-            // createANewNoteToolStripMenuItem
-            // 
-            this.createANewNoteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.createANewNoteToolStripMenuItem.Name = "createANewNoteToolStripMenuItem";
-            this.createANewNoteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.N)));
-            this.createANewNoteToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.createANewNoteToolStripMenuItem.Text = "Create a new note";
-            this.createANewNoteToolStripMenuItem.Click += new System.EventHandler(this.createANewNoteToolStripMenuItem_Click);
+            this.ContextMenuTrayicon.ShowImageMargin = false;
+            this.ContextMenuTrayicon.Size = new System.Drawing.Size(140, 114);
             // 
             // listToolStripMenuItem
             // 
             this.listToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.listToolStripMenuItem.Name = "listToolStripMenuItem";
-            this.listToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.listToolStripMenuItem.Text = "manage notes";
+            this.listToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.listToolStripMenuItem.Text = "&Manage notes";
             this.listToolStripMenuItem.Click += new System.EventHandler(this.listToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -161,44 +155,6 @@
             this.pnlHeadNewNote.TabIndex = 4;
             this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
             // 
-            // btnCancel
-            // 
-            this.btnCancel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnCancel.BackgroundImage = global::SimplePlainNote.Properties.Resources.cancel;
-            this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnCancel.CausesValidation = false;
-            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnCancel.FlatAppearance.BorderSize = 0;
-            this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
-            this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Location = new System.Drawing.Point(252, 5);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(27, 23);
-            this.btnCancel.TabIndex = 3;
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnAddNote
-            // 
-            this.btnAddNote.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnAddNote.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnAddNote.BackgroundImage = global::SimplePlainNote.Properties.Resources.accept;
-            this.btnAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnAddNote.CausesValidation = false;
-            this.btnAddNote.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnAddNote.FlatAppearance.BorderSize = 0;
-            this.btnAddNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
-            this.btnAddNote.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnAddNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNote.Location = new System.Drawing.Point(219, 5);
-            this.btnAddNote.Name = "btnAddNote";
-            this.btnAddNote.Size = new System.Drawing.Size(27, 23);
-            this.btnAddNote.TabIndex = 2;
-            this.btnAddNote.UseVisualStyleBackColor = true;
-            this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
-            // 
             // pnlNoteEdit
             // 
             this.pnlNoteEdit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -209,11 +165,70 @@
             this.pnlNoteEdit.Size = new System.Drawing.Size(284, 211);
             this.pnlNoteEdit.TabIndex = 5;
             // 
+            // btnCancel
+            // 
+            this.btnCancel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnCancel.BackgroundImage = global::SimplePlainNote.Properties.Resources.cancel;
+            this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnCancel.CausesValidation = false;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Location = new System.Drawing.Point(252, 5);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(27, 23);
+            this.btnCancel.TabIndex = 3;
+            this.btnCancel.UseMnemonic = false;
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnAddNote
+            // 
+            this.btnAddNote.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnAddNote.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnAddNote.BackgroundImage = global::SimplePlainNote.Properties.Resources.accept;
+            this.btnAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnAddNote.CausesValidation = false;
+            this.btnAddNote.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnAddNote.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnAddNote.FlatAppearance.BorderSize = 0;
+            this.btnAddNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.btnAddNote.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnAddNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddNote.Location = new System.Drawing.Point(219, 5);
+            this.btnAddNote.Name = "btnAddNote";
+            this.btnAddNote.Size = new System.Drawing.Size(27, 23);
+            this.btnAddNote.TabIndex = 2;
+            this.btnAddNote.UseMnemonic = false;
+            this.btnAddNote.UseVisualStyleBackColor = true;
+            this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
+            // 
+            // createANewNoteToolStripMenuItem
+            // 
+            this.createANewNoteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.createANewNoteToolStripMenuItem.Name = "createANewNoteToolStripMenuItem";
+            this.createANewNoteToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.createANewNoteToolStripMenuItem.Text = "&Create a new note";
+            this.createANewNoteToolStripMenuItem.Click += new System.EventHandler(this.createANewNoteToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // frmNewNote
             // 
+            this.AcceptButton = this.btnAddNote;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gold;
+            this.CancelButton = this.btnCancel;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(284, 249);
             this.Controls.Add(this.pnlNoteEdit);
@@ -248,11 +263,12 @@
         private System.Windows.Forms.NotifyIcon Trayicon;
         private System.Windows.Forms.ContextMenuStrip ContextMenuTrayicon;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createANewNoteToolStripMenuItem;
         private System.Windows.Forms.Panel pnlHeadNewNote;
         private System.Windows.Forms.Panel pnlNoteEdit;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ToolStripMenuItem listToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createANewNoteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }
 
