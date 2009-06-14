@@ -242,5 +242,14 @@ namespace SimplePlainNote
             frmSettings settings = new frmSettings();
             settings.Show();
         }
+
+        private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start(e.LinkText);
+            }
+        }
     }
 }

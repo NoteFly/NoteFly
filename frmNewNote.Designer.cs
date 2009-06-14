@@ -35,14 +35,14 @@
             this.lbTextTitle = new System.Windows.Forms.Label();
             this.Trayicon = new System.Windows.Forms.NotifyIcon(this.components);
             this.ContextMenuTrayicon = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.createANewNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
-            this.pnlNoteEdit = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddNote = new System.Windows.Forms.Button();
-            this.createANewNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnlNoteEdit = new System.Windows.Forms.Panel();
             this.ContextMenuTrayicon.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.pnlNoteEdit.SuspendLayout();
@@ -64,7 +64,9 @@
             this.rtbNote.Size = new System.Drawing.Size(275, 203);
             this.rtbNote.TabIndex = 1;
             this.rtbNote.Text = "";
+            this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
+            this.rtbNote.TextChanged += new System.EventHandler(this.rtbNote_Enter);
             // 
             // tbTitle
             // 
@@ -90,6 +92,7 @@
             this.tbTitle.Size = new System.Drawing.Size(176, 22);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
+            this.tbTitle.TextChanged += new System.EventHandler(this.tbTitle_Enter);
             this.tbTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbTitle_KeyDown);
             this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             this.tbTitle.Enter += new System.EventHandler(this.tbTitle_Enter);
@@ -122,7 +125,15 @@
             this.exitToolStripMenuItem});
             this.ContextMenuTrayicon.Name = "contextMenuStrip1";
             this.ContextMenuTrayicon.ShowImageMargin = false;
-            this.ContextMenuTrayicon.Size = new System.Drawing.Size(140, 114);
+            this.ContextMenuTrayicon.Size = new System.Drawing.Size(140, 92);
+            // 
+            // createANewNoteToolStripMenuItem
+            // 
+            this.createANewNoteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.createANewNoteToolStripMenuItem.Name = "createANewNoteToolStripMenuItem";
+            this.createANewNoteToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.createANewNoteToolStripMenuItem.Text = "&Create a new note";
+            this.createANewNoteToolStripMenuItem.Click += new System.EventHandler(this.createANewNoteToolStripMenuItem_Click);
             // 
             // listToolStripMenuItem
             // 
@@ -131,6 +142,14 @@
             this.listToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.listToolStripMenuItem.Text = "&Manage notes";
             this.listToolStripMenuItem.Click += new System.EventHandler(this.listToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -154,16 +173,6 @@
             this.pnlHeadNewNote.Size = new System.Drawing.Size(284, 40);
             this.pnlHeadNewNote.TabIndex = 4;
             this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
-            // 
-            // pnlNoteEdit
-            // 
-            this.pnlNoteEdit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlNoteEdit.Controls.Add(this.rtbNote);
-            this.pnlNoteEdit.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlNoteEdit.Location = new System.Drawing.Point(0, 38);
-            this.pnlNoteEdit.Name = "pnlNoteEdit";
-            this.pnlNoteEdit.Size = new System.Drawing.Size(284, 211);
-            this.pnlNoteEdit.TabIndex = 5;
             // 
             // btnCancel
             // 
@@ -206,21 +215,15 @@
             this.btnAddNote.UseVisualStyleBackColor = true;
             this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
             // 
-            // createANewNoteToolStripMenuItem
+            // pnlNoteEdit
             // 
-            this.createANewNoteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.createANewNoteToolStripMenuItem.Name = "createANewNoteToolStripMenuItem";
-            this.createANewNoteToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-            this.createANewNoteToolStripMenuItem.Text = "&Create a new note";
-            this.createANewNoteToolStripMenuItem.Click += new System.EventHandler(this.createANewNoteToolStripMenuItem_Click);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.pnlNoteEdit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlNoteEdit.Controls.Add(this.rtbNote);
+            this.pnlNoteEdit.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlNoteEdit.Location = new System.Drawing.Point(0, 38);
+            this.pnlNoteEdit.Name = "pnlNoteEdit";
+            this.pnlNoteEdit.Size = new System.Drawing.Size(284, 211);
+            this.pnlNoteEdit.TabIndex = 5;
             // 
             // frmNewNote
             // 
