@@ -50,15 +50,14 @@ namespace SimplePlainNote
             }
             else if (rtbNote.Text == "")
             {
-                rtbNote.BackColor = Color.Red;
-                //Console.Beep();
+                rtbNote.BackColor = Color.Red;             
                 rtbNote.Text = "Please type any text.";
             }
             else
             {
                 if (editmode)
                 {
-
+                    //todo
                 }
                 else
                 {
@@ -71,8 +70,16 @@ namespace SimplePlainNote
 
         private void editNote(int id)
         {
-            this.tbTitle.Text = notes[id].Title;
-            this.rtbNote.Text = notes[id].Note;
+            try
+            {
+                this.tbTitle.Text = notes[id].Title;
+                this.rtbNote.Text = notes[id].Note;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Error code: 200 - "+exc.Message);                
+            }
+            
         }
 
         private void tbTitle_Enter(object sender, EventArgs e)
@@ -126,6 +133,7 @@ namespace SimplePlainNote
             this.ShowInTaskbar = false;
             tbTitle.Text = "";
             rtbNote.Text = "";
+            tbTitle.Focus();
         }
 
         public void CreateNote(string title, string text)
@@ -139,7 +147,7 @@ namespace SimplePlainNote
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Error: creating note. \r\n" + exc.Message);
+                MessageBox.Show("Error code 201:\r\n" + exc.Message);
             }
         }
 
@@ -158,7 +166,7 @@ namespace SimplePlainNote
             /*
             for (int n=m+1; n <= notes.Count; n++)
             {
-                notes[n].ID = n - 1;
+                if (n>=1) { notes[n].ID = n - 1; }
             }
              */
         }

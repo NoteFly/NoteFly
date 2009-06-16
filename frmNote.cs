@@ -37,7 +37,23 @@ namespace SimplePlainNote
             this.note = note;
             InitializeComponent();            
             lblTitle.Text = title;
-            rtbNote.Text = note;            
+            rtbNote.Text = note;
+            DrawDefaultColor();
+        }
+
+        private void DrawDefaultColor()
+        {
+            try
+            {
+                String inifile = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\settings.ini";
+                notecolor = Convert.ToInt32(frmSettings.GetIniValue("main", "defaultcolor", inifile));
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Error code: 100 - "+exc.Message);             
+            }
+
+            paintColorNote();
         }
 
         public int ID
@@ -120,34 +136,35 @@ namespace SimplePlainNote
             }
         }
 
-        private void changeColorToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-        {
-            /*
-            if (notecolor == Color.Gold) yellowToolStripMenuItem.Checked = true;
-            else if (notecolor == Color.Orange) orangeToolStripMenuItem.Checked = true;
-            else if (notecolor == Color.White) whiteToolStripMenuItem.Checked = true;
-            else if (notecolor == Color.Green) greenToolStripMenuItem.Checked = true;
-            else if (notecolor == Color.Blue) blueToolStripMenuItem.Checked = true;
-             */
-        }
-
         private void setColorNote(object sender, EventArgs e)
         {
+            int i =0;
             foreach (ToolStripMenuItem curitem in menuNoteColors.DropDownItems)
-            {
+            {                
                 if (curitem == sender) 
                 {
                     curitem.Checked = true;
+                    notecolor = i;
                 }
                 else
                 {
                     curitem.Checked = false;
                 }
-                
-            }                      
+                i++;
+            }
 
+            paintColorNote();
+        }
 
-            pnlHead.BackColor = Color.Gold;
+        private void paintColorNote()
+        {
+            Color normalcolor = getObjColor(false);
+            //Color highlightcolor = getObjColor(true);
+
+            this.BackColor = normalcolor;
+            this.pnlHead.BackColor = normalcolor;
+            this.pnlNote.BackColor = normalcolor;
+            this.rtbNote.BackColor = normalcolor;
         }
 
         private Color getObjColor(bool selected)
@@ -164,14 +181,13 @@ namespace SimplePlainNote
                     if (selected) return Color.Gray;
                     else return Color.White;
                 case 3:
-                    if (selected) return Color.DarkGreen;
-                    else return Color.Green;
+                    if (selected) return Color.Green;
+                    else return Color.LightGreen;
                 case 4:
-                    if (selected) return Color.DarkBlue;
-                    else return Color.Blue;
+                    if (selected) return Color.Blue;
+                    else return Color.CornflowerBlue;
                 default:
                     return Color.Gold;
-
             }            
         }
 

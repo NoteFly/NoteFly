@@ -73,5 +73,19 @@ namespace SimplePlainNote.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap hoekje {
+            get {
+                object obj = ResourceManager.GetObject("hoekje", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vouw {
+            get {
+                object obj = ResourceManager.GetObject("vouw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

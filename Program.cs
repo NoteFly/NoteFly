@@ -12,6 +12,8 @@ namespace SimplePlainNote
         [STAThread]
         static void Main()
         {
+            //public String inifile;
+            //String inifile = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\settings.ini";
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);
             Application.Run(new frmNewNote());
