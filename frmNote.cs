@@ -191,14 +191,37 @@ namespace SimplePlainNote
             }            
         }
 
+        private void updateMenuNoteColor(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem curitem in menuNoteColors.DropDownItems)
+            {                
+                curitem.Checked = false;
+            }
+
+            switch (this.notecolor)
+            {
+                case 0:
+                    yellowToolStripMenuItem.Checked = true;
+                    break;
+                case 1:
+                    orangeToolStripMenuItem.Checked = true;
+                    break;
+                case 2:
+                    whiteToolStripMenuItem.Checked = true;
+                    break;
+                case 3:
+                    greenToolStripMenuItem.Checked = true;
+                    break;
+                case 4:
+                    blueToolStripMenuItem.Checked = true;
+                    break;                
+            }
+        }
+
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
-        {                                                
-
-            //fcn.Show();
+        {                                                            
             fcn.WindowState = FormWindowState.Normal;
-            fcn.EditNote(ID);
-            
-
+            fcn.EditNote(ID);            
         }
     }
 }
