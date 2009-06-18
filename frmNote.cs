@@ -27,7 +27,8 @@ namespace SimplePlainNote
         private string note;
         private int notecolor = 0;
         private frmNewNote fcn;
-        
+
+        //private Point mouse_offset;
 
         public frmNote(int id, string title, string note, frmNewNote fcn)
         {            
@@ -222,6 +223,16 @@ namespace SimplePlainNote
         {                                                            
             fcn.WindowState = FormWindowState.Normal;
             fcn.EditNote(ID);            
+        }
+
+        private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Cursor = Cursors.SizeNWSE;
+                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                
+            }
+            this.Cursor = Cursors.Default;
         }
     }
 }

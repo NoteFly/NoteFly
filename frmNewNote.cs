@@ -259,5 +259,14 @@ namespace SimplePlainNote
                 System.Diagnostics.Process.Start(e.LinkText);
             }
         }
+
+        private void frmNewNote_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (tbTitle.Focused == true) { MessageBox.Show("Test1"); }
+                else if (rtbNote.Focused == true) { MessageBox.Show("Test2"); }                
+            }
+        }
     }
 }

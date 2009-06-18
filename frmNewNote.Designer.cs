@@ -239,6 +239,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(50, 50);
             this.Name = "frmNewNote";
@@ -249,6 +250,7 @@
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Shown += new System.EventHandler(this.frmNewNote_Shown);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmNewNote_KeyDown);
             this.ContextMenuTrayicon.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
