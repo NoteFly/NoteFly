@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsSValidator.cs" />
     <Compile Include="frmManageNotes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="hoekje.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="settings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

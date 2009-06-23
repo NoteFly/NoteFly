@@ -46,8 +46,8 @@ namespace SimplePlainNote
         {
             try
             {
-                String inifile = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\settings.ini";
-                notecolor = Convert.ToInt32(frmSettings.GetIniValue("main", "defaultcolor", inifile));
+                //String inifile = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\settings.ini";
+                //notecolor = Convert.ToInt32(frmSettings.GetIniValue("main", "defaultcolor", inifile));
             }
             catch (Exception exc)
             {
