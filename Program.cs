@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace SimplePlainNote
 {
+    /// <summary>
+    /// Startup class.
+    /// </summary>
     static class Program
     {
         /// <summary>

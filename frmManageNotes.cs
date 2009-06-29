@@ -9,6 +9,9 @@ using System.Runtime.InteropServices;
 
 namespace SimplePlainNote
 {
+    /// <summary>
+    /// Manage notes class
+    /// </summary>
     public partial class frmManageNotes : Form
     {
         private bool transparency = true;
@@ -25,7 +28,7 @@ namespace SimplePlainNote
         public frmManageNotes(frmNewNote fcn)
         {
             InitializeComponent();
-            DrawNotesOverview(fcn.getNotes);
+            DrawNotesOverview(fcn.GetNotes);
         }
 
 
@@ -42,10 +45,10 @@ namespace SimplePlainNote
                 pnlNotes.Controls.Add(lblNoteTitle);
 
                 CheckBox cbxNoteVisible = new CheckBox();
-                cbxNoteVisible.Text = "visible?";
+                cbxNoteVisible.Text = "visible";
                 cbxNoteVisible.Name = "cbxNoteVisible" + Convert.ToString(i);
                 cbxNoteVisible.CheckState = CheckState.Checked;
-                cbxNoteVisible.Location = new Point(160, ypos);
+                cbxNoteVisible.Location = new Point(175, ypos);
                 cbxNoteVisible.AutoEllipsis = true;
                 cbxNoteVisible.AutoSize = true;
                 pnlNotes.Controls.Add(cbxNoteVisible);
@@ -53,10 +56,12 @@ namespace SimplePlainNote
                 Button btnNoteDelete = new Button();
                 btnNoteDelete.Text = "delete";
                 btnNoteDelete.Name = "btnNoteDel" + Convert.ToString(i);
+                btnNoteDelete.BackColor = Color.Orange;
                 btnNoteDelete.Location = new Point(240, ypos);
+                btnNoteDelete.Width = 60;
                 pnlNotes.Controls.Add(btnNoteDelete);
                 
-                ypos = ypos + 10;
+                ypos = ypos + 30;
             }
 
         }
@@ -73,7 +78,7 @@ namespace SimplePlainNote
 
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
-            pnlHead.BackColor = Color.Red;
+            pnlHead.BackColor = Color.OrangeRed;
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();

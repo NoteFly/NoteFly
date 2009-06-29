@@ -51,7 +51,7 @@
             // 
             this.lbTextNotes.AutoSize = true;
             this.lbTextNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTextNotes.Location = new System.Drawing.Point(13, 10);
+            this.lbTextNotes.Location = new System.Drawing.Point(11, 5);
             this.lbTextNotes.Name = "lbTextNotes";
             this.lbTextNotes.Size = new System.Drawing.Size(34, 16);
             this.lbTextNotes.TabIndex = 1;
@@ -61,7 +61,7 @@
             // 
             this.lbTextNoteOptions.AutoSize = true;
             this.lbTextNoteOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTextNoteOptions.Location = new System.Drawing.Point(196, 10);
+            this.lbTextNoteOptions.Location = new System.Drawing.Point(180, 5);
             this.lbTextNoteOptions.Name = "lbTextNoteOptions";
             this.lbTextNoteOptions.Size = new System.Drawing.Size(54, 16);
             this.lbTextNoteOptions.TabIndex = 2;

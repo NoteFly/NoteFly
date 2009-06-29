@@ -1,10 +1,13 @@
-﻿  using System;
-  using System.Xml;
-  using System.Xml.Schema; 
-  using System.Windows.Forms;
+﻿using System;
+using System.Xml;
+using System.Xml.Schema; 
+using System.Windows.Forms;
 
 namespace SimplePlainNote
 {    
+    /// <summary>
+    /// Class to check for valid XML.
+    /// </summary>
     class clsSValidator
     {
 
@@ -22,12 +25,14 @@ namespace SimplePlainNote
             m_sSchemaFileName = sSchemaFileName;
             m_objXmlSchemaCollection = new XmlSchemaCollection();
             //adding the schema file to the newly created schema collection
-
             m_objXmlSchemaCollection.Add(null, m_sSchemaFileName);
         }
 
-        //This function will Validate the XML file(.xml) against xml schema(.xsd)
-
+        
+        /// <summary>
+        /// This function will Validate the XML file(.xml) against xml schema(.xsd)
+        /// </summary>
+        /// <returns></returns>
         public bool ValidateXMLFile()
         {
             XmlTextReader objXmlTextReader = null;
@@ -37,25 +42,17 @@ namespace SimplePlainNote
             {
                 //creating a text reader for the XML file already picked by the 
                 //overloaded constructor above viz..clsSchemaValidator
-
                 objXmlTextReader = new XmlTextReader(m_sXMLFileName);
                 //creating a validating reader for that objXmlTextReader just created
-
                 objXmlValidatingReader = new XmlValidatingReader(objXmlTextReader);
                 //For validation we are adding the schema collection in 
-
                 //ValidatingReaders Schema collection.
-
                 objXmlValidatingReader.Schemas.Add(m_objXmlSchemaCollection);
                 //Attaching the event handler now in case of failures
-
                 objXmlValidatingReader.ValidationEventHandler += new ValidationEventHandler(ValidationFailed);
                 //Actually validating the data in the XML file with a empty while.
-
                 //which would fire the event ValidationEventHandler and invoke 
-
                 //our ValidationFailed function
-
                 while (objXmlValidatingReader.Read())
                 {
                 }
@@ -64,7 +61,6 @@ namespace SimplePlainNote
                 //m_bIsFailure boolean variable to false thus returning true as  
                 //a signal to the calling function that the ValidateXMLFile
                 //function(this function) has encountered failure
-
                 return m_bIsFailure;
             }
             catch (Exception ex)
@@ -80,7 +76,11 @@ namespace SimplePlainNote
             }
         }
 
-
+        /// <summary>
+        /// xml is not valid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void ValidationFailed(object sender, ValidationEventArgs args)
         {
             m_bIsFailure = true;

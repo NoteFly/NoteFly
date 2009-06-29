@@ -9,6 +9,9 @@ using System.Runtime.InteropServices;
 
 namespace SimplePlainNote
 {
+    /// <summary>
+    /// Class to create new note.
+    /// </summary>
     public partial class frmNewNote : Form
     {
         private bool transparency = true;
@@ -30,7 +33,7 @@ namespace SimplePlainNote
             InitializeComponent();
             notes = new List<frmNote>();
         }
-        public List<frmNote> getNotes
+        public List<frmNote> GetNotes
         {
             get { return this.notes; }
         }
@@ -133,7 +136,9 @@ namespace SimplePlainNote
             this.ShowInTaskbar = false;
             tbTitle.Text = "";
             rtbNote.Text = "";
-            tbTitle.Focus();
+            tbTitle.Focus();            
+            tbTitle.BackColor = Color.LightYellow;
+            rtbNote.BackColor = Color.Gold;
         }
 
         public void CreateNote(string title, string text)
@@ -222,9 +227,12 @@ namespace SimplePlainNote
 
         private void frmNewNote_Shown(object sender, EventArgs e)
         {
+            CancelNote();
+            /*
             tbTitle.Focus();
             tbTitle.BackColor = Color.LightYellow;
             rtbNote.BackColor = Color.Gold;
+             */
         }
 
         private void frmNewNote_Activated(object sender, EventArgs e)
