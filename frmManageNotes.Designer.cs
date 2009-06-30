@@ -39,11 +39,13 @@
             // btnClose
             // 
             this.btnClose.BackColor = System.Drawing.Color.DarkOrange;
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClose.Location = new System.Drawing.Point(202, 158);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(1);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(108, 23);
             this.btnClose.TabIndex = 0;
-            this.btnClose.Text = "Close";
+            this.btnClose.Text = "&Close";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 

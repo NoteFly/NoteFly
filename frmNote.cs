@@ -187,6 +187,12 @@ namespace SimplePlainNote
                 case 4:
                     if (selected) return Color.Blue;
                     else return Color.CornflowerBlue;
+                case 5:
+                    if (selected) return Color.Purple;
+                    else return Color.Magenta;
+                case 6:
+                    if (selected) return Color.DarkRed;
+                    else return Color.Red;
                 default:
                     return Color.Gold;
             }            
@@ -215,6 +221,12 @@ namespace SimplePlainNote
                     break;
                 case 4:
                     blueToolStripMenuItem.Checked = true;
+                    break;
+                case 5:
+                    purpleToolStripMenuItem.Checked = true;                    
+                    break;
+                case 6:
+                    redToolStripMenuItem.Checked = true;                    
                     break;                
             }
         }

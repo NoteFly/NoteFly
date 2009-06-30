@@ -95,7 +95,9 @@
             "Orange",
             "White",
             "Green",
-            "Blue"});
+            "Blue",
+            "Purple",
+            "Red"});
             this.cbxDefaultColor.Location = new System.Drawing.Point(165, 17);
             this.cbxDefaultColor.MaxDropDownItems = 5;
             this.cbxDefaultColor.Name = "cbxDefaultColor";
