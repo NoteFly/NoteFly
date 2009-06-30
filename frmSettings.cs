@@ -29,71 +29,70 @@ namespace SimplePlainNote
             settingsfile = appdatafolder + @"settings.xml";
             if (File.Exists(settingsfile) == false)
             {
-                // xml file does not exist, let's create one with default settings..
-
-                try
-                {
-                    string sStartupPath = Application.StartupPath;
-                    XmlTextWriter objXmlTextWriter = new XmlTextWriter(settingsfile, null);
-                    objXmlTextWriter.Formatting = Formatting.Indented;
-                    objXmlTextWriter.WriteStartDocument();
-                    objXmlTextWriter.WriteStartElement("settings");
-
-                        objXmlTextWriter.WriteStartElement("transparecy");                            
-                                objXmlTextWriter.WriteString("1");
-                        objXmlTextWriter.WriteEndElement();
-
-                        objXmlTextWriter.WriteStartElement("transparecylevel");
-                            objXmlTextWriter.WriteString("95");
-                        objXmlTextWriter.WriteEndElement();
-
-                        objXmlTextWriter.WriteStartElement("defaultcolor");
-                            objXmlTextWriter.WriteString("0");
-                        objXmlTextWriter.WriteEndElement();
-
-                    objXmlTextWriter.WriteEndElement();
-                    objXmlTextWriter.WriteEndDocument();
-                    objXmlTextWriter.Flush();
-                    objXmlTextWriter.Close();                    
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
+                WriteSettings(true, 95, 0);                
             }
             //validate xml file.
             clsSValidator objclsSValidator = new clsSValidator(settingsfile, Application.StartupPath + @"\settings.xsd");
-
-            if (objclsSValidator.ValidateXMLFile()) return;            
-
+            if (objclsSValidator.ValidateXMLFile()) return;
+            //read setting and display set them correctly.
             objXmlTextReader = new XmlTextReader(settingsfile);
-
             cbxTransparecy.Checked = getTransparecy();
-            cbxDefaultColor.SelectedIndex = getDefaultColor();
+            numProcTransparency.Value = getTransparecylevel();
+            cbxDefaultColor.SelectedIndex = getDefaultColor();            
+            objXmlTextReader.Close();
         }
         #endregion
 
         #region methoden
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (cbxTransparecy.Checked == true)
-            {
-                //WriteIniValue("main", "transparecy", "1", inifile);
-                //WriteIniValue("main", "translevel", Convert.ToString(numProcTransparency.Value), inifile);
-            }
-            /*
-            if (cbxDefaultColor.SelectedIndex == 0) WriteIniValue("main", "defaultcolor", "0", inifile);
-            else if (cbxDefaultColor.SelectedIndex == 1) WriteIniValue("main", "defaultcolor", "1", inifile);
-            else if (cbxDefaultColor.SelectedIndex == 2) WriteIniValue("main", "defaultcolor", "2", inifile);
-            else if (cbxDefaultColor.SelectedIndex == 3) WriteIniValue("main", "defaultcolor", "3", inifile);
-            else if (cbxDefaultColor.SelectedIndex == 4) WriteIniValue("main", "defaultcolor", "4", inifile);
-            else
-            {
-                MessageBox.Show("Error no default color selected.");
-                return;
-            }
-             */
+            WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex);
+
             this.Close();
+        }
+
+
+        private void WriteSettings(bool transparecy, decimal transparecylevel, int numcolor)
+        {
+            try
+            {
+                XmlTextWriter objXmlTextWriter = new XmlTextWriter(settingsfile, null);
+                objXmlTextWriter.Formatting = Formatting.Indented;
+
+                objXmlTextWriter.WriteStartDocument();
+                objXmlTextWriter.WriteStartElement("settings");
+                if (transparecy == true)
+                {
+                    objXmlTextWriter.WriteStartElement("transparecy");
+                        objXmlTextWriter.WriteString("1");
+                    objXmlTextWriter.WriteEndElement();
+                }
+                else
+                {
+                    objXmlTextWriter.WriteStartElement("transparecy");
+                        objXmlTextWriter.WriteString("0");
+                    objXmlTextWriter.WriteEndElement();
+                }
+                objXmlTextWriter.WriteStartElement("transparecylevel");
+                    objXmlTextWriter.WriteString(Convert.ToString(transparecylevel));
+                objXmlTextWriter.WriteEndElement();
+                               
+                if ((numcolor < 0) || (numcolor>cbxDefaultColor.Items.Count)) { throw new Exception("Impossible selection"); }
+                
+                objXmlTextWriter.WriteStartElement("defaultcolor");
+                    objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteEndDocument();
+
+                objXmlTextWriter.Flush();
+                objXmlTextWriter.Close();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Error: " + exc.Message);
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -108,9 +107,12 @@ namespace SimplePlainNote
             else return false;
         }
 
-        private int getTransparecylevel()
+        private Decimal getTransparecylevel()
         {
-            return getXMLnodeAsInt("transparecylevel");
+
+            Decimal transparecylvl = Convert.ToDecimal(getXMLnode("transparecylevel"));
+            if ((transparecylvl < 1) || (transparecylvl > 100)) { MessageBox.Show("transparecylevel out of range."); return 95; }
+            else return transparecylvl;
         }
 
         private int getDefaultColor()
@@ -136,8 +138,8 @@ namespace SimplePlainNote
             {
                 if (objXmlTextReader.Name == nodename)
                 {
-
-                    return objXmlTextReader.Value;
+                    string s = objXmlTextReader.ReadElementContentAsString();
+                    return s;
                 }
             }
             //error
@@ -149,24 +151,22 @@ namespace SimplePlainNote
             while (objXmlTextReader.Read())
             {
                 if (objXmlTextReader.Name == nodename)
-                {
-                    string waarde = objXmlTextReader.Value;
+                {                    
                     try
                     {
-                        int n = Convert.ToInt32(waarde);
+                        int n = objXmlTextReader.ReadElementContentAsInt();
                         return n;
                     }
                     catch (Exception)
                     {
-                        return 0;                        
+                        //error
+                        return 0;
                     }
-                    
-
                 }
             }
             //error
             return 0;
-        }
+        }       
 
 
         #endregion
