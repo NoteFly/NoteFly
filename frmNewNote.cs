@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.IO;
+using System.Xml;
 
 namespace SimplePlainNote
 {
@@ -146,6 +148,7 @@ namespace SimplePlainNote
             try
             {
                 int newid = notes.Count + 1;
+                if (SaveNote(newid, title, text) == false) { MessageBox.Show("Cannot save note."); }
                 frmNote frmNote = new frmNote(newid, title, text, this);
                 notes.Add(frmNote);
                 frmNote.Show();
@@ -154,6 +157,48 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Error code 201:\r\n" + exc.Message);
             }
+        }
+
+        /// <summary>
+        /// Save the note to xml file
+        /// </summary>
+        /// <param name="id">number</param>
+        /// <param name="title"></param>
+        /// <param name="text"></param>
+        /// <returns>true is succeed</returns>
+        private bool SaveNote(int id, string title, string text)
+        {
+            try
+            {
+                string appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
+                if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
+                
+                
+                
+                string notefile = appdatafolder + id + ".xml";
+
+                XmlTextWriter objXmlTextWriter = new XmlTextWriter(notefile, null);
+
+                objXmlTextWriter.Formatting = Formatting.Indented;
+
+                objXmlTextWriter.WriteStartDocument();
+
+                objXmlTextWriter.WriteEndDocument();
+
+                objXmlTextWriter.Flush();
+                    objXmlTextWriter.WriteStartElement("note");
+                        objXmlTextWriter.WriteStartElement("color");
+                            objXmlTextWriter.WriteString();
+                        objXmlTextWriter.WriteEndElement();
+                    objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;                
+            }
+            
         }
 
         public void DeleteNote(int id)
