@@ -148,7 +148,7 @@ namespace SimplePlainNote
             try
             {
                 int newid = notes.Count + 1;
-                if (SaveNote(newid, title, text) == false) { MessageBox.Show("Cannot save note."); }
+                SaveNote(newid, title, text);
                 frmNote frmNote = new frmNote(newid, title, text, this);
                 notes.Add(frmNote);
                 frmNote.Show();
@@ -166,38 +166,18 @@ namespace SimplePlainNote
         /// <param name="title"></param>
         /// <param name="text"></param>
         /// <returns>true is succeed</returns>
-        private bool SaveNote(int id, string title, string text)
-        {
-            try
-            {
-                string appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
-                if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
-                
-                
-                
-                string notefile = appdatafolder + id + ".xml";
+        private void SaveNote(int id, string title, string text)
+        {                             
+                string notefile = id + ".xml";
 
-                XmlTextWriter objXmlTextWriter = new XmlTextWriter(notefile, null);
+                xmlHandler getXmlSettings = new xmlHandler(true, "settings.xml");
+                string defaultcolor = getXmlSettings.getXMLnode("defaultcolor");
 
-                objXmlTextWriter.Formatting = Formatting.Indented;
-
-                objXmlTextWriter.WriteStartDocument();
-
-                objXmlTextWriter.WriteEndDocument();
-
-                objXmlTextWriter.Flush();
-                    objXmlTextWriter.WriteStartElement("note");
-                        objXmlTextWriter.WriteStartElement("color");
-                            objXmlTextWriter.WriteString();
-                        objXmlTextWriter.WriteEndElement();
-                    objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.Close();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;                
-            }
+                xmlHandler xmlnote = new xmlHandler(false, notefile);
+                if (xmlnote.WriteNote(defaultcolor, title, text) == false)
+                {
+                    MessageBox.Show("Error writing note.");
+                }
             
         }
 
