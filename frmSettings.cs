@@ -27,14 +27,21 @@ namespace SimplePlainNote
             //read setting and display them correctly.            
             cbxTransparecy.Checked = getTransparecy();
             numProcTransparency.Value = getTransparecylevel();
-            cbxDefaultColor.SelectedIndex = getDefaultColor();                        
+            cbxDefaultColor.SelectedIndex = getDefaultColor();
+            tbTwitterUser.Text = getTwitterusername();
+            tbTwitterPass.Text = getTwitterpassword();
         }
         #endregion
 
         #region methoden
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex)==false)
+            if (xmlsettings.WriteSettings(cbxTransparecy.Checked, 
+                numProcTransparency.Value,
+                cbxDefaultColor.SelectedIndex,
+                tbTwitterUser.Text,
+                tbTwitterPass.Text
+                )==false)
             {
                 MessageBox.Show("Error writing settings.");
             }
@@ -66,6 +73,16 @@ namespace SimplePlainNote
         private int getDefaultColor()
         {
             return xmlsettings.getXMLnodeAsInt("defaultcolor");
+        }
+
+        private string getTwitterusername()
+        {
+            return xmlsettings.getXMLnode("twitteruser");
+        }
+
+        private string getTwitterpassword()
+        {
+            return xmlsettings.getXMLnode("twitterpass"); ;
         }
 
         private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)

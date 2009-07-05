@@ -35,6 +35,10 @@
             this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
             this.numProcTransparency = new System.Windows.Forms.NumericUpDown();
             this.lbTextProc = new System.Windows.Forms.Label();
+            this.tbTwitterUser = new System.Windows.Forms.TextBox();
+            this.lbUsername = new System.Windows.Forms.Label();
+            this.tbTwitterPass = new System.Windows.Forms.TextBox();
+            this.lbPassword = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +49,7 @@
             this.cbxTransparecy.Checked = true;
             this.cbxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxTransparecy.Location = new System.Drawing.Point(12, 82);
+            this.cbxTransparecy.Location = new System.Drawing.Point(73, 58);
             this.cbxTransparecy.Name = "cbxTransparecy";
             this.cbxTransparecy.Size = new System.Drawing.Size(129, 18);
             this.cbxTransparecy.TabIndex = 1;
@@ -56,9 +60,9 @@
             // btnOK
             // 
             this.btnOK.BackColor = System.Drawing.Color.LightGray;
-            this.btnOK.Location = new System.Drawing.Point(197, 138);
+            this.btnOK.Location = new System.Drawing.Point(142, 162);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(101, 23);
+            this.btnOK.Size = new System.Drawing.Size(133, 23);
             this.btnOK.TabIndex = 2;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = false;
@@ -67,9 +71,9 @@
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
-            this.btnCancel.Location = new System.Drawing.Point(92, 138);
+            this.btnCancel.Location = new System.Drawing.Point(5, 162);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(99, 23);
+            this.btnCancel.Size = new System.Drawing.Size(131, 23);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -98,7 +102,7 @@
             "Blue",
             "Purple",
             "Red"});
-            this.cbxDefaultColor.Location = new System.Drawing.Point(165, 17);
+            this.cbxDefaultColor.Location = new System.Drawing.Point(142, 17);
             this.cbxDefaultColor.MaxDropDownItems = 5;
             this.cbxDefaultColor.Name = "cbxDefaultColor";
             this.cbxDefaultColor.Size = new System.Drawing.Size(133, 21);
@@ -113,7 +117,7 @@
             0,
             0,
             0});
-            this.numProcTransparency.Location = new System.Drawing.Point(231, 82);
+            this.numProcTransparency.Location = new System.Drawing.Point(208, 58);
             this.numProcTransparency.Maximum = new decimal(new int[] {
             95,
             0,
@@ -136,18 +140,58 @@
             // lbTextProc
             // 
             this.lbTextProc.AutoSize = true;
-            this.lbTextProc.Location = new System.Drawing.Point(283, 84);
+            this.lbTextProc.Location = new System.Drawing.Point(260, 63);
             this.lbTextProc.Name = "lbTextProc";
             this.lbTextProc.Size = new System.Drawing.Size(15, 13);
             this.lbTextProc.TabIndex = 7;
             this.lbTextProc.Text = "%";
+            // 
+            // tbTwitterUser
+            // 
+            this.tbTwitterUser.Location = new System.Drawing.Point(109, 94);
+            this.tbTwitterUser.MaxLength = 15;
+            this.tbTwitterUser.Name = "tbTwitterUser";
+            this.tbTwitterUser.Size = new System.Drawing.Size(166, 20);
+            this.tbTwitterUser.TabIndex = 8;
+            this.tbTwitterUser.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lbUsername
+            // 
+            this.lbUsername.AutoSize = true;
+            this.lbUsername.Location = new System.Drawing.Point(12, 97);
+            this.lbUsername.Name = "lbUsername";
+            this.lbUsername.Size = new System.Drawing.Size(87, 13);
+            this.lbUsername.TabIndex = 9;
+            this.lbUsername.Text = "twitter username:";
+            // 
+            // tbTwitterPass
+            // 
+            this.tbTwitterPass.Location = new System.Drawing.Point(109, 120);
+            this.tbTwitterPass.MaxLength = 30;
+            this.tbTwitterPass.Name = "tbTwitterPass";
+            this.tbTwitterPass.PasswordChar = 'X';
+            this.tbTwitterPass.Size = new System.Drawing.Size(166, 20);
+            this.tbTwitterPass.TabIndex = 10;
+            // 
+            // lbPassword
+            // 
+            this.lbPassword.AutoSize = true;
+            this.lbPassword.Location = new System.Drawing.Point(47, 120);
+            this.lbPassword.Name = "lbPassword";
+            this.lbPassword.Size = new System.Drawing.Size(55, 13);
+            this.lbPassword.TabIndex = 11;
+            this.lbPassword.Text = "password:";
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(308, 169);
+            this.ClientSize = new System.Drawing.Size(288, 197);
+            this.Controls.Add(this.lbPassword);
+            this.Controls.Add(this.tbTwitterPass);
+            this.Controls.Add(this.lbUsername);
+            this.Controls.Add(this.tbTwitterUser);
             this.Controls.Add(this.lbTextProc);
             this.Controls.Add(this.numProcTransparency);
             this.Controls.Add(this.cbxDefaultColor);
@@ -173,5 +217,9 @@
         private System.Windows.Forms.ComboBox cbxDefaultColor;
         private System.Windows.Forms.NumericUpDown numProcTransparency;
         private System.Windows.Forms.Label lbTextProc;
+        private System.Windows.Forms.TextBox tbTwitterUser;
+        private System.Windows.Forms.Label lbUsername;
+        private System.Windows.Forms.TextBox tbTwitterPass;
+        private System.Windows.Forms.Label lbPassword;
     }
 }

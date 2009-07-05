@@ -148,7 +148,8 @@ namespace SimplePlainNote
             try
             {
                 int newid = notes.Count + 1;
-                SaveNote(newid, title, text);
+                string notefilenm = SaveNote(newid, title, text);
+                if (notefilenm == "") { return; }
                 frmNote frmNote = new frmNote(newid, title, text, this);
                 notes.Add(frmNote);
                 frmNote.Show();
@@ -165,19 +166,19 @@ namespace SimplePlainNote
         /// <param name="id">number</param>
         /// <param name="title"></param>
         /// <param name="text"></param>
-        /// <returns>true is succeed</returns>
-        private void SaveNote(int id, string title, string text)
-        {                             
-                string notefile = id + ".xml";
-
-                xmlHandler getXmlSettings = new xmlHandler(true, "settings.xml");
-                string defaultcolor = getXmlSettings.getXMLnode("defaultcolor");
-
-                xmlHandler xmlnote = new xmlHandler(false, notefile);
-                if (xmlnote.WriteNote(defaultcolor, title, text) == false)
+        /// <returns>filepath of the created note.</returns>
+        private string SaveNote(int id, string title, string text)
+        {
+            xmlHandler getXmlSettings = new xmlHandler(true, "settings.xml");
+            string defaultcolor = getXmlSettings.getXMLnode("defaultcolor");
+            string notefile = id + ".xml";
+            xmlHandler xmlnote = new xmlHandler(false, notefile);
+            if (xmlnote.WriteNote(defaultcolor, title, text) == false)
                 {
                     MessageBox.Show("Error writing note.");
-                }
+                    return null;
+                }            
+            return notefile;
             
         }
 
@@ -253,11 +254,6 @@ namespace SimplePlainNote
         private void frmNewNote_Shown(object sender, EventArgs e)
         {
             CancelNote();
-            /*
-            tbTitle.Focus();
-            tbTitle.BackColor = Color.LightYellow;
-            rtbNote.BackColor = Color.Gold;
-             */
         }
 
         private void frmNewNote_Activated(object sender, EventArgs e)

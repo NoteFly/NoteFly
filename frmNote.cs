@@ -26,6 +26,7 @@ namespace SimplePlainNote
         private string title;
         private string note;
         private int notecolor = 0;
+        //private string notefilenm;
         private frmNewNote fcn;
 
         //private Point mouse_offset;
@@ -36,6 +37,7 @@ namespace SimplePlainNote
             this.title = title;
             this.fcn = fcn;
             this.note = note;
+            //this.notefilenm = notefilenm;
             InitializeComponent();            
             lblTitle.Text = title;
             rtbNote.Text = note;
@@ -245,6 +247,36 @@ namespace SimplePlainNote
                 this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                
             }
             this.Cursor = Cursors.Default;
+        }
+
+        private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((note != "") && (note.Length < 140))
+            {
+                xmlHandler xmlSettings = new xmlHandler(false, "settings.xml");
+
+                string twitteruser = xmlSettings.getXMLnode("twitteruser");
+                string twitterpass = xmlSettings.getXMLnode("twitterpass");
+
+                StringBuilder tweetnote = new StringBuilder(note, 139);
+                if (xmlSettings.UpdateAsXML(twitteruser, twitterpass, tweetnote.ToString()) != null)
+                {
+                    MessageBox.Show("Your note is Tweeted.");
+                }
+                else
+                {
+                    MessageBox.Show("Sending note to twitter failed.");
+                }
+            }
+            else if (note.Length >= 140)
+            {
+                MessageBox.Show("Note is more than the 140 chars limit.");
+                //todo   ask to public only beginning.
+            }
+            else
+            {
+                MessageBox.Show("Note is empty.");
+            }
         }
     }
 }
