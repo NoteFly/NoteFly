@@ -126,7 +126,7 @@ namespace SimplePlainNote
                 
                 
                 if (twitteruser.Length > 15) { throw new Exception("twitter username too long."); }
-                if (twitteruser.Length < 0) { throw new Exception("twitter username has negative length. how can that be?"); }
+                if (twitteruser.Length < 0) { throw new Exception("twitter username has negative length. How can that be?"); }
                 objXmlTextWriter.WriteStartElement("twitteruser");
                     objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
                 objXmlTextWriter.WriteEndElement();

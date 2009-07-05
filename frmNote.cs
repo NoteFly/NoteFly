@@ -253,29 +253,37 @@ namespace SimplePlainNote
         {
             if ((note != "") && (note.Length < 140))
             {
-                xmlHandler xmlSettings = new xmlHandler(false, "settings.xml");
-
-                string twitteruser = xmlSettings.getXMLnode("twitteruser");
-                string twitterpass = xmlSettings.getXMLnode("twitterpass");
-
-                StringBuilder tweetnote = new StringBuilder(note, 139);
-                if (xmlSettings.UpdateAsXML(twitteruser, twitterpass, tweetnote.ToString()) != null)
-                {
-                    MessageBox.Show("Your note is Tweeted.");
-                }
-                else
-                {
-                    MessageBox.Show("Sending note to twitter failed.");
-                }
+                tweetnote();
             }
             else if (note.Length >= 140)
             {
-                MessageBox.Show("Note is more than the 140 chars limit.");
-                //todo   ask to public only beginning.
+                //MessageBox.Show("Note is more than the 140 chars limit.");
+                DialogResult result;
+                result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part?", "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    tweetnote();
+                }
             }
             else
             {
                 MessageBox.Show("Note is empty.");
+            }
+        }
+
+        private void tweetnote()
+        {
+            xmlHandler xmlSettings = new xmlHandler(false, "settings.xml");
+            string twitteruser = xmlSettings.getXMLnode("twitteruser");
+            string twitterpass = xmlSettings.getXMLnode("twitterpass");
+
+            if (xmlSettings.UpdateAsXML(twitteruser, twitterpass, note.Substring(0, 140)) != null)
+            {
+                MessageBox.Show("Your note is Tweeted.");
+            }
+            else
+            {
+                MessageBox.Show("Sending note to twitter failed.");
             }
         }
     }
