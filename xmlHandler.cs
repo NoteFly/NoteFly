@@ -43,8 +43,8 @@ namespace SimplePlainNote
         #region properties
         private string source = null;
 
-        private string twitterClient = "SimplePlainNote";
-        private string twitterClientVersion = "0.5.0 alpha";
+        private string twitterClient = "spn";
+        private string twitterClientVersion = "0.5.0";
         private string twitterClientUrl = "http://code.google.com/p/simpleplainnote/";       
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace SimplePlainNote
         public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, string twitteruser, string twitterpass)
         {
             try
-            {                
+            {
                 objXmlTextWriter = new XmlTextWriter(appdatafolder + filenm, null);
                 objXmlTextWriter.Formatting = Formatting.Indented;
 
@@ -121,30 +121,37 @@ namespace SimplePlainNote
                 if (numcolor < 0) { throw new Exception("Impossible selection"); }
 
                 objXmlTextWriter.WriteStartElement("defaultcolor");
-                    objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
                 objXmlTextWriter.WriteEndElement();
-                
-                
+
+                objXmlTextWriter.WriteStartElement("twitter");
+
                 if (twitteruser.Length > 15) { throw new Exception("twitter username too long."); }
                 if (twitteruser.Length < 0) { throw new Exception("twitter username has negative length. How can that be?"); }
                 objXmlTextWriter.WriteStartElement("twitteruser");
-                    objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
+                objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
                 objXmlTextWriter.WriteEndElement();
 
-                if ((twitterpass.Length < 6) && (twitterpass!="")) { throw new Exception("twitter password too short."); }
-                if (twitterpass.Length > 30) { throw new Exception("twitter password too long."); }                
+                if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new Exception("twitter password too short."); }
+                if (twitterpass.Length > 30) { throw new Exception("twitter password too long."); }
                 objXmlTextWriter.WriteStartElement("twitterpass");
-                    objXmlTextWriter.WriteString(Convert.ToString(twitterpass));
+                objXmlTextWriter.WriteString(Convert.ToString(twitterpass));
+                objXmlTextWriter.WriteEndElement();
+
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteEndElement();
                 objXmlTextWriter.WriteEndDocument();
 
                 objXmlTextWriter.Flush();
-                objXmlTextWriter.Close();                
+                objXmlTextWriter.Close();
                 return true;
             }
-            catch (Exception)
+            catch (FileNotFoundException)
+            {
+                return false;
+            }
+            catch (XmlException)
             {
                 return false;
             }

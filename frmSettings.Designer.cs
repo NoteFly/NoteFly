@@ -39,6 +39,7 @@
             this.lbUsername = new System.Windows.Forms.Label();
             this.tbTwitterPass = new System.Windows.Forms.TextBox();
             this.lbPassword = new System.Windows.Forms.Label();
+            this.cbxRememberTwPass = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             this.cbxTransparecy.Checked = true;
             this.cbxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxTransparecy.Location = new System.Drawing.Point(73, 58);
+            this.cbxTransparecy.Location = new System.Drawing.Point(17, 12);
             this.cbxTransparecy.Name = "cbxTransparecy";
             this.cbxTransparecy.Size = new System.Drawing.Size(129, 18);
             this.cbxTransparecy.TabIndex = 1;
@@ -60,7 +61,7 @@
             // btnOK
             // 
             this.btnOK.BackColor = System.Drawing.Color.LightGray;
-            this.btnOK.Location = new System.Drawing.Point(142, 162);
+            this.btnOK.Location = new System.Drawing.Point(142, 180);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(133, 23);
             this.btnOK.TabIndex = 2;
@@ -71,7 +72,7 @@
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
-            this.btnCancel.Location = new System.Drawing.Point(5, 162);
+            this.btnCancel.Location = new System.Drawing.Point(5, 180);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(131, 23);
             this.btnCancel.TabIndex = 3;
@@ -82,7 +83,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 20);
+            this.label1.Location = new System.Drawing.Point(12, 41);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(119, 13);
             this.label1.TabIndex = 4;
@@ -102,10 +103,10 @@
             "Blue",
             "Purple",
             "Red"});
-            this.cbxDefaultColor.Location = new System.Drawing.Point(142, 17);
+            this.cbxDefaultColor.Location = new System.Drawing.Point(152, 36);
             this.cbxDefaultColor.MaxDropDownItems = 5;
             this.cbxDefaultColor.Name = "cbxDefaultColor";
-            this.cbxDefaultColor.Size = new System.Drawing.Size(133, 21);
+            this.cbxDefaultColor.Size = new System.Drawing.Size(123, 21);
             this.cbxDefaultColor.TabIndex = 5;
             // 
             // numProcTransparency
@@ -117,7 +118,7 @@
             0,
             0,
             0});
-            this.numProcTransparency.Location = new System.Drawing.Point(208, 58);
+            this.numProcTransparency.Location = new System.Drawing.Point(152, 10);
             this.numProcTransparency.Maximum = new decimal(new int[] {
             95,
             0,
@@ -140,7 +141,7 @@
             // lbTextProc
             // 
             this.lbTextProc.AutoSize = true;
-            this.lbTextProc.Location = new System.Drawing.Point(260, 63);
+            this.lbTextProc.Location = new System.Drawing.Point(204, 14);
             this.lbTextProc.Name = "lbTextProc";
             this.lbTextProc.Size = new System.Drawing.Size(15, 13);
             this.lbTextProc.TabIndex = 7;
@@ -148,7 +149,7 @@
             // 
             // tbTwitterUser
             // 
-            this.tbTwitterUser.Location = new System.Drawing.Point(109, 94);
+            this.tbTwitterUser.Location = new System.Drawing.Point(109, 86);
             this.tbTwitterUser.MaxLength = 15;
             this.tbTwitterUser.Name = "tbTwitterUser";
             this.tbTwitterUser.Size = new System.Drawing.Size(166, 20);
@@ -158,7 +159,7 @@
             // lbUsername
             // 
             this.lbUsername.AutoSize = true;
-            this.lbUsername.Location = new System.Drawing.Point(12, 97);
+            this.lbUsername.Location = new System.Drawing.Point(12, 89);
             this.lbUsername.Name = "lbUsername";
             this.lbUsername.Size = new System.Drawing.Size(87, 13);
             this.lbUsername.TabIndex = 9;
@@ -166,7 +167,8 @@
             // 
             // tbTwitterPass
             // 
-            this.tbTwitterPass.Location = new System.Drawing.Point(109, 120);
+            this.tbTwitterPass.Enabled = false;
+            this.tbTwitterPass.Location = new System.Drawing.Point(109, 131);
             this.tbTwitterPass.MaxLength = 30;
             this.tbTwitterPass.Name = "tbTwitterPass";
             this.tbTwitterPass.PasswordChar = 'X';
@@ -176,18 +178,30 @@
             // lbPassword
             // 
             this.lbPassword.AutoSize = true;
-            this.lbPassword.Location = new System.Drawing.Point(47, 120);
+            this.lbPassword.Location = new System.Drawing.Point(14, 134);
             this.lbPassword.Name = "lbPassword";
-            this.lbPassword.Size = new System.Drawing.Size(55, 13);
+            this.lbPassword.Size = new System.Drawing.Size(86, 13);
             this.lbPassword.TabIndex = 11;
-            this.lbPassword.Text = "password:";
+            this.lbPassword.Text = "twitter password:";
+            // 
+            // cbxRememberTwPass
+            // 
+            this.cbxRememberTwPass.AutoSize = true;
+            this.cbxRememberTwPass.Location = new System.Drawing.Point(15, 112);
+            this.cbxRememberTwPass.Name = "cbxRememberTwPass";
+            this.cbxRememberTwPass.Size = new System.Drawing.Size(242, 17);
+            this.cbxRememberTwPass.TabIndex = 12;
+            this.cbxRememberTwPass.Text = "Remember password (warning: not encrypted)";
+            this.cbxRememberTwPass.UseVisualStyleBackColor = true;
+            this.cbxRememberTwPass.CheckedChanged += new System.EventHandler(this.cbxRememberTwPass_CheckedChanged);
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(288, 197);
+            this.ClientSize = new System.Drawing.Size(288, 215);
+            this.Controls.Add(this.cbxRememberTwPass);
             this.Controls.Add(this.lbPassword);
             this.Controls.Add(this.tbTwitterPass);
             this.Controls.Add(this.lbUsername);
@@ -221,5 +235,6 @@
         private System.Windows.Forms.Label lbUsername;
         private System.Windows.Forms.TextBox tbTwitterPass;
         private System.Windows.Forms.Label lbPassword;
+        private System.Windows.Forms.CheckBox cbxRememberTwPass;
     }
 }

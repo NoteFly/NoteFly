@@ -6,8 +6,14 @@
         <xs:element name="transparecy" type="xs:boolean" />
         <xs:element name="transparecylevel" type="xs:int" />
         <xs:element name="defaultcolor" type="xs:int" />
-        <xs:element name="twitteruser" type="xs:string" />
-        <xs:element name="twitterpass" type="xs:string" />
+        <xs:element name="twitter">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="twitteruser" type="xs:string" />
+              <xs:element name="twitterpass" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -25,9 +25,9 @@ namespace SimplePlainNote
         private int id;
         private string title;
         private string note;
-        private int notecolor = 0;
-        //private string notefilenm;
+        private int notecolor = 0;        
         private frmNewNote fcn;
+        private string twpass;
 
         //private Point mouse_offset;
 
@@ -256,8 +256,7 @@ namespace SimplePlainNote
                 tweetnote();
             }
             else if (note.Length >= 140)
-            {
-                //MessageBox.Show("Note is more than the 140 chars limit.");
+            {                
                 DialogResult result;
                 result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part?", "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -276,15 +275,62 @@ namespace SimplePlainNote
             xmlHandler xmlSettings = new xmlHandler(false, "settings.xml");
             string twitteruser = xmlSettings.getXMLnode("twitteruser");
             string twitterpass = xmlSettings.getXMLnode("twitterpass");
-
-            if (xmlSettings.UpdateAsXML(twitteruser, twitterpass, note.Substring(0, 140)) != null)
+            if ((twpass != "") && (twpass != null))
             {
-                MessageBox.Show("Your note is Tweeted.");
+                twitterpass = twpass;
+            }
+
+            if (twitteruser == "") 
+            {
+                MessageBox.Show("Error: Twitter settings not set.");
+                frmSettings settings = new frmSettings();
+                settings.Show();
+                return;
+            }
+            else if ((twitterpass == null) || (twitterpass == ""))
+            {
+                Form askpass = new Form();
+                askpass.Height = 80;
+                askpass.Width = 250;
+                askpass.Text = "Twitter password needed";
+                askpass.Show();
+                TextBox tbpass = new TextBox();
+                tbpass.Location = new Point(10, 10);
+                tbpass.Width = 180;
+                tbpass.Name = "tbPassword";
+                Button btnOk = new Button();
+                btnOk.Location = new Point(190, 10);
+                btnOk.Text = "Ok";
+                btnOk.Width = 50;
+                btnOk.Name = "btnOk";
+                btnOk.Click += askpassok;
+                askpass.Controls.Add(tbpass);
+                askpass.Controls.Add(btnOk);
             }
             else
             {
-                MessageBox.Show("Sending note to twitter failed.");
+                if (xmlSettings.UpdateAsXML(twitteruser, twitterpass, note) != null)
+                {
+                    MessageBox.Show("Your note is Tweeted.");
+                }
+                else
+                {
+                    MessageBox.Show("Sending note to twitter failed.");
+                }
             }
+            
+        }
+
+        private void askpassok(object obj, EventArgs e)
+        {
+            Button btnobj = (Button)obj;
+            Form frmAskpass = btnobj.FindForm();
+
+            Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
+            twpass = passctr[0].Text;
+            MessageBox.Show(twpass);
+            frmAskpass.Close();
+            tweetnote();  
         }
     }
 }

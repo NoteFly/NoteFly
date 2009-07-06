@@ -82,7 +82,13 @@ namespace SimplePlainNote
 
         private string getTwitterpassword()
         {
-            return xmlsettings.getXMLnode("twitterpass"); ;
+            string twpass = xmlsettings.getXMLnode("twitterpass");
+            if (twpass == "")
+            {
+                cbxRememberTwPass.Checked = false;
+                tbTwitterPass.Enabled = false;                
+            }
+            return twpass;
         }
 
         private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
@@ -97,9 +103,22 @@ namespace SimplePlainNote
             }
         }
 
-
+        private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbxRememberTwPass.Checked == true)
+            {
+                tbTwitterPass.Enabled = true;
+            }
+            else
+            {
+                tbTwitterPass.Enabled = false;
+                tbTwitterPass.Text = "";
+            }
+        }
 
 
         #endregion
+
+
     }
 }
