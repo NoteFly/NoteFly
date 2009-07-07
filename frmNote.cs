@@ -251,22 +251,29 @@ namespace SimplePlainNote
 
         private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if ((note != "") && (note.Length < 140))
+            if (IsConnectedToInternet())
             {
-                tweetnote();
-            }
-            else if (note.Length >= 140)
-            {                
-                DialogResult result;
-                result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part?", "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
+                if ((note != "") && (note.Length < 140))
                 {
                     tweetnote();
+                }
+                else if (note.Length >= 140)
+                {
+                    DialogResult result;
+                    result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part?", "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        tweetnote();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Note is empty.");
                 }
             }
             else
             {
-                MessageBox.Show("Note is empty.");
+                MessageBox.Show("No network connection.");
             }
         }
 
@@ -331,6 +338,20 @@ namespace SimplePlainNote
             MessageBox.Show(twpass);
             frmAskpass.Close();
             tweetnote();  
+        }
+
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
+
+        /// <summary>
+        /// Check internet state.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsConnectedToInternet()
+        {
+            int Desc;
+            return InternetGetConnectedState(out Desc, 0);
         }
     }
 }

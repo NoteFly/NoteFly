@@ -6,6 +6,7 @@ using System.IO;
 using System.Web;
 using System.Net;
 using System.Windows.Forms;
+using System.Security.Permissions;
 
 namespace SimplePlainNote
 {
@@ -97,6 +98,10 @@ namespace SimplePlainNote
         {
             try
             {
+                if (CheckFile()) {
+                    return false;
+                }
+
                 objXmlTextWriter = new XmlTextWriter(appdatafolder + filenm, null);
                 objXmlTextWriter.Formatting = Formatting.Indented;
 
@@ -135,6 +140,7 @@ namespace SimplePlainNote
                 if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new Exception("twitter password too short."); }
                 if (twitterpass.Length > 30) { throw new Exception("twitter password too long."); }
                 objXmlTextWriter.WriteStartElement("twitterpass");
+                //encrypt it?
                 objXmlTextWriter.WriteString(Convert.ToString(twitterpass));
                 objXmlTextWriter.WriteEndElement();
 
@@ -145,9 +151,19 @@ namespace SimplePlainNote
 
                 objXmlTextWriter.Flush();
                 objXmlTextWriter.Close();
+
+                if (CheckFile())
+                {
+                    return false;
+                }
+
                 return true;
             }
             catch (FileNotFoundException)
+            {
+                return false;
+            }
+            catch (IOException)
             {
                 return false;
             }
@@ -205,6 +221,65 @@ namespace SimplePlainNote
                 return false;                
             }
         }
+
+        /// <summary>
+        /// Does some checks on the file
+        /// - Is the file empty?
+        /// - Is the file too large?
+        /// </summary>
+        /// <returns>false if no errors</returns>
+        private bool CheckFile()
+        {
+            if (File.Exists(appdatafolder + filenm) == true)
+            {
+                FileInfo checkfile = new FileInfo(appdatafolder + filenm);
+                if (checkfile.Length == 0)
+                {
+                    MessageBox.Show("File empty.");
+
+                    //create backup copy, just in case.
+                    string bakfile = appdatafolder + filenm + ".bak";
+                    int num = 1;
+                    while (File.Exists(bakfile) == true)
+                    {
+                        num++;
+                        if (num > 99) { return true; }
+                        bakfile = appdatafolder + filenm + ".bak" + num;
+                    }
+                    if (File.Exists(bakfile) == false)
+                    {
+                        try
+                        {
+                            checkfile.MoveTo(bakfile);
+                            return true;
+                        }
+                        catch (IOException)
+                        {
+                            MessageBox.Show("Failed making backup copy.");
+                            return true;
+                        }                        
+                    }
+                    return false;
+                }
+                else if (checkfile.Length > 32768)
+                {
+                    MessageBox.Show("File is unusual big. >32kb");
+                    return true;
+                }
+                //File looks okay.
+                else
+                {
+                    //MessageBox.Show("size: "+checkfile.Length.ToString()+" b");
+                    return false;
+                }
+            }
+            //File does not exist yet, so it okay.
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Get a xml node
         /// </summary>

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Runtime;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Xml;
@@ -296,6 +297,7 @@ namespace SimplePlainNote
                 if (tbTitle.Focused == true) { MessageBox.Show("Test1"); }
                 else if (rtbNote.Focused == true) { MessageBox.Show("Test2"); }                
             }
-        }
+        }        
+        
     }
 }
