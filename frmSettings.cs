@@ -39,6 +39,7 @@ namespace SimplePlainNote
             if (xmlsettings.WriteSettings(cbxTransparecy.Checked, 
                 numProcTransparency.Value,
                 cbxDefaultColor.SelectedIndex,
+                cbxSyntaxHighlight.Checked,
                 tbTwitterUser.Text,
                 tbTwitterPass.Text
                 )==false)
@@ -118,7 +119,5 @@ namespace SimplePlainNote
 
 
         #endregion
-
-
     }
 }

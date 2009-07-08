@@ -40,12 +40,6 @@ namespace SimplePlainNote
         {
             get { return this.notes; }
         }
-        /*
-        public String FormState
-        {
-            get { return this.WindowState; }
-        }
-         * */
 
         private void btnAddNote_Click(object sender, EventArgs e)
         {
@@ -71,7 +65,6 @@ namespace SimplePlainNote
                 }
                 CancelNote();
             }
-
         }
 
         private void editNote(int id)
@@ -85,35 +78,31 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Error code: 200 - "+exc.Message);                
             }
-            
+
         }
 
+        #region highlight controls
         private void tbTitle_Enter(object sender, EventArgs e)
-        {
-            if (tbTitle.Focused)
-            {
-                tbTitle.BackColor = Color.LightYellow;
-                rtbNote.BackColor = Color.Gold;
-            }
-        }
-
-        private void rtbNote_Enter(object sender, EventArgs e)
-        {
-            if (rtbNote.Focused)
-            {
-                rtbNote.BackColor = Color.LightYellow;
-                tbTitle.BackColor = Color.Gold;
-            }
-        }
-
+        {            
+            tbTitle.BackColor = Color.LightYellow;
+        }                
         private void tbTitle_Leave(object sender, EventArgs e)
         {
             tbTitle.BackColor = Color.Gold;
         }
+        private void rtbNote_Enter(object sender, EventArgs e)
+        {
+            rtbNote.BackColor = Color.LightYellow;
+        }
+        private void rtbNote_Leave(object sender, EventArgs e)
+        {
+            rtbNote.BackColor = Color.Gold;
+        }
+        #endregion
 
         private void Trayicon_Click(object sender, EventArgs e)
         {
-            //todo
+            //todo, make this configurable what the action is.
         }
 
         private void createANewNoteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -144,20 +133,29 @@ namespace SimplePlainNote
             rtbNote.BackColor = Color.Gold;
         }
 
+        /// <summary>
+        /// Create a new note interface.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="text"></param>
         public void CreateNote(string title, string text)
         {
             try
             {
                 int newid = notes.Count + 1;
                 string notefilenm = SaveNote(newid, title, text);
-                if (notefilenm == "") { return; }
-                frmNote frmNote = new frmNote(newid, title, text, this);
+                if ((notefilenm == "") || (notefilenm == null)) { return; }
+                frmNote frmNote = new frmNote(newid, title, text);
                 notes.Add(frmNote);
                 frmNote.Show();
             }
+            catch (IndexOutOfRangeException indexexc)
+            {
+                MessageBox.Show("Fout: " + indexexc.Message);
+            }
             catch (Exception exc)
             {
-                MessageBox.Show("Error code 201:\r\n" + exc.Message);
+                MessageBox.Show("Fout: " + exc.Message);
             }
         }
 
@@ -183,6 +181,10 @@ namespace SimplePlainNote
             
         }
 
+        /// <summary>
+        /// Verwijder een note uit de lijst met noten.
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteNote(int id)
         {
             int m = 0;
@@ -198,11 +200,18 @@ namespace SimplePlainNote
             /*
             for (int n=m+1; n <= notes.Count; n++)
             {
-                if (n>=1) { notes[n].ID = n - 1; }
+                if (n>=1)
+                {
+                    notes[n].ID = n - 1;
+                }
             }
-             */
+            */
         }
 
+        /// <summary>
+        /// Edit a note
+        /// </summary>
+        /// <param name="noteID">id number</param>
         public void EditNote(int noteID)
         {
             int notePos = noteID - 1;
@@ -230,7 +239,7 @@ namespace SimplePlainNote
             }
             allnotes += "---------------------\r\nNumber notes: " + notes.Count;
             MessageBox.Show(allnotes);
-             */
+            */
         }
 
         private void tbTitle_KeyDown(object sender, KeyEventArgs e)
@@ -297,7 +306,16 @@ namespace SimplePlainNote
                 if (tbTitle.Focused == true) { MessageBox.Show("Test1"); }
                 else if (rtbNote.Focused == true) { MessageBox.Show("Test2"); }                
             }
-        }        
-        
+        }
+
+        private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Cursor = Cursors.SizeNWSE;
+                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
+            }
+            this.Cursor = Cursors.Default;
+        }
     }
 }

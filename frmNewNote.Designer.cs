@@ -43,13 +43,19 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddNote = new System.Windows.Forms.Button();
             this.pnlNoteEdit = new System.Windows.Forms.Panel();
+            this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.ContextMenuTrayicon.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.pnlNoteEdit.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             this.SuspendLayout();
             // 
             // rtbNote
             // 
+            this.rtbNote.AcceptsTab = true;
+            this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbNote.AutoWordSelection = true;
             this.rtbNote.BackColor = System.Drawing.Color.Gold;
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -61,19 +67,19 @@
             this.rtbNote.MaxLength = 999999;
             this.rtbNote.Name = "rtbNote";
             this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbNote.Size = new System.Drawing.Size(275, 203);
+            this.rtbNote.Size = new System.Drawing.Size(271, 196);
             this.rtbNote.TabIndex = 1;
             this.rtbNote.Text = "";
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
+            this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
             this.rtbNote.TextChanged += new System.EventHandler(this.rtbNote_Enter);
             // 
             // tbTitle
             // 
             this.tbTitle.AcceptsTab = true;
             this.tbTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
-            this.tbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbTitle.AutoCompleteCustomSource.AddRange(new string[] {
             "TODO: ",
             "FIX: ",
@@ -177,7 +183,7 @@
             // btnCancel
             // 
             this.btnCancel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCancel.BackgroundImage = global::SimplePlainNote.Properties.Resources.cancel;
             this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnCancel.CausesValidation = false;
@@ -197,7 +203,7 @@
             // btnAddNote
             // 
             this.btnAddNote.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnAddNote.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnAddNote.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnAddNote.BackgroundImage = global::SimplePlainNote.Properties.Resources.accept;
             this.btnAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnAddNote.CausesValidation = false;
@@ -217,13 +223,31 @@
             // 
             // pnlNoteEdit
             // 
+            this.pnlNoteEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlNoteEdit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlNoteEdit.Controls.Add(this.rtbNote);
-            this.pnlNoteEdit.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlNoteEdit.Controls.Add(this.pbResizeGrip);
             this.pnlNoteEdit.Location = new System.Drawing.Point(0, 38);
             this.pnlNoteEdit.Name = "pnlNoteEdit";
             this.pnlNoteEdit.Size = new System.Drawing.Size(284, 211);
             this.pnlNoteEdit.TabIndex = 5;
+            // 
+            // pbResizeGrip
+            // 
+            this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
+            this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbResizeGrip.Image = global::SimplePlainNote.Properties.Resources.hoekje;
+            this.pbResizeGrip.Location = new System.Drawing.Point(266, 193);
+            this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
+            this.pbResizeGrip.Name = "pbResizeGrip";
+            this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
+            this.pbResizeGrip.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbResizeGrip.TabIndex = 6;
+            this.pbResizeGrip.TabStop = false;
+            this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
             // frmNewNote
             // 
@@ -255,13 +279,14 @@
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
             this.pnlNoteEdit.ResumeLayout(false);
+            this.pnlNoteEdit.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox rtbNote;
         private System.Windows.Forms.TextBox tbTitle;
         private System.Windows.Forms.Label lbTextTitle;
         private System.Windows.Forms.Button btnAddNote;
@@ -274,6 +299,8 @@
         private System.Windows.Forms.ToolStripMenuItem listToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createANewNoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox rtbNote;
+        private System.Windows.Forms.PictureBox pbResizeGrip;
     }
 }
 

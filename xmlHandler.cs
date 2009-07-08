@@ -6,7 +6,6 @@ using System.IO;
 using System.Web;
 using System.Net;
 using System.Windows.Forms;
-using System.Security.Permissions;
 
 namespace SimplePlainNote
 {
@@ -18,7 +17,8 @@ namespace SimplePlainNote
         private XmlTextReader objXmlTextReader;
         private XmlTextWriter objXmlTextWriter;
 
-        protected const string TwitterBaseUrlFormat = "http://twitter.com/{0}/{1}.{2}";
+        protected const string TwitterBaseUrlFormat = "http://twitter.com/{0}/{1}.{2}";                
+
         #endregion
 
         #region constructor
@@ -32,7 +32,7 @@ namespace SimplePlainNote
             {
                 if (File.Exists(appdatafolder+filenm) == false)
                 {
-                    WriteSettings(true, 95, 0, "", "");
+                    WriteSettings(true, 95, 0, true, "", "");
                 }                
                 //validate setting xmlfile.
                 //clsSValidator objclsSValidator = new clsSValidator(settingsfile, Application.StartupPath + @"\settings.xsd");
@@ -94,7 +94,7 @@ namespace SimplePlainNote
         /// <param name="transparecylevel"></param>
         /// <param name="numcolor"></param>
         /// <returns>true if succeed.</returns>
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, string twitteruser, string twitterpass)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, bool syntaxhighlight, string twitteruser, string twitterpass)
         {
             try
             {
@@ -128,6 +128,19 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteStartElement("defaultcolor");
                 objXmlTextWriter.WriteString(Convert.ToString(numcolor));
                 objXmlTextWriter.WriteEndElement();
+
+                if (syntaxhighlight == true)
+                {
+                    objXmlTextWriter.WriteStartElement("syntaxhighlight");
+                    objXmlTextWriter.WriteString("1");
+                    objXmlTextWriter.WriteEndElement();
+                }
+                else
+                {
+                    objXmlTextWriter.WriteStartElement("syntaxhighlight");
+                    objXmlTextWriter.WriteString("0");
+                    objXmlTextWriter.WriteEndElement();
+                }
 
                 objXmlTextWriter.WriteStartElement("twitter");
 
@@ -373,7 +386,7 @@ namespace SimplePlainNote
 
         public string Update(string userName, string password, string status)
         {        
-            //Important" statuses, update and xml have to be lower case.
+            //Important: "statuses", "update" and "xml" have to be lower case.
             string url = string.Format(TwitterBaseUrlFormat, "statuses", "update", "xml");
             string data = string.Format("status={0}", HttpUtility.UrlEncode(status));
 
@@ -397,7 +410,7 @@ namespace SimplePlainNote
             {
                 request.Credentials = new NetworkCredential(userName, password);
                 request.ContentType = "application/x-www-form-urlencoded";
-                request.Method = "POST";                
+                request.Method = "POST";
                 if (!string.IsNullOrEmpty(twitterClient))
                 {
                     request.Headers.Add("X-Twitter-Client", twitterClient);
@@ -431,14 +444,18 @@ namespace SimplePlainNote
                             }
                         }
                     }
+                    catch (TimeoutException)
+                    {
+                        MessageBox.Show("Error: connection timeout. ");
+                    }
                     catch (Exception exc)
                     {
-                        MessageBox.Show("Error: "+exc.Message);                        
+                        MessageBox.Show("Error: " + exc.Message);
                     }
 
                 }
             }
-            MessageBox.Show("Username and/or password not filled in.");
+            MessageBox.Show("Twitter username or/and password not filled in.");
             return null;
         }       
         #endregion

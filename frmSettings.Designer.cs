@@ -40,6 +40,7 @@
             this.tbTwitterPass = new System.Windows.Forms.TextBox();
             this.lbPassword = new System.Windows.Forms.Label();
             this.cbxRememberTwPass = new System.Windows.Forms.CheckBox();
+            this.cbxSyntaxHighlight = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.SuspendLayout();
             // 
@@ -149,7 +150,7 @@
             // 
             // tbTwitterUser
             // 
-            this.tbTwitterUser.Location = new System.Drawing.Point(109, 86);
+            this.tbTwitterUser.Location = new System.Drawing.Point(109, 98);
             this.tbTwitterUser.MaxLength = 15;
             this.tbTwitterUser.Name = "tbTwitterUser";
             this.tbTwitterUser.Size = new System.Drawing.Size(166, 20);
@@ -159,7 +160,7 @@
             // lbUsername
             // 
             this.lbUsername.AutoSize = true;
-            this.lbUsername.Location = new System.Drawing.Point(12, 89);
+            this.lbUsername.Location = new System.Drawing.Point(12, 101);
             this.lbUsername.Name = "lbUsername";
             this.lbUsername.Size = new System.Drawing.Size(87, 13);
             this.lbUsername.TabIndex = 9;
@@ -168,7 +169,7 @@
             // tbTwitterPass
             // 
             this.tbTwitterPass.Enabled = false;
-            this.tbTwitterPass.Location = new System.Drawing.Point(109, 131);
+            this.tbTwitterPass.Location = new System.Drawing.Point(109, 143);
             this.tbTwitterPass.MaxLength = 30;
             this.tbTwitterPass.Name = "tbTwitterPass";
             this.tbTwitterPass.PasswordChar = 'X';
@@ -178,7 +179,7 @@
             // lbPassword
             // 
             this.lbPassword.AutoSize = true;
-            this.lbPassword.Location = new System.Drawing.Point(14, 134);
+            this.lbPassword.Location = new System.Drawing.Point(14, 146);
             this.lbPassword.Name = "lbPassword";
             this.lbPassword.Size = new System.Drawing.Size(86, 13);
             this.lbPassword.TabIndex = 11;
@@ -187,7 +188,7 @@
             // cbxRememberTwPass
             // 
             this.cbxRememberTwPass.AutoSize = true;
-            this.cbxRememberTwPass.Location = new System.Drawing.Point(15, 112);
+            this.cbxRememberTwPass.Location = new System.Drawing.Point(15, 124);
             this.cbxRememberTwPass.Name = "cbxRememberTwPass";
             this.cbxRememberTwPass.Size = new System.Drawing.Size(242, 17);
             this.cbxRememberTwPass.TabIndex = 12;
@@ -195,12 +196,25 @@
             this.cbxRememberTwPass.UseVisualStyleBackColor = true;
             this.cbxRememberTwPass.CheckedChanged += new System.EventHandler(this.cbxRememberTwPass_CheckedChanged);
             // 
+            // cbxSyntaxHighlight
+            // 
+            this.cbxSyntaxHighlight.AutoSize = true;
+            this.cbxSyntaxHighlight.Checked = true;
+            this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(17, 64);
+            this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
+            this.cbxSyntaxHighlight.Size = new System.Drawing.Size(94, 17);
+            this.cbxSyntaxHighlight.TabIndex = 13;
+            this.cbxSyntaxHighlight.Text = "Highlight code";
+            this.cbxSyntaxHighlight.UseVisualStyleBackColor = true;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(288, 215);
+            this.Controls.Add(this.cbxSyntaxHighlight);
             this.Controls.Add(this.cbxRememberTwPass);
             this.Controls.Add(this.lbPassword);
             this.Controls.Add(this.tbTwitterPass);
@@ -236,5 +250,6 @@
         private System.Windows.Forms.TextBox tbTwitterPass;
         private System.Windows.Forms.Label lbPassword;
         private System.Windows.Forms.CheckBox cbxRememberTwPass;
+        private System.Windows.Forms.CheckBox cbxSyntaxHighlight;
     }
 }

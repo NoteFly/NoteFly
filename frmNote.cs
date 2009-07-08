@@ -6,12 +6,18 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace SimplePlainNote
 {
     public partial class frmNote : Form
-    {
-        private bool transparency = true;
+    {        
+        private int id;
+        private string title;
+        private string note;
+        private int notecolor = 0;
+        private string twpass;
+        private bool transparency = false;
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -19,46 +25,35 @@ namespace SimplePlainNote
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, 
                          int Msg, int wParam, int lParam);
+
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-        
-        private int id;
-        private string title;
-        private string note;
-        private int notecolor = 0;        
-        private frmNewNote fcn;
-        private string twpass;
 
-        //private Point mouse_offset;
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
 
-        public frmNote(int id, string title, string note, frmNewNote fcn)
+        public Regex syntaxKeywords = new Regex("abstract|as|base|bool|break|byte|case|catch|char|checked|"+
+            "class|const|continue|decimal|default|delegate|do|double|else|enum|event|explicit|extern|"+
+            "false|finally|fixed|float|for|foreach|goto|if|implicit|in|int|interface|internal|is|lock|"+
+            "long|namespace|new|null|object|operator|out|override|params|private|protected|public|"+
+            "readonly|ref|return|sbyte|sealed|short|sizeof|stackalloc|static|string|struct|switch|this|"+
+            "throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|volatile|void|while|");               
+
+        public frmNote(int id, string title, string note)
         {            
             this.id = id;
-            this.title = title;
-            this.fcn = fcn;
+            this.title = title;            
             this.note = note;
-            //this.notefilenm = notefilenm;
+            this.transparency = getTransparency();
             InitializeComponent();            
+            
             lblTitle.Text = title;
             rtbNote.Text = note;
+            
             DrawDefaultColor();
         }
 
-        private void DrawDefaultColor()
-        {
-            try
-            {
-                //String inifile = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\settings.ini";
-                //notecolor = Convert.ToInt32(frmSettings.GetIniValue("main", "defaultcolor", inifile));
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("Error code: 100 - "+exc.Message);             
-            }
-
-            paintColorNote();
-        }
-
+        #region properties
         public int ID
         {
             get { return id; }
@@ -88,24 +83,45 @@ namespace SimplePlainNote
                 rtbNote.Text = note;
             }
         }
+        #endregion
+
+
+        private bool getTransparency()
+        {
+            xmlHandler xmlSettings = new xmlHandler(true, "settings.xml");
+            if (xmlSettings.getXMLnode("transparecy") == "1")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }            
+        }
+
+        private void DrawDefaultColor()
+        {
+            paintColorNote();
+        }
 
         private void frmDeleteNote_Click(object sender, EventArgs e)
         {
             transparency = false;
-            fcn.DeleteNote(this.id);            
+            //fcn.DeleteNote(this.id);            
             this.Close();
             
         }
 
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
-            pnlHead.BackColor = getObjColor(true);
+            skin getskin = new skin(notecolor);
+            pnlHead.BackColor = getskin.getObjColor(true);
 
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                pnlHead.BackColor = getObjColor(false);
+                pnlHead.BackColor = getskin.getObjColor(false);
             }
 
         }
@@ -159,10 +175,11 @@ namespace SimplePlainNote
             paintColorNote();
         }
 
+
         private void paintColorNote()
         {
-            Color normalcolor = getObjColor(false);
-            //Color highlightcolor = getObjColor(true);
+            skin getskin = new skin(notecolor);
+            Color normalcolor = getskin.getObjColor(false);            
 
             this.BackColor = normalcolor;
             this.pnlHead.BackColor = normalcolor;
@@ -170,35 +187,7 @@ namespace SimplePlainNote
             this.rtbNote.BackColor = normalcolor;
         }
 
-        private Color getObjColor(bool selected)
-        {
-            switch (this.notecolor)
-            {
-                case 0:
-                    if (selected) return Color.Orange;
-                    else return Color.Gold;
-                case 1:
-                    if (selected) return Color.DarkOrange;
-                    else return Color.Orange;
-                case 2:
-                    if (selected) return Color.Gray;
-                    else return Color.White;
-                case 3:
-                    if (selected) return Color.Green;
-                    else return Color.LightGreen;
-                case 4:
-                    if (selected) return Color.Blue;
-                    else return Color.CornflowerBlue;
-                case 5:
-                    if (selected) return Color.Purple;
-                    else return Color.Magenta;
-                case 6:
-                    if (selected) return Color.DarkRed;
-                    else return Color.Red;
-                default:
-                    return Color.Gold;
-            }            
-        }
+
 
         private void updateMenuNoteColor(object sender, EventArgs e)
         {
@@ -235,8 +224,10 @@ namespace SimplePlainNote
 
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {                                                            
-            fcn.WindowState = FormWindowState.Normal;
-            fcn.EditNote(ID);            
+            //fcn.WindowState = FormWindowState.Normal;
+            //fcn.EditNote(ID);            
+            base.WindowState = FormWindowState.Normal;
+            //base.EditNote(ID);
         }
 
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
@@ -287,11 +278,9 @@ namespace SimplePlainNote
                 twitterpass = twpass;
             }
 
-            if (twitteruser == "") 
+            if ((twitteruser == "") || (twitteruser == null))
             {
                 MessageBox.Show("Error: Twitter settings not set.");
-                frmSettings settings = new frmSettings();
-                settings.Show();
                 return;
             }
             else if ((twitterpass == null) || (twitterpass == ""))
@@ -340,10 +329,6 @@ namespace SimplePlainNote
             tweetnote();  
         }
 
-
-        [DllImport("wininet.dll")]
-        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
-
         /// <summary>
         /// Check internet state.
         /// </summary>
@@ -353,5 +338,57 @@ namespace SimplePlainNote
             int Desc;
             return InternetGetConnectedState(out Desc, 0);
         }
+
+        private void frmNote_Shown(object sender, EventArgs e)
+        {
+
+            xmlHandler xmlSettings = new xmlHandler(false, "settings.xml");
+
+            if (xmlSettings.getXMLnode("syntaxhighlight") == "1")
+            {
+                int selPos = rtbNote.SelectionStart;                
+                foreach (Match keyWordMatch in syntaxKeywords.Matches(rtbNote.Text))
+                {
+                    rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
+                    rtbNote.SelectionColor = Color.Blue;
+                    rtbNote.SelectionStart = selPos;
+                    rtbNote.SelectionColor = Color.Black;
+                }
+            }
+
+            
+            if (xmlSettings.getXMLnode("twitteruser") == "")
+            {
+                TwitterToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                TwitterToolStripMenuItem.Enabled = true;
+            }
+
+        }
+
+        private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (OnTopToolStripMenuItem.Checked == true)
+            {
+                this.TopMost = true;
+            }
+            else
+            {
+                this.TopMost = false;
+            }
+        }
+
+        private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(note);                
+        }
+
+        private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(title);
+        }
+
     }
 }

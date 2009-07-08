@@ -120,6 +120,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="skin.cs" />
     <Compile Include="xmlHandler.cs" />
   </ItemGroup>
   <ItemGroup>
