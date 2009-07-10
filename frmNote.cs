@@ -18,6 +18,10 @@ namespace SimplePlainNote
         private int notecolor = 0;
         private string twpass;
         private bool transparency = false;
+        private bool notelock = false;
+        private bool notevisable = true;
+        private int locX;
+        private int locY;
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -51,6 +55,7 @@ namespace SimplePlainNote
             rtbNote.Text = note;
             
             DrawDefaultColor();
+            //SetPosNote();
         }
 
         #region properties
@@ -83,6 +88,17 @@ namespace SimplePlainNote
                 rtbNote.Text = note;
             }
         }
+        public bool NoteVisible
+        {
+            get
+            {
+                return this.notevisable; 
+            }
+            set
+            {
+                notevisable = value;                
+            }
+        }
         #endregion
 
 
@@ -101,15 +117,17 @@ namespace SimplePlainNote
 
         private void DrawDefaultColor()
         {
+            xmlHandler getSettings = new xmlHandler(true, "settings.xml");
+            notecolor = getSettings.getXMLnodeAsInt("defaultcolor");
             paintColorNote();
         }
 
         private void frmDeleteNote_Click(object sender, EventArgs e)
         {
             transparency = false;
+            this.notevisable = false;
             //fcn.DeleteNote(this.id);            
-            this.Close();
-            
+            this.Close();            
         }
 
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
@@ -123,7 +141,6 @@ namespace SimplePlainNote
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 pnlHead.BackColor = getskin.getObjColor(false);
             }
-
         }
 
         /// <summary>
@@ -234,8 +251,11 @@ namespace SimplePlainNote
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.Cursor = Cursors.SizeNWSE;
-                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                
+                if (!notelock)
+                {
+                    this.Cursor = Cursors.SizeNWSE;
+                    this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
+                }
             }
             this.Cursor = Cursors.Default;
         }
@@ -344,7 +364,7 @@ namespace SimplePlainNote
 
             xmlHandler xmlSettings = new xmlHandler(false, "settings.xml");
 
-            if (xmlSettings.getXMLnode("syntaxhighlight") == "1")
+            if (xmlSettings.getXMLnodeAsInt("syntaxhighlight") == 1)
             {
                 int selPos = rtbNote.SelectionStart;                
                 foreach (Match keyWordMatch in syntaxKeywords.Matches(rtbNote.Text))
@@ -388,6 +408,33 @@ namespace SimplePlainNote
         private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(title);
+        }
+
+        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!notelock)
+            {
+                notelock = true;
+                locknoteToolStripMenuItem.Text = "lock note (click again to unlock)";
+                this.menuNoteColors.Enabled = false;
+                this.editTToolStripMenuItem.Enabled = false;
+                this.OnTopToolStripMenuItem.Enabled = false;                
+            }
+            else
+            {
+                notelock = false;
+                locknoteToolStripMenuItem.Text = "lock note";
+                this.menuNoteColors.Enabled = true;
+                this.editTToolStripMenuItem.Enabled = true;
+                this.OnTopToolStripMenuItem.Enabled = true;
+            }
+        }
+
+        private void SetPosNote()
+        {
+            //xmlHandler setNote = new xmlHandler(false, id + ".xml");
+            //setNote.WriteNote(notecolor, title, ?);
+            throw new NotImplementedException();
         }
 
     }

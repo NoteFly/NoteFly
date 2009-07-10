@@ -273,8 +273,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Shown += new System.EventHandler(this.frmNewNote_Shown);
-            this.Activated += new System.EventHandler(this.frmNewNote_Activated);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmNewNote_KeyDown);
+            this.Activated += new System.EventHandler(this.frmNewNote_Activated);            
             this.ContextMenuTrayicon.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();

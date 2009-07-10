@@ -32,7 +32,7 @@ namespace SimplePlainNote
             {
                 if (File.Exists(appdatafolder+filenm) == false)
                 {
-                    WriteSettings(true, 95, 0, true, "", "");
+                    WriteSettings(true, 95, 0, appdatafolder, true, "", "");
                 }                
                 //validate setting xmlfile.
                 //clsSValidator objclsSValidator = new clsSValidator(settingsfile, Application.StartupPath + @"\settings.xsd");
@@ -42,6 +42,12 @@ namespace SimplePlainNote
         #endregion
 
         #region properties
+        public string AppDataFolder
+        {
+            get { return this.appdatafolder; }            
+        }
+
+
         private string source = null;
 
         private string twitterClient = "spn";
@@ -94,7 +100,7 @@ namespace SimplePlainNote
         /// <param name="transparecylevel"></param>
         /// <param name="numcolor"></param>
         /// <returns>true if succeed.</returns>
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, bool syntaxhighlight, string twitteruser, string twitterpass)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, string notesavepath, bool syntaxhighlight, string twitteruser, string twitterpass)
         {
             try
             {
@@ -128,6 +134,15 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteStartElement("defaultcolor");
                 objXmlTextWriter.WriteString(Convert.ToString(numcolor));
                 objXmlTextWriter.WriteEndElement();
+
+                if (Directory.Exists(notesavepath))
+                {
+                    objXmlTextWriter.WriteStartElement("notesavepath");
+                    objXmlTextWriter.WriteString(notesavepath);
+                    objXmlTextWriter.WriteEndElement();
+                }
+                else { throw new Exception("dir not exist"); }
+
 
                 if (syntaxhighlight == true)
                 {

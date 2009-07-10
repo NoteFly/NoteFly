@@ -18,23 +18,23 @@ namespace SimplePlainNote
     public partial class frmNewNote : Form
     {
         private bool transparency = true;
-        private bool editmode = false;
+        private bool editmode = false;        
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
-        
+            
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
                          int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-        
+    
         private List<frmNote> notes;
 
         public frmNewNote()
         {
             InitializeComponent();
-            notes = new List<frmNote>();
+            notes = new List<frmNote>();                                    
         }
         public List<frmNote> GetNotes
         {
@@ -43,14 +43,15 @@ namespace SimplePlainNote
 
         private void btnAddNote_Click(object sender, EventArgs e)
         {
+            skin Skin = getSkin();
             if (tbTitle.Text == "")
             {
-                tbTitle.BackColor = Color.Red;
+                tbTitle.BackColor = Skin.getObjColor(false, false, true); //Color.Red;
                 tbTitle.Text = DateTime.Now.ToString();
             }
             else if (rtbNote.Text == "")
             {
-                rtbNote.BackColor = Color.Red;             
+                rtbNote.BackColor = Skin.getObjColor(false, false, true); //Color.Red;             
                 rtbNote.Text = "Please type any text.";
             }
             else
@@ -83,22 +84,35 @@ namespace SimplePlainNote
 
         #region highlight controls
         private void tbTitle_Enter(object sender, EventArgs e)
-        {            
-            tbTitle.BackColor = Color.LightYellow;
+        {
+            skin Skin = getSkin();
+            tbTitle.BackColor = Skin.getObjColor(false, true, false);
         }                
         private void tbTitle_Leave(object sender, EventArgs e)
         {
-            tbTitle.BackColor = Color.Gold;
+            skin Skin = getSkin();
+            tbTitle.BackColor = Skin.getObjColor(false);
         }
         private void rtbNote_Enter(object sender, EventArgs e)
         {
-            rtbNote.BackColor = Color.LightYellow;
+            skin Skin = getSkin();
+            rtbNote.BackColor = Skin.getObjColor(false, true, false);
         }
         private void rtbNote_Leave(object sender, EventArgs e)
         {
-            rtbNote.BackColor = Color.Gold;
+            skin Skin = getSkin();
+            rtbNote.BackColor = Skin.getObjColor(false);
         }
         #endregion
+
+        private skin getSkin()
+        {
+            int numcolor = 0;
+            xmlHandler getSettings = new xmlHandler(true, "settings.xml");
+            numcolor = Convert.ToInt32(getSettings.getXMLnode("defaultcolor"));
+            skin getSkin = new skin(numcolor);
+            return getSkin;
+        }
 
         private void Trayicon_Click(object sender, EventArgs e)
         {
@@ -109,6 +123,8 @@ namespace SimplePlainNote
         {
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
+            skin Skin = getSkin();
+            this.BackColor = Skin.getObjColor(false);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -122,15 +138,21 @@ namespace SimplePlainNote
             CancelNote();
         }
 
+        /// <summary>
+        /// Redraw newnote.
+        /// </summary>
         private void CancelNote()
-        {
+        {            
             this.WindowState = FormWindowState.Minimized;
             this.ShowInTaskbar = false;
             tbTitle.Text = "";
             rtbNote.Text = "";
-            tbTitle.Focus();            
-            tbTitle.BackColor = Color.LightYellow;
-            rtbNote.BackColor = Color.Gold;
+            tbTitle.Focus();
+
+            skin Skin = getSkin();
+            Color normalcolor = Skin.getObjColor(false);
+            this.BackColor = normalcolor;
+            pnlHeadNewNote.BackColor = normalcolor;            
         }
 
         /// <summary>
@@ -252,18 +274,20 @@ namespace SimplePlainNote
 
         private void pnlHeadNewNote_MouseDown(object sender, MouseEventArgs e)
         {
-            pnlHeadNewNote.BackColor = Color.Orange;
+            skin Skin = getSkin();
+            pnlHeadNewNote.BackColor = Skin.getObjColor(true); 
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                pnlHeadNewNote.BackColor = Color.Gold;
+                pnlHeadNewNote.BackColor = Skin.getObjColor(false);
             }
         }
 
         private void frmNewNote_Shown(object sender, EventArgs e)
         {
-            CancelNote();
+            //redraw
+            CancelNote();    
         }
 
         private void frmNewNote_Activated(object sender, EventArgs e)
@@ -272,7 +296,7 @@ namespace SimplePlainNote
             {
                 this.Opacity = 1.0;
                 this.Refresh();
-            }
+            }            
         }
 
         private void frmNewNote_Deactivate(object sender, EventArgs e)
@@ -296,15 +320,6 @@ namespace SimplePlainNote
             if (result == DialogResult.Yes)
             {
                 System.Diagnostics.Process.Start(e.LinkText);
-            }
-        }
-
-        private void frmNewNote_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Tab)
-            {
-                if (tbTitle.Focused == true) { MessageBox.Show("Test1"); }
-                else if (rtbNote.Focused == true) { MessageBox.Show("Test2"); }                
             }
         }
 

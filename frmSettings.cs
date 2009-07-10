@@ -28,17 +28,25 @@ namespace SimplePlainNote
             cbxTransparecy.Checked = getTransparecy();
             numProcTransparency.Value = getTransparecylevel();
             cbxDefaultColor.SelectedIndex = getDefaultColor();
+            tbNotesSavePath.Text = getNotesSavePath();
             tbTwitterUser.Text = getTwitterusername();
-            tbTwitterPass.Text = getTwitterpassword();
+            tbTwitterPass.Text = getTwitterpassword();            
         }
         #endregion
 
         #region methoden
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (!Directory.Exists(tbNotesSavePath.Text))
+            {
+                MessageBox.Show("Ongeldige map opgeven.");
+                return;
+            }
+            
             if (xmlsettings.WriteSettings(cbxTransparecy.Checked, 
                 numProcTransparency.Value,
                 cbxDefaultColor.SelectedIndex,
+                tbNotesSavePath.Text,
                 cbxSyntaxHighlight.Checked,
                 tbTwitterUser.Text,
                 tbTwitterPass.Text
@@ -91,6 +99,12 @@ namespace SimplePlainNote
             }
             return twpass;
         }
+
+        private string getNotesSavePath()
+        {
+            return xmlsettings.getXMLnode("notesavepath");
+        }
+        
 
         private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
         {

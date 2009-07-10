@@ -48,6 +48,7 @@
             this.copyTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TwitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.locknoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.pnlHead.SuspendLayout();
             this.pnlNote.SuspendLayout();
@@ -138,16 +139,17 @@
             this.copyTitleToolStripMenuItem,
             this.copyTextToolStripMenuItem,
             this.TwitterToolStripMenuItem,
-            this.OnTopToolStripMenuItem});
+            this.OnTopToolStripMenuItem,
+            this.locknoteToolStripMenuItem});
             this.contextMenuStripNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(147, 136);
+            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(153, 180);
             this.contextMenuStripNoteOptions.Text = "-=menu=-";
             // 
             // editTToolStripMenuItem
             // 
             this.editTToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.editTToolStripMenuItem.Name = "editTToolStripMenuItem";
-            this.editTToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.editTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editTToolStripMenuItem.Text = "Edit note";
             this.editTToolStripMenuItem.Click += new System.EventHandler(this.editTToolStripMenuItem_Click);
             // 
@@ -163,7 +165,7 @@
             this.purpleToolStripMenuItem,
             this.redToolStripMenuItem});
             this.menuNoteColors.Name = "menuNoteColors";
-            this.menuNoteColors.Size = new System.Drawing.Size(146, 22);
+            this.menuNoteColors.Size = new System.Drawing.Size(152, 22);
             this.menuNoteColors.Text = "Color";
             this.menuNoteColors.DropDownOpening += new System.EventHandler(this.updateMenuNoteColor);
             // 
@@ -233,7 +235,7 @@
             // copyTitleToolStripMenuItem
             // 
             this.copyTitleToolStripMenuItem.Name = "copyTitleToolStripMenuItem";
-            this.copyTitleToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.copyTitleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyTitleToolStripMenuItem.Text = "Copy title";
             this.copyTitleToolStripMenuItem.Click += new System.EventHandler(this.copyTitleToolStripMenuItem_Click);
             // 
@@ -241,14 +243,14 @@
             // 
             this.copyTextToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.copyTextToolStripMenuItem.Name = "copyTextToolStripMenuItem";
-            this.copyTextToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.copyTextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyTextToolStripMenuItem.Text = "Copy note text";
             this.copyTextToolStripMenuItem.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
             // 
             // TwitterToolStripMenuItem
             // 
             this.TwitterToolStripMenuItem.Name = "TwitterToolStripMenuItem";
-            this.TwitterToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.TwitterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.TwitterToolStripMenuItem.Text = "tweet this note";
             this.TwitterToolStripMenuItem.Click += new System.EventHandler(this.TwitterToolStripMenuItem_Click);
             // 
@@ -256,9 +258,17 @@
             // 
             this.OnTopToolStripMenuItem.CheckOnClick = true;
             this.OnTopToolStripMenuItem.Name = "OnTopToolStripMenuItem";
-            this.OnTopToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.OnTopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.OnTopToolStripMenuItem.Text = "note on top";
             this.OnTopToolStripMenuItem.Click += new System.EventHandler(this.OnTopToolStripMenuItem_Click);
+            // 
+            // locknoteToolStripMenuItem
+            // 
+            this.locknoteToolStripMenuItem.CheckOnClick = true;
+            this.locknoteToolStripMenuItem.Name = "locknoteToolStripMenuItem";
+            this.locknoteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.locknoteToolStripMenuItem.Text = "Lock note";
+            this.locknoteToolStripMenuItem.Click += new System.EventHandler(this.locknoteToolStripMenuItem_Click);
             // 
             // pbResizeGrip
             // 
@@ -272,7 +282,7 @@
             this.pbResizeGrip.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbResizeGrip.TabIndex = 4;
             this.pbResizeGrip.TabStop = false;
-            this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);            
+            this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
             // frmNote
             // 
@@ -332,5 +342,6 @@
         private System.Windows.Forms.ToolStripMenuItem TwitterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OnTopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyTitleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem locknoteToolStripMenuItem;
     }
 }

@@ -47,7 +47,14 @@ namespace SimplePlainNote
                 CheckBox cbxNoteVisible = new CheckBox();
                 cbxNoteVisible.Text = "visible";
                 cbxNoteVisible.Name = "cbxNoteVisible" + Convert.ToString(i);
-                cbxNoteVisible.CheckState = CheckState.Checked;
+                if (notes[i].NoteVisible == true)
+                {
+                    cbxNoteVisible.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    cbxNoteVisible.CheckState = CheckState.Unchecked;
+                }
                 cbxNoteVisible.Location = new Point(175, ypos);
                 cbxNoteVisible.AutoEllipsis = true;
                 cbxNoteVisible.AutoSize = true;

@@ -41,6 +41,9 @@
             this.lbPassword = new System.Windows.Forms.Label();
             this.cbxRememberTwPass = new System.Windows.Forms.CheckBox();
             this.cbxSyntaxHighlight = new System.Windows.Forms.CheckBox();
+            this.tbNotesSavePath = new System.Windows.Forms.TextBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.lblTextNoteLocation = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,7 +65,7 @@
             // btnOK
             // 
             this.btnOK.BackColor = System.Drawing.Color.LightGray;
-            this.btnOK.Location = new System.Drawing.Point(142, 180);
+            this.btnOK.Location = new System.Drawing.Point(142, 208);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(133, 23);
             this.btnOK.TabIndex = 2;
@@ -73,7 +76,7 @@
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
-            this.btnCancel.Location = new System.Drawing.Point(5, 180);
+            this.btnCancel.Location = new System.Drawing.Point(5, 208);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(131, 23);
             this.btnCancel.TabIndex = 3;
@@ -150,7 +153,7 @@
             // 
             // tbTwitterUser
             // 
-            this.tbTwitterUser.Location = new System.Drawing.Point(109, 98);
+            this.tbTwitterUser.Location = new System.Drawing.Point(106, 134);
             this.tbTwitterUser.MaxLength = 15;
             this.tbTwitterUser.Name = "tbTwitterUser";
             this.tbTwitterUser.Size = new System.Drawing.Size(166, 20);
@@ -160,7 +163,7 @@
             // lbUsername
             // 
             this.lbUsername.AutoSize = true;
-            this.lbUsername.Location = new System.Drawing.Point(12, 101);
+            this.lbUsername.Location = new System.Drawing.Point(9, 137);
             this.lbUsername.Name = "lbUsername";
             this.lbUsername.Size = new System.Drawing.Size(87, 13);
             this.lbUsername.TabIndex = 9;
@@ -169,7 +172,7 @@
             // tbTwitterPass
             // 
             this.tbTwitterPass.Enabled = false;
-            this.tbTwitterPass.Location = new System.Drawing.Point(109, 143);
+            this.tbTwitterPass.Location = new System.Drawing.Point(106, 179);
             this.tbTwitterPass.MaxLength = 30;
             this.tbTwitterPass.Name = "tbTwitterPass";
             this.tbTwitterPass.PasswordChar = 'X';
@@ -179,7 +182,7 @@
             // lbPassword
             // 
             this.lbPassword.AutoSize = true;
-            this.lbPassword.Location = new System.Drawing.Point(14, 146);
+            this.lbPassword.Location = new System.Drawing.Point(11, 182);
             this.lbPassword.Name = "lbPassword";
             this.lbPassword.Size = new System.Drawing.Size(86, 13);
             this.lbPassword.TabIndex = 11;
@@ -188,7 +191,7 @@
             // cbxRememberTwPass
             // 
             this.cbxRememberTwPass.AutoSize = true;
-            this.cbxRememberTwPass.Location = new System.Drawing.Point(15, 124);
+            this.cbxRememberTwPass.Location = new System.Drawing.Point(12, 160);
             this.cbxRememberTwPass.Name = "cbxRememberTwPass";
             this.cbxRememberTwPass.Size = new System.Drawing.Size(242, 17);
             this.cbxRememberTwPass.TabIndex = 12;
@@ -208,12 +211,42 @@
             this.cbxSyntaxHighlight.Text = "Highlight code";
             this.cbxSyntaxHighlight.UseVisualStyleBackColor = true;
             // 
+            // tbNotesSavePath
+            // 
+            this.tbNotesSavePath.Location = new System.Drawing.Point(12, 105);
+            this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(202, 20);
+            this.tbNotesSavePath.TabIndex = 14;
+            this.tbNotesSavePath.Text = "?";
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
+            this.btnBrowse.Location = new System.Drawing.Point(219, 102);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(53, 23);
+            this.btnBrowse.TabIndex = 15;
+            this.btnBrowse.Text = "browse";
+            this.btnBrowse.UseVisualStyleBackColor = false;
+            // 
+            // lblTextNoteLocation
+            // 
+            this.lblTextNoteLocation.AutoSize = true;
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(9, 84);
+            this.lblTextNoteLocation.Name = "lblTextNoteLocation";
+            this.lblTextNoteLocation.Size = new System.Drawing.Size(73, 13);
+            this.lblTextNoteLocation.TabIndex = 16;
+            this.lblTextNoteLocation.Text = "save notes in:";
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(288, 215);
+            this.ClientSize = new System.Drawing.Size(288, 243);
+            this.Controls.Add(this.lblTextNoteLocation);
+            this.Controls.Add(this.btnBrowse);
+            this.Controls.Add(this.tbNotesSavePath);
             this.Controls.Add(this.cbxSyntaxHighlight);
             this.Controls.Add(this.cbxRememberTwPass);
             this.Controls.Add(this.lbPassword);
@@ -251,5 +284,8 @@
         private System.Windows.Forms.Label lbPassword;
         private System.Windows.Forms.CheckBox cbxRememberTwPass;
         private System.Windows.Forms.CheckBox cbxSyntaxHighlight;
+        private System.Windows.Forms.TextBox tbNotesSavePath;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.Label lblTextNoteLocation;
     }
 }
