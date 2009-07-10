@@ -31,14 +31,43 @@ namespace SimplePlainNote
     
         private List<frmNote> notes;
 
+        #region constructor
         public frmNewNote()
         {
             InitializeComponent();
-            notes = new List<frmNote>();                                    
+            notes = new List<frmNote>();
+            loadNotes();
         }
+        #endregion
+
+        #region properties
         public List<frmNote> GetNotes
         {
             get { return this.notes; }
+        }
+        #endregion
+
+        private void loadNotes()
+        {
+            xmlHandler getSettings = new xmlHandler(true, "settings.xml");
+            string notesavepath = getSettings.getXMLnode("notesavepath");
+
+            int id = 1;
+
+            string curnotefile = notesavepath+id+".xml";
+
+            while (File.Exists(@curnotefile) == true)
+            {
+                xmlHandler parserNote = new xmlHandler(false, id+".xml");
+                string title = parserNote.getXMLnode("title");
+                string content = parserNote.getXMLnode("content");
+                int notecolor = parserNote.getXMLnodeAsInt("color");
+                CreateNote(title, content, notecolor);
+
+                id++;
+                curnotefile = notesavepath + id + ".xml";
+                if (id > 2000) { MessageBox.Show("Error: Too many notes"); }
+            }
         }
 
         private void btnAddNote_Click(object sender, EventArgs e)
@@ -46,12 +75,12 @@ namespace SimplePlainNote
             skin Skin = getSkin();
             if (tbTitle.Text == "")
             {
-                tbTitle.BackColor = Skin.getObjColor(false, false, true); //Color.Red;
+                tbTitle.BackColor = Skin.getObjColor(false, false, true);
                 tbTitle.Text = DateTime.Now.ToString();
             }
             else if (rtbNote.Text == "")
             {
-                rtbNote.BackColor = Skin.getObjColor(false, false, true); //Color.Red;             
+                rtbNote.BackColor = Skin.getObjColor(false, false, true);
                 rtbNote.Text = "Please type any text.";
             }
             else
@@ -62,7 +91,9 @@ namespace SimplePlainNote
                 }
                 else
                 {
-                    CreateNote(tbTitle.Text, rtbNote.Text);
+                    xmlHandler getSettings = new xmlHandler(true, "settings.xml");
+                    int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");
+                    CreateNote(tbTitle.Text, rtbNote.Text, notecolordefault);
                 }
                 CancelNote();
             }
@@ -159,17 +190,18 @@ namespace SimplePlainNote
         /// Create a new note interface.
         /// </summary>
         /// <param name="title"></param>
-        /// <param name="text"></param>
-        public void CreateNote(string title, string text)
+        /// <param name="content"></param>
+        /// <param name="notecolor"></param>
+        public void CreateNote(string title, string content, int notecolor)
         {
             try
-            {
+            {                
                 int newid = notes.Count + 1;
-                string notefilenm = SaveNote(newid, title, text);
-                if ((notefilenm == "") || (notefilenm == null)) { return; }
-                frmNote frmNote = new frmNote(newid, title, text);
-                notes.Add(frmNote);
-                frmNote.Show();
+                string notefilenm = SaveNote(newid, title, content);
+                if ((notefilenm == "") || (notefilenm == null)) { return; }                                                
+                frmNote newnote = new frmNote(newid, title, content, notecolor);                                    
+                notes.Add(newnote);
+                newnote.Show();
             }
             catch (IndexOutOfRangeException indexexc)
             {
@@ -190,17 +222,18 @@ namespace SimplePlainNote
         /// <returns>filepath of the created note.</returns>
         private string SaveNote(int id, string title, string text)
         {
-            xmlHandler getXmlSettings = new xmlHandler(true, "settings.xml");
-            string defaultcolor = getXmlSettings.getXMLnode("defaultcolor");
+            xmlHandler getXmlSettings = new xmlHandler(true, "settings.xml");            
             string notefile = id + ".xml";
             xmlHandler xmlnote = new xmlHandler(false, notefile);
+            
+            string defaultcolor = getXmlSettings.getXMLnode("defaultcolor");
             if (xmlnote.WriteNote(defaultcolor, title, text) == false)
                 {
                     MessageBox.Show("Error writing note.");
                     return null;
-                }            
-            return notefile;
-            
+                }
+         
+            return notefile;            
         }
 
         /// <summary>

@@ -33,8 +33,7 @@ namespace SimplePlainNote
 
 
         private void DrawNotesOverview(List<frmNote> notes)
-        {
-            
+        {            
             int ypos = 10;            
             for (int i = 0; i < notes.Count; i++)
             {
@@ -70,7 +69,6 @@ namespace SimplePlainNote
                 
                 ypos = ypos + 30;
             }
-
         }
 
         private void btnClose_Click(object sender, EventArgs e)

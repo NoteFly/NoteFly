@@ -43,7 +43,7 @@ namespace SimplePlainNote
             "readonly|ref|return|sbyte|sealed|short|sizeof|stackalloc|static|string|struct|switch|this|"+
             "throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|volatile|void|while|");               
 
-        public frmNote(int id, string title, string note)
+        public frmNote(int id, string title, string note, int notecolor)
         {            
             this.id = id;
             this.title = title;            
@@ -53,8 +53,9 @@ namespace SimplePlainNote
             
             lblTitle.Text = title;
             rtbNote.Text = note;
-            
-            DrawDefaultColor();
+
+            this.notecolor = notecolor;            
+            paintColorNote();
             //SetPosNote();
         }
 
@@ -113,13 +114,6 @@ namespace SimplePlainNote
             {
                 return false;
             }            
-        }
-
-        private void DrawDefaultColor()
-        {
-            xmlHandler getSettings = new xmlHandler(true, "settings.xml");
-            notecolor = getSettings.getXMLnodeAsInt("defaultcolor");
-            paintColorNote();
         }
 
         private void frmDeleteNote_Click(object sender, EventArgs e)
@@ -181,6 +175,8 @@ namespace SimplePlainNote
                 {
                     curitem.Checked = true;
                     notecolor = i;
+                    xmlHandler savenotecolor = new xmlHandler(false, this.id + ".xml");
+                    savenotecolor.WriteNote(Convert.ToString(notecolor), this.title, this.note);                    
                 }
                 else
                 {
@@ -192,7 +188,9 @@ namespace SimplePlainNote
             paintColorNote();
         }
 
-
+        /// <summary>
+        /// Get the color of the note and paint it.
+        /// </summary>
         private void paintColorNote()
         {
             skin getskin = new skin(notecolor);
