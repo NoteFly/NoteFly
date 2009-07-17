@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace SimplePlainNote
 {
-    public partial class frmNote : Form
+    public partial class FrmNote : Form
     {        
         private int id;
         private string title;
@@ -28,7 +28,7 @@ namespace SimplePlainNote
 
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, 
-                         int Msg, int wParam, int lParam);
+                         int msg, int wParam, int lParam);
 
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
@@ -43,7 +43,7 @@ namespace SimplePlainNote
             "readonly|ref|return|sbyte|sealed|short|sizeof|stackalloc|static|string|struct|switch|this|"+
             "throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|volatile|void|while|");               
 
-        public frmNote(int id, string title, string note, int notecolor)
+        public FrmNote(int id, string title, string note, int notecolor)
         {            
             this.id = id;
             this.title = title;            
@@ -374,8 +374,8 @@ namespace SimplePlainNote
                 }
             }
 
-            
-            if (xmlSettings.getXMLnode("twitteruser") == "")
+
+            if (String.IsNullOrEmpty(xmlSettings.getXMLnode("twitteruser"))==true)
             {
                 TwitterToolStripMenuItem.Enabled = false;
             }

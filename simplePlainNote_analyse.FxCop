@@ -1,0 +1,554 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.35" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">http://www.gotdotnet.com/team/fxcop//xsl/1.35/FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-us" />
+  <VersionAware>False</VersionAware>
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/bin/Debug/SimplePlainNote.exe" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="False" AllRulesEnabled="False" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="False" AllRulesEnabled="False" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="False" AllRulesEnabled="False" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="False" AllRulesEnabled="False" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="False" AllRulesEnabled="False" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="False" AllRulesEnabled="False" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="False" AllRulesEnabled="False" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.35">
+  <Targets>
+   <Target Name="$(ProjectDir)/bin/Debug/SimplePlainNote.exe">
+    <Modules>
+     <Module Name="simpleplainnote.exe">
+      <Namespaces>
+       <Namespace Name="SimplePlainNote">
+        <Types>
+         <Type Name="frmManageNotes">
+          <Messages>
+           <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
+            <Issue Name="Type">
+             <Item>frmManageNotes</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="HT_CAPTION">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Member">
+               <Item>HT_CAPTION</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Member">
+               <Item>frmManageNotes.HT_CAPTION</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32):System.Int32">
+            <Messages>
+             <Message Id="1#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Parameter">
+               <Item>Msg</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Parameter">
+               <Item>frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+               <Item>h</Item>
+               <Item>hWnd</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Parameter">
+               <Item>frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+               <Item>w</Item>
+               <Item>wParam</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Parameter">
+               <Item>frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+               <Item>l</Item>
+               <Item>lParam</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WM_NCLBUTTONDOWN">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Member">
+               <Item>WM_NCLBUTTONDOWN</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Member">
+               <Item>frmManageNotes.WM_NCLBUTTONDOWN</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="frmNewNote">
+          <Messages>
+           <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
+            <Issue Name="Type">
+             <Item>frmNewNote</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name=".ctor()">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2009-07-16 01:00:05Z">
+              <Issue>
+               <Item>frmNewNote.frmNewNote()</Item>
+               <Item>editmode</Item>
+               <Item>System.Boolean</Item>
+               <Item>false</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="btnAddNote_Click(System.Object,System.EventArgs):System.Void">
+            <Messages>
+             <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:00:05Z">
+              <Issue Name="IsNullOrEmpty">
+               <Item>op_Equality</Item>
+               <Item>""</Item>
+               <Item>frmNewNote.btnAddNote_Click(Object, EventArgs):Void</Item>
+              </Issue>
+              <Issue Name="IsNullOrEmpty">
+               <Item>op_Equality</Item>
+               <Item>""</Item>
+               <Item>frmNewNote.btnAddNote_Click(Object, EventArgs):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="CreateNote(System.String,System.String,System.Int32):System.Void">
+            <Messages>
+             <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:00:05Z">
+              <Issue Name="IsNullOrEmpty">
+               <Item>op_Equality</Item>
+               <Item>""</Item>
+               <Item>frmNewNote.CreateNote(String, String, Int32):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="DeleteNote(System.Int32):System.Void">
+            <Messages>
+             <Message Id="m" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2009-07-16 01:00:05Z">
+              <Issue>
+               <Item>frmNewNote.DeleteNote(Int32):Void</Item>
+               <Item>m</Item>
+               <Item>System.Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="EditNote(System.Int32):System.Void">
+            <Messages>
+             <Message Id="0#" TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706" Created="2009-07-16 01:00:05Z">
+              <Issue Name="ParameterId">
+               <Item>ID</Item>
+               <Item>noteID</Item>
+               <Item>Id</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="getSkin():SimplePlainNote.skin">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-07-16 01:00:05Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>frmNewNote.getSkin():skin</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="HT_CAPTION">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Member">
+               <Item>HT_CAPTION</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Member">
+               <Item>frmNewNote.HT_CAPTION</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SaveNote(System.Int32,System.String,System.String):System.String">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-07-16 01:00:05Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>frmNewNote.SaveNote(Int32, String, String):String</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32):System.Int32">
+            <Messages>
+             <Message Id="1#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Parameter">
+               <Item>Msg</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Parameter">
+               <Item>frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+               <Item>h</Item>
+               <Item>hWnd</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Parameter">
+               <Item>frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+               <Item>w</Item>
+               <Item>wParam</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Parameter">
+               <Item>frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+               <Item>l</Item>
+               <Item>lParam</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WM_NCLBUTTONDOWN">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Member">
+               <Item>WM_NCLBUTTONDOWN</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:00:05Z">
+              <Issue Name="Member">
+               <Item>frmNewNote.WM_NCLBUTTONDOWN</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FrmNote">
+          <Members>
+           <Member Name=".ctor(System.Int32,System.String,System.String,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2009-07-16 01:27:08Z">
+              <Issue>
+               <Item>FrmNote.FrmNote(Int32, String, String, Int32)</Item>
+               <Item>notelock</Item>
+               <Item>System.Boolean</Item>
+               <Item>false</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="getTransparency():System.Boolean">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-07-16 01:27:08Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>FrmNote.getTransparency():Boolean</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="HT_CAPTION">
+            <Messages>
+             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:27:08Z">
+              <Issue Name="Member">
+               <Item>HT_CAPTION</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:27:08Z">
+              <Issue Name="Member">
+               <Item>FrmNote.HT_CAPTION</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="ID">
+            <Messages>
+             <Message Id="Member" TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706" Created="2009-07-16 01:27:08Z">
+              <Issue Name="MemberId">
+               <Item>FrmNote.ID:Int32</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="locX">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-07-16 01:27:08Z">
+              <Issue>
+               <Item>FrmNote.locX</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="locY">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-07-16 01:27:08Z">
+              <Issue>
+               <Item>FrmNote.locY</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="pnlResizeWindow_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs):System.Void">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:27:08Z">
+              <Issue>
+               <Item>FrmNote.pnlResizeWindow_MouseDown(Object, MouseEventArgs):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32):System.Int32">
+            <Messages>
+             <Message Id="0#h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:27:08Z">
+              <Issue Name="Parameter">
+               <Item>FrmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+               <Item>h</Item>
+               <Item>hWnd</Item>
+              </Issue>
+             </Message>
+             <Message Id="2#w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:27:08Z">
+              <Issue Name="Parameter">
+               <Item>FrmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+               <Item>w</Item>
+               <Item>wParam</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:27:08Z">
+              <Issue Name="Parameter">
+               <Item>FrmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+               <Item>l</Item>
+               <Item>lParam</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="SetPosNote():System.Void">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:27:08Z">
+              <Issue>
+               <Item>FrmNote.SetPosNote():Void</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-07-16 01:27:08Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>FrmNote.SetPosNote():Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="tweetnote():System.Void">
+            <Messages>
+             <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:27:08Z">
+              <Issue Name="IsNullOrEmpty">
+               <Item>op_Equality</Item>
+               <Item>""</Item>
+               <Item>FrmNote.tweetnote():Void</Item>
+              </Issue>
+              <Issue Name="IsNullOrEmpty">
+               <Item>op_Equality</Item>
+               <Item>""</Item>
+               <Item>FrmNote.tweetnote():Void</Item>
+              </Issue>
+              <Issue Name="IsNullOrEmpty">
+               <Item>op_Inequality</Item>
+               <Item>""</Item>
+               <Item>FrmNote.tweetnote():Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="TwitterToolStripMenuItem_Click(System.Object,System.EventArgs):System.Void">
+            <Messages>
+             <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:27:08Z">
+              <Issue Name="IsNullOrEmpty">
+               <Item>op_Inequality</Item>
+               <Item>""</Item>
+               <Item>FrmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="WM_NCLBUTTONDOWN">
+            <Messages>
+             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:27:08Z">
+              <Issue Name="Member">
+               <Item>FrmNote.WM_NCLBUTTONDOWN</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="frmSettings">
+          <Messages>
+           <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
+            <Issue Name="Type">
+             <Item>frmSettings</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="getTwitterpassword():System.String">
+            <Messages>
+             <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:00:05Z">
+              <Issue Name="IsNullOrEmpty">
+               <Item>op_Equality</Item>
+               <Item>""</Item>
+               <Item>frmSettings.getTwitterpassword():String</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="xmlHandler">
+          <Members>
+           <Member Name=".ctor(System.Boolean,System.String)">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2009-07-16 01:00:05Z">
+              <Issue>
+               <Item>xmlHandler.xmlHandler(Boolean, String)</Item>
+               <Item>source</Item>
+               <Item>System.String</Item>
+               <Item>null</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="AppDataFolder">
+            <Accessors>
+             <Accessor Name="get_AppDataFolder():System.String">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:00:05Z">
+                <Issue>
+                 <Item>xmlHandler.get_AppDataFolder():String</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="Source">
+            <Accessors>
+             <Accessor Name="set_Source(System.String):System.Void">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:00:05Z">
+                <Issue>
+                 <Item>xmlHandler.set_Source(String):Void</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="TwitterClientVersion">
+            <Accessors>
+             <Accessor Name="set_TwitterClientVersion(System.String):System.Void">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:00:05Z">
+                <Issue>
+                 <Item>xmlHandler.set_TwitterClientVersion(String):Void</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="WriteSettings(System.Boolean,System.Decimal,System.Int32,System.String,System.Boolean,System.String,System.String):System.Boolean">
+            <Messages>
+             <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:00:05Z">
+              <Issue Name="IsNullOrEmpty">
+               <Item>op_Inequality</Item>
+               <Item>""</Item>
+               <Item>xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Rules>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">'{0}' appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field '{0}' is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
+    <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization as it will be done automatically by the runtime.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="Parameter">Correct the casing of parameter name '{0}'.</Resolution>
+    <Resolution Name="Type">Correct the casing of type name '{0}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="Parameter">In method {0}, correct the spelling of the unrecognized token '{1}' in parameter name '{2}' or strip it entirely if it represents any sort of hungarian notation.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+    <Resolution Name="Member">Remove all underscores from member '{0}'.</Resolution>
+   </Rule>
+   <Rule TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705">
+    <Resolution Name="Member">Correct the capitalization of member name '{0}'.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in VB) of {0} is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a local, '{1}', of type {2}, which is never used or is only assigned to. Use this local or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706">
+    <Resolution Name="MemberId">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of 'ID' in member name '{0}' by changing it to 'Id'.</Resolution>
+    <Resolution Name="ParameterId">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of '{0}' in parameter name '{1}' by changing it to '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
+    <Resolution Name="IsNullOrEmpty">Replace the call to String.{0}({1}) in '{2}' with a call to String.IsNullOrEmpty.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

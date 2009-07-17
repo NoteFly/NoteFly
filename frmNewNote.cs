@@ -29,19 +29,19 @@ namespace SimplePlainNote
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
     
-        private List<frmNote> notes;
+        private List<FrmNote> notes;
 
         #region constructor
         public frmNewNote()
         {
             InitializeComponent();
-            notes = new List<frmNote>();
+            notes = new List<FrmNote>();
             loadNotes();
         }
         #endregion
 
         #region properties
-        public List<frmNote> GetNotes
+        public List<FrmNote> GetNotes
         {
             get { return this.notes; }
         }
@@ -199,7 +199,7 @@ namespace SimplePlainNote
                 int newid = notes.Count + 1;
                 string notefilenm = SaveNote(newid, title, content);
                 if ((notefilenm == "") || (notefilenm == null)) { return; }                                                
-                frmNote newnote = new frmNote(newid, title, content, notecolor);                                    
+                FrmNote newnote = new FrmNote(newid, title, content, notecolor);                                    
                 notes.Add(newnote);
                 newnote.Show();
             }

@@ -16,6 +16,9 @@
     </TargetFrameworkSubset>
     <StartupObject>SimplePlainNote.Program</StartupObject>
     <SignManifests>false</SignManifests>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>SimplePlainNote.snk</AssemblyOriginatorKeyFile>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,8 +30,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationVersion>0.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -41,6 +43,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -61,44 +64,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsSValidator.cs" />
-    <Compile Include="frmManageNotes.cs">
+    <Compile Include="FrmManageNotes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmManageNotes.Designer.cs">
-      <DependentUpon>frmManageNotes.cs</DependentUpon>
+    <Compile Include="FrmManageNotes.Designer.cs">
+      <DependentUpon>FrmManageNotes.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmNewNote.cs">
+    <Compile Include="FrmNewNote.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmNewNote.Designer.cs">
-      <DependentUpon>frmNewNote.cs</DependentUpon>
+    <Compile Include="FrmNewNote.Designer.cs">
+      <DependentUpon>FrmNewNote.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmNote.cs">
+    <Compile Include="FrmNote.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmNote.Designer.cs">
-      <DependentUpon>frmNote.cs</DependentUpon>
+    <Compile Include="FrmNote.Designer.cs">
+      <DependentUpon>FrmNote.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmSettings.cs">
+    <Compile Include="FrmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSettings.Designer.cs">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <Compile Include="FrmSettings.Designer.cs">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmManageNotes.resx">
-      <DependentUpon>frmManageNotes.cs</DependentUpon>
+    <EmbeddedResource Include="FrmManageNotes.resx">
+      <DependentUpon>FrmManageNotes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNewNote.resx">
-      <DependentUpon>frmNewNote.cs</DependentUpon>
+    <EmbeddedResource Include="FrmNewNote.resx">
+      <DependentUpon>FrmNewNote.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNote.resx">
-      <DependentUpon>frmNote.cs</DependentUpon>
+    <EmbeddedResource Include="FrmNote.resx">
+      <DependentUpon>FrmNote.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSettings.resx">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <EmbeddedResource Include="FrmSettings.resx">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -115,13 +117,14 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="SimplePlainNote.snk" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="skin.cs" />
-    <Compile Include="xmlHandler.cs" />
+    <Compile Include="Skin.cs" />
+    <Compile Include="XmlHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -132,7 +135,7 @@
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
-      <Install>false</Install>
+      <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
       <Visible>False</Visible>

@@ -1,0 +1,1074 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.gotdotnet.com/team/fxcop//xsl/1.35/FxCopReport.xsl"?>
+<FxCopReport Version="1.35">
+ <Targets>
+  <Target Name="C:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote\bin\Debug\SimplePlainNote.exe">
+   <Modules>
+    <Module Name="simpleplainnote.exe">
+     <Messages>
+      <Message TypeName="AssembliesShouldDeclareMinimumSecurity" Category="Microsoft.Usage" CheckId="CA2209" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+       <Issue Certainty="95" Level="CriticalError">No valid permission requests were found for assembly 'SimplePlainNote'. You should always specify the minimum security permissions using SecurityAction.RequestMinimum.</Issue>
+      </Message>
+      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+       <Issue Name="NoStrongName" Certainty="95" Level="CriticalError">Sign 'SimplePlainNote' with a strong name key.</Issue>
+      </Message>
+      <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+       <Issue Name="NoAttr" Certainty="95" Level="Error">'SimplePlainNote' should be marked with CLSCompliantAttribute and its value should be true.</Issue>
+      </Message>
+     </Messages>
+     <Namespaces>
+      <Namespace Name="SimplePlainNote">
+       <Types>
+        <Type Name="frmManageNotes" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="95" Level="Error">Correct the casing of type name 'frmManageNotes'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="DrawNotesOverview(System.Collections.Generic.List`1&lt;SimplePlainNote.frmNote&gt;):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Convert.ToString(System.Int32)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmManageNotes.cs" Line="42">frmManageNotes.DrawNotesOverview(List`1&lt;SimplePlainNote.frmNote&gt;):Void makes a call to System.Convert.ToString(System.Int32) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToString(System.Int32,System.IFormatProvider).</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmManageNotes.cs" Line="48">frmManageNotes.DrawNotesOverview(List`1&lt;SimplePlainNote.frmNote&gt;):Void makes a call to System.Convert.ToString(System.Int32) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToString(System.Int32,System.IFormatProvider).</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmManageNotes.cs" Line="64">frmManageNotes.DrawNotesOverview(List`1&lt;SimplePlainNote.frmNote&gt;):Void makes a call to System.Convert.ToString(System.Int32) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToString(System.Int32,System.IFormatProvider).</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="HT_CAPTION" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member 'HT_CAPTION'.</Issue>
+            </Message>
+            <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the capitalization of member name 'frmManageNotes.HT_CAPTION'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="InitializeComponent():System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmManageNotes.Designer.cs" Line="48">frmManageNotes.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: '&amp;Close'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmManageNotes.Designer.cs" Line="113">frmManageNotes.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Manage notes'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmManageNotes.Designer.cs" Line="70">frmManageNotes.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Options'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmManageNotes.Designer.cs" Line="60">frmManageNotes.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Title'</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="ReleaseCapture():System.Boolean" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Return" Certainty="95" Level="Warning">Add the MarshalAsAttribute to the return type of PInvoke frmManageNotes.ReleaseCapture():Boolean. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Issue>
+            </Message>
+            <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="CriticalWarning">Because it is a DllImport method, frmManageNotes.ReleaseCapture():Boolean should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Issue>
+            </Message>
+            <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="CriticalError">Change the accessibility of DllImport 'frmManageNotes.ReleaseCapture():Boolean' so that it is no longer visible from outside its assembly.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32):System.Int32" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="1#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="95" Level="Error">Correct the casing of parameter name 'Msg'.</Issue>
+            </Message>
+            <Message Id="0#h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="75" Level="CriticalWarning">In method frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32, correct the spelling of the unrecognized token 'h' in parameter name 'hWnd' or strip it entirely if it represents any sort of hungarian notation.</Issue>
+            </Message>
+            <Message Id="2#w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="75" Level="CriticalWarning">In method frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32, correct the spelling of the unrecognized token 'w' in parameter name 'wParam' or strip it entirely if it represents any sort of hungarian notation.</Issue>
+            </Message>
+            <Message Id="3#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="75" Level="CriticalWarning">In method frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32, correct the spelling of the unrecognized token 'l' in parameter name 'lParam' or strip it entirely if it represents any sort of hungarian notation.</Issue>
+            </Message>
+            <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="CriticalWarning">Because it is a DllImport method, frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32 should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Issue>
+            </Message>
+            <Message Id="2" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="95" Level="Error">As it is declared in your code, parameter 'wParam' of PInvoke frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32 will be 4 bytes wide on 64-bit platforms. This is not correct, as the actual native declaration of this API indicates it should be 8 bytes wide on 64-bit platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of 'System.Int32'.</Issue>
+            </Message>
+            <Message Id="3" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="95" Level="Error">As it is declared in your code, parameter 'lParam' of PInvoke frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32 will be 4 bytes wide on 64-bit platforms. This is not correct, as the actual native declaration of this API indicates it should be 8 bytes wide on 64-bit platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of 'System.Int32'.</Issue>
+            </Message>
+            <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Return" Certainty="95" Level="Error">As it is declared in your code, the return type of PInvoke frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32 will be 4 bytes wide on 64-bit platforms. This is not correct, as the actual native declaration of this API indicates it should be 8 bytes wide on 64-bit platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of 'System.Int32'.</Issue>
+            </Message>
+            <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="CriticalError">Change the accessibility of DllImport 'frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32' so that it is no longer visible from outside its assembly.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="WM_NCLBUTTONDOWN" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member 'WM_NCLBUTTONDOWN'.</Issue>
+            </Message>
+            <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the capitalization of member name 'frmManageNotes.WM_NCLBUTTONDOWN'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="frmNewNote" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="95" Level="Error">Correct the casing of type name 'frmNewNote'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name=".ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="21">frmNewNote.frmNewNote() initializes field editmode of type System.Boolean to false. Remove this initialization as it will be done automatically by the runtime.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="btnAddNote_Click(System.Object,System.EventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="84">frmNewNote.btnAddNote_Click(Object, EventArgs):Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Please type any text.'</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="76">Replace the call to String.op_Equality("") in 'frmNewNote.btnAddNote_Click(Object, EventArgs):Void' with a call to String.IsNullOrEmpty.</Issue>
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="81">Replace the call to String.op_Equality("") in 'frmNewNote.btnAddNote_Click(Object, EventArgs):Void' with a call to String.IsNullOrEmpty.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="CancelNote():System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="179">frmNewNote.CancelNote():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: ''</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="180">frmNewNote.CancelNote():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: ''</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="CreateNote(System.String,System.String,System.Int32):System.Void" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="210">Modify 'frmNewNote.CreateNote(String, String, Int32):Void' to catch a more specific exception than 'System.Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="208">Change frmNewNote.CreateNote(String, String, Int32):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="212">Change frmNewNote.CreateNote(String, String, Int32):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="201">Replace the call to String.op_Equality("") in 'frmNewNote.CreateNote(String, String, Int32):Void' with a call to String.IsNullOrEmpty.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="DeleteNote(System.Int32):System.Void" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="m" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="244">frmNewNote.DeleteNote(Int32):Void declares a local, 'm', of type System.Int32, which is never used or is only assigned to. Use this local or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="editNote(System.Int32):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="109">Modify 'frmNewNote.editNote(Int32):Void' to catch a more specific exception than 'System.Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="111">Change frmNewNote.editNote(Int32):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="EditNote(System.Int32):System.Void" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0#" TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="ParameterId" Certainty="85" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="271">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of 'ID' in parameter name 'noteID' by changing it to 'Id'.</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="280">Change frmNewNote.EditNote(Int32):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="GetNotes" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="46">Change 'System.Collections.Generic.List`1&lt;SimplePlainNote.frmNote&gt;' in frmNewNote.GetNotes:List`1&lt;SimplePlainNote.frmNote&gt; to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="getSkin():SimplePlainNote.skin" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="140">The 'this' parameter (or 'Me' in VB) of frmNewNote.getSkin():skin is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+            <Message Id="System.Convert.ToInt32(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="143">frmNewNote.getSkin():skin makes a call to System.Convert.ToInt32(System.String) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToInt32(System.String,System.IFormatProvider).</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="HT_CAPTION" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member 'HT_CAPTION'.</Issue>
+            </Message>
+            <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the capitalization of member name 'frmNewNote.HT_CAPTION'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="InitializeComponent():System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.Designer.cs" Line="72">frmNewNote.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: ''</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.Designer.cs" Line="271">frmNewNote.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'New note'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.Designer.cs" Line="114">frmNewNote.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Title:'</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.NotifyIcon.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.Designer.cs" Line="121">frmNewNote.InitializeComponent():Void passes a literal as parameter 1 of a call to NotifyIcon.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Simple Plain Notes'</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.ToolStripItem.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.Designer.cs" Line="141">frmNewNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: '&amp;Create a new note'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.Designer.cs" Line="149">frmNewNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: '&amp;Manage notes'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.Designer.cs" Line="165">frmNewNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'E&amp;xit'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.Designer.cs" Line="157">frmNewNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Settings'</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="loadNotes():System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="69">frmNewNote.loadNotes():Void passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Error: Too many notes'</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="69">Change frmNewNote.loadNotes():Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="ReleaseCapture():System.Boolean" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Return" Certainty="95" Level="Warning">Add the MarshalAsAttribute to the return type of PInvoke frmNewNote.ReleaseCapture():Boolean. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Issue>
+            </Message>
+            <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="CriticalWarning">Because it is a DllImport method, frmNewNote.ReleaseCapture():Boolean should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Issue>
+            </Message>
+            <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="CriticalError">Change the accessibility of DllImport 'frmNewNote.ReleaseCapture():Boolean' so that it is no longer visible from outside its assembly.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="rtbNote_LinkClicked(System.Object,System.Windows.Forms.LinkClickedEventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.Windows.Forms.IWin32Window,System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="352">frmNewNote.rtbNote_LinkClicked(Object, LinkClickedEventArgs):Void passes a literal as parameter 2 of a call to MessageBox.Show(IWin32Window, String, String, MessageBoxButtons, MessageBoxIcon):DialogResult. Retrieve the following string argument from a resource table instead: 'Are you sure you want to visted: __'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="352">frmNewNote.rtbNote_LinkClicked(Object, LinkClickedEventArgs):Void passes a literal as parameter 3 of a call to MessageBox.Show(IWin32Window, String, String, MessageBoxButtons, MessageBoxIcon):DialogResult. Retrieve the following string argument from a resource table instead: 'Are you sure?'</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="352">Change frmNewNote.rtbNote_LinkClicked(Object, LinkClickedEventArgs):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="SaveNote(System.Int32,System.String,System.String):System.String" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="232">frmNewNote.SaveNote(Int32, String, String):String passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Error writing note.'</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="224">The 'this' parameter (or 'Me' in VB) of frmNewNote.SaveNote(Int32, String, String):String is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNewNote.cs" Line="232">Change frmNewNote.SaveNote(Int32, String, String):String to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32):System.Int32" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="1#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="95" Level="Error">Correct the casing of parameter name 'Msg'.</Issue>
+            </Message>
+            <Message Id="0#h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="75" Level="CriticalWarning">In method frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32, correct the spelling of the unrecognized token 'h' in parameter name 'hWnd' or strip it entirely if it represents any sort of hungarian notation.</Issue>
+            </Message>
+            <Message Id="2#w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="75" Level="CriticalWarning">In method frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32, correct the spelling of the unrecognized token 'w' in parameter name 'wParam' or strip it entirely if it represents any sort of hungarian notation.</Issue>
+            </Message>
+            <Message Id="3#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="75" Level="CriticalWarning">In method frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32, correct the spelling of the unrecognized token 'l' in parameter name 'lParam' or strip it entirely if it represents any sort of hungarian notation.</Issue>
+            </Message>
+            <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="CriticalWarning">Because it is a DllImport method, frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32 should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Issue>
+            </Message>
+            <Message Id="2" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="95" Level="Error">As it is declared in your code, parameter 'wParam' of PInvoke frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32 will be 4 bytes wide on 64-bit platforms. This is not correct, as the actual native declaration of this API indicates it should be 8 bytes wide on 64-bit platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of 'System.Int32'.</Issue>
+            </Message>
+            <Message Id="3" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="95" Level="Error">As it is declared in your code, parameter 'lParam' of PInvoke frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32 will be 4 bytes wide on 64-bit platforms. This is not correct, as the actual native declaration of this API indicates it should be 8 bytes wide on 64-bit platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of 'System.Int32'.</Issue>
+            </Message>
+            <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Return" Certainty="95" Level="Error">As it is declared in your code, the return type of PInvoke frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32 will be 4 bytes wide on 64-bit platforms. This is not correct, as the actual native declaration of this API indicates it should be 8 bytes wide on 64-bit platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of 'System.Int32'.</Issue>
+            </Message>
+            <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="CriticalError">Change the accessibility of DllImport 'frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32' so that it is no longer visible from outside its assembly.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="WM_NCLBUTTONDOWN" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member 'WM_NCLBUTTONDOWN'.</Issue>
+            </Message>
+            <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the capitalization of member name 'frmNewNote.WM_NCLBUTTONDOWN'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="frmNote" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="95" Level="Error">Correct the casing of type name 'frmNote'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name=".ctor(System.Int32,System.String,System.String,System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="21">frmNote.frmNote(Int32, String, String, Int32) initializes field notelock of type System.Boolean to false. Remove this initialization as it will be done automatically by the runtime.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="askpassok(System.Object,System.EventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="345">Change frmNote.askpassok(Object, EventArgs):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="ColorNote" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Accessors>
+            <Accessor Name="set_ColorNote(System.Int32):System.Void" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+             <Messages>
+              <Message Id="value" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+               <Issue Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="79">Parameter 'value' of frmNote.set_ColorNote(Int32):Void is never used. Remove the parameter or use it in the method body.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="frmNote_Shown(System.Object,System.EventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="378">Replace the call to String.op_Equality("") in 'frmNote.frmNote_Shown(Object, EventArgs):Void' with a call to String.IsNullOrEmpty.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="getTransparency():System.Boolean" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="107">The 'this' parameter (or 'Me' in VB) of frmNote.getTransparency():Boolean is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="HT_CAPTION" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member 'HT_CAPTION'.</Issue>
+            </Message>
+            <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the capitalization of member name 'frmNote.HT_CAPTION'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="ID" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Member" TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="MemberId" Certainty="85" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="65">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of 'ID' in member name 'frmNote.ID:Int32' by changing it to 'Id'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="InitializeComponent():System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="146">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: '-=menu=-'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="93">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'X'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="67">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: '[Title]'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="117">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: '[note]'</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.ToolStripItem.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="216">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Blue'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="169">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Color'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="247">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Copy note text'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="239">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Copy title'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="153">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Edit note'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="207">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Green'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="270">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Lock note'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="189">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Orange'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="224">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Purple'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="232">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Red'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="198">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'White'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="180">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Yellow'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="262">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'note on top'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.Designer.cs" Line="254">frmNote.InitializeComponent():Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'tweet this note'</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="InternetGetConnectedState(System.Int32&amp;,System.Int32):System.Boolean" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Return" Certainty="95" Level="Warning">Add the MarshalAsAttribute to the return type of PInvoke frmNote.InternetGetConnectedState(Int32&amp;, Int32):Boolean. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Issue>
+            </Message>
+            <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="CriticalWarning">Because it is a DllImport method, frmNote.InternetGetConnectedState(Int32&amp;, Int32):Boolean should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="locknoteToolStripMenuItem_Click(System.Object,System.EventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.ToolStripItem.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="424">frmNote.locknoteToolStripMenuItem_Click(Object, EventArgs):Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'lock note'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="416">frmNote.locknoteToolStripMenuItem_Click(Object, EventArgs):Void passes a literal as parameter 1 of a call to ToolStripItem.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'lock note (click again to unlock)'</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="locX" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning">It appears that field 'frmNote.locX' is never used or is only ever assigned to. Use this field or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="locY" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning">It appears that field 'frmNote.locY' is never used or is only ever assigned to. Use this field or remove it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="pnlResizeWindow_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="146">'frmNote.pnlResizeWindow_MouseDown(Object, MouseEventArgs):Void' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="ReleaseCapture():System.Boolean" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Return" Certainty="95" Level="Warning">Add the MarshalAsAttribute to the return type of PInvoke frmNote.ReleaseCapture():Boolean. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Issue>
+            </Message>
+            <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="CriticalWarning">Because it is a DllImport method, frmNote.ReleaseCapture():Boolean should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Issue>
+            </Message>
+            <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="CriticalError">Change the accessibility of DllImport 'frmNote.ReleaseCapture():Boolean' so that it is no longer visible from outside its assembly.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32):System.Int32" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="1#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="95" Level="Error">Correct the casing of parameter name 'Msg'.</Issue>
+            </Message>
+            <Message Id="0#h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="75" Level="CriticalWarning">In method frmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32, correct the spelling of the unrecognized token 'h' in parameter name 'hWnd' or strip it entirely if it represents any sort of hungarian notation.</Issue>
+            </Message>
+            <Message Id="2#w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="75" Level="CriticalWarning">In method frmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32, correct the spelling of the unrecognized token 'w' in parameter name 'wParam' or strip it entirely if it represents any sort of hungarian notation.</Issue>
+            </Message>
+            <Message Id="3#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="75" Level="CriticalWarning">In method frmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32, correct the spelling of the unrecognized token 'l' in parameter name 'lParam' or strip it entirely if it represents any sort of hungarian notation.</Issue>
+            </Message>
+            <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="95" Level="CriticalWarning">Because it is a DllImport method, frmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32 should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Issue>
+            </Message>
+            <Message Id="2" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="95" Level="Error">As it is declared in your code, parameter 'wParam' of PInvoke frmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32 will be 4 bytes wide on 64-bit platforms. This is not correct, as the actual native declaration of this API indicates it should be 8 bytes wide on 64-bit platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of 'System.Int32'.</Issue>
+            </Message>
+            <Message Id="3" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Parameter" Certainty="95" Level="Error">As it is declared in your code, parameter 'lParam' of PInvoke frmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32 will be 4 bytes wide on 64-bit platforms. This is not correct, as the actual native declaration of this API indicates it should be 8 bytes wide on 64-bit platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of 'System.Int32'.</Issue>
+            </Message>
+            <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Return" Certainty="95" Level="Error">As it is declared in your code, the return type of PInvoke frmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32 will be 4 bytes wide on 64-bit platforms. This is not correct, as the actual native declaration of this API indicates it should be 8 bytes wide on 64-bit platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of 'System.Int32'.</Issue>
+            </Message>
+            <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="50" Level="CriticalError">Change the accessibility of DllImport 'frmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32' so that it is no longer visible from outside its assembly.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="setColorNote(System.Object,System.EventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Convert.ToString(System.Int32)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="179">frmNote.setColorNote(Object, EventArgs):Void makes a call to System.Convert.ToString(System.Int32) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToString(System.Int32,System.IFormatProvider).</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="SetPosNote():System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="432">'frmNote.SetPosNote():Void' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="432">The 'this' parameter (or 'Me' in VB) of frmNote.SetPosNote():Void is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="syntaxKeywords" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Make 'syntaxKeywords' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="tweetnote():System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="317">frmNote.tweetnote():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Ok'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="309">frmNote.tweetnote():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Twitter password needed'</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="301">frmNote.tweetnote():Void passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Error: Twitter settings not set.'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="332">frmNote.tweetnote():Void passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Sending note to twitter failed.'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="328">frmNote.tweetnote():Void passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Your note is Tweeted.'</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="301">Change frmNote.tweetnote():Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="328">Change frmNote.tweetnote():Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="332">Change frmNote.tweetnote():Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="299">Replace the call to String.op_Equality("") in 'frmNote.tweetnote():Void' with a call to String.IsNullOrEmpty.</Issue>
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="304">Replace the call to String.op_Equality("") in 'frmNote.tweetnote():Void' with a call to String.IsNullOrEmpty.</Issue>
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="294">Replace the call to String.op_Inequality("") in 'frmNote.tweetnote():Void' with a call to String.IsNullOrEmpty.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="TwitterToolStripMenuItem_Click(System.Object,System.EventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="285">frmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'No network connection.'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="280">frmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Note is empty.'</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="272">frmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void passes a literal as parameter 1 of a call to MessageBox.Show(String, String, MessageBoxButtons, MessageBoxIcon):DialogResult. Retrieve the following string argument from a resource table instead: 'Your note is more than the 140 chars. Do you want to publish only the first part?'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="272">frmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void passes a literal as parameter 2 of a call to MessageBox.Show(String, String, MessageBoxButtons, MessageBoxIcon):DialogResult. Retrieve the following string argument from a resource table instead: 'too long note'</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="272">Change frmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="280">Change frmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="285">Change frmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmNote.cs" Line="265">Replace the call to String.op_Inequality("") in 'frmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void' with a call to String.IsNullOrEmpty.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="WM_NCLBUTTONDOWN" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member 'WM_NCLBUTTONDOWN'.</Issue>
+            </Message>
+            <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Correct the capitalization of member name 'frmNote.WM_NCLBUTTONDOWN'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="frmSettings" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="95" Level="Error">Correct the casing of type name 'frmSettings'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="btnOK_Click(System.Object,System.EventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.cs" Line="55">frmSettings.btnOK_Click(Object, EventArgs):Void passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Error writing settings.'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.cs" Line="42">frmSettings.btnOK_Click(Object, EventArgs):Void passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Ongeldige map opgeven.'</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.cs" Line="42">Change frmSettings.btnOK_Click(Object, EventArgs):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.cs" Line="55">Change frmSettings.btnOK_Click(Object, EventArgs):Void to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="cbxRememberTwPass_CheckedChanged(System.Object,System.EventArgs):System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.cs" Line="130">frmSettings.cbxRememberTwPass_CheckedChanged(Object, EventArgs):Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: ''</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="getTransparecylevel():System.Decimal" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.cs" Line="78">frmSettings.getTransparecylevel():Decimal passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'transparecylevel out of range.'</Issue>
+            </Message>
+            <Message Id="System.Convert.ToDecimal(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.cs" Line="77">frmSettings.getTransparecylevel():Decimal makes a call to System.Convert.ToDecimal(System.String) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToDecimal(System.String,System.IFormatProvider).</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.cs" Line="78">Change frmSettings.getTransparecylevel():Decimal to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="getTwitterpassword():System.String" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.cs" Line="95">Replace the call to String.op_Equality("") in 'frmSettings.getTwitterpassword():String' with a call to String.IsNullOrEmpty.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="InitializeComponent():System.Void" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="152">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: '%'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="220">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: '?'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="83">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Cancel'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="94">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Defaul color new notes:'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="61">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Enable transparency'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="211">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Highlight code'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="72">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'OK'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="198">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Remember password (warning: not encrypted)'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="265">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'Settings'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="229">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'browse'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="239">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'save notes in:'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="189">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'twitter password:'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="frmSettings.Designer.cs" Line="170">frmSettings.InitializeComponent():Void passes a literal as parameter 1 of a call to Control.set_Text(String):Void. Retrieve the following string argument from a resource table instead: 'twitter username:'</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="xmlHandler" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
+         <Members>
+          <Member Name=".ctor(System.Boolean,System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="51">xmlHandler.xmlHandler(Boolean, String) initializes field source of type System.String to null. Remove this initialization as it will be done automatically by the runtime.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="AppDataFolder" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Accessors>
+            <Accessor Name="get_AppDataFolder():System.String" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+             <Messages>
+              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+               <Issue Certainty="75" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="47">'xmlHandler.get_AppDataFolder():String' appears to have no upstream public or protected callers.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="CheckFile():System.Boolean" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="286">xmlHandler.CheckFile():Boolean passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Failed making backup copy.'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="266">xmlHandler.CheckFile():Boolean passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'File empty.'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="294">xmlHandler.CheckFile():Boolean passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'File is unusual big. &gt;32kb'</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="266">Change xmlHandler.CheckFile():Boolean to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="286">Change xmlHandler.CheckFile():Boolean to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="294">Change xmlHandler.CheckFile():Boolean to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="ExecutePostCommand(System.String,System.String,System.String,System.String):System.String" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="466">Modify 'xmlHandler.ExecutePostCommand(String, String, String, String):String' to catch a more specific exception than 'System.Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="468">xmlHandler.ExecutePostCommand(String, String, String, String):String passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Error: __'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="464">xmlHandler.ExecutePostCommand(String, String, String, String):String passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Error: connection timeout. '</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="473">xmlHandler.ExecutePostCommand(String, String, String, String):String passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Twitter username or/and password not filled in.'</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="464">Change xmlHandler.ExecutePostCommand(String, String, String, String):String to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="468">Change xmlHandler.ExecutePostCommand(String, String, String, String):String to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="473">Change xmlHandler.ExecutePostCommand(String, String, String, String):String to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="getXMLnode(System.String):System.String" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="324">xmlHandler.getXMLnode(String):String passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Error: __'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="329">xmlHandler.getXMLnode(String):String passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'Error: __'</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="324">Change xmlHandler.getXMLnode(String):String to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="329">Change xmlHandler.getXMLnode(String):String to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="335">Change xmlHandler.getXMLnode(String):String to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="Source" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Accessors>
+            <Accessor Name="set_Source(System.String):System.Void" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+             <Messages>
+              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+               <Issue Certainty="75" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="91">'xmlHandler.set_Source(String):Void' appears to have no upstream public or protected callers.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="TwitterClientVersion" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Accessors>
+            <Accessor Name="set_TwitterClientVersion(System.String):System.Void" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+             <Messages>
+              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+               <Issue Certainty="75" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="66">'xmlHandler.set_TwitterClientVersion(String):Void' appears to have no upstream public or protected callers.</Issue>
+              </Message>
+             </Messages>
+            </Accessor>
+           </Accessors>
+          </Member>
+          <Member Name="Update(System.String,System.String,System.String):System.String" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="406">xmlHandler.Update(String, String, String):String makes a call to System.String.Format(System.String,System.Object) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.String.Format(System.IFormatProvider,System.String,System.Object[]).</Issue>
+            </Message>
+            <Message Id="System.String.Format(System.String,System.Object,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="405">xmlHandler.Update(String, String, String):String makes a call to System.String.Format(System.String,System.Object,System.Object,System.Object) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.String.Format(System.IFormatProvider,System.String,System.Object[]).</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="WriteNote(System.String,System.String,System.String):System.Boolean" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="247">Modify 'xmlHandler.WriteNote(String, String, String):Boolean' to catch a more specific exception than 'System.Exception' or rethrow the exception.</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="215">xmlHandler.WriteNote(String, String, String):Boolean passes a literal as parameter 1 of a call to MessageBox.Show(String):DialogResult. Retrieve the following string argument from a resource table instead: 'error __'</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="215">Change xmlHandler.WriteNote(String, String, String):Boolean to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="WriteSettings(System.Boolean,System.Decimal,System.Int32,System.String,System.Boolean,System.String,System.String):System.Boolean" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Exception.#ctor(System.String)" TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="132">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean passes a literal as parameter 1 of a call to Exception.Exception(String). Retrieve the following string argument from a resource table instead: 'Impossible selection'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="144">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean passes a literal as parameter 1 of a call to Exception.Exception(String). Retrieve the following string argument from a resource table instead: 'dir not exist'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="169">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean passes a literal as parameter 1 of a call to Exception.Exception(String). Retrieve the following string argument from a resource table instead: 'twitter password too long.'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="168">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean passes a literal as parameter 1 of a call to Exception.Exception(String). Retrieve the following string argument from a resource table instead: 'twitter password too short.'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="163">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean passes a literal as parameter 1 of a call to Exception.Exception(String). Retrieve the following string argument from a resource table instead: 'twitter username has negative length. How can that be?'</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="162">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean passes a literal as parameter 1 of a call to Exception.Exception(String). Retrieve the following string argument from a resource table instead: 'twitter username too long.'</Issue>
+            </Message>
+            <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="Breaking">
+             <Issue Name="TooGeneric" Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="132">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean creates an exception of type 'System.Exception', an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Issue>
+             <Issue Name="TooGeneric" Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="144">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean creates an exception of type 'System.Exception', an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Issue>
+             <Issue Name="TooGeneric" Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="162">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean creates an exception of type 'System.Exception', an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Issue>
+             <Issue Name="TooGeneric" Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="163">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean creates an exception of type 'System.Exception', an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Issue>
+             <Issue Name="TooGeneric" Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="168">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean creates an exception of type 'System.Exception', an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Issue>
+             <Issue Name="TooGeneric" Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="169">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean creates an exception of type 'System.Exception', an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Issue>
+            </Message>
+            <Message Id="System.Convert.ToString(System.Decimal)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="129">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean makes a call to System.Convert.ToString(System.Decimal) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToString(System.Decimal,System.IFormatProvider).</Issue>
+            </Message>
+            <Message Id="System.Convert.ToString(System.Int32)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="135">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean makes a call to System.Convert.ToString(System.Int32) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToString(System.Int32,System.IFormatProvider).</Issue>
+            </Message>
+            <Message Id="System.Convert.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="165">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean makes a call to System.Convert.ToString(System.String) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToString(System.String,System.IFormatProvider).</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="172">xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean makes a call to System.Convert.ToString(System.String) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToString(System.String,System.IFormatProvider).</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2009-07-11 15:54:16Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="c:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote" File="xmlHandler.cs" Line="168">Replace the call to String.op_Inequality("") in 'xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean' with a call to String.IsNullOrEmpty.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="AssembliesShouldDeclareMinimumSecurity" Category="Microsoft.Usage" CheckId="CA2209">
+   <Name>Assemblies should declare minimum security</Name>
+   <Description>Permission requests prevent security exceptions from being thrown after code in an assembly has already begun executing. If permission requests are specified on an assembly, the assembly will not load at runtime if it has insufficient permissions. To resolve violations of this rule, add attributes that specify what permissions the assembly will demand or might demand, and what permissions it does not want granted.  To specify required permissions, use SecurityAction.Minimum. To specify permissions that the assembly might demand, use SecurityAction.RequestOptional. To specify permissions that the assembly must not be granted, use SecurityAction.RequestRefuse.</Description>
+   <Resolution Name="Default">No valid permission requests were found for assembly '{0}'. You should always specify the minimum security permissions using SecurityAction.RequestMinimum.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Usage/AssembliesShouldDeclareMinimumSecurity.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="UsageRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+   <Name>Assemblies should have valid strong names</Name>
+   <Description>Either the assembly has no strong name, an invalid one, or the strong name is valid only because of the computer configuration. The assembly should not be deployed in this state. The most common causes of this are: 1) The assembly's contents were modified after it was signed. 2) The signing process failed. 3) The assembly was delay-signed. 4) A registry key existed that allowed the check to pass (where it would not have otherwise).</Description>
+   <Resolution Name="NoStrongName">Sign '{0}' with a strong name key.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Design/AssembliesShouldHaveValidStrongNames.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="DesignRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+   <Name>Avoid uncalled private code</Name>
+   <Description>There is uncalled code that is not externally visible and is not a known runtime entry point. If this violation fires in error, please send a problem report to the Visual Studio Code Analysis team.</Description>
+   <Resolution Name="Default">'{0}' appears to have no upstream public or protected callers.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Performance/AvoidUncalledPrivateCode.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+   <Name>Avoid unused private fields</Name>
+   <Description>Private fields were detected that do not appear to be accessed within the assembly. If this violation fires in error, please send a problem report to the Visual Studio Code Analysis team.</Description>
+   <Resolution Name="Default">It appears that field '{0}' is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Performance/AvoidUnusedPrivateFields.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+   <Name>Do not catch general exception types</Name>
+   <Description>You should not catch Exception or SystemException. Catching generic exception types can hide run-time problems from the library user, and can complicate debugging. You should catch only those exceptions that you can handle gracefully.</Description>
+   <Resolution Name="Default">Modify '{0}' to catch a more specific exception than '{1}' or rethrow the exception.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Design/DoNotCatchGeneralExceptionTypes.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="DesignRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
+   <Name>Do not declare visible instance fields</Name>
+   <Description>Public or protected instance fields limit your ability to change the implementation details for those data items. Use properties instead. They do not compromise usability or performance and they do provide flexibility in that they conceal the  implementation details of the underlying data.</Description>
+   <Resolution Name="Default">Make '{0}' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Design/DoNotDeclareVisibleInstanceFields.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="DesignRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
+   <Name>Do not expose generic lists</Name>
+   <Description>Do not expose List&lt;T&gt; in object models. Use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt; instead. List&lt;T&gt; is meant to be used from implementation, not in object model API. List&lt;T&gt; is optimized for performance at the cost of long term versioning. For example, if you return List&lt;T&gt; to the client code, you will not ever be able to receive notifications when client code modifies the collection.</Description>
+   <Resolution Name="Default">Change '{0}' in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Design/DoNotExposeGenericLists.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="DesignRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
+   <Name>Do not initialize unnecessarily</Name>
+   <Description>Do not make initializations that have already been done by the runtime.</Description>
+   <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization as it will be done automatically by the runtime.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Performance/DoNotInitializeUnnecessarily.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotPassLiteralsAsLocalizedParameters" Category="Microsoft.Globalization" CheckId="CA1303">
+   <Name>Do not pass literals as localized parameters</Name>
+   <Description>String literals that are embedded in source code are difficult to localize. Avoid passing string literals as arguments in circumstances where a localized string is generally expected. Most localized applications, for example, should localize string arguments that are passed to exception constructors. When creating an Exception instance, therefore, a string argument retrieved from a string table is more appropriate than a string literal.</Description>
+   <Resolution Name="Default">{0} passes a literal as parameter {1} of a call to {2}. Retrieve the following string argument from a resource table instead: '{3}'</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Globalization/DoNotPassLiteralsAsLocalizedParameters.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="GlobalizationRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
+   <Name>Do not raise reserved exception types</Name>
+   <Description>User code should not create and raise exceptions of certain types that are reserved by the runtime or which are of a too general exception type. Exception types that are too general include Exception, SystemException, and ApplicationException. Exception types that are reserved by the runtime include ThreadAbortException, OutOfMemoryException, ExecutionEngineException, and IndexOutOfRangeException.</Description>
+   <Resolution Name="TooGeneric">{0} creates an exception of type '{1}', an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Usage/DoNotRaiseReservedExceptionTypes.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="UsageRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+   <Name>Identifiers should be cased correctly</Name>
+   <Description>Type, namespace, and member identifiers are pascal-cased. Parameter identifiers are camel-cased. The pascal-casing convention capitalizes the first letter of each word, as in BackColor. The camel-casing convention formats the first letter of the first word in lowercase and capitalizes the first letter of all subsequent words, as in backgroundColor.</Description>
+   <Resolution Name="Parameter">Correct the casing of parameter name '{0}'.</Resolution>
+   <Resolution Name="Type">Correct the casing of type name '{0}'.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Naming/IdentifiersShouldBeCasedCorrectly.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="NamingRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+   <Name>Identifiers should be spelled correctly</Name>
+   <Description>The individual words that make up an identifier should not be abbreviated and should be spelled correctly. If this rule generates a false positive on a term that should be recognized, add the word to the FxCop custom dictionary.</Description>
+   <Resolution Name="Parameter">In method {0}, correct the spelling of the unrecognized token '{1}' in parameter name '{2}' or strip it entirely if it represents any sort of hungarian notation.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Naming/IdentifiersShouldBeSpelledCorrectly.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">CriticalWarning</MessageLevel>
+   <File Name="NamingRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+   <Name>Identifiers should not contain underscores</Name>
+   <Description>Do not use underscores when specifying identifiers. Some generated Visual Studio identifiers for applications contain underscore characters. Underscore characters should generally be avoided in public identifiers.</Description>
+   <Resolution Name="Member">Remove all underscores from member '{0}'.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Naming/IdentifiersShouldNotContainUnderscores.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="NamingRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705">
+   <Name>Long acronyms should be pascal-cased</Name>
+   <Description>Acronyms of three or more letters should be Pascal-cased. For example, use XmlSpace rather than XMLSpace. A violation of this rule might be required for compatibility with existing, non-managed symbol schemes. In general, however, these symbols should not be visible outside the assembly that uses them.</Description>
+   <Resolution Name="Member">Correct the capitalization of member name '{0}'.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Naming/LongAcronymsShouldBePascalCased.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="85">Error</MessageLevel>
+   <File Name="NamingRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+   <Name>Mark assemblies with CLSCompliant</Name>
+   <Description>Assemblies should explicitly state their Cls compliance using the CLSCompliant attribute. An assembly without this attribute is not CLS-compliant. Assemblies, modules, and types can be CLS-compliant even if some parts of the assembly, module, or type are not CLS-compliant. The following rules apply: 1) If the element is marked CLSCompliant, any noncompliant members must have the CLSCompliant attribute present with its argument set to false. 2) A comparable CLS-compliant alternative member must be supplied for each member that is not CLS-compliant.</Description>
+   <Resolution Name="NoAttr">'{0}' should be marked with CLSCompliantAttribute and its value should be true.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Design/MarkAssembliesWithClsCompliant.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="DesignRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414">
+   <Name>Mark boolean pinvoke arguments with MarshalAs</Name>
+   <Description>All boolean pinvoke parameters and return types should be explicitly marked with the MarshalAs attribute. By default, the system will marshal all booleans as 4-byte UnmanagedType.Bool. This is the correct behavior for Win32 'BOOL' arguments but incorrect for C++ 'bool' arguments, which should be marshaled as 1-byte UnmanagedType.U1. For code maintainability reasons, always explicitly specify the marshaling information for boolean arguments and return values.</Description>
+   <Resolution Name="Return">Add the MarshalAsAttribute to the return type of PInvoke {0}. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Interoperability/MarkBooleanPInvokeArgumentsWithMarshalAs.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="InteroperabilityRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+   <Name>Mark members as static</Name>
+   <Description>Methods which do not access instance data or call instance methods can be marked as static (Shared in VB). After doing so, the compiler will emit non-virtual call sites to these members which will prevent a check at runtime for each call that insures the current object pointer is non-null. This can result in a measurable performance gain for performance-sensitive code. In some cases, the failure to access the current object instance represents a correctness issue.</Description>
+   <Resolution Name="Default">The 'this' parameter (or 'Me' in VB) of {0} is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Performance/MarkMembersAsStatic.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060">
+   <Name>Move pinvokes to native methods class</Name>
+   <Description>This type contains members with the DllImport attribute. Members with the DllImport attribute should be contained in classes named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Description>
+   <Resolution Name="Default">Because it is a DllImport method, {0} should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Design/MovePInvokesToNativeMethodsClass.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalWarning</MessageLevel>
+   <File Name="DesignRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901">
+   <Name>PInvoke declarations should be portable</Name>
+   <Description>.</Description>
+   <Resolution Name="Parameter">As it is declared in your code, parameter '{0}' of PInvoke {1} will be {2} bytes wide on {3} platforms. This is not correct, as the actual native declaration of this API indicates it should be {4} bytes wide on {3} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of '{5}'.</Resolution>
+   <Resolution Name="Return">As it is declared in your code, the return type of PInvoke {0} will be {1} bytes wide on {2} platforms. This is not correct, as the actual native declaration of this API indicates it should be {3} bytes wide on {2} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of '{4}'.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Portability/PInvokeDeclarationsShouldBePortable.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="PortabilityRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401">
+   <Name>PInvokes should not be visible</Name>
+   <Description>Interop layer should not be public. The DllImport attribute should not be applied to publicly accessible members (public or protected).</Description>
+   <Resolution Name="Default">Change the accessibility of DllImport '{0}' so that it is no longer visible from outside its assembly.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Interoperability/PInvokesShouldNotBeVisible.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="50">CriticalError</MessageLevel>
+   <File Name="InteroperabilityRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+   <Name>Remove unused locals</Name>
+   <Description>Remove locals that are not used or are only assigned to in method implementations.</Description>
+   <Resolution Name="Default">{0} declares a local, '{1}', of type {2}, which is never used or is only assigned to. Use this local or remove it.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Performance/RemoveUnusedLocals.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+   <Name>Review unused parameters</Name>
+   <Description>Review parameters in non-virtual methods that are not used in the method body to insure no correctness exists around failure to access them. Unused parameters incur maintenance and performance costs. Sometimes a violation of this rule can point to an implementation bug in the method (i.e. the parameter should actually have been used in the method body). Exclude warnings of this rule if the parameter has to exist because of backward compatibility.</Description>
+   <Resolution Name="Default">Parameter '{0}' of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Usage/ReviewUnusedParameters.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="UsageRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706">
+   <Name>Short acronyms should be uppercase</Name>
+   <Description>Two letter acronyms should be upper-cased. For example, use System.IO instead of System.Io. Although it may be common practice for some two letter acronyms to not be fully capitalized, violations of this rule should not be excluded for this reason. For example, 'DbConnection', is common but incorrect; use DBConnection. A violation of this rule might be required for compatibility with existing, non-managed symbol schemes. In general, however, these symbols should not be visible outside the assembly that uses them.</Description>
+   <Resolution Name="MemberId">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of 'ID' in member name '{0}' by changing it to 'Id'.</Resolution>
+   <Resolution Name="ParameterId">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of '{0}' in parameter name '{1}' by changing it to '{2}'.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Naming/ShortAcronymsShouldBeUppercase.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="85">Error</MessageLevel>
+   <File Name="NamingRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+   <Name>Specify IFormatProvider</Name>
+   <Description>If an overload exists that takes an IFormatProvider argument, it should always be called in favor of an overload that does not. Some methods in the common language runtime convert a value to or from a string representation and take a string parameter that contains one or more characters, called format specifiers, which indicate how the value is to be converted. If the meaning of the format specifier varies by culture, a formatting object supplies the actual characters used in the string representation. In scenarios where sorting and comparison behavior should never change between cultures, specify CultureInfo.InvariantCulture.</Description>
+   <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide an IFormatProvider. This should be replaced with a call to {2}.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Globalization/SpecifyIFormatProvider.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="GlobalizationRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
+   <Name>Specify MessageBoxOptions</Name>
+   <Description>In order to run correctly on right-to-left systems, all calls to MessageBox.Show should use the overload that specifies MessageBoxOptions as an argument. Programs should detect whether they are running on a right-to-left system at run-time and pass the appropriate MessageBoxOptions value in order to display correctly.</Description>
+   <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control. If it is set to RightTolLeft.Inherit, check its parent until a value indicating Yes or No is found.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Globalization/SpecifyMessageBoxOptions.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="GlobalizationRules.dll" Version="1.35.0.0" />
+  </Rule>
+  <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
+   <Name>Test for empty strings using string length</Name>
+   <Description>To test for empty strings, check if String.Length is equal to zero. Constructs such as "".Equals(someString) and String.Empty.Equals(someString) are less efficient than testing the string length. Replace these with checks for someString.Length == 0.</Description>
+   <Resolution Name="IsNullOrEmpty">Replace the call to String.{0}({1}) in '{2}' with a call to String.IsNullOrEmpty.</Resolution>
+   <Owner />
+   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Performance/TestForEmptyStringsUsingStringLength.html</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="PerformanceRules.dll" Version="1.35.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="Line">Line</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>
