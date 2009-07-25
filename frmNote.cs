@@ -41,23 +41,61 @@ namespace SimplePlainNote
             "false|finally|fixed|float|for|foreach|goto|if|implicit|in|int|interface|internal|is|lock|"+
             "long|namespace|new|null|object|operator|out|override|params|private|protected|public|"+
             "readonly|ref|return|sbyte|sealed|short|sizeof|stackalloc|static|string|struct|switch|this|"+
-            "throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|volatile|void|while|");               
+            "throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|volatile|void|while|");
 
-        public FrmNote(int id, string title, string note, int notecolor)
+        #region constructor
+        public FrmNote(int id, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
         {            
             this.id = id;
             this.title = title;            
             this.note = note;
             this.transparency = getTransparency();
-            InitializeComponent();            
+            this.notecolor = notecolor;
+
+            this.Width = notewidth;
+            this.Height = noteheight;
+
+            if ((locX >= 0) && (locY >= 0))
+            {
+                this.locX = locX;
+                this.locY = locY;
+            }
+            else
+            {
+                this.locX = 10;
+                this.locY = 10;
+            }
             
+            InitializeComponent();
+            lblTitle.Text = title;
+            rtbNote.Text = note;                                                           
+
+            paintColorNote();
+            SetPosNote();
+        }
+
+        public FrmNote(int id, string title, string note, int notecolor)
+        {
+            this.id = id;
+            this.title = title;
+            this.note = note;
+            this.transparency = getTransparency();
+            this.notecolor = notecolor;
+            //set default location note
+            this.locX = 10;
+            this.locY = 10;
+            //set width and height to default
+            this.Width = 240;
+            this.Height = 240;
+            InitializeComponent();
+
             lblTitle.Text = title;
             rtbNote.Text = note;
 
-            this.notecolor = notecolor;            
             paintColorNote();
-            //SetPosNote();
+            SetPosNote();
         }
+#endregion
 
         #region properties
         public int ID
@@ -132,6 +170,9 @@ namespace SimplePlainNote
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
+                this.locX = this.Location.X;
+                this.locY = this.Location.Y;
+                timerSavePos.Enabled = true;
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 pnlHead.BackColor = getskin.getObjColor(false);
             }
@@ -176,7 +217,7 @@ namespace SimplePlainNote
                     curitem.Checked = true;
                     notecolor = i;
                     xmlHandler savenotecolor = new xmlHandler(false, this.id + ".xml");
-                    savenotecolor.WriteNote(Convert.ToString(notecolor), this.title, this.note);                    
+                    savenotecolor.WriteNote(Convert.ToString(notecolor), this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
                 }
                 else
                 {
@@ -253,6 +294,7 @@ namespace SimplePlainNote
                 {
                     this.Cursor = Cursors.SizeNWSE;
                     this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
+                    timerSavePos.Enabled = true;
                 }
             }
             this.Cursor = Cursors.Default;
@@ -430,9 +472,31 @@ namespace SimplePlainNote
 
         private void SetPosNote()
         {
-            //xmlHandler setNote = new xmlHandler(false, id + ".xml");
-            //setNote.WriteNote(notecolor, title, ?);
-            throw new NotImplementedException();
+            this.Location = new Point(locX, locY);
+        }
+
+        private void timerSavePos_Tick(object sender, EventArgs e)
+        {
+            xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
+            try
+            {
+                string numcolor = Convert.ToString(this.notecolor);
+                if ((this.locX >= 0) && (this.locY >= 0))
+                {
+                    updateposnote.WriteNote(numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                }
+                else
+                {
+                    MessageBox.Show("Error: note location out of screen.");
+                }
+            
+            }
+            catch (InvalidCastException)
+            {
+                MessageBox.Show("internal error");                
+            }
+            
+            timerSavePos.Enabled = false;
         }
 
     }

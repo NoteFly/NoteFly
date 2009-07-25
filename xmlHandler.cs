@@ -201,7 +201,7 @@ namespace SimplePlainNote
             }
         }
 
-        public bool WriteNote(string numcolor, string title, string content)
+        public bool WriteNote(string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
             try {
                 if (Directory.Exists(appdatafolder) == false)
@@ -229,12 +229,29 @@ namespace SimplePlainNote
 
                         objXmlTextWriter.WriteStartElement("title");
                             objXmlTextWriter.WriteString(title);
-                        objXmlTextWriter.WriteEndElement();
+                        objXmlTextWriter.WriteEndElement();                        
 
                         objXmlTextWriter.WriteStartElement("content");
                             objXmlTextWriter.WriteString(content);
                         objXmlTextWriter.WriteEndElement();
 
+                        objXmlTextWriter.WriteStartElement("location");
+                            objXmlTextWriter.WriteStartElement("x");
+                                objXmlTextWriter.WriteString(Convert.ToString(locX));
+                            objXmlTextWriter.WriteEndElement();
+                            objXmlTextWriter.WriteStartElement("y");
+                                objXmlTextWriter.WriteString(Convert.ToString(locY));
+                            objXmlTextWriter.WriteEndElement();
+                        objXmlTextWriter.WriteEndElement();
+
+                        objXmlTextWriter.WriteStartElement("size");
+                            objXmlTextWriter.WriteStartElement("width");
+                                objXmlTextWriter.WriteString(Convert.ToString(notewidth));
+                            objXmlTextWriter.WriteEndElement();
+                            objXmlTextWriter.WriteStartElement("heigth");
+                                objXmlTextWriter.WriteString(Convert.ToString(noteheight));
+                            objXmlTextWriter.WriteEndElement();
+                        objXmlTextWriter.WriteEndElement();
                     objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteEndDocument();

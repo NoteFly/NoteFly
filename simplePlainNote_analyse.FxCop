@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<FxCopProject Version="1.35" Name="My FxCop Project">
+<FxCopProject Version="1.36" Name="My FxCop Project">
  <ProjectOptions>
   <SharedProject>True</SharedProject>
-  <Stylesheet Apply="False">http://www.gotdotnet.com/team/fxcop//xsl/1.35/FxCopReport.xsl</Stylesheet>
+  <Stylesheet Apply="False">c:\program files\microsoft fxcop 1.36\Xml\FxCopReport.xsl</Stylesheet>
   <SaveMessages>
    <Project Status="Active, Excluded" NewOnly="False" />
    <Report Status="Active" NewOnly="False" />
@@ -13,32 +13,32 @@
   <SourceLookup>True</SourceLookup>
   <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
   <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
-  <Spelling Locale="en-us" />
-  <VersionAware>False</VersionAware>
+  <Spelling Locale="en-US" />
   <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
   <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
   <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
   <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
  </ProjectOptions>
  <Targets>
   <Target Name="$(ProjectDir)/bin/Debug/SimplePlainNote.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
-   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="False" AllRulesEnabled="False" />
-   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="False" AllRulesEnabled="False" />
-   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="False" AllRulesEnabled="False" />
-   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="False" AllRulesEnabled="False" />
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
-   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="False" AllRulesEnabled="False" />
-   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="False" AllRulesEnabled="False" />
-   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="False" AllRulesEnabled="False" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
   </RuleFiles>
   <Groups />
   <Settings />
  </Rules>
- <FxCopReport Version="1.35">
+ <FxCopReport Version="1.36">
   <Targets>
    <Target Name="$(ProjectDir)/bin/Debug/SimplePlainNote.exe">
     <Modules>
@@ -48,67 +48,201 @@
         <Types>
          <Type Name="frmManageNotes">
           <Messages>
-           <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
+           <Message Id="frm" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
             <Issue Name="Type">
-             <Item>frmManageNotes</Item>
+             <Item>frm</Item>
+             <Item>'frmManageNotes'</Item>
+             <Item>Frm</Item>
+            </Issue>
+           </Message>
+           <Message Id="frm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+            <Issue Name="Type">
+             <Item>frm</Item>
+             <Item>'frmManageNotes'</Item>
             </Issue>
            </Message>
           </Messages>
           <Members>
-           <Member Name="HT_CAPTION">
+           <Member Name="#.ctor(SimplePlainNote.frmNewNote)">
             <Messages>
-             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Member">
-               <Item>HT_CAPTION</Item>
-              </Issue>
-             </Message>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Member">
-               <Item>frmManageNotes.HT_CAPTION</Item>
+             <Message Id="fcn" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmManageNotes.frmManageNotes(frmNewNote)'</Item>
+               <Item>fcn</Item>
+               <Item>'fcn'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32):System.Int32">
+           <Member Name="#DrawNotesOverview(System.Collections.Generic.List`1&lt;SimplePlainNote.FrmNote&gt;)">
             <Messages>
-             <Message Id="1#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Parameter">
+             <Message Id="System.Convert.ToString(System.Int32)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'Convert.ToString(int)'</Item>
+               <Item>'frmManageNotes.DrawNotesOverview(List&lt;FrmNote&gt;)'</Item>
+               <Item>'Convert.ToString(int, IFormatProvider)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Convert.ToString(int)'</Item>
+               <Item>'frmManageNotes.DrawNotesOverview(List&lt;FrmNote&gt;)'</Item>
+               <Item>'Convert.ToString(int, IFormatProvider)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Convert.ToString(int)'</Item>
+               <Item>'frmManageNotes.DrawNotesOverview(List&lt;FrmNote&gt;)'</Item>
+               <Item>'Convert.ToString(int, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#HT_CAPTION">
+            <Messages>
+             <Message Id="CAPTION" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
+              <Issue Name="Member">
+               <Item>CAPTION</Item>
+               <Item>'frmManageNotes.HT_CAPTION'</Item>
+               <Item>Caption</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-17 00:15:15Z">
+              <Issue Name="Member">
+               <Item>'frmManageNotes.HT_CAPTION'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#pnlHead_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <Messages>
+             <Message Id="SimplePlainNote.frmManageNotes.SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-07-17 00:24:21Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'frmManageNotes.pnlHead_MouseDown(object, MouseEventArgs)'</Item>
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ReleaseCapture()">
+            <Messages>
+             <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Created="2009-07-17 00:24:21Z">
+              <Issue Name="Return">
+               <Item>'frmManageNotes.ReleaseCapture()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'frmManageNotes.ReleaseCapture()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmManageNotes.ReleaseCapture()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="Msg" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
                <Item>Msg</Item>
+               <Item>'Msg'</Item>
+               <Item>msg</Item>
               </Issue>
              </Message>
-             <Message Id="0#h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Parameter">
-               <Item>frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+             <Message Id="Param" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>Param</Item>
+               <Item>'lParam'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>Param</Item>
+               <Item>'wParam'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Wnd" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>Wnd</Item>
+               <Item>'hWnd'</Item>
+              </Issue>
+             </Message>
+             <Message Id="h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
                <Item>h</Item>
-               <Item>hWnd</Item>
+               <Item>'hWnd'</Item>
               </Issue>
              </Message>
-             <Message Id="2#w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Parameter">
-               <Item>frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
-               <Item>w</Item>
-               <Item>wParam</Item>
-              </Issue>
-             </Message>
-             <Message Id="3#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Parameter">
-               <Item>frmManageNotes.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+             <Message Id="l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
                <Item>l</Item>
-               <Item>lParam</Item>
+               <Item>'lParam'</Item>
+              </Issue>
+             </Message>
+             <Message Id="w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>w</Item>
+               <Item>'wParam'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="2" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2009-07-17 00:24:21Z" FixCategory="Breaking">
+              <Issue Name="Parameter">
+               <Item>'wParam'</Item>
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message Id="3" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2009-07-17 00:24:21Z" FixCategory="Breaking">
+              <Issue Name="Parameter">
+               <Item>'lParam'</Item>
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2009-07-17 00:24:21Z" FixCategory="Breaking">
+              <Issue Name="Return">
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmManageNotes.SendMessage(IntPtr, int, int, int)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="WM_NCLBUTTONDOWN">
+           <Member Name="#WM_NCLBUTTONDOWN">
             <Messages>
-             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:00:05Z">
+             <Message Id="NCLBUTTONDOWN" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
               <Issue Name="Member">
-               <Item>WM_NCLBUTTONDOWN</Item>
+               <Item>NCLBUTTONDOWN</Item>
+               <Item>'frmManageNotes.WM_NCLBUTTONDOWN'</Item>
+               <Item>Nclbuttondown</Item>
               </Issue>
              </Message>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:00:05Z">
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-17 00:15:15Z">
               <Issue Name="Member">
-               <Item>frmManageNotes.WM_NCLBUTTONDOWN</Item>
+               <Item>'frmManageNotes.WM_NCLBUTTONDOWN'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -117,146 +251,327 @@
          </Type>
          <Type Name="frmNewNote">
           <Messages>
-           <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
+           <Message Id="frm" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
             <Issue Name="Type">
-             <Item>frmNewNote</Item>
+             <Item>frm</Item>
+             <Item>'frmNewNote'</Item>
+             <Item>Frm</Item>
+            </Issue>
+           </Message>
+           <Message Id="frm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+            <Issue Name="Type">
+             <Item>frm</Item>
+             <Item>'frmNewNote'</Item>
             </Issue>
            </Message>
           </Messages>
           <Members>
-           <Member Name=".ctor()">
+           <Member Name="#.ctor()">
             <Messages>
              <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2009-07-16 01:00:05Z">
               <Issue>
-               <Item>frmNewNote.frmNewNote()</Item>
-               <Item>editmode</Item>
-               <Item>System.Boolean</Item>
+               <Item>'frmNewNote.frmNewNote()'</Item>
+               <Item>'frmNewNote.editmode'</Item>
+               <Item>'bool'</Item>
                <Item>false</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="btnAddNote_Click(System.Object,System.EventArgs):System.Void">
+           <Member Name="#btnAddNote_Click(System.Object,System.EventArgs)">
             <Messages>
              <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:00:05Z">
               <Issue Name="IsNullOrEmpty">
-               <Item>op_Equality</Item>
-               <Item>""</Item>
-               <Item>frmNewNote.btnAddNote_Click(Object, EventArgs):Void</Item>
+               <Item>'string.operator ==(string, string)'</Item>
+               <Item>'frmNewNote.btnAddNote_Click(object, EventArgs)'</Item>
               </Issue>
               <Issue Name="IsNullOrEmpty">
-               <Item>op_Equality</Item>
-               <Item>""</Item>
-               <Item>frmNewNote.btnAddNote_Click(Object, EventArgs):Void</Item>
+               <Item>'string.operator ==(string, string)'</Item>
+               <Item>'frmNewNote.btnAddNote_Click(object, EventArgs)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="CreateNote(System.String,System.String,System.Int32):System.Void">
+           <Member Name="#CreateNote(System.String,System.String,System.Int32)">
             <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'frmNewNote.CreateNote(string, string, int)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message Id="notecolor" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmNewNote.CreateNote(string, string, int)'</Item>
+               <Item>notecolor</Item>
+               <Item>'notecolor'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmNewNote.CreateNote(string, string, int)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'frmNewNote.CreateNote(string, string, int)'</Item>
+              </Issue>
+             </Message>
              <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:00:05Z">
               <Issue Name="IsNullOrEmpty">
-               <Item>op_Equality</Item>
-               <Item>""</Item>
-               <Item>frmNewNote.CreateNote(String, String, Int32):Void</Item>
+               <Item>'string.operator ==(string, string)'</Item>
+               <Item>'frmNewNote.CreateNote(string, string, int)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="DeleteNote(System.Int32):System.Void">
+           <Member Name="#DeleteNote(System.Int32)">
             <Messages>
              <Message Id="m" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2009-07-16 01:00:05Z">
               <Issue>
-               <Item>frmNewNote.DeleteNote(Int32):Void</Item>
-               <Item>m</Item>
-               <Item>System.Int32</Item>
+               <Item>'frmNewNote.DeleteNote(int)'</Item>
+               <Item>'m'</Item>
+               <Item>'int'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="EditNote(System.Int32):System.Void">
+           <Member Name="#editNote(System.Int32)">
             <Messages>
-             <Message Id="0#" TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706" Created="2009-07-16 01:00:05Z">
-              <Issue Name="ParameterId">
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'frmNewNote.editNote(int)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmNewNote.editNote(int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#EditNote(System.Int32)">
+            <Messages>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameterAbbreviation">
+               <Item>'frmNewNote.EditNote(int)'</Item>
                <Item>ID</Item>
-               <Item>noteID</Item>
+               <Item>'noteID'</Item>
                <Item>Id</Item>
               </Issue>
              </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmNewNote.EditNote(int)'</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
-           <Member Name="getSkin():SimplePlainNote.skin">
+           <Member Name="#GetNotes">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'List&lt;FrmNote&gt;'</Item>
+               <Item>'frmNewNote.GetNotes'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#getSkin()">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-07-16 01:00:05Z" FixCategory="NonBreaking">
               <Issue>
-               <Item>frmNewNote.getSkin():skin</Item>
+               <Item>'frmNewNote.getSkin()'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.Convert.ToInt32(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'Convert.ToInt32(string)'</Item>
+               <Item>'frmNewNote.getSkin()'</Item>
+               <Item>'Convert.ToInt32(string, IFormatProvider)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="HT_CAPTION">
+           <Member Name="#HT_CAPTION">
             <Messages>
-             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:00:05Z">
+             <Message Id="CAPTION" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
               <Issue Name="Member">
-               <Item>HT_CAPTION</Item>
+               <Item>CAPTION</Item>
+               <Item>'frmNewNote.HT_CAPTION'</Item>
+               <Item>Caption</Item>
               </Issue>
              </Message>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:00:05Z">
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-17 00:15:15Z">
               <Issue Name="Member">
-               <Item>frmNewNote.HT_CAPTION</Item>
+               <Item>'frmNewNote.HT_CAPTION'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="SaveNote(System.Int32,System.String,System.String):System.String">
+           <Member Name="#loadNotes()">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmNewNote.loadNotes()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#pnlHeadNewNote_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <Messages>
+             <Message Id="SimplePlainNote.frmNewNote.SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-07-17 00:24:21Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'frmNewNote.pnlHeadNewNote_MouseDown(object, MouseEventArgs)'</Item>
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ReleaseCapture()">
+            <Messages>
+             <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Created="2009-07-17 00:24:21Z">
+              <Issue Name="Return">
+               <Item>'frmNewNote.ReleaseCapture()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'frmNewNote.ReleaseCapture()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmNewNote.ReleaseCapture()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#rtbNote_LinkClicked(System.Object,System.Windows.Forms.LinkClickedEventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmNewNote.rtbNote_LinkClicked(object, LinkClickedEventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SaveNote(System.Int32,System.String,System.String)">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-07-16 01:00:05Z" FixCategory="NonBreaking">
               <Issue>
-               <Item>frmNewNote.SaveNote(Int32, String, String):String</Item>
+               <Item>'frmNewNote.SaveNote(int, string, string)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmNewNote.SaveNote(int, string, string)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32):System.Int32">
+           <Member Name="#SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32)">
             <Messages>
-             <Message Id="1#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Parameter">
+             <Message Id="Msg" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
                <Item>Msg</Item>
+               <Item>'Msg'</Item>
+               <Item>msg</Item>
               </Issue>
              </Message>
-             <Message Id="0#h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Parameter">
-               <Item>frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+             <Message Id="Param" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>Param</Item>
+               <Item>'lParam'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>Param</Item>
+               <Item>'wParam'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Wnd" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>Wnd</Item>
+               <Item>'hWnd'</Item>
+              </Issue>
+             </Message>
+             <Message Id="h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
                <Item>h</Item>
-               <Item>hWnd</Item>
+               <Item>'hWnd'</Item>
               </Issue>
              </Message>
-             <Message Id="2#w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Parameter">
-               <Item>frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
-               <Item>w</Item>
-               <Item>wParam</Item>
-              </Issue>
-             </Message>
-             <Message Id="3#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:00:05Z">
-              <Issue Name="Parameter">
-               <Item>frmNewNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+             <Message Id="l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
                <Item>l</Item>
-               <Item>lParam</Item>
+               <Item>'lParam'</Item>
+              </Issue>
+             </Message>
+             <Message Id="w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>w</Item>
+               <Item>'wParam'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="2" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2009-07-17 00:24:21Z" FixCategory="Breaking">
+              <Issue Name="Parameter">
+               <Item>'wParam'</Item>
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message Id="3" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2009-07-17 00:24:21Z" FixCategory="Breaking">
+              <Issue Name="Parameter">
+               <Item>'lParam'</Item>
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2009-07-17 00:24:21Z" FixCategory="Breaking">
+              <Issue Name="Return">
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmNewNote.SendMessage(IntPtr, int, int, int)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="WM_NCLBUTTONDOWN">
+           <Member Name="#WM_NCLBUTTONDOWN">
             <Messages>
-             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:00:05Z">
+             <Message Id="NCLBUTTONDOWN" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
               <Issue Name="Member">
-               <Item>WM_NCLBUTTONDOWN</Item>
+               <Item>NCLBUTTONDOWN</Item>
+               <Item>'frmNewNote.WM_NCLBUTTONDOWN'</Item>
+               <Item>Nclbuttondown</Item>
               </Issue>
              </Message>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:00:05Z">
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-17 00:15:15Z">
               <Issue Name="Member">
-               <Item>frmNewNote.WM_NCLBUTTONDOWN</Item>
+               <Item>'frmNewNote.WM_NCLBUTTONDOWN'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -264,154 +579,342 @@
           </Members>
          </Type>
          <Type Name="FrmNote">
+          <Messages>
+           <Message Id="Frm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+            <Issue Name="Type">
+             <Item>Frm</Item>
+             <Item>'FrmNote'</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
-           <Member Name=".ctor(System.Int32,System.String,System.String,System.Int32)">
+           <Member Name="#.ctor(System.Int32,System.String,System.String,System.Int32)">
             <Messages>
              <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2009-07-16 01:27:08Z">
               <Issue>
-               <Item>FrmNote.FrmNote(Int32, String, String, Int32)</Item>
-               <Item>notelock</Item>
-               <Item>System.Boolean</Item>
+               <Item>'FrmNote.FrmNote(int, string, string, int)'</Item>
+               <Item>'FrmNote.notelock'</Item>
+               <Item>'bool'</Item>
                <Item>false</Item>
               </Issue>
              </Message>
+             <Message Id="notecolor" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'FrmNote.FrmNote(int, string, string, int)'</Item>
+               <Item>notecolor</Item>
+               <Item>'notecolor'</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
-           <Member Name="getTransparency():System.Boolean">
+           <Member Name="#askpassok(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'FrmNote.askpassok(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ColorNote">
+            <Accessors>
+             <Accessor Name="#set_ColorNote(System.Int32)">
+              <Messages>
+               <Message Id="value" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2009-07-17 00:24:21Z" FixCategory="DependsOnFix">
+                <Issue>
+                 <Item>'value'</Item>
+                 <Item>'FrmNote.ColorNote.set(int)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#getTransparency()">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-07-16 01:27:08Z" FixCategory="NonBreaking">
               <Issue>
-               <Item>FrmNote.getTransparency():Boolean</Item>
+               <Item>'FrmNote.getTransparency()'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="HT_CAPTION">
+           <Member Name="#HT_CAPTION">
             <Messages>
-             <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-16 01:27:08Z">
+             <Message Id="CAPTION" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
               <Issue Name="Member">
-               <Item>HT_CAPTION</Item>
+               <Item>CAPTION</Item>
+               <Item>'FrmNote.HT_CAPTION'</Item>
+               <Item>Caption</Item>
               </Issue>
              </Message>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:27:08Z">
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-17 00:15:15Z">
               <Issue Name="Member">
-               <Item>FrmNote.HT_CAPTION</Item>
+               <Item>'FrmNote.HT_CAPTION'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="ID">
+           <Member Name="#ID">
             <Messages>
-             <Message Id="Member" TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706" Created="2009-07-16 01:27:08Z">
-              <Issue Name="MemberId">
-               <Item>FrmNote.ID:Int32</Item>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberAbbreviation">
+               <Item>ID</Item>
+               <Item>'FrmNote.ID'</Item>
+               <Item>Id</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="locX">
+           <Member Name="#InternetGetConnectedState(System.Int32&amp;,System.Int32)">
+            <Messages>
+             <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Created="2009-07-17 00:24:21Z">
+              <Issue Name="Return">
+               <Item>'FrmNote.InternetGetConnectedState(out int, int)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'FrmNote.InternetGetConnectedState(out int, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#locX">
             <Messages>
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-07-16 01:27:08Z">
               <Issue>
-               <Item>FrmNote.locX</Item>
+               <Item>'FrmNote.locX'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="locY">
+           <Member Name="#locY">
             <Messages>
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-07-16 01:27:08Z">
               <Issue>
-               <Item>FrmNote.locY</Item>
+               <Item>'FrmNote.locY'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="pnlResizeWindow_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs):System.Void">
+           <Member Name="#pnlHead_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <Messages>
+             <Message Id="SimplePlainNote.FrmNote.SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-07-17 00:24:21Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'FrmNote.pnlHead_MouseDown(object, MouseEventArgs)'</Item>
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#pnlResizeWindow_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
             <Messages>
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:27:08Z">
               <Issue>
-               <Item>FrmNote.pnlResizeWindow_MouseDown(Object, MouseEventArgs):Void</Item>
+               <Item>'FrmNote.pnlResizeWindow_MouseDown(object, MouseEventArgs)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32):System.Int32">
+           <Member Name="#ReleaseCapture()">
             <Messages>
-             <Message Id="0#h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:27:08Z">
-              <Issue Name="Parameter">
-               <Item>FrmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+             <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Created="2009-07-17 00:24:21Z">
+              <Issue Name="Return">
+               <Item>'FrmNote.ReleaseCapture()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'FrmNote.ReleaseCapture()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'FrmNote.ReleaseCapture()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SendMessage(System.IntPtr,System.Int32,System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="Param" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>Param</Item>
+               <Item>'lParam'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>Param</Item>
+               <Item>'wParam'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Wnd" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>Wnd</Item>
+               <Item>'hWnd'</Item>
+              </Issue>
+             </Message>
+             <Message Id="h" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
                <Item>h</Item>
-               <Item>hWnd</Item>
+               <Item>'hWnd'</Item>
               </Issue>
              </Message>
-             <Message Id="2#w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:27:08Z">
-              <Issue Name="Parameter">
-               <Item>FrmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
-               <Item>w</Item>
-               <Item>wParam</Item>
-              </Issue>
-             </Message>
-             <Message Id="3#l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-16 01:27:08Z">
-              <Issue Name="Parameter">
-               <Item>FrmNote.SendMessage(IntPtr, Int32, Int32, Int32):Int32</Item>
+             <Message Id="l" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
                <Item>l</Item>
-               <Item>lParam</Item>
+               <Item>'lParam'</Item>
+              </Issue>
+             </Message>
+             <Message Id="w" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+              <Issue Name="MemberParameter">
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>w</Item>
+               <Item>'wParam'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="2" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2009-07-17 00:24:21Z" FixCategory="Breaking">
+              <Issue Name="Parameter">
+               <Item>'wParam'</Item>
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message Id="3" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2009-07-17 00:24:21Z" FixCategory="Breaking">
+              <Issue Name="Parameter">
+               <Item>'lParam'</Item>
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2009-07-17 00:24:21Z" FixCategory="Breaking">
+              <Issue Name="Return">
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
+               <Item>4</Item>
+               <Item>64-bit</Item>
+               <Item>8</Item>
+               <Item>'int'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'FrmNote.SendMessage(IntPtr, int, int, int)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="SetPosNote():System.Void">
+           <Member Name="#setColorNote(System.Object,System.EventArgs)">
+            <Messages>
+             <Message Id="System.Convert.ToString(System.Int32)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'Convert.ToString(int)'</Item>
+               <Item>'FrmNote.setColorNote(object, EventArgs)'</Item>
+               <Item>'Convert.ToString(int, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetPosNote()">
             <Messages>
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:27:08Z">
               <Issue>
-               <Item>FrmNote.SetPosNote():Void</Item>
+               <Item>'FrmNote.SetPosNote()'</Item>
               </Issue>
              </Message>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-07-16 01:27:08Z" FixCategory="NonBreaking">
               <Issue>
-               <Item>FrmNote.SetPosNote():Void</Item>
+               <Item>'FrmNote.SetPosNote()'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="tweetnote():System.Void">
+           <Member Name="#syntaxKeywords">
             <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'FrmNote.syntaxKeywords'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#tweetnote()">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'FrmNote.tweetnote()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FrmNote.tweetnote()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FrmNote.tweetnote()'</Item>
+              </Issue>
+             </Message>
              <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:27:08Z">
               <Issue Name="IsNullOrEmpty">
-               <Item>op_Equality</Item>
-               <Item>""</Item>
-               <Item>FrmNote.tweetnote():Void</Item>
+               <Item>'string.operator !=(string, string)'</Item>
+               <Item>'FrmNote.tweetnote()'</Item>
               </Issue>
               <Issue Name="IsNullOrEmpty">
-               <Item>op_Equality</Item>
-               <Item>""</Item>
-               <Item>FrmNote.tweetnote():Void</Item>
+               <Item>'string.operator ==(string, string)'</Item>
+               <Item>'FrmNote.tweetnote()'</Item>
               </Issue>
               <Issue Name="IsNullOrEmpty">
-               <Item>op_Inequality</Item>
-               <Item>""</Item>
-               <Item>FrmNote.tweetnote():Void</Item>
+               <Item>'string.operator ==(string, string)'</Item>
+               <Item>'FrmNote.tweetnote()'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="TwitterToolStripMenuItem_Click(System.Object,System.EventArgs):System.Void">
+           <Member Name="#TwitterToolStripMenuItem_Click(System.Object,System.EventArgs)">
             <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'FrmNote.TwitterToolStripMenuItem_Click(object, EventArgs)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FrmNote.TwitterToolStripMenuItem_Click(object, EventArgs)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'FrmNote.TwitterToolStripMenuItem_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
              <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:27:08Z">
               <Issue Name="IsNullOrEmpty">
-               <Item>op_Inequality</Item>
-               <Item>""</Item>
-               <Item>FrmNote.TwitterToolStripMenuItem_Click(Object, EventArgs):Void</Item>
+               <Item>'string.operator !=(string, string)'</Item>
+               <Item>'FrmNote.TwitterToolStripMenuItem_Click(object, EventArgs)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="WM_NCLBUTTONDOWN">
+           <Member Name="#WM_NCLBUTTONDOWN">
             <Messages>
-             <Message Id="Member" TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705" Created="2009-07-16 01:27:08Z">
+             <Message Id="NCLBUTTONDOWN" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
               <Issue Name="Member">
-               <Item>FrmNote.WM_NCLBUTTONDOWN</Item>
+               <Item>NCLBUTTONDOWN</Item>
+               <Item>'FrmNote.WM_NCLBUTTONDOWN'</Item>
+               <Item>Nclbuttondown</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2009-07-17 00:15:15Z">
+              <Issue Name="Member">
+               <Item>'FrmNote.WM_NCLBUTTONDOWN'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -420,20 +923,55 @@
          </Type>
          <Type Name="frmSettings">
           <Messages>
-           <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-16 01:00:05Z">
+           <Message Id="frm" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-07-17 00:15:15Z">
             <Issue Name="Type">
-             <Item>frmSettings</Item>
+             <Item>frm</Item>
+             <Item>'frmSettings'</Item>
+             <Item>Frm</Item>
+            </Issue>
+           </Message>
+           <Message Id="frm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-07-17 00:15:15Z">
+            <Issue Name="Type">
+             <Item>frm</Item>
+             <Item>'frmSettings'</Item>
             </Issue>
            </Message>
           </Messages>
           <Members>
-           <Member Name="getTwitterpassword():System.String">
+           <Member Name="#btnOK_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmSettings.btnOK_Click(object, EventArgs)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'frmSettings.btnOK_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#getTransparecylevel()">
+            <Messages>
+             <Message Id="System.Convert.ToDecimal(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'Convert.ToDecimal(string)'</Item>
+               <Item>'frmSettings.getTransparecylevel()'</Item>
+               <Item>'Convert.ToDecimal(string, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'frmSettings.getTransparecylevel()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#getTwitterpassword()">
             <Messages>
              <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:00:05Z">
               <Issue Name="IsNullOrEmpty">
-               <Item>op_Equality</Item>
-               <Item>""</Item>
-               <Item>frmSettings.getTwitterpassword():String</Item>
+               <Item>'string.operator ==(string, string)'</Item>
+               <Item>'frmSettings.getTwitterpassword()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -441,65 +979,208 @@
           </Members>
          </Type>
          <Type Name="xmlHandler">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-07-17 00:15:39Z" FixCategory="NonBreaking">
+            <Issue Name="NonBreaking">
+             <Item>'xmlHandler'</Item>
+             <Item>'XmlTextWriter', 'XmlTextReader'</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
-           <Member Name=".ctor(System.Boolean,System.String)">
+           <Member Name="#.ctor(System.Boolean,System.String)">
             <Messages>
              <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2009-07-16 01:00:05Z">
               <Issue>
-               <Item>xmlHandler.xmlHandler(Boolean, String)</Item>
-               <Item>source</Item>
-               <Item>System.String</Item>
+               <Item>'xmlHandler.xmlHandler(bool, string)'</Item>
+               <Item>'xmlHandler.source'</Item>
+               <Item>'string'</Item>
                <Item>null</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="AppDataFolder">
+           <Member Name="#AppDataFolder">
             <Accessors>
-             <Accessor Name="get_AppDataFolder():System.String">
+             <Accessor Name="#get_AppDataFolder()">
               <Messages>
                <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:00:05Z">
                 <Issue>
-                 <Item>xmlHandler.get_AppDataFolder():String</Item>
+                 <Item>'xmlHandler.AppDataFolder.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="Source">
-            <Accessors>
-             <Accessor Name="set_Source(System.String):System.Void">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:00:05Z">
-                <Issue>
-                 <Item>xmlHandler.set_Source(String):Void</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="TwitterClientVersion">
-            <Accessors>
-             <Accessor Name="set_TwitterClientVersion(System.String):System.Void">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:00:05Z">
-                <Issue>
-                 <Item>xmlHandler.set_TwitterClientVersion(String):Void</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="WriteSettings(System.Boolean,System.Decimal,System.Int32,System.String,System.Boolean,System.String,System.String):System.Boolean">
+           <Member Name="#CheckFile()">
             <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'xmlHandler.CheckFile()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'xmlHandler.CheckFile()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'xmlHandler.CheckFile()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ExecutePostCommand(System.String,System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'xmlHandler.ExecutePostCommand(string, string, string, string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'xmlHandler.ExecutePostCommand(string, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'xmlHandler.ExecutePostCommand(string, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'xmlHandler.ExecutePostCommand(string, string, string, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#getXMLnode(System.String)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'xmlHandler.getXMLnode(string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'xmlHandler.getXMLnode(string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'xmlHandler.getXMLnode(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Source">
+            <Accessors>
+             <Accessor Name="#set_Source(System.String)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:00:05Z">
+                <Issue>
+                 <Item>'xmlHandler.Source.set(string)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#TwitterClientVersion">
+            <Accessors>
+             <Accessor Name="#set_TwitterClientVersion(System.String)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-07-16 01:00:05Z">
+                <Issue>
+                 <Item>'xmlHandler.TwitterClientVersion.set(string)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#Update(System.String,System.String,System.String)">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'xmlHandler.Update(string, string, string)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'string.Format(string, object, object, object)'</Item>
+               <Item>'xmlHandler.Update(string, string, string)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WriteNote(System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-07-17 00:15:39Z">
+              <Issue>
+               <Item>'xmlHandler.WriteNote(string, string, string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'xmlHandler.WriteNote(string, string, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WriteSettings(System.Boolean,System.Decimal,System.Int32,System.String,System.Boolean,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2009-07-17 00:24:21Z">
+              <Issue Name="TooGeneric">
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Issue Name="TooGeneric">
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Issue Name="TooGeneric">
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Issue Name="TooGeneric">
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Issue Name="TooGeneric">
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Issue Name="TooGeneric">
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.Convert.ToString(System.Decimal)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'Convert.ToString(decimal)'</Item>
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Convert.ToString(decimal, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.Convert.ToString(System.Int32)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'Convert.ToString(int)'</Item>
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Convert.ToString(int, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.Convert.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-07-17 00:24:21Z">
+              <Issue>
+               <Item>'Convert.ToString(string)'</Item>
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Convert.ToString(string, IFormatProvider)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Convert.ToString(string)'</Item>
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
+               <Item>'Convert.ToString(string, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
              <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2009-07-16 01:00:05Z">
               <Issue Name="IsNullOrEmpty">
-               <Item>op_Inequality</Item>
-               <Item>""</Item>
-               <Item>xmlHandler.WriteSettings(Boolean, Decimal, Int32, String, Boolean, String, String):Boolean</Item>
+               <Item>'string.operator !=(string, string)'</Item>
+               <Item>'xmlHandler.WriteSettings(bool, decimal, int, string, bool, string, string)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -515,39 +1196,76 @@
   </Targets>
   <Rules>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
-    <Resolution Name="Default">'{0}' appears to have no upstream public or protected callers.</Resolution>
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field '{0}' is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
+    <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
+    <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
+    <Resolution Name="HResultOrErrorCode">{0} calls {1} but does not use the HRESULT or error code that the method returns. This could lead to unexpected behavior in error conditions or low-resource situations. Use the result in a conditional statement, assign the result to a variable, or pass it as an argument to another method.</Resolution>
    </Rule>
    <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
-    <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization as it will be done automatically by the runtime.</Resolution>
+    <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization because it will be done automatically by the runtime.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
+    <Resolution Name="TooGeneric">{0} creates an exception of type {1}, an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
-    <Resolution Name="Parameter">Correct the casing of parameter name '{0}'.</Resolution>
-    <Resolution Name="Type">Correct the casing of type name '{0}'.</Resolution>
+    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="MemberAbbreviation">Correct the casing of '{0}' in member name {1} by changing it to '{2}'. '{2}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
+    <Resolution Name="MemberParameter">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
+    <Resolution Name="MemberParameterAbbreviation">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'. '{3}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
+    <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
-    <Resolution Name="Parameter">In method {0}, correct the spelling of the unrecognized token '{1}' in parameter name '{2}' or strip it entirely if it represents any sort of hungarian notation.</Resolution>
+    <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+    <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
-    <Resolution Name="Member">Remove all underscores from member '{0}'.</Resolution>
+    <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
    </Rule>
-   <Rule TypeName="LongAcronymsShouldBePascalCased" Category="Microsoft.Naming" CheckId="CA1705">
-    <Resolution Name="Member">Correct the capitalization of member name '{0}'.</Resolution>
+   <Rule TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414">
+    <Resolution Name="Return">Add the MarshalAsAttribute to the return type of P/Invoke {0}. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Resolution>
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
-    <Resolution Name="Default">The 'this' parameter (or 'Me' in VB) of {0} is never used. Mark the member as static (or Shared in VB) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060">
+    <Resolution Name="Default">Because it is a P/Invoke method, {0} should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Resolution>
+   </Rule>
+   <Rule TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901">
+    <Resolution Name="Parameter">As it is declared in your code, parameter {0} of P/Invoke {1} will be {2} bytes wide on {3} platforms. This is not correct, as the actual native declaration of this API indicates it should be {4} bytes wide on {3} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of {5}.</Resolution>
+    <Resolution Name="Return">As it is declared in your code, the return type of P/Invoke {0} will be {1} bytes wide on {2} platforms. This is not correct, as the actual native declaration of this API indicates it should be {3} bytes wide on {2} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of {4}.</Resolution>
+   </Rule>
+   <Rule TypeName="PInvokesShouldNotBeVisible" Category="Microsoft.Interoperability" CheckId="CA1401">
+    <Resolution Name="Default">Change the accessibility of P/Invoke {0} so that it is no longer visible from outside its assembly.</Resolution>
    </Rule>
    <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
-    <Resolution Name="Default">{0} declares a local, '{1}', of type {2}, which is never used or is only assigned to. Use this local or remove it.</Resolution>
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
    </Rule>
-   <Rule TypeName="ShortAcronymsShouldBeUppercase" Category="Microsoft.Naming" CheckId="CA1706">
-    <Resolution Name="MemberId">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of 'ID' in member name '{0}' by changing it to 'Id'.</Resolution>
-    <Resolution Name="ParameterId">'Id' is an abbreviation and therefore is not subject to acronym casing guidelines. Correct the capitalization of '{0}' in parameter name '{1}' by changing it to '{2}'.</Resolution>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
+    <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
    </Rule>
    <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
-    <Resolution Name="IsNullOrEmpty">Replace the call to String.{0}({1}) in '{2}' with a call to String.IsNullOrEmpty.</Resolution>
+    <Resolution Name="IsNullOrEmpty">Replace the call to {0} in {1} with a call to 'String.IsNullOrEmpty'.</Resolution>
+   </Rule>
+   <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
+    <Resolution Name="NonBreaking">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+//using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
@@ -62,7 +62,12 @@ namespace SimplePlainNote
                 string title = parserNote.getXMLnode("title");
                 string content = parserNote.getXMLnode("content");
                 int notecolor = parserNote.getXMLnodeAsInt("color");
-                CreateNote(title, content, notecolor);
+
+                int noteLocX = parserNote.getXMLnodeAsInt("x");
+                int noteLocY = parserNote.getXMLnodeAsInt("y");
+                int notewidth = parserNote.getXMLnodeAsInt("width");
+                int noteheight = parserNote.getXMLnodeAsInt("heigth");
+                CreateNote(title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight);
 
                 id++;
                 curnotefile = notesavepath + id + ".xml";
@@ -93,7 +98,7 @@ namespace SimplePlainNote
                 {
                     xmlHandler getSettings = new xmlHandler(true, "settings.xml");
                     int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");
-                    CreateNote(tbTitle.Text, rtbNote.Text, notecolordefault);
+                    CreateDefaultNote(tbTitle.Text, rtbNote.Text, notecolordefault);
                 }
                 CancelNote();
             }
@@ -187,19 +192,19 @@ namespace SimplePlainNote
         }
 
         /// <summary>
-        /// Create a new note interface.
+        /// Create a new note GUI.
         /// </summary>
         /// <param name="title"></param>
         /// <param name="content"></param>
         /// <param name="notecolor"></param>
-        public void CreateNote(string title, string content, int notecolor)
+        public void CreateNote(string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
             {                
                 int newid = notes.Count + 1;
                 string notefilenm = SaveNote(newid, title, content);
-                if ((notefilenm == "") || (notefilenm == null)) { return; }                                                
-                FrmNote newnote = new FrmNote(newid, title, content, notecolor);                                    
+                if (String.IsNullOrEmpty(notefilenm)) { return; }                                                
+                FrmNote newnote = new FrmNote(newid, title, content, notecolor, locX, locY, notewith, noteheight);                                    
                 notes.Add(newnote);
                 newnote.Show();
             }
@@ -207,12 +212,24 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Fout: " + indexexc.Message);
             }
-            catch (Exception exc)
-            {
-                MessageBox.Show("Fout: " + exc.Message);
-            }
         }
 
+        public void CreateDefaultNote(string title, string content, int notecolor)
+        {
+            try
+            {
+                int newid = notes.Count + 1;
+                string notefilenm = SaveNote(newid, title, content);
+                if (String.IsNullOrEmpty(notefilenm)) { return; }
+                FrmNote newnote = new FrmNote(newid, title, content, notecolor);
+                notes.Add(newnote);
+                newnote.Show();
+            }
+            catch (IndexOutOfRangeException indexexc)
+            {
+                MessageBox.Show("Fout: " + indexexc.Message);
+            }
+        }
         /// <summary>
         /// Save the note to xml file
         /// </summary>
@@ -227,7 +244,7 @@ namespace SimplePlainNote
             xmlHandler xmlnote = new xmlHandler(false, notefile);
             
             string defaultcolor = getXmlSettings.getXMLnode("defaultcolor");
-            if (xmlnote.WriteNote(defaultcolor, title, text) == false)
+            if (xmlnote.WriteNote(defaultcolor, title, text, 10, 10, 240, 240) == false)
                 {
                     MessageBox.Show("Error writing note.");
                     return null;
@@ -361,7 +378,7 @@ namespace SimplePlainNote
             if (e.Button == MouseButtons.Left)
             {
                 this.Cursor = Cursors.SizeNWSE;
-                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
+                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                
             }
             this.Cursor = Cursors.Default;
         }
