@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 
 namespace SimplePlainNote
 {
@@ -36,13 +35,6 @@ namespace SimplePlainNote
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
 
-        public Regex syntaxKeywords = new Regex("abstract|as|base|bool|break|byte|case|catch|char|checked|"+
-            "class|const|continue|decimal|default|delegate|do|double|else|enum|event|explicit|extern|"+
-            "false|finally|fixed|float|for|foreach|goto|if|implicit|in|int|interface|internal|is|lock|"+
-            "long|namespace|new|null|object|operator|out|override|params|private|protected|public|"+
-            "readonly|ref|return|sbyte|sealed|short|sizeof|stackalloc|static|string|struct|switch|this|"+
-            "throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|volatile|void|while|");
-
         #region constructor
         public FrmNote(int id, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
         {            
@@ -51,9 +43,6 @@ namespace SimplePlainNote
             this.note = note;
             this.transparency = getTransparency();
             this.notecolor = notecolor;
-
-            this.Width = notewidth;
-            this.Height = noteheight;
 
             if ((locX >= 0) && (locY >= 0))
             {
@@ -70,8 +59,9 @@ namespace SimplePlainNote
             lblTitle.Text = title;
             rtbNote.Text = note;                                                           
 
-            paintColorNote();
+            SetSizeNote(notewidth, noteheight);            
             SetPosNote();
+            paintColorNote();
         }
 
         public FrmNote(int id, string title, string note, int notecolor)
@@ -95,7 +85,7 @@ namespace SimplePlainNote
             paintColorNote();
             SetPosNote();
         }
-#endregion
+        #endregion
 
         #region properties
         public int ID
@@ -157,8 +147,7 @@ namespace SimplePlainNote
         private void frmDeleteNote_Click(object sender, EventArgs e)
         {
             transparency = false;
-            this.notevisable = false;
-            //fcn.DeleteNote(this.id);            
+            this.notevisable = false;                      
             this.Close();            
         }
 
@@ -167,14 +156,16 @@ namespace SimplePlainNote
             skin getskin = new skin(notecolor);
             pnlHead.BackColor = getskin.getObjColor(true);
 
+            timerSavePos.Enabled = true;
+
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
                 this.locX = this.Location.X;
-                this.locY = this.Location.Y;
-                timerSavePos.Enabled = true;
+                this.locY = this.Location.Y;                
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 pnlHead.BackColor = getskin.getObjColor(false);
+                
             }
         }
 
@@ -243,8 +234,6 @@ namespace SimplePlainNote
             this.rtbNote.BackColor = normalcolor;
         }
 
-
-
         private void updateMenuNoteColor(object sender, EventArgs e)
         {
             foreach (ToolStripMenuItem curitem in menuNoteColors.DropDownItems)
@@ -279,9 +268,7 @@ namespace SimplePlainNote
         }
 
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
-        {                                                            
-            //fcn.WindowState = FormWindowState.Normal;
-            //fcn.EditNote(ID);            
+        {                                                                      
             base.WindowState = FormWindowState.Normal;
             //base.EditNote(ID);
         }
@@ -293,8 +280,7 @@ namespace SimplePlainNote
                 if (!notelock)
                 {
                     this.Cursor = Cursors.SizeNWSE;
-                    this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
-                    timerSavePos.Enabled = true;
+                    this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                    
                 }
             }
             this.Cursor = Cursors.Default;
@@ -304,14 +290,15 @@ namespace SimplePlainNote
         {
             if (IsConnectedToInternet())
             {
-                if ((note != "") && (note.Length < 140))
+                if ((String.IsNullOrEmpty(note) ==false) && (note.Length < 140))
                 {
                     tweetnote();
                 }
                 else if (note.Length >= 140)
                 {
                     DialogResult result;
-                    result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part?", "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    string shrttweet = note.Substring(0, 140);
+                    result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         tweetnote();
@@ -406,14 +393,8 @@ namespace SimplePlainNote
 
             if (xmlSettings.getXMLnodeAsInt("syntaxhighlight") == 1)
             {
-                int selPos = rtbNote.SelectionStart;                
-                foreach (Match keyWordMatch in syntaxKeywords.Matches(rtbNote.Text))
-                {
-                    rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
-                    rtbNote.SelectionColor = Color.Blue;
-                    rtbNote.SelectionStart = selPos;
-                    rtbNote.SelectionColor = Color.Black;
-                }
+                
+
             }
 
 
@@ -472,31 +453,80 @@ namespace SimplePlainNote
 
         private void SetPosNote()
         {
-            this.Location = new Point(locX, locY);
+            this.Location = new Point(locX, locY);            
         }
 
+        private void SetSizeNote(int width, int height)
+        {
+            this.Width = width;
+            this.Height = height;
+        }
+
+        /// <summary>
+        /// Timer let's note settings save.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timerSavePos_Tick(object sender, EventArgs e)
         {
-            xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
             try
             {
                 string numcolor = Convert.ToString(this.notecolor);
                 if ((this.locX >= 0) && (this.locY >= 0))
                 {
-                    updateposnote.WriteNote(numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                    xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
+                    updateposnote.WriteNote(numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    timerSavePos.Enabled = false;
+                    timerSavePos.Stop();                    
                 }
                 else
                 {
                     MessageBox.Show("Error: note location out of screen.");
                 }
-            
             }
             catch (InvalidCastException)
             {
-                MessageBox.Show("internal error");                
+                MessageBox.Show("internal error");
             }
-            
-            timerSavePos.Enabled = false;
+            finally
+            {
+                timerSavePos.Enabled = false;
+            }            
+        }
+
+        private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!notelock)
+            {
+                timerSavePos.Enabled = true;
+            }
+        }
+
+        private void emailNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string emailnote = "";
+            bool DEF_MAC = false;
+
+            if (DEF_MAC)
+            {
+                emailnote = note.Replace("\r", "%0D%0A");
+            }
+            else
+            {
+                emailnote = note.Replace("\n", "%0D%0A");
+            }
+            if (!String.IsNullOrEmpty(emailnote))
+            {
+                System.Diagnostics.Process.Start("mailto:\\adres@domain.com?subject=" + title + "&body=" + emailnote);
+            }
+            else if (!String.IsNullOrEmpty(title))
+            {
+                System.Diagnostics.Process.Start("mailto:\\adres@domain.com?subject=" + title);
+            }
+            else
+            {
+                MessageBox.Show("Error: note has no title and content");
+            }
         }
 
     }

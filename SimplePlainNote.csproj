@@ -125,6 +125,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Skin.cs" />
+    <Compile Include="TextHighlight.cs" />
     <Compile Include="XmlHandler.cs" />
   </ItemGroup>
   <ItemGroup>
