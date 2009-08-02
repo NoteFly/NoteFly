@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace SimplePlainNote
 {
@@ -154,9 +155,7 @@ namespace SimplePlainNote
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
             skin getskin = new skin(notecolor);
-            pnlHead.BackColor = getskin.getObjColor(true);
-
-            timerSavePos.Enabled = true;
+            pnlHead.BackColor = getskin.getObjColor(true);            
 
             if (e.Button == MouseButtons.Left)
             {
@@ -164,9 +163,10 @@ namespace SimplePlainNote
                 this.locX = this.Location.X;
                 this.locY = this.Location.Y;                
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                pnlHead.BackColor = getskin.getObjColor(false);
-                
+                pnlHead.BackColor = getskin.getObjColor(false);                
             }
+
+            SavePos.RunWorkerAsync();
         }
 
         /// <summary>
@@ -462,11 +462,12 @@ namespace SimplePlainNote
             this.Height = height;
         }
 
+        /*
         /// <summary>
         /// Timer let's note settings save.
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e"></param>        
         private void timerSavePos_Tick(object sender, EventArgs e)
         {
             try
@@ -493,12 +494,13 @@ namespace SimplePlainNote
                 timerSavePos.Enabled = false;
             }            
         }
+         */
 
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             if (!notelock)
-            {
-                timerSavePos.Enabled = true;
+            {                
+                SavePos.RunWorkerAsync();
             }
         }
 
@@ -527,6 +529,40 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Error: note has no title and content");
             }
+        }
+
+        private void SavePos_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Thread.Sleep(50);
+            //DateTime starttime = DateTime.Now;
+            try
+            {
+                this.locX = this.Location.X;
+                this.locY = this.Location.Y;
+                string numcolor = Convert.ToString(this.notecolor);
+                if ((this.locX >= 0) && (this.locY >= 0))
+                {
+                    xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
+                    updateposnote.WriteNote(numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                }
+                else
+                {
+                    MessageBox.Show("Error: note location out of screen.");
+                }
+            }
+            catch (InvalidCastException)
+            {
+                MessageBox.Show("internal error");
+            }
+            //DateTime endtime = DateTime.Now;
+            //TimeSpan debugtime = endtime - starttime;
+            //MessageBox.Show("taken "+debugtime.Milliseconds);
+        }
+
+        private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            skin getskin = new skin(notecolor);
+            pnlHead.BackColor = getskin.getObjColor(false); 
         }
 
     }
