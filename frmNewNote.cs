@@ -1,20 +1,18 @@
-﻿/*
-Copyright (C) 2009
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2, or (at your option) any
-later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
-*/
+﻿/* Copyright (C) 2009
+ * 
+ * This program is free software; you can redistribute it and/or modify it
+ * Free Software Foundation; either version 2, or (at your option) any
+ * later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+ */
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -87,7 +85,7 @@ namespace SimplePlainNote
 
                 id++;
                 curnotefile = notesavepath + id + ".xml";
-                if (id > 2000) { MessageBox.Show("Error: Too many notes"); }
+                if (id > 2000) { MessageBox.Show("Error: Too many notes"); return; }
             }
         }
 
@@ -218,8 +216,16 @@ namespace SimplePlainNote
             try
             {                
                 int newid = notes.Count + 1;
-                string notefilenm = SaveNote(newid, title, content);
-                if (String.IsNullOrEmpty(notefilenm)) { return; }                                                
+                /*
+                string notefile = newid + ".xml";
+                xmlHandler xmlnote = new xmlHandler(false, notefile);
+                string str_note_color = Convert.ToString(notecolor);
+                if (xmlnote.WriteNote(str_note_color, title, content, locX, locY, notewith, noteheight) == false)
+                {
+                    MessageBox.Show("Error writing note.");
+                    return;
+                }
+                */                             
                 FrmNote newnote = new FrmNote(newid, title, content, notecolor, locX, locY, notewith, noteheight);                                    
                 notes.Add(newnote);
                 newnote.Show();
@@ -235,7 +241,7 @@ namespace SimplePlainNote
             try
             {
                 int newid = notes.Count + 1;
-                string notefilenm = SaveNote(newid, title, content);
+                string notefilenm = SaveNoteDefault(newid, title, content);
                 if (String.IsNullOrEmpty(notefilenm)) { return; }
                 FrmNote newnote = new FrmNote(newid, title, content, notecolor);
                 notes.Add(newnote);
@@ -253,7 +259,7 @@ namespace SimplePlainNote
         /// <param name="title"></param>
         /// <param name="text"></param>
         /// <returns>filepath of the created note.</returns>
-        private string SaveNote(int id, string title, string text)
+        private string SaveNoteDefault(int id, string title, string text)
         {
             xmlHandler getXmlSettings = new xmlHandler(true, "settings.xml");            
             string notefile = id + ".xml";
@@ -264,8 +270,7 @@ namespace SimplePlainNote
                 {
                     MessageBox.Show("Error writing note.");
                     return null;
-                }
-         
+                }         
             return notefile;            
         }
 
