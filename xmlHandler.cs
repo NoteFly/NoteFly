@@ -216,7 +216,7 @@ namespace SimplePlainNote
             }
         }
 
-        public bool WriteNote(string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
+        public bool WriteNote(bool visible, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
             try {
                 if (Directory.Exists(appdatafolder) == false)
@@ -237,6 +237,18 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteStartDocument();
                 
                     objXmlTextWriter.WriteStartElement("note");
+
+
+                        objXmlTextWriter.WriteStartElement("visible");
+                            if (visible==true)
+                            {
+                                objXmlTextWriter.WriteString("true"); //1
+                            }
+                            else
+                            {
+                                objXmlTextWriter.WriteString("false"); //0
+                            }
+                        objXmlTextWriter.WriteEndElement();
 
                         objXmlTextWriter.WriteStartElement("color");
                             objXmlTextWriter.WriteString(numcolor);

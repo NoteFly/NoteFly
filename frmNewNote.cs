@@ -73,19 +73,21 @@ namespace SimplePlainNote
             while (File.Exists(@curnotefile) == true)
             {
                 xmlHandler parserNote = new xmlHandler(false, id+".xml");
+                string visible = parserNote.getXMLnode("visible");
                 string title = parserNote.getXMLnode("title");
                 string content = parserNote.getXMLnode("content");
+
                 int notecolor = parserNote.getXMLnodeAsInt("color");
 
                 int noteLocX = parserNote.getXMLnodeAsInt("x");
                 int noteLocY = parserNote.getXMLnodeAsInt("y");
                 int notewidth = parserNote.getXMLnodeAsInt("width");
                 int noteheight = parserNote.getXMLnodeAsInt("heigth");
-                CreateNote(title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight);
-
+                CreateNote(visible, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight);
+                
                 id++;
                 curnotefile = notesavepath + id + ".xml";
-                if (id > 2000) { MessageBox.Show("Error: Too many notes"); return; }
+                if (id > 1000) { MessageBox.Show("Error: Too many notes"); return; }
             }
         }
 
@@ -211,24 +213,24 @@ namespace SimplePlainNote
         /// <param name="title"></param>
         /// <param name="content"></param>
         /// <param name="notecolor"></param>
-        public void CreateNote(string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
+        public void CreateNote(string visible, string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
             {                
                 int newid = notes.Count + 1;
-                /*
-                string notefile = newid + ".xml";
-                xmlHandler xmlnote = new xmlHandler(false, notefile);
-                string str_note_color = Convert.ToString(notecolor);
-                if (xmlnote.WriteNote(str_note_color, title, content, locX, locY, notewith, noteheight) == false)
+
+                FrmNote newnote;
+                if (visible == "true")
                 {
-                    MessageBox.Show("Error writing note.");
-                    return;
+                    newnote = new FrmNote(true, newid, title, content, notecolor, locX, locY, notewith, noteheight);
+                    newnote.Show();
                 }
-                */                             
-                FrmNote newnote = new FrmNote(newid, title, content, notecolor, locX, locY, notewith, noteheight);                                    
+                else
+                {
+                    newnote = new FrmNote(false, newid, title, content, notecolor, locX, locY, notewith, noteheight);
+                }
                 notes.Add(newnote);
-                newnote.Show();
+                
             }
             catch (IndexOutOfRangeException indexexc)
             {
@@ -266,39 +268,12 @@ namespace SimplePlainNote
             xmlHandler xmlnote = new xmlHandler(false, notefile);
             
             string defaultcolor = getXmlSettings.getXMLnode("defaultcolor");
-            if (xmlnote.WriteNote(defaultcolor, title, text, 10, 10, 240, 240) == false)
+            if (xmlnote.WriteNote(true,defaultcolor, title, text, 10, 10, 240, 240) == false)
                 {
                     MessageBox.Show("Error writing note.");
                     return null;
                 }         
             return notefile;            
-        }
-
-        /// <summary>
-        /// Verwijder een note uit de lijst met noten.
-        /// </summary>
-        /// <param name="id"></param>
-        public void DeleteNote(int id)
-        {
-            int m = 0;
-            for (int i = 0; i < notes.Count; i++)
-            {
-                if (id == notes[i].ID)
-                {
-                    notes.RemoveAt(i);
-                    m = i;
-                    break;
-                }
-            }
-            /*
-            for (int n=m+1; n <= notes.Count; n++)
-            {
-                if (n>=1)
-                {
-                    notes[n].ID = n - 1;
-                }
-            }
-            */
         }
 
         /// <summary>
@@ -322,7 +297,7 @@ namespace SimplePlainNote
 
         private void listToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmManageNotes managenotes = new frmManageNotes(this);
+            frmManageNotes managenotes = new frmManageNotes(this, false);
             managenotes.Show();
             /*
             string allnotes ="";

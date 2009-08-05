@@ -35,7 +35,7 @@ namespace SimplePlainNote
         private string twpass;
         private bool transparency = false;
         private bool notelock = false;
-        private bool notevisable = true;
+        private bool notevisable = false;
         private int locX;
         private int locY;
 
@@ -53,8 +53,12 @@ namespace SimplePlainNote
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
 
         #region constructor
-        public FrmNote(int id, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
-        {            
+        public FrmNote(bool visible, int id, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
+        {
+            if (visible == true)
+            {
+                notevisable = true;
+            }
             this.id = id;
             this.title = title;            
             this.note = note;
@@ -71,14 +75,22 @@ namespace SimplePlainNote
                 this.locX = 10;
                 this.locY = 10;
             }
-            
-            InitializeComponent();
-            lblTitle.Text = title;
-            rtbNote.Text = note;                                                           
 
-            SetSizeNote(notewidth, noteheight);            
-            SetPosNote();
-            paintColorNote();
+            if (notevisable == true)
+            {
+                InitializeComponent();
+
+                lblTitle.Text = title;
+                rtbNote.Text = note;
+
+                SetSizeNote(notewidth, noteheight);
+                SetPosNote();
+                paintColorNote();
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         public FrmNote(int id, string title, string note, int notecolor)
@@ -224,7 +236,7 @@ namespace SimplePlainNote
                     curitem.Checked = true;
                     notecolor = i;
                     xmlHandler savenotecolor = new xmlHandler(false, this.id + ".xml");
-                    savenotecolor.WriteNote(Convert.ToString(notecolor), this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    savenotecolor.WriteNote(notevisable, Convert.ToString(notecolor), this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
                 }
                 else
                 {
@@ -559,7 +571,7 @@ namespace SimplePlainNote
                 if ((this.locX >= 0) && (this.locY >= 0))
                 {
                     xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
-                    updateposnote.WriteNote(numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    updateposnote.WriteNote(notevisable,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
                 }
                 else
                 {

@@ -21,6 +21,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.IO;
+using System.Threading;
 
 namespace SimplePlainNote
 {
@@ -29,10 +31,12 @@ namespace SimplePlainNote
     /// </summary>
     public partial class frmManageNotes : Form
     {
-        private bool transparency = true;
+        private bool transparency = false;
+        private int numnotes = 0;
+        private List<FrmNote> notes;
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
-
+        
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
                          int Msg, int wParam, int lParam);
@@ -40,28 +44,44 @@ namespace SimplePlainNote
         public static extern bool ReleaseCapture();
 
 
-        public frmManageNotes(frmNewNote fcn)
+        public frmManageNotes(frmNewNote fcn, bool update)
         {
             InitializeComponent();
-            DrawNotesOverview(fcn.GetNotes);
+            notes = fcn.GetNotes;
+            DrawNotesOverview();
+            transparency = getTransparency();
         }
 
+        private bool getTransparency()
+        {
+            xmlHandler xmlSettings = new xmlHandler(true, "settings.xml");
+            if (xmlSettings.getXMLnode("transparecy") == "1")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-        private void DrawNotesOverview(List<FrmNote> notes)
-        {            
-            int ypos = 10;            
-            for (int i = 0; i < notes.Count; i++)
+        private void DrawNotesOverview()
+        {
+            pnlNotes.Controls.Clear();
+            int ypos = 10;
+            numnotes = notes.Count;
+            for (int curnote = 0; curnote < numnotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
-                lblNoteTitle.Text = notes[i].Title;
-                lblNoteTitle.Name = "lbNote"+Convert.ToString(i);
+                lblNoteTitle.Text = notes[curnote].Title;
+                lblNoteTitle.Name = "lbNote"+Convert.ToString(curnote+1);
                 lblNoteTitle.Location = new Point(10, ypos);
                 pnlNotes.Controls.Add(lblNoteTitle);
 
                 CheckBox cbxNoteVisible = new CheckBox();
                 cbxNoteVisible.Text = "visible";
-                cbxNoteVisible.Name = "cbxNoteVisible" + Convert.ToString(i);
-                if (notes[i].NoteVisible == true)
+                cbxNoteVisible.Name = Convert.ToString(curnote+1);
+                if (notes[curnote].NoteVisible == true)
                 {
                     cbxNoteVisible.CheckState = CheckState.Checked;
                 }
@@ -72,23 +92,76 @@ namespace SimplePlainNote
                 cbxNoteVisible.Location = new Point(175, ypos);
                 cbxNoteVisible.AutoEllipsis = true;
                 cbxNoteVisible.AutoSize = true;
+                cbxNoteVisible.Click += new EventHandler(cbxNoteVisible_Click);
                 pnlNotes.Controls.Add(cbxNoteVisible);
 
                 Button btnNoteDelete = new Button();
                 btnNoteDelete.Text = "delete";
-                btnNoteDelete.Name = "btnNoteDel" + Convert.ToString(i);
+                btnNoteDelete.Name = "btnNoteDel" + Convert.ToString(curnote+1);
                 btnNoteDelete.BackColor = Color.Orange;
                 btnNoteDelete.Location = new Point(240, ypos);
                 btnNoteDelete.Width = 60;
+                btnNoteDelete.Click += new EventHandler(btnNoteDelete_Click);
+
                 pnlNotes.Controls.Add(btnNoteDelete);
                 
                 ypos = ypos + 30;
             }
         }
 
+        void cbxNoteVisible_Click(object sender, EventArgs e)
+        {
+            CheckBox cbx = (CheckBox)sender;
+            int n = Convert.ToInt32(cbx.Name) - 1;
+            if ((n <= numnotes) && (n>=0))
+            {
+                notes[n].NoteVisible = !notes[n].NoteVisible;
+            }
+        }
+
+        private string getNotesSavePath()
+        {
+            xmlHandler xmlsettings = new xmlHandler(true, "settings.xml");
+            return xmlsettings.getXMLnode("notesavepath");
+        }
+
+        private void btnNoteDelete_Click(object sender, EventArgs e)
+        {                                      
+            Button btn = (Button)sender;
+            if (numnotes != 0)
+            {
+                for (int i = 1; i <= numnotes; i++)
+                {
+                    if (btn.Name == "btnNoteDel"+i)
+                    {                        
+                        //MessageBox.Show("delete note: "+i.ToString());
+
+                        try
+                        {                            
+                            File.Delete(getNotesSavePath() + Convert.ToString(i) + ".xml");                            
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            MessageBox.Show("Note is already gone.");
+                        }
+                        catch (UnauthorizedAccessException)
+                        {
+                            MessageBox.Show("Access denied. Delete note "+i+".xml manualy with premission.");
+                        }
+                        notes.RemoveAt(i - 1);
+                        DrawNotesOverview();
+                        numnotes--;                                             
+                    }
+                }
+            }
+                          
+            
+        }
+
         
         private void btnClose_Click(object sender, EventArgs e)
-        {
+        {            
+            
             this.Close();
         }
 
@@ -124,6 +197,7 @@ namespace SimplePlainNote
                 this.Opacity = 0.9;
                 this.Refresh();
             }
+            Thread.Sleep(20);
         }
 
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)

@@ -20,15 +20,17 @@ using System.Text.RegularExpressions;
 
 namespace SimplePlainNote
 {
-    class TextHighlight
+    public class TextHighlight
     {
-        
-        public Regex syntaxCsharp = new Regex("abstract|as|base|bool|break|byte|case|catch|char|checked|"+
-        "class|const|continue|decimal|default|delegate|do|double|else|enum|event|explicit|extern|"+
-        "false|finally|fixed|float|for|foreach|goto|if|implicit|in|int|interface|internal|is|lock|"+
-        "long|namespace|new|null|object|operator|out|override|params|private|protected|public|"+
-        "readonly|ref|return|sbyte|sealed|short|sizeof|stackalloc|static|string|struct|switch|this|"+
-        "throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|volatile|void|while|");
+
+        public Regex syntaxHTML = new Regex("<!DOCTYPE |<HTML>|</HTML>|<BODY|</BODY>|<A HREF|<SPAN|<I>|</I>|<U>|</U>|"+
+            "<B>|</B>|<UL>|<IL>|<OL|</OL>|<BR>|<BR />|<P |<P>|</P>|<FONT|</FONT>|<TITLE>|</TITLE>|<META|<LINK|<CODE>|"+
+            "</CODE>|<DD>|</DD>|<TABLE|</TABLE>|<TD|</TD>|<TR|</TR>|<FORM |<IMG|<FRAME |<FRAMESET>|</FRAMESET><IFRAME |" +
+            "</IFRAME>|<APPLET|</APPLET|<TH|</TH>|<THEAD|</THEAD>|<TFOOT|</TFOOT>|<INPUT|<OPTION|<LABEL|</LABEL>|<LEGEND|"+
+            "</LEGEND>|<ISINDEX|<SELECT|</SELECT>|<TEXTAREA|</TEXTAREA>|<SCRIPT|</SCRIPT>|<NOSCRIPT>|</NOSCRIPT>|<S>|</S>|"+
+            "<STRIKE|</STRIKE>|<TT|</TT>|<BIG|</BIG>|<SMALL>|</SMALL>|<BASEFONT|</BASEFONT>|<DIV|</DIV>|<H1>|</H1>|<H2>|</H2>|"+
+            "<H3>|</H3>|<H4>|</H4>|<H5>|</H5>|<H6>|</H6>|<HEAD>|</HEAD>|<HR>|<EM|</EM>"
+            );
 
 
         /*

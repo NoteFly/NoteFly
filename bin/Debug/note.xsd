@@ -3,9 +3,10 @@
   <xs:element name="note">
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="visible" type="xs:boolean" />
         <xs:element name="color" type="xs:int" />
         <xs:element name="title" type="xs:string" />
-        <xs:element name="content" type="xs:string" />                  
+        <xs:element name="content" type="xs:string" />        
         
         <xs:element name="location">
         <xs:complexType>

@@ -45,10 +45,9 @@
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.tabAdvance = new System.Windows.Forms.TabPage();
-            this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -213,11 +212,11 @@
             this.cbxSyntaxHighlight.AutoSize = true;
             this.cbxSyntaxHighlight.Checked = true;
             this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(18, 97);
+            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(11, 108);
             this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
-            this.cbxSyntaxHighlight.Size = new System.Drawing.Size(94, 17);
+            this.cbxSyntaxHighlight.Size = new System.Drawing.Size(156, 17);
             this.cbxSyntaxHighlight.TabIndex = 13;
-            this.cbxSyntaxHighlight.Text = "Highlight code";
+            this.cbxSyntaxHighlight.Text = "Highlight HTML code notes";
             this.cbxSyntaxHighlight.UseVisualStyleBackColor = true;
             // 
             // tabControl1
@@ -238,7 +237,6 @@
             this.tabAppearance.Controls.Add(this.label1);
             this.tabAppearance.Controls.Add(this.cbxDefaultColor);
             this.tabAppearance.Controls.Add(this.numProcTransparency);
-            this.tabAppearance.Controls.Add(this.cbxSyntaxHighlight);
             this.tabAppearance.Controls.Add(this.lbTextProc);
             this.tabAppearance.Location = new System.Drawing.Point(4, 22);
             this.tabAppearance.Name = "tabAppearance";
@@ -258,16 +256,16 @@
             this.tabTwitter.Location = new System.Drawing.Point(4, 22);
             this.tabTwitter.Name = "tabTwitter";
             this.tabTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTwitter.Size = new System.Drawing.Size(356, 246);
+            this.tabTwitter.Size = new System.Drawing.Size(330, 246);
             this.tabTwitter.TabIndex = 1;
             this.tabTwitter.Text = "Twitter";
             this.tabTwitter.UseVisualStyleBackColor = true;
             // 
             // tabAdvance
             // 
-            this.tabAdvance.Controls.Add(this.checkBox1);
             this.tabAdvance.Controls.Add(this.btnBrowse);
             this.tabAdvance.Controls.Add(this.lblTextNoteLocation);
+            this.tabAdvance.Controls.Add(this.cbxSyntaxHighlight);
             this.tabAdvance.Controls.Add(this.tbNotesSavePath);
             this.tabAdvance.Location = new System.Drawing.Point(4, 22);
             this.tabAdvance.Name = "tabAdvance";
@@ -275,14 +273,6 @@
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
-            // 
-            // tbNotesSavePath
-            // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(8, 44);
-            this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(260, 20);
-            this.tbNotesSavePath.TabIndex = 14;
-            this.tbNotesSavePath.Text = "?";
             // 
             // btnBrowse
             // 
@@ -297,21 +287,19 @@
             // lblTextNoteLocation
             // 
             this.lblTextNoteLocation.AutoSize = true;
-            this.lblTextNoteLocation.Location = new System.Drawing.Point(8, 28);
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(8, 16);
             this.lblTextNoteLocation.Name = "lblTextNoteLocation";
             this.lblTextNoteLocation.Size = new System.Drawing.Size(73, 13);
             this.lblTextNoteLocation.TabIndex = 16;
             this.lblTextNoteLocation.Text = "save notes in:";
             // 
-            // checkBox1
+            // tbNotesSavePath
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(8, 100);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(85, 17);
-            this.checkBox1.TabIndex = 17;
-            this.checkBox1.Text = "debug mode";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.tbNotesSavePath.Location = new System.Drawing.Point(8, 44);
+            this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(260, 20);
+            this.tbNotesSavePath.TabIndex = 14;
+            this.tbNotesSavePath.Text = "?";
             // 
             // frmSettings
             // 
@@ -359,6 +347,5 @@
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Label lblTextNoteLocation;
         private System.Windows.Forms.TextBox tbNotesSavePath;
-        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
