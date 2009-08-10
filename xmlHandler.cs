@@ -47,7 +47,7 @@ namespace SimplePlainNote
             {
                 if (File.Exists(appdatafolder+filenm) == false)
                 {
-                    WriteSettings(true, 95, 0, appdatafolder, true, "", "");
+                    WriteSettings(true, 95, 0, appdatafolder, "adres@domain.com", true, "", "");
                 }                
                 //validate setting xmlfile.
                 //clsSValidator objclsSValidator = new clsSValidator(settingsfile, Application.StartupPath + @"\settings.xsd");
@@ -115,7 +115,7 @@ namespace SimplePlainNote
         /// <param name="transparecylevel"></param>
         /// <param name="numcolor"></param>
         /// <returns>true if succeed.</returns>
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, string notesavepath, bool syntaxhighlight, string twitteruser, string twitterpass)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
         {
             try
             {
@@ -171,6 +171,10 @@ namespace SimplePlainNote
                     objXmlTextWriter.WriteString("0");
                     objXmlTextWriter.WriteEndElement();
                 }
+
+                objXmlTextWriter.WriteStartElement("defaultemail");
+                objXmlTextWriter.WriteString(defaultemail);
+                objXmlTextWriter.WriteEndElement();                
 
                 objXmlTextWriter.WriteStartElement("twitter");
 
@@ -238,9 +242,8 @@ namespace SimplePlainNote
                 
                     objXmlTextWriter.WriteStartElement("note");
 
-
                         objXmlTextWriter.WriteStartElement("visible");
-                            if (visible==true)
+                        if (visible == true)
                             {
                                 objXmlTextWriter.WriteString("true"); //1
                             }

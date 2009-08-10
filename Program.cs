@@ -15,25 +15,32 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Security.Permissions;
+using System.Threading;
 using System.Windows.Forms;
 
 [assembly: CLSCompliant(true)]
-
 namespace SimplePlainNote
-{
+{    
     /// <summary>
     /// Startup class.
     /// </summary>
     static class Program
-    {
+    {        
+        //win32 
+        //macx 
+        //linux
+        public const string PLATFORM = "win32"; 
+
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
+        [STAThread]               
         static void Main()
         {            
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(true);
+            Application.SetCompatibleTextRenderingDefault(true);            
             Application.Run(new frmNewNote());
         }
     }

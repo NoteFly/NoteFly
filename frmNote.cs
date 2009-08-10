@@ -35,7 +35,7 @@ namespace SimplePlainNote
         private string twpass;
         private bool transparency = false;
         private bool notelock = false;
-        private bool notevisable = false;
+        private bool notevisible = true;
         private int locX;
         private int locY;
 
@@ -57,7 +57,7 @@ namespace SimplePlainNote
         {
             if (visible == true)
             {
-                notevisable = true;
+                notevisible = true;
             }
             this.id = id;
             this.title = title;            
@@ -76,7 +76,7 @@ namespace SimplePlainNote
                 this.locY = 10;
             }
 
-            if (notevisable == true)
+            if (notevisible == true)
             {
                 InitializeComponent();
 
@@ -150,11 +150,11 @@ namespace SimplePlainNote
         {
             get
             {
-                return this.notevisable; 
+                return this.notevisible; 
             }
             set
             {
-                notevisable = value;                
+                notevisible = value;                
             }
         }
         #endregion
@@ -176,7 +176,7 @@ namespace SimplePlainNote
         private void frmDeleteNote_Click(object sender, EventArgs e)
         {
             transparency = false;
-            this.notevisable = false;                      
+            this.notevisible = false;                      
             this.Close();            
         }
 
@@ -236,7 +236,7 @@ namespace SimplePlainNote
                     curitem.Checked = true;
                     notecolor = i;
                     xmlHandler savenotecolor = new xmlHandler(false, this.id + ".xml");
-                    savenotecolor.WriteNote(notevisable, Convert.ToString(notecolor), this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    savenotecolor.WriteNote(notevisible, Convert.ToString(notecolor), this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
                 }
                 else
                 {
@@ -535,23 +535,33 @@ namespace SimplePlainNote
         private void emailNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string emailnote = "";
-            bool DEF_MAC = false;
 
-            if (DEF_MAC)
+            if (Program.PLATFORM=="macx")
             {
                 emailnote = note.Replace("\r", "%0D%0A");
             }
-            else
+            else if (Program.PLATFORM == "win32")
+            {
+                emailnote = note.Replace("\r\n", "%0D%0A");
+                emailnote = emailnote.Replace(".exe", "");
+            }
+            else if (Program.PLATFORM == "linux")
             {
                 emailnote = note.Replace("\n", "%0D%0A");
             }
+            //preventing a possible security issue here.
+            emailnote = emailnote.Replace("\x00", "");
+
+            xmlHandler xmlsettings = new xmlHandler(true, "settings.xml");
+            string defaultemail = xmlsettings.getXMLnode("defaultemail");
+
             if (!String.IsNullOrEmpty(emailnote))
             {
-                System.Diagnostics.Process.Start("mailto:\\adres@domain.com?subject=" + title + "&body=" + emailnote);
+                System.Diagnostics.Process.Start("mailto:\\" + defaultemail.Replace("\x00", "") + "?subject=" + title.Replace("\x00", "") + "&body=" + emailnote);
             }
             else if (!String.IsNullOrEmpty(title))
             {
-                System.Diagnostics.Process.Start("mailto:\\adres@domain.com?subject=" + title);
+                System.Diagnostics.Process.Start("mailto:\\" + defaultemail.Replace("\x00", "") + "?subject=" + title.Replace("\x00", ""));
             }
             else
             {
@@ -571,7 +581,7 @@ namespace SimplePlainNote
                 if ((this.locX >= 0) && (this.locY >= 0))
                 {
                     xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
-                    updateposnote.WriteNote(notevisable,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    updateposnote.WriteNote(notevisible,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
                 }
                 else
                 {

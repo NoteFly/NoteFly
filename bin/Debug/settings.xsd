@@ -7,6 +7,7 @@
         <xs:element name="transparecylevel" type="xs:int" />
         <xs:element name="defaultcolor" type="xs:int" />
         <xs:element name="notesavepath" type="xs:string" />
+        <xs:element name="defaultemail" type="xs:string" />
         <xs:element name="twitter">
           <xs:complexType>
             <xs:sequence>

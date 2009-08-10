@@ -20,48 +20,66 @@ using System.Drawing;
 
 namespace SimplePlainNote
 {
+    /// <summary>
+    /// Class that provide skin options to notes.
+    /// </summary>
     class skin
     {
         private int notecolor = 0;
 
         #region constructor
+        /// <summary>
+        /// itializes a new instance of the skin class.
+        /// </summary>
+        /// <param name="numcolor">color number</param>
         public skin(int numcolor)
         {
             this.notecolor = numcolor;
         }
         #endregion
 
-
+        /// <summary>
+        /// get the skin color based on the skin color number.
+        /// </summary>
+        /// <param name="selected">is it selected?</param>
+        /// <returns>color</returns>
         public Color getObjColor(bool selected)
         {
             switch (this.notecolor)
             {
                 case 0:
-                    if (selected) return Color.Orange;
-                    else return Color.Gold;
+                    if (selected) { return Color.Orange; }
+                    else { return Color.Gold; }
                 case 1:
-                    if (selected) return Color.DarkOrange;
-                    else return Color.Orange;
+                    if (selected) { return Color.DarkOrange; }
+                    else { return Color.Orange; }
                 case 2:
-                    if (selected) return Color.Gray;
-                    else return Color.White;
+                    if (selected) { return Color.Gray; }
+                    else { return Color.White; }
                 case 3:
-                    if (selected) return Color.Green;
-                    else return Color.LawnGreen;
+                    if (selected) { return Color.Green; }
+                    else { return Color.LawnGreen; }
                 case 4:
                     if (selected) return Color.Blue;
                     else return Color.CornflowerBlue;
                 case 5:
-                    if (selected) return Color.Purple;
-                    else return Color.Magenta;
+                    if (selected) { return Color.Purple; }
+                    else { return Color.Magenta; }
                 case 6:
-                    if (selected) return Color.DarkRed;
-                    else return Color.Red;
+                    if (selected) { return Color.DarkRed; }
+                    else { return Color.Red; }
                 default:
                     return Color.Gold;
             }
         }
 
+        /// <summary>
+        /// Get the skin color
+        /// </summary>
+        /// <param name="selected">is it selected?</param>
+        /// <param name="highlight">is it a highlight?</param>
+        /// <param name="warn">is it a warning?</param>
+        /// <returns></returns>
         public Color getObjColor(bool selected, bool highlight, bool warn)
         {
             if (highlight)

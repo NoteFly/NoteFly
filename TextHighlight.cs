@@ -20,19 +20,27 @@ using System.Text.RegularExpressions;
 
 namespace SimplePlainNote
 {
+    /// <summary>
+    /// helper class for text highlight in notes.
+    /// </summary>
     public class TextHighlight
     {
-
-        public Regex syntaxHTML = new Regex("<!DOCTYPE |<HTML>|</HTML>|<BODY|</BODY>|<A HREF|<SPAN|<I>|</I>|<U>|</U>|"+
+        //regulaire expression for detecting some HTML code
+        private Regex SyntaxHTML = new Regex("<!DOCTYPE |<HTML>|</HTML>|<BODY|</BODY>|<A HREF|<SPAN|<I>|</I>|<U>|</U>|"+
             "<B>|</B>|<UL>|<IL>|<OL|</OL>|<BR>|<BR />|<P |<P>|</P>|<FONT|</FONT>|<TITLE>|</TITLE>|<META|<LINK|<CODE>|"+
             "</CODE>|<DD>|</DD>|<TABLE|</TABLE>|<TD|</TD>|<TR|</TR>|<FORM |<IMG|<FRAME |<FRAMESET>|</FRAMESET><IFRAME |" +
             "</IFRAME>|<APPLET|</APPLET|<TH|</TH>|<THEAD|</THEAD>|<TFOOT|</TFOOT>|<INPUT|<OPTION|<LABEL|</LABEL>|<LEGEND|"+
             "</LEGEND>|<ISINDEX|<SELECT|</SELECT>|<TEXTAREA|</TEXTAREA>|<SCRIPT|</SCRIPT>|<NOSCRIPT>|</NOSCRIPT>|<S>|</S>|"+
             "<STRIKE|</STRIKE>|<TT|</TT>|<BIG|</BIG>|<SMALL>|</SMALL>|<BASEFONT|</BASEFONT>|<DIV|</DIV>|<H1>|</H1>|<H2>|</H2>|"+
-            "<H3>|</H3>|<H4>|</H4>|<H5>|</H5>|<H6>|</H6>|<HEAD>|</HEAD>|<HR>|<EM|</EM>"
-            );
+            "<H3>|</H3>|<H4>|</H4>|<H5>|</H5>|<H6>|</H6>|<HEAD>|</HEAD>|<HR>|<EM|</EM>");
 
-
+        public Regex GetHTML
+        {
+            get
+            {
+                return this.SyntaxHTML;
+            }
+        }
         /*
 int selPos = rtbNote.SelectionStart;                
 foreach (Match keyWordMatch in syntaxCsharp.Matches(rtbNote.Text))

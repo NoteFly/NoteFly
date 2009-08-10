@@ -45,9 +45,9 @@ namespace SimplePlainNote
             cbxDefaultColor.SelectedIndex = getDefaultColor();
             tbNotesSavePath.Text = getNotesSavePath();
             tbTwitterUser.Text = getTwitterusername();
-            tbTwitterPass.Text = getTwitterpassword();            
+            tbTwitterPass.Text = getTwitterpassword();
+            tbDefaultEmail.Text = getDefaultEmail();
         }
-        #endregion
 
         #region methoden
         private void btnOK_Click(object sender, EventArgs e)
@@ -58,11 +58,13 @@ namespace SimplePlainNote
                 return;
             }
             
-            if (xmlsettings.WriteSettings(cbxTransparecy.Checked, 
+            if (xmlsettings.WriteSettings(
+                cbxTransparecy.Checked, 
                 numProcTransparency.Value,
                 cbxDefaultColor.SelectedIndex,
                 tbNotesSavePath.Text,
-                cbxSyntaxHighlight.Checked,
+                tbDefaultEmail.Text,
+                cbxSyntaxHighlight.Checked,                
                 tbTwitterUser.Text,
                 tbTwitterPass.Text
                 )==false)
@@ -145,6 +147,12 @@ namespace SimplePlainNote
                 tbTwitterPass.Text = "";
             }
         }
+
+        private string getDefaultEmail()
+        {
+            return xmlsettings.getXMLnode("defaultemail");            
+        }
+        #endregion
 
 
         #endregion

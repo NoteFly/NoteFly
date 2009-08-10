@@ -31,19 +31,36 @@ namespace SimplePlainNote
     /// </summary>
     public partial class frmManageNotes : Form
     {
+
+        //is transparent
         private bool transparency = false;
+        
+        //counted notes
         private int numnotes = 0;
+        
+        //list of notes
         private List<FrmNote> notes;
+        
+        //for moving
         public const int WM_NCLBUTTONDOWN = 0xA1;
+        
+        //for moving
         public const int HT_CAPTION = 0x2;
         
+        //for moving form 
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
                          int Msg, int wParam, int lParam);
+
+        //for moving form 
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
-
+        /// <summary>
+        /// New instance of frmManageNotes
+        /// </summary>
+        /// <param name="fcn"></param>
+        /// <param name="update"></param>
         public frmManageNotes(frmNewNote fcn, bool update)
         {
             InitializeComponent();
@@ -109,6 +126,11 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Set a note visible or unvisible
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void cbxNoteVisible_Click(object sender, EventArgs e)
         {
             CheckBox cbx = (CheckBox)sender;
@@ -158,18 +180,22 @@ namespace SimplePlainNote
             
         }
 
-        
+        /// <summary>
+        /// Close form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClose_Click(object sender, EventArgs e)
         {            
             
             this.Close();
         }
-
-        private void frmManageNotes_Shown(object sender, EventArgs e)
-        {
-            //DrawNotesOverview(notes);
-        }
-
+        
+        /// <summary>
+        /// Moving note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
             pnlHead.BackColor = Color.OrangeRed;
@@ -190,6 +216,11 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// form not active make tranparent if needed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmManageNotes_Deactivate(object sender, EventArgs e)
         {
             if (transparency)

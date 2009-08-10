@@ -33,17 +33,20 @@ namespace SimplePlainNote
     {
         private bool transparency = true;
         private bool editmode = false;        
+        private List<FrmNote> notes;
 
+        //if (Program.PLATFORM == "win32")
+        //{
         public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-            
+        public const int HT_CAPTION = 0x2;        
+        
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
                          int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-    
-        private List<FrmNote> notes;
+        //}
+        
 
         #region constructor
         public frmNewNote()
@@ -116,6 +119,8 @@ namespace SimplePlainNote
                     int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");
                     CreateDefaultNote(tbTitle.Text, rtbNote.Text, notecolordefault);
                 }
+                this.WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = false;
                 CancelNote();
             }
         }
@@ -173,10 +178,10 @@ namespace SimplePlainNote
 
         private void createANewNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CancelNote(); 
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
-            skin Skin = getSkin();
-            this.BackColor = Skin.getObjColor(false);
+            this.Show();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -187,6 +192,8 @@ namespace SimplePlainNote
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
             CancelNote();
         }
 
@@ -195,20 +202,27 @@ namespace SimplePlainNote
         /// </summary>
         private void CancelNote()
         {            
-            this.WindowState = FormWindowState.Minimized;
-            this.ShowInTaskbar = false;
-            tbTitle.Text = "";
-            rtbNote.Text = "";
-            tbTitle.Focus();
 
+            tbTitle.Text = "";
+            rtbNote.Text = "";            
+                       
             skin Skin = getSkin();
-            Color normalcolor = Skin.getObjColor(false);
-            this.BackColor = normalcolor;
-            pnlHeadNewNote.BackColor = normalcolor;            
+            Color normalcolor = Skin.getObjColor(false);            
+
+            pnlNoteEdit.BackColor = normalcolor;
+            rtbNote.BackColor = normalcolor;
+            pnlHeadNewNote.BackColor = normalcolor;
+
+            pnlNoteEdit.Refresh();
+            rtbNote.Refresh();
+            pnlHeadNewNote.Refresh();
+
+            tbTitle.BackColor = Skin.getObjColor(true);
+            tbTitle.Focus();            
         }
 
         /// <summary>
-        /// Create a new note GUI.
+        /// Create a note GUI.
         /// </summary>
         /// <param name="title"></param>
         /// <param name="content"></param>
@@ -332,8 +346,9 @@ namespace SimplePlainNote
 
         private void frmNewNote_Shown(object sender, EventArgs e)
         {
+            //MessageBox.Show("fired.");
             //redraw
-            CancelNote();    
+            CancelNote();
         }
 
         private void frmNewNote_Activated(object sender, EventArgs e)

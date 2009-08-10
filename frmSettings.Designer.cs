@@ -48,6 +48,10 @@
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
+            this.lbTextDefaultEmail = new System.Windows.Forms.Label();
+            this.tbDefaultEmail = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.lbTextNoteFont = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -212,7 +216,7 @@
             this.cbxSyntaxHighlight.AutoSize = true;
             this.cbxSyntaxHighlight.Checked = true;
             this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(11, 108);
+            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(8, 102);
             this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
             this.cbxSyntaxHighlight.Size = new System.Drawing.Size(156, 17);
             this.cbxSyntaxHighlight.TabIndex = 13;
@@ -233,6 +237,8 @@
             // 
             // tabAppearance
             // 
+            this.tabAppearance.Controls.Add(this.lbTextNoteFont);
+            this.tabAppearance.Controls.Add(this.comboBox1);
             this.tabAppearance.Controls.Add(this.cbxTransparecy);
             this.tabAppearance.Controls.Add(this.label1);
             this.tabAppearance.Controls.Add(this.cbxDefaultColor);
@@ -263,6 +269,8 @@
             // 
             // tabAdvance
             // 
+            this.tabAdvance.Controls.Add(this.tbDefaultEmail);
+            this.tabAdvance.Controls.Add(this.lbTextDefaultEmail);
             this.tabAdvance.Controls.Add(this.btnBrowse);
             this.tabAdvance.Controls.Add(this.lblTextNoteLocation);
             this.tabAdvance.Controls.Add(this.cbxSyntaxHighlight);
@@ -300,6 +308,39 @@
             this.tbNotesSavePath.Size = new System.Drawing.Size(260, 20);
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
+            // 
+            // lbTextDefaultEmail
+            // 
+            this.lbTextDefaultEmail.AutoSize = true;
+            this.lbTextDefaultEmail.Location = new System.Drawing.Point(11, 159);
+            this.lbTextDefaultEmail.Name = "lbTextDefaultEmail";
+            this.lbTextDefaultEmail.Size = new System.Drawing.Size(98, 13);
+            this.lbTextDefaultEmail.TabIndex = 17;
+            this.lbTextDefaultEmail.Text = "default email adres:";
+            // 
+            // tbDefaultEmail
+            // 
+            this.tbDefaultEmail.Location = new System.Drawing.Point(115, 156);
+            this.tbDefaultEmail.Name = "tbDefaultEmail";
+            this.tbDefaultEmail.Size = new System.Drawing.Size(198, 20);
+            this.tbDefaultEmail.TabIndex = 18;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(130, 116);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(146, 21);
+            this.comboBox1.TabIndex = 8;
+            // 
+            // lbTextNoteFont
+            // 
+            this.lbTextNoteFont.AutoSize = true;
+            this.lbTextNoteFont.Location = new System.Drawing.Point(16, 119);
+            this.lbTextNoteFont.Name = "lbTextNoteFont";
+            this.lbTextNoteFont.Size = new System.Drawing.Size(94, 13);
+            this.lbTextNoteFont.TabIndex = 9;
+            this.lbTextNoteFont.Text = "Font note content:";
             // 
             // frmSettings
             // 
@@ -347,5 +388,9 @@
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Label lblTextNoteLocation;
         private System.Windows.Forms.TextBox tbNotesSavePath;
+        private System.Windows.Forms.TextBox tbDefaultEmail;
+        private System.Windows.Forms.Label lbTextDefaultEmail;
+        private System.Windows.Forms.Label lbTextNoteFont;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
