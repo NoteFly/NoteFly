@@ -31,9 +31,9 @@ namespace SimplePlainNote
         private string appdatafolder;
         private XmlTextReader objXmlTextReader;
         private XmlTextWriter objXmlTextWriter;
-
-        protected const string TwitterBaseUrlFormat = "http://twitter.com/{0}/{1}.{2}";                
-
+        
+        //used twitter ip to prevented dns lookup, against dns attacks.
+        protected const string TwitterBaseUrlFormat = "http://168.143.162.68/{0}/{1}.{2}";
         #endregion
 
         #region constructor

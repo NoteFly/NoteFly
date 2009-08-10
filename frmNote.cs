@@ -353,26 +353,27 @@ namespace SimplePlainNote
                 twitterpass = twpass;
             }
 
-            if ((twitteruser == "") || (twitteruser == null))
+            if (String.IsNullOrEmpty(twitteruser))
             {
                 MessageBox.Show("Error: Twitter settings not set.");
                 return;
             }
-            else if ((twitterpass == null) || (twitterpass == ""))
+            else if (String.IsNullOrEmpty(twpass))
             {
                 Form askpass = new Form();
                 askpass.Height = 80;
-                askpass.Width = 250;
+                askpass.Width = 280;
                 askpass.Text = "Twitter password needed";
                 askpass.Show();
                 TextBox tbpass = new TextBox();
                 tbpass.Location = new Point(10, 10);
-                tbpass.Width = 180;
+                tbpass.Width = 160;
                 tbpass.Name = "tbPassword";
+                tbpass.PasswordChar = Convert.ToChar("X"); ;
                 Button btnOk = new Button();
-                btnOk.Location = new Point(190, 10);
+                btnOk.Location = new Point(180, 10);
                 btnOk.Text = "Ok";
-                btnOk.Width = 50;
+                btnOk.Width = 80;
                 btnOk.Name = "btnOk";
                 btnOk.Click += askpassok;
                 askpass.Controls.Add(tbpass);
@@ -399,7 +400,7 @@ namespace SimplePlainNote
 
             Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
             twpass = passctr[0].Text;
-            MessageBox.Show(twpass);
+            //MessageBox.Show(twpass);
             frmAskpass.Close();
             tweetnote();  
         }
