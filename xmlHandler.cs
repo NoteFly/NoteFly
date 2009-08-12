@@ -31,35 +31,44 @@ namespace SimplePlainNote
         private string appdatafolder;
         private XmlTextReader objXmlTextReader;
         private XmlTextWriter objXmlTextWriter;
-        
+
         //used twitter ip to prevented dns lookup, against dns attacks.
         protected const string TwitterBaseUrlFormat = "http://168.143.162.68/{0}/{1}.{2}";
         #endregion
 
         #region constructor
-        public xmlHandler(bool issettings, string filenm)
+        public xmlHandler(bool issetting)
         {
-            this.filenm = filenm;
-            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
-            if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
-
-            if (issettings == true)
+            if (issetting == true)
             {
-                if (File.Exists(appdatafolder+filenm) == false)
-                {
-                    WriteSettings(true, 95, 0, appdatafolder, "adres@domain.com", true, "", "");
-                }                
-                //validate setting xmlfile.
-                //clsSValidator objclsSValidator = new clsSValidator(settingsfile, Application.StartupPath + @"\settings.xsd");
-                //if (objclsSValidator.ValidateXMLFile()) return;
-            }            
-         }
+                CheckSettings();
+            }
+            else
+            {
+                MessageBox.Show("Filename expected.");
+            }
+        }
+
+        public xmlHandler(bool issetting, string filenm)
+        {
+            if (issetting == false)
+            {
+                appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
+                if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
+                this.filenm = filenm;
+            }
+            else
+            {
+                CheckSettings();
+            }
+        }
+
         #endregion
 
         #region properties
         public string AppDataFolder
         {
-            get { return this.appdatafolder; }            
+            get { return this.appdatafolder; }
         }
 
 
@@ -67,7 +76,7 @@ namespace SimplePlainNote
 
         private string twitterClient = "spn";
         private string twitterClientVersion = "0.5.0";
-        private string twitterClientUrl = "http://code.google.com/p/simpleplainnote/";       
+        private string twitterClientUrl = "http://code.google.com/p/simpleplainnote/";
 
         /// <summary>
         /// Sets the version of the Twitter client.
@@ -91,7 +100,7 @@ namespace SimplePlainNote
         /// </summary>
         public string TwitterClientUrl
         {
-            get { return twitterClientUrl; }            
+            get { return twitterClientUrl; }
         }
 
         /// <summary>
@@ -115,11 +124,25 @@ namespace SimplePlainNote
         /// <param name="transparecylevel"></param>
         /// <param name="numcolor"></param>
         /// <returns>true if succeed.</returns>
+        /// 
+
+        private void CheckSettings()
+        {
+            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
+            if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
+            this.filenm = "settings.xml";
+            if (File.Exists(appdatafolder + filenm) == false)
+            {
+                WriteSettings(true, 95, 0, appdatafolder, "adres@domain.com", true, "", "");
+            }         
+        }
+
         public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
         {
             try
             {
-                if (CheckFile()) {
+                if (CheckFile())
+                {
                     return false;
                 }
 
@@ -174,11 +197,11 @@ namespace SimplePlainNote
 
                 objXmlTextWriter.WriteStartElement("defaultemail");
                 objXmlTextWriter.WriteString(defaultemail);
-                objXmlTextWriter.WriteEndElement();                
+                objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("twitter");
 
-                if (twitteruser.Length > 15) { throw new Exception("twitter username too long."); }                
+                if (twitteruser.Length > 15) { throw new Exception("twitter username too long."); }
                 objXmlTextWriter.WriteStartElement("twitteruser");
                 objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
                 objXmlTextWriter.WriteEndElement();
@@ -223,7 +246,8 @@ namespace SimplePlainNote
 
         public bool WriteNote(bool visible, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
-            try {
+            try
+            {
                 if (Directory.Exists(appdatafolder) == false)
                 {
                     try
@@ -232,69 +256,69 @@ namespace SimplePlainNote
                     }
                     catch (DirectoryNotFoundException exc)
                     {
-                        System.Windows.Forms.MessageBox.Show("error "+exc.Message);
-                    }                    
+                        System.Windows.Forms.MessageBox.Show("error " + exc.Message);
+                    }
                 }
-                objXmlTextWriter = new XmlTextWriter(appdatafolder+filenm, null);
+                objXmlTextWriter = new XmlTextWriter(appdatafolder + filenm, null);
 
                 objXmlTextWriter.Formatting = Formatting.Indented;
 
                 objXmlTextWriter.WriteStartDocument();
-                
-                    objXmlTextWriter.WriteStartElement("note");
 
-                        objXmlTextWriter.WriteStartElement("visible");
-                        if (visible == true)
-                            {
-                                objXmlTextWriter.WriteString("true"); //1
-                            }
-                            else
-                            {
-                                objXmlTextWriter.WriteString("false"); //0
-                            }
-                        objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartElement("note");
 
-                        objXmlTextWriter.WriteStartElement("color");
-                            objXmlTextWriter.WriteString(numcolor);
-                        objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartElement("visible");
+                if (visible == true)
+                {
+                    objXmlTextWriter.WriteString("true"); //1
+                }
+                else
+                {
+                    objXmlTextWriter.WriteString("false"); //0
+                }
+                objXmlTextWriter.WriteEndElement();
 
-                        objXmlTextWriter.WriteStartElement("title");
-                            objXmlTextWriter.WriteString(title);
-                        objXmlTextWriter.WriteEndElement();                        
+                objXmlTextWriter.WriteStartElement("color");
+                objXmlTextWriter.WriteString(numcolor);
+                objXmlTextWriter.WriteEndElement();
 
-                        objXmlTextWriter.WriteStartElement("content");
-                            objXmlTextWriter.WriteString(content);
-                        objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartElement("title");
+                objXmlTextWriter.WriteString(title);
+                objXmlTextWriter.WriteEndElement();
 
-                        objXmlTextWriter.WriteStartElement("location");
-                            objXmlTextWriter.WriteStartElement("x");
-                                objXmlTextWriter.WriteString(Convert.ToString(locX));
-                            objXmlTextWriter.WriteEndElement();
-                            objXmlTextWriter.WriteStartElement("y");
-                                objXmlTextWriter.WriteString(Convert.ToString(locY));
-                            objXmlTextWriter.WriteEndElement();
-                        objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartElement("content");
+                objXmlTextWriter.WriteString(content);
+                objXmlTextWriter.WriteEndElement();
 
-                        objXmlTextWriter.WriteStartElement("size");
-                            objXmlTextWriter.WriteStartElement("width");
-                                objXmlTextWriter.WriteString(Convert.ToString(notewidth));
-                            objXmlTextWriter.WriteEndElement();
-                            objXmlTextWriter.WriteStartElement("heigth");
-                                objXmlTextWriter.WriteString(Convert.ToString(noteheight));
-                            objXmlTextWriter.WriteEndElement();
-                        objXmlTextWriter.WriteEndElement();
-                    objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartElement("location");
+                objXmlTextWriter.WriteStartElement("x");
+                objXmlTextWriter.WriteString(Convert.ToString(locX));
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartElement("y");
+                objXmlTextWriter.WriteString(Convert.ToString(locY));
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("size");
+                objXmlTextWriter.WriteStartElement("width");
+                objXmlTextWriter.WriteString(Convert.ToString(notewidth));
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartElement("heigth");
+                objXmlTextWriter.WriteString(Convert.ToString(noteheight));
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteEndDocument();
 
                 objXmlTextWriter.Flush();
                 objXmlTextWriter.Close();
-                 
+
                 return true;
             }
             catch (Exception)
             {
-                return false;                
+                return false;
             }
         }
 
@@ -333,7 +357,7 @@ namespace SimplePlainNote
                         {
                             MessageBox.Show("Failed making backup copy.");
                             return true;
-                        }                        
+                        }
                     }
                     return false;
                 }
@@ -365,7 +389,7 @@ namespace SimplePlainNote
         {
             try
             {
-                objXmlTextReader = new XmlTextReader(appdatafolder+filenm);
+                objXmlTextReader = new XmlTextReader(appdatafolder + filenm);
             }
             catch (FileLoadException fileloadexc)
             {
@@ -374,7 +398,7 @@ namespace SimplePlainNote
             }
             catch (FileNotFoundException filenotfoundexc)
             {
-                MessageBox.Show("Error: "+filenotfoundexc.Message);
+                MessageBox.Show("Error: " + filenotfoundexc.Message);
                 return "";
             }
 
@@ -416,7 +440,7 @@ namespace SimplePlainNote
                     }
                     catch (InvalidCastException)
                     {
-                        objXmlTextReader.Close();                        
+                        objXmlTextReader.Close();
                     }
                 }
             }
@@ -448,7 +472,7 @@ namespace SimplePlainNote
         }
 
         public string Update(string userName, string password, string status)
-        {        
+        {
             //Important: "statuses", "update" and "xml" have to be lower case.
             string url = string.Format(TwitterBaseUrlFormat, "statuses", "update", "xml");
             string data = string.Format("status={0}", HttpUtility.UrlEncode(status));
@@ -523,7 +547,7 @@ namespace SimplePlainNote
                 MessageBox.Show("Twitter username or/and password not filled in.");
             }
             return null;
-        }       
+        }
         #endregion
 
         #endregion

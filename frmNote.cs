@@ -23,6 +23,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace SimplePlainNote
 {
@@ -162,7 +163,7 @@ namespace SimplePlainNote
 
         private bool getTransparency()
         {
-            xmlHandler xmlSettings = new xmlHandler(true, "settings.xml");
+            xmlHandler xmlSettings = new xmlHandler(true);
             if (xmlSettings.getXMLnode("transparecy") == "1")
             {
                 return true;
@@ -345,7 +346,7 @@ namespace SimplePlainNote
 
         private void tweetnote()
         {
-            xmlHandler xmlSettings = new xmlHandler(false, "settings.xml");
+            xmlHandler xmlSettings = new xmlHandler(true);
             string twitteruser = xmlSettings.getXMLnode("twitteruser");
             string twitterpass = xmlSettings.getXMLnode("twitterpass");
             if ((twpass != "") && (twpass != null))
@@ -417,23 +418,29 @@ namespace SimplePlainNote
 
         private void frmNote_Shown(object sender, EventArgs e)
         {
-
-            xmlHandler xmlSettings = new xmlHandler(false, "settings.xml");
+            xmlHandler xmlSettings = new xmlHandler(true);
 
             if (xmlSettings.getXMLnodeAsInt("syntaxhighlight") == 1)
             {
+                TextHighlight texthighlight = new TextHighlight();
                 
-
+                int selPos = rtbNote.SelectionStart;
+                foreach (Match keyWordMatch in texthighlight.GetHTML.Matches(rtbNote.Text))
+                {
+                    rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
+                    rtbNote.SelectionColor = Color.Blue;
+                    rtbNote.SelectionStart = selPos;
+                    rtbNote.SelectionColor = Color.Black;
+                }
             }
 
-
-            if (String.IsNullOrEmpty(xmlSettings.getXMLnode("twitteruser"))==true)
+            if (!String.IsNullOrEmpty(xmlSettings.getXMLnode("twitteruser")))
             {
-                TwitterToolStripMenuItem.Enabled = false;
+                TwitterToolStripMenuItem.Enabled = true;
             }
             else
             {
-                TwitterToolStripMenuItem.Enabled = true;
+                TwitterToolStripMenuItem.Enabled = false;
             }
 
         }
@@ -553,7 +560,7 @@ namespace SimplePlainNote
             //preventing a possible security issue here.
             emailnote = emailnote.Replace("\x00", "");
 
-            xmlHandler xmlsettings = new xmlHandler(true, "settings.xml");
+            xmlHandler xmlsettings = new xmlHandler(true);
             string defaultemail = xmlsettings.getXMLnode("defaultemail");
 
             if (!String.IsNullOrEmpty(emailnote))

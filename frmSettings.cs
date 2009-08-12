@@ -37,7 +37,7 @@ namespace SimplePlainNote
         {
             InitializeComponent();
 
-            xmlsettings = new xmlHandler(true, "settings.xml");
+            xmlsettings = new xmlHandler(true);
 
             //read setting and display them correctly.            
             cbxTransparecy.Checked = getTransparecy();

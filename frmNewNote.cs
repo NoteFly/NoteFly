@@ -66,7 +66,7 @@ namespace SimplePlainNote
 
         private void loadNotes()
         {
-            xmlHandler getSettings = new xmlHandler(true, "settings.xml");
+            xmlHandler getSettings = new xmlHandler(true);
             string notesavepath = getSettings.getXMLnode("notesavepath");
 
             int id = 1;
@@ -115,7 +115,7 @@ namespace SimplePlainNote
                 }
                 else
                 {
-                    xmlHandler getSettings = new xmlHandler(true, "settings.xml");
+                    xmlHandler getSettings = new xmlHandler(true);
                     int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");
                     CreateDefaultNote(tbTitle.Text, rtbNote.Text, notecolordefault);
                 }
@@ -165,7 +165,7 @@ namespace SimplePlainNote
         private skin getSkin()
         {
             int numcolor = 0;
-            xmlHandler getSettings = new xmlHandler(true, "settings.xml");
+            xmlHandler getSettings = new xmlHandler(true);
             numcolor = Convert.ToInt32(getSettings.getXMLnode("defaultcolor"));
             skin getSkin = new skin(numcolor);
             return getSkin;
@@ -277,7 +277,7 @@ namespace SimplePlainNote
         /// <returns>filepath of the created note.</returns>
         private string SaveNoteDefault(int id, string title, string text)
         {
-            xmlHandler getXmlSettings = new xmlHandler(true, "settings.xml");            
+            xmlHandler getXmlSettings = new xmlHandler(true);            
             string notefile = id + ".xml";
             xmlHandler xmlnote = new xmlHandler(false, notefile);
             

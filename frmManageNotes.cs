@@ -71,7 +71,7 @@ namespace SimplePlainNote
 
         private bool getTransparency()
         {
-            xmlHandler xmlSettings = new xmlHandler(true, "settings.xml");
+            xmlHandler xmlSettings = new xmlHandler(true);
             if (xmlSettings.getXMLnode("transparecy") == "1")
             {
                 return true;
@@ -143,7 +143,7 @@ namespace SimplePlainNote
 
         private string getNotesSavePath()
         {
-            xmlHandler xmlsettings = new xmlHandler(true, "settings.xml");
+            xmlHandler xmlsettings = new xmlHandler(true);
             return xmlsettings.getXMLnode("notesavepath");
         }
 
