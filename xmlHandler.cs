@@ -178,17 +178,18 @@ namespace SimplePlainNote
 
                 objXmlTextWriter.WriteStartElement("twitter");
 
-                if (twitteruser.Length > 15) { throw new Exception("twitter username too long."); }
-                if (twitteruser.Length < 0) { throw new Exception("twitter username has negative length. How can that be?"); }
+                if (twitteruser.Length > 15) { throw new Exception("twitter username too long."); }                
                 objXmlTextWriter.WriteStartElement("twitteruser");
                 objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
                 objXmlTextWriter.WriteEndElement();
 
                 if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new Exception("twitter password too short."); }
-                if (twitterpass.Length > 30) { throw new Exception("twitter password too long."); }
+                if (twitterpass.Length > 255) { throw new Exception("twitter password too long."); }
                 objXmlTextWriter.WriteStartElement("twitterpass");
-                //encrypt it?
-                objXmlTextWriter.WriteString(Convert.ToString(twitterpass));
+                if (twitterpass != "")
+                {
+                    objXmlTextWriter.WriteString(twitterpass);
+                }
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteEndElement();
@@ -517,7 +518,10 @@ namespace SimplePlainNote
 
                 }
             }
-            MessageBox.Show("Twitter username or/and password not filled in.");
+            else
+            {
+                MessageBox.Show("Twitter username or/and password not filled in.");
+            }
             return null;
         }       
         #endregion

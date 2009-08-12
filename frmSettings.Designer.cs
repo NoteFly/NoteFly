@@ -43,15 +43,16 @@
             this.cbxSyntaxHighlight = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabAppearance = new System.Windows.Forms.TabPage();
+            this.lbTextNoteFont = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.tbDefaultEmail = new System.Windows.Forms.TextBox();
+            this.lbTextDefaultEmail = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
-            this.lbTextDefaultEmail = new System.Windows.Forms.Label();
-            this.tbDefaultEmail = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.lbTextNoteFont = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -165,17 +166,17 @@
             // 
             // tbTwitterUser
             // 
-            this.tbTwitterUser.Location = new System.Drawing.Point(103, 11);
-            this.tbTwitterUser.MaxLength = 15;
+            this.tbTwitterUser.Location = new System.Drawing.Point(113, 29);
+            this.tbTwitterUser.MaxLength = 16;
             this.tbTwitterUser.Name = "tbTwitterUser";
-            this.tbTwitterUser.Size = new System.Drawing.Size(166, 20);
+            this.tbTwitterUser.Size = new System.Drawing.Size(153, 20);
             this.tbTwitterUser.TabIndex = 8;
             this.tbTwitterUser.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lbUsername
             // 
             this.lbUsername.AutoSize = true;
-            this.lbUsername.Location = new System.Drawing.Point(6, 14);
+            this.lbUsername.Location = new System.Drawing.Point(16, 32);
             this.lbUsername.Name = "lbUsername";
             this.lbUsername.Size = new System.Drawing.Size(87, 13);
             this.lbUsername.TabIndex = 9;
@@ -184,17 +185,17 @@
             // tbTwitterPass
             // 
             this.tbTwitterPass.Enabled = false;
-            this.tbTwitterPass.Location = new System.Drawing.Point(103, 56);
-            this.tbTwitterPass.MaxLength = 30;
+            this.tbTwitterPass.Location = new System.Drawing.Point(113, 110);
+            this.tbTwitterPass.MaxLength = 255;
             this.tbTwitterPass.Name = "tbTwitterPass";
             this.tbTwitterPass.PasswordChar = 'X';
-            this.tbTwitterPass.Size = new System.Drawing.Size(166, 20);
+            this.tbTwitterPass.Size = new System.Drawing.Size(153, 20);
             this.tbTwitterPass.TabIndex = 10;
             // 
             // lbPassword
             // 
             this.lbPassword.AutoSize = true;
-            this.lbPassword.Location = new System.Drawing.Point(8, 59);
+            this.lbPassword.Location = new System.Drawing.Point(21, 113);
             this.lbPassword.Name = "lbPassword";
             this.lbPassword.Size = new System.Drawing.Size(86, 13);
             this.lbPassword.TabIndex = 11;
@@ -203,7 +204,7 @@
             // cbxRememberTwPass
             // 
             this.cbxRememberTwPass.AutoSize = true;
-            this.cbxRememberTwPass.Location = new System.Drawing.Point(9, 37);
+            this.cbxRememberTwPass.Location = new System.Drawing.Point(24, 93);
             this.cbxRememberTwPass.Name = "cbxRememberTwPass";
             this.cbxRememberTwPass.Size = new System.Drawing.Size(242, 17);
             this.cbxRememberTwPass.TabIndex = 12;
@@ -216,7 +217,7 @@
             this.cbxSyntaxHighlight.AutoSize = true;
             this.cbxSyntaxHighlight.Checked = true;
             this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(8, 102);
+            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(19, 90);
             this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
             this.cbxSyntaxHighlight.Size = new System.Drawing.Size(156, 17);
             this.cbxSyntaxHighlight.TabIndex = 13;
@@ -252,8 +253,26 @@
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
             // 
+            // lbTextNoteFont
+            // 
+            this.lbTextNoteFont.AutoSize = true;
+            this.lbTextNoteFont.Location = new System.Drawing.Point(16, 119);
+            this.lbTextNoteFont.Name = "lbTextNoteFont";
+            this.lbTextNoteFont.Size = new System.Drawing.Size(94, 13);
+            this.lbTextNoteFont.TabIndex = 9;
+            this.lbTextNoteFont.Text = "Font note content:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(130, 116);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(146, 21);
+            this.comboBox1.TabIndex = 8;
+            // 
             // tabTwitter
             // 
+            this.tabTwitter.Controls.Add(this.label2);
             this.tabTwitter.Controls.Add(this.lbUsername);
             this.tabTwitter.Controls.Add(this.tbTwitterUser);
             this.tabTwitter.Controls.Add(this.tbTwitterPass);
@@ -266,6 +285,15 @@
             this.tabTwitter.TabIndex = 1;
             this.tabTwitter.Text = "Twitter";
             this.tabTwitter.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 133);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(318, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Never ever enter your twitter password here on a public computer.";
             // 
             // tabAdvance
             // 
@@ -282,10 +310,26 @@
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
             // 
+            // tbDefaultEmail
+            // 
+            this.tbDefaultEmail.Location = new System.Drawing.Point(120, 140);
+            this.tbDefaultEmail.Name = "tbDefaultEmail";
+            this.tbDefaultEmail.Size = new System.Drawing.Size(188, 20);
+            this.tbDefaultEmail.TabIndex = 18;
+            // 
+            // lbTextDefaultEmail
+            // 
+            this.lbTextDefaultEmail.AutoSize = true;
+            this.lbTextDefaultEmail.Location = new System.Drawing.Point(16, 140);
+            this.lbTextDefaultEmail.Name = "lbTextDefaultEmail";
+            this.lbTextDefaultEmail.Size = new System.Drawing.Size(98, 13);
+            this.lbTextDefaultEmail.TabIndex = 17;
+            this.lbTextDefaultEmail.Text = "default email adres:";
+            // 
             // btnBrowse
             // 
             this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnBrowse.Location = new System.Drawing.Point(274, 42);
+            this.btnBrowse.Location = new System.Drawing.Point(262, 42);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(53, 23);
             this.btnBrowse.TabIndex = 15;
@@ -295,7 +339,7 @@
             // lblTextNoteLocation
             // 
             this.lblTextNoteLocation.AutoSize = true;
-            this.lblTextNoteLocation.Location = new System.Drawing.Point(8, 16);
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(8, 28);
             this.lblTextNoteLocation.Name = "lblTextNoteLocation";
             this.lblTextNoteLocation.Size = new System.Drawing.Size(73, 13);
             this.lblTextNoteLocation.TabIndex = 16;
@@ -305,42 +349,9 @@
             // 
             this.tbNotesSavePath.Location = new System.Drawing.Point(8, 44);
             this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(260, 20);
+            this.tbNotesSavePath.Size = new System.Drawing.Size(248, 20);
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
-            // 
-            // lbTextDefaultEmail
-            // 
-            this.lbTextDefaultEmail.AutoSize = true;
-            this.lbTextDefaultEmail.Location = new System.Drawing.Point(11, 159);
-            this.lbTextDefaultEmail.Name = "lbTextDefaultEmail";
-            this.lbTextDefaultEmail.Size = new System.Drawing.Size(98, 13);
-            this.lbTextDefaultEmail.TabIndex = 17;
-            this.lbTextDefaultEmail.Text = "default email adres:";
-            // 
-            // tbDefaultEmail
-            // 
-            this.tbDefaultEmail.Location = new System.Drawing.Point(115, 156);
-            this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(198, 20);
-            this.tbDefaultEmail.TabIndex = 18;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(130, 116);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(146, 21);
-            this.comboBox1.TabIndex = 8;
-            // 
-            // lbTextNoteFont
-            // 
-            this.lbTextNoteFont.AutoSize = true;
-            this.lbTextNoteFont.Location = new System.Drawing.Point(16, 119);
-            this.lbTextNoteFont.Name = "lbTextNoteFont";
-            this.lbTextNoteFont.Size = new System.Drawing.Size(94, 13);
-            this.lbTextNoteFont.TabIndex = 9;
-            this.lbTextNoteFont.Text = "Font note content:";
             // 
             // frmSettings
             // 
@@ -392,5 +403,6 @@
         private System.Windows.Forms.Label lbTextDefaultEmail;
         private System.Windows.Forms.Label lbTextNoteFont;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -54,24 +54,40 @@ namespace SimplePlainNote
         {
             if (!Directory.Exists(tbNotesSavePath.Text))
             {
-                MessageBox.Show("Ongeldige map opgeven.");
+                MessageBox.Show("Settings advance: Invalide folder note save folder.");
+                tabAdvance.Select();
                 return;
             }
-            
-            if (xmlsettings.WriteSettings(
-                cbxTransparecy.Checked, 
-                numProcTransparency.Value,
-                cbxDefaultColor.SelectedIndex,
-                tbNotesSavePath.Text,
-                tbDefaultEmail.Text,
-                cbxSyntaxHighlight.Checked,                
-                tbTwitterUser.Text,
-                tbTwitterPass.Text
-                )==false)
+            else if (!tbDefaultEmail.Text.Contains("@"))
             {
-                MessageBox.Show("Error writing settings.");
+                MessageBox.Show("Settings advance: default email adres not valide.");
+                tabAdvance.Select();
+                return;
+            }            
+            else if (tbTwitterUser.Text.Length > 16)
+            {
+                MessageBox.Show("Settings Twitter: username is too long.");
+                tabTwitter.Select();
+                return;
             }
-
+            else if ((tbTwitterPass.Text.Length < 6) && (cbxRememberTwPass.Checked == true))
+            {
+                MessageBox.Show("Settings Twitter: password is too short.");
+                tabTwitter.Select();
+                return;
+            }
+            //everything looks okay            
+            else
+            {
+                xmlsettings.WriteSettings(cbxTransparecy.Checked,                     
+                    numProcTransparency.Value,
+                    cbxDefaultColor.SelectedIndex,
+                    tbNotesSavePath.Text,
+                    tbDefaultEmail.Text,
+                    cbxSyntaxHighlight.Checked,
+                    tbTwitterUser.Text,
+                    tbTwitterPass.Text);
+            }
             this.Close();
         }
 
