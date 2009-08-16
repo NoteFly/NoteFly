@@ -31,30 +31,22 @@ namespace SimplePlainNote
     /// </summary>
     public partial class frmManageNotes : Form
     {
+		#region Fields (5) 
 
-        //is transparent
-        private bool transparency = false;
-        
-        //counted notes
-        private int numnotes = 0;
-        
-        //list of notes
-        private List<FrmNote> notes;
-        
-        //for moving
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        
         //for moving
         public const int HT_CAPTION = 0x2;
-        
-        //for moving form 
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd,
-                         int Msg, int wParam, int lParam);
+        //list of notes
+        private List<FrmNote> notes;
+        //counted notes
+        private int numnotes = 0;
+        //is transparent
+        private bool transparency = false;
+        //for moving
+        public const int WM_NCLBUTTONDOWN = 0xA1;
 
-        //for moving form 
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         /// <summary>
         /// New instance of frmManageNotes
@@ -69,16 +61,74 @@ namespace SimplePlainNote
             transparency = getTransparency();
         }
 
-        private bool getTransparency()
-        {
-            xmlHandler xmlSettings = new xmlHandler(true);
-            if (xmlSettings.getXMLnode("transparecy") == "1")
+		#endregion Constructors 
+
+		#region Methods (12) 
+        //for moving form 
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        //for moving form 
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd,
+                         int Msg, int wParam, int lParam);		
+
+        /// <summary>
+        /// Close form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClose_Click(object sender, EventArgs e)
+        {            
+            
+            this.Close();
+        }
+
+        private void btnNoteDelete_Click(object sender, EventArgs e)
+        {                                      
+            Button btn = (Button)sender;
+            if (numnotes != 0)
             {
-                return true;
+                for (int i = 1; i <= numnotes; i++)
+                {
+                    if (btn.Name == "btnNoteDel"+i)
+                    {                        
+                        //MessageBox.Show("delete note: "+i.ToString());
+
+                        try
+                        {                            
+                            File.Delete(getNotesSavePath() + Convert.ToString(i) + ".xml");                            
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            MessageBox.Show("Note is already gone.");
+                        }
+                        catch (UnauthorizedAccessException)
+                        {
+                            MessageBox.Show("Access denied. Delete note "+i+".xml manualy with premission.");
+                        }
+                        notes.RemoveAt(i - 1);
+                        DrawNotesOverview();
+                        numnotes--;                                             
+                    }
+                }
             }
-            else
+                          
+            
+        }
+
+        /// <summary>
+        /// Set a note visible or unvisible
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void cbxNoteVisible_Click(object sender, EventArgs e)
+        {
+            CheckBox cbx = (CheckBox)sender;
+            int n = Convert.ToInt32(cbx.Name) - 1;
+            if ((n <= numnotes) && (n>=0))
             {
-                return false;
+                notes[n].NoteVisible = !notes[n].NoteVisible;
             }
         }
 
@@ -126,87 +176,6 @@ namespace SimplePlainNote
             }
         }
 
-        /// <summary>
-        /// Set a note visible or unvisible
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void cbxNoteVisible_Click(object sender, EventArgs e)
-        {
-            CheckBox cbx = (CheckBox)sender;
-            int n = Convert.ToInt32(cbx.Name) - 1;
-            if ((n <= numnotes) && (n>=0))
-            {
-                notes[n].NoteVisible = !notes[n].NoteVisible;
-            }
-        }
-
-        private string getNotesSavePath()
-        {
-            xmlHandler xmlsettings = new xmlHandler(true);
-            return xmlsettings.getXMLnode("notesavepath");
-        }
-
-        private void btnNoteDelete_Click(object sender, EventArgs e)
-        {                                      
-            Button btn = (Button)sender;
-            if (numnotes != 0)
-            {
-                for (int i = 1; i <= numnotes; i++)
-                {
-                    if (btn.Name == "btnNoteDel"+i)
-                    {                        
-                        //MessageBox.Show("delete note: "+i.ToString());
-
-                        try
-                        {                            
-                            File.Delete(getNotesSavePath() + Convert.ToString(i) + ".xml");                            
-                        }
-                        catch (FileNotFoundException)
-                        {
-                            MessageBox.Show("Note is already gone.");
-                        }
-                        catch (UnauthorizedAccessException)
-                        {
-                            MessageBox.Show("Access denied. Delete note "+i+".xml manualy with premission.");
-                        }
-                        notes.RemoveAt(i - 1);
-                        DrawNotesOverview();
-                        numnotes--;                                             
-                    }
-                }
-            }
-                          
-            
-        }
-
-        /// <summary>
-        /// Close form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnClose_Click(object sender, EventArgs e)
-        {            
-            
-            this.Close();
-        }
-        
-        /// <summary>
-        /// Moving note
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pnlHead_MouseDown(object sender, MouseEventArgs e)
-        {
-            pnlHead.BackColor = Color.OrangeRed;
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                pnlHead.BackColor = Color.Orange;
-            }
-        }
-
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
             if (transparency)
@@ -231,6 +200,25 @@ namespace SimplePlainNote
             Thread.Sleep(20);
         }
 
+        private string getNotesSavePath()
+        {
+            xmlHandler xmlsettings = new xmlHandler(true);
+            return xmlsettings.getXMLnode("notesavepath");
+        }
+
+        private bool getTransparency()
+        {
+            xmlHandler xmlSettings = new xmlHandler(true);
+            if (xmlSettings.getXMLnode("transparecy") == "1")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -240,5 +228,23 @@ namespace SimplePlainNote
             }
             this.Cursor = Cursors.Default;
         }
+
+        /// <summary>
+        /// Moving note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseDown(object sender, MouseEventArgs e)
+        {
+            pnlHead.BackColor = Color.OrangeRed;
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                pnlHead.BackColor = Color.Orange;
+            }
+        }
+
+		#endregion Methods 
     }
 }

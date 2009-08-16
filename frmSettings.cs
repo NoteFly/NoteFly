@@ -23,16 +23,19 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Xml;
+using IWshRuntimeLibrary;
 
 namespace SimplePlainNote
 {
     public partial class frmSettings : Form
     {
-        #region datavelde
+		#region Fields (2) 
+        private WshShellClass WshShell;
         private xmlHandler xmlsettings;
-        #endregion
+		#endregion Fields 
 
-        #region constructor
+		#region Constructors (1) 
+
         public frmSettings()
         {
             InitializeComponent();
@@ -47,9 +50,18 @@ namespace SimplePlainNote
             tbTwitterUser.Text = getTwitterusername();
             tbTwitterPass.Text = getTwitterpassword();
             tbDefaultEmail.Text = getDefaultEmail();
+            cbxStartOnBootWindows.Checked = getStatusStartlogin();
         }
 
-        #region methoden
+		#endregion Constructors 
+
+		#region Methods (11) 
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (!Directory.Exists(tbNotesSavePath.Text))
@@ -87,68 +99,58 @@ namespace SimplePlainNote
                     cbxSyntaxHighlight.Checked,
                     tbTwitterUser.Text,
                     tbTwitterPass.Text);
+
+                string startmenustartup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+
+                if (cbxStartOnBootWindows.Checked == true)
+                {                    
+                    if (Directory.Exists(startmenustartup))
+                    {                        
+                        try
+                        {
+                            WshShell = new WshShellClass();
+                            IWshRuntimeLibrary.IWshShortcut MyShortcut;
+
+                            MyShortcut = (IWshRuntimeLibrary.IWshShortcut)WshShell.CreateShortcut(startmenustartup + @"\simpleplainnote.lnk");
+
+                            MyShortcut.TargetPath = Application.ExecutablePath;
+
+                            MyShortcut.Description = "launch simpleplainnote on logon.";
+                            MyShortcut.IconLocation = Application.ExecutablePath + ",0";
+                            MyShortcut.Save();
+                        }
+                        catch (UnauthorizedAccessException)
+                        {
+                            MessageBox.Show("Need admin credentials to store shortcut.");                            
+                        }
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error: Folder not found: " + startmenustartup.ToString());
+                    }
+                }
+                else if (cbxStartOnBootWindows.Checked == false)
+                {
+                    if (Directory.Exists(startmenustartup))
+                    {
+                        if (System.IO.File.Exists(startmenustartup + @"\simpleplainnote.lnk"))
+                        {
+                            FileInfo checkshortcut = new FileInfo(startmenustartup + @"\simpleplainnote.lnk");
+                            if (checkshortcut.Length > 4096) { return; }
+                            try
+                            {
+                                System.IO.File.Delete("simpleplainnote.lnk");
+                            }
+                            catch (UnauthorizedAccessException)
+                            {
+                                MessageBox.Show("Need admin credentials to delete shortcut.");
+                            }
+                        }
+                    }
+                }
             }
             this.Close();
-        }
-
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-
-        private bool getTransparecy()
-        {
-            if (xmlsettings.getXMLnode("transparecy") == "1") return true;
-            else return false;
-        }
-
-        private Decimal getTransparecylevel()
-        {
-
-            Decimal transparecylvl = Convert.ToDecimal(xmlsettings.getXMLnode("transparecylevel"));
-            if ((transparecylvl < 1) || (transparecylvl > 100)) { MessageBox.Show("transparecylevel out of range."); return 95; }
-            else return transparecylvl;
-        }
-
-        private int getDefaultColor()
-        {
-            return xmlsettings.getXMLnodeAsInt("defaultcolor");
-        }
-
-        private string getTwitterusername()
-        {
-            return xmlsettings.getXMLnode("twitteruser");
-        }
-
-        private string getTwitterpassword()
-        {
-            string twpass = xmlsettings.getXMLnode("twitterpass");
-            if (twpass == "")
-            {
-                cbxRememberTwPass.Checked = false;
-                tbTwitterPass.Enabled = false;                
-            }
-            return twpass;
-        }
-
-        private string getNotesSavePath()
-        {
-            return xmlsettings.getXMLnode("notesavepath");
-        }
-        
-
-        private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
-        {
-            if (cbxTransparecy.Checked == false)
-            {
-                numProcTransparency.Enabled = false;
-            }
-            else if (cbxTransparecy.Checked == true)
-            {
-                numProcTransparency.Enabled = true;
-            }
         }
 
         private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)
@@ -164,13 +166,76 @@ namespace SimplePlainNote
             }
         }
 
+        private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbxTransparecy.Checked == false)
+            {
+                numProcTransparency.Enabled = false;
+            }
+            else if (cbxTransparecy.Checked == true)
+            {
+                numProcTransparency.Enabled = true;
+            }
+        }
+
+        private int getDefaultColor()
+        {
+            return xmlsettings.getXMLnodeAsInt("defaultcolor");
+        }
+
         private string getDefaultEmail()
         {
             return xmlsettings.getXMLnode("defaultemail");            
         }
-        #endregion
 
+        private string getNotesSavePath()
+        {
+            return xmlsettings.getXMLnode("notesavepath");
+        }
 
-        #endregion
+        private bool getTransparecy()
+        {
+            if (xmlsettings.getXMLnode("transparecy") == "1") return true;
+            else return false;
+        }
+
+        private Decimal getTransparecylevel()
+        {
+
+            Decimal transparecylvl = Convert.ToDecimal(xmlsettings.getXMLnode("transparecylevel"));
+            if ((transparecylvl < 1) || (transparecylvl > 100)) { MessageBox.Show("transparecylevel out of range."); return 95; }
+            else return transparecylvl;
+        }
+
+        private string getTwitterpassword()
+        {
+            string twpass = xmlsettings.getXMLnode("twitterpass");
+            if (twpass == "")
+            {
+                cbxRememberTwPass.Checked = false;
+                tbTwitterPass.Enabled = false;                
+            }
+            return twpass;
+        }
+
+        private string getTwitterusername()
+        {
+            return xmlsettings.getXMLnode("twitteruser");
+        }
+
+        private bool getStatusStartlogin()
+        {
+            string startmenustartup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            if (System.IO.File.Exists(startmenustartup + @"\simpleplainnote.lnk"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+		#endregion Methods 
     }
 }

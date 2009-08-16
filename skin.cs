@@ -25,9 +25,14 @@ namespace SimplePlainNote
     /// </summary>
     class skin
     {
+        #region Fields (1)
+
         private int notecolor = 0;
 
-        #region constructor
+        #endregion Fields
+
+        #region Constructors (1)
+
         /// <summary>
         /// itializes a new instance of the skin class.
         /// </summary>
@@ -36,7 +41,10 @@ namespace SimplePlainNote
         {
             this.notecolor = numcolor;
         }
-        #endregion
+
+        #endregion Constructors
+
+        #region Methods (2)
 
         /// <summary>
         /// get the skin color based on the skin color number.
@@ -84,7 +92,7 @@ namespace SimplePlainNote
         {
             if (highlight)
             {
-                return Color.LightYellow;                
+                return Color.LightYellow;
             }
             else if (warn)
             {
@@ -95,5 +103,7 @@ namespace SimplePlainNote
                 return getObjColor(selected);
             }
         }
+
+        #endregion
     }
 }

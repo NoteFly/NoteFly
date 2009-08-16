@@ -17,6 +17,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace SimplePlainNote
 {
@@ -25,6 +27,8 @@ namespace SimplePlainNote
     /// </summary>
     public class TextHighlight
     {
+		#region Fields (2) 
+
         //regulaire expression for detecting some HTML code
         private Regex SyntaxHTML = new Regex("<!DOCTYPE |<HTML>|</HTML>|<BODY|</BODY>|<A HREF|<SPAN|<I>|</I>|<U>|</U>|"+
             "<B>|</B>|<UL>|<IL>|<OL|</OL>|<BR>|<BR />|<P |<P>|</P>|<FONT|</FONT>|<TITLE>|</TITLE>|<META|<LINK|<CODE>|"+
@@ -33,6 +37,11 @@ namespace SimplePlainNote
             "</LEGEND>|<ISINDEX|<SELECT|</SELECT>|<TEXTAREA|</TEXTAREA>|<SCRIPT|</SCRIPT>|<NOSCRIPT>|</NOSCRIPT>|<S>|</S>|"+
             "<STRIKE|</STRIKE>|<TT|</TT>|<BIG|</BIG>|<SMALL>|</SMALL>|<BASEFONT|</BASEFONT>|<DIV|</DIV>|<H1>|</H1>|<H2>|</H2>|"+
             "<H3>|</H3>|<H4>|</H4>|<H5>|</H5>|<H6>|</H6>|<HEAD>|</HEAD>|<HR>|<EM|</EM>");
+        private string test;
+
+		#endregion Fields 
+
+		#region Properties (1) 
 
         public Regex GetHTML
         {
@@ -41,15 +50,26 @@ namespace SimplePlainNote
                 return this.SyntaxHTML;
             }
         }
-        /*
-int selPos = rtbNote.SelectionStart;                
-foreach (Match keyWordMatch in syntaxCsharp.Matches(rtbNote.Text))
-{
-    rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
-    rtbNote.SelectionColor = Color.Blue;
-    rtbNote.SelectionStart = selPos;
-    rtbNote.SelectionColor = Color.Black;
-}
- */
+
+		#endregion Properties 
+
+		#region Methods (1) 
+
+		// Public Methods (1) 
+
+        public RichTextBox highlightHTML(RichTextBox rtb)
+        {
+            int selPos = rtb.SelectionStart;
+            foreach (Match keyWordMatch in SyntaxHTML.Matches(rtb.Text))
+            {
+                rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
+                rtb.SelectionColor = Color.Blue;
+                rtb.SelectionStart = selPos;
+                rtb.SelectionColor = Color.Black;
+            }
+            return rtb;
+        }
+
+		#endregion Methods    
     }
 }

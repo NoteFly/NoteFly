@@ -53,6 +53,7 @@
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
+            this.cbxStartOnBootWindows = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -238,6 +239,7 @@
             // 
             // tabAppearance
             // 
+            this.tabAppearance.Controls.Add(this.cbxStartOnBootWindows);
             this.tabAppearance.Controls.Add(this.lbTextNoteFont);
             this.tabAppearance.Controls.Add(this.comboBox1);
             this.tabAppearance.Controls.Add(this.cbxTransparecy);
@@ -256,7 +258,7 @@
             // lbTextNoteFont
             // 
             this.lbTextNoteFont.AutoSize = true;
-            this.lbTextNoteFont.Location = new System.Drawing.Point(16, 119);
+            this.lbTextNoteFont.Location = new System.Drawing.Point(16, 97);
             this.lbTextNoteFont.Name = "lbTextNoteFont";
             this.lbTextNoteFont.Size = new System.Drawing.Size(94, 13);
             this.lbTextNoteFont.TabIndex = 9;
@@ -265,7 +267,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(130, 116);
+            this.comboBox1.Location = new System.Drawing.Point(130, 94);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(146, 21);
             this.comboBox1.TabIndex = 8;
@@ -353,6 +355,16 @@
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
+            // cbxStartOnBootWindows
+            // 
+            this.cbxStartOnBootWindows.AutoSize = true;
+            this.cbxStartOnBootWindows.Location = new System.Drawing.Point(16, 153);
+            this.cbxStartOnBootWindows.Name = "cbxStartOnBootWindows";
+            this.cbxStartOnBootWindows.Size = new System.Drawing.Size(245, 17);
+            this.cbxStartOnBootWindows.TabIndex = 10;
+            this.cbxStartOnBootWindows.Text = "Start simple plain notes automatically on logon.";
+            this.cbxStartOnBootWindows.UseVisualStyleBackColor = true;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -404,5 +416,6 @@
         private System.Windows.Forms.Label lbTextNoteFont;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox cbxStartOnBootWindows;
     }
 }

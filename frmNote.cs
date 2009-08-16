@@ -19,41 +19,35 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Threading;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace SimplePlainNote
 {
     public partial class FrmNote : Form
-    {        
-        private int id;
-        private string title;
-        private string note;
-        private int notecolor = 0;
-        private string twpass;
-        private bool transparency = false;
-        private bool notelock = false;
-        private bool notevisible = true;
+    {
+		#region Fields (12) 
+
+        public const int HT_CAPTION = 0x2;
+                private int id;
         private int locX;
         private int locY;
-
+        private string note;
+        private int notecolor = 0;
+        private bool notelock = false;
+        private bool notevisible = true;
+        private string title;
+        private bool transparency = false;
+        private string twpass;
         public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
 
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, 
-                         int msg, int wParam, int lParam);
+		#endregion Fields 
 
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
+		#region Constructors (2) 
 
-        [DllImport("wininet.dll")]
-        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
-
-        #region constructor
         public FrmNote(bool visible, int id, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             if (visible == true)
@@ -115,18 +109,11 @@ namespace SimplePlainNote
             paintColorNote();
             SetPosNote();
         }
-        #endregion
 
-        #region properties
-        public int ID
-        {
-            get { return id; }
-            set { this.id = value; }
-        }
-        public string Title
-        {
-            get { return this.title; }
-        }
+		#endregion Constructors 
+
+		#region Properties (5) 
+
         public int ColorNote
         {
             get
@@ -138,6 +125,13 @@ namespace SimplePlainNote
                 value = notecolor;
             }
         }
+
+        public int ID
+        {
+            get { return id; }
+            set { this.id = value; }
+        }
+
         public string Note
         {
             get { return this.note; }
@@ -147,6 +141,7 @@ namespace SimplePlainNote
                 rtbNote.Text = note;
             }
         }
+
         public bool NoteVisible
         {
             get
@@ -158,8 +153,156 @@ namespace SimplePlainNote
                 notevisible = value;                
             }
         }
-        #endregion
 
+        public string Title
+        {
+            get { return this.title; }
+        }
+
+		#endregion Properties 
+
+		#region Methods (29) 
+        /// <summary>
+        /// Check internet state.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsConnectedToInternet()
+        {
+            int Desc;
+            return InternetGetConnectedState(out Desc, 0);
+        }
+
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, 
+                         int msg, int wParam, int lParam);	
+
+        private void askpassok(object obj, EventArgs e)
+        {
+            Button btnobj = (Button)obj;
+            Form frmAskpass = btnobj.FindForm();
+
+            Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
+            twpass = passctr[0].Text;
+            //MessageBox.Show(twpass);
+            frmAskpass.Close();
+            tweetnote();  
+        }
+
+        private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            skin getskin = new skin(notecolor);
+            pnlHead.BackColor = getskin.getObjColor(false); 
+        }
+
+        private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(note);                
+        }
+
+        private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(title);
+        }
+
+        private void editTToolStripMenuItem_Click(object sender, EventArgs e)
+        {                                                                      
+            base.WindowState = FormWindowState.Normal;
+            //base.EditNote(ID);
+        }
+
+        private void emailNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string emailnote = "";
+
+            if (Program.PLATFORM=="macx")
+            {
+                emailnote = note.Replace("\r", "%0D%0A");
+            }
+            else if (Program.PLATFORM == "win32")
+            {
+                emailnote = note.Replace("\r\n", "%0D%0A");
+                emailnote = emailnote.Replace(".exe", "");
+            }
+            else if (Program.PLATFORM == "linux")
+            {
+                emailnote = note.Replace("\n", "%0D%0A");
+            }
+            //preventing a possible security issue here.
+            emailnote = emailnote.Replace("\x00", "");
+
+            xmlHandler xmlsettings = new xmlHandler(true);
+            string defaultemail = xmlsettings.getXMLnode("defaultemail");
+
+            if (!String.IsNullOrEmpty(emailnote))
+            {
+                System.Diagnostics.Process.Start("mailto:\\" + defaultemail.Replace("\x00", "") + "?subject=" + title.Replace("\x00", "") + "&body=" + emailnote);
+            }
+            else if (!String.IsNullOrEmpty(title))
+            {
+                System.Diagnostics.Process.Start("mailto:\\" + defaultemail.Replace("\x00", "") + "?subject=" + title.Replace("\x00", ""));
+            }
+            else
+            {
+                MessageBox.Show("Error: note has no title and content");
+            }
+        }
+
+        private void frmDeleteNote_Click(object sender, EventArgs e)
+        {
+            transparency = false;
+            this.notevisible = false;                      
+            this.Close();            
+        }
+
+        private void frmNote_Activated(object sender, EventArgs e)
+        {
+            if (transparency)
+            {
+                this.Opacity = 1.0;
+                this.Refresh();
+            }
+        }
+
+        private void frmNote_Deactivate(object sender, EventArgs e)
+        {
+            if (transparency)
+            {
+                this.Opacity = 0.9;
+                this.Refresh();
+            }
+        }
+
+        private void frmNote_Shown(object sender, EventArgs e)
+        {
+            xmlHandler xmlSettings = new xmlHandler(true);
+
+            if (xmlSettings.getXMLnodeAsInt("syntaxhighlight") == 1)
+            {
+                TextHighlight texthighlight = new TextHighlight();
+                
+                int selPos = rtbNote.SelectionStart;
+                foreach (Match keyWordMatch in texthighlight.GetHTML.Matches(rtbNote.Text))
+                {
+                    rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
+                    rtbNote.SelectionColor = Color.Blue;
+                    rtbNote.SelectionStart = selPos;
+                    rtbNote.SelectionColor = Color.Black;
+                }
+            }
+
+            if (!String.IsNullOrEmpty(xmlSettings.getXMLnode("twitteruser")))
+            {
+                TwitterToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                TwitterToolStripMenuItem.Enabled = false;
+            }
+
+        }
 
         private bool getTransparency()
         {
@@ -174,11 +317,74 @@ namespace SimplePlainNote
             }            
         }
 
-        private void frmDeleteNote_Click(object sender, EventArgs e)
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
+
+        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            transparency = false;
-            this.notevisible = false;                      
-            this.Close();            
+            if (!notelock)
+            {
+                notelock = true;
+                locknoteToolStripMenuItem.Text = "lock note (click again to unlock)";
+                this.menuNoteColors.Enabled = false;
+                this.editTToolStripMenuItem.Enabled = false;
+                this.OnTopToolStripMenuItem.Enabled = false;                
+            }
+            else
+            {
+                notelock = false;
+                locknoteToolStripMenuItem.Text = "lock note";
+                this.menuNoteColors.Enabled = true;
+                this.editTToolStripMenuItem.Enabled = true;
+                this.OnTopToolStripMenuItem.Enabled = true;
+            }
+        }
+
+        private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (OnTopToolStripMenuItem.Checked == true)
+            {
+                this.TopMost = true;
+            }
+            else
+            {
+                this.TopMost = false;
+            }
+        }
+
+        /// <summary>
+        /// Get the color of the note and paint it.
+        /// </summary>
+        private void paintColorNote()
+        {
+            skin getskin = new skin(notecolor);
+            Color normalcolor = getskin.getObjColor(false);            
+
+            this.BackColor = normalcolor;
+            this.pnlHead.BackColor = normalcolor;
+            this.pnlNote.BackColor = normalcolor;
+            this.rtbNote.BackColor = normalcolor;
+        }
+
+        private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (!notelock)
+                {
+                    this.Cursor = Cursors.SizeNWSE;
+                    this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                    
+                }
+            }
+            this.Cursor = Cursors.Default;
+        }
+
+        private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!notelock)
+            {                
+                SavePos.RunWorkerAsync();
+            }
         }
 
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
@@ -209,22 +415,32 @@ namespace SimplePlainNote
             //e.Location
         }
 
-        private void frmNote_Deactivate(object sender, EventArgs e)
+        private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (transparency)
+            Thread.Sleep(50);
+            //DateTime starttime = DateTime.Now;
+            try
             {
-                this.Opacity = 0.9;
-                this.Refresh();
+                this.locX = this.Location.X;
+                this.locY = this.Location.Y;
+                string numcolor = Convert.ToString(this.notecolor);
+                if ((this.locX >= 0) && (this.locY >= 0))
+                {
+                    xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
+                    updateposnote.WriteNote(notevisible,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                }
+                else
+                {
+                    MessageBox.Show("Error: note location out of screen.");
+                }
             }
-        }
-
-        private void frmNote_Activated(object sender, EventArgs e)
-        {
-            if (transparency)
+            catch (InvalidCastException)
             {
-                this.Opacity = 1.0;
-                this.Refresh();
+                MessageBox.Show("internal error");
             }
+            //DateTime endtime = DateTime.Now;
+            //TimeSpan debugtime = endtime - starttime;
+            //MessageBox.Show("taken "+debugtime.Milliseconds);
         }
 
         private void setColorNote(object sender, EventArgs e)
@@ -249,99 +465,15 @@ namespace SimplePlainNote
             paintColorNote();
         }
 
-        /// <summary>
-        /// Get the color of the note and paint it.
-        /// </summary>
-        private void paintColorNote()
+        private void SetPosNote()
         {
-            skin getskin = new skin(notecolor);
-            Color normalcolor = getskin.getObjColor(false);            
-
-            this.BackColor = normalcolor;
-            this.pnlHead.BackColor = normalcolor;
-            this.pnlNote.BackColor = normalcolor;
-            this.rtbNote.BackColor = normalcolor;
+            this.Location = new Point(locX, locY);            
         }
 
-        private void updateMenuNoteColor(object sender, EventArgs e)
+        private void SetSizeNote(int width, int height)
         {
-            foreach (ToolStripMenuItem curitem in menuNoteColors.DropDownItems)
-            {                
-                curitem.Checked = false;
-            }
-
-            switch (this.notecolor)
-            {
-                case 0:
-                    yellowToolStripMenuItem.Checked = true;
-                    break;
-                case 1:
-                    orangeToolStripMenuItem.Checked = true;
-                    break;
-                case 2:
-                    whiteToolStripMenuItem.Checked = true;
-                    break;
-                case 3:
-                    greenToolStripMenuItem.Checked = true;
-                    break;
-                case 4:
-                    blueToolStripMenuItem.Checked = true;
-                    break;
-                case 5:
-                    purpleToolStripMenuItem.Checked = true;                    
-                    break;
-                case 6:
-                    redToolStripMenuItem.Checked = true;                    
-                    break;                
-            }
-        }
-
-        private void editTToolStripMenuItem_Click(object sender, EventArgs e)
-        {                                                                      
-            base.WindowState = FormWindowState.Normal;
-            //base.EditNote(ID);
-        }
-
-        private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                if (!notelock)
-                {
-                    this.Cursor = Cursors.SizeNWSE;
-                    this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                    
-                }
-            }
-            this.Cursor = Cursors.Default;
-        }
-
-        private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (IsConnectedToInternet())
-            {
-                if ((String.IsNullOrEmpty(note) ==false) && (note.Length < 140))
-                {
-                    tweetnote();
-                }
-                else if (note.Length >= 140)
-                {
-                    DialogResult result;
-                    string shrttweet = note.Substring(0, 140);
-                    result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        tweetnote();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Note is empty.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("No network connection.");
-            }
+            this.Width = width;
+            this.Height = height;
         }
 
         private void tweetnote()
@@ -390,226 +522,71 @@ namespace SimplePlainNote
                 {
                     MessageBox.Show("Sending note to twitter failed.");
                 }
-            }
-            
-        }
-
-        private void askpassok(object obj, EventArgs e)
-        {
-            Button btnobj = (Button)obj;
-            Form frmAskpass = btnobj.FindForm();
-
-            Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
-            twpass = passctr[0].Text;
-            //MessageBox.Show(twpass);
-            frmAskpass.Close();
-            tweetnote();  
-        }
-
-        /// <summary>
-        /// Check internet state.
-        /// </summary>
-        /// <returns></returns>
-        public static bool IsConnectedToInternet()
-        {
-            int Desc;
-            return InternetGetConnectedState(out Desc, 0);
-        }
-
-        private void frmNote_Shown(object sender, EventArgs e)
-        {
-            xmlHandler xmlSettings = new xmlHandler(true);
-
-            if (xmlSettings.getXMLnodeAsInt("syntaxhighlight") == 1)
-            {
-                TextHighlight texthighlight = new TextHighlight();
-                
-                int selPos = rtbNote.SelectionStart;
-                foreach (Match keyWordMatch in texthighlight.GetHTML.Matches(rtbNote.Text))
-                {
-                    rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
-                    rtbNote.SelectionColor = Color.Blue;
-                    rtbNote.SelectionStart = selPos;
-                    rtbNote.SelectionColor = Color.Black;
-                }
-            }
-
-            if (!String.IsNullOrEmpty(xmlSettings.getXMLnode("twitteruser")))
-            {
-                TwitterToolStripMenuItem.Enabled = true;
-            }
-            else
-            {
-                TwitterToolStripMenuItem.Enabled = false;
-            }
-
-        }
-
-        private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (OnTopToolStripMenuItem.Checked == true)
-            {
-                this.TopMost = true;
-            }
-            else
-            {
-                this.TopMost = false;
-            }
-        }
-
-        private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(note);                
-        }
-
-        private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(title);
-        }
-
-        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!notelock)
-            {
-                notelock = true;
-                locknoteToolStripMenuItem.Text = "lock note (click again to unlock)";
-                this.menuNoteColors.Enabled = false;
-                this.editTToolStripMenuItem.Enabled = false;
-                this.OnTopToolStripMenuItem.Enabled = false;                
-            }
-            else
-            {
-                notelock = false;
-                locknoteToolStripMenuItem.Text = "lock note";
-                this.menuNoteColors.Enabled = true;
-                this.editTToolStripMenuItem.Enabled = true;
-                this.OnTopToolStripMenuItem.Enabled = true;
-            }
-        }
-
-        private void SetPosNote()
-        {
-            this.Location = new Point(locX, locY);            
-        }
-
-        private void SetSizeNote(int width, int height)
-        {
-            this.Width = width;
-            this.Height = height;
-        }
-
-        /*
-        /// <summary>
-        /// Timer let's note settings save.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>        
-        private void timerSavePos_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                string numcolor = Convert.ToString(this.notecolor);
-                if ((this.locX >= 0) && (this.locY >= 0))
-                {
-                    xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
-                    updateposnote.WriteNote(numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
-                    timerSavePos.Enabled = false;
-                    timerSavePos.Stop();                    
-                }
-                else
-                {
-                    MessageBox.Show("Error: note location out of screen.");
-                }
-            }
-            catch (InvalidCastException)
-            {
-                MessageBox.Show("internal error");
-            }
-            finally
-            {
-                timerSavePos.Enabled = false;
             }            
         }
-         */
 
-        private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
+        private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!notelock)
-            {                
-                SavePos.RunWorkerAsync();
-            }
-        }
-
-        private void emailNoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string emailnote = "";
-
-            if (Program.PLATFORM=="macx")
+            if (IsConnectedToInternet())
             {
-                emailnote = note.Replace("\r", "%0D%0A");
-            }
-            else if (Program.PLATFORM == "win32")
-            {
-                emailnote = note.Replace("\r\n", "%0D%0A");
-                emailnote = emailnote.Replace(".exe", "");
-            }
-            else if (Program.PLATFORM == "linux")
-            {
-                emailnote = note.Replace("\n", "%0D%0A");
-            }
-            //preventing a possible security issue here.
-            emailnote = emailnote.Replace("\x00", "");
-
-            xmlHandler xmlsettings = new xmlHandler(true);
-            string defaultemail = xmlsettings.getXMLnode("defaultemail");
-
-            if (!String.IsNullOrEmpty(emailnote))
-            {
-                System.Diagnostics.Process.Start("mailto:\\" + defaultemail.Replace("\x00", "") + "?subject=" + title.Replace("\x00", "") + "&body=" + emailnote);
-            }
-            else if (!String.IsNullOrEmpty(title))
-            {
-                System.Diagnostics.Process.Start("mailto:\\" + defaultemail.Replace("\x00", "") + "?subject=" + title.Replace("\x00", ""));
-            }
-            else
-            {
-                MessageBox.Show("Error: note has no title and content");
-            }
-        }
-
-        private void SavePos_DoWork(object sender, DoWorkEventArgs e)
-        {
-            Thread.Sleep(50);
-            //DateTime starttime = DateTime.Now;
-            try
-            {
-                this.locX = this.Location.X;
-                this.locY = this.Location.Y;
-                string numcolor = Convert.ToString(this.notecolor);
-                if ((this.locX >= 0) && (this.locY >= 0))
+                if ((String.IsNullOrEmpty(note) ==false) && (note.Length < 140))
                 {
-                    xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
-                    updateposnote.WriteNote(notevisible,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    tweetnote();
+                }
+                else if (note.Length >= 140)
+                {
+                    DialogResult result;
+                    string shrttweet = note.Substring(0, 140);
+                    result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        tweetnote();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Error: note location out of screen.");
+                    MessageBox.Show("Note is empty.");
                 }
             }
-            catch (InvalidCastException)
+            else
             {
-                MessageBox.Show("internal error");
+                MessageBox.Show("No network connection.");
             }
-            //DateTime endtime = DateTime.Now;
-            //TimeSpan debugtime = endtime - starttime;
-            //MessageBox.Show("taken "+debugtime.Milliseconds);
         }
 
-        private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        private void updateMenuNoteColor(object sender, EventArgs e)
         {
-            skin getskin = new skin(notecolor);
-            pnlHead.BackColor = getskin.getObjColor(false); 
+            foreach (ToolStripMenuItem curitem in menuNoteColors.DropDownItems)
+            {                
+                curitem.Checked = false;
+            }
+
+            switch (this.notecolor)
+            {
+                case 0:
+                    yellowToolStripMenuItem.Checked = true;
+                    break;
+                case 1:
+                    orangeToolStripMenuItem.Checked = true;
+                    break;
+                case 2:
+                    whiteToolStripMenuItem.Checked = true;
+                    break;
+                case 3:
+                    greenToolStripMenuItem.Checked = true;
+                    break;
+                case 4:
+                    blueToolStripMenuItem.Checked = true;
+                    break;
+                case 5:
+                    purpleToolStripMenuItem.Checked = true;                    
+                    break;
+                case 6:
+                    redToolStripMenuItem.Checked = true;                    
+                    break;                
+            }
         }
 
-    }
+		#endregion Methods 
+            }
 }

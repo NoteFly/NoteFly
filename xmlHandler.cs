@@ -71,7 +71,6 @@ namespace SimplePlainNote
             get { return this.appdatafolder; }
         }
 
-
         private string source = null;
 
         private string twitterClient = "spn";
@@ -549,8 +548,6 @@ namespace SimplePlainNote
             return null;
         }
         #endregion
-
         #endregion
-
     }
 }
