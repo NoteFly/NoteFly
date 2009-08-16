@@ -23,14 +23,14 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Xml;
-using IWshRuntimeLibrary;
+using Microsoft.Win32;
 
 namespace SimplePlainNote
 {
     public partial class frmSettings : Form
     {
-		#region Fields (2) 
-        private WshShellClass WshShell;
+		#region Fields (2)         
+        private RegistryKey key;
         private xmlHandler xmlsettings;
 		#endregion Fields 
 
@@ -91,7 +91,7 @@ namespace SimplePlainNote
             //everything looks okay            
             else
             {
-                xmlsettings.WriteSettings(cbxTransparecy.Checked,                     
+                xmlsettings.WriteSettings(cbxTransparecy.Checked,
                     numProcTransparency.Value,
                     cbxDefaultColor.SelectedIndex,
                     tbNotesSavePath.Text,
@@ -100,54 +100,33 @@ namespace SimplePlainNote
                     tbTwitterUser.Text,
                     tbTwitterPass.Text);
 
-                string startmenustartup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+                key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if (key != null)
+                {
 
-                if (cbxStartOnBootWindows.Checked == true)
-                {                    
-                    if (Directory.Exists(startmenustartup))
-                    {                        
+                    if (cbxStartOnBootWindows.Checked == true)
+                    {
                         try
                         {
-                            WshShell = new WshShellClass();
-                            IWshRuntimeLibrary.IWshShortcut MyShortcut;
-
-                            MyShortcut = (IWshRuntimeLibrary.IWshShortcut)WshShell.CreateShortcut(startmenustartup + @"\simpleplainnote.lnk");
-
-                            MyShortcut.TargetPath = Application.ExecutablePath;
-
-                            MyShortcut.Description = "launch simpleplainnote on logon.";
-                            MyShortcut.IconLocation = Application.ExecutablePath + ",0";
-                            MyShortcut.Save();
+                            key.SetValue("simpleplainnote", "\"" + Application.ExecutablePath + "\"");
                         }
-                        catch (UnauthorizedAccessException)
+                        catch (UnauthorizedAccessException exc)
                         {
-                            MessageBox.Show("Need admin credentials to store shortcut.");                            
+                            MessageBox.Show("Error: no registery access." + exc.Message);
                         }
 
                     }
-                    else
+                    else if (cbxStartOnBootWindows.Checked == false)
                     {
-                        MessageBox.Show("Error: Folder not found: " + startmenustartup.ToString());
+                        if (key.GetValue("simpleplainnote", null)!=null)
+                        {                        
+                            key.DeleteValue("simpleplainnote", false);
+                        }
                     }
                 }
-                else if (cbxStartOnBootWindows.Checked == false)
+                else
                 {
-                    if (Directory.Exists(startmenustartup))
-                    {
-                        if (System.IO.File.Exists(startmenustartup + @"\simpleplainnote.lnk"))
-                        {
-                            FileInfo checkshortcut = new FileInfo(startmenustartup + @"\simpleplainnote.lnk");
-                            if (checkshortcut.Length > 4096) { return; }
-                            try
-                            {
-                                System.IO.File.Delete("simpleplainnote.lnk");
-                            }
-                            catch (UnauthorizedAccessException)
-                            {
-                                MessageBox.Show("Need admin credentials to delete shortcut.");
-                            }
-                        }
-                    }
+                    MessageBox.Show("Error: Run subkey in registery does not exist. Or it cannot be found.");
                 }
             }
             this.Close();
@@ -225,15 +204,19 @@ namespace SimplePlainNote
 
         private bool getStatusStartlogin()
         {
-            string startmenustartup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-            if (System.IO.File.Exists(startmenustartup + @"\simpleplainnote.lnk"))
+            key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (key != null)
             {
-                return true;
+                if (key.GetValue("simpleplainnote", null)!=null)
+                {
+                    return true;
+                } 
+                else 
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
 		#endregion Methods 

@@ -43,6 +43,7 @@
             this.cbxSyntaxHighlight = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabAppearance = new System.Windows.Forms.TabPage();
+            this.cbxStartOnBootWindows = new System.Windows.Forms.CheckBox();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
@@ -53,7 +54,6 @@
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
-            this.cbxStartOnBootWindows = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -255,6 +255,16 @@
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
             // 
+            // cbxStartOnBootWindows
+            // 
+            this.cbxStartOnBootWindows.AutoSize = true;
+            this.cbxStartOnBootWindows.Location = new System.Drawing.Point(16, 153);
+            this.cbxStartOnBootWindows.Name = "cbxStartOnBootWindows";
+            this.cbxStartOnBootWindows.Size = new System.Drawing.Size(245, 17);
+            this.cbxStartOnBootWindows.TabIndex = 10;
+            this.cbxStartOnBootWindows.Text = "Start simple plain notes automatically on logon.";
+            this.cbxStartOnBootWindows.UseVisualStyleBackColor = true;
+            // 
             // lbTextNoteFont
             // 
             this.lbTextNoteFont.AutoSize = true;
@@ -354,16 +364,6 @@
             this.tbNotesSavePath.Size = new System.Drawing.Size(248, 20);
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
-            // 
-            // cbxStartOnBootWindows
-            // 
-            this.cbxStartOnBootWindows.AutoSize = true;
-            this.cbxStartOnBootWindows.Location = new System.Drawing.Point(16, 153);
-            this.cbxStartOnBootWindows.Name = "cbxStartOnBootWindows";
-            this.cbxStartOnBootWindows.Size = new System.Drawing.Size(245, 17);
-            this.cbxStartOnBootWindows.TabIndex = 10;
-            this.cbxStartOnBootWindows.Text = "Start simple plain notes automatically on logon.";
-            this.cbxStartOnBootWindows.UseVisualStyleBackColor = true;
             // 
             // frmSettings
             // 
