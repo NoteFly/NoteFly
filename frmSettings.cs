@@ -29,7 +29,7 @@ namespace SimplePlainNote
 {
     public partial class frmSettings : Form
     {
-		#region Fields (2)         
+		#region Fields (2)
         private RegistryKey key;
         private xmlHandler xmlsettings;
 		#endregion Fields 
@@ -63,7 +63,7 @@ namespace SimplePlainNote
         }
 
         private void btnOK_Click(object sender, EventArgs e)
-        {
+        {            
             if (!Directory.Exists(tbNotesSavePath.Text))
             {
                 MessageBox.Show("Settings advance: Invalide folder note save folder.");
@@ -90,46 +90,45 @@ namespace SimplePlainNote
             }
             //everything looks okay            
             else
-            {
-                xmlsettings.WriteSettings(cbxTransparecy.Checked,
-                    numProcTransparency.Value,
-                    cbxDefaultColor.SelectedIndex,
-                    tbNotesSavePath.Text,
-                    tbDefaultEmail.Text,
-                    cbxSyntaxHighlight.Checked,
-                    tbTwitterUser.Text,
-                    tbTwitterPass.Text);
-
-                key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                if (key != null)
+            {                
                 {
-
-                    if (cbxStartOnBootWindows.Checked == true)
+                    xmlsettings.WriteSettings(cbxTransparecy.Checked,numProcTransparency.Value,cbxDefaultColor.SelectedIndex,tbNotesSavePath.Text,tbDefaultEmail.Text,cbxSyntaxHighlight.Checked,tbTwitterUser.Text,tbTwitterPass.Text);
+               
+                    #if win32                
+                    key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                    if (key != null)
                     {
-                        try
-                        {
-                            key.SetValue("simpleplainnote", "\"" + Application.ExecutablePath + "\"");
-                        }
-                        catch (UnauthorizedAccessException exc)
-                        {
-                            MessageBox.Show("Error: no registery access." + exc.Message);
-                        }
 
-                    }
-                    else if (cbxStartOnBootWindows.Checked == false)
-                    {
-                        if (key.GetValue("simpleplainnote", null)!=null)
-                        {                        
-                            key.DeleteValue("simpleplainnote", false);
+                        if (cbxStartOnBootWindows.Checked == true)
+                        {
+                            try
+                            {
+                                key.SetValue("simpleplainnote", "\"" + Application.ExecutablePath + "\"");
+                            }
+                            catch (UnauthorizedAccessException exc)
+                            {
+                                MessageBox.Show("Error: no registery access." + exc.Message);
+                            }
+
+                        }
+                        else if (cbxStartOnBootWindows.Checked == false)
+                        {
+                            if (key.GetValue("simpleplainnote", null) != null)
+                            {
+                                key.DeleteValue("simpleplainnote", false);
+                            }
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("Error: Run subkey in registery does not exist. Or it cannot be found.");
+                    }                    
+                    #endif
                 }
-                else
-                {
-                    MessageBox.Show("Error: Run subkey in registery does not exist. Or it cannot be found.");
-                }
+                
+                this.Close();
             }
-            this.Close();
+            
         }
 
         private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)

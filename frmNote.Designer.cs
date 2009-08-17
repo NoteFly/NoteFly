@@ -1,6 +1,6 @@
 ﻿namespace SimplePlainNote
 {
-    partial class FrmNote
+    partial class frmNote
     {
         /// <summary>
         /// Required designer variable.

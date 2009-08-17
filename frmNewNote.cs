@@ -35,7 +35,7 @@ namespace SimplePlainNote
 
         private bool editmode = false;
         public const int HT_CAPTION = 0x2;
-                private List<FrmNote> notes;
+                private List<frmNote> notes;
         private bool transparency = true;
         //if (Program.PLATFORM == "win32")
         //{
@@ -49,7 +49,7 @@ namespace SimplePlainNote
         public frmNewNote()
         {
             InitializeComponent();
-            notes = new List<FrmNote>();
+            notes = new List<frmNote>();
             loadNotes();
         }
 
@@ -57,7 +57,7 @@ namespace SimplePlainNote
 
 		#region Properties (1) 
 
-                public List<FrmNote> GetNotes
+                public List<frmNote> GetNotes
         {
             get { return this.notes; }
         }
@@ -75,7 +75,7 @@ namespace SimplePlainNote
                 int newid = notes.Count + 1;
                 string notefilenm = SaveNoteDefault(newid, title, content);
                 if (String.IsNullOrEmpty(notefilenm)) { return; }
-                FrmNote newnote = new FrmNote(newid, title, content, notecolor);
+                frmNote newnote = new frmNote(newid, title, content, notecolor);
                 notes.Add(newnote);
                 newnote.Show();
             }
@@ -97,15 +97,15 @@ namespace SimplePlainNote
             {                
                 int newid = notes.Count + 1;
 
-                FrmNote newnote;
+                frmNote newnote;
                 if (visible == "true")
                 {
-                    newnote = new FrmNote(true, newid, title, content, notecolor, locX, locY, notewith, noteheight);
+                    newnote = new frmNote(true, newid, title, content, notecolor, locX, locY, notewith, noteheight);
                     newnote.Show();
                 }
                 else
                 {
-                    newnote = new FrmNote(false, newid, title, content, notecolor, locX, locY, notewith, noteheight);
+                    newnote = new frmNote(false, newid, title, content, notecolor, locX, locY, notewith, noteheight);
                 }
                 notes.Add(newnote);
                 

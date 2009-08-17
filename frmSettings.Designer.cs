@@ -41,7 +41,7 @@
             this.lbPassword = new System.Windows.Forms.Label();
             this.cbxRememberTwPass = new System.Windows.Forms.CheckBox();
             this.cbxSyntaxHighlight = new System.Windows.Forms.CheckBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.cbxStartOnBootWindows = new System.Windows.Forms.CheckBox();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
@@ -54,11 +54,13 @@
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
+            this.eventLog1 = new System.Diagnostics.EventLog();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
-            this.tabControl1.SuspendLayout();
+            this.tabControlSettings.SuspendLayout();
             this.tabAppearance.SuspendLayout();
             this.tabTwitter.SuspendLayout();
             this.tabAdvance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
             // 
             // cbxTransparecy
@@ -225,17 +227,17 @@
             this.cbxSyntaxHighlight.Text = "Highlight HTML code notes";
             this.cbxSyntaxHighlight.UseVisualStyleBackColor = true;
             // 
-            // tabControl1
+            // tabControlSettings
             // 
-            this.tabControl1.Controls.Add(this.tabAppearance);
-            this.tabControl1.Controls.Add(this.tabTwitter);
-            this.tabControl1.Controls.Add(this.tabAdvance);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(338, 272);
-            this.tabControl1.TabIndex = 17;
+            this.tabControlSettings.Controls.Add(this.tabAppearance);
+            this.tabControlSettings.Controls.Add(this.tabTwitter);
+            this.tabControlSettings.Controls.Add(this.tabAdvance);
+            this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
+            this.tabControlSettings.Name = "tabControlSettings";
+            this.tabControlSettings.SelectedIndex = 0;
+            this.tabControlSettings.Size = new System.Drawing.Size(338, 272);
+            this.tabControlSettings.TabIndex = 17;
             // 
             // tabAppearance
             // 
@@ -365,26 +367,32 @@
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
+            // eventLog1
+            // 
+            this.eventLog1.Log = "Application";
+            this.eventLog1.SynchronizingObject = this;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(338, 303);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmSettings";
             this.Text = "Settings";
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).EndInit();
-            this.tabControl1.ResumeLayout(false);
+            this.tabControlSettings.ResumeLayout(false);
             this.tabAppearance.ResumeLayout(false);
             this.tabAppearance.PerformLayout();
             this.tabTwitter.ResumeLayout(false);
             this.tabTwitter.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -404,7 +412,7 @@
         private System.Windows.Forms.Label lbPassword;
         private System.Windows.Forms.CheckBox cbxRememberTwPass;
         private System.Windows.Forms.CheckBox cbxSyntaxHighlight;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControlSettings;
         private System.Windows.Forms.TabPage tabAppearance;
         private System.Windows.Forms.TabPage tabTwitter;
         private System.Windows.Forms.TabPage tabAdvance;
@@ -417,5 +425,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox cbxStartOnBootWindows;
+        private System.Diagnostics.EventLog eventLog1;
     }
 }

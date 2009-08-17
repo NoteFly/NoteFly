@@ -36,7 +36,7 @@ namespace SimplePlainNote
         //for moving
         public const int HT_CAPTION = 0x2;
         //list of notes
-        private List<FrmNote> notes;
+        private List<frmNote> notes;
         //counted notes
         private int numnotes = 0;
         //is transparent

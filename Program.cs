@@ -13,6 +13,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
+#define win32
+
 using System;
 using System.Collections.Generic;
 using System.Security.Permissions;
@@ -30,15 +32,14 @@ namespace SimplePlainNote
         //win32 
         //macx 
         //linux
-        public const string PLATFORM = "win32"; 
-
+        //public const string PLATFORM = "win32";         
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]               
         static void Main()
-        {            
+        {                                    
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);            
             Application.Run(new frmNewNote());

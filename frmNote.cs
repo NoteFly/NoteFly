@@ -27,7 +27,7 @@ using System.Windows.Forms;
 
 namespace SimplePlainNote
 {
-    public partial class FrmNote : Form
+    public partial class frmNote : Form
     {
 		#region Fields (12) 
 
@@ -48,7 +48,7 @@ namespace SimplePlainNote
 
 		#region Constructors (2) 
 
-        public FrmNote(bool visible, int id, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
+        public frmNote(bool visible, int id, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             if (visible == true)
             {
@@ -88,7 +88,7 @@ namespace SimplePlainNote
             }
         }
 
-        public FrmNote(int id, string title, string note, int notecolor)
+        public frmNote(int id, string title, string note, int notecolor)
         {
             this.id = id;
             this.title = title;
@@ -217,19 +217,14 @@ namespace SimplePlainNote
         {
             string emailnote = "";
 
-            if (Program.PLATFORM=="macx")
-            {
-                emailnote = note.Replace("\r", "%0D%0A");
-            }
-            else if (Program.PLATFORM == "win32")
-            {
-                emailnote = note.Replace("\r\n", "%0D%0A");
-                emailnote = emailnote.Replace(".exe", "");
-            }
-            else if (Program.PLATFORM == "linux")
-            {
-                emailnote = note.Replace("\n", "%0D%0A");
-            }
+            #if win32
+            emailnote = note.Replace("\r\n", "%0D%0A");
+            #elif mac
+            emailnote = note.Replace("\r", "%0D%0A");
+            #elif linux                        
+            emailnote = note.Replace("\n", "%0D%0A");
+            #endif
+            
             //preventing a possible security issue here.
             emailnote = emailnote.Replace("\x00", "");
 
@@ -412,13 +407,16 @@ namespace SimplePlainNote
         private void pnlResizeWindow_MouseDown(object sender, MouseEventArgs e)
         {            
             Cursor = Cursors.SizeNWSE;            
-            //e.Location
         }
 
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
-        {
+        {                      
+            #if DEBUG
+            DateTime starttime = DateTime.Now;
+            #endif
+
             Thread.Sleep(50);
-            //DateTime starttime = DateTime.Now;
+
             try
             {
                 this.locX = this.Location.X;
@@ -438,9 +436,13 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("internal error");
             }
-            //DateTime endtime = DateTime.Now;
-            //TimeSpan debugtime = endtime - starttime;
-            //MessageBox.Show("taken "+debugtime.Milliseconds);
+
+            #if DEBUG
+            DateTime endtime = DateTime.Now;
+            TimeSpan debugtime = endtime - starttime;
+            MessageBox.Show("taken: "+debugtime.Milliseconds+" ms\r\n "+debugtime.Ticks+" ticks");            
+            #endif
+
         }
 
         private void setColorNote(object sender, EventArgs e)
