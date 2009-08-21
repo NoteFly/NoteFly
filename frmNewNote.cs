@@ -91,14 +91,14 @@ namespace SimplePlainNote
         /// <param name="title"></param>
         /// <param name="content"></param>
         /// <param name="notecolor"></param>
-        public void CreateNote(string visible, string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
+        public void CreateNote(int visible, string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
             {                
                 int newid = notes.Count + 1;
 
                 frmNote newnote;
-                if (visible == "true")
+                if (visible == 1)
                 {
                     newnote = new frmNote(true, newid, title, content, notecolor, locX, locY, notewith, noteheight);
                     newnote.Show();
@@ -186,7 +186,6 @@ namespace SimplePlainNote
         /// </summary>
         private void CancelNote()
         {            
-
             tbTitle.Text = "";
             rtbNote.Text = "";            
                        
@@ -252,8 +251,7 @@ namespace SimplePlainNote
         }
 
         private void frmNewNote_Shown(object sender, EventArgs e)
-        {
-            //MessageBox.Show("fired.");
+        {            
             //redraw
             CancelNote();
         }
@@ -284,6 +282,10 @@ namespace SimplePlainNote
 
         private void loadNotes()
         {
+            #if DEBUG
+            DateTime starttime = DateTime.Now;
+            #endif
+
             xmlHandler getSettings = new xmlHandler(true);
             string notesavepath = getSettings.getXMLnode("notesavepath");
 
@@ -293,8 +295,9 @@ namespace SimplePlainNote
 
             while (File.Exists(@curnotefile) == true)
             {
-                xmlHandler parserNote = new xmlHandler(false, id+".xml");
-                string visible = parserNote.getXMLnode("visible");
+                xmlHandler parserNote = new xmlHandler(false, id+".xml");                
+                int visible = parserNote.GetXMLAttrVisibleInt();
+
                 string title = parserNote.getXMLnode("title");
                 string content = parserNote.getXMLnode("content");
 
@@ -310,6 +313,12 @@ namespace SimplePlainNote
                 curnotefile = notesavepath + id + ".xml";
                 if (id > 1000) { MessageBox.Show("Error: Too many notes"); return; }
             }
+
+            #if DEBUG
+            DateTime endtime = DateTime.Now;
+            TimeSpan debugtime = endtime - starttime;
+            MessageBox.Show("taken: " + debugtime.Milliseconds + " ms\r\n " + debugtime.Ticks + " ticks");
+            #endif
         }
 
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)

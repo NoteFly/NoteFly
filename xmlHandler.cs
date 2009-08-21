@@ -265,17 +265,17 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteStartDocument();
 
                 objXmlTextWriter.WriteStartElement("note");
-
-                objXmlTextWriter.WriteStartElement("visible");
+                
                 if (visible == true)
                 {
-                    objXmlTextWriter.WriteString("true"); //1
+                   //objXmlTextWriter.WriteStartAttribute("visible", "1");
+                   objXmlTextWriter.WriteAttributeString("visible", "1");
                 }
                 else
                 {
-                    objXmlTextWriter.WriteString("false"); //0
-                }
-                objXmlTextWriter.WriteEndElement();
+                    objXmlTextWriter.WriteAttributeString("visible", "0");            
+                }                               
+               
 
                 objXmlTextWriter.WriteStartElement("color");
                 objXmlTextWriter.WriteString(numcolor);
@@ -368,7 +368,9 @@ namespace SimplePlainNote
                 //File looks okay.
                 else
                 {
+                    //#if DEBUG
                     //MessageBox.Show("size: "+checkfile.Length.ToString()+" b");
+                    //#endif
                     return false;
                 }
             }
@@ -377,6 +379,23 @@ namespace SimplePlainNote
             {
                 return false;
             }
+        }
+
+        public int GetXMLAttrVisibleInt()
+        {
+            objXmlTextReader = new XmlTextReader(appdatafolder + filenm);
+
+            while (objXmlTextReader.Read())
+            {
+                if (objXmlTextReader.Name == "note")
+                {          
+                    if (objXmlTextReader.HasAttributes==false) { return -1; }
+                    int i = Convert.ToInt32(objXmlTextReader.GetAttribute("visible"));
+                    objXmlTextReader.Close();
+                    return i;
+                }                
+            }
+            return -1;            
         }
 
         /// <summary>
@@ -437,9 +456,14 @@ namespace SimplePlainNote
                         objXmlTextReader.Close();
                         return n;
                     }
-                    catch (InvalidCastException)
+                    catch (InvalidCastException castexc)
                     {
                         objXmlTextReader.Close();
+                        MessageBox.Show("Error casting. "+castexc.Message);
+                    }
+                    catch (FormatException formatexc)
+                    {
+                        MessageBox.Show("Error format. "+formatexc.Message);
                     }
                 }
             }
@@ -472,7 +496,7 @@ namespace SimplePlainNote
 
         public string Update(string userName, string password, string status)
         {
-            //Important: "statuses", "update" and "xml" have to be lower case.
+            //Important: "statuses", "update" and "xml" must be lower case.
             string url = string.Format(TwitterBaseUrlFormat, "statuses", "update", "xml");
             string data = string.Format("status={0}", HttpUtility.UrlEncode(status));
 
@@ -534,9 +558,9 @@ namespace SimplePlainNote
                     {
                         MessageBox.Show("Error: connection timeout. ");
                     }
-                    catch (Exception exc)
+                    catch (NotSupportedException notsupexc)
                     {
-                        MessageBox.Show("Error: " + exc.Message);
+                        MessageBox.Show("Error: cannot send POST message:\r\n "+notsupexc.Message);
                     }
 
                 }

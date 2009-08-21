@@ -162,15 +162,18 @@ namespace SimplePlainNote
 		#endregion Properties 
 
 		#region Methods (29) 
+
+        #if win32
         /// <summary>
         /// Check internet state.
         /// </summary>
         /// <returns></returns>
-        public static bool IsConnectedToInternet()
+        private static bool IsConnectedToInternet()
         {
             int Desc;
             return InternetGetConnectedState(out Desc, 0);
         }
+        #endif
 
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
@@ -312,8 +315,10 @@ namespace SimplePlainNote
             }            
         }
 
+        #if win32
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
+        #endif
 
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -529,8 +534,10 @@ namespace SimplePlainNote
 
         private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
+#if win32
             if (IsConnectedToInternet())
             {
+#endif
                 if ((String.IsNullOrEmpty(note) ==false) && (note.Length < 140))
                 {
                     tweetnote();
@@ -549,11 +556,13 @@ namespace SimplePlainNote
                 {
                     MessageBox.Show("Note is empty.");
                 }
+#if win32
             }
             else
             {
                 MessageBox.Show("No network connection.");
             }
+#endif
         }
 
         private void updateMenuNoteColor(object sender, EventArgs e)
@@ -590,5 +599,5 @@ namespace SimplePlainNote
         }
 
 		#endregion Methods 
-            }
+    }
 }
