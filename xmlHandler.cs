@@ -267,8 +267,7 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteStartElement("note");
                 
                 if (visible == true)
-                {
-                   //objXmlTextWriter.WriteStartAttribute("visible", "1");
+                {                   
                    objXmlTextWriter.WriteAttributeString("visible", "1");
                 }
                 else

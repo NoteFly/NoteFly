@@ -32,15 +32,14 @@ namespace SimplePlainNote
     public partial class frmManageNotes : Form
     {
 		#region Fields (5) 
-
-        //for moving
-        public const int HT_CAPTION = 0x2;
         //list of notes
-        private List<frmNote> notes;
+        //private List<frmNote> notes;
         //counted notes
         private int numnotes = 0;
         //is transparent
         private bool transparency = false;
+        //for moving
+        public const int HT_CAPTION = 0x2;
         //for moving
         public const int WM_NCLBUTTONDOWN = 0xA1;
 
@@ -51,19 +50,18 @@ namespace SimplePlainNote
         /// <summary>
         /// New instance of frmManageNotes
         /// </summary>
-        /// <param name="fcn"></param>
-        /// <param name="update"></param>
-        public frmManageNotes(frmNewNote fcn, bool update)
+        /// <param name="fcn"></param>        
+        public frmManageNotes()
         {
-            InitializeComponent();
-            notes = fcn.GetNotes;
-            DrawNotesOverview();
+            InitializeComponent();            
+            // DrawNotesOverview();
             transparency = getTransparency();
         }
 
 		#endregion Constructors 
 
 		#region Methods (12) 
+        #if win32
         //for moving form 
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
@@ -72,15 +70,14 @@ namespace SimplePlainNote
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
                          int Msg, int wParam, int lParam);		
-
+        #endif
         /// <summary>
         /// Close form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnClose_Click(object sender, EventArgs e)
-        {            
-            
+        {                      
             this.Close();
         }
 
@@ -92,9 +89,7 @@ namespace SimplePlainNote
                 for (int i = 1; i <= numnotes; i++)
                 {
                     if (btn.Name == "btnNoteDel"+i)
-                    {                        
-                        //MessageBox.Show("delete note: "+i.ToString());
-
+                    {
                         try
                         {                            
                             File.Delete(getNotesSavePath() + Convert.ToString(i) + ".xml");                            
@@ -107,8 +102,8 @@ namespace SimplePlainNote
                         {
                             MessageBox.Show("Access denied. Delete note "+i+".xml manualy with premission.");
                         }
-                        notes.RemoveAt(i - 1);
-                        DrawNotesOverview();
+                        //notes.RemoveAt(i - 1);
+                        // DrawNotesOverview();
                         numnotes--;                                             
                     }
                 }
@@ -128,15 +123,16 @@ namespace SimplePlainNote
             int n = Convert.ToInt32(cbx.Name) - 1;
             if ((n <= numnotes) && (n>=0))
             {
-                notes[n].NoteVisible = !notes[n].NoteVisible;
+                //notes[n].NoteVisible = !notes[n].NoteVisible;
             }
         }
 
+        /*
         private void DrawNotesOverview()
         {
             pnlNotes.Controls.Clear();
             int ypos = 10;
-            numnotes = notes.Count;
+            //numnotes = notes.Count;
             for (int curnote = 0; curnote < numnotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
@@ -144,10 +140,11 @@ namespace SimplePlainNote
                 lblNoteTitle.Name = "lbNote"+Convert.ToString(curnote+1);
                 lblNoteTitle.Location = new Point(10, ypos);
                 pnlNotes.Controls.Add(lblNoteTitle);
-
+                                
                 CheckBox cbxNoteVisible = new CheckBox();
                 cbxNoteVisible.Text = "visible";
                 cbxNoteVisible.Name = Convert.ToString(curnote+1);
+                
                 if (notes[curnote].NoteVisible == true)
                 {
                     cbxNoteVisible.CheckState = CheckState.Checked;
@@ -175,6 +172,7 @@ namespace SimplePlainNote
                 ypos = ypos + 30;
             }
         }
+         */
 
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
@@ -239,8 +237,8 @@ namespace SimplePlainNote
             pnlHead.BackColor = Color.OrangeRed;
             if (e.Button == MouseButtons.Left)
             {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                //ReleaseCapture();
+                //SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 pnlHead.BackColor = Color.Orange;
             }
         }

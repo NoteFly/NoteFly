@@ -114,7 +114,25 @@ namespace SimplePlainNote
 
 		#region Properties (5) 
 
-        public int ColorNote
+        public int ID
+        {
+            get { return id; }
+            set { this.id = value; }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                return this.notevisible;
+            }
+            set
+            {
+                notevisible = value;
+            }
+        }
+
+        public int Color
         {
             get
             {
@@ -126,13 +144,12 @@ namespace SimplePlainNote
             }
         }
 
-        public int ID
+        public string Title
         {
-            get { return id; }
-            set { this.id = value; }
+            get { return this.title; }
         }
 
-        public string Note
+        public string Text
         {
             get { return this.note; }
             set
@@ -142,22 +159,7 @@ namespace SimplePlainNote
             }
         }
 
-        public bool NoteVisible
-        {
-            get
-            {
-                return this.notevisible; 
-            }
-            set
-            {
-                notevisible = value;                
-            }
-        }
 
-        public string Title
-        {
-            get { return this.title; }
-        }
 
 		#endregion Properties 
 
@@ -172,11 +174,11 @@ namespace SimplePlainNote
         {
             int Desc;
             return InternetGetConnectedState(out Desc, 0);
-        }
-        #endif
+        }        
 
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
+        #endif
 
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, 
@@ -192,6 +194,8 @@ namespace SimplePlainNote
             //MessageBox.Show(twpass);
             frmAskpass.Close();
             tweetnote();  
+            
+            
         }
 
         private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
@@ -285,9 +289,9 @@ namespace SimplePlainNote
                 foreach (Match keyWordMatch in texthighlight.GetHTML.Matches(rtbNote.Text))
                 {
                     rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
-                    rtbNote.SelectionColor = Color.Blue;
+                    rtbNote.SelectionColor = System.Drawing.Color.Blue;
                     rtbNote.SelectionStart = selPos;
-                    rtbNote.SelectionColor = Color.Black;
+                    rtbNote.SelectionColor = System.Drawing.Color.Black;
                 }
             }
 
@@ -394,14 +398,15 @@ namespace SimplePlainNote
 
             if (e.Button == MouseButtons.Left)
             {
-                ReleaseCapture();
+                // ReleaseCapture();
                 this.locX = this.Location.X;
                 this.locY = this.Location.Y;                
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 pnlHead.BackColor = getskin.getObjColor(false);                
             }
 
-            SavePos.RunWorkerAsync();
+            //FIXME: thread not safe.
+            SavePos.RunWorkerAsync(); 
         }
 
         /// <summary>
@@ -418,9 +423,7 @@ namespace SimplePlainNote
         {                      
             #if DEBUG
             DateTime starttime = DateTime.Now;
-            #endif
-
-            Thread.Sleep(50);
+            #endif         
 
             try
             {
@@ -556,13 +559,13 @@ namespace SimplePlainNote
                 {
                     MessageBox.Show("Note is empty.");
                 }
-#if win32
+            #if win32
             }
             else
             {
                 MessageBox.Show("No network connection.");
             }
-#endif
+            #endif
         }
 
         private void updateMenuNoteColor(object sender, EventArgs e)

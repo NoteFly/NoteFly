@@ -31,43 +31,42 @@ namespace SimplePlainNote
     /// </summary>
     public partial class frmNewNote : Form
     {
-		#region Fields (5) 
-
+        #region Fields (5)
         private bool editmode = false;
-        public const int HT_CAPTION = 0x2;
-                private List<frmNote> notes;
+        //private List<frmNote> notes;        
         private bool transparency = true;
-        //if (Program.PLATFORM == "win32")
-        //{
+#if win32
+        public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
+#endif
+        #endregion Fields
 
-		#endregion Fields 
-
-		#region Constructors (1) 
-
+        #region Constructors (1)
         //}
         public frmNewNote()
         {
             InitializeComponent();
-            notes = new List<frmNote>();
+            //notes = new List<frmNote>();
+            
             loadNotes();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (1) 
-
-                public List<frmNote> GetNotes
+        #region Properties (1)
+        /*
+        public List<frmNote> Notes
         {
             get { return this.notes; }
         }
+        */
+        #endregion Properties
 
-		#endregion Properties 
+        #region Methods (24)
 
-		#region Methods (24) 
+        // Public Methods (5) 
 
-		// Public Methods (5) 
-
+        /*
         public void CreateDefaultNote(string title, string content, int notecolor)
         {
             try
@@ -82,19 +81,20 @@ namespace SimplePlainNote
             catch (IndexOutOfRangeException indexexc)
             {
                 MessageBox.Show("Fout: " + indexexc.Message);
-            }
+            }            
         }
+         
 
         /// <summary>
         /// Create a note GUI.
         /// </summary>
         /// <param name="title"></param>
         /// <param name="content"></param>
-        /// <param name="notecolor"></param>
+        /// <param name="notecolor"></param>        
         public void CreateNote(int visible, string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
-            {                
+            {
                 int newid = notes.Count + 1;
 
                 frmNote newnote;
@@ -108,13 +108,14 @@ namespace SimplePlainNote
                     newnote = new frmNote(false, newid, title, content, notecolor, locX, locY, notewith, noteheight);
                 }
                 notes.Add(newnote);
-                
+
             }
             catch (IndexOutOfRangeException indexexc)
             {
                 MessageBox.Show("Fout: " + indexexc.Message);
             }
         }
+         
 
         /// <summary>
         /// Edit a note
@@ -129,19 +130,22 @@ namespace SimplePlainNote
                 this.rtbNote.Text = notes[notePos].Note;
             }
             catch (ArgumentOutOfRangeException ExcID)
-            {                
-                MessageBox.Show("Note not found. "+ExcID.Source);
+            {
+                MessageBox.Show("Note not found. " + ExcID.Source);
             }
             editmode = true;
         }
+         */
 
+#if win32
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
-                        [DllImportAttribute("user32.dll")]
+        [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
                          int Msg, int wParam, int lParam);
-		// Private Methods (19) 
+#endif
+        // Private Methods (19) 
 
         private void btnAddNote_Click(object sender, EventArgs e)
         {
@@ -166,7 +170,7 @@ namespace SimplePlainNote
                 {
                     xmlHandler getSettings = new xmlHandler(true);
                     int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");
-                    CreateDefaultNote(tbTitle.Text, rtbNote.Text, notecolordefault);
+                    // CreateDefaultNote(tbTitle.Text, rtbNote.Text, notecolordefault);
                 }
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
@@ -185,12 +189,12 @@ namespace SimplePlainNote
         /// Redraw newnote.
         /// </summary>
         private void CancelNote()
-        {            
+        {
             tbTitle.Text = "";
-            rtbNote.Text = "";            
-                       
+            rtbNote.Text = "";
+
             skin Skin = getSkin();
-            Color normalcolor = Skin.getObjColor(false);            
+            Color normalcolor = Skin.getObjColor(false);
 
             pnlNoteEdit.BackColor = normalcolor;
             rtbNote.BackColor = normalcolor;
@@ -201,36 +205,9 @@ namespace SimplePlainNote
             pnlHeadNewNote.Refresh();
 
             tbTitle.BackColor = Skin.getObjColor(true);
-            tbTitle.Focus();            
+            tbTitle.Focus();
         }
 
-        private void createANewNoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CancelNote(); 
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
-            this.Show();
-        }
-
-        private void editNote(int id)
-        {
-            try
-            {
-                this.tbTitle.Text = notes[id].Title;
-                this.rtbNote.Text = notes[id].Note;
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("Error code: 200 - "+exc.Message);                
-            }
-
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Trayicon.Dispose();
-            Application.Exit();
-        }
 
         private void frmNewNote_Activated(object sender, EventArgs e)
         {
@@ -238,7 +215,7 @@ namespace SimplePlainNote
             {
                 this.Opacity = 1.0;
                 this.Refresh();
-            }            
+            }
         }
 
         private void frmNewNote_Deactivate(object sender, EventArgs e)
@@ -248,12 +225,6 @@ namespace SimplePlainNote
                 this.Opacity = 0.9;
                 this.Refresh();
             }
-        }
-
-        private void frmNewNote_Shown(object sender, EventArgs e)
-        {            
-            //redraw
-            CancelNote();
         }
 
         private skin getSkin()
@@ -267,35 +238,26 @@ namespace SimplePlainNote
 
         private void listToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmManageNotes managenotes = new frmManageNotes(this, false);
-            managenotes.Show();
-            /*
-            string allnotes ="";
-            for (int i = 0; i < notes.Count; i++)
-            {
-                allnotes += notes[i].ID + " - " + notes[i].Title + " \r\n";
-            }
-            allnotes += "---------------------\r\nNumber notes: " + notes.Count;
-            MessageBox.Show(allnotes);
-            */
+            //frmManageNotes managenotes = new frmManageNotes(this);
+            //managenotes.Show();
         }
 
         private void loadNotes()
         {
-            #if DEBUG
+#if DEBUG
             DateTime starttime = DateTime.Now;
-            #endif
+#endif
 
             xmlHandler getSettings = new xmlHandler(true);
             string notesavepath = getSettings.getXMLnode("notesavepath");
 
             int id = 1;
 
-            string curnotefile = notesavepath+id+".xml";
+            string curnotefile = notesavepath + id + ".xml";
 
             while (File.Exists(@curnotefile) == true)
             {
-                xmlHandler parserNote = new xmlHandler(false, id+".xml");                
+                xmlHandler parserNote = new xmlHandler(false, id + ".xml");
                 int visible = parserNote.GetXMLAttrVisibleInt();
 
                 string title = parserNote.getXMLnode("title");
@@ -307,18 +269,18 @@ namespace SimplePlainNote
                 int noteLocY = parserNote.getXMLnodeAsInt("y");
                 int notewidth = parserNote.getXMLnodeAsInt("width");
                 int noteheight = parserNote.getXMLnodeAsInt("heigth");
-                CreateNote(visible, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight);
-                
+                // CreateNote(visible, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight);
+
                 id++;
                 curnotefile = notesavepath + id + ".xml";
                 if (id > 1000) { MessageBox.Show("Error: Too many notes"); return; }
             }
 
-            #if DEBUG
+#if DEBUG
             DateTime endtime = DateTime.Now;
             TimeSpan debugtime = endtime - starttime;
             MessageBox.Show("taken: " + debugtime.Milliseconds + " ms\r\n " + debugtime.Ticks + " ticks");
-            #endif
+#endif
         }
 
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
@@ -326,7 +288,7 @@ namespace SimplePlainNote
             if (e.Button == MouseButtons.Left)
             {
                 this.Cursor = Cursors.SizeNWSE;
-                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                
+                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
             }
             this.Cursor = Cursors.Default;
         }
@@ -334,13 +296,16 @@ namespace SimplePlainNote
         private void pnlHeadNewNote_MouseDown(object sender, MouseEventArgs e)
         {
             skin Skin = getSkin();
-            pnlHeadNewNote.BackColor = Skin.getObjColor(true); 
+            pnlHeadNewNote.BackColor = Skin.getObjColor(true);
+            #if win32
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
+
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 pnlHeadNewNote.BackColor = Skin.getObjColor(false);
             }
+            #endif
         }
 
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -361,17 +326,17 @@ namespace SimplePlainNote
         /// <returns>filepath of the created note.</returns>
         private string SaveNoteDefault(int id, string title, string text)
         {
-            xmlHandler getXmlSettings = new xmlHandler(true);            
+            xmlHandler getXmlSettings = new xmlHandler(true);
             string notefile = id + ".xml";
             xmlHandler xmlnote = new xmlHandler(false, notefile);
-            
+
             string defaultcolor = getXmlSettings.getXMLnode("defaultcolor");
-            if (xmlnote.WriteNote(true,defaultcolor, title, text, 10, 10, 240, 240) == false)
-                {
-                    MessageBox.Show("Error writing note.");
-                    return null;
-                }         
-            return notefile;            
+            if (xmlnote.WriteNote(true, defaultcolor, title, text, 10, 10, 240, 240) == false)
+            {
+                MessageBox.Show("Error writing note.");
+                return null;
+            }
+            return notefile;
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -388,12 +353,7 @@ namespace SimplePlainNote
             }
         }
 
-        private void Trayicon_Click(object sender, EventArgs e)
-        {
-            //todo, make this configurable what the action is.
-        }
-
-		#endregion Methods 
+        #endregion Methods
 
         #region highlight controls
         private void tbTitle_Enter(object sender, EventArgs e)
@@ -417,5 +377,5 @@ namespace SimplePlainNote
             rtbNote.BackColor = Skin.getObjColor(false);
         }
         #endregion
-            }
+    } 
 }

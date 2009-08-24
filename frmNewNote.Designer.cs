@@ -28,23 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNewNote));
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.lbTextTitle = new System.Windows.Forms.Label();
-            this.Trayicon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.ContextMenuTrayicon = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.createANewNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddNote = new System.Windows.Forms.Button();
             this.pnlNoteEdit = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
-            this.ContextMenuTrayicon.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.pnlNoteEdit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
@@ -113,57 +105,6 @@
             this.lbTextTitle.TabIndex = 2;
             this.lbTextTitle.Text = "Title:";
             this.lbTextTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // Trayicon
-            // 
-            this.Trayicon.ContextMenuStrip = this.ContextMenuTrayicon;
-            this.Trayicon.Icon = ((System.Drawing.Icon)(resources.GetObject("Trayicon.Icon")));
-            this.Trayicon.Text = "Simple Plain Notes";
-            this.Trayicon.Visible = true;
-            this.Trayicon.Click += new System.EventHandler(this.Trayicon_Click);
-            // 
-            // ContextMenuTrayicon
-            // 
-            this.ContextMenuTrayicon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createANewNoteToolStripMenuItem,
-            this.listToolStripMenuItem,
-            this.settingsToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.ContextMenuTrayicon.Name = "contextMenuStrip1";
-            this.ContextMenuTrayicon.ShowImageMargin = false;
-            this.ContextMenuTrayicon.Size = new System.Drawing.Size(145, 92);
-            // 
-            // createANewNoteToolStripMenuItem
-            // 
-            this.createANewNoteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.createANewNoteToolStripMenuItem.Name = "createANewNoteToolStripMenuItem";
-            this.createANewNoteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.createANewNoteToolStripMenuItem.Text = "&Create a new note";
-            this.createANewNoteToolStripMenuItem.Click += new System.EventHandler(this.createANewNoteToolStripMenuItem_Click);
-            // 
-            // listToolStripMenuItem
-            // 
-            this.listToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.listToolStripMenuItem.Name = "listToolStripMenuItem";
-            this.listToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.listToolStripMenuItem.Text = "&Manage notes";
-            this.listToolStripMenuItem.Click += new System.EventHandler(this.listToolStripMenuItem_Click);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // pnlHeadNewNote
             // 
@@ -268,14 +209,10 @@
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(50, 50);
             this.Name = "frmNewNote";
-            this.ShowInTaskbar = false;
             this.Text = "New note";
             this.TransparencyKey = System.Drawing.Color.LightPink;
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
-            this.Shown += new System.EventHandler(this.frmNewNote_Shown);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);
-            this.ContextMenuTrayicon.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
             this.pnlNoteEdit.ResumeLayout(false);
@@ -290,15 +227,9 @@
         private System.Windows.Forms.TextBox tbTitle;
         private System.Windows.Forms.Label lbTextTitle;
         private System.Windows.Forms.Button btnAddNote;
-        private System.Windows.Forms.NotifyIcon Trayicon;
-        private System.Windows.Forms.ContextMenuStrip ContextMenuTrayicon;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Panel pnlHeadNewNote;
         private System.Windows.Forms.Panel pnlNoteEdit;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.ToolStripMenuItem listToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createANewNoteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.RichTextBox rtbNote;
         private System.Windows.Forms.PictureBox pbResizeGrip;
     }
