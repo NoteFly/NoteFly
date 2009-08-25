@@ -380,7 +380,8 @@ namespace SimplePlainNote
             }
         }
 
-        public int GetXMLAttrVisibleInt()
+        /*
+        public int getXMLAttrVisibleInt()
         {
             objXmlTextReader = new XmlTextReader(appdatafolder + filenm);
 
@@ -396,6 +397,7 @@ namespace SimplePlainNote
             }
             return -1;            
         }
+         * */
 
         /// <summary>
         /// Get a xml node
