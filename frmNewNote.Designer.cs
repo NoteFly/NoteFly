@@ -209,7 +209,7 @@
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(50, 50);
             this.Name = "frmNewNote";
-            this.Text = "New note";
+            this.Text = "New note";            
             this.TransparencyKey = System.Drawing.Color.LightPink;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);

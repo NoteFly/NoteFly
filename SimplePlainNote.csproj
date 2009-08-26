@@ -187,6 +187,8 @@
     <None Include="Resources\cancel.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\Debug\note.xsd" />
+    <None Include="bin\Debug\settings.xsd" />
     <None Include="Resources\hoekje.png" />
     <None Include="strongkey_simpleplainnotes.pfx" />
   </ItemGroup>

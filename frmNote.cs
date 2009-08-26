@@ -114,25 +114,13 @@ namespace SimplePlainNote
 
 		#region Properties (5) 
 
-        public int ID
+        public int NoteID
         {
             get { return id; }
             set { this.id = value; }
         }
 
-        public bool Visible
-        {
-            get
-            {
-                return this.notevisible;
-            }
-            set
-            {
-                notevisible = value;
-            }
-        }
-
-        public int Color
+        public int NoteColor
         {
             get
             {
@@ -144,12 +132,12 @@ namespace SimplePlainNote
             }
         }
 
-        public string Title
+        public string NoteTitle
         {
             get { return this.title; }
         }
 
-        public string Text
+        public string NoteContent
         {
             get { return this.note; }
             set
@@ -178,11 +166,12 @@ namespace SimplePlainNote
 
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-        #endif
+        
 
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, 
                          int msg, int wParam, int lParam);	
+        #endif
 
         private void askpassok(object obj, EventArgs e)
         {
@@ -190,8 +179,7 @@ namespace SimplePlainNote
             Form frmAskpass = btnobj.FindForm();
 
             Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
-            twpass = passctr[0].Text;
-            //MessageBox.Show(twpass);
+            twpass = passctr[0].Text;            
             frmAskpass.Close();
             tweetnote();  
             
@@ -216,8 +204,8 @@ namespace SimplePlainNote
 
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {                                                                      
-            base.WindowState = FormWindowState.Normal;
-            //base.EditNote(ID);
+            //base.WindowState = FormWindowState.Normal;            
+            throw new NotImplementedException();
         }
 
         private void emailNoteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -398,14 +386,17 @@ namespace SimplePlainNote
 
             if (e.Button == MouseButtons.Left)
             {
-                // ReleaseCapture();
+                #if win32
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);                
+                #endif
                 this.locX = this.Location.X;
                 this.locY = this.Location.Y;                
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                
                 pnlHead.BackColor = getskin.getObjColor(false);                
             }
 
-            //FIXME: thread not safe.
+            //FIXME: not thread safe.
             SavePos.RunWorkerAsync(); 
         }
 
@@ -432,7 +423,7 @@ namespace SimplePlainNote
                 string numcolor = Convert.ToString(this.notecolor);
                 if ((this.locX >= 0) && (this.locY >= 0))
                 {
-                    xmlHandler updateposnote = new xmlHandler(false, ID + ".xml");
+                    xmlHandler updateposnote = new xmlHandler(false, this.id + ".xml");
                     updateposnote.WriteNote(notevisible,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
                 }
                 else

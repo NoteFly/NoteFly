@@ -444,7 +444,7 @@ namespace SimplePlainNote
         /// <param name="nodename"></param>
         /// <returns>return node as integer, -1 if error</returns>
         public int getXMLnodeAsInt(string nodename)
-        {
+        {            
             objXmlTextReader = new XmlTextReader(appdatafolder + filenm);
 
             while (objXmlTextReader.Read())
@@ -472,6 +472,34 @@ namespace SimplePlainNote
             return -1;
         }
 
+        public bool getXMLnodeAsBool(string nodename)
+        {
+            objXmlTextReader = new XmlTextReader(appdatafolder + filenm);
+
+            while (objXmlTextReader.Read())
+            {
+                if (objXmlTextReader.Name == nodename)
+                {
+                    try
+                    {
+                        bool nodevalue = objXmlTextReader.ReadElementContentAsBoolean();
+                        objXmlTextReader.Close();
+                        return nodevalue;
+                    }
+                    catch (InvalidCastException castexc)
+                    {
+                        objXmlTextReader.Close();
+                        MessageBox.Show("Error casting. " + castexc.Message);
+                    }
+                    catch (FormatException formatexc)
+                    {
+                        MessageBox.Show("Error format. " + formatexc.Message);
+                    }
+                }
+            }
+            objXmlTextReader.Close();
+            return false;
+        }
 
         #region twitter support
         /// <summary>

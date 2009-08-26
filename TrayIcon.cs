@@ -31,6 +31,7 @@ namespace SimplePlainNote
     static class TrayIcon
     {
 		#region Fields (7) 
+        static Notes notes;
 
         static System.ComponentModel.IContainer components = null;
         static NotifyIcon icon;
@@ -91,7 +92,8 @@ namespace SimplePlainNote
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);            
 
-            Notes notes = new Notes();
+            //start loading notes.
+            notes = new Notes();
 
             //MenuTrayIcon = new ContextMenuStrip(components);
             //MenuTrayIcon.AllowDrop = false;
@@ -103,16 +105,14 @@ namespace SimplePlainNote
             MenuSettings = new System.Windows.Forms.ToolStripMenuItem();
             MenuExit = new System.Windows.Forms.ToolStripMenuItem();
 
-            icon = new NotifyIcon(components);            
-            icon.ContextMenuStrip = new ContextMenuStrip(components);
+            icon = new NotifyIcon(components);
+            icon.ContextMenuStrip = MenuTrayIcon; //new ContextMenuStrip(components);
             //icon.Icon = ((System.Drawing.Icon)(resources.GetObject("Trayicon.Icon")));            
             icon.Icon = new Icon(@"C:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote\Resources\trayicon.ico");
             icon.Click += new EventHandler(Icon_Click);
             icon.Visible = true;            
 
-
-            icon.ContextMenuStrip.Name = "MenuTrayIcon";
-            //if (menuitems.Length == 0) { MessageBox.Show("wrong!!"); }
+            icon.ContextMenuStrip.Name = "MenuTrayIcon";            
             icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
             MenuNewNote,
             MenuManageNotes,
@@ -156,7 +156,7 @@ namespace SimplePlainNote
 
         static void MenuNewNote_Click(object sender, EventArgs e)
         {
-            frmNewNote newnote = new frmNewNote();
+            frmNewNote newnote = new frmNewNote(notes);
             newnote.Show();
         }
 
