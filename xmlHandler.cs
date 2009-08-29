@@ -132,11 +132,11 @@ namespace SimplePlainNote
             this.filenm = "settings.xml";
             if (File.Exists(appdatafolder + filenm) == false)
             {
-                WriteSettings(true, 95, 0, appdatafolder, "adres@domain.com", true, "", "");
+                WriteSettings(true, 95, 0, appdatafolder, "Microsoft Sans Serif", "adres@domain.com", true, "", "");
             }         
         }
 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, string fontcontent, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
         {
             try
             {
@@ -162,6 +162,12 @@ namespace SimplePlainNote
                     objXmlTextWriter.WriteString("0");
                     objXmlTextWriter.WriteEndElement();
                 }
+
+                objXmlTextWriter.WriteStartElement("fontcontent");
+                objXmlTextWriter.WriteString(fontcontent);
+                objXmlTextWriter.WriteEndElement();
+                
+
                 objXmlTextWriter.WriteStartElement("transparecylevel");
                 objXmlTextWriter.WriteString(Convert.ToString(transparecylevel));
                 objXmlTextWriter.WriteEndElement();
@@ -366,9 +372,6 @@ namespace SimplePlainNote
                 //File looks okay.
                 else
                 {
-                    //#if DEBUG
-                    //MessageBox.Show("size: "+checkfile.Length.ToString()+" b");
-                    //#endif
                     return false;
                 }
             }
@@ -378,25 +381,6 @@ namespace SimplePlainNote
                 return false;
             }
         }
-
-        /*
-        public int getXMLAttrVisibleInt()
-        {
-            objXmlTextReader = new XmlTextReader(appdatafolder + filenm);
-
-            while (objXmlTextReader.Read())
-            {
-                if (objXmlTextReader.Name == "note")
-                {          
-                    if (objXmlTextReader.HasAttributes==false) { return -1; }
-                    int i = Convert.ToInt32(objXmlTextReader.GetAttribute("visible"));
-                    objXmlTextReader.Close();
-                    return i;
-                }                
-            }
-            return -1;            
-        }
-         * */
 
         /// <summary>
         /// Get a xml node
@@ -500,7 +484,7 @@ namespace SimplePlainNote
             return false;
         }
 
-        #region twitter support
+        #region twitter support (TODO: move to seperated class)
         /// <summary>
         /// Update the twitter status with XML
         /// </summary>

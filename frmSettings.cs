@@ -19,6 +19,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Drawing.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
@@ -51,6 +52,8 @@ namespace SimplePlainNote
             tbTwitterPass.Text = getTwitterpassword();
             tbDefaultEmail.Text = getDefaultEmail();
             cbxStartOnBootWindows.Checked = getStatusStartlogin();
+
+            DrawCbxFonts();
         }
 
 		#endregion Constructors 
@@ -129,6 +132,15 @@ namespace SimplePlainNote
                 this.Close();
             }
             
+        }
+
+        private void DrawCbxFonts()
+        {            
+            foreach ( FontFamily oneFontFamily in FontFamily.Families )
+            {
+                CbxFontNoteContent.Items.Add(oneFontFamily.Name);
+            }
+            string curfont = xmlsettings.getXMLnode("fontcontent");           
         }
 
         private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)

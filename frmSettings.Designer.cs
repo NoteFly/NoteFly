@@ -45,7 +45,7 @@
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.cbxStartOnBootWindows = new System.Windows.Forms.CheckBox();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.CbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
@@ -220,7 +220,7 @@
             this.cbxSyntaxHighlight.AutoSize = true;
             this.cbxSyntaxHighlight.Checked = true;
             this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(19, 90);
+            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(10, 90);
             this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
             this.cbxSyntaxHighlight.Size = new System.Drawing.Size(156, 17);
             this.cbxSyntaxHighlight.TabIndex = 13;
@@ -243,7 +243,7 @@
             // 
             this.tabAppearance.Controls.Add(this.cbxStartOnBootWindows);
             this.tabAppearance.Controls.Add(this.lbTextNoteFont);
-            this.tabAppearance.Controls.Add(this.comboBox1);
+            this.tabAppearance.Controls.Add(this.CbxFontNoteContent);
             this.tabAppearance.Controls.Add(this.cbxTransparecy);
             this.tabAppearance.Controls.Add(this.label1);
             this.tabAppearance.Controls.Add(this.cbxDefaultColor);
@@ -272,17 +272,18 @@
             this.lbTextNoteFont.AutoSize = true;
             this.lbTextNoteFont.Location = new System.Drawing.Point(16, 97);
             this.lbTextNoteFont.Name = "lbTextNoteFont";
-            this.lbTextNoteFont.Size = new System.Drawing.Size(94, 13);
+            this.lbTextNoteFont.Size = new System.Drawing.Size(55, 13);
             this.lbTextNoteFont.TabIndex = 9;
-            this.lbTextNoteFont.Text = "Font note content:";
+            this.lbTextNoteFont.Text = "Font note:";
             // 
-            // comboBox1
+            // CbxFontNoteContent
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(130, 94);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(146, 21);
-            this.comboBox1.TabIndex = 8;
+            this.CbxFontNoteContent.FormattingEnabled = true;
+            this.CbxFontNoteContent.Location = new System.Drawing.Point(94, 94);
+            this.CbxFontNoteContent.Name = "CbxFontNoteContent";
+            this.CbxFontNoteContent.Size = new System.Drawing.Size(182, 21);
+            this.CbxFontNoteContent.TabIndex = 8;
+            this.CbxFontNoteContent.Text = "?";
             // 
             // tabTwitter
             // 
@@ -326,15 +327,15 @@
             // 
             // tbDefaultEmail
             // 
-            this.tbDefaultEmail.Location = new System.Drawing.Point(120, 140);
+            this.tbDefaultEmail.Location = new System.Drawing.Point(115, 136);
             this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(188, 20);
+            this.tbDefaultEmail.Size = new System.Drawing.Size(200, 20);
             this.tbDefaultEmail.TabIndex = 18;
             // 
             // lbTextDefaultEmail
             // 
             this.lbTextDefaultEmail.AutoSize = true;
-            this.lbTextDefaultEmail.Location = new System.Drawing.Point(16, 140);
+            this.lbTextDefaultEmail.Location = new System.Drawing.Point(10, 140);
             this.lbTextDefaultEmail.Name = "lbTextDefaultEmail";
             this.lbTextDefaultEmail.Size = new System.Drawing.Size(98, 13);
             this.lbTextDefaultEmail.TabIndex = 17;
@@ -353,11 +354,11 @@
             // lblTextNoteLocation
             // 
             this.lblTextNoteLocation.AutoSize = true;
-            this.lblTextNoteLocation.Location = new System.Drawing.Point(8, 28);
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(10, 26);
             this.lblTextNoteLocation.Name = "lblTextNoteLocation";
-            this.lblTextNoteLocation.Size = new System.Drawing.Size(73, 13);
+            this.lblTextNoteLocation.Size = new System.Drawing.Size(176, 13);
             this.lblTextNoteLocation.TabIndex = 16;
-            this.lblTextNoteLocation.Text = "save notes in:";
+            this.lblTextNoteLocation.Text = "save notes in: (not yet implemented)";
             // 
             // tbNotesSavePath
             // 
@@ -422,7 +423,7 @@
         private System.Windows.Forms.TextBox tbDefaultEmail;
         private System.Windows.Forms.Label lbTextDefaultEmail;
         private System.Windows.Forms.Label lbTextNoteFont;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox CbxFontNoteContent;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox cbxStartOnBootWindows;
         private System.Diagnostics.EventLog eventLog1;

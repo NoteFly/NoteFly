@@ -56,10 +56,12 @@ namespace SimplePlainNote
         /// <param name="fcn"></param>        
         public frmManageNotes(Notes notes, bool transparency, int notecolor)
         {
-            InitializeComponent();                        
+            InitializeComponent();
+
+            skin = new Skin(notecolor);
+
             this.notes = notes;
-            this.transparency = transparency;
-            Skin skin = new Skin(notecolor);
+            this.transparency = transparency;            
             DrawNotesOverview();
         }
 
@@ -195,11 +197,9 @@ namespace SimplePlainNote
         {
             if (transparency)
             {
-                xmlHandler getSettings = new xmlHandler(true);
-                this.Opacity = Convert.ToDouble(getSettings.getXMLnodeAsInt("transparecylevel"));
+                this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
-            }
-            //Thread.Sleep(20);
+            }            
         }
 
         private string getNotesSavePath()

@@ -36,9 +36,8 @@ namespace SimplePlainNote
         #region Fields (5)
         
         private Notes notes;
-        private Skin skin;
-        //private int notecolor;
-        private int editnoteid = 0;
+        private Skin skin;        
+        private int editnoteid = -1;
         private bool transparency = false;
         private bool editnote = false;
         #if win32
@@ -55,9 +54,9 @@ namespace SimplePlainNote
             InitializeComponent();
             this.editnote = false;
             this.notes = notes;
-            this.transparency = transparency;
-            //this.notecolor = notecolor;
+            this.transparency = transparency;            
             this.skin = new Skin(notecolor);
+            ResetNewNoteForm();
         }
 
         public frmNewNote(Notes notes, bool transparency,  int notecolor, int editnoteid, string editnotetitle, string editnotecontent)
@@ -68,9 +67,9 @@ namespace SimplePlainNote
             this.notes = notes;
             this.transparency = transparency;
             this.tbTitle.Text = editnotetitle;
-            this.rtbNote.Text = editnotecontent;
-            //this.notecolor = editnotecolor;
+            this.rtbNote.Text = editnotecontent;            
             this.skin = new Skin(notecolor);
+            ResetNewNoteForm();
         }
 
         #endregion Constructors
@@ -159,7 +158,7 @@ namespace SimplePlainNote
         {
             if (transparency)
             {
-                this.Opacity = 0.9;
+                this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
             }
         }

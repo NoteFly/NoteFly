@@ -260,7 +260,8 @@ namespace SimplePlainNote
         {
             transparency = false;
             this.notevisible = false;                      
-            this.Close();            
+            //this.Close();            
+            this.Hide();
         }
 
         private void frmNote_Activated(object sender, EventArgs e)
@@ -346,7 +347,8 @@ namespace SimplePlainNote
         /// Get the color of the note and paint it.
         /// </summary>
         private void paintColorNote()
-        {            
+        {                
+            skin = new Skin(notecolor);
             Color normalcolor = skin.getObjColor(false);            
 
             this.BackColor = normalcolor;
@@ -533,7 +535,7 @@ namespace SimplePlainNote
                 {
                     tweetnote();
                 }
-                else if (note.Length >= 140)
+                else if (note.Length > 140)
                 {
                     DialogResult result;
                     string shrttweet = note.Substring(0, 140);

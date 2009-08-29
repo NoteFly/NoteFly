@@ -107,8 +107,16 @@ namespace SimplePlainNote
         public double getTransparencylevel()
         {
             xmlHandler getSettings = new xmlHandler(true);
-            double transparecylevel = Convert.ToDouble(getSettings.getXMLnodeAsInt("transparecylevel"));
-            return transparecylevel;
+            double transparecylevel = Convert.ToDouble(getSettings.getXMLnodeAsInt("transparecylevel")) / 100;
+            if (transparecylevel > 0 && transparecylevel <= 100)
+            {
+                return transparecylevel;
+            }
+            else
+            {
+                //error
+                throw new Exception("invalid transparencylevel");
+            }
         }
 
         #endregion
