@@ -36,14 +36,14 @@ namespace SimplePlainNote
 
 		#region Constructors (1) 
 
-        public frmSettings()
+        public frmSettings(bool transparecy)
         {
             InitializeComponent();
 
             xmlsettings = new xmlHandler(true);
 
             //read setting and display them correctly.            
-            cbxTransparecy.Checked = getTransparecy();
+            cbxTransparecy.Checked = transparecy;
             numProcTransparency.Value = getTransparecylevel();
             cbxDefaultColor.SelectedIndex = getDefaultColor();
             tbNotesSavePath.Text = getNotesSavePath();
@@ -169,12 +169,6 @@ namespace SimplePlainNote
         private string getNotesSavePath()
         {
             return xmlsettings.getXMLnode("notesavepath");
-        }
-
-        private bool getTransparecy()
-        {
-            if (xmlsettings.getXMLnode("transparecy") == "1") return true;
-            else return false;
         }
 
         private Decimal getTransparecylevel()

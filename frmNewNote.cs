@@ -13,6 +13,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
+#define win32
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -33,8 +35,11 @@ namespace SimplePlainNote
     {
         #region Fields (5)
         
-        private Notes notes;                     
+        private Notes notes;
+        private int notecolor;
+        private int editnoteid = 0;
         private bool transparency = false;
+        private bool editnote = false;
         #if win32
         public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -47,8 +52,21 @@ namespace SimplePlainNote
         public frmNewNote(Notes notes, bool transparency)
         {
             InitializeComponent();
+            this.editnote = false;
             this.notes = notes;
             this.transparency = transparency;      
+        }
+
+        public frmNewNote(Notes notes, bool transparency, int editnoteid, string editnotetitle, string editnotecontent, int editnotecolor)
+        {
+            InitializeComponent();
+            this.editnote = true;
+            this.editnoteid = editnoteid;
+            this.notes = notes;
+            this.transparency = transparency;
+            this.tbTitle.Text = editnotetitle;
+            this.rtbNote.Text = editnotecontent;
+            this.notecolor = editnotecolor;
         }
 
         #endregion Constructors
@@ -82,10 +100,17 @@ namespace SimplePlainNote
             }
             else
             {
-                xmlHandler getSettings = new xmlHandler(true);
-                int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");                
-                notes.CreateDefaultNote(tbTitle.Text, rtbNote.Text, notecolordefault);                
-                
+                if (editnote)
+                {
+                    notes.UpdateNote(editnoteid, this.tbTitle.Text, this.rtbNote.Text, true);
+                }
+                else
+                {
+                    xmlHandler getSettings = new xmlHandler(true);
+                    int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");
+                    //new note
+                    notes.CreateNewNote(tbTitle.Text, rtbNote.Text, notecolordefault);                 
+                }
                 this.Close();
             }
         }
@@ -178,13 +203,7 @@ namespace SimplePlainNote
             {
                 System.Diagnostics.Process.Start(e.LinkText);
             }
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmSettings settings = new frmSettings();
-            settings.Show();
-        }
+        } 
 
         private void tbTitle_KeyDown(object sender, KeyEventArgs e)
         {
@@ -193,8 +212,6 @@ namespace SimplePlainNote
                 rtbNote.Focus();
             }
         }
-
-        #endregion Methods
 
         #region highlight controls
         private void tbTitle_Enter(object sender, EventArgs e)
@@ -218,5 +235,7 @@ namespace SimplePlainNote
             rtbNote.BackColor = Skin.getObjColor(false);
         }
         #endregion
+
+        #endregion Methods
     } 
 }

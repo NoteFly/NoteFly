@@ -13,6 +13,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
+#define win32
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,16 +35,17 @@ namespace SimplePlainNote
     {
 		#region Fields (5) 
         //list of notes
-        //private List<frmNote> notes;
+        private Notes notes;
         //counted notes
         private int numnotes = 0;
         //is transparent
         private bool transparency = false;
+        #if win32
         //for moving
         public const int HT_CAPTION = 0x2;
         //for moving
         public const int WM_NCLBUTTONDOWN = 0xA1;
-
+        #endif
 		#endregion Fields 
 
 		#region Constructors (1) 
@@ -51,11 +54,12 @@ namespace SimplePlainNote
         /// New instance of frmManageNotes
         /// </summary>
         /// <param name="fcn"></param>        
-        public frmManageNotes()
+        public frmManageNotes(Notes notes, bool transparency)
         {
-            InitializeComponent();            
+            InitializeComponent();                        
+            this.notes = notes;
+            this.transparency = transparency;
             // DrawNotesOverview();
-            transparency = getTransparency();
         }
 
 		#endregion Constructors 
@@ -126,8 +130,7 @@ namespace SimplePlainNote
                 //notes[n].NoteVisible = !notes[n].NoteVisible;
             }
         }
-
-        /*
+        
         private void DrawNotesOverview()
         {
             pnlNotes.Controls.Clear();
@@ -136,7 +139,7 @@ namespace SimplePlainNote
             for (int curnote = 0; curnote < numnotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
-                lblNoteTitle.Text = notes[curnote].Title;
+                lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle;
                 lblNoteTitle.Name = "lbNote"+Convert.ToString(curnote+1);
                 lblNoteTitle.Location = new Point(10, ypos);
                 pnlNotes.Controls.Add(lblNoteTitle);
@@ -145,7 +148,7 @@ namespace SimplePlainNote
                 cbxNoteVisible.Text = "visible";
                 cbxNoteVisible.Name = Convert.ToString(curnote+1);
                 
-                if (notes[curnote].NoteVisible == true)
+                if (notes.GetNotes[curnote].Visible == true)
                 {
                     cbxNoteVisible.CheckState = CheckState.Checked;
                 }
@@ -171,13 +174,13 @@ namespace SimplePlainNote
                 
                 ypos = ypos + 30;
             }
-        }
-         */
+        }        
 
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
             if (transparency)
             {
+                //todo
                 this.Opacity = 1.0;
                 this.Refresh();
             }
@@ -192,6 +195,7 @@ namespace SimplePlainNote
         {
             if (transparency)
             {
+                //todo
                 this.Opacity = 0.9;
                 this.Refresh();
             }
@@ -202,19 +206,6 @@ namespace SimplePlainNote
         {
             xmlHandler xmlsettings = new xmlHandler(true);
             return xmlsettings.getXMLnode("notesavepath");
-        }
-
-        private bool getTransparency()
-        {
-            xmlHandler xmlSettings = new xmlHandler(true);
-            if (xmlSettings.getXMLnode("transparecy") == "1")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
@@ -237,8 +228,10 @@ namespace SimplePlainNote
             pnlHead.BackColor = Color.OrangeRed;
             if (e.Button == MouseButtons.Left)
             {
-                //ReleaseCapture();
-                //SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                #if win32
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                #endif
                 pnlHead.BackColor = Color.Orange;
             }
         }

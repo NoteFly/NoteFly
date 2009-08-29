@@ -13,6 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
+#define win32
 
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,8 @@ namespace SimplePlainNote
 {
     public partial class frmNote : Form
     {
-		#region Fields (12) 
-
-        public const int HT_CAPTION = 0x2;
-                private int id;
+		#region Fields (12)         
+        private int id;
         private int locX;
         private int locY;
         private string note;
@@ -42,13 +41,14 @@ namespace SimplePlainNote
         private string title;
         private bool transparency = false;
         private string twpass;
+        public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
 
 		#endregion Fields 
 
 		#region Constructors (2) 
 
-        public frmNote(bool visible, int id, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
+        public frmNote(bool visible, int id, string title, string note, bool transparency, int notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             if (visible == true)
             {
@@ -57,7 +57,7 @@ namespace SimplePlainNote
             this.id = id;
             this.title = title;            
             this.note = note;
-            this.transparency = getTransparency();
+            this.transparency = transparency;
             this.notecolor = notecolor;
 
             if ((locX >= 0) && (locY >= 0))
@@ -88,12 +88,12 @@ namespace SimplePlainNote
             }
         }
 
-        public frmNote(int id, string title, string note, int notecolor)
+        public frmNote(int id, string title, string note, bool transparency, int notecolor)
         {
             this.id = id;
             this.title = title;
             this.note = note;
-            this.transparency = getTransparency();
+            this.transparency = transparency;
             this.notecolor = notecolor;
             //set default location note
             this.locX = 10;
@@ -117,7 +117,7 @@ namespace SimplePlainNote
         public int NoteID
         {
             get { return id; }
-            set { this.id = value; }
+            //set { this.id = value; }
         }
 
         public int NoteColor
@@ -135,6 +135,11 @@ namespace SimplePlainNote
         public string NoteTitle
         {
             get { return this.title; }
+            set
+            {
+                title = value;
+                lblTitle.Text = title;
+            }
         }
 
         public string NoteContent
@@ -147,12 +152,11 @@ namespace SimplePlainNote
             }
         }
 
-
-
 		#endregion Properties 
 
 		#region Methods (29) 
-
+        
+        
         #if win32
         /// <summary>
         /// Check internet state.
@@ -166,11 +170,15 @@ namespace SimplePlainNote
 
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-        
+
 
         [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, 
-                         int msg, int wParam, int lParam);	
+        public static extern int SendMessage(IntPtr hWnd,
+                         int msg, int wParam, int lParam);
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
+
         #endif
 
         private void askpassok(object obj, EventArgs e)
@@ -181,9 +189,7 @@ namespace SimplePlainNote
             Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
             twpass = passctr[0].Text;            
             frmAskpass.Close();
-            tweetnote();  
-            
-            
+            tweetnote();                         
         }
 
         private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
@@ -203,9 +209,17 @@ namespace SimplePlainNote
         }
 
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
-        {                                                                      
-            //base.WindowState = FormWindowState.Normal;            
-            throw new NotImplementedException();
+        {
+            this.Hide();
+            //FIX: this is a dirty copy            
+            Notes getfuncnotes = new Notes();
+            if (this.NoteID > getfuncnotes.numnotes)
+            {
+                MessageBox.Show("Error: cannot find note.");
+            }
+            getfuncnotes.EditNewNote(this.NoteID);                            
+            //dispose this memory waste ASAP
+            Dispose();                        
         }
 
         private void emailNoteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -294,6 +308,7 @@ namespace SimplePlainNote
 
         }
 
+        /*
         private bool getTransparency()
         {
             xmlHandler xmlSettings = new xmlHandler(true);
@@ -305,12 +320,9 @@ namespace SimplePlainNote
             {
                 return false;
             }            
-        }
-
-        #if win32
-        [DllImport("wininet.dll")]
-        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
-        #endif
+        } 
+         */
+        
 
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -373,8 +385,8 @@ namespace SimplePlainNote
 
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!notelock)
-            {                
+            if (!notelock && !SavePos.IsBusy)
+            {                        
                 SavePos.RunWorkerAsync();
             }
         }
@@ -385,19 +397,20 @@ namespace SimplePlainNote
             pnlHead.BackColor = getskin.getObjColor(true);            
 
             if (e.Button == MouseButtons.Left)
-            {
-                #if win32
+            {                
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);                
-                #endif
+
                 this.locX = this.Location.X;
                 this.locY = this.Location.Y;                
                 
                 pnlHead.BackColor = getskin.getObjColor(false);                
             }
-
-            //FIXME: not thread safe.
-            SavePos.RunWorkerAsync(); 
+            
+            if (SavePos.IsBusy == false)
+            {
+                SavePos.RunWorkerAsync();
+            }
         }
 
         /// <summary>
@@ -528,10 +541,10 @@ namespace SimplePlainNote
 
         private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-#if win32
+            #if win32
             if (IsConnectedToInternet())
             {
-#endif
+            #endif
                 if ((String.IsNullOrEmpty(note) ==false) && (note.Length < 140))
                 {
                     tweetnote();

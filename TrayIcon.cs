@@ -24,28 +24,46 @@ using System.Windows.Forms;
 
 [assembly: CLSCompliant(true)]
 namespace SimplePlainNote
-{
+{  
     /// <summary>
     /// Startup class.
     /// </summary>
-    static class TrayIcon
+    public class TrayIcon
     {
-		#region Fields (7) 
-        static Notes notes;
+		#region Fields (9) 
 
         static System.ComponentModel.IContainer components = null;
         static NotifyIcon icon;
-        static System.Windows.Forms.ToolStripMenuItem MenuExit;
-        static System.Windows.Forms.ToolStripMenuItem MenuManageNotes;
-        static System.Windows.Forms.ToolStripMenuItem MenuNewNote;
-        static System.Windows.Forms.ToolStripMenuItem MenuSettings;
-        static System.Windows.Forms.ContextMenuStrip MenuTrayIcon;
+        static ToolStripMenuItem MenuExit;
+        static ToolStripMenuItem MenuManageNotes;
+        static ToolStripMenuItem MenuNewNote;
+        static ToolStripMenuItem MenuSettings;
+        static ContextMenuStrip MenuTrayIcon;
+        static Notes notes;
+        static bool transparency = true;
 
 		#endregion Fields 
 
-		#region Methods (6) 
+		#region Methods (2) 
 
-		// Private Methods (6) 
+		// Public Methods (1) 
+
+        public bool getTransparency
+        {
+            get
+            {
+                xmlHandler xmlSettings = new xmlHandler(true);
+                if (xmlSettings.getXMLnode("transparecy") == "1")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+		// Private Methods (1) 
 
         /// <summary>
         /// The main entry point for the application.
@@ -53,15 +71,9 @@ namespace SimplePlainNote
         [STAThread]
         static void Main()
         {
-            /*
-             * Unhandled exception handler
-             * 
-            // Create new instance of UnhandledExceptionDlg:
-            UnhandledExceptionDlg exDlg = new UnhandledExceptionDlg();
-            // Uncheck "Restart App" check box by default:
+            // Create new instance of UnhandledExceptionDlg
+            UnhandledExceptionDlg exDlg = new UnhandledExceptionDlg();            
             exDlg.RestartApp = false;
-            // Add handling of OnShowErrorReport.
-            // If you skip this then link to report details won't be showing.
             exDlg.OnShowErrorReport += delegate(object sender, SendExceptionClickEventArgs ar)
             {
                 System.Windows.Forms.MessageBox.Show("Handle OnShowErrorReport event to show what you are going to send.\n" +
@@ -73,11 +85,12 @@ namespace SimplePlainNote
             {
                 // User clicked on "Send Error Report" button:
                 if (ar.SendExceptionDetails)
+                {
                     System.Windows.Forms.MessageBox.Show(String.Format("Implement your communication part here " +
                         "(do HTTP POST or send e-mail, for example).\nExample:\nError Message: {0}\r" +
                         "Stack Trace:\n{1}",
                         ar.UnhandledException.Message, ar.UnhandledException.StackTrace));
-
+                }
                 // User wants to restart the App:
                 if (ar.RestartApp)
                 {
@@ -85,21 +98,23 @@ namespace SimplePlainNote
                     System.Diagnostics.Process.Start(System.Windows.Forms.Application.ExecutablePath);
                 }
             };
-            */
-
+                     
             components = new System.ComponentModel.Container();
-
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(true);            
+            Application.SetCompatibleTextRenderingDefault(true);
 
+            transparency = true;
+
+            if (System.Environment.GetCommandLineArgs().Length > 1 && System.Environment.GetCommandLineArgs()[1] == "/disabletransparency")
+            {
+                transparency = false;
+            }
             //start loading notes.
-            notes = new Notes();
-
-            //MenuTrayIcon = new ContextMenuStrip(components);
-            //MenuTrayIcon.AllowDrop = false;
+            notes = new Notes();                        
 
             icon = new System.Windows.Forms.NotifyIcon(components);
             MenuTrayIcon = new System.Windows.Forms.ContextMenuStrip(components);
+            MenuTrayIcon.AllowDrop = false;
             MenuNewNote = new System.Windows.Forms.ToolStripMenuItem();
             MenuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
             MenuSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -149,6 +164,9 @@ namespace SimplePlainNote
             Application.Run();
         }
 
+		#endregion Methods 
+
+        #region menu events
         static void Icon_Click(object sender, EventArgs e)
         {
             //todo: make it configurable.
@@ -156,19 +174,19 @@ namespace SimplePlainNote
 
         static void MenuNewNote_Click(object sender, EventArgs e)
         {
-            frmNewNote newnote = new frmNewNote(notes);
+            frmNewNote newnote = new frmNewNote(notes, transparency);
             newnote.Show();
         }
 
         static void MenuManageNotes_Click(object sender, EventArgs e)
         {
-            frmManageNotes managenotes = new frmManageNotes();
+            frmManageNotes managenotes = new frmManageNotes(notes, transparency);
             managenotes.Show();
         }
 
         static void MenuSettings_Click(object sender, EventArgs e)
         {
-            frmSettings settings = new frmSettings();
+            frmSettings settings = new frmSettings(transparency);
             settings.Show();
         }
 
@@ -177,7 +195,6 @@ namespace SimplePlainNote
             components.Dispose();
             Application.Exit();
         }
-
-		#endregion Methods 
+        #endregion
     }
 }

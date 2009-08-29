@@ -267,14 +267,13 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteStartElement("note");
                 
                 if (visible == true)
-                {                   
-                   objXmlTextWriter.WriteAttributeString("visible", "1");
+                {
+                    objXmlTextWriter.WriteElementString("visible", "1");
                 }
                 else
                 {
-                    objXmlTextWriter.WriteAttributeString("visible", "0");            
-                }                               
-               
+                    objXmlTextWriter.WriteElementString("visible", "0");
+                }                
 
                 objXmlTextWriter.WriteStartElement("color");
                 objXmlTextWriter.WriteString(numcolor);
