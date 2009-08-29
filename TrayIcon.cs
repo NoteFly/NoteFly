@@ -63,6 +63,7 @@ namespace SimplePlainNote
                 }
             }
         }
+
 		// Private Methods (1) 
 
         /// <summary>
@@ -163,6 +164,12 @@ namespace SimplePlainNote
 
             Application.Run();
         }
+        static int getDefaultColor()
+        {
+            xmlHandler xmlSettings = new xmlHandler(true);
+            int color = xmlSettings.getXMLnodeAsInt("defaultcolor");
+            return color;
+        }
 
 		#endregion Methods 
 
@@ -174,13 +181,14 @@ namespace SimplePlainNote
 
         static void MenuNewNote_Click(object sender, EventArgs e)
         {
-            frmNewNote newnote = new frmNewNote(notes, transparency);
+
+            frmNewNote newnote = new frmNewNote(notes, transparency, getDefaultColor());
             newnote.Show();
         }
 
         static void MenuManageNotes_Click(object sender, EventArgs e)
         {
-            frmManageNotes managenotes = new frmManageNotes(notes, transparency);
+            frmManageNotes managenotes = new frmManageNotes(notes, transparency, getDefaultColor());
             managenotes.Show();
         }
 

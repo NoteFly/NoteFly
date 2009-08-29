@@ -30,7 +30,8 @@ namespace SimplePlainNote
 {
     public partial class frmNote : Form
     {
-		#region Fields (12)         
+		#region Fields (12)  
+        private Skin skin;
         private int id;
         private int locX;
         private int locY;
@@ -50,6 +51,7 @@ namespace SimplePlainNote
 
         public frmNote(bool visible, int id, string title, string note, bool transparency, int notecolor, int locX, int locY, int notewidth, int noteheight)
         {
+            this.skin = new Skin(notecolor);
             if (visible == true)
             {
                 notevisible = true;
@@ -90,11 +92,12 @@ namespace SimplePlainNote
 
         public frmNote(int id, string title, string note, bool transparency, int notecolor)
         {
+            this.skin = new Skin(notecolor);
             this.id = id;
             this.title = title;
             this.note = note;
             this.transparency = transparency;
-            this.notecolor = notecolor;
+            this.notecolor = notecolor;            
             //set default location note
             this.locX = 10;
             this.locY = 10;
@@ -193,9 +196,8 @@ namespace SimplePlainNote
         }
 
         private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
-        {
-            skin getskin = new skin(notecolor);
-            pnlHead.BackColor = getskin.getObjColor(false); 
+        {                       
+            pnlHead.BackColor = skin.getObjColor(false); 
         }
 
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -274,7 +276,7 @@ namespace SimplePlainNote
         {
             if (transparency)
             {
-                this.Opacity = 0.9;
+                this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
             }
         }
@@ -306,23 +308,7 @@ namespace SimplePlainNote
                 TwitterToolStripMenuItem.Enabled = false;
             }
 
-        }
-
-        /*
-        private bool getTransparency()
-        {
-            xmlHandler xmlSettings = new xmlHandler(true);
-            if (xmlSettings.getXMLnode("transparecy") == "1")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }            
-        } 
-         */
-        
+        }      
 
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -360,9 +346,8 @@ namespace SimplePlainNote
         /// Get the color of the note and paint it.
         /// </summary>
         private void paintColorNote()
-        {
-            skin getskin = new skin(notecolor);
-            Color normalcolor = getskin.getObjColor(false);            
+        {            
+            Color normalcolor = skin.getObjColor(false);            
 
             this.BackColor = normalcolor;
             this.pnlHead.BackColor = normalcolor;
@@ -392,9 +377,8 @@ namespace SimplePlainNote
         }
 
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
-        {
-            skin getskin = new skin(notecolor);
-            pnlHead.BackColor = getskin.getObjColor(true);            
+        {            
+            pnlHead.BackColor = skin.getObjColor(true);            
 
             if (e.Button == MouseButtons.Left)
             {                
@@ -404,7 +388,7 @@ namespace SimplePlainNote
                 this.locX = this.Location.X;
                 this.locY = this.Location.Y;                
                 
-                pnlHead.BackColor = getskin.getObjColor(false);                
+                pnlHead.BackColor = skin.getObjColor(false);                
             }
             
             if (SavePos.IsBusy == false)

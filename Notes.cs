@@ -75,8 +75,8 @@ namespace SimplePlainNote
             string title = noteslst[noteid - 1].NoteTitle;
             string content = noteslst[noteid - 1].NoteContent;
             int color = noteslst[noteid - 1].NoteColor;
-            bool transparenty = getTransparency();
-            frmNewNote createnewnote = new frmNewNote(this, transparenty, noteid, title, content, color);
+            bool transparenty = getTransparency();            
+            frmNewNote createnewnote = new frmNewNote(this, transparenty, color,noteid, title, content);
             createnewnote.Show();
         }
 

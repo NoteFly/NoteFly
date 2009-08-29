@@ -23,7 +23,7 @@ namespace SimplePlainNote
     /// <summary>
     /// Class that provide skin options to notes.
     /// </summary>
-    class skin
+    class Skin
     {
         #region Fields (1)
 
@@ -37,7 +37,7 @@ namespace SimplePlainNote
         /// itializes a new instance of the skin class.
         /// </summary>
         /// <param name="numcolor">color number</param>
-        public skin(int numcolor)
+        public Skin(int numcolor)
         {
             this.notecolor = numcolor;
         }
@@ -102,6 +102,13 @@ namespace SimplePlainNote
             {
                 return getObjColor(selected);
             }
+        }
+
+        public double getTransparencylevel()
+        {
+            xmlHandler getSettings = new xmlHandler(true);
+            double transparecylevel = Convert.ToDouble(getSettings.getXMLnodeAsInt("transparecylevel"));
+            return transparecylevel;
         }
 
         #endregion

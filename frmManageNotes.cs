@@ -36,8 +36,8 @@ namespace SimplePlainNote
 		#region Fields (5) 
         //list of notes
         private Notes notes;
-        //counted notes
-        private int numnotes = 0;
+        //skin colors etc.
+        private Skin skin;
         //is transparent
         private bool transparency = false;
         #if win32
@@ -54,12 +54,13 @@ namespace SimplePlainNote
         /// New instance of frmManageNotes
         /// </summary>
         /// <param name="fcn"></param>        
-        public frmManageNotes(Notes notes, bool transparency)
+        public frmManageNotes(Notes notes, bool transparency, int notecolor)
         {
             InitializeComponent();                        
             this.notes = notes;
             this.transparency = transparency;
-            // DrawNotesOverview();
+            Skin skin = new Skin(notecolor);
+            DrawNotesOverview();
         }
 
 		#endregion Constructors 
@@ -75,6 +76,7 @@ namespace SimplePlainNote
         public static extern int SendMessage(IntPtr hWnd,
                          int Msg, int wParam, int lParam);		
         #endif
+
         /// <summary>
         /// Close form
         /// </summary>
@@ -88,9 +90,9 @@ namespace SimplePlainNote
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {                                      
             Button btn = (Button)sender;
-            if (numnotes != 0)
+            if (notes.numnotes != 0)
             {
-                for (int i = 1; i <= numnotes; i++)
+                for (int i = 1; i <= notes.numnotes; i++)
                 {
                     if (btn.Name == "btnNoteDel"+i)
                     {
@@ -106,9 +108,8 @@ namespace SimplePlainNote
                         {
                             MessageBox.Show("Access denied. Delete note "+i+".xml manualy with premission.");
                         }
-                        //notes.RemoveAt(i - 1);
-                        // DrawNotesOverview();
-                        numnotes--;                                             
+                        notes.GetNotes.RemoveAt(i - 1);
+                        DrawNotesOverview();                                                                    
                     }
                 }
             }
@@ -125,18 +126,17 @@ namespace SimplePlainNote
         {
             CheckBox cbx = (CheckBox)sender;
             int n = Convert.ToInt32(cbx.Name) - 1;
-            if ((n <= numnotes) && (n>=0))
+            if ((n <= notes.numnotes) && (n>=0))
             {
-                //notes[n].NoteVisible = !notes[n].NoteVisible;
+                notes.GetNotes[n].Visible = !notes.GetNotes[n].Visible;
             }
         }
         
         private void DrawNotesOverview()
         {
             pnlNotes.Controls.Clear();
-            int ypos = 10;
-            //numnotes = notes.Count;
-            for (int curnote = 0; curnote < numnotes; curnote++)
+            int ypos = 10;            
+            for (int curnote = 0; curnote < notes.numnotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
                 lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle;
@@ -179,7 +179,7 @@ namespace SimplePlainNote
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
             if (transparency)
-            {
+            {                
                 //todo
                 this.Opacity = 1.0;
                 this.Refresh();
@@ -195,11 +195,11 @@ namespace SimplePlainNote
         {
             if (transparency)
             {
-                //todo
-                this.Opacity = 0.9;
+                xmlHandler getSettings = new xmlHandler(true);
+                this.Opacity = Convert.ToDouble(getSettings.getXMLnodeAsInt("transparecylevel"));
                 this.Refresh();
             }
-            Thread.Sleep(20);
+            //Thread.Sleep(20);
         }
 
         private string getNotesSavePath()

@@ -36,7 +36,8 @@ namespace SimplePlainNote
         #region Fields (5)
         
         private Notes notes;
-        private int notecolor;
+        private Skin skin;
+        //private int notecolor;
         private int editnoteid = 0;
         private bool transparency = false;
         private bool editnote = false;
@@ -49,15 +50,17 @@ namespace SimplePlainNote
 
         #region Constructors (1)
       
-        public frmNewNote(Notes notes, bool transparency)
+        public frmNewNote(Notes notes, bool transparency, int notecolor)
         {
             InitializeComponent();
             this.editnote = false;
             this.notes = notes;
-            this.transparency = transparency;      
+            this.transparency = transparency;
+            //this.notecolor = notecolor;
+            this.skin = new Skin(notecolor);
         }
 
-        public frmNewNote(Notes notes, bool transparency, int editnoteid, string editnotetitle, string editnotecontent, int editnotecolor)
+        public frmNewNote(Notes notes, bool transparency,  int notecolor, int editnoteid, string editnotetitle, string editnotecontent)
         {
             InitializeComponent();
             this.editnote = true;
@@ -66,7 +69,8 @@ namespace SimplePlainNote
             this.transparency = transparency;
             this.tbTitle.Text = editnotetitle;
             this.rtbNote.Text = editnotecontent;
-            this.notecolor = editnotecolor;
+            //this.notecolor = editnotecolor;
+            this.skin = new Skin(notecolor);
         }
 
         #endregion Constructors
@@ -86,16 +90,15 @@ namespace SimplePlainNote
         // Private Methods (19) 
 
         private void btnAddNote_Click(object sender, EventArgs e)
-        {
-            skin Skin = getSkin();
+        {            
             if (tbTitle.Text == "")
             {
-                tbTitle.BackColor = Skin.getObjColor(false, false, true);
+                tbTitle.BackColor = skin.getObjColor(false, false, true);
                 tbTitle.Text = DateTime.Now.ToString();
             }
             else if (rtbNote.Text == "")
             {
-                rtbNote.BackColor = Skin.getObjColor(false, false, true);
+                rtbNote.BackColor = skin.getObjColor(false, false, true);
                 rtbNote.Text = "Please type any text.";
             }
             else
@@ -127,9 +130,8 @@ namespace SimplePlainNote
         {
             tbTitle.Text = "";
             rtbNote.Text = "";
-
-            skin Skin = getSkin();
-            Color normalcolor = Skin.getObjColor(false);
+            
+            Color normalcolor = skin.getObjColor(false);
 
             pnlNoteEdit.BackColor = normalcolor;
             rtbNote.BackColor = normalcolor;
@@ -139,7 +141,7 @@ namespace SimplePlainNote
             rtbNote.Refresh();
             pnlHeadNewNote.Refresh();
 
-            tbTitle.BackColor = Skin.getObjColor(true);
+            tbTitle.BackColor = skin.getObjColor(true);
             tbTitle.Focus();
         }
 
@@ -162,14 +164,16 @@ namespace SimplePlainNote
             }
         }
 
-        private skin getSkin()
+        /*
+        private Skin getSkin()
         {
             int numcolor = 0;
             xmlHandler getSettings = new xmlHandler(true);            
             numcolor = getSettings.getXMLnodeAsInt("defaultcolor");
-            skin getSkin = new skin(numcolor);
+            Skin getSkin = new Skin(numcolor);
             return getSkin;
         }
+         */
 
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
@@ -182,16 +186,15 @@ namespace SimplePlainNote
         }
 
         private void pnlHeadNewNote_MouseDown(object sender, MouseEventArgs e)
-        {
-            skin Skin = getSkin();
-            pnlHeadNewNote.BackColor = Skin.getObjColor(true);
+        {            
+            pnlHeadNewNote.BackColor = skin.getObjColor(true);
             #if win32
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
 
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                pnlHeadNewNote.BackColor = Skin.getObjColor(false);
+                pnlHeadNewNote.BackColor = skin.getObjColor(false);
             }
             #endif
         }
@@ -215,24 +218,20 @@ namespace SimplePlainNote
 
         #region highlight controls
         private void tbTitle_Enter(object sender, EventArgs e)
-        {
-            skin Skin = getSkin();
-            tbTitle.BackColor = Skin.getObjColor(false, true, false);
+        {            
+            tbTitle.BackColor = skin.getObjColor(false, true, false);
         }
         private void tbTitle_Leave(object sender, EventArgs e)
-        {
-            skin Skin = getSkin();
-            tbTitle.BackColor = Skin.getObjColor(false);
+        {            
+            tbTitle.BackColor = skin.getObjColor(false);
         }
         private void rtbNote_Enter(object sender, EventArgs e)
-        {
-            skin Skin = getSkin();
-            rtbNote.BackColor = Skin.getObjColor(false, true, false);
+        {            
+            rtbNote.BackColor = skin.getObjColor(false, true, false);
         }
         private void rtbNote_Leave(object sender, EventArgs e)
         {
-            skin Skin = getSkin();
-            rtbNote.BackColor = Skin.getObjColor(false);
+            rtbNote.BackColor = skin.getObjColor(false);
         }
         #endregion
 
