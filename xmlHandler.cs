@@ -150,23 +150,17 @@ namespace SimplePlainNote
 
                 objXmlTextWriter.WriteStartDocument();
                 objXmlTextWriter.WriteStartElement("settings");
+                
+                objXmlTextWriter.WriteStartElement("transparecy");
                 if (transparecy == true)
-                {
-                    objXmlTextWriter.WriteStartElement("transparecy");
-                    objXmlTextWriter.WriteString("1");
-                    objXmlTextWriter.WriteEndElement();
+                {                   
+                    objXmlTextWriter.WriteString("1");                    
                 }
                 else
-                {
-                    objXmlTextWriter.WriteStartElement("transparecy");
-                    objXmlTextWriter.WriteString("0");
-                    objXmlTextWriter.WriteEndElement();
+                {                    
+                    objXmlTextWriter.WriteString("0");                    
                 }
-
-                objXmlTextWriter.WriteStartElement("fontcontent");
-                objXmlTextWriter.WriteString(fontcontent);
                 objXmlTextWriter.WriteEndElement();
-                
 
                 objXmlTextWriter.WriteStartElement("transparecylevel");
                 objXmlTextWriter.WriteString(Convert.ToString(transparecylevel));
@@ -178,6 +172,10 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteString(Convert.ToString(numcolor));
                 objXmlTextWriter.WriteEndElement();
 
+                objXmlTextWriter.WriteStartElement("fontcontent");
+                objXmlTextWriter.WriteString(fontcontent);
+                objXmlTextWriter.WriteEndElement();   
+
                 if (Directory.Exists(notesavepath))
                 {
                     objXmlTextWriter.WriteStartElement("notesavepath");
@@ -186,19 +184,17 @@ namespace SimplePlainNote
                 }
                 else { throw new Exception("dir not exist"); }
 
-
+                objXmlTextWriter.WriteStartElement("syntaxhighlight");
                 if (syntaxhighlight == true)
-                {
-                    objXmlTextWriter.WriteStartElement("syntaxhighlight");
+                {                    
                     objXmlTextWriter.WriteString("1");
-                    objXmlTextWriter.WriteEndElement();
+                    
                 }
                 else
-                {
-                    objXmlTextWriter.WriteStartElement("syntaxhighlight");
-                    objXmlTextWriter.WriteString("0");
-                    objXmlTextWriter.WriteEndElement();
+                {                    
+                    objXmlTextWriter.WriteString("0");                    
                 }
+                objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("defaultemail");
                 objXmlTextWriter.WriteString(defaultemail);

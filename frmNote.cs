@@ -105,7 +105,7 @@ namespace SimplePlainNote
             this.Width = 240;
             this.Height = 240;
             InitializeComponent();
-
+            rtbNote.Font = skin.getFontNoteContent();
             lblTitle.Text = title;
             rtbNote.Text = note;
 

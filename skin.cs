@@ -119,6 +119,15 @@ namespace SimplePlainNote
             }
         }
 
+        public Font getFontNoteContent()
+        {
+            xmlHandler getSettings = new xmlHandler(true);
+            string fontname = getSettings.getXMLnode("fontcontent");
+		
+	  //todo
+            return null;
+        }
+
         #endregion
     }
 }
