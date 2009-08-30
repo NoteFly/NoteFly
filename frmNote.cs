@@ -82,7 +82,7 @@ namespace SimplePlainNote
 
                 SetSizeNote(notewidth, noteheight);
                 SetPosNote();
-                paintColorNote();
+                PaintColorNote();                
             }
             else
             {
@@ -104,12 +104,11 @@ namespace SimplePlainNote
             //set width and height to default
             this.Width = 240;
             this.Height = 240;
-            InitializeComponent();
-            rtbNote.Font = skin.getFontNoteContent();
+            InitializeComponent();            
             lblTitle.Text = title;
             rtbNote.Text = note;
 
-            paintColorNote();
+            PaintColorNote();
             SetPosNote();
         }
 
@@ -170,7 +169,7 @@ namespace SimplePlainNote
             int Desc;
             return InternetGetConnectedState(out Desc, 0);
         }        
-
+                
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
@@ -181,7 +180,6 @@ namespace SimplePlainNote
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
-
         #endif
 
         private void askpassok(object obj, EventArgs e)
@@ -213,7 +211,7 @@ namespace SimplePlainNote
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
-            //FIX: this is a dirty copy            
+            //FIX: this is a dirty copy,  base is currently form, so it needs to be moved.
             Notes getfuncnotes = new Notes();
             if (this.NoteID > getfuncnotes.numnotes)
             {
@@ -256,11 +254,10 @@ namespace SimplePlainNote
             }
         }
 
-        private void frmDeleteNote_Click(object sender, EventArgs e)
+        private void frmCloseNote_Click(object sender, EventArgs e)
         {
             transparency = false;
-            this.notevisible = false;                      
-            //this.Close();            
+            this.notevisible = false;
             this.Hide();
         }
 
@@ -346,7 +343,7 @@ namespace SimplePlainNote
         /// <summary>
         /// Get the color of the note and paint it.
         /// </summary>
-        private void paintColorNote()
+        public void PaintColorNote()
         {                
             skin = new Skin(notecolor);
             Color normalcolor = skin.getObjColor(false);            
@@ -355,6 +352,7 @@ namespace SimplePlainNote
             this.pnlHead.BackColor = normalcolor;
             this.pnlNote.BackColor = normalcolor;
             this.rtbNote.BackColor = normalcolor;
+            rtbNote.Font = skin.getFontNoteContent();
         }
 
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
@@ -462,7 +460,7 @@ namespace SimplePlainNote
                 i++;
             }
 
-            paintColorNote();
+            PaintColorNote();
         }
 
         private void SetPosNote()
@@ -488,7 +486,7 @@ namespace SimplePlainNote
 
             if (String.IsNullOrEmpty(twitteruser))
             {
-                MessageBox.Show("Error: Twitter settings not set.");
+                MessageBox.Show("Twitter settings not set.");
                 return;
             }
             else if (String.IsNullOrEmpty(twpass))
@@ -502,7 +500,7 @@ namespace SimplePlainNote
                 tbpass.Location = new Point(10, 10);
                 tbpass.Width = 160;
                 tbpass.Name = "tbPassword";
-                tbpass.PasswordChar = Convert.ToChar("X"); ;
+                tbpass.PasswordChar = Convert.ToChar("*"); ;
                 Button btnOk = new Button();
                 btnOk.Location = new Point(180, 10);
                 btnOk.Text = "Ok";
@@ -514,7 +512,8 @@ namespace SimplePlainNote
             }
             else
             {
-                if (xmlSettings.UpdateAsXML(twitteruser, twitterpass, note) != null)
+                Twitter twitter = new Twitter();
+                if (twitter.UpdateAsXML(twitteruser, twitterpass, note) != null)
                 {
                     MessageBox.Show("Your note is Tweeted.");
                 }

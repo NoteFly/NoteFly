@@ -90,6 +90,15 @@ namespace SimplePlainNote
             }
         }
 
+        public void UpdateAllFonts()
+        {            
+            
+            foreach (frmNote curfrmnote in noteslst)
+            {
+                curfrmnote.PaintColorNote();
+            }
+        }
+
 		// Private Methods (3) 
 
         private bool getTransparency()
@@ -103,7 +112,8 @@ namespace SimplePlainNote
             {
                 return false;
             }
-        } 
+        }
+
 
         /// <summary>
         /// Create a note GUI.

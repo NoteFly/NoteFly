@@ -23,8 +23,7 @@
     <GenerateManifests>false</GenerateManifests>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <ExcludedPermissions>System.Data.OleDb.OleDbPermission, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089; System.Data.SqlClient.SqlClientPermission, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ExcludedPermissions>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\trayicon.ico</ApplicationIcon>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -146,6 +145,7 @@
     <Compile Include="exceptionhandling\UnhandledExDlgForm.designer.cs">
       <DependentUpon>UnhandledExDlgForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Twitter.cs" />
     <Compile Include="XmlHandler.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,7 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\logo.png" />
-    <Content Include="Resources\trayicon.ico" />
+    <EmbeddedResource Include="Resources\trayicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,184 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Net;
+using System.Web;
+using System.Windows.Forms;
+using System.IO;
+using System.Xml;
+
+namespace SimplePlainNote
+{
+    class Twitter
+    {
+		#region Fields (5) 
+
+        private string source = null;
+        //used twitter ip to prevented dns lookup, against dns attacks.
+        protected const string TwitterBaseUrlFormat = "http://168.143.162.68/{0}/{1}.{2}";
+        private string twitterClient = "spn";
+        private string twitterClientUrl = "http://code.google.com/p/simpleplainnote/";
+        private string twitterClientVersion = "0.5.0";
+
+		#endregion Fields 
+
+		#region Constructors (1) 
+
+        /// <summary>
+        /// Creating a new instance of Twitter class.
+        /// </summary>
+        public Twitter()
+        {
+
+        }
+
+		#endregion Constructors 
+
+		#region Properties (3) 
+
+        /// <summary>
+        /// Source is an additional parameters that will be used to fill the "From" field.
+        /// Currently you must talk to the developers of Twitter at:
+        /// http://groups.google.com/group/twitter-development-talk/
+        /// Otherwise, Twitter will simply ignore this parameter and set the "From" field to "web".
+        /// </summary>
+        public string Source
+        {
+            get { return source; }
+            set { source = value; }
+        }
+
+        /// <summary>
+        /// Sets the URL of the Twitter client.
+        /// Must be in the XML format documented in the "Request Headers" section at:
+        /// http://twitter.pbwiki.com/API-Docs.
+        /// According to the Twitter Fan Wiki at http://twitter.pbwiki.com/API-Docs and supported by
+        /// the Twitter developers, this will be used in the future (hopefully near) to set more information
+        /// in Twitter about the client posting the information as well as future usage in a clients directory.		
+        /// </summary>
+        public string TwitterClientUrl
+        {
+            get { return twitterClientUrl; }
+        }
+
+        /// <summary>
+        /// Sets the version of the Twitter client.
+        /// According to the Twitter Fan Wiki at http://twitter.pbwiki.com/API-Docs and supported by
+        /// the Twitter developers, this will be used in the future (hopefully near) to set more information
+        /// in Twitter about the client posting the information as well as future usage in a clients directory.
+        /// </summary>
+        public string TwitterClientVersion
+        {
+            get { return twitterClientVersion; }
+            set { twitterClientVersion = value; }
+        }
+
+		#endregion Properties 
+
+		#region Methods (3) 
+
+		// Public Methods (2) 
+
+        public string Update(string userName, string password, string status)
+        {
+            //Important: "statuses", "update" and "xml" must be lower case.
+            string url = string.Format(TwitterBaseUrlFormat, "statuses", "update", "xml");
+            string data = string.Format("status={0}", HttpUtility.UrlEncode(status));
+
+            return ExecutePostCommand(url, userName, password, data);
+        }
+
+        /// <summary>
+        /// Update the twitter status with XML
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="text"></param>
+        /// <returns>xml document</returns>
+        public XmlDocument UpdateAsXML(string userName, string password, string text)
+        {
+            string output = Update(userName, password, text);
+            if (!string.IsNullOrEmpty(output))
+            {
+                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument.LoadXml(output);
+
+                return xmlDocument;
+            }
+
+            return null;
+        }
+		// Protected Methods (1) 
+
+        /// <summary>
+        /// Executes an HTTP POST command and retrives the information.		
+        /// This function will automatically include a "source" parameter if the "Source" property is set.
+        /// </summary>
+        /// <param name="url">The URL to perform the POST operation</param>
+        /// <param name="userName">The username to use with the request</param>
+        /// <param name="password">The password to use with the request</param>
+        /// <param name="data">The data to post</param> 
+        /// <returns>The response of the request, or null if we got 404 or nothing.</returns>
+        protected string ExecutePostCommand(string url, string userName, string password, string data)
+        {
+            System.Net.ServicePointManager.Expect100Continue = false;
+            WebRequest request = WebRequest.Create(url);
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
+            {
+                request.Credentials = new NetworkCredential(userName, password);
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.Method = "POST";
+                if (!string.IsNullOrEmpty(twitterClient))
+                {
+                    request.Headers.Add("X-Twitter-Client", twitterClient);
+                }
+                if (!string.IsNullOrEmpty(TwitterClientVersion))
+                {
+                    request.Headers.Add("X-Twitter-Version", TwitterClientVersion);
+                }
+                if (!string.IsNullOrEmpty(TwitterClientUrl))
+                {
+                    request.Headers.Add("X-Twitter-URL", TwitterClientUrl);
+                }
+                if (!string.IsNullOrEmpty(Source))
+                {
+                    data += "&source=" + HttpUtility.UrlEncode(Source);
+                }
+                byte[] bytes = Encoding.UTF8.GetBytes(data);
+
+                request.ContentLength = bytes.Length;
+                using (Stream requestStream = request.GetRequestStream())
+                {
+                    requestStream.Write(bytes, 0, bytes.Length);
+
+                    try
+                    {
+                        using (WebResponse response = request.GetResponse())
+                        {
+                            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                            {
+                                return reader.ReadToEnd();
+                            }
+                        }
+                    }
+                    catch (TimeoutException)
+                    {
+                        MessageBox.Show("Error: connection timeout. ");
+                    }
+                    catch (NotSupportedException notsupexc)
+                    {
+                        MessageBox.Show("Error: cannot send POST message:\r\n " + notsupexc.Message);
+                    }
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Twitter username or/and password not filled in.");
+            }
+            return null;
+        }
+
+		#endregion Methods 
+    }
+}

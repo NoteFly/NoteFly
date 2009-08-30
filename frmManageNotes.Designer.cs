@@ -44,7 +44,7 @@
             this.btnClose.BackColor = System.Drawing.Color.DarkOrange;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(289, 2);
+            this.btnClose.Location = new System.Drawing.Point(305, 2);
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(32, 23);
@@ -83,7 +83,7 @@
             this.pnlNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlNotes.Location = new System.Drawing.Point(0, 28);
             this.pnlNotes.Name = "pnlNotes";
-            this.pnlNotes.Size = new System.Drawing.Size(324, 140);
+            this.pnlNotes.Size = new System.Drawing.Size(340, 153);
             this.pnlNotes.TabIndex = 7;
             // 
             // pnlHead
@@ -97,7 +97,7 @@
             this.pnlHead.Controls.Add(this.btnClose);
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
-            this.pnlHead.Size = new System.Drawing.Size(324, 28);
+            this.pnlHead.Size = new System.Drawing.Size(340, 28);
             this.pnlHead.TabIndex = 8;
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             // 
@@ -107,7 +107,7 @@
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::SimplePlainNote.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(308, 171);
+            this.pbResizeGrip.Location = new System.Drawing.Point(324, 184);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
@@ -121,17 +121,19 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Orange;
-            this.ClientSize = new System.Drawing.Size(324, 187);
+            this.ClientSize = new System.Drawing.Size(340, 200);
             this.Controls.Add(this.pbResizeGrip);
             this.Controls.Add(this.pnlHead);
             this.Controls.Add(this.pnlNotes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(280, 60);
             this.Name = "frmManageNotes";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Manage notes";
+            this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.Transparent;
-            this.Deactivate += new System.EventHandler(this.frmManageNotes_Deactivate);            
+            this.Deactivate += new System.EventHandler(this.frmManageNotes_Deactivate);
             this.Activated += new System.EventHandler(this.frmManageNotes_Activated);
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();

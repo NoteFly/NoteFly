@@ -122,9 +122,17 @@ namespace SimplePlainNote
         public Font getFontNoteContent()
         {
             xmlHandler getSettings = new xmlHandler(true);
-            string fontname = getSettings.getXMLnode("fontcontent");
-		
-	  //todo
+            string fontname = getSettings.getXMLnode("fontcontent");            
+            
+            foreach (FontFamily curfont in FontFamily.Families)
+            {
+                if (curfont.Name.ToString() == fontname)
+                {
+                    Font font = new Font(curfont, 10);
+                    return font;
+                }
+            }	       
+            //error
             return null;
         }
 

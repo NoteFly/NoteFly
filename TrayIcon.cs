@@ -21,6 +21,7 @@ using System.Drawing;
 using System.Security.Permissions;
 using System.Threading;
 using System.Windows.Forms;
+using System.Reflection;
 
 [assembly: CLSCompliant(true)]
 namespace SimplePlainNote
@@ -120,11 +121,14 @@ namespace SimplePlainNote
             MenuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
             MenuSettings = new System.Windows.Forms.ToolStripMenuItem();
             MenuExit = new System.Windows.Forms.ToolStripMenuItem();
-
+            
             icon = new NotifyIcon(components);
-            icon.ContextMenuStrip = MenuTrayIcon; //new ContextMenuStrip(components);
-            //icon.Icon = ((System.Drawing.Icon)(resources.GetObject("Trayicon.Icon")));            
-            icon.Icon = new Icon(@"C:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote\Resources\trayicon.ico");
+            icon.ContextMenuStrip = MenuTrayIcon;            
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            //assembly.GetManifestResourceStream("SimplePlainNote.Resources.trayicon.ico");
+            icon.Icon = new Icon(assembly.GetManifestResourceStream("SimplePlainNote.Resources.trayicon.ico"));
+            
+
             icon.Click += new EventHandler(Icon_Click);
             icon.Visible = true;            
 
@@ -176,7 +180,7 @@ namespace SimplePlainNote
         #region menu events
         static void Icon_Click(object sender, EventArgs e)
         {
-            //todo: make it configurable.
+            //todo: make it configurable, advance option.
         }
 
         static void MenuNewNote_Click(object sender, EventArgs e)
@@ -194,7 +198,7 @@ namespace SimplePlainNote
 
         static void MenuSettings_Click(object sender, EventArgs e)
         {
-            frmSettings settings = new frmSettings(transparency);
+            frmSettings settings = new frmSettings(notes, transparency);
             settings.Show();
         }
 

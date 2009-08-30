@@ -13,6 +13,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
+#define win32
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,18 +33,19 @@ namespace SimplePlainNote
     public partial class frmSettings : Form
     {
 		#region Fields (2)
+        private Notes notes;
         private RegistryKey key;
         private xmlHandler xmlsettings;
 		#endregion Fields 
 
 		#region Constructors (1) 
 
-        public frmSettings(bool transparecy)
+        public frmSettings(Notes notes, bool transparecy)
         {
             InitializeComponent();
 
             xmlsettings = new xmlHandler(true);
-
+            
             //read setting and display them correctly.            
             cbxTransparecy.Checked = transparecy;
             numProcTransparency.Value = getTransparecylevel();
@@ -52,7 +55,7 @@ namespace SimplePlainNote
             tbTwitterPass.Text = getTwitterpassword();
             tbDefaultEmail.Text = getDefaultEmail();
             cbxStartOnBootWindows.Checked = getStatusStartlogin();
-
+            this.notes = notes;
             DrawCbxFonts();
         }
 
@@ -66,42 +69,41 @@ namespace SimplePlainNote
         }
 
         private void btnOK_Click(object sender, EventArgs e)
-        {            
-            if (!Directory.Exists(tbNotesSavePath.Text))
+        {        
+            if (String.IsNullOrEmpty(cbxFontNoteContent.Text)==true)
             {
-                MessageBox.Show("Settings advance: Invalide folder note save folder.");
-                tabAdvance.Select();
-                return;
+                MessageBox.Show("Select a font.");
+                tabAppearance.Select();                
             }
-            else if (!tbDefaultEmail.Text.Contains("@"))
-            {
-                MessageBox.Show("Settings advance: default email adres not valide.");
-                tabAdvance.Select();
-                return;
-            }            
             else if (tbTwitterUser.Text.Length > 16)
             {
                 MessageBox.Show("Settings Twitter: username is too long.");
                 tabTwitter.Select();
-                return;
             }
             else if ((tbTwitterPass.Text.Length < 6) && (cbxRememberTwPass.Checked == true))
             {
                 MessageBox.Show("Settings Twitter: password is too short.");
-                tabTwitter.Select();
-                return;
+                tabTwitter.Select();                
             }
+            else if (!Directory.Exists(tbNotesSavePath.Text))
+            {
+                MessageBox.Show("Settings advance: Invalid folder note save folder.");
+                tabAdvance.Select();                
+            }
+            else if (!tbDefaultEmail.Text.Contains("@"))
+            {
+                MessageBox.Show("Settings advance: default emailadres not valid.");
+                tabAdvance.Select();                
+            }            
             //everything looks okay            
             else
-            {                
-                {
-                    xmlsettings.WriteSettings(cbxTransparecy.Checked,numProcTransparency.Value,cbxDefaultColor.SelectedIndex,tbNotesSavePath.Text,tbDefaultEmail.Text,cbxSyntaxHighlight.Checked,tbTwitterUser.Text,tbTwitterPass.Text);
-               
+            {                                    
+                    xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxFontNoteContent.Text, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
+
                     #if win32                
                     key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                     if (key != null)
                     {
-
                         if (cbxStartOnBootWindows.Checked == true)
                         {
                             try
@@ -112,7 +114,6 @@ namespace SimplePlainNote
                             {
                                 MessageBox.Show("Error: no registery access." + exc.Message);
                             }
-
                         }
                         else if (cbxStartOnBootWindows.Checked == false)
                         {
@@ -127,20 +128,28 @@ namespace SimplePlainNote
                         MessageBox.Show("Error: Run subkey in registery does not exist. Or it cannot be found.");
                     }                    
                     #endif
-                }
-                
-                this.Close();
-            }
-            
+
+                    notes.UpdateAllFonts();
+                            
+                    this.Close();
+                }                                        
         }
 
         private void DrawCbxFonts()
         {            
-            foreach ( FontFamily oneFontFamily in FontFamily.Families )
+            foreach (FontFamily oneFontFamily in FontFamily.Families)
             {
-                CbxFontNoteContent.Items.Add(oneFontFamily.Name);
+                cbxFontNoteContent.Items.Add(oneFontFamily.Name);
             }
-            string curfont = xmlsettings.getXMLnode("fontcontent");           
+            string curfont = xmlsettings.getXMLnode("fontcontent");
+            if (String.IsNullOrEmpty(curfont))
+            {
+                MessageBox.Show("Error: Current font not found.");                
+            }
+            else
+            {
+                cbxFontNoteContent.Text = curfont;
+            }            
         }
 
         private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)
@@ -185,7 +194,6 @@ namespace SimplePlainNote
 
         private Decimal getTransparecylevel()
         {
-
             Decimal transparecylvl = Convert.ToDecimal(xmlsettings.getXMLnode("transparecylevel"));
             if ((transparecylvl < 1) || (transparecylvl > 100)) { MessageBox.Show("transparecylevel out of range."); return 95; }
             else return transparecylvl;

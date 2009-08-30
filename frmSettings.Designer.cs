@@ -31,7 +31,7 @@
             this.cbxTransparecy = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbDefaultNewNoteColor = new System.Windows.Forms.Label();
             this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
             this.numProcTransparency = new System.Windows.Forms.NumericUpDown();
             this.lbTextProc = new System.Windows.Forms.Label();
@@ -45,9 +45,9 @@
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.cbxStartOnBootWindows = new System.Windows.Forms.CheckBox();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
-            this.CbxFontNoteContent = new System.Windows.Forms.ComboBox();
+            this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
@@ -100,14 +100,14 @@
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // label1
+            // lbDefaultNewNoteColor
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 54);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Defaul color new notes:";
+            this.lbDefaultNewNoteColor.AutoSize = true;
+            this.lbDefaultNewNoteColor.Location = new System.Drawing.Point(13, 54);
+            this.lbDefaultNewNoteColor.Name = "lbDefaultNewNoteColor";
+            this.lbDefaultNewNoteColor.Size = new System.Drawing.Size(119, 13);
+            this.lbDefaultNewNoteColor.TabIndex = 4;
+            this.lbDefaultNewNoteColor.Text = "Defaul color new notes:";
             // 
             // cbxDefaultColor
             // 
@@ -222,9 +222,9 @@
             this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbxSyntaxHighlight.Location = new System.Drawing.Point(10, 90);
             this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
-            this.cbxSyntaxHighlight.Size = new System.Drawing.Size(156, 17);
+            this.cbxSyntaxHighlight.Size = new System.Drawing.Size(261, 17);
             this.cbxSyntaxHighlight.TabIndex = 13;
-            this.cbxSyntaxHighlight.Text = "Highlight HTML code notes";
+            this.cbxSyntaxHighlight.Text = "Highlight HTML code notes (Not yet implemented)";
             this.cbxSyntaxHighlight.UseVisualStyleBackColor = true;
             // 
             // tabControlSettings
@@ -243,9 +243,9 @@
             // 
             this.tabAppearance.Controls.Add(this.cbxStartOnBootWindows);
             this.tabAppearance.Controls.Add(this.lbTextNoteFont);
-            this.tabAppearance.Controls.Add(this.CbxFontNoteContent);
+            this.tabAppearance.Controls.Add(this.cbxFontNoteContent);
             this.tabAppearance.Controls.Add(this.cbxTransparecy);
-            this.tabAppearance.Controls.Add(this.label1);
+            this.tabAppearance.Controls.Add(this.lbDefaultNewNoteColor);
             this.tabAppearance.Controls.Add(this.cbxDefaultColor);
             this.tabAppearance.Controls.Add(this.numProcTransparency);
             this.tabAppearance.Controls.Add(this.lbTextProc);
@@ -276,18 +276,19 @@
             this.lbTextNoteFont.TabIndex = 9;
             this.lbTextNoteFont.Text = "Font note:";
             // 
-            // CbxFontNoteContent
+            // cbxFontNoteContent
             // 
-            this.CbxFontNoteContent.FormattingEnabled = true;
-            this.CbxFontNoteContent.Location = new System.Drawing.Point(94, 94);
-            this.CbxFontNoteContent.Name = "CbxFontNoteContent";
-            this.CbxFontNoteContent.Size = new System.Drawing.Size(182, 21);
-            this.CbxFontNoteContent.TabIndex = 8;
-            this.CbxFontNoteContent.Text = "?";
+            this.cbxFontNoteContent.DropDownHeight = 140;
+            this.cbxFontNoteContent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxFontNoteContent.IntegralHeight = false;
+            this.cbxFontNoteContent.Location = new System.Drawing.Point(94, 94);
+            this.cbxFontNoteContent.Name = "cbxFontNoteContent";
+            this.cbxFontNoteContent.Size = new System.Drawing.Size(182, 21);
+            this.cbxFontNoteContent.TabIndex = 8;
             // 
             // tabTwitter
             // 
-            this.tabTwitter.Controls.Add(this.label2);
+            this.tabTwitter.Controls.Add(this.lbWarningTwitterPassword);
             this.tabTwitter.Controls.Add(this.lbUsername);
             this.tabTwitter.Controls.Add(this.tbTwitterUser);
             this.tabTwitter.Controls.Add(this.tbTwitterPass);
@@ -301,14 +302,14 @@
             this.tabTwitter.Text = "Twitter";
             this.tabTwitter.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // lbWarningTwitterPassword
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 133);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(318, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Never ever enter your twitter password here on a public computer.";
+            this.lbWarningTwitterPassword.AutoSize = true;
+            this.lbWarningTwitterPassword.Location = new System.Drawing.Point(9, 133);
+            this.lbWarningTwitterPassword.Name = "lbWarningTwitterPassword";
+            this.lbWarningTwitterPassword.Size = new System.Drawing.Size(318, 13);
+            this.lbWarningTwitterPassword.TabIndex = 13;
+            this.lbWarningTwitterPassword.Text = "Never ever enter your twitter password here on a public computer.";
             // 
             // tabAdvance
             // 
@@ -403,7 +404,7 @@
         private System.Windows.Forms.CheckBox cbxTransparecy;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbDefaultNewNoteColor;
         private System.Windows.Forms.ComboBox cbxDefaultColor;
         private System.Windows.Forms.NumericUpDown numProcTransparency;
         private System.Windows.Forms.Label lbTextProc;
@@ -423,8 +424,8 @@
         private System.Windows.Forms.TextBox tbDefaultEmail;
         private System.Windows.Forms.Label lbTextDefaultEmail;
         private System.Windows.Forms.Label lbTextNoteFont;
-        private System.Windows.Forms.ComboBox CbxFontNoteContent;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbxFontNoteContent;
+        private System.Windows.Forms.Label lbWarningTwitterPassword;
         private System.Windows.Forms.CheckBox cbxStartOnBootWindows;
         private System.Diagnostics.EventLog eventLog1;
     }

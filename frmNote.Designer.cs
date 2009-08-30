@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlHead = new System.Windows.Forms.Panel();
-            this.btnDeleteNote = new System.Windows.Forms.Button();
+            this.btnCloseNote = new System.Windows.Forms.Button();
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.pnlNote = new System.Windows.Forms.Panel();
             this.contextMenuStripNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -64,15 +64,15 @@
             this.lblTitle.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.Location = new System.Drawing.Point(3, 4);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(61, 19);
+            this.lblTitle.Size = new System.Drawing.Size(18, 19);
             this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "[Title]";
+            this.lblTitle.Text = "?";
             // 
             // pnlHead
             // 
             this.pnlHead.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHead.Controls.Add(this.btnDeleteNote);
+            this.pnlHead.Controls.Add(this.btnCloseNote);
             this.pnlHead.Controls.Add(this.lblTitle);
             this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
@@ -81,20 +81,20 @@
             this.pnlHead.TabIndex = 1;
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             // 
-            // btnDeleteNote
+            // btnCloseNote
             // 
-            this.btnDeleteNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.btnCloseNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteNote.Font = new System.Drawing.Font("Kartika", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteNote.Location = new System.Drawing.Point(200, 4);
-            this.btnDeleteNote.Margin = new System.Windows.Forms.Padding(0);
-            this.btnDeleteNote.Name = "btnDeleteNote";
-            this.btnDeleteNote.Size = new System.Drawing.Size(31, 23);
-            this.btnDeleteNote.TabIndex = 1;
-            this.btnDeleteNote.Text = "X";
-            this.btnDeleteNote.UseVisualStyleBackColor = true;
-            this.btnDeleteNote.Click += new System.EventHandler(this.frmDeleteNote_Click);
+            this.btnCloseNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCloseNote.Font = new System.Drawing.Font("Kartika", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCloseNote.Location = new System.Drawing.Point(200, 4);
+            this.btnCloseNote.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCloseNote.Name = "btnCloseNote";
+            this.btnCloseNote.Size = new System.Drawing.Size(31, 23);
+            this.btnCloseNote.TabIndex = 1;
+            this.btnCloseNote.Text = "X";
+            this.btnCloseNote.UseVisualStyleBackColor = true;
+            this.btnCloseNote.Click += new System.EventHandler(this.frmCloseNote_Click);
             // 
             // rtbNote
             // 
@@ -105,8 +105,9 @@
             this.rtbNote.BackColor = System.Drawing.Color.Gold;
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNote.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.rtbNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbNote.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNote.ForeColor = System.Drawing.Color.Black;
+            this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
             this.rtbNote.Location = new System.Drawing.Point(7, 6);
             this.rtbNote.Margin = new System.Windows.Forms.Padding(10);
             this.rtbNote.MaxLength = 1000000;
@@ -116,7 +117,7 @@
             this.rtbNote.Size = new System.Drawing.Size(221, 184);
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
-            this.rtbNote.Text = "[note]";
+            this.rtbNote.Text = "?";
             // 
             // pnlNote
             // 
@@ -300,7 +301,7 @@
             // 
             this.SavePos.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
             // 
-            // FrmNote
+            // frmNote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -318,7 +319,7 @@
             this.MaximumSize = new System.Drawing.Size(1023, 799);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(80, 60);
-            this.Name = "FrmNote";
+            this.Name = "frmNote";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -340,7 +341,7 @@
 
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel pnlHead;
-        private System.Windows.Forms.Button btnDeleteNote;
+        private System.Windows.Forms.Button btnCloseNote;
         private System.Windows.Forms.RichTextBox rtbNote;
         private System.Windows.Forms.Panel pnlNote;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripNoteOptions;

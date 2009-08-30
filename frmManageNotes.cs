@@ -100,18 +100,34 @@ namespace SimplePlainNote
                     {
                         try
                         {                            
-                            File.Delete(getNotesSavePath() + Convert.ToString(i) + ".xml");                            
+                            File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(i) + ".xml"));
+
+                            if ((i < notes.numnotes) && (i>0))
+                            {
+                                for (int n = i; n < notes.numnotes; n++)
+                                {
+                                    string orgfile = Path.Combine(getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
+                                    string newfile = Path.Combine(getNotesSavePath(), Convert.ToString(n) + ".xml");
+                                    if (!File.Exists(newfile))
+                                    {
+                                        File.Move(orgfile, newfile);
+                                    }
+                                }
+                            }
                         }
                         catch (FileNotFoundException)
                         {
-                            MessageBox.Show("Note is already gone.");
+                            MessageBox.Show("Note is already gone. (Or other error occur.)");
                         }
                         catch (UnauthorizedAccessException)
                         {
                             MessageBox.Show("Access denied. Delete note "+i+".xml manualy with premission.");
                         }
+                        notes.GetNotes[i - 1].Close();
                         notes.GetNotes.RemoveAt(i - 1);
-                        DrawNotesOverview();                                                                    
+                        
+                        DrawNotesOverview();
+                        return;
                     }
                 }
             }

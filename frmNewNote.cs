@@ -129,9 +129,9 @@ namespace SimplePlainNote
         {
             tbTitle.Text = "";
             rtbNote.Text = "";
-            
-            Color normalcolor = skin.getObjColor(false);
+            rtbNote.Font = skin.getFontNoteContent();
 
+            Color normalcolor = skin.getObjColor(false);            
             pnlNoteEdit.BackColor = normalcolor;
             rtbNote.BackColor = normalcolor;
             pnlHeadNewNote.BackColor = normalcolor;
