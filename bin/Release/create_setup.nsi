@@ -11,9 +11,8 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 ;
-
 ; The name of the installer
-Name "Simple Plain Note v0.9.0 alpha"
+Name "Simple Plain Note 0.9.0 alpha"
 
 ; The file to write
 OutFile "SimplePlainNote_v0.9.0.exe"
@@ -28,6 +27,24 @@ InstallDirRegKey HKLM "Software\simpleplainnote" "Install_Dir"
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
 
+; Usage:
+;Call IsDotNETInstalled
+;Pop $0
+;StrCmp $0 1 found.NETFramework no.NETFramework
+
+ Function IsDotNETInstalled
+   Push $0
+   Push $1
+
+   StrCpy $0 1
+   System::Call "mscoree::GetCORVersion(w, i ${NSIS_MAX_STRLEN}, *i) i .r1"
+   StrCmp $1 0 +2
+     StrCpy $0 0
+
+   Pop $1
+   Exch $0
+ FunctionEnd
+ 
 ;--------------------------------
 
 ; Pages
@@ -92,6 +109,10 @@ Section "Uninstall"
 
   ; Remove directories used
   RMDir "$SMPROGRAMS\simpleplainnote"
-  RMDir "$INSTDIR"
+  ;warning deletes all notes.. 
+  ;TODO: need to find out how to ASK for doing this.
+  SetShellVarContext current
+  RMDir /r "$APPDATA\.simpleplainnote" 
+  RMDir "$INSTDIR"  
 
 SectionEnd
