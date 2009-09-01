@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnClose = new System.Windows.Forms.Button();
             this.lbTextNotes = new System.Windows.Forms.Label();
             this.lbTextNoteOptions = new System.Windows.Forms.Label();
             this.pnlNotes = new System.Windows.Forms.Panel();
             this.pnlHead = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
+            this.timerUpdateNotesList = new System.Windows.Forms.Timer(this.components);
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             this.SuspendLayout();
@@ -116,6 +118,12 @@
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
+            // timerUpdateNotesList
+            // 
+            this.timerUpdateNotesList.Enabled = true;
+            this.timerUpdateNotesList.Interval = 5000;
+            this.timerUpdateNotesList.Tick += new System.EventHandler(this.timerUpdateNotesList_Tick);
+            // 
             // frmManageNotes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -151,5 +159,6 @@
         private System.Windows.Forms.Panel pnlNotes;
         private System.Windows.Forms.Panel pnlHead;
         private System.Windows.Forms.PictureBox pbResizeGrip;
+        private System.Windows.Forms.Timer timerUpdateNotesList;
     }
 }

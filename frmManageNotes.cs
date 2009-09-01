@@ -40,6 +40,8 @@ namespace SimplePlainNote
         private Skin skin;
         //is transparent
         private bool transparency = false;
+
+        private bool redrawbusy = false;
         #if win32
         //for moving
         public const int HT_CAPTION = 0x2;
@@ -214,11 +216,9 @@ namespace SimplePlainNote
 
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
-            if (transparency)
-            {                
-                //todo
-                this.Opacity = 1.0;
-                this.Refresh();
+            if ((transparency) && (this.skin != null))
+            {                                
+                this.Opacity = 1.0;                
             }
         }
 
@@ -268,8 +268,18 @@ namespace SimplePlainNote
                 #endif
                 pnlHead.BackColor = Color.Orange;
             }
+        }		
+
+        private void timerUpdateNotesList_Tick(object sender, EventArgs e)
+        {
+            if (!redrawbusy)
+            {
+                redrawbusy = true;
+                DrawNotesOverview();
+                redrawbusy = false;
+            }
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

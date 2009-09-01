@@ -98,7 +98,8 @@ namespace SimplePlainNote
                     xmlHandler getSettings = new xmlHandler(true);
                     int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");
                     //new note
-                    notes.CreateNewNote(tbTitle.Text, rtbNote.Text, notecolordefault);                 
+                    notes.CreateNewNote(tbTitle.Text, rtbNote.Text, notecolordefault); 
+                    
                 }
                 this.Close();
             }

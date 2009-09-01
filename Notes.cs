@@ -207,7 +207,7 @@ namespace SimplePlainNote
                 return null;
             }
             return notefile;
-        }
+        }        
 
 		#endregion Methods 
     }
