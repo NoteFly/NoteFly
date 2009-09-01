@@ -127,9 +127,9 @@ namespace SimplePlainNote
                 int newid = noteslst.Count + 1;
 
                 frmNote newnote;
-                if ((visible == true) && (ontop))
-                {
-                    newnote = new frmNote(this,newid, true, true,title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
+                if ((visible == true) && (ontop==true))
+                { 
+                    newnote = new frmNote(this,newid, true, true, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
                     newnote.Show();
                 }
                 else if ((visible==true) && (ontop==false))
@@ -139,7 +139,7 @@ namespace SimplePlainNote
                 }
                 else
                 {
-                    newnote = new frmNote(this,newid, false, false, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
+                    newnote = new frmNote(this, newid, false, false, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
                 }
                 return newnote;
 

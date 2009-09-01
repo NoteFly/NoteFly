@@ -21,7 +21,6 @@ namespace SimplePlainNote
             buttonNotSend.Focus();
             labelExceptionDate.Text = String.Format(labelExceptionDate.Text, DateTime.Now);
             linkLabelData.Left = labelLinkTitle.Right;
-        }
-
+        }        
     }
 }

@@ -275,16 +275,15 @@ namespace SimplePlainNote
 
         private void frmNote_Activated(object sender, EventArgs e)
         {
-            if (transparency)
+            if ((transparency) && (skin!=null))
             {
-                this.Opacity = 1.0;
-                this.Refresh();
+                this.Opacity = 1.0;                
             }
         }
 
         private void frmNote_Deactivate(object sender, EventArgs e)
         {
-            if (transparency)
+            if ((transparency) && (skin!=null))
             {
                 this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
@@ -349,6 +348,10 @@ namespace SimplePlainNote
             else
             {
                 this.TopMost = false;
+            }
+            if (!notelock && !SavePos.IsBusy)
+            {
+                SavePos.RunWorkerAsync();
             }
         }
 
@@ -432,15 +435,8 @@ namespace SimplePlainNote
                 string numcolor = Convert.ToString(this.notecolor);
                 if ((this.locX >= 0) && (this.locY >= 0))
                 {
-                    xmlHandler updateposnote = new xmlHandler(false, this.id + ".xml");
-                    if (OnTopToolStripMenuItem.Checked==true)
-                    {
-                        updateposnote.WriteNote(notevisible,true,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
-                    }
-                    else
-                    {
-                        updateposnote.WriteNote(notevisible,true,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
-                    }
+                    xmlHandler updateposnote = new xmlHandler(false, this.id + ".xml");                    
+                    updateposnote.WriteNote(notevisible,this.TopMost,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
                 }
                 else
                 {

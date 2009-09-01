@@ -113,8 +113,7 @@ namespace SimplePlainNote
         {
             if (transparency)
             {
-                this.Opacity = 1.0;
-                this.Refresh();
+                this.Opacity = 1.0;                
             }
         }
 

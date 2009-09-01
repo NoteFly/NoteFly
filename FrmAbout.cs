@@ -12,8 +12,9 @@ namespace SimplePlainNote
         public FrmAbout()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0} {0}", AssemblyTitle);            
-            this.lblVersion.Text = String.Format("Version {0} {0}", AssemblyVersion);      
+            this.Text = "About";
+            this.lblProductName.Text = AssemblyProduct;
+            this.lblVersion.Text = String.Format("Version {0}", AssemblyVersion);  
         }
 
         #region Assembly Attribute Accessors
@@ -67,38 +68,17 @@ namespace SimplePlainNote
                 }
                 return ((AssemblyProductAttribute)attributes[0]).Product;
             }
-        }
-
-        public string AssemblyCopyright
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
-            }
-        }
-
-        public string AssemblyCompany
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCompanyAttribute)attributes[0]).Company;
-            }
-        }
+        }        
         #endregion
 
         private void okButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://code.google.com/p/simpleplainnote/");
         }
     }
 }

@@ -32,7 +32,6 @@ namespace SimplePlainNote
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelDevider = new System.Windows.Forms.Panel();
             this.labelExceptionDate = new System.Windows.Forms.Label();
-            this.labelCaption = new System.Windows.Forms.Label();
             this.labelDescription = new System.Windows.Forms.Label();
             this.buttonNotSend = new System.Windows.Forms.Button();
             this.buttonSend = new System.Windows.Forms.Button();
@@ -79,43 +78,34 @@ namespace SimplePlainNote
             this.labelExceptionDate.TabIndex = 2;
             this.labelExceptionDate.Text = "This error occured on {0}";
             // 
-            // labelCaption
-            // 
-            this.labelCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCaption.Location = new System.Drawing.Point(13, 91);
-            this.labelCaption.Name = "labelCaption";
-            this.labelCaption.Size = new System.Drawing.Size(387, 23);
-            this.labelCaption.TabIndex = 3;
-            this.labelCaption.Text = "Please tell Us about this problem";
-            // 
             // labelDescription
             // 
             this.labelDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.labelDescription.Location = new System.Drawing.Point(12, 114);
+            this.labelDescription.Location = new System.Drawing.Point(12, 100);
             this.labelDescription.Name = "labelDescription";
             this.labelDescription.Size = new System.Drawing.Size(387, 29);
             this.labelDescription.TabIndex = 4;
-            this.labelDescription.Text = "We have created an error report that you can send us. We will treat this report a" +
-                "s confidential and anonymous.";
+            this.labelDescription.Text = "An error report is created. Copy this error report to clipboard to be able to pos" +
+                "t this issue on our bugtracker.";
             // 
             // buttonNotSend
             // 
             this.buttonNotSend.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonNotSend.Location = new System.Drawing.Point(325, 198);
+            this.buttonNotSend.Location = new System.Drawing.Point(271, 198);
             this.buttonNotSend.Name = "buttonNotSend";
-            this.buttonNotSend.Size = new System.Drawing.Size(75, 23);
+            this.buttonNotSend.Size = new System.Drawing.Size(129, 23);
             this.buttonNotSend.TabIndex = 6;
-            this.buttonNotSend.Text = "&Don\'t send";
+            this.buttonNotSend.Text = "&Close programme";
             this.buttonNotSend.UseVisualStyleBackColor = true;
             // 
             // buttonSend
             // 
             this.buttonSend.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.buttonSend.Location = new System.Drawing.Point(212, 198);
+            this.buttonSend.Location = new System.Drawing.Point(106, 198);
             this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(107, 23);
+            this.buttonSend.Size = new System.Drawing.Size(159, 23);
             this.buttonSend.TabIndex = 7;
-            this.buttonSend.Text = "&Send Error Report";
+            this.buttonSend.Text = "&Copy error report to clipboard";
             this.buttonSend.UseVisualStyleBackColor = true;
             // 
             // labelLinkTitle
@@ -137,7 +127,7 @@ namespace SimplePlainNote
             this.linkLabelData.Size = new System.Drawing.Size(56, 13);
             this.linkLabelData.TabIndex = 8;
             this.linkLabelData.TabStop = true;
-            this.linkLabelData.Text = "click here.";            
+            this.linkLabelData.Text = "click here.";
             // 
             // checkBoxRestart
             // 
@@ -165,7 +155,6 @@ namespace SimplePlainNote
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.buttonNotSend);
             this.Controls.Add(this.labelDescription);
-            this.Controls.Add(this.labelCaption);
             this.Controls.Add(this.labelExceptionDate);
             this.Controls.Add(this.panelDevider);
             this.Controls.Add(this.panelTop);
@@ -189,7 +178,6 @@ namespace SimplePlainNote
         private System.Windows.Forms.Panel panelTop;
         private System.Windows.Forms.Panel panelDevider;
         private System.Windows.Forms.Label labelExceptionDate;
-        private System.Windows.Forms.Label labelCaption;
         private System.Windows.Forms.Label labelDescription;
         private System.Windows.Forms.Button buttonNotSend;
         internal System.Windows.Forms.Label labelTitle;

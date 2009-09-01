@@ -89,10 +89,8 @@ namespace SimplePlainNote
                 // User clicked on "Send Error Report" button:
                 if (ar.SendExceptionDetails)
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format("Implement your communication part here " +
-                        "(do HTTP POST or send e-mail, for example).\nExample:\nError Message: {0}\r" +
-                        "Stack Trace:\n{1}",
-                        ar.UnhandledException.Message, ar.UnhandledException.StackTrace));
+                    System.Windows.Forms.MessageBox.Show("paste error on new issue on http://code.google.com/p/simpleplainnote/issues/ Thanks for your effort.");
+                    Clipboard.SetText(ar.UnhandledException.StackTrace);
                 }
                 // User wants to restart the App:
                 if (ar.RestartApp)
