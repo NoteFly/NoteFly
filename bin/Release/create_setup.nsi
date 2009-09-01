@@ -12,10 +12,10 @@
 ; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 ;
 ; The name of the installer
-Name "Simple Plain Note 0.9.0 alpha"
+Name "Simple Plain Note 0.9.1 alpha"
 
 ; The file to write
-OutFile "SimplePlainNote_v0.9.0.exe"
+OutFile "SimplePlainNote_v0.9.1.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\simpleplainnote
@@ -27,28 +27,50 @@ InstallDirRegKey HKLM "Software\simpleplainnote" "Install_Dir"
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
 
-; Usage:
-;Call IsDotNETInstalled
-;Pop $0
-;StrCmp $0 1 found.NETFramework no.NETFramework
+!include WordFunc.nsh
+!insertmacro VersionCompare
+ 
+!include LogicLib.nsh
 
- Function IsDotNETInstalled
-   Push $0
-   Push $1
 
-   StrCpy $0 1
-   System::Call "mscoree::GetCORVersion(w, i ${NSIS_MAX_STRLEN}, *i) i .r1"
-   StrCmp $1 0 +2
-     StrCpy $0 0
+Function .onInit
+  Call GetDotNETVersion
+  Pop $0
+  ${If} $0 == "not found"
+    MessageBox MB_OK|MB_ICONSTOP ".NET runtime library is not installed."
+    Abort
+  ${EndIf}
+ 
+  StrCpy $0 $0 "" 1 # skip "v"
+ 
+  ${VersionCompare} $0 "2.0" $1
+  ${If} $1 == 2
+    MessageBox MB_OK|MB_ICONSTOP ".NET runtime library v2.0 or newer is required. You have $0."
+    Abort
+  ${EndIf}
+FunctionEnd
 
-   Pop $1
-   Exch $0
- FunctionEnd
+Function GetDotNETVersion
+  Push $0
+  Push $1
+ 
+  System::Call "mscoree::GetCORVersion(w .r0, i ${NSIS_MAX_STRLEN}, *i) i .r1 ?u"
+  StrCmp $1 "error" 0 +2
+    StrCpy $0 "not found"
+ 
+  Pop $1
+  Exch $0
+FunctionEnd
+
  
 ;--------------------------------
 
 ; Pages
 
+ PageEx license
+   LicenseText "License agreement"
+   LicenseData license.txt
+ PageExEnd
 Page components
 Page directory
 Page instfiles
@@ -61,7 +83,7 @@ UninstPage instfiles
 ; The stuff to install
 Section "main executable (required)"
 
-  SectionIn RO
+  SectionIn RO     
   
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
@@ -70,11 +92,13 @@ Section "main executable (required)"
   File "simpleplainnote.exe"
   
   ; Write the installation path into the registry
-  WriteRegStr HKLM SOFTWARE\NSIS_Example2 "Install_Dir" "$INSTDIR"
+  WriteRegStr HKLM SOFTWARE\simpleplainnote "Install_Dir" "$INSTDIR"
   
   ; Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayName" "simpleplainnote"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayName" "simpleplainnote"  
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "URLInfoAbout" "http://code.google.com/p/simpleplainnote/"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayVersion" "0.9.1"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
@@ -86,7 +110,7 @@ Section "Start Menu Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\simpleplainnote"
   CreateShortCut "$SMPROGRAMS\simpleplainnote\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\simpleplainnote\simpleplainnote.lnk" "$INSTDIR\simpleplainnote.exe" "" "$INSTDIR\simpleplainnote.exe" 0
+  CreateShortCut "$SMPROGRAMS\simpleplainnote\start simpleplainnote.lnk" "$INSTDIR\simpleplainnote.exe" "" "$INSTDIR\simpleplainnote.exe" 0
   
 SectionEnd
 

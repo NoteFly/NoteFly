@@ -35,10 +35,11 @@ namespace SimplePlainNote
 
         static System.ComponentModel.IContainer components = null;
         static NotifyIcon icon;
-        static ToolStripMenuItem MenuExit;
-        static ToolStripMenuItem MenuManageNotes;
         static ToolStripMenuItem MenuNewNote;
+        static ToolStripMenuItem MenuManageNotes;        
         static ToolStripMenuItem MenuSettings;
+        static ToolStripMenuItem MenuAbout;
+        static ToolStripMenuItem MenuExit;
         static ContextMenuStrip MenuTrayIcon;
         static Notes notes;
         static bool transparency = true;
@@ -120,6 +121,7 @@ namespace SimplePlainNote
             MenuNewNote = new System.Windows.Forms.ToolStripMenuItem();
             MenuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
             MenuSettings = new System.Windows.Forms.ToolStripMenuItem();
+            MenuAbout = new System.Windows.Forms.ToolStripMenuItem();
             MenuExit = new System.Windows.Forms.ToolStripMenuItem();
             
             icon = new NotifyIcon(components);
@@ -137,6 +139,7 @@ namespace SimplePlainNote
             MenuNewNote,
             MenuManageNotes,
             MenuSettings,
+            MenuAbout,
             MenuExit} );            
             icon.ContextMenuStrip.ShowImageMargin = false;
             icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
@@ -158,7 +161,13 @@ namespace SimplePlainNote
             MenuSettings.Name = "MenuSettings";
             MenuSettings.Size = new System.Drawing.Size(144, 22);
             MenuSettings.Text = "Settings";
-            MenuSettings.Click += new System.EventHandler(MenuSettings_Click);            
+            MenuSettings.Click += new System.EventHandler(MenuSettings_Click);
+            // MenuAbout
+            MenuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            MenuAbout.Name = "MenuAbout";
+            MenuAbout.Size = new System.Drawing.Size(144, 22);
+            MenuAbout.Text = "About";
+            MenuAbout.Click += new System.EventHandler(MenuAbout_Click);
             // MenuExit
             MenuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             MenuExit.Name = "MenuExit";
@@ -200,6 +209,12 @@ namespace SimplePlainNote
         {
             frmSettings settings = new frmSettings(notes, transparency);
             settings.Show();
+        }
+
+        static void MenuAbout_Click(object sender, EventArgs e)
+        {
+            FrmAbout about = new FrmAbout();
+            about.Show();
         }
 
         static void MenuExit_Click(object sender, EventArgs e)
