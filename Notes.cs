@@ -20,8 +20,7 @@ namespace SimplePlainNote
         {
             noteslst = new List<frmNote>();
             transparecy = getTransparency();
-            LoadNotes();
-            
+            LoadNotes();            
         }
 
 		#endregion Constructors 
@@ -121,21 +120,26 @@ namespace SimplePlainNote
         /// <param name="title"></param>
         /// <param name="content"></param>
         /// <param name="notecolor"></param>        
-        private frmNote CreateNote(bool visible, string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
+        private frmNote CreateNote(bool visible, bool ontop, string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
             {                
                 int newid = noteslst.Count + 1;
 
                 frmNote newnote;
-                if (visible == true)
+                if ((visible == true) && (ontop))
                 {
-                    newnote = new frmNote(true, newid, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
+                    newnote = new frmNote(this,newid, true, true,title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
+                    newnote.Show();
+                }
+                else if ((visible==true) && (ontop==false))
+                {
+                    newnote = new frmNote(this, newid, true, false, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
                     newnote.Show();
                 }
                 else
                 {
-                    newnote = new frmNote(false, newid, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
+                    newnote = new frmNote(this,newid, false, false, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
                 }
                 return newnote;
 
@@ -164,6 +168,7 @@ namespace SimplePlainNote
                 xmlHandler parserNote = new xmlHandler(false, id + ".xml");
 
                 bool visible = parserNote.getXMLnodeAsBool("visible");
+                bool ontop = parserNote.getXMLnodeAsBool("ontop");
                 string title = parserNote.getXMLnode("title");
                 string content = parserNote.getXMLnode("content");
                 int notecolor = parserNote.getXMLnodeAsInt("color");
@@ -172,7 +177,7 @@ namespace SimplePlainNote
                 int notewidth = parserNote.getXMLnodeAsInt("width");
                 int noteheight = parserNote.getXMLnodeAsInt("heigth");
 
-                noteslst.Add(CreateNote(visible, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
+                noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
 
                 id++;                
                 if (id > 1000) { MessageBox.Show("Error: Too many notes"); return; }
@@ -196,7 +201,7 @@ namespace SimplePlainNote
         {            
             string notefile = id + ".xml";
             xmlHandler xmlnote = new xmlHandler(false, notefile);            
-            if (xmlnote.WriteNote(true, numcolor, title, text, 10, 10, 240, 240) == false)
+            if (xmlnote.WriteNote(true, false, numcolor, title, text, 10, 10, 240, 240) == false)
             {
                 MessageBox.Show("Error writing note.");
                 return null;

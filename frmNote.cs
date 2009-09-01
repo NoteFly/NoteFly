@@ -28,10 +28,12 @@ using System.Windows.Forms;
 
 namespace SimplePlainNote
 {
-    public partial class frmNote : Form
+    public partial class frmNote : Form //Notes
+        
     {
 		#region Fields (12)  
-        private Skin skin;
+        public Notes notes;
+        private Skin skin;        
         private int id;
         private int locX;
         private int locY;
@@ -49,8 +51,9 @@ namespace SimplePlainNote
 
 		#region Constructors (2) 
 
-        public frmNote(bool visible, int id, string title, string note, bool transparency, int notecolor, int locX, int locY, int notewidth, int noteheight)
+        public frmNote(Notes notes, int id, bool visible, bool ontop, string title, string note, bool transparency, int notecolor, int locX, int locY, int notewidth, int noteheight)
         {
+            this.notes = notes;
             this.skin = new Skin(notecolor);
             if (visible == true)
             {
@@ -86,7 +89,18 @@ namespace SimplePlainNote
             }
             else
             {
-                this.Close();
+                this.Hide();
+            }
+
+            if (ontop == true)
+            {
+                OnTopToolStripMenuItem.Checked = true;
+                this.TopMost = true;
+            }
+            else
+            {
+                OnTopToolStripMenuItem.Checked = false;
+                this.TopMost = false;
             }
         }
 
@@ -115,12 +129,12 @@ namespace SimplePlainNote
 		#endregion Constructors 
 
 		#region Properties (5) 
-
+       
         public int NoteID
         {
             get { return id; }
-            //set { this.id = value; }
-        }
+            set { this.id = value; }
+        }        
 
         public int NoteColor
         {
@@ -211,15 +225,13 @@ namespace SimplePlainNote
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
-            //FIX: this is a dirty copy,  base is currently form, so it needs to be moved.
-            Notes getfuncnotes = new Notes();
-            if (this.NoteID > getfuncnotes.numnotes)
+                     
+            if (this.NoteID >  notes.numnotes)
             {
                 MessageBox.Show("Error: cannot find note.");
             }
-            getfuncnotes.EditNewNote(this.NoteID);                            
-            //dispose this memory waste ASAP
-            Dispose();                        
+            notes.EditNewNote(this.NoteID);            
+             
         }
 
         private void emailNoteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -421,7 +433,14 @@ namespace SimplePlainNote
                 if ((this.locX >= 0) && (this.locY >= 0))
                 {
                     xmlHandler updateposnote = new xmlHandler(false, this.id + ".xml");
-                    updateposnote.WriteNote(notevisible,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    if (OnTopToolStripMenuItem.Checked==true)
+                    {
+                        updateposnote.WriteNote(notevisible,true,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                    }
+                    else
+                    {
+                        updateposnote.WriteNote(notevisible,true,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                    }
                 }
                 else
                 {
@@ -451,7 +470,7 @@ namespace SimplePlainNote
                     curitem.Checked = true;
                     notecolor = i;
                     xmlHandler savenotecolor = new xmlHandler(false, this.id + ".xml");
-                    savenotecolor.WriteNote(notevisible, Convert.ToString(notecolor), this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    savenotecolor.WriteNote(notevisible, OnTopToolStripMenuItem.Checked, Convert.ToString(notecolor), this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
                 }
                 else
                 {

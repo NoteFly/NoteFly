@@ -101,16 +101,25 @@ namespace SimplePlainNote
                         try
                         {                            
                             File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(i) + ".xml"));
-
+                            int noteid = i - 1;
+                            notes.GetNotes[noteid].Close();
                             if ((i < notes.numnotes) && (i>0))
-                            {
-                                for (int n = i; n < notes.numnotes; n++)
+                            {                                
+                                notes.GetNotes.RemoveAt(noteid);
+
+                                for (int n = i; n <= notes.numnotes; n++)
                                 {
                                     string orgfile = Path.Combine(getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
                                     string newfile = Path.Combine(getNotesSavePath(), Convert.ToString(n) + ".xml");
                                     if (!File.Exists(newfile))
                                     {
                                         File.Move(orgfile, newfile);
+                                    }
+                                    //update list
+                                    noteid = n - 1;
+                                    if (noteid > 0)
+                                    {
+                                        notes.GetNotes[noteid].NoteID = noteid - 1;
                                     }
                                 }
                             }
@@ -123,8 +132,7 @@ namespace SimplePlainNote
                         {
                             MessageBox.Show("Access denied. Delete note "+i+".xml manualy with premission.");
                         }
-                        notes.GetNotes[i - 1].Close();
-                        notes.GetNotes.RemoveAt(i - 1);
+                        
                         
                         DrawNotesOverview();
                         return;
@@ -157,9 +165,19 @@ namespace SimplePlainNote
             for (int curnote = 0; curnote < notes.numnotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
-                lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle;
+                int titlelength = notes.GetNotes[curnote].NoteTitle.Length;
+                if (titlelength >= 20)
+                {
+                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 20) + " (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                }
+                else
+                {
+                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle + " (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                }
+
                 lblNoteTitle.Name = "lbNote"+Convert.ToString(curnote+1);
-                lblNoteTitle.Location = new Point(10, ypos);
+                lblNoteTitle.Location = new Point(2, ypos);
+                lblNoteTitle.Size = new Size(199, 16);
                 pnlNotes.Controls.Add(lblNoteTitle);
                                 
                 CheckBox cbxNoteVisible = new CheckBox();
@@ -174,7 +192,7 @@ namespace SimplePlainNote
                 {
                     cbxNoteVisible.CheckState = CheckState.Unchecked;
                 }
-                cbxNoteVisible.Location = new Point(175, ypos);
+                cbxNoteVisible.Location = new Point(201, ypos);
                 cbxNoteVisible.AutoEllipsis = true;
                 cbxNoteVisible.AutoSize = true;
                 cbxNoteVisible.Click += new EventHandler(cbxNoteVisible_Click);
@@ -184,7 +202,7 @@ namespace SimplePlainNote
                 btnNoteDelete.Text = "delete";
                 btnNoteDelete.Name = "btnNoteDel" + Convert.ToString(curnote+1);
                 btnNoteDelete.BackColor = Color.Orange;
-                btnNoteDelete.Location = new Point(240, ypos);
+                btnNoteDelete.Location = new Point(260, ypos);
                 btnNoteDelete.Width = 60;
                 btnNoteDelete.Click += new EventHandler(btnNoteDelete_Click);
 
@@ -211,8 +229,8 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void frmManageNotes_Deactivate(object sender, EventArgs e)
         {
-            if (transparency)
-            {
+            if ((transparency) && (this.skin != null))
+            {                                 
                 this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
             }            

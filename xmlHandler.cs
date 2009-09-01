@@ -199,7 +199,7 @@ namespace SimplePlainNote
             }
         }
 
-        public bool WriteNote(bool visible, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
+        public bool WriteNote(bool visible, bool ontop, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
             try
             {
@@ -229,7 +229,16 @@ namespace SimplePlainNote
                 else
                 {
                     objXmlTextWriter.WriteElementString("visible", "0");
-                }                
+                }
+
+                if (ontop== true)
+                {
+                    objXmlTextWriter.WriteElementString("ontop", "1");
+                }
+                else
+                {
+                    objXmlTextWriter.WriteElementString("ontop", "0");
+                }
 
                 objXmlTextWriter.WriteStartElement("color");
                 objXmlTextWriter.WriteString(numcolor);
