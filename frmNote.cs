@@ -293,7 +293,7 @@ namespace SimplePlainNote
         private void frmNote_Shown(object sender, EventArgs e)
         {
             xmlHandler xmlSettings = new xmlHandler(true);
-
+            /*
             if (xmlSettings.getXMLnodeAsInt("syntaxhighlight") == 1)
             {
                 TextHighlight texthighlight = new TextHighlight();
@@ -307,7 +307,7 @@ namespace SimplePlainNote
                     rtbNote.SelectionColor = System.Drawing.Color.Black;
                 }
             }
-
+            */
             if (!String.IsNullOrEmpty(xmlSettings.getXMLnode("twitteruser")))
             {
                 TwitterToolStripMenuItem.Enabled = true;
@@ -315,7 +315,7 @@ namespace SimplePlainNote
             else
             {
                 TwitterToolStripMenuItem.Enabled = false;
-            }
+            }            
 
         }      
 

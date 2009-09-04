@@ -96,53 +96,48 @@ namespace SimplePlainNote
             Button btn = (Button)sender;
             if (notes.numnotes != 0)
             {
-                for (int i = 1; i <= notes.numnotes; i++)
+                int numbernotes = notes.numnotes;
+                for (int i = 1; i <= numbernotes; i++)
                 {
                     if (btn.Name == "btnNoteDel"+i)
                     {
+                        int noteid = i - 1;
+                        notes.GetNotes[noteid].Close();
+
                         try
                         {                            
                             File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(i) + ".xml"));
-                            int noteid = i - 1;
-                            notes.GetNotes[noteid].Close();
-                            if ((i < notes.numnotes) && (i>0))
-                            {                                
-                                notes.GetNotes.RemoveAt(noteid);
-
-                                for (int n = i; n <= notes.numnotes; n++)
+                            
+                            //reorder filenames
+                            for (int n = i; n < numbernotes; n++)
+                            {
+                                string orgfile = Path.Combine(getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
+                                string newfile = Path.Combine(getNotesSavePath(), Convert.ToString(n) + ".xml");
+                                if (!File.Exists(newfile))
                                 {
-                                    string orgfile = Path.Combine(getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
-                                    string newfile = Path.Combine(getNotesSavePath(), Convert.ToString(n) + ".xml");
-                                    if (!File.Exists(newfile))
-                                    {
-                                        File.Move(orgfile, newfile);
-                                    }
-                                    //update list
-                                    noteid = n - 1;
-                                    if (noteid > 0)
-                                    {
-                                        notes.GetNotes[noteid].NoteID = noteid - 1;
-                                    }
+                                    File.Move(orgfile, newfile);
                                 }
+                                if (n < numbernotes)
+                                {
+                                    notes.GetNotes[n].NoteID = n;
+                                } 
                             }
+                            notes.GetNotes.RemoveAt(noteid);
                         }
                         catch (FileNotFoundException)
                         {
-                            MessageBox.Show("Note is already gone. (Or other error occur.)");
+                            MessageBox.Show("Note is already gone.");
                         }
                         catch (UnauthorizedAccessException)
                         {
                             MessageBox.Show("Access denied. Delete note "+i+".xml manualy with premission.");
-                        }
-                        
+                        }                        
                         
                         DrawNotesOverview();
-                        return;
+                        Thread.Sleep(100);
                     }
                 }
-            }
-                          
-            
+            }                                     
         }
 
         /// <summary>
@@ -156,7 +151,14 @@ namespace SimplePlainNote
             int n = Convert.ToInt32(cbx.Name) - 1;
             if ((n <= notes.numnotes) && (n>=0))
             {
-                notes.GetNotes[n].Visible = !notes.GetNotes[n].Visible;
+                if (notes.GetNotes[n].Visible == true)
+                {                    
+                    notes.GetNotes[n].Hide();                    
+                }
+                else
+                {                    
+                    notes.GetNotes[n].Show();
+                }
             }
         }
         

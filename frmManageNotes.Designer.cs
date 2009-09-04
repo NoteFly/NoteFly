@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManageNotes));
             this.btnClose = new System.Windows.Forms.Button();
             this.lbTextNotes = new System.Windows.Forms.Label();
             this.lbTextNoteOptions = new System.Windows.Forms.Label();
@@ -134,6 +135,7 @@
             this.Controls.Add(this.pnlHead);
             this.Controls.Add(this.pnlNotes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(280, 60);
             this.Name = "frmManageNotes";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;

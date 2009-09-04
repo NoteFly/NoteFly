@@ -8,10 +8,11 @@ namespace SimplePlainNote
 {
     public class Notes
     {
-		#region Fields (1) 
+		#region Fields (2) 
 
         private List<frmNote> noteslst;
         private bool transparecy = false;
+
 		#endregion Fields 
 
 		#region Constructors (1) 
@@ -45,11 +46,11 @@ namespace SimplePlainNote
 
 		#endregion Properties 
 
-		#region Methods (5) 
+		#region Methods (8) 
 
-		// Public Methods (2) 
+		// Public Methods (4) 
 
-        public void CreateNewNote(string title, string content, int notecolor)
+        public void DrawNewNote(string title, string content, int notecolor)
         {
             try
             {
@@ -61,6 +62,7 @@ namespace SimplePlainNote
                 if (String.IsNullOrEmpty(notefilenm)) { return; }
                 frmNote newnote = new frmNote(newid, title, content, transparecy, notecolor);
                 noteslst.Add(newnote);
+                newnote.StartPosition = FormStartPosition.Manual;                
                 newnote.Show();
             }
             catch (IndexOutOfRangeException indexexc)
@@ -69,24 +71,27 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Edit a note.
+        /// </summary>
+        /// <param name="noteid"></param>
         public void EditNewNote(int noteid)
         {
-            string title = noteslst[noteid - 1].NoteTitle;
-            string content = noteslst[noteid - 1].NoteContent;
-            int color = noteslst[noteid - 1].NoteColor;
-            bool transparenty = getTransparency();            
-            frmNewNote createnewnote = new frmNewNote(this, transparenty, color,noteid, title, content);
-            createnewnote.Show();
-        }
-
-        public void UpdateNote(int noteid, string title, string content, bool visible)
-        {
-            noteslst[noteid - 1].NoteTitle = title;
-            noteslst[noteid - 1].NoteContent = content;
-            noteslst[noteid - 1].Visible = visible;
-            if (visible) { 
-                noteslst[noteid - 1].Show(); 
+            int noteslistpos = noteid - 1;
+            if ((noteslistpos >= 0) && (noteslistpos <= numnotes))
+            {
+                string title = noteslst[noteid - 1].NoteTitle;
+                string content = noteslst[noteid - 1].NoteContent;
+                int color = noteslst[noteid - 1].NoteColor;
+                bool transparenty = getTransparency();
+                frmNewNote createnewnote = new frmNewNote(this, transparenty, color, noteid, title, content);
+                createnewnote.Show();
             }
+            else
+            {
+                MessageBox.Show("Fout: note not found in memory.");
+            }
+
         }
 
         public void UpdateAllFonts()
@@ -98,21 +103,16 @@ namespace SimplePlainNote
             }
         }
 
-		// Private Methods (3) 
-
-        private bool getTransparency()
+        public void UpdateNote(int noteid, string title, string content, bool visible)
         {
-            xmlHandler xmlSettings = new xmlHandler(true);
-            if (xmlSettings.getXMLnode("transparecy") == "1")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
+            noteslst[noteid - 1].NoteTitle = title;
+            noteslst[noteid - 1].NoteContent = content;
+            noteslst[noteid - 1].Visible = visible;
+            if (visible) { 
+                noteslst[noteid - 1].Show(); 
             }
         }
-
+		// Private Methods (4) 
 
         /// <summary>
         /// Create a note GUI.
@@ -151,6 +151,19 @@ namespace SimplePlainNote
             }
         }
 
+        private bool getTransparency()
+        {
+            xmlHandler xmlSettings = new xmlHandler(true);
+            if (xmlSettings.getXMLnode("transparecy") == "1")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void LoadNotes()
         {
             #if DEBUG
@@ -160,7 +173,6 @@ namespace SimplePlainNote
             xmlHandler getSettings = new xmlHandler(true);
             string notesavepath = getSettings.getXMLnode("notesavepath");
             
-
             int id = 1;
             
             while (File.Exists( Path.Combine(notesavepath, id+".xml") ) == true)
@@ -207,7 +219,7 @@ namespace SimplePlainNote
                 return null;
             }
             return notefile;
-        }        
+        }
 
 		#endregion Methods 
     }

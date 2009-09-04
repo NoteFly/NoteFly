@@ -30,8 +30,15 @@ namespace SimplePlainNote
     {
         public bool SendExceptionDetails;
         public Exception UnhandledException;
+        //flag for app restarting
         public bool RestartApp;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SendDetailsArg"></param>
+        /// <param name="ExceptionArg"></param>
+        /// <param name="RestartAppArg"></param>
         public SendExceptionClickEventArgs(bool SendDetailsArg, Exception ExceptionArg, bool RestartAppArg)
         {
             this.SendExceptionDetails = SendDetailsArg;     // TRUE if user clicked on "Send Error Report" button and FALSE if on "Don't Send"
@@ -66,6 +73,7 @@ namespace SimplePlainNote
         public event SendExceptionClickHandler OnSendExceptionClick;
 
         /// <summary>
+        /// Initializes a new instance of the UnhandledExceptionDlg class
         /// Occurs when user clicks on "click here" link lable to get data that will be send
         /// </summary>
         public event SendExceptionClickHandler OnShowErrorReport;

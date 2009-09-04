@@ -98,7 +98,7 @@ namespace SimplePlainNote
                     xmlHandler getSettings = new xmlHandler(true);
                     int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");
                     //new note
-                    notes.CreateNewNote(tbTitle.Text, rtbNote.Text, notecolordefault); 
+                    notes.DrawNewNote(tbTitle.Text, rtbNote.Text, notecolordefault); 
                     
                 }
                 this.Close();
@@ -199,6 +199,7 @@ namespace SimplePlainNote
         public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
         #endif
+        
         #if win32
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();

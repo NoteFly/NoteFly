@@ -41,21 +41,15 @@ namespace SimplePlainNote
 
 		#endregion Fields 
 
-		#region Properties (1) 
-
-        public Regex GetHTML
+        #region constructor (1)
+        public TextHighlight()
         {
-            get
-            {
-                return this.SyntaxHTML;
-            }
         }
+        #endregion
 
-		#endregion Properties 
+        #region Methods (1)
 
-		#region Methods (1) 
-
-		// Public Methods (1) 
+        // Public Methods (1) 
 
         public RichTextBox highlightHTML(RichTextBox rtb)
         {
