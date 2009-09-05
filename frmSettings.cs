@@ -128,8 +128,8 @@ namespace SimplePlainNote
                         MessageBox.Show("Error: Run subkey in registery does not exist. Or it cannot be found.");
                     }                    
                     #endif
-
-                    notes.UpdateAllFonts();
+                    notes.SetSettings();
+                    notes.UpdateAllFonts();                    
                             
                     this.Close();
                 }                                        

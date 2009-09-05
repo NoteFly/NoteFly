@@ -28,8 +28,7 @@ using System.Windows.Forms;
 
 namespace SimplePlainNote
 {
-    public partial class frmNote : Form //Notes
-        
+    public partial class frmNote : Form
     {
 		#region Fields (12)  
         public Notes notes;
@@ -51,7 +50,7 @@ namespace SimplePlainNote
 
 		#region Constructors (2) 
 
-        public frmNote(Notes notes, int id, bool visible, bool ontop, string title, string note, bool transparency, int notecolor, int locX, int locY, int notewidth, int noteheight)
+        public frmNote(Notes notes, int id, bool visible, bool ontop, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight, bool transparency, bool highlightsyntax, bool twitterenabled)
         {
             this.notes = notes;
             this.skin = new Skin(notecolor);
@@ -85,7 +84,9 @@ namespace SimplePlainNote
 
                 SetSizeNote(notewidth, noteheight);
                 SetPosNote();
-                PaintColorNote();                
+                PaintColorNote();
+                CheckTwitter(twitterenabled);
+                CheckSyntax(highlightsyntax);
             }
             else
             {
@@ -104,7 +105,7 @@ namespace SimplePlainNote
             }
         }
 
-        public frmNote(int id, string title, string note, bool transparency, int notecolor)
+        public frmNote(int id, string title, string note, int notecolor, bool transparency, bool highlightsyntax, bool twitterenabled)
         {
             this.skin = new Skin(notecolor);
             this.id = id;
@@ -124,6 +125,8 @@ namespace SimplePlainNote
 
             PaintColorNote();
             SetPosNote();
+            CheckTwitter(twitterenabled);
+            CheckSyntax(highlightsyntax);
         }
 
 		#endregion Constructors 
@@ -195,6 +198,38 @@ namespace SimplePlainNote
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
         #endif
+
+
+        private void CheckTwitter(bool twitterenabled)
+        {
+            if (twitterenabled)
+            {
+                TwitterToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                TwitterToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        private void CheckSyntax(bool syntaxhighlight)
+        {
+            if (syntaxhighlight==true)
+            {
+                TextHighlight texthighlight = new TextHighlight();
+
+                int selPos = rtbNote.SelectionStart;
+                ////TODO: find out of new thread is need for this..
+                foreach (Match keyWordMatch in texthighlight.getRegexHTML.Matches(rtbNote.Text))
+                {
+                    rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
+                    rtbNote.SelectionColor = System.Drawing.Color.Blue;
+                    rtbNote.SelectionStart = selPos;
+                    rtbNote.SelectionColor = System.Drawing.Color.Black;
+                }
+            }
+        }
+
 
         private void askpassok(object obj, EventArgs e)
         {
@@ -288,36 +323,7 @@ namespace SimplePlainNote
                 this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
             }
-        }
-
-        private void frmNote_Shown(object sender, EventArgs e)
-        {
-            xmlHandler xmlSettings = new xmlHandler(true);
-            /*
-            if (xmlSettings.getXMLnodeAsInt("syntaxhighlight") == 1)
-            {
-                TextHighlight texthighlight = new TextHighlight();
-                
-                int selPos = rtbNote.SelectionStart;
-                foreach (Match keyWordMatch in texthighlight.GetHTML.Matches(rtbNote.Text))
-                {
-                    rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
-                    rtbNote.SelectionColor = System.Drawing.Color.Blue;
-                    rtbNote.SelectionStart = selPos;
-                    rtbNote.SelectionColor = System.Drawing.Color.Black;
-                }
-            }
-            */
-            if (!String.IsNullOrEmpty(xmlSettings.getXMLnode("twitteruser")))
-            {
-                TwitterToolStripMenuItem.Enabled = true;
-            }
-            else
-            {
-                TwitterToolStripMenuItem.Enabled = false;
-            }            
-
-        }      
+        }    
 
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {

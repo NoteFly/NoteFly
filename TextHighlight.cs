@@ -47,10 +47,27 @@ namespace SimplePlainNote
         }
         #endregion
 
+        public Regex getRegexHTML
+        {
+            get
+            {
+                return this.SyntaxHTML;
+            }
+        }
+
+        public Regex getRegexC
+        {
+            get
+            {
+                return this.SyntaxC;
+            }
+        }
+
         #region Methods (1)
 
         // Public Methods (1) 
 
+        /*
         public RichTextBox highlightHTML(RichTextBox rtb)
         {
             int selPos = rtb.SelectionStart;
@@ -63,6 +80,7 @@ namespace SimplePlainNote
             }
             return rtb;
         }
+         */
 
 		#endregion Methods    
     }

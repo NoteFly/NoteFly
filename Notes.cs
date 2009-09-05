@@ -12,6 +12,10 @@ namespace SimplePlainNote
 
         private List<frmNote> noteslst;
         private bool transparecy = false;
+        private bool syntaxhighlight = false;
+        private bool twitterenabled = false;
+        private int defaultcolor = 1;
+        private string notesavepath;
 
 		#endregion Fields 
 
@@ -19,8 +23,8 @@ namespace SimplePlainNote
 
         public Notes()
         {
-            noteslst = new List<frmNote>();
-            transparecy = getTransparency();
+            noteslst = new List<frmNote>();            
+            SetSettings();
             LoadNotes();            
         }
 
@@ -50,17 +54,20 @@ namespace SimplePlainNote
 
 		// Public Methods (4) 
 
+        /// <summary>
+        /// Draws a new note and saves the xml note file.(call to SaveNewNote)
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="content"></param>
+        /// <param name="notecolor"></param>
         public void DrawNewNote(string title, string content, int notecolor)
         {
             try
-            {
-                xmlHandler getXmlSettings = new xmlHandler(true);
-                string defaultcolor = getXmlSettings.getXMLnode("defaultcolor");
-
+            {           
                 int newid = noteslst.Count + 1;
-                string notefilenm = SaveNewNote(newid, title, content, defaultcolor);
+                string notefilenm = SaveNewNote(newid, title, content, defaultcolor.ToString());
                 if (String.IsNullOrEmpty(notefilenm)) { return; }
-                frmNote newnote = new frmNote(newid, title, content, transparecy, notecolor);
+                frmNote newnote = new frmNote(newid, title, content, notecolor, this.transparecy, this.syntaxhighlight, this.twitterenabled);
                 noteslst.Add(newnote);
                 newnote.StartPosition = FormStartPosition.Manual;                
                 newnote.Show();
@@ -82,9 +89,8 @@ namespace SimplePlainNote
             {
                 string title = noteslst[noteid - 1].NoteTitle;
                 string content = noteslst[noteid - 1].NoteContent;
-                int color = noteslst[noteid - 1].NoteColor;
-                bool transparenty = getTransparency();
-                frmNewNote createnewnote = new frmNewNote(this, transparenty, color, noteid, title, content);
+                int color = noteslst[noteid - 1].NoteColor;                
+                frmNewNote createnewnote = new frmNewNote(this, this.transparecy, color, noteid, title, content);
                 createnewnote.Show();
             }
             else
@@ -112,7 +118,27 @@ namespace SimplePlainNote
                 noteslst[noteid - 1].Show(); 
             }
         }
-		// Private Methods (4) 
+
+        /// <summary>
+        /// check settings and set variables
+        /// </summary>
+        public void SetSettings()
+        {
+            xmlHandler getSettings = new xmlHandler(true);
+            this.defaultcolor = getSettings.getXMLnodeAsInt("defaultcolor");
+            if (getSettings.getXMLnodeAsBool("transparecy") == true)
+            {
+                this.transparecy = true;
+            }
+            if (getSettings.getXMLnodeAsBool("syntaxhighlight") == true)
+            {
+                this.syntaxhighlight = true;
+            }
+            this.notesavepath = getSettings.getXMLnode("notesavepath");
+            this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
+        }
+
+		// Private Methods (4)
 
         /// <summary>
         /// Create a note GUI.
@@ -125,24 +151,12 @@ namespace SimplePlainNote
             try
             {                
                 int newid = noteslst.Count + 1;
-
-                frmNote newnote;
-                if ((visible == true) && (ontop==true))
-                { 
-                    newnote = new frmNote(this,newid, true, true, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
-                    newnote.Show();
-                }
-                else if ((visible==true) && (ontop==false))
+                frmNote newnote = new frmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewith, noteheight, this.transparecy, this.syntaxhighlight, this.twitterenabled);
+                if (visible)
                 {
-                    newnote = new frmNote(this, newid, true, false, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
                     newnote.Show();
-                }
-                else
-                {
-                    newnote = new frmNote(this, newid, false, false, title, content, transparecy, notecolor, locX, locY, notewith, noteheight);
                 }
                 return newnote;
-
             }
             catch (IndexOutOfRangeException indexexc)
             {
@@ -151,30 +165,13 @@ namespace SimplePlainNote
             }
         }
 
-        private bool getTransparency()
-        {
-            xmlHandler xmlSettings = new xmlHandler(true);
-            if (xmlSettings.getXMLnode("transparecy") == "1")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         private void LoadNotes()
         {
             #if DEBUG
             DateTime starttime = DateTime.Now;
-            #endif
-
-            xmlHandler getSettings = new xmlHandler(true);
-            string notesavepath = getSettings.getXMLnode("notesavepath");
+            #endif                        
             
-            int id = 1;
-            
+            int id = 1;            
             while (File.Exists( Path.Combine(notesavepath, id+".xml") ) == true)
             {                
                 xmlHandler parserNote = new xmlHandler(false, id + ".xml");
@@ -192,7 +189,7 @@ namespace SimplePlainNote
                 noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
 
                 id++;                
-                if (id > 1000) { MessageBox.Show("Error: Too many notes"); return; }
+                if (id > 500) { MessageBox.Show("Error: Too many notes"); return; }
             }            
 
             #if DEBUG
