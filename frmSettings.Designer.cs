@@ -222,9 +222,9 @@
             this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbxSyntaxHighlight.Location = new System.Drawing.Point(10, 90);
             this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
-            this.cbxSyntaxHighlight.Size = new System.Drawing.Size(261, 17);
+            this.cbxSyntaxHighlight.Size = new System.Drawing.Size(156, 17);
             this.cbxSyntaxHighlight.TabIndex = 13;
-            this.cbxSyntaxHighlight.Text = "Highlight HTML code notes (Not yet implemented)";
+            this.cbxSyntaxHighlight.Text = "Highlight HTML code notes";
             this.cbxSyntaxHighlight.UseVisualStyleBackColor = true;
             // 
             // tabControlSettings
@@ -351,6 +351,7 @@
             this.btnBrowse.TabIndex = 15;
             this.btnBrowse.Text = "browse";
             this.btnBrowse.UseVisualStyleBackColor = false;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // lblTextNoteLocation
             // 

@@ -232,6 +232,11 @@ namespace SimplePlainNote
             return false;
         }
 
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("sorry, this still needs to be done.");
+        }
+
 		#endregion Methods 
     }
 }

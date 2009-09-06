@@ -12,10 +12,10 @@
 ; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 ;
 ; The name of the installer
-Name "Simple Plain Note 0.9.2 alpha"
+Name "Simple Plain Note 0.9.3 alpha"
 
 ; The file to write
-OutFile "SimplePlainNote_v0.9.2.exe"
+OutFile "SimplePlainNote_v0.9.3.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\simpleplainnote
