@@ -91,9 +91,9 @@ namespace SimplePlainNote
             // buttonNotSend
             // 
             this.buttonNotSend.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonNotSend.Location = new System.Drawing.Point(262, 198);
+            this.buttonNotSend.Location = new System.Drawing.Point(226, 198);
             this.buttonNotSend.Name = "buttonNotSend";
-            this.buttonNotSend.Size = new System.Drawing.Size(138, 23);
+            this.buttonNotSend.Size = new System.Drawing.Size(174, 23);
             this.buttonNotSend.TabIndex = 6;
             this.buttonNotSend.Text = "&Shutdown programme";
             this.buttonNotSend.UseVisualStyleBackColor = true;
@@ -101,9 +101,9 @@ namespace SimplePlainNote
             // buttonSend
             // 
             this.buttonSend.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.buttonSend.Location = new System.Drawing.Point(89, 198);
+            this.buttonSend.Location = new System.Drawing.Point(16, 198);
             this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(167, 23);
+            this.buttonSend.Size = new System.Drawing.Size(193, 23);
             this.buttonSend.TabIndex = 7;
             this.buttonSend.Text = "&Copy error report to clipboard";
             this.buttonSend.UseVisualStyleBackColor = true;

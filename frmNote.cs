@@ -102,7 +102,7 @@ namespace SimplePlainNote
             }
         }
 
-        public frmNote(int id, string title, string note, int notecolor)
+        public frmNote(Notes notes, int id, string title, string note, int notecolor)
         {
             this.skin = new Skin(notecolor);
             this.id = id;
@@ -116,6 +116,7 @@ namespace SimplePlainNote
             //set width and height to default
             this.Width = 240;
             this.Height = 240;
+            this.notes = notes;
             InitializeComponent();            
             lblTitle.Text = title;
             rtbNote.Text = note;

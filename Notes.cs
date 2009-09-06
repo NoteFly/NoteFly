@@ -93,7 +93,7 @@ namespace SimplePlainNote
                 int newid = noteslst.Count + 1;
                 string notefilenm = SaveNewNote(newid, title, content, defaultcolor.ToString());
                 if (String.IsNullOrEmpty(notefilenm)) { return; }
-                frmNote newnote = new frmNote(newid, title, content, notecolor);
+                frmNote newnote = new frmNote(this, newid, title, content, notecolor);
                 noteslst.Add(newnote);
                 newnote.StartPosition = FormStartPosition.Manual;                
                 newnote.Show();
