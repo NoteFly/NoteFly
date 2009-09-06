@@ -65,7 +65,7 @@
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
             this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
-            this.rtbNote.TextChanged += new System.EventHandler(this.rtbNote_Enter);
+            this.rtbNote.TextChanged += new System.EventHandler(this.rtbNote_TextChanged);
             // 
             // tbTitle
             // 
@@ -86,6 +86,7 @@
             this.tbTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbTitle.ImeMode = System.Windows.Forms.ImeMode.On;
             this.tbTitle.Location = new System.Drawing.Point(38, 6);
+            this.tbTitle.MaxLength = 4096;
             this.tbTitle.Name = "tbTitle";
             this.tbTitle.Size = new System.Drawing.Size(176, 22);
             this.tbTitle.TabIndex = 0;
@@ -101,10 +102,11 @@
             this.lbTextTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbTextTitle.Location = new System.Drawing.Point(0, 9);
             this.lbTextTitle.Name = "lbTextTitle";
-            this.lbTextTitle.Size = new System.Drawing.Size(37, 16);
-            this.lbTextTitle.TabIndex = 2;
+            this.lbTextTitle.Size = new System.Drawing.Size(34, 20);
+            this.lbTextTitle.TabIndex = 9;
             this.lbTextTitle.Text = "Title:";
             this.lbTextTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lbTextTitle.UseCompatibleTextRendering = true;
             // 
             // pnlHeadNewNote
             // 
@@ -173,7 +175,7 @@
             this.pnlNoteEdit.Location = new System.Drawing.Point(0, 38);
             this.pnlNoteEdit.Name = "pnlNoteEdit";
             this.pnlNoteEdit.Size = new System.Drawing.Size(284, 211);
-            this.pnlNoteEdit.TabIndex = 5;
+            this.pnlNoteEdit.TabIndex = 0;
             // 
             // pbResizeGrip
             // 

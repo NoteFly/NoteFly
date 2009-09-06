@@ -254,6 +254,7 @@
             // 
             // TwitterToolStripMenuItem
             // 
+            this.TwitterToolStripMenuItem.Enabled = false;
             this.TwitterToolStripMenuItem.Name = "TwitterToolStripMenuItem";
             this.TwitterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.TwitterToolStripMenuItem.Text = "tweet this note";
@@ -324,7 +325,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TransparencyKey = System.Drawing.SystemColors.Control;
-            this.Deactivate += new System.EventHandler(this.frmNote_Deactivate);            
+            this.Deactivate += new System.EventHandler(this.frmNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNote_Activated);
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();

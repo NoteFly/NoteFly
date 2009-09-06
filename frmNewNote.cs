@@ -36,37 +36,35 @@ namespace SimplePlainNote
 		#region Fields (5) 
 
         private bool editnote = false;
-                private int editnoteid = -1;
+        private int editnoteid = -1;
         private Notes notes;
-        private Skin skin;
-        private bool transparency = false;
+        private Skin skin;        
 
 		#endregion Fields 
 
 		#region Constructors (2) 
 
-        public frmNewNote(Notes notes, bool transparency,  int notecolor, int editnoteid, string editnotetitle, string editnotecontent)
+        public frmNewNote(Notes notes, int notecolor, int editnoteid, string editnotetitle, string editnotecontent)
         {
             InitializeComponent();
             this.editnote = true;
             this.skin = new Skin(notecolor);
             this.editnoteid = editnoteid;
-            this.notes = notes;
-            this.transparency = transparency;
+            this.notes = notes;            
             ResetNewNoteForm(editnotetitle, editnotecontent);
-            this.rtbNote.Focus();
+            this.tbTitle.Focus();
+            checksyntax();
         }
 
-        public frmNewNote(Notes notes, bool transparency, int notecolor)
+        public frmNewNote(Notes notes, int notecolor)
         {
             InitializeComponent();
             this.editnote = false;
-            this.notes = notes;
-            this.transparency = transparency;            
+            this.notes = notes;           
             this.skin = new Skin(notecolor);
-            ResetNewNoteForm("", "");
-            //tbTitle.BackColor = skin.getObjColor(true);
+            ResetNewNoteForm("", "");           
             this.tbTitle.Focus();
+            checksyntax();
         }
 
 		#endregion Constructors 
@@ -112,7 +110,7 @@ namespace SimplePlainNote
 
         private void frmNewNote_Activated(object sender, EventArgs e)
         {
-            if (transparency)
+            if (notes.Transparency)
             {
                 this.Opacity = 1.0;                
             }
@@ -120,7 +118,7 @@ namespace SimplePlainNote
 
         private void frmNewNote_Deactivate(object sender, EventArgs e)
         {
-            if ((transparency) && (skin != null))
+            if ((notes.Transparency) && (skin != null))
             {
                 this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
@@ -191,6 +189,16 @@ namespace SimplePlainNote
             {
                 rtbNote.Focus();
             }
+        }
+
+        private void checksyntax()
+        {
+            notes.CheckSyntax(notes.SyntaxHighlightEnabled, rtbNote);
+        }
+
+        private void rtbNote_TextChanged(object sender, EventArgs e)
+        {
+            checksyntax();
         }
 
 		#endregion Methods 

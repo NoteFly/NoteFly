@@ -193,7 +193,7 @@ namespace SimplePlainNote
         static void MenuNewNote_Click(object sender, EventArgs e)
         {
 
-            frmNewNote newnote = new frmNewNote(notes, transparency, getDefaultColor());
+            frmNewNote newnote = new frmNewNote(notes, getDefaultColor());
             newnote.Show();
         }
 

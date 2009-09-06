@@ -29,6 +29,7 @@ namespace SimplePlainNote
     {
 		#region Fields (2) 
 
+        private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if");
         //regulaire expression for detecting some HTML code
         private Regex SyntaxHTML = new Regex("<!DOCTYPE |<HTML>|</HTML>|<BODY|</BODY>|<A HREF|<SPAN|<I>|</I>|<U>|</U>|"+
             "<B>|</B>|<UL>|<IL>|<OL|</OL>|<BR>|<BR />|<P |<P>|</P>|<FONT|</FONT>|<TITLE>|</TITLE>|<META|<LINK|<CODE>|"+
@@ -37,23 +38,10 @@ namespace SimplePlainNote
             "</LEGEND>|<ISINDEX|<SELECT|</SELECT>|<TEXTAREA|</TEXTAREA>|<SCRIPT|</SCRIPT>|<NOSCRIPT>|</NOSCRIPT>|<S>|</S>|"+
             "<STRIKE|</STRIKE>|<TT|</TT>|<BIG|</BIG>|<SMALL>|</SMALL>|<BASEFONT|</BASEFONT>|<DIV|</DIV>|<H1>|</H1>|<H2>|</H2>|"+
             "<H3>|</H3>|<H4>|</H4>|<H5>|</H5>|<H6>|</H6>|<HEAD>|</HEAD>|<HR>|<EM|</EM>");
-        private Regex SyntaxC = new Regex("if|else|for|while|{\r\n|}|do|define|#if");
 
 		#endregion Fields 
 
-        #region constructor (1)
-        public TextHighlight()
-        {
-        }
-        #endregion
-
-        public Regex getRegexHTML
-        {
-            get
-            {
-                return this.SyntaxHTML;
-            }
-        }
+		#region Properties (2) 
 
         public Regex getRegexC
         {
@@ -63,25 +51,22 @@ namespace SimplePlainNote
             }
         }
 
-        #region Methods (1)
-
-        // Public Methods (1) 
-
-        /*
-        public RichTextBox highlightHTML(RichTextBox rtb)
+        public Regex getRegexHTML
         {
-            int selPos = rtb.SelectionStart;
-            foreach (Match keyWordMatch in SyntaxHTML.Matches(rtb.Text))
+            get
             {
-                rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
-                rtb.SelectionColor = Color.Blue;
-                rtb.SelectionStart = selPos;
-                rtb.SelectionColor = Color.Black;
+                return this.SyntaxHTML;
             }
-            return rtb;
         }
-         */
 
-		#endregion Methods    
-    }
+		#endregion Properties 
+
+
+
+        #region constructor (1)
+        public TextHighlight()
+        {
+        }
+        #endregion
+     }
 }

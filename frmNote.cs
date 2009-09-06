@@ -22,7 +22,6 @@ using System.Data;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -41,7 +40,7 @@ namespace SimplePlainNote
         private bool notelock = false;
         private bool notevisible = true;
         private string title;
-        private bool transparency = false;
+        //private bool transparency = false;
         private string twpass;
         public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -50,7 +49,7 @@ namespace SimplePlainNote
 
 		#region Constructors (2) 
 
-        public frmNote(Notes notes, int id, bool visible, bool ontop, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight, bool transparency, bool highlightsyntax, bool twitterenabled)
+        public frmNote(Notes notes, int id, bool visible, bool ontop, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             this.notes = notes;
             this.skin = new Skin(notecolor);
@@ -60,8 +59,7 @@ namespace SimplePlainNote
             }
             this.id = id;
             this.title = title;            
-            this.note = note;
-            this.transparency = transparency;
+            this.note = note;            
             this.notecolor = notecolor;
 
             if ((locX >= 0) && (locY >= 0))
@@ -85,8 +83,7 @@ namespace SimplePlainNote
                 SetSizeNote(notewidth, noteheight);
                 SetPosNote();
                 PaintColorNote();
-                CheckTwitter(twitterenabled);
-                CheckSyntax(highlightsyntax);
+                checkthings();
             }
             else
             {
@@ -105,13 +102,13 @@ namespace SimplePlainNote
             }
         }
 
-        public frmNote(int id, string title, string note, int notecolor, bool transparency, bool highlightsyntax, bool twitterenabled)
+        public frmNote(int id, string title, string note, int notecolor)
         {
             this.skin = new Skin(notecolor);
             this.id = id;
             this.title = title;
             this.note = note;
-            this.transparency = transparency;
+            //this.transparency = transparency;
             this.notecolor = notecolor;            
             //set default location note
             this.locX = 10;
@@ -125,8 +122,7 @@ namespace SimplePlainNote
 
             PaintColorNote();
             SetPosNote();
-            CheckTwitter(twitterenabled);
-            CheckSyntax(highlightsyntax);
+            checkthings();
         }
 
 		#endregion Constructors 
@@ -167,7 +163,7 @@ namespace SimplePlainNote
             set
             {
                 note = value;
-                rtbNote.Text = note;
+                rtbNote.Text = note;                
             }
         }
 
@@ -199,6 +195,11 @@ namespace SimplePlainNote
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
         #endif
 
+        public void checkthings()
+        {
+            CheckTwitter(notes.TwitterEnabled);
+            notes.CheckSyntax(notes.SyntaxHighlightEnabled, rtbNote);
+        }
 
         private void CheckTwitter(bool twitterenabled)
         {
@@ -211,25 +212,6 @@ namespace SimplePlainNote
                 TwitterToolStripMenuItem.Enabled = false;
             }
         }
-
-        private void CheckSyntax(bool syntaxhighlight)
-        {
-            if (syntaxhighlight==true)
-            {
-                TextHighlight texthighlight = new TextHighlight();
-
-                int selPos = rtbNote.SelectionStart;
-                ////TODO: find out of new thread is need for this..
-                foreach (Match keyWordMatch in texthighlight.getRegexHTML.Matches(rtbNote.Text))
-                {
-                    rtbNote.Select(keyWordMatch.Index, keyWordMatch.Length);
-                    rtbNote.SelectionColor = System.Drawing.Color.Blue;
-                    rtbNote.SelectionStart = selPos;
-                    rtbNote.SelectionColor = System.Drawing.Color.Black;
-                }
-            }
-        }
-
 
         private void askpassok(object obj, EventArgs e)
         {
@@ -302,15 +284,14 @@ namespace SimplePlainNote
         }
 
         private void frmCloseNote_Click(object sender, EventArgs e)
-        {
-            transparency = false;
+        {            
             this.notevisible = false;
             this.Hide();
         }
 
         private void frmNote_Activated(object sender, EventArgs e)
         {
-            if ((transparency) && (skin!=null))
+            if ((notes.Transparency) && (skin!=null))
             {
                 this.Opacity = 1.0;                
             }
@@ -318,7 +299,7 @@ namespace SimplePlainNote
 
         private void frmNote_Deactivate(object sender, EventArgs e)
         {
-            if ((transparency) && (skin!=null))
+            if ((notes.Transparency) && (skin!=null))
             {
                 this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
