@@ -65,6 +65,7 @@
             this.lbTextNotes.Size = new System.Drawing.Size(34, 16);
             this.lbTextNotes.TabIndex = 1;
             this.lbTextNotes.Text = "Title";
+            this.lbTextNotes.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             // 
             // lbTextNoteOptions
             // 
@@ -75,6 +76,7 @@
             this.lbTextNoteOptions.Size = new System.Drawing.Size(54, 16);
             this.lbTextNoteOptions.TabIndex = 2;
             this.lbTextNoteOptions.Text = "Options";
+            this.lbTextNoteOptions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             // 
             // pnlNotes
             // 

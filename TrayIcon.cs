@@ -79,8 +79,7 @@ namespace SimplePlainNote
             exDlg.RestartApp = false;
             exDlg.OnShowErrorReport += delegate(object sender, SendExceptionClickEventArgs ar)
             {
-                System.Windows.Forms.MessageBox.Show("Handle OnShowErrorReport event to show what you are going to send.\n" +
-                    "For example:\n" + ar.UnhandledException.Message + "\n" + ar.UnhandledException.StackTrace +
+                System.Windows.Forms.MessageBox.Show("Error report:\n" + ar.UnhandledException.Message + "\n" + ar.UnhandledException.StackTrace +
                     "\n" + (ar.RestartApp ? "This App will be restarted." : "This App will be terminated!"));
             };
             // Implement your sending protocol here. You can use any information from System.Exception

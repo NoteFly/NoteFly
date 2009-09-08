@@ -67,6 +67,7 @@
             this.lblTitle.Size = new System.Drawing.Size(18, 19);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "?";
+            this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             // 
             // pnlHead
             // 

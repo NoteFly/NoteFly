@@ -107,6 +107,7 @@
             this.lbTextTitle.Text = "Title:";
             this.lbTextTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lbTextTitle.UseCompatibleTextRendering = true;
+            this.lbTextTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
             // 
             // pnlHeadNewNote
             // 
@@ -215,6 +216,7 @@
             this.TransparencyKey = System.Drawing.Color.LightPink;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmNewNote_KeyPress);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
             this.pnlNoteEdit.ResumeLayout(false);

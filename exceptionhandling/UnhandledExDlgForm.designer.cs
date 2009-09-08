@@ -106,7 +106,7 @@ namespace SimplePlainNote
             this.buttonSend.Size = new System.Drawing.Size(193, 23);
             this.buttonSend.TabIndex = 7;
             this.buttonSend.Text = "&Copy error report to clipboard";
-            this.buttonSend.UseVisualStyleBackColor = true;
+            this.buttonSend.UseVisualStyleBackColor = true;            
             // 
             // labelLinkTitle
             // 

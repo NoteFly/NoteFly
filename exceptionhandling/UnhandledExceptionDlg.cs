@@ -28,10 +28,16 @@ namespace SimplePlainNote
 {
     internal class SendExceptionClickEventArgs: System.EventArgs
     {
-        public bool SendExceptionDetails;
-        public Exception UnhandledException;
+		#region Fields (3) 
+
         //flag for app restarting
         public bool RestartApp;
+        public bool SendExceptionDetails;
+        public Exception UnhandledException;
+
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         /// <summary>
         /// 
@@ -45,6 +51,8 @@ namespace SimplePlainNote
             this.UnhandledException = ExceptionArg;         // Used to store captured exception
             this.RestartApp = RestartAppArg;                // Contains user's request: should the App to be restarted or not
         }
+
+		#endregion Constructors 
     }
 
     /// <summary>
@@ -52,31 +60,13 @@ namespace SimplePlainNote
     /// </summary>
     class UnhandledExceptionDlg
     {
+		#region Fields (1) 
+
         private bool _dorestart = true;
 
-        /// <summary>
-        /// Set to true if you want to restart your App after falure
-        /// </summary>
-        public bool RestartApp
-        {
-            get { return _dorestart; }
-            set { _dorestart = value; }
-        }
+		#endregion Fields 
 
-        public delegate void SendExceptionClickHandler(object sender, SendExceptionClickEventArgs args);
-
-        //public delegate void ShowErrorReportHandler(object sender, System.EventArgs args);
-
-        /// <summary>
-        /// Occurs when user clicks on "Send Error report" button
-        /// </summary>
-        public event SendExceptionClickHandler OnSendExceptionClick;
-
-        /// <summary>
-        /// Initializes a new instance of the UnhandledExceptionDlg class
-        /// Occurs when user clicks on "click here" link lable to get data that will be send
-        /// </summary>
-        public event SendExceptionClickHandler OnShowErrorReport;
+		#region Constructors (1) 
 
         /// <summary>
         /// Default constructor
@@ -93,31 +83,45 @@ namespace SimplePlainNote
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionFunction);
         }
 
-        /// <summary>
-        /// Handle the UI exceptions by showing a dialog box
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ThreadExceptionFunction(Object sender, ThreadExceptionEventArgs e)
-        {
-            // Suppress the Dialog in Debug mode:
-            #if !DEBUG
-            ShowUnhandledExceptionDlg(e.Exception);
-            #endif
-        }
+		#endregion Constructors 
+
+		#region Properties (1) 
 
         /// <summary>
-        /// Handle the UI exceptions by showing a dialog box
+        /// Set to true if you want to restart your App after falure
         /// </summary>
-        /// <param name="sender">Sender Object</param>
-        /// <param name="args">Passing arguments: original exception etc.</param>
-        private void UnhandledExceptionFunction(Object sender, UnhandledExceptionEventArgs args)
+        public bool RestartApp
         {
-            // Suppress the Dialog in Debug mode:
-            #if !DEBUG
-            ShowUnhandledExceptionDlg((Exception)args.ExceptionObject);
-            #endif
+            get { return _dorestart; }
+            set { _dorestart = value; }
         }
+
+		#endregion Properties 
+
+		#region Delegates and Events (3) 
+
+		// Delegates (1) 
+
+        public delegate void SendExceptionClickHandler(object sender, SendExceptionClickEventArgs args);
+		// Events (2) 
+
+        //public delegate void ShowErrorReportHandler(object sender, System.EventArgs args);
+        /// <summary>
+        /// Occurs when user clicks on "Send Error report" button
+        /// </summary>
+        public event SendExceptionClickHandler OnSendExceptionClick;
+
+        /// <summary>
+        /// Initializes a new instance of the UnhandledExceptionDlg class
+        /// Occurs when user clicks on "click here" link lable to get data that will be send
+        /// </summary>
+        public event SendExceptionClickHandler OnShowErrorReport;
+
+		#endregion Delegates and Events 
+
+		#region Methods (3) 
+
+		// Private Methods (3) 
 
         /// <summary>
         /// Raise Exception Dialog box for both UI and non-UI Unhandled Exceptions
@@ -176,6 +180,33 @@ namespace SimplePlainNote
                 exDlgForm.Dispose();
             }
         }
-        
-    }
+
+        /// <summary>
+        /// Handle the UI exceptions by showing a dialog box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ThreadExceptionFunction(Object sender, ThreadExceptionEventArgs e)
+        {
+            // Suppress the Dialog in Debug mode:
+            #if !DEBUG
+            ShowUnhandledExceptionDlg(e.Exception);
+            #endif
+        }
+
+        /// <summary>
+        /// Handle the UI exceptions by showing a dialog box
+        /// </summary>
+        /// <param name="sender">Sender Object</param>
+        /// <param name="args">Passing arguments: original exception etc.</param>
+        private void UnhandledExceptionFunction(Object sender, UnhandledExceptionEventArgs args)
+        {
+            // Suppress the Dialog in Debug mode:
+            #if !DEBUG
+            ShowUnhandledExceptionDlg((Exception)args.ExceptionObject);
+            #endif
+        }
+
+		#endregion Methods 
+            }
 }
