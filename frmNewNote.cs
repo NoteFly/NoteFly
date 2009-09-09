@@ -35,6 +35,7 @@ namespace SimplePlainNote
     {
 		#region Fields (5) 
 
+        private int notecolor;
         private bool editnote = false;
         private int editnoteid = -1;
         private Notes notes;
@@ -48,6 +49,7 @@ namespace SimplePlainNote
         {
             InitializeComponent();
             this.editnote = true;
+            this.notecolor = notecolor;
             this.skin = new Skin(notecolor);
             this.editnoteid = editnoteid;
             this.notes = notes;            
@@ -60,7 +62,8 @@ namespace SimplePlainNote
         {
             InitializeComponent();
             this.editnote = false;
-            this.notes = notes;           
+            this.notes = notes;
+            this.notecolor = notecolor;
             this.skin = new Skin(notecolor);
             ResetNewNoteForm("", "");           
             this.tbTitle.Focus();
@@ -83,7 +86,7 @@ namespace SimplePlainNote
             else if (String.IsNullOrEmpty(rtbNote.Text))
             {
                 rtbNote.BackColor = skin.getObjColor(false, false, true);
-                rtbNote.Text = "Please type any text.";
+                rtbNote.Text = "Please type any note content, like this for example.";
             }
             else
             {
@@ -92,12 +95,8 @@ namespace SimplePlainNote
                     notes.UpdateNote(editnoteid, this.tbTitle.Text, this.rtbNote.Text, true);
                 }
                 else
-                {
-                    xmlHandler getSettings = new xmlHandler(true);
-                    int notecolordefault = getSettings.getXMLnodeAsInt("defaultcolor");
-                    //new note
-                    notes.DrawNewNote(tbTitle.Text, rtbNote.Text, notecolordefault); 
-                    
+                {  
+                    notes.DrawNewNote(tbTitle.Text, rtbNote.Text, notecolor);                    
                 }
                 this.Close();
             }
@@ -174,10 +173,24 @@ namespace SimplePlainNote
             rtbNote.Text = content;                        
         }
 
+        /// <summary>
+        /// A hyperlink is clicked, check settings to see if confirm launch dialog have
+        /// to be showed, if not then directly launch the URL.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            xmlHandler getSettings = new xmlHandler(true);
+            if (getSettings.getXMLnodeAsBool("askurl"))
+            {
+                DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(e.LinkText);
+                }
+            }
+            else
             {
                 System.Diagnostics.Process.Start(e.LinkText);
             }

@@ -48,8 +48,9 @@ namespace SimplePlainNote
             
             //read setting and display them correctly.            
             cbxTransparecy.Checked = transparecy;
-            numProcTransparency.Value = getTransparecylevel();
+            numProcTransparency.Value = getTransparecylevel();            
             cbxDefaultColor.SelectedIndex = getDefaultColor();
+            cbxConfirmLink.Checked = getAskUrl();
             tbNotesSavePath.Text = getNotesSavePath();
             tbTwitterUser.Text = getTwitterusername();
             tbTwitterPass.Text = getTwitterpassword();
@@ -98,7 +99,7 @@ namespace SimplePlainNote
             //everything looks okay            
             else
             {                                    
-                    xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxFontNoteContent.Text, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
+                    xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
 
                     #if win32                
                     key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -182,6 +183,11 @@ namespace SimplePlainNote
             return xmlsettings.getXMLnodeAsInt("defaultcolor");
         }
 
+        private bool getAskUrl()
+        {
+            return xmlsettings.getXMLnodeAsBool("askurl");
+        }
+
         private string getDefaultEmail()
         {
             return xmlsettings.getXMLnode("defaultemail");            
@@ -217,6 +223,7 @@ namespace SimplePlainNote
 
         private bool getStatusStartlogin()
         {
+            #if win32
             key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {
@@ -229,6 +236,7 @@ namespace SimplePlainNote
                     return false;
                 }
             }
+            #endif
             return false;
         }
 
@@ -236,6 +244,8 @@ namespace SimplePlainNote
         {
             MessageBox.Show("sorry, this still needs to be done.");
         }
+
+
 
 		#endregion Methods 
     }

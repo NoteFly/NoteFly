@@ -55,6 +55,7 @@
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.eventLog1 = new System.Diagnostics.EventLog();
+            this.cbxConfirmLink = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -241,6 +242,7 @@
             // 
             // tabAppearance
             // 
+            this.tabAppearance.Controls.Add(this.cbxConfirmLink);
             this.tabAppearance.Controls.Add(this.cbxStartOnBootWindows);
             this.tabAppearance.Controls.Add(this.lbTextNoteFont);
             this.tabAppearance.Controls.Add(this.cbxFontNoteContent);
@@ -375,6 +377,16 @@
             this.eventLog1.Log = "Application";
             this.eventLog1.SynchronizingObject = this;
             // 
+            // cbxConfirmLink
+            // 
+            this.cbxConfirmLink.AutoSize = true;
+            this.cbxConfirmLink.Location = new System.Drawing.Point(16, 130);
+            this.cbxConfirmLink.Name = "cbxConfirmLink";
+            this.cbxConfirmLink.Size = new System.Drawing.Size(194, 17);
+            this.cbxConfirmLink.TabIndex = 11;
+            this.cbxConfirmLink.Text = "Ask before launching URL, on click";
+            this.cbxConfirmLink.UseVisualStyleBackColor = true;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -429,5 +441,6 @@
         private System.Windows.Forms.Label lbWarningTwitterPassword;
         private System.Windows.Forms.CheckBox cbxStartOnBootWindows;
         private System.Diagnostics.EventLog eventLog1;
+        private System.Windows.Forms.CheckBox cbxConfirmLink;
     }
 }

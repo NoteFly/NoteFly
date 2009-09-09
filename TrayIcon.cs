@@ -25,30 +25,30 @@ using System.Reflection;
 
 [assembly: CLSCompliant(true)]
 namespace SimplePlainNote
-{  
+{
     /// <summary>
     /// Startup class.
     /// </summary>
     public class TrayIcon
     {
-		#region Fields (9) 
+        #region Fields (9)
 
         static System.ComponentModel.IContainer components = null;
         static NotifyIcon icon;
         static ToolStripMenuItem MenuNewNote;
-        static ToolStripMenuItem MenuManageNotes;        
+        static ToolStripMenuItem MenuManageNotes;
         static ToolStripMenuItem MenuSettings;
         static ToolStripMenuItem MenuAbout;
         static ToolStripMenuItem MenuExit;
         static ContextMenuStrip MenuTrayIcon;
         static Notes notes;
-        static bool transparency = true;
+        static bool transparency = true;        
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Methods (2) 
+        #region Methods (2)
 
-		// Public Methods (1) 
+        // Public Methods (1) 
 
         public bool getTransparency
         {
@@ -66,7 +66,7 @@ namespace SimplePlainNote
             }
         }
 
-		// Private Methods (1) 
+        // Private Methods (1) 
 
         /// <summary>
         /// The main entry point for the application.
@@ -75,7 +75,7 @@ namespace SimplePlainNote
         static void Main()
         {
             // Create new instance of UnhandledExceptionDlg
-            UnhandledExceptionDlg exDlg = new UnhandledExceptionDlg();            
+            UnhandledExceptionDlg exDlg = new UnhandledExceptionDlg();
             exDlg.RestartApp = false;
             exDlg.OnShowErrorReport += delegate(object sender, SendExceptionClickEventArgs ar)
             {
@@ -94,23 +94,34 @@ namespace SimplePlainNote
                 // User wants to restart the App:
                 if (ar.RestartApp)
                 {
-                    Console.WriteLine("The App will be restarted...");                    
+                    Console.WriteLine("The App will be restarted...");
                     System.Diagnostics.Process.Start(System.Windows.Forms.Application.ExecutablePath);
                 }
             };
-                     
+
             components = new System.ComponentModel.Container();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);
 
             transparency = true;
 
-            if (System.Environment.GetCommandLineArgs().Length > 1 && System.Environment.GetCommandLineArgs()[1] == "/disabletransparency")
+            bool firstrun = false;
+
+            if (System.Environment.GetCommandLineArgs().Length > 1)
             {
-                transparency = false;
+                if (System.Environment.GetCommandLineArgs()[1] == "/disabletransparency")
+                {
+                    transparency = false;
+                }
+                else if (System.Environment.GetCommandLineArgs()[1] == "/firstrun")
+                {
+                    firstrun = true;
+                    //notes.DrawNewNote("howdy", "first note!", 0);
+                }
             }
+
             //start loading notes.
-            notes = new Notes();                        
+            notes = new Notes(firstrun);
 
             icon = new System.Windows.Forms.NotifyIcon(components);
             MenuTrayIcon = new System.Windows.Forms.ContextMenuStrip(components);
@@ -120,24 +131,24 @@ namespace SimplePlainNote
             MenuSettings = new System.Windows.Forms.ToolStripMenuItem();
             MenuAbout = new System.Windows.Forms.ToolStripMenuItem();
             MenuExit = new System.Windows.Forms.ToolStripMenuItem();
-            
+
             icon = new NotifyIcon(components);
-            icon.ContextMenuStrip = MenuTrayIcon;            
+            icon.ContextMenuStrip = MenuTrayIcon;
             Assembly assembly = Assembly.GetExecutingAssembly();
             //assembly.GetManifestResourceStream("SimplePlainNote.Resources.trayicon.ico");
             icon.Icon = new Icon(assembly.GetManifestResourceStream("SimplePlainNote.Resources.trayicon.ico"));
-            
+
 
             icon.Click += new EventHandler(Icon_Click);
-            icon.Visible = true;            
+            icon.Visible = true;
 
-            icon.ContextMenuStrip.Name = "MenuTrayIcon";            
+            icon.ContextMenuStrip.Name = "MenuTrayIcon";
             icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
             MenuNewNote,
             MenuManageNotes,
             MenuSettings,
             MenuAbout,
-            MenuExit} );            
+            MenuExit});
             icon.ContextMenuStrip.ShowImageMargin = false;
             icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
 
@@ -146,13 +157,13 @@ namespace SimplePlainNote
             MenuNewNote.Name = "MenuNewNote";
             MenuNewNote.Size = new System.Drawing.Size(144, 22);
             MenuNewNote.Text = "&Create a new note";
-            MenuNewNote.Click += new System.EventHandler(MenuNewNote_Click);            
+            MenuNewNote.Click += new System.EventHandler(MenuNewNote_Click);
             // MenuManageNotes            
             MenuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             MenuManageNotes.Name = "listToolStripMenuItem";
             MenuManageNotes.Size = new System.Drawing.Size(144, 22);
             MenuManageNotes.Text = "&Manage notes";
-            MenuManageNotes.Click += new System.EventHandler(MenuManageNotes_Click);            
+            MenuManageNotes.Click += new System.EventHandler(MenuManageNotes_Click);
             // MenuSettings            
             MenuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             MenuSettings.Name = "MenuSettings";
@@ -181,7 +192,7 @@ namespace SimplePlainNote
             return color;
         }
 
-		#endregion Methods 
+        #endregion Methods
 
         #region menu events
         static void Icon_Click(object sender, EventArgs e)

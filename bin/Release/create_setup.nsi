@@ -12,10 +12,10 @@
 ; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 ;
 ; The name of the installer
-Name "Simple Plain Note 0.9.4 alpha"
+Name "Simple Plain Note 0.9.5 beta"
 
 ; The file to write
-OutFile "SimplePlainNote_v0.9.4.exe"
+OutFile "SimplePlainNote_v0.9.5.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\simpleplainnote
@@ -98,10 +98,12 @@ Section "main executable (required)"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayName" "simpleplainnote"  
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "UninstallString" '"$INSTDIR\uninstall.exe"'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "URLInfoAbout" "http://code.google.com/p/simpleplainnote/"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayVersion" "0.9.1"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayVersion" "0.9.5"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
+  
+  Exec '"$INSTDIR\simpleplainnote.exe" /firstrun'
   
 SectionEnd
 

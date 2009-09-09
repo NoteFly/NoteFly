@@ -6,6 +6,7 @@
         <xs:element name="transparecy" type="xs:boolean" />
         <xs:element name="transparecylevel" type="xs:int" />
         <xs:element name="defaultcolor" type="xs:int" />
+        <xs:element name="askurl" type="xs:boolean" />
         <xs:element name="fontcontent" type="xs:string" />
         <xs:element name="notesavepath" type="xs:string" />
         <xs:element name="syntaxhighlight" type="xs:boolean" />

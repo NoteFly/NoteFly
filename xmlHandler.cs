@@ -84,11 +84,11 @@ namespace SimplePlainNote
             this.filenm = "settings.xml";
             if (File.Exists(appdatafolder + filenm) == false)
             {
-                WriteSettings(true, 95, 0, "Verdana", appdatafolder, "adres@domain.com", true, "", "");
+                WriteSettings(true, 95, 0, true, "Verdana", appdatafolder, "adres@domain.com", true, "", "");
             }         
         }
 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, string fontcontent, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, bool askurl, string fontcontent, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
         {
             try
             {
@@ -122,6 +122,21 @@ namespace SimplePlainNote
 
                 objXmlTextWriter.WriteStartElement("defaultcolor");
                 objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("defaultcolor");
+                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("askurl");
+                if (askurl == true)
+                {
+                    objXmlTextWriter.WriteString("1");
+                }
+                else
+                {
+                    objXmlTextWriter.WriteString("0");
+                }
                 objXmlTextWriter.WriteEndElement();
 
                 if (String.IsNullOrEmpty(fontcontent)) { throw new Exception("No font"); }
@@ -305,7 +320,7 @@ namespace SimplePlainNote
                     while (File.Exists(bakfile) == true)
                     {
                         num++;
-                        if (num > 99) { return true; }
+                        if (num > 9) { return true; }
                         bakfile = appdatafolder + filenm + ".bak" + num;
                     }
                     if (File.Exists(bakfile) == false)
@@ -325,7 +340,7 @@ namespace SimplePlainNote
                 }
                 else if (checkfile.Length > 32768)
                 {
-                    MessageBox.Show("File is unusual big. >32kb");
+                    MessageBox.Show("Error seitting file is unusual big. >32kb");
                     return true;
                 }
                 //File looks okay.

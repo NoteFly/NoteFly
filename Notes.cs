@@ -23,11 +23,11 @@ namespace SimplePlainNote
 
 		#region Constructors (1) 
 
-        public Notes()
+        public Notes(bool firstrun)
         {
             noteslst = new List<frmNote>();            
-            SetSettings();
-            LoadNotes();            
+            SetSettings();            
+            LoadNotes(firstrun);            
         }
 
 		#endregion Constructors 
@@ -211,7 +211,7 @@ namespace SimplePlainNote
             }
         }
 
-        private void LoadNotes()
+        private void LoadNotes(bool firstrun)
         {
             #if DEBUG
             DateTime starttime = DateTime.Now;
@@ -236,7 +236,15 @@ namespace SimplePlainNote
 
                 id++;                
                 if (id > 500) { MessageBox.Show("Error: Too many notes"); return; }
-            }            
+            }
+            if (firstrun)
+            {
+                int tipnotewidth = 200;
+                int tipnoteheight = 200;
+                int tipnoteposx = (Screen.PrimaryScreen.WorkingArea.Width/2)-(tipnotewidth/2);
+                int tipnoteposy = (Screen.PrimaryScreen.WorkingArea.Height/2)-(tipnoteheight/2);
+                noteslst.Add(CreateNote(true, false, "first note", "Simple plain notes is succesfully installed.\r\n\r\nTo delete this note, right click the systray icon choice manage note and press delete note.",0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+            }
 
             #if DEBUG
             DateTime endtime = DateTime.Now;

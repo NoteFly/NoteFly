@@ -527,6 +527,24 @@ namespace SimplePlainNote
             }            
         }
 
+        private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            xmlHandler getSettings = new xmlHandler(true);
+            if (getSettings.getXMLnodeAsBool("askurl"))
+            {
+                DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(e.LinkText);
+                }
+            }
+            else
+            {
+                System.Diagnostics.Process.Start(e.LinkText);
+            }
+        }
+
+
         private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             #if win32
