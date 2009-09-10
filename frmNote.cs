@@ -199,12 +199,19 @@ namespace SimplePlainNote
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
         #endif
 
+        /// <summary>
+        /// Check if twitter is enabled and check Syntax.
+        /// </summary>
         public void checkthings()
         {
             CheckTwitter(notes.TwitterEnabled);
             notes.CheckSyntax(notes.SyntaxHighlightEnabled, rtbNote);
         }
 
+        /// <summary>
+        /// check if twitter is enabled.
+        /// </summary>
+        /// <param name="twitterenabled"></param>
         private void CheckTwitter(bool twitterenabled)
         {
             if (twitterenabled)
@@ -217,6 +224,11 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Find what password is entered.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
         private void askpassok(object obj, EventArgs e)
         {
             Button btnobj = (Button)obj;
@@ -229,8 +241,11 @@ namespace SimplePlainNote
         }
 
         private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
-        {                       
-            pnlHead.BackColor = skin.getObjColor(false); 
+        {
+            if (skin != null)
+            {
+                pnlHead.BackColor = skin.getObjColor(false);
+            }
         }
 
         /// <summary>
@@ -271,7 +286,7 @@ namespace SimplePlainNote
         }
 
         /// <summary>
-        /// e-mail note
+        /// Create an e-mail of a note.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -285,21 +300,18 @@ namespace SimplePlainNote
             emailnote = note.Replace("\r", "%0D%0A");
             #elif linux                        
             emailnote = note.Replace("\n", "%0D%0A");
-            #endif
-            
-            //preventing a possible security issue here.
-            emailnote = emailnote.Replace("\x00", "");
+            #endif                        
 
             xmlHandler xmlsettings = new xmlHandler(true);
             string defaultemail = xmlsettings.getXMLnode("defaultemail");
 
-            if (!String.IsNullOrEmpty(emailnote))
+            if ((!String.IsNullOrEmpty(title)) && (String.IsNullOrEmpty(emailnote)))
             {
-                System.Diagnostics.Process.Start("mailto:\\" + defaultemail.Replace("\x00", "") + "?subject=" + title.Replace("\x00", "") + "&body=" + emailnote);
+                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title + "&body=" + emailnote);
             }
             else if (!String.IsNullOrEmpty(title))
             {
-                System.Diagnostics.Process.Start("mailto:\\" + defaultemail.Replace("\x00", "") + "?subject=" + title.Replace("\x00", ""));
+                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title);
             }
             else
             {
@@ -430,18 +442,26 @@ namespace SimplePlainNote
         }
 
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
-        {            
-            pnlHead.BackColor = skin.getObjColor(true);            
+        {
+            if (skin != null)
+            {
+                pnlHead.BackColor = skin.getObjColor(true);
+            }
 
             if (e.Button == MouseButtons.Left)
-            {                
+            {       
+                #if win32
                 ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);                
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                #endif
+
+                if (skin != null)
+                {
+                    pnlHead.BackColor = skin.getObjColor(false);
+                }                
 
                 this.locX = this.Location.X;
-                this.locY = this.Location.Y;                
-                
-                pnlHead.BackColor = skin.getObjColor(false);                
+                this.locY = this.Location.Y;                                                
             }
             
             if (SavePos.IsBusy == false)

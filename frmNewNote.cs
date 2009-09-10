@@ -55,6 +55,7 @@ namespace SimplePlainNote
             this.notes = notes;            
             ResetNewNoteForm(editnotetitle, editnotecontent);
             this.tbTitle.Focus();
+            this.tbTitle.Select();
             checksyntax();
         }
 
@@ -67,6 +68,7 @@ namespace SimplePlainNote
             this.skin = new Skin(notecolor);
             ResetNewNoteForm("", "");           
             this.tbTitle.Focus();
+            this.tbTitle.Select();
             checksyntax();
         }
 
@@ -269,6 +271,25 @@ namespace SimplePlainNote
         }
         #endregion
 
+        private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(rtbNote.Text);
+        }
+
+        private void pastTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                rtbNote.Text = rtbNote.Text + Clipboard.GetText();
+            }
+            else
+            {
+                MessageBox.Show("clipboard is empty.");
+            }
+        }
+
         #endregion Methods
+
+
     } 
 }

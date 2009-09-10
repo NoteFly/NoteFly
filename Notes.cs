@@ -1,9 +1,23 @@
-﻿using System;
+﻿/* Copyright (C) 2009
+ * 
+ * This program is free software; you can redistribute it and/or modify it
+ * Free Software Foundation; either version 2, or (at your option) any
+ * later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+ */
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace SimplePlainNote
 {
@@ -116,20 +130,27 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Check syntax, use TextHighlight class too.
+        /// </summary>
+        /// <param name="syntaxhighlight"></param>
+        /// <param name="rtb"></param>
         public void CheckSyntax(bool syntaxhighlight, RichTextBox rtb)
         {
             if (syntaxhighlight == true)
             {
                 TextHighlight texthighlight = new TextHighlight();
 
-                int selPos = rtb.SelectionStart;
-                foreach (Match keyWordMatch in texthighlight.getRegexHTML.Matches(rtb.Text))
+                int selPos = rtb.SelectionStart; 
+                               
+                foreach (System.Text.RegularExpressions.Match keyWordMatch in texthighlight.getRegexHTML.Matches(rtb.Text))
                 {
                     rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
                     rtb.SelectionColor = System.Drawing.Color.Blue;
                     rtb.SelectionStart = selPos;
                     rtb.SelectionColor = System.Drawing.Color.Black;
                 }
+                rtb.DeselectAll();
             }
         }
         /// <summary>
@@ -149,7 +170,7 @@ namespace SimplePlainNote
             }
             else
             {
-                MessageBox.Show("Fout: note not found in memory.");
+                throw new Exception("Error: note not found in memory.");                
             }
 
         }
@@ -173,10 +194,7 @@ namespace SimplePlainNote
                 noteslst[notelstpos].Show(); 
             }
             noteslst[notelstpos].checkthings();
-
-            this.notesupdated = true;
-            //noteslst[notelstpos].CheckSyntax(syntaxhighlight);
-            //noteslst[notelstpos].CheckTwitter(twitterenabled);
+            this.notesupdated = true;     
         }
 
         /// <summary>
@@ -253,11 +271,11 @@ namespace SimplePlainNote
             }
             if (firstrun)
             {
-                int tipnotewidth = 200;
-                int tipnoteheight = 200;
+                int tipnotewidth = 280;
+                int tipnoteheight = 240;
                 int tipnoteposx = (Screen.PrimaryScreen.WorkingArea.Width/2)-(tipnotewidth/2);
                 int tipnoteposy = (Screen.PrimaryScreen.WorkingArea.Height/2)-(tipnoteheight/2);
-                noteslst.Add(CreateNote(true, false, "first note", "Simple plain notes is succesfully installed.\r\n\r\nTo delete this note, right click the systray icon choice manage note and press delete note.",0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+                noteslst.Add(CreateNote(true, false, "first example note", "This is a example note.\r\nYou can change color of this note by rightclicking this note.\r\nYou can delete this note, by rightclicking the systray icon choice manage note and then press delete note.\r\nBy clicking on the cross of this note. This note will hiden.\r\nYou can get it back with the manage notes window.",0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
             }
 
             #if DEBUG

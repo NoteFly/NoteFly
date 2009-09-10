@@ -13,7 +13,6 @@
 ;
 ; The name of the installer
 
-
 !define VERSION "0.9.5"
 !define VERSTATUS "alpha"
 
@@ -94,9 +93,7 @@ UninstPage instfiles
 ;--------------------------------
 
 ; The stuff to install
-Section "main executable (required)"
-
-	;DetailPrint "tester de test"
+Section "main executable (required)"	
  
   SectionIn RO     
   
@@ -104,7 +101,8 @@ Section "main executable (required)"
   SetOutPath $INSTDIR
   
   ; Put file there
-  File "simpleplainnote.exe"
+  File "SimplePlainNote.exe"
+  File "SimplePlainNote.exe.config"
   
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\simpleplainnote "Install_Dir" "$INSTDIR"
@@ -142,7 +140,8 @@ Section "Uninstall"
   DeleteRegKey HKLM SOFTWARE\simpleplainnote
 
   ; Remove files and uninstaller
-  Delete $INSTDIR\simpleplainnote.exe
+  Delete $INSTDIR\SimplePlainNote.exe
+  Delete $INSTDIR\SimplePlainNote.exe.config
   Delete $INSTDIR\uninstall.exe
 
   ; Remove shortcuts, if any
@@ -150,11 +149,16 @@ Section "Uninstall"
 
   ; Remove directories used
   RMDir "$SMPROGRAMS\simpleplainnote"
-  ;warning deletes all notes.. 
-  ;TODO: need to find out how to ASK for doing this.
   
+  MessageBox MB_YESNO "Do you want to keep your notes and settings?" IDYES true IDNO false
+  true:
+  Goto next
+  false:
+  ;warning deleting all files in appdata folder. 
   SetShellVarContext current
   RMDir /r "$APPDATA\.simpleplainnote" 
+  
+  next:     
   RMDir "$INSTDIR"  
 
 SectionEnd

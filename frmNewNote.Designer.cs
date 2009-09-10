@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNewNote));
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.tbTitle = new System.Windows.Forms.TextBox();
@@ -37,9 +38,13 @@
             this.btnAddNote = new System.Windows.Forms.Button();
             this.pnlNoteEdit = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
+            this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pastTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlHeadNewNote.SuspendLayout();
             this.pnlNoteEdit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
+            this.contextMenuStripTextActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // rtbNote
@@ -65,7 +70,7 @@
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
             this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
-            this.rtbNote.TextChanged += new System.EventHandler(this.rtbNote_TextChanged);
+            this.rtbNote.TextChanged += new System.EventHandler(this.rtbNote_TextChanged);            
             // 
             // tbTitle
             // 
@@ -191,6 +196,28 @@
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
+            // contextMenuStripTextActions
+            // 
+            this.contextMenuStripTextActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pastTextToolStripMenuItem,
+            this.copyTextToolStripMenuItem});
+            this.contextMenuStripTextActions.Name = "contextMenuStrip1";
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(125, 48);
+            // 
+            // pastTextToolStripMenuItem
+            // 
+            this.pastTextToolStripMenuItem.Name = "pastTextToolStripMenuItem";
+            this.pastTextToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.pastTextToolStripMenuItem.Text = "Past text";
+            this.pastTextToolStripMenuItem.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
+            // 
+            // copyTextToolStripMenuItem
+            // 
+            this.copyTextToolStripMenuItem.Name = "copyTextToolStripMenuItem";
+            this.copyTextToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.copyTextToolStripMenuItem.Text = "Copy text";
+            this.copyTextToolStripMenuItem.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
+            // 
             // frmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
@@ -219,6 +246,7 @@
             this.pnlNoteEdit.ResumeLayout(false);
             this.pnlNoteEdit.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
+            this.contextMenuStripTextActions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -233,6 +261,9 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.RichTextBox rtbNote;
         private System.Windows.Forms.PictureBox pbResizeGrip;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripTextActions;
+        private System.Windows.Forms.ToolStripMenuItem pastTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyTextToolStripMenuItem;
     }
 }
 
