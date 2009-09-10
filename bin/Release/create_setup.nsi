@@ -14,7 +14,7 @@
 ; The name of the installer
 
 !define VERSION "0.9.5"
-!define VERSTATUS "alpha"
+!define VERSTATUS "beta"
 
 Name "Simple Plain Note ${VERSION} ${VERSTATUS}"
 
