@@ -43,22 +43,26 @@
             this.cbxSyntaxHighlight = new System.Windows.Forms.CheckBox();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabAppearance = new System.Windows.Forms.TabPage();
+            this.lblTextpt = new System.Windows.Forms.Label();
+            this.numFontSize = new System.Windows.Forms.NumericUpDown();
+            this.lblTextFontSize = new System.Windows.Forms.Label();
             this.cbxStartOnBootWindows = new System.Windows.Forms.CheckBox();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.cbxConfirmLink = new System.Windows.Forms.CheckBox();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.eventLog1 = new System.Diagnostics.EventLog();
-            this.cbxConfirmLink = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabAppearance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).BeginInit();
             this.tabTwitter.SuspendLayout();
             this.tabAdvance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
@@ -221,7 +225,7 @@
             this.cbxSyntaxHighlight.AutoSize = true;
             this.cbxSyntaxHighlight.Checked = true;
             this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(10, 90);
+            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(10, 102);
             this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
             this.cbxSyntaxHighlight.Size = new System.Drawing.Size(156, 17);
             this.cbxSyntaxHighlight.TabIndex = 13;
@@ -242,7 +246,9 @@
             // 
             // tabAppearance
             // 
-            this.tabAppearance.Controls.Add(this.cbxConfirmLink);
+            this.tabAppearance.Controls.Add(this.lblTextpt);
+            this.tabAppearance.Controls.Add(this.numFontSize);
+            this.tabAppearance.Controls.Add(this.lblTextFontSize);
             this.tabAppearance.Controls.Add(this.cbxStartOnBootWindows);
             this.tabAppearance.Controls.Add(this.lbTextNoteFont);
             this.tabAppearance.Controls.Add(this.cbxFontNoteContent);
@@ -259,10 +265,50 @@
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
             // 
+            // lblTextpt
+            // 
+            this.lblTextpt.AutoSize = true;
+            this.lblTextpt.Location = new System.Drawing.Point(138, 111);
+            this.lblTextpt.Name = "lblTextpt";
+            this.lblTextpt.Size = new System.Drawing.Size(16, 13);
+            this.lblTextpt.TabIndex = 14;
+            this.lblTextpt.Text = "pt";
+            // 
+            // numFontSize
+            // 
+            this.numFontSize.Location = new System.Drawing.Point(94, 111);
+            this.numFontSize.Maximum = new decimal(new int[] {
+            96,
+            0,
+            0,
+            0});
+            this.numFontSize.Minimum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.numFontSize.Name = "numFontSize";
+            this.numFontSize.Size = new System.Drawing.Size(38, 20);
+            this.numFontSize.TabIndex = 13;
+            this.numFontSize.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // lblTextFontSize
+            // 
+            this.lblTextFontSize.AutoSize = true;
+            this.lblTextFontSize.Location = new System.Drawing.Point(15, 113);
+            this.lblTextFontSize.Name = "lblTextFontSize";
+            this.lblTextFontSize.Size = new System.Drawing.Size(52, 13);
+            this.lblTextFontSize.TabIndex = 12;
+            this.lblTextFontSize.Text = "Font size:";
+            // 
             // cbxStartOnBootWindows
             // 
             this.cbxStartOnBootWindows.AutoSize = true;
-            this.cbxStartOnBootWindows.Location = new System.Drawing.Point(16, 153);
+            this.cbxStartOnBootWindows.Location = new System.Drawing.Point(16, 185);
             this.cbxStartOnBootWindows.Name = "cbxStartOnBootWindows";
             this.cbxStartOnBootWindows.Size = new System.Drawing.Size(245, 17);
             this.cbxStartOnBootWindows.TabIndex = 10;
@@ -272,7 +318,7 @@
             // lbTextNoteFont
             // 
             this.lbTextNoteFont.AutoSize = true;
-            this.lbTextNoteFont.Location = new System.Drawing.Point(16, 97);
+            this.lbTextNoteFont.Location = new System.Drawing.Point(16, 79);
             this.lbTextNoteFont.Name = "lbTextNoteFont";
             this.lbTextNoteFont.Size = new System.Drawing.Size(55, 13);
             this.lbTextNoteFont.TabIndex = 9;
@@ -283,7 +329,7 @@
             this.cbxFontNoteContent.DropDownHeight = 140;
             this.cbxFontNoteContent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxFontNoteContent.IntegralHeight = false;
-            this.cbxFontNoteContent.Location = new System.Drawing.Point(94, 94);
+            this.cbxFontNoteContent.Location = new System.Drawing.Point(94, 76);
             this.cbxFontNoteContent.Name = "cbxFontNoteContent";
             this.cbxFontNoteContent.Size = new System.Drawing.Size(182, 21);
             this.cbxFontNoteContent.TabIndex = 8;
@@ -315,6 +361,7 @@
             // 
             // tabAdvance
             // 
+            this.tabAdvance.Controls.Add(this.cbxConfirmLink);
             this.tabAdvance.Controls.Add(this.tbDefaultEmail);
             this.tabAdvance.Controls.Add(this.lbTextDefaultEmail);
             this.tabAdvance.Controls.Add(this.btnBrowse);
@@ -328,9 +375,21 @@
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
             // 
+            // cbxConfirmLink
+            // 
+            this.cbxConfirmLink.AutoSize = true;
+            this.cbxConfirmLink.Checked = true;
+            this.cbxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxConfirmLink.Location = new System.Drawing.Point(10, 12);
+            this.cbxConfirmLink.Name = "cbxConfirmLink";
+            this.cbxConfirmLink.Size = new System.Drawing.Size(194, 17);
+            this.cbxConfirmLink.TabIndex = 18;
+            this.cbxConfirmLink.Text = "Ask before launching URL, on click";
+            this.cbxConfirmLink.UseVisualStyleBackColor = true;
+            // 
             // tbDefaultEmail
             // 
-            this.tbDefaultEmail.Location = new System.Drawing.Point(115, 136);
+            this.tbDefaultEmail.Location = new System.Drawing.Point(115, 148);
             this.tbDefaultEmail.Name = "tbDefaultEmail";
             this.tbDefaultEmail.Size = new System.Drawing.Size(200, 20);
             this.tbDefaultEmail.TabIndex = 18;
@@ -338,7 +397,7 @@
             // lbTextDefaultEmail
             // 
             this.lbTextDefaultEmail.AutoSize = true;
-            this.lbTextDefaultEmail.Location = new System.Drawing.Point(10, 140);
+            this.lbTextDefaultEmail.Location = new System.Drawing.Point(10, 152);
             this.lbTextDefaultEmail.Name = "lbTextDefaultEmail";
             this.lbTextDefaultEmail.Size = new System.Drawing.Size(98, 13);
             this.lbTextDefaultEmail.TabIndex = 17;
@@ -347,7 +406,7 @@
             // btnBrowse
             // 
             this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnBrowse.Location = new System.Drawing.Point(262, 42);
+            this.btnBrowse.Location = new System.Drawing.Point(262, 61);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(53, 23);
             this.btnBrowse.TabIndex = 15;
@@ -358,7 +417,7 @@
             // lblTextNoteLocation
             // 
             this.lblTextNoteLocation.AutoSize = true;
-            this.lblTextNoteLocation.Location = new System.Drawing.Point(10, 26);
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(10, 46);
             this.lblTextNoteLocation.Name = "lblTextNoteLocation";
             this.lblTextNoteLocation.Size = new System.Drawing.Size(176, 13);
             this.lblTextNoteLocation.TabIndex = 16;
@@ -366,7 +425,7 @@
             // 
             // tbNotesSavePath
             // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(8, 44);
+            this.tbNotesSavePath.Location = new System.Drawing.Point(8, 64);
             this.tbNotesSavePath.Name = "tbNotesSavePath";
             this.tbNotesSavePath.Size = new System.Drawing.Size(248, 20);
             this.tbNotesSavePath.TabIndex = 14;
@@ -376,16 +435,6 @@
             // 
             this.eventLog1.Log = "Application";
             this.eventLog1.SynchronizingObject = this;
-            // 
-            // cbxConfirmLink
-            // 
-            this.cbxConfirmLink.AutoSize = true;
-            this.cbxConfirmLink.Location = new System.Drawing.Point(16, 130);
-            this.cbxConfirmLink.Name = "cbxConfirmLink";
-            this.cbxConfirmLink.Size = new System.Drawing.Size(194, 17);
-            this.cbxConfirmLink.TabIndex = 11;
-            this.cbxConfirmLink.Text = "Ask before launching URL, on click";
-            this.cbxConfirmLink.UseVisualStyleBackColor = true;
             // 
             // frmSettings
             // 
@@ -403,6 +452,7 @@
             this.tabControlSettings.ResumeLayout(false);
             this.tabAppearance.ResumeLayout(false);
             this.tabAppearance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).EndInit();
             this.tabTwitter.ResumeLayout(false);
             this.tabTwitter.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
@@ -441,6 +491,9 @@
         private System.Windows.Forms.Label lbWarningTwitterPassword;
         private System.Windows.Forms.CheckBox cbxStartOnBootWindows;
         private System.Diagnostics.EventLog eventLog1;
+        private System.Windows.Forms.NumericUpDown numFontSize;
+        private System.Windows.Forms.Label lblTextFontSize;
+        private System.Windows.Forms.Label lblTextpt;
         private System.Windows.Forms.CheckBox cbxConfirmLink;
     }
 }

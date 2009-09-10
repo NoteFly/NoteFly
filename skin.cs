@@ -119,6 +119,10 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Get the font for the note.
+        /// </summary>
+        /// <returns>null if error.</returns>
         public Font getFontNoteContent()
         {
             xmlHandler getSettings = new xmlHandler(true);
@@ -128,12 +132,25 @@ namespace SimplePlainNote
             {
                 if (curfont.Name.ToString() == fontname)
                 {
-                    Font font = new Font(curfont, 10);
+                    Font font = new Font(curfont, getFontNoteSize(getSettings));
                     return font;
                 }
-            }	       
-            //error
+            }	                   
             return null;
+        }
+
+        private float getFontNoteSize(xmlHandler getSettings)
+        {
+            getSettings = new xmlHandler(true);
+            int fontsize = getSettings.getXMLnodeAsInt("fontsize");
+            if ((fontsize > 1) && (fontsize <= 96))
+            {
+                return fontsize;
+            }
+            else
+            {
+                return 10;
+            }
         }
 
         #endregion

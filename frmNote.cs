@@ -355,7 +355,10 @@ namespace SimplePlainNote
             this.pnlHead.BackColor = normalcolor;
             this.pnlNote.BackColor = normalcolor;
             this.rtbNote.BackColor = normalcolor;
+
             rtbNote.Font = skin.getFontNoteContent();
+            //rtbNote.Font = skin.getFontNoteSize();
+            
         }
 
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)

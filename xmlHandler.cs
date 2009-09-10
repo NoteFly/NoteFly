@@ -84,11 +84,11 @@ namespace SimplePlainNote
             this.filenm = "settings.xml";
             if (File.Exists(appdatafolder + filenm) == false)
             {
-                WriteSettings(true, 95, 0, true, "Verdana", appdatafolder, "adres@domain.com", true, "", "");
+                WriteSettings(true, 95, 0, true, "Verdana", 10, appdatafolder, "adres@domain.com", true, "", "");
             }         
         }
 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, bool askurl, string fontcontent, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
         {
             try
             {
@@ -143,7 +143,12 @@ namespace SimplePlainNote
 
                 objXmlTextWriter.WriteStartElement("fontcontent");
                 objXmlTextWriter.WriteString(fontcontent);
-                objXmlTextWriter.WriteEndElement();   
+                objXmlTextWriter.WriteEndElement();
+
+                //if (fontsize == null) { throw new Exception("fontsize not set."); }
+                objXmlTextWriter.WriteStartElement("fontsize");
+                objXmlTextWriter.WriteString(Convert.ToString(fontsize));
+                objXmlTextWriter.WriteEndElement(); 
 
                 if (Directory.Exists(notesavepath))
                 {

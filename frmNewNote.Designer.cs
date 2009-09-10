@@ -215,7 +215,7 @@
             this.Text = "New note";
             this.TransparencyKey = System.Drawing.Color.LightPink;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
-            this.Activated += new System.EventHandler(this.frmNewNote_Activated);            
+            this.Activated += new System.EventHandler(this.frmNewNote_Activated);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
             this.pnlNoteEdit.ResumeLayout(false);

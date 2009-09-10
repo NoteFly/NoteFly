@@ -76,6 +76,10 @@ namespace SimplePlainNote
                 MessageBox.Show("Select a font.");
                 tabAppearance.Select();                
             }
+            else if ((numFontSize.Value < 1) || (numFontSize.Value > 100))
+            {
+                MessageBox.Show("Font size invalid.");
+            }
             else if (tbTwitterUser.Text.Length > 16)
             {
                 MessageBox.Show("Settings Twitter: username is too long.");
@@ -84,56 +88,55 @@ namespace SimplePlainNote
             else if ((tbTwitterPass.Text.Length < 6) && (cbxRememberTwPass.Checked == true))
             {
                 MessageBox.Show("Settings Twitter: password is too short.");
-                tabTwitter.Select();                
+                tabTwitter.Select();
             }
             else if (!Directory.Exists(tbNotesSavePath.Text))
             {
                 MessageBox.Show("Settings advance: Invalid folder note save folder.");
-                tabAdvance.Select();                
+                tabAdvance.Select();
             }
             else if (!tbDefaultEmail.Text.Contains("@"))
             {
                 MessageBox.Show("Settings advance: default emailadres not valid.");
-                tabAdvance.Select();                
-            }            
+                tabAdvance.Select();
+            }
             //everything looks okay            
             else
-            {                                    
-                    xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
-
-                    #if win32                
-                    key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                    if (key != null)
+            {
+                xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
+                #if win32
+                key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                if (key != null)
+                {
+                    if (cbxStartOnBootWindows.Checked == true)
                     {
-                        if (cbxStartOnBootWindows.Checked == true)
+                        try
                         {
-                            try
-                            {
-                                key.SetValue("simpleplainnote", "\"" + Application.ExecutablePath + "\"");
-                            }
-                            catch (UnauthorizedAccessException exc)
-                            {
-                                MessageBox.Show("Error: no registery access." + exc.Message);
-                            }
+                            key.SetValue("simpleplainnote", "\"" + Application.ExecutablePath + "\"");
                         }
-                        else if (cbxStartOnBootWindows.Checked == false)
+                        catch (UnauthorizedAccessException exc)
                         {
-                            if (key.GetValue("simpleplainnote", null) != null)
-                            {
-                                key.DeleteValue("simpleplainnote", false);
-                            }
+                            MessageBox.Show("Error: no registery access." + exc.Message);
                         }
                     }
-                    else
+                    else if (cbxStartOnBootWindows.Checked == false)
                     {
-                        MessageBox.Show("Error: Run subkey in registery does not exist. Or it cannot be found.");
-                    }                    
-                    #endif
-                    notes.SetSettings();
-                    notes.UpdateAllFonts();                    
-                            
-                    this.Close();
-                }                                        
+                        if (key.GetValue("simpleplainnote", null) != null)
+                        {
+                            key.DeleteValue("simpleplainnote", false);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error: Run subkey in registery does not exist. Or it cannot be found.");
+                }
+#endif
+                notes.SetSettings();
+                notes.UpdateAllFonts();
+
+                this.Close();
+            }                                        
         }
 
         private void DrawCbxFonts()
