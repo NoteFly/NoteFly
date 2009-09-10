@@ -73,6 +73,8 @@ namespace SimplePlainNote
                 this.locY = 10;
             }
 
+            notes.NotesUpdated = true;
+
             if (notevisible == true)
             {
                 InitializeComponent();
@@ -90,7 +92,7 @@ namespace SimplePlainNote
                 this.Hide();
             }
 
-            if (ontop == true)
+            if (ontop)
             {
                 OnTopToolStripMenuItem.Checked = true;
                 this.TopMost = true;
@@ -124,6 +126,7 @@ namespace SimplePlainNote
             PaintColorNote();
             SetPosNote();
             checkthings();
+            notes.NotesUpdated = true;
         }
 
 		#endregion Constructors 
@@ -230,21 +233,36 @@ namespace SimplePlainNote
             pnlHead.BackColor = skin.getObjColor(false); 
         }
 
+        /// <summary>
+        /// copy note content to clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(note);                
         }
 
+        /// <summary>
+        /// copy title to clipboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(title);
         }
 
+        /// <summary>
+        /// Edit note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
                      
-            if (this.NoteID >  notes.numnotes)
+            if (this.NoteID >  notes.NumNotes)
             {
                 MessageBox.Show("Error: cannot find note.");
             }
@@ -252,6 +270,11 @@ namespace SimplePlainNote
              
         }
 
+        /// <summary>
+        /// e-mail note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void emailNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string emailnote = "";
@@ -284,9 +307,15 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Hide note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmCloseNote_Click(object sender, EventArgs e)
         {            
             this.notevisible = false;
+            notes.NotesUpdated = true;
             this.Hide();
         }
 
@@ -307,6 +336,11 @@ namespace SimplePlainNote
             }
         }    
 
+        /// <summary>
+        /// Lock a note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!notelock)
@@ -327,6 +361,11 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Make a note on top
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (OnTopToolStripMenuItem.Checked == true)
@@ -356,11 +395,14 @@ namespace SimplePlainNote
             this.pnlNote.BackColor = normalcolor;
             this.rtbNote.BackColor = normalcolor;
 
-            rtbNote.Font = skin.getFontNoteContent();
-            //rtbNote.Font = skin.getFontNoteSize();
-            
+            rtbNote.Font = skin.getFontNoteContent();                        
         }
 
+        /// <summary>
+        /// Resize note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -374,6 +416,11 @@ namespace SimplePlainNote
             this.Cursor = Cursors.Default;
         }
 
+        /// <summary>
+        /// Save resized note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             if (!notelock && !SavePos.IsBusy)

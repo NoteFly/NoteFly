@@ -124,7 +124,7 @@
             // timerUpdateNotesList
             // 
             this.timerUpdateNotesList.Enabled = true;
-            this.timerUpdateNotesList.Interval = 5000;
+            this.timerUpdateNotesList.Interval = 1000;
             this.timerUpdateNotesList.Tick += new System.EventHandler(this.timerUpdateNotesList_Tick);
             // 
             // frmManageNotes

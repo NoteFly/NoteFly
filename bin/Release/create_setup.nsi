@@ -12,10 +12,15 @@
 ; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 ;
 ; The name of the installer
-Name "Simple Plain Note 0.9.5 beta"
+
+
+!define VERSION "0.9.5"
+!define VERSTATUS "alpha"
+
+Name "Simple Plain Note ${VERSION} ${VERSTATUS}"
 
 ; The file to write
-OutFile "SimplePlainNote_v0.9.5.exe"
+OutFile "SimplePlainNote_v${VERSION}.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\simpleplainnote
@@ -48,6 +53,14 @@ Function .onInit
     MessageBox MB_OK|MB_ICONSTOP ".NET runtime library v2.0 or newer is required. You have $0."
     Abort
   ${EndIf}
+  
+  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "myMutex") i .r1 ?e'
+  Pop $R0
+ 
+  StrCmp $R0 0 +3
+   MessageBox MB_OK|MB_ICONEXCLAMATION "The installer is already running."
+   Abort
+
 FunctionEnd
 
 Function GetDotNETVersion
@@ -83,6 +96,8 @@ UninstPage instfiles
 ; The stuff to install
 Section "main executable (required)"
 
+	;DetailPrint "tester de test"
+ 
   SectionIn RO     
   
   ; Set output path to the installation directory.
@@ -98,7 +113,7 @@ Section "main executable (required)"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayName" "simpleplainnote"  
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "UninstallString" '"$INSTDIR\uninstall.exe"'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "URLInfoAbout" "http://code.google.com/p/simpleplainnote/"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayVersion" "0.9.5"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayVersion" "${VERSION}"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
@@ -137,6 +152,7 @@ Section "Uninstall"
   RMDir "$SMPROGRAMS\simpleplainnote"
   ;warning deletes all notes.. 
   ;TODO: need to find out how to ASK for doing this.
+  
   SetShellVarContext current
   RMDir /r "$APPDATA\.simpleplainnote" 
   RMDir "$INSTDIR"  

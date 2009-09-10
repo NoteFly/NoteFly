@@ -40,7 +40,7 @@ namespace SimplePlainNote
         private Skin skin;
         //is transparent
         private bool transparency = false;
-
+        //flag is redraw is busy
         private bool redrawbusy = false;
         #if win32
         //for moving
@@ -94,9 +94,9 @@ namespace SimplePlainNote
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {                                      
             Button btn = (Button)sender;
-            if (notes.numnotes != 0)
-            {
-                int numbernotes = notes.numnotes;
+            int numbernotes = notes.NumNotes;
+            if (numbernotes != 0)
+            {                
                 for (int i = 1; i <= numbernotes; i++)
                 {
                     if (btn.Name == "btnNoteDel"+i)
@@ -149,7 +149,7 @@ namespace SimplePlainNote
         {
             CheckBox cbx = (CheckBox)sender;
             int n = Convert.ToInt32(cbx.Name) - 1;
-            if ((n <= notes.numnotes) && (n>=0))
+            if ((n <= notes.NumNotes) && (n>=0))
             {
                 if (notes.GetNotes[n].Visible == true)
                 {                    
@@ -166,7 +166,7 @@ namespace SimplePlainNote
         {
             pnlNotes.Controls.Clear();
             int ypos = 10;            
-            for (int curnote = 0; curnote < notes.numnotes; curnote++)
+            for (int curnote = 0; curnote < notes.NumNotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
                 int titlelength = notes.GetNotes[curnote].NoteTitle.Length;
@@ -274,11 +274,12 @@ namespace SimplePlainNote
 
         private void timerUpdateNotesList_Tick(object sender, EventArgs e)
         {
-            if (!redrawbusy)
+            if ((!redrawbusy) && (notes.NotesUpdated))
             {
-                redrawbusy = true;
+                redrawbusy = true;                
                 DrawNotesOverview();
                 redrawbusy = false;
+                notes.NotesUpdated = false;
             }
         }
 

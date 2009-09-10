@@ -69,15 +69,13 @@
             // 
             // tbTitle
             // 
-            this.tbTitle.AcceptsTab = true;
             this.tbTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.tbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbTitle.AutoCompleteCustomSource.AddRange(new string[] {
             "TODO: ",
+            "GO TO: ",
             "FIX: ",
-            "HACK: ",
-            "Go to ",
-            "Meeting"});
+            "MEETING: "});
             this.tbTitle.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbTitle.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbTitle.BackColor = System.Drawing.Color.Khaki;

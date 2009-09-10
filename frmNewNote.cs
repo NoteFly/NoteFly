@@ -196,7 +196,12 @@ namespace SimplePlainNote
             }
         }
 
-         private void tbTitle_KeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// Move to rtbNote
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbTitle_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -204,6 +209,9 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// do some syntax highlighting
+        /// </summary>
         private void checksyntax()
         {
             notes.CheckSyntax(notes.SyntaxHighlightEnabled, rtbNote);
@@ -212,23 +220,18 @@ namespace SimplePlainNote
         private void rtbNote_TextChanged(object sender, EventArgs e)
         {
             checksyntax();
-        }
-
-		#endregion Methods 
+        }		
 
         #if win32
         public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
-        #endif
-        
-        #if win32
+  
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
-                         int Msg, int wParam, int lParam);
+        int Msg, int wParam, int lParam);
         #endif
-
 
         #region highlight controls
         private void tbTitle_Enter(object sender, EventArgs e)
@@ -252,6 +255,11 @@ namespace SimplePlainNote
                 rtbNote.BackColor = skin.getObjColor(false, true, false);
             }
         }
+        /// <summary>
+        /// rtbNote is not selected anymore.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rtbNote_Leave(object sender, EventArgs e)
         {
             if (skin != null)
@@ -260,5 +268,7 @@ namespace SimplePlainNote
             }
         }
         #endregion
+
+        #endregion Methods
     } 
 }

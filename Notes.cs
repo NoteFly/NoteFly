@@ -14,10 +14,10 @@ namespace SimplePlainNote
         private List<frmNote> noteslst;
         private int defaultcolor = 1;
         private string notesavepath;
-
         private bool transparecy = false;
         private bool syntaxhighlight = false;
-        private bool twitterenabled = false;        
+        private bool twitterenabled = false;
+        private bool notesupdated = false;
        
 		#endregion Fields 
 
@@ -42,7 +42,7 @@ namespace SimplePlainNote
             }
         }
 
-        public int numnotes
+        public int NumNotes
         {
             get
             {
@@ -71,6 +71,18 @@ namespace SimplePlainNote
             get
             {
                 return this.twitterenabled;
+            }
+        }
+
+        public bool NotesUpdated
+        {
+            get
+            {
+                return this.notesupdated;
+            }
+            set
+            {
+                this.notesupdated = value;
             }
         }
 
@@ -127,13 +139,13 @@ namespace SimplePlainNote
         public void EditNewNote(int noteid)
         {
             int noteslistpos = noteid - 1;
-            if ((noteslistpos >= 0) && (noteslistpos <= numnotes))
+            if ((noteslistpos >= 0) && (noteslistpos <= this.NumNotes))
             {
                 string title = noteslst[noteid - 1].NoteTitle;
                 string content = noteslst[noteid - 1].NoteContent;
                 int color = noteslst[noteid - 1].NoteColor;                
                 frmNewNote createnewnote = new frmNewNote(this, color, noteid, title, content);
-                createnewnote.Show();
+                createnewnote.Show();                
             }
             else
             {
@@ -161,6 +173,8 @@ namespace SimplePlainNote
                 noteslst[notelstpos].Show(); 
             }
             noteslst[notelstpos].checkthings();
+
+            this.notesupdated = true;
             //noteslst[notelstpos].CheckSyntax(syntaxhighlight);
             //noteslst[notelstpos].CheckTwitter(twitterenabled);
         }

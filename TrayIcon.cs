@@ -73,32 +73,7 @@ namespace SimplePlainNote
         /// </summary>
         [STAThread]
         static void Main()
-        {
-            // Create new instance of UnhandledExceptionDlg
-            UnhandledExceptionDlg exDlg = new UnhandledExceptionDlg();
-            exDlg.RestartApp = false;
-            exDlg.OnShowErrorReport += delegate(object sender, SendExceptionClickEventArgs ar)
-            {
-                System.Windows.Forms.MessageBox.Show("Error report:\n" + ar.UnhandledException.Message + "\n" + ar.UnhandledException.StackTrace +
-                    "\n" + (ar.RestartApp ? "This App will be restarted." : "This App will be terminated!"));
-            };
-            // Implement your sending protocol here. You can use any information from System.Exception
-            exDlg.OnSendExceptionClick += delegate(object sender, SendExceptionClickEventArgs ar)
-            {
-                // User clicked on "Send Error Report" button:
-                if (ar.SendExceptionDetails)
-                {
-                    System.Windows.Forms.MessageBox.Show("paste error on new issue on http://code.google.com/p/simpleplainnote/issues/ Thanks for your effort.");
-                    Clipboard.SetText(ar.UnhandledException.StackTrace);
-                }
-                // User wants to restart the App:
-                if (ar.RestartApp)
-                {
-                    Console.WriteLine("The App will be restarted...");
-                    System.Diagnostics.Process.Start(System.Windows.Forms.Application.ExecutablePath);
-                }
-            };
-
+        {            
             components = new System.ComponentModel.Container();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);
@@ -192,8 +167,6 @@ namespace SimplePlainNote
             return color;
         }
 
-        #endregion Methods
-
         #region menu events
         static void Icon_Click(object sender, EventArgs e)
         {
@@ -231,5 +204,9 @@ namespace SimplePlainNote
             Application.Exit();
         }
         #endregion
+
+        #endregion Methods
+
+
     }
 }

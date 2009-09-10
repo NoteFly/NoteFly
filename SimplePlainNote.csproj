@@ -125,9 +125,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="exceptionhandling\UnhandledExDlgForm.resx">
-      <DependentUpon>UnhandledExDlgForm.cs</DependentUpon>
-    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -146,13 +143,6 @@
     </Compile>
     <Compile Include="Skin.cs" />
     <Compile Include="TextHighlight.cs" />
-    <Compile Include="exceptionhandling\UnhandledExceptionDlg.cs" />
-    <Compile Include="exceptionhandling\UnhandledExDlgForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="exceptionhandling\UnhandledExDlgForm.designer.cs">
-      <DependentUpon>UnhandledExDlgForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Twitter.cs" />
     <Compile Include="XmlHandler.cs" />
   </ItemGroup>
