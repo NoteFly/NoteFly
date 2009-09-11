@@ -1,4 +1,107 @@
-                         GNU GENERAL PUBLIC LICENSE
+<?xml version="1.0" ?>
+<XML_DIZ_INFO>
+	<MASTER_PAD_VERSION_INFO>
+		<MASTER_PAD_VERSION>3.01</MASTER_PAD_VERSION>
+		<MASTER_PAD_EDITOR>PADGen 3.0.1.38 http://www.padgen.org</MASTER_PAD_EDITOR>
+		<MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
+	</MASTER_PAD_VERSION_INFO>
+	<Company_Info>
+		<Company_Name>GNU</Company_Name>
+		<Address_1>none</Address_1>
+		<Address_2 />
+		<City_Town>none</City_Town>
+		<State_Province />
+		<Zip_Postal_Code />
+		<Country>none</Country>
+		<Company_WebSite_URL>http://code.google.com/p/simpleplainnote/</Company_WebSite_URL>
+		<Contact_Info>
+			<Author_First_Name>Tom</Author_First_Name>
+			<Author_Last_Name>Postma</Author_Last_Name>
+			<Author_Email>tomheefteenwebsite@hotmail.com</Author_Email>
+			<Contact_First_Name>Tom</Contact_First_Name>
+			<Contact_Last_Name>Postma</Contact_Last_Name>
+			<Contact_Email>tomheefteenwebsite@hotmail.com</Contact_Email>
+		</Contact_Info>
+		<Support_Info>
+			<Sales_Email>tomheefteenwebsite@hotmail.com</Sales_Email>
+			<Support_Email>tomheefteenwebsite@hotmail.com</Support_Email>
+			<General_Email>tomheefteenwebsite@hotmail.com</General_Email>
+			<Sales_Phone />
+			<Support_Phone />
+			<General_Phone />
+			<Fax_Phone />
+		</Support_Info>
+	</Company_Info>
+	<Program_Info>
+		<Program_Name>SimplePlainNote</Program_Name>
+		<Program_Version>0.9.5</Program_Version>
+		<Program_Release_Month>09</Program_Release_Month>
+		<Program_Release_Day>10</Program_Release_Day>
+		<Program_Release_Year>2009</Program_Release_Year>
+		<Program_Cost_Dollars />
+		<Program_Cost_Other_Code />
+		<Program_Cost_Other />
+		<Program_Type>Freeware</Program_Type>
+		<Program_Release_Status>Beta</Program_Release_Status>
+		<Program_Install_Support>Install and Uninstall</Program_Install_Support>
+		<Program_OS_Support>Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64</Program_OS_Support>
+		<Program_Language>English</Program_Language>
+		<Program_Change_Info />
+		<Program_Specific_Category>Utilities</Program_Specific_Category>
+		<Program_Category_Class>Desktop::Other</Program_Category_Class>
+		<Program_System_Requirements>.net framework 2.0</Program_System_Requirements>
+		<File_Info>
+			<File_Size_Bytes>82574</File_Size_Bytes>
+			<File_Size_K>80</File_Size_K>
+			<File_Size_MB>0.08</File_Size_MB>
+		</File_Info>
+		<Expire_Info>
+			<Has_Expire_Info>N</Has_Expire_Info>
+			<Expire_Count />
+			<Expire_Based_On>Days</Expire_Based_On>
+			<Expire_Other_Info />
+			<Expire_Month />
+			<Expire_Day />
+			<Expire_Year />
+		</Expire_Info>
+	</Program_Info>
+	<Program_Descriptions>
+		<English>
+			<Keywords>notes</Keywords>
+			<Char_Desc_45>A small note application</Char_Desc_45>
+			<Char_Desc_80>A very small colorful note taking application</Char_Desc_80>
+			<Char_Desc_250>A very small colorful note taking application.</Char_Desc_250>
+			<Char_Desc_450>A very small colorful note taking application. The setup is less than 100kb if .net framework 2.0/Mono is installed and this provide a lot of functionality.</Char_Desc_450>
+			<Char_Desc_2000>Features:
+-Very small application. (Less than 100kb setup) If .net framework 2.0/Mono is installed.
+-Change color of notes.
+-Make note stick on top.
+-Make notes transparent.
+-Create e-mail of note.
+-Send note to twitter.
+-Resize notes how big or small you want it.
+-Some syntax highlight for notes that have code.
+-Fully xml based</Char_Desc_2000>
+		</English>
+	</Program_Descriptions>
+	<Web_Info>
+		<Application_URLs>
+			<Application_Info_URL>http://code.google.com/p/simpleplainnote/</Application_Info_URL>
+			<Application_Order_URL />
+			<Application_Screenshot_URL>http://simpleplainnote.googlecode.com/svn/trunk/wiki/simpleplainnote_notes01.png</Application_Screenshot_URL>
+			<Application_Icon_URL>http://simpleplainnote.googlecode.com/svn/trunk/Resources/logo.png</Application_Icon_URL>
+			<Application_XML_File_URL>http://simpleplainnote.googlecode.com/svn/trunk/wiki/PAD_file.xml</Application_XML_File_URL>
+		</Application_URLs>
+		<Download_URLs>
+			<Primary_Download_URL>http://simpleplainnote.googlecode.com/files/SimplePlainNote_v0.9.5.exe</Primary_Download_URL>
+			<Secondary_Download_URL />
+			<Additional_Download_URL_1 />
+			<Additional_Download_URL_2 />
+		</Download_URLs>
+	</Web_Info>
+	<Permissions>
+		<Distribution_Permissions />
+		<EULA>                         GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991
 
  Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
@@ -277,57 +380,6 @@ YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER
 PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGES.
 
-		     END OF TERMS AND CONDITIONS
-
-	    How to Apply These Terms to Your New Programs
-
-  If you develop a new program, and you want it to be of the greatest
-possible use to the public, the best way to achieve this is to make it
-free software which everyone can redistribute and change under these terms.
-
-  To do so, attach the following notices to the program.  It is safest
-to attach them to the start of each source file to most effectively
-convey the exclusion of warranty; and each file should have at least
-the "copyright" line and a pointer to where the full notice is found.
-
-    <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) <year>  <name of author>
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
-Also add information on how to contact you by electronic and paper mail.
-
-If the program is interactive, make it output a short notice like this
-when it starts in an interactive mode:
-
-    Gnomovision version 69, Copyright (C) year name of author
-    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
-    This is free software, and you are welcome to redistribute it
-    under certain conditions; type `show c' for details.
-
-The hypothetical commands `show w' and `show c' should show the appropriate
-parts of the General Public License.  Of course, the commands you use may
-be called something other than `show w' and `show c'; they could even be
-mouse-clicks or menu items--whatever suits your program.
-
-You should also get your employer (if you work as a programmer) or your
-school, if any, to sign a "copyright disclaimer" for the program, if
-necessary.  Here is a sample; alter the names:
-
-  Yoyodyne, Inc., hereby disclaims all copyright interest in the program
-  `Gnomovision' (which makes passes at compilers) written by James Hacker.
-
-  <signature of Ty Coon>, 1 April 1989
-  Ty Coon, President of Vice
+		     END OF TERMS AND CONDITIONS</EULA>
+	</Permissions>
+</XML_DIZ_INFO>
