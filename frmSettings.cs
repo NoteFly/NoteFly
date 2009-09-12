@@ -100,10 +100,21 @@ namespace SimplePlainNote
                 MessageBox.Show("Settings advance: default emailadres not valid.");
                 tabAdvance.Select();
             }
+            else if (!Directory.Exists(tbNotesSavePath.Text))
+            {
+                MessageBox.Show("Settings advance: note save path does not exist.");
+                tabAdvance.Select();
+            }
             //everything looks okay            
             else
-            {
+            {               
+                string oldnotesavepath = getNotesSavePath();
+                if (tbNotesSavePath.Text != oldnotesavepath)
+                {
+                    MoveNotes(tbNotesSavePath.Text);
+                }
                 xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
+
                 #if win32
                 key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
@@ -245,8 +256,54 @@ namespace SimplePlainNote
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("sorry, this still needs to be done.");
+            
+            DialogResult dlgresult = folderBrowserDialog1.ShowDialog();
+            if (dlgresult == DialogResult.OK)
+            {
+                string newpathsavenotes = folderBrowserDialog1.SelectedPath;
+                
+                if (Directory.Exists(newpathsavenotes))
+                {
+                    this.tbNotesSavePath.Text = folderBrowserDialog1.SelectedPath;
+                }
+                else
+                {
+                    MessageBox.Show("Error: Directory does not exist. Please choice a valid directory.");                    
+                }                                               
+            }            
         }
+
+        /// <summary>
+        /// Move note files.
+        /// </summary>
+        /// <param name="newpathsavenotes"></param>
+        private void MoveNotes(string newpathsavenotes)
+        {            
+            bool errorshowed = false;
+            string oldpathsavenotes = getNotesSavePath();
+            int id = 1;
+            while (File.Exists(Path.Combine(oldpathsavenotes, id + ".xml")) == true)
+            {
+                if (Directory.Exists(newpathsavenotes))
+                {
+                    string oldfile = Path.Combine(oldpathsavenotes, id + ".xml");
+                    string newfile = Path.Combine(newpathsavenotes, id + ".xml");
+                    if (!File.Exists(newfile))
+                    {
+                        File.Move(oldfile, newfile);
+                    }
+                    else
+                    {
+                        if (!errorshowed)
+                        {
+                            MessageBox.Show("Error: File " + id + ".xml already exist in new folder.");
+                            errorshowed = true;
+                        }
+                    }
+                }
+            }
+        }
+
 
 
 

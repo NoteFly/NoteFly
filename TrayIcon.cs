@@ -42,7 +42,7 @@ namespace SimplePlainNote
         static ToolStripMenuItem MenuExit;
         static ContextMenuStrip MenuTrayIcon;
         static Notes notes;
-        static bool transparency = true;        
+        static bool transparency = true;
 
         #endregion Fields
 
@@ -90,8 +90,7 @@ namespace SimplePlainNote
                 }
                 else if (System.Environment.GetCommandLineArgs()[1] == "/firstrun")
                 {
-                    firstrun = true;
-                    //notes.DrawNewNote("howdy", "first note!", 0);
+                    firstrun = true;                    
                 }
             }
 

@@ -58,14 +58,13 @@
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
-            this.eventLog1 = new System.Diagnostics.EventLog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).BeginInit();
             this.tabTwitter.SuspendLayout();
             this.tabAdvance.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
             // 
             // cbxTransparecy
@@ -234,10 +233,12 @@
             // 
             // tabControlSettings
             // 
+            this.tabControlSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlSettings.Controls.Add(this.tabAppearance);
             this.tabControlSettings.Controls.Add(this.tabTwitter);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
-            this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
@@ -419,9 +420,9 @@
             this.lblTextNoteLocation.AutoSize = true;
             this.lblTextNoteLocation.Location = new System.Drawing.Point(10, 46);
             this.lblTextNoteLocation.Name = "lblTextNoteLocation";
-            this.lblTextNoteLocation.Size = new System.Drawing.Size(176, 13);
+            this.lblTextNoteLocation.Size = new System.Drawing.Size(73, 13);
             this.lblTextNoteLocation.TabIndex = 16;
-            this.lblTextNoteLocation.Text = "save notes in: (not yet implemented)";
+            this.lblTextNoteLocation.Text = "save notes in:";
             // 
             // tbNotesSavePath
             // 
@@ -430,11 +431,6 @@
             this.tbNotesSavePath.Size = new System.Drawing.Size(248, 20);
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
-            // 
-            // eventLog1
-            // 
-            this.eventLog1.Log = "Application";
-            this.eventLog1.SynchronizingObject = this;
             // 
             // frmSettings
             // 
@@ -457,7 +453,6 @@
             this.tabTwitter.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -490,10 +485,10 @@
         private System.Windows.Forms.ComboBox cbxFontNoteContent;
         private System.Windows.Forms.Label lbWarningTwitterPassword;
         private System.Windows.Forms.CheckBox cbxStartOnBootWindows;
-        private System.Diagnostics.EventLog eventLog1;
         private System.Windows.Forms.NumericUpDown numFontSize;
         private System.Windows.Forms.Label lblTextFontSize;
         private System.Windows.Forms.Label lblTextpt;
         private System.Windows.Forms.CheckBox cbxConfirmLink;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

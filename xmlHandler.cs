@@ -13,12 +13,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
+#define win32
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.IO;
-using System.Windows.Forms;
 
 namespace SimplePlainNote
 {
@@ -26,7 +27,8 @@ namespace SimplePlainNote
     {
         #region datavelden
         private string filenm;
-        private string appdatafolder;
+        //private string appdatafolder;
+        private bool issetting;
         private XmlTextReader objXmlTextReader;
         private XmlTextWriter objXmlTextWriter;
         #endregion
@@ -34,37 +36,38 @@ namespace SimplePlainNote
         #region constructor
         public xmlHandler(bool issetting)
         {
-            if (issetting == true)
-            {
-                CheckSettings();
-            }
-            else
-            {
-                MessageBox.Show("Filename expected.");
-            }
-        }
-
-        public xmlHandler(bool issetting, string filenm)
-        {
-            if (issetting == false)
-            {
+            this.issetting = issetting;
+            if (issetting)
+            {                
+                string appdatafolder = "";
+                #if win32
                 appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
+                #elif linux
+                appdatafolder = "~\\.simpleplainnote\\"
+                #elif mac
+                appdatafolder = "????"
+                #endif
+
                 if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
-                this.filenm = filenm;
+                this.filenm = Path.Combine(appdatafolder, "settings.xml");                
+                if (File.Exists(filenm) == false)
+                {
+                    WriteSettings(true, 95, 0, true, "Verdana", 10, appdatafolder, "adres@domain.com", true, "", "");
+                }                                
             }
             else
             {
-                CheckSettings();
+                throw new Exception("expected true for settings file.");
             }
         }
 
-        #endregion
-
-        #region properties
-        public string AppDataFolder
-        {
-            get { return this.appdatafolder; }
+        public xmlHandler(string filenm)
+        {            
+            //appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
+            //if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
+            this.filenm = filenm;            
         }
+
         #endregion
 
         #region methoden
@@ -76,28 +79,17 @@ namespace SimplePlainNote
         /// <param name="numcolor"></param>
         /// <returns>true if succeed.</returns>
         /// 
-
-        private void CheckSettings()
-        {
-            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
-            if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
-            this.filenm = "settings.xml";
-            if (File.Exists(appdatafolder + filenm) == false)
-            {
-                WriteSettings(true, 95, 0, true, "Verdana", 10, appdatafolder, "adres@domain.com", true, "", "");
-            }         
-        }
-
         public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
         {
+            if (!this.issetting)
+            {
+                throw new Exception("not settings file");
+            }
+
             try
             {
-                if (CheckFile())
-                {
-                    return false;
-                }
 
-                objXmlTextWriter = new XmlTextWriter(appdatafolder + filenm, null);
+                objXmlTextWriter = new XmlTextWriter(filenm, null);
                 objXmlTextWriter.Formatting = Formatting.Indented;
 
                 objXmlTextWriter.WriteStartDocument();
@@ -198,11 +190,6 @@ namespace SimplePlainNote
                 objXmlTextWriter.Flush();
                 objXmlTextWriter.Close();
 
-                if (CheckFile())
-                {
-                    return false;
-                }
-
                 return true;
             }
             catch (FileNotFoundException)
@@ -221,20 +208,10 @@ namespace SimplePlainNote
 
         public bool WriteNote(bool visible, bool ontop, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
+            if (issetting) { throw new Exception("This is a settings file, cannot write a note of it."); }
             try
             {
-                if (Directory.Exists(appdatafolder) == false)
-                {
-                    try
-                    {
-                        Directory.CreateDirectory(appdatafolder);
-                    }
-                    catch (DirectoryNotFoundException exc)
-                    {
-                        System.Windows.Forms.MessageBox.Show("error " + exc.Message);
-                    }
-                }
-                objXmlTextWriter = new XmlTextWriter(appdatafolder + filenm, null);
+                objXmlTextWriter = new XmlTextWriter(this.filenm, null);
 
                 objXmlTextWriter.Formatting = Formatting.Indented;
 
@@ -304,6 +281,7 @@ namespace SimplePlainNote
             }
         }
 
+        /*
         /// <summary>
         /// Does some checks on the file
         /// - Is the file empty?
@@ -360,6 +338,7 @@ namespace SimplePlainNote
                 return false;
             }
         }
+         */
 
         /// <summary>
         /// Get a xml node
@@ -370,29 +349,39 @@ namespace SimplePlainNote
         {
             try
             {
-                objXmlTextReader = new XmlTextReader(appdatafolder + filenm);
+                objXmlTextReader = new XmlTextReader(filenm);
             }
             catch (FileLoadException fileloadexc)
-            {
-                MessageBox.Show("Error: " + fileloadexc.Message);
+            {                
                 return "";
             }
             catch (FileNotFoundException filenotfoundexc)
-            {
-                MessageBox.Show("Error: " + filenotfoundexc.Message);
+            {                
                 return "";
             }
 
             if (objXmlTextReader == null)
             {
-                MessageBox.Show("Error: objXmlTextReader is null.");
+                //MessageBox.Show("Error: objXmlTextReader is null.");
             }
             while (objXmlTextReader.Read())
             {
                 if (objXmlTextReader.Name == nodename)
                 {
-                    string s = objXmlTextReader.ReadElementContentAsString();
-                    objXmlTextReader.Close();
+                    string s = "";
+                    try
+                    {
+                        s = objXmlTextReader.ReadElementContentAsString();
+                    }
+                    catch (Exception)
+                    {
+                        //todo
+                        s = "";
+                    }
+                    finally
+                    {
+                        objXmlTextReader.Close();
+                    }                                        
                     return s;
                 }
             }
@@ -407,26 +396,29 @@ namespace SimplePlainNote
         /// <returns>return node as integer, -1 if error</returns>
         public int getXMLnodeAsInt(string nodename)
         {            
-            objXmlTextReader = new XmlTextReader(appdatafolder + filenm);
+            objXmlTextReader = new XmlTextReader(filenm);
 
             while (objXmlTextReader.Read())
             {
                 if (objXmlTextReader.Name == nodename)
-                {
+                {                    
                     try
                     {
                         int n = objXmlTextReader.ReadElementContentAsInt();
                         objXmlTextReader.Close();
                         return n;
                     }
-                    catch (InvalidCastException castexc)
+                    catch (InvalidCastException)
+                    {
+                        return -1;
+                    }
+                    catch (FormatException)
+                    {
+                        return -1;                        
+                    }
+                    finally
                     {
                         objXmlTextReader.Close();
-                        MessageBox.Show("Error casting. "+castexc.Message);
-                    }
-                    catch (FormatException formatexc)
-                    {
-                        MessageBox.Show("Error format. "+formatexc.Message);
                     }
                 }
             }
@@ -434,9 +426,14 @@ namespace SimplePlainNote
             return -1;
         }
 
+        /// <summary>
+        /// get xml node boolean valaue
+        /// </summary>
+        /// <param name="nodename"></param>
+        /// <returns></returns>
         public bool getXMLnodeAsBool(string nodename)
         {
-            objXmlTextReader = new XmlTextReader(appdatafolder + filenm);
+            objXmlTextReader = new XmlTextReader(filenm);
 
             while (objXmlTextReader.Read())
             {
@@ -450,12 +447,17 @@ namespace SimplePlainNote
                     }
                     catch (InvalidCastException castexc)
                     {
-                        objXmlTextReader.Close();
-                        MessageBox.Show("Error casting. " + castexc.Message);
+                        //todo                        
+                        return false;
                     }
                     catch (FormatException formatexc)
                     {
-                        MessageBox.Show("Error format. " + formatexc.Message);
+                        //todo
+                        return false;
+                    }
+                    finally
+                    {
+                        objXmlTextReader.Close();
                     }
                 }
             }

@@ -493,7 +493,8 @@ namespace SimplePlainNote
                 string numcolor = Convert.ToString(this.notecolor);
                 if ((this.locX >= 0) && (this.locY >= 0))
                 {
-                    xmlHandler updateposnote = new xmlHandler(false, this.id + ".xml");                    
+                    string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
+                    xmlHandler updateposnote = new xmlHandler(notefile);                    
                     updateposnote.WriteNote(notevisible,this.TopMost,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
                 }
                 else
@@ -523,7 +524,8 @@ namespace SimplePlainNote
                 {
                     curitem.Checked = true;
                     notecolor = i;
-                    xmlHandler savenotecolor = new xmlHandler(false, this.id + ".xml");
+                    string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
+                    xmlHandler savenotecolor = new xmlHandler(notefile);
                     savenotecolor.WriteNote(notevisible, OnTopToolStripMenuItem.Checked, Convert.ToString(notecolor), this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
                 }
                 else

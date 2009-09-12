@@ -100,6 +100,14 @@ namespace SimplePlainNote
             }
         }
 
+        public string NoteSavePath
+        {
+            get
+            {
+                return this.notesavepath;
+            }
+        }
+
 		#endregion Properties 
 
 		#region Methods (8) 
@@ -203,6 +211,7 @@ namespace SimplePlainNote
         public void SetSettings()
         {
             xmlHandler getSettings = new xmlHandler(true);
+
             this.defaultcolor = getSettings.getXMLnodeAsInt("defaultcolor");
             if (getSettings.getXMLnodeAsBool("transparecy") == true)
             {
@@ -249,10 +258,17 @@ namespace SimplePlainNote
             DateTime starttime = DateTime.Now;
             #endif                        
             
-            int id = 1;            
-            while (File.Exists( Path.Combine(notesavepath, id+".xml") ) == true)
+            if (!Directory.Exists(this.notesavepath))
+            {
+                MessageBox.Show("Error: folder with notes does not exist");
+                return;
+            }
+
+            int id = 1;
+            string notefile = Path.Combine(this.notesavepath, id + ".xml");
+            while (File.Exists(notefile) == true)
             {                
-                xmlHandler parserNote = new xmlHandler(false, id + ".xml");
+                xmlHandler parserNote = new xmlHandler(notefile);
 
                 bool visible = parserNote.getXMLnodeAsBool("visible");
                 bool ontop = parserNote.getXMLnodeAsBool("ontop");
@@ -266,7 +282,9 @@ namespace SimplePlainNote
 
                 noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
 
-                id++;                
+                id++;
+                notefile = Path.Combine(notesavepath, id + ".xml");
+                
                 if (id > 500) { MessageBox.Show("Error: Too many notes"); return; }
             }
             if (firstrun)
@@ -293,9 +311,9 @@ namespace SimplePlainNote
         /// <param name="text"></param>
         /// <returns>filepath of the created note.</returns>
         private string SaveNewNote(int id, string title, string text, string numcolor)
-        {            
-            string notefile = id + ".xml";
-            xmlHandler xmlnote = new xmlHandler(false, notefile);            
+        {
+            string notefile = Path.Combine(notesavepath, id + ".xml");
+            xmlHandler xmlnote = new xmlHandler(notefile);            
             if (xmlnote.WriteNote(true, false, numcolor, title, text, 10, 10, 240, 240) == false)
             {
                 MessageBox.Show("Error writing note.");
