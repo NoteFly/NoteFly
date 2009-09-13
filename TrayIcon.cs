@@ -205,7 +205,5 @@ namespace SimplePlainNote
         #endregion
 
         #endregion Methods
-
-
     }
 }

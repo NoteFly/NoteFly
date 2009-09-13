@@ -27,7 +27,7 @@ namespace SimplePlainNote
     {
         #region datavelden
         private string filenm;
-        //private string appdatafolder;
+        private string appdatafolder = "";
         private bool issetting;
         private XmlTextReader objXmlTextReader;
         private XmlTextWriter objXmlTextWriter;
@@ -36,18 +36,10 @@ namespace SimplePlainNote
         #region constructor
         public xmlHandler(bool issetting)
         {
+            SetAppdataFolder();
             this.issetting = issetting;
             if (issetting)
-            {                
-                string appdatafolder = "";
-                #if win32
-                appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
-                #elif linux
-                appdatafolder = "~\\.simpleplainnote\\"
-                #elif mac
-                appdatafolder = "????"
-                #endif
-
+            {                                
                 if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
                 this.filenm = Path.Combine(appdatafolder, "settings.xml");                
                 if (File.Exists(filenm) == false)
@@ -55,22 +47,41 @@ namespace SimplePlainNote
                     WriteSettings(true, 95, 0, true, "Verdana", 10, appdatafolder, "adres@domain.com", true, "", "");
                 }                                
             }
-            else
-            {
-                throw new Exception("expected true for settings file.");
-            }
         }
 
         public xmlHandler(string filenm)
-        {            
-            //appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
-            //if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
+        {
+            SetAppdataFolder();
             this.filenm = filenm;            
         }
 
         #endregion
 
+        public string AppDataFolder
+        {
+            get
+            {
+                return this.appdatafolder;
+            }
+        }
+            
+
         #region methoden
+
+        /// <summary>
+        /// find where the application data folder for this programme is.
+        /// </summary>
+        private void SetAppdataFolder()
+        {
+            #if win32
+            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
+            #elif linux
+            appdatafolder = "~\\.simpleplainnote\\"
+            #elif mac
+            appdatafolder = "????"
+            #endif
+        }
+
         /// <summary>
         /// Write settings
         /// </summary>
@@ -86,8 +97,6 @@ namespace SimplePlainNote
                 throw new Exception("not settings file");
             }
 
-            try
-            {
 
                 objXmlTextWriter = new XmlTextWriter(filenm, null);
                 objXmlTextWriter.Formatting = Formatting.Indented;
@@ -136,8 +145,7 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteStartElement("fontcontent");
                 objXmlTextWriter.WriteString(fontcontent);
                 objXmlTextWriter.WriteEndElement();
-
-                //if (fontsize == null) { throw new Exception("fontsize not set."); }
+                
                 objXmlTextWriter.WriteStartElement("fontsize");
                 objXmlTextWriter.WriteString(Convert.ToString(fontsize));
                 objXmlTextWriter.WriteEndElement(); 
@@ -190,27 +198,14 @@ namespace SimplePlainNote
                 objXmlTextWriter.Flush();
                 objXmlTextWriter.Close();
 
-                return true;
-            }
-            catch (FileNotFoundException)
-            {
-                return false;
-            }
-            catch (IOException)
-            {
-                return false;
-            }
-            catch (XmlException)
-            {
-                return false;
-            }
+                return true;            
+
         }
 
         public bool WriteNote(bool visible, bool ontop, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
             if (issetting) { throw new Exception("This is a settings file, cannot write a note of it."); }
-            try
-            {
+
                 objXmlTextWriter = new XmlTextWriter(this.filenm, null);
 
                 objXmlTextWriter.Formatting = Formatting.Indented;
@@ -273,12 +268,7 @@ namespace SimplePlainNote
                 objXmlTextWriter.Flush();
                 objXmlTextWriter.Close();
 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+                return true;            
         }
 
         /*
@@ -352,11 +342,13 @@ namespace SimplePlainNote
                 objXmlTextReader = new XmlTextReader(filenm);
             }
             catch (FileLoadException fileloadexc)
-            {                
+            {
+                System.Windows.Forms.MessageBox.Show("error: "+fileloadexc.Message);
                 return "";
             }
             catch (FileNotFoundException filenotfoundexc)
-            {                
+            {
+                System.Windows.Forms.MessageBox.Show("error: " + filenotfoundexc.Message);   
                 return "";
             }
 
@@ -373,9 +365,9 @@ namespace SimplePlainNote
                     {
                         s = objXmlTextReader.ReadElementContentAsString();
                     }
-                    catch (Exception)
+                    catch (InvalidCastException invalidcastexc)
                     {
-                        //todo
+                        System.Windows.Forms.MessageBox.Show("Error: "+invalidcastexc.Message);
                         s = "";
                     }
                     finally
@@ -408,13 +400,10 @@ namespace SimplePlainNote
                         objXmlTextReader.Close();
                         return n;
                     }
-                    catch (InvalidCastException)
+                    catch (InvalidCastException invalidcastexc)
                     {
+                        System.Windows.Forms.MessageBox.Show("error: " + invalidcastexc.Message);   
                         return -1;
-                    }
-                    catch (FormatException)
-                    {
-                        return -1;                        
                     }
                     finally
                     {
@@ -445,14 +434,9 @@ namespace SimplePlainNote
                         objXmlTextReader.Close();
                         return nodevalue;
                     }
-                    catch (InvalidCastException castexc)
+                    catch (InvalidCastException invalidcastexc)
                     {
-                        //todo                        
-                        return false;
-                    }
-                    catch (FormatException formatexc)
-                    {
-                        //todo
+                        System.Windows.Forms.MessageBox.Show("error: "+invalidcastexc.Message);
                         return false;
                     }
                     finally

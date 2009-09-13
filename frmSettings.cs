@@ -158,7 +158,7 @@ namespace SimplePlainNote
             }
             string curfont = xmlsettings.getXMLnode("fontcontent");
             if (String.IsNullOrEmpty(curfont))
-            {
+            {                
                 MessageBox.Show("Error: Current font not found.");                
             }
             else

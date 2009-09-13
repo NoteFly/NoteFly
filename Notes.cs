@@ -260,8 +260,19 @@ namespace SimplePlainNote
             
             if (!Directory.Exists(this.notesavepath))
             {
-                MessageBox.Show("Error: folder with notes does not exist");
-                return;
+                DialogResult result = MessageBox.Show("Error: Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?", "note folder doesn't exist", MessageBoxButtons.YesNo,MessageBoxIcon.Error);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+                else
+                {
+                    xmlHandler getAppdata = new xmlHandler(false);
+                    this.notesavepath = getAppdata.AppDataFolder;
+                    #if DEBUG
+                    starttime = DateTime.Now;
+                    #endif 
+                }
             }
 
             int id = 1;
