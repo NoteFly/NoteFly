@@ -23,30 +23,30 @@ namespace SimplePlainNote
 {
     public class Notes
     {
-		#region Fields (6) 
+        #region Fields (7)
 
-        private List<frmNote> noteslst;
         private int defaultcolor = 1;
         private string notesavepath;
-        private bool transparecy = false;
-        private bool syntaxhighlight = false;
-        private bool twitterenabled = false;
+        private List<frmNote> noteslst;
         private bool notesupdated = false;
-       
-		#endregion Fields 
+        private bool syntaxhighlight = false;
+        private bool transparecy = false;
+        private bool twitterenabled = false;
 
-		#region Constructors (1) 
+        #endregion Fields
+
+        #region Constructors (1)
 
         public Notes(bool firstrun)
         {
-            noteslst = new List<frmNote>();            
-            SetSettings();            
-            LoadNotes(firstrun);            
+            noteslst = new List<frmNote>();
+            SetSettings();
+            LoadNotes(firstrun);
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (5) 
+        #region Properties (7)
 
         public List<frmNote> GetNotes
         {
@@ -56,35 +56,11 @@ namespace SimplePlainNote
             }
         }
 
-        public int NumNotes
+        public string NoteSavePath
         {
             get
             {
-                return this.noteslst.Count;
-            }
-        }
-
-        public bool Transparency
-        {
-            get
-            {
-                return this.transparecy;
-            }
-        }
-
-        public bool SyntaxHighlightEnabled
-        {
-            get 
-            {
-                return this.syntaxhighlight;
-            }
-        }
-
-        public bool TwitterEnabled
-        {
-            get
-            {
-                return this.twitterenabled;
+                return this.notesavepath;
             }
         }
 
@@ -100,43 +76,48 @@ namespace SimplePlainNote
             }
         }
 
-        public string NoteSavePath
+        public UInt16 NumNotes
         {
             get
             {
-                return this.notesavepath;
+                UInt16 numnotes = Convert.ToUInt16(this.noteslst.Count);
+                if (numnotes > 255)
+                {
+                    throw new Exception("error too many notes.");
+                }
+                return numnotes;
             }
         }
 
-		#endregion Properties 
-
-		#region Methods (8) 
-
-		// Public Methods (4) 
-
-        /// <summary>
-        /// Draws a new note and saves the xml note file.(call to SaveNewNote)
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="content"></param>
-        /// <param name="notecolor"></param>
-        public void DrawNewNote(string title, string content, int notecolor)
+        public bool SyntaxHighlightEnabled
         {
-            try
-            {           
-                int newid = noteslst.Count + 1;
-                string notefilenm = SaveNewNote(newid, title, content, defaultcolor.ToString());
-                if (String.IsNullOrEmpty(notefilenm)) { return; }
-                frmNote newnote = new frmNote(this, newid, title, content, notecolor);
-                noteslst.Add(newnote);
-                newnote.StartPosition = FormStartPosition.Manual;                
-                newnote.Show();
-            }
-            catch (IndexOutOfRangeException indexexc)
+            get
             {
-                MessageBox.Show("Fout: " + indexexc.Message);
+                return this.syntaxhighlight;
             }
         }
+
+        public bool Transparency
+        {
+            get
+            {
+                return this.transparecy;
+            }
+        }
+
+        public bool TwitterEnabled
+        {
+            get
+            {
+                return this.twitterenabled;
+            }
+        }
+
+        #endregion Properties
+
+        #region Methods (10)
+
+        // Public Methods (6) 
 
         /// <summary>
         /// Check syntax, use TextHighlight class too.
@@ -149,8 +130,8 @@ namespace SimplePlainNote
             {
                 TextHighlight texthighlight = new TextHighlight();
 
-                int selPos = rtb.SelectionStart; 
-                               
+                int selPos = rtb.SelectionStart;
+
                 foreach (System.Text.RegularExpressions.Match keyWordMatch in texthighlight.getRegexHTML.Matches(rtb.Text))
                 {
                     rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
@@ -161,6 +142,31 @@ namespace SimplePlainNote
                 rtb.DeselectAll();
             }
         }
+
+        /// <summary>
+        /// Draws a new note and saves the xml note file.(call to SaveNewNote)
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="content"></param>
+        /// <param name="notecolor"></param>
+        public void DrawNewNote(string title, string content, int notecolor)
+        {
+            try
+            {
+                UInt16 newid = Convert.ToUInt16(noteslst.Count + 1);
+                string notefilenm = SaveNewNote(newid, title, content, defaultcolor.ToString());
+                if (String.IsNullOrEmpty(notefilenm)) { return; }
+                frmNote newnote = new frmNote(this, newid, title, content, notecolor);
+                noteslst.Add(newnote);
+                newnote.StartPosition = FormStartPosition.Manual;
+                newnote.Show();
+            }
+            catch (IndexOutOfRangeException indexexc)
+            {
+                MessageBox.Show("Fout: " + indexexc.Message);
+            }
+        }
+
         /// <summary>
         /// Edit a note.
         /// </summary>
@@ -172,37 +178,15 @@ namespace SimplePlainNote
             {
                 string title = noteslst[noteid - 1].NoteTitle;
                 string content = noteslst[noteid - 1].NoteContent;
-                int color = noteslst[noteid - 1].NoteColor;                
+                int color = noteslst[noteid - 1].NoteColor;
                 frmNewNote createnewnote = new frmNewNote(this, color, noteid, title, content);
-                createnewnote.Show();                
+                createnewnote.Show();
             }
             else
             {
-                throw new Exception("Error: note not found in memory.");                
+                throw new Exception("Error: note not found in memory.");
             }
 
-        }
-
-        public void UpdateAllFonts()
-        {            
-            
-            foreach (frmNote curfrmnote in noteslst)
-            {
-                curfrmnote.PaintColorNote();
-            }
-        }
-
-        public void UpdateNote(int noteid, string title, string content, bool visible)
-        {
-            int notelstpos = noteid - 1;
-            noteslst[notelstpos].NoteTitle = title;
-            noteslst[notelstpos].NoteContent = content;
-            noteslst[notelstpos].Visible = visible;
-            if (visible) { 
-                noteslst[notelstpos].Show(); 
-            }
-            noteslst[notelstpos].checkthings();
-            this.notesupdated = true;     
         }
 
         /// <summary>
@@ -225,7 +209,47 @@ namespace SimplePlainNote
             this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
         }
 
-		// Private Methods (4)
+        public void UpdateAllFonts()
+        {
+
+            foreach (frmNote curfrmnote in noteslst)
+            {
+                curfrmnote.PaintColorNote();
+            }
+        }
+
+        public void UpdateNote(int noteid, string title, string content, bool visible)
+        {
+            int notelstpos = noteid - 1;
+            noteslst[notelstpos].NoteTitle = title;
+            noteslst[notelstpos].NoteContent = content;
+            noteslst[notelstpos].Visible = visible;
+            if (visible)
+            {
+                noteslst[notelstpos].Show();
+            }
+            noteslst[notelstpos].checkthings();
+            this.notesupdated = true;
+        }
+        // Private Methods (4) 
+
+        /// <summary>
+        /// This method set a limit to how many notes can be loaded.
+        /// This is to prevent a hang.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>true when limit is reached.</returns>
+        private bool CheckLimitNotes(int id)
+        {
+            if (id > 255)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Create a note GUI.
@@ -236,9 +260,10 @@ namespace SimplePlainNote
         private frmNote CreateNote(bool visible, bool ontop, string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
-            {                
-                int newid = noteslst.Count + 1;
+            {
+                UInt16 newid = Convert.ToUInt16(noteslst.Count + 1);
                 frmNote newnote = new frmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewith, noteheight);
+                newnote.FormBorderStyle = FormBorderStyle.None;
                 if (visible)
                 {
                     newnote.Show();
@@ -252,33 +277,37 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Loads all notes.
+        /// </summary>
+        /// <param name="firstrun"></param>
         private void LoadNotes(bool firstrun)
         {
             #if DEBUG
             DateTime starttime = DateTime.Now;
-            #endif                        
-            
+            #endif
+
             if (!Directory.Exists(this.notesavepath))
             {
-                DialogResult result = MessageBox.Show("Error: Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?", "note folder doesn't exist", MessageBoxButtons.YesNo,MessageBoxIcon.Error);
+                DialogResult result = MessageBox.Show("Error: Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?", "note folder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
                     return;
                 }
                 else
                 {
-                    xmlHandler getAppdata = new xmlHandler(false);
+                    xmlHandler getAppdata = new xmlHandler(true);
                     this.notesavepath = getAppdata.AppDataFolder;
                     #if DEBUG
                     starttime = DateTime.Now;
-                    #endif 
+                    #endif
                 }
             }
 
-            int id = 1;
+            UInt16 id = 1;
             string notefile = Path.Combine(this.notesavepath, id + ".xml");
             while (File.Exists(notefile) == true)
-            {                
+            {
                 xmlHandler parserNote = new xmlHandler(notefile);
 
                 bool visible = parserNote.getXMLnodeAsBool("visible");
@@ -295,23 +324,26 @@ namespace SimplePlainNote
 
                 id++;
                 notefile = Path.Combine(notesavepath, id + ".xml");
-                
-                if (id > 500) { MessageBox.Show("Error: Too many notes"); return; }
+
+                if (CheckLimitNotes(id)) { MessageBox.Show("Error: Too many notes to load. More than 500 notes."); return; }
             }
             if (firstrun)
             {
                 int tipnotewidth = 280;
                 int tipnoteheight = 240;
-                int tipnoteposx = (Screen.PrimaryScreen.WorkingArea.Width/2)-(tipnotewidth/2);
-                int tipnoteposy = (Screen.PrimaryScreen.WorkingArea.Height/2)-(tipnoteheight/2);
-                noteslst.Add(CreateNote(true, false, "first example note", "This is a example note.\r\nYou can change color of this note by rightclicking this note.\r\nYou can delete this note, by rightclicking the systray icon choice manage note and then press delete note.\r\nBy clicking on the cross of this note. This note will hiden.\r\nYou can get it back with the manage notes window.",0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+                int tipnoteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2);
+                int tipnoteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2);
+                noteslst.Add(CreateNote(true, false, "first example note", "This is a example note.\r\nYou can change color of this note by rightclicking this note.\r\nYou can delete this note, by rightclicking the systray icon choice manage note and then press delete note.\r\nBy clicking on the cross of this note. This note will hiden.\r\nYou can get it back with the manage notes window.", 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
             }
 
-            #if DEBUG
+#if DEBUG
+            //LoadNotesStressTest(100);
+
+            //no good.
             DateTime endtime = DateTime.Now;
             TimeSpan debugtime = endtime - starttime;
             MessageBox.Show("loading notes time: " + debugtime.Milliseconds + " ms\r\n " + debugtime.Ticks + " ticks");
-            #endif         
+#endif
         }
 
         /// <summary>
@@ -324,7 +356,7 @@ namespace SimplePlainNote
         private string SaveNewNote(int id, string title, string text, string numcolor)
         {
             string notefile = Path.Combine(notesavepath, id + ".xml");
-            xmlHandler xmlnote = new xmlHandler(notefile);            
+            xmlHandler xmlnote = new xmlHandler(notefile);
             if (xmlnote.WriteNote(true, false, numcolor, title, text, 10, 10, 240, 240) == false)
             {
                 MessageBox.Show("Error writing note.");
@@ -333,6 +365,35 @@ namespace SimplePlainNote
             return notefile;
         }
 
-		#endregion Methods 
+        #endregion Methods
+
+#if DEBUG
+        /// <summary>
+        /// Mthode that creates a lot of notes for stress testing this app.
+        /// </summary>
+        /// <param name="maxnotes"></param>
+        private void LoadNotesStressTest(int maxnotes)
+        {
+            Random ran = new Random();
+
+            for (int id = 1; id <= maxnotes; id++)
+            {
+                bool visible = true;
+                bool ontop = false;
+                string title = "test nr." + id;
+                string content = "This is a stress test of creating a lot of notes, to see how fast or slow it loads." +
+                                 "warning: To preven a note from saving don't move them!";
+                int notecolor = ran.Next(0, 6);
+                int noteLocX = ran.Next(0, 360);
+                int noteLocY = ran.Next(0, 240);
+                int notewidth = 180;
+                int noteheight = 160;
+
+                noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
+
+                if (CheckLimitNotes(id)) { MessageBox.Show("Limit reached."); }
+            }
+        }
+#endif
     }
 }

@@ -32,7 +32,7 @@ namespace SimplePlainNote
 		#region Fields (12)  
         public Notes notes;
         private Skin skin;        
-        private int id;
+        private UInt16 id;
         private int locX;
         private int locY;
         private string note;
@@ -49,7 +49,7 @@ namespace SimplePlainNote
 
 		#region Constructors (2) 
 
-        public frmNote(Notes notes, int id, bool visible, bool ontop, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
+        public frmNote(Notes notes, UInt16 id, bool visible, bool ontop, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             this.notes = notes;
             this.skin = new Skin(notecolor);
@@ -104,7 +104,7 @@ namespace SimplePlainNote
             }
         }
 
-        public frmNote(Notes notes, int id, string title, string note, int notecolor)
+        public frmNote(Notes notes, UInt16 id, string title, string note, int notecolor)
         {
             this.skin = new Skin(notecolor);
             this.id = id;
@@ -133,7 +133,7 @@ namespace SimplePlainNote
 
 		#region Properties (5) 
        
-        public int NoteID
+        public UInt16 NoteID
         {
             get { return id; }
             set { this.id = value; }

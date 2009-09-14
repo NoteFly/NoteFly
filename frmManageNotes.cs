@@ -33,21 +33,17 @@ namespace SimplePlainNote
     /// </summary>
     public partial class frmManageNotes : Form
     {
-		#region Fields (5) 
+		#region Fields (4) 
+
         //list of notes
         private Notes notes;
+        //flag is redraw is busy
+        private bool redrawbusy = false;
         //skin colors etc.
         private Skin skin;
         //is transparent
         private bool transparency = false;
-        //flag is redraw is busy
-        private bool redrawbusy = false;
-        #if win32
-        //for moving
-        public const int HT_CAPTION = 0x2;
-        //for moving
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        #endif
+
 		#endregion Fields 
 
 		#region Constructors (1) 
@@ -59,27 +55,18 @@ namespace SimplePlainNote
         public frmManageNotes(Notes notes, bool transparency, int notecolor)
         {
             InitializeComponent();
-
             skin = new Skin(notecolor);
-
-            this.notes = notes;
-            this.transparency = transparency;            
-            DrawNotesOverview();
+            this.notes = notes;            
+            this.transparency = transparency;
+            notes.NotesUpdated = false;
+            DrawNotesOverview();            
         }
 
 		#endregion Constructors 
 
-		#region Methods (12) 
-        #if win32
-        //for moving form 
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
+		#region Methods (10) 
 
-        //for moving form 
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd,
-                         int Msg, int wParam, int lParam);		
-        #endif
+		// Private Methods (10) 
 
         /// <summary>
         /// Close form
@@ -94,22 +81,26 @@ namespace SimplePlainNote
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {                                      
             Button btn = (Button)sender;
-            int numbernotes = notes.NumNotes;
+            UInt16 numbernotes = notes.NumNotes;
             if (numbernotes != 0)
-            {                
-                for (int i = 1; i <= numbernotes; i++)
+            {
+                for (UInt16 curnote = 1; curnote <= numbernotes; curnote++)
                 {
-                    if (btn.Name == "btnNoteDel"+i)
+                    if (btn.Name == "btnNoteDel" + curnote)
                     {
-                        int noteid = i - 1;
+                        if (curnote - 1 < 0)
+                        {
+                            throw new Exception("noteid cannot be negative.");
+                        }
+                        int noteid = Convert.ToInt32(curnote) - 1;
                         notes.GetNotes[noteid].Close();
 
                         try
                         {                            
-                            File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(i) + ".xml"));
+                            File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
                             
                             //reorder filenames
-                            for (int n = i; n < numbernotes; n++)
+                            for (UInt16 n = curnote; n < numbernotes; n++)
                             {
                                 string orgfile = Path.Combine(getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
                                 string newfile = Path.Combine(getNotesSavePath(), Convert.ToString(n) + ".xml");
@@ -130,11 +121,11 @@ namespace SimplePlainNote
                         }
                         catch (UnauthorizedAccessException)
                         {
-                            MessageBox.Show("Access denied. Delete note "+i+".xml manualy with premission.");
+                            MessageBox.Show("Access denied. Delete note "+curnote+".xml manualy with premission.");
                         }                        
                         
                         DrawNotesOverview();
-                        Thread.Sleep(100);
+                        Thread.Sleep(50);
                     }
                 }
             }                                     
@@ -161,14 +152,24 @@ namespace SimplePlainNote
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Draw a list of all notes.
+        /// </summary>
         private void DrawNotesOverview()
         {
+            #if DEBUG
+            DateTime starttime = DateTime.Now;
+            #endif
+
             pnlNotes.Controls.Clear();
             int ypos = 10;            
-            for (int curnote = 0; curnote < notes.NumNotes; curnote++)
+            for (UInt16 curnote = 0; curnote < notes.NumNotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
+                CheckBox cbxNoteVisible = new CheckBox();
+                Button btnNoteDelete = new Button();
+
                 int titlelength = notes.GetNotes[curnote].NoteTitle.Length;
                 if (titlelength >= 20)
                 {
@@ -181,10 +182,8 @@ namespace SimplePlainNote
 
                 lblNoteTitle.Name = "lbNote"+Convert.ToString(curnote+1);
                 lblNoteTitle.Location = new Point(2, ypos);
-                lblNoteTitle.Size = new Size(199, 16);
-                pnlNotes.Controls.Add(lblNoteTitle);
-                                
-                CheckBox cbxNoteVisible = new CheckBox();
+                lblNoteTitle.Size = new Size(199, 16);                                                
+                
                 cbxNoteVisible.Text = "visible";
                 cbxNoteVisible.Name = Convert.ToString(curnote+1);
                 
@@ -200,9 +199,7 @@ namespace SimplePlainNote
                 cbxNoteVisible.AutoEllipsis = true;
                 cbxNoteVisible.AutoSize = true;
                 cbxNoteVisible.Click += new EventHandler(cbxNoteVisible_Click);
-                pnlNotes.Controls.Add(cbxNoteVisible);
-
-                Button btnNoteDelete = new Button();
+                                
                 btnNoteDelete.Text = "delete";
                 btnNoteDelete.Name = "btnNoteDel" + Convert.ToString(curnote+1);
                 btnNoteDelete.BackColor = Color.Orange;
@@ -210,13 +207,21 @@ namespace SimplePlainNote
                 btnNoteDelete.Width = 60;
                 btnNoteDelete.Click += new EventHandler(btnNoteDelete_Click);
 
+                pnlNotes.Controls.Add(lblNoteTitle);
+                pnlNotes.Controls.Add(cbxNoteVisible);
                 pnlNotes.Controls.Add(btnNoteDelete);
                 
                 ypos = ypos + 30;
             }
-        }        
 
-        private void frmManageNotes_Activated(object sender, EventArgs e)
+            #if DEBUG
+            DateTime endtime = DateTime.Now;
+            TimeSpan debugtime = endtime - starttime;
+            MessageBox.Show("loading notes time: " + debugtime.Milliseconds + " ms\r\n " + debugtime.Ticks + " ticks");
+            #endif
+        }
+
+                private void frmManageNotes_Activated(object sender, EventArgs e)
         {
             if ((transparency) && (this.skin != null))
             {                                
@@ -270,9 +275,9 @@ namespace SimplePlainNote
                 #endif
                 pnlHead.BackColor = Color.Orange;
             }
-        }		
+        }
 
-        private void timerUpdateNotesList_Tick(object sender, EventArgs e)
+		        private void timerUpdateNotesList_Tick(object sender, EventArgs e)
         {
             if ((!redrawbusy) && (notes.NotesUpdated))
             {
@@ -283,6 +288,22 @@ namespace SimplePlainNote
             }
         }
 
-        #endregion Methods
+		#endregion Methods 
+
+        #if win32
+        //for moving
+        public const int HT_CAPTION = 0x2;
+        //for moving
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        #endif
+        #if win32
+        //for moving form 
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+        //for moving form 
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd,
+                         int Msg, int wParam, int lParam);		
+        #endif
     }
 }

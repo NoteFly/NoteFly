@@ -25,37 +25,42 @@ namespace SimplePlainNote
 {
     class xmlHandler
     {
-        #region datavelden
-        private string filenm;
+        #region Fields (5)
+
         private string appdatafolder = "";
+        private string filenm;
         private bool issetting;
         private XmlTextReader objXmlTextReader;
         private XmlTextWriter objXmlTextWriter;
-        #endregion
 
-        #region constructor
+        #endregion Fields
+
+        #region Constructors (2)
+
         public xmlHandler(bool issetting)
         {
             SetAppdataFolder();
             this.issetting = issetting;
             if (issetting)
-            {                                
+            {
                 if (Directory.Exists(appdatafolder) == false) { Directory.CreateDirectory(appdatafolder); }
-                this.filenm = Path.Combine(appdatafolder, "settings.xml");                
+                this.filenm = Path.Combine(appdatafolder, "settings.xml");
                 if (File.Exists(filenm) == false)
                 {
                     WriteSettings(true, 95, 0, true, "Verdana", 10, appdatafolder, "adres@domain.com", true, "", "");
-                }                                
+                }
             }
         }
 
         public xmlHandler(string filenm)
         {
             SetAppdataFolder();
-            this.filenm = filenm;            
+            this.filenm = filenm;
         }
 
-        #endregion
+        #endregion Constructors
+
+        #region Properties (1)
 
         public string AppDataFolder
         {
@@ -64,271 +69,12 @@ namespace SimplePlainNote
                 return this.appdatafolder;
             }
         }
-            
 
-        #region methoden
+        #endregion Properties
 
-        /// <summary>
-        /// find where the application data folder for this programme is.
-        /// </summary>
-        private void SetAppdataFolder()
-        {
-            #if win32
-            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
-            #elif linux
-            appdatafolder = "~\\.simpleplainnote\\"
-            #elif mac
-            appdatafolder = "????"
-            #endif
-        }
+        #region Methods (6)
 
-        /// <summary>
-        /// Write settings
-        /// </summary>
-        /// <param name="transparecy"></param>
-        /// <param name="transparecylevel"></param>
-        /// <param name="numcolor"></param>
-        /// <returns>true if succeed.</returns>
-        /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
-        {
-            if (!this.issetting)
-            {
-                throw new Exception("not settings file");
-            }
-
-
-                objXmlTextWriter = new XmlTextWriter(filenm, null);
-                objXmlTextWriter.Formatting = Formatting.Indented;
-
-                objXmlTextWriter.WriteStartDocument();
-                objXmlTextWriter.WriteStartElement("settings");
-                
-                objXmlTextWriter.WriteStartElement("transparecy");
-                if (transparecy == true)
-                {                   
-                    objXmlTextWriter.WriteString("1");                    
-                }
-                else
-                {                    
-                    objXmlTextWriter.WriteString("0");                    
-                }
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteStartElement("transparecylevel");
-                objXmlTextWriter.WriteString(Convert.ToString(transparecylevel));
-                objXmlTextWriter.WriteEndElement();
-
-                if (numcolor < 0) { throw new Exception("Impossible selection"); }
-
-                objXmlTextWriter.WriteStartElement("defaultcolor");
-                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteStartElement("defaultcolor");
-                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteStartElement("askurl");
-                if (askurl == true)
-                {
-                    objXmlTextWriter.WriteString("1");
-                }
-                else
-                {
-                    objXmlTextWriter.WriteString("0");
-                }
-                objXmlTextWriter.WriteEndElement();
-
-                if (String.IsNullOrEmpty(fontcontent)) { throw new Exception("No font"); }
-
-                objXmlTextWriter.WriteStartElement("fontcontent");
-                objXmlTextWriter.WriteString(fontcontent);
-                objXmlTextWriter.WriteEndElement();
-                
-                objXmlTextWriter.WriteStartElement("fontsize");
-                objXmlTextWriter.WriteString(Convert.ToString(fontsize));
-                objXmlTextWriter.WriteEndElement(); 
-
-                if (Directory.Exists(notesavepath))
-                {
-                    objXmlTextWriter.WriteStartElement("notesavepath");
-                    objXmlTextWriter.WriteString(notesavepath);
-                    objXmlTextWriter.WriteEndElement();
-                }
-                else { throw new Exception("dir not exist"); }
-
-                objXmlTextWriter.WriteStartElement("syntaxhighlight");
-                if (syntaxhighlight == true)
-                {                    
-                    objXmlTextWriter.WriteString("1");
-                    
-                }
-                else
-                {                    
-                    objXmlTextWriter.WriteString("0");                    
-                }
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteStartElement("defaultemail");
-                objXmlTextWriter.WriteString(defaultemail);
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteStartElement("twitter");
-
-                if (twitteruser.Length > 15) { throw new Exception("twitter username too long."); }
-                objXmlTextWriter.WriteStartElement("twitteruser");
-                objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
-                objXmlTextWriter.WriteEndElement();
-
-                if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new Exception("twitter password too short."); }
-                if (twitterpass.Length > 255) { throw new Exception("twitter password too long."); }
-                objXmlTextWriter.WriteStartElement("twitterpass");
-                if (twitterpass != "")
-                {
-                    objXmlTextWriter.WriteString(twitterpass);
-                }
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteEndDocument();
-
-                objXmlTextWriter.Flush();
-                objXmlTextWriter.Close();
-
-                return true;            
-
-        }
-
-        public bool WriteNote(bool visible, bool ontop, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
-        {
-            if (issetting) { throw new Exception("This is a settings file, cannot write a note of it."); }
-
-                objXmlTextWriter = new XmlTextWriter(this.filenm, null);
-
-                objXmlTextWriter.Formatting = Formatting.Indented;
-
-                objXmlTextWriter.WriteStartDocument();
-
-                objXmlTextWriter.WriteStartElement("note");
-                
-                if (visible == true)
-                {
-                    objXmlTextWriter.WriteElementString("visible", "1");
-                }
-                else
-                {
-                    objXmlTextWriter.WriteElementString("visible", "0");
-                }
-
-                if (ontop== true)
-                {
-                    objXmlTextWriter.WriteElementString("ontop", "1");
-                }
-                else
-                {
-                    objXmlTextWriter.WriteElementString("ontop", "0");
-                }
-
-                objXmlTextWriter.WriteStartElement("color");
-                objXmlTextWriter.WriteString(numcolor);
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteStartElement("title");
-                objXmlTextWriter.WriteString(title);
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteStartElement("content");
-                objXmlTextWriter.WriteString(content);
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteStartElement("location");
-                objXmlTextWriter.WriteStartElement("x");
-                objXmlTextWriter.WriteString(Convert.ToString(locX));
-                objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteStartElement("y");
-                objXmlTextWriter.WriteString(Convert.ToString(locY));
-                objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteStartElement("size");
-                objXmlTextWriter.WriteStartElement("width");
-                objXmlTextWriter.WriteString(Convert.ToString(notewidth));
-                objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteStartElement("heigth");
-                objXmlTextWriter.WriteString(Convert.ToString(noteheight));
-                objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteEndElement();
-
-                objXmlTextWriter.WriteEndDocument();
-
-                objXmlTextWriter.Flush();
-                objXmlTextWriter.Close();
-
-                return true;            
-        }
-
-        /*
-        /// <summary>
-        /// Does some checks on the file
-        /// - Is the file empty?
-        /// - Is the file too large?
-        /// </summary>
-        /// <returns>false if no errors</returns>
-        private bool CheckFile()
-        {
-            if (File.Exists(appdatafolder + filenm) == true)
-            {
-                FileInfo checkfile = new FileInfo(appdatafolder + filenm);
-                if (checkfile.Length == 0)
-                {
-                    MessageBox.Show("File empty.");
-
-                    //create backup copy, just in case.
-                    string bakfile = appdatafolder + filenm + ".bak";
-                    int num = 1;
-                    while (File.Exists(bakfile) == true)
-                    {
-                        num++;
-                        if (num > 9) { return true; }
-                        bakfile = appdatafolder + filenm + ".bak" + num;
-                    }
-                    if (File.Exists(bakfile) == false)
-                    {
-                        try
-                        {
-                            checkfile.MoveTo(bakfile);
-                            return true;
-                        }
-                        catch (IOException)
-                        {
-                            MessageBox.Show("Failed making backup copy.");
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-                else if (checkfile.Length > 32768)
-                {
-                    MessageBox.Show("Error seitting file is unusual big. >32kb");
-                    return true;
-                }
-                //File looks okay.
-                else
-                {
-                    return false;
-                }
-            }
-            //File does not exist yet, so it okay.
-            else
-            {
-                return false;
-            }
-        }
-         */
+        // Public Methods (5) 
 
         /// <summary>
         /// Get a xml node
@@ -343,12 +89,12 @@ namespace SimplePlainNote
             }
             catch (FileLoadException fileloadexc)
             {
-                System.Windows.Forms.MessageBox.Show("error: "+fileloadexc.Message);
+                System.Windows.Forms.MessageBox.Show("error: " + fileloadexc.Message);
                 return "";
             }
             catch (FileNotFoundException filenotfoundexc)
             {
-                System.Windows.Forms.MessageBox.Show("error: " + filenotfoundexc.Message);   
+                System.Windows.Forms.MessageBox.Show("error: " + filenotfoundexc.Message);
                 return "";
             }
 
@@ -367,52 +113,18 @@ namespace SimplePlainNote
                     }
                     catch (InvalidCastException invalidcastexc)
                     {
-                        System.Windows.Forms.MessageBox.Show("Error: "+invalidcastexc.Message);
+                        System.Windows.Forms.MessageBox.Show("Error: " + invalidcastexc.Message);
                         s = "";
                     }
                     finally
                     {
                         objXmlTextReader.Close();
-                    }                                        
+                    }
                     return s;
                 }
             }
             //error node not found.
             return "";
-        }
-
-        /// <summary>
-        /// Get a xml node
-        /// </summary>
-        /// <param name="nodename"></param>
-        /// <returns>return node as integer, -1 if error</returns>
-        public int getXMLnodeAsInt(string nodename)
-        {            
-            objXmlTextReader = new XmlTextReader(filenm);
-
-            while (objXmlTextReader.Read())
-            {
-                if (objXmlTextReader.Name == nodename)
-                {                    
-                    try
-                    {
-                        int n = objXmlTextReader.ReadElementContentAsInt();
-                        objXmlTextReader.Close();
-                        return n;
-                    }
-                    catch (InvalidCastException invalidcastexc)
-                    {
-                        System.Windows.Forms.MessageBox.Show("error: " + invalidcastexc.Message);   
-                        return -1;
-                    }
-                    finally
-                    {
-                        objXmlTextReader.Close();
-                    }
-                }
-            }
-            objXmlTextReader.Close();
-            return -1;
         }
 
         /// <summary>
@@ -436,7 +148,7 @@ namespace SimplePlainNote
                     }
                     catch (InvalidCastException invalidcastexc)
                     {
-                        System.Windows.Forms.MessageBox.Show("error: "+invalidcastexc.Message);
+                        System.Windows.Forms.MessageBox.Show("error: " + invalidcastexc.Message);
                         return false;
                     }
                     finally
@@ -448,6 +160,278 @@ namespace SimplePlainNote
             objXmlTextReader.Close();
             return false;
         }
-        #endregion
+
+        /// <summary>
+        /// Get a xml node
+        /// </summary>
+        /// <param name="nodename"></param>
+        /// <returns>return node as integer, -1 if error</returns>
+        public int getXMLnodeAsInt(string nodename)
+        {
+            objXmlTextReader = new XmlTextReader(filenm);
+
+            while (objXmlTextReader.Read())
+            {
+                if (objXmlTextReader.Name == nodename)
+                {
+                    try
+                    {
+                        int n = objXmlTextReader.ReadElementContentAsInt();
+                        objXmlTextReader.Close();
+                        return n;
+                    }
+                    catch (InvalidCastException invalidcastexc)
+                    {
+                        System.Windows.Forms.MessageBox.Show("error: " + invalidcastexc.Message);
+                        return -1;
+                    }
+                    finally
+                    {
+                        objXmlTextReader.Close();
+                    }
+                }
+            }
+            objXmlTextReader.Close();
+            return -1;
+        }
+
+        public bool WriteNote(bool visible, bool ontop, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
+        {
+            if (issetting) { throw new Exception("This is a settings file, cannot write a note of it."); }
+            
+            objXmlTextWriter = new XmlTextWriter(this.filenm, null);
+
+            objXmlTextWriter.Formatting = Formatting.Indented;
+
+            objXmlTextWriter.WriteStartDocument();
+
+            objXmlTextWriter.WriteStartElement("note");
+
+            if (visible == true)
+            {
+                objXmlTextWriter.WriteElementString("visible", "1");
+            }
+            else
+            {
+                objXmlTextWriter.WriteElementString("visible", "0");
+            }
+
+            if (ontop == true)
+            {
+                objXmlTextWriter.WriteElementString("ontop", "1");
+            }
+            else
+            {
+                objXmlTextWriter.WriteElementString("ontop", "0");
+            }
+
+            objXmlTextWriter.WriteStartElement("color");
+            objXmlTextWriter.WriteString(numcolor);
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("title");
+            objXmlTextWriter.WriteString(title);
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("content");
+            objXmlTextWriter.WriteString(content);
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("location");
+            objXmlTextWriter.WriteStartElement("x");
+            objXmlTextWriter.WriteString(Convert.ToString(locX));
+            objXmlTextWriter.WriteEndElement();
+            objXmlTextWriter.WriteStartElement("y");
+            objXmlTextWriter.WriteString(Convert.ToString(locY));
+            objXmlTextWriter.WriteEndElement();
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("size");
+            objXmlTextWriter.WriteStartElement("width");
+            objXmlTextWriter.WriteString(Convert.ToString(notewidth));
+            objXmlTextWriter.WriteEndElement();
+            objXmlTextWriter.WriteStartElement("heigth");
+            objXmlTextWriter.WriteString(Convert.ToString(noteheight));
+            objXmlTextWriter.WriteEndElement();
+            objXmlTextWriter.WriteEndElement();
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteEndDocument();
+
+            objXmlTextWriter.Flush();
+            objXmlTextWriter.Close();
+
+            CheckFile();
+
+            return true;
+        }
+
+        /// <summary>
+        /// Write settings
+        /// </summary>
+        /// <param name="transparecy"></param>
+        /// <param name="transparecylevel"></param>
+        /// <param name="numcolor"></param>
+        /// <returns>true if succeed.</returns>
+        /// 
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
+        {
+            if (!this.issetting)
+            {
+                throw new Exception("not settings file");
+            }            
+
+            objXmlTextWriter = new XmlTextWriter(filenm, null);
+            objXmlTextWriter.Formatting = Formatting.Indented;
+
+            objXmlTextWriter.WriteStartDocument();
+            objXmlTextWriter.WriteStartElement("settings");
+
+            objXmlTextWriter.WriteStartElement("transparecy");
+            if (transparecy == true)
+            {
+                objXmlTextWriter.WriteString("1");
+            }
+            else
+            {
+                objXmlTextWriter.WriteString("0");
+            }
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("transparecylevel");
+            objXmlTextWriter.WriteString(Convert.ToString(transparecylevel));
+            objXmlTextWriter.WriteEndElement();
+
+            if (numcolor < 0) { throw new Exception("Impossible selection"); }
+
+            objXmlTextWriter.WriteStartElement("defaultcolor");
+            objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("defaultcolor");
+            objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("askurl");
+            if (askurl == true)
+            {
+                objXmlTextWriter.WriteString("1");
+            }
+            else
+            {
+                objXmlTextWriter.WriteString("0");
+            }
+            objXmlTextWriter.WriteEndElement();
+
+            if (String.IsNullOrEmpty(fontcontent)) { throw new Exception("No font"); }
+
+            objXmlTextWriter.WriteStartElement("fontcontent");
+            objXmlTextWriter.WriteString(fontcontent);
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("fontsize");
+            objXmlTextWriter.WriteString(Convert.ToString(fontsize));
+            objXmlTextWriter.WriteEndElement();
+
+            if (Directory.Exists(notesavepath))
+            {
+                objXmlTextWriter.WriteStartElement("notesavepath");
+                objXmlTextWriter.WriteString(notesavepath);
+                objXmlTextWriter.WriteEndElement();
+            }
+            else { throw new Exception("dir not exist"); }
+
+            objXmlTextWriter.WriteStartElement("syntaxhighlight");
+            if (syntaxhighlight == true)
+            {
+                objXmlTextWriter.WriteString("1");
+
+            }
+            else
+            {
+                objXmlTextWriter.WriteString("0");
+            }
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("defaultemail");
+            objXmlTextWriter.WriteString(defaultemail);
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("twitter");
+
+            if (twitteruser.Length > 15) { throw new Exception("twitter username too long."); }
+            objXmlTextWriter.WriteStartElement("twitteruser");
+            objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
+            objXmlTextWriter.WriteEndElement();
+
+            if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new Exception("twitter password too short."); }
+            if (twitterpass.Length > 255) { throw new Exception("twitter password too long."); }
+            objXmlTextWriter.WriteStartElement("twitterpass");
+            if (twitterpass != "")
+            {
+                objXmlTextWriter.WriteString(twitterpass);
+            }
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteEndElement();
+            objXmlTextWriter.WriteEndDocument();
+
+            objXmlTextWriter.Flush();
+            objXmlTextWriter.Close();
+
+            CheckFile();
+
+            return true;
+
+        }
+        // Private Methods (1) 
+
+        /// <summary>
+        /// find where the application data folder for this programme is.
+        /// </summary>
+        private void SetAppdataFolder()
+        {
+#if win32
+            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
+#elif linux
+            appdatafolder = "~\\.simpleplainnote\\"
+#elif mac
+            appdatafolder = "????"
+#endif
+        }
+
+        /// <summary>
+        /// Does some checks on the file
+        /// - Is the file empty?
+        /// - Is the file too large?
+        /// </summary>        
+        private void CheckFile()
+        {
+            if (File.Exists(filenm) == true)
+            {
+                FileInfo checkfile = new FileInfo(filenm);
+                if (checkfile.Length == 0)
+                {
+                    throw new Exception("File "+filenm+" is empty");                   
+                }
+                else if (issetting)
+                {
+                    //check if larger that 32 KB
+                    if (checkfile.Length > 32768)
+                    {
+                        throw new Exception("Setting file " + filenm + " is too big.");
+                    }
+                }
+                    //check if larger that 10 MB
+                else if (checkfile.Length > 10485760)
+                {
+                    throw new Exception("File " + filenm + " is way too big.");
+                }
+            }
+        }
+
+        #endregion Methods
     }
 }
