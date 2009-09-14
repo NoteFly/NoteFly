@@ -32,15 +32,15 @@ namespace SimplePlainNote
 		#region Fields (12)  
         public Notes notes;
         private Skin skin;        
-        private UInt16 id;
+        private Int16 id;
         private int locX;
         private int locY;
         private string note;
-        private int notecolor = 0;
+        private Int16 notecolor = 0;
         private bool notelock = false;
         private bool notevisible = true;
         private string title;
-        //private bool transparency = false;
+        private bool transparency = false;
         private string twpass;
         public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -49,7 +49,7 @@ namespace SimplePlainNote
 
 		#region Constructors (2) 
 
-        public frmNote(Notes notes, UInt16 id, bool visible, bool ontop, string title, string note, int notecolor, int locX, int locY, int notewidth, int noteheight)
+        public frmNote(Notes notes, Int16 id, bool visible, bool ontop, string title, string note, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             this.notes = notes;
             this.skin = new Skin(notecolor);
@@ -104,7 +104,7 @@ namespace SimplePlainNote
             }
         }
 
-        public frmNote(Notes notes, UInt16 id, string title, string note, int notecolor)
+        public frmNote(Notes notes, Int16 id, string title, string note, Int16 notecolor)
         {
             this.skin = new Skin(notecolor);
             this.id = id;
@@ -133,13 +133,13 @@ namespace SimplePlainNote
 
 		#region Properties (5) 
        
-        public UInt16 NoteID
+        public Int16 NoteID
         {
             get { return id; }
             set { this.id = value; }
         }        
 
-        public int NoteColor
+        public Int16 NoteColor
         {
             get
             {
@@ -518,7 +518,7 @@ namespace SimplePlainNote
 
         private void setColorNote(object sender, EventArgs e)
         {
-            int i =0;
+            Int16 i =0;
             foreach (ToolStripMenuItem curitem in menuNoteColors.DropDownItems)
             {                
                 if (curitem == sender) 

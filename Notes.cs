@@ -76,11 +76,11 @@ namespace SimplePlainNote
             }
         }
 
-        public UInt16 NumNotes
+        public Int16 NumNotes
         {
             get
             {
-                UInt16 numnotes = Convert.ToUInt16(this.noteslst.Count);
+                Int16 numnotes = Convert.ToInt16(this.noteslst.Count);
                 if (numnotes > 255)
                 {
                     throw new Exception("error too many notes.");
@@ -149,11 +149,11 @@ namespace SimplePlainNote
         /// <param name="title"></param>
         /// <param name="content"></param>
         /// <param name="notecolor"></param>
-        public void DrawNewNote(string title, string content, int notecolor)
+        public void DrawNewNote(string title, string content, Int16 notecolor)
         {
             try
             {
-                UInt16 newid = Convert.ToUInt16(noteslst.Count + 1);
+                Int16 newid = Convert.ToInt16(noteslst.Count + 1);
                 string notefilenm = SaveNewNote(newid, title, content, defaultcolor.ToString());
                 if (String.IsNullOrEmpty(notefilenm)) { return; }
                 frmNote newnote = new frmNote(this, newid, title, content, notecolor);
@@ -178,7 +178,7 @@ namespace SimplePlainNote
             {
                 string title = noteslst[noteid - 1].NoteTitle;
                 string content = noteslst[noteid - 1].NoteContent;
-                int color = noteslst[noteid - 1].NoteColor;
+                Int16 color = noteslst[noteid - 1].NoteColor;
                 frmNewNote createnewnote = new frmNewNote(this, color, noteid, title, content);
                 createnewnote.Show();
             }
@@ -257,11 +257,11 @@ namespace SimplePlainNote
         /// <param name="title"></param>
         /// <param name="content"></param>
         /// <param name="notecolor"></param>        
-        private frmNote CreateNote(bool visible, bool ontop, string title, string content, int notecolor, int locX, int locY, int notewith, int noteheight)
+        private frmNote CreateNote(bool visible, bool ontop, string title, string content, Int16 notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
             {
-                UInt16 newid = Convert.ToUInt16(noteslst.Count + 1);
+                Int16 newid = Convert.ToInt16(noteslst.Count + 1);
                 frmNote newnote = new frmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewith, noteheight);
                 newnote.FormBorderStyle = FormBorderStyle.None;
                 if (visible)
@@ -314,7 +314,7 @@ namespace SimplePlainNote
                 bool ontop = parserNote.getXMLnodeAsBool("ontop");
                 string title = parserNote.getXMLnode("title");
                 string content = parserNote.getXMLnode("content");
-                int notecolor = parserNote.getXMLnodeAsInt("color");
+                Int16 notecolor = Convert.ToInt16(parserNote.getXMLnodeAsInt("color"));
                 int noteLocX = parserNote.getXMLnodeAsInt("x");
                 int noteLocY = parserNote.getXMLnodeAsInt("y");
                 int notewidth = parserNote.getXMLnodeAsInt("width");
@@ -337,7 +337,7 @@ namespace SimplePlainNote
             }
 
 #if DEBUG
-            //LoadNotesStressTest(100);
+            LoadNotesStressTest(10);
 
             //no good.
             DateTime endtime = DateTime.Now;
@@ -383,7 +383,7 @@ namespace SimplePlainNote
                 string title = "test nr." + id;
                 string content = "This is a stress test of creating a lot of notes, to see how fast or slow it loads." +
                                  "warning: To preven a note from saving don't move them!";
-                int notecolor = ran.Next(0, 6);
+                Int16 notecolor = Convert.ToInt16(ran.Next(0, 6));
                 int noteLocX = ran.Next(0, 360);
                 int noteLocY = ran.Next(0, 240);
                 int notewidth = 180;

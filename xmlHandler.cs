@@ -384,7 +384,6 @@ namespace SimplePlainNote
             CheckFile();
 
             return true;
-
         }
         // Private Methods (1) 
 
@@ -424,7 +423,7 @@ namespace SimplePlainNote
                         throw new Exception("Setting file " + filenm + " is too big.");
                     }
                 }
-                    //check if larger that 10 MB
+                //check if larger that 10 MB
                 else if (checkfile.Length > 10485760)
                 {
                     throw new Exception("File " + filenm + " is way too big.");

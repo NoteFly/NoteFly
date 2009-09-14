@@ -159,10 +159,11 @@ namespace SimplePlainNote
 
             Application.Run();
         }
-        static int getDefaultColor()
+
+        static Int16 getDefaultColor()
         {
             xmlHandler xmlSettings = new xmlHandler(true);
-            int color = xmlSettings.getXMLnodeAsInt("defaultcolor");
+            Int16 color = Convert.ToInt16(xmlSettings.getXMLnodeAsInt("defaultcolor"));
             return color;
         }
 

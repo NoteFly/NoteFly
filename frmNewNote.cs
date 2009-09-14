@@ -35,7 +35,7 @@ namespace SimplePlainNote
     {
 		#region Fields (5) 
 
-        private int notecolor;
+        private Int16 notecolor;
         private bool editnote = false;
         private int editnoteid = -1;
         private Notes notes;
@@ -45,7 +45,7 @@ namespace SimplePlainNote
 
 		#region Constructors (2) 
 
-        public frmNewNote(Notes notes, int notecolor, int editnoteid, string editnotetitle, string editnotecontent)
+        public frmNewNote(Notes notes, Int16 notecolor, int editnoteid, string editnotetitle, string editnotecontent)
         {
             InitializeComponent();
             this.editnote = true;
@@ -59,7 +59,7 @@ namespace SimplePlainNote
             checksyntax();
         }
 
-        public frmNewNote(Notes notes, int notecolor)
+        public frmNewNote(Notes notes, Int16 notecolor)
         {
             InitializeComponent();
             this.editnote = false;

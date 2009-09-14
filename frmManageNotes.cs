@@ -81,10 +81,10 @@ namespace SimplePlainNote
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {                                      
             Button btn = (Button)sender;
-            UInt16 numbernotes = notes.NumNotes;
+            Int16 numbernotes = notes.NumNotes;
             if (numbernotes != 0)
             {
-                for (UInt16 curnote = 1; curnote <= numbernotes; curnote++)
+                for (Int16 curnote = 1; curnote <= numbernotes; curnote++)
                 {
                     if (btn.Name == "btnNoteDel" + curnote)
                     {
@@ -100,7 +100,7 @@ namespace SimplePlainNote
                             File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
                             
                             //reorder filenames
-                            for (UInt16 n = curnote; n < numbernotes; n++)
+                            for (Int16 n = curnote; n < numbernotes; n++)
                             {
                                 string orgfile = Path.Combine(getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
                                 string newfile = Path.Combine(getNotesSavePath(), Convert.ToString(n) + ".xml");
