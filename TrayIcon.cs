@@ -181,10 +181,8 @@ namespace SimplePlainNote
         }
 
         static void MenuManageNotes_Click(object sender, EventArgs e)
-        {
-            //notes.NotesUpdated = false;
-            frmManageNotes managenotes = new frmManageNotes(notes, transparency, getDefaultColor());
-            
+        {            
+            frmManageNotes managenotes = new frmManageNotes(notes, transparency, getDefaultColor());            
             managenotes.Show();
         }
 

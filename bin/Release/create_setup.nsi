@@ -13,7 +13,7 @@
 ;
 ; The name of the installer
 
-!define VERSION "0.9.6"
+!define VERSION "0.9.6b"
 !define VERSTATUS "beta"
 
 Name "Simple Plain Note ${VERSION} ${VERSTATUS}"

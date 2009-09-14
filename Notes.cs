@@ -336,14 +336,14 @@ namespace SimplePlainNote
                 noteslst.Add(CreateNote(true, false, "first example note", "This is a example note.\r\nYou can change color of this note by rightclicking this note.\r\nYou can delete this note, by rightclicking the systray icon choice manage note and then press delete note.\r\nBy clicking on the cross of this note. This note will hiden.\r\nYou can get it back with the manage notes window.", 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
             }
 
-#if DEBUG
-            LoadNotesStressTest(10);
+            #if DEBUG
+            LoadNotesStressTest(200);
 
             //no good.
             DateTime endtime = DateTime.Now;
             TimeSpan debugtime = endtime - starttime;
             MessageBox.Show("loading notes time: " + debugtime.Milliseconds + " ms\r\n " + debugtime.Ticks + " ticks");
-#endif
+            #endif
         }
 
         /// <summary>
