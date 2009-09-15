@@ -73,7 +73,7 @@ namespace SimplePlainNote
         /// </summary>
         [STAThread]
         static void Main()
-        {            
+        {
             components = new System.ComponentModel.Container();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);
@@ -90,7 +90,7 @@ namespace SimplePlainNote
                 }
                 else if (System.Environment.GetCommandLineArgs()[1] == "/firstrun")
                 {
-                    firstrun = true;                    
+                    firstrun = true;
                 }
             }
 
@@ -108,12 +108,10 @@ namespace SimplePlainNote
 
             icon = new NotifyIcon(components);
             icon.ContextMenuStrip = MenuTrayIcon;
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            //assembly.GetManifestResourceStream("SimplePlainNote.Resources.trayicon.ico");
+            Assembly assembly = Assembly.GetExecutingAssembly();            
             icon.Icon = new Icon(assembly.GetManifestResourceStream("SimplePlainNote.Resources.trayicon.ico"));
 
-
-            icon.Click += new EventHandler(Icon_Click);
+            icon.MouseClick += new MouseEventHandler(Icon_Click);
             icon.Visible = true;
 
             icon.ContextMenuStrip.Name = "MenuTrayIcon";
@@ -167,22 +165,42 @@ namespace SimplePlainNote
             return color;
         }
 
-        #region menu events
-        static void Icon_Click(object sender, EventArgs e)
+        static int getActionLeftClick()
         {
-            //todo: make it configurable, advance option.
+            xmlHandler getSettings = new xmlHandler(true);
+            return getSettings.getXMLnodeAsInt("actionleftclick");
+        }
+
+        #region menu events
+        static void Icon_Click(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                int actionleftclick = getActionLeftClick();
+                if (actionleftclick == 1)
+                {
+                    for (int i = 0; i < notes.NumNotes; i++)
+                    {
+                        notes.GetNotes[i].Activate();
+                    }
+                }
+                else if (actionleftclick == 2)
+                {
+                    frmNewNote newnote = new frmNewNote(notes, getDefaultColor());
+                    newnote.Show();
+                }
+            }
         }
 
         static void MenuNewNote_Click(object sender, EventArgs e)
         {
-
             frmNewNote newnote = new frmNewNote(notes, getDefaultColor());
             newnote.Show();
         }
 
         static void MenuManageNotes_Click(object sender, EventArgs e)
-        {            
-            frmManageNotes managenotes = new frmManageNotes(notes, transparency, getDefaultColor());            
+        {
+            frmManageNotes managenotes = new frmManageNotes(notes, transparency, getDefaultColor());
             managenotes.Show();
         }
 

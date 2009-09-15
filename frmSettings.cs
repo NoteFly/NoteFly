@@ -50,12 +50,14 @@ namespace SimplePlainNote
             cbxTransparecy.Checked = transparecy;
             numProcTransparency.Value = getTransparecylevel();            
             cbxDefaultColor.SelectedIndex = getDefaultColor();
+            cbxActionLeftClick.SelectedIndex = getActionLeftClick();
             cbxConfirmLink.Checked = getAskUrl();
             tbNotesSavePath.Text = getNotesSavePath();
             tbTwitterUser.Text = getTwitterusername();
             tbTwitterPass.Text = getTwitterpassword();
             tbDefaultEmail.Text = getDefaultEmail();
             cbxStartOnBootWindows.Checked = getStatusStartlogin();
+            
             this.notes = notes;
             DrawCbxFonts();
         }
@@ -113,7 +115,7 @@ namespace SimplePlainNote
                 {
                     MoveNotes(tbNotesSavePath.Text);
                 }
-                xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
+                xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
 
                 #if win32
                 key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -195,6 +197,11 @@ namespace SimplePlainNote
         private int getDefaultColor()
         {
             return xmlsettings.getXMLnodeAsInt("defaultcolor");
+        }
+
+        private int getActionLeftClick()
+        {
+            return xmlsettings.getXMLnodeAsInt("actionleftclick");            
         }
 
         private bool getAskUrl()

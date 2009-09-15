@@ -337,7 +337,7 @@ namespace SimplePlainNote
             }
 
             #if DEBUG
-            LoadNotesStressTest(200);
+            //LoadNotesStressTest(10);
 
             //no good.
             DateTime endtime = DateTime.Now;
@@ -367,7 +367,7 @@ namespace SimplePlainNote
 
         #endregion Methods
 
-#if DEBUG
+        #if DEBUG
         /// <summary>
         /// Mthode that creates a lot of notes for stress testing this app.
         /// </summary>
@@ -394,6 +394,6 @@ namespace SimplePlainNote
                 if (CheckLimitNotes(id)) { MessageBox.Show("Limit reached."); }
             }
         }
-#endif
+        #endif
     }
 }

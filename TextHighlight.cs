@@ -29,7 +29,9 @@ namespace SimplePlainNote
     {
 		#region Fields (2) 
 
-        //private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if");
+        private Regex SyntaxDatatype = new Regex("int|short|double|float|long|string|bool|char");
+
+        private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if|break|goto|continue|switch|case|default:|try|catch|throw|static");
 
         private Regex SyntaxHTML = new Regex("<!DOCTYPE |<HTML>|</HTML>|<BODY |<BODY>|</BODY>|<A HREF|<SPAN|<I>|</I>|<U>|</U>|" +
             "<B>|</B>|<UL>|<IL>|<OL|</OL>|<BR>|<BR />|<P |<P>|</P>|<FONT|</FONT>|<TITLE>|<BLOCKQUOTE>|</BLOCKQUOTE>|</TITLE>|<META|<LINK|<CODE>|" +
