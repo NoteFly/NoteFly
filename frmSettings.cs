@@ -44,6 +44,9 @@ namespace SimplePlainNote
         {
             InitializeComponent();
 
+            #if DEBUG
+            btnCrash.Visible = true;
+            #endif
             xmlsettings = new xmlHandler(true);
             
             //read setting and display them correctly.            
@@ -311,9 +314,16 @@ namespace SimplePlainNote
             }
         }
 
+        private void btnCrash_Click(object sender, EventArgs e)
+        {
+            #if DEBUG        
+            throw new CustomExceptions("This is a crash test, to test if exceptions are throw good.");
+            #endif
+        }
 
 
+        
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

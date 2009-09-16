@@ -266,7 +266,7 @@ namespace SimplePlainNote
                 newnote.FormBorderStyle = FormBorderStyle.None;
                 if (visible)
                 {
-                    newnote.Show();
+                    newnote.Show();                    
                 }
                 return newnote;
             }
@@ -337,7 +337,7 @@ namespace SimplePlainNote
             }
 
             #if DEBUG
-            //LoadNotesStressTest(10);
+            //LoadNotesStressTest(100);
 
             //no good.
             DateTime endtime = DateTime.Now;

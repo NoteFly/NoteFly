@@ -1,5 +1,6 @@
 @echo off
 echo Making zip archive...
+REM Path where sourcecode of SimplePlainNotes is stored.
 set SPN_SCR=M:\Public\sourcecode\Projects_Csharp\simpleplainnote
 set VERSION="0.9.7"
 REM Please make sure 7-zip is in your PATH or 

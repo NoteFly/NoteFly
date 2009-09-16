@@ -43,7 +43,7 @@ namespace SimplePlainNote
         static ContextMenuStrip MenuTrayIcon;
         static Notes notes;
         static bool transparency = true;
-
+        static bool newnoteshowed = false;
         #endregion Fields
 
         #region Methods (2)
@@ -77,6 +77,7 @@ namespace SimplePlainNote
             components = new System.ComponentModel.Container();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);
+            //Application.SetUnhandledExceptionMode(UnhandledExceptionEventHandler
 
             transparency = true;
 
@@ -108,7 +109,7 @@ namespace SimplePlainNote
 
             icon = new NotifyIcon(components);
             icon.ContextMenuStrip = MenuTrayIcon;
-            Assembly assembly = Assembly.GetExecutingAssembly();            
+            Assembly assembly = Assembly.GetExecutingAssembly();
             icon.Icon = new Icon(assembly.GetManifestResourceStream("SimplePlainNote.Resources.trayicon.ico"));
 
             icon.MouseClick += new MouseEventHandler(Icon_Click);
@@ -186,8 +187,16 @@ namespace SimplePlainNote
                 }
                 else if (actionleftclick == 2)
                 {
-                    frmNewNote newnote = new frmNewNote(notes, getDefaultColor());
-                    newnote.Show();
+                    if (!newnoteshowed)
+                    {
+                        frmNewNote newnote = new frmNewNote(notes, getDefaultColor());
+                        newnote.Show();
+                        newnoteshowed = true;
+                    }
+                    else
+                    {
+                        newnoteshowed = false;
+                    }
                 }
             }
         }

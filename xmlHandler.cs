@@ -25,7 +25,7 @@ namespace SimplePlainNote
 {
     class xmlHandler
     {
-        #region Fields (5)
+		#region Fields (5) 
 
         private string appdatafolder = "";
         private string filenm;
@@ -33,9 +33,9 @@ namespace SimplePlainNote
         private XmlTextReader objXmlTextReader;
         private XmlTextWriter objXmlTextWriter;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (2)
+		#region Constructors (2) 
 
         public xmlHandler(bool issetting)
         {
@@ -58,9 +58,9 @@ namespace SimplePlainNote
             this.filenm = filenm;
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Properties (1)
+		#region Properties (1) 
 
         public string AppDataFolder
         {
@@ -70,11 +70,11 @@ namespace SimplePlainNote
             }
         }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Methods (6)
+		#region Methods (7) 
 
-        // Public Methods (5) 
+		// Public Methods (5) 
 
         /// <summary>
         /// Get a xml node
@@ -197,7 +197,9 @@ namespace SimplePlainNote
 
         public bool WriteNote(bool visible, bool ontop, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
-            if (issetting) { throw new Exception("This is a settings file, cannot write a note of it."); }
+            if (issetting) {
+                throw new CustomExceptions("This is a settings file, cannot write a note of it."); 
+            }
             
             objXmlTextWriter = new XmlTextWriter(this.filenm, null);
 
@@ -278,7 +280,7 @@ namespace SimplePlainNote
         {
             if (!this.issetting)
             {
-                throw new Exception("not settings file");
+                throw new CustomExceptions("not settings file");
             }            
 
             objXmlTextWriter = new XmlTextWriter(filenm, null);
@@ -302,13 +304,13 @@ namespace SimplePlainNote
             objXmlTextWriter.WriteString(Convert.ToString(transparecylevel));
             objXmlTextWriter.WriteEndElement();
 
-            if (numcolor < 0) { throw new Exception("Impossible selection"); }
+            if (numcolor < 0) { throw new CustomExceptions("Impossible selection"); }
 
             objXmlTextWriter.WriteStartElement("defaultcolor");
             objXmlTextWriter.WriteString(Convert.ToString(numcolor));
             objXmlTextWriter.WriteEndElement();
 
-            if ((actionleftclick < 0) || (actionleftclick > 3)) { throw new Exception("action left click unknow"); }
+            if ((actionleftclick < 0) || (actionleftclick > 3)) { throw new CustomExceptions("action left click unknow"); }
             objXmlTextWriter.WriteStartElement("actionleftclick");
             objXmlTextWriter.WriteString(Convert.ToString(actionleftclick));
             objXmlTextWriter.WriteEndElement();            
@@ -328,7 +330,7 @@ namespace SimplePlainNote
             }
             objXmlTextWriter.WriteEndElement();
 
-            if (String.IsNullOrEmpty(fontcontent)) { throw new Exception("No font"); }
+            if (String.IsNullOrEmpty(fontcontent)) { throw new CustomExceptions("No font"); }
 
             objXmlTextWriter.WriteStartElement("fontcontent");
             objXmlTextWriter.WriteString(fontcontent);
@@ -344,7 +346,7 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteString(notesavepath);
                 objXmlTextWriter.WriteEndElement();
             }
-            else { throw new Exception("dir not exist"); }
+            else { throw new CustomExceptions("Directory does not exist"); }
 
             objXmlTextWriter.WriteStartElement("syntaxhighlight");
             if (syntaxhighlight == true)
@@ -364,13 +366,13 @@ namespace SimplePlainNote
 
             objXmlTextWriter.WriteStartElement("twitter");
 
-            if (twitteruser.Length > 15) { throw new Exception("twitter username too long."); }
+            if (twitteruser.Length > 15) { throw new CustomExceptions("Twitter username too long."); }
             objXmlTextWriter.WriteStartElement("twitteruser");
             objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
             objXmlTextWriter.WriteEndElement();
 
-            if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new Exception("twitter password too short."); }
-            if (twitterpass.Length > 255) { throw new Exception("twitter password too long."); }
+            if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new CustomExceptions("Twitter password too short."); }
+            if (twitterpass.Length > 255) { throw new CustomExceptions("Twitter password too long."); }
             objXmlTextWriter.WriteStartElement("twitterpass");
             if (twitterpass != "")
             {
@@ -390,7 +392,37 @@ namespace SimplePlainNote
 
             return true;
         }
-        // Private Methods (1) 
+		// Private Methods (2) 
+
+        /// <summary>
+        /// Does some checks on the file
+        /// - Is the file empty?
+        /// - Is the file too large?
+        /// </summary>        
+        private void CheckFile()
+        {
+            if (File.Exists(filenm) == true)
+            {
+                FileInfo checkfile = new FileInfo(filenm);
+                if (checkfile.Length == 0)
+                {
+                    throw new CustomExceptions("File " + filenm + " is empty");                   
+                }
+                else if (issetting)
+                {
+                    //check if larger that 32 KB
+                    if (checkfile.Length > 32768)
+                    {
+                        throw new CustomExceptions("Setting file " + filenm + " is too big.");
+                    }
+                }
+                //check if larger that 10 MB
+                else if (checkfile.Length > 10485760)
+                {
+                    throw new CustomExceptions("File " + filenm + " is way too big.");
+                }
+            }
+        }
 
         /// <summary>
         /// find where the application data folder for this programme is.
@@ -406,36 +438,6 @@ namespace SimplePlainNote
 #endif
         }
 
-        /// <summary>
-        /// Does some checks on the file
-        /// - Is the file empty?
-        /// - Is the file too large?
-        /// </summary>        
-        private void CheckFile()
-        {
-            if (File.Exists(filenm) == true)
-            {
-                FileInfo checkfile = new FileInfo(filenm);
-                if (checkfile.Length == 0)
-                {
-                    throw new Exception("File "+filenm+" is empty");                   
-                }
-                else if (issetting)
-                {
-                    //check if larger that 32 KB
-                    if (checkfile.Length > 32768)
-                    {
-                        throw new Exception("Setting file " + filenm + " is too big.");
-                    }
-                }
-                //check if larger that 10 MB
-                else if (checkfile.Length > 10485760)
-                {
-                    throw new Exception("File " + filenm + " is way too big.");
-                }
-            }
-        }
-
-        #endregion Methods
+		#endregion Methods 
     }
 }

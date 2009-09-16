@@ -39,8 +39,7 @@ namespace SimplePlainNote
         private Int16 notecolor = 0;
         private bool notelock = false;
         private bool notevisible = true;
-        private string title;
-        private bool transparency = false;
+        private string title;        
         private string twpass;
         public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -552,9 +551,9 @@ namespace SimplePlainNote
 
         private void tweetnote()
         {
-            xmlHandler xmlSettings = new xmlHandler(true);
-            string twitteruser = xmlSettings.getXMLnode("twitteruser");
-            string twitterpass = xmlSettings.getXMLnode("twitterpass");
+            xmlHandler getSettings = new xmlHandler(true);
+            string twitteruser = getSettings.getXMLnode("twitteruser");
+            string twitterpass = getSettings.getXMLnode("twitterpass");
             if ((twpass != "") && (twpass != null))
             {
                 twitterpass = twpass;
@@ -591,12 +590,13 @@ namespace SimplePlainNote
                 Twitter twitter = new Twitter();
                 if (twitter.UpdateAsXML(twitteruser, twitterpass, note) != null)
                 {
-                    MessageBox.Show("Your note is Tweeted.");
+                    MessageBox.Show("Your note is Tweeted.");                    
                 }
                 else
                 {
-                    MessageBox.Show("Sending note to twitter failed.");
+                    MessageBox.Show("Error: Sending note to twitter failed.");                    
                 }
+                twpass = "";
             }            
         }
 
