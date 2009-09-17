@@ -13,8 +13,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-#define win32
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +24,9 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Xml;
+#if win32
 using Microsoft.Win32;
+#endif
 
 namespace SimplePlainNote
 {
@@ -317,7 +317,7 @@ namespace SimplePlainNote
         private void btnCrash_Click(object sender, EventArgs e)
         {
             #if DEBUG        
-            throw new CustomExceptions("This is a crash test, to test if exceptions are throw good.");
+            throw new CustomExceptions("This is a crash test, to test if exceptions are thrown correctly.");
             #endif
         }
 

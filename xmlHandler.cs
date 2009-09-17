@@ -13,8 +13,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-#define win32
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -195,7 +193,7 @@ namespace SimplePlainNote
             return -1;
         }
 
-        public bool WriteNote(bool visible, bool ontop, string numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
+        public bool WriteNote(bool visible, bool ontop, Int16 numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
             if (issetting) {
                 throw new CustomExceptions("This is a settings file, cannot write a note of it."); 
@@ -228,7 +226,7 @@ namespace SimplePlainNote
             }
 
             objXmlTextWriter.WriteStartElement("color");
-            objXmlTextWriter.WriteString(numcolor);
+            objXmlTextWriter.WriteString(Convert.ToString(numcolor));
             objXmlTextWriter.WriteEndElement();
 
             objXmlTextWriter.WriteStartElement("title");

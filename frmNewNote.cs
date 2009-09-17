@@ -13,8 +13,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-#define win32
-
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -106,6 +104,11 @@ namespace SimplePlainNote
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            int posnotelst = editnoteid - 1;
+            if ((this.editnote) && (posnotelst >= 0) && (posnotelst < notes.NumNotes))
+            {                
+                notes.GetNotes[posnotelst].Show();                                
+            }
             this.Close();
         }
 
@@ -257,11 +260,7 @@ namespace SimplePlainNote
                 rtbNote.BackColor = skin.getObjColor(false, true, false);
             }
         }
-        /// <summary>
-        /// rtbNote is not selected anymore.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void rtbNote_Leave(object sender, EventArgs e)
         {
             if (skin != null)
@@ -288,8 +287,20 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Force context menu to show up.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rtbNote_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                MessageBox.Show("show it damit,.");
+                contextMenuStripTextActions.Show(e.Location);
+            }
+        }
+
         #endregion Methods
-
-
     } 
 }

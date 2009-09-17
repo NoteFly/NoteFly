@@ -25,7 +25,7 @@ namespace SimplePlainNote
     {
         #region Fields (7)
 
-        private int defaultcolor = 1;
+        private Int16 defaultcolor = 1;
         private string notesavepath;
         private List<frmNote> noteslst;
         private bool notesupdated = false;
@@ -154,7 +154,7 @@ namespace SimplePlainNote
             try
             {
                 Int16 newid = Convert.ToInt16(noteslst.Count + 1);
-                string notefilenm = SaveNewNote(newid, title, content, defaultcolor.ToString());
+                string notefilenm = SaveNewNote(newid, title, content, defaultcolor);
                 if (String.IsNullOrEmpty(notefilenm)) { return; }
                 frmNote newnote = new frmNote(this, newid, title, content, notecolor);
                 noteslst.Add(newnote);
@@ -176,15 +176,15 @@ namespace SimplePlainNote
             int noteslistpos = noteid - 1;
             if ((noteslistpos >= 0) && (noteslistpos <= this.NumNotes))
             {
-                string title = noteslst[noteid - 1].NoteTitle;
-                string content = noteslst[noteid - 1].NoteContent;
-                Int16 color = noteslst[noteid - 1].NoteColor;
-                frmNewNote createnewnote = new frmNewNote(this, color, noteid, title, content);
-                createnewnote.Show();
+                string title = noteslst[noteslistpos].NoteTitle;
+                string content = noteslst[noteslistpos].NoteContent;
+                Int16 color = noteslst[noteslistpos].NoteColor;
+                frmNewNote newnote = new frmNewNote(this, color, noteid, title, content);
+                newnote.Show();
             }
             else
             {
-                throw new Exception("Error: note not found in memory.");
+                throw new CustomExceptions("Note not found in memory.");
             }
 
         }
@@ -196,7 +196,7 @@ namespace SimplePlainNote
         {
             xmlHandler getSettings = new xmlHandler(true);
 
-            this.defaultcolor = getSettings.getXMLnodeAsInt("defaultcolor");
+            this.defaultcolor = Convert.ToInt16(getSettings.getXMLnodeAsInt("defaultcolor"));
             if (getSettings.getXMLnodeAsBool("transparecy") == true)
             {
                 this.transparecy = true;
@@ -209,15 +209,13 @@ namespace SimplePlainNote
             this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
         }
 
-        public void UpdateAllFonts()
-        {
-
-            foreach (frmNote curfrmnote in noteslst)
-            {
-                curfrmnote.PaintColorNote();
-            }
-        }
-
+        /// <summary>
+        /// Update a partialer note with noteid
+        /// </summary>
+        /// <param name="noteid">id of note</param>
+        /// <param name="title">new title</param>
+        /// <param name="content">new content</param>
+        /// <param name="visible">is visible?</param>
         public void UpdateNote(int noteid, string title, string content, bool visible)
         {
             int notelstpos = noteid - 1;
@@ -230,6 +228,17 @@ namespace SimplePlainNote
             }
             noteslst[notelstpos].checkthings();
             this.notesupdated = true;
+        }
+
+        /// <summary>
+        /// Update all fonts (family/size etc.) for all notes.
+        /// </summary>
+        public void UpdateAllFonts()
+        {
+            foreach (frmNote curfrmnote in noteslst)
+            {
+                curfrmnote.PaintColorNote();
+            }
         }
         // Private Methods (4) 
 
@@ -339,7 +348,7 @@ namespace SimplePlainNote
             #if DEBUG
             //LoadNotesStressTest(100);
 
-            //no good.
+            //not really exact timing.
             DateTime endtime = DateTime.Now;
             TimeSpan debugtime = endtime - starttime;
             MessageBox.Show("loading notes time: " + debugtime.Milliseconds + " ms\r\n " + debugtime.Ticks + " ticks");
@@ -353,7 +362,7 @@ namespace SimplePlainNote
         /// <param name="title"></param>
         /// <param name="text"></param>
         /// <returns>filepath of the created note.</returns>
-        private string SaveNewNote(int id, string title, string text, string numcolor)
+        private string SaveNewNote(int id, string title, string text, Int16 numcolor)
         {
             string notefile = Path.Combine(notesavepath, id + ".xml");
             xmlHandler xmlnote = new xmlHandler(notefile);
@@ -369,7 +378,7 @@ namespace SimplePlainNote
 
         #if DEBUG
         /// <summary>
-        /// Mthode that creates a lot of notes for stress testing this app.
+        /// Methode that creates a lot of notes for stress testing this app.
         /// </summary>
         /// <param name="maxnotes"></param>
         private void LoadNotesStressTest(int maxnotes)

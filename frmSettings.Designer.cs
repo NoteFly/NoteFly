@@ -88,6 +88,7 @@
             // 
             // btnOK
             // 
+            this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnOK.BackColor = System.Drawing.Color.LightGray;
             this.btnOK.Location = new System.Drawing.Point(185, 268);
             this.btnOK.Name = "btnOK";
@@ -99,6 +100,7 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
             this.btnCancel.Location = new System.Drawing.Point(4, 268);
             this.btnCancel.Name = "btnCancel";
@@ -394,7 +396,7 @@
             // lbWarningTwitterPassword
             // 
             this.lbWarningTwitterPassword.AutoSize = true;
-            this.lbWarningTwitterPassword.Location = new System.Drawing.Point(9, 133);
+            this.lbWarningTwitterPassword.Location = new System.Drawing.Point(3, 133);
             this.lbWarningTwitterPassword.Name = "lbWarningTwitterPassword";
             this.lbWarningTwitterPassword.Size = new System.Drawing.Size(318, 13);
             this.lbWarningTwitterPassword.TabIndex = 13;

@@ -13,8 +13,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-#define win32
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,19 +27,20 @@ namespace SimplePlainNote
 {
     public partial class frmNote : Form
     {
-		#region Fields (12)  
-        public Notes notes;
-        private Skin skin;        
-        private Int16 id;
+		#region Fields (13) 
+
+        public const int HT_CAPTION = 0x2;
+                private Int16 id;
         private int locX;
         private int locY;
         private string note;
         private Int16 notecolor = 0;
         private bool notelock = false;
+        public Notes notes;
         private bool notevisible = true;
-        private string title;        
-        private string twpass;
-        public const int HT_CAPTION = 0x2;
+        private Skin skin;
+        private string title;
+                private string twpass;
         public const int WM_NCLBUTTONDOWN = 0xA1;
 
 		#endregion Fields 
@@ -111,7 +110,7 @@ namespace SimplePlainNote
             this.note = note;
             //this.transparency = transparency;
             this.notecolor = notecolor;            
-            //set default location note
+            //set default location note            
             this.locX = 10;
             this.locY = 10;
             //set width and height to default
@@ -130,15 +129,9 @@ namespace SimplePlainNote
 
 		#endregion Constructors 
 
-		#region Properties (5) 
-       
-        public Int16 NoteID
-        {
-            get { return id; }
-            set { this.id = value; }
-        }        
+		#region Properties (4) 
 
-        public Int16 NoteColor
+                public Int16 NoteColor
         {
             get
             {
@@ -147,16 +140,6 @@ namespace SimplePlainNote
             set
             {
                 value = notecolor;
-            }
-        }
-
-        public string NoteTitle
-        {
-            get { return this.title; }
-            set
-            {
-                title = value;
-                lblTitle.Text = title;
             }
         }
 
@@ -170,34 +153,27 @@ namespace SimplePlainNote
             }
         }
 
+        public Int16 NoteID
+        {
+            get { return id; }
+            set { this.id = value; }
+        }
+
+        public string NoteTitle
+        {
+            get { return this.title; }
+            set
+            {
+                title = value;
+                lblTitle.Text = title;
+            }
+        }
+
 		#endregion Properties 
 
-		#region Methods (29) 
-        
-        
-        #if win32
-        /// <summary>
-        /// Check internet state.
-        /// </summary>
-        /// <returns></returns>
-        private static bool IsConnectedToInternet()
-        {
-            int Desc;
-            return InternetGetConnectedState(out Desc, 0);
-        }        
-                
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
+		#region Methods (26) 
 
-
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd,
-                         int msg, int wParam, int lParam);
-
-        [DllImport("wininet.dll")]
-        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
-
-        #endif
+		// Public Methods (2) 
 
         /// <summary>
         /// Check if twitter is enabled and check Syntax.
@@ -206,6 +182,39 @@ namespace SimplePlainNote
         {
             CheckTwitter(notes.TwitterEnabled);
             notes.CheckSyntax(notes.SyntaxHighlightEnabled, rtbNote);
+        }
+
+        /// <summary>
+        /// Get the color of the note and paint it.
+        /// </summary>
+        public void PaintColorNote()
+        {                
+            skin = new Skin(notecolor);
+            Color normalcolor = skin.getObjColor(false);            
+
+            this.BackColor = normalcolor;
+            this.pnlHead.BackColor = normalcolor;
+            this.pnlNote.BackColor = normalcolor;
+            this.rtbNote.BackColor = normalcolor;
+
+            rtbNote.Font = skin.getFontNoteContent();                        
+        }
+		// Private Methods (24) 
+
+        /// <summary>
+        /// Find what password is entered.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
+        private void askpassok(object obj, EventArgs e)
+        {
+            Button btnobj = (Button)obj;
+            Form frmAskpass = btnobj.FindForm();
+
+            Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
+            twpass = passctr[0].Text;            
+            frmAskpass.Close();
+            tweetnote();                         
         }
 
         /// <summary>
@@ -222,22 +231,6 @@ namespace SimplePlainNote
             {
                 TwitterToolStripMenuItem.Enabled = false;
             }
-        }
-
-        /// <summary>
-        /// Find what password is entered.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="e"></param>
-        private void askpassok(object obj, EventArgs e)
-        {
-            Button btnobj = (Button)obj;
-            Form frmAskpass = btnobj.FindForm();
-
-            Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
-            twpass = passctr[0].Text;            
-            frmAskpass.Close();
-            tweetnote();                         
         }
 
         private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
@@ -281,8 +274,7 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Error: cannot find note.");
             }
-            notes.EditNewNote(this.NoteID);            
-             
+            notes.EditNewNote(this.NoteID);                         
         }
 
         /// <summary>
@@ -346,9 +338,9 @@ namespace SimplePlainNote
                 this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
             }
-        }    
+        }
 
-        /// <summary>
+            /// <summary>
         /// Lock a note
         /// </summary>
         /// <param name="sender"></param>
@@ -392,22 +384,6 @@ namespace SimplePlainNote
             {
                 SavePos.RunWorkerAsync();
             }
-        }
-
-        /// <summary>
-        /// Get the color of the note and paint it.
-        /// </summary>
-        public void PaintColorNote()
-        {                
-            skin = new Skin(notecolor);
-            Color normalcolor = skin.getObjColor(false);            
-
-            this.BackColor = normalcolor;
-            this.pnlHead.BackColor = normalcolor;
-            this.pnlNote.BackColor = normalcolor;
-            this.rtbNote.BackColor = normalcolor;
-
-            rtbNote.Font = skin.getFontNoteContent();                        
         }
 
         /// <summary>
@@ -480,32 +456,47 @@ namespace SimplePlainNote
             Cursor = Cursors.SizeNWSE;            
         }
 
+        private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            xmlHandler getSettings = new xmlHandler(true);
+            if (getSettings.getXMLnodeAsBool("askurl"))
+            {
+                DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(e.LinkText);
+                }
+            }
+            else
+            {
+                System.Diagnostics.Process.Start(e.LinkText);
+            }
+        }
+
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {                      
             #if DEBUG
             DateTime starttime = DateTime.Now;
             #endif         
 
-            try
-            {
                 this.locX = this.Location.X;
                 this.locY = this.Location.Y;
-                string numcolor = Convert.ToString(this.notecolor);
-                if ((this.locX >= 0) && (this.locY >= 0))
+
+                if ((this.locX + this.Width > 0) && (this.locY + this.Height > 0) && (notecolor >= 0))
                 {
                     string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
                     xmlHandler updateposnote = new xmlHandler(notefile);                    
-                    updateposnote.WriteNote(notevisible,this.TopMost,numcolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                    updateposnote.WriteNote(notevisible,this.TopMost,notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
                 }
-                else
+                else if (notecolor >= 0)
                 {
                     MessageBox.Show("Error: note location out of screen.");
                 }
-            }
-            catch (InvalidCastException)
-            {
-                MessageBox.Show("internal error");
-            }
+                else
+                {
+                    MessageBox.Show("Error: notecolor unknow.");
+                }
+            
 
             #if DEBUG
             DateTime endtime = DateTime.Now;
@@ -526,7 +517,7 @@ namespace SimplePlainNote
                     notecolor = i;
                     string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
                     xmlHandler savenotecolor = new xmlHandler(notefile);
-                    savenotecolor.WriteNote(notevisible, OnTopToolStripMenuItem.Checked, Convert.ToString(notecolor), this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    savenotecolor.WriteNote(notevisible, OnTopToolStripMenuItem.Checked, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
                 }
                 else
                 {
@@ -561,7 +552,9 @@ namespace SimplePlainNote
 
             if (String.IsNullOrEmpty(twitteruser))
             {
-                MessageBox.Show("Twitter settings not set.");
+                MessageBox.Show("Error: you haven't set your twitter username yet.\r\nSettings window will now open.");
+                frmSettings settings = new frmSettings(notes, notes.Transparency);
+                settings.Show();                
                 return;
             }
             else if (String.IsNullOrEmpty(twpass))
@@ -596,27 +589,9 @@ namespace SimplePlainNote
                 {
                     MessageBox.Show("Error: Sending note to twitter failed.");                    
                 }
-                twpass = "";
+                twpass.Remove(0);                
             }            
         }
-
-        private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            xmlHandler getSettings = new xmlHandler(true);
-            if (getSettings.getXMLnodeAsBool("askurl"))
-            {
-                DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    System.Diagnostics.Process.Start(e.LinkText);
-                }
-            }
-            else
-            {
-                System.Diagnostics.Process.Start(e.LinkText);
-            }
-        }
-
 
         private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -640,13 +615,13 @@ namespace SimplePlainNote
                 }
                 else
                 {
-                    MessageBox.Show("Note is empty.");
+                    MessageBox.Show("Error: Your note is empty.");
                 }
             #if win32
             }
             else
             {
-                MessageBox.Show("No network connection.");
+                MessageBox.Show("Error: There is no network connection.");
             }
             #endif
         }
@@ -683,6 +658,25 @@ namespace SimplePlainNote
                     break;                
             }
         }
+
+#if win32
+        /// <summary>
+        /// Check internet state.
+        /// </summary>
+        /// <returns></returns>
+        private static bool IsConnectedToInternet()
+        {
+            int Desc;
+            return InternetGetConnectedState(out Desc, 0);
+        }
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd,
+                         int msg, int wParam, int lParam);
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
+#endif
 
 		#endregion Methods 
     }

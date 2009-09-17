@@ -1,5 +1,6 @@
-﻿namespace SimplePlainNote
-{
+﻿#define win32
+namespace SimplePlainNote
+{    
     partial class frmNewNote
     {
         /// <summary>
@@ -68,9 +69,10 @@
             this.rtbNote.TabIndex = 1;
             this.rtbNote.Text = "";
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
+            this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
             this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
-            this.rtbNote.TextChanged += new System.EventHandler(this.rtbNote_TextChanged);            
+            this.rtbNote.TextChanged += new System.EventHandler(this.rtbNote_TextChanged);
             // 
             // tbTitle
             // 
