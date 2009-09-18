@@ -42,8 +42,10 @@ namespace SimplePlainNote
         static ToolStripMenuItem MenuExit;
         static ContextMenuStrip MenuTrayIcon;
         static Notes notes;
+        //static bool settingshowed = false;
         static bool transparency = true;
         static bool newnoteshowed = false;
+        
         #endregion Fields
 
         #region Methods (2)
@@ -76,8 +78,7 @@ namespace SimplePlainNote
         {
             components = new System.ComponentModel.Container();
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(true);
-            //Application.SetUnhandledExceptionMode(UnhandledExceptionEventHandler
+            Application.SetCompatibleTextRenderingDefault(true);            
 
             transparency = true;
 
@@ -216,7 +217,7 @@ namespace SimplePlainNote
         static void MenuSettings_Click(object sender, EventArgs e)
         {
             frmSettings settings = new frmSettings(notes, transparency);
-            settings.Show();
+            settings.Show();                                             
         }
 
         static void MenuAbout_Click(object sender, EventArgs e)
@@ -227,9 +228,27 @@ namespace SimplePlainNote
 
         static void MenuExit_Click(object sender, EventArgs e)
         {
+            xmlHandler getSetting = new xmlHandler(true);
+            if (getSetting.getXMLnodeAsBool("confirmexit"))
+            {
+                DialogResult resultdialogconfirm = MessageBox.Show("Are sure you want to exit SimplePlainNote?", "confirm exit", MessageBoxButtons.YesNo);
+                if (resultdialogconfirm == DialogResult.Yes)
+                {
+                    ExitApplication();
+                }
+            }
+            else
+            {
+                ExitApplication();
+            }
+        }
+
+        static void ExitApplication()
+        {
             components.Dispose();
             Application.Exit();
         }
+
         #endregion
 
         #endregion Methods

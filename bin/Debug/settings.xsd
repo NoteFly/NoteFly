@@ -12,6 +12,7 @@
         <xs:element name="fontsize" type="xs:int" />
         <xs:element name="notesavepath" type="xs:string" />
         <xs:element name="syntaxhighlight" type="xs:boolean" />
+        <xs:element name="confirmexit" type="xs:boolean" />
         <xs:element name="defaultemail" type="xs:string" />
         <xs:element name="twitter">
           <xs:complexType>

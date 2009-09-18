@@ -18,10 +18,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+#if win32
+using System.Runtime.InteropServices;
+#endif
 
 namespace SimplePlainNote
 {

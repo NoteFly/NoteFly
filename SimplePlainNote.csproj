@@ -63,6 +63,26 @@
     <DebugSymbols>true</DebugSymbols>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release linux|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>linux</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release mac|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>win32</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Deployment" />
@@ -187,11 +207,18 @@
   <ItemGroup>
     <None Include="bin\Debug\note.xsd" />
     <None Include="bin\Debug\settings.xsd" />
+    <None Include="bin\Release\create_setup.nsi" />
+    <None Include="bin\Release\SimplePlainNote_package.pkgxml" />
+    <None Include="build_setup.bat" />
+    <None Include="make_archive.bat" />
     <None Include="Resources\hoekje.png" />
+    <None Include="simpleplainnote_classdiagram.zargo" />
     <None Include="strongkey_simpleplainnotes.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Release\license.txt" />
     <Content Include="Resources\logo.png" />
+    <Content Include="wiki\pad_file.xml" />
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>
     </EmbeddedResource>

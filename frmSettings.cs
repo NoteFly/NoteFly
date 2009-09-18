@@ -51,6 +51,7 @@ namespace SimplePlainNote
             
             //read setting and display them correctly.            
             cbxTransparecy.Checked = transparecy;
+            cbxConfirmExit.Checked = getConfirmExit();
             numProcTransparency.Value = getTransparecylevel();            
             cbxDefaultColor.SelectedIndex = getDefaultColor();
             cbxActionLeftClick.SelectedIndex = getActionLeftClick();
@@ -118,7 +119,7 @@ namespace SimplePlainNote
                 {
                     MoveNotes(tbNotesSavePath.Text);
                 }
-                xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
+                xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, cbxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
 
                 #if win32
                 key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -150,8 +151,9 @@ namespace SimplePlainNote
 #endif
                 notes.SetSettings();
                 notes.UpdateAllFonts();
-
+                
                 this.Close();
+
             }                                        
         }
 
@@ -312,6 +314,11 @@ namespace SimplePlainNote
                     }
                 }
             }
+        }
+
+        private bool getConfirmExit()
+        {
+            return xmlsettings.getXMLnodeAsBool("confirmexit");
         }
 
         private void btnCrash_Click(object sender, EventArgs e)

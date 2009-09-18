@@ -45,7 +45,7 @@ namespace SimplePlainNote
                 this.filenm = Path.Combine(appdatafolder, "settings.xml");
                 if (File.Exists(filenm) == false)
                 {
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, appdatafolder, "adres@domain.com", true, "", "");
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, appdatafolder, "adres@domain.com", true, false, "", "");
                 }
             }
         }
@@ -274,7 +274,7 @@ namespace SimplePlainNote
         /// <param name="numcolor"></param>
         /// <returns>true if succeed.</returns>
         /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool syntaxhighlight, string twitteruser, string twitterpass)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool syntaxhighlight, bool confirmexit, string twitteruser, string twitterpass)
         {
             if (!this.issetting)
             {
@@ -351,6 +351,17 @@ namespace SimplePlainNote
             {
                 objXmlTextWriter.WriteString("1");
 
+            }
+            else
+            {
+                objXmlTextWriter.WriteString("0");
+            }
+            objXmlTextWriter.WriteEndElement();
+
+            objXmlTextWriter.WriteStartElement("confirmexit");
+            if (confirmexit)
+            {
+                objXmlTextWriter.WriteString("1");
             }
             else
             {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <name>SimplePlainNote</name>
+  <shortname>SimplePlainNote</shortname>
+  <summary>note application</summary>
+  <version>0.9.7</version>
+  <url>http://code.google.com/p/simpleplainnote/</url>
+  <license>GPLv2</license>
+  <type>Winexe</type>
+  <description>A small colorful note taking application.</description>
+  <createdesktopfile>true</createdesktopfile>
+  <icon>C:\Users\Public\sourcecode\Projects_Csharp\simpleplainnote\Resources\logo.png</icon>
+  <categories>Utility</categories>
+  <group>Productivity/Office/Other</group>
+  <dependencies>
+    <dependency>mono(System.Data) = 2.0.0.0</dependency>
+    <dependency>mono(System.Drawing) = 2.0.0.0</dependency>
+    <dependency>mono(System.Web) = 2.0.0.0</dependency>
+    <dependency>mono(System.Xml) = 2.0.0.0</dependency>
+  </dependencies>
+  <provides />
+  <filetree name="Application Root" writable="false">
+    <directories />
+    <files />
+  </filetree>
+  <autogeneraterelease>true</autogeneraterelease>
+  <release />
+  <preinstallscript />
+  <postinstallscript />
+  <preuninstallscript />
+  <postuninstallscript />
+  <useiomap>false</useiomap>
+  <minimummono>2.4.2</minimummono>
+  <leaveonserver>false</leaveonserver>
+  <serverlocation />
+</package>
