@@ -68,6 +68,7 @@ namespace SimplePlainNote
             this.rtbNote.Size = new System.Drawing.Size(271, 196);
             this.rtbNote.TabIndex = 1;
             this.rtbNote.Text = "";
+            this.rtbNote.UseWaitCursor = true;
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -182,6 +183,7 @@ namespace SimplePlainNote
             this.pnlNoteEdit.Name = "pnlNoteEdit";
             this.pnlNoteEdit.Size = new System.Drawing.Size(284, 211);
             this.pnlNoteEdit.TabIndex = 0;
+            this.pnlNoteEdit.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlNoteEdit_MouseClick);
             // 
             // pbResizeGrip
             // 

@@ -260,6 +260,7 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //FIXME: no enters copied.
             Clipboard.SetText(title);
         }
 
@@ -325,6 +326,11 @@ namespace SimplePlainNote
             this.Hide();
         }
 
+        /// <summary>
+        /// Form got focus, remove transparency
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmNote_Activated(object sender, EventArgs e)
         {
             if ((notes.Transparency) && (skin!=null))
@@ -333,6 +339,11 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Form is not active anymore, make transparent if allowed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmNote_Deactivate(object sender, EventArgs e)
         {
             if ((notes.Transparency) && (skin!=null))
@@ -343,7 +354,7 @@ namespace SimplePlainNote
         }
 
             /// <summary>
-        /// Lock a note
+        /// Lock note
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -352,6 +363,9 @@ namespace SimplePlainNote
             if (!notelock)
             {
                 notelock = true;
+                pbShowLock.Visible = true;
+                pbShowLock.Location = new Point(btnCloseNote.Location.X - 24, 8);
+                pbShowLock.Size = new Size(16, 16);
                 locknoteToolStripMenuItem.Text = "lock note (click again to unlock)";
                 this.menuNoteColors.Enabled = false;
                 this.editTToolStripMenuItem.Enabled = false;
@@ -360,6 +374,7 @@ namespace SimplePlainNote
             else
             {
                 notelock = false;
+                pbShowLock.Visible = false;
                 locknoteToolStripMenuItem.Text = "lock note";
                 this.menuNoteColors.Enabled = true;
                 this.editTToolStripMenuItem.Enabled = true;
@@ -428,7 +443,7 @@ namespace SimplePlainNote
 
             if (e.Button == MouseButtons.Left)
             {       
-                #if win32
+                #if win32                
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 #endif
@@ -458,6 +473,11 @@ namespace SimplePlainNote
             Cursor = Cursors.SizeNWSE;            
         }
 
+        /// <summary>
+        /// hyperlink clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             xmlHandler getSettings = new xmlHandler(true);
@@ -475,6 +495,11 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Thread to save note settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {                      
             #if DEBUG
@@ -508,6 +533,11 @@ namespace SimplePlainNote
 
         }
 
+        /// <summary>
+        /// Set the color of the note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void setColorNote(object sender, EventArgs e)
         {
             Int16 i =0;
@@ -531,17 +561,28 @@ namespace SimplePlainNote
             PaintColorNote();
         }
 
+        /// <summary>
+        /// Set the position of frmNote
+        /// </summary>
         private void SetPosNote()
         {
             this.Location = new Point(locX, locY);            
         }
 
+        /// <summary>
+        /// Set the size of frmNote
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         private void SetSizeNote(int width, int height)
         {
             this.Width = width;
             this.Height = height;
         }
 
+        /// <summary>
+        /// Tweet a note.
+        /// </summary>
         private void tweetnote()
         {
             xmlHandler getSettings = new xmlHandler(true);
@@ -595,6 +636,11 @@ namespace SimplePlainNote
             }            
         }
 
+        /// <summary>
+        /// Request to tweet note. Check if allow, if so call tweetnote() methode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             #if win32
@@ -628,6 +674,11 @@ namespace SimplePlainNote
             #endif
         }
 
+        /// <summary>
+        /// Change check in menu colors
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateMenuNoteColor(object sender, EventArgs e)
         {
             foreach (ToolStripMenuItem curitem in menuNoteColors.DropDownItems)

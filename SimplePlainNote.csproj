@@ -217,7 +217,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
+    <None Include="Resources\locknote.png" />
     <Content Include="Resources\logo.png" />
+    <None Include="Resources\notelock.png" />
     <Content Include="wiki\pad_file.xml" />
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>

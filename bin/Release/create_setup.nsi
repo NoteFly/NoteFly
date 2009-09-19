@@ -19,7 +19,7 @@
 Name "Simple Plain Note ${VERSION} ${VERSTATUS}"
 
 ; The file to write
-OutFile "SimplePlainNote_v${VERSION}.exe"
+OutFile ".\windows setups\SimplePlainNote_v${VERSION}.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\simpleplainnote

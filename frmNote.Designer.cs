@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlHead = new System.Windows.Forms.Panel();
+            this.pbShowLock = new System.Windows.Forms.PictureBox();
             this.btnCloseNote = new System.Windows.Forms.Button();
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.pnlNote = new System.Windows.Forms.Panel();
@@ -53,6 +54,7 @@
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.SavePos = new System.ComponentModel.BackgroundWorker();
             this.pnlHead.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbShowLock)).BeginInit();
             this.pnlNote.SuspendLayout();
             this.contextMenuStripNoteOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
@@ -73,6 +75,7 @@
             // 
             this.pnlHead.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHead.Controls.Add(this.pbShowLock);
             this.pnlHead.Controls.Add(this.btnCloseNote);
             this.pnlHead.Controls.Add(this.lblTitle);
             this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
@@ -82,10 +85,23 @@
             this.pnlHead.TabIndex = 1;
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             // 
+            // pbShowLock
+            // 
+            this.pbShowLock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbShowLock.Image = global::SimplePlainNote.Properties.Resources.locknote;
+            this.pbShowLock.Location = new System.Drawing.Point(180, 8);
+            this.pbShowLock.Name = "pbShowLock";
+            this.pbShowLock.Size = new System.Drawing.Size(16, 16);
+            this.pbShowLock.TabIndex = 2;
+            this.pbShowLock.TabStop = false;
+            this.pbShowLock.Visible = false;
+            // 
             // btnCloseNote
             // 
             this.btnCloseNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCloseNote.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCloseNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseNote.Font = new System.Drawing.Font("Kartika", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCloseNote.Location = new System.Drawing.Point(200, 4);
@@ -183,7 +199,7 @@
             this.yellowToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.yellowToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.yellowToolStripMenuItem.Name = "yellowToolStripMenuItem";
-            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.yellowToolStripMenuItem.Text = "Yellow";
             this.yellowToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -192,7 +208,7 @@
             this.orangeToolStripMenuItem.BackColor = System.Drawing.Color.Orange;
             this.orangeToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.orangeToolStripMenuItem.Name = "orangeToolStripMenuItem";
-            this.orangeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.orangeToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.orangeToolStripMenuItem.Text = "Orange";
             this.orangeToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -201,7 +217,7 @@
             this.whiteToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.whiteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.whiteToolStripMenuItem.Name = "whiteToolStripMenuItem";
-            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.whiteToolStripMenuItem.Text = "White";
             this.whiteToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -210,7 +226,7 @@
             this.greenToolStripMenuItem.BackColor = System.Drawing.Color.LawnGreen;
             this.greenToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.greenToolStripMenuItem.Name = "greenToolStripMenuItem";
-            this.greenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.greenToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.greenToolStripMenuItem.Text = "Green";
             this.greenToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -219,7 +235,7 @@
             this.blueToolStripMenuItem.BackColor = System.Drawing.Color.CornflowerBlue;
             this.blueToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.blueToolStripMenuItem.Name = "blueToolStripMenuItem";
-            this.blueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.blueToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.blueToolStripMenuItem.Text = "Blue";
             this.blueToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -227,7 +243,7 @@
             // 
             this.purpleToolStripMenuItem.BackColor = System.Drawing.Color.Fuchsia;
             this.purpleToolStripMenuItem.Name = "purpleToolStripMenuItem";
-            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.purpleToolStripMenuItem.Text = "Purple";
             this.purpleToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -235,7 +251,7 @@
             // 
             this.redToolStripMenuItem.BackColor = System.Drawing.Color.Red;
             this.redToolStripMenuItem.Name = "redToolStripMenuItem";
-            this.redToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.redToolStripMenuItem.Text = "Red";
             this.redToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -332,6 +348,7 @@
             this.Activated += new System.EventHandler(this.frmNote_Activated);
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbShowLock)).EndInit();
             this.pnlNote.ResumeLayout(false);
             this.pnlNote.PerformLayout();
             this.contextMenuStripNoteOptions.ResumeLayout(false);
@@ -365,5 +382,6 @@
         private System.Windows.Forms.ToolStripMenuItem locknoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem emailNoteToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker SavePos;
+        private System.Windows.Forms.PictureBox pbShowLock;
     }
 }

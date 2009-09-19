@@ -147,9 +147,9 @@ namespace SimplePlainNote
                 #if win32
                 if (e.Button == MouseButtons.Left)
                 {
-                    ReleaseCapture();
+                    ReleaseCapture();                    
 
-                    SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                    //SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                     pnlHeadNewNote.BackColor = skin.getObjColor(false);
                 }
                 #endif
@@ -296,11 +296,20 @@ namespace SimplePlainNote
         {
             if (e.Button == MouseButtons.Right)
             {
-                MessageBox.Show("show it damit,.");
-                contextMenuStripTextActions.Show(e.Location);
-            }
+                //FIX: show context menu.                
+                contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
+                MessageBox.Show("ogogogg");
+            }            
         }
 
         #endregion Methods
+
+        private void pnlNoteEdit_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextMenuStripTextActions.Show(this.Location.X+e.X, this.Location.X+e.Y);
+            }
+        }
     } 
 }

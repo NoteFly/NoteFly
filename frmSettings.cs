@@ -153,10 +153,12 @@ namespace SimplePlainNote
                 notes.UpdateAllFonts();
                 
                 this.Close();
-
             }                                        
         }
 
+        /// <summary>
+        /// Fill combobox list with fonts
+        /// </summary>
         private void DrawCbxFonts()
         {            
             foreach (FontFamily oneFontFamily in FontFamily.Families)
@@ -174,6 +176,11 @@ namespace SimplePlainNote
             }            
         }
 
+        /// <summary>
+        /// Enable password editbox on checking remember password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)
         {
             if (cbxRememberTwPass.Checked == true)
@@ -187,6 +194,11 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Enable nummericupdown control if transparecy is checked.        
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
             if (cbxTransparecy.Checked == false)

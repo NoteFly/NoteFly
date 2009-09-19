@@ -80,5 +80,12 @@ namespace SimplePlainNote.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        public static System.Drawing.Bitmap locknote {
+            get {
+                object obj = ResourceManager.GetObject("locknote", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
