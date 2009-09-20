@@ -338,11 +338,11 @@ namespace SimplePlainNote
             }
             if (firstrun)
             {
-                int tipnotewidth = 280;
-                int tipnoteheight = 240;
+                int tipnotewidth = 320;
+                int tipnoteheight = 280;
                 int tipnoteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2);
                 int tipnoteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2);
-                noteslst.Add(CreateNote(true, false, "first example note", "This is a example note.\r\nYou can change color of this note by rightclicking this note.\r\nYou can delete this note, by rightclicking the systray icon choice manage note and then press delete note.\r\nBy clicking on the cross of this note. This note will hiden.\r\nYou can get it back with the manage notes window.", 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+                noteslst.Add(CreateNote(true, false, "first example note", "This is a example note.\r\nYou can change color of this note by rightclicking this note.\r\nYou can delete this note, by rightclicking the systray icon choice manage note and then press delete note.\r\nBy clicking on the cross of this note. This note will hiden.\r\nYou can get it back with the manage notes window.\r\nPlease close the installer now.", 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
             }
 
             #if DEBUG

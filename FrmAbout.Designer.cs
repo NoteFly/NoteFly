@@ -68,9 +68,10 @@
             // linklblWebsite
             // 
             this.linklblWebsite.AutoSize = true;
-            this.linklblWebsite.Location = new System.Drawing.Point(12, 119);
+            this.linklblWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linklblWebsite.Location = new System.Drawing.Point(12, 114);
             this.linklblWebsite.Name = "linklblWebsite";
-            this.linklblWebsite.Size = new System.Drawing.Size(43, 13);
+            this.linklblWebsite.Size = new System.Drawing.Size(54, 16);
             this.linklblWebsite.TabIndex = 28;
             this.linklblWebsite.TabStop = true;
             this.linklblWebsite.Text = "website";

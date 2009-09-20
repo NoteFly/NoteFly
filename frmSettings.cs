@@ -45,12 +45,7 @@ namespace SimplePlainNote
         public frmSettings(Notes notes, bool transparecy)
         {
             InitializeComponent();
-
-            #if DEBUG
-            btnCrash.Visible = true;
-            #endif
-            xmlsettings = new xmlHandler(true);
-            
+            xmlsettings = new xmlHandler(true);            
             //read setting and display them correctly.            
             cbxTransparecy.Checked = transparecy;
             cbxConfirmExit.Checked = getConfirmExit();
@@ -66,6 +61,9 @@ namespace SimplePlainNote
             
             this.notes = notes;
             DrawCbxFonts();
+#if DEBUG
+            btnCrash.Visible = true;
+#endif
         }
 
 		#endregion Constructors 
@@ -77,12 +75,21 @@ namespace SimplePlainNote
             this.Close();
         }
 
+        /// <summary>
+        /// Check the form input. If everything is okay
+        /// call xmlHandler class to save the xml setting file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnOK_Click(object sender, EventArgs e)
-        {        
-            if (String.IsNullOrEmpty(cbxFontNoteContent.Text)==true)
+        {    
+            if (!Directory.Exists(tbNotesSavePath.Text))
             {
-                MessageBox.Show("Select a font.");
-                tabAppearance.Select();                
+                MessageBox.Show("Invalid folder note save folder.");                
+            }
+            else if (String.IsNullOrEmpty(cbxFontNoteContent.Text)==true)
+            {
+                MessageBox.Show("Select a font.");                                
             }
             else if ((numFontSize.Value < 1) || (numFontSize.Value > 100))
             {
@@ -90,28 +97,15 @@ namespace SimplePlainNote
             }
             else if (tbTwitterUser.Text.Length > 16)
             {
-                MessageBox.Show("Settings Twitter: username is too long.");
-                tabTwitter.Select();
+                MessageBox.Show("Settings Twitter: username is too long.");                
             }
             else if ((tbTwitterPass.Text.Length < 6) && (cbxRememberTwPass.Checked == true))
             {
-                MessageBox.Show("Settings Twitter: password is too short.");
-                tabTwitter.Select();
-            }
-            else if (!Directory.Exists(tbNotesSavePath.Text))
-            {
-                MessageBox.Show("Settings advance: Invalid folder note save folder.");
-                tabAdvance.Select();
+                MessageBox.Show("Settings Twitter: password is too short.");                
             }
             else if (!tbDefaultEmail.Text.Contains("@"))
             {
-                MessageBox.Show("Settings advance: default emailadres not valid.");
-                tabAdvance.Select();
-            }
-            else if (!Directory.Exists(tbNotesSavePath.Text))
-            {
-                MessageBox.Show("Settings advance: note save path does not exist.");
-                tabAdvance.Select();
+                MessageBox.Show("Settings advance: default emailadres not valid.");                
             }
             //everything looks okay            
             else

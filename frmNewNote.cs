@@ -33,17 +33,17 @@ namespace SimplePlainNote
     {
 		#region Fields (5) 
 
-        private Int16 notecolor;
         private bool editnote = false;
         private int editnoteid = -1;
+        private Int16 notecolor;
         private Notes notes;
-        private Skin skin;        
+        private Skin skin;
 
 		#endregion Fields 
 
 		#region Constructors (2) 
 
-        public frmNewNote(Notes notes, Int16 notecolor, int editnoteid, string editnotetitle, string editnotecontent)
+                public frmNewNote(Notes notes, Int16 notecolor, int editnoteid, string editnotetitle, string editnotecontent)
         {
             InitializeComponent();
             this.editnote = true;
@@ -72,9 +72,9 @@ namespace SimplePlainNote
 
 		#endregion Constructors 
 
-		#region Methods (9) 
+		#region Methods (15) 
 
-		// Private Methods (9) 
+		// Private Methods (15) 
 
         private void btnAddNote_Click(object sender, EventArgs e)
         {            
@@ -112,6 +112,19 @@ namespace SimplePlainNote
             this.Close();
         }
 
+        /// <summary>
+        /// do some syntax highlighting
+        /// </summary>
+        private void checksyntax()
+        {
+            notes.CheckSyntax(notes.SyntaxHighlightEnabled, rtbNote);
+        }
+
+        private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(rtbNote.Text);
+        }
+
         private void frmNewNote_Activated(object sender, EventArgs e)
         {
             if (notes.Transparency)
@@ -126,6 +139,18 @@ namespace SimplePlainNote
             {
                 this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
+            }
+        }
+
+        private void pastTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                rtbNote.Text = rtbNote.Text + Clipboard.GetText();
+            }
+            else
+            {
+                MessageBox.Show("clipboard is empty.");
             }
         }
 
@@ -148,11 +173,18 @@ namespace SimplePlainNote
                 if (e.Button == MouseButtons.Left)
                 {
                     ReleaseCapture();                    
-
-                    //SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                    SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                     pnlHeadNewNote.BackColor = skin.getObjColor(false);
                 }
                 #endif
+            }
+        }
+
+        private void pnlNoteEdit_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
             }
         }
 
@@ -202,41 +234,47 @@ namespace SimplePlainNote
         }
 
         /// <summary>
+        /// Force context menu to show up.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rtbNote_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                //FIX: show context menu.                
+                contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
+                MessageBox.Show("ogogogg");
+            }            
+        }
+
+        /// <summary>
         /// Move to rtbNote
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void tbTitle_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Tab))
             {
-                rtbNote.Focus();
-            }
+                this.rtbNote.Focus();
+                this.rtbNote.Select();
+                MessageBox.Show("enter or tab dectected.");
+            }                        
         }
 
-        /// <summary>
-        /// do some syntax highlighting
-        /// </summary>
-        private void checksyntax()
-        {
-            notes.CheckSyntax(notes.SyntaxHighlightEnabled, rtbNote);
-        }
-
-        private void rtbNote_TextChanged(object sender, EventArgs e)
-        {
-            checksyntax();
-        }		
+		#endregion Methods 
 
         #if win32
         public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
-  
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
         int Msg, int wParam, int lParam);
         #endif
+
 
         #region highlight controls
         private void tbTitle_Enter(object sender, EventArgs e)
@@ -270,45 +308,20 @@ namespace SimplePlainNote
         }
         #endregion
 
-        private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void rtbNote_KeyDown(object sender, KeyEventArgs e)
         {
-            Clipboard.SetText(rtbNote.Text);
+
         }
 
-        private void pastTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void copyTextToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
             {
-                rtbNote.Text = rtbNote.Text + Clipboard.GetText();
+                pastTextToolStripMenuItem.Enabled = true;
             }
             else
             {
-                MessageBox.Show("clipboard is empty.");
-            }
-        }
-
-        /// <summary>
-        /// Force context menu to show up.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void rtbNote_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                //FIX: show context menu.                
-                contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
-                MessageBox.Show("ogogogg");
-            }            
-        }
-
-        #endregion Methods
-
-        private void pnlNoteEdit_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                contextMenuStripTextActions.Show(this.Location.X+e.X, this.Location.X+e.Y);
+                pastTextToolStripMenuItem.Enabled = false;
             }
         }
     } 

@@ -211,12 +211,12 @@
     <None Include="build_setup.bat" />
     <None Include="make_archive.bat" />
     <None Include="Resources\hoekje.png" />
-    <None Include="simpleplainnote_classdiagram.zargo" />
     <None Include="strongkey_simpleplainnotes.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
     <None Include="bin\Release\create_linux_package.pkgxml" />
+    <None Include="classdiagram.zargo" />
     <None Include="Resources\locknote.png" />
     <Content Include="Resources\logo.png" />
     <Content Include="wiki\pad_file.xml" />

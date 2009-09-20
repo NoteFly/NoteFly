@@ -32,6 +32,9 @@ namespace SimplePlainNote
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNewNote));
             this.rtbNote = new System.Windows.Forms.RichTextBox();
+            this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pastTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.lbTextTitle = new System.Windows.Forms.Label();
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
@@ -39,13 +42,12 @@ namespace SimplePlainNote
             this.btnAddNote = new System.Windows.Forms.Button();
             this.pnlNoteEdit = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
-            this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pastTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveNewNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cancelNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.pnlNoteEdit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
-            this.contextMenuStripTextActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // rtbNote
@@ -57,8 +59,7 @@ namespace SimplePlainNote
             this.rtbNote.AutoWordSelection = true;
             this.rtbNote.BackColor = System.Drawing.Color.Gold;
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbNote.CausesValidation = false;
-            this.rtbNote.EnableAutoDragDrop = true;
+            this.rtbNote.ContextMenuStrip = this.contextMenuStripTextActions;
             this.rtbNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
             this.rtbNote.Location = new System.Drawing.Point(3, 3);
@@ -68,36 +69,55 @@ namespace SimplePlainNote
             this.rtbNote.Size = new System.Drawing.Size(271, 196);
             this.rtbNote.TabIndex = 1;
             this.rtbNote.Text = "";
-            this.rtbNote.UseWaitCursor = true;
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
             this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
-            this.rtbNote.TextChanged += new System.EventHandler(this.rtbNote_TextChanged);
+            this.rtbNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rtbNote_KeyDown);
+            // 
+            // contextMenuStripTextActions
+            // 
+            this.contextMenuStripTextActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pastTextToolStripMenuItem,
+            this.copyTextToolStripMenuItem,
+            this.saveNewNoteToolStripMenuItem,
+            this.cancelNoteToolStripMenuItem});
+            this.contextMenuStripTextActions.Name = "contextMenuStrip1";
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(257, 114);
+            // 
+            // pastTextToolStripMenuItem
+            // 
+            this.pastTextToolStripMenuItem.Name = "pastTextToolStripMenuItem";
+            this.pastTextToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.pastTextToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.pastTextToolStripMenuItem.Text = "Past to note content";
+            this.pastTextToolStripMenuItem.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
+            // 
+            // copyTextToolStripMenuItem
+            // 
+            this.copyTextToolStripMenuItem.Name = "copyTextToolStripMenuItem";
+            this.copyTextToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyTextToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.copyTextToolStripMenuItem.Text = "Copy current note content";
+            this.copyTextToolStripMenuItem.DropDownOpening += new System.EventHandler(this.copyTextToolStripMenuItem_DropDownOpening);
+            this.copyTextToolStripMenuItem.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
             // 
             // tbTitle
             // 
             this.tbTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.tbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbTitle.AutoCompleteCustomSource.AddRange(new string[] {
-            "TODO: ",
-            "GO TO: ",
-            "FIX: ",
-            "MEETING: "});
-            this.tbTitle.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbTitle.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbTitle.BackColor = System.Drawing.Color.Khaki;
             this.tbTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbTitle.CausesValidation = false;
+            this.tbTitle.ContextMenuStrip = this.contextMenuStripTextActions;
             this.tbTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbTitle.ImeMode = System.Windows.Forms.ImeMode.On;
             this.tbTitle.Location = new System.Drawing.Point(38, 6);
-            this.tbTitle.MaxLength = 4096;
+            this.tbTitle.MaxLength = 255;
             this.tbTitle.Name = "tbTitle";
             this.tbTitle.Size = new System.Drawing.Size(176, 22);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
-            this.tbTitle.TextChanged += new System.EventHandler(this.tbTitle_Enter);
             this.tbTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbTitle_KeyDown);
             this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             this.tbTitle.Enter += new System.EventHandler(this.tbTitle_Enter);
@@ -157,7 +177,6 @@ namespace SimplePlainNote
             this.btnAddNote.BackgroundImage = global::SimplePlainNote.Properties.Resources.accept;
             this.btnAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnAddNote.CausesValidation = false;
-            this.btnAddNote.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnAddNote.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnAddNote.FlatAppearance.BorderSize = 0;
             this.btnAddNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
@@ -200,44 +219,39 @@ namespace SimplePlainNote
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
-            // contextMenuStripTextActions
+            // saveNewNoteToolStripMenuItem
             // 
-            this.contextMenuStripTextActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pastTextToolStripMenuItem,
-            this.copyTextToolStripMenuItem});
-            this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(125, 48);
+            this.saveNewNoteToolStripMenuItem.Name = "saveNewNoteToolStripMenuItem";
+            this.saveNewNoteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveNewNoteToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.saveNewNoteToolStripMenuItem.Text = "Save note";
+            this.saveNewNoteToolStripMenuItem.Click += new System.EventHandler(this.btnAddNote_Click);
             // 
-            // pastTextToolStripMenuItem
+            // cancelNoteToolStripMenuItem
             // 
-            this.pastTextToolStripMenuItem.Name = "pastTextToolStripMenuItem";
-            this.pastTextToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.pastTextToolStripMenuItem.Text = "Past text";
-            this.pastTextToolStripMenuItem.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
-            // 
-            // copyTextToolStripMenuItem
-            // 
-            this.copyTextToolStripMenuItem.Name = "copyTextToolStripMenuItem";
-            this.copyTextToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.copyTextToolStripMenuItem.Text = "Copy text";
-            this.copyTextToolStripMenuItem.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
+            this.cancelNoteToolStripMenuItem.Name = "cancelNoteToolStripMenuItem";
+            this.cancelNoteToolStripMenuItem.ShortcutKeyDisplayString = "Escape";
+            this.cancelNoteToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.cancelNoteToolStripMenuItem.Text = "Cancel note";
+            this.cancelNoteToolStripMenuItem.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // frmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.Gold;
             this.CancelButton = this.btnCancel;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(284, 249);
+            this.ContextMenuStrip = this.contextMenuStripTextActions;
             this.ControlBox = false;
             this.Controls.Add(this.pnlNoteEdit);
             this.Controls.Add(this.pnlHeadNewNote);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(50, 50);
             this.Name = "frmNewNote";
@@ -245,12 +259,12 @@ namespace SimplePlainNote
             this.TransparencyKey = System.Drawing.Color.LightPink;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);
+            this.contextMenuStripTextActions.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
             this.pnlNoteEdit.ResumeLayout(false);
             this.pnlNoteEdit.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
-            this.contextMenuStripTextActions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -268,6 +282,8 @@ namespace SimplePlainNote
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTextActions;
         private System.Windows.Forms.ToolStripMenuItem pastTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveNewNoteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cancelNoteToolStripMenuItem;
     }
 }
 

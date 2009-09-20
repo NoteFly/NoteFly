@@ -31,26 +31,25 @@ namespace SimplePlainNote
     /// </summary>
     public class TrayIcon
     {
-        #region Fields (9)
+		#region Fields (12) 
 
         static System.ComponentModel.IContainer components = null;
+        static bool confirmexitshowed = false;
         static NotifyIcon icon;
-        static ToolStripMenuItem MenuNewNote;
-        static ToolStripMenuItem MenuManageNotes;
-        static ToolStripMenuItem MenuSettings;
         static ToolStripMenuItem MenuAbout;
         static ToolStripMenuItem MenuExit;
+        static ToolStripMenuItem MenuManageNotes;
+        static ToolStripMenuItem MenuNewNote;
+        static ToolStripMenuItem MenuSettings;
         static ContextMenuStrip MenuTrayIcon;
+        static bool newnoteshowed = false;
         static Notes notes;
         //static bool settingshowed = false;
         static bool transparency = true;
-        static bool newnoteshowed = false;
-        
-        #endregion Fields
 
-        #region Methods (2)
+		#endregion Fields 
 
-        // Public Methods (1) 
+		#region Properties (1) 
 
         public bool getTransparency
         {
@@ -68,7 +67,32 @@ namespace SimplePlainNote
             }
         }
 
-        // Private Methods (1) 
+		#endregion Properties 
+
+		#region Methods (3) 
+
+		// Private Methods (3) 
+
+        /// <summary>
+        /// get actionleftclick setting
+        /// </summary>
+        /// <returns></returns>
+        static Int16 getActionLeftClick()
+        {
+            xmlHandler getSettings = new xmlHandler(true);
+            return Convert.ToInt16(getSettings.getXMLnodeAsInt("actionleftclick"));
+        }
+
+        /// <summary>
+        /// get defaultcolor setting
+        /// </summary>
+        /// <returns></returns>
+        static Int16 getDefaultColor()
+        {
+            xmlHandler xmlSettings = new xmlHandler(true);
+            Int16 color = Convert.ToInt16(xmlSettings.getXMLnodeAsInt("defaultcolor"));
+            return color;
+        }
 
         /// <summary>
         /// The main entry point for the application.
@@ -86,19 +110,21 @@ namespace SimplePlainNote
 
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
-                if (System.Environment.GetCommandLineArgs()[1] == "/disabletransparency")
-                {
-                    transparency = false;
-                }
-                else if (System.Environment.GetCommandLineArgs()[1] == "/firstrun")
+                if (System.Environment.GetCommandLineArgs()[1] == "/firstrun")
                 {
                     firstrun = true;
+                }
+                //disabletransparency parameter is for OS that don't support transparency, so they still can launch this programme.
+                else if (System.Environment.GetCommandLineArgs()[1] == "/disabletransparency")
+                {
+                    transparency = false;
                 }
             }
 
             //start loading notes.
             notes = new Notes(firstrun);
 
+            //start building icon and icon contextmenu
             icon = new System.Windows.Forms.NotifyIcon(components);
             MenuTrayIcon = new System.Windows.Forms.ContextMenuStrip(components);
             MenuTrayIcon.AllowDrop = false;
@@ -124,7 +150,7 @@ namespace SimplePlainNote
             MenuAbout,
             MenuExit});
             icon.ContextMenuStrip.ShowImageMargin = false;
-            icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
+            icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);            
 
             // MenuNewNote            
             MenuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -159,26 +185,22 @@ namespace SimplePlainNote
 
             Application.Run();
         }
-
-        static Int16 getDefaultColor()
-        {
-            xmlHandler xmlSettings = new xmlHandler(true);
-            Int16 color = Convert.ToInt16(xmlSettings.getXMLnodeAsInt("defaultcolor"));
-            return color;
-        }
-
-        static int getActionLeftClick()
-        {
-            xmlHandler getSettings = new xmlHandler(true);
-            return getSettings.getXMLnodeAsInt("actionleftclick");
-        }
+		#endregion Methods 
 
         #region menu events
+        /// <summary>
+        /// There is left clicked on the icon.
+        /// If actionleftclick is 0 do nothing.
+        /// If actionleftclick is 1 actived all notes.
+        /// If actionleftclick is 2 create a new note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void Icon_Click(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                int actionleftclick = getActionLeftClick();
+                Int16 actionleftclick = getActionLeftClick();
                 if (actionleftclick == 1)
                 {
                     for (int i = 0; i < notes.NumNotes; i++)
@@ -202,37 +224,81 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// open new note window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void MenuNewNote_Click(object sender, EventArgs e)
         {
             frmNewNote newnote = new frmNewNote(notes, getDefaultColor());
             newnote.Show();
         }
 
+        /// <summary>
+        /// open manage notes window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void MenuManageNotes_Click(object sender, EventArgs e)
         {
             frmManageNotes managenotes = new frmManageNotes(notes, transparency, getDefaultColor());
             managenotes.Show();
         }
 
+        /// <summary>
+        /// open settings window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void MenuSettings_Click(object sender, EventArgs e)
         {
             frmSettings settings = new frmSettings(notes, transparency);
             settings.Show();                                             
         }
 
+        /// <summary>
+        /// Open about window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void MenuAbout_Click(object sender, EventArgs e)
         {
             FrmAbout about = new FrmAbout();
             about.Show();
         }
 
+        /// <summary>
+        /// User request to shutdown application.
+        /// Check if confirm box is needed. 
+        /// if confirm box is still open then shutdown anyway.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void MenuExit_Click(object sender, EventArgs e)
         {
             xmlHandler getSetting = new xmlHandler(true);
             if (getSetting.getXMLnodeAsBool("confirmexit"))
             {
-                DialogResult resultdialogconfirm = MessageBox.Show("Are sure you want to exit SimplePlainNote?", "confirm exit", MessageBoxButtons.YesNo);
-                if (resultdialogconfirm == DialogResult.Yes)
+                if (!confirmexitshowed)
+                {
+                    confirmexitshowed = true;
+                    string AssemblyProduct;
+                    object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+                    if (attributes.Length == 0)
+                    {
+                        AssemblyProduct = "";
+                    }
+                    AssemblyProduct = ((AssemblyProductAttribute)attributes[0]).Product;
+
+                    DialogResult resultdialogconfirm = MessageBox.Show("Are sure you want to exit " + AssemblyProduct + "?", "confirm exit", MessageBoxButtons.YesNo);
+
+                    if (resultdialogconfirm == DialogResult.Yes)
+                    {
+                        ExitApplication();
+                    }
+                }                
+                else
                 {
                     ExitApplication();
                 }
@@ -243,6 +309,9 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// Terminate application
+        /// </summary>
         static void ExitApplication()
         {
             components.Dispose();
@@ -250,7 +319,5 @@ namespace SimplePlainNote
         }
 
         #endregion
-
-        #endregion Methods
     }
 }

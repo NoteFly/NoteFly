@@ -41,37 +41,37 @@
             this.lbPassword = new System.Windows.Forms.Label();
             this.cbxRememberTwPass = new System.Windows.Forms.CheckBox();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
-            this.tabAppearance = new System.Windows.Forms.TabPage();
-            this.btnCrash = new System.Windows.Forms.Button();
+            this.tabGeneral = new System.Windows.Forms.TabPage();
             this.cbxActionLeftClick = new System.Windows.Forms.ComboBox();
+            this.cbxConfirmExit = new System.Windows.Forms.CheckBox();
+            this.cbxStartOnBootWindows = new System.Windows.Forms.CheckBox();
             this.lbText = new System.Windows.Forms.Label();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.tbNotesSavePath = new System.Windows.Forms.TextBox();
+            this.lblTextNoteLocation = new System.Windows.Forms.Label();
+            this.tabAppearance = new System.Windows.Forms.TabPage();
+            this.cbxHighlightC = new System.Windows.Forms.CheckBox();
             this.lblTextpt = new System.Windows.Forms.Label();
             this.numFontSize = new System.Windows.Forms.NumericUpDown();
+            this.cbxSyntaxHighlight = new System.Windows.Forms.CheckBox();
             this.lblTextFontSize = new System.Windows.Forms.Label();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.btnCrash = new System.Windows.Forms.Button();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.lblTextNoteLocation = new System.Windows.Forms.Label();
-            this.tbNotesSavePath = new System.Windows.Forms.TextBox();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.tabGeneral = new System.Windows.Forms.TabPage();
-            this.cbxStartOnBootWindows = new System.Windows.Forms.CheckBox();
             this.cbxConfirmLink = new System.Windows.Forms.CheckBox();
-            this.cbxConfirmExit = new System.Windows.Forms.CheckBox();
-            this.cbxSyntaxHighlight = new System.Windows.Forms.CheckBox();
-            this.cbxHighlightC = new System.Windows.Forms.CheckBox();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
+            this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).BeginInit();
             this.tabTwitter.SuspendLayout();
             this.tabAdvance.SuspendLayout();
-            this.tabGeneral.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbxTransparecy
@@ -241,6 +241,93 @@
             this.tabControlSettings.Size = new System.Drawing.Size(334, 274);
             this.tabControlSettings.TabIndex = 17;
             // 
+            // tabGeneral
+            // 
+            this.tabGeneral.Controls.Add(this.cbxActionLeftClick);
+            this.tabGeneral.Controls.Add(this.cbxConfirmExit);
+            this.tabGeneral.Controls.Add(this.cbxStartOnBootWindows);
+            this.tabGeneral.Controls.Add(this.lbText);
+            this.tabGeneral.Controls.Add(this.btnBrowse);
+            this.tabGeneral.Controls.Add(this.tbNotesSavePath);
+            this.tabGeneral.Controls.Add(this.lblTextNoteLocation);
+            this.tabGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tabGeneral.Name = "tabGeneral";
+            this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGeneral.Size = new System.Drawing.Size(326, 248);
+            this.tabGeneral.TabIndex = 3;
+            this.tabGeneral.Text = "General";
+            this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // cbxActionLeftClick
+            // 
+            this.cbxActionLeftClick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxActionLeftClick.FormattingEnabled = true;
+            this.cbxActionLeftClick.Items.AddRange(new object[] {
+            "Do nothing",
+            "Bring notes to front",
+            "Create a new note"});
+            this.cbxActionLeftClick.Location = new System.Drawing.Point(145, 97);
+            this.cbxActionLeftClick.Name = "cbxActionLeftClick";
+            this.cbxActionLeftClick.Size = new System.Drawing.Size(163, 21);
+            this.cbxActionLeftClick.TabIndex = 16;
+            // 
+            // cbxConfirmExit
+            // 
+            this.cbxConfirmExit.AutoSize = true;
+            this.cbxConfirmExit.Location = new System.Drawing.Point(20, 57);
+            this.cbxConfirmExit.Name = "cbxConfirmExit";
+            this.cbxConfirmExit.Size = new System.Drawing.Size(167, 17);
+            this.cbxConfirmExit.TabIndex = 20;
+            this.cbxConfirmExit.Text = "Confirm shutdown application.";
+            this.cbxConfirmExit.UseVisualStyleBackColor = true;
+            // 
+            // cbxStartOnBootWindows
+            // 
+            this.cbxStartOnBootWindows.AutoSize = true;
+            this.cbxStartOnBootWindows.Location = new System.Drawing.Point(20, 34);
+            this.cbxStartOnBootWindows.Name = "cbxStartOnBootWindows";
+            this.cbxStartOnBootWindows.Size = new System.Drawing.Size(159, 17);
+            this.cbxStartOnBootWindows.TabIndex = 10;
+            this.cbxStartOnBootWindows.Text = "Start automatically on logon.";
+            this.cbxStartOnBootWindows.UseVisualStyleBackColor = true;
+            // 
+            // lbText
+            // 
+            this.lbText.AutoSize = true;
+            this.lbText.Location = new System.Drawing.Point(17, 100);
+            this.lbText.Name = "lbText";
+            this.lbText.Size = new System.Drawing.Size(122, 13);
+            this.lbText.TabIndex = 15;
+            this.lbText.Text = "Action left click trayicon:";
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
+            this.btnBrowse.Location = new System.Drawing.Point(257, 167);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(53, 23);
+            this.btnBrowse.TabIndex = 15;
+            this.btnBrowse.Text = "browse";
+            this.btnBrowse.UseVisualStyleBackColor = false;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            // 
+            // tbNotesSavePath
+            // 
+            this.tbNotesSavePath.Location = new System.Drawing.Point(8, 170);
+            this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(243, 20);
+            this.tbNotesSavePath.TabIndex = 14;
+            this.tbNotesSavePath.Text = "?";
+            // 
+            // lblTextNoteLocation
+            // 
+            this.lblTextNoteLocation.AutoSize = true;
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(8, 154);
+            this.lblTextNoteLocation.Name = "lblTextNoteLocation";
+            this.lblTextNoteLocation.Size = new System.Drawing.Size(73, 13);
+            this.lblTextNoteLocation.TabIndex = 16;
+            this.lblTextNoteLocation.Text = "save notes in:";
+            // 
             // tabAppearance
             // 
             this.tabAppearance.Controls.Add(this.cbxHighlightC);
@@ -263,38 +350,15 @@
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
             // 
-            // btnCrash
+            // cbxHighlightC
             // 
-            this.btnCrash.Location = new System.Drawing.Point(8, 169);
-            this.btnCrash.Name = "btnCrash";
-            this.btnCrash.Size = new System.Drawing.Size(69, 47);
-            this.btnCrash.TabIndex = 17;
-            this.btnCrash.Text = "DEBUG ONLY Crash test!";
-            this.btnCrash.UseVisualStyleBackColor = true;
-            this.btnCrash.Visible = false;
-            this.btnCrash.Click += new System.EventHandler(this.btnCrash_Click);
-            // 
-            // cbxActionLeftClick
-            // 
-            this.cbxActionLeftClick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxActionLeftClick.FormattingEnabled = true;
-            this.cbxActionLeftClick.Items.AddRange(new object[] {
-            "Do nothing",
-            "Bring notes to front",
-            "Create a new note"});
-            this.cbxActionLeftClick.Location = new System.Drawing.Point(145, 97);
-            this.cbxActionLeftClick.Name = "cbxActionLeftClick";
-            this.cbxActionLeftClick.Size = new System.Drawing.Size(163, 21);
-            this.cbxActionLeftClick.TabIndex = 16;
-            // 
-            // lbText
-            // 
-            this.lbText.AutoSize = true;
-            this.lbText.Location = new System.Drawing.Point(17, 100);
-            this.lbText.Name = "lbText";
-            this.lbText.Size = new System.Drawing.Size(122, 13);
-            this.lbText.TabIndex = 15;
-            this.lbText.Text = "Action left click trayicon:";
+            this.cbxHighlightC.AutoSize = true;
+            this.cbxHighlightC.Location = new System.Drawing.Point(22, 215);
+            this.cbxHighlightC.Name = "cbxHighlightC";
+            this.cbxHighlightC.Size = new System.Drawing.Size(145, 17);
+            this.cbxHighlightC.TabIndex = 19;
+            this.cbxHighlightC.Text = "Highlight C++ code notes";
+            this.cbxHighlightC.UseVisualStyleBackColor = true;
             // 
             // lblTextpt
             // 
@@ -326,6 +390,18 @@
             0,
             0,
             0});
+            // 
+            // cbxSyntaxHighlight
+            // 
+            this.cbxSyntaxHighlight.AutoSize = true;
+            this.cbxSyntaxHighlight.Checked = true;
+            this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(22, 192);
+            this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
+            this.cbxSyntaxHighlight.Size = new System.Drawing.Size(156, 17);
+            this.cbxSyntaxHighlight.TabIndex = 13;
+            this.cbxSyntaxHighlight.Text = "Highlight HTML code notes";
+            this.cbxSyntaxHighlight.UseVisualStyleBackColor = true;
             // 
             // lblTextFontSize
             // 
@@ -393,6 +469,17 @@
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
             // 
+            // btnCrash
+            // 
+            this.btnCrash.Location = new System.Drawing.Point(8, 169);
+            this.btnCrash.Name = "btnCrash";
+            this.btnCrash.Size = new System.Drawing.Size(69, 47);
+            this.btnCrash.TabIndex = 17;
+            this.btnCrash.Text = "DEBUG ONLY Crash test!";
+            this.btnCrash.UseVisualStyleBackColor = true;
+            this.btnCrash.Visible = false;
+            this.btnCrash.Click += new System.EventHandler(this.btnCrash_Click);
+            // 
             // tbDefaultEmail
             // 
             this.tbDefaultEmail.Location = new System.Drawing.Point(14, 106);
@@ -409,61 +496,6 @@
             this.lbTextDefaultEmail.TabIndex = 17;
             this.lbTextDefaultEmail.Text = "default email adres to send to: ";
             // 
-            // btnBrowse
-            // 
-            this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnBrowse.Location = new System.Drawing.Point(257, 167);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(53, 23);
-            this.btnBrowse.TabIndex = 15;
-            this.btnBrowse.Text = "browse";
-            this.btnBrowse.UseVisualStyleBackColor = false;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-            // 
-            // lblTextNoteLocation
-            // 
-            this.lblTextNoteLocation.AutoSize = true;
-            this.lblTextNoteLocation.Location = new System.Drawing.Point(8, 154);
-            this.lblTextNoteLocation.Name = "lblTextNoteLocation";
-            this.lblTextNoteLocation.Size = new System.Drawing.Size(73, 13);
-            this.lblTextNoteLocation.TabIndex = 16;
-            this.lblTextNoteLocation.Text = "save notes in:";
-            // 
-            // tbNotesSavePath
-            // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(8, 170);
-            this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(243, 20);
-            this.tbNotesSavePath.TabIndex = 14;
-            this.tbNotesSavePath.Text = "?";
-            // 
-            // tabGeneral
-            // 
-            this.tabGeneral.Controls.Add(this.cbxActionLeftClick);
-            this.tabGeneral.Controls.Add(this.cbxConfirmExit);
-            this.tabGeneral.Controls.Add(this.cbxStartOnBootWindows);
-            this.tabGeneral.Controls.Add(this.lbText);
-            this.tabGeneral.Controls.Add(this.btnBrowse);
-            this.tabGeneral.Controls.Add(this.tbNotesSavePath);
-            this.tabGeneral.Controls.Add(this.lblTextNoteLocation);
-            this.tabGeneral.Location = new System.Drawing.Point(4, 22);
-            this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(326, 248);
-            this.tabGeneral.TabIndex = 3;
-            this.tabGeneral.Text = "General";
-            this.tabGeneral.UseVisualStyleBackColor = true;
-            // 
-            // cbxStartOnBootWindows
-            // 
-            this.cbxStartOnBootWindows.AutoSize = true;
-            this.cbxStartOnBootWindows.Location = new System.Drawing.Point(20, 34);
-            this.cbxStartOnBootWindows.Name = "cbxStartOnBootWindows";
-            this.cbxStartOnBootWindows.Size = new System.Drawing.Size(245, 17);
-            this.cbxStartOnBootWindows.TabIndex = 10;
-            this.cbxStartOnBootWindows.Text = "Start simple plain notes automatically on logon.";
-            this.cbxStartOnBootWindows.UseVisualStyleBackColor = true;
-            // 
             // cbxConfirmLink
             // 
             this.cbxConfirmLink.AutoSize = true;
@@ -475,38 +507,6 @@
             this.cbxConfirmLink.TabIndex = 18;
             this.cbxConfirmLink.Text = "Ask before launching URL, on click";
             this.cbxConfirmLink.UseVisualStyleBackColor = true;
-            // 
-            // cbxConfirmExit
-            // 
-            this.cbxConfirmExit.AutoSize = true;
-            this.cbxConfirmExit.Location = new System.Drawing.Point(20, 57);
-            this.cbxConfirmExit.Name = "cbxConfirmExit";
-            this.cbxConfirmExit.Size = new System.Drawing.Size(163, 17);
-            this.cbxConfirmExit.TabIndex = 20;
-            this.cbxConfirmExit.Text = "confirm shutdown application";
-            this.cbxConfirmExit.UseVisualStyleBackColor = true;
-            // 
-            // cbxSyntaxHighlight
-            // 
-            this.cbxSyntaxHighlight.AutoSize = true;
-            this.cbxSyntaxHighlight.Checked = true;
-            this.cbxSyntaxHighlight.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxSyntaxHighlight.Location = new System.Drawing.Point(22, 192);
-            this.cbxSyntaxHighlight.Name = "cbxSyntaxHighlight";
-            this.cbxSyntaxHighlight.Size = new System.Drawing.Size(156, 17);
-            this.cbxSyntaxHighlight.TabIndex = 13;
-            this.cbxSyntaxHighlight.Text = "Highlight HTML code notes";
-            this.cbxSyntaxHighlight.UseVisualStyleBackColor = true;
-            // 
-            // cbxHighlightC
-            // 
-            this.cbxHighlightC.AutoSize = true;
-            this.cbxHighlightC.Location = new System.Drawing.Point(22, 215);
-            this.cbxHighlightC.Name = "cbxHighlightC";
-            this.cbxHighlightC.Size = new System.Drawing.Size(145, 17);
-            this.cbxHighlightC.TabIndex = 19;
-            this.cbxHighlightC.Text = "Highlight C++ code notes";
-            this.cbxHighlightC.UseVisualStyleBackColor = true;
             // 
             // frmSettings
             // 
@@ -522,6 +522,8 @@
             this.Text = "Settings";
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).EndInit();
             this.tabControlSettings.ResumeLayout(false);
+            this.tabGeneral.ResumeLayout(false);
+            this.tabGeneral.PerformLayout();
             this.tabAppearance.ResumeLayout(false);
             this.tabAppearance.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).EndInit();
@@ -529,8 +531,6 @@
             this.tabTwitter.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
-            this.tabGeneral.ResumeLayout(false);
-            this.tabGeneral.PerformLayout();
             this.ResumeLayout(false);
 
         }
