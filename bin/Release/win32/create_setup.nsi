@@ -19,7 +19,7 @@
 Name "Simple Plain Note ${VERSION} ${VERSTATUS}"
 
 ; The file to write
-OutFile ".\windows setups\SimplePlainNote_v${VERSION}.exe"
+OutFile ".\win32\SimplePlainNote_v${VERSION}.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\simpleplainnote
@@ -81,7 +81,7 @@ FunctionEnd
 
  PageEx license
    LicenseText "License agreement"
-   LicenseData license.txt
+   LicenseData "..\license.txt"
  PageExEnd
 Page components
 Page directory
@@ -125,7 +125,7 @@ Section "Start Menu Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\simpleplainnote"
   CreateShortCut "$SMPROGRAMS\simpleplainnote\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\simpleplainnote\start simpleplainnote.lnk" "$INSTDIR\simpleplainnote.exe" "" "$INSTDIR\simpleplainnote.exe" 0
+  CreateShortCut "$SMPROGRAMS\simpleplainnote\simpleplainnote.lnk" "$INSTDIR\simpleplainnote.exe" "" "$INSTDIR\simpleplainnote.exe" 0
   
 SectionEnd
 
@@ -150,13 +150,16 @@ Section "Uninstall"
   ; Remove directories used
   RMDir "$SMPROGRAMS\simpleplainnote"
   
-  MessageBox MB_YESNO "Do you want to keep your notes and settings?" IDYES true IDNO false
+  MessageBox MB_YESNO "Do you want to remove your notes and settings too?" IDYES true IDNO false
   true:
-  Goto next
-  false:
-  ;warning deleting all files in appdata folder. 
+  ;deleting all files in appdata folder. 
   SetShellVarContext current
-  RMDir /r "$APPDATA\.simpleplainnote" 
+  Delete "$APPDATA\.simpleplainnote\*.*"
+  RMDir "$APPDATA\.simpleplainnote" 
+  Goto next
+  
+  false:
+  Goto next
   
   next:     
   RMDir "$INSTDIR"  

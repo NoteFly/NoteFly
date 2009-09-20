@@ -34,11 +34,13 @@ namespace SimplePlainNote
     {
 		#region Fields (2)
         private Notes notes;
-        private RegistryKey key;
         private xmlHandler xmlsettings;
-		#endregion Fields 
+#if win32
+        private RegistryKey key;
+#endif
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public frmSettings(Notes notes, bool transparecy)
         {

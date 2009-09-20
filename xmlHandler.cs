@@ -441,7 +441,7 @@ namespace SimplePlainNote
 #if win32
             appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
 #elif linux
-            appdatafolder = "~\\.simpleplainnote\\"
+            appdatafolder = "~\\.simpleplainnote\\";
 #elif mac
             appdatafolder = "????"
 #endif
