@@ -44,8 +44,7 @@ namespace SimplePlainNote
 		#endregion Fields         
 
 		#region Properties (2) 
-
-        /*
+        
         public Regex getRegexC
         {
             get
@@ -53,7 +52,7 @@ namespace SimplePlainNote
                 return this.SyntaxC;
             }
         }
-         */
+        
 
         public Regex getRegexHTML
         {
@@ -64,6 +63,7 @@ namespace SimplePlainNote
         }
 
 		#endregion Properties 
+
 
      }
 }

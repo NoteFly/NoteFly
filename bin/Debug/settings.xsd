@@ -10,10 +10,18 @@
         <xs:element name="askurl" type="xs:boolean" />
         <xs:element name="fontcontent" type="xs:string" />
         <xs:element name="fontsize" type="xs:int" />
-        <xs:element name="notesavepath" type="xs:string" />
-        <xs:element name="syntaxhighlight" type="xs:boolean" />
+        <xs:element name="notesavepath" type="xs:string" />        
+        <xs:element name="syntaxhighlight">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="highlightHTML" type="xs:boolean" />
+              <xs:element name="highlightC" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>              
         <xs:element name="confirmexit" type="xs:boolean" />
         <xs:element name="defaultemail" type="xs:string" />
+        
         <xs:element name="twitter">
           <xs:complexType>
             <xs:sequence>
@@ -22,6 +30,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        
       </xs:sequence>
     </xs:complexType>
   </xs:element>

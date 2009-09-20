@@ -45,7 +45,7 @@ namespace SimplePlainNote
                 this.filenm = Path.Combine(appdatafolder, "settings.xml");
                 if (File.Exists(filenm) == false)
                 {
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, appdatafolder, "adres@domain.com", true, false, "", "");
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, appdatafolder, "adres@domain.com",false, false, false, "", "");
                 }
             }
         }
@@ -274,7 +274,7 @@ namespace SimplePlainNote
         /// <param name="numcolor"></param>
         /// <returns>true if succeed.</returns>
         /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool syntaxhighlight, bool confirmexit, string twitteruser, string twitterpass)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass)
         {
             if (!this.issetting)
             {
@@ -288,14 +288,7 @@ namespace SimplePlainNote
             objXmlTextWriter.WriteStartElement("settings");
 
             objXmlTextWriter.WriteStartElement("transparecy");
-            if (transparecy == true)
-            {
-                objXmlTextWriter.WriteString("1");
-            }
-            else
-            {
-                objXmlTextWriter.WriteString("0");
-            }
+            WriteXMLBool(transparecy);            
             objXmlTextWriter.WriteEndElement();
 
             objXmlTextWriter.WriteStartElement("transparecylevel");
@@ -318,14 +311,7 @@ namespace SimplePlainNote
             objXmlTextWriter.WriteEndElement();
 
             objXmlTextWriter.WriteStartElement("askurl");
-            if (askurl == true)
-            {
-                objXmlTextWriter.WriteString("1");
-            }
-            else
-            {
-                objXmlTextWriter.WriteString("0");
-            }
+            WriteXMLBool(askurl);
             objXmlTextWriter.WriteEndElement();
 
             if (String.IsNullOrEmpty(fontcontent)) { throw new CustomExceptions("No font"); }
@@ -347,26 +333,19 @@ namespace SimplePlainNote
             else { throw new CustomExceptions("Directory does not exist"); }
 
             objXmlTextWriter.WriteStartElement("syntaxhighlight");
-            if (syntaxhighlight == true)
-            {
-                objXmlTextWriter.WriteString("1");
 
-            }
-            else
-            {
-                objXmlTextWriter.WriteString("0");
-            }
+                objXmlTextWriter.WriteStartElement("highlightHTML");
+                WriteXMLBool(highlightHTML);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("highlightC");
+                WriteXMLBool(highlightC);
+                objXmlTextWriter.WriteEndElement();
+
             objXmlTextWriter.WriteEndElement();
 
             objXmlTextWriter.WriteStartElement("confirmexit");
-            if (confirmexit)
-            {
-                objXmlTextWriter.WriteString("1");
-            }
-            else
-            {
-                objXmlTextWriter.WriteString("0");
-            }
+            WriteXMLBool(confirmexit);
             objXmlTextWriter.WriteEndElement();
 
             objXmlTextWriter.WriteStartElement("defaultemail");
@@ -375,19 +354,16 @@ namespace SimplePlainNote
 
             objXmlTextWriter.WriteStartElement("twitter");
 
-            if (twitteruser.Length > 15) { throw new CustomExceptions("Twitter username too long."); }
-            objXmlTextWriter.WriteStartElement("twitteruser");
-            objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
-            objXmlTextWriter.WriteEndElement();
+                if (twitteruser.Length > 15) { throw new CustomExceptions("Twitter username too long."); }
+                objXmlTextWriter.WriteStartElement("twitteruser");
+                objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
+                objXmlTextWriter.WriteEndElement();
 
-            if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new CustomExceptions("Twitter password too short."); }
-            if (twitterpass.Length > 255) { throw new CustomExceptions("Twitter password too long."); }
-            objXmlTextWriter.WriteStartElement("twitterpass");
-            if (twitterpass != "")
-            {
-                objXmlTextWriter.WriteString(twitterpass);
-            }
-            objXmlTextWriter.WriteEndElement();
+                if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new CustomExceptions("Twitter password too short."); }
+                if (twitterpass.Length > 255) { throw new CustomExceptions("Twitter password too long."); }
+                objXmlTextWriter.WriteStartElement("twitterpass");
+                objXmlTextWriter.WriteString(twitterpass);                
+                objXmlTextWriter.WriteEndElement();
 
             objXmlTextWriter.WriteEndElement();
 
@@ -402,6 +378,18 @@ namespace SimplePlainNote
             return true;
         }
 		// Private Methods (2) 
+
+        private void WriteXMLBool(bool checknode)
+        {
+            if (checknode == true)
+            {
+                objXmlTextWriter.WriteString("1");
+            }
+            else
+            {
+                objXmlTextWriter.WriteString("0");
+            }
+        }
 
         /// <summary>
         /// Does some checks on the file

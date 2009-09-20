@@ -29,7 +29,8 @@ namespace SimplePlainNote
         private string notesavepath;
         private List<frmNote> noteslst;
         private bool notesupdated = false;
-        private bool syntaxhighlight = false;
+        private bool highlightHTML = false;
+        private bool highlightC = false;
         private bool transparecy = false;
         private bool twitterenabled = false;
 
@@ -89,11 +90,19 @@ namespace SimplePlainNote
             }
         }
 
-        public bool SyntaxHighlightEnabled
+        public bool HighlightHTML
         {
             get
             {
-                return this.syntaxhighlight;
+                return this.highlightHTML;
+            }
+        }
+
+        public bool HighlightC
+        {
+            get
+            {
+                return this.highlightC;
             }
         }
 
@@ -120,24 +129,38 @@ namespace SimplePlainNote
         // Public Methods (6) 
 
         /// <summary>
-        /// Check syntax, use TextHighlight class too.
+        /// Check syntax,
+        /// TODO: make it work and well.
+        /// also move to TextHighlight.
         /// </summary>
         /// <param name="syntaxhighlight"></param>
         /// <param name="rtb"></param>
-        public void CheckSyntax(bool syntaxhighlight, RichTextBox rtb)
+        public void CheckSyntax(RichTextBox rtb)
         {
-            if (syntaxhighlight == true)
+            if ((highlightHTML == true) || (highlightC == true))
             {
                 TextHighlight texthighlight = new TextHighlight();
 
                 int selPos = rtb.SelectionStart;
-
-                foreach (System.Text.RegularExpressions.Match keyWordMatch in texthighlight.getRegexHTML.Matches(rtb.Text))
+                if (highlightHTML)
                 {
-                    rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
-                    rtb.SelectionColor = System.Drawing.Color.Blue;
-                    rtb.SelectionStart = selPos;
-                    rtb.SelectionColor = System.Drawing.Color.Black;
+                    foreach (System.Text.RegularExpressions.Match keyWordMatch in texthighlight.getRegexHTML.Matches(rtb.Text))
+                    {
+                        rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
+                        rtb.SelectionColor = System.Drawing.Color.Blue;
+                        rtb.SelectionStart = selPos;
+                        rtb.SelectionColor = System.Drawing.Color.Black;
+                    }
+                }
+                if (highlightC)
+                {
+                    foreach (System.Text.RegularExpressions.Match keyWordMatch in texthighlight.getRegexC.Matches(rtb.Text))
+                    {
+                        rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
+                        rtb.SelectionColor = System.Drawing.Color.Green;
+                        rtb.SelectionStart = selPos;
+                        rtb.SelectionColor = System.Drawing.Color.Black;
+                    }
                 }
                 rtb.DeselectAll();
             }
@@ -201,9 +224,13 @@ namespace SimplePlainNote
             {
                 this.transparecy = true;
             }
-            if (getSettings.getXMLnodeAsBool("syntaxhighlight") == true)
+            if (getSettings.getXMLnodeAsBool("highlightHTML") == true)
             {
-                this.syntaxhighlight = true;
+                this.highlightHTML = true;
+            }
+            if (getSettings.getXMLnodeAsBool("highlightC") == true)
+            {
+                this.highlightC = true;
             }
             this.notesavepath = getSettings.getXMLnode("notesavepath");
             this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
@@ -226,7 +253,7 @@ namespace SimplePlainNote
             {
                 noteslst[notelstpos].Show();
             }
-            noteslst[notelstpos].checkthings();
+            noteslst[notelstpos].CheckThings();
             this.notesupdated = true;
         }
 

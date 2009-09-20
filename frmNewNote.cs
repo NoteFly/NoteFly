@@ -117,7 +117,7 @@ namespace SimplePlainNote
         /// </summary>
         private void checksyntax()
         {
-            notes.CheckSyntax(notes.SyntaxHighlightEnabled, rtbNote);
+            notes.CheckSyntax(rtbNote);
         }
 
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)

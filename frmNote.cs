@@ -85,7 +85,7 @@ namespace SimplePlainNote
                 SetSizeNote(notewidth, noteheight);
                 SetPosNote();
                 PaintColorNote();
-                checkthings();
+                CheckThings();
             }
             else
             {
@@ -125,7 +125,7 @@ namespace SimplePlainNote
 
             PaintColorNote();
             SetPosNote();
-            checkthings();
+            CheckThings();
             notes.NotesUpdated = true;
         }
 
@@ -180,10 +180,10 @@ namespace SimplePlainNote
         /// <summary>
         /// Check if twitter is enabled and check Syntax.
         /// </summary>
-        public void checkthings()
+        public void CheckThings()
         {
             CheckTwitter(notes.TwitterEnabled);
-            notes.CheckSyntax(notes.SyntaxHighlightEnabled, rtbNote);
+            notes.CheckSyntax(rtbNote);
         }
 
         /// <summary>

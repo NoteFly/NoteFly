@@ -48,7 +48,7 @@ namespace SimplePlainNote
             xmlsettings = new xmlHandler(true);            
             //read setting and display them correctly.            
             cbxTransparecy.Checked = transparecy;
-            cbxConfirmExit.Checked = getConfirmExit();
+            chxConfirmExit.Checked = getConfirmExit();
             numProcTransparency.Value = getTransparecylevel();            
             cbxDefaultColor.SelectedIndex = getDefaultColor();
             cbxActionLeftClick.SelectedIndex = getActionLeftClick();
@@ -57,7 +57,9 @@ namespace SimplePlainNote
             tbTwitterUser.Text = getTwitterusername();
             tbTwitterPass.Text = getTwitterpassword();
             tbDefaultEmail.Text = getDefaultEmail();
-            cbxStartOnBootWindows.Checked = getStatusStartlogin();
+            chxStartOnBootWindows.Checked = getStatusStartlogin();
+            chxSyntaxHighlightHTML.Checked = getHighlightHTML();
+            chxSyntaxHighlightC.Checked = getHighlightC();
             
             this.notes = notes;
             DrawCbxFonts();
@@ -85,7 +87,7 @@ namespace SimplePlainNote
         {    
             if (!Directory.Exists(tbNotesSavePath.Text))
             {
-                MessageBox.Show("Invalid folder note save folder.");                
+                MessageBox.Show("Invalid folder for saving notes folder.");                
             }
             else if (String.IsNullOrEmpty(cbxFontNoteContent.Text)==true)
             {
@@ -95,33 +97,38 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Font size invalid.");
             }
+            else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) || (chxSyntaxHighlightC.CheckState == CheckState.Indeterminate) || 
+                (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate))
+            {
+                MessageBox.Show("Not allowed.");
+            }
             else if (tbTwitterUser.Text.Length > 16)
             {
-                MessageBox.Show("Settings Twitter: username is too long.");                
+                MessageBox.Show("Settings Twitter: username is too long.");
             }
             else if ((tbTwitterPass.Text.Length < 6) && (cbxRememberTwPass.Checked == true))
             {
-                MessageBox.Show("Settings Twitter: password is too short.");                
+                MessageBox.Show("Settings Twitter: password is too short.");
             }
             else if (!tbDefaultEmail.Text.Contains("@"))
             {
-                MessageBox.Show("Settings advance: default emailadres not valid.");                
+                MessageBox.Show("Settings advance: default emailadres not valid.");
             }
             //everything looks okay            
             else
-            {               
+            {
                 string oldnotesavepath = getNotesSavePath();
                 if (tbNotesSavePath.Text != oldnotesavepath)
                 {
                     MoveNotes(tbNotesSavePath.Text);
                 }
-                xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, cbxSyntaxHighlight.Checked, cbxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
+                xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
 
-                #if win32
+#if win32
                 key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
                 {
-                    if (cbxStartOnBootWindows.Checked == true)
+                    if (chxStartOnBootWindows.Checked == true)
                     {
                         try
                         {
@@ -132,7 +139,7 @@ namespace SimplePlainNote
                             MessageBox.Show("Error: no registery access." + exc.Message);
                         }
                     }
-                    else if (cbxStartOnBootWindows.Checked == false)
+                    else if (chxStartOnBootWindows.Checked == false)
                     {
                         if (key.GetValue("simpleplainnote", null) != null)
                         {
@@ -147,7 +154,7 @@ namespace SimplePlainNote
 #endif
                 notes.SetSettings();
                 notes.UpdateAllFonts();
-                
+
                 this.Close();
             }                                        
         }
@@ -255,6 +262,21 @@ namespace SimplePlainNote
             return xmlsettings.getXMLnode("twitteruser");
         }
 
+        private bool getConfirmExit()
+        {
+            return xmlsettings.getXMLnodeAsBool("confirmexit");
+        }
+
+        private bool getHighlightHTML()
+        {
+            return xmlsettings.getXMLnodeAsBool("HighlightHTML");
+        }
+
+        private bool getHighlightC()
+        {
+            return xmlsettings.getXMLnodeAsBool("HighlightC");
+        }
+
         private bool getStatusStartlogin()
         {
             #if win32
@@ -322,11 +344,6 @@ namespace SimplePlainNote
                     }
                 }
             }
-        }
-
-        private bool getConfirmExit()
-        {
-            return xmlsettings.getXMLnodeAsBool("confirmexit");
         }
 
         private void btnCrash_Click(object sender, EventArgs e)
