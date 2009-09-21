@@ -109,11 +109,6 @@ namespace SimplePlainNote
                     {
                         s = objXmlTextReader.ReadElementContentAsString();
                     }
-                    catch (InvalidCastException invalidcastexc)
-                    {
-                        System.Windows.Forms.MessageBox.Show("Error: " + invalidcastexc.Message);
-                        s = "";
-                    }
                     finally
                     {
                         objXmlTextReader.Close();

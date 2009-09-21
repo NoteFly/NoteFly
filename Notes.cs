@@ -130,18 +130,20 @@ namespace SimplePlainNote
 
         /// <summary>
         /// Check syntax,
-        /// TODO: make it work and well.
-        /// also move to TextHighlight.
+        /// returns true, if no error.
         /// </summary>
         /// <param name="syntaxhighlight"></param>
         /// <param name="rtb"></param>
-        public void CheckSyntax(RichTextBox rtb)
+        public bool CheckSyntax(RichTextBox rtb)
         {
             if ((highlightHTML == true) || (highlightC == true))
             {
                 TextHighlight texthighlight = new TextHighlight(highlightHTML, highlightC);
-                texthighlight.CheckSyntax(rtb);
-                rtb.DeselectAll();
+                return texthighlight.CheckSyntax(rtb);
+            }
+            else
+            {
+                return true;
             }
         }
 

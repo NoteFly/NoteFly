@@ -115,9 +115,12 @@ namespace SimplePlainNote
         /// <summary>
         /// do some syntax highlighting
         /// </summary>
-        private void checksyntax()
+        private void checksyntax(object sender, EventArgs e)
         {
-            notes.CheckSyntax(rtbNote);
+            if (!notes.CheckSyntax(rtbNote))
+            {
+                MessageBox.Show("Error: syntax could not be checked.");
+            }
         }
 
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -323,6 +326,16 @@ namespace SimplePlainNote
             {
                 pastTextToolStripMenuItem.Enabled = false;
             }
+        }
+
+        private void rtbNote_TextChanged(object sender, EventArgs e)
+        {
+            notes.CheckSyntax(rtbNote);
+        }
+
+        private void checksyntax()
+        {
+
         }
     } 
 }
