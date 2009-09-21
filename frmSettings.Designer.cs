@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cbxTransparecy = new System.Windows.Forms.CheckBox();
+            this.chxTransparecy = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lbDefaultNewNoteColor = new System.Windows.Forms.Label();
@@ -39,7 +39,7 @@
             this.lbUsername = new System.Windows.Forms.Label();
             this.tbTwitterPass = new System.Windows.Forms.TextBox();
             this.lbPassword = new System.Windows.Forms.Label();
-            this.cbxRememberTwPass = new System.Windows.Forms.CheckBox();
+            this.chxRememberTwPass = new System.Windows.Forms.CheckBox();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.cbxActionLeftClick = new System.Windows.Forms.ComboBox();
@@ -50,6 +50,7 @@
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tabAppearance = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.chxSyntaxHighlightC = new System.Windows.Forms.CheckBox();
             this.lblTextpt = new System.Windows.Forms.Label();
             this.numFontSize = new System.Windows.Forms.NumericUpDown();
@@ -63,9 +64,8 @@
             this.btnCrash = new System.Windows.Forms.Button();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
-            this.cbxConfirmLink = new System.Windows.Forms.CheckBox();
+            this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -75,20 +75,20 @@
             this.tabAdvance.SuspendLayout();
             this.SuspendLayout();
             // 
-            // cbxTransparecy
+            // chxTransparecy
             // 
-            this.cbxTransparecy.AutoSize = true;
-            this.cbxTransparecy.BackColor = System.Drawing.Color.White;
-            this.cbxTransparecy.Checked = true;
-            this.cbxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxTransparecy.Location = new System.Drawing.Point(18, 25);
-            this.cbxTransparecy.Name = "cbxTransparecy";
-            this.cbxTransparecy.Size = new System.Drawing.Size(129, 18);
-            this.cbxTransparecy.TabIndex = 1;
-            this.cbxTransparecy.Text = "Enable transparency";
-            this.cbxTransparecy.UseVisualStyleBackColor = false;
-            this.cbxTransparecy.CheckedChanged += new System.EventHandler(this.cbxTransparecy_CheckedChanged);
+            this.chxTransparecy.AutoSize = true;
+            this.chxTransparecy.BackColor = System.Drawing.Color.White;
+            this.chxTransparecy.Checked = true;
+            this.chxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chxTransparecy.Location = new System.Drawing.Point(18, 25);
+            this.chxTransparecy.Name = "chxTransparecy";
+            this.chxTransparecy.Size = new System.Drawing.Size(129, 18);
+            this.chxTransparecy.TabIndex = 1;
+            this.chxTransparecy.Text = "Enable transparency";
+            this.chxTransparecy.UseVisualStyleBackColor = false;
+            this.chxTransparecy.CheckedChanged += new System.EventHandler(this.cbxTransparecy_CheckedChanged);
             // 
             // btnOK
             // 
@@ -218,16 +218,16 @@
             this.lbPassword.TabIndex = 11;
             this.lbPassword.Text = "twitter password:";
             // 
-            // cbxRememberTwPass
+            // chxRememberTwPass
             // 
-            this.cbxRememberTwPass.AutoSize = true;
-            this.cbxRememberTwPass.Location = new System.Drawing.Point(19, 85);
-            this.cbxRememberTwPass.Name = "cbxRememberTwPass";
-            this.cbxRememberTwPass.Size = new System.Drawing.Size(242, 17);
-            this.cbxRememberTwPass.TabIndex = 12;
-            this.cbxRememberTwPass.Text = "Remember password (warning: not encrypted)";
-            this.cbxRememberTwPass.UseVisualStyleBackColor = true;
-            this.cbxRememberTwPass.CheckedChanged += new System.EventHandler(this.cbxRememberTwPass_CheckedChanged);
+            this.chxRememberTwPass.AutoSize = true;
+            this.chxRememberTwPass.Location = new System.Drawing.Point(19, 85);
+            this.chxRememberTwPass.Name = "chxRememberTwPass";
+            this.chxRememberTwPass.Size = new System.Drawing.Size(242, 17);
+            this.chxRememberTwPass.TabIndex = 12;
+            this.chxRememberTwPass.Text = "Remember password (warning: not encrypted)";
+            this.chxRememberTwPass.UseVisualStyleBackColor = true;
+            this.chxRememberTwPass.CheckedChanged += new System.EventHandler(this.cbxRememberTwPass_CheckedChanged);
             // 
             // tabControlSettings
             // 
@@ -339,7 +339,7 @@
             this.tabAppearance.Controls.Add(this.lblTextFontSize);
             this.tabAppearance.Controls.Add(this.lbTextNoteFont);
             this.tabAppearance.Controls.Add(this.cbxFontNoteContent);
-            this.tabAppearance.Controls.Add(this.cbxTransparecy);
+            this.tabAppearance.Controls.Add(this.chxTransparecy);
             this.tabAppearance.Controls.Add(this.lbDefaultNewNoteColor);
             this.tabAppearance.Controls.Add(this.cbxDefaultColor);
             this.tabAppearance.Controls.Add(this.numProcTransparency);
@@ -351,6 +351,15 @@
             this.tabAppearance.TabIndex = 0;
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 173);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(150, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "warning experimental features:";
             // 
             // chxSyntaxHighlightC
             // 
@@ -438,7 +447,7 @@
             this.tabTwitter.Controls.Add(this.tbTwitterUser);
             this.tabTwitter.Controls.Add(this.tbTwitterPass);
             this.tabTwitter.Controls.Add(this.lbPassword);
-            this.tabTwitter.Controls.Add(this.cbxRememberTwPass);
+            this.tabTwitter.Controls.Add(this.chxRememberTwPass);
             this.tabTwitter.Location = new System.Drawing.Point(4, 22);
             this.tabTwitter.Name = "tabTwitter";
             this.tabTwitter.Padding = new System.Windows.Forms.Padding(3);
@@ -461,7 +470,7 @@
             this.tabAdvance.Controls.Add(this.btnCrash);
             this.tabAdvance.Controls.Add(this.tbDefaultEmail);
             this.tabAdvance.Controls.Add(this.lbTextDefaultEmail);
-            this.tabAdvance.Controls.Add(this.cbxConfirmLink);
+            this.tabAdvance.Controls.Add(this.chxConfirmLink);
             this.tabAdvance.Location = new System.Drawing.Point(4, 22);
             this.tabAdvance.Name = "tabAdvance";
             this.tabAdvance.Size = new System.Drawing.Size(326, 248);
@@ -496,26 +505,17 @@
             this.lbTextDefaultEmail.TabIndex = 17;
             this.lbTextDefaultEmail.Text = "default email adres to send to: ";
             // 
-            // cbxConfirmLink
+            // chxConfirmLink
             // 
-            this.cbxConfirmLink.AutoSize = true;
-            this.cbxConfirmLink.Checked = true;
-            this.cbxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxConfirmLink.Location = new System.Drawing.Point(14, 28);
-            this.cbxConfirmLink.Name = "cbxConfirmLink";
-            this.cbxConfirmLink.Size = new System.Drawing.Size(194, 17);
-            this.cbxConfirmLink.TabIndex = 18;
-            this.cbxConfirmLink.Text = "Ask before launching URL, on click";
-            this.cbxConfirmLink.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 173);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "warning experimental features:";
+            this.chxConfirmLink.AutoSize = true;
+            this.chxConfirmLink.Checked = true;
+            this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmLink.Location = new System.Drawing.Point(14, 28);
+            this.chxConfirmLink.Name = "chxConfirmLink";
+            this.chxConfirmLink.Size = new System.Drawing.Size(194, 17);
+            this.chxConfirmLink.TabIndex = 18;
+            this.chxConfirmLink.Text = "Ask before launching URL, on click";
+            this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
             // frmSettings
             // 
@@ -546,7 +546,7 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox cbxTransparecy;
+        private System.Windows.Forms.CheckBox chxTransparecy;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lbDefaultNewNoteColor;
@@ -557,7 +557,7 @@
         private System.Windows.Forms.Label lbUsername;
         private System.Windows.Forms.TextBox tbTwitterPass;
         private System.Windows.Forms.Label lbPassword;
-        private System.Windows.Forms.CheckBox cbxRememberTwPass;
+        private System.Windows.Forms.CheckBox chxRememberTwPass;
         private System.Windows.Forms.TabControl tabControlSettings;
         private System.Windows.Forms.TabPage tabAppearance;
         private System.Windows.Forms.TabPage tabTwitter;
@@ -579,7 +579,7 @@
         private System.Windows.Forms.Button btnCrash;
         private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.CheckBox chxStartOnBootWindows;
-        private System.Windows.Forms.CheckBox cbxConfirmLink;
+        private System.Windows.Forms.CheckBox chxConfirmLink;
         private System.Windows.Forms.CheckBox chxConfirmExit;
         private System.Windows.Forms.CheckBox chxSyntaxHighlightC;
         private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;

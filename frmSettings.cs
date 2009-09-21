@@ -47,12 +47,12 @@ namespace SimplePlainNote
             InitializeComponent();
             xmlsettings = new xmlHandler(true);            
             //read setting and display them correctly.            
-            cbxTransparecy.Checked = transparecy;
+            chxTransparecy.Checked = transparecy;
             chxConfirmExit.Checked = getConfirmExit();
             numProcTransparency.Value = getTransparecylevel();            
             cbxDefaultColor.SelectedIndex = getDefaultColor();
             cbxActionLeftClick.SelectedIndex = getActionLeftClick();
-            cbxConfirmLink.Checked = getAskUrl();
+            chxConfirmLink.Checked = getAskUrl();
             tbNotesSavePath.Text = getNotesSavePath();
             tbTwitterUser.Text = getTwitterusername();
             tbTwitterPass.Text = getTwitterpassword();
@@ -106,7 +106,7 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Settings Twitter: username is too long.");
             }
-            else if ((tbTwitterPass.Text.Length < 6) && (cbxRememberTwPass.Checked == true))
+            else if ((tbTwitterPass.Text.Length < 6) && (chxRememberTwPass.Checked == true))
             {
                 MessageBox.Show("Settings Twitter: password is too short.");
             }
@@ -122,7 +122,7 @@ namespace SimplePlainNote
                 {
                     MoveNotes(tbNotesSavePath.Text);
                 }
-                xmlsettings.WriteSettings(cbxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, cbxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
+                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
 
 #if win32
                 key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -186,7 +186,7 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbxRememberTwPass.Checked == true)
+            if (chxRememberTwPass.Checked == true)
             {
                 tbTwitterPass.Enabled = true;
             }
@@ -204,11 +204,11 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbxTransparecy.Checked == false)
+            if (chxTransparecy.Checked == false)
             {
                 numProcTransparency.Enabled = false;
             }
-            else if (cbxTransparecy.Checked == true)
+            else if (chxTransparecy.Checked == true)
             {
                 numProcTransparency.Enabled = true;
             }
@@ -251,7 +251,7 @@ namespace SimplePlainNote
             string twpass = xmlsettings.getXMLnode("twitterpass");
             if (twpass == "")
             {
-                cbxRememberTwPass.Checked = false;
+                chxRememberTwPass.Checked = false;
                 tbTwitterPass.Enabled = false;                
             }
             return twpass;

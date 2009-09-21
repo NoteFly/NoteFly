@@ -20,8 +20,7 @@
           </xs:complexType>
         </xs:element>              
         <xs:element name="confirmexit" type="xs:boolean" />
-        <xs:element name="defaultemail" type="xs:string" />
-        
+        <xs:element name="defaultemail" type="xs:string" />        
         <xs:element name="twitter">
           <xs:complexType>
             <xs:sequence>

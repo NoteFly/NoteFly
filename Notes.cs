@@ -139,29 +139,8 @@ namespace SimplePlainNote
         {
             if ((highlightHTML == true) || (highlightC == true))
             {
-                TextHighlight texthighlight = new TextHighlight();
-
-                int selPos = rtb.SelectionStart;
-                if (highlightHTML)
-                {
-                    foreach (System.Text.RegularExpressions.Match keyWordMatch in texthighlight.getRegexHTML.Matches(rtb.Text))
-                    {
-                        rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
-                        rtb.SelectionColor = System.Drawing.Color.Blue;
-                        rtb.SelectionStart = selPos;
-                        rtb.SelectionColor = System.Drawing.Color.Black;
-                    }
-                }
-                if (highlightC)
-                {
-                    foreach (System.Text.RegularExpressions.Match keyWordMatch in texthighlight.getRegexC.Matches(rtb.Text))
-                    {
-                        rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
-                        rtb.SelectionColor = System.Drawing.Color.Green;
-                        rtb.SelectionStart = selPos;
-                        rtb.SelectionColor = System.Drawing.Color.Black;
-                    }
-                }
+                TextHighlight texthighlight = new TextHighlight(highlightHTML, highlightC);
+                texthighlight.CheckSyntax(rtb);
                 rtb.DeselectAll();
             }
         }
