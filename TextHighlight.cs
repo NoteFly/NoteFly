@@ -27,27 +27,18 @@ namespace SimplePlainNote
     /// </summary>
     public class TextHighlight
     {
-        #region Fields (2)
-
-        private Regex SyntaxCdatatype = new Regex("int|short|double|float|long|string|bool|char");
-
-        private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if|break|goto|continue|switch|case|default:|try|catch|throw|static");
-
-        private Regex SyntaxHTML = new Regex("!DOCTYPE|HTML|/HTML|BODY|BODY|/BODY|A HREF|SPAN|I|/I|U|/U|" +
-            "B|/B|UL|IL|OL|/OL|BR|BR /|P|/P|FONT|/FONT|TITLE|/TITLE|BLOCKQUOTE|/BLOCKQUOTE|META|LINK|CODE|/CODE|" +
-            "DD|/DD|TABLE|/TABLE|DL|/DL|TD|/TD|TR|/TR|FORM|IMG|FRAME|STRONG|/STRONG|FRAMESET|/FRAMESET|IFRAME|" +
-            "/IFRAME|APPLET|/APPLET|TH|/TH|PRE|/PRE|HEAD|/THEAD|TFOOT|/TFOOT|INPUT|OPTION|LABEL|/LABEL|LEGEND|" +
-            "/LEGEND|ISINDEX|SELECT|/SELECT|TEXTAREA|/TEXTAREA|SCRIPT|</SCRIPT|NOSCRIPT|/NOSCRIPT|S|/S|" +
-            "STRIKE|/STRIKE|TT|/TT|BIG|/BIG|SMALL|/SMALL|BASEFONT|/BASEFONT|DIV|/DIV|H1|/H1|H2|/H2|H3|/H3|" +
-            "H4|/H4|H5|/H5|H6|/H6|HEAD|ADRESS|/ADRESS|/HEAD|HR|EM|/EM", RegexOptions.IgnoreCase);
+        #region Fields (6)
 
         private bool highlightC = false;
-
         private bool highlightHTML = false;
-
         private int posstarttag = 0;
+        private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if|break|goto|continue|switch|case|default:|try|catch|throw|static");
+        private Regex SyntaxCdatatype = new Regex("int|short|double|float|long|string|bool|char");
+        private Regex SyntaxHTML = new Regex("HTML|/HTML|HEAD|/HEAD|BODY|/BODY|A|SPAN|I|/I|U|/U|B|/B|UL|IL|OL|/OL|BR|BR /|P|/P|FONT|/FONT|TITLE|/TITLE|BLOCKQUOTE|/BLOCKQUOTE|META|LINK|CODE|/CODE|DD|/DD|TABLE|/TABLE|DL|/DL|TD|/TD|TR|/TR|FORM|IMG|FRAME|STRONG|/STRONG|FRAMESET|/FRAMESET|IFRAME|/IFRAME|APPLET|/APPLET|TH|/TH|PRE|/PRE|HEAD|/THEAD|TFOOT|/TFOOT|INPUT|OPTION|LABEL|/LABEL|LEGEND|/LEGEND|ISINDEX|SELECT|/SELECT|TEXTAREA|/TEXTAREA|SCRIPT|</SCRIPT|NOSCRIPT|/NOSCRIPT|S|/S|STRIKE|/STRIKE|TT|/TT|BIG|/BIG|SMALL|/SMALL|BASEFONT|/BASEFONT|DIV|/DIV|H1|/H1|H2|/H2|H3|/H3|H4|/H4|H5|/H5|H6|/H6|ADRESS|/ADRESS|HR|EM|/EM", RegexOptions.IgnoreCase);
 
         #endregion Fields
+
+        #region Constructors (1)
 
         public TextHighlight(bool highlightC, bool highlightHTML)
         {
@@ -55,16 +46,19 @@ namespace SimplePlainNote
             this.highlightHTML = highlightHTML;
         }
 
-        #region Properties (0)
+        #endregion Constructors
 
-        #endregion Properties
+        #region Methods (1)
+
+        // Public Methods (1) 
 
         /// <summary>
-        /// Check syntax..
+        /// Check syntax
         /// </summary>
         /// <param name="rtb"></param>
         public bool CheckSyntax(RichTextBox rtb)
         {
+            int oldpos = rtb.SelectionStart;
             for (int i = 0; i < rtb.TextLength; i++)
             {
                 if (this.highlightHTML)
@@ -75,32 +69,22 @@ namespace SimplePlainNote
                     }
                     else if (rtb.Text[i] == '>')
                     {
-                        int lengthtillendtag = i - posstarttag - 1;
-
-                        string temp = rtb.Text.Substring(posstarttag + 1, lengthtillendtag);
-                        try
-                        {
-                            if (SyntaxHTML.IsMatch(temp, posstarttag) == true)
-                            {
-                                rtb.Select(posstarttag + 1, lengthtillendtag);
-                                rtb.SelectionColor = System.Drawing.Color.Blue;
-                            }
-                            else
-                            {
-                                rtb.Select(posstarttag + 1, lengthtillendtag);
-                                rtb.SelectionColor = System.Drawing.Color.Red;
-                            }
-                        }
-                        catch (ArgumentOutOfRangeException)
-                        {
-                            return false;
-                        }
-                        if (rtb.TextLength >= i)
+                        int lengthtillendtag = i - posstarttag;
+                        if (lengthtillendtag > 0)
                         {
                             try
                             {
-                                rtb.SelectionStart = i + 1;
-                                rtb.SelectionColor = System.Drawing.Color.Black;
+                                string ishtmlnode = rtb.Text.Substring(posstarttag + 1, lengthtillendtag-1);
+                                if (SyntaxHTML.IsMatch(ishtmlnode) == true)
+                                {
+                                    rtb.Select(posstarttag, lengthtillendtag+1);
+                                    rtb.SelectionColor = System.Drawing.Color.Blue;
+                                }
+                                else
+                                {
+                                    rtb.Select(posstarttag, lengthtillendtag+1);
+                                    rtb.SelectionColor = System.Drawing.Color.Red;
+                                }
                             }
                             catch (ArgumentOutOfRangeException)
                             {
@@ -108,10 +92,24 @@ namespace SimplePlainNote
                             }
                         }
                     }
+                    if (rtb.TextLength >= i)
+                    {
+                        try
+                        {
+                            rtb.SelectionStart = i + 1;
+                            rtb.SelectionColor = System.Drawing.Color.Black;
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                            return false;
+                        }
+                    }
                 }
             }
-            rtb.Select(rtb.TextLength, 0);
+            rtb.SelectionStart = oldpos;
             return true;
         }
+
+        #endregion Methods
     }
 }

@@ -214,6 +214,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
+    <None Include="bin\Release\linux\create_linux_package.pkgxml" />
+    <None Include="bin\Release\win32\create_setup.nsi" />
     <None Include="classdiagram.zargo" />
     <None Include="Resources\locknote.png" />
     <Content Include="Resources\logo.png" />
