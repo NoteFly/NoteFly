@@ -40,10 +40,10 @@ namespace SimplePlainNote
 
         #region Constructors (1)
 
-        public TextHighlight(bool highlightC, bool highlightHTML)
-        {
-            this.highlightC = highlightC;
+        public TextHighlight(bool highlightHTML, bool highlightC)
+        {            
             this.highlightHTML = highlightHTML;
+            this.highlightC = highlightC;
         }
 
         #endregion Constructors
@@ -103,6 +103,25 @@ namespace SimplePlainNote
                         {
                             return false;
                         }
+                    }
+                }
+                if (this.highlightC)
+                {
+                    //todo: make more effective only 1 loop.
+                    int selPos = rtb.SelectionStart;                    
+                    foreach (Match keyWordMatch in SyntaxC.Matches(rtb.Text))
+                    {
+                        rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
+                        rtb.SelectionColor = Color.Green;
+                        rtb.SelectionStart = selPos;
+                        rtb.SelectionColor = Color.Black;
+                    }
+                    foreach (Match keyWordMatch in SyntaxCdatatype.Matches(rtb.Text))
+                    {
+                        rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
+                        rtb.SelectionColor = Color.Gray;
+                        rtb.SelectionStart = selPos;
+                        rtb.SelectionColor = Color.Black;
                     }
                 }
             }

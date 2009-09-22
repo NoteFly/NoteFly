@@ -45,7 +45,8 @@ namespace SimplePlainNote
                 this.filenm = Path.Combine(appdatafolder, "settings.xml");
                 if (File.Exists(filenm) == false)
                 {
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, appdatafolder, "adres@domain.com",false, false, false, "", "");
+                    //write default settings.
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, appdatafolder, "adres@domain.com",false, false, false, "", "", true);
                 }
             }
         }
@@ -188,6 +189,19 @@ namespace SimplePlainNote
             return -1;
         }
 
+        /// <summary>
+        /// Write a note xml file.
+        /// </summary>
+        /// <param name="visible"></param>
+        /// <param name="ontop"></param>
+        /// <param name="numcolor"></param>
+        /// <param name="title"></param>
+        /// <param name="content"></param>
+        /// <param name="locX"></param>
+        /// <param name="locY"></param>
+        /// <param name="notewidth"></param>
+        /// <param name="noteheight"></param>
+        /// <returns></returns>
         public bool WriteNote(bool visible, bool ontop, Int16 numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
             if (issetting) {
@@ -260,16 +274,13 @@ namespace SimplePlainNote
 
             return true;
         }
-
+        
         /// <summary>
-        /// Write settings
+        /// Write settings file
         /// </summary>
-        /// <param name="transparecy"></param>
-        /// <param name="transparecylevel"></param>
-        /// <param name="numcolor"></param>
         /// <returns>true if succeed.</returns>
         /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass, bool logerror)
         {
             if (!this.issetting)
             {
@@ -327,6 +338,10 @@ namespace SimplePlainNote
             }
             else { throw new CustomExceptions("Directory does not exist"); }
 
+            objXmlTextWriter.WriteStartElement("logerror");
+            WriteXMLBool(logerror);
+            objXmlTextWriter.WriteEndElement();
+
             objXmlTextWriter.WriteStartElement("syntaxhighlight");
 
                 objXmlTextWriter.WriteStartElement("highlightHTML");
@@ -374,6 +389,10 @@ namespace SimplePlainNote
         }
 		// Private Methods (2) 
 
+        /// <summary>
+        /// write 1 for true and 0 for false.
+        /// </summary>
+        /// <param name="checknode"></param>
         private void WriteXMLBool(bool checknode)
         {
             if (checknode == true)
@@ -421,13 +440,13 @@ namespace SimplePlainNote
         /// </summary>
         private void SetAppdataFolder()
         {
-#if win32
+            #if win32
             appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
-#elif linux
+            #elif linux
             appdatafolder = "~\\.simpleplainnote\\";
-#elif mac
+            #elif mac
             appdatafolder = "????"
-#endif
+            #endif
         }
 
 		#endregion Methods 

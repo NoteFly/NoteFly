@@ -84,21 +84,23 @@ namespace SimplePlainNote
             this.saveNewNoteToolStripMenuItem,
             this.cancelNoteToolStripMenuItem});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(257, 92);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 114);
             // 
             // pastTextToolStripMenuItem
             // 
             this.pastTextToolStripMenuItem.Name = "pastTextToolStripMenuItem";
-            this.pastTextToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.pastTextToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.pastTextToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.P)));
+            this.pastTextToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.pastTextToolStripMenuItem.Text = "Past to note content";
             this.pastTextToolStripMenuItem.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
             // 
             // copyTextToolStripMenuItem
             // 
             this.copyTextToolStripMenuItem.Name = "copyTextToolStripMenuItem";
-            this.copyTextToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyTextToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.copyTextToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
+            this.copyTextToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.copyTextToolStripMenuItem.Text = "Copy current note content";
             this.copyTextToolStripMenuItem.DropDownOpening += new System.EventHandler(this.copyTextToolStripMenuItem_DropDownOpening);
             this.copyTextToolStripMenuItem.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
@@ -107,7 +109,7 @@ namespace SimplePlainNote
             // 
             this.saveNewNoteToolStripMenuItem.Name = "saveNewNoteToolStripMenuItem";
             this.saveNewNoteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveNewNoteToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.saveNewNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.saveNewNoteToolStripMenuItem.Text = "Save note";
             this.saveNewNoteToolStripMenuItem.Click += new System.EventHandler(this.btnAddNote_Click);
             // 
@@ -115,7 +117,7 @@ namespace SimplePlainNote
             // 
             this.cancelNoteToolStripMenuItem.Name = "cancelNoteToolStripMenuItem";
             this.cancelNoteToolStripMenuItem.ShortcutKeyDisplayString = "Escape";
-            this.cancelNoteToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.cancelNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.cancelNoteToolStripMenuItem.Text = "Cancel note";
             this.cancelNoteToolStripMenuItem.Click += new System.EventHandler(this.btnCancel_Click);
             // 

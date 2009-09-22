@@ -89,7 +89,7 @@ namespace SimplePlainNote
                 return numnotes;
             }
         }
-
+        /*
         public bool HighlightHTML
         {
             get
@@ -105,7 +105,7 @@ namespace SimplePlainNote
                 return this.highlightC;
             }
         }
-
+        */
         public bool Transparency
         {
             get
@@ -205,13 +205,25 @@ namespace SimplePlainNote
             {
                 this.transparecy = true;
             }
+            else
+            {
+                this.transparecy = false;
+            }
             if (getSettings.getXMLnodeAsBool("highlightHTML") == true)
             {
                 this.highlightHTML = true;
             }
+            else
+            {
+                this.highlightHTML = false;
+            }
             if (getSettings.getXMLnodeAsBool("highlightC") == true)
             {
                 this.highlightC = true;
+            }
+            else
+            {
+                this.highlightC = false;
             }
             this.notesavepath = getSettings.getXMLnode("notesavepath");
             this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
@@ -246,7 +258,9 @@ namespace SimplePlainNote
             foreach (frmNote curfrmnote in noteslst)
             {
                 curfrmnote.PaintColorNote();
+                curfrmnote.CheckThings();
             }
+            
         }
         // Private Methods (4) 
 

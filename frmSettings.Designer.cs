@@ -66,6 +66,7 @@
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.chxLogErrors = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -467,6 +468,7 @@
             // 
             // tabAdvance
             // 
+            this.tabAdvance.Controls.Add(this.chxLogErrors);
             this.tabAdvance.Controls.Add(this.btnCrash);
             this.tabAdvance.Controls.Add(this.tbDefaultEmail);
             this.tabAdvance.Controls.Add(this.lbTextDefaultEmail);
@@ -480,9 +482,9 @@
             // 
             // btnCrash
             // 
-            this.btnCrash.Location = new System.Drawing.Point(8, 169);
+            this.btnCrash.Location = new System.Drawing.Point(14, 177);
             this.btnCrash.Name = "btnCrash";
-            this.btnCrash.Size = new System.Drawing.Size(69, 47);
+            this.btnCrash.Size = new System.Drawing.Size(101, 47);
             this.btnCrash.TabIndex = 17;
             this.btnCrash.Text = "DEBUG ONLY Crash test!";
             this.btnCrash.UseVisualStyleBackColor = true;
@@ -516,6 +518,18 @@
             this.chxConfirmLink.TabIndex = 18;
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
+            // 
+            // chxLogErrors
+            // 
+            this.chxLogErrors.AutoSize = true;
+            this.chxLogErrors.Checked = true;
+            this.chxLogErrors.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxLogErrors.Location = new System.Drawing.Point(14, 52);
+            this.chxLogErrors.Name = "chxLogErrors";
+            this.chxLogErrors.Size = new System.Drawing.Size(123, 17);
+            this.chxLogErrors.TabIndex = 19;
+            this.chxLogErrors.Text = "log application errors";
+            this.chxLogErrors.UseVisualStyleBackColor = true;
             // 
             // frmSettings
             // 
@@ -584,5 +598,6 @@
         private System.Windows.Forms.CheckBox chxSyntaxHighlightC;
         private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chxLogErrors;
     }
 }

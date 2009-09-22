@@ -54,7 +54,10 @@ namespace SimplePlainNote
             ResetNewNoteForm(editnotetitle, editnotecontent);
             this.tbTitle.Focus();
             this.tbTitle.Select();
-            checksyntax();
+            if (editnote)
+            {
+                this.Text = "edit note";
+            }
         }
 
         public frmNewNote(Notes notes, Int16 notecolor)
@@ -66,8 +69,7 @@ namespace SimplePlainNote
             this.skin = new Skin(notecolor);
             ResetNewNoteForm("", "");           
             this.tbTitle.Focus();
-            this.tbTitle.Select();
-            checksyntax();
+            this.tbTitle.Select();            
         }
 
 		#endregion Constructors 
@@ -331,11 +333,6 @@ namespace SimplePlainNote
         private void rtbNote_TextChanged(object sender, EventArgs e)
         {
             notes.CheckSyntax(rtbNote);
-        }
-
-        private void checksyntax()
-        {
-
         }
     } 
 }

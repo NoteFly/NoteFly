@@ -98,7 +98,7 @@ namespace SimplePlainNote
                 MessageBox.Show("Font size invalid.");
             }
             else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) || (chxSyntaxHighlightC.CheckState == CheckState.Indeterminate) || 
-                (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate))
+                (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate))
             {
                 MessageBox.Show("Not allowed.");
             }
@@ -122,7 +122,7 @@ namespace SimplePlainNote
                 {
                     MoveNotes(tbNotesSavePath.Text);
                 }
-                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text);
+                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text, chxLogErrors.Checked);
 
 #if win32
                 key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -154,7 +154,6 @@ namespace SimplePlainNote
 #endif
                 notes.SetSettings();
                 notes.UpdateAllFonts();
-
                 this.Close();
             }                                        
         }
@@ -269,12 +268,12 @@ namespace SimplePlainNote
 
         private bool getHighlightHTML()
         {
-            return xmlsettings.getXMLnodeAsBool("HighlightHTML");
+            return xmlsettings.getXMLnodeAsBool("highlightHTML");
         }
 
         private bool getHighlightC()
         {
-            return xmlsettings.getXMLnodeAsBool("HighlightC");
+            return xmlsettings.getXMLnodeAsBool("highlightC");
         }
 
         private bool getStatusStartlogin()
