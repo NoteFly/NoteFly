@@ -89,23 +89,7 @@ namespace SimplePlainNote
                 return numnotes;
             }
         }
-        /*
-        public bool HighlightHTML
-        {
-            get
-            {
-                return this.highlightHTML;
-            }
-        }
 
-        public bool HighlightC
-        {
-            get
-            {
-                return this.highlightC;
-            }
-        }
-        */
         public bool Transparency
         {
             get

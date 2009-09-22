@@ -314,7 +314,7 @@ namespace SimplePlainNote
         /// </summary>
         static void ExitApplication()
         {
-            components.Dispose();
+            components.Dispose();            
             Application.Exit();
         }
 
