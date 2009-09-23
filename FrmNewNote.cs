@@ -29,7 +29,7 @@ namespace SimplePlainNote
     /// <summary>
     /// Class to create new note.
     /// </summary>
-    public partial class frmNewNote : Form
+    public partial class FrmNewNote : Form
     {
 		#region Fields (5) 
 
@@ -43,7 +43,7 @@ namespace SimplePlainNote
 
 		#region Constructors (2) 
 
-                public frmNewNote(Notes notes, Int16 notecolor, int editnoteid, string editnotetitle, string editnotecontent)
+        public FrmNewNote(Notes notes, Int16 notecolor, int editnoteid, string editnotetitle, string editnotecontent)
         {
             InitializeComponent();
             this.editnote = true;
@@ -60,7 +60,7 @@ namespace SimplePlainNote
             }
         }
 
-        public frmNewNote(Notes notes, Int16 notecolor)
+        public FrmNewNote(Notes notes, Int16 notecolor)
         {
             InitializeComponent();
             this.editnote = false;

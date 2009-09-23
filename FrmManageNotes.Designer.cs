@@ -1,6 +1,6 @@
 ﻿namespace SimplePlainNote
 {
-    partial class frmManageNotes
+    partial class FrmManageNotes
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManageNotes));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmManageNotes));
             this.btnClose = new System.Windows.Forms.Button();
             this.lbTextNotes = new System.Windows.Forms.Label();
             this.lbTextNoteOptions = new System.Windows.Forms.Label();

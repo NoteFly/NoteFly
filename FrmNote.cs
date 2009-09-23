@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 
 namespace SimplePlainNote
 {
-    public partial class frmNote : Form
+    public partial class FrmNote : Form
     {
 		#region Fields (13) 
 
@@ -49,7 +49,7 @@ namespace SimplePlainNote
 
 		#region Constructors (2) 
 
-        public frmNote(Notes notes, Int16 id, bool visible, bool ontop, string title, string note, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
+        public FrmNote(Notes notes, Int16 id, bool visible, bool ontop, string title, string note, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             this.notes = notes;
             this.skin = new Skin(notecolor);
@@ -104,7 +104,7 @@ namespace SimplePlainNote
             }
         }
 
-        public frmNote(Notes notes, Int16 id, string title, string note, Int16 notecolor)
+        public FrmNote(Notes notes, Int16 id, string title, string note, Int16 notecolor)
         {
             this.skin = new Skin(notecolor);
             this.id = id;
@@ -596,7 +596,7 @@ namespace SimplePlainNote
             if (String.IsNullOrEmpty(twitteruser))
             {
                 MessageBox.Show("Error: you haven't set your twitter username yet.\r\nSettings window will now open.");
-                frmSettings settings = new frmSettings(notes, notes.Transparency);
+                FrmSettings settings = new FrmSettings(notes, notes.Transparency);
                 settings.Show();                
                 return;
             }

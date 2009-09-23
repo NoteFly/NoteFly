@@ -27,7 +27,7 @@ namespace SimplePlainNote
 
         private Int16 defaultcolor = 1;
         private string notesavepath;
-        private List<frmNote> noteslst;
+        private List<FrmNote> noteslst;
         private bool notesupdated = false;
         private bool highlightHTML = false;
         private bool highlightC = false;
@@ -40,7 +40,7 @@ namespace SimplePlainNote
 
         public Notes(bool firstrun)
         {
-            noteslst = new List<frmNote>();
+            noteslst = new List<FrmNote>();
             SetSettings();
             LoadNotes(firstrun);
         }
@@ -49,7 +49,7 @@ namespace SimplePlainNote
 
         #region Properties (7)
 
-        public List<frmNote> GetNotes
+        public List<FrmNote> GetNotes
         {
             get
             {
@@ -144,7 +144,7 @@ namespace SimplePlainNote
                 Int16 newid = Convert.ToInt16(noteslst.Count + 1);
                 string notefilenm = SaveNewNote(newid, title, content, defaultcolor);
                 if (String.IsNullOrEmpty(notefilenm)) { return; }
-                frmNote newnote = new frmNote(this, newid, title, content, notecolor);
+                FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
                 noteslst.Add(newnote);
                 newnote.StartPosition = FormStartPosition.Manual;
                 newnote.Show();
@@ -167,7 +167,7 @@ namespace SimplePlainNote
                 string title = noteslst[noteslistpos].NoteTitle;
                 string content = noteslst[noteslistpos].NoteContent;
                 Int16 color = noteslst[noteslistpos].NoteColor;
-                frmNewNote newnote = new frmNewNote(this, color, noteid, title, content);
+                FrmNewNote newnote = new FrmNewNote(this, color, noteid, title, content);
                 newnote.Show();
             }
             else
@@ -239,7 +239,7 @@ namespace SimplePlainNote
         /// </summary>
         public void UpdateAllFonts()
         {
-            foreach (frmNote curfrmnote in noteslst)
+            foreach (FrmNote curfrmnote in noteslst)
             {
                 curfrmnote.PaintColorNote();
                 curfrmnote.CheckThings();
@@ -272,12 +272,12 @@ namespace SimplePlainNote
         /// <param name="title"></param>
         /// <param name="content"></param>
         /// <param name="notecolor"></param>        
-        private frmNote CreateNote(bool visible, bool ontop, string title, string content, Int16 notecolor, int locX, int locY, int notewith, int noteheight)
+        private FrmNote CreateNote(bool visible, bool ontop, string title, string content, Int16 notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
             {
                 Int16 newid = Convert.ToInt16(noteslst.Count + 1);
-                frmNote newnote = new frmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewith, noteheight);
+                FrmNote newnote = new FrmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewith, noteheight);
                 newnote.FormBorderStyle = FormBorderStyle.None;
                 if (visible)
                 {

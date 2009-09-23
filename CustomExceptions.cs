@@ -6,9 +6,8 @@ using System.IO;
 
 namespace SimplePlainNote
 {
-
     /// <summary>
-    /// wel een voordeel van deze class is dat je nog bijv. nog een logfile kunt schrijven.
+    /// Own exceptions, and log what happend.
     /// </summary>
     class CustomExceptions : ApplicationException
     {

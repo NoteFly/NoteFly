@@ -1,7 +1,7 @@
 ﻿#define win32
 namespace SimplePlainNote
 {    
-    partial class frmNewNote
+    partial class FrmNewNote
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace SimplePlainNote
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNewNote));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNewNote));
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.pastTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();

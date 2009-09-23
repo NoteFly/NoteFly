@@ -30,7 +30,7 @@ using Microsoft.Win32;
 
 namespace SimplePlainNote
 {
-    public partial class frmSettings : Form
+    public partial class FrmSettings : Form
     {
 		#region Fields (2)
         private Notes notes;
@@ -42,7 +42,7 @@ namespace SimplePlainNote
 
         #region Constructors (1)
 
-        public frmSettings(Notes notes, bool transparecy)
+        public FrmSettings(Notes notes, bool transparecy)
         {
             InitializeComponent();
             xmlsettings = new xmlHandler(true);            

@@ -29,7 +29,7 @@ namespace SimplePlainNote
     /// <summary>
     /// Manage notes class
     /// </summary>
-    public partial class frmManageNotes : Form
+    public partial class FrmManageNotes : Form
     {
         #region Fields (4)
 
@@ -50,7 +50,7 @@ namespace SimplePlainNote
         /// New instance of frmManageNotes
         /// </summary>
         /// <param name="fcn"></param>        
-        public frmManageNotes(Notes notes, bool transparency, int notecolor)
+        public FrmManageNotes(Notes notes, bool transparency, int notecolor)
         {
             InitializeComponent();
             skin = new Skin(notecolor);

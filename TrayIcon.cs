@@ -212,7 +212,7 @@ namespace SimplePlainNote
                 {
                     if (!newnoteshowed)
                     {
-                        frmNewNote newnote = new frmNewNote(notes, getDefaultColor());
+                        FrmNewNote newnote = new FrmNewNote(notes, getDefaultColor());
                         newnote.Show();
                         newnoteshowed = true;
                     }
@@ -231,7 +231,7 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         static void MenuNewNote_Click(object sender, EventArgs e)
         {
-            frmNewNote newnote = new frmNewNote(notes, getDefaultColor());
+            FrmNewNote newnote = new FrmNewNote(notes, getDefaultColor());
             newnote.Show();
         }
 
@@ -242,7 +242,7 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         static void MenuManageNotes_Click(object sender, EventArgs e)
         {
-            frmManageNotes managenotes = new frmManageNotes(notes, transparency, getDefaultColor());
+            FrmManageNotes managenotes = new FrmManageNotes(notes, transparency, getDefaultColor());
             managenotes.Show();
         }
 
@@ -253,7 +253,7 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         static void MenuSettings_Click(object sender, EventArgs e)
         {
-            frmSettings settings = new frmSettings(notes, transparency);
+            FrmSettings settings = new FrmSettings(notes, transparency);
             settings.Show();                                             
         }
 
