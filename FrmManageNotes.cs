@@ -22,7 +22,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
-//using System.Threading;
 
 namespace SimplePlainNote
 {
@@ -169,9 +168,35 @@ namespace SimplePlainNote
                 Button btnNoteDelete = new Button();
 
                 int titlelength = notes.GetNotes[curnote].NoteTitle.Length;
-                if (titlelength >= 20)
+                //lblNoteTitle.Size = new Size(140, 16);
+                lblNoteTitle.AutoSize = true;
+                if ((titlelength >= 20) && (this.Width < 350))
                 {
-                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 20) + " (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 20) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                }
+                else if ((titlelength >= 30) && (this.Width >= 350) && (this.Width < 400))
+                {
+                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 30) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                }
+                else if ((titlelength >= 40) && (this.Width >= 400) && (this.Width < 450))
+                {
+                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 40) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                }
+                else if ((titlelength >= 50) && (this.Width >= 450) && (this.Width < 500))
+                {
+                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 50) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                }
+                else if ((titlelength >= 60) && (this.Width >= 500) && (this.Width < 550))
+                {
+                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 60) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                }
+                else if ((titlelength >= 70) && (this.Width >= 550) && (this.Width < 600))
+                {
+                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 70) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                }
+                else if ((titlelength >= 80) && (this.Width >= 600))
+                {
+                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 80) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
                 }
                 else
                 {
@@ -179,8 +204,8 @@ namespace SimplePlainNote
                 }
 
                 lblNoteTitle.Name = "lbNote" + Convert.ToString(curnote + 1);
-                lblNoteTitle.Location = new Point(2, ypos);
-                lblNoteTitle.Size = new Size(199, 16);
+                lblNoteTitle.Location = new Point(2, ypos);                
+                lblNoteTitle.Anchor = (AnchorStyles.Left | AnchorStyles.Top);
 
                 cbxNoteVisible.Text = "visible";
                 cbxNoteVisible.Name = Convert.ToString(curnote + 1);
@@ -193,17 +218,19 @@ namespace SimplePlainNote
                 {
                     cbxNoteVisible.CheckState = CheckState.Unchecked;
                 }
-                cbxNoteVisible.Location = new Point(201, ypos);
+                cbxNoteVisible.Location = new Point(this.Width-200, ypos);
                 cbxNoteVisible.AutoEllipsis = true;
                 cbxNoteVisible.AutoSize = true;
                 cbxNoteVisible.Click += new EventHandler(cbxNoteVisible_Click);
+                cbxNoteVisible.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
 
                 btnNoteDelete.Text = "delete";
                 btnNoteDelete.Name = "btnNoteDel" + Convert.ToString(curnote + 1);
                 btnNoteDelete.BackColor = Color.Orange;
-                btnNoteDelete.Location = new Point(260, ypos);
+                btnNoteDelete.Location = new Point(this.Width-90, ypos-3);
                 btnNoteDelete.Width = 60;
                 btnNoteDelete.Click += new EventHandler(btnNoteDelete_Click);
+                btnNoteDelete.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
 
                 pnlNotes.Controls.Add(lblNoteTitle);
                 pnlNotes.Controls.Add(cbxNoteVisible);
@@ -246,7 +273,7 @@ namespace SimplePlainNote
             if (e.Button == MouseButtons.Left)
             {
                 this.Cursor = Cursors.SizeNWSE;
-                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
+                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                
             }
             this.Cursor = Cursors.Default;
         }
@@ -292,6 +319,16 @@ namespace SimplePlainNote
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
                          int Msg, int wParam, int lParam);
+
+        private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!redrawbusy)
+            {
+                redrawbusy = true;
+                DrawNotesOverview();
+                redrawbusy = false;
+            }
+        }
 #endif
         #endregion Methods
     }

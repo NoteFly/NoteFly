@@ -69,6 +69,7 @@
             // 
             // lbTextNoteOptions
             // 
+            this.lbTextNoteOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbTextNoteOptions.AutoSize = true;
             this.lbTextNoteOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbTextNoteOptions.Location = new System.Drawing.Point(178, 8);
@@ -120,6 +121,7 @@
             this.pbResizeGrip.TabIndex = 9;
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
+            this.pbResizeGrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseUp);
             // 
             // timerUpdateNotesList
             // 
@@ -127,7 +129,7 @@
             this.timerUpdateNotesList.Interval = 1000;
             this.timerUpdateNotesList.Tick += new System.EventHandler(this.timerUpdateNotesList_Tick);
             // 
-            // frmManageNotes
+            // FrmManageNotes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -141,7 +143,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(280, 60);
-            this.Name = "frmManageNotes";
+            this.Name = "FrmManageNotes";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Manage notes";
