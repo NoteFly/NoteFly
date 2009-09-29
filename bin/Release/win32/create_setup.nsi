@@ -16,7 +16,7 @@
 !define VERSION "0.9.8"
 !define VERSTATUS "beta"
 
-Name "Simple Plain Note ${VERSION} ${VERSTATUS}"
+Name "SimplePlainNote ${VERSION} ${VERSTATUS}"
 
 ; The file to write
 OutFile ".\SimplePlainNote_v${VERSION}.exe"
@@ -41,7 +41,7 @@ Function .onInit
   Call GetDotNETVersion
   Pop $0
   ${If} $0 == "not found"
-    MessageBox MB_OK|MB_ICONSTOP ".NET runtime library is not installed."
+    MessageBox MB_OK|MB_ICONSTOP ".NET framework 2.0 is not installed.\r\nPlease get .NET framework 2.0 from:\r\n http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5 "
     Abort
   ${EndIf}
  
@@ -49,7 +49,7 @@ Function .onInit
  
   ${VersionCompare} $0 "2.0" $1
   ${If} $1 == 2
-    MessageBox MB_OK|MB_ICONSTOP ".NET runtime library v2.0 or newer is required. You have $0."
+    MessageBox MB_OK|MB_ICONSTOP ".NET framework v2.0 or newer is required. You have $0.\r\nPlease update."
     Abort
   ${EndIf}
   
@@ -123,9 +123,9 @@ SectionEnd
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"
 
-  CreateDirectory "$SMPROGRAMS\simpleplainnote"
-  CreateShortCut "$SMPROGRAMS\simpleplainnote\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\simpleplainnote\simpleplainnote.lnk" "$INSTDIR\simpleplainnote.exe" "" "$INSTDIR\simpleplainnote.exe" 0
+  CreateDirectory "$SMPROGRAMS\SimplePlainNote"
+  CreateShortCut "$SMPROGRAMS\SimplePlainNote\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\SimplePlainNote\SimplePlainNote.lnk" "$INSTDIR\simpleplainnote.exe" "" "$INSTDIR\simpleplainnote.exe" 0
   
 SectionEnd
 

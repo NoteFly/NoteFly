@@ -39,7 +39,7 @@ namespace SimplePlainNote
         //skin colors etc.
         private Skin skin;
         //is transparent
-        private bool transparency = false;
+        private bool transparency = false;        
 
         #endregion Fields
 
@@ -56,7 +56,7 @@ namespace SimplePlainNote
             this.notes = notes;
             this.transparency = transparency;
             notes.NotesUpdated = false;
-            DrawNotesOverview();
+            DrawNotesOverview();           
         }
 
         #endregion Constructors
@@ -160,6 +160,8 @@ namespace SimplePlainNote
         private void DrawNotesOverview()
         {
             pnlNotes.Controls.Clear();
+            CleanUp();            
+
             int ypos = 10;
             for (UInt16 curnote = 0; curnote < notes.NumNotes; curnote++)
             {
@@ -167,36 +169,35 @@ namespace SimplePlainNote
                 CheckBox cbxNoteVisible = new CheckBox();
                 Button btnNoteDelete = new Button();
 
-                int titlelength = notes.GetNotes[curnote].NoteTitle.Length;
-                //lblNoteTitle.Size = new Size(140, 16);
+                int titlelength = notes.GetNotes[curnote].NoteTitle.Length;                
                 lblNoteTitle.AutoSize = true;
-                if ((titlelength >= 20) && (this.Width < 350))
+                if ((titlelength >= 20) && (this.Width < 400))
                 {
-                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 20) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                    lblNoteTitle.Text = ShortenTitle(curnote, 20);
                 }
-                else if ((titlelength >= 30) && (this.Width >= 350) && (this.Width < 400))
+                else if ((titlelength >= 30) && (this.Width >= 400) && (this.Width < 450))
                 {
-                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 30) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                    lblNoteTitle.Text = ShortenTitle(curnote, 30);
                 }
                 else if ((titlelength >= 40) && (this.Width >= 400) && (this.Width < 450))
                 {
-                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 40) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                    lblNoteTitle.Text = ShortenTitle(curnote, 40);
                 }
                 else if ((titlelength >= 50) && (this.Width >= 450) && (this.Width < 500))
                 {
-                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 50) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                    lblNoteTitle.Text = ShortenTitle(curnote, 50);
                 }
                 else if ((titlelength >= 60) && (this.Width >= 500) && (this.Width < 550))
                 {
-                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 60) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                    lblNoteTitle.Text = ShortenTitle(curnote, 60);
                 }
                 else if ((titlelength >= 70) && (this.Width >= 550) && (this.Width < 600))
                 {
-                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 70) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                    lblNoteTitle.Text = ShortenTitle(curnote, 70);
                 }
                 else if ((titlelength >= 80) && (this.Width >= 600))
                 {
-                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle.Substring(0, 80) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                    lblNoteTitle.Text = ShortenTitle(curnote, 80);
                 }
                 else
                 {
@@ -237,6 +238,20 @@ namespace SimplePlainNote
                 pnlNotes.Controls.Add(btnNoteDelete);
 
                 ypos = ypos + 30;
+            }
+        }
+
+        private string ShortenTitle(int curnote, int lengte)
+        {
+            return notes.GetNotes[curnote].NoteTitle.Substring(0, lengte) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+        }
+
+        private void CleanUp()
+        {
+            int ctrlnum = pnlNotes.Controls.Count;
+            for (int i = 0; i < ctrlnum; i++)
+            {
+                pnlNotes.Controls[i].Dispose();
             }
         }
 

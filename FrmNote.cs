@@ -215,7 +215,8 @@ namespace SimplePlainNote
 
             Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
             twpass = passctr[0].Text;            
-            frmAskpass.Close();
+            frmAskpass.Close();            
+            frmAskpass.Dispose();            
             tweetnote();                         
         }
 
@@ -576,7 +577,7 @@ namespace SimplePlainNote
             xmlHandler getSettings = new xmlHandler(true);
             string twitteruser = getSettings.getXMLnode("twitteruser");
             string twitterpass = getSettings.getXMLnode("twitterpass");
-            if ((twpass != "") && (twpass != null))
+            if (!String.IsNullOrEmpty(twpass))
             {
                 twitterpass = twpass;
             }
@@ -599,7 +600,7 @@ namespace SimplePlainNote
                 tbpass.Location = new Point(10, 10);
                 tbpass.Width = 160;
                 tbpass.Name = "tbPassword";
-                tbpass.PasswordChar = Convert.ToChar("*"); ;
+                tbpass.PasswordChar = Convert.ToChar("X"); ;
                 Button btnOk = new Button();
                 btnOk.Location = new Point(180, 10);
                 btnOk.Text = "Ok";

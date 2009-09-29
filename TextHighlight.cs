@@ -34,7 +34,15 @@ namespace SimplePlainNote
         private int posstarttag = 0;
         private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if|break|goto|continue|switch|case|default:|try|catch|throw|static");
         private Regex SyntaxCdatatype = new Regex("int|short|double|float|long|string|bool|char");
-        private Regex SyntaxHTML = new Regex("HTML|/HTML|HEAD|/HEAD|BODY|/BODY|A|SPAN|I|/I|U|/U|B|/B|UL|IL|OL|/OL|BR|BR /|P|/P|FONT|/FONT|TITLE|/TITLE|BLOCKQUOTE|/BLOCKQUOTE|META|LINK|CODE|/CODE|DD|/DD|TABLE|/TABLE|DL|/DL|TD|/TD|TR|/TR|FORM|IMG|FRAME|STRONG|/STRONG|FRAMESET|/FRAMESET|IFRAME|/IFRAME|APPLET|/APPLET|TH|/TH|PRE|/PRE|HEAD|/THEAD|TFOOT|/TFOOT|INPUT|OPTION|LABEL|/LABEL|LEGEND|/LEGEND|ISINDEX|SELECT|/SELECT|TEXTAREA|/TEXTAREA|SCRIPT|</SCRIPT|NOSCRIPT|/NOSCRIPT|S|/S|STRIKE|/STRIKE|TT|/TT|BIG|/BIG|SMALL|/SMALL|BASEFONT|/BASEFONT|DIV|/DIV|H1|/H1|H2|/H2|H3|/H3|H4|/H4|H5|/H5|H6|/H6|ADRESS|/ADRESS|HR|EM|/EM", RegexOptions.IgnoreCase);
+        private Regex SyntaxHTML = new Regex("HTML|HEAD|BODY|"+
+        "A|SPAN|I|U|B|UL|IL|OL|BR|P|FONT|"+
+        "TITLE|BLOCKQUOTE|META|LINK|CODE|DD|"+
+        "TABLE|DL|TD|TR|FORM|IMG|FRAME|STRONG|"+
+        "FRAMESET|IFRAME|APPLET|TH|PRE|"+
+        "HEAD|TFOOT|INPUT|OPTION|LABEL|LEGEND|"+
+        "SELECT|TEXTAREA|SCRIPT|NOSCRIPT|"+
+        "S|STRIKE||TT|BIG|SMALL|BASEFONT|"+
+        "DIV|H1|H2|H3|H4|H5|H6|ADRESS|HR|EM", RegexOptions.IgnoreCase);
 
         #endregion Fields
 
@@ -74,18 +82,23 @@ namespace SimplePlainNote
                         if (lengthtillendtag > 0)
                         {
                             try
-                            {
+                            {                                
                                 string ishtmlnode = rtb.Text.Substring(posstarttag + 1, lengthtillendtag-1);
-                                if (SyntaxHTML.IsMatch(ishtmlnode) == true)
+                                //FIXME: does always match..
+                                foreach (Match keyWordHTML in SyntaxHTML.Matches(ishtmlnode))
                                 {
                                     rtb.Select(posstarttag, lengthtillendtag+1);
-                                    rtb.SelectionColor = System.Drawing.Color.Blue;
+                                    rtb.SelectionColor = Color.Blue;
+                                    rtb.SelectionStart = lengthtillendtag + 1;
+                                    rtb.SelectionColor = Color.Black;
                                 }
+                                /*
                                 else
                                 {
                                     rtb.Select(posstarttag, lengthtillendtag+1);
                                     rtb.SelectionColor = System.Drawing.Color.Red;
                                 }
+                                 */
                             }
                             catch (ArgumentOutOfRangeException)
                             {

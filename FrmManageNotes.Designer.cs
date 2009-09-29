@@ -150,7 +150,7 @@
             this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.Transparent;
             this.Deactivate += new System.EventHandler(this.frmManageNotes_Deactivate);
-            this.Activated += new System.EventHandler(this.frmManageNotes_Activated);
+            this.Activated += new System.EventHandler(this.frmManageNotes_Activated);            
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();

@@ -266,11 +266,19 @@ namespace SimplePlainNote
         }
 
         /// <summary>
-        /// Create a note GUI.
+        /// Create a new FrmNote.
         /// </summary>
-        /// <param name="title"></param>
-        /// <param name="content"></param>
-        /// <param name="notecolor"></param>        
+        /// <param name="visible">is visible</param>
+        /// <param name="ontop">is on top</param>
+        /// <param name="title">title</param>
+        /// <param name="content">content</param>
+        /// <param name="notecolor">color note, 0 Gold, 1 orange, 2 White, 3 LawnGreen, 4 CornflowerBlue, 5 Magenta, 6 Red</param>
+        /// <param name="locX">X coordinate</param>
+        /// <param name="locY">Y coordinate</param>
+        /// <param name="notewith"></param>
+        /// <param name="noteheight"></param>
+        /// <returns></returns>
+                    
         private FrmNote CreateNote(bool visible, bool ontop, string title, string content, Int16 notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
@@ -340,14 +348,15 @@ namespace SimplePlainNote
                 int tipnoteheight = 280;
                 int tipnoteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2);
                 int tipnoteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2);
-                noteslst.Add(CreateNote(true, false, "first example note", 
+                noteslst.Add(CreateNote(true, false, "Example", 
                     "This is a example note.\r\n"+
-                    "You can change color of this note by rightclicking this note.\r\n"+
-                    "You can delete this note, by rightclicking the systray icon choice manage notes"+
-                    "and then press delete note.\r\n"+
-                    "By clicking on the cross of this note. This note will hidden.\r\n"+
-                    "You can get it back with the manage notes window.\r\n"+
-                    "Please close the installer now.", 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+                    "Please close the installer now."+
+                    "You can chance colour of this note by rightclicking on this note.\r\n" +
+                    "You can delete this note, by rightclicking the systray icon choice manage notes\r\n"+
+                    "and then press delete note button for this particuler note.\r\n"+
+                    "By clicking on the cross on this note this note will be hidden.\r\n"+
+                    "You can get it back with the manage notes window.\r\n"
+                    , 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
             }
 
             #if DEBUG
