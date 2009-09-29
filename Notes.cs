@@ -33,7 +33,6 @@ namespace SimplePlainNote
         private bool highlightC = false;
         private bool transparecy = false;
         private bool twitterenabled = false;
-
         #endregion Fields
 
         #region Constructors (1)
@@ -298,10 +297,6 @@ namespace SimplePlainNote
         /// <param name="firstrun"></param>
         private void LoadNotes(bool firstrun)
         {
-            #if DEBUG
-            DateTime starttime = DateTime.Now;
-            #endif
-
             if (!Directory.Exists(this.notesavepath))
             {
                 DialogResult result = MessageBox.Show("Error: Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?", "note folder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -313,9 +308,6 @@ namespace SimplePlainNote
                 {
                     xmlHandler getAppdata = new xmlHandler(true);
                     this.notesavepath = getAppdata.AppDataFolder;
-                    #if DEBUG
-                    starttime = DateTime.Now;
-                    #endif
                 }
             }
 
@@ -348,16 +340,18 @@ namespace SimplePlainNote
                 int tipnoteheight = 280;
                 int tipnoteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2);
                 int tipnoteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2);
-                noteslst.Add(CreateNote(true, false, "first example note", "This is a example note.\r\nYou can change color of this note by rightclicking this note.\r\nYou can delete this note, by rightclicking the systray icon choice manage note and then press delete note.\r\nBy clicking on the cross of this note. This note will hiden.\r\nYou can get it back with the manage notes window.\r\nPlease close the installer now.", 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+                noteslst.Add(CreateNote(true, false, "first example note", 
+                    "This is a example note.\r\n"+
+                    "You can change color of this note by rightclicking this note.\r\n"+
+                    "You can delete this note, by rightclicking the systray icon choice manage notes"+
+                    "and then press delete note.\r\n"+
+                    "By clicking on the cross of this note. This note will hidden.\r\n"+
+                    "You can get it back with the manage notes window.\r\n"+
+                    "Please close the installer now.", 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
             }
 
             #if DEBUG
-            //LoadNotesStressTest(100);
-
-            //not really exact timing.
-            DateTime endtime = DateTime.Now;
-            TimeSpan debugtime = endtime - starttime;
-            MessageBox.Show("loading notes time: " + debugtime.Milliseconds + " ms\r\n " + debugtime.Ticks + " ticks");
+            LoadNotesStressTest(10);                    
             #endif
         }
 

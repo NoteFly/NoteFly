@@ -21,7 +21,9 @@
   <provides />
   <filetree name="Application Root" writable="false">
     <directories />
-    <files />
+    <files>
+      <file name="SimplePlainNote.exe" source="M:\Public\sourcecode\Projects_Csharp\simpleplainnote\bin\Release\linux\SimplePlainNote.exe" startup="true" />
+    </files>
   </filetree>
   <autogeneraterelease>true</autogeneraterelease>
   <release />

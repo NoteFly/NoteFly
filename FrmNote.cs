@@ -319,7 +319,7 @@ namespace SimplePlainNote
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void frmCloseNote_Click(object sender, EventArgs e)
+        private void btnCloseNote_Click(object sender, EventArgs e)
         {            
             this.notevisible = false;
             notes.NotesUpdated = true;
@@ -501,11 +501,7 @@ namespace SimplePlainNote
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
-        {                      
-            #if DEBUG
-            DateTime starttime = DateTime.Now;
-            #endif         
-
+        {
                 this.locX = this.Location.X;
                 this.locY = this.Location.Y;
 
@@ -522,15 +518,7 @@ namespace SimplePlainNote
                 else
                 {
                     MessageBox.Show("Error: notecolor unknow.");
-                }
-            
-
-            #if DEBUG
-            DateTime endtime = DateTime.Now;
-            TimeSpan debugtime = endtime - starttime;
-            MessageBox.Show("taken: "+debugtime.Milliseconds+" ms\r\n "+debugtime.Ticks+" ticks");            
-            #endif
-
+                }           
         }
 
         /// <summary>
@@ -712,6 +700,11 @@ namespace SimplePlainNote
             }
         }
 
+        private void hideNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnCloseNote_Click(sender, e);
+        }
+
 #if win32
         /// <summary>
         /// Check internet state.
@@ -730,6 +723,8 @@ namespace SimplePlainNote
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
 #endif
+
+
 
 		#endregion Methods 
     }

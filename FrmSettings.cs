@@ -84,23 +84,27 @@ namespace SimplePlainNote
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnOK_Click(object sender, EventArgs e)
-        {    
+        {
             if (!Directory.Exists(tbNotesSavePath.Text))
             {
                 MessageBox.Show("Invalid folder for saving notes folder.");                
+                tabControlSettings.SelectedTab = tabGeneral;
             }
-            else if (String.IsNullOrEmpty(cbxFontNoteContent.Text)==true)
+            else if (String.IsNullOrEmpty(cbxFontNoteContent.Text) == true)
             {
-                MessageBox.Show("Select a font.");                                
+                MessageBox.Show("Select a font.");
+                tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((numFontSize.Value < 1) || (numFontSize.Value > 100))
+            else if ((numFontSize.Value < 4) || (numFontSize.Value > 128))
             {
-                MessageBox.Show("Font size invalid.");
+                MessageBox.Show("Font size invalid. minmal 4pt maximal 128pt");
+                tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) || (chxSyntaxHighlightC.CheckState == CheckState.Indeterminate) || 
+            else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) || (chxSyntaxHighlightC.CheckState == CheckState.Indeterminate) ||
                 (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate))
             {
                 MessageBox.Show("Not allowed.");
+                tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if (tbTwitterUser.Text.Length > 16)
             {

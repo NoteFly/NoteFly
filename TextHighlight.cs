@@ -57,8 +57,9 @@ namespace SimplePlainNote
         /// </summary>
         /// <param name="rtb"></param>
         public bool CheckSyntax(RichTextBox rtb)
-        {
+        {         
             int oldpos = rtb.SelectionStart;
+            ResetHighlighting(rtb);
             for (int i = 0; i < rtb.TextLength; i++)
             {
                 if (this.highlightHTML)
@@ -127,6 +128,16 @@ namespace SimplePlainNote
             }
             rtb.SelectionStart = oldpos;
             return true;
+        }
+
+        /// <summary>
+        /// Make everything black again.
+        /// </summary>
+        /// <param name="rtb"></param>
+        private void ResetHighlighting(RichTextBox rtb)
+        {
+            rtb.SelectAll();
+            rtb.SelectionColor = Color.Black;
         }
 
         #endregion Methods

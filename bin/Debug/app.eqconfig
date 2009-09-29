@@ -1,0 +1,14 @@
+﻿<config>
+  <OutputFolder>$(AppDir)-Profiled</OutputFolder>
+  <ReportFolderNetFull>$(SystemRoot)\Temp\EQATECProfilerLogs</ReportFolderNetFull>
+  <ReportFolderNetCF>\Temp\EQATECProfilerLogs</ReportFolderNetCF>
+  <AutoSnapshot>Main OnStop ApplicationEnd</AutoSnapshot>
+  <TinyMethodAction>CallCount</TinyMethodAction>
+  <RuntimeControlEnabled>true</RuntimeControlEnabled>
+  <RuntimeControlPort>3947</RuntimeControlPort>
+  <RuntimeModuleLogLevel>Errors</RuntimeModuleLogLevel>
+  <ExcludeFiles>
+    <ExcludeFile>SimplePlainNote.vshost.exe</ExcludeFile>
+  </ExcludeFiles>
+  <SignActions />
+</config>

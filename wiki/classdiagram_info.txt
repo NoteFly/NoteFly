@@ -1,0 +1,3 @@
+The classesdiagram.zargo file is create with ArgoUML, 
+This is a opensource Java programme, a should run under any platform.
+The classesdiagram.uml is the same classdiagram but created with StarUML.

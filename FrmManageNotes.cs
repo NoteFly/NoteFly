@@ -22,7 +22,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
-using System.Threading;
+//using System.Threading;
 
 namespace SimplePlainNote
 {
@@ -123,7 +123,7 @@ namespace SimplePlainNote
                         }
 
                         DrawNotesOverview();
-                        Thread.Sleep(50);
+                        //Thread.Sleep(50);
                     }
                 }
             }
@@ -160,10 +160,6 @@ namespace SimplePlainNote
         /// </summary>
         private void DrawNotesOverview()
         {
-#if DEBUG
-            DateTime starttime = DateTime.Now;
-#endif
-
             pnlNotes.Controls.Clear();
             int ypos = 10;
             for (UInt16 curnote = 0; curnote < notes.NumNotes; curnote++)
@@ -215,12 +211,6 @@ namespace SimplePlainNote
 
                 ypos = ypos + 30;
             }
-
-#if DEBUG
-            DateTime endtime = DateTime.Now;
-            TimeSpan debugtime = endtime - starttime;
-            MessageBox.Show("loading notes time: " + debugtime.Milliseconds + " ms\r\n " + debugtime.Ticks + " ticks");
-#endif
         }
 
         private void frmManageNotes_Activated(object sender, EventArgs e)
