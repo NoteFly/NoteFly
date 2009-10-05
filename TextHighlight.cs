@@ -29,29 +29,24 @@ namespace SimplePlainNote
     {
         #region Fields (6)
 
+        private RichTextBox rtbcode;
         private bool highlightC = false;
         private bool highlightHTML = false;
         private int posstarttag = 0;
         private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if|break|goto|continue|switch|case|default:|try|catch|throw|static");
         private Regex SyntaxCdatatype = new Regex("int|short|double|float|long|string|bool|char");
-        private Regex SyntaxHTML = new Regex("HTML|HEAD|BODY|"+
-        "A|SPAN|I|U|B|UL|IL|OL|BR|P|FONT|"+
-        "TITLE|BLOCKQUOTE|META|LINK|CODE|DD|"+
-        "TABLE|DL|TD|TR|FORM|IMG|FRAME|STRONG|"+
-        "FRAMESET|IFRAME|APPLET|TH|PRE|"+
-        "HEAD|TFOOT|INPUT|OPTION|LABEL|LEGEND|"+
-        "SELECT|TEXTAREA|SCRIPT|NOSCRIPT|"+
-        "S|STRIKE||TT|BIG|SMALL|BASEFONT|"+
-        "DIV|H1|H2|H3|H4|H5|H6|ADRESS|HR|EM", RegexOptions.IgnoreCase);
+        //IngoreCase options is set.
+        private Regex SyntaxHTML = new Regex("<HTML|<HEAD|<BODY^|<A^|<P|<BR|<SPAN^|<I|<U|<B|<OL|<UL|<IL|<FONT^|<TITLE|<BLOCKQUOTE|<META^|<LINK^|<CODE|<DD|<TABLE^|<DL|<TD^|<TR^|<FORM^|<IMG^|<FRAME^|<STRONG|<FRAMESET^|<IFRAME^|<APPLET^|<TH^|<PRE^|<HEAD|<TFOOT|<INPUT^|<OPTION^|<LABEL^|<LEGEND^|<SELECT^|<TEXTAREA^|<SCRIPT^|<NOSCRIPT|<S|<STRIKE|<TT|<BIG|<SMALL|<BASEFONT^|<DIV^|<H1|<H2|<H3|<H4|<H5|<H6|<ADRESS|<HR|<EM", RegexOptions.IgnoreCase);        
 
         #endregion Fields
 
         #region Constructors (1)
 
-        public TextHighlight(bool highlightHTML, bool highlightC)
-        {            
+        public TextHighlight(bool highlightHTML, bool highlightC, RichTextBox temprtbcode)
+        {
             this.highlightHTML = highlightHTML;
             this.highlightC = highlightC;
+            this.rtbcode = temprtbcode;
         }
 
         #endregion Constructors
@@ -61,44 +56,40 @@ namespace SimplePlainNote
         // Public Methods (1) 
 
         /// <summary>
-        /// Check syntax
+        /// Check syntax of the whole text
         /// </summary>
         /// <param name="rtb"></param>
-        public bool CheckSyntax(RichTextBox rtb)
-        {         
-            int oldpos = rtb.SelectionStart;
-            ResetHighlighting(rtb);
-            for (int i = 0; i < rtb.TextLength; i++)
+        public bool CheckSyntaxFull()
+        {
+            int oldpos = rtbcode.SelectionStart;
+            ResetHighlighting(rtbcode);            
+            for (int i = 0; i < rtbcode.TextLength; i++)
             {
                 if (this.highlightHTML)
                 {
-                    if (rtb.Text[i] == '<')
+                    if (rtbcode.Text[i] == '<')
                     {
                         posstarttag = i;
                     }
-                    else if (rtb.Text[i] == '>')
+                    else if (rtbcode.Text[i] == '>')
                     {
                         int lengthtillendtag = i - posstarttag;
                         if (lengthtillendtag > 0)
                         {
                             try
-                            {                                
-                                string ishtmlnode = rtb.Text.Substring(posstarttag + 1, lengthtillendtag-1);
-                                //FIXME: does always match..
-                                foreach (Match keyWordHTML in SyntaxHTML.Matches(ishtmlnode))
+                            {
+                                if (ValidingHTMLNode(posstarttag, lengthtillendtag))
                                 {
-                                    rtb.Select(posstarttag, lengthtillendtag+1);
-                                    rtb.SelectionColor = Color.Blue;
-                                    rtb.SelectionStart = lengthtillendtag + 1;
-                                    rtb.SelectionColor = Color.Black;
+                                    rtbcode.Select(posstarttag, posstarttag + lengthtillendtag);
+                                    rtbcode.SelectionColor = Color.Blue;
                                 }
-                                /*
                                 else
                                 {
-                                    rtb.Select(posstarttag, lengthtillendtag+1);
-                                    rtb.SelectionColor = System.Drawing.Color.Red;
+                                    rtbcode.Select(posstarttag, lengthtillendtag + 1);
+                                    rtbcode.SelectionColor = System.Drawing.Color.Red;
                                 }
-                                 */
+                                rtbcode.SelectionStart = posstarttag + lengthtillendtag + 1;
+                                rtbcode.SelectionColor = Color.Black;
                             }
                             catch (ArgumentOutOfRangeException)
                             {
@@ -106,12 +97,12 @@ namespace SimplePlainNote
                             }
                         }
                     }
-                    if (rtb.TextLength >= i)
+                    if (rtbcode.TextLength >= i)
                     {
                         try
                         {
-                            rtb.SelectionStart = i + 1;
-                            rtb.SelectionColor = System.Drawing.Color.Black;
+                            rtbcode.SelectionStart = i + 1;
+                            rtbcode.SelectionColor = System.Drawing.Color.Black;
                         }
                         catch (ArgumentOutOfRangeException)
                         {
@@ -122,25 +113,83 @@ namespace SimplePlainNote
                 if (this.highlightC)
                 {
                     //todo: make more effective only 1 loop.
-                    int selPos = rtb.SelectionStart;                    
-                    foreach (Match keyWordMatch in SyntaxC.Matches(rtb.Text))
+                    int selPos = rtbcode.SelectionStart;
+                    foreach (Match keyWordMatch in SyntaxC.Matches(rtbcode.Text))
                     {
-                        rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
-                        rtb.SelectionColor = Color.Green;
-                        rtb.SelectionStart = selPos;
-                        rtb.SelectionColor = Color.Black;
+                        rtbcode.Select(keyWordMatch.Index, keyWordMatch.Length);
+                        rtbcode.SelectionColor = Color.Green;
+                        rtbcode.SelectionStart = selPos;
+                        rtbcode.SelectionColor = Color.Black;
                     }
-                    foreach (Match keyWordMatch in SyntaxCdatatype.Matches(rtb.Text))
+                    foreach (Match keyWordMatch in SyntaxCdatatype.Matches(rtbcode.Text))
                     {
-                        rtb.Select(keyWordMatch.Index, keyWordMatch.Length);
-                        rtb.SelectionColor = Color.Gray;
-                        rtb.SelectionStart = selPos;
-                        rtb.SelectionColor = Color.Black;
+                        rtbcode.Select(keyWordMatch.Index, keyWordMatch.Length);
+                        rtbcode.SelectionColor = Color.Gray;
+                        rtbcode.SelectionStart = selPos;
+                        rtbcode.SelectionColor = Color.Black;
                     }
                 }
             }
-            rtb.SelectionStart = oldpos;
+            rtbcode.SelectionStart = oldpos;
             return true;
+        }
+
+        /// <summary>
+        /// This does only finds the last node for highlighting.
+        /// The rest stays the same.
+        /// </summary>
+        public void CheckSyntaxQuick()
+        {
+            Boolean foundendtag = false;
+            for (int i = rtbcode.TextLength; ((i > 0) && (!foundendtag)); i--)
+            {
+                if (this.highlightHTML)
+                {
+                    if (rtbcode.Text[i-1] == '<')
+                    {                        
+                        for (int n = i; ((n < rtbcode.TextLength) && (!foundendtag)); n++)
+                        {
+                            if (rtbcode.Text[n] == '>')
+                            {
+                                foundendtag = true;
+                                posstarttag = i - 1;
+                                if (ValidingHTMLNode(posstarttag, n - posstarttag))
+                                {
+                                    rtbcode.Select(posstarttag, (n+1 - posstarttag));
+                                    rtbcode.SelectionColor = Color.Blue;
+                                }
+                                else
+                                {
+                                    rtbcode.Select(posstarttag, (n+1 - posstarttag));
+                                    rtbcode.SelectionColor = System.Drawing.Color.Red;
+                                }                                
+                            }
+                        }
+                        rtbcode.SelectionStart = rtbcode.TextLength;
+                        rtbcode.SelectionColor = Color.Black;
+                    }
+                }
+            }            
+        }
+
+        private Boolean ValidingHTMLNode(int posstarttag, int lengthtillendtag)
+        {
+            string ishtmlnode = rtbcode.Text.Substring(posstarttag, lengthtillendtag);
+            if (ishtmlnode.Length > 1)
+            {
+                if (SyntaxHTML.IsMatch(ishtmlnode))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

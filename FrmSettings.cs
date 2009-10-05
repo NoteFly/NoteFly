@@ -32,15 +32,17 @@ namespace SimplePlainNote
 {
     public partial class FrmSettings : Form
     {
-		#region Fields (2)
+		#region Fields (2) 
+
         private Notes notes;
         private xmlHandler xmlsettings;
 #if win32
         private RegistryKey key;
 #endif
-        #endregion Fields
 
-        #region Constructors (1)
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         public FrmSettings(Notes notes, bool transparecy)
         {
@@ -60,6 +62,7 @@ namespace SimplePlainNote
             chxStartOnBootWindows.Checked = getStatusStartlogin();
             chxSyntaxHighlightHTML.Checked = getHighlightHTML();
             chxSyntaxHighlightC.Checked = getHighlightC();
+            cbxTextDirection.SelectedIndex = getTextDirection();
             
             this.notes = notes;
             DrawCbxFonts();
@@ -70,11 +73,39 @@ namespace SimplePlainNote
 
 		#endregion Constructors 
 
-		#region Methods (11) 
+		#region Methods (24) 
+
+		// Private Methods (24) 
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            
+            DialogResult dlgresult = folderBrowserDialog1.ShowDialog();
+            if (dlgresult == DialogResult.OK)
+            {
+                string newpathsavenotes = folderBrowserDialog1.SelectedPath;
+                
+                if (Directory.Exists(newpathsavenotes))
+                {
+                    this.tbNotesSavePath.Text = folderBrowserDialog1.SelectedPath;
+                }
+                else
+                {
+                    MessageBox.Show("Error: Directory does not exist. Please choice a valid directory.");                    
+                }                                               
+            }            
+        }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnCrash_Click(object sender, EventArgs e)
+        {
+            #if DEBUG        
+            throw new CustomExceptions("This is a crash test, to test if exceptions are thrown correctly.");
+            #endif
         }
 
         /// <summary>
@@ -99,6 +130,10 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Font size invalid. minmal 4pt maximal 128pt");
                 tabControlSettings.SelectedTab = this.tabAppearance;
+            }
+            else if (cbxTextDirection.SelectedIndex > 1)
+            {
+                MessageBox.Show("Settings text direction unknow.");
             }
             else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) || (chxSyntaxHighlightC.CheckState == CheckState.Indeterminate) ||
                 (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate))
@@ -126,7 +161,8 @@ namespace SimplePlainNote
                 {
                     MoveNotes(tbNotesSavePath.Text);
                 }
-                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text, chxLogErrors.Checked);
+                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text, chxLogErrors.Checked);
+                
 
 #if win32
                 key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -155,31 +191,11 @@ namespace SimplePlainNote
                 {
                     MessageBox.Show("Error: Run subkey in registery does not exist. Or it cannot be found.");
                 }
-#endif
+#endif                
                 notes.SetSettings();
                 notes.UpdateAllFonts();
                 this.Close();
             }                                        
-        }
-
-        /// <summary>
-        /// Fill combobox list with fonts
-        /// </summary>
-        private void DrawCbxFonts()
-        {            
-            foreach (FontFamily oneFontFamily in FontFamily.Families)
-            {
-                cbxFontNoteContent.Items.Add(oneFontFamily.Name);
-            }
-            string curfont = xmlsettings.getXMLnode("fontcontent");
-            if (String.IsNullOrEmpty(curfont))
-            {                
-                MessageBox.Show("Error: Current font not found.");                
-            }
-            else
-            {
-                cbxFontNoteContent.Text = curfont;
-            }            
         }
 
         /// <summary>
@@ -217,9 +233,34 @@ namespace SimplePlainNote
             }
         }
 
-        private int getDefaultColor()
+        private void chxSyntaxHighlightC_CheckedChanged(object sender, EventArgs e)
         {
-            return xmlsettings.getXMLnodeAsInt("defaultcolor");
+
+        }
+
+        private void chxSyntaxHighlightHTML_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Fill combobox list with fonts
+        /// </summary>
+        private void DrawCbxFonts()
+        {            
+            foreach (FontFamily oneFontFamily in FontFamily.Families)
+            {
+                cbxFontNoteContent.Items.Add(oneFontFamily.Name);
+            }
+            string curfont = xmlsettings.getXMLnode("fontcontent");
+            if (String.IsNullOrEmpty(curfont))
+            {                
+                MessageBox.Show("Error: Current font not found.");                
+            }
+            else
+            {
+                cbxFontNoteContent.Text = curfont;
+            }            
         }
 
         private int getActionLeftClick()
@@ -232,14 +273,58 @@ namespace SimplePlainNote
             return xmlsettings.getXMLnodeAsBool("askurl");
         }
 
+        private bool getConfirmExit()
+        {
+            return xmlsettings.getXMLnodeAsBool("confirmexit");
+        }
+
+        private int getDefaultColor()
+        {
+            return xmlsettings.getXMLnodeAsInt("defaultcolor");
+        }
+
         private string getDefaultEmail()
         {
             return xmlsettings.getXMLnode("defaultemail");            
         }
 
+        private bool getHighlightC()
+        {
+            return xmlsettings.getXMLnodeAsBool("highlightC");
+        }
+
+        private bool getHighlightHTML()
+        {
+            return xmlsettings.getXMLnodeAsBool("highlightHTML");
+        }
+
         private string getNotesSavePath()
         {
             return xmlsettings.getXMLnode("notesavepath");
+        }
+
+        private bool getStatusStartlogin()
+        {
+            #if win32
+            key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (key != null)
+            {
+                if (key.GetValue("simpleplainnote", null)!=null)
+                {
+                    return true;
+                } 
+                else 
+                {
+                    return false;
+                }
+            }
+            #endif
+            return false;
+        }
+
+        private int getTextDirection()
+        {
+            return xmlsettings.getXMLnodeAsInt("textdirection");
         }
 
         private Decimal getTransparecylevel()
@@ -265,57 +350,9 @@ namespace SimplePlainNote
             return xmlsettings.getXMLnode("twitteruser");
         }
 
-        private bool getConfirmExit()
+        private void label1_Click(object sender, EventArgs e)
         {
-            return xmlsettings.getXMLnodeAsBool("confirmexit");
-        }
 
-        private bool getHighlightHTML()
-        {
-            return xmlsettings.getXMLnodeAsBool("highlightHTML");
-        }
-
-        private bool getHighlightC()
-        {
-            return xmlsettings.getXMLnodeAsBool("highlightC");
-        }
-
-        private bool getStatusStartlogin()
-        {
-            #if win32
-            key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (key != null)
-            {
-                if (key.GetValue("simpleplainnote", null)!=null)
-                {
-                    return true;
-                } 
-                else 
-                {
-                    return false;
-                }
-            }
-            #endif
-            return false;
-        }
-
-        private void btnBrowse_Click(object sender, EventArgs e)
-        {
-            
-            DialogResult dlgresult = folderBrowserDialog1.ShowDialog();
-            if (dlgresult == DialogResult.OK)
-            {
-                string newpathsavenotes = folderBrowserDialog1.SelectedPath;
-                
-                if (Directory.Exists(newpathsavenotes))
-                {
-                    this.tbNotesSavePath.Text = folderBrowserDialog1.SelectedPath;
-                }
-                else
-                {
-                    MessageBox.Show("Error: Directory does not exist. Please choice a valid directory.");                    
-                }                                               
-            }            
         }
 
         /// <summary>
@@ -349,16 +386,6 @@ namespace SimplePlainNote
             }
         }
 
-        private void btnCrash_Click(object sender, EventArgs e)
-        {
-            #if DEBUG        
-            throw new CustomExceptions("This is a crash test, to test if exceptions are thrown correctly.");
-            #endif
-        }
-
-
-        
-
-        #endregion Methods
+		#endregion Methods 
     }
 }

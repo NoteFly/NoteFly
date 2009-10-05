@@ -23,19 +23,22 @@ namespace SimplePlainNote
 {
     public class Notes
     {
-        #region Fields (7)
+		#region Fields (9) 
 
         private Int16 defaultcolor = 1;
-        private string notesavepath;
+        //private TextHighlight highlight;
+        private Boolean highlightC = false;
+        private Boolean highlightHTML = false;
+        private String notesavepath;
         private List<FrmNote> noteslst;
-        private bool notesupdated = false;
-        private bool highlightHTML = false;
-        private bool highlightC = false;
-        private bool transparecy = false;
-        private bool twitterenabled = false;
-        #endregion Fields
+        private Boolean notesupdated = false;
+        private Boolean transparecy = false;
+        private Boolean twitterenabled = false;
+        private Int16 textdirection = 0;
 
-        #region Constructors (1)
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         public Notes(bool firstrun)
         {
@@ -44,9 +47,9 @@ namespace SimplePlainNote
             LoadNotes(firstrun);
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Properties (7)
+		#region Properties (8) 
 
         public List<FrmNote> GetNotes
         {
@@ -56,7 +59,23 @@ namespace SimplePlainNote
             }
         }
 
-        public string NoteSavePath
+        public Boolean HighlightC
+        {
+            get
+            {
+                return this.highlightC;
+            }
+        }
+
+        public Boolean HighlightHTML
+        {
+            get
+            {
+                return this.highlightHTML;
+            }
+        }
+
+        public String NoteSavePath
         {
             get
             {
@@ -64,7 +83,7 @@ namespace SimplePlainNote
             }
         }
 
-        public bool NotesUpdated
+        public Boolean NotesUpdated
         {
             get
             {
@@ -89,7 +108,7 @@ namespace SimplePlainNote
             }
         }
 
-        public bool Transparency
+        public Boolean Transparency
         {
             get
             {
@@ -97,7 +116,7 @@ namespace SimplePlainNote
             }
         }
 
-        public bool TwitterEnabled
+        public Boolean TwitterEnabled
         {
             get
             {
@@ -105,31 +124,21 @@ namespace SimplePlainNote
             }
         }
 
-        #endregion Properties
-
-        #region Methods (10)
-
-        // Public Methods (6) 
-
-        /// <summary>
-        /// Check syntax,
-        /// returns true, if no error.
-        /// </summary>
-        /// <param name="syntaxhighlight"></param>
-        /// <param name="rtb"></param>
-        public bool CheckSyntax(RichTextBox rtb)
+        public Int16 TextDirection
         {
-            if ((highlightHTML == true) || (highlightC == true))
+            get
             {
-                TextHighlight texthighlight = new TextHighlight(highlightHTML, highlightC);
-                return texthighlight.CheckSyntax(rtb);
+                return this.textdirection;
             }
-            else
+            set
             {
-                return true;
+                textdirection = value;
             }
         }
 
+		#endregion Properties 
+
+		#region Methods (10) 		
         /// <summary>
         /// Draws a new note and saves the xml note file.(call to SaveNewNote)
         /// </summary>
@@ -208,8 +217,22 @@ namespace SimplePlainNote
             {
                 this.highlightC = false;
             }
+            this.textdirection = Convert.ToInt16(getSettings.getXMLnodeAsInt("textdirection"));
             this.notesavepath = getSettings.getXMLnode("notesavepath");
-            this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
+            this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));            
+        }
+
+        /// <summary>
+        /// Update all fonts (family/size etc.) for all notes.
+        /// </summary>
+        public void UpdateAllFonts()
+        {
+            foreach (FrmNote curfrmnote in noteslst)
+            {
+                curfrmnote.PaintColorNote();
+                curfrmnote.CheckThings();
+            }
+            
         }
 
         /// <summary>
@@ -232,20 +255,7 @@ namespace SimplePlainNote
             noteslst[notelstpos].CheckThings();
             this.notesupdated = true;
         }
-
-        /// <summary>
-        /// Update all fonts (family/size etc.) for all notes.
-        /// </summary>
-        public void UpdateAllFonts()
-        {
-            foreach (FrmNote curfrmnote in noteslst)
-            {
-                curfrmnote.PaintColorNote();
-                curfrmnote.CheckThings();
-            }
-            
-        }
-        // Private Methods (4) 
+		// Private Methods (4) 
 
         /// <summary>
         /// This method set a limit to how many notes can be loaded.
@@ -277,8 +287,7 @@ namespace SimplePlainNote
         /// <param name="locY">Y coordinate</param>
         /// <param name="notewith"></param>
         /// <param name="noteheight"></param>
-        /// <returns></returns>
-                    
+        /// <returns>form</returns>
         private FrmNote CreateNote(bool visible, bool ontop, string title, string content, Int16 notecolor, int locX, int locY, int notewith, int noteheight)
         {
             try
@@ -325,10 +334,10 @@ namespace SimplePlainNote
             {
                 xmlHandler parserNote = new xmlHandler(notefile);
 
-                bool visible = parserNote.getXMLnodeAsBool("visible");
-                bool ontop = parserNote.getXMLnodeAsBool("ontop");
-                string title = parserNote.getXMLnode("title");
-                string content = parserNote.getXMLnode("content");
+                Boolean visible = parserNote.getXMLnodeAsBool("visible");
+                Boolean ontop = parserNote.getXMLnodeAsBool("ontop");
+                String title = parserNote.getXMLnode("title");
+                String content = parserNote.getXMLnode("content");
                 Int16 notecolor = Convert.ToInt16(parserNote.getXMLnodeAsInt("color"));
                 int noteLocX = parserNote.getXMLnodeAsInt("x");
                 int noteLocY = parserNote.getXMLnodeAsInt("y");
@@ -383,7 +392,7 @@ namespace SimplePlainNote
             return notefile;
         }
 
-        #endregion Methods
+		#endregion Methods 
 
         #if DEBUG
         /// <summary>

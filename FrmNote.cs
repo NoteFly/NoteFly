@@ -29,25 +29,27 @@ namespace SimplePlainNote
 {
     public partial class FrmNote : Form
     {
-		#region Fields (13) 
+        #region Fields (13)
 
         public const int HT_CAPTION = 0x2;
-                private Int16 id;
+        private Int16 id;
         private int locX;
         private int locY;
-        private string note;
+        private String note;
         private Int16 notecolor = 0;
-        private bool notelock = false;
+        private Boolean notelock = false;
         public Notes notes;
-        private bool notevisible = true;
+        private Boolean notevisible = true;
         private Skin skin;
-        private string title;
-                private string twpass;
+        private String title;
+        private String twpass;
+        private TextHighlight highlight;
+
         public const int WM_NCLBUTTONDOWN = 0xA1;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         public FrmNote(Notes notes, Int16 id, bool visible, bool ontop, string title, string note, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
         {
@@ -58,8 +60,8 @@ namespace SimplePlainNote
                 notevisible = true;
             }
             this.id = id;
-            this.title = title;            
-            this.note = note;            
+            this.title = title;
+            this.note = note;
             this.notecolor = notecolor;
 
             if ((locX >= 0) && (locY >= 0))
@@ -111,7 +113,7 @@ namespace SimplePlainNote
             this.title = title;
             this.note = note;
             //this.transparency = transparency;
-            this.notecolor = notecolor;            
+            this.notecolor = notecolor;
             //set default location note            
             this.locX = 10;
             this.locY = 10;
@@ -119,7 +121,7 @@ namespace SimplePlainNote
             this.Width = 240;
             this.Height = 240;
             this.notes = notes;
-            InitializeComponent();            
+            InitializeComponent();
             lblTitle.Text = title;
             rtbNote.Text = note;
 
@@ -129,11 +131,11 @@ namespace SimplePlainNote
             notes.NotesUpdated = true;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (4) 
+        #region Properties (4)
 
-                public Int16 NoteColor
+        public Int16 NoteColor
         {
             get
             {
@@ -151,7 +153,7 @@ namespace SimplePlainNote
             set
             {
                 note = value;
-                rtbNote.Text = note;                
+                rtbNote.Text = note;
             }
         }
 
@@ -171,11 +173,11 @@ namespace SimplePlainNote
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (26) 
+        #region Methods (26)
 
-		// Public Methods (2) 
+        // Public Methods (2) 
 
         /// <summary>
         /// Check if twitter is enabled and check Syntax.
@@ -183,25 +185,45 @@ namespace SimplePlainNote
         public void CheckThings()
         {
             CheckTwitter(notes.TwitterEnabled);
-            notes.CheckSyntax(rtbNote);
+
+            if ((notes.HighlightHTML == true) || (notes.HighlightC == true))
+            {
+                if (highlight == null)
+                {
+                    highlight = new TextHighlight(notes.HighlightHTML, notes.HighlightC, this.rtbNote);
+                    highlight.CheckSyntaxFull();
+                }
+                else if (highlight != null)
+                {
+                    highlight.CheckSyntaxFull();
+                }
+            }
         }
 
         /// <summary>
         /// Get the color of the note and paint it.
         /// </summary>
         public void PaintColorNote()
-        {                
+        {
             skin = new Skin(notecolor);
-            Color normalcolor = skin.getObjColor(false);            
+            Color normalcolor = skin.getObjColor(false);
 
             this.BackColor = normalcolor;
             this.pnlHead.BackColor = normalcolor;
             this.pnlNote.BackColor = normalcolor;
             this.rtbNote.BackColor = normalcolor;
 
-            rtbNote.Font = skin.getFontNoteContent();                        
+            if (notes.TextDirection == 0)
+            {
+                lblTitle.TextAlign = ContentAlignment.TopLeft;                
+            }
+            else if (notes.TextDirection == 1)
+            {
+                lblTitle.TextAlign = ContentAlignment.TopRight;
+            }
+            rtbNote.Font = skin.getFontNoteContent();
         }
-		// Private Methods (24) 
+        // Private Methods (24) 
 
         /// <summary>
         /// Find what password is entered.
@@ -214,10 +236,10 @@ namespace SimplePlainNote
             Form frmAskpass = btnobj.FindForm();
 
             Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
-            twpass = passctr[0].Text;            
-            frmAskpass.Close();            
-            frmAskpass.Dispose();            
-            tweetnote();                         
+            twpass = passctr[0].Text;
+            frmAskpass.Close();
+            frmAskpass.Dispose();
+            tweetnote();
         }
 
         /// <summary>
@@ -251,7 +273,7 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(note);                
+            Clipboard.SetText(note);
         }
 
         /// <summary>
@@ -273,12 +295,12 @@ namespace SimplePlainNote
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
-                     
-            if (this.NoteID >  notes.NumNotes)
+
+            if (this.NoteID > notes.NumNotes)
             {
                 MessageBox.Show("Error: cannot find note.");
             }
-            notes.EditNewNote(this.NoteID);                         
+            notes.EditNewNote(this.NoteID);
         }
 
         /// <summary>
@@ -290,13 +312,13 @@ namespace SimplePlainNote
         {
             string emailnote = "";
 
-            #if win32
+#if win32
             emailnote = note.Replace("\r\n", "%0D%0A");
-            #elif mac
+#elif mac
             emailnote = note.Replace("\r", "%0D%0A");
-            #elif linux                        
+#elif linux                        
             emailnote = note.Replace("\n", "%0D%0A");
-            #endif                        
+#endif
 
             xmlHandler xmlsettings = new xmlHandler(true);
             string defaultemail = xmlsettings.getXMLnode("defaultemail");
@@ -321,7 +343,7 @@ namespace SimplePlainNote
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnCloseNote_Click(object sender, EventArgs e)
-        {            
+        {
             this.notevisible = false;
             notes.NotesUpdated = true;
             this.Hide();
@@ -334,9 +356,9 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void frmNote_Activated(object sender, EventArgs e)
         {
-            if ((notes.Transparency) && (skin!=null))
+            if ((notes.Transparency) && (skin != null))
             {
-                this.Opacity = 1.0;                
+                this.Opacity = 1.0;
             }
         }
 
@@ -347,14 +369,14 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void frmNote_Deactivate(object sender, EventArgs e)
         {
-            if ((notes.Transparency) && (skin!=null))
+            if ((notes.Transparency) && (skin != null))
             {
                 this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
             }
         }
 
-            /// <summary>
+        /// <summary>
         /// Lock note
         /// </summary>
         /// <param name="sender"></param>
@@ -370,7 +392,7 @@ namespace SimplePlainNote
                 locknoteToolStripMenuItem.Text = "lock note (click again to unlock)";
                 this.menuNoteColors.Enabled = false;
                 this.editTToolStripMenuItem.Enabled = false;
-                this.OnTopToolStripMenuItem.Enabled = false;                
+                this.OnTopToolStripMenuItem.Enabled = false;
             }
             else
             {
@@ -416,7 +438,7 @@ namespace SimplePlainNote
                 if (!notelock)
                 {
                     this.Cursor = Cursors.SizeNWSE;
-                    this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                    
+                    this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
                 }
             }
             this.Cursor = Cursors.Default;
@@ -430,7 +452,7 @@ namespace SimplePlainNote
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             if (!notelock && !SavePos.IsBusy)
-            {                        
+            {
                 SavePos.RunWorkerAsync();
             }
         }
@@ -443,21 +465,21 @@ namespace SimplePlainNote
             }
 
             if (e.Button == MouseButtons.Left)
-            {       
-                #if win32                
+            {
+#if win32
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                #endif
+#endif
 
                 if (skin != null)
                 {
                     pnlHead.BackColor = skin.getObjColor(false);
-                }                
+                }
 
                 this.locX = this.Location.X;
-                this.locY = this.Location.Y;                                                
+                this.locY = this.Location.Y;
             }
-            
+
             if (SavePos.IsBusy == false)
             {
                 SavePos.RunWorkerAsync();
@@ -470,8 +492,8 @@ namespace SimplePlainNote
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void pnlResizeWindow_MouseDown(object sender, MouseEventArgs e)
-        {            
-            Cursor = Cursors.SizeNWSE;            
+        {
+            Cursor = Cursors.SizeNWSE;
         }
 
         /// <summary>
@@ -503,23 +525,23 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {
-                this.locX = this.Location.X;
-                this.locY = this.Location.Y;
+            this.locX = this.Location.X;
+            this.locY = this.Location.Y;
 
-                if ((this.locX + this.Width > 0) && (this.locY + this.Height > 0) && (notecolor >= 0))
-                {
-                    string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
-                    xmlHandler updateposnote = new xmlHandler(notefile);                    
-                    updateposnote.WriteNote(notevisible,this.TopMost,notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
-                }
-                else if (notecolor >= 0)
-                {
-                    MessageBox.Show("Error: note location out of screen.");
-                }
-                else
-                {
-                    MessageBox.Show("Error: notecolor unknow.");
-                }           
+            if ((this.locX + this.Width > 0) && (this.locY + this.Height > 0) && (notecolor >= 0))
+            {
+                string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
+                xmlHandler updateposnote = new xmlHandler(notefile);
+                updateposnote.WriteNote(notevisible, this.TopMost, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+            }
+            else if (notecolor >= 0)
+            {
+                MessageBox.Show("Error: note location out of screen.");
+            }
+            else
+            {
+                MessageBox.Show("Error: notecolor unknow.");
+            }
         }
 
         /// <summary>
@@ -529,16 +551,16 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void setColorNote(object sender, EventArgs e)
         {
-            Int16 i =0;
+            Int16 i = 0;
             foreach (ToolStripMenuItem curitem in menuNoteColors.DropDownItems)
-            {                
-                if (curitem == sender) 
+            {
+                if (curitem == sender)
                 {
                     curitem.Checked = true;
                     notecolor = i;
                     string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
                     xmlHandler savenotecolor = new xmlHandler(notefile);
-                    savenotecolor.WriteNote(notevisible, OnTopToolStripMenuItem.Checked, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);                    
+                    savenotecolor.WriteNote(notevisible, OnTopToolStripMenuItem.Checked, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
                 }
                 else
                 {
@@ -555,7 +577,7 @@ namespace SimplePlainNote
         /// </summary>
         private void SetPosNote()
         {
-            this.Location = new Point(locX, locY);            
+            this.Location = new Point(locX, locY);
         }
 
         /// <summary>
@@ -586,7 +608,7 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Error: you haven't set your twitter username yet.\r\nSettings window will now open.");
                 FrmSettings settings = new FrmSettings(notes, notes.Transparency);
-                settings.Show();                
+                settings.Show();
                 return;
             }
             else if (String.IsNullOrEmpty(twpass))
@@ -615,14 +637,14 @@ namespace SimplePlainNote
                 Twitter twitter = new Twitter();
                 if (twitter.UpdateAsXML(twitteruser, twitterpass, note) != null)
                 {
-                    MessageBox.Show("Your note is Tweeted.");                    
+                    MessageBox.Show("Your note is Tweeted.");
                 }
                 else
                 {
-                    MessageBox.Show("Error: Sending note to twitter failed.");                    
+                    MessageBox.Show("Error: Sending note to twitter failed.");
                 }
-                twpass.Remove(0);                
-            }            
+                twpass.Remove(0);
+            }
         }
 
         /// <summary>
@@ -632,11 +654,11 @@ namespace SimplePlainNote
         /// <param name="e"></param>
         private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            #if win32
+#if win32
             if (IsConnectedToInternet())
             {
-            #endif
-                if ((String.IsNullOrEmpty(note) ==false) && (note.Length < 140))
+#endif
+                if ((String.IsNullOrEmpty(note) == false) && (note.Length < 140))
                 {
                     tweetnote();
                 }
@@ -654,13 +676,13 @@ namespace SimplePlainNote
                 {
                     MessageBox.Show("Error: Your note is empty.");
                 }
-            #if win32
+#if win32
             }
             else
             {
                 MessageBox.Show("Error: There is no network connection.");
             }
-            #endif
+#endif
         }
 
         /// <summary>
@@ -671,7 +693,7 @@ namespace SimplePlainNote
         private void updateMenuNoteColor(object sender, EventArgs e)
         {
             foreach (ToolStripMenuItem curitem in menuNoteColors.DropDownItems)
-            {                
+            {
                 curitem.Checked = false;
             }
 
@@ -693,11 +715,11 @@ namespace SimplePlainNote
                     blueToolStripMenuItem.Checked = true;
                     break;
                 case 5:
-                    purpleToolStripMenuItem.Checked = true;                    
+                    purpleToolStripMenuItem.Checked = true;
                     break;
                 case 6:
-                    redToolStripMenuItem.Checked = true;                    
-                    break;                
+                    redToolStripMenuItem.Checked = true;
+                    break;
             }
         }
 
@@ -727,6 +749,6 @@ namespace SimplePlainNote
 
 
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

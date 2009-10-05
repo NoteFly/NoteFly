@@ -50,23 +50,25 @@
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tabAppearance = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.chxSyntaxHighlightC = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbxTextDirection = new System.Windows.Forms.ComboBox();
             this.lblTextpt = new System.Windows.Forms.Label();
             this.numFontSize = new System.Windows.Forms.NumericUpDown();
-            this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.lblTextFontSize = new System.Windows.Forms.Label();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.chxLogErrors = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnCrash = new System.Windows.Forms.Button();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
+            this.chxSyntaxHighlightC = new System.Windows.Forms.CheckBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
+            this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.chxLogErrors = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -95,7 +97,7 @@
             // 
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnOK.BackColor = System.Drawing.Color.LightGray;
-            this.btnOK.Location = new System.Drawing.Point(173, 280);
+            this.btnOK.Location = new System.Drawing.Point(175, 277);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(157, 23);
             this.btnOK.TabIndex = 2;
@@ -107,7 +109,7 @@
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
-            this.btnCancel.Location = new System.Drawing.Point(6, 280);
+            this.btnCancel.Location = new System.Drawing.Point(6, 277);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(161, 23);
             this.btnCancel.TabIndex = 3;
@@ -126,6 +128,8 @@
             // 
             // cbxDefaultColor
             // 
+            this.cbxDefaultColor.AccessibleDescription = "Defaul color for new note.";
+            this.cbxDefaultColor.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
             this.cbxDefaultColor.BackColor = System.Drawing.Color.LightGray;
             this.cbxDefaultColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxDefaultColor.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -184,6 +188,8 @@
             // 
             // tbTwitterUser
             // 
+            this.tbTwitterUser.AccessibleDescription = "Editbox twitter username";
+            this.tbTwitterUser.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.tbTwitterUser.Location = new System.Drawing.Point(113, 43);
             this.tbTwitterUser.MaxLength = 16;
             this.tbTwitterUser.Name = "tbTwitterUser";
@@ -202,6 +208,8 @@
             // 
             // tbTwitterPass
             // 
+            this.tbTwitterPass.AccessibleDescription = "Editbox twitter password";
+            this.tbTwitterPass.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.tbTwitterPass.Enabled = false;
             this.tbTwitterPass.Location = new System.Drawing.Point(113, 122);
             this.tbTwitterPass.MaxLength = 255;
@@ -240,7 +248,7 @@
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(334, 274);
+            this.tabControlSettings.Size = new System.Drawing.Size(356, 274);
             this.tabControlSettings.TabIndex = 17;
             // 
             // tabGeneral
@@ -255,13 +263,14 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(326, 248);
+            this.tabGeneral.Size = new System.Drawing.Size(348, 248);
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
             // cbxActionLeftClick
             // 
+            this.cbxActionLeftClick.CausesValidation = false;
             this.cbxActionLeftClick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxActionLeftClick.FormattingEnabled = true;
             this.cbxActionLeftClick.Items.AddRange(new object[] {
@@ -332,11 +341,10 @@
             // 
             // tabAppearance
             // 
-            this.tabAppearance.Controls.Add(this.label1);
-            this.tabAppearance.Controls.Add(this.chxSyntaxHighlightC);
+            this.tabAppearance.Controls.Add(this.label2);
+            this.tabAppearance.Controls.Add(this.cbxTextDirection);
             this.tabAppearance.Controls.Add(this.lblTextpt);
             this.tabAppearance.Controls.Add(this.numFontSize);
-            this.tabAppearance.Controls.Add(this.chxSyntaxHighlightHTML);
             this.tabAppearance.Controls.Add(this.lblTextFontSize);
             this.tabAppearance.Controls.Add(this.lbTextNoteFont);
             this.tabAppearance.Controls.Add(this.cbxFontNoteContent);
@@ -348,29 +356,36 @@
             this.tabAppearance.Location = new System.Drawing.Point(4, 22);
             this.tabAppearance.Name = "tabAppearance";
             this.tabAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppearance.Size = new System.Drawing.Size(326, 248);
+            this.tabAppearance.Size = new System.Drawing.Size(348, 248);
             this.tabAppearance.TabIndex = 0;
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // label2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 173);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "warning experimental features:";
+            this.label2.AccessibleDescription = "";
+            this.label2.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 165);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Text direction";
             // 
-            // chxSyntaxHighlightC
+            // cbxTextDirection
             // 
-            this.chxSyntaxHighlightC.AutoSize = true;
-            this.chxSyntaxHighlightC.Location = new System.Drawing.Point(22, 215);
-            this.chxSyntaxHighlightC.Name = "chxSyntaxHighlightC";
-            this.chxSyntaxHighlightC.Size = new System.Drawing.Size(133, 17);
-            this.chxSyntaxHighlightC.TabIndex = 19;
-            this.chxSyntaxHighlightC.Text = "Highlight C code notes";
-            this.chxSyntaxHighlightC.UseVisualStyleBackColor = true;
+            this.cbxTextDirection.AccessibleDescription = "Text direction";
+            this.cbxTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
+            this.cbxTextDirection.CausesValidation = false;
+            this.cbxTextDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTextDirection.FormattingEnabled = true;
+            this.cbxTextDirection.Items.AddRange(new object[] {
+            "Left to right",
+            "Right to left"});
+            this.cbxTextDirection.Location = new System.Drawing.Point(110, 165);
+            this.cbxTextDirection.Name = "cbxTextDirection";
+            this.cbxTextDirection.Size = new System.Drawing.Size(182, 21);
+            this.cbxTextDirection.TabIndex = 21;
             // 
             // lblTextpt
             // 
@@ -403,16 +418,6 @@
             0,
             0});
             // 
-            // chxSyntaxHighlightHTML
-            // 
-            this.chxSyntaxHighlightHTML.AutoSize = true;
-            this.chxSyntaxHighlightHTML.Location = new System.Drawing.Point(22, 192);
-            this.chxSyntaxHighlightHTML.Name = "chxSyntaxHighlightHTML";
-            this.chxSyntaxHighlightHTML.Size = new System.Drawing.Size(156, 17);
-            this.chxSyntaxHighlightHTML.TabIndex = 13;
-            this.chxSyntaxHighlightHTML.Text = "Highlight HTML code notes";
-            this.chxSyntaxHighlightHTML.UseVisualStyleBackColor = true;
-            // 
             // lblTextFontSize
             // 
             this.lblTextFontSize.AutoSize = true;
@@ -433,6 +438,8 @@
             // 
             // cbxFontNoteContent
             // 
+            this.cbxFontNoteContent.AccessibleDescription = "Font size notes";
+            this.cbxFontNoteContent.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
             this.cbxFontNoteContent.DropDownHeight = 140;
             this.cbxFontNoteContent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxFontNoteContent.IntegralHeight = false;
@@ -452,7 +459,7 @@
             this.tabTwitter.Location = new System.Drawing.Point(4, 22);
             this.tabTwitter.Name = "tabTwitter";
             this.tabTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTwitter.Size = new System.Drawing.Size(326, 248);
+            this.tabTwitter.Size = new System.Drawing.Size(348, 248);
             this.tabTwitter.TabIndex = 1;
             this.tabTwitter.Text = "Twitter";
             this.tabTwitter.UseVisualStyleBackColor = true;
@@ -469,55 +476,19 @@
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.chxLogErrors);
+            this.tabAdvance.Controls.Add(this.label1);
             this.tabAdvance.Controls.Add(this.btnCrash);
             this.tabAdvance.Controls.Add(this.tbDefaultEmail);
+            this.tabAdvance.Controls.Add(this.chxSyntaxHighlightC);
             this.tabAdvance.Controls.Add(this.lbTextDefaultEmail);
+            this.tabAdvance.Controls.Add(this.chxSyntaxHighlightHTML);
             this.tabAdvance.Controls.Add(this.chxConfirmLink);
             this.tabAdvance.Location = new System.Drawing.Point(4, 22);
             this.tabAdvance.Name = "tabAdvance";
-            this.tabAdvance.Size = new System.Drawing.Size(326, 248);
+            this.tabAdvance.Size = new System.Drawing.Size(348, 248);
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
-            // 
-            // btnCrash
-            // 
-            this.btnCrash.Location = new System.Drawing.Point(14, 177);
-            this.btnCrash.Name = "btnCrash";
-            this.btnCrash.Size = new System.Drawing.Size(101, 47);
-            this.btnCrash.TabIndex = 17;
-            this.btnCrash.Text = "DEBUG ONLY Crash test!";
-            this.btnCrash.UseVisualStyleBackColor = true;
-            this.btnCrash.Visible = false;
-            this.btnCrash.Click += new System.EventHandler(this.btnCrash_Click);
-            // 
-            // tbDefaultEmail
-            // 
-            this.tbDefaultEmail.Location = new System.Drawing.Point(14, 106);
-            this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(200, 20);
-            this.tbDefaultEmail.TabIndex = 18;
-            // 
-            // lbTextDefaultEmail
-            // 
-            this.lbTextDefaultEmail.AutoSize = true;
-            this.lbTextDefaultEmail.Location = new System.Drawing.Point(12, 90);
-            this.lbTextDefaultEmail.Name = "lbTextDefaultEmail";
-            this.lbTextDefaultEmail.Size = new System.Drawing.Size(151, 13);
-            this.lbTextDefaultEmail.TabIndex = 17;
-            this.lbTextDefaultEmail.Text = "default email adres to send to: ";
-            // 
-            // chxConfirmLink
-            // 
-            this.chxConfirmLink.AutoSize = true;
-            this.chxConfirmLink.Checked = true;
-            this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmLink.Location = new System.Drawing.Point(14, 28);
-            this.chxConfirmLink.Name = "chxConfirmLink";
-            this.chxConfirmLink.Size = new System.Drawing.Size(194, 17);
-            this.chxConfirmLink.TabIndex = 18;
-            this.chxConfirmLink.Text = "Ask before launching URL, on click";
-            this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
             // chxLogErrors
             // 
@@ -531,17 +502,90 @@
             this.chxLogErrors.Text = "log application errors";
             this.chxLogErrors.UseVisualStyleBackColor = true;
             // 
-            // frmSettings
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 145);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(150, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "warning experimental features:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // btnCrash
+            // 
+            this.btnCrash.Location = new System.Drawing.Point(212, 183);
+            this.btnCrash.Name = "btnCrash";
+            this.btnCrash.Size = new System.Drawing.Size(101, 47);
+            this.btnCrash.TabIndex = 17;
+            this.btnCrash.Text = "DEBUG ONLY Crash test!";
+            this.btnCrash.UseVisualStyleBackColor = true;
+            this.btnCrash.Visible = false;
+            this.btnCrash.Click += new System.EventHandler(this.btnCrash_Click);
+            // 
+            // tbDefaultEmail
+            // 
+            this.tbDefaultEmail.AccessibleDescription = "Editbox default email address";
+            this.tbDefaultEmail.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
+            this.tbDefaultEmail.Location = new System.Drawing.Point(14, 106);
+            this.tbDefaultEmail.Name = "tbDefaultEmail";
+            this.tbDefaultEmail.Size = new System.Drawing.Size(200, 20);
+            this.tbDefaultEmail.TabIndex = 18;
+            // 
+            // chxSyntaxHighlightC
+            // 
+            this.chxSyntaxHighlightC.AutoSize = true;
+            this.chxSyntaxHighlightC.Location = new System.Drawing.Point(16, 187);
+            this.chxSyntaxHighlightC.Name = "chxSyntaxHighlightC";
+            this.chxSyntaxHighlightC.Size = new System.Drawing.Size(133, 17);
+            this.chxSyntaxHighlightC.TabIndex = 19;
+            this.chxSyntaxHighlightC.Text = "Highlight C code notes";
+            this.chxSyntaxHighlightC.UseVisualStyleBackColor = true;
+            this.chxSyntaxHighlightC.CheckedChanged += new System.EventHandler(this.chxSyntaxHighlightC_CheckedChanged);
+            // 
+            // lbTextDefaultEmail
+            // 
+            this.lbTextDefaultEmail.AutoSize = true;
+            this.lbTextDefaultEmail.Location = new System.Drawing.Point(12, 90);
+            this.lbTextDefaultEmail.Name = "lbTextDefaultEmail";
+            this.lbTextDefaultEmail.Size = new System.Drawing.Size(159, 13);
+            this.lbTextDefaultEmail.TabIndex = 17;
+            this.lbTextDefaultEmail.Text = "defaul email address to send to: ";
+            // 
+            // chxSyntaxHighlightHTML
+            // 
+            this.chxSyntaxHighlightHTML.AutoSize = true;
+            this.chxSyntaxHighlightHTML.Location = new System.Drawing.Point(16, 164);
+            this.chxSyntaxHighlightHTML.Name = "chxSyntaxHighlightHTML";
+            this.chxSyntaxHighlightHTML.Size = new System.Drawing.Size(156, 17);
+            this.chxSyntaxHighlightHTML.TabIndex = 13;
+            this.chxSyntaxHighlightHTML.Text = "Highlight HTML code notes";
+            this.chxSyntaxHighlightHTML.UseVisualStyleBackColor = true;
+            this.chxSyntaxHighlightHTML.CheckedChanged += new System.EventHandler(this.chxSyntaxHighlightHTML_CheckedChanged);
+            // 
+            // chxConfirmLink
+            // 
+            this.chxConfirmLink.AutoSize = true;
+            this.chxConfirmLink.Checked = true;
+            this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmLink.Location = new System.Drawing.Point(14, 28);
+            this.chxConfirmLink.Name = "chxConfirmLink";
+            this.chxConfirmLink.Size = new System.Drawing.Size(194, 17);
+            this.chxConfirmLink.TabIndex = 18;
+            this.chxConfirmLink.Text = "Ask before launching URL, on click";
+            this.chxConfirmLink.UseVisualStyleBackColor = true;
+            // 
+            // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(334, 309);
+            this.ClientSize = new System.Drawing.Size(356, 305);
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "frmSettings";
+            this.Name = "FrmSettings";
             this.Text = "Settings";
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).EndInit();
             this.tabControlSettings.ResumeLayout(false);
@@ -599,5 +643,7 @@
         private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chxLogErrors;
+        private System.Windows.Forms.ComboBox cbxTextDirection;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -33,7 +33,9 @@ namespace SimplePlainNote
         }
 
         #region Assembly Attribute Accessors
-
+        /// <summary>
+        /// The application title.
+        /// </summary>
         public string AssemblyTitle
         {
             get
@@ -42,7 +44,7 @@ namespace SimplePlainNote
                 if (attributes.Length > 0)
                 {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
+                    if (!String.IsNullOrEmpty(titleAttribute.Title))
                     {
                         return titleAttribute.Title;
                     }
@@ -51,6 +53,9 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// The application version number, please change in project file.
+        /// </summary>
         public string AssemblyVersion
         {
             get
@@ -59,6 +64,9 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// The application description.
+        /// </summary>
         public string AssemblyDescription
         {
             get
@@ -72,6 +80,9 @@ namespace SimplePlainNote
             }
         }
 
+        /// <summary>
+        /// assembly product field.
+        /// </summary>
         public string AssemblyProduct
         {
             get

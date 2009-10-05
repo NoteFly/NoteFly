@@ -46,7 +46,7 @@ namespace SimplePlainNote
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, appdatafolder, "adres@domain.com",false, false, false, "", "", true);
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "adres@domain.com",false, false, false, "", "", true);
                 }
             }
         }
@@ -280,7 +280,7 @@ namespace SimplePlainNote
         /// </summary>
         /// <returns>true if succeed.</returns>
         /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass, bool logerror)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass, bool logerror)
         {
             if (!this.issetting)
             {
@@ -302,34 +302,48 @@ namespace SimplePlainNote
             objXmlTextWriter.WriteEndElement();
 
             if (numcolor < 0) { throw new CustomExceptions("Impossible selection"); }
-
-            objXmlTextWriter.WriteStartElement("defaultcolor");
-            objXmlTextWriter.WriteString(Convert.ToString(numcolor));
-            objXmlTextWriter.WriteEndElement();
-
+            else
+            {
+                objXmlTextWriter.WriteStartElement("defaultcolor");
+                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+                objXmlTextWriter.WriteEndElement();
+            }
             if ((actionleftclick < 0) || (actionleftclick > 3)) { throw new CustomExceptions("action left click unknow"); }
-            objXmlTextWriter.WriteStartElement("actionleftclick");
-            objXmlTextWriter.WriteString(Convert.ToString(actionleftclick));
-            objXmlTextWriter.WriteEndElement();            
-
-            objXmlTextWriter.WriteStartElement("defaultcolor");
-            objXmlTextWriter.WriteString(Convert.ToString(numcolor));
-            objXmlTextWriter.WriteEndElement();
-
+            else
+            {
+                objXmlTextWriter.WriteStartElement("actionleftclick");
+                objXmlTextWriter.WriteString(Convert.ToString(actionleftclick));
+                objXmlTextWriter.WriteEndElement();
+            }
+            if (numcolor >= 8) { throw new CustomExceptions("default color unknow"); }
+            else
+            {
+                objXmlTextWriter.WriteStartElement("defaultcolor");
+                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+                objXmlTextWriter.WriteEndElement();
+            }
             objXmlTextWriter.WriteStartElement("askurl");
             WriteXMLBool(askurl);
             objXmlTextWriter.WriteEndElement();
 
             if (String.IsNullOrEmpty(fontcontent)) { throw new CustomExceptions("No font"); }
-
-            objXmlTextWriter.WriteStartElement("fontcontent");
-            objXmlTextWriter.WriteString(fontcontent);
-            objXmlTextWriter.WriteEndElement();
-
+            else
+            {
+                objXmlTextWriter.WriteStartElement("fontcontent");
+                objXmlTextWriter.WriteString(fontcontent);
+                objXmlTextWriter.WriteEndElement();
+            }
             objXmlTextWriter.WriteStartElement("fontsize");
             objXmlTextWriter.WriteString(Convert.ToString(fontsize));
             objXmlTextWriter.WriteEndElement();
 
+            if ((textdirection < 0) || (textdirection > 2)) { throw new CustomExceptions("Invalid text direction"); }
+            else
+            {
+                objXmlTextWriter.WriteStartElement("textdirection");
+                objXmlTextWriter.WriteString(Convert.ToString(textdirection));
+                objXmlTextWriter.WriteEndElement();
+            }
             if (Directory.Exists(notesavepath))
             {
                 objXmlTextWriter.WriteStartElement("notesavepath");
@@ -337,7 +351,7 @@ namespace SimplePlainNote
                 objXmlTextWriter.WriteEndElement();
             }
             else { throw new CustomExceptions("Directory does not exist"); }
-
+            
             objXmlTextWriter.WriteStartElement("logerror");
             WriteXMLBool(logerror);
             objXmlTextWriter.WriteEndElement();
@@ -364,16 +378,21 @@ namespace SimplePlainNote
 
             objXmlTextWriter.WriteStartElement("twitter");
 
-                if (twitteruser.Length > 15) { throw new CustomExceptions("Twitter username too long."); }
+            if (twitteruser.Length > 15) { throw new CustomExceptions("Twitter username too long."); }
+            else
+            {
                 objXmlTextWriter.WriteStartElement("twitteruser");
                 objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
                 objXmlTextWriter.WriteEndElement();
-
-                if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new CustomExceptions("Twitter password too short."); }
+            }
+            if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new CustomExceptions("Twitter password too short."); }
+            else
+            {
                 if (twitterpass.Length > 255) { throw new CustomExceptions("Twitter password too long."); }
                 objXmlTextWriter.WriteStartElement("twitterpass");
-                objXmlTextWriter.WriteString(twitterpass);                
+                objXmlTextWriter.WriteString(twitterpass);
                 objXmlTextWriter.WriteEndElement();
+            }             
 
             objXmlTextWriter.WriteEndElement();
 

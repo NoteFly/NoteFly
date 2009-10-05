@@ -38,6 +38,7 @@ namespace SimplePlainNote
         private Int16 notecolor;
         private Notes notes;
         private Skin skin;
+        private TextHighlight highlight;
 
 		#endregion Fields 
 
@@ -74,9 +75,9 @@ namespace SimplePlainNote
 
 		#endregion Constructors 
 
-		#region Methods (15) 
+		#region Methods (18) 
 
-		// Private Methods (15) 
+		// Private Methods (18) 
 
         private void btnAddNote_Click(object sender, EventArgs e)
         {            
@@ -115,19 +116,39 @@ namespace SimplePlainNote
         }
 
         /// <summary>
-        /// do some syntax highlighting
+        /// syntax highlighting
         /// </summary>
         private void checksyntax(object sender, EventArgs e)
         {
-            if (!notes.CheckSyntax(rtbNote))
+            if ((notes.HighlightHTML == true) || (notes.HighlightC == true))
             {
-                MessageBox.Show("Error: syntax could not be checked.");
+                if (highlight == null)
+                {
+                    highlight = new TextHighlight(notes.HighlightHTML, notes.HighlightC, this.rtbNote);                    
+                }
+                else if (highlight != null)
+                {
+                    highlight.CheckSyntaxQuick();
+                }
             }
+            
         }
 
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(rtbNote.Text);
+        }
+
+        private void copyTextToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                pastTextToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                pastTextToolStripMenuItem.Enabled = false;
+            }
         }
 
         private void frmNewNote_Activated(object sender, EventArgs e)
@@ -155,7 +176,7 @@ namespace SimplePlainNote
             }
             else
             {
-                MessageBox.Show("clipboard is empty.");
+                MessageBox.Show("clipboard is empty/no text in it.");
             }
         }
 
@@ -212,7 +233,12 @@ namespace SimplePlainNote
             pnlHeadNewNote.Refresh();
 
             tbTitle.Text = title;
-            rtbNote.Text = content;                        
+            rtbNote.Text = content;
+        }
+
+        private void rtbNote_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -246,13 +272,23 @@ namespace SimplePlainNote
         private void rtbNote_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-            {
-                //FIX: show context menu.                
+            {                
                 contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
-                MessageBox.Show("ogogogg");
             }            
         }
 
+        private void setTextDirection()
+        {
+            if (notes.TextDirection == 0)
+            {
+                tbTitle.TextAlign = HorizontalAlignment.Left;                
+            }
+            else if (notes.TextDirection == 1)
+            {
+                tbTitle.TextAlign = HorizontalAlignment.Right;                
+            }
+        }
+        /*
         /// <summary>
         /// Move to rtbNote
         /// </summary>
@@ -263,10 +299,10 @@ namespace SimplePlainNote
             if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Tab))
             {
                 this.rtbNote.Focus();
-                this.rtbNote.Select();
-                MessageBox.Show("enter or tab dectected.");
+                this.rtbNote.Select();             
             }                        
         }
+         */
 
 		#endregion Methods 
 
@@ -312,27 +348,5 @@ namespace SimplePlainNote
             }
         }
         #endregion
-
-        private void rtbNote_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void copyTextToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-        {
-            if (Clipboard.ContainsText())
-            {
-                pastTextToolStripMenuItem.Enabled = true;
-            }
-            else
-            {
-                pastTextToolStripMenuItem.Enabled = false;
-            }
-        }
-
-        private void rtbNote_TextChanged(object sender, EventArgs e)
-        {
-            notes.CheckSyntax(rtbNote);
-        }
     } 
 }

@@ -84,7 +84,7 @@ namespace SimplePlainNote
             this.saveNewNoteToolStripMenuItem,
             this.cancelNoteToolStripMenuItem});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 114);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 92);
             // 
             // pastTextToolStripMenuItem
             // 
@@ -123,6 +123,7 @@ namespace SimplePlainNote
             // 
             // tbTitle
             // 
+            this.tbTitle.AccessibleDescription = "input title note";
             this.tbTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.tbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbTitle.BackColor = System.Drawing.Color.Khaki;
@@ -136,8 +137,7 @@ namespace SimplePlainNote
             this.tbTitle.Name = "tbTitle";
             this.tbTitle.Size = new System.Drawing.Size(176, 22);
             this.tbTitle.TabIndex = 0;
-            this.tbTitle.WordWrap = false;
-            this.tbTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbTitle_KeyDown);
+            this.tbTitle.WordWrap = false;            
             this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             this.tbTitle.Enter += new System.EventHandler(this.tbTitle_Enter);
             // 
@@ -238,7 +238,7 @@ namespace SimplePlainNote
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
-            // frmNewNote
+            // FrmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -257,7 +257,7 @@ namespace SimplePlainNote
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(50, 50);
-            this.Name = "frmNewNote";
+            this.Name = "FrmNewNote";
             this.Text = "New note";
             this.TransparencyKey = System.Drawing.Color.LightPink;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);

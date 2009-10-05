@@ -26,7 +26,10 @@ namespace SimplePlainNote
     /// </summary>
     class CustomExceptions : ApplicationException
     {
-        public CustomExceptions() : base() { }
+        /// <summary>
+        /// Initializes a new instance of the CustomExceptions class.
+        /// </summary>
+        /// <param name="message">the message to log</param>
         public CustomExceptions(String message)
             : base("Exception: " + message)
         {
@@ -35,39 +38,36 @@ namespace SimplePlainNote
             if (getsetting.getXMLnodeAsBool("logerror") == true)
             {
                 writelog(getsetting.AppDataFolder, message);
-            }            
-            
-            //shutdown        
-            //Trayicon. icon.Dispose();
+            }                        
         }
 
+        /// <summary>
+        /// Write and append a message to the logfile.
+        /// </summary>
+        /// <param name="appdatafolder"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         private bool writelog(string appdatafolder, string message)
         {
             //log to file
             string errorlog = Path.Combine(appdatafolder, "errors.log");
             if ((!String.IsNullOrEmpty(errorlog)) && (File.Exists(errorlog)))
             {
+                StreamWriter bestandsSchrijver = null;
                 try
                 {
-                    StreamWriter bestandsSchrijver = new StreamWriter(errorlog, true);
-                    try
-                    {
-                        bestandsSchrijver.WriteLine(DateTime.Now.ToString() + " exception: " + message);
-                    }
-                    finally
-                    {
-                        bestandsSchrijver.Close();
-                    }
+                    bestandsSchrijver = new StreamWriter(errorlog, true);
+                    bestandsSchrijver.WriteLine(DateTime.Now.ToString() + " exception: " + message);
                 }
-                catch (Exception)
-                { //do nothing                                       
-                }                
+                finally
+                {
+                    bestandsSchrijver.Close();
+                }
             }
             else
             {
                 return false;
             }
-
             return true;
         }
     }

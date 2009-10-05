@@ -63,11 +63,14 @@
             // 
             // lblTitle
             // 
-            this.lblTitle.AutoSize = true;
+            this.lblTitle.AccessibleDescription = "Note title";
+            this.lblTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTitle.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(3, 4);
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(18, 19);
+            this.lblTitle.Padding = new System.Windows.Forms.Padding(3, 5, 60, 0);
+            this.lblTitle.Size = new System.Drawing.Size(238, 30);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "?";
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
@@ -100,7 +103,7 @@
             this.locknoteToolStripMenuItem,
             this.hideNoteToolStripMenuItem});
             this.contextMenuStripNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(216, 224);
+            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(216, 202);
             this.contextMenuStripNoteOptions.Text = "-=menu=-";
             this.contextMenuStripNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
             // 
@@ -292,6 +295,7 @@
             // 
             // rtbNote
             // 
+            this.rtbNote.AccessibleDescription = "Note content";
             this.rtbNote.AccessibleRole = System.Windows.Forms.AccessibleRole.Document;
             this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
@@ -378,7 +382,6 @@
             this.Deactivate += new System.EventHandler(this.frmNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNote_Activated);
             this.pnlHead.ResumeLayout(false);
-            this.pnlHead.PerformLayout();
             this.contextMenuStripNoteOptions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbShowLock)).EndInit();
             this.pnlNote.ResumeLayout(false);
