@@ -17,6 +17,12 @@
 !define VERSTATUS "beta"
 
 Name "SimplePlainNote ${VERSION} ${VERSTATUS}"
+BrandingText " "
+InstProgressFlags smooth
+AllowRootDirInstall false
+CRCCheck on
+ShowInstDetails show
+CompletedText "Installation completed, application started. Please close this installer now."
 
 ; The file to write
 OutFile ".\SimplePlainNote_v${VERSION}.exe"
