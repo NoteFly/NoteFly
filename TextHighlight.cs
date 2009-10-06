@@ -27,16 +27,16 @@ namespace SimplePlainNote
     /// </summary>
     public class TextHighlight
     {
-        #region Fields (6)
+        #region Fields (7)
 
-        private RichTextBox rtbcode;
         private bool highlightC = false;
         private bool highlightHTML = false;
         private int posstarttag = 0;
+        private RichTextBox rtbcode;
         private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if|break|goto|continue|switch|case|default:|try|catch|throw|static");
         private Regex SyntaxCdatatype = new Regex("int|short|double|float|long|string|bool|char");
         //IngoreCase options is set.
-        private Regex SyntaxHTML = new Regex("<HTML|<HEAD|<BODY^|<A^|<P|<BR|<SPAN^|<I|<U|<B|<OL|<UL|<IL|<FONT^|<TITLE|<BLOCKQUOTE|<META^|<LINK^|<CODE|<DD|<TABLE^|<DL|<TD^|<TR^|<FORM^|<IMG^|<FRAME^|<STRONG|<FRAMESET^|<IFRAME^|<APPLET^|<TH^|<PRE^|<HEAD|<TFOOT|<INPUT^|<OPTION^|<LABEL^|<LEGEND^|<SELECT^|<TEXTAREA^|<SCRIPT^|<NOSCRIPT|<S|<STRIKE|<TT|<BIG|<SMALL|<BASEFONT^|<DIV^|<H1|<H2|<H3|<H4|<H5|<H6|<ADRESS|<HR|<EM", RegexOptions.IgnoreCase);        
+        private Regex SyntaxHTML = new Regex("<HTML|<HEAD|<BODY^|<A^|<P|<BR|<SPAN^|<I|<U|<B|<OL|<UL|<IL|<FONT^|<TITLE|<BLOCKQUOTE|<META^|<LINK^|<CODE|<DD|<TABLE^|<DL|<TD^|<TR^|<FORM^|<IMG^|<FRAME^|<STRONG|<FRAMESET^|<IFRAME^|<APPLET^|<TH^|<PRE^|<HEAD|<TFOOT|<INPUT^|<OPTION^|<LABEL^|<LEGEND^|<SELECT^|<TEXTAREA^|<SCRIPT^|<NOSCRIPT|<S|<STRIKE|<TT|<BIG|<SMALL|<BASEFONT^|<DIV^|<H1|<H2|<H3|<H4|<H5|<H6|<ADRESS|<HR|<EM", RegexOptions.IgnoreCase);
 
         #endregion Fields
 
@@ -51,9 +51,9 @@ namespace SimplePlainNote
 
         #endregion Constructors
 
-        #region Methods (1)
+        #region Methods (4)
 
-        // Public Methods (1) 
+        // Public Methods (2) 
 
         /// <summary>
         /// Check syntax of the whole text
@@ -62,7 +62,7 @@ namespace SimplePlainNote
         public bool CheckSyntaxFull()
         {
             int oldpos = rtbcode.SelectionStart;
-            ResetHighlighting(rtbcode);            
+            ResetHighlighting(rtbcode);
             for (int i = 0; i < rtbcode.TextLength; i++)
             {
                 if (this.highlightHTML)
@@ -91,9 +91,9 @@ namespace SimplePlainNote
                                 rtbcode.SelectionStart = posstarttag + lengthtillendtag + 1;
                                 rtbcode.SelectionColor = Color.Black;
                             }
-                            catch (ArgumentOutOfRangeException)
+                            catch (ArgumentOutOfRangeException arg)
                             {
-                                return false;
+                                throw new CustomExceptions("TextHighlighter out of range: " + arg.Source);
                             }
                         }
                     }
@@ -104,9 +104,9 @@ namespace SimplePlainNote
                             rtbcode.SelectionStart = i + 1;
                             rtbcode.SelectionColor = System.Drawing.Color.Black;
                         }
-                        catch (ArgumentOutOfRangeException)
+                        catch (ArgumentOutOfRangeException arg)
                         {
-                            return false;
+                            throw new CustomExceptions("TextHighlighter out of range: " + arg.Source);
                         }
                     }
                 }
@@ -145,31 +145,52 @@ namespace SimplePlainNote
             {
                 if (this.highlightHTML)
                 {
-                    if (rtbcode.Text[i-1] == '<')
-                    {                        
-                        for (int n = i; ((n < rtbcode.TextLength) && (!foundendtag)); n++)
+                    try
+                    {
+                        if (rtbcode.Text[i - 1] == '<')
                         {
-                            if (rtbcode.Text[n] == '>')
+                            for (int n = i; ((n < rtbcode.TextLength) && (!foundendtag)); n++)
                             {
-                                foundendtag = true;
-                                posstarttag = i - 1;
-                                if (ValidingHTMLNode(posstarttag, n - posstarttag))
+
+                                if (rtbcode.Text[n] == '>')
                                 {
-                                    rtbcode.Select(posstarttag, (n+1 - posstarttag));
-                                    rtbcode.SelectionColor = Color.Blue;
+                                    foundendtag = true;
+                                    posstarttag = i - 1;
+                                    if (ValidingHTMLNode(posstarttag, n - posstarttag))
+                                    {
+                                        rtbcode.Select(posstarttag, (n + 1 - posstarttag));
+                                        rtbcode.SelectionColor = Color.Blue;
+                                    }
+                                    else
+                                    {
+                                        rtbcode.Select(posstarttag, (n + 1 - posstarttag));
+                                        rtbcode.SelectionColor = System.Drawing.Color.Red;
+                                    }
                                 }
-                                else
-                                {
-                                    rtbcode.Select(posstarttag, (n+1 - posstarttag));
-                                    rtbcode.SelectionColor = System.Drawing.Color.Red;
-                                }                                
+
                             }
+                            rtbcode.SelectionStart = rtbcode.TextLength;
+                            rtbcode.SelectionColor = Color.Black;
                         }
-                        rtbcode.SelectionStart = rtbcode.TextLength;
-                        rtbcode.SelectionColor = Color.Black;
+                    }
+                    catch (ArgumentOutOfRangeException arg)
+                    {
+                        throw new CustomExceptions("Quick TextHighlighter out of range: " + arg.Source);
                     }
                 }
-            }            
+
+            }
+        }
+        // Private Methods (2) 
+
+        /// <summary>
+        /// Make everything black again.
+        /// </summary>
+        /// <param name="rtb"></param>
+        private void ResetHighlighting(RichTextBox rtb)
+        {
+            rtb.SelectAll();
+            rtb.SelectionColor = Color.Black;
         }
 
         private Boolean ValidingHTMLNode(int posstarttag, int lengthtillendtag)
@@ -190,16 +211,6 @@ namespace SimplePlainNote
             {
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Make everything black again.
-        /// </summary>
-        /// <param name="rtb"></param>
-        private void ResetHighlighting(RichTextBox rtb)
-        {
-            rtb.SelectAll();
-            rtb.SelectionColor = Color.Black;
         }
 
         #endregion Methods

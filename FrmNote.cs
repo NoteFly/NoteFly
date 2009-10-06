@@ -85,8 +85,7 @@ namespace SimplePlainNote
                 rtbNote.Text = note;
 
                 SetSizeNote(notewidth, noteheight);
-                SetPosNote();
-                PaintColorNote();
+                SetPosNote();                
                 CheckThings();
             }
             else
@@ -122,10 +121,10 @@ namespace SimplePlainNote
             this.Height = 240;
             this.notes = notes;
             InitializeComponent();
-            lblTitle.Text = title;
-            rtbNote.Text = note;
 
             PaintColorNote();
+            lblTitle.Text = title;
+            rtbNote.Text = note;
             SetPosNote();
             CheckThings();
             notes.NotesUpdated = true;
@@ -185,6 +184,8 @@ namespace SimplePlainNote
         public void CheckThings()
         {
             CheckTwitter(notes.TwitterEnabled);
+            
+            PaintColorNote();
 
             if ((notes.HighlightHTML == true) || (notes.HighlightC == true))
             {
@@ -197,13 +198,13 @@ namespace SimplePlainNote
                 {
                     highlight.CheckSyntaxFull();
                 }
-            }
+            }            
         }
 
         /// <summary>
         /// Get the color of the note and paint it.
         /// </summary>
-        public void PaintColorNote()
+        private void PaintColorNote()
         {
             skin = new Skin(notecolor);
             Color normalcolor = skin.getObjColor(false);
@@ -215,11 +216,15 @@ namespace SimplePlainNote
 
             if (notes.TextDirection == 0)
             {
-                lblTitle.TextAlign = ContentAlignment.TopLeft;                
+                lblTitle.TextAlign = ContentAlignment.TopLeft;
+                rtbNote.SelectionAlignment = HorizontalAlignment.Left;
             }
             else if (notes.TextDirection == 1)
             {
                 lblTitle.TextAlign = ContentAlignment.TopRight;
+
+                rtbNote.SelectAll();                
+                rtbNote.SelectionAlignment = HorizontalAlignment.Right;                
             }
             rtbNote.Font = skin.getFontNoteContent();
         }

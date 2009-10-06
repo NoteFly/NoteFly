@@ -126,9 +126,17 @@ namespace SimplePlainNote
                 {
                     highlight = new TextHighlight(notes.HighlightHTML, notes.HighlightC, this.rtbNote);                    
                 }
-                else if (highlight != null)
+                else if ((highlight != null) && (!String.IsNullOrEmpty(rtbNote.Text)))
                 {
-                    highlight.CheckSyntaxQuick();
+                    int curselstart = rtbNote.SelectionStart;
+                    if (curselstart >= rtbNote.Text.Length - 1)
+                    {
+                        highlight.CheckSyntaxQuick();
+                    }
+                    else
+                    {
+                        highlight.CheckSyntaxFull();
+                    }
                 }
             }
             
@@ -227,6 +235,17 @@ namespace SimplePlainNote
             pnlNoteEdit.BackColor = normalcolor;
             rtbNote.BackColor = normalcolor;
             pnlHeadNewNote.BackColor = normalcolor;
+
+            if (notes.TextDirection == 0)
+            {
+                this.tbTitle.TextAlign = HorizontalAlignment.Left;
+                this.rtbNote.SelectionAlignment = HorizontalAlignment.Left;
+            }
+            else if (notes.TextDirection == 1)
+            {
+                this.tbTitle.TextAlign = HorizontalAlignment.Right;
+                this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
+            }
 
             pnlNoteEdit.Refresh();
             rtbNote.Refresh();

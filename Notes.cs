@@ -229,7 +229,7 @@ namespace SimplePlainNote
         {
             foreach (FrmNote curfrmnote in noteslst)
             {
-                curfrmnote.PaintColorNote();
+                //curfrmnote.PaintColorNote();
                 curfrmnote.CheckThings();
             }
             
