@@ -228,11 +228,9 @@ namespace SimplePlainNote
         public void UpdateAllFonts()
         {
             foreach (FrmNote curfrmnote in noteslst)
-            {
-                //curfrmnote.PaintColorNote();
+            {                
                 curfrmnote.CheckThings();
-            }
-            
+            }            
         }
 
         /// <summary>
@@ -328,6 +326,8 @@ namespace SimplePlainNote
                 }
             }
 
+            
+
             UInt16 id = 1;
             string notefile = Path.Combine(this.notesavepath, id + ".xml");
             while (File.Exists(notefile) == true)
@@ -337,15 +337,14 @@ namespace SimplePlainNote
                 Boolean visible = parserNote.getXMLnodeAsBool("visible");
                 Boolean ontop = parserNote.getXMLnodeAsBool("ontop");
                 String title = parserNote.getXMLnode("title");
-                String content = parserNote.getXMLnode("content");
-                Int16 notecolor = Convert.ToInt16(parserNote.getXMLnodeAsInt("color"));
-                int noteLocX = parserNote.getXMLnodeAsInt("x");
-                int noteLocY = parserNote.getXMLnodeAsInt("y");
-                int notewidth = parserNote.getXMLnodeAsInt("width");
-                int noteheight = parserNote.getXMLnodeAsInt("heigth");
+                String content = parserNote.getXMLnode("content");                             
+                Int16 notecolor = Convert.ToInt16(parserNote.ParserNoteInts()[0]);
+                int noteLocX = parserNote.ParserNoteInts()[1];
+                int noteLocY = parserNote.ParserNoteInts()[2];
+                int notewidth = parserNote.ParserNoteInts()[3];
+                int noteheight = parserNote.ParserNoteInts()[4];
 
                 noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
-
                 id++;
                 notefile = Path.Combine(notesavepath, id + ".xml");
 

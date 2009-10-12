@@ -81,7 +81,16 @@ namespace SimplePlainNote
             Int16 numbernotes = notes.NumNotes;
             if (numbernotes != 0)
             {
-                Int16 curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));                
+                Int16 curnote = 0;
+                try
+                {
+                    curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));                
+                }
+                catch (InvalidCastException invexc)
+                {
+                    MessageBox.Show(invexc.Message);
+                }
+                
                 if (btn.Name == "btnNoteDel" + curnote)
                 {
                     int noteid = Convert.ToInt32(curnote) - 1;

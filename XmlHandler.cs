@@ -189,6 +189,37 @@ namespace SimplePlainNote
             return -1;
         }
 
+        public Int32[] ParserNoteInts()
+        {
+            objXmlTextReader = new XmlTextReader(filenm);
+
+            Int32[] settings = new Int32[5];
+
+            while (objXmlTextReader.Read())
+            {
+                switch (objXmlTextReader.Name)
+                {
+                    case "color":
+                        settings[0] = objXmlTextReader.ReadElementContentAsInt();
+                        break;
+                    case "x":
+                        settings[1] = objXmlTextReader.ReadElementContentAsInt();
+                        break;
+                    case "y":
+                        settings[2] = objXmlTextReader.ReadElementContentAsInt();
+                        break;
+                    case "width":
+                        settings[3] = objXmlTextReader.ReadElementContentAsInt();
+                        break;
+                    case "heigth":
+                        settings[4] = objXmlTextReader.ReadElementContentAsInt();
+                        break;
+                }     
+            }
+            objXmlTextReader.Close();
+            return settings;                       
+        }
+
         /// <summary>
         /// Write a note xml file.
         /// </summary>
