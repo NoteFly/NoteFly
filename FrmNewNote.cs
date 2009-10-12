@@ -129,14 +129,7 @@ namespace SimplePlainNote
                 else if ((highlight != null) && (!String.IsNullOrEmpty(rtbNote.Text)))
                 {
                     int curselstart = rtbNote.SelectionStart;
-                    if (curselstart >= rtbNote.Text.Length - 1)
-                    {
-                        highlight.CheckSyntaxQuick();
-                    }
-                    else
-                    {
-                        highlight.CheckSyntaxFull();
-                    }
+                    highlight.CheckSyntaxQuick(curselstart);
                 }
             }
             

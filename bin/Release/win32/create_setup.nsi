@@ -13,7 +13,7 @@
 ;
 ; The name of the installer
 
-!define VERSION "0.9.8"
+!define VERSION "0.9.9"
 !define VERSTATUS "beta"
 
 Name "SimplePlainNote ${VERSION} ${VERSTATUS}"
@@ -22,7 +22,7 @@ InstProgressFlags smooth
 AllowRootDirInstall false
 CRCCheck on
 ShowInstDetails show
-CompletedText "Installation completed, application started. Please close this installer now."
+CompletedText "Installation completed. Please close this installer now."
 
 ; The file to write
 OutFile ".\SimplePlainNote_v${VERSION}.exe"
@@ -128,7 +128,8 @@ SectionEnd
 
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"
-
+;startmenu shortcut should be for currentuser!
+  SetShellVarContext current
   CreateDirectory "$SMPROGRAMS\SimplePlainNote"
   CreateShortCut "$SMPROGRAMS\SimplePlainNote\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   CreateShortCut "$SMPROGRAMS\SimplePlainNote\SimplePlainNote.lnk" "$INSTDIR\simpleplainnote.exe" "" "$INSTDIR\simpleplainnote.exe" 0

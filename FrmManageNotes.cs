@@ -81,50 +81,47 @@ namespace SimplePlainNote
             Int16 numbernotes = notes.NumNotes;
             if (numbernotes != 0)
             {
-                for (Int16 curnote = 1; curnote <= numbernotes; curnote++)
+                Int16 curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));                
+                if (btn.Name == "btnNoteDel" + curnote)
                 {
-                    if (btn.Name == "btnNoteDel" + curnote)
+                    int noteid = Convert.ToInt32(curnote) - 1;
+                    notes.GetNotes[noteid].Close();
+
+                    try
                     {
-                        if (curnote - 1 < 0)
-                        {
-                            throw new Exception("noteid cannot be negative.");
-                        }
-                        int noteid = Convert.ToInt32(curnote) - 1;
-                        notes.GetNotes[noteid].Close();
+                        File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
 
-                        try
+                        //reorder filenames
+                        for (Int16 n = curnote; n < numbernotes; n++)
                         {
-                            File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
-
-                            //reorder filenames
-                            for (Int16 n = curnote; n < numbernotes; n++)
+                            string orgfile = Path.Combine(getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
+                            string newfile = Path.Combine(getNotesSavePath(), Convert.ToString(n) + ".xml");
+                            if (!File.Exists(newfile))
                             {
-                                string orgfile = Path.Combine(getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
-                                string newfile = Path.Combine(getNotesSavePath(), Convert.ToString(n) + ".xml");
-                                if (!File.Exists(newfile))
-                                {
-                                    File.Move(orgfile, newfile);
-                                }
-                                if (n < numbernotes)
-                                {
-                                    notes.GetNotes[n].NoteID = n;
-                                }
+                                File.Move(orgfile, newfile);
                             }
-                            notes.GetNotes.RemoveAt(noteid);
+                            if (n < numbernotes)
+                            {
+                                notes.GetNotes[n].NoteID = n;
+                            }
                         }
-                        catch (FileNotFoundException)
-                        {
-                            MessageBox.Show("Note is already gone.");
-                        }
-                        catch (UnauthorizedAccessException)
-                        {
-                            MessageBox.Show("Access denied. Delete note " + curnote + ".xml manualy with premission.");
-                        }
-
-                        DrawNotesOverview();
-                        //Thread.Sleep(50);
+                        notes.GetNotes.RemoveAt(noteid);
                     }
+                    catch (FileNotFoundException)
+                    {
+                        MessageBox.Show("Note is already gone.");
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        MessageBox.Show("Access denied. Delete note " + curnote + ".xml manualy with premission.");
+                    }
+
+                    DrawNotesOverview();
                 }
+                else
+                {
+                    throw new CustomExceptions("Note to delete not found.");
+                }              
             }
         }
 
@@ -163,7 +160,7 @@ namespace SimplePlainNote
             CleanUp();            
 
             int ypos = 10;
-            for (UInt16 curnote = 0; curnote < notes.NumNotes; curnote++)
+            for (Int16 curnote = 0; curnote < notes.NumNotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
                 CheckBox cbxNoteVisible = new CheckBox();

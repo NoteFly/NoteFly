@@ -36,7 +36,8 @@ namespace SimplePlainNote
         private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if|break|goto|continue|switch|case|default:|try|catch|throw|static");
         private Regex SyntaxCdatatype = new Regex("int|short|double|float|long|string|bool|char");
         //IngoreCase options is set.
-        private Regex SyntaxHTML = new Regex("<HTML|<HEAD|<BODY^|<A^|<P|<BR|<SPAN^|<I|<U|<B|<OL|<UL|<IL|<FONT^|<TITLE|<BLOCKQUOTE|<META^|<LINK^|<CODE|<DD|<TABLE^|<DL|<TD^|<TR^|<FORM^|<IMG^|<FRAME^|<STRONG|<FRAMESET^|<IFRAME^|<APPLET^|<TH^|<PRE^|<HEAD|<TFOOT|<INPUT^|<OPTION^|<LABEL^|<LEGEND^|<SELECT^|<TEXTAREA^|<SCRIPT^|<NOSCRIPT|<S|<STRIKE|<TT|<BIG|<SMALL|<BASEFONT^|<DIV^|<H1|<H2|<H3|<H4|<H5|<H6|<ADRESS|<HR|<EM", RegexOptions.IgnoreCase);
+        //todo
+        private Regex SyntaxHTML = new Regex("<?HTML|<?HEAD|<?BODY^|<?A^|<?P|<?BR|<?SPAN^|<?I|<?U|<?B|<?OL|<?UL|<?IL|<?FONT^|<?TITLE|<?BLOCKQUOTE|<?META ^|<?LINK ^|<?CODE|<?DD|<?TABLE ^|<?DL|<?TD^|<?TR^|<?FORM ^|<?IMG ^|<?FRAME ^|<?STRONG|<?FRAMESET ^|<?IFRAME^|<?APPLET^|<?TH^|<?PRE^|<?HEAD|<?TFOOT|<?INPUT^|<?OPTION^|<?LABEL^|<?LEGEND^|<?SELECT^|<?TEXTAREA^|<?SCRIPT^|<?NOSCRIPT|<?S|<?STRIKE|<?TT|<?BIG|<?SMALL|<?BASEFONT^|<?DIV^|<?H1|<?H2|<?H3|<?H4|<?H5|<?H6|<?ADRESS|<?HR|<?EM", RegexOptions.IgnoreCase);
 
         #endregion Fields
 
@@ -63,6 +64,8 @@ namespace SimplePlainNote
         {
             int oldpos = rtbcode.SelectionStart;
             ResetHighlighting(rtbcode);
+            int beginword = 0;
+            int lenword = 0;
             for (int i = 0; i < rtbcode.TextLength; i++)
             {
                 if (this.highlightHTML)
@@ -76,59 +79,43 @@ namespace SimplePlainNote
                         int lengthtillendtag = i - posstarttag;
                         if (lengthtillendtag > 0)
                         {
-                            try
+                            if (ValidingHTMLNode(posstarttag, lengthtillendtag))
                             {
-                                if (ValidingHTMLNode(posstarttag, lengthtillendtag))
-                                {
-                                    rtbcode.Select(posstarttag, posstarttag + lengthtillendtag);
-                                    rtbcode.SelectionColor = Color.Blue;
-                                }
-                                else
-                                {
-                                    rtbcode.Select(posstarttag, lengthtillendtag + 1);
-                                    rtbcode.SelectionColor = System.Drawing.Color.Red;
-                                }
-                                rtbcode.SelectionStart = posstarttag + lengthtillendtag + 1;
-                                rtbcode.SelectionColor = Color.Black;
+                                ColorText(posstarttag + lengthtillendtag + 1, 0, Color.Blue);
                             }
-                            catch (ArgumentOutOfRangeException arg)
+                            else
                             {
-                                throw new CustomExceptions("TextHighlighter out of range: " + arg.Source);
+                                ColorText(posstarttag + lengthtillendtag + 1, 0, Color.Red);
                             }
+
+                            ColorText(posstarttag + lengthtillendtag + 1, 0, Color.Black);
                         }
                     }
                     if (rtbcode.TextLength >= i)
                     {
-                        try
-                        {
-                            rtbcode.SelectionStart = i + 1;
-                            rtbcode.SelectionColor = System.Drawing.Color.Black;
-                        }
-                        catch (ArgumentOutOfRangeException arg)
-                        {
-                            throw new CustomExceptions("TextHighlighter out of range: " + arg.Source);
-                        }
+                        ColorText(i + 1, 0, Color.Black);
                     }
-                }
-                if (this.highlightC)
-                {
-                    //todo: make more effective only 1 loop.
-                    int selPos = rtbcode.SelectionStart;
-                    foreach (Match keyWordMatch in SyntaxC.Matches(rtbcode.Text))
+                    if (this.highlightC)
                     {
-                        rtbcode.Select(keyWordMatch.Index, keyWordMatch.Length);
-                        rtbcode.SelectionColor = Color.Green;
-                        rtbcode.SelectionStart = selPos;
-                        rtbcode.SelectionColor = Color.Black;
+                        lenword++;
+                        if ((rtbcode.Text[i] == ' ') || (rtbcode.Text[i] == '\n'))
+                        {
+                            String iscode = rtbcode.Text.Substring(beginword, lenword);
+                            if (SyntaxC.IsMatch(iscode))
+                            {
+                                ColorText(beginword, lenword, Color.Green);
+                            }
+                            else if (SyntaxCdatatype.IsMatch(iscode))
+                            {
+                                ColorText(beginword, lenword, Color.Gray);
+                            }
+                            beginword = i;
+                            lenword = 0;
+                        }
                     }
-                    foreach (Match keyWordMatch in SyntaxCdatatype.Matches(rtbcode.Text))
-                    {
-                        rtbcode.Select(keyWordMatch.Index, keyWordMatch.Length);
-                        rtbcode.SelectionColor = Color.Gray;
-                        rtbcode.SelectionStart = selPos;
-                        rtbcode.SelectionColor = Color.Black;
-                    }
+
                 }
+
             }
             rtbcode.SelectionStart = oldpos;
             return true;
@@ -138,10 +125,10 @@ namespace SimplePlainNote
         /// This does only finds the last node for highlighting.
         /// The rest stays the same.
         /// </summary>
-        public void CheckSyntaxQuick()
+        public void CheckSyntaxQuick(int pos)
         {
             Boolean foundendtag = false;
-            for (int i = rtbcode.TextLength; ((i > 0) && (!foundendtag)); i--)
+            for (int i = pos; ((i > 0) && (!foundendtag)); i--)
             {
                 if (this.highlightHTML)
                 {
@@ -158,19 +145,18 @@ namespace SimplePlainNote
                                     posstarttag = i - 1;
                                     if (ValidingHTMLNode(posstarttag, n - posstarttag))
                                     {
-                                        rtbcode.Select(posstarttag, (n + 1 - posstarttag));
-                                        rtbcode.SelectionColor = Color.Blue;
+                                        ColorText(posstarttag, (n + 1 - posstarttag), Color.Blue);
                                     }
                                     else
                                     {
-                                        rtbcode.Select(posstarttag, (n + 1 - posstarttag));
-                                        rtbcode.SelectionColor = System.Drawing.Color.Red;
+                                        ColorText(posstarttag, (n + 1 - posstarttag), Color.Red);
                                     }
                                 }
 
                             }
-                            rtbcode.SelectionStart = rtbcode.TextLength;
-                            rtbcode.SelectionColor = Color.Black;
+                            ColorText(rtbcode.TextLength, 0, Color.Black);
+                            //rtbcode.SelectionStart = rtbcode.TextLength;
+                            //rtbcode.SelectionColor = Color.Black;
                         }
                     }
                     catch (ArgumentOutOfRangeException arg)
@@ -210,6 +196,19 @@ namespace SimplePlainNote
             else
             {
                 return false;
+            }
+        }
+
+        private void ColorText(int posstart, int len, Color syncolor)
+        {
+            try
+            {
+                rtbcode.Select(posstart, len);
+                rtbcode.SelectionColor = syncolor;
+            }
+            catch (ArgumentOutOfRangeException arg)
+            {
+                throw new CustomExceptions("TextHighlighter out of range: " + arg.Source);
             }
         }
 
