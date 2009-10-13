@@ -337,12 +337,13 @@ namespace SimplePlainNote
                 Boolean visible = parserNote.getXMLnodeAsBool("visible");
                 Boolean ontop = parserNote.getXMLnodeAsBool("ontop");
                 String title = parserNote.getXMLnode("title");
-                String content = parserNote.getXMLnode("content");                             
-                Int16 notecolor = Convert.ToInt16(parserNote.ParserNoteInts()[0]);
-                int noteLocX = parserNote.ParserNoteInts()[1];
-                int noteLocY = parserNote.ParserNoteInts()[2];
-                int notewidth = parserNote.ParserNoteInts()[3];
-                int noteheight = parserNote.ParserNoteInts()[4];
+                String content = parserNote.getXMLnode("content");
+                Int32[] NoteSettingsInt = parserNote.ParserNoteInts();
+                Int16 notecolor = Convert.ToInt16(NoteSettingsInt[0]);
+                Int32 noteLocX = NoteSettingsInt[1];
+                Int32 noteLocY = NoteSettingsInt[2];
+                Int32 notewidth = NoteSettingsInt[3];
+                Int32 noteheight = NoteSettingsInt[4];
 
                 noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
                 id++;
