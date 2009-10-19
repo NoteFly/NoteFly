@@ -523,6 +523,11 @@ namespace SimplePlainNote
             }
         }
 
+        public void UpdateThisNote()
+        {
+            SavePos.RunWorkerAsync();
+        }
+
         /// <summary>
         /// Thread to save note settings
         /// </summary>

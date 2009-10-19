@@ -155,7 +155,7 @@ namespace SimplePlainNote
                 FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
                 noteslst.Add(newnote);
                 newnote.StartPosition = FormStartPosition.Manual;
-                newnote.Show();
+                newnote.Show();                
             }
             catch (IndexOutOfRangeException indexexc)
             {
@@ -234,7 +234,7 @@ namespace SimplePlainNote
         }
 
         /// <summary>
-        /// Update a partialer note with noteid
+        /// Update a note
         /// </summary>
         /// <param name="noteid">id of note</param>
         /// <param name="title">new title</param>
@@ -251,7 +251,9 @@ namespace SimplePlainNote
                 noteslst[notelstpos].Show();
             }
             noteslst[notelstpos].CheckThings();
+            noteslst[notelstpos].UpdateThisNote();
             this.notesupdated = true;
+            
         }
 		// Private Methods (4) 
 
@@ -324,9 +326,7 @@ namespace SimplePlainNote
                     xmlHandler getAppdata = new xmlHandler(true);
                     this.notesavepath = getAppdata.AppDataFolder;
                 }
-            }
-
-            
+            }         
 
             UInt16 id = 1;
             string notefile = Path.Combine(this.notesavepath, id + ".xml");
@@ -340,12 +340,8 @@ namespace SimplePlainNote
                 String content = parserNote.getXMLnode("content");
                 Int32[] NoteSettingsInt = parserNote.ParserNoteInts();
                 Int16 notecolor = Convert.ToInt16(NoteSettingsInt[0]);
-                Int32 noteLocX = NoteSettingsInt[1];
-                Int32 noteLocY = NoteSettingsInt[2];
-                Int32 notewidth = NoteSettingsInt[3];
-                Int32 noteheight = NoteSettingsInt[4];
 
-                noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
+                noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, NoteSettingsInt[1], NoteSettingsInt[2], NoteSettingsInt[3], NoteSettingsInt[4]));
                 id++;
                 notefile = Path.Combine(notesavepath, id + ".xml");
 
