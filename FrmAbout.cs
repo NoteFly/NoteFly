@@ -106,5 +106,10 @@ namespace SimplePlainNote
         {
             System.Diagnostics.Process.Start("http://code.google.com/p/simpleplainnote/");
         }
+
+        private void linklblFollow_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://twitter.com/ToMSoms/");
+        }
     }
 }
