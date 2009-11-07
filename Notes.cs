@@ -347,6 +347,12 @@ namespace SimplePlainNote
 
                 if (CheckLimitNotes(id)) { MessageBox.Show("Error: Too many notes to load. More than 500 notes."); return; }
             }
+            id++;
+            notefile = Path.Combine(this.notesavepath, id + ".xml");
+            if (File.Exists(notefile)==true)
+            {
+                MessageBox.Show(notesavepath + Convert.ToString(id-1) + ".xml is missing.");
+            }
             if (firstrun)
             {
                 int tipnotewidth = 320;
