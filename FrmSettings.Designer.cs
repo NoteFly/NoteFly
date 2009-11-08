@@ -60,6 +60,7 @@
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.btnResetSettings = new System.Windows.Forms.Button();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnCrash = new System.Windows.Forms.Button();
@@ -69,7 +70,6 @@
             this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnResetSettings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -254,6 +254,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.btnResetSettings);
             this.tabGeneral.Controls.Add(this.cbxActionLeftClick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
             this.tabGeneral.Controls.Add(this.chxStartOnBootWindows);
@@ -278,7 +279,7 @@
             "Do nothing",
             "Bring notes to front",
             "Create a new note"});
-            this.cbxActionLeftClick.Location = new System.Drawing.Point(145, 97);
+            this.cbxActionLeftClick.Location = new System.Drawing.Point(145, 91);
             this.cbxActionLeftClick.Name = "cbxActionLeftClick";
             this.cbxActionLeftClick.Size = new System.Drawing.Size(163, 21);
             this.cbxActionLeftClick.TabIndex = 16;
@@ -286,7 +287,7 @@
             // chxConfirmExit
             // 
             this.chxConfirmExit.AutoSize = true;
-            this.chxConfirmExit.Location = new System.Drawing.Point(20, 57);
+            this.chxConfirmExit.Location = new System.Drawing.Point(20, 51);
             this.chxConfirmExit.Name = "chxConfirmExit";
             this.chxConfirmExit.Size = new System.Drawing.Size(167, 17);
             this.chxConfirmExit.TabIndex = 20;
@@ -296,7 +297,7 @@
             // chxStartOnBootWindows
             // 
             this.chxStartOnBootWindows.AutoSize = true;
-            this.chxStartOnBootWindows.Location = new System.Drawing.Point(20, 34);
+            this.chxStartOnBootWindows.Location = new System.Drawing.Point(20, 28);
             this.chxStartOnBootWindows.Name = "chxStartOnBootWindows";
             this.chxStartOnBootWindows.Size = new System.Drawing.Size(159, 17);
             this.chxStartOnBootWindows.TabIndex = 10;
@@ -306,7 +307,7 @@
             // lbText
             // 
             this.lbText.AutoSize = true;
-            this.lbText.Location = new System.Drawing.Point(17, 100);
+            this.lbText.Location = new System.Drawing.Point(17, 94);
             this.lbText.Name = "lbText";
             this.lbText.Size = new System.Drawing.Size(122, 13);
             this.lbText.TabIndex = 15;
@@ -315,7 +316,7 @@
             // btnBrowse
             // 
             this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnBrowse.Location = new System.Drawing.Point(265, 167);
+            this.btnBrowse.Location = new System.Drawing.Point(265, 143);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(53, 23);
             this.btnBrowse.TabIndex = 15;
@@ -325,7 +326,7 @@
             // 
             // tbNotesSavePath
             // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(16, 170);
+            this.tbNotesSavePath.Location = new System.Drawing.Point(16, 146);
             this.tbNotesSavePath.Name = "tbNotesSavePath";
             this.tbNotesSavePath.Size = new System.Drawing.Size(243, 20);
             this.tbNotesSavePath.TabIndex = 14;
@@ -334,7 +335,7 @@
             // lblTextNoteLocation
             // 
             this.lblTextNoteLocation.AutoSize = true;
-            this.lblTextNoteLocation.Location = new System.Drawing.Point(16, 154);
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(16, 130);
             this.lblTextNoteLocation.Name = "lblTextNoteLocation";
             this.lblTextNoteLocation.Size = new System.Drawing.Size(73, 13);
             this.lblTextNoteLocation.TabIndex = 16;
@@ -475,7 +476,6 @@
             // 
             // tabAdvance
             // 
-            this.tabAdvance.Controls.Add(this.btnResetSettings);
             this.tabAdvance.Controls.Add(this.chxLogErrors);
             this.tabAdvance.Controls.Add(this.label1);
             this.tabAdvance.Controls.Add(this.btnCrash);
@@ -490,6 +490,17 @@
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
+            // 
+            // btnResetSettings
+            // 
+            this.btnResetSettings.BackColor = System.Drawing.Color.LightGray;
+            this.btnResetSettings.Location = new System.Drawing.Point(16, 172);
+            this.btnResetSettings.Name = "btnResetSettings";
+            this.btnResetSettings.Size = new System.Drawing.Size(156, 26);
+            this.btnResetSettings.TabIndex = 21;
+            this.btnResetSettings.Text = "reset all settings to default";
+            this.btnResetSettings.UseVisualStyleBackColor = false;
+            this.btnResetSettings.Click += new System.EventHandler(this.btnResetSettings_Click);
             // 
             // chxLogErrors
             // 
@@ -572,17 +583,6 @@
             this.chxConfirmLink.TabIndex = 18;
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
-            // 
-            // btnResetSettings
-            // 
-            this.btnResetSettings.BackColor = System.Drawing.Color.LightGray;
-            this.btnResetSettings.Location = new System.Drawing.Point(16, 204);
-            this.btnResetSettings.Name = "btnResetSettings";
-            this.btnResetSettings.Size = new System.Drawing.Size(156, 26);
-            this.btnResetSettings.TabIndex = 21;
-            this.btnResetSettings.Text = "reset all settings to default";
-            this.btnResetSettings.UseVisualStyleBackColor = false;
-            this.btnResetSettings.Click += new System.EventHandler(this.btnResetSettings_Click);
             // 
             // FrmSettings
             // 

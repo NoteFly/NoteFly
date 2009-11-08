@@ -385,11 +385,13 @@ namespace SimplePlainNote
 
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
-            DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset your settings?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            //this.Hide();
+            DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset your settings?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);            
             if (dlgres == DialogResult.Yes)
-            {                
-                xmlsettings.WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, xmlsettings.AppDataFolder, "adres@domain.com", false, false, false, "", "", true);
+            {
+                if (!xmlsettings.WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, xmlsettings.AppDataFolder, "adres@domain.com", false, false, false, "", "", true))
+                {
+                    throw new Exception("Could not reset settings.");
+                }
                 this.Close();
             }            
         }
