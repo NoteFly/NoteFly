@@ -69,6 +69,7 @@
             this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnResetSettings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -314,7 +315,7 @@
             // btnBrowse
             // 
             this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnBrowse.Location = new System.Drawing.Point(257, 167);
+            this.btnBrowse.Location = new System.Drawing.Point(265, 167);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(53, 23);
             this.btnBrowse.TabIndex = 15;
@@ -324,7 +325,7 @@
             // 
             // tbNotesSavePath
             // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(8, 170);
+            this.tbNotesSavePath.Location = new System.Drawing.Point(16, 170);
             this.tbNotesSavePath.Name = "tbNotesSavePath";
             this.tbNotesSavePath.Size = new System.Drawing.Size(243, 20);
             this.tbNotesSavePath.TabIndex = 14;
@@ -333,7 +334,7 @@
             // lblTextNoteLocation
             // 
             this.lblTextNoteLocation.AutoSize = true;
-            this.lblTextNoteLocation.Location = new System.Drawing.Point(8, 154);
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(16, 154);
             this.lblTextNoteLocation.Name = "lblTextNoteLocation";
             this.lblTextNoteLocation.Size = new System.Drawing.Size(73, 13);
             this.lblTextNoteLocation.TabIndex = 16;
@@ -466,15 +467,15 @@
             // 
             // lbWarningTwitterPassword
             // 
-            this.lbWarningTwitterPassword.AutoSize = true;
             this.lbWarningTwitterPassword.Location = new System.Drawing.Point(16, 151);
             this.lbWarningTwitterPassword.Name = "lbWarningTwitterPassword";
-            this.lbWarningTwitterPassword.Size = new System.Drawing.Size(318, 13);
+            this.lbWarningTwitterPassword.Size = new System.Drawing.Size(278, 41);
             this.lbWarningTwitterPassword.TabIndex = 13;
             this.lbWarningTwitterPassword.Text = "Never ever enter your twitter password here on a public computer.";
             // 
             // tabAdvance
             // 
+            this.tabAdvance.Controls.Add(this.btnResetSettings);
             this.tabAdvance.Controls.Add(this.chxLogErrors);
             this.tabAdvance.Controls.Add(this.label1);
             this.tabAdvance.Controls.Add(this.btnCrash);
@@ -505,11 +506,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 145);
+            this.label1.Location = new System.Drawing.Point(13, 139);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(150, 13);
             this.label1.TabIndex = 20;
-            this.label1.Text = "warning experimental features:";            
+            this.label1.Text = "warning experimental features:";
             // 
             // btnCrash
             // 
@@ -526,7 +527,7 @@
             // 
             this.tbDefaultEmail.AccessibleDescription = "Editbox default email address";
             this.tbDefaultEmail.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
-            this.tbDefaultEmail.Location = new System.Drawing.Point(14, 106);
+            this.tbDefaultEmail.Location = new System.Drawing.Point(14, 100);
             this.tbDefaultEmail.Name = "tbDefaultEmail";
             this.tbDefaultEmail.Size = new System.Drawing.Size(200, 20);
             this.tbDefaultEmail.TabIndex = 18;
@@ -534,17 +535,17 @@
             // chxSyntaxHighlightC
             // 
             this.chxSyntaxHighlightC.AutoSize = true;
-            this.chxSyntaxHighlightC.Location = new System.Drawing.Point(16, 187);
+            this.chxSyntaxHighlightC.Location = new System.Drawing.Point(16, 181);
             this.chxSyntaxHighlightC.Name = "chxSyntaxHighlightC";
             this.chxSyntaxHighlightC.Size = new System.Drawing.Size(133, 17);
             this.chxSyntaxHighlightC.TabIndex = 19;
             this.chxSyntaxHighlightC.Text = "Highlight C code notes";
-            this.chxSyntaxHighlightC.UseVisualStyleBackColor = true;            
+            this.chxSyntaxHighlightC.UseVisualStyleBackColor = true;
             // 
             // lbTextDefaultEmail
             // 
             this.lbTextDefaultEmail.AutoSize = true;
-            this.lbTextDefaultEmail.Location = new System.Drawing.Point(12, 90);
+            this.lbTextDefaultEmail.Location = new System.Drawing.Point(12, 84);
             this.lbTextDefaultEmail.Name = "lbTextDefaultEmail";
             this.lbTextDefaultEmail.Size = new System.Drawing.Size(159, 13);
             this.lbTextDefaultEmail.TabIndex = 17;
@@ -553,12 +554,12 @@
             // chxSyntaxHighlightHTML
             // 
             this.chxSyntaxHighlightHTML.AutoSize = true;
-            this.chxSyntaxHighlightHTML.Location = new System.Drawing.Point(16, 164);
+            this.chxSyntaxHighlightHTML.Location = new System.Drawing.Point(16, 158);
             this.chxSyntaxHighlightHTML.Name = "chxSyntaxHighlightHTML";
             this.chxSyntaxHighlightHTML.Size = new System.Drawing.Size(156, 17);
             this.chxSyntaxHighlightHTML.TabIndex = 13;
             this.chxSyntaxHighlightHTML.Text = "Highlight HTML code notes";
-            this.chxSyntaxHighlightHTML.UseVisualStyleBackColor = true;            
+            this.chxSyntaxHighlightHTML.UseVisualStyleBackColor = true;
             // 
             // chxConfirmLink
             // 
@@ -571,6 +572,17 @@
             this.chxConfirmLink.TabIndex = 18;
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
+            // 
+            // btnResetSettings
+            // 
+            this.btnResetSettings.BackColor = System.Drawing.Color.LightGray;
+            this.btnResetSettings.Location = new System.Drawing.Point(16, 204);
+            this.btnResetSettings.Name = "btnResetSettings";
+            this.btnResetSettings.Size = new System.Drawing.Size(156, 26);
+            this.btnResetSettings.TabIndex = 21;
+            this.btnResetSettings.Text = "reset all settings to default";
+            this.btnResetSettings.UseVisualStyleBackColor = false;
+            this.btnResetSettings.Click += new System.EventHandler(this.btnResetSettings_Click);
             // 
             // FrmSettings
             // 
@@ -642,5 +654,6 @@
         private System.Windows.Forms.CheckBox chxLogErrors;
         private System.Windows.Forms.ComboBox cbxTextDirection;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnResetSettings;
     }
 }
