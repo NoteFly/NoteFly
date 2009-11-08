@@ -509,8 +509,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(150, 13);
             this.label1.TabIndex = 20;
-            this.label1.Text = "warning experimental features:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.label1.Text = "warning experimental features:";            
             // 
             // btnCrash
             // 
@@ -540,8 +539,7 @@
             this.chxSyntaxHighlightC.Size = new System.Drawing.Size(133, 17);
             this.chxSyntaxHighlightC.TabIndex = 19;
             this.chxSyntaxHighlightC.Text = "Highlight C code notes";
-            this.chxSyntaxHighlightC.UseVisualStyleBackColor = true;
-            this.chxSyntaxHighlightC.CheckedChanged += new System.EventHandler(this.chxSyntaxHighlightC_CheckedChanged);
+            this.chxSyntaxHighlightC.UseVisualStyleBackColor = true;            
             // 
             // lbTextDefaultEmail
             // 
@@ -560,8 +558,7 @@
             this.chxSyntaxHighlightHTML.Size = new System.Drawing.Size(156, 17);
             this.chxSyntaxHighlightHTML.TabIndex = 13;
             this.chxSyntaxHighlightHTML.Text = "Highlight HTML code notes";
-            this.chxSyntaxHighlightHTML.UseVisualStyleBackColor = true;
-            this.chxSyntaxHighlightHTML.CheckedChanged += new System.EventHandler(this.chxSyntaxHighlightHTML_CheckedChanged);
+            this.chxSyntaxHighlightHTML.UseVisualStyleBackColor = true;            
             // 
             // chxConfirmLink
             // 

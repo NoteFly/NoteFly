@@ -78,8 +78,7 @@ namespace SimplePlainNote
 		// Private Methods (24) 
 
         private void btnBrowse_Click(object sender, EventArgs e)
-        {
-            
+        {            
             DialogResult dlgresult = folderBrowserDialog1.ShowDialog();
             if (dlgresult == DialogResult.OK)
             {
@@ -91,7 +90,7 @@ namespace SimplePlainNote
                 }
                 else
                 {
-                    MessageBox.Show("Error: Directory does not exist. Please choice a valid directory.");                    
+                    MessageBox.Show("Error: Directory does not exist.\r\nPlease choice a valid directory.");                    
                 }                                               
             }            
         }
@@ -232,7 +231,8 @@ namespace SimplePlainNote
                 numProcTransparency.Enabled = true;
             }
         }
-
+    
+        /*        
         private void chxSyntaxHighlightC_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -242,6 +242,7 @@ namespace SimplePlainNote
         {
 
         }
+         */
 
         /// <summary>
         /// Fill combobox list with fonts
@@ -350,11 +351,6 @@ namespace SimplePlainNote
             return xmlsettings.getXMLnode("twitteruser");
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// Move note files.
         /// </summary>
@@ -362,7 +358,7 @@ namespace SimplePlainNote
         private void MoveNotes(string newpathsavenotes)
         {            
             bool errorshowed = false;
-            string oldpathsavenotes = getNotesSavePath();
+            string oldpathsavenotes = getNotesSavePath();            
             int id = 1;
             while (File.Exists(Path.Combine(oldpathsavenotes, id + ".xml")) == true)
             {
@@ -382,7 +378,8 @@ namespace SimplePlainNote
                             errorshowed = true;
                         }
                     }
-                }
+                }                
+                id++; //bug fix #23.
             }
         }
 
