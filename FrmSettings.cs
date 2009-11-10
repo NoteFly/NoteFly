@@ -63,6 +63,16 @@ namespace SimplePlainNote
             chxSyntaxHighlightHTML.Checked = getHighlightHTML();
             chxSyntaxHighlightC.Checked = getHighlightC();
             cbxTextDirection.SelectedIndex = getTextDirection();
+            if (String.IsNullOrEmpty(tbDefaultEmail.Text))
+            {
+                tbDefaultEmail.Enabled = false;
+                cbxDefaultEmailToBlank.Checked = true;
+            }
+            else
+            {
+                tbDefaultEmail.Enabled = true;
+                cbxDefaultEmailToBlank.Checked = false;
+            }
             
             this.notes = notes;
             DrawCbxFonts();
@@ -148,7 +158,7 @@ namespace SimplePlainNote
             {
                 MessageBox.Show("Settings Twitter: password is too short.");
             }
-            else if (!tbDefaultEmail.Text.Contains("@"))
+            else if ((!tbDefaultEmail.Text.Contains("@") || !tbDefaultEmail.Text.Contains(".")) && (!cbxDefaultEmailToBlank.Checked))
             {
                 MessageBox.Show("Settings advance: default emailadres not valid.");
             }
@@ -388,16 +398,26 @@ namespace SimplePlainNote
             DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset your settings?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);            
             if (dlgres == DialogResult.Yes)
             {
-                if (!xmlsettings.WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, xmlsettings.AppDataFolder, "adres@domain.com", false, false, false, "", "", true))
+                String settingsfile = Path.Combine(xmlsettings.AppDataFolder, "settings.xml");
+                if (File.Exists(settingsfile))
                 {
-                    throw new Exception("Could not reset settings.");
+                    File.Delete(settingsfile);
+                    xmlsettings = new xmlHandler(true);
                 }
+                else
+                {
+                    throw new Exception("Could not find settings file in application directory.");
+                }        
                 this.Close();
             }            
+        }		
+
+        private void cbxDefaultEmailToBlank_CheckedChanged(object sender, EventArgs e)
+        {            
+            tbDefaultEmail.Enabled = !cbxDefaultEmailToBlank.Checked;
+            if (cbxDefaultEmailToBlank.Checked) { tbDefaultEmail.Text = ""; }
         }
 
-		#endregion Methods 
-
-
+        #endregion Methods
     }
 }

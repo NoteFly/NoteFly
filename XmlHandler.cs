@@ -46,7 +46,7 @@ namespace SimplePlainNote
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "adres@domain.com",false, false, false, "", "", true);
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "",false, false, false, "", "", true);
                 }
             }
         }
