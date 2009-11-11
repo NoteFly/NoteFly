@@ -21,6 +21,9 @@ using System.Drawing;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Collections.ObjectModel;
+using Facebook;
+
 #if win32
 using System.Runtime.InteropServices;
 #endif
@@ -44,6 +47,7 @@ namespace SimplePlainNote
         private String title;
         private String twpass;
         private TextHighlight highlight;
+        private Form FrmLoginFb = null;
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
 
@@ -242,8 +246,13 @@ namespace SimplePlainNote
 
             Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
             twpass = passctr[0].Text;
-            frmAskpass.Close();
-            frmAskpass.Dispose();
+            frmAskpass.Close();            
+            foreach (Control cntrl in frmAskpass.Controls)
+            {
+                cntrl.Dispose(); 
+            }
+            frmAskpass.Dispose(); //figure out if all memory is back.
+            
             tweetnote();
         }
 
@@ -255,11 +264,11 @@ namespace SimplePlainNote
         {
             if (twitterenabled)
             {
-                TwitterToolStripMenuItem.Enabled = true;
+                tsmenuSendToTwitter.Enabled = true;
             }
             else
             {
-                TwitterToolStripMenuItem.Enabled = false;
+                tsmenuSendToTwitter.Enabled = false;
             }
         }
 
@@ -277,7 +286,7 @@ namespace SimplePlainNote
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        {            
             Clipboard.SetText(note);
         }
 
@@ -287,8 +296,7 @@ namespace SimplePlainNote
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //FIXME: no enters copied.
+        {            
             Clipboard.SetText(title);
         }
 
@@ -306,40 +314,6 @@ namespace SimplePlainNote
                 MessageBox.Show("Error: cannot find note.");
             }
             notes.EditNewNote(this.NoteID);
-        }
-
-        /// <summary>
-        /// Create an e-mail of a note.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void emailNoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string emailnote = "";
-
-#if win32
-            emailnote = note.Replace("\r\n", "%0D%0A");
-#elif mac
-            emailnote = note.Replace("\r", "%0D%0A");
-#elif linux                        
-            emailnote = note.Replace("\n", "%0D%0A");
-#endif
-
-            xmlHandler xmlsettings = new xmlHandler(true);
-            string defaultemail = xmlsettings.getXMLnode("defaultemail");
-
-            if ((!String.IsNullOrEmpty(title)) && (String.IsNullOrEmpty(emailnote)))
-            {
-                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title + "&body=" + emailnote);
-            }
-            else if (!String.IsNullOrEmpty(title))
-            {
-                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title);
-            }
-            else
-            {
-                MessageBox.Show("Error: note has no title and content");
-            }
         }
 
         /// <summary>
@@ -655,45 +629,7 @@ namespace SimplePlainNote
                 }
                 twpass.Remove(0);
             }
-        }
-
-        /// <summary>
-        /// Request to tweet note. Check if allow, if so call tweetnote() methode
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TwitterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-#if win32
-            if (IsConnectedToInternet())
-            {
-#endif
-                if ((String.IsNullOrEmpty(note) == false) && (note.Length < 140))
-                {
-                    tweetnote();
-                }
-                else if (note.Length > 140)
-                {
-                    DialogResult result;
-                    string shrttweet = note.Substring(0, 140);
-                    result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        tweetnote();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Error: Your note is empty.");
-                }
-#if win32
-            }
-            else
-            {
-                MessageBox.Show("Error: There is no network connection.");
-            }
-#endif
-        }
+        }     
 
         /// <summary>
         /// Change check in menu colors
@@ -755,10 +691,133 @@ namespace SimplePlainNote
                          int msg, int wParam, int lParam);
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
+
 #endif
 
+        /// <summary>
+        /// Request to tweet note. Check if allow, if so call tweetnote() methode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
+        {
 
+#if win32
+            if (IsConnectedToInternet())
+            {
+#endif
+                if ((String.IsNullOrEmpty(note) == false) && (note.Length < 140))
+                {
+                    tweetnote();
+                }
+                else if (note.Length > 140)
+                {
+                    DialogResult result;
+                    string shrttweet = note.Substring(0, 140);
+                    result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        tweetnote();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error: Your note is empty.");
+                }
+#if win32
+            }
+            else
+            {
+                MessageBox.Show("Error: There is no network connection.");
+            }
+#endif
+        }
+
+        /// <summary>
+        /// E-mail
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void emailToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string emailnote;
+
+#if win32
+            emailnote = note.Replace("\r\n", "%0D%0A");
+#elif mac
+            emailnote = note.Replace("\r", "%0D%0A");
+#elif linux                        
+            emailnote = note.Replace("\n", "%0D%0A");
+#endif
+            xmlHandler xmlsettings = new xmlHandler(true);
+
+            string defaultemail = xmlsettings.getXMLnode("defaultemail");
+
+            if ((!String.IsNullOrEmpty(title)) && (String.IsNullOrEmpty(emailnote)))
+            {
+                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title + "&body=" + emailnote);
+            }
+            else if (!String.IsNullOrEmpty(title))
+            {
+                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title);
+            }
+            else
+            {
+                MessageBox.Show("Error: note has no title and content");
+            }
+        }
+
+        /// <summary>
+        /// Send note to Facebook.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
+        {
+            Facebook fb = new Facebook();
+
+            //grant access.
+            FrmLoginFb = new Form();
+
+            FrmLoginFb.Width = 640;
+            FrmLoginFb.Height = 480;
+            System.Windows.Forms.WebBrowser FbWeb = new System.Windows.Forms.WebBrowser();
+            FbWeb.Location = new System.Drawing.Point(10, 10);
+            FbWeb.Dock = DockStyle.Fill;
+            FbWeb.Navigate("http://www.facebook.com/login.php?api_key=" + fb.AppKey + "&connect_display=popup&v=" + fb.ApiVer + "&next=http://www.facebook.com/connect/login_success.html&cancel_url=http://www.facebook.com/connect/login_failure.html&fbconnect=true");
+            FrmLoginFb.Controls.Add(FbWeb);
+            FrmLoginFb.Show();
+
+            FbWeb.Navigated += new WebBrowserNavigatedEventHandler(FbWeb_Navigated);
+            
+            
+            /*
+            if (fb.Update(note))
+            {
+                MessageBox.Show("Note was published on your Facebook wall. (fb. dev. toolkit way)");
+            }
+             */
+        }
+
+        private void FbWeb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
+        {            
+            if (e.Url.ToString().StartsWith("http://www.facebook.com/connect/login_success.html?auth_token=") == true)
+            {
+                MessageBox.Show("premissions granted, okay");
+            }
+            else if (e.Url.ToString().StartsWith("http://www.facebook.com/connect/login_failure.html") == true)
+            {
+                if (FrmLoginFb != null)
+                {
+                    FrmLoginFb.Close();
+                    MessageBox.Show("Login cancel.");
+                }
+            }
+
+        }
 
         #endregion Methods
+
+
     }
 }

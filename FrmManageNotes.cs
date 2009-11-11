@@ -243,7 +243,7 @@ namespace SimplePlainNote
                 pnlNotes.Controls.Add(cbxNoteVisible);
                 pnlNotes.Controls.Add(btnNoteDelete);
 
-                ypos = ypos + 30;
+                ypos += 30;
             }
         }
 

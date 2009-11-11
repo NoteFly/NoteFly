@@ -96,6 +96,10 @@ namespace SimplePlainNote
             }
             else if (warn)
             {
+                if (this.notecolor == 6)
+                {
+                    return Color.Orange;
+                }
                 return Color.Red;
             }
             else

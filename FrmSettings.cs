@@ -23,9 +23,10 @@ using System.Drawing.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
-using System.Xml;
+
 #if win32
 using Microsoft.Win32;
+
 #endif
 
 namespace SimplePlainNote
@@ -241,18 +242,6 @@ namespace SimplePlainNote
                 numProcTransparency.Enabled = true;
             }
         }
-    
-        /*        
-        private void chxSyntaxHighlightC_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chxSyntaxHighlightHTML_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-         */
 
         /// <summary>
         /// Fill combobox list with fonts

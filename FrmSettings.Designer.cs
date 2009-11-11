@@ -61,6 +61,7 @@
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.cbxDefaultEmailToBlank = new System.Windows.Forms.CheckBox();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnCrash = new System.Windows.Forms.Button();
@@ -70,7 +71,6 @@
             this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.cbxDefaultEmailToBlank = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -143,7 +143,8 @@
             "Green",
             "Blue",
             "Purple",
-            "Red"});
+            "Red",
+            "random color"});
             this.cbxDefaultColor.Location = new System.Drawing.Point(153, 62);
             this.cbxDefaultColor.MaxDropDownItems = 5;
             this.cbxDefaultColor.Name = "cbxDefaultColor";
@@ -504,6 +505,19 @@
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
             // 
+            // cbxDefaultEmailToBlank
+            // 
+            this.cbxDefaultEmailToBlank.AutoSize = true;
+            this.cbxDefaultEmailToBlank.Checked = true;
+            this.cbxDefaultEmailToBlank.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxDefaultEmailToBlank.Location = new System.Drawing.Point(14, 101);
+            this.cbxDefaultEmailToBlank.Name = "cbxDefaultEmailToBlank";
+            this.cbxDefaultEmailToBlank.Size = new System.Drawing.Size(52, 17);
+            this.cbxDefaultEmailToBlank.TabIndex = 21;
+            this.cbxDefaultEmailToBlank.Text = "blank";
+            this.cbxDefaultEmailToBlank.UseVisualStyleBackColor = true;
+            this.cbxDefaultEmailToBlank.CheckedChanged += new System.EventHandler(this.cbxDefaultEmailToBlank_CheckedChanged);
+            // 
             // chxLogErrors
             // 
             this.chxLogErrors.AutoSize = true;
@@ -586,19 +600,6 @@
             this.chxConfirmLink.TabIndex = 18;
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
-            // 
-            // cbxDefaultEmailToBlank
-            // 
-            this.cbxDefaultEmailToBlank.AutoSize = true;
-            this.cbxDefaultEmailToBlank.Checked = true;
-            this.cbxDefaultEmailToBlank.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxDefaultEmailToBlank.Location = new System.Drawing.Point(14, 101);
-            this.cbxDefaultEmailToBlank.Name = "cbxDefaultEmailToBlank";
-            this.cbxDefaultEmailToBlank.Size = new System.Drawing.Size(52, 17);
-            this.cbxDefaultEmailToBlank.TabIndex = 21;
-            this.cbxDefaultEmailToBlank.Text = "blank";
-            this.cbxDefaultEmailToBlank.UseVisualStyleBackColor = true;
-            this.cbxDefaultEmailToBlank.CheckedChanged += new System.EventHandler(this.cbxDefaultEmailToBlank_CheckedChanged);
             // 
             // FrmSettings
             // 

@@ -91,6 +91,11 @@ namespace SimplePlainNote
         {
             xmlHandler xmlSettings = new xmlHandler(true);
             Int16 color = Convert.ToInt16(xmlSettings.getXMLnodeAsInt("defaultcolor"));
+            
+            if (color == 7)
+            {
+                color = Convert.ToInt16(new Random().Next(0, 7));
+            }
             return color;
         }
 

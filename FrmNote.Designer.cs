@@ -41,10 +41,12 @@
             this.blueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.purpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmenuSendToFacebook = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmenuSendToTwitter = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmenuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.copyTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TwitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.emailNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.locknoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,15 +97,14 @@
             this.contextMenuStripNoteOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editTToolStripMenuItem,
             this.menuNoteColors,
+            this.sendToToolStripMenuItem,
             this.copyTitleToolStripMenuItem,
             this.copyTextToolStripMenuItem,
-            this.TwitterToolStripMenuItem,
-            this.emailNoteToolStripMenuItem,
             this.OnTopToolStripMenuItem,
             this.locknoteToolStripMenuItem,
             this.hideNoteToolStripMenuItem});
             this.contextMenuStripNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(216, 202);
+            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(216, 180);
             this.contextMenuStripNoteOptions.Text = "-=menu=-";
             this.contextMenuStripNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
             // 
@@ -204,6 +205,40 @@
             this.redToolStripMenuItem.Text = "Red";
             this.redToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
+            // sendToToolStripMenuItem
+            // 
+            this.sendToToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmenuSendToEmail,
+            this.tsmenuSendToTwitter,
+            this.tsmenuSendToFacebook});
+            this.sendToToolStripMenuItem.Name = "sendToToolStripMenuItem";
+            this.sendToToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.sendToToolStripMenuItem.Text = "Send to";
+            // 
+            // tsmenuSendToFacebook
+            // 
+            this.tsmenuSendToFacebook.Name = "tsmenuSendToFacebook";
+            this.tsmenuSendToFacebook.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.tsmenuSendToFacebook.Size = new System.Drawing.Size(165, 22);
+            this.tsmenuSendToFacebook.Text = "Facebook";
+            this.tsmenuSendToFacebook.Click += new System.EventHandler(this.tsmenuSendToFacebook_Click);
+            // 
+            // tsmenuSendToTwitter
+            // 
+            this.tsmenuSendToTwitter.Name = "tsmenuSendToTwitter";
+            this.tsmenuSendToTwitter.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.tsmenuSendToTwitter.Size = new System.Drawing.Size(165, 22);
+            this.tsmenuSendToTwitter.Text = "Twitter";
+            this.tsmenuSendToTwitter.Click += new System.EventHandler(this.tsmenuSendToTwitter_Click);
+            // 
+            // tsmenuSendToEmail
+            // 
+            this.tsmenuSendToEmail.Name = "tsmenuSendToEmail";
+            this.tsmenuSendToEmail.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.tsmenuSendToEmail.Size = new System.Drawing.Size(165, 22);
+            this.tsmenuSendToEmail.Text = "E-mail";
+            this.tsmenuSendToEmail.Click += new System.EventHandler(this.emailToolStripMenuItem_Click);
+            // 
             // copyTitleToolStripMenuItem
             // 
             this.copyTitleToolStripMenuItem.Name = "copyTitleToolStripMenuItem";
@@ -221,23 +256,6 @@
             this.copyTextToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.copyTextToolStripMenuItem.Text = "Copy note content";
             this.copyTextToolStripMenuItem.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
-            // 
-            // TwitterToolStripMenuItem
-            // 
-            this.TwitterToolStripMenuItem.Enabled = false;
-            this.TwitterToolStripMenuItem.Name = "TwitterToolStripMenuItem";
-            this.TwitterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.TwitterToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.TwitterToolStripMenuItem.Text = "tweet this note";
-            this.TwitterToolStripMenuItem.Click += new System.EventHandler(this.TwitterToolStripMenuItem_Click);
-            // 
-            // emailNoteToolStripMenuItem
-            // 
-            this.emailNoteToolStripMenuItem.Name = "emailNoteToolStripMenuItem";
-            this.emailNoteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.emailNoteToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.emailNoteToolStripMenuItem.Text = "e-mail note";
-            this.emailNoteToolStripMenuItem.Click += new System.EventHandler(this.emailNoteToolStripMenuItem_Click);
             // 
             // OnTopToolStripMenuItem
             // 
@@ -410,13 +428,15 @@
         private System.Windows.Forms.PictureBox pbResizeGrip;
         private System.Windows.Forms.ToolStripMenuItem purpleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem TwitterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OnTopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyTitleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem locknoteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem emailNoteToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker SavePos;
         private System.Windows.Forms.PictureBox pbShowLock;
         private System.Windows.Forms.ToolStripMenuItem hideNoteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendToToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToFacebook;
+        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToTwitter;
+        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToEmail;
     }
 }
