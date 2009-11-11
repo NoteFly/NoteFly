@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SimplePlainNote</RootNamespace>
     <AssemblyName>SimplePlainNote</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
@@ -84,18 +84,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="facebook, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Libs\facebook_developers_toolkit\facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Facebook.Winforms, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Libs\facebook_developers_toolkit\Facebook.Winforms.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
     <Reference Include="System.DirectoryServices" />

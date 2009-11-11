@@ -22,7 +22,6 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
-using Facebook;
 
 #if win32
 using System.Runtime.InteropServices;
