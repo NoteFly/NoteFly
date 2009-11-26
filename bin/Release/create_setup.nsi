@@ -13,7 +13,7 @@
 ;
 ; The name of the installer
 
-!define VERSION "0.9.9b"
+!define VERSION "0.9.10"
 !define VERSTATUS "beta"
 
 Name "SimplePlainNote ${VERSION} ${VERSTATUS}"
@@ -25,14 +25,14 @@ ShowInstDetails show
 CompletedText "Installation completed. Please close this installer now."
 
 ; The file to write
-OutFile ".\SimplePlainNote_v${VERSION}.exe"
+OutFile ".\NoteDesk_v${VERSION}.exe"
 
 ; The default installation directory
-InstallDir $PROGRAMFILES\simpleplainnote
+InstallDir $PROGRAMFILES\NoteDesk
 
 ; Registry key to check for directory (so if you install again, it will 
 ; overwrite the old one automatically)
-InstallDirRegKey HKLM "Software\simpleplainnote" "Install_Dir"
+InstallDirRegKey HKLM "Software\NoteDesk" "Install_Dir"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
@@ -107,22 +107,22 @@ Section "main executable (required)"
   SetOutPath $INSTDIR
   
   ; Put file there
-  File "SimplePlainNote.exe"
-  File "SimplePlainNote.exe.config"
+  File "NoteDesk.exe"
+  ;File "NoteDesk.exe.config"
   
   ; Write the installation path into the registry
-  WriteRegStr HKLM SOFTWARE\simpleplainnote "Install_Dir" "$INSTDIR"
+  WriteRegStr HKLM SOFTWARE\NoteDesk "Install_Dir" "$INSTDIR"
   
   ; Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayName" "simpleplainnote"  
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayName" "NoteDesk"  
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "URLInfoAbout" "http://code.google.com/p/simpleplainnote/"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "URLInfoAbout" "http://"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayVersion" "${VERSION}"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
   
-  Exec '"$INSTDIR\simpleplainnote.exe" /firstrun'
+  Exec '"$INSTDIR\NoteDesk.exe" /firstrun'
   
 SectionEnd
 
@@ -130,9 +130,9 @@ SectionEnd
 Section "Start Menu Shortcuts"
 ;startmenu shortcut should be for currentuser!
   SetShellVarContext current
-  CreateDirectory "$SMPROGRAMS\SimplePlainNote"
-  CreateShortCut "$SMPROGRAMS\SimplePlainNote\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\SimplePlainNote\SimplePlainNote.lnk" "$INSTDIR\simpleplainnote.exe" "" "$INSTDIR\simpleplainnote.exe" 0
+  CreateDirectory "$SMPROGRAMS\NoteDesk"
+  CreateShortCut "$SMPROGRAMS\NoteDesk\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\NoteDesk\NoteDesk.lnk" "$INSTDIR\NoteDesk.exe" "" "$INSTDIR\NoteDesk.exe" 0
   
 SectionEnd
 
@@ -143,26 +143,26 @@ SectionEnd
 Section "Uninstall"
   
   ; Remove registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote"
-  DeleteRegKey HKLM SOFTWARE\simpleplainnote
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteDesk"
+  DeleteRegKey HKLM SOFTWARE\NoteDesk
 
   ; Remove files and uninstaller
-  Delete $INSTDIR\SimplePlainNote.exe
-  Delete $INSTDIR\SimplePlainNote.exe.config
+  Delete $INSTDIR\NoteDesk.exe
+  ;Delete $INSTDIR\NoteDesk.exe.config
   Delete $INSTDIR\uninstall.exe
 
   ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\simpleplainnote\*.*"
+  Delete "$SMPROGRAMS\NoteDesk\*.*"
 
   ; Remove directories used
-  RMDir "$SMPROGRAMS\simpleplainnote"
+  RMDir "$SMPROGRAMS\NoteDesk"
   
   MessageBox MB_YESNO "Do you want to remove your notes and settings too?" IDYES true IDNO false
   true:
   ;deleting all files in appdata folder. 
   SetShellVarContext current
-  Delete "$APPDATA\.simpleplainnote\*.*"
-  RMDir "$APPDATA\.simpleplainnote" 
+  Delete "$APPDATA\.NoteDesk\*.*"
+  RMDir "$APPDATA\.NoteDesk" 
   Goto next
   
   false:

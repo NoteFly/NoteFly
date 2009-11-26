@@ -19,7 +19,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-namespace SimplePlainNote
+namespace NoteDesk
 {
     public class Notes
     {

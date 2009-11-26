@@ -1,4 +1,4 @@
-﻿namespace SimplePlainNote
+﻿namespace NoteDesk
 {
     partial class FrmAbout
     {
@@ -32,9 +32,7 @@
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
-            this.linklblFollow = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // okButton
@@ -88,43 +86,20 @@
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of GNU Public License version2";
             // 
-            // linklblFollow
-            // 
-            this.linklblFollow.AutoSize = true;
-            this.linklblFollow.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linklblFollow.Location = new System.Drawing.Point(113, 98);
-            this.linklblFollow.Name = "linklblFollow";
-            this.linklblFollow.Size = new System.Drawing.Size(51, 13);
-            this.linklblFollow.TabIndex = 31;
-            this.linklblFollow.TabStop = true;
-            this.linklblFollow.Text = "follow me";
-            this.linklblFollow.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklblFollow_LinkClicked);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 98);
+            this.label1.Location = new System.Drawing.Point(7, 88);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(107, 13);
+            this.label1.Size = new System.Drawing.Size(189, 13);
             this.label1.TabIndex = 32;
-            this.label1.Text = "Like my programme? ";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 111);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(190, 13);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "on twitter and know about updates first";
+            this.label1.Text = "Which also means there is no warrenty";
             // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(235, 171);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.linklblFollow);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);
@@ -152,9 +127,7 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.LinkLabel linklblWebsite;
         private System.Windows.Forms.Label lblTextLicense;
-        private System.Windows.Forms.LinkLabel linklblFollow;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
 
     }
 }

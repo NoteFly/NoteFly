@@ -20,7 +20,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace SimplePlainNote
+namespace NoteDesk
 {
     partial class FrmAbout : Form
     {

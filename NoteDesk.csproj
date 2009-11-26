@@ -8,17 +8,17 @@
     <ProjectGuid>{2E47E4D6-04CC-4578-8380-95AA497D3341}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimplePlainNote</RootNamespace>
-    <AssemblyName>SimplePlainNote</AssemblyName>
+    <RootNamespace>NoteDesk</RootNamespace>
+    <AssemblyName>NoteDesk</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
-    <StartupObject>SimplePlainNote.TrayIcon</StartupObject>
+    <StartupObject>NoteDesk.TrayIcon</StartupObject>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>strongkey_simpleplainnotes.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>strongkey_notedesk.pfx</AssemblyOriginatorKeyFile>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>false</GenerateManifests>
     <ExcludedPermissions>System.Data.OleDb.OleDbPermission, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089; System.Data.SqlClient.SqlClientPermission, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ExcludedPermissions>
@@ -212,13 +212,13 @@
     <None Include="build_setup.bat" />
     <None Include="make_archive.bat" />
     <None Include="Resources\hoekje.png" />
-    <None Include="strongkey_simpleplainnotes.pfx" />
+    <None Include="strongkey_notedesk.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
     <None Include="bin\Debug\app.eqconfig" />
-    <None Include="bin\Release\linux\create_linux_package.pkgxml" />
-    <None Include="bin\Release\win32\create_setup.nsi" />
+    <None Include="create_linux_package.pkgxml" />
+    <None Include="bin\Release\create_setup.nsi" />
     <None Include="Resources\locknote.png" />
     <Content Include="Resources\logo.png" />
     <Content Include="wiki\pad_file.xml" />
@@ -228,7 +228,7 @@
     <EmbeddedResource Include="Resources\trayicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Release\mac\" />
+    <Folder Include="bin\Release\win32\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

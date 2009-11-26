@@ -29,7 +29,7 @@ using Microsoft.Win32;
 
 #endif
 
-namespace SimplePlainNote
+namespace NoteDesk
 {
     public partial class FrmSettings : Form
     {

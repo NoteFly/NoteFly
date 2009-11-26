@@ -27,32 +27,32 @@ using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 #endif
 
-namespace SimplePlainNote
+namespace NoteDesk
 {
     public partial class FrmNote : Form
     {
-        #region Fields (13)
+		#region Fields (15) 
 
-        public const int HT_CAPTION = 0x2;
+        public Notes notes;
+        private Form frmLoginFb = null;
+        private TextHighlight highlight;        
         private Int16 id;
         private int locX;
         private int locY;
         private String note;
         private Int16 notecolor = 0;
-        private Boolean notelock = false;
-        public Notes notes;
+        private Boolean notelock = false;        
         private Boolean notevisible = true;
         private Skin skin;
         private String title;
         private String twpass;
-        private TextHighlight highlight;
-        private Form FrmLoginFb = null;
 
+        public const int HT_CAPTION = 0x2;
         public const int WM_NCLBUTTONDOWN = 0xA1;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (2)
+		#region Constructors (2) 
 
         public FrmNote(Notes notes, Int16 id, bool visible, bool ontop, string title, string note, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
         {
@@ -133,9 +133,9 @@ namespace SimplePlainNote
             notes.NotesUpdated = true;
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Properties (4)
+		#region Properties (4) 
 
         public Int16 NoteColor
         {
@@ -175,11 +175,11 @@ namespace SimplePlainNote
             }
         }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Methods (26)
+		#region Methods (30) 
 
-        // Public Methods (2) 
+		// Public Methods (2) 
 
         /// <summary>
         /// Check if twitter is enabled and check Syntax.
@@ -204,34 +204,11 @@ namespace SimplePlainNote
             }            
         }
 
-        /// <summary>
-        /// Get the color of the note and paint it.
-        /// </summary>
-        private void PaintColorNote()
+        public void UpdateThisNote()
         {
-            skin = new Skin(notecolor);
-            Color normalcolor = skin.getObjColor(false);
-
-            this.BackColor = normalcolor;
-            this.pnlHead.BackColor = normalcolor;
-            this.pnlNote.BackColor = normalcolor;
-            this.rtbNote.BackColor = normalcolor;
-
-            if (notes.TextDirection == 0)
-            {
-                lblTitle.TextAlign = ContentAlignment.TopLeft;
-                rtbNote.SelectionAlignment = HorizontalAlignment.Left;
-            }
-            else if (notes.TextDirection == 1)
-            {
-                lblTitle.TextAlign = ContentAlignment.TopRight;
-
-                rtbNote.SelectAll();                
-                rtbNote.SelectionAlignment = HorizontalAlignment.Right;                
-            }
-            rtbNote.Font = skin.getFontNoteContent();
+            SavePos.RunWorkerAsync();
         }
-        // Private Methods (24) 
+		// Private Methods (28) 
 
         /// <summary>
         /// Find what password is entered.
@@ -253,6 +230,18 @@ namespace SimplePlainNote
             frmAskpass.Dispose(); //figure out if all memory is back.
             
             tweetnote();
+        }
+
+        /// <summary>
+        /// Hide note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCloseNote_Click(object sender, EventArgs e)
+        {
+            this.notevisible = false;
+            notes.NotesUpdated = true;
+            this.Hide();
         }
 
         /// <summary>
@@ -316,16 +305,73 @@ namespace SimplePlainNote
         }
 
         /// <summary>
-        /// Hide note
+        /// E-mail
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnCloseNote_Click(object sender, EventArgs e)
+        private void emailToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.notevisible = false;
-            notes.NotesUpdated = true;
-            this.Hide();
+            string emailnote;
+
+#if win32
+            emailnote = note.Replace("\r\n", "%0D%0A");
+#elif mac
+            emailnote = note.Replace("\r", "%0D%0A");
+#elif linux                        
+            emailnote = note.Replace("\n", "%0D%0A");
+#endif
+            xmlHandler xmlsettings = new xmlHandler(true);
+
+            string defaultemail = xmlsettings.getXMLnode("defaultemail");
+
+            if ((!String.IsNullOrEmpty(title)) && (String.IsNullOrEmpty(emailnote)))
+            {
+                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title + "&body=" + emailnote);
+            }
+            else if (!String.IsNullOrEmpty(title))
+            {
+                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title);
+            }
+            else
+            {
+                MessageBox.Show("Error: note has no title and content");
+            }
         }
+
+        private void FbWeb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
+        {
+            Facebook fb = new Facebook();
+            
+            String url = e.Url.ToString();            
+
+            if (url.StartsWith("http://www.facebook.com/connect/login_success.html") == true)
+            {                
+                String authtoken = "";
+                try
+                {
+                    authtoken = url.Substring(62, url.Length - 62);
+                }
+                catch (Exception)
+                {
+                    throw new CustomExceptions("error getting authcode");
+                }
+
+                if (!String.IsNullOrEmpty(authtoken))
+                {
+                    MessageBox.Show("session started. rest todo\r\nCurrent auth token is: "+authtoken);                    
+                }
+
+                if (frmLoginFb != null) { frmLoginFb.Close(); }
+            }
+            else if (url.StartsWith("http://www.facebook.com/connect/login_failure.html") == true)
+            {
+                if (frmLoginFb != null)
+                {                    
+                    MessageBox.Show("Login cancel.");
+                    frmLoginFb.Close();
+                }
+            }
+        }        
 
         /// <summary>
         /// Form got focus, remove transparency
@@ -352,6 +398,11 @@ namespace SimplePlainNote
                 this.Opacity = skin.getTransparencylevel();
                 this.Refresh();
             }
+        }
+
+        private void hideNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnCloseNote_Click(sender, e);
         }
 
         /// <summary>
@@ -402,6 +453,34 @@ namespace SimplePlainNote
             {
                 SavePos.RunWorkerAsync();
             }
+        }
+
+        /// <summary>
+        /// Get the color of the note and paint it.
+        /// </summary>
+        private void PaintColorNote()
+        {
+            skin = new Skin(notecolor);
+            Color normalcolor = skin.getObjColor(false);
+
+            this.BackColor = normalcolor;
+            this.pnlHead.BackColor = normalcolor;
+            this.pnlNote.BackColor = normalcolor;
+            this.rtbNote.BackColor = normalcolor;
+
+            if (notes.TextDirection == 0)
+            {
+                lblTitle.TextAlign = ContentAlignment.TopLeft;
+                rtbNote.SelectionAlignment = HorizontalAlignment.Left;
+            }
+            else if (notes.TextDirection == 1)
+            {
+                lblTitle.TextAlign = ContentAlignment.TopRight;
+
+                rtbNote.SelectAll();                
+                rtbNote.SelectionAlignment = HorizontalAlignment.Right;                
+            }
+            rtbNote.Font = skin.getFontNoteContent();
         }
 
         /// <summary>
@@ -496,11 +575,6 @@ namespace SimplePlainNote
             }
         }
 
-        public void UpdateThisNote()
-        {
-            SavePos.RunWorkerAsync();
-        }
-
         /// <summary>
         /// Thread to save note settings
         /// </summary>
@@ -575,6 +649,70 @@ namespace SimplePlainNote
         }
 
         /// <summary>
+        /// Send note to Facebook.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
+        {
+            Facebook fb = new Facebook();
+            
+            //grant access.
+            frmLoginFb = new Form();
+
+            frmLoginFb.Width = 640;
+            frmLoginFb.Height = 480;
+            WebBrowser FbWeb = new WebBrowser();
+            FbWeb.Name = "FbWeb";
+            FbWeb.Location = new System.Drawing.Point(10, 10);
+            FbWeb.Dock = DockStyle.Fill;
+            FbWeb.Navigated += new WebBrowserNavigatedEventHandler(FbWeb_Navigated);                        
+            frmLoginFb.Controls.Add(FbWeb);
+            frmLoginFb.Show();
+
+            FbWeb.Navigate("http://www.facebook.com/login.php?api_key=" + fb.AppKey + "&connect_display=popup&v=" + fb.ApiVer + "&next=http://www.facebook.com/connect/login_success.html&cancel_url=http://www.facebook.com/connect/login_failure.html&fbconnect=true");                       
+        }
+
+        /// <summary>
+        /// Request to tweet note. Check if allow, if so call tweetnote() methode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
+        {
+
+#if win32
+            if (IsConnectedToInternet())
+            {
+#endif
+                if ((String.IsNullOrEmpty(note) == false) && (note.Length < 140))
+                {
+                    tweetnote();
+                }
+                else if (note.Length > 140)
+                {
+                    DialogResult result;
+                    string shrttweet = note.Substring(0, 140);
+                    result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        tweetnote();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error: Your note is empty.");
+                }
+#if win32
+            }
+            else
+            {
+                MessageBox.Show("Error: There is no network connection.");
+            }
+#endif
+        }
+
+        /// <summary>
         /// Tweet a note.
         /// </summary>
         private void tweetnote()
@@ -628,9 +766,9 @@ namespace SimplePlainNote
                 }
                 twpass.Remove(0);
             }
-        }     
+        }
 
-        /// <summary>
+             /// <summary>
         /// Change check in menu colors
         /// </summary>
         /// <param name="sender"></param>
@@ -668,10 +806,7 @@ namespace SimplePlainNote
             }
         }
 
-        private void hideNoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            btnCloseNote_Click(sender, e);
-        }
+		#endregion Methods 
 
 #if win32
         /// <summary>
@@ -690,133 +825,6 @@ namespace SimplePlainNote
                          int msg, int wParam, int lParam);
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
-
 #endif
-
-        /// <summary>
-        /// Request to tweet note. Check if allow, if so call tweetnote() methode
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
-        {
-
-#if win32
-            if (IsConnectedToInternet())
-            {
-#endif
-                if ((String.IsNullOrEmpty(note) == false) && (note.Length < 140))
-                {
-                    tweetnote();
-                }
-                else if (note.Length > 140)
-                {
-                    DialogResult result;
-                    string shrttweet = note.Substring(0, 140);
-                    result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        tweetnote();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Error: Your note is empty.");
-                }
-#if win32
-            }
-            else
-            {
-                MessageBox.Show("Error: There is no network connection.");
-            }
-#endif
-        }
-
-        /// <summary>
-        /// E-mail
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void emailToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string emailnote;
-
-#if win32
-            emailnote = note.Replace("\r\n", "%0D%0A");
-#elif mac
-            emailnote = note.Replace("\r", "%0D%0A");
-#elif linux                        
-            emailnote = note.Replace("\n", "%0D%0A");
-#endif
-            xmlHandler xmlsettings = new xmlHandler(true);
-
-            string defaultemail = xmlsettings.getXMLnode("defaultemail");
-
-            if ((!String.IsNullOrEmpty(title)) && (String.IsNullOrEmpty(emailnote)))
-            {
-                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title + "&body=" + emailnote);
-            }
-            else if (!String.IsNullOrEmpty(title))
-            {
-                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + title);
-            }
-            else
-            {
-                MessageBox.Show("Error: note has no title and content");
-            }
-        }
-
-        /// <summary>
-        /// Send note to Facebook.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
-        {
-            Facebook fb = new Facebook();
-
-            //grant access.
-            FrmLoginFb = new Form();
-
-            FrmLoginFb.Width = 640;
-            FrmLoginFb.Height = 480;
-            System.Windows.Forms.WebBrowser FbWeb = new System.Windows.Forms.WebBrowser();
-            FbWeb.Location = new System.Drawing.Point(10, 10);
-            FbWeb.Dock = DockStyle.Fill;
-            FbWeb.Navigate("http://www.facebook.com/login.php?api_key=" + fb.AppKey + "&connect_display=popup&v=" + fb.ApiVer + "&next=http://www.facebook.com/connect/login_success.html&cancel_url=http://www.facebook.com/connect/login_failure.html&fbconnect=true");
-            FrmLoginFb.Controls.Add(FbWeb);
-            FrmLoginFb.Show();
-
-            FbWeb.Navigated += new WebBrowserNavigatedEventHandler(FbWeb_Navigated);
-            
-            
-            /*
-            if (fb.Update(note))
-            {
-                MessageBox.Show("Note was published on your Facebook wall. (fb. dev. toolkit way)");
-            }
-             */
-        }
-
-        private void FbWeb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
-        {            
-            if (e.Url.ToString().StartsWith("http://www.facebook.com/connect/login_success.html?auth_token=") == true)
-            {
-                MessageBox.Show("premissions granted, okay");
-            }
-            else if (e.Url.ToString().StartsWith("http://www.facebook.com/connect/login_failure.html") == true)
-            {
-                if (FrmLoginFb != null)
-                {
-                    FrmLoginFb.Close();
-                    MessageBox.Show("Login cancel.");
-                }
-            }
-
-        }
-
-        #endregion Methods
-
-
     }
 }

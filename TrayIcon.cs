@@ -24,7 +24,7 @@ using System.Windows.Forms;
 using System.Reflection;
 
 [assembly: CLSCompliant(true)]
-namespace SimplePlainNote
+namespace NoteDesk
 {
     /// <summary>
     /// Startup class.
@@ -142,7 +142,7 @@ namespace SimplePlainNote
             icon = new NotifyIcon(components);
             icon.ContextMenuStrip = MenuTrayIcon;
             Assembly assembly = Assembly.GetExecutingAssembly();
-            icon.Icon = new Icon(assembly.GetManifestResourceStream("SimplePlainNote.Resources.trayicon.ico"));
+            icon.Icon = new Icon(assembly.GetManifestResourceStream("NoteDesk.Resources.trayicon.ico"));
 
             icon.MouseClick += new MouseEventHandler(Icon_Click);
             icon.Visible = true;

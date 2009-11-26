@@ -19,7 +19,7 @@ using System.Text;
 using System.Diagnostics;
 using System.IO;
 
-namespace SimplePlainNote
+namespace NoteDesk
 {
     /// <summary>
     /// Own exceptions, and log what happend.

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplePlainNote", "SimplePlainNote.csproj", "{2E47E4D6-04CC-4578-8380-95AA497D3341}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteDesk", "NoteDesk.csproj", "{2E47E4D6-04CC-4578-8380-95AA497D3341}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

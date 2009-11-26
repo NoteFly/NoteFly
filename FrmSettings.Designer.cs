@@ -1,4 +1,4 @@
-﻿namespace SimplePlainNote
+﻿namespace NoteDesk
 {
     partial class FrmSettings
     {

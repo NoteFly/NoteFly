@@ -19,7 +19,7 @@ using System.Text;
 using System.Xml;
 using System.IO;
 
-namespace SimplePlainNote
+namespace NoteDesk
 {
     class xmlHandler
     {

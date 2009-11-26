@@ -1,4 +1,4 @@
-﻿namespace SimplePlainNote
+﻿namespace NoteDesk
 {
     partial class FrmNote
     {
@@ -287,7 +287,7 @@
             // 
             this.pbShowLock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbShowLock.Image = global::SimplePlainNote.Properties.Resources.locknote;
+            this.pbShowLock.Image = global::NoteDesk.Properties.Resources.locknote;
             this.pbShowLock.Location = new System.Drawing.Point(180, 8);
             this.pbShowLock.Name = "pbShowLock";
             this.pbShowLock.Size = new System.Drawing.Size(16, 16);
@@ -358,7 +358,7 @@
             // 
             this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbResizeGrip.Image = global::SimplePlainNote.Properties.Resources.hoekje;
+            this.pbResizeGrip.Image = global::NoteDesk.Properties.Resources.hoekje;
             this.pbResizeGrip.Location = new System.Drawing.Point(223, 191);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
