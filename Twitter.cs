@@ -22,7 +22,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 
-namespace NoteDesk
+namespace NoteFly
 {
     class Twitter
     {

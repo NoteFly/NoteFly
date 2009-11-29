@@ -13,10 +13,10 @@
 ;
 ; The name of the installer
 
-!define VERSION "0.9.10"
-!define VERSTATUS "beta"
+!define VERSION "1.0.0"
+!define VERSTATUS "RC1"
 
-Name "SimplePlainNote ${VERSION} ${VERSTATUS}"
+Name "NoteFly ${VERSION} ${VERSTATUS}"
 BrandingText " "
 InstProgressFlags smooth
 AllowRootDirInstall false
@@ -25,14 +25,14 @@ ShowInstDetails show
 CompletedText "Installation completed. Please close this installer now."
 
 ; The file to write
-OutFile ".\NoteDesk_v${VERSION}.exe"
+OutFile ".\NoteFly_v${VERSION}.exe"
 
 ; The default installation directory
-InstallDir $PROGRAMFILES\NoteDesk
+InstallDir $PROGRAMFILES\NoteFly
 
 ; Registry key to check for directory (so if you install again, it will 
 ; overwrite the old one automatically)
-InstallDirRegKey HKLM "Software\NoteDesk" "Install_Dir"
+InstallDirRegKey HKLM "Software\NoteFly" "Install_Dir"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
@@ -107,22 +107,22 @@ Section "main executable (required)"
   SetOutPath $INSTDIR
   
   ; Put file there
-  File "NoteDesk.exe"
-  ;File "NoteDesk.exe.config"
+  File "NoteFly.exe"
+  ;File "NoteFly.exe.config"
   
   ; Write the installation path into the registry
-  WriteRegStr HKLM SOFTWARE\NoteDesk "Install_Dir" "$INSTDIR"
+  WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"
   
   ; Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayName" "NoteDesk"  
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "URLInfoAbout" "http://"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "DisplayVersion" "${VERSION}"
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoModify" 1
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\simpleplainnote" "NoRepair" 1
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "DisplayName" "NoteFly"  
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "URLInfoAbout" "http://"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "DisplayVersion" "${VERSION}"
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoModify" 1
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
   
-  Exec '"$INSTDIR\NoteDesk.exe" /firstrun'
+  Exec '"$INSTDIR\NoteFly.exe" /firstrun'
   
 SectionEnd
 
@@ -130,9 +130,9 @@ SectionEnd
 Section "Start Menu Shortcuts"
 ;startmenu shortcut should be for currentuser!
   SetShellVarContext current
-  CreateDirectory "$SMPROGRAMS\NoteDesk"
-  CreateShortCut "$SMPROGRAMS\NoteDesk\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\NoteDesk\NoteDesk.lnk" "$INSTDIR\NoteDesk.exe" "" "$INSTDIR\NoteDesk.exe" 0
+  CreateDirectory "$SMPROGRAMS\NoteFly"
+  CreateShortCut "$SMPROGRAMS\NoteFly\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\NoteFly.exe" "" "$INSTDIR\NoteFly.exe" 0
   
 SectionEnd
 
@@ -143,26 +143,26 @@ SectionEnd
 Section "Uninstall"
   
   ; Remove registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteDesk"
-  DeleteRegKey HKLM SOFTWARE\NoteDesk
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly"
+  DeleteRegKey HKLM SOFTWARE\NoteFly
 
   ; Remove files and uninstaller
-  Delete $INSTDIR\NoteDesk.exe
-  ;Delete $INSTDIR\NoteDesk.exe.config
+  Delete $INSTDIR\NoteFly.exe
+  ;Delete $INSTDIR\NoteFly.exe.config
   Delete $INSTDIR\uninstall.exe
 
   ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\NoteDesk\*.*"
+  Delete "$SMPROGRAMS\NoteFly\*.*"
 
   ; Remove directories used
-  RMDir "$SMPROGRAMS\NoteDesk"
+  RMDir "$SMPROGRAMS\NoteFly"
   
   MessageBox MB_YESNO "Do you want to remove your notes and settings too?" IDYES true IDNO false
   true:
   ;deleting all files in appdata folder. 
   SetShellVarContext current
-  Delete "$APPDATA\.NoteDesk\*.*"
-  RMDir "$APPDATA\.NoteDesk" 
+  Delete "$APPDATA\.NoteFly\*.*"
+  RMDir "$APPDATA\.NoteFly" 
   Goto next
   
   false:

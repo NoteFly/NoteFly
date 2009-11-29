@@ -20,7 +20,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace NoteDesk
+namespace NoteFly
 {
     partial class FrmAbout : Form
     {

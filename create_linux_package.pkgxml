@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <name>SimplePlainNote</name>
-  <shortname>SimplePlainNote</shortname>
+  <name>NoteFly</name>
+  <shortname>NoteFly</shortname>
   <summary>note application</summary>
-  <version>0.9.7</version>
+  <version>1.0.0</version>
   <url>http://code.google.com/p/simpleplainnote/</url>
   <license>GPLv2</license>
   <type>Winexe</type>
@@ -22,7 +22,7 @@
   <filetree name="Application Root" writable="false">
     <directories />
     <files>
-      <file name="SimplePlainNote.exe" source="M:\Public\sourcecode\Projects_Csharp\simpleplainnote\bin\Release\linux\SimplePlainNote.exe" startup="true" />
+      <file name="NoteFly.exe" source="M:\Public\sourcecode\Projects_Csharp\simpleplainnote\bin\Release\NoteFly.exe" startup="true" />
     </files>
   </filetree>
   <autogeneraterelease>true</autogeneraterelease>

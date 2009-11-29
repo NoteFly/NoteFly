@@ -21,17 +21,10 @@ using System.Web;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace NoteDesk
+namespace NoteFly
 {
     class Facebook
     {                              
-
-        public Facebook()
-        {
-            //todo            
-        }
-
-
 
         public string AppKey
         {

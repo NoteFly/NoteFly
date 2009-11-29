@@ -1,4 +1,4 @@
-﻿namespace NoteDesk
+﻿namespace NoteFly
 {
     partial class FrmManageNotes
     {
@@ -112,7 +112,7 @@
             this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbResizeGrip.Image = global::NoteDesk.Properties.Resources.hoekje;
+            this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
             this.pbResizeGrip.Location = new System.Drawing.Point(324, 184);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";

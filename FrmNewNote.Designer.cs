@@ -1,4 +1,4 @@
-﻿namespace NoteDesk
+﻿namespace NoteFly
 {    
     partial class FrmNewNote
     {
@@ -172,7 +172,7 @@
             // 
             this.btnCancel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnCancel.BackgroundImage = global::NoteDesk.Properties.Resources.cancel;
+            this.btnCancel.BackgroundImage = global::NoteFly.Properties.Resources.cancel;
             this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnCancel.CausesValidation = false;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -192,7 +192,7 @@
             // 
             this.btnAddNote.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnAddNote.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnAddNote.BackgroundImage = global::NoteDesk.Properties.Resources.accept;
+            this.btnAddNote.BackgroundImage = global::NoteFly.Properties.Resources.accept;
             this.btnAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnAddNote.CausesValidation = false;
             this.btnAddNote.FlatAppearance.BorderColor = System.Drawing.Color.Black;
@@ -227,7 +227,7 @@
             this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbResizeGrip.Image = global::NoteDesk.Properties.Resources.hoekje;
+            this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
             this.pbResizeGrip.Location = new System.Drawing.Point(266, 193);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";

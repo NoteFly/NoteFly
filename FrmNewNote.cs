@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Xml;
 
-namespace NoteDesk
+namespace NoteFly
 {
     /// <summary>
     /// Class to create new note.

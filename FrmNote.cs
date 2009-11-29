@@ -27,7 +27,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 #endif
 
-namespace NoteDesk
+namespace NoteFly
 {
     public partial class FrmNote : Form
     {

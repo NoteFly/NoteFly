@@ -20,7 +20,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace NoteDesk
+namespace NoteFly
 {
     /// <summary>
     /// helper class for text highlight in notes.

@@ -19,7 +19,7 @@ using System.Text;
 using System.Diagnostics;
 using System.IO;
 
-namespace NoteDesk
+namespace NoteFly
 {
     /// <summary>
     /// Own exceptions, and log what happend.

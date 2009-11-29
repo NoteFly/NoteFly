@@ -1,4 +1,4 @@
-﻿namespace NoteDesk
+﻿namespace NoteFly
 {
     partial class FrmSettings
     {
@@ -51,7 +51,7 @@
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tabAppearance = new System.Windows.Forms.TabPage();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lbTextDirection = new System.Windows.Forms.Label();
             this.cbxTextDirection = new System.Windows.Forms.ComboBox();
             this.lblTextpt = new System.Windows.Forms.Label();
             this.numFontSize = new System.Windows.Forms.NumericUpDown();
@@ -63,7 +63,7 @@
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.cbxDefaultEmailToBlank = new System.Windows.Forms.CheckBox();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbTextWarnExperimentalFeatures = new System.Windows.Forms.Label();
             this.btnCrash = new System.Windows.Forms.Button();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.chxSyntaxHighlightC = new System.Windows.Forms.CheckBox();
@@ -356,7 +356,7 @@
             // 
             // tabAppearance
             // 
-            this.tabAppearance.Controls.Add(this.label2);
+            this.tabAppearance.Controls.Add(this.lbTextDirection);
             this.tabAppearance.Controls.Add(this.cbxTextDirection);
             this.tabAppearance.Controls.Add(this.lblTextpt);
             this.tabAppearance.Controls.Add(this.numFontSize);
@@ -376,16 +376,16 @@
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // lbTextDirection
             // 
-            this.label2.AccessibleDescription = "";
-            this.label2.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 165);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
-            this.label2.TabIndex = 22;
-            this.label2.Text = "Text direction";
+            this.lbTextDirection.AccessibleDescription = "";
+            this.lbTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.lbTextDirection.AutoSize = true;
+            this.lbTextDirection.Location = new System.Drawing.Point(18, 165);
+            this.lbTextDirection.Name = "lbTextDirection";
+            this.lbTextDirection.Size = new System.Drawing.Size(71, 13);
+            this.lbTextDirection.TabIndex = 22;
+            this.lbTextDirection.Text = "Text direction";
             // 
             // cbxTextDirection
             // 
@@ -491,7 +491,7 @@
             // 
             this.tabAdvance.Controls.Add(this.cbxDefaultEmailToBlank);
             this.tabAdvance.Controls.Add(this.chxLogErrors);
-            this.tabAdvance.Controls.Add(this.label1);
+            this.tabAdvance.Controls.Add(this.lbTextWarnExperimentalFeatures);
             this.tabAdvance.Controls.Add(this.btnCrash);
             this.tabAdvance.Controls.Add(this.tbDefaultEmail);
             this.tabAdvance.Controls.Add(this.chxSyntaxHighlightC);
@@ -530,14 +530,14 @@
             this.chxLogErrors.Text = "log application errors";
             this.chxLogErrors.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // lbTextWarnExperimentalFeatures
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 139);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "warning experimental features:";
+            this.lbTextWarnExperimentalFeatures.AutoSize = true;
+            this.lbTextWarnExperimentalFeatures.Location = new System.Drawing.Point(13, 139);
+            this.lbTextWarnExperimentalFeatures.Name = "lbTextWarnExperimentalFeatures";
+            this.lbTextWarnExperimentalFeatures.Size = new System.Drawing.Size(150, 13);
+            this.lbTextWarnExperimentalFeatures.TabIndex = 20;
+            this.lbTextWarnExperimentalFeatures.Text = "warning experimental features:";
             // 
             // btnCrash
             // 
@@ -667,10 +667,10 @@
         private System.Windows.Forms.CheckBox chxConfirmExit;
         private System.Windows.Forms.CheckBox chxSyntaxHighlightC;
         private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbTextWarnExperimentalFeatures;
         private System.Windows.Forms.CheckBox chxLogErrors;
         private System.Windows.Forms.ComboBox cbxTextDirection;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbTextDirection;
         private System.Windows.Forms.Button btnResetSettings;
         private System.Windows.Forms.CheckBox cbxDefaultEmailToBlank;
     }

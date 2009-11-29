@@ -19,7 +19,7 @@ using System.Text;
 using System.Xml;
 using System.IO;
 
-namespace NoteDesk
+namespace NoteFly
 {
     class xmlHandler
     {

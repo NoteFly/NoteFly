@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 
-namespace NoteDesk
+namespace NoteFly
 {
     /// <summary>
     /// Class that provide skin options to notes.

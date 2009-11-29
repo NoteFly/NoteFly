@@ -1,4 +1,4 @@
-﻿namespace NoteDesk
+﻿namespace NoteFly
 {
     partial class FrmAbout
     {
