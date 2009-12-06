@@ -87,7 +87,7 @@ FunctionEnd
 
  PageEx license
    LicenseText "License agreement"
-   LicenseData "..\license.txt"
+   LicenseData "license.txt"
  PageExEnd
 Page components
 Page directory

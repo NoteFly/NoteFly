@@ -341,37 +341,10 @@ namespace NoteFly
         private void FbWeb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
             Facebook fb = new Facebook();
-            
-            String url = e.Url.ToString();            
+            fb.ParserURL(e.Url.ToString());
 
-            if (url.StartsWith("http://www.facebook.com/connect/login_success.html") == true)
-            {                
-                String authtoken = "";
-                try
-                {
-                    authtoken = url.Substring(62, url.Length - 62);
-                }
-                catch (Exception)
-                {
-                    throw new CustomExceptions("error getting authcode");
-                }
-
-                if (!String.IsNullOrEmpty(authtoken))
-                {
-                    MessageBox.Show("session started. rest todo\r\nCurrent auth token is: "+authtoken);                    
-                }
-
-                if (frmLoginFb != null) { frmLoginFb.Close(); }
-            }
-            else if (url.StartsWith("http://www.facebook.com/connect/login_failure.html") == true)
-            {
-                if (frmLoginFb != null)
-                {                    
-                    MessageBox.Show("Login cancel.");
-                    frmLoginFb.Close();
-                }
-            }
-        }        
+            if (frmLoginFb != null) { frmLoginFb.Close(); }
+        }  
 
         /// <summary>
         /// Form got focus, remove transparency
@@ -670,7 +643,7 @@ namespace NoteFly
             frmLoginFb.Controls.Add(FbWeb);
             frmLoginFb.Show();
 
-            FbWeb.Navigate("http://www.facebook.com/login.php?api_key=" + fb.AppKey + "&connect_display=popup&v=" + fb.ApiVer + "&next=http://www.facebook.com/connect/login_success.html&cancel_url=http://www.facebook.com/connect/login_failure.html&fbconnect=true");                       
+            FbWeb.Navigate(fb.CreateLoginURL());
         }
 
         /// <summary>

@@ -184,7 +184,6 @@ namespace NoteFly
                     {
                         MessageBox.Show("Error: cannot send POST message:\r\n " + notsupexc.Message);
                     }
-
                 }
             }
             else
