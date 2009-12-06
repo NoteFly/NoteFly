@@ -341,7 +341,11 @@ namespace NoteFly
         private void FbWeb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
             Facebook fb = new Facebook();
-            fb.ParserURL(e.Url.ToString());
+            if (fb.ParserURL(e.Url.ToString()))
+            {
+                string response = fb.PostStream(this.note);
+                MessageBox.Show(response);
+            }
 
             if (frmLoginFb != null) { frmLoginFb.Close(); }
         }  

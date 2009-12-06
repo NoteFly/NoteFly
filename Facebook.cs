@@ -21,6 +21,7 @@ using System.Web;
 using System.Security.Cryptography;
 using System.IO;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace NoteFly
 {
@@ -32,6 +33,7 @@ namespace NoteFly
         private const String appkey = "cced88bcd1585fa3862e7fd17b2f6986";
         private const String apiversion = "1.0";
 
+        private int numpost = 0;
         private String p_session_key;
         private String p_uid;
         private String p_expires;
@@ -54,7 +56,7 @@ namespace NoteFly
             WebRequest request = WebRequest.Create(fburl);
             request.ContentType = "application/x-www-form-urlencoded";
             request.Method = "POST";
-            request.Timeout = 6000;
+            request.Timeout = 15000; //15secs
 
             string data = CreatePostData(message);
 
@@ -82,23 +84,51 @@ namespace NoteFly
                 {
                     MessageBox.Show("Error: cannot send POST message:\r\n " + notsupexc.Message);
                 }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(exc.Message);
+                }
             }
             return null;
         }
 
         private String CreatePostData(String message)
         {
-            string data = "method=facebook.stream.publish&message=" + message;
-            data += "&uid="+p_uid;
+            numpost++;
+            String data = "method=facebook.stream.publish&message=" + message;            
+            data += "&uid=" + p_uid;
             data += "&session_key=" + p_session_key;
             data += "&api_key=" + appkey;
             data += "&v=" + apiversion;
             data += "&ss=1";
-            //todo
-            data += "&call_id=" + "???????????????"; //find out..
-            data += "????????????????????????????????"; //generate one...
-            
+            String callid = Convert.ToString(numpost) + DateTime.Now.Millisecond.ToString();
+            data += "&call_id=" + callid;            
+            data += "&sig=" + GenerateSignature(appkey, callid, message, "facebook.stream.publish", p_session_key, "1", p_uid, apiversion);                        
             return data;
+        }
+
+        private String GenerateSignature(String api_key, String call_id, String message, String method, String session_key, String ss, String uid, String v)
+        {
+            var md5 = MD5.Create();
+
+            String signatureparms = "api_key=" + api_key + "call_id=" + call_id + "message=" + message + "method=" + method + "session_key=" + session_key + "ss=" + ss + "uid=" + uid + "v=" + v;
+
+            String hash = MakeMD5(signatureparms);
+            if (hash.Length == 32) return hash;
+            else throw new CustomExceptions("error generating md5 signature.");    
+
+        }
+
+        public String MakeMD5(String input)
+        {
+            MD5 md5Hasher = MD5.Create();
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
 
         /// <summary>
@@ -111,7 +141,7 @@ namespace NoteFly
             if (url.StartsWith(fbsuccessurl) == true)
             {
                 String parm = url.ToString().Substring(60, url.Length - 61);
-                String[] parms = parm.Split(',');                                
+                String[] parms = parm.Split(',');
 
                 if (!String.IsNullOrEmpty(parms[0]))
                 {
@@ -139,11 +169,11 @@ namespace NoteFly
                             p_sig = curparm.Substring(7, curparm.Length - 8);
                         }
                     }
-                    MessageBox.Show("session_key=" + p_session_key);
-                    MessageBox.Show("uid=" + p_uid);
-                    MessageBox.Show("expires=" + p_expires);
-                    MessageBox.Show("secret=" + p_secret);
-                    MessageBox.Show("sig=" + p_sig);
+                    //MessageBox.Show("session_key=" + p_session_key);
+                    //MessageBox.Show("uid=" + p_uid);
+                    //MessageBox.Show("expires=" + p_expires);
+                    //MessageBox.Show("secret=" + p_secret);
+                    //MessageBox.Show("sig=" + p_sig);  
                     return true;
                 }
                 else
@@ -153,7 +183,7 @@ namespace NoteFly
             }
             else if (url.StartsWith(fbcancelurl) == true)
             {
-                return false;                                  
+                return false;
             }
             else
             { throw new CustomExceptions("error parsering url page"); }
