@@ -14,13 +14,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Net;
-using System.Web;
-using System.Security.Cryptography;
 using System.IO;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
+using System.Web;
+//using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
 using System.Globalization;
 
 namespace NoteFly
@@ -29,11 +31,11 @@ namespace NoteFly
     {
         public const String fbcancelurl = "http://www.facebook.com/connect/login_failure.html";
         public const String fbsuccessurl = "http://www.facebook.com/connect/login_success.html";
+        private const String restserverurl = "http://api.facebook.com/restserver.php";
 
         private const String appkey = "cced88bcd1585fa3862e7fd17b2f6986";
         private const String apiversion = "1.0";
-
-        private int numpost = 0;
+        
         private String p_session_key;
         private String p_uid;
         private String p_expires;
@@ -42,6 +44,7 @@ namespace NoteFly
 
         public String CreateLoginURL()
         {
+            //http://www.facebook.com/login.php?api_key=cced88bcd1585fa3862e7fd17b2f6986&connect_display=popup&v=1.0&fbconnect=true&session_key_only=true&return_session=true&next=http://www.facebook.com/connect/login_success.html&cancel_url=http://www.facebook.com/connect/login_failure.html
             return "http://www.facebook.com/login.php?api_key=" + appkey + "&connect_display=popup&v=" + apiversion + "&fbconnect=true&session_key_only=true&return_session=true&next=" + fbsuccessurl + "&cancel_url=" + fbcancelurl;
         }
 
@@ -52,11 +55,10 @@ namespace NoteFly
         /// <returns>response code (as json or xml?)</returns>
         public String PostStream(String message)
         {
-            String fburl = "http://api.facebook.com/restserver.php";
-            WebRequest request = WebRequest.Create(fburl);
-            request.ContentType = "application/x-www-form-urlencoded";
+            WebRequest request = WebRequest.Create(restserverurl);
             request.Method = "POST";
-            request.Timeout = 15000; //15secs
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Timeout = 10000; //10secs
 
             string data = CreatePostData(message);
 
@@ -86,39 +88,57 @@ namespace NoteFly
                 }
                 catch (Exception exc)
                 {
-                    MessageBox.Show(exc.Message);
+                    MessageBox.Show("Error: " + exc.Message);
                 }
             }
             return null;
         }
 
+        /// <summary>
+        /// Create the Data to post and attach the generated the signature.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         private String CreatePostData(String message)
-        {
-            numpost++;
-            String data = "method=facebook.stream.publish&message=" + message;            
-            data += "&uid=" + p_uid;
-            data += "&session_key=" + p_session_key;
-            data += "&api_key=" + appkey;
-            data += "&v=" + apiversion;
-            data += "&ss=1";
-            String callid = Convert.ToString(numpost) + DateTime.Now.Millisecond.ToString();
+        {            
+            String data = "api_key=" + appkey;
+            String callid = DateTime.Now.Ticks.ToString("x", CultureInfo.InvariantCulture);
             data += "&call_id=" + callid;            
-            data += "&sig=" + GenerateSignature(appkey, callid, message, "facebook.stream.publish", p_session_key, "1", p_uid, apiversion);                        
+            data += "&message=" + message;
+            data += "&method=facebook.stream.publish";
+            data += "&session_key=" + p_session_key;
+            data += "&ss=1";
+            data += "&uid=" + p_uid;
+            data += "&v=" + apiversion;                                    
+
+            data += "&sig=" + GenerateSignature(p_expires, callid, message, p_session_key, "1", p_uid);
             return data;
         }
 
-        private String GenerateSignature(String api_key, String call_id, String message, String method, String session_key, String ss, String uid, String v)
+        /// <summary>
+        /// Create a signature.. if this works, come on..
+        /// </summary>
+        /// <param name="expires"></param>
+        /// <param name="session_key"></param>
+        /// <param name="ss"></param>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        private String GenerateSignature(String expires, String call_id, String message, String session_key, String ss_bool, String uid)
         {
             var md5 = MD5.Create();
-
-            String signatureparms = "api_key=" + api_key + "call_id=" + call_id + "message=" + message + "method=" + method + "session_key=" + session_key + "ss=" + ss + "uid=" + uid + "v=" + v;
-
-            String hash = MakeMD5(signatureparms);
+            String methode_s = "facebook.stream.publish";
+            String data = "api_key=" + appkey + "call_id=" + call_id + "message=" + message + "method="+methode_s+"session_key=" + p_session_key + "ss=" + ss_bool + "uid=" + uid + "v=" + apiversion + p_secret;                        
+            String hash = MakeMD5(data);
             if (hash.Length == 32) return hash;
-            else throw new CustomExceptions("error generating md5 signature.");    
+            else throw new CustomExceptions("error: cannot generating MD5 hash.");
 
-        }
+        }        
 
+        /// <summary>
+        /// Generate a md5 hash from the given string.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public String MakeMD5(String input)
         {
             MD5 md5Hasher = MD5.Create();
@@ -132,6 +152,14 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// parser xml respons, throw error on error code return.
+        /// </summary>
+        public void CheckResponse(String responsestream)
+        {
+            //todo
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="url"></param>
@@ -141,7 +169,7 @@ namespace NoteFly
             if (url.StartsWith(fbsuccessurl) == true)
             {
                 String parm = url.ToString().Substring(60, url.Length - 61);
-                String[] parms = parm.Split(',');
+                String[] parms = parm.Split(',');                
 
                 if (!String.IsNullOrEmpty(parms[0]))
                 {
@@ -169,11 +197,6 @@ namespace NoteFly
                             p_sig = curparm.Substring(7, curparm.Length - 8);
                         }
                     }
-                    //MessageBox.Show("session_key=" + p_session_key);
-                    //MessageBox.Show("uid=" + p_uid);
-                    //MessageBox.Show("expires=" + p_expires);
-                    //MessageBox.Show("secret=" + p_secret);
-                    //MessageBox.Show("sig=" + p_sig);  
                     return true;
                 }
                 else

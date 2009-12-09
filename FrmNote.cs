@@ -342,9 +342,8 @@ namespace NoteFly
         {
             Facebook fb = new Facebook();
             if (fb.ParserURL(e.Url.ToString()))
-            {
-                string response = fb.PostStream(this.note);
-                MessageBox.Show(response);
+            {                                          
+                fb.CheckResponse(fb.PostStream(this.note));                                
             }
 
             if (frmLoginFb != null) { frmLoginFb.Close(); }
@@ -632,22 +631,29 @@ namespace NoteFly
         /// <param name="e"></param>
         private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
         {
-            Facebook fb = new Facebook();
-            
-            //grant access.
-            frmLoginFb = new Form();
+            if (IsConnectedToInternet())
+            {
+                Facebook fb = new Facebook();
 
-            frmLoginFb.Width = 640;
-            frmLoginFb.Height = 480;
-            WebBrowser FbWeb = new WebBrowser();
-            FbWeb.Name = "FbWeb";
-            FbWeb.Location = new System.Drawing.Point(10, 10);
-            FbWeb.Dock = DockStyle.Fill;
-            FbWeb.Navigated += new WebBrowserNavigatedEventHandler(FbWeb_Navigated);                        
-            frmLoginFb.Controls.Add(FbWeb);
-            frmLoginFb.Show();
+                //grant access.
+                frmLoginFb = new Form();
 
-            FbWeb.Navigate(fb.CreateLoginURL());
+                frmLoginFb.Width = 640;
+                frmLoginFb.Height = 480;
+                WebBrowser FbWeb = new WebBrowser();
+                FbWeb.Name = "FbWeb";
+                FbWeb.Location = new System.Drawing.Point(10, 10);
+                FbWeb.Dock = DockStyle.Fill;
+                FbWeb.Navigated += new WebBrowserNavigatedEventHandler(FbWeb_Navigated);
+                frmLoginFb.Controls.Add(FbWeb);
+                frmLoginFb.Show();
+
+                FbWeb.Navigate(fb.CreateLoginURL());
+            }
+            else
+            {
+                MessageBox.Show("Error: no network connection.");
+            }
         }
 
         /// <summary>
