@@ -16,12 +16,9 @@
 #define win32
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Security.Permissions;
-using System.Threading;
-using System.Windows.Forms;
 using System.Reflection;
+using System.Windows.Forms;
 
 [assembly: CLSCompliant(true)]
 namespace NoteFly
