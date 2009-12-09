@@ -19,122 +19,47 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using System.Web;
-//using System.Linq;
-using System.Collections.Generic;
-using System.Collections;
 using System.Globalization;
 
 namespace NoteFly
 {
     public class Facebook
     {
+		#region Fields (10) 
+
+        private const String apiversion = "1.0";
+        private const String appkey = "cced88bcd1585fa3862e7fd17b2f6986";
         public const String fbcancelurl = "http://www.facebook.com/connect/login_failure.html";
         public const String fbsuccessurl = "http://www.facebook.com/connect/login_success.html";
-        private const String restserverurl = "http://api.facebook.com/restserver.php";
-
-        private const String appkey = "cced88bcd1585fa3862e7fd17b2f6986";
-        private const String apiversion = "1.0";
-        
-        private String p_session_key;
-        private String p_uid;
         private String p_expires;
         private String p_secret;
+        private String p_session_key;
         private String p_sig;
+        private String p_uid;
+        private const String restserverurl = "http://api.facebook.com/restserver.php";
+
+		#endregion Fields 
+
+		#region Methods (7) 
+
+		// Public Methods (5) 
+
+        /// <summary>
+        /// parser xml response, return errorcode if it returned by facebook.
+        /// </summary>
+        public int CheckResponse(String responsestream)
+        {
+            
+
+            return 0;//is good
+        }
 
         public String CreateLoginURL()
-        {
-            //http://www.facebook.com/login.php?api_key=cced88bcd1585fa3862e7fd17b2f6986&connect_display=popup&v=1.0&fbconnect=true&session_key_only=true&return_session=true&next=http://www.facebook.com/connect/login_success.html&cancel_url=http://www.facebook.com/connect/login_failure.html
+        {            
             return "http://www.facebook.com/login.php?api_key=" + appkey + "&connect_display=popup&v=" + apiversion + "&fbconnect=true&session_key_only=true&return_session=true&next=" + fbsuccessurl + "&cancel_url=" + fbcancelurl;
         }
 
-        /// <summary>
-        /// Post a message to the stream.
-        /// </summary>
-        /// <param name="message">the message</param>
-        /// <returns>response code (as json or xml?)</returns>
-        public String PostStream(String message)
-        {
-            WebRequest request = WebRequest.Create(restserverurl);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.Timeout = 10000; //10secs
-
-            string data = CreatePostData(message);
-
-            byte[] bytes = Encoding.UTF8.GetBytes(data);
-            request.ContentLength = bytes.Length;
-            using (Stream requestStream = request.GetRequestStream())
-            {
-                requestStream.Write(bytes, 0, bytes.Length);
-
-                try
-                {
-                    using (WebResponse response = request.GetResponse())
-                    {
-                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                        {
-                            return reader.ReadToEnd();
-                        }
-                    }
-                }
-                catch (TimeoutException)
-                {
-                    MessageBox.Show("Error: connection timeout. ");
-                }
-                catch (NotSupportedException notsupexc)
-                {
-                    MessageBox.Show("Error: cannot send POST message:\r\n " + notsupexc.Message);
-                }
-                catch (Exception exc)
-                {
-                    MessageBox.Show("Error: " + exc.Message);
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Create the Data to post and attach the generated the signature.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        private String CreatePostData(String message)
-        {            
-            String data = "api_key=" + appkey;
-            String callid = DateTime.Now.Ticks.ToString("x", CultureInfo.InvariantCulture);
-            data += "&call_id=" + callid;            
-            data += "&message=" + message;
-            data += "&method=facebook.stream.publish";
-            data += "&session_key=" + p_session_key;
-            data += "&ss=1";
-            data += "&uid=" + p_uid;
-            data += "&v=" + apiversion;                                    
-
-            data += "&sig=" + GenerateSignature(p_expires, callid, message, p_session_key, "1", p_uid);
-            return data;
-        }
-
-        /// <summary>
-        /// Create a signature.. if this works, come on..
-        /// </summary>
-        /// <param name="expires"></param>
-        /// <param name="session_key"></param>
-        /// <param name="ss"></param>
-        /// <param name="uid"></param>
-        /// <returns></returns>
-        private String GenerateSignature(String expires, String call_id, String message, String session_key, String ss_bool, String uid)
-        {
-            var md5 = MD5.Create();
-            String methode_s = "facebook.stream.publish";
-            String data = "api_key=" + appkey + "call_id=" + call_id + "message=" + message + "method="+methode_s+"session_key=" + p_session_key + "ss=" + ss_bool + "uid=" + uid + "v=" + apiversion + p_secret;                        
-            String hash = MakeMD5(data);
-            if (hash.Length == 32) return hash;
-            else throw new CustomExceptions("error: cannot generating MD5 hash.");
-
-        }        
-
-        /// <summary>
+                /// <summary>
         /// Generate a md5 hash from the given string.
         /// </summary>
         /// <param name="input"></param>
@@ -149,14 +74,6 @@ namespace NoteFly
                 sBuilder.Append(data[i].ToString("x2"));
             }
             return sBuilder.ToString();
-        }
-
-        /// <summary>
-        /// parser xml respons, throw error on error code return.
-        /// </summary>
-        public void CheckResponse(String responsestream)
-        {
-            //todo
         }
 
         /// <summary>
@@ -211,5 +128,98 @@ namespace NoteFly
             else
             { throw new CustomExceptions("error parsering url page"); }
         }
+
+        /// <summary>
+        /// Post a message to the stream.
+        /// </summary>
+        /// <param name="message">the message</param>
+        /// <returns>response code (as json or xml?)</returns>
+        public String PostStream(String message)
+        {
+            WebRequest request = WebRequest.Create(restserverurl);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Timeout = 10000; //10secs
+            
+            //request.Proxy = new WebProxy("");
+
+            string data = CreatePostData(message);
+
+            byte[] bytes = Encoding.UTF8.GetBytes(data);
+            request.ContentLength = bytes.Length;
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(bytes, 0, bytes.Length);
+
+                try
+                {
+                    using (WebResponse response = request.GetResponse())
+                    {
+                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                        {
+                            return reader.ReadToEnd();
+                        }
+                    }
+                }
+                catch (TimeoutException)
+                {
+                    MessageBox.Show("Error: connection timeout. ");
+                }
+                catch (NotSupportedException notsupexc)
+                {
+                    MessageBox.Show("Error: cannot send POST message:\r\n " + notsupexc.Message);
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show("Error: " + exc.Message);
+                }
+            }
+            return null;
+        }
+		// Private Methods (2) 
+
+        /// <summary>
+        /// Create the Data to post and attach the generated the signature.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private String CreatePostData(String message)
+        {            
+            String data = "api_key=" + appkey;
+            String callid = DateTime.Now.Ticks.ToString("x", CultureInfo.InvariantCulture);
+            data += "&call_id=" + callid;            
+            data += "&message=" + message;
+            data += "&method=facebook.stream.publish";
+            data += "&session_key=" + p_session_key;
+            String sessionsecret = "1";
+            data += "&ss=" + sessionsecret;
+            data += "&uid=" + p_uid;
+            data += "&v=" + apiversion;
+
+            String methode = "facebook.stream.publish";
+            data += "&sig=" + GenerateSignature(callid, message, methode, p_session_key, sessionsecret, p_uid);
+            return data;
+        }
+
+        /// <summary>
+        /// Create a signature.. if this works, come on..
+        /// </summary>
+        /// <param name="expires"></param>
+        /// <param name="session_key"></param>
+        /// <param name="ss"></param>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        private String GenerateSignature(String call_id, String message, String methode, String session_key, String sessionsecret, String uid)
+        {
+            String data = "api_key=" + appkey + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + p_session_key + "ss=" + sessionsecret + "uid=" + uid + "v=" + apiversion + p_secret;
+
+            var md5 = MD5.Create();
+            String hash = MakeMD5(data);
+            if (hash.Length == 32) return hash;
+            else throw new CustomExceptions("error: cannot generating MD5 hash.");
+
+        }
+
+		#endregion Methods 
     }
 }

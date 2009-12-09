@@ -161,6 +161,8 @@ namespace NoteFly
                 }
                 byte[] bytes = Encoding.UTF8.GetBytes(data);
 
+                //request.Proxy = new WebProxy("");
+
                 request.ContentLength = bytes.Length;
                 using (Stream requestStream = request.GetRequestStream())
                 {

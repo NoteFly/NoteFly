@@ -60,6 +60,8 @@
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
+            this.tabNetwerk = new System.Windows.Forms.TabPage();
+            this.cbxProxy = new System.Windows.Forms.CheckBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.cbxDefaultEmailToBlank = new System.Windows.Forms.CheckBox();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
@@ -77,6 +79,7 @@
             this.tabAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).BeginInit();
             this.tabTwitter.SuspendLayout();
+            this.tabNetwerk.SuspendLayout();
             this.tabAdvance.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -246,6 +249,7 @@
             this.tabControlSettings.Controls.Add(this.tabGeneral);
             this.tabControlSettings.Controls.Add(this.tabAppearance);
             this.tabControlSettings.Controls.Add(this.tabTwitter);
+            this.tabControlSettings.Controls.Add(this.tabNetwerk);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
             this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
@@ -487,6 +491,28 @@
             this.lbWarningTwitterPassword.TabIndex = 13;
             this.lbWarningTwitterPassword.Text = "Never ever enter your twitter password here on a public computer.";
             // 
+            // tabNetwerk
+            // 
+            this.tabNetwerk.Controls.Add(this.cbxProxy);
+            this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
+            this.tabNetwerk.Name = "tabNetwerk";
+            this.tabNetwerk.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNetwerk.Size = new System.Drawing.Size(348, 248);
+            this.tabNetwerk.TabIndex = 4;
+            this.tabNetwerk.Text = "Netwerk";
+            this.tabNetwerk.UseVisualStyleBackColor = true;
+            // 
+            // cbxProxy
+            // 
+            this.cbxProxy.AutoSize = true;
+            this.cbxProxy.Location = new System.Drawing.Point(24, 23);
+            this.cbxProxy.Name = "cbxProxy";
+            this.cbxProxy.Size = new System.Drawing.Size(111, 17);
+            this.cbxProxy.TabIndex = 1;
+            this.cbxProxy.Text = "Use socked proxy";
+            this.cbxProxy.UseVisualStyleBackColor = true;
+            this.cbxProxy.Click += new System.EventHandler(this.cbxProxy_Click);
+            // 
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.cbxDefaultEmailToBlank);
@@ -622,6 +648,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).EndInit();
             this.tabTwitter.ResumeLayout(false);
             this.tabTwitter.PerformLayout();
+            this.tabNetwerk.ResumeLayout(false);
+            this.tabNetwerk.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
             this.ResumeLayout(false);
@@ -673,5 +701,7 @@
         private System.Windows.Forms.Label lbTextDirection;
         private System.Windows.Forms.Button btnResetSettings;
         private System.Windows.Forms.CheckBox cbxDefaultEmailToBlank;
+        private System.Windows.Forms.TabPage tabNetwerk;
+        private System.Windows.Forms.CheckBox cbxProxy;
     }
 }

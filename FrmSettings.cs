@@ -37,6 +37,7 @@ namespace NoteFly
 
         private Notes notes;
         private xmlHandler xmlsettings;
+        private IPTextBox ipproxy;
 #if win32
         private RegistryKey key;
 #endif
@@ -77,6 +78,11 @@ namespace NoteFly
             
             this.notes = notes;
             DrawCbxFonts();
+
+            ipproxy = new IPTextBox();
+            ipproxy.Location = new Point(24, 50);
+            //ipproxy.Enabled = false;
+            this.tabNetwerk.Controls.Add(ipproxy);
 #if DEBUG
             btnCrash.Visible = true;
 #endif
@@ -408,5 +414,10 @@ namespace NoteFly
         }
 
         #endregion Methods
+
+        private void cbxProxy_Click(object sender, EventArgs e)
+        {
+            ipproxy.Enabled = cbxProxy.Checked;            
+        }   
     }
 }

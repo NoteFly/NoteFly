@@ -32,7 +32,6 @@
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // okButton
@@ -50,7 +49,7 @@
             // 
             this.lblProductName.AutoSize = true;
             this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProductName.Location = new System.Drawing.Point(15, 5);
+            this.lblProductName.Location = new System.Drawing.Point(6, 9);
             this.lblProductName.Name = "lblProductName";
             this.lblProductName.Size = new System.Drawing.Size(121, 20);
             this.lblProductName.TabIndex = 26;
@@ -60,7 +59,7 @@
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.Location = new System.Drawing.Point(16, 25);
+            this.lblVersion.Location = new System.Drawing.Point(7, 29);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(68, 16);
             this.lblVersion.TabIndex = 27;
@@ -86,21 +85,11 @@
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of GNU Public License version2";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 88);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(189, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "Which also means there is no warrenty";
-            // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(235, 171);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);
             this.Controls.Add(this.lblVersion);
@@ -127,7 +116,6 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.LinkLabel linklblWebsite;
         private System.Windows.Forms.Label lblTextLicense;
-        private System.Windows.Forms.Label label1;
 
     }
 }
