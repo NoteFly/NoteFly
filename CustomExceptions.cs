@@ -47,19 +47,12 @@ namespace NoteFly
         private bool writelog(string appdatafolder, string message)
         {
             //log to file
-            string errorlog = Path.Combine(appdatafolder, "errors.log");
-            if ((!String.IsNullOrEmpty(errorlog)) && (File.Exists(errorlog)))
+            String errorlog = Path.Combine(appdatafolder, "errors.log");
+            String line = DateTime.Now.ToString() + " exception: " + message;
+
+            if (File.Exists(errorlog))
             {
-                StreamWriter bestandsSchrijver = null;
-                try
-                {
-                    bestandsSchrijver = new StreamWriter(errorlog, true);
-                    bestandsSchrijver.WriteLine(DateTime.Now.ToString() + " exception: " + message);
-                }
-                finally
-                {
-                    bestandsSchrijver.Close();
-                }
+                new Textfile(false, errorlog, "", line);
             }
             else
             {

@@ -27,14 +27,11 @@ namespace NoteFly
 {
     public partial class FrmSettings : Form
     {
-		#region Fields (2) 
+		#region Fields (3) 
 
+        private IPTextBox ipproxy;
         private Notes notes;
         private xmlHandler xmlsettings;
-        private IPTextBox ipproxy;
-#if win32
-        private RegistryKey key;
-#endif
 
 		#endregion Fields 
 
@@ -43,11 +40,11 @@ namespace NoteFly
         public FrmSettings(Notes notes, bool transparecy)
         {
             InitializeComponent();
-            xmlsettings = new xmlHandler(true);            
-            //read setting and display them correctly.            
+            xmlsettings = new xmlHandler(true);
+            //read setting and display them correctly.
             chxTransparecy.Checked = transparecy;
             chxConfirmExit.Checked = getConfirmExit();
-            numProcTransparency.Value = getTransparecylevel();            
+            numProcTransparency.Value = getTransparecylevel();
             cbxDefaultColor.SelectedIndex = getDefaultColor();
             cbxActionLeftClick.SelectedIndex = getActionLeftClick();
             chxConfirmLink.Checked = getAskUrl();
@@ -75,7 +72,7 @@ namespace NoteFly
 
             ipproxy = new IPTextBox();
             ipproxy.Location = new Point(24, 50);
-            //ipproxy.Enabled = false;
+            ipproxy.Enabled = false; //getProxySettings()
             this.tabNetwerk.Controls.Add(ipproxy);
 #if DEBUG
             btnCrash.Visible = true;
@@ -206,6 +203,36 @@ namespace NoteFly
                 notes.UpdateAllFonts();
                 this.Close();
             }                                        
+        }
+
+        private void btnResetSettings_Click(object sender, EventArgs e)
+        {
+            DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset your settings?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);            
+            if (dlgres == DialogResult.Yes)
+            {
+                String settingsfile = Path.Combine(xmlsettings.AppDataFolder, "settings.xml");
+                if (File.Exists(settingsfile))
+                {
+                    File.Delete(settingsfile);
+                    xmlsettings = new xmlHandler(true);
+                }
+                else
+                {
+                    throw new Exception("Could not find settings file in application directory.");
+                }        
+                this.Close();
+            }            
+        }
+
+		        private void cbxDefaultEmailToBlank_CheckedChanged(object sender, EventArgs e)
+        {            
+            tbDefaultEmail.Enabled = !cbxDefaultEmailToBlank.Checked;
+            if (cbxDefaultEmailToBlank.Checked) { tbDefaultEmail.Text = ""; }
+        }
+
+        private void cbxProxy_Click(object sender, EventArgs e)
+        {
+            ipproxy.Enabled = cbxProxy.Checked;
         }
 
         /// <summary>
@@ -382,36 +409,10 @@ namespace NoteFly
             }
         }
 
-        private void btnResetSettings_Click(object sender, EventArgs e)
-        {
-            DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset your settings?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);            
-            if (dlgres == DialogResult.Yes)
-            {
-                String settingsfile = Path.Combine(xmlsettings.AppDataFolder, "settings.xml");
-                if (File.Exists(settingsfile))
-                {
-                    File.Delete(settingsfile);
-                    xmlsettings = new xmlHandler(true);
-                }
-                else
-                {
-                    throw new Exception("Could not find settings file in application directory.");
-                }        
-                this.Close();
-            }            
-        }		
+		#endregion Methods 
 
-        private void cbxDefaultEmailToBlank_CheckedChanged(object sender, EventArgs e)
-        {            
-            tbDefaultEmail.Enabled = !cbxDefaultEmailToBlank.Checked;
-            if (cbxDefaultEmailToBlank.Checked) { tbDefaultEmail.Text = ""; }
-        }
-
-        #endregion Methods
-
-        private void cbxProxy_Click(object sender, EventArgs e)
-        {
-            ipproxy.Enabled = cbxProxy.Checked;            
-        }   
+#if win32
+        private RegistryKey key;
+#endif
     }
 }

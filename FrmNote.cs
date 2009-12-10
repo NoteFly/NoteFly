@@ -236,6 +236,18 @@ namespace NoteFly
         /// <param name="e"></param>
         private void btnCloseNote_Click(object sender, EventArgs e)
         {
+            if (frmLoginFb != null)
+            {
+                try
+                {
+                    frmLoginFb.Close();
+                }
+                catch (Exception exc)
+                {
+                    throw new CustomExceptions(exc.Message);
+                }
+                
+            }
             this.notevisible = false;
             notes.NotesUpdated = true;
             this.Hide();
@@ -654,9 +666,9 @@ namespace NoteFly
 
             Facebook fb = new Facebook();
 
-            //grant access.
+            //grant access.form
             frmLoginFb = new Form();
-
+            frmLoginFb.Text = "Post note on FaceBook";
             frmLoginFb.Width = 640;
             frmLoginFb.Height = 480;
             WebBrowser FbWeb = new WebBrowser();
@@ -712,12 +724,19 @@ namespace NoteFly
             sfdlg.ValidateNames = true;
             sfdlg.CheckPathExists = true;
             sfdlg.OverwritePrompt = true;
-            sfdlg.FileName = title;
+            if (title.Length > 100)
+            {
+                sfdlg.FileName = title.Substring(0, 100);
+            }
+            else
+            {
+                sfdlg.FileName = title;
+            }
             sfdlg.Title = "Save note to textfile";
-            sfdlg.Filter = "Text files (*.txt)|*.txt";
+            sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm";
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
-                Textfile file = new Textfile(sfdlg.FileName, this.title, this.note);
+                new Textfile(true, sfdlg.FileName, this.title, this.note);
             }
             
         }

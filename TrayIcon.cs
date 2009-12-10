@@ -104,7 +104,7 @@ namespace NoteFly
         {
             components = new System.ComponentModel.Container();
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(true);            
+            Application.SetCompatibleTextRenderingDefault(true);
 
             transparency = true;
 
@@ -152,25 +152,26 @@ namespace NoteFly
             MenuAbout,
             MenuExit});
             icon.ContextMenuStrip.ShowImageMargin = false;
-            icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);            
+            icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
 
-            // MenuNewNote            
+            // MenuNewNote
             MenuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             MenuNewNote.Name = "MenuNewNote";
             MenuNewNote.Size = new System.Drawing.Size(144, 22);
             MenuNewNote.Text = "&Create a new note";
+            MenuNewNote.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
             MenuNewNote.Click += new System.EventHandler(MenuNewNote_Click);
-            // MenuManageNotes            
+            // MenuManageNotes
             MenuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             MenuManageNotes.Name = "listToolStripMenuItem";
             MenuManageNotes.Size = new System.Drawing.Size(144, 22);
             MenuManageNotes.Text = "&Manage notes";
             MenuManageNotes.Click += new System.EventHandler(MenuManageNotes_Click);
-            // MenuSettings            
+            // MenuSettings
             MenuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             MenuSettings.Name = "MenuSettings";
             MenuSettings.Size = new System.Drawing.Size(144, 22);
-            MenuSettings.Text = "Settings";
+            MenuSettings.Text = "&Settings";
             MenuSettings.Click += new System.EventHandler(MenuSettings_Click);
             // MenuAbout
             MenuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -256,7 +257,7 @@ namespace NoteFly
         static void MenuSettings_Click(object sender, EventArgs e)
         {
             FrmSettings settings = new FrmSettings(notes, transparency);
-            settings.Show();                                             
+            settings.Show();
         }
 
         /// <summary>
@@ -299,7 +300,7 @@ namespace NoteFly
                     {
                         ExitApplication();
                     }
-                }                
+                }
                 else
                 {
                     ExitApplication();
@@ -316,7 +317,7 @@ namespace NoteFly
         /// </summary>
         static void ExitApplication()
         {
-            components.Dispose();            
+            components.Dispose();
             Application.Exit();
         }
 

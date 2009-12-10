@@ -55,7 +55,6 @@
             this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbNote.AutoWordSelection = true;
             this.rtbNote.BackColor = System.Drawing.Color.Gold;
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNote.ContextMenuStrip = this.contextMenuStripTextActions;
@@ -64,7 +63,7 @@
             this.rtbNote.Location = new System.Drawing.Point(3, 3);
             this.rtbNote.MaxLength = 999999;
             this.rtbNote.Name = "rtbNote";
-            this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNote.Size = new System.Drawing.Size(271, 196);
             this.rtbNote.TabIndex = 1;
             this.rtbNote.Text = "";
@@ -136,7 +135,7 @@
             this.tbTitle.Name = "tbTitle";
             this.tbTitle.Size = new System.Drawing.Size(176, 22);
             this.tbTitle.TabIndex = 0;
-            this.tbTitle.WordWrap = false;            
+            this.tbTitle.WordWrap = false;
             this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             this.tbTitle.Enter += new System.EventHandler(this.tbTitle_Enter);
             // 
