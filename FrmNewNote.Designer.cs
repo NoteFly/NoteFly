@@ -71,7 +71,6 @@
             this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
             this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
-            this.rtbNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rtbNote_KeyDown);
             this.rtbNote.TextChanged += new System.EventHandler(this.checksyntax);
             // 
             // contextMenuStripTextActions

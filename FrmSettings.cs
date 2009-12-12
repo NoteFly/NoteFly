@@ -56,6 +56,7 @@ namespace NoteFly
             chxSyntaxHighlightHTML.Checked = getHighlightHTML();
             chxSyntaxHighlightC.Checked = getHighlightC();
             cbxTextDirection.SelectedIndex = getTextDirection();
+            chxLogInfo.Checked = getLogDebugInfo();
             if (String.IsNullOrEmpty(tbDefaultEmail.Text))
             {
                 tbDefaultEmail.Enabled = false;
@@ -98,9 +99,11 @@ namespace NoteFly
                 }
                 else
                 {
-                    MessageBox.Show("Error: Directory does not exist.\r\nPlease choice a valid directory.");                    
-                }                                               
-            }            
+                    String dirnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
+                    MessageBox.Show(dirnotexist);
+                    Log.write(LogType.info, dirnotexist);
+                }
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -110,8 +113,8 @@ namespace NoteFly
 
         private void btnCrash_Click(object sender, EventArgs e)
         {
-            #if DEBUG        
-            throw new CustomExceptions("This is a crash test, to test if exceptions are thrown correctly.");
+            #if DEBUG
+            throw new CustomException("This is a crash test, to test if exceptions are thrown correctly.");
             #endif
         }
 
@@ -125,42 +128,59 @@ namespace NoteFly
         {
             if (!Directory.Exists(tbNotesSavePath.Text))
             {
-                MessageBox.Show("Invalid folder for saving notes folder.");                
+                String invalidfoldersavenote = "Invalid folder for saving notes folder.";
+                MessageBox.Show(invalidfoldersavenote);
                 tabControlSettings.SelectedTab = tabGeneral;
+                Log.write(LogType.info, invalidfoldersavenote);
             }
             else if (String.IsNullOrEmpty(cbxFontNoteContent.Text) == true)
             {
-                MessageBox.Show("Select a font.");
+                String nofont = "Select a font.";
+                MessageBox.Show(nofont);
                 tabControlSettings.SelectedTab = this.tabAppearance;
+                Log.write(LogType.info, nofont);
             }
             else if ((numFontSize.Value < 4) || (numFontSize.Value > 128))
             {
-                MessageBox.Show("Font size invalid. minmal 4pt maximal 128pt");
+                String invalidfontsize = "Font size invalid. minmal 4pt maximal 128pt";
+                MessageBox.Show(invalidfontsize);
                 tabControlSettings.SelectedTab = this.tabAppearance;
+                Log.write(LogType.info, invalidfontsize);
             }
             else if (cbxTextDirection.SelectedIndex > 1)
             {
-                MessageBox.Show("Settings text direction unknow.");
+                String noknowtextdir = "Settings text direction unknow.";
+                MessageBox.Show(noknowtextdir);
+                tabControlSettings.SelectedTab = this.tabAppearance;
+                Log.write(LogType.error, noknowtextdir);
             }
             else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) || (chxSyntaxHighlightC.CheckState == CheckState.Indeterminate) ||
-                (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate))
+                (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate) || (chxLogInfo.CheckState == CheckState.Indeterminate))
             {
-                MessageBox.Show("Not allowed.");
+                String notallowcheckstate = "checkstate not allowed.";
+                MessageBox.Show(notallowcheckstate);
                 tabControlSettings.SelectedTab = this.tabAppearance;
+                Log.write(LogType.error, notallowcheckstate);
             }
             else if (tbTwitterUser.Text.Length > 16)
             {
-                MessageBox.Show("Settings Twitter: username is too long.");
+                String twnametoolong = "Settings Twitter: username is too long.";
+                MessageBox.Show(twnametoolong);
+                Log.write(LogType.error, twnametoolong);
             }
             else if ((tbTwitterPass.Text.Length < 6) && (chxRememberTwPass.Checked == true))
             {
-                MessageBox.Show("Settings Twitter: password is too short.");
+                String twpaswtooshort = "Settings Twitter: password is too short.";
+                MessageBox.Show(twpaswtooshort);
+                Log.write(LogType.error, twpaswtooshort);
             }
             else if ((!tbDefaultEmail.Text.Contains("@") || !tbDefaultEmail.Text.Contains(".")) && (!cbxDefaultEmailToBlank.Checked))
             {
-                MessageBox.Show("Settings advance: default emailadres not valid.");
+                String emailnotvalid = "Settings advance: default emailadres not valid.";
+                MessageBox.Show(emailnotvalid);
+                Log.write(LogType.error, emailnotvalid);
             }
-            //everything looks okay            
+            //everything looks okay 
             else
             {
                 string oldnotesavepath = getNotesSavePath();
@@ -168,9 +188,7 @@ namespace NoteFly
                 {
                     MoveNotes(tbNotesSavePath.Text);
                 }
-                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text, chxLogErrors.Checked);
-                
-
+                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked);
 #if win32
                 key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
@@ -183,7 +201,9 @@ namespace NoteFly
                         }
                         catch (UnauthorizedAccessException exc)
                         {
-                            MessageBox.Show("Error: no registery access." + exc.Message);
+                            String regnotaccess = "Error: no registery access." + exc.StackTrace;
+                            MessageBox.Show(regnotaccess);
+                            Log.write(LogType.exception, regnotaccess);
                         }
                     }
                     else if (chxStartOnBootWindows.Checked == false)
@@ -196,13 +216,16 @@ namespace NoteFly
                 }
                 else
                 {
-                    MessageBox.Show("Error: Run subkey in registery does not exist. Or it cannot be found.");
+                    String regkeynotexistfound = "Error: Run subkey in registery does not exist. Or it cannot be found.";
+                    MessageBox.Show(regkeynotexistfound);
+                    Log.write(LogType.exception, regkeynotexistfound);
                 }
-#endif                
+#endif
                 notes.SetSettings();
                 notes.UpdateAllFonts();
+                Log.write(LogType.info, "settings updated");
                 this.Close();
-            }                                        
+            }
         }
 
         private void btnResetSettings_Click(object sender, EventArgs e)
@@ -254,7 +277,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Enable nummericupdown control if transparecy is checked.        
+        /// Enable nummericupdown control if transparecy is checked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -274,25 +297,27 @@ namespace NoteFly
         /// Fill combobox list with fonts
         /// </summary>
         private void DrawCbxFonts()
-        {            
+        {
             foreach (FontFamily oneFontFamily in FontFamily.Families)
             {
                 cbxFontNoteContent.Items.Add(oneFontFamily.Name);
             }
             string curfont = xmlsettings.getXMLnode("fontcontent");
             if (String.IsNullOrEmpty(curfont))
-            {                
-                MessageBox.Show("Error: Current font not found.");                
+            {
+                String fontnotfound = "Error: Current font not found.";
+                MessageBox.Show(fontnotfound);
+                Log.write(LogType.info, fontnotfound);
             }
             else
             {
                 cbxFontNoteContent.Text = curfont;
-            }            
+            }
         }
 
         private int getActionLeftClick()
         {
-            return xmlsettings.getXMLnodeAsInt("actionleftclick");            
+            return xmlsettings.getXMLnodeAsInt("actionleftclick");
         }
 
         private bool getAskUrl()
@@ -312,7 +337,7 @@ namespace NoteFly
 
         private string getDefaultEmail()
         {
-            return xmlsettings.getXMLnode("defaultemail");            
+            return xmlsettings.getXMLnode("defaultemail");
         }
 
         private bool getHighlightC()
@@ -364,10 +389,10 @@ namespace NoteFly
         private string getTwitterpassword()
         {
             string twpass = xmlsettings.getXMLnode("twitterpass");
-            if (twpass == "")
+            if (String.IsNullOrEmpty(twpass))
             {
                 chxRememberTwPass.Checked = false;
-                tbTwitterPass.Enabled = false;                
+                tbTwitterPass.Enabled = false;
             }
             return twpass;
         }
@@ -377,6 +402,11 @@ namespace NoteFly
             return xmlsettings.getXMLnode("twitteruser");
         }
 
+        private Boolean getLogDebugInfo()
+        {
+            return xmlsettings.getXMLnodeAsBool("loginfo");
+        }
+
         /// <summary>
         /// Move note files.
         /// </summary>
@@ -384,7 +414,7 @@ namespace NoteFly
         private void MoveNotes(string newpathsavenotes)
         {            
             bool errorshowed = false;
-            string oldpathsavenotes = getNotesSavePath();            
+            string oldpathsavenotes = getNotesSavePath();
             int id = 1;
             while (File.Exists(Path.Combine(oldpathsavenotes, id + ".xml")) == true)
             {
@@ -400,8 +430,10 @@ namespace NoteFly
                     {
                         if (!errorshowed)
                         {
-                            MessageBox.Show("Error: File " + id + ".xml already exist in new folder.");
+                            String fileexist = "File " + id + ".xml already exist in new folder.";
+                            MessageBox.Show(fileexist);
                             errorshowed = true;
+                            Log.write(LogType.error, fileexist);
                         }
                     }
                 }                

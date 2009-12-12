@@ -44,7 +44,7 @@ namespace NoteFly
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "",false, false, false, "", "", true);
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "",false, false, false, "", "", true, false);
                 }
             }
         }
@@ -86,18 +86,16 @@ namespace NoteFly
             }
             catch (FileLoadException fileloadexc)
             {
-                System.Windows.Forms.MessageBox.Show("error: " + fileloadexc.Message);
-                return "";
+                throw new CustomException(fileloadexc.Message);
             }
             catch (FileNotFoundException filenotfoundexc)
             {
-                System.Windows.Forms.MessageBox.Show("error: " + filenotfoundexc.Message);
-                return "";
+                throw new CustomException(filenotfoundexc.Message);
             }
 
             if (objXmlTextReader == null)
             {
-                //MessageBox.Show("Error: objXmlTextReader is null.");
+                throw new CustomException("objXmlTextReader is null.");
             }
             while (objXmlTextReader.Read())
             {
@@ -140,8 +138,7 @@ namespace NoteFly
                     }
                     catch (InvalidCastException invalidcastexc)
                     {
-                        System.Windows.Forms.MessageBox.Show("error: " + invalidcastexc.Message);
-                        return false;
+                        throw new CustomException(invalidcastexc.Message);
                     }
                     finally
                     {
@@ -174,8 +171,7 @@ namespace NoteFly
                     }
                     catch (InvalidCastException invalidcastexc)
                     {
-                        System.Windows.Forms.MessageBox.Show("error: " + invalidcastexc.Message);
-                        return -1;
+                        throw new CustomException(invalidcastexc.Message);
                     }
                     finally
                     {
@@ -215,7 +211,7 @@ namespace NoteFly
                 }     
             }
             objXmlTextReader.Close();
-            return settings;                       
+            return settings;
         }
 
         /// <summary>
@@ -234,7 +230,7 @@ namespace NoteFly
         public bool WriteNote(bool visible, bool ontop, Int16 numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {
             if (issetting) {
-                throw new CustomExceptions("This is a settings file, cannot write a note of it."); 
+                throw new CustomException("This is a settings file, cannot write a note of it."); 
             }
             
             objXmlTextWriter = new XmlTextWriter(this.filenm, null);
@@ -309,83 +305,89 @@ namespace NoteFly
         /// </summary>
         /// <returns>true if succeed.</returns>
         /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass, bool logerror)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass, bool logerror, bool loginfo)
         {
             if (!this.issetting)
             {
-                throw new CustomExceptions("not settings file");
-            }            
-
-            objXmlTextWriter = new XmlTextWriter(filenm, null);
-            objXmlTextWriter.Formatting = Formatting.Indented;
-
-            objXmlTextWriter.WriteStartDocument();
-            objXmlTextWriter.WriteStartElement("settings");
-
-            objXmlTextWriter.WriteStartElement("transparecy");
-            WriteXMLBool(transparecy);            
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteStartElement("transparecylevel");
-            objXmlTextWriter.WriteString(Convert.ToString(transparecylevel));
-            objXmlTextWriter.WriteEndElement();
-
-            if (numcolor < 0) { throw new CustomExceptions("Impossible selection"); }
-            else
-            {
-                objXmlTextWriter.WriteStartElement("defaultcolor");
-                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
-                objXmlTextWriter.WriteEndElement();
+                throw new CustomException("not settings file");
             }
-            if ((actionleftclick < 0) || (actionleftclick > 3)) { throw new CustomExceptions("action left click unknow"); }
-            else
-            {
-                objXmlTextWriter.WriteStartElement("actionleftclick");
-                objXmlTextWriter.WriteString(Convert.ToString(actionleftclick));
-                objXmlTextWriter.WriteEndElement();
-            }
-            if (numcolor >= 8) { throw new CustomExceptions("default color unknow"); }
-            else
-            {
-                objXmlTextWriter.WriteStartElement("defaultcolor");
-                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
-                objXmlTextWriter.WriteEndElement();
-            }
-            objXmlTextWriter.WriteStartElement("askurl");
-            WriteXMLBool(askurl);
-            objXmlTextWriter.WriteEndElement();
 
-            if (String.IsNullOrEmpty(fontcontent)) { throw new CustomExceptions("No font"); }
-            else
+            try
             {
-                objXmlTextWriter.WriteStartElement("fontcontent");
-                objXmlTextWriter.WriteString(fontcontent);
-                objXmlTextWriter.WriteEndElement();
-            }
-            objXmlTextWriter.WriteStartElement("fontsize");
-            objXmlTextWriter.WriteString(Convert.ToString(fontsize));
-            objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter = new XmlTextWriter(filenm, null);
+                objXmlTextWriter.Formatting = Formatting.Indented;
 
-            if ((textdirection < 0) || (textdirection > 2)) { throw new CustomExceptions("Invalid text direction"); }
-            else
-            {
-                objXmlTextWriter.WriteStartElement("textdirection");
-                objXmlTextWriter.WriteString(Convert.ToString(textdirection));
-                objXmlTextWriter.WriteEndElement();
-            }
-            if (Directory.Exists(notesavepath))
-            {
-                objXmlTextWriter.WriteStartElement("notesavepath");
-                objXmlTextWriter.WriteString(notesavepath);
-                objXmlTextWriter.WriteEndElement();
-            }
-            else { throw new CustomExceptions("Directory does not exist"); }
-            
-            objXmlTextWriter.WriteStartElement("logerror");
-            WriteXMLBool(logerror);
-            objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartDocument();
+                objXmlTextWriter.WriteStartElement("settings");
 
-            objXmlTextWriter.WriteStartElement("syntaxhighlight");
+                objXmlTextWriter.WriteStartElement("transparecy");
+                WriteXMLBool(transparecy);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("transparecylevel");
+                objXmlTextWriter.WriteString(Convert.ToString(transparecylevel));
+                objXmlTextWriter.WriteEndElement();
+
+                if (numcolor < 0) { throw new CustomException("Impossible selection"); }
+                else
+                {
+                    objXmlTextWriter.WriteStartElement("defaultcolor");
+                    objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+                    objXmlTextWriter.WriteEndElement();
+                }
+                if ((actionleftclick < 0) || (actionleftclick > 3)) { throw new CustomException("action left click unknow"); }
+                else
+                {
+                    objXmlTextWriter.WriteStartElement("actionleftclick");
+                    objXmlTextWriter.WriteString(Convert.ToString(actionleftclick));
+                    objXmlTextWriter.WriteEndElement();
+                }
+                if (numcolor >= 8) { throw new CustomException("default color unknow"); }
+                else
+                {
+                    objXmlTextWriter.WriteStartElement("defaultcolor");
+                    objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+                    objXmlTextWriter.WriteEndElement();
+                }
+                objXmlTextWriter.WriteStartElement("askurl");
+                WriteXMLBool(askurl);
+                objXmlTextWriter.WriteEndElement();
+
+                if (String.IsNullOrEmpty(fontcontent)) { throw new CustomException("No font"); }
+                else
+                {
+                    objXmlTextWriter.WriteStartElement("fontcontent");
+                    objXmlTextWriter.WriteString(fontcontent);
+                    objXmlTextWriter.WriteEndElement();
+                }
+                objXmlTextWriter.WriteStartElement("fontsize");
+                objXmlTextWriter.WriteString(Convert.ToString(fontsize));
+                objXmlTextWriter.WriteEndElement();
+
+                if ((textdirection < 0) || (textdirection > 2)) { throw new CustomException("Invalid text direction"); }
+                else
+                {
+                    objXmlTextWriter.WriteStartElement("textdirection");
+                    objXmlTextWriter.WriteString(Convert.ToString(textdirection));
+                    objXmlTextWriter.WriteEndElement();
+                }
+                if (Directory.Exists(notesavepath))
+                {
+                    objXmlTextWriter.WriteStartElement("notesavepath");
+                    objXmlTextWriter.WriteString(notesavepath);
+                    objXmlTextWriter.WriteEndElement();
+                }
+                else { throw new CustomException("Directory does not exist"); }
+
+                objXmlTextWriter.WriteStartElement("logerror");
+                WriteXMLBool(logerror);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("loginfo");
+                WriteXMLBool(logerror);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("syntaxhighlight");
 
                 objXmlTextWriter.WriteStartElement("highlightHTML");
                 WriteXMLBool(highlightHTML);
@@ -395,41 +397,44 @@ namespace NoteFly
                 WriteXMLBool(highlightC);
                 objXmlTextWriter.WriteEndElement();
 
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteStartElement("confirmexit");
-            WriteXMLBool(confirmexit);
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteStartElement("defaultemail");
-            objXmlTextWriter.WriteString(defaultemail);
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteStartElement("twitter");
-
-            if (twitteruser.Length > 15) { throw new CustomExceptions("Twitter username too long."); }
-            else
-            {
-                objXmlTextWriter.WriteStartElement("twitteruser");
-                objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
                 objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("confirmexit");
+                WriteXMLBool(confirmexit);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("defaultemail");
+                objXmlTextWriter.WriteString(defaultemail);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("twitter");
+
+                if (twitteruser.Length > 15) { throw new CustomException("Twitter username too long."); }
+                else
+                {
+                    objXmlTextWriter.WriteStartElement("twitteruser");
+                    objXmlTextWriter.WriteString(Convert.ToString(twitteruser));
+                    objXmlTextWriter.WriteEndElement();
+                }
+                if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new CustomException("Twitter password too short."); }
+                else
+                {
+                    if (twitterpass.Length > 255) { throw new CustomException("Twitter password too long."); }
+                    objXmlTextWriter.WriteStartElement("twitterpass");
+                    objXmlTextWriter.WriteString(twitterpass);
+                    objXmlTextWriter.WriteEndElement();
+                }
+
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteEndDocument();
             }
-            if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new CustomExceptions("Twitter password too short."); }
-            else
+            finally
             {
-                if (twitterpass.Length > 255) { throw new CustomExceptions("Twitter password too long."); }
-                objXmlTextWriter.WriteStartElement("twitterpass");
-                objXmlTextWriter.WriteString(twitterpass);
-                objXmlTextWriter.WriteEndElement();
-            }             
-
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteEndElement();
-            objXmlTextWriter.WriteEndDocument();
-
-            objXmlTextWriter.Flush();
-            objXmlTextWriter.Close();
+                objXmlTextWriter.Flush();
+                objXmlTextWriter.Close();
+            }
 
             CheckFile();
 
@@ -465,20 +470,20 @@ namespace NoteFly
                 FileInfo checkfile = new FileInfo(filenm);
                 if (checkfile.Length == 0)
                 {
-                    throw new CustomExceptions("File " + filenm + " is empty");                   
+                    throw new CustomException("File " + filenm + " is empty");
                 }
                 else if (issetting)
                 {
                     //check if larger that 32 KB
                     if (checkfile.Length > 32768)
                     {
-                        throw new CustomExceptions("Setting file " + filenm + " is too big.");
+                        throw new CustomException("Setting file " + filenm + " is too big.");
                     }
                 }
                 //check if larger that 10 MB
                 else if (checkfile.Length > 10485760)
                 {
-                    throw new CustomExceptions("File " + filenm + " is way too big.");
+                    throw new CustomException("File " + filenm + " is way too big.");
                 }
             }
         }

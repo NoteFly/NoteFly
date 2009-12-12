@@ -92,8 +92,8 @@ namespace NoteFly
                     notes.UpdateNote(editnoteid, this.tbTitle.Text, this.rtbNote.Text, true);
                 }
                 else
-                {  
-                    notes.DrawNewNote(tbTitle.Text, rtbNote.Text, notecolor);                    
+                {
+                    notes.DrawNewNote(tbTitle.Text, rtbNote.Text, notecolor);
                 }
                 this.Close();
             }
@@ -104,7 +104,7 @@ namespace NoteFly
             int posnotelst = editnoteid - 1;
             if ((this.editnote) && (posnotelst >= 0) && (posnotelst < notes.NumNotes))
             {                
-                notes.GetNotes[posnotelst].Show();                                
+                notes.GetNotes[posnotelst].Show();
             }
             this.Close();
         }
@@ -150,7 +150,7 @@ namespace NoteFly
         {
             if (notes.Transparency)
             {
-                this.Opacity = 1.0;                
+                this.Opacity = 1.0;
             }
         }
 
@@ -171,7 +171,9 @@ namespace NoteFly
             }
             else
             {
-                MessageBox.Show("clipboard is empty/no text in it.");
+                String emptyclipboard = "clipboard is empty/no text in it.";
+                MessageBox.Show(emptyclipboard);
+                Log.write(LogType.error, emptyclipboard);
             }
         }
 
@@ -193,7 +195,7 @@ namespace NoteFly
                 #if win32
                 if (e.Button == MouseButtons.Left)
                 {
-                    ReleaseCapture();                    
+                    ReleaseCapture();
                     SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                     pnlHeadNewNote.BackColor = skin.getObjColor(false);
                 }
@@ -218,7 +220,7 @@ namespace NoteFly
 
             rtbNote.Font = skin.getFontNoteContent();
 
-            Color normalcolor = skin.getObjColor(false);            
+            Color normalcolor = skin.getObjColor(false);
             pnlNoteEdit.BackColor = normalcolor;
             rtbNote.BackColor = normalcolor;
             pnlHeadNewNote.BackColor = normalcolor;
@@ -240,11 +242,6 @@ namespace NoteFly
 
             tbTitle.Text = title;
             rtbNote.Text = content;
-        }
-
-        private void rtbNote_KeyDown(object sender, KeyEventArgs e)
-        {
-
         }
 
         /// <summary>
@@ -278,37 +275,23 @@ namespace NoteFly
         private void rtbNote_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-            {                
+            {
                 contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
-            }            
+            }
         }
 
         private void setTextDirection()
         {
             if (notes.TextDirection == 0)
             {
-                tbTitle.TextAlign = HorizontalAlignment.Left;                
+                tbTitle.TextAlign = HorizontalAlignment.Left;
             }
             else if (notes.TextDirection == 1)
             {
-                tbTitle.TextAlign = HorizontalAlignment.Right;                
+                tbTitle.TextAlign = HorizontalAlignment.Right;
             }
         }
-        /*
-        /// <summary>
-        /// Move to rtbNote
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tbTitle_KeyDown(object sender, KeyEventArgs e)
-        {
-            if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Tab))
-            {
-                this.rtbNote.Focus();
-                this.rtbNote.Select();             
-            }                        
-        }
-         */
+
 
 		#endregion Methods 
 

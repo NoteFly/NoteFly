@@ -159,7 +159,7 @@ namespace NoteFly
                     }
                     catch (ArgumentOutOfRangeException arg)
                     {
-                        throw new CustomExceptions("Quick TextHighlighter out of range: " + arg.Source);
+                        throw new CustomException("Quick TextHighlighter out of range: " + arg.Source);
                     }
                 }
 
@@ -206,7 +206,7 @@ namespace NoteFly
             }
             catch (ArgumentOutOfRangeException arg)
             {
-                throw new CustomExceptions("TextHighlighter out of range: " + arg.Source);
+                throw new CustomException("TextHighlighter out of range: " + arg.Source);
             }
         }
 

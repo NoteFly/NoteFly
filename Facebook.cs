@@ -118,7 +118,7 @@ namespace NoteFly
                 }
                 else
                 {
-                    throw new CustomExceptions("error parsering url parameters");
+                    throw new CustomException("error parsering url parameters");
                 }
             }
             else if (url.StartsWith(fbcancelurl) == true)
@@ -126,7 +126,7 @@ namespace NoteFly
                 return false;
             }
             else
-            { throw new CustomExceptions("error parsering url page"); }
+            { throw new CustomException("error parsering url page"); }
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace NoteFly
             var md5 = MD5.Create();
             String hash = MakeMD5(data);
             if (hash.Length == 32) return hash;
-            else throw new CustomExceptions("error: cannot generating MD5 hash.");
+            else throw new CustomException("error: cannot generating MD5 hash.");
 
         }
 

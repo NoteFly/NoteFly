@@ -13,6 +13,7 @@
         <xs:element name="textdirection" type="xs:int" />
         <xs:element name="notesavepath" type="xs:string" />
         <xs:element name="logerror" type="xs:boolean" />
+        <xs:element name="loginfo" type="xs:boolean" />
         <xs:element name="syntaxhighlight">
           <xs:complexType>
             <xs:sequence>

@@ -17,7 +17,7 @@
     <StartupObject>NoteFly.TrayIcon</StartupObject>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>strongkey_notefly.pfx</AssemblyOriginatorKeyFile>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>false</GenerateManifests>
@@ -75,7 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomExceptions.cs" />
+    <Compile Include="CustomException.cs" />
     <Compile Include="Facebook.cs" />
     <Compile Include="FrmAbout.cs">
       <SubType>Form</SubType>
@@ -113,6 +113,7 @@
     <Compile Include="IPTextBox.Designer.cs">
       <DependentUpon>IPTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs" />
     <Compile Include="Notes.cs" />
     <Compile Include="Textfile.cs" />
     <Compile Include="TrayIcon.cs" />

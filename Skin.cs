@@ -117,7 +117,7 @@ namespace NoteFly
             else
             {
                 //error
-                throw new Exception("invalid transparencylevel");
+                throw new CustomException("invalid transparencylevel");
             }
         }
 
@@ -128,7 +128,7 @@ namespace NoteFly
         public Font getFontNoteContent()
         {
             xmlHandler getSettings = new xmlHandler(true);
-            string fontname = getSettings.getXMLnode("fontcontent");            
+            string fontname = getSettings.getXMLnode("fontcontent");
             
             foreach (FontFamily curfont in FontFamily.Families)
             {
@@ -137,7 +137,7 @@ namespace NoteFly
                     Font font = new Font(curfont, getFontNoteSize(getSettings));
                     return font;
                 }
-            }	                   
+            }
             return null;
         }
 

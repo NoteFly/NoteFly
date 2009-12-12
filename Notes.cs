@@ -25,7 +25,6 @@ namespace NoteFly
 		#region Fields (9) 
 
         private Int16 defaultcolor = 1;
-        //private TextHighlight highlight;
         private Boolean highlightC = false;
         private Boolean highlightHTML = false;
         private String notesavepath;
@@ -101,7 +100,7 @@ namespace NoteFly
                 Int16 numnotes = Convert.ToInt16(this.noteslst.Count);
                 if (numnotes > 255)
                 {
-                    throw new Exception("error too many notes.");
+                    throw new Exception("Too many notes.");
                 }
                 return numnotes;
             }
@@ -137,28 +136,28 @@ namespace NoteFly
 
 		#endregion Properties 
 
-		#region Methods (10) 		
+		#region Methods (10)
         /// <summary>
         /// Draws a new note and saves the xml note file.(call to SaveNewNote)
         /// </summary>
-        /// <param name="title"></param>
-        /// <param name="content"></param>
-        /// <param name="notecolor"></param>
+        /// <param name="title">the title</param>
+        /// <param name="content">the note content</param>
+        /// <param name="notecolor">color number</param>
         public void DrawNewNote(string title, string content, Int16 notecolor)
         {
             try
             {
                 Int16 newid = Convert.ToInt16(noteslst.Count + 1);
                 string notefilenm = SaveNewNote(newid, title, content, defaultcolor);
-                if (String.IsNullOrEmpty(notefilenm)) { return; }
+                if (String.IsNullOrEmpty(notefilenm)) { throw new CustomException("cannot create filename."); }
                 FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
                 noteslst.Add(newnote);
                 newnote.StartPosition = FormStartPosition.Manual;
-                newnote.Show();                
+                newnote.Show();
             }
-            catch (IndexOutOfRangeException indexexc)
+            catch (Exception exc)
             {
-                MessageBox.Show("Fout: " + indexexc.Message);
+                throw new CustomException(exc.Message+" "+exc.StackTrace);
             }
         }
 
@@ -179,7 +178,7 @@ namespace NoteFly
             }
             else
             {
-                throw new CustomExceptions("Note not found in memory.");
+                throw new CustomException("Note not found in memory.");
             }
 
         }
@@ -218,7 +217,7 @@ namespace NoteFly
             }
             this.textdirection = Convert.ToInt16(getSettings.getXMLnodeAsInt("textdirection"));
             this.notesavepath = getSettings.getXMLnode("notesavepath");
-            this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));            
+            this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
         }
 
         /// <summary>
@@ -227,9 +226,9 @@ namespace NoteFly
         public void UpdateAllFonts()
         {
             foreach (FrmNote curfrmnote in noteslst)
-            {                
+            {
                 curfrmnote.CheckThings();
-            }            
+            }
         }
 
         /// <summary>
@@ -296,14 +295,13 @@ namespace NoteFly
                 newnote.FormBorderStyle = FormBorderStyle.None;
                 if (visible)
                 {
-                    newnote.Show();                    
+                    newnote.Show();
                 }
                 return newnote;
             }
-            catch (IndexOutOfRangeException indexexc)
+            catch (Exception exc)
             {
-                MessageBox.Show("Fout: " + indexexc.Message);
-                return null;
+                throw new CustomException(exc.Message + " " + exc.StackTrace);
             }
         }
 
@@ -315,13 +313,16 @@ namespace NoteFly
         {
             if (!Directory.Exists(this.notesavepath))
             {
-                DialogResult result = MessageBox.Show("Error: Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?", "note folder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                String notefoldernoteexist = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
+                DialogResult result = MessageBox.Show(notefoldernoteexist, "notefolder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
+                    Log.write(LogType.error, notefoldernoteexist+" No");
                     return;
                 }
                 else
                 {
+                    Log.write(LogType.error, notefoldernoteexist + " Yes");
                     xmlHandler getAppdata = new xmlHandler(true);
                     this.notesavepath = getAppdata.AppDataFolder;
                 }
@@ -344,13 +345,20 @@ namespace NoteFly
                 id++;
                 notefile = Path.Combine(notesavepath, id + ".xml");
 
-                if (CheckLimitNotes(id)) { MessageBox.Show("Error: Too many notes to load. More than 500 notes."); return; }
+                if (CheckLimitNotes(id)) { 
+                    String toomanynotes = "Too many notes to load.";
+                    MessageBox.Show(toomanynotes);
+                    Log.write(LogType.error, toomanynotes);
+                    return;
+                }
             }
             id++;
             notefile = Path.Combine(this.notesavepath, id + ".xml");
             if (File.Exists(notefile)==true)
             {
-                MessageBox.Show(notesavepath + Convert.ToString(id-1) + ".xml is missing.");
+                String notemissing = notesavepath + Convert.ToString(id - 1) + ".xml is missing.";
+                MessageBox.Show(notemissing);
+                Log.write(LogType.error, notemissing);
             }
             if (firstrun)
             {
@@ -370,7 +378,10 @@ namespace NoteFly
             }
 
             #if DEBUG
-            LoadNotesStressTest(10);                    
+            Log.write(LogType.info, "start stress test");
+            //LoadNotesStressTest(200);
+            LoadNotesStressTest(10);
+            Log.write(LogType.info, "finished stress test");
             #endif
         }
 
@@ -387,8 +398,7 @@ namespace NoteFly
             xmlHandler xmlnote = new xmlHandler(notefile);
             if (xmlnote.WriteNote(true, false, numcolor, title, text, 10, 10, 240, 240) == false)
             {
-                MessageBox.Show("Error writing note.");
-                return null;
+                throw new CustomException("Cannot write note.");
             }
             return notefile;
         }
@@ -409,17 +419,22 @@ namespace NoteFly
                 bool visible = true;
                 bool ontop = false;
                 string title = "test nr." + id;
-                string content = "This is a stress test of creating a lot of notes, to see how fast or slow it loads." +
-                                 "warning: To preven a note from saving don't move them!";
+                string content = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
+                                 "warning: To prevent this note from saving don't move or touch it!";
                 Int16 notecolor = Convert.ToInt16(ran.Next(0, 6));
                 int noteLocX = ran.Next(0, 360);
                 int noteLocY = ran.Next(0, 240);
                 int notewidth = 180;
-                int noteheight = 160;
+                int noteheight = 180;
 
                 noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
 
-                if (CheckLimitNotes(id)) { MessageBox.Show("Limit reached."); }
+                if (CheckLimitNotes(id)) { 
+                    String maxnoteslimit = "Maximum notes limit reached.";
+                    MessageBox.Show(maxnoteslimit);
+                    Log.write(LogType.error, maxnoteslimit);
+                    return;
+                }
             }
         }
         #endif

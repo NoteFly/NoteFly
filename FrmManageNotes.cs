@@ -35,7 +35,7 @@ namespace NoteFly
         //skin colors etc.
         private Skin skin;
         //is transparent
-        private bool transparency = false;        
+        private bool transparency = false;
 
         #endregion Fields
 
@@ -80,11 +80,11 @@ namespace NoteFly
                 Int16 curnote = 0;
                 try
                 {
-                    curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));                
+                    curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));
                 }
                 catch (InvalidCastException invexc)
                 {
-                    MessageBox.Show(invexc.Message);
+                    throw new CustomException(invexc.Message+" "+invexc.StackTrace);
                 }
                 
                 if (btn.Name == "btnNoteDel" + curnote)
@@ -95,6 +95,7 @@ namespace NoteFly
                     try
                     {
                         File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
+                        Log.write(LogType.info, Convert.ToString(curnote)+".xml deleted.");
 
                         //reorder filenames
                         for (Int16 n = curnote; n < numbernotes; n++)
@@ -112,21 +113,23 @@ namespace NoteFly
                         }
                         notes.GetNotes.RemoveAt(noteid);
                     }
-                    catch (FileNotFoundException)
+                    catch (FileNotFoundException filenotfoundexc)
                     {
-                        MessageBox.Show("Note is already gone.");
+                        throw new CustomException(filenotfoundexc.Message);
                     }
                     catch (UnauthorizedAccessException)
                     {
-                        MessageBox.Show("Access denied. Delete note " + curnote + ".xml manualy with premission.");
+                        String msg = "Access denied. Delete note " + curnote + ".xml manualy with proper premission.";
+                        MessageBox.Show(msg);
+                        Log.write(LogType.error, msg);
                     }
 
                     DrawNotesOverview();
                 }
                 else
                 {
-                    throw new CustomExceptions("Note to delete not found.");
-                }              
+                    throw new CustomException("Note to delete not found.");
+                }
             }
         }
 
@@ -152,7 +155,7 @@ namespace NoteFly
             }
             else
             {
-                throw new CustomExceptions("note not found.");
+                throw new CustomException("note not found.");
             }
         }
 
@@ -171,7 +174,7 @@ namespace NoteFly
                 CheckBox cbxNoteVisible = new CheckBox();
                 Button btnNoteDelete = new Button();
 
-                int titlelength = notes.GetNotes[curnote].NoteTitle.Length;                
+                int titlelength = notes.GetNotes[curnote].NoteTitle.Length;
                 lblNoteTitle.AutoSize = true;
                 if ((titlelength >= 20) && (this.Width < 400))
                 {
@@ -207,7 +210,7 @@ namespace NoteFly
                 }
 
                 lblNoteTitle.Name = "lbNote" + Convert.ToString(curnote + 1);
-                lblNoteTitle.Location = new Point(2, ypos);                
+                lblNoteTitle.Location = new Point(2, ypos);
                 lblNoteTitle.Anchor = (AnchorStyles.Left | AnchorStyles.Top);
 
                 cbxNoteVisible.Text = "visible";

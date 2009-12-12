@@ -46,26 +46,6 @@ namespace NoteFly
 
 		#endregion Fields 
 
-		#region Properties (1) 
-
-        public bool getTransparency
-        {
-            get
-            {
-                xmlHandler xmlSettings = new xmlHandler(true);
-                if (xmlSettings.getXMLnode("transparecy") == "1")
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-		#endregion Properties 
-
 		#region Methods (3) 
 
 		// Private Methods (3) 

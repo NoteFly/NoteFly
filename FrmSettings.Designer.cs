@@ -58,26 +58,29 @@
             this.lblTextFontSize = new System.Windows.Forms.Label();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
+            this.tabHighlighting = new System.Windows.Forms.TabPage();
+            this.lbTextWarnExperimentalFeatures = new System.Windows.Forms.Label();
+            this.chxSyntaxHighlightC = new System.Windows.Forms.CheckBox();
+            this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
             this.cbxProxy = new System.Windows.Forms.CheckBox();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.chxLogInfo = new System.Windows.Forms.CheckBox();
             this.cbxDefaultEmailToBlank = new System.Windows.Forms.CheckBox();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
-            this.lbTextWarnExperimentalFeatures = new System.Windows.Forms.Label();
             this.btnCrash = new System.Windows.Forms.Button();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
-            this.chxSyntaxHighlightC = new System.Windows.Forms.CheckBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
-            this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).BeginInit();
+            this.tabHighlighting.SuspendLayout();
             this.tabTwitter.SuspendLayout();
             this.tabNetwerk.SuspendLayout();
             this.tabAdvance.SuspendLayout();
@@ -147,7 +150,7 @@
             "Blue",
             "Purple",
             "Red",
-            "random color"});
+            "Random/suprise me!"});
             this.cbxDefaultColor.Location = new System.Drawing.Point(153, 62);
             this.cbxDefaultColor.MaxDropDownItems = 5;
             this.cbxDefaultColor.Name = "cbxDefaultColor";
@@ -248,6 +251,7 @@
             // 
             this.tabControlSettings.Controls.Add(this.tabGeneral);
             this.tabControlSettings.Controls.Add(this.tabAppearance);
+            this.tabControlSettings.Controls.Add(this.tabHighlighting);
             this.tabControlSettings.Controls.Add(this.tabTwitter);
             this.tabControlSettings.Controls.Add(this.tabNetwerk);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
@@ -255,7 +259,7 @@
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(356, 274);
+            this.tabControlSettings.Size = new System.Drawing.Size(358, 274);
             this.tabControlSettings.TabIndex = 17;
             // 
             // tabGeneral
@@ -271,7 +275,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(348, 248);
+            this.tabGeneral.Size = new System.Drawing.Size(350, 248);
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -375,7 +379,7 @@
             this.tabAppearance.Location = new System.Drawing.Point(4, 22);
             this.tabAppearance.Name = "tabAppearance";
             this.tabAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppearance.Size = new System.Drawing.Size(348, 248);
+            this.tabAppearance.Size = new System.Drawing.Size(350, 248);
             this.tabAppearance.TabIndex = 0;
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
@@ -467,6 +471,48 @@
             this.cbxFontNoteContent.Size = new System.Drawing.Size(182, 21);
             this.cbxFontNoteContent.TabIndex = 8;
             // 
+            // tabHighlighting
+            // 
+            this.tabHighlighting.Controls.Add(this.lbTextWarnExperimentalFeatures);
+            this.tabHighlighting.Controls.Add(this.chxSyntaxHighlightC);
+            this.tabHighlighting.Controls.Add(this.chxSyntaxHighlightHTML);
+            this.tabHighlighting.Location = new System.Drawing.Point(4, 22);
+            this.tabHighlighting.Name = "tabHighlighting";
+            this.tabHighlighting.Padding = new System.Windows.Forms.Padding(3);
+            this.tabHighlighting.Size = new System.Drawing.Size(350, 248);
+            this.tabHighlighting.TabIndex = 5;
+            this.tabHighlighting.Text = "Highlighting";
+            this.tabHighlighting.UseVisualStyleBackColor = true;
+            // 
+            // lbTextWarnExperimentalFeatures
+            // 
+            this.lbTextWarnExperimentalFeatures.AutoSize = true;
+            this.lbTextWarnExperimentalFeatures.Location = new System.Drawing.Point(13, 23);
+            this.lbTextWarnExperimentalFeatures.Name = "lbTextWarnExperimentalFeatures";
+            this.lbTextWarnExperimentalFeatures.Size = new System.Drawing.Size(150, 13);
+            this.lbTextWarnExperimentalFeatures.TabIndex = 20;
+            this.lbTextWarnExperimentalFeatures.Text = "warning experimental features:";
+            // 
+            // chxSyntaxHighlightC
+            // 
+            this.chxSyntaxHighlightC.AutoSize = true;
+            this.chxSyntaxHighlightC.Location = new System.Drawing.Point(16, 65);
+            this.chxSyntaxHighlightC.Name = "chxSyntaxHighlightC";
+            this.chxSyntaxHighlightC.Size = new System.Drawing.Size(133, 17);
+            this.chxSyntaxHighlightC.TabIndex = 19;
+            this.chxSyntaxHighlightC.Text = "Highlight C code notes";
+            this.chxSyntaxHighlightC.UseVisualStyleBackColor = true;
+            // 
+            // chxSyntaxHighlightHTML
+            // 
+            this.chxSyntaxHighlightHTML.AutoSize = true;
+            this.chxSyntaxHighlightHTML.Location = new System.Drawing.Point(16, 42);
+            this.chxSyntaxHighlightHTML.Name = "chxSyntaxHighlightHTML";
+            this.chxSyntaxHighlightHTML.Size = new System.Drawing.Size(162, 17);
+            this.chxSyntaxHighlightHTML.TabIndex = 13;
+            this.chxSyntaxHighlightHTML.Text = "Highlight HTML syntax notes";
+            this.chxSyntaxHighlightHTML.UseVisualStyleBackColor = true;
+            // 
             // tabTwitter
             // 
             this.tabTwitter.Controls.Add(this.lbWarningTwitterPassword);
@@ -478,7 +524,7 @@
             this.tabTwitter.Location = new System.Drawing.Point(4, 22);
             this.tabTwitter.Name = "tabTwitter";
             this.tabTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTwitter.Size = new System.Drawing.Size(348, 248);
+            this.tabTwitter.Size = new System.Drawing.Size(350, 248);
             this.tabTwitter.TabIndex = 1;
             this.tabTwitter.Text = "Twitter";
             this.tabTwitter.UseVisualStyleBackColor = true;
@@ -498,7 +544,7 @@
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
             this.tabNetwerk.Name = "tabNetwerk";
             this.tabNetwerk.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNetwerk.Size = new System.Drawing.Size(348, 248);
+            this.tabNetwerk.Size = new System.Drawing.Size(350, 248);
             this.tabNetwerk.TabIndex = 4;
             this.tabNetwerk.Text = "Network";
             this.tabNetwerk.UseVisualStyleBackColor = true;
@@ -528,20 +574,28 @@
             // 
             // tabAdvance
             // 
+            this.tabAdvance.Controls.Add(this.chxLogInfo);
             this.tabAdvance.Controls.Add(this.cbxDefaultEmailToBlank);
             this.tabAdvance.Controls.Add(this.chxLogErrors);
-            this.tabAdvance.Controls.Add(this.lbTextWarnExperimentalFeatures);
             this.tabAdvance.Controls.Add(this.btnCrash);
             this.tabAdvance.Controls.Add(this.tbDefaultEmail);
-            this.tabAdvance.Controls.Add(this.chxSyntaxHighlightC);
             this.tabAdvance.Controls.Add(this.lbTextDefaultEmail);
-            this.tabAdvance.Controls.Add(this.chxSyntaxHighlightHTML);
             this.tabAdvance.Location = new System.Drawing.Point(4, 22);
             this.tabAdvance.Name = "tabAdvance";
-            this.tabAdvance.Size = new System.Drawing.Size(348, 248);
+            this.tabAdvance.Size = new System.Drawing.Size(350, 248);
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
+            // 
+            // chxLogInfo
+            // 
+            this.chxLogInfo.AutoSize = true;
+            this.chxLogInfo.Location = new System.Drawing.Point(14, 119);
+            this.chxLogInfo.Name = "chxLogInfo";
+            this.chxLogInfo.Size = new System.Drawing.Size(93, 17);
+            this.chxLogInfo.TabIndex = 22;
+            this.chxLogInfo.Text = "log debug info";
+            this.chxLogInfo.UseVisualStyleBackColor = true;
             // 
             // cbxDefaultEmailToBlank
             // 
@@ -561,21 +615,12 @@
             this.chxLogErrors.AutoSize = true;
             this.chxLogErrors.Checked = true;
             this.chxLogErrors.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxLogErrors.Location = new System.Drawing.Point(14, 161);
+            this.chxLogErrors.Location = new System.Drawing.Point(14, 97);
             this.chxLogErrors.Name = "chxLogErrors";
             this.chxLogErrors.Size = new System.Drawing.Size(123, 17);
             this.chxLogErrors.TabIndex = 19;
             this.chxLogErrors.Text = "log application errors";
             this.chxLogErrors.UseVisualStyleBackColor = true;
-            // 
-            // lbTextWarnExperimentalFeatures
-            // 
-            this.lbTextWarnExperimentalFeatures.AutoSize = true;
-            this.lbTextWarnExperimentalFeatures.Location = new System.Drawing.Point(11, 87);
-            this.lbTextWarnExperimentalFeatures.Name = "lbTextWarnExperimentalFeatures";
-            this.lbTextWarnExperimentalFeatures.Size = new System.Drawing.Size(150, 13);
-            this.lbTextWarnExperimentalFeatures.TabIndex = 20;
-            this.lbTextWarnExperimentalFeatures.Text = "warning experimental features:";
             // 
             // btnCrash
             // 
@@ -598,16 +643,6 @@
             this.tbDefaultEmail.Size = new System.Drawing.Size(200, 20);
             this.tbDefaultEmail.TabIndex = 18;
             // 
-            // chxSyntaxHighlightC
-            // 
-            this.chxSyntaxHighlightC.AutoSize = true;
-            this.chxSyntaxHighlightC.Location = new System.Drawing.Point(14, 129);
-            this.chxSyntaxHighlightC.Name = "chxSyntaxHighlightC";
-            this.chxSyntaxHighlightC.Size = new System.Drawing.Size(133, 17);
-            this.chxSyntaxHighlightC.TabIndex = 19;
-            this.chxSyntaxHighlightC.Text = "Highlight C code notes";
-            this.chxSyntaxHighlightC.UseVisualStyleBackColor = true;
-            // 
             // lbTextDefaultEmail
             // 
             this.lbTextDefaultEmail.AutoSize = true;
@@ -617,22 +652,12 @@
             this.lbTextDefaultEmail.TabIndex = 17;
             this.lbTextDefaultEmail.Text = "default email address to send to: ";
             // 
-            // chxSyntaxHighlightHTML
-            // 
-            this.chxSyntaxHighlightHTML.AutoSize = true;
-            this.chxSyntaxHighlightHTML.Location = new System.Drawing.Point(14, 106);
-            this.chxSyntaxHighlightHTML.Name = "chxSyntaxHighlightHTML";
-            this.chxSyntaxHighlightHTML.Size = new System.Drawing.Size(162, 17);
-            this.chxSyntaxHighlightHTML.TabIndex = 13;
-            this.chxSyntaxHighlightHTML.Text = "Highlight HTML syntax notes";
-            this.chxSyntaxHighlightHTML.UseVisualStyleBackColor = true;
-            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(356, 305);
+            this.ClientSize = new System.Drawing.Size(358, 305);
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -646,6 +671,8 @@
             this.tabAppearance.ResumeLayout(false);
             this.tabAppearance.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).EndInit();
+            this.tabHighlighting.ResumeLayout(false);
+            this.tabHighlighting.PerformLayout();
             this.tabTwitter.ResumeLayout(false);
             this.tabTwitter.PerformLayout();
             this.tabNetwerk.ResumeLayout(false);
@@ -693,9 +720,6 @@
         private System.Windows.Forms.CheckBox chxStartOnBootWindows;
         private System.Windows.Forms.CheckBox chxConfirmLink;
         private System.Windows.Forms.CheckBox chxConfirmExit;
-        private System.Windows.Forms.CheckBox chxSyntaxHighlightC;
-        private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
-        private System.Windows.Forms.Label lbTextWarnExperimentalFeatures;
         private System.Windows.Forms.CheckBox chxLogErrors;
         private System.Windows.Forms.ComboBox cbxTextDirection;
         private System.Windows.Forms.Label lbTextDirection;
@@ -703,5 +727,10 @@
         private System.Windows.Forms.CheckBox cbxDefaultEmailToBlank;
         private System.Windows.Forms.TabPage tabNetwerk;
         private System.Windows.Forms.CheckBox cbxProxy;
+        private System.Windows.Forms.CheckBox chxLogInfo;
+        private System.Windows.Forms.TabPage tabHighlighting;
+        private System.Windows.Forms.Label lbTextWarnExperimentalFeatures;
+        private System.Windows.Forms.CheckBox chxSyntaxHighlightC;
+        private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
     }
 }

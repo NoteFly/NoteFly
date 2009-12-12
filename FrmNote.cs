@@ -113,7 +113,7 @@ namespace NoteFly
             this.note = note;
             //this.transparency = transparency;
             this.notecolor = notecolor;
-            //set default location note            
+            //set default location note
             this.locX = 10;
             this.locY = 10;
             //set width and height to default
@@ -244,7 +244,7 @@ namespace NoteFly
                 }
                 catch (Exception exc)
                 {
-                    throw new CustomExceptions(exc.Message);
+                    throw new CustomException(exc.Message);
                 }
                 
             }
@@ -308,7 +308,9 @@ namespace NoteFly
 
             if (this.NoteID > notes.NumNotes)
             {
-                MessageBox.Show("Error: cannot find note.");
+                String cannotfindnote = "Cannot find note.";
+                MessageBox.Show(cannotfindnote);
+                Log.write(LogType.error, cannotfindnote);
             }
             notes.EditNewNote(this.NoteID);
         }
@@ -343,7 +345,9 @@ namespace NoteFly
             }
             else
             {
-                MessageBox.Show("Error: note has no title and content");
+                String notitlecontent = "note has no title and content";
+                MessageBox.Show(notitlecontent);
+                Log.write(LogType.error, notitlecontent);
             }
         }
 
@@ -356,24 +360,33 @@ namespace NoteFly
                 switch (responsecode)
                 {
                     case 0:
-                        MessageBox.Show("Note is posted on your facebook wall.");
+                        String notefbposted = "The note is posted on your facebook wall.";
+                        MessageBox.Show(notefbposted);
+                        Log.write(LogType.info, notefbposted);
                         break;
                     case 1:
-                        MessageBox.Show("Error: unknow error occurred");
+                        String unknowfberror = "Unknow facebook error occurred";
+                        MessageBox.Show(unknowfberror);
+                        Log.write(LogType.error, unknowfberror);
                         break;
                     case 100:
-                        throw new CustomExceptions("Invalid paramters");
+                        throw new CustomException("Invalid paramters");
                         break;
                     case 200:
-                        MessageBox.Show("Error: no proper primisiion to post on your wall.");
+                        String fbprimission = "No proper primision to post on your wall.";
+                        MessageBox.Show(fbprimission);
+                        Log.write(LogType.error, fbprimission);
                         break;
                     case 210:
-                        MessageBox.Show("Error: User not visible. The user doesn't have permission to act on that object. ");
+                        String fbusernotvisible = "User not visible. The user doesn't have permission to act on that object.";
+                        MessageBox.Show(fbusernotvisible);
+                        Log.write(LogType.error, fbusernotvisible);
                         break;
                     case 340:
-                        MessageBox.Show("Error: Feed action request limit reached.");
+                        String fbfeedlimit = "Feed action request limit reached.";
+                        MessageBox.Show(fbfeedlimit);
+                        Log.write(LogType.error, fbfeedlimit);
                         break;
-
                 }
             }
 
@@ -600,11 +613,15 @@ namespace NoteFly
             }
             else if (notecolor >= 0)
             {
-                MessageBox.Show("Error: note location out of screen.");
+                String outofscreen = "note location out of screen.";
+                MessageBox.Show(outofscreen);
+                Log.write(LogType.error, outofscreen);
             }
             else
             {
-                MessageBox.Show("Error: notecolor unknow.");
+                String unknowcolor = "notecolor unknow.";
+                MessageBox.Show(unknowcolor);
+                Log.write(LogType.error, unknowcolor);
             }
         }
 
@@ -707,7 +724,9 @@ namespace NoteFly
             }
             else
             {
-                MessageBox.Show("Error: Your note is empty.");
+                String emptynote = "Your note is empty.";
+                MessageBox.Show(emptynote);
+                Log.write(LogType.error, emptynote);
             }
         }
 
@@ -754,7 +773,9 @@ namespace NoteFly
             }
             else
             {
-                MessageBox.Show("Error: there is no network connection.");
+                String nonetwork = "There is no network connection.";
+                MessageBox.Show(nonetwork);
+                Log.write(LogType.error, nonetwork);
                 return false;
             }
             #elif !win32
@@ -777,7 +798,9 @@ namespace NoteFly
 
             if (String.IsNullOrEmpty(twitteruser))
             {
-                MessageBox.Show("Error: you haven't set your twitter username yet.\r\nSettings window will now open.");
+                String notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
+                MessageBox.Show(notwusername);
+                Log.write(LogType.error, notwusername);
                 FrmSettings settings = new FrmSettings(notes, notes.Transparency);
                 settings.Show();
                 return;
@@ -814,7 +837,9 @@ namespace NoteFly
                 }
                 else
                 {
-                    MessageBox.Show("Error: Sending note to twitter failed.");
+                    String sendtwfail = "Sending note to twitter failed.";
+                    MessageBox.Show(sendtwfail);
+                    Log.write(LogType.error, sendtwfail);
                 }
                 twpass.Remove(0);
             }
