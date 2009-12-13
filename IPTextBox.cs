@@ -5,16 +5,16 @@ namespace NoteFly
 {
     public partial class IPTextBox : UserControl
     {
-		#region Constructors (1) 
+        #region Constructors (1)
 
         public IPTextBox()
         {
             InitializeComponent();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (4) 
+        #region Properties (4)
 
         public string IPpart1
         {
@@ -64,11 +64,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (2) 
+        #region Methods (2)
 
-		// Public Methods (2) 
+        // Public Methods (2) 
 
         public String GetIPAddress()
         {
@@ -85,7 +85,7 @@ namespace NoteFly
                 {
                     String curpart = addr.Substring(startpos, i - startpos);
                     partnum++;
-                    startpos = i+1;
+                    startpos = i + 1;
                     switch (partnum)
                     {
                         case 1:
@@ -105,6 +105,48 @@ namespace NoteFly
             }
         }
 
-		#endregion Methods 
-       }
+        #endregion Methods
+
+        private void CheckInput(object sender, KeyEventArgs e)
+        {
+            MaskedTextBox masktb = (MaskedTextBox)sender;
+            String newcontent = masktb.Text + KeyToStr(e.KeyCode);
+            int newval = Convert.ToInt32(newcontent);
+            if (newval > 255)
+            {
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private String KeyToStr(Keys keycode)
+        {
+            switch (keycode)
+            {
+                case Keys.D0:
+                    return "0";
+                case Keys.D1:
+                    return "1";
+                case Keys.D2:
+                    return "2";
+                case Keys.D3:
+                    return "3";
+                case Keys.D4:
+                    return "4";
+                case Keys.D5:
+                    return "5";
+                case Keys.D6:
+                    return "6";
+                case Keys.D7:
+                    return "7";
+                case Keys.D8:
+                    return "8";
+                case Keys.D9:
+                    return "9";
+                default:
+                    return "";
+            }
+        }
+
+
+    }
 }

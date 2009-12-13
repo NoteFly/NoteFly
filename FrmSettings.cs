@@ -76,18 +76,10 @@ namespace NoteFly
             ipproxy = new IPTextBox();
             ipproxy.Location = new Point(24, 50);
             this.tabNetwerk.Controls.Add(ipproxy);
-            
-            //if (String.IsNullOrEmpty(getProxy()))
-            //{
-            //    chxProxy.Checked = false;
-            //    ipproxy.Enabled = false;
-            //    ipproxy.SetIPAddress(getProxy());
-            //}
-            //else
-            //{
-            //    chxProxy.Checked = true;
-            //    ipproxy.Enabled = true;
-            //}
+            if (getUseProxy())
+            {
+                ipproxy.Enabled = true;
+            }
 #if DEBUG
             btnCrash.Visible = true;
 #endif

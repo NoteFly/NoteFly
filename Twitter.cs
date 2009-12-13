@@ -161,7 +161,7 @@ namespace NoteFly
                 byte[] bytes = Encoding.UTF8.GetBytes(data);
 
                 xmlHandler getsettting = new xmlHandler(true);
-                if (getsettting.getXMLnodeAsBool("useproxy"))
+                if (getsettting.getXMLnodeAsBool("useproxy") == true)
                 {
                     String addr = getsettting.getXMLnode("proxyaddr");
                     if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0")
@@ -169,7 +169,7 @@ namespace NoteFly
                         String novalidproxy = "Proxy address is not given";
                         MessageBox.Show(novalidproxy);
                         Log.write(LogType.error, novalidproxy);
-
+                        return "";
                     }
                     else
                     {

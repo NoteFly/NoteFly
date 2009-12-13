@@ -49,7 +49,7 @@ namespace NoteFly
         /// </summary>
         public int CheckResponse(String responsestream)
         {
-            
+            if (String.IsNullOrEmpty(responsestream)) return 1;
 
             return 0;//is good
         }
@@ -86,7 +86,7 @@ namespace NoteFly
             if (url.StartsWith(fbsuccessurl) == true)
             {
                 String parm = url.ToString().Substring(60, url.Length - 61);
-                String[] parms = parm.Split(',');                
+                String[] parms = parm.Split(',');
 
                 if (!String.IsNullOrEmpty(parms[0]))
                 {
@@ -142,7 +142,7 @@ namespace NoteFly
             request.Timeout = 10000; //10secs
 
             xmlHandler getsettting = new xmlHandler(true);
-            if (getsettting.getXMLnodeAsBool("useproxy"))
+            if (getsettting.getXMLnodeAsBool("useproxy")==true)
             {
                 String addr = getsettting.getXMLnode("proxyaddr");
                 if (String.IsNullOrEmpty(addr) || addr=="0.0.0.0")
@@ -150,7 +150,7 @@ namespace NoteFly
                     String novalidproxy = "Proxy address is not given";
                     MessageBox.Show(novalidproxy);
                     Log.write(LogType.error, novalidproxy);
-                    
+                    return "";
                 }
                 else
                 {

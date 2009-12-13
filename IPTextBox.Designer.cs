@@ -80,6 +80,7 @@
             this.tbIPpart4.TabIndex = 14;
             this.tbIPpart4.Text = "0";
             this.tbIPpart4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbIPpart4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckInput);
             // 
             // tbIPpart3
             // 
@@ -97,6 +98,7 @@
             this.tbIPpart3.TabIndex = 13;
             this.tbIPpart3.Text = "0";
             this.tbIPpart3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbIPpart3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckInput);
             // 
             // tbIPpart2
             // 
@@ -114,6 +116,7 @@
             this.tbIPpart2.TabIndex = 12;
             this.tbIPpart2.Text = "0";
             this.tbIPpart2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbIPpart2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckInput);
             // 
             // tbIPpart1
             // 
@@ -131,6 +134,7 @@
             this.tbIPpart1.TabIndex = 11;
             this.tbIPpart1.Text = "0";
             this.tbIPpart1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbIPpart1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckInput);
             // 
             // IPTextBox
             // 

@@ -425,7 +425,7 @@ namespace NoteFly
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("useproxy");
-                WriteXMLBool(logerror);
+                WriteXMLBool(useproxy);
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("proxyaddr");
