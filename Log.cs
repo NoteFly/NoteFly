@@ -50,7 +50,6 @@ namespace NoteFly
                 errorlog = Path.Combine(getsettings.AppDataFolder, "debug.log");
                 logerror = getsettings.getXMLnodeAsBool("logerror");
                 loginfo = getsettings.getXMLnodeAsBool("loginfo");
-                
             }
             catch (Exception)
             {

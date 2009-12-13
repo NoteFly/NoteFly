@@ -44,7 +44,7 @@ namespace NoteFly
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "",false, false, false, "", "", true, false);
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "",false, false, false, "", "", true, false, false, "");
                 }
             }
         }
@@ -124,29 +124,35 @@ namespace NoteFly
         /// <returns></returns>
         public bool getXMLnodeAsBool(string nodename)
         {
-            objXmlTextReader = new XmlTextReader(filenm);
-
-            while (objXmlTextReader.Read())
+            try
             {
-                if (objXmlTextReader.Name == nodename)
+                objXmlTextReader = new XmlTextReader(filenm);
+
+                while (objXmlTextReader.Read())
                 {
-                    try
+                    if (objXmlTextReader.Name == nodename)
                     {
-                        bool nodevalue = objXmlTextReader.ReadElementContentAsBoolean();
-                        objXmlTextReader.Close();
-                        return nodevalue;
-                    }
-                    catch (InvalidCastException invalidcastexc)
-                    {
-                        throw new CustomException(invalidcastexc.Message);
-                    }
-                    finally
-                    {
-                        objXmlTextReader.Close();
+                        try
+                        {
+                            bool nodevalue = objXmlTextReader.ReadElementContentAsBoolean();
+                            objXmlTextReader.Close();
+                            return nodevalue;
+                        }
+                        catch (InvalidCastException invalidcastexc)
+                        {
+                            throw new CustomException(invalidcastexc.Message);
+                        }
+                        finally
+                        {
+                            objXmlTextReader.Close();
+                        }
                     }
                 }
             }
-            objXmlTextReader.Close();
+            finally
+            {
+                objXmlTextReader.Close();
+            }
             return false;
         }
 
@@ -157,29 +163,36 @@ namespace NoteFly
         /// <returns>return node as integer, -1 if error</returns>
         public int getXMLnodeAsInt(string nodename)
         {
-            objXmlTextReader = new XmlTextReader(filenm);
-
-            while (objXmlTextReader.Read())
+            try
             {
-                if (objXmlTextReader.Name == nodename)
+                objXmlTextReader = new XmlTextReader(filenm);
+
+                while (objXmlTextReader.Read())
                 {
-                    try
+                    if (objXmlTextReader.Name == nodename)
                     {
-                        int n = objXmlTextReader.ReadElementContentAsInt();
-                        objXmlTextReader.Close();
-                        return n;
-                    }
-                    catch (InvalidCastException invalidcastexc)
-                    {
-                        throw new CustomException(invalidcastexc.Message);
-                    }
-                    finally
-                    {
-                        objXmlTextReader.Close();
+                        try
+                        {
+                            int n = objXmlTextReader.ReadElementContentAsInt();
+                            objXmlTextReader.Close();
+                            return n;
+                        }
+                        catch (InvalidCastException invalidcastexc)
+                        {
+                            throw new CustomException(invalidcastexc.Message);
+                        }
+                        finally
+                        {
+                            objXmlTextReader.Close();
+                        }
                     }
                 }
             }
-            objXmlTextReader.Close();
+            finally
+            {
+                objXmlTextReader.Close();
+                
+            }
             return -1;
         }
 
@@ -232,69 +245,73 @@ namespace NoteFly
             if (issetting) {
                 throw new CustomException("This is a settings file, cannot write a note of it."); 
             }
-            
-            objXmlTextWriter = new XmlTextWriter(this.filenm, null);
 
-            objXmlTextWriter.Formatting = Formatting.Indented;
-
-            objXmlTextWriter.WriteStartDocument();
-
-            objXmlTextWriter.WriteStartElement("note");
-
-            if (visible == true)
+            try
             {
-                objXmlTextWriter.WriteElementString("visible", "1");
+                objXmlTextWriter = new XmlTextWriter(this.filenm, null);
+
+                objXmlTextWriter.Formatting = Formatting.Indented;
+
+                objXmlTextWriter.WriteStartDocument();
+
+                objXmlTextWriter.WriteStartElement("note");
+
+                if (visible == true)
+                {
+                    objXmlTextWriter.WriteElementString("visible", "1");
+                }
+                else
+                {
+                    objXmlTextWriter.WriteElementString("visible", "0");
+                }
+
+                if (ontop == true)
+                {
+                    objXmlTextWriter.WriteElementString("ontop", "1");
+                }
+                else
+                {
+                    objXmlTextWriter.WriteElementString("ontop", "0");
+                }
+
+                objXmlTextWriter.WriteStartElement("color");
+                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("title");
+                objXmlTextWriter.WriteString(title);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("content");
+                objXmlTextWriter.WriteString(content);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("location");
+                objXmlTextWriter.WriteStartElement("x");
+                objXmlTextWriter.WriteString(Convert.ToString(locX));
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartElement("y");
+                objXmlTextWriter.WriteString(Convert.ToString(locY));
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("size");
+                objXmlTextWriter.WriteStartElement("width");
+                objXmlTextWriter.WriteString(Convert.ToString(notewidth));
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteStartElement("heigth");
+                objXmlTextWriter.WriteString(Convert.ToString(noteheight));
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteEndDocument();
             }
-            else
+            finally
             {
-                objXmlTextWriter.WriteElementString("visible", "0");
+                objXmlTextWriter.Flush();
+                objXmlTextWriter.Close();
             }
-
-            if (ontop == true)
-            {
-                objXmlTextWriter.WriteElementString("ontop", "1");
-            }
-            else
-            {
-                objXmlTextWriter.WriteElementString("ontop", "0");
-            }
-
-            objXmlTextWriter.WriteStartElement("color");
-            objXmlTextWriter.WriteString(Convert.ToString(numcolor));
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteStartElement("title");
-            objXmlTextWriter.WriteString(title);
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteStartElement("content");
-            objXmlTextWriter.WriteString(content);
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteStartElement("location");
-            objXmlTextWriter.WriteStartElement("x");
-            objXmlTextWriter.WriteString(Convert.ToString(locX));
-            objXmlTextWriter.WriteEndElement();
-            objXmlTextWriter.WriteStartElement("y");
-            objXmlTextWriter.WriteString(Convert.ToString(locY));
-            objXmlTextWriter.WriteEndElement();
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteStartElement("size");
-            objXmlTextWriter.WriteStartElement("width");
-            objXmlTextWriter.WriteString(Convert.ToString(notewidth));
-            objXmlTextWriter.WriteEndElement();
-            objXmlTextWriter.WriteStartElement("heigth");
-            objXmlTextWriter.WriteString(Convert.ToString(noteheight));
-            objXmlTextWriter.WriteEndElement();
-            objXmlTextWriter.WriteEndElement();
-            objXmlTextWriter.WriteEndElement();
-
-            objXmlTextWriter.WriteEndDocument();
-
-            objXmlTextWriter.Flush();
-            objXmlTextWriter.Close();
-
             CheckFile();
 
             return true;
@@ -305,7 +322,7 @@ namespace NoteFly
         /// </summary>
         /// <returns>true if succeed.</returns>
         /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass, bool logerror, bool loginfo)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr)
         {
             if (!this.issetting)
             {
@@ -405,6 +422,14 @@ namespace NoteFly
 
                 objXmlTextWriter.WriteStartElement("defaultemail");
                 objXmlTextWriter.WriteString(defaultemail);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("useproxy");
+                WriteXMLBool(logerror);
+                objXmlTextWriter.WriteEndElement();
+
+                objXmlTextWriter.WriteStartElement("proxyaddr");
+                objXmlTextWriter.WriteString(proxyaddr);
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("twitter");

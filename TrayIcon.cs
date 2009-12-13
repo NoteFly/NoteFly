@@ -46,6 +46,26 @@ namespace NoteFly
 
 		#endregion Fields 
 
+        /// <summary>
+        /// The application title.
+        /// </summary>
+        static public string AssemblyTitle
+        {
+            get
+            {
+                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+                if (attributes.Length > 0)
+                {
+                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
+                    if (!String.IsNullOrEmpty(titleAttribute.Title))
+                    {
+                        return titleAttribute.Title;
+                    }
+                }
+                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+            }
+        }
+
 		#region Methods (3) 
 
 		// Private Methods (3) 

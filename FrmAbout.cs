@@ -25,30 +25,11 @@ namespace NoteFly
         {
             InitializeComponent();
             this.Text = "About";
-            this.lblProductName.Text = AssemblyProduct;
+            this.lblProductName.Text = TrayIcon.AssemblyTitle;
             this.lblVersion.Text = String.Format("Version {0}", AssemblyVersion);  
         }
 
         #region Assembly Attribute Accessors
-        /// <summary>
-        /// The application title.
-        /// </summary>
-        public string AssemblyTitle
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0)
-                {
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (!String.IsNullOrEmpty(titleAttribute.Title))
-                    {
-                        return titleAttribute.Title;
-                    }
-                }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
-            }
-        }
 
         /// <summary>
         /// The application version number, please change in project file.
@@ -77,21 +58,6 @@ namespace NoteFly
             }
         }
 
-        /// <summary>
-        /// assembly product field.
-        /// </summary>
-        public string AssemblyProduct
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyProductAttribute)attributes[0]).Product;
-            }
-        }        
         #endregion
 
         private void okButton_Click(object sender, EventArgs e)
@@ -102,11 +68,6 @@ namespace NoteFly
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://code.google.com/p/simpleplainnote/");
-        }
-
-        private void linklblFollow_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://twitter.com/ToMSoms/");
         }
     }
 }

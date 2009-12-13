@@ -21,9 +21,11 @@
               <xs:element name="highlightC" type="xs:boolean" />
             </xs:sequence>
           </xs:complexType>
-        </xs:element>              
+        </xs:element>
         <xs:element name="confirmexit" type="xs:boolean" />
-        <xs:element name="defaultemail" type="xs:string" />        
+        <xs:element name="defaultemail" type="xs:string" />
+        <xs:element name="useproxy" type="xs:boolean" />
+        <xs:element name="proxyaddr" type="xs:string" />
         <xs:element name="twitter">
           <xs:complexType>
             <xs:sequence>
@@ -32,7 +34,6 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        
       </xs:sequence>
     </xs:complexType>
   </xs:element>

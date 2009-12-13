@@ -65,7 +65,7 @@
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
-            this.cbxProxy = new System.Windows.Forms.CheckBox();
+            this.chxUseProxy = new System.Windows.Forms.CheckBox();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogInfo = new System.Windows.Forms.CheckBox();
@@ -539,7 +539,7 @@
             // 
             // tabNetwerk
             // 
-            this.tabNetwerk.Controls.Add(this.cbxProxy);
+            this.tabNetwerk.Controls.Add(this.chxUseProxy);
             this.tabNetwerk.Controls.Add(this.chxConfirmLink);
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
             this.tabNetwerk.Name = "tabNetwerk";
@@ -549,16 +549,16 @@
             this.tabNetwerk.Text = "Network";
             this.tabNetwerk.UseVisualStyleBackColor = true;
             // 
-            // cbxProxy
+            // chxUseProxy
             // 
-            this.cbxProxy.AutoSize = true;
-            this.cbxProxy.Location = new System.Drawing.Point(24, 23);
-            this.cbxProxy.Name = "cbxProxy";
-            this.cbxProxy.Size = new System.Drawing.Size(111, 17);
-            this.cbxProxy.TabIndex = 1;
-            this.cbxProxy.Text = "Use socked proxy";
-            this.cbxProxy.UseVisualStyleBackColor = true;
-            this.cbxProxy.Click += new System.EventHandler(this.cbxProxy_Click);
+            this.chxUseProxy.AutoSize = true;
+            this.chxUseProxy.Location = new System.Drawing.Point(24, 23);
+            this.chxUseProxy.Name = "chxUseProxy";
+            this.chxUseProxy.Size = new System.Drawing.Size(111, 17);
+            this.chxUseProxy.TabIndex = 1;
+            this.chxUseProxy.Text = "Use socked proxy";
+            this.chxUseProxy.UseVisualStyleBackColor = true;
+            this.chxUseProxy.Click += new System.EventHandler(this.cbxProxy_Click);
             // 
             // chxConfirmLink
             // 
@@ -726,7 +726,7 @@
         private System.Windows.Forms.Button btnResetSettings;
         private System.Windows.Forms.CheckBox cbxDefaultEmailToBlank;
         private System.Windows.Forms.TabPage tabNetwerk;
-        private System.Windows.Forms.CheckBox cbxProxy;
+        private System.Windows.Forms.CheckBox chxUseProxy;
         private System.Windows.Forms.CheckBox chxLogInfo;
         private System.Windows.Forms.TabPage tabHighlighting;
         private System.Windows.Forms.Label lbTextWarnExperimentalFeatures;

@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lbDot1 = new System.Windows.Forms.Label();
             this.tbIPpart4 = new System.Windows.Forms.MaskedTextBox();
-            this.tbIPpar3 = new System.Windows.Forms.MaskedTextBox();
+            this.tbIPpart3 = new System.Windows.Forms.MaskedTextBox();
             this.tbIPpart2 = new System.Windows.Forms.MaskedTextBox();
             this.tbIPpart1 = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
@@ -80,25 +80,23 @@
             this.tbIPpart4.TabIndex = 14;
             this.tbIPpart4.Text = "0";
             this.tbIPpart4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbIPpart4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckInput);
             // 
-            // tbIPpar3
+            // tbIPpart3
             // 
-            this.tbIPpar3.AsciiOnly = true;
-            this.tbIPpar3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbIPpar3.CausesValidation = false;
-            this.tbIPpar3.Culture = new System.Globalization.CultureInfo("");
-            this.tbIPpar3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbIPpar3.Location = new System.Drawing.Point(68, 0);
-            this.tbIPpar3.Mask = "000";
-            this.tbIPpar3.Name = "tbIPpar3";
-            this.tbIPpar3.PromptChar = ' ';
-            this.tbIPpar3.ShortcutsEnabled = false;
-            this.tbIPpar3.Size = new System.Drawing.Size(28, 15);
-            this.tbIPpar3.TabIndex = 13;
-            this.tbIPpar3.Text = "0";
-            this.tbIPpar3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbIPpar3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckInput);
+            this.tbIPpart3.AsciiOnly = true;
+            this.tbIPpart3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbIPpart3.CausesValidation = false;
+            this.tbIPpart3.Culture = new System.Globalization.CultureInfo("");
+            this.tbIPpart3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbIPpart3.Location = new System.Drawing.Point(68, 0);
+            this.tbIPpart3.Mask = "000";
+            this.tbIPpart3.Name = "tbIPpart3";
+            this.tbIPpart3.PromptChar = ' ';
+            this.tbIPpart3.ShortcutsEnabled = false;
+            this.tbIPpart3.Size = new System.Drawing.Size(28, 15);
+            this.tbIPpart3.TabIndex = 13;
+            this.tbIPpart3.Text = "0";
+            this.tbIPpart3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tbIPpart2
             // 
@@ -116,7 +114,6 @@
             this.tbIPpart2.TabIndex = 12;
             this.tbIPpart2.Text = "0";
             this.tbIPpart2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbIPpart2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckInput);
             // 
             // tbIPpart1
             // 
@@ -134,7 +131,6 @@
             this.tbIPpart1.TabIndex = 11;
             this.tbIPpart1.Text = "0";
             this.tbIPpart1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbIPpart1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckInput);
             // 
             // IPTextBox
             // 
@@ -146,7 +142,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbDot1);
             this.Controls.Add(this.tbIPpart4);
-            this.Controls.Add(this.tbIPpar3);
+            this.Controls.Add(this.tbIPpart3);
             this.Controls.Add(this.tbIPpart2);
             this.Controls.Add(this.tbIPpart1);
             this.Name = "IPTextBox";
@@ -162,7 +158,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbDot1;
         private System.Windows.Forms.MaskedTextBox tbIPpart4;
-        private System.Windows.Forms.MaskedTextBox tbIPpar3;
+        private System.Windows.Forms.MaskedTextBox tbIPpart3;
         private System.Windows.Forms.MaskedTextBox tbIPpart2;
         private System.Windows.Forms.MaskedTextBox tbIPpart1;
 

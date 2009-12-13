@@ -57,6 +57,8 @@ namespace NoteFly
             chxSyntaxHighlightC.Checked = getHighlightC();
             cbxTextDirection.SelectedIndex = getTextDirection();
             chxLogInfo.Checked = getLogDebugInfo();
+            chxUseProxy.Checked = getUseProxy();
+
             if (String.IsNullOrEmpty(tbDefaultEmail.Text))
             {
                 tbDefaultEmail.Enabled = false;
@@ -73,8 +75,19 @@ namespace NoteFly
 
             ipproxy = new IPTextBox();
             ipproxy.Location = new Point(24, 50);
-            ipproxy.Enabled = false; //getProxySettings()
             this.tabNetwerk.Controls.Add(ipproxy);
+            
+            //if (String.IsNullOrEmpty(getProxy()))
+            //{
+            //    chxProxy.Checked = false;
+            //    ipproxy.Enabled = false;
+            //    ipproxy.SetIPAddress(getProxy());
+            //}
+            //else
+            //{
+            //    chxProxy.Checked = true;
+            //    ipproxy.Enabled = true;
+            //}
 #if DEBUG
             btnCrash.Visible = true;
 #endif
@@ -188,37 +201,42 @@ namespace NoteFly
                 {
                     MoveNotes(tbNotesSavePath.Text);
                 }
-                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text, tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked);
+                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, 
+                    numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text,
+                    tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked, chxUseProxy.Checked, ipproxy.GetIPAddress());
 #if win32
-                key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
                 {
                     if (chxStartOnBootWindows.Checked == true)
                     {
                         try
                         {
-                            key.SetValue("simpleplainnote", "\"" + Application.ExecutablePath + "\"");
+                            key.SetValue(TrayIcon.AssemblyTitle, "\"" + Application.ExecutablePath + "\"");
                         }
-                        catch (UnauthorizedAccessException exc)
+                        catch (UnauthorizedAccessException unauthexc)
                         {
-                            String regnotaccess = "Error: no registery access." + exc.StackTrace;
-                            MessageBox.Show(regnotaccess);
-                            Log.write(LogType.exception, regnotaccess);
+                            MessageBox.Show(unauthexc.Message);
+                            Log.write(LogType.exception, unauthexc.Message);
+                        }
+                        catch (Exception exc)
+                        {
+                            throw new CustomException(exc.Message + " " + exc.StackTrace);
                         }
                     }
                     else if (chxStartOnBootWindows.Checked == false)
                     {
-                        if (key.GetValue("simpleplainnote", null) != null)
+                        if (key.GetValue(TrayIcon.AssemblyTitle, null) != null)
                         {
-                            key.DeleteValue("simpleplainnote", false);
+                            key.DeleteValue(TrayIcon.AssemblyTitle, false);
                         }
                     }
                 }
                 else
                 {
-                    String regkeynotexistfound = "Error: Run subkey in registery does not exist. Or it cannot be found.";
+                    String regkeynotexistfound = "Run subkey in registery does not exist. Or it cannot be found.";
                     MessageBox.Show(regkeynotexistfound);
-                    Log.write(LogType.exception, regkeynotexistfound);
+                    Log.write(LogType.error, regkeynotexistfound);
                 }
 #endif
                 notes.SetSettings();
@@ -242,20 +260,20 @@ namespace NoteFly
                 else
                 {
                     throw new Exception("Could not find settings file in application directory.");
-                }        
+                }
                 this.Close();
-            }            
+            }
         }
 
-		        private void cbxDefaultEmailToBlank_CheckedChanged(object sender, EventArgs e)
-        {            
+        private void cbxDefaultEmailToBlank_CheckedChanged(object sender, EventArgs e)
+        {
             tbDefaultEmail.Enabled = !cbxDefaultEmailToBlank.Checked;
             if (cbxDefaultEmailToBlank.Checked) { tbDefaultEmail.Text = ""; }
         }
 
         private void cbxProxy_Click(object sender, EventArgs e)
         {
-            ipproxy.Enabled = cbxProxy.Checked;
+            ipproxy.Enabled = chxUseProxy.Checked;
         }
 
         /// <summary>
@@ -355,10 +373,20 @@ namespace NoteFly
             return xmlsettings.getXMLnode("notesavepath");
         }
 
+        private bool getUseProxy()
+        {
+            return xmlsettings.getXMLnodeAsBool("useproxy");
+        }
+
+        private string getProxyAddr()
+        {
+            return xmlsettings.getXMLnode("proxyaddr");
+        }
+
         private bool getStatusStartlogin()
         {
             #if win32
-            key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {
                 if (key.GetValue("simpleplainnote", null)!=null)
@@ -436,15 +464,11 @@ namespace NoteFly
                             Log.write(LogType.error, fileexist);
                         }
                     }
-                }                
-                id++; //bug fix #23.
+                }
+                id++;
             }
         }
 
 		#endregion Methods 
-
-#if win32
-        private RegistryKey key;
-#endif
     }
 }

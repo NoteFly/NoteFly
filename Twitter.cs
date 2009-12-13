@@ -160,7 +160,22 @@ namespace NoteFly
                 }
                 byte[] bytes = Encoding.UTF8.GetBytes(data);
 
-                //request.Proxy = new WebProxy("");
+                xmlHandler getsettting = new xmlHandler(true);
+                if (getsettting.getXMLnodeAsBool("useproxy"))
+                {
+                    String addr = getsettting.getXMLnode("proxyaddr");
+                    if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0")
+                    {
+                        String novalidproxy = "Proxy address is not given";
+                        MessageBox.Show(novalidproxy);
+                        Log.write(LogType.error, novalidproxy);
+
+                    }
+                    else
+                    {
+                        request.Proxy = new WebProxy(getsettting.getXMLnode("proxyaddr"));
+                    }
+                }
 
                 request.ContentLength = bytes.Length;
                 using (Stream requestStream = request.GetRequestStream())
