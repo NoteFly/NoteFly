@@ -444,7 +444,12 @@ namespace NoteFly
                     string newfile = Path.Combine(newpathsavenotes, id + ".xml");
                     if (!File.Exists(newfile))
                     {
-                        File.Move(oldfile, newfile);
+                        FileInfo fi = new FileInfo(oldfile);
+                        if (fi.Attributes != FileAttributes.System)
+                        {
+                            File.Move(oldfile, newfile);
+                        }
+                        else throw new CustomException("File is marked as system file. Did not move.");
                     }
                     else
                     {

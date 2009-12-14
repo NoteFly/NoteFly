@@ -60,7 +60,7 @@ namespace NoteFly
             {
                 if (CheckFileSize(errorlog))
                 {
-                    File.Delete(errorlog);
+                    File.Move(errorlog, errorlog + ".old");
                 }
                 new Textfile(false, errorlog, null, line.ToString());
             }
@@ -76,7 +76,7 @@ namespace NoteFly
             if (File.Exists(file))
             {
                 FileInfo fileinfo = new FileInfo(file);
-                if (fileinfo.Length > 1024 * 512 && fileinfo.Attributes != FileAttributes.System)
+                if (fileinfo.Length > 1024 * 512 && (fileinfo.Attributes != FileAttributes.System))
                 {
                     return true;
                 }

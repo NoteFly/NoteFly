@@ -149,6 +149,7 @@ namespace NoteFly
             {
                 Int16 newid = Convert.ToInt16(noteslst.Count + 1);
                 string notefilenm = SaveNewNote(newid, title, content, defaultcolor);
+                Log.write(LogType.info, "note created: " + notefilenm);
                 if (String.IsNullOrEmpty(notefilenm)) { throw new CustomException("cannot create filename."); }
                 FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
                 noteslst.Add(newnote);
@@ -251,7 +252,7 @@ namespace NoteFly
             noteslst[notelstpos].CheckThings();
             noteslst[notelstpos].UpdateThisNote();
             this.notesupdated = true;
-            
+            Log.write(LogType.info, "update note ID:"+noteid);
         }
 		// Private Methods (4) 
 

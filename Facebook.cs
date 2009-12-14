@@ -87,10 +87,9 @@ namespace NoteFly
             {
                 String parm = url.ToString().Substring(60, url.Length - 61);
                 String[] parms = parm.Split(',');
-
+                
                 if (!String.IsNullOrEmpty(parms[0]))
                 {
-
                     foreach (String curparm in parms)
                     {
                         if (curparm.StartsWith("\"session_key\":"))
@@ -118,7 +117,7 @@ namespace NoteFly
                 }
                 else
                 {
-                    throw new CustomException("error parsering url parameters");
+                    throw new CustomException("cannot parser url parameters.");
                 }
             }
             else if (url.StartsWith(fbcancelurl) == true)

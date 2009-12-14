@@ -258,13 +258,19 @@ namespace NoteFly
                 DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    System.Diagnostics.Process.Start(e.LinkText);
+                    LoadUrl(e.LinkText);
                 }
             }
             else
             {
-                System.Diagnostics.Process.Start(e.LinkText);
+                LoadUrl(e.LinkText);
             }
+        }
+
+        private void LoadUrl(string url)
+        {
+            System.Diagnostics.Process.Start(url.Trim());
+            Log.write(LogType.info, "link clicked.");
         }
 
         /// <summary>
