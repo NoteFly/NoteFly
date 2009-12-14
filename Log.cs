@@ -56,17 +56,36 @@ namespace NoteFly
                 line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot get log settings.");
                 logerror = true;
             }
-
-            if (typemsg == LogType.exception)
+            if ((typemsg == LogType.exception) || (logerror && typemsg == LogType.error) || (loginfo && typemsg == LogType.info))
             {
+                if (CheckFileSize(errorlog))
+                {
+                    File.Delete(errorlog);
+                }
                 new Textfile(false, errorlog, null, line.ToString());
             }
-            else if (logerror || loginfo)
-            {
-                new Textfile(false, errorlog, null, line.ToString());
-            }
-          
+        }
 
+        /// <summary>
+        /// Check if logfile larger than 512KB.
+        /// </summary>
+        /// <param name="file">the filename and path</param>
+        /// <returns></returns>
+        private static bool CheckFileSize(String file)
+        {
+            if (File.Exists(file))
+            {
+                FileInfo fileinfo = new FileInfo(file);
+                if (fileinfo.Length > 1024 * 512 && fileinfo.Attributes != FileAttributes.System)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
         }
     }
 }
