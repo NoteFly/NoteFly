@@ -16,11 +16,14 @@
 using System;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace NoteFly
 {
     partial class FrmAbout : Form
     {
+        private int curletter = -1;
+
         public FrmAbout()
         {
             InitializeComponent();
@@ -68,6 +71,28 @@ namespace NoteFly
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://code.google.com/p/simpleplainnote/");
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (curletter < this.richTextBox1.Text.Length)
+            {
+                curletter++;
+            } else { 
+                curletter = 0;
+            }
+            if (curletter > 2)
+            {
+                this.richTextBox1.Select(curletter-3, 1);
+                this.richTextBox1.SelectionColor = Color.Red;
+            }
+            else if (curletter <= 2)
+            {
+                this.richTextBox1.Select(richTextBox1.Text.Length - curletter, 1);
+                this.richTextBox1.SelectionColor = Color.Red;
+            }
+            this.richTextBox1.Select(curletter, 1);
+            this.richTextBox1.SelectionColor = Color.Green;
         }
     }
 }

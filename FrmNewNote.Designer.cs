@@ -76,12 +76,12 @@
             // contextMenuStripTextActions
             // 
             this.contextMenuStripTextActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pastTextToolStripMenuItem,
-            this.copyTextToolStripMenuItem,
             this.saveNewNoteToolStripMenuItem,
-            this.cancelNoteToolStripMenuItem});
+            this.cancelNoteToolStripMenuItem,
+            this.pastTextToolStripMenuItem,
+            this.copyTextToolStripMenuItem});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 92);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 114);
             // 
             // pastTextToolStripMenuItem
             // 
@@ -104,6 +104,7 @@
             // 
             // saveNewNoteToolStripMenuItem
             // 
+            this.saveNewNoteToolStripMenuItem.Image = global::NoteFly.Properties.Resources.accept;
             this.saveNewNoteToolStripMenuItem.Name = "saveNewNoteToolStripMenuItem";
             this.saveNewNoteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveNewNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
@@ -112,6 +113,7 @@
             // 
             // cancelNoteToolStripMenuItem
             // 
+            this.cancelNoteToolStripMenuItem.Image = global::NoteFly.Properties.Resources.cancel;
             this.cancelNoteToolStripMenuItem.Name = "cancelNoteToolStripMenuItem";
             this.cancelNoteToolStripMenuItem.ShortcutKeyDisplayString = "Escape";
             this.cancelNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);

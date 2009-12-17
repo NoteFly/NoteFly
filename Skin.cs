@@ -42,6 +42,18 @@ namespace NoteFly
 
         #endregion Constructors
 
+        /// <summary>
+        /// Number of colors of note 
+        /// Count from zero.
+        /// </summary>
+        public int MaxNotesColors
+        {
+            get
+            {
+                return 6;
+            }
+        }
+
         #region Methods (2)
 
         /// <summary>

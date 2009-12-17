@@ -23,6 +23,13 @@ namespace NoteFly
     /// </summary>
     public class Textfile
     {
+        /*
+        public Textfile(string filename, string content)
+        {
+            new Textfile(false, filename, null, content);
+        }
+         */
+
         public Textfile(bool isnote, string filename, string title, string content)
         {
             FileStream fs = null;
@@ -34,20 +41,22 @@ namespace NoteFly
                     fs = new FileStream(filename, FileMode.OpenOrCreate);
                 }
                 else
-                { fs = new FileStream(filename, FileMode.Append); }
+                {
+                    fs = new FileStream(filename, FileMode.Append);
+                }
                 writer = new StreamWriter(fs);
                 if (isnote)
                 {
                     writer.WriteLine("Title: " + title + "\r\n");
                     writer.Write(content);
-                } 
+                }
                 else
                 {
                     writer.Write(content);
                 }
             }
             finally
-            {                
+            {
                 writer.Close();
                 fs.Close();
             }

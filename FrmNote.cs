@@ -28,28 +28,28 @@ namespace NoteFly
 {
     public partial class FrmNote : Form
     {
-        #region Fields (15)
+		#region Fields (16) 
 
-        public Notes notes;
-        private Form frmLoginFb = null;
         private TextHighlight highlight;
         private Int16 id;
-        private int locX;
-        private int locY;
+        private Int32 locX;
+        private Int32 locY;
         private String note;
         private Int16 notecolor = 0;
         private Boolean notelock = false;
+        public Notes notes;
         private Boolean notevisible = true;
         private Skin skin;
         private String title;
         private String twpass;
 
-        public const int HT_CAPTION = 0x2;
-        public const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int minvisiblesize = 5;
+        private const int HT_CAPTION = 0x2;
+        private const int WM_NCLBUTTONDOWN = 0xA1;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (2)
+		#region Constructors (2) 
 
         public FrmNote(Notes notes, Int16 id, bool visible, bool ontop, string title, string note, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
         {
@@ -64,7 +64,7 @@ namespace NoteFly
             this.note = note;
             this.notecolor = notecolor;
 
-            if ((locX >= 0) && (locY >= 0))
+            if ((locX + notewidth > minvisiblesize) && (locY + noteheight > minvisiblesize))
             {
                 this.locX = locX;
                 this.locY = locY;
@@ -130,9 +130,9 @@ namespace NoteFly
             notes.NotesUpdated = true;
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Properties (4)
+		#region Properties (4) 
 
         public Int16 NoteColor
         {
@@ -172,11 +172,11 @@ namespace NoteFly
             }
         }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Methods (30)
+		#region Methods (32) 
 
-        // Public Methods (2) 
+		// Public Methods (2) 
 
         /// <summary>
         /// Check if twitter is enabled and check Syntax.
@@ -192,12 +192,8 @@ namespace NoteFly
                 if (highlight == null)
                 {
                     highlight = new TextHighlight(notes.HighlightHTML, notes.HighlightC, this.rtbNote);
-                    highlight.CheckSyntaxFull();
                 }
-                else if (highlight != null)
-                {
-                    highlight.CheckSyntaxFull();
-                }
+                highlight.CheckSyntaxFull();
             }
         }
 
@@ -205,7 +201,7 @@ namespace NoteFly
         {
             SavePos.RunWorkerAsync();
         }
-        // Private Methods (28) 
+		// Private Methods (30) 
 
         /// <summary>
         /// Find what password is entered.
@@ -217,7 +213,12 @@ namespace NoteFly
             Button btnobj = (Button)obj;
             Form frmAskpass = btnobj.FindForm();
 
-            Control[] passctr = frmAskpass.Controls.Find("tbPassword", true);
+            Control[] passctr = frmAskpass.Controls.Find("tbPassword", false);
+            if (String.IsNullOrEmpty(passctr[0].Text))
+            {
+                passctr[0].BackColor = Color.Red;
+                return;
+            }
             twpass = passctr[0].Text;
             frmAskpass.Close();
             foreach (Control cntrl in frmAskpass.Controls)
@@ -236,21 +237,32 @@ namespace NoteFly
         /// <param name="e"></param>
         private void btnCloseNote_Click(object sender, EventArgs e)
         {
-            if (frmLoginFb != null)
-            {
-                try
-                {
-                    frmLoginFb.Close();
-                }
-                catch (Exception exc)
-                {
-                    throw new CustomException(exc.Message);
-                }
-                
-            }
             this.notevisible = false;
             notes.NotesUpdated = true;
             this.Hide();
+        }
+
+        /// <summary>
+        /// Check if there is internet connection, if not warn user.
+        /// </summary>
+        /// <returns>true if there is a coonection, otherwise return false</returns>
+        private bool CheckConnection()
+        {
+            #if win32
+            if (IsConnectedToInternet() == true)
+            {
+                return true;
+            }
+            else
+            {
+                String nonetwork = "There is no network connection.";
+                MessageBox.Show(nonetwork);
+                Log.write(LogType.error, nonetwork);
+                return false;
+            }
+            #elif !win32
+            return true;
+            #endif
         }
 
         /// <summary>
@@ -298,7 +310,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Edit note
+        /// Edit note is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -316,7 +328,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// E-mail
+        /// E-mail note is selected.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -349,48 +361,6 @@ namespace NoteFly
                 MessageBox.Show(notitlecontent);
                 Log.write(LogType.error, notitlecontent);
             }
-        }
-
-        private void FbWeb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
-        {
-            Facebook fb = new Facebook();
-            if (fb.ParserURL(e.Url.ToString()))
-            {
-                int responsecode = fb.CheckResponse(fb.PostStream(this.note));
-                switch (responsecode)
-                {
-                    case 0:
-                        String notefbposted = "The note is posted on your facebook wall.";
-                        MessageBox.Show(notefbposted);
-                        Log.write(LogType.info, notefbposted);
-                        break;
-                    case 1:
-                        String unknowfberror = "Unknow facebook error occurred";
-                        MessageBox.Show(unknowfberror);
-                        Log.write(LogType.error, unknowfberror);
-                        break;
-                    case 100:
-                        throw new CustomException("Invalid paramters");
-                        break;
-                    case 200:
-                        String fbprimission = "No proper primision to post on your wall.";
-                        MessageBox.Show(fbprimission);
-                        Log.write(LogType.error, fbprimission);
-                        break;
-                    case 210:
-                        String fbusernotvisible = "User not visible. The user doesn't have permission to act on that object.";
-                        MessageBox.Show(fbusernotvisible);
-                        Log.write(LogType.error, fbusernotvisible);
-                        break;
-                    case 340:
-                        String fbfeedlimit = "Feed action request limit reached.";
-                        MessageBox.Show(fbfeedlimit);
-                        Log.write(LogType.error, fbfeedlimit);
-                        break;
-                }
-            }
-
-            if (frmLoginFb != null) { frmLoginFb.Close(); }
         }
 
         /// <summary>
@@ -534,6 +504,11 @@ namespace NoteFly
             }
         }
 
+       /// <summary>
+       /// pnlHead the grabbel area is selected.
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
             if (skin != null)
@@ -605,23 +580,21 @@ namespace NoteFly
             this.locX = this.Location.X;
             this.locY = this.Location.Y;
 
-            if ((this.locX + this.Width > 0) && (this.locY + this.Height > 0) && (notecolor >= 0))
+            if ((this.locX + this.Width > minvisiblesize) && (this.locY + this.Height > minvisiblesize) && (notecolor >= 0) && notecolor <= skin.MaxNotesColors)
             {
                 string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
                 xmlHandler updateposnote = new xmlHandler(notefile);
                 updateposnote.WriteNote(notevisible, this.TopMost, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
             }
-            else if (notecolor >= 0)
+            else if (notecolor < 0 || notecolor > skin.MaxNotesColors)
             {
-                String outofscreen = "note location out of screen.";
-                MessageBox.Show(outofscreen);
-                Log.write(LogType.error, outofscreen);
+                throw new CustomException("Note color unknow.");
             }
             else
             {
-                String unknowcolor = "notecolor unknow.";
-                MessageBox.Show(unknowcolor);
-                Log.write(LogType.error, unknowcolor);
+                String outofscreen = "position note (ID:" + this.NoteID + ") is out of screen.";
+                MessageBox.Show(outofscreen);
+                Log.write(LogType.error, outofscreen);
             }
         }
 
@@ -642,6 +615,7 @@ namespace NoteFly
                     string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
                     xmlHandler savenotecolor = new xmlHandler(notefile);
                     savenotecolor.WriteNote(notevisible, OnTopToolStripMenuItem.Checked, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                    Log.write(LogType.info, "color note (ID:" + this.NoteID + ") changed.");
                 }
                 else
                 {
@@ -680,54 +654,8 @@ namespace NoteFly
         private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
         {
             if (!CheckConnection()) return;
-
             Facebook fb = new Facebook();
-
-            //grant access.form
-            frmLoginFb = new Form();
-            frmLoginFb.Text = "Post note on FaceBook";
-            frmLoginFb.Width = 640;
-            frmLoginFb.Height = 480;
-            WebBrowser FbWeb = new WebBrowser();
-            FbWeb.Name = "FbWeb";
-            FbWeb.Location = new System.Drawing.Point(10, 10);
-            FbWeb.Dock = DockStyle.Fill;
-            FbWeb.Navigated += new WebBrowserNavigatedEventHandler(FbWeb_Navigated);
-            frmLoginFb.Controls.Add(FbWeb);
-            frmLoginFb.Show();
-
-            FbWeb.Navigate(fb.CreateLoginURL());
-        }
-
-        /// <summary>
-        /// Request to tweet note. Check if allow, if so call tweetnote() methode
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
-        {
-            if (!CheckConnection()) return;
-
-            if ((String.IsNullOrEmpty(note) == false) && (note.Length < 140))
-            {
-                tweetnote();
-            }
-            else if (note.Length > 140)
-            {
-                DialogResult result;
-                string shrttweet = note.Substring(0, 140);
-                result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first part? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    tweetnote();
-                }
-            }
-            else
-            {
-                String emptynote = "Your note is empty.";
-                MessageBox.Show(emptynote);
-                Log.write(LogType.error, emptynote);
-            }
+            fb.StartPostingNote(note);
         }
 
         /// <summary>
@@ -756,31 +684,42 @@ namespace NoteFly
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
                 new Textfile(true, sfdlg.FileName, this.title, this.note);
+                Log.write(LogType.info, "note (ID:" + this.NoteID + ") saved to textfile.");
             }
             
         }
 
         /// <summary>
-        /// Check if there is internet connection, if not warn user.
+        /// Request to tweet note. Check if allow, if so call tweetnote() methode
         /// </summary>
-        /// <returns></returns>
-        private bool CheckConnection()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
         {
-            #if win32
-            if (IsConnectedToInternet() == true)
+            if (!CheckConnection()) return;
+
+            if ((String.IsNullOrEmpty(note) == false) && (note.Length < 140))
             {
-                return true;
+                tweetnote();
+                Log.write(LogType.info, "note send to twitter.");
+            }
+            else if (note.Length > 140)
+            {
+                DialogResult result;
+                string shrttweet = note.Substring(0, 140);
+                result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first 140 characters? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    tweetnote();
+                    Log.write(LogType.info, "shorted note send to twitter.");
+                }
             }
             else
             {
-                String nonetwork = "There is no network connection.";
-                MessageBox.Show(nonetwork);
-                Log.write(LogType.error, nonetwork);
-                return false;
+                String emptynote = "Note is empty.";
+                MessageBox.Show(emptynote);
+                Log.write(LogType.error, emptynote);
             }
-            #elif !win32
-            return true;
-            #endif
         }
 
         /// <summary>
@@ -788,6 +727,8 @@ namespace NoteFly
         /// </summary>
         private void tweetnote()
         {
+            if (!CheckConnection()) return;
+
             xmlHandler getSettings = new xmlHandler(true);
             string twitteruser = getSettings.getXMLnode("twitteruser");
             string twitterpass = getSettings.getXMLnode("twitterpass");
@@ -808,6 +749,7 @@ namespace NoteFly
             else if (String.IsNullOrEmpty(twpass))
             {
                 Form askpass = new Form();
+                askpass.ShowIcon = false;
                 askpass.Height = 80;
                 askpass.Width = 280;
                 askpass.Text = "Twitter password needed";
@@ -816,7 +758,7 @@ namespace NoteFly
                 tbpass.Location = new Point(10, 10);
                 tbpass.Width = 160;
                 tbpass.Name = "tbPassword";
-                tbpass.PasswordChar = Convert.ToChar("X"); ;
+                tbpass.PasswordChar = 'X'; ;
                 Button btnOk = new Button();
                 btnOk.Location = new Point(180, 10);
                 btnOk.Text = "Ok";
@@ -828,8 +770,6 @@ namespace NoteFly
             }
             else
             {
-                if (!CheckConnection()) return;
-
                 Twitter twitter = new Twitter();
                 if (twitter.UpdateAsXML(twitteruser, twitterpass, note) != null)
                 {
@@ -883,8 +823,6 @@ namespace NoteFly
             }
         }
 
-        #endregion Methods
-
 #if win32
         /// <summary>
         /// Check internet state.
@@ -902,7 +840,10 @@ namespace NoteFly
                          int msg, int wParam, int lParam);
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
-
 #endif
+
+		#endregion Methods 
+
+
     }
 }

@@ -27,11 +27,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.okButton = new System.Windows.Forms.Button();
             this.lblProductName = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // okButton
@@ -85,11 +88,29 @@
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of GNU Public License version2";
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 50;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.ForeColor = System.Drawing.Color.Red;
+            this.richTextBox1.Location = new System.Drawing.Point(10, 102);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(196, 24);
+            this.richTextBox1.TabIndex = 31;
+            this.richTextBox1.Text = "Happy Christmas";
+            // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(235, 171);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);
             this.Controls.Add(this.lblVersion);
@@ -116,6 +137,8 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.LinkLabel linklblWebsite;
         private System.Windows.Forms.Label lblTextLicense;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
 
     }
 }
