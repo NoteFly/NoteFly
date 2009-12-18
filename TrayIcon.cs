@@ -46,6 +46,8 @@ namespace NoteFly
 
 		#endregion Fields 
 
+		#region Properties (1) 
+
         /// <summary>
         /// The application title.
         /// </summary>
@@ -65,6 +67,18 @@ namespace NoteFly
                 return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
+        /// <summary>
+        /// The application version number.
+        /// </summary>
+        static public string AssemblyVersion
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
+        }
+
+		#endregion Properties 
 
 		#region Methods (3) 
 
@@ -188,6 +202,7 @@ namespace NoteFly
 
             Application.Run();
         }
+
 		#endregion Methods 
 
         #region menu events

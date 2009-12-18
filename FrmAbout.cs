@@ -29,39 +29,8 @@ namespace NoteFly
             InitializeComponent();
             this.Text = "About";
             this.lblProductName.Text = TrayIcon.AssemblyTitle;
-            this.lblVersion.Text = String.Format("Version {0}", AssemblyVersion);  
+            this.lblVersion.Text = String.Format("Version {0}", TrayIcon.AssemblyVersion);
         }
-
-        #region Assembly Attribute Accessors
-
-        /// <summary>
-        /// The application version number, please change in project file.
-        /// </summary>
-        public string AssemblyVersion
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
-
-        /// <summary>
-        /// The application description.
-        /// </summary>
-        public string AssemblyDescription
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
-            }
-        }
-
-        #endregion
 
         private void okButton_Click(object sender, EventArgs e)
         {

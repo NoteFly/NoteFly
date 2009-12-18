@@ -23,6 +23,9 @@ using System.Xml;
 
 namespace NoteFly
 {
+    /// <summary>
+    /// sends a note to twitter
+    /// </summary>
     class Twitter
     {
 		#region Fields (5) 
@@ -30,9 +33,7 @@ namespace NoteFly
         private string source = null;
         //used twitter ip to prevented dns lookup, against dns attacks.
         protected const string TwitterBaseUrlFormat = "http://168.143.162.68/{0}/{1}.{2}";
-        private string twitterClient = "spn";
-        private string twitterClientUrl = "http://code.google.com/p/simpleplainnote/";
-        private string twitterClientVersion = "0.5.0";
+        private const string twitterClientUrl = "http://code.google.com/p/simpleplainnote/";
 
 		#endregion Fields 
 
@@ -75,18 +76,6 @@ namespace NoteFly
             get { return twitterClientUrl; }
         }
 
-        /// <summary>
-        /// Sets the version of the Twitter client.
-        /// According to the Twitter Fan Wiki at http://twitter.pbwiki.com/API-Docs and supported by
-        /// the Twitter developers, this will be used in the future (hopefully near) to set more information
-        /// in Twitter about the client posting the information as well as future usage in a clients directory.
-        /// </summary>
-        public string TwitterClientVersion
-        {
-            get { return twitterClientVersion; }
-            set { twitterClientVersion = value; }
-        }
-
 		#endregion Properties 
 
 		#region Methods (3) 
@@ -119,7 +108,6 @@ namespace NoteFly
 
                 return xmlDocument;
             }
-
             return null;
         }
 		// Protected Methods (1) 
@@ -142,13 +130,13 @@ namespace NoteFly
                 request.Credentials = new NetworkCredential(userName, password);
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.Method = "POST";
-                if (!string.IsNullOrEmpty(twitterClient))
+                if (!string.IsNullOrEmpty(TrayIcon.AssemblyTitle))
                 {
-                    request.Headers.Add("X-Twitter-Client", twitterClient);
+                    request.Headers.Add("X-Twitter-Client", TrayIcon.AssemblyTitle.Trim());
                 }
-                if (!string.IsNullOrEmpty(TwitterClientVersion))
+                if (!string.IsNullOrEmpty(TrayIcon.AssemblyVersion))
                 {
-                    request.Headers.Add("X-Twitter-Version", TwitterClientVersion);
+                    request.Headers.Add("X-Twitter-Version", TrayIcon.AssemblyVersion.Trim());
                 }
                 if (!string.IsNullOrEmpty(TwitterClientUrl))
                 {
@@ -194,7 +182,7 @@ namespace NoteFly
                     }
                     catch (TimeoutException)
                     {
-                        MessageBox.Show("Error: connection timeout. ");
+                        MessageBox.Show("Error: connection timeout.");
                     }
                     catch (NotSupportedException notsupexc)
                     {
