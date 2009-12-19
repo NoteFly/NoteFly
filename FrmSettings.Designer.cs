@@ -89,7 +89,7 @@
             // chxTransparecy
             // 
             this.chxTransparecy.AutoSize = true;
-            this.chxTransparecy.BackColor = System.Drawing.Color.White;
+            this.chxTransparecy.BackColor = System.Drawing.SystemColors.Control;
             this.chxTransparecy.Checked = true;
             this.chxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -103,9 +103,9 @@
             // 
             // btnOK
             // 
-            this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnOK.BackColor = System.Drawing.Color.LightGray;
-            this.btnOK.Location = new System.Drawing.Point(175, 277);
+            this.btnOK.Location = new System.Drawing.Point(175, 268);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(157, 23);
             this.btnOK.TabIndex = 2;
@@ -115,9 +115,9 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
-            this.btnCancel.Location = new System.Drawing.Point(6, 277);
+            this.btnCancel.Location = new System.Drawing.Point(6, 268);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(161, 23);
             this.btnCancel.TabIndex = 3;
@@ -255,11 +255,11 @@
             this.tabControlSettings.Controls.Add(this.tabTwitter);
             this.tabControlSettings.Controls.Add(this.tabNetwerk);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
-            this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControlSettings.HotTrack = true;
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(358, 274);
+            this.tabControlSettings.Size = new System.Drawing.Size(358, 262);
             this.tabControlSettings.TabIndex = 17;
             // 
             // tabGeneral
@@ -275,7 +275,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(350, 248);
+            this.tabGeneral.Size = new System.Drawing.Size(350, 236);
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -379,7 +379,7 @@
             this.tabAppearance.Location = new System.Drawing.Point(4, 22);
             this.tabAppearance.Name = "tabAppearance";
             this.tabAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppearance.Size = new System.Drawing.Size(350, 248);
+            this.tabAppearance.Size = new System.Drawing.Size(350, 236);
             this.tabAppearance.TabIndex = 0;
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
@@ -479,7 +479,7 @@
             this.tabHighlighting.Location = new System.Drawing.Point(4, 22);
             this.tabHighlighting.Name = "tabHighlighting";
             this.tabHighlighting.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHighlighting.Size = new System.Drawing.Size(350, 248);
+            this.tabHighlighting.Size = new System.Drawing.Size(350, 236);
             this.tabHighlighting.TabIndex = 5;
             this.tabHighlighting.Text = "Highlighting";
             this.tabHighlighting.UseVisualStyleBackColor = true;
@@ -524,7 +524,7 @@
             this.tabTwitter.Location = new System.Drawing.Point(4, 22);
             this.tabTwitter.Name = "tabTwitter";
             this.tabTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTwitter.Size = new System.Drawing.Size(350, 248);
+            this.tabTwitter.Size = new System.Drawing.Size(350, 236);
             this.tabTwitter.TabIndex = 1;
             this.tabTwitter.Text = "Twitter";
             this.tabTwitter.UseVisualStyleBackColor = true;
@@ -544,7 +544,7 @@
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
             this.tabNetwerk.Name = "tabNetwerk";
             this.tabNetwerk.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNetwerk.Size = new System.Drawing.Size(350, 248);
+            this.tabNetwerk.Size = new System.Drawing.Size(350, 236);
             this.tabNetwerk.TabIndex = 4;
             this.tabNetwerk.Text = "Network";
             this.tabNetwerk.UseVisualStyleBackColor = true;
@@ -582,7 +582,7 @@
             this.tabAdvance.Controls.Add(this.lbTextDefaultEmail);
             this.tabAdvance.Location = new System.Drawing.Point(4, 22);
             this.tabAdvance.Name = "tabAdvance";
-            this.tabAdvance.Size = new System.Drawing.Size(350, 248);
+            this.tabAdvance.Size = new System.Drawing.Size(350, 236);
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
@@ -656,12 +656,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(358, 305);
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ClientSize = new System.Drawing.Size(352, 296);
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(360, 240);
             this.Name = "FrmSettings";
             this.Text = "Settings";
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).EndInit();

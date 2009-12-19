@@ -17,7 +17,7 @@
     <StartupObject>NoteFly.TrayIcon</StartupObject>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>strongkey_notefly.pfx</AssemblyOriginatorKeyFile>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>false</GenerateManifests>

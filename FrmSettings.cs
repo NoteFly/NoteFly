@@ -75,6 +75,7 @@ namespace NoteFly
 
             ipproxy = new IPTextBox();
             ipproxy.Location = new Point(24, 50);
+            ipproxy.Enabled = false;
             this.tabNetwerk.Controls.Add(ipproxy);
             if (getUseProxy())
             {

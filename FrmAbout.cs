@@ -43,7 +43,7 @@ namespace NoteFly
         }
 
         private void timer1_Tick(object sender, EventArgs e)
-        {
+        {            
             if (curletter < this.richTextBox1.Text.Length)
             {
                 curletter++;
@@ -62,6 +62,7 @@ namespace NoteFly
             }
             this.richTextBox1.Select(curletter, 1);
             this.richTextBox1.SelectionColor = Color.Green;
+            this.richTextBox1.Select(0, 0);
         }
     }
 }

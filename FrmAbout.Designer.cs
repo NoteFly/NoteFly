@@ -98,11 +98,19 @@
             // 
             this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.CausesValidation = false;
+            this.richTextBox1.DetectUrls = false;
+            this.richTextBox1.Enabled = false;
             this.richTextBox1.ForeColor = System.Drawing.Color.Red;
             this.richTextBox1.Location = new System.Drawing.Point(10, 102);
+            this.richTextBox1.Multiline = false;
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.richTextBox1.ShortcutsEnabled = false;
             this.richTextBox1.Size = new System.Drawing.Size(196, 24);
             this.richTextBox1.TabIndex = 31;
+            this.richTextBox1.TabStop = false;
             this.richTextBox1.Text = "Happy Christmas";
             // 
             // FrmAbout
