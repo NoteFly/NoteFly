@@ -58,6 +58,7 @@ namespace NoteFly
             cbxTextDirection.SelectedIndex = getTextDirection();
             chxLogInfo.Checked = getLogDebugInfo();
             chxUseProxy.Checked = getUseProxy();
+            chxSaveFBSession.Checked = getSaveFbSession();
 
             if (String.IsNullOrEmpty(tbDefaultEmail.Text))
             {
@@ -196,7 +197,7 @@ namespace NoteFly
                 }
                 xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, 
                     numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text,
-                    tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked, chxUseProxy.Checked, ipproxy.GetIPAddress());
+                    tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked, chxUseProxy.Checked, ipproxy.GetIPAddress(), chxSaveFBSession.Checked);
 #if win32
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
@@ -324,6 +325,11 @@ namespace NoteFly
             {
                 cbxFontNoteContent.Text = curfont;
             }
+        }
+
+        private bool getSaveFbSession()
+        {
+            return xmlsettings.getXMLnodeAsBool("savesession");
         }
 
         private int getActionLeftClick()

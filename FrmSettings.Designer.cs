@@ -58,7 +58,7 @@
             this.lblTextFontSize = new System.Windows.Forms.Label();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
-            this.tabHighlighting = new System.Windows.Forms.TabPage();
+            this.tabHighlight = new System.Windows.Forms.TabPage();
             this.lbTextWarnExperimentalFeatures = new System.Windows.Forms.Label();
             this.chxSyntaxHighlightC = new System.Windows.Forms.CheckBox();
             this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
@@ -75,15 +75,19 @@
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.tabFacebook = new System.Windows.Forms.TabPage();
+            this.chxSaveFBSession = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).BeginInit();
-            this.tabHighlighting.SuspendLayout();
+            this.tabHighlight.SuspendLayout();
             this.tabTwitter.SuspendLayout();
             this.tabNetwerk.SuspendLayout();
             this.tabAdvance.SuspendLayout();
+            this.tabFacebook.SuspendLayout();
             this.SuspendLayout();
             // 
             // chxTransparecy
@@ -251,8 +255,9 @@
             // 
             this.tabControlSettings.Controls.Add(this.tabGeneral);
             this.tabControlSettings.Controls.Add(this.tabAppearance);
-            this.tabControlSettings.Controls.Add(this.tabHighlighting);
+            this.tabControlSettings.Controls.Add(this.tabHighlight);
             this.tabControlSettings.Controls.Add(this.tabTwitter);
+            this.tabControlSettings.Controls.Add(this.tabFacebook);
             this.tabControlSettings.Controls.Add(this.tabNetwerk);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
             this.tabControlSettings.HotTrack = true;
@@ -471,27 +476,27 @@
             this.cbxFontNoteContent.Size = new System.Drawing.Size(182, 21);
             this.cbxFontNoteContent.TabIndex = 8;
             // 
-            // tabHighlighting
+            // tabHighlight
             // 
-            this.tabHighlighting.Controls.Add(this.lbTextWarnExperimentalFeatures);
-            this.tabHighlighting.Controls.Add(this.chxSyntaxHighlightC);
-            this.tabHighlighting.Controls.Add(this.chxSyntaxHighlightHTML);
-            this.tabHighlighting.Location = new System.Drawing.Point(4, 22);
-            this.tabHighlighting.Name = "tabHighlighting";
-            this.tabHighlighting.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHighlighting.Size = new System.Drawing.Size(350, 236);
-            this.tabHighlighting.TabIndex = 5;
-            this.tabHighlighting.Text = "Highlighting";
-            this.tabHighlighting.UseVisualStyleBackColor = true;
+            this.tabHighlight.Controls.Add(this.lbTextWarnExperimentalFeatures);
+            this.tabHighlight.Controls.Add(this.chxSyntaxHighlightC);
+            this.tabHighlight.Controls.Add(this.chxSyntaxHighlightHTML);
+            this.tabHighlight.Location = new System.Drawing.Point(4, 22);
+            this.tabHighlight.Name = "tabHighlight";
+            this.tabHighlight.Padding = new System.Windows.Forms.Padding(3);
+            this.tabHighlight.Size = new System.Drawing.Size(350, 236);
+            this.tabHighlight.TabIndex = 5;
+            this.tabHighlight.Text = "Highlight";
+            this.tabHighlight.UseVisualStyleBackColor = true;
             // 
             // lbTextWarnExperimentalFeatures
             // 
             this.lbTextWarnExperimentalFeatures.AutoSize = true;
-            this.lbTextWarnExperimentalFeatures.Location = new System.Drawing.Point(13, 23);
+            this.lbTextWarnExperimentalFeatures.Location = new System.Drawing.Point(13, 162);
             this.lbTextWarnExperimentalFeatures.Name = "lbTextWarnExperimentalFeatures";
-            this.lbTextWarnExperimentalFeatures.Size = new System.Drawing.Size(150, 13);
+            this.lbTextWarnExperimentalFeatures.Size = new System.Drawing.Size(237, 13);
             this.lbTextWarnExperimentalFeatures.TabIndex = 20;
-            this.lbTextWarnExperimentalFeatures.Text = "warning experimental features:";
+            this.lbTextWarnExperimentalFeatures.Text = "Enabling highlighting makes loading notes slower";
             // 
             // chxSyntaxHighlightC
             // 
@@ -652,6 +657,39 @@
             this.lbTextDefaultEmail.TabIndex = 17;
             this.lbTextDefaultEmail.Text = "default email address to send to: ";
             // 
+            // tabFacebook
+            // 
+            this.tabFacebook.Controls.Add(this.label1);
+            this.tabFacebook.Controls.Add(this.chxSaveFBSession);
+            this.tabFacebook.Location = new System.Drawing.Point(4, 22);
+            this.tabFacebook.Name = "tabFacebook";
+            this.tabFacebook.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFacebook.Size = new System.Drawing.Size(350, 236);
+            this.tabFacebook.TabIndex = 6;
+            this.tabFacebook.Text = "Facebook";
+            this.tabFacebook.UseVisualStyleBackColor = true;
+            // 
+            // chxSaveFBSession
+            // 
+            this.chxSaveFBSession.AutoSize = true;
+            this.chxSaveFBSession.Checked = true;
+            this.chxSaveFBSession.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxSaveFBSession.Location = new System.Drawing.Point(17, 44);
+            this.chxSaveFBSession.Name = "chxSaveFBSession";
+            this.chxSaveFBSession.Size = new System.Drawing.Size(146, 17);
+            this.chxSaveFBSession.TabIndex = 0;
+            this.chxSaveFBSession.Text = "Save  session information";
+            this.chxSaveFBSession.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(37, 64);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(187, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Not recommend on a public computer.";
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -672,14 +710,16 @@
             this.tabAppearance.ResumeLayout(false);
             this.tabAppearance.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).EndInit();
-            this.tabHighlighting.ResumeLayout(false);
-            this.tabHighlighting.PerformLayout();
+            this.tabHighlight.ResumeLayout(false);
+            this.tabHighlight.PerformLayout();
             this.tabTwitter.ResumeLayout(false);
             this.tabTwitter.PerformLayout();
             this.tabNetwerk.ResumeLayout(false);
             this.tabNetwerk.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
+            this.tabFacebook.ResumeLayout(false);
+            this.tabFacebook.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -729,9 +769,12 @@
         private System.Windows.Forms.TabPage tabNetwerk;
         private System.Windows.Forms.CheckBox chxUseProxy;
         private System.Windows.Forms.CheckBox chxLogInfo;
-        private System.Windows.Forms.TabPage tabHighlighting;
+        private System.Windows.Forms.TabPage tabHighlight;
         private System.Windows.Forms.Label lbTextWarnExperimentalFeatures;
         private System.Windows.Forms.CheckBox chxSyntaxHighlightC;
         private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
+        private System.Windows.Forms.TabPage tabFacebook;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chxSaveFBSession;
     }
 }

@@ -219,6 +219,27 @@ namespace NoteFly
             this.textdirection = Convert.ToInt16(getSettings.getXMLnodeAsInt("textdirection"));
             this.notesavepath = getSettings.getXMLnode("notesavepath");
             this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
+
+
+            if (getSettings.getXMLnodeAsBool("savesession") == true)
+            {
+                FacebookSettings.uid = getSettings.getXMLnode("uid");
+                String strSessionExpires = getSettings.getXMLnode("sesionexpires");
+                if (!String.IsNullOrEmpty(strSessionExpires))
+                {
+                    try
+                    {
+
+                        FacebookSettings.sesionexpires = Convert.ToDouble(strSessionExpires);
+                    }
+                    catch (InvalidCastException)
+                    {
+                        throw new CustomException("facebook session expires is not a valid unix (double) valeau.");
+                    }
+                }
+                FacebookSettings.sessionsecret = getSettings.getXMLnode("sessionsecret");
+                FacebookSettings.sessionkey = getSettings.getXMLnode("sessionkey");
+            }
         }
 
         /// <summary>

@@ -26,6 +26,17 @@
         <xs:element name="defaultemail" type="xs:string" />
         <xs:element name="useproxy" type="xs:boolean" />
         <xs:element name="proxyaddr" type="xs:string" />
+        <xs:element name="facebook">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="savesession" type="xs:string" />
+              <xs:element name="uid" type="xs:string" />
+              <xs:element name="sessionexpires" type="xs:string" />
+              <xs:element name="sessionexpires" type="xs:string" />
+              <xs:element name="sessionkey" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>        
         <xs:element name="twitter">
           <xs:complexType>
             <xs:sequence>

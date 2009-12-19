@@ -31,10 +31,10 @@ namespace NoteFly
     {
         #region Fields (4)
 
-        public static double expires;
-        public static String secret;
-        public static String sessionkey;
         public static String uid;
+        public static double sesionexpires;
+        public static String sessionsecret;
+        public static String sessionkey;
 
         #endregion Fields
     }
@@ -195,7 +195,7 @@ namespace NoteFly
                         {
                             try
                             {
-                                FacebookSettings.expires = Convert.ToDouble(curparm.Substring(10, curparm.Length - 10));
+                                FacebookSettings.sesionexpires = Convert.ToDouble(curparm.Substring(10, curparm.Length - 10));
                             }
                             catch (Exception)
                             {
@@ -204,7 +204,7 @@ namespace NoteFly
                         }
                         else if (curparm.StartsWith("\"secret\":"))
                         {
-                            FacebookSettings.secret = curparm.Substring(10, curparm.Length - 11);
+                            FacebookSettings.sessionsecret = curparm.Substring(10, curparm.Length - 11);
                         }
                         else if (curparm.StartsWith("\"sig\":"))
                         {
@@ -289,14 +289,14 @@ namespace NoteFly
         public void StartPostingNote(string note)
         {
             this.message = note;
-            if (String.IsNullOrEmpty(FacebookSettings.sessionkey) || String.IsNullOrEmpty(FacebookSettings.secret) || String.IsNullOrEmpty(FacebookSettings.uid))
+            if (String.IsNullOrEmpty(FacebookSettings.sessionkey) || String.IsNullOrEmpty(FacebookSettings.sessionsecret) || String.IsNullOrEmpty(FacebookSettings.uid))
             {
                 ShowFBLoginForm();
             }
             else
             {
                 System.DateTime dtExpiresSession = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
-                dtExpiresSession = dtExpiresSession.AddSeconds(FacebookSettings.expires);
+                dtExpiresSession = dtExpiresSession.AddSeconds(FacebookSettings.sesionexpires);
 
                 if (dtExpiresSession.Month == DateTime.Now.Month)
                 {
@@ -379,7 +379,7 @@ namespace NoteFly
         /// <returns></returns>
         private String GenerateSignature(String call_id, String message, String methode, String session_key, String sessionsecret, String uid)
         {
-            String data = "api_key=" + appkey + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + FacebookSettings.sessionkey + "ss=" + sessionsecret + "uid=" + uid + "v=" + apiversion + FacebookSettings.secret;
+            String data = "api_key=" + appkey + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + FacebookSettings.sessionkey + "ss=" + sessionsecret + "uid=" + uid + "v=" + apiversion + FacebookSettings.sessionsecret;
 
             var md5 = MD5.Create();
             String hash = MakeMD5(data);
