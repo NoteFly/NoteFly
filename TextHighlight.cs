@@ -31,11 +31,108 @@ namespace NoteFly
         private bool highlightHTML = false;
         private int posstarttag = 0;
         private RichTextBox rtbcode;
-        private Regex SyntaxC = new Regex("if|else|for|while|{|}|do|define|#if|break|goto|continue|switch|case|default:|try|catch|throw|static");
-        private Regex SyntaxCdatatype = new Regex("int|short|double|float|long|string|bool|char");
+        private Regex Ckeywords  = new Regex("auto|break|case|char|catch|const|continue|default|define|do|else|extern|for|goto|if|return|sizeof|static|switch|throw|try|typedef|union|void|volatile|while");
+        private Regex Cdatatypes = new Regex("bool|char|double|enum|float|int|long|short|signed|string|unsigned");
+
+        private Regex CfunctionsStdlib = new Regex("abort|abs|atexit|atof|atoi|atol|atoll|bsearch|calloc|div|exit|free|getenv|labs|ldiv|llabs|lldiv|malloc|mblen|mbstowcs|mbtowc|qsort|rand|realloc|srand|strtod|strtof|strtol|strtold|strtoll|strtoul|strtoull|system");
+        private Regex CfunctionsStdio  = new Regex("clearerr|fclose|feof|ferror|fflush|fgetc|fgetpos|fgets|fopen|fprintf|fputc|fputs|fread|freopen|fscanf|fseek|fsetpos|fseek|fsetpos|ftell|fwrite|getc|getchar|gets|perror|printf|putc|putchar|puts|remove|rename|rewind|scanf|setbuf|setvbuf|snprintf|sprintf|sscanf|tmpfile|tmpnam|ungetc|vprintf|vfprintf|vsprintf|vsnprintf|vfscanf|vsscanf");
+        private Regex CfunctionsString = new Regex("memchr|memcmp|memcpy|memmove|memset|strcat|strchr|strcmp|strcoll|strcpy|strcspn|strerror|strlen|strncat|strncmp|strncpy|strpbrk|strrchr|strspn|strstr|strtok|strxfrm");
+        private Regex CfunctionsType   = new Regex("isalnum|isblank|iscntrl|isdigit|isgraph|islower|isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper|printf|scanf");
+        private Regex CfunctionsMath   = new Regex("acos|acosh|asin|asinh|atan2|atan|atanh|cbrt|ceil|copysign|cos|cosh|erf|erfc|exp2|exp|expm1|fabs|fdim|floor|fma|fmax|fmin|fmod|fpclassify|frexp|hypot|ilogb|isfinite|isgreater|isgreaterequal|isinf|isless|islessequal|islessgreater|isnan|isnormal|isunordered|ldexp|lgamma|llrint|llround|log1p|log2|log10|log|logb|lrint|lround|modf|nan|nearbyint|nextafter|nexttoward|pow|remainder|remquo|rint|round|scalbln|scalbn|signbit|sin|sinh|sqrt|tan|tanh|tgamma|trunc");
+        private Regex CfunctionsTime   = new Regex("'*'asctime|'*'ctime|difftime|'*'gmtime|'*'localeconv|'*'localtime|mktime|'*'setlocale|strftime|time");
+        
+        
         //IngoreCase options is set.
-        //todo
         private Regex SyntaxHTML = new Regex("<?HTML|<?HEAD|<?BODY^|<?A^|<?P|<?BR|<?SPAN^|<?I|<?U|<?B|<?OL|<?UL|<?IL|<?FONT^|<?TITLE|<?BLOCKQUOTE|<?META ^|<?LINK ^|<?CODE|<?DD|<?TABLE ^|<?DL|<?TD^|<?TR^|<?FORM ^|<?IMG ^|<?FRAME ^|<?STRONG|<?FRAMESET ^|<?IFRAME^|<?APPLET^|<?TH^|<?PRE^|<?HEAD|<?TFOOT|<?INPUT^|<?OPTION^|<?LABEL^|<?LEGEND^|<?SELECT^|<?TEXTAREA^|<?SCRIPT^|<?NOSCRIPT|<?S|<?STRIKE|<?TT|<?BIG|<?SMALL|<?BASEFONT^|<?DIV^|<?H1|<?H2|<?H3|<?H4|<?H5|<?H6|<?ADRESS|<?HR|<?EM", RegexOptions.IgnoreCase);
+        /*
+A
+ABBR
+ACRONYM
+ADDRESS
+APPLET
+AREA
+B
+BASE
+BASEFONT
+BDO
+BIG
+BLOCKQUOTE
+BODY
+BR
+BUTTON
+CAPTION
+CENTER
+CITE
+CODE
+COL
+COLGROUP
+DD
+DEL
+DFN
+DIR
+DIV
+DL
+DT
+EM
+FIELDSET
+FONT
+FORM
+FRAME
+FRAMESET
+HEAD
+HR
+HTML
+Hx
+I
+IFRAME
+IMG
+INPUT
+INS
+ISINDEX
+KBD
+LABEL
+LEGEND
+LI
+LINK
+MAP
+MENU
+META
+NOFRAMES
+NOSCRIPT
+OBJECT
+OL
+OPTGROUP
+OPTION
+P
+PARAM
+PRE
+Q
+S
+SAMP
+SCRIPT
+SELECT
+SMALL
+SPAN
+STRIKE
+STRONG
+STYLE
+SUB
+SUP
+TABLE
+TBODY
+TD
+TEXTAREA
+TFOOT
+TH
+THEAD
+TITLE
+TR
+TT
+U
+UL
+VAR
+         */
+
 
         #endregion Fields
 
@@ -99,11 +196,11 @@ namespace NoteFly
                         if ((rtbcode.Text[i] == ' ') || (rtbcode.Text[i] == '\n'))
                         {
                             String iscode = rtbcode.Text.Substring(beginword, lenword);
-                            if (SyntaxC.IsMatch(iscode))
+                            if (Ckeywords.IsMatch(iscode))
                             {
                                 ColorText(beginword, lenword, Color.Green);
                             }
-                            else if (SyntaxCdatatype.IsMatch(iscode))
+                            else if (Cdatatypes.IsMatch(iscode))
                             {
                                 ColorText(beginword, lenword, Color.Gray);
                             }
