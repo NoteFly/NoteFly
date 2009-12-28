@@ -59,11 +59,12 @@
             this.lbTextNoteFont = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.tabHighlight = new System.Windows.Forms.TabPage();
-            this.lbTextWarnExperimentalFeatures = new System.Windows.Forms.Label();
-            this.chxSyntaxHighlightC = new System.Windows.Forms.CheckBox();
             this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.tabTwitter = new System.Windows.Forms.TabPage();
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
+            this.tabFacebook = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.chxSaveFBSession = new System.Windows.Forms.CheckBox();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
             this.chxUseProxy = new System.Windows.Forms.CheckBox();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
@@ -75,9 +76,6 @@
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.tabFacebook = new System.Windows.Forms.TabPage();
-            this.chxSaveFBSession = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -85,9 +83,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).BeginInit();
             this.tabHighlight.SuspendLayout();
             this.tabTwitter.SuspendLayout();
+            this.tabFacebook.SuspendLayout();
             this.tabNetwerk.SuspendLayout();
             this.tabAdvance.SuspendLayout();
-            this.tabFacebook.SuspendLayout();
             this.SuspendLayout();
             // 
             // chxTransparecy
@@ -478,8 +476,6 @@
             // 
             // tabHighlight
             // 
-            this.tabHighlight.Controls.Add(this.lbTextWarnExperimentalFeatures);
-            this.tabHighlight.Controls.Add(this.chxSyntaxHighlightC);
             this.tabHighlight.Controls.Add(this.chxSyntaxHighlightHTML);
             this.tabHighlight.Location = new System.Drawing.Point(4, 22);
             this.tabHighlight.Name = "tabHighlight";
@@ -488,25 +484,6 @@
             this.tabHighlight.TabIndex = 5;
             this.tabHighlight.Text = "Highlight";
             this.tabHighlight.UseVisualStyleBackColor = true;
-            // 
-            // lbTextWarnExperimentalFeatures
-            // 
-            this.lbTextWarnExperimentalFeatures.AutoSize = true;
-            this.lbTextWarnExperimentalFeatures.Location = new System.Drawing.Point(13, 162);
-            this.lbTextWarnExperimentalFeatures.Name = "lbTextWarnExperimentalFeatures";
-            this.lbTextWarnExperimentalFeatures.Size = new System.Drawing.Size(237, 13);
-            this.lbTextWarnExperimentalFeatures.TabIndex = 20;
-            this.lbTextWarnExperimentalFeatures.Text = "Enabling highlighting makes loading notes slower";
-            // 
-            // chxSyntaxHighlightC
-            // 
-            this.chxSyntaxHighlightC.AutoSize = true;
-            this.chxSyntaxHighlightC.Location = new System.Drawing.Point(16, 65);
-            this.chxSyntaxHighlightC.Name = "chxSyntaxHighlightC";
-            this.chxSyntaxHighlightC.Size = new System.Drawing.Size(133, 17);
-            this.chxSyntaxHighlightC.TabIndex = 19;
-            this.chxSyntaxHighlightC.Text = "Highlight C code notes";
-            this.chxSyntaxHighlightC.UseVisualStyleBackColor = true;
             // 
             // chxSyntaxHighlightHTML
             // 
@@ -541,6 +518,39 @@
             this.lbWarningTwitterPassword.Size = new System.Drawing.Size(278, 41);
             this.lbWarningTwitterPassword.TabIndex = 13;
             this.lbWarningTwitterPassword.Text = "Never ever enter your twitter password here on a public computer.";
+            // 
+            // tabFacebook
+            // 
+            this.tabFacebook.Controls.Add(this.label1);
+            this.tabFacebook.Controls.Add(this.chxSaveFBSession);
+            this.tabFacebook.Location = new System.Drawing.Point(4, 22);
+            this.tabFacebook.Name = "tabFacebook";
+            this.tabFacebook.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFacebook.Size = new System.Drawing.Size(350, 236);
+            this.tabFacebook.TabIndex = 6;
+            this.tabFacebook.Text = "Facebook";
+            this.tabFacebook.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(37, 64);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(187, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Not recommend on a public computer.";
+            // 
+            // chxSaveFBSession
+            // 
+            this.chxSaveFBSession.AutoSize = true;
+            this.chxSaveFBSession.Checked = true;
+            this.chxSaveFBSession.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxSaveFBSession.Location = new System.Drawing.Point(17, 44);
+            this.chxSaveFBSession.Name = "chxSaveFBSession";
+            this.chxSaveFBSession.Size = new System.Drawing.Size(146, 17);
+            this.chxSaveFBSession.TabIndex = 0;
+            this.chxSaveFBSession.Text = "Save  session information";
+            this.chxSaveFBSession.UseVisualStyleBackColor = true;
             // 
             // tabNetwerk
             // 
@@ -657,39 +667,6 @@
             this.lbTextDefaultEmail.TabIndex = 17;
             this.lbTextDefaultEmail.Text = "default email address to send to: ";
             // 
-            // tabFacebook
-            // 
-            this.tabFacebook.Controls.Add(this.label1);
-            this.tabFacebook.Controls.Add(this.chxSaveFBSession);
-            this.tabFacebook.Location = new System.Drawing.Point(4, 22);
-            this.tabFacebook.Name = "tabFacebook";
-            this.tabFacebook.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFacebook.Size = new System.Drawing.Size(350, 236);
-            this.tabFacebook.TabIndex = 6;
-            this.tabFacebook.Text = "Facebook";
-            this.tabFacebook.UseVisualStyleBackColor = true;
-            // 
-            // chxSaveFBSession
-            // 
-            this.chxSaveFBSession.AutoSize = true;
-            this.chxSaveFBSession.Checked = true;
-            this.chxSaveFBSession.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxSaveFBSession.Location = new System.Drawing.Point(17, 44);
-            this.chxSaveFBSession.Name = "chxSaveFBSession";
-            this.chxSaveFBSession.Size = new System.Drawing.Size(146, 17);
-            this.chxSaveFBSession.TabIndex = 0;
-            this.chxSaveFBSession.Text = "Save  session information";
-            this.chxSaveFBSession.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(37, 64);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(187, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Not recommend on a public computer.";
-            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -714,12 +691,12 @@
             this.tabHighlight.PerformLayout();
             this.tabTwitter.ResumeLayout(false);
             this.tabTwitter.PerformLayout();
+            this.tabFacebook.ResumeLayout(false);
+            this.tabFacebook.PerformLayout();
             this.tabNetwerk.ResumeLayout(false);
             this.tabNetwerk.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
-            this.tabFacebook.ResumeLayout(false);
-            this.tabFacebook.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -770,8 +747,6 @@
         private System.Windows.Forms.CheckBox chxUseProxy;
         private System.Windows.Forms.CheckBox chxLogInfo;
         private System.Windows.Forms.TabPage tabHighlight;
-        private System.Windows.Forms.Label lbTextWarnExperimentalFeatures;
-        private System.Windows.Forms.CheckBox chxSyntaxHighlightC;
         private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
         private System.Windows.Forms.TabPage tabFacebook;
         private System.Windows.Forms.Label label1;

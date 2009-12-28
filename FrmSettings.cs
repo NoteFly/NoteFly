@@ -54,7 +54,6 @@ namespace NoteFly
             tbDefaultEmail.Text = getDefaultEmail();
             chxStartOnBootWindows.Checked = getStatusStartlogin();
             chxSyntaxHighlightHTML.Checked = getHighlightHTML();
-            chxSyntaxHighlightC.Checked = getHighlightC();
             cbxTextDirection.SelectedIndex = getTextDirection();
             chxLogInfo.Checked = getLogDebugInfo();
             chxUseProxy.Checked = getUseProxy();
@@ -161,7 +160,7 @@ namespace NoteFly
                 tabControlSettings.SelectedTab = this.tabAppearance;
                 Log.write(LogType.error, noknowtextdir);
             }
-            else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) || (chxSyntaxHighlightC.CheckState == CheckState.Indeterminate) ||
+            else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) ||
                 (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate) || (chxLogInfo.CheckState == CheckState.Indeterminate))
             {
                 String notallowcheckstate = "checkstate not allowed.";
@@ -196,7 +195,7 @@ namespace NoteFly
                     MoveNotes(tbNotesSavePath.Text);
                 }
                 xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, 
-                    numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxSyntaxHighlightC.Checked, chxConfirmExit.Checked, tbTwitterUser.Text,
+                    numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxConfirmExit.Checked, tbTwitterUser.Text,
                     tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked, chxUseProxy.Checked, ipproxy.GetIPAddress(), chxSaveFBSession.Checked);
 #if win32
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);

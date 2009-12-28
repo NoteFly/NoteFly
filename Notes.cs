@@ -25,8 +25,6 @@ namespace NoteFly
 		#region Fields (9) 
 
         private Int16 defaultcolor = 1;
-        private Boolean highlightC = false;
-        private Boolean highlightHTML = false;
         private String notesavepath;
         private List<FrmNote> noteslst;
         private Boolean notesupdated = false;
@@ -49,27 +47,15 @@ namespace NoteFly
 
 		#region Properties (8) 
 
+        public Boolean HighlightC { get; set; }
+
+        public Boolean HighlightHTML { get; set; }
+
         public List<FrmNote> GetNotes
         {
             get
             {
                 return this.noteslst;
-            }
-        }
-
-        public Boolean HighlightC
-        {
-            get
-            {
-                return this.highlightC;
-            }
-        }
-
-        public Boolean HighlightHTML
-        {
-            get
-            {
-                return this.highlightHTML;
             }
         }
 
@@ -202,19 +188,19 @@ namespace NoteFly
             }
             if (getSettings.getXMLnodeAsBool("highlightHTML") == true)
             {
-                this.highlightHTML = true;
+                HighlightHTML = true;
             }
             else
             {
-                this.highlightHTML = false;
+                HighlightHTML = false;
             }
             if (getSettings.getXMLnodeAsBool("highlightC") == true)
             {
-                this.highlightC = true;
+                HighlightC = true;
             }
             else
             {
-                this.highlightC = false;
+                HighlightC = false;
             }
             this.textdirection = Convert.ToInt16(getSettings.getXMLnodeAsInt("textdirection"));
             this.notesavepath = getSettings.getXMLnode("notesavepath");

@@ -118,7 +118,7 @@ namespace NoteFly
             {
                 if (highlight == null)
                 {
-                    highlight = new TextHighlight(notes.HighlightHTML, notes.HighlightC, this.rtbNote);                    
+                    highlight = new TextHighlight(this.rtbNote, notes.HighlightHTML);                    
                 }
                 else if ((highlight != null) && (!String.IsNullOrEmpty(rtbNote.Text)))
                 {

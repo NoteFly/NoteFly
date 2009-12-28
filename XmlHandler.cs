@@ -44,7 +44,7 @@ namespace NoteFly
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, false, "", "", true, false, false, "", true);
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, "", "", true, false, false, "", true);
                 }
             }
         }
@@ -257,53 +257,26 @@ namespace NoteFly
 
                 objXmlTextWriter.WriteStartElement("note");
 
-                if (visible == true)
-                {
-                    objXmlTextWriter.WriteElementString("visible", "1");
-                }
-                else
-                {
-                    objXmlTextWriter.WriteElementString("visible", "0");
-                }
+                WriteXMLBool("visible", visible);
 
-                if (ontop == true)
-                {
-                    objXmlTextWriter.WriteElementString("ontop", "1");
-                }
-                else
-                {
-                    objXmlTextWriter.WriteElementString("ontop", "0");
-                }
+                WriteXMLBool("ontop", ontop);
 
-                objXmlTextWriter.WriteStartElement("color");
-                objXmlTextWriter.WriteString(Convert.ToString(numcolor));
-                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteElementString("color", Convert.ToString(numcolor));
 
-                objXmlTextWriter.WriteStartElement("title");
-                objXmlTextWriter.WriteString(title);
-                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteElementString("title", title);
 
-                objXmlTextWriter.WriteStartElement("content");
-                objXmlTextWriter.WriteString(content);
-                objXmlTextWriter.WriteEndElement();
+                objXmlTextWriter.WriteElementString("content", content); 
 
                 objXmlTextWriter.WriteStartElement("location");
-                objXmlTextWriter.WriteStartElement("x");
-                objXmlTextWriter.WriteString(Convert.ToString(locX));
-                objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteStartElement("y");
-                objXmlTextWriter.WriteString(Convert.ToString(locY));
-                objXmlTextWriter.WriteEndElement();
+                    objXmlTextWriter.WriteElementString("x", Convert.ToString(locX));
+                    objXmlTextWriter.WriteElementString("y", Convert.ToString(locY));                
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("size");
-                objXmlTextWriter.WriteStartElement("width");
-                objXmlTextWriter.WriteString(Convert.ToString(notewidth));
+                    objXmlTextWriter.WriteElementString("width", Convert.ToString(notewidth));
+                    objXmlTextWriter.WriteElementString("heigth", Convert.ToString(noteheight));               
                 objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteStartElement("heigth");
-                objXmlTextWriter.WriteString(Convert.ToString(noteheight));
-                objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteEndElement();
+
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteEndDocument();
@@ -323,7 +296,7 @@ namespace NoteFly
         /// </summary>
         /// <returns>true if succeed.</returns>
         /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool highlightC, bool confirmexit, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr, Boolean savefacebooksession)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool confirmexit, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr, Boolean savefacebooksession)
         {
             if (!this.issetting)
             {
@@ -382,9 +355,9 @@ namespace NoteFly
 
                 WriteXMLBool("loginfo", logerror);
 
-                objXmlTextWriter.WriteStartElement("syntaxhighlight");
-                WriteXMLBool("highlightHTML", highlightHTML);
-                WriteXMLBool("highlightC", highlightC);
+                objXmlTextWriter.WriteStartElement("syntaxhighlight");                
+                    WriteXMLBool("highlightHTML", highlightHTML);
+                    //WriteXMLBool("highlightC", highlightC);
                 objXmlTextWriter.WriteEndElement();
 
                 WriteXMLBool("confirmexit", confirmexit);

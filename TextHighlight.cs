@@ -15,7 +15,6 @@
  */
 using System;
 using System.Drawing;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace NoteFly
@@ -27,122 +26,66 @@ namespace NoteFly
     {
         #region Fields (7)
 
-        private bool highlightC = false;
-        private bool highlightHTML = false;
+        private Boolean checkhtml;
         private int posstarttag = 0;
+        private String[] htmlnodes;
         private RichTextBox rtbcode;
-        private Regex Ckeywords  = new Regex("auto|break|case|char|catch|const|continue|default|define|do|else|extern|for|goto|if|return|sizeof|static|switch|throw|try|typedef|union|void|volatile|while");
-        private Regex Cdatatypes = new Regex("bool|char|double|enum|float|int|long|short|signed|string|unsigned");
-
-        private Regex CfunctionsStdlib = new Regex("abort|abs|atexit|atof|atoi|atol|atoll|bsearch|calloc|div|exit|free|getenv|labs|ldiv|llabs|lldiv|malloc|mblen|mbstowcs|mbtowc|qsort|rand|realloc|srand|strtod|strtof|strtol|strtold|strtoll|strtoul|strtoull|system");
-        private Regex CfunctionsStdio  = new Regex("clearerr|fclose|feof|ferror|fflush|fgetc|fgetpos|fgets|fopen|fprintf|fputc|fputs|fread|freopen|fscanf|fseek|fsetpos|fseek|fsetpos|ftell|fwrite|getc|getchar|gets|perror|printf|putc|putchar|puts|remove|rename|rewind|scanf|setbuf|setvbuf|snprintf|sprintf|sscanf|tmpfile|tmpnam|ungetc|vprintf|vfprintf|vsprintf|vsnprintf|vfscanf|vsscanf");
-        private Regex CfunctionsString = new Regex("memchr|memcmp|memcpy|memmove|memset|strcat|strchr|strcmp|strcoll|strcpy|strcspn|strerror|strlen|strncat|strncmp|strncpy|strpbrk|strrchr|strspn|strstr|strtok|strxfrm");
-        private Regex CfunctionsType   = new Regex("isalnum|isblank|iscntrl|isdigit|isgraph|islower|isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper|printf|scanf");
-        private Regex CfunctionsMath   = new Regex("acos|acosh|asin|asinh|atan2|atan|atanh|cbrt|ceil|copysign|cos|cosh|erf|erfc|exp2|exp|expm1|fabs|fdim|floor|fma|fmax|fmin|fmod|fpclassify|frexp|hypot|ilogb|isfinite|isgreater|isgreaterequal|isinf|isless|islessequal|islessgreater|isnan|isnormal|isunordered|ldexp|lgamma|llrint|llround|log1p|log2|log10|log|logb|lrint|lround|modf|nan|nearbyint|nextafter|nexttoward|pow|remainder|remquo|rint|round|scalbln|scalbn|signbit|sin|sinh|sqrt|tan|tanh|tgamma|trunc");
-        private Regex CfunctionsTime   = new Regex("'*'asctime|'*'ctime|difftime|'*'gmtime|'*'localeconv|'*'localtime|mktime|'*'setlocale|strftime|time");
-        
-        
-        //IngoreCase options is set.
-        private Regex SyntaxHTML = new Regex("<?HTML|<?HEAD|<?BODY^|<?A^|<?P|<?BR|<?SPAN^|<?I|<?U|<?B|<?OL|<?UL|<?IL|<?FONT^|<?TITLE|<?BLOCKQUOTE|<?META ^|<?LINK ^|<?CODE|<?DD|<?TABLE ^|<?DL|<?TD^|<?TR^|<?FORM ^|<?IMG ^|<?FRAME ^|<?STRONG|<?FRAMESET ^|<?IFRAME^|<?APPLET^|<?TH^|<?PRE^|<?HEAD|<?TFOOT|<?INPUT^|<?OPTION^|<?LABEL^|<?LEGEND^|<?SELECT^|<?TEXTAREA^|<?SCRIPT^|<?NOSCRIPT|<?S|<?STRIKE|<?TT|<?BIG|<?SMALL|<?BASEFONT^|<?DIV^|<?H1|<?H2|<?H3|<?H4|<?H5|<?H6|<?ADRESS|<?HR|<?EM", RegexOptions.IgnoreCase);
-        /*
-A
-ABBR
-ACRONYM
-ADDRESS
-APPLET
-AREA
-B
-BASE
-BASEFONT
-BDO
-BIG
-BLOCKQUOTE
-BODY
-BR
-BUTTON
-CAPTION
-CENTER
-CITE
-CODE
-COL
-COLGROUP
-DD
-DEL
-DFN
-DIR
-DIV
-DL
-DT
-EM
-FIELDSET
-FONT
-FORM
-FRAME
-FRAMESET
-HEAD
-HR
-HTML
-Hx
-I
-IFRAME
-IMG
-INPUT
-INS
-ISINDEX
-KBD
-LABEL
-LEGEND
-LI
-LINK
-MAP
-MENU
-META
-NOFRAMES
-NOSCRIPT
-OBJECT
-OL
-OPTGROUP
-OPTION
-P
-PARAM
-PRE
-Q
-S
-SAMP
-SCRIPT
-SELECT
-SMALL
-SPAN
-STRIKE
-STRONG
-STYLE
-SUB
-SUP
-TABLE
-TBODY
-TD
-TEXTAREA
-TFOOT
-TH
-THEAD
-TITLE
-TR
-TT
-U
-UL
-VAR
-         */
-
 
         #endregion Fields
 
         #region Constructors (1)
 
-        public TextHighlight(bool highlightHTML, bool highlightC, RichTextBox temprtbcode)
+        public TextHighlight(RichTextBox rtb, Boolean checkhtml)
         {
-            this.highlightHTML = highlightHTML;
-            this.highlightC = highlightC;
-            this.rtbcode = temprtbcode;
+            this.rtbcode = rtb;
+            this.checkhtml = checkhtml;
+            if (checkhtml)
+            {
+                htmlnodes = new String[85];
+                htmlnodes[0] = "A"; htmlnodes[1] = "ABBR";
+                htmlnodes[2] = "ACRONYM"; htmlnodes[3] = "ADDRESS";
+                htmlnodes[4] = "APPLET"; htmlnodes[5] = "B";
+                htmlnodes[6] = "BASE"; htmlnodes[7] = "BASEFONT";
+                htmlnodes[8] = "BDO"; htmlnodes[9] = "BIG";
+                htmlnodes[10] = "BLOCKQUOTE"; htmlnodes[11] = "BODY";
+                htmlnodes[12] = "BR"; htmlnodes[13] = "BUTTON";
+                htmlnodes[14] = "CAPTION"; htmlnodes[15] = "CENTER";
+                htmlnodes[16] = "CITE"; htmlnodes[17] = "CODE";
+                htmlnodes[18] = "COL"; htmlnodes[19] = "COLGROUP";
+                htmlnodes[20] = "DD"; htmlnodes[21] = "DEL";
+                htmlnodes[22] = "DFN"; htmlnodes[23] = "DIR";
+                htmlnodes[24] = "DIV"; htmlnodes[25] = "DL";
+                htmlnodes[26] = "DT"; htmlnodes[27] = "EM";
+                htmlnodes[28] = "FIELDSET"; htmlnodes[29] = "FONT";
+                htmlnodes[30] = "FORM"; htmlnodes[31] = "FRAME";
+                htmlnodes[32] = "FRAMESET"; htmlnodes[33] = "HEAD";
+                htmlnodes[34] = "HR"; htmlnodes[35] = "HTML";
+                htmlnodes[36] = "Hx"; htmlnodes[37] = "I";
+                htmlnodes[38] = "IFRAME"; htmlnodes[39] = "IMG";
+                htmlnodes[40] = "INPUT"; htmlnodes[41] = "INS";
+                htmlnodes[42] = "ISINDEX"; htmlnodes[43] = "KBD";
+                htmlnodes[44] = "LABEL"; htmlnodes[45] = "LEGEND";
+                htmlnodes[46] = "LI"; htmlnodes[47] = "LINK";
+                htmlnodes[48] = "MAP"; htmlnodes[49] = "MENU";
+                htmlnodes[50] = "META"; htmlnodes[51] = "NOFRAMES";
+                htmlnodes[52] = "NOSCRIPT"; htmlnodes[53] = "OBJECT";
+                htmlnodes[54] = "OL"; htmlnodes[55] = "OPTGROUP";
+                htmlnodes[56] = "OPTION"; htmlnodes[57] = "P";
+                htmlnodes[58] = "PARAM"; htmlnodes[59] = "PRE";
+                htmlnodes[60] = "Q"; htmlnodes[61] = "S";
+                htmlnodes[62] = "SAMP"; htmlnodes[63] = "SCRIPT";
+                htmlnodes[64] = "SELECT"; htmlnodes[65] = "SMALL";
+                htmlnodes[66] = "SPAN"; htmlnodes[67] = "STRIKE";
+                htmlnodes[68] = "STRONG"; htmlnodes[69] = "STYLE";
+                htmlnodes[70] = "SUB"; htmlnodes[71] = "SUP";
+                htmlnodes[72] = "TABLE"; htmlnodes[73] = "TBODY";
+                htmlnodes[74] = "TD"; htmlnodes[75] = "TEXTAREA";
+                htmlnodes[76] = "TFOOT"; htmlnodes[77] = "TH";
+                htmlnodes[78] = "THEAD"; htmlnodes[79] = "TITLE";
+                htmlnodes[80] = "TR"; htmlnodes[81] = "TT";
+                htmlnodes[82] = "U"; htmlnodes[83] = "UL";
+                htmlnodes[84] = "VAR";
+            }
         }
 
         #endregion Constructors
@@ -155,15 +98,15 @@ VAR
         /// Check syntax of the whole text
         /// </summary>
         /// <param name="rtb"></param>
-        public bool CheckSyntaxFull()
-        {
-            int oldpos = rtbcode.SelectionStart;
+        public void CheckSyntaxFull()
+        {            
             ResetHighlighting(rtbcode);
-            int beginword = 0;
-            int lenword = 0;
+            int beginpos = 0;
+            int len = 0;
+
             for (int i = 0; i < rtbcode.TextLength; i++)
             {
-                if (this.highlightHTML)
+                if (checkhtml)
                 {
                     if (rtbcode.Text[i] == '<')
                     {
@@ -190,30 +133,8 @@ VAR
                     {
                         ColorText(i + 1, 0, Color.Black);
                     }
-                    if (this.highlightC)
-                    {
-                        lenword++;
-                        if ((rtbcode.Text[i] == ' ') || (rtbcode.Text[i] == '\n'))
-                        {
-                            String iscode = rtbcode.Text.Substring(beginword, lenword);
-                            if (Ckeywords.IsMatch(iscode))
-                            {
-                                ColorText(beginword, lenword, Color.Green);
-                            }
-                            else if (Cdatatypes.IsMatch(iscode))
-                            {
-                                ColorText(beginword, lenword, Color.Gray);
-                            }
-                            beginword = i;
-                            lenword = 0;
-                        }
-                    }
-
                 }
-
             }
-            rtbcode.SelectionStart = oldpos;
-            return true;
         }
 
         /// <summary>
@@ -265,7 +186,7 @@ VAR
         // Private Methods (2) 
 
         /// <summary>
-        /// Make everything black again.
+        /// Make the whole text black.
         /// </summary>
         /// <param name="rtb"></param>
         private void ResetHighlighting(RichTextBox rtb)
@@ -274,12 +195,18 @@ VAR
             rtb.SelectionColor = Color.Black;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="posstarttag"></param>
+        /// <param name="lengthtillendtag"></param>
+        /// <returns></returns>
         private Boolean ValidingHTMLNode(int posstarttag, int lengthtillendtag)
         {
             string ishtmlnode = rtbcode.Text.Substring(posstarttag, lengthtillendtag);
             if (ishtmlnode.Length > 1)
             {
-                if (SyntaxHTML.IsMatch(ishtmlnode))
+                if (HTMLnodes.IsMatch(ishtmlnode))
                 {
                     return true;
                 }
@@ -294,12 +221,12 @@ VAR
             }
         }
 
-        private void ColorText(int posstart, int len, Color syncolor)
+        private void ColorText(int posstart, int len, Color color)
         {
             try
             {
                 rtbcode.Select(posstart, len);
-                rtbcode.SelectionColor = syncolor;
+                rtbcode.SelectionColor = color;
             }
             catch (ArgumentOutOfRangeException arg)
             {
