@@ -118,12 +118,13 @@ namespace NoteFly
             {
                 if (highlight == null)
                 {
-                    highlight = new TextHighlight(this.rtbNote, notes.HighlightHTML);                    
+                    highlight = new TextHighlight(this.rtbNote, notes.HighlightHTML);
                 }
                 else if ((highlight != null) && (!String.IsNullOrEmpty(rtbNote.Text)))
                 {
                     int curselstart = rtbNote.SelectionStart;
-                    highlight.CheckSyntaxQuick(curselstart);
+                    highlight.CheckSyntaxFull();
+                    //highlight.CheckSyntaxQuick(curselstart);
                 }
             }
             

@@ -90,7 +90,6 @@
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
             this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
@@ -111,7 +110,8 @@
             this.richTextBox1.Size = new System.Drawing.Size(196, 24);
             this.richTextBox1.TabIndex = 31;
             this.richTextBox1.TabStop = false;
-            this.richTextBox1.Text = "Happy Christmas";
+            this.richTextBox1.Text = "Happy new year";
+            this.richTextBox1.Visible = false;
             // 
             // FrmAbout
             // 

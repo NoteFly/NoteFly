@@ -99,10 +99,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="rtb"></param>
         public void CheckSyntaxFull()
-        {            
+        {
+            int cursorpos = rtbcode.SelectionStart;
             ResetHighlighting(rtbcode);
-            int beginpos = 0;
-            int len = 0;
 
             for (int i = 0; i < rtbcode.TextLength; i++)
             {
@@ -115,18 +114,17 @@ namespace NoteFly
                     else if (rtbcode.Text[i] == '>')
                     {
                         int lengthtillendtag = i - posstarttag;
-                        if (lengthtillendtag > 0)
+                        if (lengthtillendtag > 1)
                         {
-                            if (ValidingHTMLNode(posstarttag, lengthtillendtag))
+                            string ishtml = rtbcode.Text.Substring(posstarttag + 1, lengthtillendtag - 1);
+                            if (ValidingHTMLNode(ishtml))
                             {
-                                ColorText(posstarttag + lengthtillendtag + 1, 0, Color.Blue);
+                                ColorText(posstarttag, lengthtillendtag+1, Color.Blue);
                             }
                             else
                             {
-                                ColorText(posstarttag + lengthtillendtag + 1, 0, Color.Red);
+                                ColorText(posstarttag, lengthtillendtag + 1, Color.Red);
                             }
-
-                            ColorText(posstarttag + lengthtillendtag + 1, 0, Color.Black);
                         }
                     }
                     if (rtbcode.TextLength >= i)
@@ -135,8 +133,10 @@ namespace NoteFly
                     }
                 }
             }
+            rtbcode.SelectionStart = cursorpos;
         }
 
+        /*
         /// <summary>
         /// This does only finds the last node for highlighting.
         /// The rest stays the same.
@@ -146,7 +146,7 @@ namespace NoteFly
             Boolean foundendtag = false;
             for (int i = pos; ((i > 0) && (!foundendtag)); i--)
             {
-                if (this.highlightHTML)
+                if (this.checkhtml)
                 {
                     try
                     {
@@ -183,6 +183,7 @@ namespace NoteFly
 
             }
         }
+         */
         // Private Methods (2) 
 
         /// <summary>
@@ -196,29 +197,27 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Find out if it is a html node between < or </ and > 
         /// </summary>
-        /// <param name="posstarttag"></param>
-        /// <param name="lengthtillendtag"></param>
-        /// <returns></returns>
-        private Boolean ValidingHTMLNode(int posstarttag, int lengthtillendtag)
+        /// <returns>true if it is html</returns>
+        private Boolean ValidingHTMLNode(string ishtml)
         {
-            string ishtmlnode = rtbcode.Text.Substring(posstarttag, lengthtillendtag);
-            if (ishtmlnode.Length > 1)
+            for (int i = 1; i < ishtml.Length; i++)
             {
-                if (HTMLnodes.IsMatch(ishtmlnode))
+                if (ishtml[i] == ' ')
+                {
+                    ishtml = ishtml.Substring(0, i);
+                    break;
+                }
+            }
+            for (int n = 0; n < htmlnodes.Length; n++)
+            {
+                if (ishtml == htmlnodes[n] || ishtml == htmlnodes[n].ToLower())
                 {
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private void ColorText(int posstart, int len, Color color)

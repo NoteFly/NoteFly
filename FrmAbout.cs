@@ -30,6 +30,11 @@ namespace NoteFly
             this.Text = "About";
             this.lblProductName.Text = TrayIcon.AssemblyTitle;
             this.lblVersion.Text = String.Format("Version {0}", TrayIcon.AssemblyVersion);
+            if (DateTime.Now.Month == 1 && DateTime.Now.Day < 8)
+            {
+                richTextBox1.Visible = true;
+                timer1.Enabled = true;
+            }
         }
 
         private void okButton_Click(object sender, EventArgs e)
