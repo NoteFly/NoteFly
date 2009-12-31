@@ -33,7 +33,7 @@ namespace NoteFly
             if (DateTime.Now.Month == 1 && DateTime.Now.Day < 8)
             {
                 richTextBox1.Visible = true;
-                timer1.Enabled = true;
+                timerTextEffect.Enabled = true;
             }
         }
 

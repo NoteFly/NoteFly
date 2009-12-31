@@ -28,12 +28,14 @@ namespace NoteFly
 {
     public partial class FrmNote : Form
     {
-		#region Fields (16) 
+		#region Fields (15) 
 
         private TextHighlight highlight;
+        private const int HT_CAPTION = 0x2;
         private Int16 id;
         private Int32 locX;
         private Int32 locY;
+        private const int minvisiblesize = 5;
         private String note;
         private Int16 notecolor = 0;
         private Boolean notelock = false;
@@ -42,9 +44,6 @@ namespace NoteFly
         private Skin skin;
         private String title;
         private String twpass;
-
-        private const int minvisiblesize = 5;
-        private const int HT_CAPTION = 0x2;
         private const int WM_NCLBUTTONDOWN = 0xA1;
 
 		#endregion Fields 
@@ -174,7 +173,7 @@ namespace NoteFly
 
 		#endregion Properties 
 
-		#region Methods (32) 
+		#region Methods (31) 
 
 		// Public Methods (2) 
 
@@ -187,7 +186,7 @@ namespace NoteFly
 
             PaintColorNote();
 
-            if ((notes.HighlightHTML == true) || (notes.HighlightC == true))
+            if ((notes.HighlightHTML == true))
             {
                 if (highlight == null)
                 {
@@ -201,7 +200,7 @@ namespace NoteFly
         {
             SavePos.RunWorkerAsync();
         }
-		// Private Methods (30) 
+		// Private Methods (29) 
 
         /// <summary>
         /// Find what password is entered.
@@ -823,6 +822,8 @@ namespace NoteFly
             }
         }
 
+		#endregion Methods 
+
 #if win32
         /// <summary>
         /// Check internet state.
@@ -841,9 +842,5 @@ namespace NoteFly
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
 #endif
-
-		#endregion Methods 
-
-
     }
 }

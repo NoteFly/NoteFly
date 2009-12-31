@@ -74,7 +74,10 @@ namespace NoteFly
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                int majorver = Assembly.GetExecutingAssembly().GetName().Version.Major;
+                int minorver = Assembly.GetExecutingAssembly().GetName().Version.Minor;
+                int buildver = Assembly.GetExecutingAssembly().GetName().Version.Build;
+                return majorver+"."+minorver+"."+buildver;
             }
         }
 

@@ -47,7 +47,7 @@ namespace NoteFly
 
 		#region Properties (8) 
 
-        public Boolean HighlightC { get; set; }
+        //public Boolean HighlightC { get; set; }
 
         public Boolean HighlightHTML { get; set; }
 
@@ -186,22 +186,11 @@ namespace NoteFly
             {
                 this.transparecy = false;
             }
-            if (getSettings.getXMLnodeAsBool("highlightHTML") == true)
+            if (getSettings.getXMLnodeAsBool("highlightHTML"))
             {
                 HighlightHTML = true;
             }
-            else
-            {
-                HighlightHTML = false;
-            }
-            if (getSettings.getXMLnodeAsBool("highlightC") == true)
-            {
-                HighlightC = true;
-            }
-            else
-            {
-                HighlightC = false;
-            }
+
             this.textdirection = Convert.ToInt16(getSettings.getXMLnodeAsInt("textdirection"));
             this.notesavepath = getSettings.getXMLnode("notesavepath");
             this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));

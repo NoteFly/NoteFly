@@ -33,7 +33,7 @@
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerTextEffect = new System.Windows.Forms.Timer(this.components);
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
@@ -88,10 +88,10 @@
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of GNU Public License version2";
             // 
-            // timer1
+            // timerTextEffect
             // 
-            this.timer1.Interval = 50;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerTextEffect.Interval = 50;
+            this.timerTextEffect.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // richTextBox1
             // 
@@ -145,7 +145,7 @@
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.LinkLabel linklblWebsite;
         private System.Windows.Forms.Label lblTextLicense;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerTextEffect;
         private System.Windows.Forms.RichTextBox richTextBox1;
 
     }

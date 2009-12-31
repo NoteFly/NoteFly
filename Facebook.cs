@@ -29,14 +29,14 @@ namespace NoteFly
     /// </summary>
     public static class FacebookSettings
     {
-        #region Fields (4)
+		#region Fields (4) 
 
-        public static String uid;
         public static double sesionexpires;
-        public static String sessionsecret;
         public static String sessionkey;
+        public static String sessionsecret;
+        public static String uid;
 
-        #endregion Fields
+		#endregion Fields 
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ namespace NoteFly
     /// </summary>
     public class Facebook
     {
-        #region Fields (9)
+		#region Fields (9) 
 
         private const String apiversion = "1.0";
         private const String appkey = "cced88bcd1585fa3862e7fd17b2f6986";
@@ -56,20 +56,20 @@ namespace NoteFly
         private String message;
         private String p_sig;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (1)
+		#region Constructors (1) 
 
         public Facebook()
         {
 
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (10)
+		#region Methods (10) 
 
-        // Public Methods (5) 
+		// Public Methods (5) 
 
         /// <summary>
         /// parser xml response, return errorcode if it returned by facebook.
@@ -149,23 +149,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Generate a md5 hash from the given string.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public String MakeMD5(String input)
-        {
-            MD5 md5Hasher = MD5.Create();
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
-            StringBuilder sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-            return sBuilder.ToString();
-        }
-
-        /// <summary>
         /// Check the url if facebook navigated to the succeed page
         /// meaning that we have a session.
         /// This also gets all parameters needed from the Url.
@@ -223,6 +206,23 @@ namespace NoteFly
                 return false;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Generate a md5 hash from the given string.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public String MakeMD5(String input)
+        {
+            MD5 md5Hasher = MD5.Create();
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace NoteFly
                 }
             }
         }
-        // Private Methods (5) 
+		// Private Methods (5) 
 
         /// <summary>
         /// Construct a right login url.
@@ -411,6 +411,6 @@ namespace NoteFly
             frmLoginFb.Show();
         }
 
-        #endregion Methods
+		#endregion Methods 
     }
 }

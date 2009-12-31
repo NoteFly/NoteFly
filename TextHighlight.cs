@@ -24,16 +24,16 @@ namespace NoteFly
     /// </summary>
     public class TextHighlight
     {
-        #region Fields (7)
+		#region Fields (4) 
 
         private Boolean checkhtml;
-        private int posstarttag = 0;
         private String[] htmlnodes;
+        private int posstarttag = 0;
         private RichTextBox rtbcode;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (1)
+		#region Constructors (1) 
 
         public TextHighlight(RichTextBox rtb, Boolean checkhtml)
         {
@@ -41,7 +41,7 @@ namespace NoteFly
             this.checkhtml = checkhtml;
             if (checkhtml)
             {
-                htmlnodes = new String[85];
+                htmlnodes = new String[91];
                 htmlnodes[0] = "A"; htmlnodes[1] = "ABBR";
                 htmlnodes[2] = "ACRONYM"; htmlnodes[3] = "ADDRESS";
                 htmlnodes[4] = "APPLET"; htmlnodes[5] = "B";
@@ -84,15 +84,18 @@ namespace NoteFly
                 htmlnodes[78] = "THEAD"; htmlnodes[79] = "TITLE";
                 htmlnodes[80] = "TR"; htmlnodes[81] = "TT";
                 htmlnodes[82] = "U"; htmlnodes[83] = "UL";
-                htmlnodes[84] = "VAR";
+                htmlnodes[84] = "VAR"; htmlnodes[85] = "H1";
+                htmlnodes[86] = "H2"; htmlnodes[87] = "H3";
+                htmlnodes[88] = "H4"; htmlnodes[89] = "H5";
+                htmlnodes[90] = "H6";
             }
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (4)
+		#region Methods (2) 
 
-        // Public Methods (2) 
+		// Public Methods (2) 
 
         /// <summary>
         /// Check syntax of the whole text
@@ -103,6 +106,7 @@ namespace NoteFly
             int cursorpos = rtbcode.SelectionStart;
             ResetHighlighting(rtbcode);
 
+            bool htmlendnode = false;
             for (int i = 0; i < rtbcode.TextLength; i++)
             {
                 if (checkhtml)
@@ -110,16 +114,31 @@ namespace NoteFly
                     if (rtbcode.Text[i] == '<')
                     {
                         posstarttag = i;
+                        if (i + 1 < rtbcode.TextLength)
+                        {
+                            if (rtbcode.Text[i+1] == '/')
+                            {
+                                htmlendnode = true;
+                            }
+                        }
                     }
                     else if (rtbcode.Text[i] == '>')
                     {
                         int lengthtillendtag = i - posstarttag;
                         if (lengthtillendtag > 1)
                         {
-                            string ishtml = rtbcode.Text.Substring(posstarttag + 1, lengthtillendtag - 1);
-                            if (ValidingHTMLNode(ishtml))
+                            string htmlnodename;
+                            if (htmlendnode == true)
                             {
-                                ColorText(posstarttag, lengthtillendtag+1, Color.Blue);
+                                htmlnodename = rtbcode.Text.Substring(posstarttag + 2, lengthtillendtag - 2);
+                                htmlendnode = false;
+                            } else
+                            {
+                                htmlnodename  = rtbcode.Text.Substring(posstarttag + 1, lengthtillendtag - 1);
+                            }
+                            if (ValidingHTMLNode(htmlnodename))
+                            {
+                                ColorText(posstarttag, lengthtillendtag + 1, Color.Blue);
                             }
                             else
                             {
@@ -127,26 +146,27 @@ namespace NoteFly
                             }
                         }
                     }
-                    if (rtbcode.TextLength >= i)
-                    {
-                        ColorText(i + 1, 0, Color.Black);
-                    }
                 }
             }
             rtbcode.SelectionStart = cursorpos;
+            rtbcode.SelectionLength = 0;
         }
 
-        /*
         /// <summary>
-        /// This does only finds the last node for highlighting.
-        /// The rest stays the same.
+        /// highlight the change.
         /// </summary>
-        public void CheckSyntaxQuick(int pos)
+        public void CheckSyntaxQuick(int newcharpos)
         {
-            Boolean foundendtag = false;
-            for (int i = pos; ((i > 0) && (!foundendtag)); i--)
+            bool htmlstarttag = false;
+            if (newcharpos > 0)
             {
-                if (this.checkhtml)
+                MessageBox.Show("u tikte: " + rtbcode.Text[newcharpos]);
+            }
+            /*
+            for (int i = newcharpos; ((i > 0) && (!foundendtag)); i--)
+            {
+
+                /*
                 {
                     try
                     {
@@ -180,11 +200,8 @@ namespace NoteFly
                         throw new CustomException("Quick TextHighlighter out of range: " + arg.Source);
                     }
                 }
-
-            }
+                 */
         }
-         */
-        // Private Methods (2) 
 
         /// <summary>
         /// Make the whole text black.
@@ -233,6 +250,7 @@ namespace NoteFly
             }
         }
 
-        #endregion Methods
     }
+
+		#endregion Methods 
 }
