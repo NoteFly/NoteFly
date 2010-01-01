@@ -474,11 +474,11 @@ namespace NoteFly
         private void SetAppdataFolder()
         {
 #if win32
-            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.simpleplainnote\\";
+            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\."+TrayIcon.AssemblyTitle+"\\";
 #elif linux
-            appdatafolder = "~\\.simpleplainnote\\";
+            appdatafolder = "~\\.NoteFly\\";
 #elif mac
-            appdatafolder = "????"
+            appdatafolder = "???"
 #endif
         }
 
