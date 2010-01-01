@@ -33,7 +33,7 @@ namespace NoteFly
         private Notes notes;
         private Skin skin;
         private TextHighlight highlight;
-        private bool firsttime = false;
+        private bool setupfirsthighlight = false;
 		#endregion Fields 
 
 		#region Constructors (2) 
@@ -119,17 +119,15 @@ namespace NoteFly
                 if (highlight == null)
                 {
                     highlight = new TextHighlight(this.rtbNote, notes.HighlightHTML);
-                    firsttime = true;
+                    setupfirsthighlight = true;
                 }
-                else if (firsttime)
+                else if (setupfirsthighlight)
                 {
                     highlight.CheckSyntaxFull();
-                    firsttime = false;
+                    setupfirsthighlight = false;
                 }
                 else if ((highlight != null) && (!String.IsNullOrEmpty(rtbNote.Text)))
                 {
-                    //highlight.CheckSyntaxFull();
-
                     highlight.CheckSyntaxQuick(rtbNote.SelectionStart - 1);
                 }
             }

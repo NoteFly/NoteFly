@@ -44,7 +44,7 @@ namespace NoteFly
 
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://code.google.com/p/simpleplainnote/");
+            System.Diagnostics.Process.Start("http://www.notefly.tk/");
         }
 
         private void timer1_Tick(object sender, EventArgs e)

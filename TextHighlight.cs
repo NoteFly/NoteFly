@@ -157,50 +157,89 @@ namespace NoteFly
         /// </summary>
         public void CheckSyntaxQuick(int newcharpos)
         {
-            bool htmlstarttag = false;
             if (newcharpos > 0)
             {
-                MessageBox.Show("u tikte: " + rtbcode.Text[newcharpos]);
-            }
-            /*
-            for (int i = newcharpos; ((i > 0) && (!foundendtag)); i--)
-            {
-
-                /*
+                //MessageBox.Show("u tikte: " + rtbcode.Text[newcharpos]);
+                int cursorpos = rtbcode.SelectionStart;
+                if (this.checkhtml)
                 {
-                    try
+                    if (newcharpos < 0) { throw new CustomException("negative character location."); }
+
+                    if (rtbcode.Text[newcharpos] == '<')
                     {
-                        if (rtbcode.Text[i - 1] == '<')
+
+                        for (int i = newcharpos; i > 0; i--)
                         {
-                            for (int n = i; ((n < rtbcode.TextLength) && (!foundendtag)); n++)
+                            if (rtbcode.Text[i] == '<')
                             {
-
-                                if (rtbcode.Text[n] == '>')
-                                {
-                                    foundendtag = true;
-                                    posstarttag = i - 1;
-                                    if (ValidingHTMLNode(posstarttag, n - posstarttag))
-                                    {
-                                        ColorText(posstarttag, (n + 1 - posstarttag), Color.Blue);
-                                    }
-                                    else
-                                    {
-                                        ColorText(posstarttag, (n + 1 - posstarttag), Color.Red);
-                                    }
-                                }
-
+                                ColorText(newcharpos, 1, Color.Red);
+                                break;
                             }
-                            ColorText(rtbcode.TextLength, 0, Color.Black);
-                            //rtbcode.SelectionStart = rtbcode.TextLength;
-                            //rtbcode.SelectionColor = Color.Black;
+                            else if (rtbcode.Text[i] == '>')
+                            {
+                                ColorText(newcharpos, 1, Color.Black);
+                                break;
+                            }
                         }
                     }
-                    catch (ArgumentOutOfRangeException arg)
+                    else if (rtbcode.Text[newcharpos] == '>')
                     {
-                        throw new CustomException("Quick TextHighlighter out of range: " + arg.Source);
+                        string htmlnodename = "";
+                        int htmlnodestartpos = -1;
+                        for (int i = newcharpos; i >= 0; i--)
+                        {
+                            try
+                            {
+                                int chkpos = i-1;
+                                if (chkpos < 0)
+                                {
+                                    chkpos = 0;
+                                }
+
+                                if (rtbcode.Text[i] == '<')
+                                {
+                                    htmlnodestartpos = i;
+                                    htmlnodename = rtbcode.Text.Substring(i + 1, newcharpos - 1 - i);
+                                    break;
+                                }
+                                else if (rtbcode.Text[i] == '/' && rtbcode.Text[chkpos] == '<') //if text starts with \ then condition always false.
+                                {
+                                    htmlnodestartpos = i - 1;
+                                    htmlnodename = rtbcode.Text.Substring(i + 1, newcharpos - 1 - i);
+                                    break;
+                                }
+                            }
+                            catch (IndexOutOfRangeException outofrangeexc)
+                            {
+                                throw new CustomException(outofrangeexc.Message+" "+outofrangeexc.StackTrace);
+                            }
+                    
+                        }
+                        if ((htmlnodename != "") && (htmlnodestartpos != -1))
+                        {
+                            if (ValidingHTMLNode(htmlnodename))
+                            {
+                                ColorText(htmlnodestartpos, newcharpos - htmlnodestartpos +1, Color.Blue);
+                            }
+                            else
+                            {
+                                ColorText(htmlnodestartpos, newcharpos - htmlnodestartpos +1, Color.Red);
+                            }
+                        }
+                        else
+                        {
+                            ColorText(newcharpos, newcharpos + 1, Color.Black);
+                        }
+
+                    }
+                    else
+                    {
+                        ColorText(newcharpos, 1, Color.Black);
                     }
                 }
-                 */
+                rtbcode.SelectionStart = cursorpos;
+                rtbcode.SelectionLength = 0;
+            }
         }
 
         /// <summary>

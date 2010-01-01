@@ -269,12 +269,12 @@ namespace NoteFly
 
                 objXmlTextWriter.WriteStartElement("location");
                     objXmlTextWriter.WriteElementString("x", Convert.ToString(locX));
-                    objXmlTextWriter.WriteElementString("y", Convert.ToString(locY));                
+                    objXmlTextWriter.WriteElementString("y", Convert.ToString(locY));
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("size");
                     objXmlTextWriter.WriteElementString("width", Convert.ToString(notewidth));
-                    objXmlTextWriter.WriteElementString("heigth", Convert.ToString(noteheight));               
+                    objXmlTextWriter.WriteElementString("heigth", Convert.ToString(noteheight));
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteEndElement();
@@ -355,7 +355,7 @@ namespace NoteFly
 
                 WriteXMLBool("loginfo", logerror);
 
-                objXmlTextWriter.WriteStartElement("syntaxhighlight");                
+                objXmlTextWriter.WriteStartElement("syntaxhighlight");
                     WriteXMLBool("highlightHTML", highlightHTML);
                     //WriteXMLBool("highlightC", highlightC);
                 objXmlTextWriter.WriteEndElement();
@@ -417,6 +417,7 @@ namespace NoteFly
 
             return true;
         }
+
         // Private Methods (2) 
 
         /// <summary>

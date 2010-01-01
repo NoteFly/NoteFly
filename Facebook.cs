@@ -237,11 +237,11 @@ namespace NoteFly
             request.ContentType = "application/x-www-form-urlencoded";
             request.Timeout = 10000; //10secs
 
-            xmlHandler getsettting = new xmlHandler(true);
-            if (getsettting.getXMLnodeAsBool("useproxy") == true)
+            xmlHandler settting = new xmlHandler(true);
+            if (settting.getXMLnodeAsBool("useproxy") == true)
             {
-                String addr = getsettting.getXMLnode("proxyaddr");
-                if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0")
+                String addr = settting.getXMLnode("proxyaddr");
+                if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0" || addr == "255.255.255.255")
                 {
                     String novalidproxy = "Proxy address is not given";
                     MessageBox.Show(novalidproxy);
@@ -250,9 +250,12 @@ namespace NoteFly
                 }
                 else
                 {
-                    request.Proxy = new WebProxy(getsettting.getXMLnode("proxyaddr"));
+                    request.Proxy = new WebProxy(settting.getXMLnode("proxyaddr"));
                 }
             }
+            settting.WriteSettings(settting.getXMLnodeAsBool("transparecy"), Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), settting.getXMLnodeAsInt("defaultcolor"), settting.getXMLnodeAsInt("actionleftclick"), settting.getXMLnodeAsBool("askurl"), settting.getXMLnode("fontcontent"), Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")), settting.getXMLnodeAsInt("textdirection"),
+                settting.getXMLnode("notesavepath"), settting.getXMLnode("defaultemail"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("confirmexit"), settting.getXMLnode("twitteruser"), settting.getXMLnode("twitterpass"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("loginfo"), settting.getXMLnodeAsBool("useproxy"), settting.getXMLnode("proxyaddr"), settting.getXMLnodeAsBool("proxyaddr"));
+            
 
             string data = CreatePostData(message);
 
@@ -385,7 +388,6 @@ namespace NoteFly
             String hash = MakeMD5(data);
             if (hash.Length == 32) return hash;
             else throw new CustomException("Cannot generate MD5 hash.");
-
         }
 
         /// <summary>
