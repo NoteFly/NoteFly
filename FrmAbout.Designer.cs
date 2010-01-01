@@ -35,6 +35,7 @@
             this.lblTextLicense = new System.Windows.Forms.Label();
             this.timerTextEffect = new System.Windows.Forms.Timer(this.components);
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.lbVersionStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // okButton
@@ -51,10 +52,10 @@
             // lblProductName
             // 
             this.lblProductName.AutoSize = true;
-            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProductName.Location = new System.Drawing.Point(6, 9);
+            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductName.Location = new System.Drawing.Point(6, 5);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(121, 20);
+            this.lblProductName.Size = new System.Drawing.Size(145, 24);
             this.lblProductName.TabIndex = 26;
             this.lblProductName.Text = "lblProductName";
             // 
@@ -62,7 +63,7 @@
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.Location = new System.Drawing.Point(7, 29);
+            this.lblVersion.Location = new System.Drawing.Point(7, 31);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(68, 16);
             this.lblVersion.TabIndex = 27;
@@ -82,7 +83,7 @@
             // 
             // lblTextLicense
             // 
-            this.lblTextLicense.Location = new System.Drawing.Point(7, 58);
+            this.lblTextLicense.Location = new System.Drawing.Point(7, 60);
             this.lblTextLicense.Name = "lblTextLicense";
             this.lblTextLicense.Size = new System.Drawing.Size(225, 30);
             this.lblTextLicense.TabIndex = 30;
@@ -110,14 +111,24 @@
             this.richTextBox1.Size = new System.Drawing.Size(196, 24);
             this.richTextBox1.TabIndex = 31;
             this.richTextBox1.TabStop = false;
-            this.richTextBox1.Text = "Happy new year";
+            this.richTextBox1.Text = "Happy new year!";
             this.richTextBox1.Visible = false;
+            // 
+            // lbVersionStatus
+            // 
+            this.lbVersionStatus.AutoSize = true;
+            this.lbVersionStatus.Location = new System.Drawing.Point(87, 33);
+            this.lbVersionStatus.Name = "lbVersionStatus";
+            this.lbVersionStatus.Size = new System.Drawing.Size(28, 13);
+            this.lbVersionStatus.TabIndex = 32;
+            this.lbVersionStatus.Text = "RC1";
             // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(235, 171);
+            this.Controls.Add(this.lbVersionStatus);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);
@@ -147,6 +158,7 @@
         private System.Windows.Forms.Label lblTextLicense;
         private System.Windows.Forms.Timer timerTextEffect;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Label lbVersionStatus;
 
     }
 }

@@ -27,7 +27,7 @@ namespace NoteFly
         public FrmAbout()
         {
             InitializeComponent();
-            this.Text = "About";
+            this.Text = "About "+TrayIcon.AssemblyTitle;
             this.lblProductName.Text = TrayIcon.AssemblyTitle;
             this.lblVersion.Text = String.Format("Version {0}", TrayIcon.AssemblyVersion);
             if (DateTime.Now.Month == 1 && DateTime.Now.Day < 8)

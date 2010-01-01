@@ -18,6 +18,7 @@
 
 Name "NoteFly ${VERSION} ${VERSTATUS}"
 BrandingText " "
+Icon ".\..\..\Resources\installer_logo.ico"
 InstProgressFlags smooth
 AllowRootDirInstall false
 CRCCheck on
