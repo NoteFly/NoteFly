@@ -253,9 +253,20 @@ namespace NoteFly
                     request.Proxy = new WebProxy(settting.getXMLnode("proxyaddr"));
                 }
             }
-            settting.WriteSettings(settting.getXMLnodeAsBool("transparecy"), Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), settting.getXMLnodeAsInt("defaultcolor"), settting.getXMLnodeAsInt("actionleftclick"), settting.getXMLnodeAsBool("askurl"), settting.getXMLnode("fontcontent"), Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")), settting.getXMLnodeAsInt("textdirection"),
-                settting.getXMLnode("notesavepath"), settting.getXMLnode("defaultemail"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("confirmexit"), settting.getXMLnode("twitteruser"), settting.getXMLnode("twitterpass"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("loginfo"), settting.getXMLnodeAsBool("useproxy"), settting.getXMLnode("proxyaddr"), settting.getXMLnodeAsBool("proxyaddr"));
-            
+            if (settting.getXMLnodeAsBool("savesession"))
+            {
+                try
+                {
+                    settting.WriteSettings(settting.getXMLnodeAsBool("transparecy"), Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), settting.getXMLnodeAsInt("defaultcolor"), settting.getXMLnodeAsInt("actionleftclick"), settting.getXMLnodeAsBool("askurl"), settting.getXMLnode("fontcontent"), Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")), settting.getXMLnodeAsInt("textdirection"),
+                        settting.getXMLnode("notesavepath"), settting.getXMLnode("defaultemail"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("confirmexit"), settting.getXMLnode("twitteruser"), settting.getXMLnode("twitterpass"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("loginfo"), settting.getXMLnodeAsBool("useproxy"), settting.getXMLnode("proxyaddr"), settting.getXMLnodeAsBool("savesession"));
+                }
+                catch (Exception fbsessionexc)
+                {
+                    string fbsessionsave = "Cannot save facebook session.\r\n" + fbsessionexc.StackTrace;
+                    MessageBox.Show(fbsessionsave);
+                    Log.write(LogType.exception, fbsessionsave);
+                }
+            }
 
             string data = CreatePostData(message);
 
