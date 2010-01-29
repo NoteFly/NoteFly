@@ -415,7 +415,7 @@ namespace NoteFly
             {
                 bool visible = true;
                 bool ontop = false;
-                string title = "test nr." + id;
+                string title = "test nr." + id+" testalongtitlesoiteasytoseeifresizingofmanagenoteisdonecorrectlyblablabla";
                 string content = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
                                  "warning: To prevent this note from saving don't move or touch it!";
                 Int16 notecolor = Convert.ToInt16(ran.Next(0, 6));

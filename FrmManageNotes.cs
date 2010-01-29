@@ -165,9 +165,11 @@ namespace NoteFly
         private void DrawNotesOverview()
         {
             pnlNotes.Controls.Clear();
-            CleanUp();            
+            CleanUp();
 
             int ypos = 10;
+            int newlentitle = ((this.Width - 280) / 4);
+
             for (Int16 curnote = 0; curnote < notes.NumNotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
@@ -176,38 +178,8 @@ namespace NoteFly
 
                 int titlelength = notes.GetNotes[curnote].NoteTitle.Length;
                 lblNoteTitle.AutoSize = true;
-                if ((titlelength >= 20) && (this.Width < 400))
-                {
-                    lblNoteTitle.Text = ShortenTitle(curnote, 20);
-                }
-                else if ((titlelength >= 30) && (this.Width >= 400) && (this.Width < 450))
-                {
-                    lblNoteTitle.Text = ShortenTitle(curnote, 30);
-                }
-                else if ((titlelength >= 40) && (this.Width >= 400) && (this.Width < 450))
-                {
-                    lblNoteTitle.Text = ShortenTitle(curnote, 40);
-                }
-                else if ((titlelength >= 50) && (this.Width >= 450) && (this.Width < 500))
-                {
-                    lblNoteTitle.Text = ShortenTitle(curnote, 50);
-                }
-                else if ((titlelength >= 60) && (this.Width >= 500) && (this.Width < 550))
-                {
-                    lblNoteTitle.Text = ShortenTitle(curnote, 60);
-                }
-                else if ((titlelength >= 70) && (this.Width >= 550) && (this.Width < 600))
-                {
-                    lblNoteTitle.Text = ShortenTitle(curnote, 70);
-                }
-                else if ((titlelength >= 80) && (this.Width >= 600))
-                {
-                    lblNoteTitle.Text = ShortenTitle(curnote, 80);
-                }
-                else
-                {
-                    lblNoteTitle.Text = notes.GetNotes[curnote].NoteTitle + " (ID:" + notes.GetNotes[curnote].NoteID + ")";
-                }
+
+                lblNoteTitle.Text = ShortenTitle(curnote, newlentitle);
 
                 lblNoteTitle.Name = "lbNote" + Convert.ToString(curnote + 1);
                 lblNoteTitle.Location = new Point(2, ypos);
@@ -246,11 +218,32 @@ namespace NoteFly
             }
         }
 
-        private string ShortenTitle(int curnote, int lengte)
+        /// <summary>
+        /// Limit the title
+        /// </summary>
+        /// <param name="curnote"></param>
+        /// <param name="lengte"></param>
+        /// <returns></returns>
+        private string ShortenTitle(int curnote, int newlentitle)
         {
-            return notes.GetNotes[curnote].NoteTitle.Substring(0, lengte) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+            int reallen = notes.GetNotes[curnote].NoteTitle.Length;
+            if (newlentitle < 4)
+            {
+                return notes.GetNotes[curnote].NoteTitle.Substring(0, 4) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+            }
+            else if (reallen > newlentitle)
+            {
+                return notes.GetNotes[curnote].NoteTitle.Substring(0, newlentitle) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+            }
+            else
+            {
+                return notes.GetNotes[curnote].NoteTitle + "(ID:" + notes.GetNotes[curnote].NoteID + ")";
+            }
         }
 
+        /// <summary>
+        /// Dispose all children controls of pnlNotes control.
+        /// </summary>
         private void CleanUp()
         {
             int ctrlnum = pnlNotes.Controls.Count;
@@ -260,6 +253,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// frmManage notes is activated.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
             if ((transparency) && (this.skin != null))
@@ -269,7 +267,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// form not active make tranparent if needed.
+        /// form not active, make tranparent if set.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -282,12 +280,21 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Get the full path of the note folder.
+        /// </summary>
+        /// <returns></returns>
         private string getNotesSavePath()
         {
             xmlHandler xmlsettings = new xmlHandler(true);
             return xmlsettings.getXMLnode("notesavepath");
         }
 
+        /// <summary>
+        /// The manage note form is beening resized.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
