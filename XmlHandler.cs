@@ -44,7 +44,7 @@ namespace NoteFly
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, "", "", true, false, false, "", true);
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, "", "", true, false, false, "", 10000, true);
                 }
             }
         }
@@ -296,7 +296,7 @@ namespace NoteFly
         /// </summary>
         /// <returns>true if succeed.</returns>
         /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool confirmexit, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr, Boolean savefacebooksession)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool confirmexit, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr, int timeout, Boolean savefacebooksession)
         {
             if (!this.issetting)
             {
@@ -367,6 +367,8 @@ namespace NoteFly
                 WriteXMLBool("useproxy", useproxy);
 
                 objXmlTextWriter.WriteElementString("proxyaddr", proxyaddr);
+
+                objXmlTextWriter.WriteElementString("timeout", Convert.ToString(timeout));
 
                 objXmlTextWriter.WriteStartElement("facebook");
 

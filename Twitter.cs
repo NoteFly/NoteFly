@@ -164,6 +164,7 @@ namespace NoteFly
                         request.Proxy = new WebProxy(getsettting.getXMLnode("proxyaddr"));
                     }
                 }
+                request.Timeout = getsettting.getXMLnodeAsInt("timeout");
 
                 request.ContentLength = bytes.Length;
                 using (Stream requestStream = request.GetRequestStream())

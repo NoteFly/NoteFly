@@ -26,6 +26,7 @@
         <xs:element name="defaultemail" type="xs:string" />
         <xs:element name="useproxy" type="xs:boolean" />
         <xs:element name="proxyaddr" type="xs:string" />
+        <xs:element name="timeout" type="xs:int" />
         <xs:element name="facebook">
           <xs:complexType>
             <xs:sequence>

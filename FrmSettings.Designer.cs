@@ -67,7 +67,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chxSaveFBSession = new System.Windows.Forms.CheckBox();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
-            this.ipTextBox1 = new NoteFly.IPTextBox();
             this.chxUseProxy = new System.Windows.Forms.CheckBox();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
@@ -78,6 +77,10 @@
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.lbTextTwMs = new System.Windows.Forms.Label();
+            this.lbTextTwTimeout = new System.Windows.Forms.Label();
+            this.numTimeout = new System.Windows.Forms.NumericUpDown();
+            this.ipTextBox1 = new NoteFly.IPTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -88,6 +91,7 @@
             this.tabFacebook.SuspendLayout();
             this.tabNetwerk.SuspendLayout();
             this.tabAdvance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
             this.SuspendLayout();
             // 
             // chxTransparecy
@@ -203,7 +207,7 @@
             // 
             this.tbTwitterUser.AccessibleDescription = "Editbox twitter username";
             this.tbTwitterUser.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
-            this.tbTwitterUser.Location = new System.Drawing.Point(113, 43);
+            this.tbTwitterUser.Location = new System.Drawing.Point(113, 23);
             this.tbTwitterUser.MaxLength = 16;
             this.tbTwitterUser.Name = "tbTwitterUser";
             this.tbTwitterUser.Size = new System.Drawing.Size(153, 20);
@@ -213,7 +217,7 @@
             // lbUsername
             // 
             this.lbUsername.AutoSize = true;
-            this.lbUsername.Location = new System.Drawing.Point(16, 46);
+            this.lbUsername.Location = new System.Drawing.Point(16, 26);
             this.lbUsername.Name = "lbUsername";
             this.lbUsername.Size = new System.Drawing.Size(87, 13);
             this.lbUsername.TabIndex = 9;
@@ -224,7 +228,7 @@
             this.tbTwitterPass.AccessibleDescription = "Editbox twitter password";
             this.tbTwitterPass.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.tbTwitterPass.Enabled = false;
-            this.tbTwitterPass.Location = new System.Drawing.Point(113, 122);
+            this.tbTwitterPass.Location = new System.Drawing.Point(113, 102);
             this.tbTwitterPass.MaxLength = 255;
             this.tbTwitterPass.Name = "tbTwitterPass";
             this.tbTwitterPass.PasswordChar = 'X';
@@ -234,7 +238,7 @@
             // lbPassword
             // 
             this.lbPassword.AutoSize = true;
-            this.lbPassword.Location = new System.Drawing.Point(16, 125);
+            this.lbPassword.Location = new System.Drawing.Point(16, 105);
             this.lbPassword.Name = "lbPassword";
             this.lbPassword.Size = new System.Drawing.Size(86, 13);
             this.lbPassword.TabIndex = 11;
@@ -243,7 +247,7 @@
             // chxRememberTwPass
             // 
             this.chxRememberTwPass.AutoSize = true;
-            this.chxRememberTwPass.Location = new System.Drawing.Point(19, 85);
+            this.chxRememberTwPass.Location = new System.Drawing.Point(19, 65);
             this.chxRememberTwPass.Name = "chxRememberTwPass";
             this.chxRememberTwPass.Size = new System.Drawing.Size(242, 17);
             this.chxRememberTwPass.TabIndex = 12;
@@ -267,7 +271,7 @@
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(358, 262);
+            this.tabControlSettings.Size = new System.Drawing.Size(350, 262);
             this.tabControlSettings.TabIndex = 17;
             // 
             // tabGeneral
@@ -283,7 +287,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(350, 236);
+            this.tabGeneral.Size = new System.Drawing.Size(342, 236);
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -387,7 +391,7 @@
             this.tabAppearance.Location = new System.Drawing.Point(4, 22);
             this.tabAppearance.Name = "tabAppearance";
             this.tabAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppearance.Size = new System.Drawing.Size(350, 236);
+            this.tabAppearance.Size = new System.Drawing.Size(342, 236);
             this.tabAppearance.TabIndex = 0;
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
@@ -485,7 +489,7 @@
             this.tabHighlight.Location = new System.Drawing.Point(4, 22);
             this.tabHighlight.Name = "tabHighlight";
             this.tabHighlight.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHighlight.Size = new System.Drawing.Size(350, 236);
+            this.tabHighlight.Size = new System.Drawing.Size(342, 236);
             this.tabHighlight.TabIndex = 5;
             this.tabHighlight.Text = "Highlight";
             this.tabHighlight.UseVisualStyleBackColor = true;
@@ -511,16 +515,16 @@
             this.tabTwitter.Location = new System.Drawing.Point(4, 22);
             this.tabTwitter.Name = "tabTwitter";
             this.tabTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTwitter.Size = new System.Drawing.Size(350, 236);
+            this.tabTwitter.Size = new System.Drawing.Size(342, 236);
             this.tabTwitter.TabIndex = 1;
             this.tabTwitter.Text = "Twitter";
             this.tabTwitter.UseVisualStyleBackColor = true;
             // 
             // lbWarningTwitterPassword
             // 
-            this.lbWarningTwitterPassword.Location = new System.Drawing.Point(16, 151);
+            this.lbWarningTwitterPassword.Location = new System.Drawing.Point(16, 131);
             this.lbWarningTwitterPassword.Name = "lbWarningTwitterPassword";
-            this.lbWarningTwitterPassword.Size = new System.Drawing.Size(278, 41);
+            this.lbWarningTwitterPassword.Size = new System.Drawing.Size(278, 36);
             this.lbWarningTwitterPassword.TabIndex = 13;
             this.lbWarningTwitterPassword.Text = "Never ever enter your twitter password here on a public computer.";
             // 
@@ -531,7 +535,7 @@
             this.tabFacebook.Location = new System.Drawing.Point(4, 22);
             this.tabFacebook.Name = "tabFacebook";
             this.tabFacebook.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFacebook.Size = new System.Drawing.Size(350, 236);
+            this.tabFacebook.Size = new System.Drawing.Size(342, 236);
             this.tabFacebook.TabIndex = 6;
             this.tabFacebook.Text = "Facebook";
             this.tabFacebook.UseVisualStyleBackColor = true;
@@ -541,9 +545,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(37, 64);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(187, 13);
+            this.label1.Size = new System.Drawing.Size(198, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Not recommend on a public computer.";
+            this.label1.Text = "Do not enable this on a public computer.";
             // 
             // chxSaveFBSession
             // 
@@ -559,31 +563,24 @@
             // 
             // tabNetwerk
             // 
+            this.tabNetwerk.Controls.Add(this.lbTextTwMs);
             this.tabNetwerk.Controls.Add(this.ipTextBox1);
             this.tabNetwerk.Controls.Add(this.chxUseProxy);
+            this.tabNetwerk.Controls.Add(this.numTimeout);
+            this.tabNetwerk.Controls.Add(this.lbTextTwTimeout);
             this.tabNetwerk.Controls.Add(this.chxConfirmLink);
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
             this.tabNetwerk.Name = "tabNetwerk";
             this.tabNetwerk.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNetwerk.Size = new System.Drawing.Size(350, 236);
+            this.tabNetwerk.Size = new System.Drawing.Size(342, 236);
             this.tabNetwerk.TabIndex = 4;
             this.tabNetwerk.Text = "Network";
             this.tabNetwerk.UseVisualStyleBackColor = true;
             // 
-            // ipTextBox1
-            // 
-            this.ipTextBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ipTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ipTextBox1.Enabled = false;
-            this.ipTextBox1.Location = new System.Drawing.Point(24, 46);
-            this.ipTextBox1.Name = "ipTextBox1";
-            this.ipTextBox1.Size = new System.Drawing.Size(228, 18);
-            this.ipTextBox1.TabIndex = 19;
-            // 
             // chxUseProxy
             // 
             this.chxUseProxy.AutoSize = true;
-            this.chxUseProxy.Location = new System.Drawing.Point(24, 23);
+            this.chxUseProxy.Location = new System.Drawing.Point(24, 35);
             this.chxUseProxy.Name = "chxUseProxy";
             this.chxUseProxy.Size = new System.Drawing.Size(111, 17);
             this.chxUseProxy.TabIndex = 1;
@@ -596,7 +593,7 @@
             this.chxConfirmLink.AutoSize = true;
             this.chxConfirmLink.Checked = true;
             this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmLink.Location = new System.Drawing.Point(24, 114);
+            this.chxConfirmLink.Location = new System.Drawing.Point(24, 104);
             this.chxConfirmLink.Name = "chxConfirmLink";
             this.chxConfirmLink.Size = new System.Drawing.Size(194, 17);
             this.chxConfirmLink.TabIndex = 18;
@@ -613,7 +610,7 @@
             this.tabAdvance.Controls.Add(this.lbTextDefaultEmail);
             this.tabAdvance.Location = new System.Drawing.Point(4, 22);
             this.tabAdvance.Name = "tabAdvance";
-            this.tabAdvance.Size = new System.Drawing.Size(350, 236);
+            this.tabAdvance.Size = new System.Drawing.Size(342, 236);
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
@@ -683,12 +680,69 @@
             this.lbTextDefaultEmail.TabIndex = 17;
             this.lbTextDefaultEmail.Text = "default email address to send to: ";
             // 
+            // lbTextTwMs
+            // 
+            this.lbTextTwMs.AutoSize = true;
+            this.lbTextTwMs.Location = new System.Drawing.Point(142, 138);
+            this.lbTextTwMs.Name = "lbTextTwMs";
+            this.lbTextTwMs.Size = new System.Drawing.Size(20, 13);
+            this.lbTextTwMs.TabIndex = 25;
+            this.lbTextTwMs.Text = "ms";
+            // 
+            // lbTextTwTimeout
+            // 
+            this.lbTextTwTimeout.AutoSize = true;
+            this.lbTextTwTimeout.Location = new System.Drawing.Point(21, 138);
+            this.lbTextTwTimeout.Name = "lbTextTwTimeout";
+            this.lbTextTwTimeout.Size = new System.Drawing.Size(44, 13);
+            this.lbTextTwTimeout.TabIndex = 24;
+            this.lbTextTwTimeout.Text = "timeout:";
+            // 
+            // numTimeout
+            // 
+            this.numTimeout.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numTimeout.Location = new System.Drawing.Point(71, 136);
+            this.numTimeout.Maximum = new decimal(new int[] {
+            30000,
+            0,
+            0,
+            0});
+            this.numTimeout.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numTimeout.Name = "numTimeout";
+            this.numTimeout.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.numTimeout.Size = new System.Drawing.Size(65, 20);
+            this.numTimeout.TabIndex = 23;
+            this.numTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numTimeout.Value = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            // 
+            // ipTextBox1
+            // 
+            this.ipTextBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ipTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ipTextBox1.Enabled = false;
+            this.ipTextBox1.Location = new System.Drawing.Point(24, 58);
+            this.ipTextBox1.Name = "ipTextBox1";
+            this.ipTextBox1.Size = new System.Drawing.Size(228, 20);
+            this.ipTextBox1.TabIndex = 19;
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(352, 296);
+            this.ClientSize = new System.Drawing.Size(344, 296);
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -714,6 +768,7 @@
             this.tabNetwerk.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -769,5 +824,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chxSaveFBSession;
         private IPTextBox ipTextBox1;
+        private System.Windows.Forms.Label lbTextTwMs;
+        private System.Windows.Forms.Label lbTextTwTimeout;
+        private System.Windows.Forms.NumericUpDown numTimeout;
     }
 }

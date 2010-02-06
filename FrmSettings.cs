@@ -58,6 +58,7 @@ namespace NoteFly
             chxLogInfo.Checked = getLogDebugInfo();
             chxUseProxy.Checked = getUseProxy();
             chxSaveFBSession.Checked = getSaveFbSession();
+            numTimeout.Value = getTimeout();
 
             if (String.IsNullOrEmpty(tbDefaultEmail.Text))
             {
@@ -197,7 +198,7 @@ namespace NoteFly
                 }
                 xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, 
                     numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxConfirmExit.Checked, tbTwitterUser.Text,
-                    tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked, chxUseProxy.Checked, this.ipTextBox1.GetIPAddress(), chxSaveFBSession.Checked);
+                    tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked, chxUseProxy.Checked, this.ipTextBox1.GetIPAddress(), Convert.ToInt32(this.numTimeout.Value), chxSaveFBSession.Checked);
 #if win32
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
@@ -375,6 +376,11 @@ namespace NoteFly
         private string getProxyAddr()
         {
             return xmlsettings.getXMLnode("proxyaddr");
+        }
+
+        private decimal getTimeout()
+        {
+            return xmlsettings.getXMLnodeAsInt("timeout");
         }
 
         private bool getStatusStartlogin()

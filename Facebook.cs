@@ -235,7 +235,6 @@ namespace NoteFly
             WebRequest request = WebRequest.Create(fbrestserverurl);
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
-            request.Timeout = 10000; //10secs
 
             xmlHandler settting = new xmlHandler(true);
             if (settting.getXMLnodeAsBool("useproxy") == true)
@@ -258,7 +257,7 @@ namespace NoteFly
                 try
                 {
                     settting.WriteSettings(settting.getXMLnodeAsBool("transparecy"), Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), settting.getXMLnodeAsInt("defaultcolor"), settting.getXMLnodeAsInt("actionleftclick"), settting.getXMLnodeAsBool("askurl"), settting.getXMLnode("fontcontent"), Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")), settting.getXMLnodeAsInt("textdirection"),
-                        settting.getXMLnode("notesavepath"), settting.getXMLnode("defaultemail"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("confirmexit"), settting.getXMLnode("twitteruser"), settting.getXMLnode("twitterpass"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("loginfo"), settting.getXMLnodeAsBool("useproxy"), settting.getXMLnode("proxyaddr"), settting.getXMLnodeAsBool("savesession"));
+                        settting.getXMLnode("notesavepath"), settting.getXMLnode("defaultemail"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("confirmexit"), settting.getXMLnode("twitteruser"), settting.getXMLnode("twitterpass"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("loginfo"), settting.getXMLnodeAsBool("useproxy"), settting.getXMLnode("proxyaddr"), settting.getXMLnodeAsInt("timeout"), settting.getXMLnodeAsBool("savesession"));
                 }
                 catch (Exception fbsessionexc)
                 {
@@ -267,6 +266,7 @@ namespace NoteFly
                     Log.write(LogType.exception, fbsessionsave);
                 }
             }
+            request.Timeout = settting.getXMLnodeAsInt("timeout");
 
             string data = CreatePostData(message);
 
