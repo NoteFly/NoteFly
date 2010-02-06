@@ -67,6 +67,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chxSaveFBSession = new System.Windows.Forms.CheckBox();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
+            this.ipTextBox1 = new NoteFly.IPTextBox();
             this.chxUseProxy = new System.Windows.Forms.CheckBox();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
@@ -558,6 +559,7 @@
             // 
             // tabNetwerk
             // 
+            this.tabNetwerk.Controls.Add(this.ipTextBox1);
             this.tabNetwerk.Controls.Add(this.chxUseProxy);
             this.tabNetwerk.Controls.Add(this.chxConfirmLink);
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
@@ -568,6 +570,16 @@
             this.tabNetwerk.Text = "Network";
             this.tabNetwerk.UseVisualStyleBackColor = true;
             // 
+            // ipTextBox1
+            // 
+            this.ipTextBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ipTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ipTextBox1.Enabled = false;
+            this.ipTextBox1.Location = new System.Drawing.Point(24, 46);
+            this.ipTextBox1.Name = "ipTextBox1";
+            this.ipTextBox1.Size = new System.Drawing.Size(228, 18);
+            this.ipTextBox1.TabIndex = 19;
+            // 
             // chxUseProxy
             // 
             this.chxUseProxy.AutoSize = true;
@@ -577,7 +589,7 @@
             this.chxUseProxy.TabIndex = 1;
             this.chxUseProxy.Text = "Use socked proxy";
             this.chxUseProxy.UseVisualStyleBackColor = true;
-            this.chxUseProxy.Click += new System.EventHandler(this.cbxProxy_Click);
+            this.chxUseProxy.CheckedChanged += new System.EventHandler(this.chxUseProxy_CheckedChanged);
             // 
             // chxConfirmLink
             // 
@@ -756,5 +768,6 @@
         private System.Windows.Forms.TabPage tabFacebook;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chxSaveFBSession;
+        private IPTextBox ipTextBox1;
     }
 }

@@ -706,7 +706,7 @@ namespace NoteFly
             {
                 DialogResult result;
                 string shrttweet = note.Substring(0, 140);
-                result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first 140 characters? " + shrttweet, "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first 140 characters? ", "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     tweetnote();

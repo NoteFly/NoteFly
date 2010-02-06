@@ -73,10 +73,11 @@ namespace NoteFly
             this.notes = notes;
             DrawCbxFonts();
 
-            ipproxy = new IPTextBox();
-            ipproxy.Location = new Point(24, 50);
-            ipproxy.Enabled = false;
-            this.tabNetwerk.Controls.Add(ipproxy);
+            //ipproxy = new IPTextBox();
+            //ipproxy.Location = new Point(24, 50);
+            //ipproxy.Enabled = false;
+            //this.tabNetwerk.Controls.Add(ipproxy);
+
             if (getUseProxy())
             {
                 ipproxy.Enabled = true;
@@ -196,7 +197,7 @@ namespace NoteFly
                 }
                 xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, 
                     numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxConfirmExit.Checked, tbTwitterUser.Text,
-                    tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked, chxUseProxy.Checked, ipproxy.GetIPAddress(), chxSaveFBSession.Checked);
+                    tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked, chxUseProxy.Checked, this.ipTextBox1.GetIPAddress(), chxSaveFBSession.Checked);
 #if win32
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
@@ -262,11 +263,6 @@ namespace NoteFly
         {
             tbDefaultEmail.Enabled = !cbxDefaultEmailToBlank.Checked;
             if (cbxDefaultEmailToBlank.Checked) { tbDefaultEmail.Text = ""; }
-        }
-
-        private void cbxProxy_Click(object sender, EventArgs e)
-        {
-            ipproxy.Enabled = chxUseProxy.Checked;
         }
 
         /// <summary>
@@ -470,6 +466,11 @@ namespace NoteFly
                 }
                 id++;
             }
+        }
+
+        private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
+        {
+            this.ipTextBox1.Enabled = this.chxUseProxy.Checked;
         }
 
 		#endregion Methods 

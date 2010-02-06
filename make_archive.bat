@@ -1,5 +1,5 @@
 @echo off
-set path7z="C:\Libs\mozilla-build\7zip\7z.exe"
+set path7z="C:\Program Files\7zip\7z.exe"
 set VERSION=1.0.0
 
 echo Making zip archive: src_NoteFly_v%VERSION%.zip
