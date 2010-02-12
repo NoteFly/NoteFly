@@ -205,7 +205,6 @@
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
     <None Include="bin\Debug\app.eqconfig" />
-    <None Include="create_linux_package.pkgxml" />
     <None Include="bin\Release\create_setup.nsi" />
     <None Include="Resources\locknote.png" />
     <Content Include="Resources\logo.png" />

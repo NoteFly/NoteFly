@@ -29,7 +29,6 @@ namespace NoteFly
     {
 		#region Fields (3) 
 
-        private IPTextBox ipproxy;
         private Notes notes;
         private xmlHandler xmlsettings;
 
@@ -74,14 +73,9 @@ namespace NoteFly
             this.notes = notes;
             DrawCbxFonts();
 
-            //ipproxy = new IPTextBox();
-            //ipproxy.Location = new Point(24, 50);
-            //ipproxy.Enabled = false;
-            //this.tabNetwerk.Controls.Add(ipproxy);
-
             if (getUseProxy())
             {
-                ipproxy.Enabled = true;
+                this.ipTextBox1.Enabled = true;
             }
 #if DEBUG
             btnCrash.Visible = true;
@@ -114,6 +108,12 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Cancel button pressed.
+        /// Don't save any change made.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -241,6 +241,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// reset button clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
             DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset your settings?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);            
@@ -323,98 +328,79 @@ namespace NoteFly
             }
         }
 
-        private bool getSaveFbSession()
-        {
-            return xmlsettings.getXMLnodeAsBool("savesession");
-        }
-
         private int getActionLeftClick()
         {
             return xmlsettings.getXMLnodeAsInt("actionleftclick");
         }
-
-        private bool getAskUrl()
-        {
-            return xmlsettings.getXMLnodeAsBool("askurl");
-        }
-
-        private bool getConfirmExit()
-        {
-            return xmlsettings.getXMLnodeAsBool("confirmexit");
-        }
-
         private int getDefaultColor()
         {
             return xmlsettings.getXMLnodeAsInt("defaultcolor");
         }
-
-        private string getDefaultEmail()
-        {
-            return xmlsettings.getXMLnode("defaultemail");
-        }
-
-        private bool getHighlightC()
-        {
-            return xmlsettings.getXMLnodeAsBool("highlightC");
-        }
-
-        private bool getHighlightHTML()
-        {
-            return xmlsettings.getXMLnodeAsBool("highlightHTML");
-        }
-
-        private string getNotesSavePath()
-        {
-            return xmlsettings.getXMLnode("notesavepath");
-        }
-
-        private bool getUseProxy()
-        {
-            return xmlsettings.getXMLnodeAsBool("useproxy");
-        }
-
-        private string getProxyAddr()
-        {
-            return xmlsettings.getXMLnode("proxyaddr");
-        }
-
-        private decimal getTimeout()
-        {
-            return xmlsettings.getXMLnodeAsInt("timeout");
-        }
-
-        private bool getStatusStartlogin()
-        {
-            #if win32
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (key != null)
-            {
-                if (key.GetValue("simpleplainnote", null)!=null)
-                {
-                    return true;
-                } 
-                else 
-                {
-                    return false;
-                }
-            }
-            #endif
-            return false;
-        }
-
         private int getTextDirection()
         {
             return xmlsettings.getXMLnodeAsInt("textdirection");
         }
 
-        private Decimal getTransparecylevel()
+        private bool getSaveFbSession()
         {
-            Decimal transparecylvl = Convert.ToDecimal(xmlsettings.getXMLnode("transparecylevel"));
-            if ((transparecylvl < 1) || (transparecylvl > 100)) { MessageBox.Show("transparecylevel out of range."); return 95; }
-            else return transparecylvl;
+            return xmlsettings.getXMLnodeAsBool("savesession");
+        }
+        private bool getAskUrl()
+        {
+            return xmlsettings.getXMLnodeAsBool("askurl");
+        }
+        private bool getConfirmExit()
+        {
+            return xmlsettings.getXMLnodeAsBool("confirmexit");
+        }
+        private bool getHighlightC()
+        {
+            return xmlsettings.getXMLnodeAsBool("highlightC");
+        }
+        private bool getHighlightHTML()
+        {
+            return xmlsettings.getXMLnodeAsBool("highlightHTML");
+        }
+        private bool getUseProxy()
+        {
+            return xmlsettings.getXMLnodeAsBool("useproxy");
+        }
+        private bool getLogDebugInfo()
+        {
+            return xmlsettings.getXMLnodeAsBool("loginfo");
+        }
+        private bool getStatusStartlogin()
+        {
+#if win32
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (key != null)
+            {
+                if (key.GetValue("simpleplainnote", null) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+#endif
+            return false;
         }
 
-        private string getTwitterpassword()
+        private String getDefaultEmail()
+        {
+            return xmlsettings.getXMLnode("defaultemail");
+        }
+        private String getNotesSavePath()
+        {
+            return xmlsettings.getXMLnode("notesavepath");
+        }
+        private String getProxyAddr()
+        {
+            return xmlsettings.getXMLnode("proxyaddr");
+        }
+        private String getTwitterpassword()
         {
             string twpass = xmlsettings.getXMLnode("twitterpass");
             if (String.IsNullOrEmpty(twpass))
@@ -424,15 +410,20 @@ namespace NoteFly
             }
             return twpass;
         }
-
-        private string getTwitterusername()
+        private String getTwitterusername()
         {
             return xmlsettings.getXMLnode("twitteruser");
         }
 
-        private Boolean getLogDebugInfo()
+        private Decimal getTimeout()
         {
-            return xmlsettings.getXMLnodeAsBool("loginfo");
+            return xmlsettings.getXMLnodeAsInt("timeout");
+        }
+        private Decimal getTransparecylevel()
+        {
+            Decimal transparecylvl = Convert.ToDecimal(xmlsettings.getXMLnode("transparecylevel"));
+            if ((transparecylvl < 1) || (transparecylvl > 100)) { MessageBox.Show("transparecylevel out of range."); return 95; }
+            else return transparecylvl;
         }
 
         /// <summary>

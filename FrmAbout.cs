@@ -1,4 +1,4 @@
-﻿/* Copyright (C) 2009
+﻿/* Copyright (C) 2009-2010
  * 
  * This program is free software; you can redistribute it and/or modify it
  * Free Software Foundation; either version 2, or (at your option) any
