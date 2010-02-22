@@ -16,6 +16,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace NoteFly
 {
@@ -39,6 +40,7 @@ namespace NoteFly
         {
             this.rtbcode = rtb;
             this.checkhtml = checkhtml;
+            
             if (checkhtml)
             {
                 htmlnodes = new String[91];

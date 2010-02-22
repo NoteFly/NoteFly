@@ -312,8 +312,9 @@ namespace NoteFly
                     }
                     AssemblyProduct = ((AssemblyProductAttribute)attributes[0]).Product;
 
+                    
                     DialogResult resultdialogconfirm = MessageBox.Show("Are sure you want to exit " + AssemblyProduct + "?", "confirm exit", MessageBoxButtons.YesNo);
-
+                    
                     if (resultdialogconfirm == DialogResult.Yes)
                     {
                         ExitApplication();

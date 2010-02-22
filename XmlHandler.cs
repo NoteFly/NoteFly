@@ -230,15 +230,15 @@ namespace NoteFly
         /// <summary>
         /// Write a note xml file.
         /// </summary>
-        /// <param name="visible"></param>
-        /// <param name="ontop"></param>
-        /// <param name="numcolor"></param>
-        /// <param name="title"></param>
-        /// <param name="content"></param>
-        /// <param name="locX"></param>
-        /// <param name="locY"></param>
-        /// <param name="notewidth"></param>
-        /// <param name="noteheight"></param>
+        /// <param name="visible">note is visible</param>
+        /// <param name="ontop">note is on top of other windows</param>
+        /// <param name="numcolor">color number of note</param>
+        /// <param name="title">the title of the note</param>
+        /// <param name="content">the content of the note</param>
+        /// <param name="locX">X location of note on screen</param>
+        /// <param name="locY">Y location of note on screen</param>
+        /// <param name="notewidth">width in pixels of the note</param>
+        /// <param name="noteheight">height in pixels of the note</param>
         /// <returns></returns>
         public bool WriteNote(bool visible, bool ontop, Int16 numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
         {

@@ -30,6 +30,7 @@ namespace NoteFly
         private Boolean notesupdated = false;
         private Boolean transparecy = false;
         private Boolean twitterenabled = false;
+        private Boolean resourcevars = false;
         private Int16 textdirection = 0;
 
 		#endregion Fields 

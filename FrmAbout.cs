@@ -30,11 +30,6 @@ namespace NoteFly
             this.Text = "About "+TrayIcon.AssemblyTitle;
             this.lblProductName.Text = TrayIcon.AssemblyTitle;
             this.lblVersion.Text = String.Format("Version {0}", TrayIcon.AssemblyVersion);
-            if (DateTime.Now.Month == 1 && DateTime.Now.Day < 8)
-            {
-                richTextBox1.Visible = true;
-                timerTextEffect.Enabled = true;
-            }
         }
 
         private void okButton_Click(object sender, EventArgs e)
@@ -47,27 +42,9 @@ namespace NoteFly
             System.Diagnostics.Process.Start("http://www.notefly.tk/");
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {            
-            if (curletter < this.richTextBox1.Text.Length)
-            {
-                curletter++;
-            } else { 
-                curletter = 0;
-            }
-            if (curletter > 2)
-            {
-                this.richTextBox1.Select(curletter-3, 1);
-                this.richTextBox1.SelectionColor = Color.Red;
-            }
-            else if (curletter <= 2)
-            {
-                this.richTextBox1.Select(richTextBox1.Text.Length - curletter, 1);
-                this.richTextBox1.SelectionColor = Color.Red;
-            }
-            this.richTextBox1.Select(curletter, 1);
-            this.richTextBox1.SelectionColor = Color.Green;
-            this.richTextBox1.Select(0, 0);
+        private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.notefly.tk/faq.php");
         }
     }
 }

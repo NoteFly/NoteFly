@@ -28,22 +28,20 @@ namespace NoteFly
 {
     public partial class FrmNote : Form
     {
-		#region Fields (15) 
+		#region Fields (10)
 
         private TextHighlight highlight;
-        private const int HT_CAPTION = 0x2;
-        private Int16 id;
-        private Int32 locX;
-        private Int32 locY;
-        private const int minvisiblesize = 5;
         private String note;
-        private Int16 notecolor = 0;
-        private Boolean notelock = false;
+        private Int16 id, notecolor = 0;
         public Notes notes;
-        private Boolean notevisible = true;
+        private Boolean notevisible = true, rolledup = false, notelock = false;
         private Skin skin;
-        private String title;
-        private String twpass;
+        private Int32 locX, locY;
+        private UInt16 noteWidth, noteHeight;
+        private String title, twpass;
+
+        private const int minvisiblesize = 5;
+        private const int HT_CAPTION = 0x2;
         private const int WM_NCLBUTTONDOWN = 0xA1;
 
 		#endregion Fields 
@@ -94,12 +92,12 @@ namespace NoteFly
 
             if (ontop)
             {
-                OnTopToolStripMenuItem.Checked = true;
+                menuOnTop.Checked = true;
                 this.TopMost = true;
             }
             else
             {
-                OnTopToolStripMenuItem.Checked = false;
+                menuOnTop.Checked = false;
                 this.TopMost = false;
             }
         }
@@ -173,7 +171,7 @@ namespace NoteFly
 
 		#endregion Properties 
 
-		#region Methods (31) 
+		#region Methods (32) 
 
 		// Public Methods (2) 
 
@@ -182,7 +180,7 @@ namespace NoteFly
         /// </summary>
         public void CheckThings()
         {
-            CheckTwitter(notes.TwitterEnabled);
+            checkTwitter(notes.TwitterEnabled);
 
             PaintColorNote();
 
@@ -200,7 +198,7 @@ namespace NoteFly
         {
             SavePos.RunWorkerAsync();
         }
-		// Private Methods (29) 
+		// Private Methods (30) 
 
         /// <summary>
         /// Find what password is entered.
@@ -245,7 +243,7 @@ namespace NoteFly
         /// Check if there is internet connection, if not warn user.
         /// </summary>
         /// <returns>true if there is a coonection, otherwise return false</returns>
-        private bool CheckConnection()
+        private bool checkConnection()
         {
             #if win32
             if (IsConnectedToInternet() == true)
@@ -254,9 +252,9 @@ namespace NoteFly
             }
             else
             {
-                String nonetwork = "There is no network connection.";
-                MessageBox.Show(nonetwork);
-                Log.write(LogType.error, nonetwork);
+                String msgNoNetwork = "There is no network connection.";
+                MessageBox.Show(msgNoNetwork);
+                Log.write(LogType.error, msgNoNetwork);
                 return false;
             }
             #elif !win32
@@ -268,7 +266,7 @@ namespace NoteFly
         /// check if twitter is enabled.
         /// </summary>
         /// <param name="twitterenabled"></param>
-        private void CheckTwitter(bool twitterenabled)
+        private void checkTwitter(bool twitterenabled)
         {
             if (twitterenabled)
             {
@@ -356,9 +354,9 @@ namespace NoteFly
             }
             else
             {
-                String notitlecontent = "note has no title and content";
-                MessageBox.Show(notitlecontent);
-                Log.write(LogType.error, notitlecontent);
+                String msgNoTitleContent = "note has no title and content";
+                Log.write(LogType.error, msgNoTitleContent);
+                MessageBox.Show(msgNoTitleContent);
             }
         }
 
@@ -407,19 +405,44 @@ namespace NoteFly
                 pbShowLock.Visible = true;
                 pbShowLock.Location = new Point(btnCloseNote.Location.X - 24, 8);
                 pbShowLock.Size = new Size(16, 16);
-                locknoteToolStripMenuItem.Text = "lock note (click again to unlock)";
+                menuLockNote.Text = "lock note (click again to unlock)";
                 this.menuNoteColors.Enabled = false;
-                this.editTToolStripMenuItem.Enabled = false;
-                this.OnTopToolStripMenuItem.Enabled = false;
+                this.menuEditNote.Enabled = false;
+                this.menuOnTop.Enabled = false;
             }
             else
             {
                 notelock = false;
                 pbShowLock.Visible = false;
-                locknoteToolStripMenuItem.Text = "lock note";
+                menuLockNote.Text = "lock note";
                 this.menuNoteColors.Enabled = true;
-                this.editTToolStripMenuItem.Enabled = true;
-                this.OnTopToolStripMenuItem.Enabled = true;
+                this.menuEditNote.Enabled = true;
+                this.menuOnTop.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Roll the note up and down.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuRollUp_Click(object sender, EventArgs e)
+        {
+            rolledup = !rolledup;
+
+            if (rolledup)
+            {
+                menuRollUp.Text = menuRollUp.Text+"(click again to Roll Down)";
+                this.MinimumSize = new Size(this.MinimumSize.Width, pnlHead.Height);
+                this.Height = this.Height - pnlNote.Height;
+                this.menuRollUp.Checked = true;
+            }
+            else
+            {
+                menuRollUp.Text = menuRollUp.Text.Substring(0, 7);
+                this.MinimumSize = new Size(this.MinimumSize.Width, pnlHead.Height+this.pbResizeGrip.Height);
+                this.Height = this.noteHeight;
+                this.menuRollUp.Checked = false;
             }
         }
 
@@ -430,7 +453,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (OnTopToolStripMenuItem.Checked == true)
+            if (menuOnTop.Checked == true)
             {
                 this.TopMost = true;
             }
@@ -504,7 +527,7 @@ namespace NoteFly
         }
 
        /// <summary>
-       /// pnlHead the grabbel area is selected.
+       /// pnlHead the grab area is selected.
        /// </summary>
        /// <param name="sender"></param>
        /// <param name="e"></param>
@@ -576,25 +599,33 @@ namespace NoteFly
         /// <param name="e"></param>
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.locX = this.Location.X;
-            this.locY = this.Location.Y;
+                this.locX = this.Location.X;
+                this.locY = this.Location.Y;
 
-            if ((this.locX + this.Width > minvisiblesize) && (this.locY + this.Height > minvisiblesize) && (notecolor >= 0) && notecolor <= skin.MaxNotesColors)
-            {
-                string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
-                xmlHandler updateposnote = new xmlHandler(notefile);
-                updateposnote.WriteNote(notevisible, this.TopMost, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
-            }
-            else if (notecolor < 0 || notecolor > skin.MaxNotesColors)
-            {
-                throw new CustomException("Note color unknow.");
-            }
-            else
-            {
-                String outofscreen = "position note (ID:" + this.NoteID + ") is out of screen.";
-                MessageBox.Show(outofscreen);
-                Log.write(LogType.error, outofscreen);
-            }
+                if (!this.rolledup)
+                {
+                    this.noteWidth = Convert.ToUInt16(this.Width);
+                    this.noteHeight = Convert.ToUInt16(this.Height);
+                }
+
+                if ((this.locX + this.Width > minvisiblesize) && (this.locY + this.Height > minvisiblesize) && (notecolor >= 0) && notecolor <= skin.MaxNotesColors)
+                {
+                    string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
+                    xmlHandler updateposnote = new xmlHandler(notefile);
+                    updateposnote.WriteNote(notevisible, this.TopMost, notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
+                    
+                }
+                else if (notecolor < 0 || notecolor > skin.MaxNotesColors)
+                {
+                    throw new CustomException("Note color unknow.");
+                }
+                else
+                {
+                    String msgOutOfScreen = "position note (ID:" + this.NoteID + ") is out of screen.";
+                    Log.write(LogType.error, msgOutOfScreen);
+                    MessageBox.Show(msgOutOfScreen);
+                }
+            
         }
 
         /// <summary>
@@ -613,7 +644,7 @@ namespace NoteFly
                     notecolor = i;
                     string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
                     xmlHandler savenotecolor = new xmlHandler(notefile);
-                    savenotecolor.WriteNote(notevisible, OnTopToolStripMenuItem.Checked, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                    savenotecolor.WriteNote(notevisible, menuOnTop.Checked, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
                     Log.write(LogType.info, "color note (ID:" + this.NoteID + ") changed.");
                 }
                 else
@@ -652,7 +683,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
         {
-            if (!CheckConnection()) return;
+            if (!checkConnection()) return;
             Facebook fb = new Facebook();
             fb.StartPostingNote(note);
         }
@@ -695,7 +726,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
         {
-            if (!CheckConnection()) return;
+            if (!checkConnection()) return;
 
             if ((String.IsNullOrEmpty(note) == false) && (note.Length < 140))
             {
@@ -726,7 +757,7 @@ namespace NoteFly
         /// </summary>
         private void tweetnote()
         {
-            if (!CheckConnection()) return;
+            if (!checkConnection()) return;
 
             xmlHandler getSettings = new xmlHandler(true);
             string twitteruser = getSettings.getXMLnode("twitteruser");
