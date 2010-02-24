@@ -218,7 +218,7 @@
     <EmbeddedResource Include="Resources\trayicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Release\win32\" />
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

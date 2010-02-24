@@ -1,3 +1,5 @@
+; Copyright (C) 2009-2010
+;
 ; This program is free software; you can redistribute it and/or modify it
 ; Free Software Foundation; either version 2, or (at your option) any
 ; later version.
@@ -11,14 +13,17 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 ;
+
+; version
+!define VERSION "1.0.0" ;version number: major.minor.release
+!define VERSTATUS "RC2" ;alpha, beta, rc, or nothing for final.
+
 ; The name of the installer
-
-!define VERSION "1.0.0"
-!define VERSTATUS "RC1"
-
 Name "NoteFly ${VERSION} ${VERSTATUS}"
-BrandingText " "
+
 Icon ".\..\..\Resources\installer_logo.ico"
+BrandingText " "
+
 InstProgressFlags smooth
 AllowRootDirInstall false
 CRCCheck on
@@ -26,7 +31,7 @@ ShowInstDetails show
 CompletedText "Installation completed. Please close this installer now."
 
 ; The file to write
-OutFile ".\NoteFly_v${VERSION}.exe"
+OutFile ".\NoteFly_v${VERSION}_${VERSTATUS}.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\NoteFly
@@ -35,7 +40,7 @@ InstallDir $PROGRAMFILES\NoteFly
 ; overwrite the old one automatically)
 InstallDirRegKey HKLM "Software\NoteFly" "Install_Dir"
 
-; Request application privileges for Windows Vista
+; Request application privileges for Windows Vista >=
 RequestExecutionLevel admin
 
 !include WordFunc.nsh
@@ -123,7 +128,8 @@ Section "main executable (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
   
-  Exec '"$INSTDIR\NoteFly.exe" /firstrun'
+  SetShellVarContext current
+  Exec '"$INSTDIR\NoteFly.exe" /firstrun' ;FIXME: runs as admin if installer does, but shouldn't.
   
 SectionEnd
 
@@ -141,10 +147,9 @@ SectionEnd
 
 ; Uninstaller
 
-Section "Uninstall"
-  
+Section "Uninstall"  
   ; Remove registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly"  
   DeleteRegKey HKLM SOFTWARE\NoteFly
 
   ; Remove files and uninstaller
@@ -160,10 +165,12 @@ Section "Uninstall"
   
   MessageBox MB_YESNO "Do you want to remove your notes and settings too?" IDYES true IDNO false
   true:
-  ;deleting all files in appdata folder. 
-  SetShellVarContext current
-  Delete "$APPDATA\.NoteFly\*.*"
-  RMDir "$APPDATA\.NoteFly" 
+  ; Deleting all files in application data folder of NoteFly.
+  SetShellVarContext current  
+  Delete "$APPDATA\.NoteFly\*.*" ;FIXME: should not be admin user.
+  RMDir "$APPDATA\.NoteFly"  ;FIXME: should not be admin user.
+  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Run\NoteFly" ;not tested yet
+  
   Goto next
   
   false:

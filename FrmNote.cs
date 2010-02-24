@@ -143,6 +143,18 @@ namespace NoteFly
             }
         }
 
+        public Boolean NoteVisible
+        {
+            get
+            {
+                return this.notevisible;
+            }
+            set
+            {
+                this.notevisible = value;
+            }
+        }
+
         public string NoteContent
         {
             get { return this.note; }
@@ -194,6 +206,9 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Save the setting of the note.
+        /// </summary>
         public void UpdateThisNote()
         {
             SavePos.RunWorkerAsync();
@@ -612,7 +627,7 @@ namespace NoteFly
                 {
                     string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
                     xmlHandler updateposnote = new xmlHandler(notefile);
-                    updateposnote.WriteNote(notevisible, this.TopMost, notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
+                    updateposnote.WriteNote(this.notevisible, this.TopMost, notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
                     
                 }
                 else if (notecolor < 0 || notecolor > skin.MaxNotesColors)

@@ -119,9 +119,9 @@ namespace NoteFly
                     }
                     catch (UnauthorizedAccessException)
                     {
-                        String msg = "Access denied. Delete note " + curnote + ".xml manualy with proper premission.";
-                        MessageBox.Show(msg);
-                        Log.write(LogType.error, msg);
+                        String msgaccessdenied = "Access denied. Delete note " + curnote + ".xml manualy with proper premission.";
+                        MessageBox.Show(msgaccessdenied);
+                        Log.write(LogType.error, msgaccessdenied);
                     }
 
                     DrawNotesOverview();
@@ -147,11 +147,14 @@ namespace NoteFly
                 if (notes.GetNotes[n].Visible == true)
                 {
                     notes.GetNotes[n].Hide();
+                    notes.GetNotes[n].NoteVisible = false;
                 }
                 else
                 {
                     notes.GetNotes[n].Show();
+                    notes.GetNotes[n].NoteVisible = true;
                 }
+                notes.GetNotes[n].UpdateThisNote();
             }
             else
             {
