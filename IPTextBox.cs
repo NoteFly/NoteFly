@@ -59,35 +59,45 @@ namespace NoteFly
         private void tbIPaddress_KeyDown(object sender, KeyEventArgs e)
         {
             int k = e.KeyValue;
-            //'0'-'9'
-            if (k >= 48 && k <= 57)
-            {
-                MessageBox.Show("ok, ipv4 or ipv6 char");
-            }
+            
             //'a'-'f'
-            else if (k >= 65 && k <= 70)
+            if (k >= 65 && k <= 70)
             {
                 addrtype = IPaddrType.ipv6;
-                MessageBox.Show("ok, ipv6 char");
             }
             //':'
             else if (k == 186 && e.Shift)
             {
                 if (addrtype == IPaddrType.ipv4) { MessageBox.Show("can't mix ipv4 and ipv6 seperators."); }
                 addrtype = IPaddrType.ipv6;
-                MessageBox.Show("ok, ipv6 char");
             }
             //'.'
             else if (k == 190 && !e.Shift)
             {
+                int lastpoint = -10;
+                for (int i = 0; i < tbIPaddress.Text.Length; i++)
+                {
+                    if (tbIPaddress.Text[i] == '.')
+                    {
+                        lastpoint = i;
+                    }
+                }
+                if (lastpoint == tbIPaddress.Text.Length-1)
+                {
+                    MessageBox.Show("Did not except an other dot.");
+                }
+                else if ((lastpoint < tbIPaddress.Text.Length - 4) && (lastpoint!=-10))
+                {
+                    MessageBox.Show("There should be not more than 3 numbers between each dot");
+                }
+
                 if (addrtype == IPaddrType.ipv6) { MessageBox.Show("can't mix ipv4 and ipv6 seperators."); }
                 addrtype = IPaddrType.ipv4;
-                MessageBox.Show("ok, ipv4 char");
             }
-            //shift or backspace
-            else if (k == 16 || k==8)
+            ////'0'-'9' or shift or backspace
+            else if ((k == 16 || k==8) || (k >= 48 && k <= 57))
             {
-                //allow
+                e.SuppressKeyPress = false;
             }
             else
             {

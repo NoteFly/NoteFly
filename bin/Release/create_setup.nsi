@@ -50,6 +50,13 @@ RequestExecutionLevel admin
 
 
 Function .onInit
+ System::Call 'kernel32::CreateMutexA(i 0, i 0, t "myMutex") i .r1 ?e'
+ Pop $R0
+ 
+ StrCmp $R0 0 +3
+   MessageBox MB_OK|MB_ICONEXCLAMATION "The installer is already running."
+   Abort
+
   Call GetDotNETVersion
   Pop $0
   ${If} $0 == "not found"
@@ -113,7 +120,7 @@ Section "main executable (required)"
   SetOutPath $INSTDIR
   
   ; Put file there
-  File "NoteFly.exe"
+  File NoteFly.exe
   ;File "NoteFly.exe.config"
   
   ; Write the installation path into the registry
@@ -128,9 +135,9 @@ Section "main executable (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
   
-  SetShellVarContext current
+  ;SetShellVarContext current
   Exec '"$INSTDIR\NoteFly.exe" /firstrun' ;FIXME: runs as admin if installer does, but shouldn't.
-  
+  ;Exec 'RunAs /user:$pc\$user "$INSTDIR\NoteFly.exe" /firstrun'
 SectionEnd
 
 ; Optional section (can be disabled by the user)
