@@ -417,7 +417,17 @@ namespace NoteFly
 
         private Decimal getTimeout()
         {
-            return xmlsettings.getXMLnodeAsInt("timeout");
+            int timeout = xmlsettings.getXMLnodeAsInt("networktimeout");
+            if (timeout < 0)
+            {
+                Log.write(LogType.error, "Network timeout not set or negative.");
+                return 10000;
+            }
+            else
+            {
+                return timeout;
+            }
+
         }
         private Decimal getTransparecylevel()
         {
