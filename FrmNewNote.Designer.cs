@@ -32,10 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNewNote));
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pastTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveNewNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pastTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.lbTextTitle = new System.Windows.Forms.Label();
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
@@ -43,6 +43,7 @@
             this.btnAddNote = new System.Windows.Forms.Button();
             this.pnlNoteEdit = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.pnlNoteEdit.SuspendLayout();
@@ -81,7 +82,25 @@
             this.pastTextToolStripMenuItem,
             this.copyTextToolStripMenuItem});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 114);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 92);
+            // 
+            // saveNewNoteToolStripMenuItem
+            // 
+            this.saveNewNoteToolStripMenuItem.Image = global::NoteFly.Properties.Resources.accept;
+            this.saveNewNoteToolStripMenuItem.Name = "saveNewNoteToolStripMenuItem";
+            this.saveNewNoteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveNewNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
+            this.saveNewNoteToolStripMenuItem.Text = "Save note";
+            this.saveNewNoteToolStripMenuItem.Click += new System.EventHandler(this.btnAddNote_Click);
+            // 
+            // cancelNoteToolStripMenuItem
+            // 
+            this.cancelNoteToolStripMenuItem.Image = global::NoteFly.Properties.Resources.cancel;
+            this.cancelNoteToolStripMenuItem.Name = "cancelNoteToolStripMenuItem";
+            this.cancelNoteToolStripMenuItem.ShortcutKeyDisplayString = "Escape";
+            this.cancelNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
+            this.cancelNoteToolStripMenuItem.Text = "Cancel note";
+            this.cancelNoteToolStripMenuItem.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // pastTextToolStripMenuItem
             // 
@@ -101,24 +120,6 @@
             this.copyTextToolStripMenuItem.Text = "Copy current note content";
             this.copyTextToolStripMenuItem.DropDownOpening += new System.EventHandler(this.copyTextToolStripMenuItem_DropDownOpening);
             this.copyTextToolStripMenuItem.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
-            // 
-            // saveNewNoteToolStripMenuItem
-            // 
-            this.saveNewNoteToolStripMenuItem.Image = global::NoteFly.Properties.Resources.accept;
-            this.saveNewNoteToolStripMenuItem.Name = "saveNewNoteToolStripMenuItem";
-            this.saveNewNoteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveNewNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.saveNewNoteToolStripMenuItem.Text = "Save note";
-            this.saveNewNoteToolStripMenuItem.Click += new System.EventHandler(this.btnAddNote_Click);
-            // 
-            // cancelNoteToolStripMenuItem
-            // 
-            this.cancelNoteToolStripMenuItem.Image = global::NoteFly.Properties.Resources.cancel;
-            this.cancelNoteToolStripMenuItem.Name = "cancelNoteToolStripMenuItem";
-            this.cancelNoteToolStripMenuItem.ShortcutKeyDisplayString = "Escape";
-            this.cancelNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.cancelNoteToolStripMenuItem.Text = "Cancel note";
-            this.cancelNoteToolStripMenuItem.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // tbTitle
             // 
@@ -184,6 +185,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(27, 23);
             this.btnCancel.TabIndex = 3;
+            this.toolTip.SetToolTip(this.btnCancel, "cancel new note (escape)");
             this.btnCancel.UseMnemonic = false;
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -195,6 +197,7 @@
             this.btnAddNote.BackgroundImage = global::NoteFly.Properties.Resources.accept;
             this.btnAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnAddNote.CausesValidation = false;
+            this.btnAddNote.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnAddNote.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnAddNote.FlatAppearance.BorderSize = 0;
             this.btnAddNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
@@ -204,6 +207,7 @@
             this.btnAddNote.Name = "btnAddNote";
             this.btnAddNote.Size = new System.Drawing.Size(27, 23);
             this.btnAddNote.TabIndex = 2;
+            this.toolTip.SetToolTip(this.btnAddNote, "accept new note (enter)");
             this.btnAddNote.UseMnemonic = false;
             this.btnAddNote.UseVisualStyleBackColor = true;
             this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
@@ -236,6 +240,13 @@
             this.pbResizeGrip.TabIndex = 6;
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
+            // 
+            // toolTip
+            // 
+            this.toolTip.AutomaticDelay = 800;
+            this.toolTip.AutoPopDelay = 6000;
+            this.toolTip.InitialDelay = 800;
+            this.toolTip.ReshowDelay = 100;
             // 
             // FrmNewNote
             // 
@@ -286,6 +297,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveNewNoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cancelNoteToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 
