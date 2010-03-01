@@ -16,7 +16,7 @@
 
 ; version
 !define VERSION "1.0.0" ;version number: major.minor.release
-!define VERSTATUS "RC2" ;alpha, beta, rc, or nothing for final.
+!define VERSTATUS "rc2" ;alpha, beta, rc, or nothing for final.
 
 ; The name of the installer
 Name "NoteFly ${VERSION} ${VERSTATUS}"
@@ -30,6 +30,8 @@ CRCCheck on
 ShowInstDetails show
 CompletedText "Installation completed. Please close this installer now."
 
+; !addplugindir ".\setuplib\"
+
 ; The file to write
 OutFile ".\NoteFly_v${VERSION}_${VERSTATUS}.exe"
 
@@ -40,8 +42,8 @@ InstallDir $PROGRAMFILES\NoteFly
 ; overwrite the old one automatically)
 InstallDirRegKey HKLM "Software\NoteFly" "Install_Dir"
 
-; Request application privileges for Windows Vista >=
-RequestExecutionLevel admin
+; nsis UAC plugin requires launch at user level.
+RequestExecutionLevel user
 
 !include WordFunc.nsh
 !insertmacro VersionCompare
@@ -50,13 +52,13 @@ RequestExecutionLevel admin
 
 
 Function .onInit
- System::Call 'kernel32::CreateMutexA(i 0, i 0, t "myMutex") i .r1 ?e'
+ System::Call 'kernel32::CreateMutexA(i 0, i 0, t "installnotefly") i .r1 ?e'
  Pop $R0
  
  StrCmp $R0 0 +3
    MessageBox MB_OK|MB_ICONEXCLAMATION "The installer is already running."
    Abort
-
+   
   Call GetDotNETVersion
   Pop $0
   ${If} $0 == "not found"
@@ -72,13 +74,36 @@ Function .onInit
     Abort
   ${EndIf}
   
-  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "myMutex") i .r1 ?e'
-  Pop $R0
+UAC_Elevate:
+    UAC::RunElevated 
+    StrCmp 1223 $0 UAC_ElevationAborted ; UAC dialog aborted by user?
+    StrCmp 0 $0 0 UAC_Err ; Error?
+    StrCmp 1 $1 0 UAC_Success ;Are we the real deal or just the wrapper?
+    Quit
  
-  StrCmp $R0 0 +3
-   MessageBox MB_OK|MB_ICONEXCLAMATION "The installer is already running."
-   Abort
+UAC_Err:
+    MessageBox mb_iconstop "Unable to elevate, error $0"
+    Abort
+ 
+UAC_ElevationAborted:
+    # elevation was aborted, run as normal?
+    MessageBox mb_iconstop "This installer requires admin access, aborting!"
+    Abort
+ 
+UAC_Success:
+    StrCmp 1 $3 +4 ;Admin?
+    StrCmp 3 $1 0 UAC_ElevationAborted ;Try again?
+    MessageBox mb_iconstop "This installer requires admin access, try again"
+    goto UAC_Elevate 
 
+FunctionEnd
+
+Function .OnInstSuccess
+    UAC::Unload ;Must call unload!
+FunctionEnd
+
+Function .OnInstFailed
+    UAC::Unload ;Must call unload!
 FunctionEnd
 
 Function GetDotNETVersion
@@ -120,7 +145,7 @@ Section "main executable (required)"
   SetOutPath $INSTDIR
   
   ; Put file there
-  File NoteFly.exe
+  File "NoteFly.exe"
   ;File "NoteFly.exe.config"
   
   ; Write the installation path into the registry
@@ -134,10 +159,10 @@ Section "main executable (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
-  
-  ;SetShellVarContext current
-  Exec '"$INSTDIR\NoteFly.exe" /firstrun' ;FIXME: runs as admin if installer does, but shouldn't.
-  ;Exec 'RunAs /user:$pc\$user "$INSTDIR\NoteFly.exe" /firstrun'
+    
+  ;this should run the app at user level:
+  ;!insertmacro UAC_AsUser_ExecShell 'open' '$INSTDIR\NoteFly.exe' '/firstrun' '$INSTDIR' ''
+  Exec '"$INSTDIR\NoteFly.exe" /firstrun' 
 SectionEnd
 
 ; Optional section (can be disabled by the user)

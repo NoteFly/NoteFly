@@ -88,9 +88,12 @@ namespace NoteFly
                 }
                 else if ((lastpoint < tbIPaddress.Text.Length - 4) && (lastpoint!=-10))
                 {
-                    MessageBox.Show("There should be not more than 3 numbers between each dot");
+                    MessageBox.Show("There should be not more than 3 numbers between each dot.");
                 }
-
+                else if ((tbIPaddress.Text.Length==0) && (k == 190))
+                {
+                    MessageBox.Show("IP adress cannot start with a dot.");
+                }
                 if (addrtype == IPaddrType.ipv6) { MessageBox.Show("can't mix ipv4 and ipv6 seperators."); }
                 addrtype = IPaddrType.ipv4;
             }
