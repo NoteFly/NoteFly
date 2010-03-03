@@ -62,8 +62,8 @@
             this.tabHighlight = new System.Windows.Forms.TabPage();
             this.chxSyntaxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.tabTwitterAndFacebook = new System.Windows.Forms.TabPage();
-            this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.chxSaveFBSession = new System.Windows.Forms.CheckBox();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
             this.lbTextTwMs = new System.Windows.Forms.Label();
@@ -72,7 +72,7 @@
             this.lbTextTwTimeout = new System.Windows.Forms.Label();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
-            this.chxLogInfo = new System.Windows.Forms.CheckBox();
+            this.chxLogDebug = new System.Windows.Forms.CheckBox();
             this.cbxDefaultEmailToBlank = new System.Windows.Forms.CheckBox();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
             this.btnCrash = new System.Windows.Forms.Button();
@@ -80,6 +80,7 @@
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.ipTextBox1 = new NoteFly.IPTextBox();
+            this.chxConfirmDeleteNote = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -519,14 +520,6 @@
             this.tabTwitterAndFacebook.Text = "Twitter/Facebook";
             this.tabTwitterAndFacebook.UseVisualStyleBackColor = true;
             // 
-            // lbWarningTwitterPassword
-            // 
-            this.lbWarningTwitterPassword.Location = new System.Drawing.Point(17, 95);
-            this.lbWarningTwitterPassword.Name = "lbWarningTwitterPassword";
-            this.lbWarningTwitterPassword.Size = new System.Drawing.Size(278, 36);
-            this.lbWarningTwitterPassword.TabIndex = 13;
-            this.lbWarningTwitterPassword.Text = "Never ever enter your twitter password here on a public computer.";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -535,6 +528,14 @@
             this.label1.Size = new System.Drawing.Size(198, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Do not enable this on a public computer.";
+            // 
+            // lbWarningTwitterPassword
+            // 
+            this.lbWarningTwitterPassword.Location = new System.Drawing.Point(17, 95);
+            this.lbWarningTwitterPassword.Name = "lbWarningTwitterPassword";
+            this.lbWarningTwitterPassword.Size = new System.Drawing.Size(278, 36);
+            this.lbWarningTwitterPassword.TabIndex = 13;
+            this.lbWarningTwitterPassword.Text = "Never ever enter your twitter password here on a public computer.";
             // 
             // chxSaveFBSession
             // 
@@ -636,7 +637,8 @@
             // 
             // tabAdvance
             // 
-            this.tabAdvance.Controls.Add(this.chxLogInfo);
+            this.tabAdvance.Controls.Add(this.chxConfirmDeleteNote);
+            this.tabAdvance.Controls.Add(this.chxLogDebug);
             this.tabAdvance.Controls.Add(this.cbxDefaultEmailToBlank);
             this.tabAdvance.Controls.Add(this.chxLogErrors);
             this.tabAdvance.Controls.Add(this.btnCrash);
@@ -649,15 +651,15 @@
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
             // 
-            // chxLogInfo
+            // chxLogDebug
             // 
-            this.chxLogInfo.AutoSize = true;
-            this.chxLogInfo.Location = new System.Drawing.Point(14, 119);
-            this.chxLogInfo.Name = "chxLogInfo";
-            this.chxLogInfo.Size = new System.Drawing.Size(93, 17);
-            this.chxLogInfo.TabIndex = 22;
-            this.chxLogInfo.Text = "log debug info";
-            this.chxLogInfo.UseVisualStyleBackColor = true;
+            this.chxLogDebug.AutoSize = true;
+            this.chxLogDebug.Location = new System.Drawing.Point(14, 149);
+            this.chxLogDebug.Name = "chxLogDebug";
+            this.chxLogDebug.Size = new System.Drawing.Size(93, 17);
+            this.chxLogDebug.TabIndex = 22;
+            this.chxLogDebug.Text = "log debug info";
+            this.chxLogDebug.UseVisualStyleBackColor = true;
             // 
             // cbxDefaultEmailToBlank
             // 
@@ -677,7 +679,7 @@
             this.chxLogErrors.AutoSize = true;
             this.chxLogErrors.Checked = true;
             this.chxLogErrors.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxLogErrors.Location = new System.Drawing.Point(14, 97);
+            this.chxLogErrors.Location = new System.Drawing.Point(14, 127);
             this.chxLogErrors.Name = "chxLogErrors";
             this.chxLogErrors.Size = new System.Drawing.Size(123, 17);
             this.chxLogErrors.TabIndex = 19;
@@ -723,6 +725,18 @@
             this.ipTextBox1.Name = "ipTextBox1";
             this.ipTextBox1.Size = new System.Drawing.Size(228, 20);
             this.ipTextBox1.TabIndex = 19;
+            // 
+            // chxConfirmDeleteNote
+            // 
+            this.chxConfirmDeleteNote.AutoSize = true;
+            this.chxConfirmDeleteNote.Checked = true;
+            this.chxConfirmDeleteNote.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmDeleteNote.Location = new System.Drawing.Point(14, 88);
+            this.chxConfirmDeleteNote.Name = "chxConfirmDeleteNote";
+            this.chxConfirmDeleteNote.Size = new System.Drawing.Size(125, 17);
+            this.chxConfirmDeleteNote.TabIndex = 23;
+            this.chxConfirmDeleteNote.Text = "Confirm deleting note";
+            this.chxConfirmDeleteNote.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 
@@ -802,7 +816,7 @@
         private System.Windows.Forms.CheckBox cbxDefaultEmailToBlank;
         private System.Windows.Forms.TabPage tabNetwerk;
         private System.Windows.Forms.CheckBox chxUseProxy;
-        private System.Windows.Forms.CheckBox chxLogInfo;
+        private System.Windows.Forms.CheckBox chxLogDebug;
         private System.Windows.Forms.TabPage tabHighlight;
         private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
         private System.Windows.Forms.Label label1;
@@ -811,5 +825,6 @@
         private System.Windows.Forms.Label lbTextTwMs;
         private System.Windows.Forms.Label lbTextTwTimeout;
         private System.Windows.Forms.NumericUpDown numTimeout;
+        private System.Windows.Forms.CheckBox chxConfirmDeleteNote;
     }
 }

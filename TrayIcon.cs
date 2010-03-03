@@ -274,7 +274,7 @@ namespace NoteFly
         /// <param name="e"></param>
         static void MenuSettings_Click(object sender, EventArgs e)
         {
-            FrmSettings settings = new FrmSettings(notes, transparency);
+            FrmSettings settings = new FrmSettings(notes);
             settings.Show();
         }
 
@@ -299,9 +299,10 @@ namespace NoteFly
         static void MenuExit_Click(object sender, EventArgs e)
         {
             xmlHandler getSetting = new xmlHandler(true);
+
             if (getSetting.getXMLnodeAsBool("confirmexit"))
             {
-                if (!confirmexitshowed)
+                if (!confirmexitshowed) //two times exit in contextmenu systray icon will alway exit.
                 {
                     confirmexitshowed = true;
                     string AssemblyProduct;
@@ -312,23 +313,15 @@ namespace NoteFly
                     }
                     AssemblyProduct = ((AssemblyProductAttribute)attributes[0]).Product;
 
-                    
-                    DialogResult resultdialogconfirm = MessageBox.Show("Are sure you want to exit " + AssemblyProduct + "?", "confirm exit", MessageBoxButtons.YesNo);
-                    
-                    if (resultdialogconfirm == DialogResult.Yes)
+                    DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + AssemblyProduct + "?", "confirm exit", MessageBoxButtons.YesNo);
+                    if (resdlgconfirmexit == DialogResult.No)
                     {
-                        ExitApplication();
+                        confirmexitshowed = false;
+                        return;
                     }
                 }
-                else
-                {
-                    ExitApplication();
-                }
             }
-            else
-            {
-                ExitApplication();
-            }
+            ExitApplication();
         }
 
         /// <summary>

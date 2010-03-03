@@ -52,7 +52,7 @@ namespace NoteFly
             this.notes = notes;
             this.transparency = transparency;
             notes.NotesUpdated = false;
-            DrawNotesOverview();           
+            DrawNotesOverview();
         }
 
         #endregion Constructors
@@ -81,21 +81,32 @@ namespace NoteFly
                 try
                 {
                     curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));
+                    //curnote = Convert.ToInt16(btn.Tag);
                 }
                 catch (InvalidCastException invexc)
                 {
-                    throw new CustomException(invexc.Message+" "+invexc.StackTrace);
+                    throw new CustomException(invexc.Message + " " + invexc.StackTrace);
                 }
-                
+
                 if (btn.Name == "btnNoteDel" + curnote)
                 {
                     int noteid = Convert.ToInt32(curnote) - 1;
+
+                    xmlHandler settings = new xmlHandler(true);
+                    if (settings.getXMLnodeAsBool("confirmdelete"))
+                    {
+                        DialogResult deleteres = MessageBox.Show("Are you sure you want to delete note (ID:" + noteid + ") ?", "delete note?", MessageBoxButtons.YesNo);
+                        if (deleteres == DialogResult.No)
+                        {
+                            return;
+                        }
+                    }
                     notes.GetNotes[noteid].Close();
 
                     try
                     {
                         File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
-                        Log.write(LogType.info, Convert.ToString(curnote)+".xml deleted.");
+                        Log.write(LogType.info, Convert.ToString(curnote) + ".xml deleted.");
 
                         //reorder filenames
                         for (Int16 n = curnote; n < numbernotes; n++)
@@ -199,7 +210,7 @@ namespace NoteFly
                 {
                     cbxNoteVisible.CheckState = CheckState.Unchecked;
                 }
-                cbxNoteVisible.Location = new Point(this.Width-200, ypos);
+                cbxNoteVisible.Location = new Point(this.Width - 200, ypos);
                 cbxNoteVisible.AutoEllipsis = true;
                 cbxNoteVisible.AutoSize = true;
                 cbxNoteVisible.Click += new EventHandler(cbxNoteVisible_Click);
@@ -208,10 +219,11 @@ namespace NoteFly
                 btnNoteDelete.Text = "delete";
                 btnNoteDelete.Name = "btnNoteDel" + Convert.ToString(curnote + 1);
                 btnNoteDelete.BackColor = Color.Orange;
-                btnNoteDelete.Location = new Point(this.Width-90, ypos-3);
+                btnNoteDelete.Location = new Point(this.Width - 90, ypos - 3);
                 btnNoteDelete.Width = 60;
                 btnNoteDelete.Click += new EventHandler(btnNoteDelete_Click);
                 btnNoteDelete.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
+                btnNoteDelete.Tag = curnote;
 
                 pnlNotes.Controls.Add(lblNoteTitle);
                 pnlNotes.Controls.Add(cbxNoteVisible);
@@ -303,7 +315,7 @@ namespace NoteFly
             if (e.Button == MouseButtons.Left)
             {
                 this.Cursor = Cursors.SizeNWSE;
-                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);                
+                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
             }
             this.Cursor = Cursors.Default;
         }

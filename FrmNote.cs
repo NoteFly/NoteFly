@@ -787,7 +787,7 @@ namespace NoteFly
                 String notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
                 MessageBox.Show(notwusername);
                 Log.write(LogType.error, notwusername);
-                FrmSettings settings = new FrmSettings(notes, notes.Transparency);
+                FrmSettings settings = new FrmSettings(notes);
                 settings.Show();
                 return;
             }

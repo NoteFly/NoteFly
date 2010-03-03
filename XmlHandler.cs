@@ -44,7 +44,7 @@ namespace NoteFly
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, "", "", true, false, false, "", 10000, true);
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, true, "", "", true, false, false, "", 10000, true);
                 }
             }
         }
@@ -196,6 +196,74 @@ namespace NoteFly
             return -1;
         }
 
+        /// <summary>
+        /// Get the boolean setting in the settings.xml file as array.
+        /// </summary>
+        /// <returns>array of boolean settings
+        /// 0 transparecy
+        /// 1 askurl
+        /// 2 logerror
+        /// 3 loginfo
+        /// 4 highlightHTML
+        /// 5 confirmexit
+        /// 6 confirmdelete
+        /// 7 useproxy
+        /// 8 savesession</returns>
+        public Boolean[] ParserSettingsBool()
+        {
+            Boolean[] boolsetting = new Boolean[9];
+            try
+            {
+                objXmlTextReader = new XmlTextReader(filenm);
+                while (objXmlTextReader.Read())
+                {
+                    switch (objXmlTextReader.Name)
+                    {
+                        case "transparecy":
+                            boolsetting[0] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "askurl":
+                            boolsetting[1] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "logerror":
+                            boolsetting[2] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "loginfo":
+                            boolsetting[3] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "highlightHTML":
+                            boolsetting[4] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "confirmexit":
+                            boolsetting[5] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "confirmdelete":
+                            boolsetting[6] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "useproxy":
+                            boolsetting[7] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "savesession":
+                            boolsetting[8] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                    }
+                }
+            }
+            finally
+            {
+                objXmlTextReader.Close();
+            }
+            return boolsetting;
+        }
+
+        /// <summary>
+        /// Get integer note settings as array
+        /// </summary>
+        /// <returns>0 color
+        /// 1 x
+        /// 2 y
+        /// 3 width
+        /// 4 height</returns>
         public Int32[] ParserNoteInts()
         {
             objXmlTextReader = new XmlTextReader(filenm);
@@ -265,16 +333,16 @@ namespace NoteFly
 
                 objXmlTextWriter.WriteElementString("title", title);
 
-                objXmlTextWriter.WriteElementString("content", content); 
+                objXmlTextWriter.WriteElementString("content", content);
 
                 objXmlTextWriter.WriteStartElement("location");
-                    objXmlTextWriter.WriteElementString("x", Convert.ToString(locX));
-                    objXmlTextWriter.WriteElementString("y", Convert.ToString(locY));
+                objXmlTextWriter.WriteElementString("x", Convert.ToString(locX));
+                objXmlTextWriter.WriteElementString("y", Convert.ToString(locY));
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("size");
-                    objXmlTextWriter.WriteElementString("width", Convert.ToString(notewidth));
-                    objXmlTextWriter.WriteElementString("heigth", Convert.ToString(noteheight));
+                objXmlTextWriter.WriteElementString("width", Convert.ToString(notewidth));
+                objXmlTextWriter.WriteElementString("heigth", Convert.ToString(noteheight));
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteEndElement();
@@ -295,8 +363,7 @@ namespace NoteFly
         /// Write settings file
         /// </summary>
         /// <returns>true if succeed.</returns>
-        /// 
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool confirmexit, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr, int timeout, Boolean savefacebooksession)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool confirmexit, bool confirmdelete, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr, int timeout, Boolean savefacebooksession)
         {
             if (!this.issetting)
             {
@@ -353,14 +420,16 @@ namespace NoteFly
 
                 WriteXMLBool("logerror", logerror);
 
-                WriteXMLBool("loginfo", logerror);
+                WriteXMLBool("loginfo", loginfo);
 
                 objXmlTextWriter.WriteStartElement("syntaxhighlight");
-                    WriteXMLBool("highlightHTML", highlightHTML);
-                    //WriteXMLBool("highlightC", highlightC);
+                WriteXMLBool("highlightHTML", highlightHTML);
+                //WriteXMLBool("highlightC", highlightC);
                 objXmlTextWriter.WriteEndElement();
 
                 WriteXMLBool("confirmexit", confirmexit);
+
+                WriteXMLBool("confirmdelete", confirmdelete);
 
                 objXmlTextWriter.WriteElementString("defaultemail", defaultemail);
 
@@ -476,7 +545,7 @@ namespace NoteFly
         private void SetAppdataFolder()
         {
 #if win32
-            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\."+TrayIcon.AssemblyTitle+"\\";
+            appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\." + TrayIcon.AssemblyTitle + "\\";
 #elif linux
             appdatafolder = "~\\.NoteFly\\";
 #elif mac

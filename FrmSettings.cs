@@ -27,7 +27,7 @@ namespace NoteFly
 {
     public partial class FrmSettings : Form
     {
-		#region Fields (3) 
+		#region Fields (2) 
 
         private Notes notes;
         private xmlHandler xmlsettings;
@@ -36,27 +36,37 @@ namespace NoteFly
 
 		#region Constructors (1) 
 
-        public FrmSettings(Notes notes, bool transparecy)
+        public FrmSettings(Notes notes)
         {
             InitializeComponent();
             xmlsettings = new xmlHandler(true);
+            
             //read setting and display them correctly.
-            chxTransparecy.Checked = transparecy;
-            chxConfirmExit.Checked = getConfirmExit();
+            Boolean[] boolsetting = xmlsettings.ParserSettingsBool();
+            chxTransparecy.Checked = boolsetting[0];
+            chxConfirmLink.Checked = boolsetting[1];
+            chxLogErrors.Checked = boolsetting[2];
+            chxLogDebug.Checked = boolsetting[3];
+            chxSyntaxHighlightHTML.Checked = boolsetting[4];
+            chxConfirmExit.Checked = boolsetting[5];
+            chxConfirmDeleteNote.Checked = boolsetting[6];
+            chxUseProxy.Checked = boolsetting[7];
+            chxSaveFBSession.Checked = boolsetting[8];
+            if (boolsetting[6])
+            {
+                this.ipTextBox1.Enabled = true;
+            }
+            
             numProcTransparency.Value = getTransparecylevel();
             cbxDefaultColor.SelectedIndex = getDefaultColor();
             cbxActionLeftClick.SelectedIndex = getActionLeftClick();
-            chxConfirmLink.Checked = getAskUrl();
+            
             tbNotesSavePath.Text = getNotesSavePath();
             tbTwitterUser.Text = getTwitterusername();
             tbTwitterPass.Text = getTwitterpassword();
             tbDefaultEmail.Text = getDefaultEmail();
             chxStartOnBootWindows.Checked = getStatusStartlogin();
-            chxSyntaxHighlightHTML.Checked = getHighlightHTML();
             cbxTextDirection.SelectedIndex = getTextDirection();
-            chxLogInfo.Checked = getLogDebugInfo();
-            chxUseProxy.Checked = getUseProxy();
-            chxSaveFBSession.Checked = getSaveFbSession();
             numTimeout.Value = getTimeout();
 
             if (String.IsNullOrEmpty(tbDefaultEmail.Text))
@@ -69,17 +79,13 @@ namespace NoteFly
                 tbDefaultEmail.Enabled = true;
                 cbxDefaultEmailToBlank.Checked = false;
             }
-            
-            this.notes = notes;
             DrawCbxFonts();
-
-            if (getUseProxy())
-            {
-                this.ipTextBox1.Enabled = true;
-            }
 #if DEBUG
             btnCrash.Visible = true;
 #endif
+            this.notes = notes;
+
+            boolsetting = null;
         }
 
 		#endregion Constructors 
@@ -163,7 +169,7 @@ namespace NoteFly
                 Log.write(LogType.error, noknowtextdir);
             }
             else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) ||
-                (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate) || (chxLogInfo.CheckState == CheckState.Indeterminate))
+                (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate) || (chxLogDebug.CheckState == CheckState.Indeterminate))
             {
                 String notallowcheckstate = "checkstate not allowed.";
                 MessageBox.Show(notallowcheckstate);
@@ -196,9 +202,27 @@ namespace NoteFly
                 {
                     MoveNotes(tbNotesSavePath.Text);
                 }
-                xmlsettings.WriteSettings(chxTransparecy.Checked, numProcTransparency.Value, cbxDefaultColor.SelectedIndex, cbxActionLeftClick.SelectedIndex, chxConfirmLink.Checked, cbxFontNoteContent.Text, 
-                    numFontSize.Value, cbxTextDirection.SelectedIndex, tbNotesSavePath.Text, tbDefaultEmail.Text, chxSyntaxHighlightHTML.Checked, chxConfirmExit.Checked, tbTwitterUser.Text,
-                    tbTwitterPass.Text, chxLogErrors.Checked, chxLogInfo.Checked, chxUseProxy.Checked, this.ipTextBox1.GetIPAddress(), Convert.ToInt32(this.numTimeout.Value), chxSaveFBSession.Checked);
+                xmlsettings.WriteSettings(chxTransparecy.Checked,
+                    numProcTransparency.Value,
+                    cbxDefaultColor.SelectedIndex,
+                    cbxActionLeftClick.SelectedIndex,
+                    chxConfirmLink.Checked,
+                    cbxFontNoteContent.Text, 
+                    numFontSize.Value,
+                    cbxTextDirection.SelectedIndex,
+                    tbNotesSavePath.Text,
+                    tbDefaultEmail.Text,
+                    chxSyntaxHighlightHTML.Checked,
+                    chxConfirmExit.Checked,
+                    chxConfirmDeleteNote.Checked,
+                    tbTwitterUser.Text,
+                    tbTwitterPass.Text,
+                    chxLogErrors.Checked,
+                    chxLogDebug.Checked,
+                    chxUseProxy.Checked,
+                    this.ipTextBox1.GetIPAddress(),
+                    Convert.ToInt32(this.numTimeout.Value),
+                    chxSaveFBSession.Checked);
 #if win32
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
@@ -341,6 +365,7 @@ namespace NoteFly
             return xmlsettings.getXMLnodeAsInt("textdirection");
         }
 
+        /*
         private bool getSaveFbSession()
         {
             return xmlsettings.getXMLnodeAsBool("savesession");
@@ -365,10 +390,16 @@ namespace NoteFly
         {
             return xmlsettings.getXMLnodeAsBool("useproxy");
         }
+        private bool getLogError()
+        {
+            return xmlsettings.getXMLnodeAsBool("logerror");
+        }
         private bool getLogDebugInfo()
         {
             return xmlsettings.getXMLnodeAsBool("loginfo");
         }
+         */
+
         private bool getStatusStartlogin()
         {
 #if win32
@@ -400,6 +431,10 @@ namespace NoteFly
         {
             return xmlsettings.getXMLnode("proxyaddr");
         }
+        private String getTwitterusername()
+        {
+            return xmlsettings.getXMLnode("twitteruser");
+        }
         private String getTwitterpassword()
         {
             string twpass = xmlsettings.getXMLnode("twitterpass");
@@ -409,10 +444,6 @@ namespace NoteFly
                 tbTwitterPass.Enabled = false;
             }
             return twpass;
-        }
-        private String getTwitterusername()
-        {
-            return xmlsettings.getXMLnode("twitteruser");
         }
 
         private Decimal getTimeout()

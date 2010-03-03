@@ -256,8 +256,29 @@ namespace NoteFly
             {
                 try
                 {
-                    settting.WriteSettings(settting.getXMLnodeAsBool("transparecy"), Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), settting.getXMLnodeAsInt("defaultcolor"), settting.getXMLnodeAsInt("actionleftclick"), settting.getXMLnodeAsBool("askurl"), settting.getXMLnode("fontcontent"), Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")), settting.getXMLnodeAsInt("textdirection"),
-                        settting.getXMLnode("notesavepath"), settting.getXMLnode("defaultemail"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("confirmexit"), settting.getXMLnode("twitteruser"), settting.getXMLnode("twitterpass"), settting.getXMLnodeAsBool("logerror"), settting.getXMLnodeAsBool("loginfo"), settting.getXMLnodeAsBool("useproxy"), settting.getXMLnode("proxyaddr"), settting.getXMLnodeAsInt("timeout"), settting.getXMLnodeAsBool("savesession"));
+                    Boolean[] boolsettings = settting.ParserSettingsBool();
+
+                    settting.WriteSettings(boolsettings[0],
+                        Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), 
+                        settting.getXMLnodeAsInt("defaultcolor"),
+                        settting.getXMLnodeAsInt("actionleftclick"),
+                        boolsettings[1],
+                        settting.getXMLnode("fontcontent"),
+                        Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")),
+                        settting.getXMLnodeAsInt("textdirection"),
+                        settting.getXMLnode("notesavepath"),
+                        settting.getXMLnode("defaultemail"),
+                        boolsettings[4],
+                        boolsettings[5],
+                        boolsettings[6],
+                        settting.getXMLnode("twitteruser"),
+                        settting.getXMLnode("twitterpass"),
+                        boolsettings[2],
+                        boolsettings[3],
+                        boolsettings[7],
+                        settting.getXMLnode("proxyaddr"),
+                        settting.getXMLnodeAsInt("timeout"),
+                        boolsettings[8]);
                 }
                 catch (Exception fbsessionexc)
                 {

@@ -73,28 +73,6 @@ Function .onInit
     MessageBox MB_OK|MB_ICONSTOP ".NET framework v2.0 or newer is required. You have $0.\r\nPlease update."
     Abort
   ${EndIf}
-  
-UAC_Elevate:
-    UAC::RunElevated 
-    StrCmp 1223 $0 UAC_ElevationAborted ; UAC dialog aborted by user?
-    StrCmp 0 $0 0 UAC_Err ; Error?
-    StrCmp 1 $1 0 UAC_Success ;Are we the real deal or just the wrapper?
-    Quit
- 
-UAC_Err:
-    MessageBox mb_iconstop "Unable to elevate, error $0"
-    Abort
- 
-UAC_ElevationAborted:
-    # elevation was aborted, run as normal?
-    MessageBox mb_iconstop "This installer requires admin access, aborting!"
-    Abort
- 
-UAC_Success:
-    StrCmp 1 $3 +4 ;Admin?
-    StrCmp 3 $1 0 UAC_ElevationAborted ;Try again?
-    MessageBox mb_iconstop "This installer requires admin access, try again"
-    goto UAC_Elevate 
 
 FunctionEnd
 
@@ -162,13 +140,13 @@ Section "main executable (required)"
     
   ;this should run the app at user level:
   ;!insertmacro UAC_AsUser_ExecShell 'open' '$INSTDIR\NoteFly.exe' '/firstrun' '$INSTDIR' ''
-  Exec '"$INSTDIR\NoteFly.exe" /firstrun' 
+  Exec '"$INSTDIR\NoteFly.exe" /firstrun'   
 SectionEnd
 
 ; Optional section (can be disabled by the user)
-Section "Start Menu Shortcuts"
-;startmenu shortcut should be for currentuser!
-  SetShellVarContext current
+Section "Start Menu Shortcuts"  
+  
+  ;startmenu shortcut should be for currentuser!
   CreateDirectory "$SMPROGRAMS\NoteFly"
   CreateShortCut "$SMPROGRAMS\NoteFly\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\NoteFly.exe" "" "$INSTDIR\NoteFly.exe" 0
