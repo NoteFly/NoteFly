@@ -332,23 +332,21 @@ namespace NoteFly
             {
                 xmlHandler parserNote = new xmlHandler(notefile);
 
-                Boolean visible = parserNote.getXMLnodeAsBool("visible");
-                Boolean ontop = parserNote.getXMLnodeAsBool("ontop");
+                Boolean[] noteSettingBool = parserNote.ParserNoteBools();
                 String title = parserNote.getXMLnode("title");
                 String content = parserNote.getXMLnode("content");
-                Int32[] NoteSettingsInt = parserNote.ParserNoteInts();
-                Int16 notecolor = Convert.ToInt16(NoteSettingsInt[0]);
+                Int32[] noteSettingsInt = parserNote.ParserNoteInts();
+                Int16 notecolor = Convert.ToInt16(noteSettingsInt[0]);
 
-                noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, NoteSettingsInt[1], NoteSettingsInt[2], NoteSettingsInt[3], NoteSettingsInt[4]));
+                noteslst.Add(CreateNote(noteSettingBool[0], noteSettingBool[1], title, content, notecolor, noteSettingsInt[1], noteSettingsInt[2], noteSettingsInt[3], noteSettingsInt[4]));
                 id++;
-                notefile = Path.Combine(notesavepath, id + ".xml");
-
                 if (CheckLimitNotes(id)) { 
                     String toomanynotes = "Too many notes to load.";
                     MessageBox.Show(toomanynotes);
                     Log.write(LogType.error, toomanynotes);
                     return;
                 }
+                notefile = Path.Combine(notesavepath, id + ".xml");
             }
             id++;
             notefile = Path.Combine(this.notesavepath, id + ".xml");

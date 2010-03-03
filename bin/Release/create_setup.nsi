@@ -30,6 +30,7 @@ CRCCheck on
 ShowInstDetails show
 CompletedText "Installation completed. Please close this installer now."
 
+;put uac.dll in .\setuplib folder to use it.
 ; !addplugindir ".\setuplib\"
 
 ; The file to write
@@ -74,14 +75,6 @@ Function .onInit
     Abort
   ${EndIf}
 
-FunctionEnd
-
-Function .OnInstSuccess
-    UAC::Unload ;Must call unload!
-FunctionEnd
-
-Function .OnInstFailed
-    UAC::Unload ;Must call unload!
 FunctionEnd
 
 Function GetDotNETVersion
@@ -177,8 +170,8 @@ Section "Uninstall"
   true:
   ; Deleting all files in application data folder of NoteFly.
   SetShellVarContext current  
-  Delete "$APPDATA\.NoteFly\*.*" ;FIXME: should not be admin user.
-  RMDir "$APPDATA\.NoteFly"  ;FIXME: should not be admin user.
+  Delete "$APPDATA\.NoteFly\*.*" ;FIXME: should not be admin user appdata.
+  RMDir "$APPDATA\.NoteFly"  ;FIXME: should not be admin user appdata.
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Run\NoteFly" ;not tested yet
   
   Goto next

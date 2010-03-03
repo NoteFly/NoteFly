@@ -266,32 +266,68 @@ namespace NoteFly
         /// 4 height</returns>
         public Int32[] ParserNoteInts()
         {
-            objXmlTextReader = new XmlTextReader(filenm);
-
             Int32[] settings = new Int32[5];
 
-            while (objXmlTextReader.Read())
+            try
             {
-                switch (objXmlTextReader.Name)
+                objXmlTextReader = new XmlTextReader(filenm);
+                while (objXmlTextReader.Read())
                 {
-                    case "color":
-                        settings[0] = objXmlTextReader.ReadElementContentAsInt();
-                        break;
-                    case "x":
-                        settings[1] = objXmlTextReader.ReadElementContentAsInt();
-                        break;
-                    case "y":
-                        settings[2] = objXmlTextReader.ReadElementContentAsInt();
-                        break;
-                    case "width":
-                        settings[3] = objXmlTextReader.ReadElementContentAsInt();
-                        break;
-                    case "heigth":
-                        settings[4] = objXmlTextReader.ReadElementContentAsInt();
-                        break;
+                    switch (objXmlTextReader.Name)
+                    {
+                        case "color":
+                            settings[0] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                        case "x":
+                            settings[1] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                        case "y":
+                            settings[2] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                        case "width":
+                            settings[3] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                        case "heigth":
+                            settings[4] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                    }
                 }
             }
-            objXmlTextReader.Close();
+            finally
+            {
+                objXmlTextReader.Close();
+            }
+            return settings;
+        }
+
+        /// <summary>
+        /// Get boolean setting from a note.
+        /// </summary>
+        /// <returns>0 visible
+        /// 1 ontop</returns>
+        public Boolean[] ParserNoteBools()
+        {
+            Boolean[] settings = new Boolean[2];
+            try
+            {
+                objXmlTextReader = new XmlTextReader(filenm);
+                while (objXmlTextReader.Read())
+                {
+                    switch (objXmlTextReader.Name)
+                    {
+                        case "visible":
+                            settings[0] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "ontop":
+                            settings[1] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                    }
+                }
+            }
+            finally
+            {
+                objXmlTextReader.Close();
+            }
             return settings;
         }
 
