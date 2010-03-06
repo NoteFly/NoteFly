@@ -382,10 +382,10 @@ namespace NoteFly
         /// <param name="e"></param>
         private void frmNote_Activated(object sender, EventArgs e)
         {
-            if ((notes.Transparency) && (skin != null))
-            {
-                this.Opacity = 1.0;
-            }
+                if ((notes.Transparency) && (skin != null))
+                {
+                    this.Opacity = 1.0;
+                }
         }
 
         /// <summary>
@@ -395,11 +395,10 @@ namespace NoteFly
         /// <param name="e"></param>
         private void frmNote_Deactivate(object sender, EventArgs e)
         {
-            if ((notes.Transparency) && (skin != null))
-            {
-                this.Opacity = skin.getTransparencylevel();
-                this.Refresh();
-            }
+                if ((notes.Transparency) && (skin != null))
+                {
+                    this.Opacity = skin.getTransparencylevel();
+                }
         }
 
         private void hideNoteToolStripMenuItem_Click(object sender, EventArgs e)

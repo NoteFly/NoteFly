@@ -3,12 +3,13 @@
   <ReportFolderNetFull>$(SystemRoot)\Temp\EQATECProfilerLogs</ReportFolderNetFull>
   <ReportFolderNetCF>\Temp\EQATECProfilerLogs</ReportFolderNetCF>
   <AutoSnapshot>Main OnStop ApplicationEnd</AutoSnapshot>
-  <TinyMethodAction>CallCount</TinyMethodAction>
+  <TinyMethodAction>Normal</TinyMethodAction>
   <RuntimeControlEnabled>true</RuntimeControlEnabled>
   <RuntimeControlPort>3947</RuntimeControlPort>
   <RuntimeModuleLogLevel>Errors</RuntimeModuleLogLevel>
-  <ExcludeFiles>
-    <ExcludeFile>SimplePlainNote.vshost.exe</ExcludeFile>
-  </ExcludeFiles>
-  <SignActions />
+  <ExcludeFiles />
+  <SignActions>
+    <SignAction action="Strip" publickey="ACQAAASAAACUAAAABgIAAAAkAABSU0ExAAQAAAEAAQBLzJ0KvLLTUJqHKePs20GMOnxkbpSvCW0/b2Lu61FLbm51BkCwLye/zYNHJa9+haABgBSsTmb1b0RnhnKaguGboKToNGjDEuEp5BLlo77uyO7ZQLWwcc+Cv+JpGJmt1IRmzoL1pwtBd8vPJ/5zEHcU9UluU27Qr3Qnp566RGw0og==" usedby="C:\Users\Public\sourcecode\Projects_Csharp\notefly\bin\Debug\NoteFly.exe" keyfile="" />
+  </SignActions>
+  <AppType>FullNet</AppType>
 </config>

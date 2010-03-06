@@ -9,14 +9,12 @@
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
 ;
-; You should have received a copy of the GNU General Public License
-; along with this program; if not, write to the Free Software
-; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
-;
 
 ; version
 !define VERSION "1.0.0" ;version number: major.minor.release
 !define VERSTATUS "rc2" ;alpha, beta, rc, or nothing for final.
+
+SetCompressor lzma
 
 ; The name of the installer
 Name "NoteFly ${VERSION} ${VERSTATUS}"
@@ -30,7 +28,7 @@ CRCCheck on
 ShowInstDetails show
 CompletedText "Installation completed. Please close this installer now."
 
-;put uac.dll in .\setuplib folder to use it.
+;put uac.dll in .\setuplib folder to use it. I am not using it yet
 ; !addplugindir ".\setuplib\"
 
 ; The file to write
@@ -44,7 +42,7 @@ InstallDir $PROGRAMFILES\NoteFly
 InstallDirRegKey HKLM "Software\NoteFly" "Install_Dir"
 
 ; nsis UAC plugin requires launch at user level.
-RequestExecutionLevel user
+RequestExecutionLevel admin
 
 !include WordFunc.nsh
 !insertmacro VersionCompare
@@ -117,7 +115,10 @@ Section "main executable (required)"
   
   ; Put file there
   File "NoteFly.exe"
-  ;File "NoteFly.exe.config"
+  File "NoteFly.exe.config" ;config file, optional adds <1kb
+  ;File "NoteFly.pdb" ;debuggingsymbols. optional adds ~165kb
+  
+  SetOverwrite on
   
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"
@@ -131,8 +132,9 @@ Section "main executable (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
     
-  ;this should run the app at user level:
+  ;this should run the app at user level with uac.dll.. if it works, disabled for now.
   ;!insertmacro UAC_AsUser_ExecShell 'open' '$INSTDIR\NoteFly.exe' '/firstrun' '$INSTDIR' ''
+  
   Exec '"$INSTDIR\NoteFly.exe" /firstrun'   
 SectionEnd
 
@@ -157,7 +159,7 @@ Section "Uninstall"
 
   ; Remove files and uninstaller
   Delete $INSTDIR\NoteFly.exe
-  ;Delete $INSTDIR\NoteFly.exe.config
+  Delete $INSTDIR\NoteFly.exe.config ;if exist, see top
   Delete $INSTDIR\uninstall.exe
 
   ; Remove shortcuts, if any

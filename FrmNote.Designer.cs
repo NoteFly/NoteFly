@@ -49,6 +49,7 @@
             this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyText = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRollUp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuLockNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHideNote = new System.Windows.Forms.ToolStripMenuItem();
             this.pbShowLock = new System.Windows.Forms.PictureBox();
@@ -57,7 +58,6 @@
             this.pnlNote = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.SavePos = new System.ComponentModel.BackgroundWorker();
-            this.menuRollUp = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlHead.SuspendLayout();
             this.contextMenuStripNoteOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbShowLock)).BeginInit();
@@ -107,7 +107,7 @@
             this.menuLockNote,
             this.menuHideNote});
             this.contextMenuStripNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(216, 224);
+            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(216, 202);
             this.contextMenuStripNoteOptions.Text = "-=menu=-";
             this.contextMenuStripNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
             // 
@@ -148,7 +148,7 @@
             this.yellowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
                         | System.Windows.Forms.Keys.D1)));
             this.yellowToolStripMenuItem.ShowShortcutKeys = false;
-            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.yellowToolStripMenuItem.Text = "Yellow";
             this.yellowToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -158,7 +158,7 @@
             this.orangeToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.orangeToolStripMenuItem.Name = "orangeToolStripMenuItem";
             this.orangeToolStripMenuItem.ShowShortcutKeys = false;
-            this.orangeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.orangeToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.orangeToolStripMenuItem.Text = "Orange";
             this.orangeToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -168,7 +168,7 @@
             this.whiteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.whiteToolStripMenuItem.Name = "whiteToolStripMenuItem";
             this.whiteToolStripMenuItem.ShowShortcutKeys = false;
-            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.whiteToolStripMenuItem.Text = "White";
             this.whiteToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -178,7 +178,7 @@
             this.greenToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.greenToolStripMenuItem.Name = "greenToolStripMenuItem";
             this.greenToolStripMenuItem.ShowShortcutKeys = false;
-            this.greenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.greenToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.greenToolStripMenuItem.Text = "Green";
             this.greenToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -188,7 +188,7 @@
             this.blueToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.blueToolStripMenuItem.Name = "blueToolStripMenuItem";
             this.blueToolStripMenuItem.ShowShortcutKeys = false;
-            this.blueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.blueToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.blueToolStripMenuItem.Text = "Blue";
             this.blueToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -197,7 +197,7 @@
             this.purpleToolStripMenuItem.BackColor = System.Drawing.Color.Fuchsia;
             this.purpleToolStripMenuItem.Name = "purpleToolStripMenuItem";
             this.purpleToolStripMenuItem.ShowShortcutKeys = false;
-            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.purpleToolStripMenuItem.Text = "Purple";
             this.purpleToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -205,7 +205,7 @@
             // 
             this.redToolStripMenuItem.BackColor = System.Drawing.Color.Red;
             this.redToolStripMenuItem.Name = "redToolStripMenuItem";
-            this.redToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.redToolStripMenuItem.Text = "Red";
             this.redToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
             // 
@@ -279,6 +279,14 @@
             this.menuOnTop.Text = "Sticky &on top";
             this.menuOnTop.Click += new System.EventHandler(this.OnTopToolStripMenuItem_Click);
             // 
+            // menuRollUp
+            // 
+            this.menuRollUp.Name = "menuRollUp";
+            this.menuRollUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.menuRollUp.Size = new System.Drawing.Size(215, 22);
+            this.menuRollUp.Text = "Roll up";
+            this.menuRollUp.Click += new System.EventHandler(this.menuRollUp_Click);
+            // 
             // menuLockNote
             // 
             this.menuLockNote.CheckOnClick = true;
@@ -301,7 +309,7 @@
             this.pbShowLock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pbShowLock.Image = global::NoteFly.Properties.Resources.locknote;
-            this.pbShowLock.Location = new System.Drawing.Point(180, 8);
+            this.pbShowLock.Location = new System.Drawing.Point(181, 8);
             this.pbShowLock.Name = "pbShowLock";
             this.pbShowLock.Size = new System.Drawing.Size(16, 16);
             this.pbShowLock.TabIndex = 2;
@@ -386,14 +394,6 @@
             // SavePos
             // 
             this.SavePos.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
-            // 
-            // menuRollUp
-            // 
-            this.menuRollUp.Name = "menuRollUp";
-            this.menuRollUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.menuRollUp.Size = new System.Drawing.Size(215, 22);
-            this.menuRollUp.Text = "Roll up";
-            this.menuRollUp.Click += new System.EventHandler(this.menuRollUp_Click);
             // 
             // FrmNote
             // 

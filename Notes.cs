@@ -324,7 +324,7 @@ namespace NoteFly
                     xmlHandler getAppdata = new xmlHandler(true);
                     this.notesavepath = getAppdata.AppDataFolder;
                 }
-            }         
+            }
 
             UInt16 id = 1;
             string notefile = Path.Combine(this.notesavepath, id + ".xml");
