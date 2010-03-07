@@ -32,7 +32,7 @@ CompletedText "Installation completed. Please close this installer now."
 ; !addplugindir ".\setuplib\"
 
 ; The file to write
-OutFile ".\NoteFly_v${VERSION}_${VERSTATUS}.exe"
+OutFile ".\NoteFly_v${VERSION}${VERSTATUS}.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\NoteFly
