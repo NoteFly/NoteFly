@@ -13,15 +13,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.Drawing;
-
 namespace NoteFly
 {
+    using System;
+    using System.Drawing;
+
     /// <summary>
     /// Class that provide skin options to notes.
     /// </summary>
-    class Skin
+    public class Skin
     {
         #region Fields (1)
 
@@ -63,31 +63,72 @@ namespace NoteFly
         /// </summary>
         /// <param name="selected">Is it selected?</param>
         /// <returns>The color valeau</returns>
-        public Color getObjColor(bool selected)
+        public Color GetObjColor(bool selected)
         {
             switch (this.notecolor)
             {
                 case 0:
-                    if (selected) { return Color.Orange; }
-                    else { return Color.Gold; }
+                    if (selected) 
+                    {
+                        return Color.Orange; 
+                    }
+                    else 
+                    { 
+                        return Color.Gold; 
+                    }
                 case 1:
-                    if (selected) { return Color.DarkOrange; }
-                    else { return Color.Orange; }
+                    if (selected) 
+                    {
+                        return Color.DarkOrange; 
+                    }
+                    else {
+                        return Color.Orange; 
+                    }
                 case 2:
-                    if (selected) { return Color.Gray; }
-                    else { return Color.White; }
+                    if (selected)
+                    { 
+                        return Color.Gray; 
+                    }
+                    else 
+                    { 
+                        return Color.White; 
+                    }
                 case 3:
-                    if (selected) { return Color.Green; }
-                    else { return Color.LawnGreen; }
+                    if (selected) 
+                    {
+                        return Color.Green;
+                    }
+                    else
+                    {
+                        return Color.LawnGreen;
+                    }
                 case 4:
-                    if (selected) return Color.Blue;
-                    else return Color.CornflowerBlue;
+                    if (selected)
+                    {
+                        return Color.Blue;
+                    }
+                    else
+                    {
+                        return Color.CornflowerBlue;
+                    }
                 case 5:
-                    if (selected) { return Color.Purple; }
-                    else { return Color.Magenta; }
+                    if (selected) 
+                    {
+                        return Color.Purple; 
+                    }
+                    else
+                    {
+                        return Color.Magenta;
+                    }
                 case 6:
-                    if (selected) { return Color.DarkRed; }
-                    else { return Color.Red; }
+                    if (selected) 
+                    {
+                        return Color.DarkRed;
+                    }
+                    else 
+                    {
+                        return Color.Red;
+                    }
                 default:
                     return Color.Gold;
             }
@@ -100,7 +141,7 @@ namespace NoteFly
         /// <param name="highlight">is it a highlight?</param>
         /// <param name="warn">is it a warning?</param>
         /// <returns>The color valeau</returns>
-        public Color getObjColor(bool selected, bool highlight, bool warn)
+        public Color GetObjColor(bool selected, bool highlight, bool warn)
         {
             if (highlight)
             {
@@ -116,7 +157,7 @@ namespace NoteFly
             }
             else
             {
-                return getObjColor(selected);
+                return this.GetObjColor(selected);
             }
         }
 
@@ -124,7 +165,7 @@ namespace NoteFly
         /// Get the transparencylevel of the note.
         /// </summary>
         /// <returns>Transparencylevel as double</returns>
-        public double getTransparencylevel()
+        public double GetTransparencylevel()
         {
             xmlHandler getSettings = new xmlHandler(true);
             double transparecylevel = Convert.ToDouble(getSettings.getXMLnodeAsInt("transparecylevel")) / 100;
@@ -134,7 +175,6 @@ namespace NoteFly
             }
             else
             {
-                //error
                 throw new CustomException("invalid transparencylevel");
             }
         }
@@ -143,7 +183,7 @@ namespace NoteFly
         /// Get the font for the note.
         /// </summary>
         /// <returns>null if error.</returns>
-        public Font getFontNoteContent()
+        public Font GetFontNoteContent()
         {
             xmlHandler getSettings = new xmlHandler(true);
             string fontname = getSettings.getXMLnode("fontcontent");
@@ -152,7 +192,7 @@ namespace NoteFly
             {
                 if (curfont.Name.ToString() == fontname)
                 {
-                    Font font = new Font(curfont, getFontNoteSize(getSettings));
+                    Font font = new Font(curfont, this.GetFontNoteSize(getSettings));
                     return font;
                 }
             }
@@ -164,7 +204,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="getSettings">XmlHandler class</param>
         /// <returns>fontsize as a float number </returns>
-        private float getFontNoteSize(xmlHandler getSettings)
+        private float GetFontNoteSize(xmlHandler getSettings)
         {
             getSettings = new xmlHandler(true);
             int fontsize = getSettings.getXMLnodeAsInt("fontsize");

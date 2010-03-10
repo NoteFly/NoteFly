@@ -77,12 +77,12 @@ namespace NoteFly
         {            
             if (String.IsNullOrEmpty(tbTitle.Text))
             {
-                tbTitle.BackColor = skin.getObjColor(false, false, true);
+                tbTitle.BackColor = skin.GetObjColor(false, false, true);
                 tbTitle.Text = DateTime.Now.ToString();
             }
             else if (String.IsNullOrEmpty(rtbNote.Text))
             {
-                rtbNote.BackColor = skin.getObjColor(false, false, true);
+                rtbNote.BackColor = skin.GetObjColor(false, false, true);
                 rtbNote.Text = "Please type any note content, like this for example.";
             }
             else
@@ -163,7 +163,7 @@ namespace NoteFly
         {
             if ((notes.Transparency) && (skin != null))
             {
-                this.Opacity = skin.getTransparencylevel();
+                this.Opacity = skin.GetTransparencylevel();
                 this.Refresh();
             }
         }
@@ -196,13 +196,13 @@ namespace NoteFly
         {
             if (skin != null)
             {
-                pnlHeadNewNote.BackColor = skin.getObjColor(true);
+                pnlHeadNewNote.BackColor = skin.GetObjColor(true);
                 #if win32
                 if (e.Button == MouseButtons.Left)
                 {
                     ReleaseCapture();
                     SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                    pnlHeadNewNote.BackColor = skin.getObjColor(false);
+                    pnlHeadNewNote.BackColor = skin.GetObjColor(false);
                 }
                 #endif
             }
@@ -223,9 +223,9 @@ namespace NoteFly
         {
             if (skin == null) return;
 
-            rtbNote.Font = skin.getFontNoteContent();
+            rtbNote.Font = skin.GetFontNoteContent();
 
-            Color normalcolor = skin.getObjColor(false);
+            Color normalcolor = skin.GetObjColor(false);
             pnlNoteEdit.BackColor = normalcolor;
             rtbNote.BackColor = normalcolor;
             pnlHeadNewNote.BackColor = normalcolor;
@@ -329,21 +329,21 @@ namespace NoteFly
         {
             if (skin != null)
             {
-                tbTitle.BackColor = skin.getObjColor(false, true, false);
+                tbTitle.BackColor = skin.GetObjColor(false, true, false);
             }
         }
         private void tbTitle_Leave(object sender, EventArgs e)
         {
             if (skin != null)
             {
-                tbTitle.BackColor = skin.getObjColor(false);
+                tbTitle.BackColor = skin.GetObjColor(false);
             }
         }
         private void rtbNote_Enter(object sender, EventArgs e)
         {
             if (skin != null)
             {
-                rtbNote.BackColor = skin.getObjColor(false, true, false);
+                rtbNote.BackColor = skin.GetObjColor(false, true, false);
             }
         }
 
@@ -351,7 +351,7 @@ namespace NoteFly
         {
             if (skin != null)
             {
-                rtbNote.BackColor = skin.getObjColor(false);
+                rtbNote.BackColor = skin.GetObjColor(false);
             }
         }
         #endregion

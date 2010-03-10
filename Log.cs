@@ -13,13 +13,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-
 namespace NoteFly
 {
+    using System;
+    using System.IO;
+    using System.Text;
+
     /// <summary>
     /// The logtype
     /// </summary>
@@ -46,7 +45,6 @@ namespace NoteFly
     /// </summary>
     public static class Log
     {
-
         /// <summary>
         /// Write and append a message to the logfile.
         /// </summary>
@@ -59,6 +57,7 @@ namespace NoteFly
             {
                 line.Append(" ");
             }
+
             switch (typemsg)
             {
                 case LogType.exception:
@@ -71,11 +70,11 @@ namespace NoteFly
                     line.Append(" info:      ");
                     break;
             }
-            line.AppendLine(message);
 
+            line.AppendLine(message);
             bool logerror = false;
             bool loginfo = false;
-            String errorlog = Path.Combine("%TEMP%", "debug.log");
+            string errorlog = Path.Combine("%TEMP%", "debug.log");
             try
             {
                 xmlHandler getsettings = new xmlHandler(true);
@@ -88,6 +87,7 @@ namespace NoteFly
                 line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot get log settings.");
                 logerror = true;
             }
+
             if ((typemsg == LogType.exception) || (logerror && typemsg == LogType.error) || (loginfo && typemsg == LogType.info))
             {
                 if (CheckFileSize(errorlog))
@@ -103,7 +103,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="file">the filename and path</param>
         /// <returns>true if it is larger than 512KB</returns>
-        private static bool CheckFileSize(String file)
+        private static bool CheckFileSize(string file)
         {
             if (File.Exists(file))
             {

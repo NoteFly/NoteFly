@@ -298,7 +298,7 @@ namespace NoteFly
         {
             if (skin != null)
             {
-                pnlHead.BackColor = skin.getObjColor(false);
+                pnlHead.BackColor = skin.GetObjColor(false);
             }
         }
 
@@ -398,7 +398,7 @@ namespace NoteFly
         {
                 if ((notes.Transparency) && (skin != null))
                 {
-                    this.Opacity = skin.getTransparencylevel();
+                    this.Opacity = skin.GetTransparencylevel();
                 }
         }
 
@@ -513,7 +513,7 @@ namespace NoteFly
         private void PaintColorNote()
         {
             skin = new Skin(notecolor);
-            Color normalcolor = skin.getObjColor(false);
+            Color normalcolor = skin.GetObjColor(false);
 
             this.BackColor = normalcolor;
             this.pnlHead.BackColor = normalcolor;
@@ -532,7 +532,7 @@ namespace NoteFly
                 rtbNote.SelectAll();
                 rtbNote.SelectionAlignment = HorizontalAlignment.Right;
             }
-            rtbNote.Font = skin.getFontNoteContent();
+            rtbNote.Font = skin.GetFontNoteContent();
         }
 
         /// <summary>
@@ -575,7 +575,7 @@ namespace NoteFly
         {
             if (skin != null)
             {
-                pnlHead.BackColor = skin.getObjColor(true);
+                pnlHead.BackColor = skin.GetObjColor(true);
             }
 
             if (e.Button == MouseButtons.Left)
@@ -587,7 +587,7 @@ namespace NoteFly
 
                 if (skin != null)
                 {
-                    pnlHead.BackColor = skin.getObjColor(false);
+                    pnlHead.BackColor = skin.GetObjColor(false);
                 }
 
                 this.locX = this.Location.X;

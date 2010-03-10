@@ -290,7 +290,7 @@ namespace NoteFly
         {
             if ((transparency) && (this.skin != null))
             {
-                this.Opacity = skin.getTransparencylevel();
+                this.Opacity = skin.GetTransparencylevel();
                 this.Refresh();
             }
         }

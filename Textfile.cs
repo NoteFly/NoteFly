@@ -13,11 +13,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.IO;
-
 namespace NoteFly
 {
+    using System;
+    using System.IO;
+
     /// <summary>
     /// Save the note as a textfile
     /// </summary>
@@ -29,7 +29,13 @@ namespace NoteFly
             new Textfile(false, filename, null, content);
         }
          */
-
+        /// <summary>
+        /// Initilation a new instance of Textfile class.
+        /// </summary>
+        /// <param name="isnote">is a note to be saved.</param>
+        /// <param name="filename">the filename</param>
+        /// <param name="title">the title of the textfile</param>
+        /// <param name="content">the content of the textfile</param>
         public Textfile(bool isnote, string filename, string title, string content)
         {
             FileStream fs = null;

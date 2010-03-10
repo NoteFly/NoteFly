@@ -30,9 +30,21 @@ namespace NoteFly
     {
 		#region Fields (12) 
 
+        /// <summary>
+        /// container that holds some objects.
+        /// </summary>
         static System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// indicated wheter confirm exit is showed.
+        /// </summary>
         static bool confirmexitshowed = false;
+
+        /// <summary>
+        /// The trayicon itself.
+        /// </summary>
         static NotifyIcon icon;
+
         static ToolStripMenuItem MenuAbout;
         static ToolStripMenuItem MenuExit;
         static ToolStripMenuItem MenuManageNotes;

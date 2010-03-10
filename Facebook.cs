@@ -13,42 +13,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.Globalization;
-using System.IO;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using System.Windows.Forms;
-
 namespace NoteFly
 {
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Net;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Windows.Forms;
+
     /// <summary>
     /// All settings needed for a facebook session.
     /// </summary>
     public static class FacebookSettings
     {
-		// Fields (4) 
+        // Fields (4) 
 
         /// <summary>
-        /// Unix time when the facebook session expires
+        /// Gets or sets the unix time when the facebook session expires
         /// </summary>
-        public static double Sesionexpires;
+        public static double Sesionexpires { get; set; }
 
         /// <summary>
-        /// The session key
+        /// Gets or sets the session key
         /// </summary>
-        public static string Sessionkey;
+        public static string Sessionkey { get; set; }
 
         /// <summary>
-        /// The session secret key (gives 24hour access to account)
+        /// Gets or sets the session secret key (gives 24hour access to account)
         /// </summary>
-        public static string Sessionsecret;
+        public static string Sessionsecret { get; set; }
 
         /// <summary>
-        /// The user id
+        /// Gets or sets the user id
         /// </summary>
-        public static string Uid;
+        public static string Uid { get; set; }
     }
 
     /// <summary>
@@ -62,48 +62,56 @@ namespace NoteFly
         /// The API version.
         /// </summary>
         private const string APIVERISON = "1.0";
+
         /// <summary>
         /// The application key of NoteFly.
         /// </summary>
         private const string APPKEY = "cced88bcd1585fa3862e7fd17b2f6986";
+
         /// <summary>
         /// URL to figure out if signed in has failed.
         /// </summary>
         private const string FBCANCELURL = "http://www.facebook.com/connect/login_failure.html";
+
         /// <summary>
         /// URL to the login page.
         /// </summary>
         private const string FBLOGINPAGE = "http://www.facebook.com/login.php";
+
         /// <summary>
         /// The URL of the REST server page.
         /// </summary>
         private const string FBRESTSERVERURL = "http://api.facebook.com/restserver.php";
+
         /// <summary>
         /// URL to figure out if signed in has succeed.
         /// </summary>
         private const string FBSUCCEEDURL = "http://www.facebook.com/connect/login_success.html";
+
         /// <summary>
         /// The form with webbrowser
         /// </summary>
         private Form frmLoginFb;
+
         /// <summary>
         /// The message to post on users wall.
         /// </summary>
         private string message;
+
         /// <summary>
         /// The signature of the request.
         /// </summary>
         private string sig;
 
-		// Methods (10) 
+        // Methods (10) 
 
-		// Public Methods (5) 
+        // Public Methods (5) 
 
         /// <summary>
         /// parser xml response, return errorcode if it returned by facebook.
         /// </summary>
         /// <param name="responsestream">The response we got from the rest server.</param>
-        public void CheckResponse(String responsestream)
+        public void CheckResponse(string responsestream)
         {
             int responsecode = 0;
             string errorcodestartnode = "<error_code>";
@@ -226,7 +234,6 @@ namespace NoteFly
                         {
                             this.sig = curparm.Substring(7, curparm.Length - 8);
                         }
-
                     }
                     return true;
                 }
@@ -248,7 +255,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="input">The content to create an hash of.</param>
         /// <returns>The MD5 hash</returns>
-        public string MakeMD5(String input)
+        public string MakeMD5(string input)
         {
             MD5 md5hasher = MD5.Create();
             byte[] data = md5hasher.ComputeHash(Encoding.Default.GetBytes(input));
@@ -266,7 +273,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="message">the message</param>
         /// <returns>response code (as json or xml?)</returns>
-        public string PostStream(String message)
+        public string PostStream(string message)
         {
             WebRequest request = WebRequest.Create(FBRESTSERVERURL);
             request.Method = "POST";
@@ -294,7 +301,8 @@ namespace NoteFly
                 {
                     bool[] boolsettings = settting.ParserSettingsBool();
 
-                    settting.WriteSettings(boolsettings[0],
+                    settting.WriteSettings(
+                        boolsettings[0],
                         Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), 
                         settting.getXMLnodeAsInt("defaultcolor"),
                         settting.getXMLnodeAsInt("actionleftclick"),
@@ -387,7 +395,7 @@ namespace NoteFly
                 }
                 else if ((dtexpiressession.Month + 1 == DateTime.Now.Month) && (dtexpiressession.Day == 1))
                 {
-                    this.CheckResponse(PostStream(this.message));
+                    this.CheckResponse(this.PostStream(this.message));
                 }
                 else
                 {
@@ -395,7 +403,8 @@ namespace NoteFly
                 }
             }
         }
-		// Private Methods (5) 
+
+        // Private Methods (5) 
 
         /// <summary>
         /// Construct a right login url.
@@ -411,7 +420,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="message">The message to post.</param>
         /// <returns>The data to post.</returns>
-        private string CreatePostData(String message)
+        private string CreatePostData(string message)
         {
             string data = "api_key=" + APPKEY;
             string callid = DateTime.Now.Ticks.ToString("x", CultureInfo.InvariantCulture);
@@ -438,7 +447,7 @@ namespace NoteFly
         {
             if (this.IsSucceedUrl(e.Url.ToString()) == true)
             {
-                this.CheckResponse(PostStream(this.message));
+                this.CheckResponse(this.PostStream(this.message));
                 this.frmLoginFb.Close();
             }
         }
@@ -453,7 +462,7 @@ namespace NoteFly
         /// <param name="sessionsecret">The session secret</param>
         /// <param name="uid">The userid</param>
         /// <returns>The generated signature based on the parameters.</returns>
-        private string GenerateSignature(String call_id, String message, String methode, String session_key, String sessionsecret, String uid)
+        private string GenerateSignature(string call_id, string message, string methode, string session_key, string sessionsecret, string uid)
         {
             string data = "api_key=" + APPKEY + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + FacebookSettings.Sessionkey + "ss=" + sessionsecret + "uid=" + uid + "v=" + APIVERISON + FacebookSettings.Sessionsecret;
 
@@ -482,13 +491,13 @@ namespace NoteFly
             this.frmLoginFb.Text = "Post note on FaceBook";
             this.frmLoginFb.Width = 640;
             this.frmLoginFb.Height = 480;
-            WebBrowser FbWeb = new WebBrowser();
-            FbWeb.Name = "FbWeb";
-            FbWeb.Location = new System.Drawing.Point(10, 10);
-            FbWeb.Dock = DockStyle.Fill;
-            this.frmLoginFb.Controls.Add(FbWeb);
-            FbWeb.Navigated += new WebBrowserNavigatedEventHandler(this.FbWeb_Navigated);
-            FbWeb.Navigate(this.CreateLoginURL());
+            WebBrowser fbweb = new WebBrowser();
+            fbweb.Name = "FbWeb";
+            fbweb.Location = new System.Drawing.Point(10, 10);
+            fbweb.Dock = DockStyle.Fill;
+            this.frmLoginFb.Controls.Add(fbweb);
+            fbweb.Navigated += new WebBrowserNavigatedEventHandler(this.FbWeb_Navigated);
+            fbweb.Navigate(this.CreateLoginURL());
             this.frmLoginFb.Show();
         }
     }

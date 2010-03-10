@@ -13,47 +13,82 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-
 namespace NoteFly
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Windows.Forms;
+
     /// <summary>
     /// This class has a list of all notes.
     /// </summary>
     public class Notes
     {
-		#region Fields (9) 
+        #region Fields (9) 
 
+        /// <summary>
+        /// The default number color.
+        /// </summary>
         private Int16 defaultcolor = 1;
-        private String notesavepath;
+
+        /// <summary>
+        /// Path to where notes are saved.
+        /// </summary>
+        private string notesavepath;
+
+        /// <summary>
+        /// The list with all notes.
+        /// </summary>
         private List<FrmNote> noteslst;
-        private Boolean notesupdated = false;
-        private Boolean transparecy = false;
-        private Boolean twitterenabled = false;
+
+        /// <summary>
+        /// Are notes updated.
+        /// </summary>
+        private bool notesupdated = false;
+
+        /// <summary>
+        /// Transparecy enabled.
+        /// </summary>
+        private bool transparecy = false;
+
+        /// <summary>
+        /// Twitter enabled.
+        /// </summary>
+        private bool twitterenabled = false;
+
+        /// <summary>
+        /// The textdirection, 0 is left to right, 1 is right to left
+        /// </summary>
         private Int16 textdirection = 0;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
+        /// <summary>
+        /// Initializes a new instance of the Notes class.
+        /// </summary>
+        /// <param name="firstrun">Is this appliction to run for the first time, with /firstrun parameter.</param>
         public Notes(bool firstrun)
         {
-            noteslst = new List<FrmNote>();
-            SetSettings();
-            LoadNotes(firstrun);
+            this.noteslst = new List<FrmNote>();
+            this.SetSettings();
+            this.LoadNotes(firstrun);
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (8) 
+        #region Properties (7)
 
-        //public Boolean HighlightC { get; set; }
+        /// <summary>
+        /// Get or set if notes HTML content note are highlighted.
+        /// </summary>
+        public bool HighlightHTML { get; set; }
 
-        public Boolean HighlightHTML { get; set; }
-
+        /// <summary>
+        /// Gets a note.
+        /// </summary>
         public List<FrmNote> GetNotes
         {
             get
@@ -62,7 +97,10 @@ namespace NoteFly
             }
         }
 
-        public String NoteSavePath
+        /// <summary>
+        /// Gets the path where notes are saved.
+        /// </summary>
+        public string NoteSavePath
         {
             get
             {
@@ -70,18 +108,25 @@ namespace NoteFly
             }
         }
 
-        public Boolean NotesUpdated
+        /// <summary>
+        /// Gets or sets a value indicating whether notes are updated.
+        /// </summary>
+        public bool NotesUpdated
         {
             get
             {
                 return this.notesupdated;
             }
+
             set
             {
                 this.notesupdated = value;
             }
         }
 
+        /// <summary>
+        /// Gets the number of notes.
+        /// </summary>
         public Int16 NumNotes
         {
             get
@@ -95,7 +140,10 @@ namespace NoteFly
             }
         }
 
-        public Boolean Transparency
+        /// <summary>
+        /// Gets a value indicating whether transparency is enabled.
+        /// </summary>
+        public bool Transparency
         {
             get
             {
@@ -103,7 +151,10 @@ namespace NoteFly
             }
         }
 
-        public Boolean TwitterEnabled
+        /// <summary>
+        /// Gets a value indicating whether twitter is enabled.
+        /// </summary>
+        public bool TwitterEnabled
         {
             get
             {
@@ -111,37 +162,41 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether textdirection is left to right(0) or right to left(1).
+        /// </summary>
         public Int16 TextDirection
         {
             get
             {
                 return this.textdirection;
             }
+
             set
             {
-                textdirection = value;
+                this.textdirection = value;
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (10)
+        #region Methods (10)
         /// <summary>
         /// Draws a new note and saves the xml note file.(call to SaveNewNote)
         /// </summary>
-        /// <param name="title">the title</param>
-        /// <param name="content">the note content</param>
-        /// <param name="notecolor">color number</param>
+        /// <param name="title">The title of the note.</param>
+        /// <param name="content">The note content</param>
+        /// <param name="notecolor">Note color number</param>
         public void DrawNewNote(string title, string content, Int16 notecolor)
         {
             try
             {
-                Int16 newid = Convert.ToInt16(noteslst.Count + 1);
-                string notefilenm = SaveNewNote(newid, title, content, defaultcolor);
+                Int16 newid = Convert.ToInt16(this.noteslst.Count + 1);
+                string notefilenm = this.SaveNewNote(newid, title, content, defaultcolor);
                 Log.Write(LogType.info, "note created: " + notefilenm);
                 if (String.IsNullOrEmpty(notefilenm)) { throw new CustomException("cannot create filename."); }
                 FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
-                noteslst.Add(newnote);
+                this.noteslst.Add(newnote);
                 newnote.StartPosition = FormStartPosition.Manual;
                 newnote.Show();
             }
@@ -154,15 +209,15 @@ namespace NoteFly
         /// <summary>
         /// Edit a note.
         /// </summary>
-        /// <param name="noteid"></param>
+        /// <param name="noteid">The note id number of the note to edit.</param>
         public void EditNewNote(int noteid)
         {
             int noteslistpos = noteid - 1;
             if ((noteslistpos >= 0) && (noteslistpos <= this.NumNotes))
             {
-                string title = noteslst[noteslistpos].NoteTitle;
-                string content = noteslst[noteslistpos].NoteContent;
-                Int16 color = noteslst[noteslistpos].NoteColor;
+                string title = this.noteslst[noteslistpos].NoteTitle;
+                string content = this.noteslst[noteslistpos].NoteContent;
+                Int16 color = this.noteslst[noteslistpos].NoteColor;
                 FrmNewNote newnote = new FrmNewNote(this, color, noteid, title, content);
                 newnote.Show();
             }
@@ -191,13 +246,12 @@ namespace NoteFly
             }
             if (getSettings.getXMLnodeAsBool("highlightHTML"))
             {
-                HighlightHTML = true;
+                this.HighlightHTML = true;
             }
 
             this.textdirection = Convert.ToInt16(getSettings.getXMLnodeAsInt("textdirection"));
             this.notesavepath = getSettings.getXMLnode("notesavepath");
             this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
-
 
             if (getSettings.getXMLnodeAsBool("savesession") == true)
             {
@@ -225,7 +279,7 @@ namespace NoteFly
         /// </summary>
         public void UpdateAllFonts()
         {
-            foreach (FrmNote curfrmnote in noteslst)
+            foreach (FrmNote curfrmnote in this.noteslst)
             {
                 curfrmnote.CheckThings();
             }
@@ -241,19 +295,20 @@ namespace NoteFly
         public void UpdateNote(int noteid, string title, string content, bool visible)
         {
             int notelstpos = noteid - 1;
-            noteslst[notelstpos].NoteTitle = title;
-            noteslst[notelstpos].NoteContent = content;
-            noteslst[notelstpos].Visible = visible;
+            this.noteslst[notelstpos].NoteTitle = title;
+            this.noteslst[notelstpos].NoteContent = content;
+            this.noteslst[notelstpos].Visible = visible;
             if (visible)
             {
-                noteslst[notelstpos].Show();
+                this.noteslst[notelstpos].Show();
             }
-            noteslst[notelstpos].CheckThings();
-            noteslst[notelstpos].UpdateThisNote();
+            this.noteslst[notelstpos].CheckThings();
+            this.noteslst[notelstpos].UpdateThisNote();
             this.notesupdated = true;
             Log.Write(LogType.info, ("Update note ID:"+noteid));
         }
-		// Private Methods (4) 
+
+        // Private Methods (4) 
 
         /// <summary>
         /// This method set a limit to how many notes can be loaded.
@@ -276,21 +331,21 @@ namespace NoteFly
         /// <summary>
         /// Create a new FrmNote.
         /// </summary>
-        /// <param name="visible">is visible</param>
-        /// <param name="ontop">is on top</param>
-        /// <param name="title">title</param>
-        /// <param name="content">content</param>
-        /// <param name="notecolor">color note, 0 Gold, 1 orange, 2 White, 3 LawnGreen, 4 CornflowerBlue, 5 Magenta, 6 Red</param>
+        /// <param name="visible">Is the note visible</param>
+        /// <param name="ontop">Is the note on top</param>
+        /// <param name="title">The note title</param>
+        /// <param name="content">The note content</param>
+        /// <param name="notecolor">Color note, 0 Gold, 1 orange, 2 White, 3 LawnGreen, 4 CornflowerBlue, 5 Magenta, 6 Red</param>
         /// <param name="locX">X coordinate</param>
         /// <param name="locY">Y coordinate</param>
-        /// <param name="notewidth">the note width</param>
-        /// <param name="noteheight">the note height</param>
-        /// <returns>form</returns>
+        /// <param name="notewidth">The note width</param>
+        /// <param name="noteheight">The note height</param>
+        /// <returns>A FrmNote object</returns>
         private FrmNote CreateNote(bool visible, bool ontop, string title, string content, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             try
             {
-                Int16 newid = Convert.ToInt16(noteslst.Count + 1);
+                Int16 newid = Convert.ToInt16(this.noteslst.Count + 1);
                 FrmNote newnote = new FrmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewidth, noteheight);
                 if (visible)
                 {
@@ -312,7 +367,7 @@ namespace NoteFly
         {
             if (!Directory.Exists(this.notesavepath))
             {
-                String notefoldernoteexist = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
+                string notefoldernoteexist = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
                 DialogResult result = MessageBox.Show(notefoldernoteexist, "notefolder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
@@ -333,27 +388,27 @@ namespace NoteFly
             {
                 xmlHandler parserNote = new xmlHandler(notefile);
 
-                Boolean[] noteSettingBool = parserNote.ParserNoteBools();
-                String title = parserNote.getXMLnode("title");
-                String content = parserNote.getXMLnode("content");
-                Int32[] noteSettingsInt = parserNote.ParserNoteInts();
+                bool[] noteSettingBool = parserNote.ParserNoteBools();
+                string title = parserNote.getXMLnode("title");
+                string content = parserNote.getXMLnode("content");
+                int[] noteSettingsInt = parserNote.ParserNoteInts();
                 Int16 notecolor = Convert.ToInt16(noteSettingsInt[0]);
 
-                noteslst.Add(CreateNote(noteSettingBool[0], noteSettingBool[1], title, content, notecolor, noteSettingsInt[1], noteSettingsInt[2], noteSettingsInt[3], noteSettingsInt[4]));
+                this.noteslst.Add(CreateNote(noteSettingBool[0], noteSettingBool[1], title, content, notecolor, noteSettingsInt[1], noteSettingsInt[2], noteSettingsInt[3], noteSettingsInt[4]));
                 id++;
-                if (CheckLimitNotes(id)) { 
+                if (this.CheckLimitNotes(id)) { 
                     string toomanynotes = "Too many notes to load.";
                     MessageBox.Show(toomanynotes);
                     Log.Write(LogType.error, toomanynotes);
                     return;
                 }
-                notefile = Path.Combine(notesavepath, id + ".xml");
+                notefile = Path.Combine(this.notesavepath, id + ".xml");
             }
             id++;
             notefile = Path.Combine(this.notesavepath, id + ".xml");
-            if (File.Exists(notefile)==true)
+            if (File.Exists(notefile))
             {
-                string notemissing = notesavepath + Convert.ToString(id - 1) + ".xml is missing.";
+                string notemissing = this.notesavepath + Convert.ToString(id - 1) + ".xml is missing.";
                 MessageBox.Show(notemissing);
                 Log.Write(LogType.error, notemissing);
             }
@@ -361,9 +416,9 @@ namespace NoteFly
             {
                 int tipnotewidth = 320;
                 int tipnoteheight = 280;
-                int tipnoteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2);
-                int tipnoteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2);
-                noteslst.Add(CreateNote(true, false, "Example",
+                int tipnoteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2));
+                int tipnoteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2));
+                this.noteslst.Add(CreateNote(true, false, "Example",
                     ("This is a example note.\r\n"+
                     "Please close the installer now."+
                     "You can chance colour of this note by rightclicking on this note.\r\n" +
@@ -375,7 +430,7 @@ namespace NoteFly
 
             #if DEBUG
             Log.Write(LogType.info, "start stress test");
-            LoadNotesStressTest(10);
+            this.LoadNotesStressTest(10);
             Log.Write(LogType.info, "finished stress test");
             #endif
         }
@@ -390,7 +445,7 @@ namespace NoteFly
         /// <returns>filepath of the created note.</returns>
         private string SaveNewNote(int id, string title, string text, Int16 numcolor)
         {
-            string notefile = Path.Combine(notesavepath, id + ".xml");
+            string notefile = Path.Combine(this.notesavepath, id + ".xml");
             xmlHandler xmlnote = new xmlHandler(notefile);
             if (xmlnote.WriteNote(true, false, numcolor, title, text, 10, 10, 240, 240) == false)
             {
@@ -403,9 +458,10 @@ namespace NoteFly
 
         #if DEBUG
         /// <summary>
-        /// Methode that creates a lot of notes for stress testing this app.
+        /// Methode that creates some notes with a hardcoded text and random color 
+        /// for stress testing this application.
         /// </summary>
-        /// <param name="maxnotes"></param>
+        /// <param name="maxnotes">How many notes to create.</param>
         private void LoadNotesStressTest(int maxnotes)
         {
             Random ran = new Random();
@@ -423,9 +479,9 @@ namespace NoteFly
                 int notewidth = 180;
                 int noteheight = 180;
 
-                noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
+                this.noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
 
-                if (CheckLimitNotes(id)) { 
+                if (this.CheckLimitNotes(id)) { 
                     String maxnoteslimit = "Maximum notes limit reached.";
                     MessageBox.Show(maxnoteslimit);
                     Log.Write(LogType.error, maxnoteslimit);

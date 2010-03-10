@@ -13,13 +13,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Diagnostics;
-
 namespace NoteFly
 {
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     /// <summary>
     /// helper class for text highlight in notes.
     /// </summary>
@@ -27,16 +26,36 @@ namespace NoteFly
     {
 		#region Fields (4) 
 
+        /// <summary>
+        /// Boolean that tells if html is being checked.
+        /// </summary>
         private Boolean checkhtml;
+
+        /// <summary>
+        /// A array of possible HTML nodes.
+        /// </summary>
         private String[] htmlnodes;
+
+        /// <summary>
+        /// The start position of a html tag.
+        /// </summary>
         private int posstarttag = 0;
+
+        /// <summary>
+        /// The rich content of the note.
+        /// </summary>
         private RichTextBox rtbcode;
 
 		#endregion Fields 
 
 		#region Constructors (1) 
 
-        public TextHighlight(RichTextBox rtb, Boolean checkhtml)
+        /// <summary>
+        /// Initializes an new instance of TextHighlight class.
+        /// </summary>
+        /// <param name="rtb">The richedit note content</param>
+        /// <param name="checkhtml">indicteds wheter html is gonna be checked</param>
+        public TextHighlight(RichTextBox rtb, bool checkhtml)
         {
             this.rtbcode = rtb;
             this.checkhtml = checkhtml;
@@ -278,6 +297,12 @@ namespace NoteFly
             return false;
         }
 
+        /// <summary>
+        /// Color some part of the rich edit text.
+        /// </summary>
+        /// <param name="posstart">The start position</param>
+        /// <param name="len">The lenght</param>
+        /// <param name="color">The color the text should get.</param>
         private void ColorText(int posstart, int len, Color color)
         {
             try
