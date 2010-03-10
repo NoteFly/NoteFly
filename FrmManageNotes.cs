@@ -42,17 +42,19 @@ namespace NoteFly
         #region Constructors (1)
 
         /// <summary>
-        /// New instance of frmManageNotes
+        /// Initializes a new instance of the FrmManageNotes class.
         /// </summary>
-        /// <param name="fcn"></param>        
+        /// <param name="notes">The class notes, with access to all the notes.</param>
+        /// <param name="transparency">Is transparency enabled</param>
+        /// <param name="notecolor">The default note color.</param>
         public FrmManageNotes(Notes notes, bool transparency, int notecolor)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             skin = new Skin(notecolor);
             this.notes = notes;
             this.transparency = transparency;
             notes.NotesUpdated = false;
-            DrawNotesOverview();
+            this.DrawNotesOverview();
         }
 
         #endregion Constructors
@@ -64,13 +66,18 @@ namespace NoteFly
         /// <summary>
         /// Close form
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// The user pressed the delete button for a note.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -105,14 +112,14 @@ namespace NoteFly
 
                     try
                     {
-                        File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
+                        File.Delete(Path.Combine(this.getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
                         Log.Write(LogType.info, Convert.ToString(curnote) + ".xml deleted.");
 
                         //reorder filenames
                         for (Int16 n = curnote; n < numbernotes; n++)
                         {
-                            string orgfile = Path.Combine(getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
-                            string newfile = Path.Combine(getNotesSavePath(), Convert.ToString(n) + ".xml");
+                            string orgfile = Path.Combine(this.getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
+                            string newfile = Path.Combine(this.getNotesSavePath(), Convert.ToString(n) + ".xml");
                             if (!File.Exists(newfile))
                             {
                                 File.Move(orgfile, newfile);
@@ -135,7 +142,7 @@ namespace NoteFly
                         Log.Write(LogType.error, msgaccessdenied);
                     }
 
-                    DrawNotesOverview();
+                    this.DrawNotesOverview();
                 }
                 else
                 {
@@ -147,7 +154,7 @@ namespace NoteFly
         /// <summary>
         /// Set a note visible or unvisible
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         void cbxNoteVisible_Click(object sender, EventArgs e)
         {
@@ -234,11 +241,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Limit the title
+        /// Limit the title.
         /// </summary>
-        /// <param name="curnote"></param>
-        /// <param name="lengte"></param>
-        /// <returns></returns>
+        /// <param name="curnote">The note id.</param>
+        /// <param name="newlentitle">The maximum lenght to limit the title to.</param>
+        /// <returns>A shorter title.</returns>
         private string ShortenTitle(int curnote, int newlentitle)
         {
             int reallen = notes.GetNotes[curnote].NoteTitle.Length;
@@ -269,9 +276,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// frmManage notes is activated.
+        /// FrmManageNotes is activated.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
@@ -284,7 +291,7 @@ namespace NoteFly
         /// <summary>
         /// form not active, make tranparent if set.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void frmManageNotes_Deactivate(object sender, EventArgs e)
         {
@@ -308,7 +315,7 @@ namespace NoteFly
         /// <summary>
         /// The manage note form is beening resized.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
@@ -323,7 +330,7 @@ namespace NoteFly
         /// <summary>
         /// Moving note
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
@@ -338,12 +345,17 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Timer updated the list of notes.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void timerUpdateNotesList_Tick(object sender, EventArgs e)
         {
             if ((!redrawbusy) && (notes.NotesUpdated))
             {
                 redrawbusy = true;
-                DrawNotesOverview();
+                this.DrawNotesOverview();
                 redrawbusy = false;
                 notes.NotesUpdated = false;
             }
@@ -360,14 +372,14 @@ namespace NoteFly
         //for moving form 
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd,
-                         int Msg, int wParam, int lParam);
+                         int msg, int wParam, int lParam);
 
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             if (!redrawbusy)
             {
                 redrawbusy = true;
-                DrawNotesOverview();
+                this.DrawNotesOverview();
                 redrawbusy = false;
             }
         }

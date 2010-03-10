@@ -23,14 +23,8 @@ namespace NoteFly
     /// </summary>
     public class Textfile
     {
-        /*
-        public Textfile(string filename, string content)
-        {
-            new Textfile(false, filename, null, content);
-        }
-         */
         /// <summary>
-        /// Initilation a new instance of Textfile class.
+        /// Initializes a new instance of the Textfile class.
         /// </summary>
         /// <param name="isnote">is a note to be saved.</param>
         /// <param name="filename">the filename</param>

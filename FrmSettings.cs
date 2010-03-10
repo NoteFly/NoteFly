@@ -25,6 +25,9 @@ using Microsoft.Win32;
 
 namespace NoteFly
 {
+    /// <summary>
+    /// Setting window.
+    /// </summary>
     public partial class FrmSettings : Form
     {
 		#region Fields (2) 
@@ -43,30 +46,31 @@ namespace NoteFly
             
             //read setting and display them correctly.
             Boolean[] boolsetting = xmlsettings.ParserSettingsBool();
-            chxTransparecy.Checked = boolsetting[0];
-            chxConfirmLink.Checked = boolsetting[1];
-            chxLogErrors.Checked = boolsetting[2];
-            chxLogDebug.Checked = boolsetting[3];
-            chxSyntaxHighlightHTML.Checked = boolsetting[4];
-            chxConfirmExit.Checked = boolsetting[5];
-            chxConfirmDeleteNote.Checked = boolsetting[6];
-            chxUseProxy.Checked = boolsetting[7];
-            chxSaveFBSession.Checked = boolsetting[8];
+            this.chxTransparecy.Checked = boolsetting[0];
+            this.chxConfirmLink.Checked = boolsetting[1];
+            this.chxLogErrors.Checked = boolsetting[2];
+            this.chxLogDebug.Checked = boolsetting[3];
+            this.chxSyntaxHighlightHTML.Checked = boolsetting[4];
+            this.chxConfirmExit.Checked = boolsetting[5];
+            this.chxConfirmDeleteNote.Checked = boolsetting[6];
+            this.chxUseProxy.Checked = boolsetting[7];
+            this.chxSaveFBSession.Checked = boolsetting[8];
             if (boolsetting[6])
             {
                 this.ipTextBox1.Enabled = true;
             }
-            
-            numProcTransparency.Value = getTransparecylevel();
-            cbxDefaultColor.SelectedIndex = getDefaultColor();
-            cbxActionLeftClick.SelectedIndex = getActionLeftClick();
-            
-            tbNotesSavePath.Text = getNotesSavePath();
-            tbTwitterUser.Text = getTwitterusername();
-            tbTwitterPass.Text = getTwitterpassword();
-            tbDefaultEmail.Text = getDefaultEmail();
-            chxStartOnBootWindows.Checked = getStatusStartlogin();
-            cbxTextDirection.SelectedIndex = getTextDirection();
+
+            this.numProcTransparency.Value = getTransparecylevel();
+            this.cbxDefaultColor.SelectedIndex = getDefaultColor();
+            this.cbxActionLeftClick.SelectedIndex = getActionLeftClick();
+
+            this.tbNotesSavePath.Text = getNotesSavePath();
+            this.tbTwitterUser.Text = getTwitterusername();
+            this.tbTwitterPass.Text = getTwitterpassword();
+            this.tbDefaultEmail.Text = getDefaultEmail();
+
+            this.cbxTextDirection.SelectedIndex = getTextDirection();
+            this.chxStartOnBootWindows.Checked = getStatusStartlogin();
             numTimeout.Value = getTimeout();
 
             if (String.IsNullOrEmpty(tbDefaultEmail.Text))
@@ -79,7 +83,7 @@ namespace NoteFly
                 tbDefaultEmail.Enabled = true;
                 cbxDefaultEmailToBlank.Checked = false;
             }
-            DrawCbxFonts();
+            this.DrawCbxFonts();
 #if DEBUG
             btnCrash.Visible = true;
 #endif
@@ -118,7 +122,7 @@ namespace NoteFly
         /// Cancel button pressed.
         /// Don't save any change made.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -136,61 +140,61 @@ namespace NoteFly
         /// Check the form input. If everything is okay
         /// call xmlHandler class to save the xml setting file.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (!Directory.Exists(tbNotesSavePath.Text))
             {
-                String invalidfoldersavenote = "Invalid folder for saving notes folder.";
+                string invalidfoldersavenote = "Invalid folder for saving notes folder.";
                 MessageBox.Show(invalidfoldersavenote);
                 tabControlSettings.SelectedTab = tabGeneral;
                 Log.Write(LogType.info, invalidfoldersavenote);
             }
             else if (String.IsNullOrEmpty(cbxFontNoteContent.Text) == true)
             {
-                String nofont = "Select a font.";
+                string nofont = "Select a font.";
                 MessageBox.Show(nofont);
                 tabControlSettings.SelectedTab = this.tabAppearance;
                 Log.Write(LogType.info, nofont);
             }
             else if ((numFontSize.Value < 4) || (numFontSize.Value > 128))
             {
-                String invalidfontsize = "Font size invalid. minmal 4pt maximal 128pt";
+                string invalidfontsize = "Font size invalid. minmal 4pt maximal 128pt";
                 MessageBox.Show(invalidfontsize);
                 tabControlSettings.SelectedTab = this.tabAppearance;
                 Log.Write(LogType.info, invalidfontsize);
             }
-            else if (cbxTextDirection.SelectedIndex > 1)
+            else if (this.cbxTextDirection.SelectedIndex > 1)
             {
-                String noknowtextdir = "Settings text direction unknow.";
+                string noknowtextdir = "Settings text direction unknow.";
                 MessageBox.Show(noknowtextdir);
                 tabControlSettings.SelectedTab = this.tabAppearance;
                 Log.Write(LogType.error, noknowtextdir);
             }
-            else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) ||
-                (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate) || (chxLogDebug.CheckState == CheckState.Indeterminate))
+            else if ((this.chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) ||
+                (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
             {
-                String notallowcheckstate = "checkstate not allowed.";
+                string notallowcheckstate = "checkstate not allowed.";
                 MessageBox.Show(notallowcheckstate);
                 tabControlSettings.SelectedTab = this.tabAppearance;
                 Log.Write(LogType.error, notallowcheckstate);
             }
-            else if (tbTwitterUser.Text.Length > 16)
+            else if (this.tbTwitterUser.Text.Length > 16)
             {
-                String twnametoolong = "Settings Twitter: username is too long.";
+                string twnametoolong = "Settings Twitter: username is too long.";
                 MessageBox.Show(twnametoolong);
                 Log.Write(LogType.error, twnametoolong);
             }
-            else if ((tbTwitterPass.Text.Length < 6) && (chxRememberTwPass.Checked == true))
+            else if ((this.tbTwitterPass.Text.Length < 6) && (chxRememberTwPass.Checked == true))
             {
-                String twpaswtooshort = "Settings Twitter: password is too short.";
+                string twpaswtooshort = "Settings Twitter: password is too short.";
                 MessageBox.Show(twpaswtooshort);
                 Log.Write(LogType.error, twpaswtooshort);
             }
-            else if ((!tbDefaultEmail.Text.Contains("@") || !tbDefaultEmail.Text.Contains(".")) && (!cbxDefaultEmailToBlank.Checked))
+            else if ((!this.tbDefaultEmail.Text.Contains("@") || !tbDefaultEmail.Text.Contains(".")) && (!cbxDefaultEmailToBlank.Checked))
             {
-                String emailnotvalid = "Settings advance: default emailadres not valid.";
+                string emailnotvalid = "Settings advance: default emailadres not valid.";
                 MessageBox.Show(emailnotvalid);
                 Log.Write(LogType.error, emailnotvalid);
             }
@@ -227,7 +231,7 @@ namespace NoteFly
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
                 {
-                    if (chxStartOnBootWindows.Checked == true)
+                    if (this.chxStartOnBootWindows.Checked == true)
                     {
                         try
                         {
@@ -243,7 +247,7 @@ namespace NoteFly
                             throw new CustomException(exc.Message + " " + exc.StackTrace);
                         }
                     }
-                    else if (chxStartOnBootWindows.Checked == false)
+                    else if (this.chxStartOnBootWindows.Checked == false)
                     {
                         if (key.GetValue(TrayIcon.AssemblyTitle, null) != null)
                         {
@@ -268,7 +272,7 @@ namespace NoteFly
         /// <summary>
         /// reset button clicked.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
@@ -298,7 +302,7 @@ namespace NoteFly
         /// <summary>
         /// Enable password editbox on checking remember password
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)
         {
@@ -316,7 +320,7 @@ namespace NoteFly
         /// <summary>
         /// Enable nummericupdown control if transparecy is checked.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
@@ -470,7 +474,7 @@ namespace NoteFly
         /// <summary>
         /// Move note files.
         /// </summary>
-        /// <param name="newpathsavenotes"></param>
+        /// <param name="newpathsavenotes">The new path wear to save the notes to.</param>
         private void MoveNotes(string newpathsavenotes)
         {            
             bool errorshowed = false;

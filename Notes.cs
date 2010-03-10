@@ -30,7 +30,7 @@ namespace NoteFly
         /// <summary>
         /// The default number color.
         /// </summary>
-        private Int16 defaultcolor = 1;
+        private short defaultcolor = 1;
 
         /// <summary>
         /// Path to where notes are saved.
@@ -60,7 +60,7 @@ namespace NoteFly
         /// <summary>
         /// The textdirection, 0 is left to right, 1 is right to left
         /// </summary>
-        private Int16 textdirection = 0;
+        private short textdirection = 0;
 
         #endregion Fields
 
@@ -127,11 +127,11 @@ namespace NoteFly
         /// <summary>
         /// Gets the number of notes.
         /// </summary>
-        public Int16 NumNotes
+        public short NumNotes
         {
             get
             {
-                Int16 numnotes = Convert.ToInt16(this.noteslst.Count);
+                short numnotes = Convert.ToInt16(this.noteslst.Count);
                 if (numnotes > 255)
                 {
                     throw new Exception("Too many notes.");
@@ -165,7 +165,7 @@ namespace NoteFly
         /// <summary>
         /// Gets or sets a value indicating whether textdirection is left to right(0) or right to left(1).
         /// </summary>
-        public Int16 TextDirection
+        public short TextDirection
         {
             get
             {
@@ -187,12 +187,12 @@ namespace NoteFly
         /// <param name="title">The title of the note.</param>
         /// <param name="content">The note content</param>
         /// <param name="notecolor">Note color number</param>
-        public void DrawNewNote(string title, string content, Int16 notecolor)
+        public void DrawNewNote(string title, string content, short notecolor)
         {
             try
             {
-                Int16 newid = Convert.ToInt16(this.noteslst.Count + 1);
-                string notefilenm = this.SaveNewNote(newid, title, content, defaultcolor);
+                short newid = Convert.ToInt16(this.noteslst.Count + 1);
+                string notefilenm = this.SaveNewNote(newid, title, content, this.defaultcolor);
                 Log.Write(LogType.info, "note created: " + notefilenm);
                 if (String.IsNullOrEmpty(notefilenm)) { throw new CustomException("cannot create filename."); }
                 FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
@@ -217,7 +217,7 @@ namespace NoteFly
             {
                 string title = this.noteslst[noteslistpos].NoteTitle;
                 string content = this.noteslst[noteslistpos].NoteContent;
-                Int16 color = this.noteslst[noteslistpos].NoteColor;
+                short color = this.noteslst[noteslistpos].NoteColor;
                 FrmNewNote newnote = new FrmNewNote(this, color, noteid, title, content);
                 newnote.Show();
             }
@@ -256,7 +256,7 @@ namespace NoteFly
             if (getSettings.getXMLnodeAsBool("savesession") == true)
             {
                 FacebookSettings.Uid = getSettings.getXMLnode("uid");
-                String strSessionExpires = getSettings.getXMLnode("sesionexpires");
+                string strSessionExpires = getSettings.getXMLnode("sesionexpires");
                 if (!String.IsNullOrEmpty(strSessionExpires))
                 {
                     try
@@ -341,11 +341,11 @@ namespace NoteFly
         /// <param name="notewidth">The note width</param>
         /// <param name="noteheight">The note height</param>
         /// <returns>A FrmNote object</returns>
-        private FrmNote CreateNote(bool visible, bool ontop, string title, string content, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
+        private FrmNote CreateNote(bool visible, bool ontop, string title, string content, short notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             try
             {
-                Int16 newid = Convert.ToInt16(this.noteslst.Count + 1);
+                short newid = Convert.ToInt16(this.noteslst.Count + 1);
                 FrmNote newnote = new FrmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewidth, noteheight);
                 if (visible)
                 {
@@ -382,7 +382,7 @@ namespace NoteFly
                 }
             }
 
-            UInt16 id = 1;
+            ushort id = 1;
             string notefile = Path.Combine(this.notesavepath, id + ".xml");
             while (File.Exists(notefile) == true)
             {
@@ -392,9 +392,9 @@ namespace NoteFly
                 string title = parserNote.getXMLnode("title");
                 string content = parserNote.getXMLnode("content");
                 int[] noteSettingsInt = parserNote.ParserNoteInts();
-                Int16 notecolor = Convert.ToInt16(noteSettingsInt[0]);
+                short notecolor = Convert.ToInt16(noteSettingsInt[0]);
 
-                this.noteslst.Add(CreateNote(noteSettingBool[0], noteSettingBool[1], title, content, notecolor, noteSettingsInt[1], noteSettingsInt[2], noteSettingsInt[3], noteSettingsInt[4]));
+                this.noteslst.Add(this.CreateNote(noteSettingBool[0], noteSettingBool[1], title, content, notecolor, noteSettingsInt[1], noteSettingsInt[2], noteSettingsInt[3], noteSettingsInt[4]));
                 id++;
                 if (this.CheckLimitNotes(id)) { 
                     string toomanynotes = "Too many notes to load.";
@@ -418,7 +418,7 @@ namespace NoteFly
                 int tipnoteheight = 280;
                 int tipnoteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2));
                 int tipnoteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2));
-                this.noteslst.Add(CreateNote(true, false, "Example",
+                this.noteslst.Add(this.CreateNote(true, false, "Example",
                     ("This is a example note.\r\n"+
                     "Please close the installer now."+
                     "You can chance colour of this note by rightclicking on this note.\r\n" +
@@ -473,16 +473,16 @@ namespace NoteFly
                 string title = "test nr." + id+" testalongtitlesoiteasytoseeifresizingofmanagenoteisdonecorrectlyblablabla";
                 string content = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
                                  "warning: To prevent this note from saving don't move or touch it!";
-                Int16 notecolor = Convert.ToInt16(ran.Next(0, 6));
+                short notecolor = Convert.ToInt16(ran.Next(0, 6));
                 int noteLocX = ran.Next(0, 360);
                 int noteLocY = ran.Next(0, 240);
                 int notewidth = 180;
                 int noteheight = 180;
 
-                this.noteslst.Add(CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
+                this.noteslst.Add(this.CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
 
                 if (this.CheckLimitNotes(id)) { 
-                    String maxnoteslimit = "Maximum notes limit reached.";
+                    string maxnoteslimit = "Maximum notes limit reached.";
                     MessageBox.Show(maxnoteslimit);
                     Log.Write(LogType.error, maxnoteslimit);
                     return;

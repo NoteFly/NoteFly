@@ -13,20 +13,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.Reflection;
-using System.Windows.Forms;
-using System.Drawing;
-
 namespace NoteFly
 {
-    partial class FrmAbout : Form
+    using System;
+    using System.Reflection;
+    using System.Windows.Forms;
+    using System.Drawing;
+
+    /// <summary>
+    /// About window.
+    /// </summary>
+    public partial class FrmAbout : Form
     {
 		#region Constructors (1) 
 
+        /// <summary>
+        /// Initializes a new instance of the FrmAbout class.
+        /// </summary>
         public FrmAbout()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.Text = "About "+TrayIcon.AssemblyTitle;
             this.lblProductName.Text = TrayIcon.AssemblyTitle;
             this.lblVersion.Text = String.Format("Version {0}", TrayIcon.AssemblyVersion);
@@ -38,16 +44,31 @@ namespace NoteFly
 
 		// Private Methods (3) 
 
+        /// <summary>
+        /// The FAQ link is clicked in the about dialog.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.notefly.tk/faq.php");
         }
 
+        /// <summary>
+        /// The Website link is clicked in the about dialog.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.notefly.tk/");
         }
 
+        /// <summary>
+        /// An OK button is clicked, close FrmAbout.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -26,6 +26,9 @@ using System.Runtime.InteropServices;
 
 namespace NoteFly
 {
+    /// <summary>
+    /// Note.
+    /// </summary>
     public partial class FrmNote : Form
     {
 		#region Fields (10)
@@ -49,6 +52,20 @@ namespace NoteFly
 
 		#region Constructors (2) 
 
+        /// <summary>
+        /// Initializes a new instance of the FrmNote class.
+        /// </summary>
+        /// <param name="notes">The class with access to all notes.</param>
+        /// <param name="id">The id of the note.</param>
+        /// <param name="visible">Is the note visible.</param>
+        /// <param name="ontop">Is the note on top.</param>
+        /// <param name="title">The title of the note.</param>
+        /// <param name="note">the content of the note.</param>
+        /// <param name="notecolor">The default note color.</param>
+        /// <param name="locX">The X location on the screen.</param>
+        /// <param name="locY">The Y location on the screen.</param>
+        /// <param name="notewidth">The width of the note.</param>
+        /// <param name="noteheight">The height of the note.</param>
         public FrmNote(Notes notes, Int16 id, bool visible, bool ontop, string title, string note, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             this.notes = notes;
@@ -76,8 +93,7 @@ namespace NoteFly
 
             if (this.notevisible)
             {
-                
-                InitializeComponent();
+                this.InitializeComponent();
 
                 this.lblTitle.Text = title;
                 this.rtbNote.Text = note;
@@ -88,7 +104,7 @@ namespace NoteFly
             }
             else
             {
-                //this.Hide();
+                this.Hide();
             }
 
             if (ontop)
@@ -103,6 +119,14 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the FrmNote class.
+        /// </summary>
+        /// <param name="notes">The class with access to all notes</param>
+        /// <param name="id">The note id.</param>
+        /// <param name="title">The note title.</param>
+        /// <param name="note">The note content.</param>
+        /// <param name="notecolor">The color (number) of the note.</param>
         public FrmNote(Notes notes, Int16 id, string title, string note, Int16 notecolor)
         {
             this.skin = new Skin(notecolor);
@@ -219,7 +243,7 @@ namespace NoteFly
         /// <summary>
         /// Find what password is entered.
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="obj">The form</param>
         /// <param name="e"></param>
         private void askpassok(object obj, EventArgs e)
         {
@@ -244,9 +268,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Hide note
+        /// The user pressed the cross on the note,
+        /// Hide the note.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void btnCloseNote_Click(object sender, EventArgs e)
         {
@@ -279,9 +304,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// check if twitter is enabled.
+        /// Enabled or disable tsmenuSendToTwitter based on if twitter is enabled.
         /// </summary>
-        /// <param name="twitterenabled"></param>
+        /// <param name="twitterenabled">Is twitter enabled.</param>
         private void checkTwitter(bool twitterenabled)
         {
             if (twitterenabled)
@@ -294,6 +319,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// contextMenuStripNoteOptions is closed.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
             if (skin != null)
@@ -303,9 +333,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// copy note content to clipboard
+        /// Copy note content to clipboard.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -313,9 +343,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// copy title to clipboard.
+        /// Copy note title to clipboard.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -323,9 +353,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Edit note is clicked
+        /// Edit note is clicked.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -343,7 +373,7 @@ namespace NoteFly
         /// <summary>
         /// E-mail note is selected.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void emailToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -377,9 +407,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Form got focus, remove transparency
+        /// Form got focus, remove transparency.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void frmNote_Activated(object sender, EventArgs e)
         {
@@ -392,7 +422,7 @@ namespace NoteFly
         /// <summary>
         /// Form is not active anymore, make transparent if allowed.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void frmNote_Deactivate(object sender, EventArgs e)
         {
@@ -408,9 +438,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Lock note
+        /// Lock the note and show a lock.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -418,9 +448,7 @@ namespace NoteFly
             {
                 notelock = true;
                 menuLockNote.Text = "lock note (click again to unlock)";
-
-                CreatePbLock();
-                
+                this.CreatePbLock();
                 this.menuNoteColors.Enabled = false;
                 this.menuEditNote.Enabled = false;
                 this.menuOnTop.Enabled = false;
@@ -429,9 +457,7 @@ namespace NoteFly
             {
                 notelock = false;
                 menuLockNote.Text = "lock note";
-
-                DestroyPbLock();
-
+                this.DestroyPbLock();
                 this.menuNoteColors.Enabled = true;
                 this.menuEditNote.Enabled = true;
                 this.menuOnTop.Enabled = true;
@@ -464,7 +490,7 @@ namespace NoteFly
         /// <summary>
         /// Roll the note up and down.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void menuRollUp_Click(object sender, EventArgs e)
         {
@@ -538,7 +564,7 @@ namespace NoteFly
         /// <summary>
         /// Resize note
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
@@ -556,7 +582,7 @@ namespace NoteFly
         /// <summary>
         /// Save resized note.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
@@ -569,7 +595,7 @@ namespace NoteFly
        /// <summary>
        /// pnlHead the grab area is selected.
        /// </summary>
-       /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
        /// <param name="e"></param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
@@ -611,9 +637,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// hyperlink clicked.
+        /// Hyperlink clicked.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
@@ -633,9 +659,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Thread to save note settings
+        /// Thread to save note settings.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -671,7 +697,7 @@ namespace NoteFly
         /// <summary>
         /// Set the color of the note.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void setColorNote(object sender, EventArgs e)
         {
@@ -706,10 +732,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Set the size of frmNote
+        /// Set the size of FrmNote.
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="width">The new width of FrmNote.</param>
+        /// <param name="height">The new height of FrmNote.</param>
         private void SetSizeNote(int width, int height)
         {
             this.Width = width;
@@ -719,7 +745,7 @@ namespace NoteFly
         /// <summary>
         /// Send note to Facebook.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
         {
@@ -731,7 +757,7 @@ namespace NoteFly
         /// <summary>
         /// Save the note to a plain textfile.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void tsmenuSendToTextfile_Click(object sender, EventArgs e)
         {
@@ -760,9 +786,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Request to tweet note. Check if allow, if so call tweetnote() methode
+        /// Request to tweet note. Check if allow, if so call tweetnote() methode.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
         {
@@ -856,9 +882,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Change check in menu colors
+        /// Change check in menu colors.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void updateMenuNoteColor(object sender, EventArgs e)
         {

@@ -14,15 +14,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 #define win32
-
 using System;
-using System.Drawing;
-using System.Reflection;
-using System.Windows.Forms;
 
 [assembly: CLSCompliant(true)]
 namespace NoteFly
 {
+    using System.Drawing;
+    using System.Reflection;
+    using System.Windows.Forms;
+
     /// <summary>
     /// Startup class.
     /// </summary>
@@ -33,26 +33,26 @@ namespace NoteFly
         /// <summary>
         /// container that holds some objects.
         /// </summary>
-        static System.ComponentModel.IContainer components = null;
+        private static System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// indicated wheter confirm exit is showed.
         /// </summary>
-        static bool confirmexitshowed = false;
+        private static bool confirmexitshowed = false;
 
         /// <summary>
         /// The trayicon itself.
         /// </summary>
-        static NotifyIcon icon;
+        private static NotifyIcon icon;
 
-        static ToolStripMenuItem MenuAbout;
-        static ToolStripMenuItem MenuExit;
-        static ToolStripMenuItem MenuManageNotes;
-        static ToolStripMenuItem MenuNewNote;
-        static ToolStripMenuItem MenuSettings;
-        static ContextMenuStrip MenuTrayIcon;
-        static bool newnoteshowed = false;
-        static Notes notes;
+        private static ToolStripMenuItem MenuAbout;
+        private static ToolStripMenuItem MenuExit;
+        private static ToolStripMenuItem MenuManageNotes;
+        private static ToolStripMenuItem MenuNewNote;
+        private static ToolStripMenuItem MenuSettings;
+        private static ContextMenuStrip MenuTrayIcon;
+        private static bool newnoteshowed = false;
+        private static Notes notes;
         //static bool settingshowed = false;
         static bool transparency = true;
 
@@ -63,7 +63,7 @@ namespace NoteFly
         /// <summary>
         /// The application title.
         /// </summary>
-        static public string AssemblyTitle
+        public static string AssemblyTitle
         {
             get
             {
@@ -82,7 +82,7 @@ namespace NoteFly
         /// <summary>
         /// The application version number.
         /// </summary>
-        static public string AssemblyVersion
+        public static string AssemblyVersion
         {
             get
             {
@@ -103,7 +103,7 @@ namespace NoteFly
         /// get actionleftclick setting
         /// </summary>
         /// <returns></returns>
-        static Int16 getActionLeftClick()
+        private static short getActionLeftClick()
         {
             xmlHandler getSettings = new xmlHandler(true);
             return Convert.ToInt16(getSettings.getXMLnodeAsInt("actionleftclick"));
@@ -113,10 +113,10 @@ namespace NoteFly
         /// get defaultcolor setting
         /// </summary>
         /// <returns></returns>
-        static Int16 getDefaultColor()
+        private static short getDefaultColor()
         {
             xmlHandler xmlSettings = new xmlHandler(true);
-            Int16 color = Convert.ToInt16(xmlSettings.getXMLnodeAsInt("defaultcolor"));
+            short color = Convert.ToInt16(xmlSettings.getXMLnodeAsInt("defaultcolor"));
             
             if (color == 7)
             {
@@ -137,14 +137,14 @@ namespace NoteFly
 
             transparency = true;
             bool firstrun = false;
-            
+
+            //disabletransparency parameter is for OS that don't support transparency, so they still can launch this programme.
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
                 if (System.Environment.GetCommandLineArgs()[1] == "/firstrun")
                 {
                     firstrun = true;
                 }
-                //disabletransparency parameter is for OS that don't support transparency, so they still can launch this programme.
                 else if (System.Environment.GetCommandLineArgs()[1] == "/disabletransparency")
                 {
                     transparency = false;
@@ -226,13 +226,13 @@ namespace NoteFly
         /// If actionleftclick is 1 actived all notes.
         /// If actionleftclick is 2 create a new note.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
-        static void Icon_Click(object sender, MouseEventArgs e)
+        private static void Icon_Click(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                Int16 actionleftclick = getActionLeftClick();
+                short actionleftclick = getActionLeftClick();
                 if (actionleftclick == 1)
                 {
                     for (int i = 0; i < notes.NumNotes; i++)
@@ -259,9 +259,9 @@ namespace NoteFly
         /// <summary>
         /// open new note window
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
-        static void MenuNewNote_Click(object sender, EventArgs e)
+        private static void MenuNewNote_Click(object sender, EventArgs e)
         {
             FrmNewNote newnote = new FrmNewNote(notes, getDefaultColor());
             newnote.Show();
@@ -270,31 +270,31 @@ namespace NoteFly
         /// <summary>
         /// open manage notes window
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
-        static void MenuManageNotes_Click(object sender, EventArgs e)
+        private static void MenuManageNotes_Click(object sender, EventArgs e)
         {
             FrmManageNotes managenotes = new FrmManageNotes(notes, transparency, getDefaultColor());
             managenotes.Show();
         }
 
         /// <summary>
-        /// open settings window
+        /// Open settings window.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
-        static void MenuSettings_Click(object sender, EventArgs e)
+        private static void MenuSettings_Click(object sender, EventArgs e)
         {
             FrmSettings settings = new FrmSettings(notes);
             settings.Show();
         }
 
         /// <summary>
-        /// Open about window
+        /// Open about window.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
-        static void MenuAbout_Click(object sender, EventArgs e)
+        private static void MenuAbout_Click(object sender, EventArgs e)
         {
             FrmAbout about = new FrmAbout();
             about.Show();
@@ -305,9 +305,9 @@ namespace NoteFly
         /// Check if confirm box is needed. 
         /// if confirm box is still open then shutdown anyway.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
-        static void MenuExit_Click(object sender, EventArgs e)
+        private static void MenuExit_Click(object sender, EventArgs e)
         {
             xmlHandler getSetting = new xmlHandler(true);
 
@@ -338,7 +338,7 @@ namespace NoteFly
         /// <summary>
         /// Terminate application
         /// </summary>
-        static void ExitApplication()
+        private static void ExitApplication()
         {
             components.Dispose();
             Application.Exit();

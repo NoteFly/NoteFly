@@ -13,20 +13,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Web;
-using System.Windows.Forms;
-using System.Xml;
-
 namespace NoteFly
 {
+    using System;
+    using System.IO;
+    using System.Net;
+    using System.Text;
+    using System.Web;
+    using System.Windows.Forms;
+    using System.Xml;
+
     /// <summary>
     /// sends a note to twitter
     /// </summary>
-    class Twitter
+    public class Twitter
     {
 		#region Fields (5) 
 
@@ -40,7 +40,7 @@ namespace NoteFly
 		#region Constructors (1) 
 
         /// <summary>
-        /// Creating a new instance of Twitter class.
+        /// Initializes a new instance of the Twitter class.
         /// </summary>
         public Twitter()
         {
@@ -59,8 +59,8 @@ namespace NoteFly
         /// </summary>
         public string Source
         {
-            get { return source; }
-            set { source = value; }
+            get { return this.source; }
+            set { this.source = value; }
         }
 
         /// <summary>
@@ -82,25 +82,32 @@ namespace NoteFly
 
 		// Public Methods (2) 
 
+        /// <summary>
+        /// Send a tweet to Twitter.
+        /// </summary>
+        /// <param name="userName">The Twitter username</param>
+        /// <param name="password">The Twitter password</param>
+        /// <param name="status">The tweet, limited to 140 chars.</param>
+        /// <returns></returns>
         public string Update(string userName, string password, string status)
         {
             //Important: "statuses", "update" and "xml" must be lower case.
             string url = string.Format(TwitterBaseUrlFormat, "statuses", "update", "xml");
             string data = string.Format("status={0}", HttpUtility.UrlEncode(status));
 
-            return ExecutePostCommand(url, userName, password, data);
+            return this.ExecutePostCommand(url, userName, password, data);
         }
 
         /// <summary>
-        /// Update the twitter status with XML
+        /// Update the twitter status with XML.
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <param name="text"></param>
-        /// <returns>xml document</returns>
+        /// <param name="userName">The twitter username.</param>
+        /// <param name="password">The twitter password.</param>
+        /// <param name="text">The message.</param>
+        /// <returns>A xml document as response from the server.</returns>
         public XmlDocument UpdateAsXML(string userName, string password, string text)
         {
-            string output = Update(userName, password, text);
+            string output = this.Update(userName, password, text);
             if (!string.IsNullOrEmpty(output))
             {
                 XmlDocument xmlDocument = new XmlDocument();
@@ -138,23 +145,23 @@ namespace NoteFly
                 {
                     request.Headers.Add("X-Twitter-Version", TrayIcon.AssemblyVersion.Trim());
                 }
-                if (!string.IsNullOrEmpty(TwitterClientUrl))
+                if (!string.IsNullOrEmpty(this.TwitterClientUrl))
                 {
-                    request.Headers.Add("X-Twitter-URL", TwitterClientUrl);
+                    request.Headers.Add("X-Twitter-URL", this.TwitterClientUrl);
                 }
-                if (!string.IsNullOrEmpty(Source))
+                if (!string.IsNullOrEmpty(this.Source))
                 {
-                    data += "&source=" + HttpUtility.UrlEncode(Source);
+                    data += "&source=" + HttpUtility.UrlEncode(this.Source);
                 }
                 byte[] bytes = Encoding.UTF8.GetBytes(data);
 
                 xmlHandler getsettting = new xmlHandler(true);
                 if (getsettting.getXMLnodeAsBool("useproxy") == true)
                 {
-                    String addr = getsettting.getXMLnode("proxyaddr");
+                    string addr = getsettting.getXMLnode("proxyaddr");
                     if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0")
                     {
-                        String novalidproxy = "Proxy address is not given/not valid.";
+                        string novalidproxy = "Proxy address is not given/not valid.";
                         MessageBox.Show(novalidproxy);
                         Log.Write(LogType.error, novalidproxy);
                         return null;

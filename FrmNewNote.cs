@@ -38,33 +38,46 @@ namespace NoteFly
 
 		#region Constructors (2) 
 
+        /// <summary>
+        /// Initializes a new instance of the FrmNewNote class.
+        /// </summary>
+        /// <param name="notes">The class with access to all notes.</param>
+        /// <param name="notecolor">the default note color.</param>
+        /// <param name="editnoteid">The noteid to edit.</param>
+        /// <param name="editnotetitle">The title of the note to edit.</param>
+        /// <param name="editnotecontent">The content of the note to edit.</param>
         public FrmNewNote(Notes notes, Int16 notecolor, int editnoteid, string editnotetitle, string editnotecontent)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.editnote = true;
             this.notecolor = notecolor;
             this.skin = new Skin(notecolor);
             this.editnoteid = editnoteid;
-            this.notes = notes;            
-            ResetNewNoteForm(editnotetitle, editnotecontent);
+            this.notes = notes;
+            this.ResetNewNoteForm(editnotetitle, editnotecontent);
             this.tbTitle.Focus();
             this.tbTitle.Select();
-            if (editnote)
+            if (this.editnote)
             {
                 this.Text = "edit note";
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the FrmNewNote class.
+        /// </summary>
+        /// <param name="notes">The class with access to all notes.</param>
+        /// <param name="notecolor">The default note color.</param>
         public FrmNewNote(Notes notes, Int16 notecolor)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.editnote = false;
             this.notes = notes;
             this.notecolor = notecolor;
             this.skin = new Skin(notecolor);
-            ResetNewNoteForm("", "");           
+            this.ResetNewNoteForm("", "");
             this.tbTitle.Focus();
-            this.tbTitle.Select();            
+            this.tbTitle.Select();
         }
 
 		#endregion Constructors 
@@ -73,6 +86,11 @@ namespace NoteFly
 
 		// Private Methods (18) 
 
+        /// <summary>
+        /// User pressed the accept note button. Note will now be saved.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void btnAddNote_Click(object sender, EventArgs e)
         {            
             if (String.IsNullOrEmpty(tbTitle.Text))
@@ -99,9 +117,14 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// User pressed the cancel button, all things typed in FrmNewNote window will be lost.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            int posnotelst = editnoteid - 1;
+            int posnotelst = this.editnoteid - 1;
             if ((this.editnote) && (posnotelst >= 0) && (posnotelst < notes.NumNotes))
             {                
                 notes.GetNotes[posnotelst].Show();
@@ -116,29 +139,39 @@ namespace NoteFly
         {
             if (notes.HighlightHTML == true)
             {
-                if (highlight == null)
+                if (this.highlight == null)
                 {
-                    highlight = new TextHighlight(this.rtbNote, notes.HighlightHTML);
+                    this.highlight = new TextHighlight(this.rtbNote, notes.HighlightHTML);
                     setupfirsthighlight = true;
                 }
                 else if (setupfirsthighlight)
                 {
-                    highlight.CheckSyntaxFull();
+                    this.highlight.CheckSyntaxFull();
                     setupfirsthighlight = false;
                 }
-                else if ((highlight != null) && (!String.IsNullOrEmpty(rtbNote.Text)))
+                else if ((this.highlight != null) && (!String.IsNullOrEmpty(rtbNote.Text)))
                 {
-                    highlight.CheckSyntaxQuick(rtbNote.SelectionStart - 1);
+                    this.highlight.CheckSyntaxQuick(rtbNote.SelectionStart - 1);
                 }
             }
             
         }
 
+        /// <summary>
+        /// Copy the note content.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(rtbNote.Text);
         }
 
+        /// <summary>
+        /// Check whether pastTextToolStripMenuItem should be enabled.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void copyTextToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
@@ -151,6 +184,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Form got focus, remove transparency.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void frmNewNote_Activated(object sender, EventArgs e)
         {
             if (notes.Transparency)
@@ -159,6 +197,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Form lost focus, make transparent.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void frmNewNote_Deactivate(object sender, EventArgs e)
         {
             if ((notes.Transparency) && (skin != null))
@@ -168,6 +211,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Pasting text as note content.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void pastTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
@@ -182,6 +230,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Resizing the note.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -192,6 +245,11 @@ namespace NoteFly
             this.Cursor = Cursors.Default;
         }
 
+        /// <summary>
+        /// Moving the note.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void pnlHeadNewNote_MouseDown(object sender, MouseEventArgs e)
         {
             if (skin != null)
@@ -208,11 +266,16 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Show context menu.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"></param>
         private void pnlNoteEdit_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
+                this.contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
             }
         }
 
@@ -253,7 +316,7 @@ namespace NoteFly
         /// A hyperlink is clicked, check settings to see if confirm launch dialog have
         /// to be showed, if not then directly launch the URL.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
@@ -285,13 +348,13 @@ namespace NoteFly
         /// <summary>
         /// Force context menu to show up.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void rtbNote_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
+                this.contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
             }
         }
 
