@@ -106,7 +106,7 @@ namespace NoteFly
                     try
                     {
                         File.Delete(Path.Combine(getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
-                        Log.write(LogType.info, Convert.ToString(curnote) + ".xml deleted.");
+                        Log.Write(LogType.info, Convert.ToString(curnote) + ".xml deleted.");
 
                         //reorder filenames
                         for (Int16 n = curnote; n < numbernotes; n++)
@@ -132,7 +132,7 @@ namespace NoteFly
                     {
                         String msgaccessdenied = "Access denied. Delete note " + curnote + ".xml manualy with proper premission.";
                         MessageBox.Show(msgaccessdenied);
-                        Log.write(LogType.error, msgaccessdenied);
+                        Log.Write(LogType.error, msgaccessdenied);
                     }
 
                     DrawNotesOverview();

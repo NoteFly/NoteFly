@@ -20,22 +20,39 @@ using System.IO;
 
 namespace NoteFly
 {
+    /// <summary>
+    /// The logtype
+    /// </summary>
     public enum LogType
     {
-        exception, //Application crash, unexpected/bug
-        error, //User did something wrong, application handled it okay.
-        info //something important happend, for instance note got deleted.
+        /// <summary>
+        /// Application crash, unexpected/bug
+        /// </summary>
+        exception,
+
+        /// <summary>
+        /// User did something wrong, application handled it okay.
+        /// </summary>
+        error,
+
+        /// <summary>
+        /// Something happend that is woth notecing , for instance note got deleted.
+        /// </summary>
+        info
     }
 
+    /// <summary>
+    /// This class write messages to a logfile.
+    /// </summary>
     public static class Log
     {
+
         /// <summary>
         /// Write and append a message to the logfile.
         /// </summary>
-        /// <param name="appdatafolder"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public static void write(LogType typemsg, string message)
+        /// <param name="typemsg">The type of the log message</param>
+        /// <param name="message">The message to log</param>
+        public static void Write(LogType typemsg, string message)
         {
             StringBuilder line = new StringBuilder(DateTime.Now.ToString());
             while (line.Length < 19)
@@ -85,7 +102,7 @@ namespace NoteFly
         /// Check if logfile larger than 512KB.
         /// </summary>
         /// <param name="file">the filename and path</param>
-        /// <returns></returns>
+        /// <returns>true if it is larger than 512KB</returns>
         private static bool CheckFileSize(String file)
         {
             if (File.Exists(file))

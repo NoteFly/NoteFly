@@ -17,4 +17,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		AMDCaProjectFile = M:\Public\sourcecode\Projects_Csharp\notefly\CodeAnalyst\NoteFly.caw
+	EndGlobalSection
 EndGlobal

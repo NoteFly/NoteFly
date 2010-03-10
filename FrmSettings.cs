@@ -109,7 +109,7 @@ namespace NoteFly
                 {
                     String dirnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
                     MessageBox.Show(dirnotexist);
-                    Log.write(LogType.info, dirnotexist);
+                    Log.Write(LogType.info, dirnotexist);
                 }
             }
         }
@@ -145,28 +145,28 @@ namespace NoteFly
                 String invalidfoldersavenote = "Invalid folder for saving notes folder.";
                 MessageBox.Show(invalidfoldersavenote);
                 tabControlSettings.SelectedTab = tabGeneral;
-                Log.write(LogType.info, invalidfoldersavenote);
+                Log.Write(LogType.info, invalidfoldersavenote);
             }
             else if (String.IsNullOrEmpty(cbxFontNoteContent.Text) == true)
             {
                 String nofont = "Select a font.";
                 MessageBox.Show(nofont);
                 tabControlSettings.SelectedTab = this.tabAppearance;
-                Log.write(LogType.info, nofont);
+                Log.Write(LogType.info, nofont);
             }
             else if ((numFontSize.Value < 4) || (numFontSize.Value > 128))
             {
                 String invalidfontsize = "Font size invalid. minmal 4pt maximal 128pt";
                 MessageBox.Show(invalidfontsize);
                 tabControlSettings.SelectedTab = this.tabAppearance;
-                Log.write(LogType.info, invalidfontsize);
+                Log.Write(LogType.info, invalidfontsize);
             }
             else if (cbxTextDirection.SelectedIndex > 1)
             {
                 String noknowtextdir = "Settings text direction unknow.";
                 MessageBox.Show(noknowtextdir);
                 tabControlSettings.SelectedTab = this.tabAppearance;
-                Log.write(LogType.error, noknowtextdir);
+                Log.Write(LogType.error, noknowtextdir);
             }
             else if ((chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) ||
                 (chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (chxConfirmExit.CheckState == CheckState.Indeterminate) || (chxLogErrors.CheckState == CheckState.Indeterminate) || (chxLogDebug.CheckState == CheckState.Indeterminate))
@@ -174,25 +174,25 @@ namespace NoteFly
                 String notallowcheckstate = "checkstate not allowed.";
                 MessageBox.Show(notallowcheckstate);
                 tabControlSettings.SelectedTab = this.tabAppearance;
-                Log.write(LogType.error, notallowcheckstate);
+                Log.Write(LogType.error, notallowcheckstate);
             }
             else if (tbTwitterUser.Text.Length > 16)
             {
                 String twnametoolong = "Settings Twitter: username is too long.";
                 MessageBox.Show(twnametoolong);
-                Log.write(LogType.error, twnametoolong);
+                Log.Write(LogType.error, twnametoolong);
             }
             else if ((tbTwitterPass.Text.Length < 6) && (chxRememberTwPass.Checked == true))
             {
                 String twpaswtooshort = "Settings Twitter: password is too short.";
                 MessageBox.Show(twpaswtooshort);
-                Log.write(LogType.error, twpaswtooshort);
+                Log.Write(LogType.error, twpaswtooshort);
             }
             else if ((!tbDefaultEmail.Text.Contains("@") || !tbDefaultEmail.Text.Contains(".")) && (!cbxDefaultEmailToBlank.Checked))
             {
                 String emailnotvalid = "Settings advance: default emailadres not valid.";
                 MessageBox.Show(emailnotvalid);
-                Log.write(LogType.error, emailnotvalid);
+                Log.Write(LogType.error, emailnotvalid);
             }
             //everything looks okay 
             else
@@ -236,7 +236,7 @@ namespace NoteFly
                         catch (UnauthorizedAccessException unauthexc)
                         {
                             MessageBox.Show(unauthexc.Message);
-                            Log.write(LogType.exception, unauthexc.Message);
+                            Log.Write(LogType.exception, unauthexc.Message);
                         }
                         catch (Exception exc)
                         {
@@ -255,12 +255,12 @@ namespace NoteFly
                 {
                     String regkeynotexistfound = "Run subkey in registery does not exist. Or it cannot be found.";
                     MessageBox.Show(regkeynotexistfound);
-                    Log.write(LogType.error, regkeynotexistfound);
+                    Log.Write(LogType.error, regkeynotexistfound);
                 }
 #endif
                 notes.SetSettings();
                 notes.UpdateAllFonts();
-                Log.write(LogType.info, "settings updated");
+                Log.Write(LogType.info, "settings updated.");
                 this.Close();
             }
         }
@@ -342,9 +342,9 @@ namespace NoteFly
             string curfont = xmlsettings.getXMLnode("fontcontent");
             if (String.IsNullOrEmpty(curfont))
             {
-                String fontnotfound = "Error: Current font not found.";
+                String fontnotfound = "Current font not found.";
                 MessageBox.Show(fontnotfound);
-                Log.write(LogType.info, fontnotfound);
+                Log.Write(LogType.info, fontnotfound);
             }
             else
             {
@@ -451,7 +451,7 @@ namespace NoteFly
             int timeout = xmlsettings.getXMLnodeAsInt("networktimeout");
             if (timeout < 0)
             {
-                Log.write(LogType.error, "Network timeout not set or negative.");
+                Log.Write(LogType.error, "Network timeout not set or negative.");
                 return 10000;
             }
             else
@@ -498,7 +498,7 @@ namespace NoteFly
                             String fileexist = "File " + id + ".xml already exist in new folder.";
                             MessageBox.Show(fileexist);
                             errorshowed = true;
-                            Log.write(LogType.error, fileexist);
+                            Log.Write(LogType.error, fileexist);
                         }
                     }
                 }

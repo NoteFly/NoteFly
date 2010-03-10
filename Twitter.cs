@@ -154,9 +154,9 @@ namespace NoteFly
                     String addr = getsettting.getXMLnode("proxyaddr");
                     if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0")
                     {
-                        String novalidproxy = "Proxy address is not given/not valid";
+                        String novalidproxy = "Proxy address is not given/not valid.";
                         MessageBox.Show(novalidproxy);
-                        Log.write(LogType.error, novalidproxy);
+                        Log.Write(LogType.error, novalidproxy);
                         return null;
                     }
                     else

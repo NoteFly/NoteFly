@@ -176,9 +176,9 @@ namespace NoteFly
             }
             else
             {
-                String emptyclipboard = "clipboard is empty/no text in it.";
+                string emptyclipboard = "Clipboard is empty/no text in it.";
                 MessageBox.Show(emptyclipboard);
-                Log.write(LogType.error, emptyclipboard);
+                Log.Write(LogType.error, emptyclipboard);
             }
         }
 
@@ -272,10 +272,14 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Load a url
+        /// </summary>
+        /// <param name="url">the url to load.</param>
         private void LoadUrl(string url)
         {
             System.Diagnostics.Process.Start(url.Trim());
-            Log.write(LogType.info, "link clicked.");
+            Log.Write(LogType.info, "Link clicked.");
         }
 
         /// <summary>
@@ -291,6 +295,9 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Set the text direction of the note content.
+        /// </summary>
         private void setTextDirection()
         {
             if (notes.TextDirection == 0)

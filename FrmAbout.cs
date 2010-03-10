@@ -22,7 +22,7 @@ namespace NoteFly
 {
     partial class FrmAbout : Form
     {
-        private int curletter = -1;
+		#region Constructors (1) 
 
         public FrmAbout()
         {
@@ -32,9 +32,15 @@ namespace NoteFly
             this.lblVersion.Text = String.Format("Version {0}", TrayIcon.AssemblyVersion);
         }
 
-        private void okButton_Click(object sender, EventArgs e)
+		#endregion Constructors 
+
+		#region Methods (3) 
+
+		// Private Methods (3) 
+
+        private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.Close();
+            System.Diagnostics.Process.Start("http://www.notefly.tk/faq.php");
         }
 
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -42,9 +48,11 @@ namespace NoteFly
             System.Diagnostics.Process.Start("http://www.notefly.tk/");
         }
 
-        private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void okButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.notefly.tk/faq.php");
+            this.Close();
         }
+
+		#endregion Methods 
     }
 }

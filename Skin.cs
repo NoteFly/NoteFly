@@ -25,6 +25,9 @@ namespace NoteFly
     {
         #region Fields (1)
 
+        /// <summary>
+        /// The color of the note.
+        /// </summary>
         private int notecolor = 0;
 
         #endregion Fields
@@ -32,7 +35,7 @@ namespace NoteFly
         #region Constructors (1)
 
         /// <summary>
-        /// itializes a new instance of the skin class.
+        /// Initializes a new instance of the Skin class.
         /// </summary>
         /// <param name="numcolor">color number</param>
         public Skin(int numcolor)
@@ -43,8 +46,7 @@ namespace NoteFly
         #endregion Constructors
 
         /// <summary>
-        /// Number of colors of note 
-        /// Count from zero.
+        /// Gets the number of possible note colors. (Counting from zero.)
         /// </summary>
         public int MaxNotesColors
         {
@@ -59,8 +61,8 @@ namespace NoteFly
         /// <summary>
         /// get the skin color based on the skin color number.
         /// </summary>
-        /// <param name="selected">is it selected?</param>
-        /// <returns>color</returns>
+        /// <param name="selected">Is it selected?</param>
+        /// <returns>The color valeau</returns>
         public Color getObjColor(bool selected)
         {
             switch (this.notecolor)
@@ -92,12 +94,12 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the skin color
+        /// Get the skin color.
         /// </summary>
         /// <param name="selected">is it selected?</param>
         /// <param name="highlight">is it a highlight?</param>
         /// <param name="warn">is it a warning?</param>
-        /// <returns></returns>
+        /// <returns>The color valeau</returns>
         public Color getObjColor(bool selected, bool highlight, bool warn)
         {
             if (highlight)
@@ -118,6 +120,10 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Get the transparencylevel of the note.
+        /// </summary>
+        /// <returns>Transparencylevel as double</returns>
         public double getTransparencylevel()
         {
             xmlHandler getSettings = new xmlHandler(true);
@@ -153,6 +159,11 @@ namespace NoteFly
             return null;
         }
 
+        /// <summary>
+        /// Get the font size of the note.
+        /// </summary>
+        /// <param name="getSettings">XmlHandler class</param>
+        /// <returns>fontsize as a float number </returns>
         private float getFontNoteSize(xmlHandler getSettings)
         {
             getSettings = new xmlHandler(true);

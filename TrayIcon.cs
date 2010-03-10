@@ -124,9 +124,8 @@ namespace NoteFly
             Application.SetCompatibleTextRenderingDefault(true);
 
             transparency = true;
-
             bool firstrun = false;
-
+            
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
                 if (System.Environment.GetCommandLineArgs()[1] == "/firstrun")

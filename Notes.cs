@@ -20,6 +20,9 @@ using System.Windows.Forms;
 
 namespace NoteFly
 {
+    /// <summary>
+    /// This class has a list of all notes.
+    /// </summary>
     public class Notes
     {
 		#region Fields (9) 
@@ -30,7 +33,6 @@ namespace NoteFly
         private Boolean notesupdated = false;
         private Boolean transparecy = false;
         private Boolean twitterenabled = false;
-        private Boolean resourcevars = false;
         private Int16 textdirection = 0;
 
 		#endregion Fields 
@@ -136,7 +138,7 @@ namespace NoteFly
             {
                 Int16 newid = Convert.ToInt16(noteslst.Count + 1);
                 string notefilenm = SaveNewNote(newid, title, content, defaultcolor);
-                Log.write(LogType.info, "note created: " + notefilenm);
+                Log.Write(LogType.info, "note created: " + notefilenm);
                 if (String.IsNullOrEmpty(notefilenm)) { throw new CustomException("cannot create filename."); }
                 FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
                 noteslst.Add(newnote);
@@ -199,22 +201,22 @@ namespace NoteFly
 
             if (getSettings.getXMLnodeAsBool("savesession") == true)
             {
-                FacebookSettings.uid = getSettings.getXMLnode("uid");
+                FacebookSettings.Uid = getSettings.getXMLnode("uid");
                 String strSessionExpires = getSettings.getXMLnode("sesionexpires");
                 if (!String.IsNullOrEmpty(strSessionExpires))
                 {
                     try
                     {
 
-                        FacebookSettings.sesionexpires = Convert.ToDouble(strSessionExpires);
+                        FacebookSettings.Sesionexpires = Convert.ToDouble(strSessionExpires);
                     }
                     catch (InvalidCastException)
                     {
                         throw new CustomException("facebook session expires is not a valid unix (double) valeau.");
                     }
                 }
-                FacebookSettings.sessionsecret = getSettings.getXMLnode("sessionsecret");
-                FacebookSettings.sessionkey = getSettings.getXMLnode("sessionkey");
+                FacebookSettings.Sessionsecret = getSettings.getXMLnode("sessionsecret");
+                FacebookSettings.Sessionkey = getSettings.getXMLnode("sessionkey");
             }
         }
 
@@ -233,9 +235,9 @@ namespace NoteFly
         /// Update a note
         /// </summary>
         /// <param name="noteid">id of note</param>
-        /// <param name="title">new title</param>
+        /// <param name="title">the new title</param>
         /// <param name="content">new content</param>
-        /// <param name="visible">is visible?</param>
+        /// <param name="visible">is the note visible</param>
         public void UpdateNote(int noteid, string title, string content, bool visible)
         {
             int notelstpos = noteid - 1;
@@ -249,7 +251,7 @@ namespace NoteFly
             noteslst[notelstpos].CheckThings();
             noteslst[notelstpos].UpdateThisNote();
             this.notesupdated = true;
-            Log.write(LogType.info, "update note ID:"+noteid);
+            Log.Write(LogType.info, ("Update note ID:"+noteid));
         }
 		// Private Methods (4) 
 
@@ -257,7 +259,7 @@ namespace NoteFly
         /// This method set a limit to how many notes can be loaded.
         /// This is to prevent a hang.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">the note id to check.</param>
         /// <returns>true when limit is reached.</returns>
         private bool CheckLimitNotes(int id)
         {
@@ -281,16 +283,15 @@ namespace NoteFly
         /// <param name="notecolor">color note, 0 Gold, 1 orange, 2 White, 3 LawnGreen, 4 CornflowerBlue, 5 Magenta, 6 Red</param>
         /// <param name="locX">X coordinate</param>
         /// <param name="locY">Y coordinate</param>
-        /// <param name="notewith"></param>
-        /// <param name="noteheight"></param>
+        /// <param name="notewidth">the note width</param>
+        /// <param name="noteheight">the note height</param>
         /// <returns>form</returns>
-        private FrmNote CreateNote(bool visible, bool ontop, string title, string content, Int16 notecolor, int locX, int locY, int notewith, int noteheight)
+        private FrmNote CreateNote(bool visible, bool ontop, string title, string content, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             try
             {
                 Int16 newid = Convert.ToInt16(noteslst.Count + 1);
-                FrmNote newnote = new FrmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewith, noteheight);
-                newnote.FormBorderStyle = FormBorderStyle.None;
+                FrmNote newnote = new FrmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewidth, noteheight);
                 if (visible)
                 {
                     newnote.Show();
@@ -306,7 +307,7 @@ namespace NoteFly
         /// <summary>
         /// Loads all notes.
         /// </summary>
-        /// <param name="firstrun"></param>
+        /// <param name="firstrun">is it the first run?</param>
         private void LoadNotes(bool firstrun)
         {
             if (!Directory.Exists(this.notesavepath))
@@ -315,12 +316,12 @@ namespace NoteFly
                 DialogResult result = MessageBox.Show(notefoldernoteexist, "notefolder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
-                    Log.write(LogType.error, notefoldernoteexist+" No");
+                    Log.Write(LogType.error, (notefoldernoteexist+" No"));
                     return;
                 }
                 else
                 {
-                    Log.write(LogType.error, notefoldernoteexist + " Yes");
+                    Log.Write(LogType.error, (notefoldernoteexist + " Yes"));
                     xmlHandler getAppdata = new xmlHandler(true);
                     this.notesavepath = getAppdata.AppDataFolder;
                 }
@@ -341,9 +342,9 @@ namespace NoteFly
                 noteslst.Add(CreateNote(noteSettingBool[0], noteSettingBool[1], title, content, notecolor, noteSettingsInt[1], noteSettingsInt[2], noteSettingsInt[3], noteSettingsInt[4]));
                 id++;
                 if (CheckLimitNotes(id)) { 
-                    String toomanynotes = "Too many notes to load.";
+                    string toomanynotes = "Too many notes to load.";
                     MessageBox.Show(toomanynotes);
-                    Log.write(LogType.error, toomanynotes);
+                    Log.Write(LogType.error, toomanynotes);
                     return;
                 }
                 notefile = Path.Combine(notesavepath, id + ".xml");
@@ -352,9 +353,9 @@ namespace NoteFly
             notefile = Path.Combine(this.notesavepath, id + ".xml");
             if (File.Exists(notefile)==true)
             {
-                String notemissing = notesavepath + Convert.ToString(id - 1) + ".xml is missing.";
+                string notemissing = notesavepath + Convert.ToString(id - 1) + ".xml is missing.";
                 MessageBox.Show(notemissing);
-                Log.write(LogType.error, notemissing);
+                Log.Write(LogType.error, notemissing);
             }
             if (firstrun)
             {
@@ -362,31 +363,30 @@ namespace NoteFly
                 int tipnoteheight = 280;
                 int tipnoteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2);
                 int tipnoteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2);
-                noteslst.Add(CreateNote(true, false, "Example", 
-                    "This is a example note.\r\n"+
+                noteslst.Add(CreateNote(true, false, "Example",
+                    ("This is a example note.\r\n"+
                     "Please close the installer now."+
                     "You can chance colour of this note by rightclicking on this note.\r\n" +
                     "You can delete this note, by rightclicking the systray icon choice manage notes\r\n"+
                     "and then press delete note button for this particuler note.\r\n"+
                     "By clicking on the cross on this note this note will be hidden.\r\n"+
-                    "You can get it back with the manage notes window.\r\n"
-                    , 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+                    "You can get it back with the manage notes window.\r\n"),0,tipnoteposx,tipnoteposy,tipnotewidth,tipnoteheight));
             }
 
             #if DEBUG
-            Log.write(LogType.info, "start stress test");
-            //LoadNotesStressTest(200);
+            Log.Write(LogType.info, "start stress test");
             LoadNotesStressTest(10);
-            Log.write(LogType.info, "finished stress test");
+            Log.Write(LogType.info, "finished stress test");
             #endif
         }
 
         /// <summary>
-        /// Save the note to xml file
+        /// Save the note to xml file.
         /// </summary>
-        /// <param name="id">number</param>
-        /// <param name="title"></param>
-        /// <param name="text"></param>
+        /// <param name="id">note id number.</param>
+        /// <param name="title">the title of the note.</param>
+        /// <param name="text">the content of the note.</param>
+        /// <param name="numcolor">the color number.</param>
         /// <returns>filepath of the created note.</returns>
         private string SaveNewNote(int id, string title, string text, Int16 numcolor)
         {
@@ -428,7 +428,7 @@ namespace NoteFly
                 if (CheckLimitNotes(id)) { 
                     String maxnoteslimit = "Maximum notes limit reached.";
                     MessageBox.Show(maxnoteslimit);
-                    Log.write(LogType.error, maxnoteslimit);
+                    Log.Write(LogType.error, maxnoteslimit);
                     return;
                 }
             }

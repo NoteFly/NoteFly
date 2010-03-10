@@ -52,7 +52,6 @@
             this.menuRollUp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuLockNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHideNote = new System.Windows.Forms.ToolStripMenuItem();
-            this.pbShowLock = new System.Windows.Forms.PictureBox();
             this.btnCloseNote = new System.Windows.Forms.Button();
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.pnlNote = new System.Windows.Forms.Panel();
@@ -60,7 +59,6 @@
             this.SavePos = new System.ComponentModel.BackgroundWorker();
             this.pnlHead.SuspendLayout();
             this.contextMenuStripNoteOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbShowLock)).BeginInit();
             this.pnlNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             this.SuspendLayout();
@@ -84,7 +82,6 @@
             this.pnlHead.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlHead.ContextMenuStrip = this.contextMenuStripNoteOptions;
-            this.pnlHead.Controls.Add(this.pbShowLock);
             this.pnlHead.Controls.Add(this.btnCloseNote);
             this.pnlHead.Controls.Add(this.lblTitle);
             this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
@@ -304,18 +301,6 @@
             this.menuHideNote.Text = "&Hide note";
             this.menuHideNote.Click += new System.EventHandler(this.hideNoteToolStripMenuItem_Click);
             // 
-            // pbShowLock
-            // 
-            this.pbShowLock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbShowLock.Image = global::NoteFly.Properties.Resources.locknote;
-            this.pbShowLock.Location = new System.Drawing.Point(181, 8);
-            this.pbShowLock.Name = "pbShowLock";
-            this.pbShowLock.Size = new System.Drawing.Size(16, 16);
-            this.pbShowLock.TabIndex = 2;
-            this.pbShowLock.TabStop = false;
-            this.pbShowLock.Visible = false;
-            // 
             // btnCloseNote
             // 
             this.btnCloseNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -423,7 +408,6 @@
             this.Activated += new System.EventHandler(this.frmNote_Activated);
             this.pnlHead.ResumeLayout(false);
             this.contextMenuStripNoteOptions.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbShowLock)).EndInit();
             this.pnlNote.ResumeLayout(false);
             this.pnlNote.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
@@ -454,7 +438,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
         private System.Windows.Forms.ToolStripMenuItem menuLockNote;
         private System.ComponentModel.BackgroundWorker SavePos;
-        private System.Windows.Forms.PictureBox pbShowLock;
         private System.Windows.Forms.ToolStripMenuItem menuHideNote;
         private System.Windows.Forms.ToolStripMenuItem menuSendTo;
         private System.Windows.Forms.ToolStripMenuItem tsmenuSendToFacebook;

@@ -479,19 +479,19 @@ namespace NoteFly
 
                 WriteXMLBool("savesession", savefacebooksession);
 
-                if (savefacebooksession && !String.IsNullOrEmpty(FacebookSettings.uid) && !String.IsNullOrEmpty(FacebookSettings.sessionsecret) && !String.IsNullOrEmpty(FacebookSettings.sessionkey) && FacebookSettings.sesionexpires != 0)
+                if (savefacebooksession && !String.IsNullOrEmpty(FacebookSettings.Uid) && !String.IsNullOrEmpty(FacebookSettings.Sessionsecret) && !String.IsNullOrEmpty(FacebookSettings.Sessionkey) && FacebookSettings.Sesionexpires != 0)
                 {
-                    objXmlTextWriter.WriteElementString("uid", FacebookSettings.uid);
-                    objXmlTextWriter.WriteElementString("sesionexpires", Convert.ToString(FacebookSettings.sesionexpires));
-                    objXmlTextWriter.WriteElementString("sessionsecret", FacebookSettings.sessionsecret);
-                    objXmlTextWriter.WriteElementString("sessionkey", FacebookSettings.sessionkey);
+                    objXmlTextWriter.WriteElementString("uid", FacebookSettings.Uid);
+                    objXmlTextWriter.WriteElementString("sesionexpires", Convert.ToString(FacebookSettings.Sesionexpires));
+                    objXmlTextWriter.WriteElementString("sessionsecret", FacebookSettings.Sessionsecret);
+                    objXmlTextWriter.WriteElementString("sessionkey", FacebookSettings.Sessionkey);
                 }
                 else
                 {
-                    objXmlTextWriter.WriteElementString("uid", "");
-                    objXmlTextWriter.WriteElementString("sesionexpires", "");
-                    objXmlTextWriter.WriteElementString("sessionsecret", "");
-                    objXmlTextWriter.WriteElementString("sessionkey", "");
+                    objXmlTextWriter.WriteElementString("uid", String.Empty);
+                    objXmlTextWriter.WriteElementString("sesionexpires", String.Empty);
+                    objXmlTextWriter.WriteElementString("sessionsecret", String.Empty);
+                    objXmlTextWriter.WriteElementString("sessionkey", String.Empty);
                 }
                 objXmlTextWriter.WriteEndElement();
 

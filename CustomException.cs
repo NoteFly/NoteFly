@@ -16,7 +16,6 @@
 using System;
 using System.IO;
 
-
 namespace NoteFly
 {
     /// <summary>
@@ -25,24 +24,20 @@ namespace NoteFly
     public class CustomException : ApplicationException
     {
         /// <summary>
-        /// Initializes a new instance of the CustomExceptions class.
+        /// Initializes a new instance of the CustomException class.
         /// This let the programme crash.
         /// </summary>
         /// <param name="message">the message to log</param>
-        public CustomException(String message)
+        public CustomException(string message)
             : base("Exception: " + message)
         {
-            //check if error loging is enabled
+            // check if error loging is enabled
             xmlHandler getsetting = new xmlHandler(true);
             
             if (getsetting.getXMLnodeAsBool("logerror") == true)
             {
-                Log.write(LogType.exception, message);
-            } 
-            
+                Log.Write(LogType.exception, message);
+            }
         }
-
     }
-
-
 }

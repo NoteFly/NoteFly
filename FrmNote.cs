@@ -30,16 +30,17 @@ namespace NoteFly
     {
 		#region Fields (10)
 
+        public Notes notes;
+
         private TextHighlight highlight;
         private String note;
         private Int16 id, notecolor = 0;
-        public Notes notes;
         private Boolean notevisible = true, rolledup = false, notelock = false;
         private Skin skin;
         private Int32 locX, locY;
         private UInt16 noteWidth, noteHeight;
         private String title, twpass;
-
+        private PictureBox pbShowLock;
         private const int minvisiblesize = 5;
         private const int HT_CAPTION = 0x2;
         private const int WM_NCLBUTTONDOWN = 0xA1;
@@ -51,11 +52,10 @@ namespace NoteFly
         public FrmNote(Notes notes, Int16 id, bool visible, bool ontop, string title, string note, Int16 notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             this.notes = notes;
+            this.notevisible = visible;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.skin = new Skin(notecolor);
-            if (visible == true)
-            {
-                notevisible = true;
-            }
+            
             this.id = id;
             this.title = title;
             this.note = note;
@@ -71,33 +71,34 @@ namespace NoteFly
                 this.locX = 10;
                 this.locY = 10;
             }
-
+            
             notes.NotesUpdated = true;
 
-            if (notevisible == true)
+            if (this.notevisible)
             {
+                
                 InitializeComponent();
 
-                lblTitle.Text = title;
-                rtbNote.Text = note;
+                this.lblTitle.Text = title;
+                this.rtbNote.Text = note;
 
-                SetSizeNote(notewidth, noteheight);
-                SetPosNote();
-                CheckThings();
+                this.SetSizeNote(notewidth, noteheight);
+                this.SetPosNote();
+                this.CheckThings();
             }
             else
             {
-                this.Hide();
+                //this.Hide();
             }
 
             if (ontop)
             {
-                menuOnTop.Checked = true;
+                this.menuOnTop.Checked = true;
                 this.TopMost = true;
             }
             else
             {
-                menuOnTop.Checked = false;
+                this.menuOnTop.Checked = false;
                 this.TopMost = false;
             }
         }
@@ -249,7 +250,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void btnCloseNote_Click(object sender, EventArgs e)
         {
-            this.notevisible = false;
+            this.Visible = false;
             notes.NotesUpdated = true;
             this.Hide();
         }
@@ -269,7 +270,7 @@ namespace NoteFly
             {
                 String msgNoNetwork = "There is no network connection.";
                 MessageBox.Show(msgNoNetwork);
-                Log.write(LogType.error, msgNoNetwork);
+                Log.Write(LogType.error, msgNoNetwork);
                 return false;
             }
             #elif !win32
@@ -334,7 +335,7 @@ namespace NoteFly
             {
                 String cannotfindnote = "Cannot find note.";
                 MessageBox.Show(cannotfindnote);
-                Log.write(LogType.error, cannotfindnote);
+                Log.Write(LogType.error, cannotfindnote);
             }
             notes.EditNewNote(this.NoteID);
         }
@@ -369,8 +370,8 @@ namespace NoteFly
             }
             else
             {
-                String msgNoTitleContent = "note has no title and content";
-                Log.write(LogType.error, msgNoTitleContent);
+                String msgNoTitleContent = "Note has no title and content.";
+                Log.Write(LogType.error, msgNoTitleContent);
                 MessageBox.Show(msgNoTitleContent);
             }
         }
@@ -416,10 +417,10 @@ namespace NoteFly
             if (!notelock)
             {
                 notelock = true;
-                pbShowLock.Visible = true;
-                pbShowLock.Location = new Point(btnCloseNote.Location.X - 24, 8);
-                pbShowLock.Size = new Size(16, 16);
                 menuLockNote.Text = "lock note (click again to unlock)";
+
+                CreatePbLock();
+                
                 this.menuNoteColors.Enabled = false;
                 this.menuEditNote.Enabled = false;
                 this.menuOnTop.Enabled = false;
@@ -427,12 +428,37 @@ namespace NoteFly
             else
             {
                 notelock = false;
-                pbShowLock.Visible = false;
                 menuLockNote.Text = "lock note";
+
+                DestroyPbLock();
+
                 this.menuNoteColors.Enabled = true;
                 this.menuEditNote.Enabled = true;
                 this.menuOnTop.Enabled = true;
             }
+        }
+
+        /// <summary>
+        /// Create a PictureBox with lock picture.
+        /// </summary>
+        private void CreatePbLock()
+        {
+            this.pbShowLock = new PictureBox();
+            this.pbShowLock.Name = "pbShowLock";
+            this.pbShowLock.Location = new Point(btnCloseNote.Location.X - 24, 8);
+            this.pbShowLock.Size = new Size(16, 16);
+            this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
+            this.pbShowLock.Visible = true;
+            this.pnlHead.Controls.Add(this.pbShowLock);
+        }
+
+        /// <summary>
+        /// Removes and freese memory lock picture.
+        /// </summary>
+        private void DestroyPbLock()
+        {
+            this.pbShowLock.Visible = false;
+            this.pbShowLock.Dispose();
         }
 
         /// <summary>
@@ -446,14 +472,14 @@ namespace NoteFly
 
             if (rolledup)
             {
-                menuRollUp.Text = menuRollUp.Text+"(click again to Roll Down)";
+                this.menuRollUp.Text = menuRollUp.Text+"(click again to Roll Down)";
                 this.MinimumSize = new Size(this.MinimumSize.Width, pnlHead.Height);
                 this.Height = this.Height - pnlNote.Height;
                 this.menuRollUp.Checked = true;
             }
             else
             {
-                menuRollUp.Text = menuRollUp.Text.Substring(0, 7);
+                this.menuRollUp.Text = menuRollUp.Text.Substring(0, 7);
                 this.MinimumSize = new Size(this.MinimumSize.Width, pnlHead.Height+this.pbResizeGrip.Height);
                 this.Height = this.noteHeight;
                 this.menuRollUp.Checked = false;
@@ -626,7 +652,7 @@ namespace NoteFly
                 {
                     string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
                     xmlHandler updateposnote = new xmlHandler(notefile);
-                    updateposnote.WriteNote(this.notevisible, this.TopMost, notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
+                    updateposnote.WriteNote(this.Visible, this.TopMost, notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
                     
                 }
                 else if (notecolor < 0 || notecolor > skin.MaxNotesColors)
@@ -635,8 +661,8 @@ namespace NoteFly
                 }
                 else
                 {
-                    String msgOutOfScreen = "position note (ID:" + this.NoteID + ") is out of screen.";
-                    Log.write(LogType.error, msgOutOfScreen);
+                    String msgOutOfScreen = "Position note (ID:" + this.NoteID + ") is out of screen.";
+                    Log.Write(LogType.error, msgOutOfScreen);
                     MessageBox.Show(msgOutOfScreen);
                 }
             
@@ -658,8 +684,8 @@ namespace NoteFly
                     notecolor = i;
                     string notefile = System.IO.Path.Combine(notes.NoteSavePath, this.id + ".xml");
                     xmlHandler savenotecolor = new xmlHandler(notefile);
-                    savenotecolor.WriteNote(notevisible, menuOnTop.Checked, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
-                    Log.write(LogType.info, "color note (ID:" + this.NoteID + ") changed.");
+                    savenotecolor.WriteNote(this.NoteVisible, menuOnTop.Checked, notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                    Log.Write(LogType.info, "Color note (ID:" + this.NoteID + ") changed.");
                 }
                 else
                 {
@@ -728,7 +754,7 @@ namespace NoteFly
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
                 new Textfile(true, sfdlg.FileName, this.title, this.note);
-                Log.write(LogType.info, "note (ID:" + this.NoteID + ") saved to textfile.");
+                Log.Write(LogType.info, "Note (ID:" + this.NoteID + ") saved to textfile.");
             }
             
         }
@@ -745,7 +771,7 @@ namespace NoteFly
             if ((String.IsNullOrEmpty(note) == false) && (note.Length < 140))
             {
                 tweetnote();
-                Log.write(LogType.info, "note send to twitter.");
+                Log.Write(LogType.info, "Note send to twitter.");
             }
             else if (note.Length > 140)
             {
@@ -755,14 +781,14 @@ namespace NoteFly
                 if (result == DialogResult.Yes)
                 {
                     tweetnote();
-                    Log.write(LogType.info, "shorted note send to twitter.");
+                    Log.Write(LogType.info, "Shorted note send to twitter.");
                 }
             }
             else
             {
                 String emptynote = "Note is empty.";
                 MessageBox.Show(emptynote);
-                Log.write(LogType.error, emptynote);
+                Log.Write(LogType.error, emptynote);
             }
         }
 
@@ -783,9 +809,9 @@ namespace NoteFly
 
             if (String.IsNullOrEmpty(twitteruser))
             {
-                String notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
+                string notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
                 MessageBox.Show(notwusername);
-                Log.write(LogType.error, notwusername);
+                Log.Write(LogType.error, notwusername);
                 FrmSettings settings = new FrmSettings(notes);
                 settings.Show();
                 return;
@@ -823,7 +849,7 @@ namespace NoteFly
                 {
                     String sendtwfail = "Sending note to twitter failed.";
                     MessageBox.Show(sendtwfail);
-                    Log.write(LogType.error, sendtwfail);
+                    Log.Write(LogType.error, sendtwfail);
                 }
                 twpass.Remove(0);
             }
