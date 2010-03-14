@@ -18,6 +18,7 @@ namespace NoteFly
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text;
     using System.Windows.Forms;
 
     /// <summary>
@@ -25,7 +26,7 @@ namespace NoteFly
     /// </summary>
     public class Notes
     {
-        #region Fields (9) 
+        #region Fields (9)
 
         /// <summary>
         /// The default number color.
@@ -82,7 +83,7 @@ namespace NoteFly
         #region Properties (7)
 
         /// <summary>
-        /// Get or set if notes HTML content note are highlighted.
+        /// Get or sets if notes HTML content note are highlighted.
         /// </summary>
         public bool HighlightHTML { get; set; }
 
@@ -136,6 +137,7 @@ namespace NoteFly
                 {
                     throw new Exception("Too many notes.");
                 }
+
                 return numnotes;
             }
         }
@@ -194,7 +196,11 @@ namespace NoteFly
                 short newid = Convert.ToInt16(this.noteslst.Count + 1);
                 string notefilenm = this.SaveNewNote(newid, title, content, this.defaultcolor);
                 Log.Write(LogType.info, "note created: " + notefilenm);
-                if (String.IsNullOrEmpty(notefilenm)) { throw new CustomException("cannot create filename."); }
+                if (String.IsNullOrEmpty(notefilenm))
+                {
+                    throw new CustomException("cannot create filename.");
+                }
+
                 FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
                 this.noteslst.Add(newnote);
                 newnote.StartPosition = FormStartPosition.Manual;
@@ -202,7 +208,7 @@ namespace NoteFly
             }
             catch (Exception exc)
             {
-                throw new CustomException(exc.Message+" "+exc.StackTrace);
+                throw new CustomException(exc.Message + " " + exc.StackTrace);
             }
         }
 
@@ -225,7 +231,6 @@ namespace NoteFly
             {
                 throw new CustomException("Note not found in memory.");
             }
-
         }
 
         /// <summary>
@@ -244,15 +249,15 @@ namespace NoteFly
             {
                 this.transparecy = false;
             }
+
             if (getSettings.getXMLnodeAsBool("highlightHTML"))
             {
                 this.HighlightHTML = true;
             }
 
-            this.textdirection = Convert.ToInt16(getSettings.getXMLnodeAsInt("textdirection"));
             this.notesavepath = getSettings.getXMLnode("notesavepath");
+            this.textdirection = Convert.ToInt16(getSettings.getXMLnodeAsInt("textdirection"));
             this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
-
             if (getSettings.getXMLnodeAsBool("savesession") == true)
             {
                 FacebookSettings.Uid = getSettings.getXMLnode("uid");
@@ -305,7 +310,7 @@ namespace NoteFly
             this.noteslst[notelstpos].CheckThings();
             this.noteslst[notelstpos].UpdateThisNote();
             this.notesupdated = true;
-            Log.Write(LogType.info, ("Update note ID:"+noteid));
+            Log.Write(LogType.info, ("Update note ID:" + noteid));
         }
 
         // Private Methods (4) 
@@ -347,10 +352,6 @@ namespace NoteFly
             {
                 short newid = Convert.ToInt16(this.noteslst.Count + 1);
                 FrmNote newnote = new FrmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewidth, noteheight);
-                if (visible)
-                {
-                    newnote.Show();
-                }
                 return newnote;
             }
             catch (Exception exc)
@@ -371,7 +372,7 @@ namespace NoteFly
                 DialogResult result = MessageBox.Show(notefoldernoteexist, "notefolder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
-                    Log.Write(LogType.error, (notefoldernoteexist+" No"));
+                    Log.Write(LogType.error, (notefoldernoteexist + " No"));
                     return;
                 }
                 else
@@ -396,7 +397,8 @@ namespace NoteFly
 
                 this.noteslst.Add(this.CreateNote(noteSettingBool[0], noteSettingBool[1], title, content, notecolor, noteSettingsInt[1], noteSettingsInt[2], noteSettingsInt[3], noteSettingsInt[4]));
                 id++;
-                if (this.CheckLimitNotes(id)) { 
+                if (this.CheckLimitNotes(id))
+                {
                     string toomanynotes = "Too many notes to load.";
                     MessageBox.Show(toomanynotes);
                     Log.Write(LogType.error, toomanynotes);
@@ -418,21 +420,22 @@ namespace NoteFly
                 int tipnoteheight = 280;
                 int tipnoteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2));
                 int tipnoteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2));
-                this.noteslst.Add(this.CreateNote(true, false, "Example",
-                    ("This is a example note.\r\n"+
-                    "Please close the installer now."+
-                    "You can chance colour of this note by rightclicking on this note.\r\n" +
-                    "You can delete this note, by rightclicking the systray icon choice manage notes\r\n"+
-                    "and then press delete note button for this particuler note.\r\n"+
-                    "By clicking on the cross on this note this note will be hidden.\r\n"+
-                    "You can get it back with the manage notes window.\r\n"),0,tipnoteposx,tipnoteposy,tipnotewidth,tipnoteheight));
+                StringBuilder notecontent = new StringBuilder();
+                notecontent.AppendLine("This is a example note.");
+                notecontent.Append("Please close the installer now.");
+                notecontent.AppendLine("You can chance colour of this note by rightclicking on this note.");
+                notecontent.AppendLine("You can delete this note, by rightclicking the systray icon choice manage notes");
+                notecontent.AppendLine("and then press delete note button for this particuler note.");
+                notecontent.AppendLine("By clicking on the cross on this note this note will be hidden.");
+                notecontent.AppendLine("You can get it back with the manage notes window.");
+                this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
             }
 
-            #if DEBUG
+#if DEBUG
             Log.Write(LogType.info, "start stress test");
             this.LoadNotesStressTest(10);
             Log.Write(LogType.info, "finished stress test");
-            #endif
+#endif
         }
 
         /// <summary>
@@ -443,7 +446,7 @@ namespace NoteFly
         /// <param name="text">the content of the note.</param>
         /// <param name="numcolor">the color number.</param>
         /// <returns>filepath of the created note.</returns>
-        private string SaveNewNote(int id, string title, string text, Int16 numcolor)
+        private string SaveNewNote(int id, string title, string text, short numcolor)
         {
             string notefile = Path.Combine(this.notesavepath, id + ".xml");
             xmlHandler xmlnote = new xmlHandler(notefile);
@@ -454,9 +457,9 @@ namespace NoteFly
             return notefile;
         }
 
-		#endregion Methods 
+        #endregion Methods
 
-        #if DEBUG
+#if DEBUG
         /// <summary>
         /// Methode that creates some notes with a hardcoded text and random color 
         /// for stress testing this application.
@@ -470,7 +473,7 @@ namespace NoteFly
             {
                 bool visible = true;
                 bool ontop = false;
-                string title = "test nr." + id+" testalongtitlesoiteasytoseeifresizingofmanagenoteisdonecorrectlyblablabla";
+                string title = "test nr." + id + " testalongtitlesoiteasytoseeifresizingofmanagenoteisdonecorrectlyblablabla";
                 string content = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
                                  "warning: To prevent this note from saving don't move or touch it!";
                 short notecolor = Convert.ToInt16(ran.Next(0, 6));
@@ -481,7 +484,8 @@ namespace NoteFly
 
                 this.noteslst.Add(this.CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
 
-                if (this.CheckLimitNotes(id)) { 
+                if (this.CheckLimitNotes(id))
+                {
                     string maxnoteslimit = "Maximum notes limit reached.";
                     MessageBox.Show(maxnoteslimit);
                     Log.Write(LogType.error, maxnoteslimit);
@@ -489,6 +493,6 @@ namespace NoteFly
                 }
             }
         }
-        #endif
+#endif
     }
 }

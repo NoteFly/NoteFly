@@ -70,12 +70,12 @@
             this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNote.Size = new System.Drawing.Size(271, 196);
             this.rtbNote.TabIndex = 1;
-            this.rtbNote.Text = "";
+            this.rtbNote.Text = string.Empty;
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
             this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
-            this.rtbNote.TextChanged += new System.EventHandler(this.checksyntax);
+            this.rtbNote.TextChanged += new System.EventHandler(this.Checksyntax);
             // 
             // contextMenuStripTextActions
             // 

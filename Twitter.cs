@@ -30,10 +30,17 @@ namespace NoteFly
     {
 		#region Fields (5) 
 
-        private string source = null;
-        //used twitter ip to prevented dns lookup, against dns attacks.
+        /// <summary>
+        /// The url of twitter.
+        /// </summary>
         protected const string TwitterBaseUrlFormat = "http://168.143.162.68/{0}/{1}.{2}";
-        private const string twitterClientUrl = "http://code.google.com/p/simpleplainnote/";
+
+        /// <summary>
+        /// The client url
+        /// </summary>
+        private const string twitterClientUrl = "http://www.notefly.tk/";
+        
+        ////private string source = null;
 
 		#endregion Fields 
 
@@ -52,19 +59,7 @@ namespace NoteFly
 		#region Properties (3) 
 
         /// <summary>
-        /// Source is an additional parameters that will be used to fill the "From" field.
-        /// Currently you must talk to the developers of Twitter at:
-        /// http://groups.google.com/group/twitter-development-talk/
-        /// Otherwise, Twitter will simply ignore this parameter and set the "From" field to "web".
-        /// </summary>
-        public string Source
-        {
-            get { return this.source; }
-            set { this.source = value; }
-        }
-
-        /// <summary>
-        /// Sets the URL of the Twitter client.
+        /// Gets the URL of the Twitter client.
         /// Must be in the XML format documented in the "Request Headers" section at:
         /// http://twitter.pbwiki.com/API-Docs.
         /// According to the Twitter Fan Wiki at http://twitter.pbwiki.com/API-Docs and supported by
@@ -149,9 +144,9 @@ namespace NoteFly
                 {
                     request.Headers.Add("X-Twitter-URL", this.TwitterClientUrl);
                 }
-                if (!string.IsNullOrEmpty(this.Source))
+                if (!string.IsNullOrEmpty(this.TwitterClientUrl))
                 {
-                    data += "&source=" + HttpUtility.UrlEncode(this.Source);
+                    data += "&source=" + HttpUtility.UrlEncode(this.TwitterClientUrl);
                 }
                 byte[] bytes = Encoding.UTF8.GetBytes(data);
 

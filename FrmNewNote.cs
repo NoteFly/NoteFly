@@ -13,23 +13,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
 
 namespace NoteFly
 {
+    using System;
+    using System.Drawing;
+    using System.Runtime.InteropServices;
+    using System.Windows.Forms;
+
     /// <summary>
     /// Class to create new note.
     /// </summary>
     public partial class FrmNewNote : Form
     {
 		#region Fields (5) 
-
+#if win32
+        public const int HT_CAPTION = 0x2;
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+#endif
         private bool editnote = false;
         private int editnoteid = -1;
-        private Int16 notecolor;
+        private short notecolor;
         private Notes notes;
         private Skin skin;
         private TextHighlight highlight;
@@ -46,7 +50,7 @@ namespace NoteFly
         /// <param name="editnoteid">The noteid to edit.</param>
         /// <param name="editnotetitle">The title of the note to edit.</param>
         /// <param name="editnotecontent">The content of the note to edit.</param>
-        public FrmNewNote(Notes notes, Int16 notecolor, int editnoteid, string editnotetitle, string editnotecontent)
+        public FrmNewNote(Notes notes, short notecolor, int editnoteid, string editnotetitle, string editnotecontent)
         {
             this.InitializeComponent();
             this.editnote = true;
@@ -68,14 +72,14 @@ namespace NoteFly
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
         /// <param name="notecolor">The default note color.</param>
-        public FrmNewNote(Notes notes, Int16 notecolor)
+        public FrmNewNote(Notes notes, short notecolor)
         {
             this.InitializeComponent();
             this.editnote = false;
             this.notes = notes;
             this.notecolor = notecolor;
             this.skin = new Skin(notecolor);
-            this.ResetNewNoteForm("", "");
+            this.ResetNewNoteForm(String.Empty, String.Empty);
             this.tbTitle.Focus();
             this.tbTitle.Select();
         }
@@ -92,26 +96,26 @@ namespace NoteFly
         /// <param name="sender">sender object</param>
         /// <param name="e"></param>
         private void btnAddNote_Click(object sender, EventArgs e)
-        {            
-            if (String.IsNullOrEmpty(tbTitle.Text))
+        {
+            if (String.IsNullOrEmpty(this.tbTitle.Text))
             {
-                tbTitle.BackColor = skin.GetObjColor(false, false, true);
-                tbTitle.Text = DateTime.Now.ToString();
+                this.tbTitle.BackColor = this.skin.GetObjColor(false, false, true);
+                this.tbTitle.Text = DateTime.Now.ToString();
             }
-            else if (String.IsNullOrEmpty(rtbNote.Text))
+            else if (String.IsNullOrEmpty(this.rtbNote.Text))
             {
-                rtbNote.BackColor = skin.GetObjColor(false, false, true);
-                rtbNote.Text = "Please type any note content, like this for example.";
+                this.rtbNote.BackColor = this.skin.GetObjColor(false, false, true);
+                this.rtbNote.Text = "Please type any note content, like this for example.";
             }
             else
             {
-                if (editnote)
+                if (this.editnote)
                 {
-                    notes.UpdateNote(editnoteid, this.tbTitle.Text, this.rtbNote.Text, true);
+                    this.notes.UpdateNote(this.editnoteid, this.tbTitle.Text, this.rtbNote.Text, true);
                 }
                 else
                 {
-                    notes.DrawNewNote(tbTitle.Text, rtbNote.Text, notecolor);
+                    this.notes.DrawNewNote(this.tbTitle.Text, this.rtbNote.Text, this.notecolor);
                 }
                 this.Close();
             }
@@ -121,13 +125,13 @@ namespace NoteFly
         /// User pressed the cancel button, all things typed in FrmNewNote window will be lost.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
             int posnotelst = this.editnoteid - 1;
-            if ((this.editnote) && (posnotelst >= 0) && (posnotelst < notes.NumNotes))
-            {                
-                notes.GetNotes[posnotelst].Show();
+            if (this.editnote && posnotelst >= 0 && posnotelst < this.notes.NumNotes)
+            {
+                this.notes.GetNotes[posnotelst].Show();
             }
             this.Close();
         }
@@ -135,23 +139,25 @@ namespace NoteFly
         /// <summary>
         /// syntax highlighting
         /// </summary>
-        private void checksyntax(object sender, EventArgs e)
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
+        private void Checksyntax(object sender, EventArgs e)
         {
-            if (notes.HighlightHTML == true)
+            if (this.notes.HighlightHTML == true)
             {
                 if (this.highlight == null)
                 {
-                    this.highlight = new TextHighlight(this.rtbNote, notes.HighlightHTML);
-                    setupfirsthighlight = true;
+                    this.highlight = new TextHighlight(this.rtbNote, this.notes.HighlightHTML);
+                    this.setupfirsthighlight = true;
                 }
-                else if (setupfirsthighlight)
+                else if (this.setupfirsthighlight)
                 {
                     this.highlight.CheckSyntaxFull();
-                    setupfirsthighlight = false;
+                    this.setupfirsthighlight = false;
                 }
-                else if ((this.highlight != null) && (!String.IsNullOrEmpty(rtbNote.Text)))
+                else if ((this.highlight != null) && (!String.IsNullOrEmpty(this.rtbNote.Text)))
                 {
-                    this.highlight.CheckSyntaxQuick(rtbNote.SelectionStart - 1);
+                    this.highlight.CheckSyntaxQuick(this.rtbNote.SelectionStart - 1);
                 }
             }
             
@@ -161,26 +167,26 @@ namespace NoteFly
         /// Copy the note content.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(rtbNote.Text);
+            Clipboard.SetText(this.rtbNote.Text);
         }
 
         /// <summary>
         /// Check whether pastTextToolStripMenuItem should be enabled.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void copyTextToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
             {
-                pastTextToolStripMenuItem.Enabled = true;
+                this.pastTextToolStripMenuItem.Enabled = true;
             }
             else
             {
-                pastTextToolStripMenuItem.Enabled = false;
+                this.pastTextToolStripMenuItem.Enabled = false;
             }
         }
 
@@ -188,10 +194,10 @@ namespace NoteFly
         /// Form got focus, remove transparency.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void frmNewNote_Activated(object sender, EventArgs e)
         {
-            if (notes.Transparency)
+            if (this.notes.Transparency)
             {
                 this.Opacity = 1.0;
             }
@@ -201,12 +207,12 @@ namespace NoteFly
         /// Form lost focus, make transparent.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void frmNewNote_Deactivate(object sender, EventArgs e)
         {
-            if ((notes.Transparency) && (skin != null))
+            if (this.notes.Transparency && this.skin != null)
             {
-                this.Opacity = skin.GetTransparencylevel();
+                this.Opacity = this.skin.GetTransparencylevel();
                 this.Refresh();
             }
         }
@@ -215,12 +221,12 @@ namespace NoteFly
         /// Pasting text as note content.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void pastTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
             {
-                rtbNote.Text = rtbNote.Text + Clipboard.GetText();
+                this.rtbNote.Text = this.rtbNote.Text + Clipboard.GetText();
             }
             else
             {
@@ -234,7 +240,7 @@ namespace NoteFly
         /// Resizing the note.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -249,18 +255,18 @@ namespace NoteFly
         /// Moving the note.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void pnlHeadNewNote_MouseDown(object sender, MouseEventArgs e)
         {
-            if (skin != null)
+            if (this.skin != null)
             {
-                pnlHeadNewNote.BackColor = skin.GetObjColor(true);
+                this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(true);
                 #if win32
                 if (e.Button == MouseButtons.Left)
                 {
                     ReleaseCapture();
                     SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                    pnlHeadNewNote.BackColor = skin.GetObjColor(false);
+                    this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(false);
                 }
                 #endif
             }
@@ -270,7 +276,7 @@ namespace NoteFly
         /// Show context menu.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void pnlNoteEdit_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -284,32 +290,32 @@ namespace NoteFly
         /// </summary>
         private void ResetNewNoteForm(string title, string content)
         {
-            if (skin == null) return;
+            if (this.skin == null) return;
 
-            rtbNote.Font = skin.GetFontNoteContent();
+            this.rtbNote.Font = this.skin.GetFontNoteContent();
 
-            Color normalcolor = skin.GetObjColor(false);
-            pnlNoteEdit.BackColor = normalcolor;
-            rtbNote.BackColor = normalcolor;
-            pnlHeadNewNote.BackColor = normalcolor;
+            Color normalcolor = this.skin.GetObjColor(false);
+            this.pnlNoteEdit.BackColor = normalcolor;
+            this.rtbNote.BackColor = normalcolor;
+            this.pnlHeadNewNote.BackColor = normalcolor;
 
-            if (notes.TextDirection == 0)
+            if (this.notes.TextDirection == 0)
             {
                 this.tbTitle.TextAlign = HorizontalAlignment.Left;
                 this.rtbNote.SelectionAlignment = HorizontalAlignment.Left;
             }
-            else if (notes.TextDirection == 1)
+            else if (this.notes.TextDirection == 1)
             {
                 this.tbTitle.TextAlign = HorizontalAlignment.Right;
                 this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
             }
 
-            pnlNoteEdit.Refresh();
-            rtbNote.Refresh();
-            pnlHeadNewNote.Refresh();
+            this.pnlNoteEdit.Refresh();
+            this.rtbNote.Refresh();
+            this.pnlHeadNewNote.Refresh();
 
-            tbTitle.Text = title;
-            rtbNote.Text = content;
+            this.tbTitle.Text = title;
+            this.rtbNote.Text = content;
         }
 
         /// <summary>
@@ -317,7 +323,7 @@ namespace NoteFly
         /// to be showed, if not then directly launch the URL.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             xmlHandler getSettings = new xmlHandler(true);
@@ -326,12 +332,12 @@ namespace NoteFly
                 DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    LoadUrl(e.LinkText);
+                    this.LoadUrl(e.LinkText);
                 }
             }
             else
             {
-                LoadUrl(e.LinkText);
+                this.LoadUrl(e.LinkText);
             }
         }
 
@@ -349,7 +355,7 @@ namespace NoteFly
         /// Force context menu to show up.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void rtbNote_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -363,13 +369,13 @@ namespace NoteFly
         /// </summary>
         private void setTextDirection()
         {
-            if (notes.TextDirection == 0)
+            if (this.notes.TextDirection == 0)
             {
-                tbTitle.TextAlign = HorizontalAlignment.Left;
+                this.tbTitle.TextAlign = HorizontalAlignment.Left;
             }
-            else if (notes.TextDirection == 1)
+            else if (this.notes.TextDirection == 1)
             {
-                tbTitle.TextAlign = HorizontalAlignment.Right;
+                this.tbTitle.TextAlign = HorizontalAlignment.Right;
             }
         }
 
@@ -377,44 +383,41 @@ namespace NoteFly
 		#endregion Methods 
 
         #if win32
-        public const int HT_CAPTION = 0x2;
-        public const int WM_NCLBUTTONDOWN = 0xA1;
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
         [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd,
-        int Msg, int wParam, int lParam);
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         #endif
 
 
         #region highlight controls
         private void tbTitle_Enter(object sender, EventArgs e)
         {
-            if (skin != null)
+            if (this.skin != null)
             {
-                tbTitle.BackColor = skin.GetObjColor(false, true, false);
+                this.tbTitle.BackColor = this.skin.GetObjColor(false, true, false);
             }
         }
         private void tbTitle_Leave(object sender, EventArgs e)
         {
-            if (skin != null)
+            if (this.skin != null)
             {
-                tbTitle.BackColor = skin.GetObjColor(false);
+                this.tbTitle.BackColor = this.skin.GetObjColor(false);
             }
         }
         private void rtbNote_Enter(object sender, EventArgs e)
         {
-            if (skin != null)
+            if (this.skin != null)
             {
-                rtbNote.BackColor = skin.GetObjColor(false, true, false);
+                this.rtbNote.BackColor = this.skin.GetObjColor(false, true, false);
             }
         }
 
         private void rtbNote_Leave(object sender, EventArgs e)
         {
-            if (skin != null)
+            if (this.skin != null)
             {
-                rtbNote.BackColor = skin.GetObjColor(false);
+                this.rtbNote.BackColor = this.skin.GetObjColor(false);
             }
         }
         #endregion

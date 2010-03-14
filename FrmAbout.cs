@@ -16,9 +16,9 @@
 namespace NoteFly
 {
     using System;
+    using System.Drawing;
     using System.Reflection;
     using System.Windows.Forms;
-    using System.Drawing;
 
     /// <summary>
     /// About window.
@@ -33,7 +33,7 @@ namespace NoteFly
         public FrmAbout()
         {
             this.InitializeComponent();
-            this.Text = "About "+TrayIcon.AssemblyTitle;
+            this.Text = "About " + TrayIcon.AssemblyTitle;
             this.lblProductName.Text = TrayIcon.AssemblyTitle;
             this.lblVersion.Text = String.Format("Version {0}", TrayIcon.AssemblyVersion);
         }
@@ -48,7 +48,7 @@ namespace NoteFly
         /// The FAQ link is clicked in the about dialog.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.notefly.tk/faq.php");
@@ -58,7 +58,7 @@ namespace NoteFly
         /// The Website link is clicked in the about dialog.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.notefly.tk/");
@@ -68,7 +68,7 @@ namespace NoteFly
         /// An OK button is clicked, close FrmAbout.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void okButton_Click(object sender, EventArgs e)
         {
             this.Close();

@@ -1,7 +1,7 @@
 ﻿namespace NoteFly
 {
     /// <summary>
-    /// Note.
+    /// The Note.
     /// </summary>
     partial class FrmNote
     {
@@ -144,7 +144,7 @@
             this.yellowToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.yellowToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.yellowToolStripMenuItem.Name = "yellowToolStripMenuItem";
-            this.yellowToolStripMenuItem.ShortcutKeyDisplayString = "";
+            this.yellowToolStripMenuItem.ShortcutKeyDisplayString = string.Empty;
             this.yellowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
                         | System.Windows.Forms.Keys.D1)));
             this.yellowToolStripMenuItem.ShowShortcutKeys = false;

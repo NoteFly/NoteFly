@@ -13,9 +13,9 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -396,7 +396,7 @@
             // 
             // lbTextDirection
             // 
-            this.lbTextDirection.AccessibleDescription = "";
+            this.lbTextDirection.AccessibleDescription = string.Empty;
             this.lbTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lbTextDirection.AutoSize = true;
             this.lbTextDirection.Location = new System.Drawing.Point(18, 165);

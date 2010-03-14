@@ -45,16 +45,38 @@ namespace NoteFly
         /// </summary>
         private static NotifyIcon icon;
 
-        private static ToolStripMenuItem MenuAbout;
-        private static ToolStripMenuItem MenuExit;
-        private static ToolStripMenuItem MenuManageNotes;
-        private static ToolStripMenuItem MenuNewNote;
-        private static ToolStripMenuItem MenuSettings;
-        private static ContextMenuStrip MenuTrayIcon;
+        /// <summary>
+        /// About menu option
+        /// </summary>
+        private static ToolStripMenuItem menuAbout;
+
+        /// <summary>
+        /// Exit menu option
+        /// </summary>
+        private static ToolStripMenuItem menuExit;
+
+        /// <summary>
+        /// Manage notes menu option
+        /// </summary>
+        private static ToolStripMenuItem menuManageNotes;
+
+        /// <summary>
+        /// New note menu option
+        /// </summary>
+        private static ToolStripMenuItem menuNewNote;
+
+        /// <summary>
+        /// Settings application menu option
+        /// </summary>
+        private static ToolStripMenuItem menuSettings;
+
+        /// <summary>
+        /// The trayicon contextmenu
+        /// </summary>
+        private static ContextMenuStrip menuTrayIcon;
         private static bool newnoteshowed = false;
         private static Notes notes;
-        //static bool settingshowed = false;
-        static bool transparency = true;
+        private static bool transparency = true;
 
 		#endregion Fields 
 
@@ -79,9 +101,11 @@ namespace NoteFly
                 return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
+
         /// <summary>
         /// The application version number.
         /// </summary>
+        /// <returns>a string containing the version number of this application in the form of major.minur.build number</returns>
         public static string AssemblyVersion
         {
             get
@@ -89,7 +113,7 @@ namespace NoteFly
                 int majorver = Assembly.GetExecutingAssembly().GetName().Version.Major;
                 int minorver = Assembly.GetExecutingAssembly().GetName().Version.Minor;
                 int buildver = Assembly.GetExecutingAssembly().GetName().Version.Build;
-                return majorver+"."+minorver+"."+buildver;
+                return majorver + "." + minorver + "." + buildver;
             }
         }
 
@@ -103,7 +127,7 @@ namespace NoteFly
         /// get actionleftclick setting
         /// </summary>
         /// <returns></returns>
-        private static short getActionLeftClick()
+        private static short GetActionLeftClick()
         {
             xmlHandler getSettings = new xmlHandler(true);
             return Convert.ToInt16(getSettings.getXMLnodeAsInt("actionleftclick"));
@@ -113,7 +137,7 @@ namespace NoteFly
         /// get defaultcolor setting
         /// </summary>
         /// <returns></returns>
-        private static short getDefaultColor()
+        private static short GetDefaultColor()
         {
             xmlHandler xmlSettings = new xmlHandler(true);
             short color = Convert.ToInt16(xmlSettings.getXMLnodeAsInt("defaultcolor"));
@@ -122,6 +146,7 @@ namespace NoteFly
             {
                 color = Convert.ToInt16(new Random().Next(0, 7));
             }
+
             return color;
         }
 
@@ -156,16 +181,16 @@ namespace NoteFly
 
             //start building icon and icon contextmenu
             icon = new System.Windows.Forms.NotifyIcon(components);
-            MenuTrayIcon = new System.Windows.Forms.ContextMenuStrip(components);
-            MenuTrayIcon.AllowDrop = false;
-            MenuNewNote = new System.Windows.Forms.ToolStripMenuItem();
-            MenuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
-            MenuSettings = new System.Windows.Forms.ToolStripMenuItem();
-            MenuAbout = new System.Windows.Forms.ToolStripMenuItem();
-            MenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            menuTrayIcon = new System.Windows.Forms.ContextMenuStrip(components);
+            menuTrayIcon.AllowDrop = false;
+            menuNewNote = new System.Windows.Forms.ToolStripMenuItem();
+            menuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
+            menuSettings = new System.Windows.Forms.ToolStripMenuItem();
+            menuAbout = new System.Windows.Forms.ToolStripMenuItem();
+            menuExit = new System.Windows.Forms.ToolStripMenuItem();
 
             icon = new NotifyIcon(components);
-            icon.ContextMenuStrip = MenuTrayIcon;
+            icon.ContextMenuStrip = menuTrayIcon;
             Assembly assembly = Assembly.GetExecutingAssembly();
             icon.Icon = new Icon(assembly.GetManifestResourceStream("NoteFly.Resources.trayicon.ico"));
 
@@ -174,45 +199,45 @@ namespace NoteFly
 
             icon.ContextMenuStrip.Name = "MenuTrayIcon";
             icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
-            MenuNewNote,
-            MenuManageNotes,
-            MenuSettings,
-            MenuAbout,
-            MenuExit});
+            menuNewNote,
+            menuManageNotes,
+            menuSettings,
+            menuAbout,
+            menuExit});
             icon.ContextMenuStrip.ShowImageMargin = false;
             icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
 
             // MenuNewNote
-            MenuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            MenuNewNote.Name = "MenuNewNote";
-            MenuNewNote.Size = new System.Drawing.Size(144, 22);
-            MenuNewNote.Text = "&Create a new note";
-            MenuNewNote.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
-            MenuNewNote.Click += new System.EventHandler(MenuNewNote_Click);
+            menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            menuNewNote.Name = "MenuNewNote";
+            menuNewNote.Size = new System.Drawing.Size(144, 22);
+            menuNewNote.Text = "&Create a new note";
+            menuNewNote.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
+            menuNewNote.Click += new System.EventHandler(MenuNewNote_Click);
             // MenuManageNotes
-            MenuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            MenuManageNotes.Name = "listToolStripMenuItem";
-            MenuManageNotes.Size = new System.Drawing.Size(144, 22);
-            MenuManageNotes.Text = "&Manage notes";
-            MenuManageNotes.Click += new System.EventHandler(MenuManageNotes_Click);
+            menuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            menuManageNotes.Name = "listToolStripMenuItem";
+            menuManageNotes.Size = new System.Drawing.Size(144, 22);
+            menuManageNotes.Text = "&Manage notes";
+            menuManageNotes.Click += new System.EventHandler(MenuManageNotes_Click);
             // MenuSettings
-            MenuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            MenuSettings.Name = "MenuSettings";
-            MenuSettings.Size = new System.Drawing.Size(144, 22);
-            MenuSettings.Text = "&Settings";
-            MenuSettings.Click += new System.EventHandler(MenuSettings_Click);
+            menuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            menuSettings.Name = "MenuSettings";
+            menuSettings.Size = new System.Drawing.Size(144, 22);
+            menuSettings.Text = "&Settings";
+            menuSettings.Click += new System.EventHandler(MenuSettings_Click);
             // MenuAbout
-            MenuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            MenuAbout.Name = "MenuAbout";
-            MenuAbout.Size = new System.Drawing.Size(144, 22);
-            MenuAbout.Text = "About";
-            MenuAbout.Click += new System.EventHandler(MenuAbout_Click);
+            menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            menuAbout.Name = "MenuAbout";
+            menuAbout.Size = new System.Drawing.Size(144, 22);
+            menuAbout.Text = "About";
+            menuAbout.Click += new System.EventHandler(MenuAbout_Click);
             // MenuExit
-            MenuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            MenuExit.Name = "MenuExit";
-            MenuExit.Size = new System.Drawing.Size(144, 22);
-            MenuExit.Text = "E&xit";
-            MenuExit.Click += new System.EventHandler(MenuExit_Click);
+            menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            menuExit.Name = "MenuExit";
+            menuExit.Size = new System.Drawing.Size(144, 22);
+            menuExit.Text = "E&xit";
+            menuExit.Click += new System.EventHandler(MenuExit_Click);
 
             Application.Run();
         }
@@ -227,12 +252,12 @@ namespace NoteFly
         /// If actionleftclick is 2 create a new note.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private static void Icon_Click(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                short actionleftclick = getActionLeftClick();
+                short actionleftclick = GetActionLeftClick();
                 if (actionleftclick == 1)
                 {
                     for (int i = 0; i < notes.NumNotes; i++)
@@ -244,7 +269,7 @@ namespace NoteFly
                 {
                     if (!newnoteshowed)
                     {
-                        FrmNewNote newnote = new FrmNewNote(notes, getDefaultColor());
+                        FrmNewNote newnote = new FrmNewNote(notes, GetDefaultColor());
                         newnote.Show();
                         newnoteshowed = true;
                     }
@@ -263,7 +288,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private static void MenuNewNote_Click(object sender, EventArgs e)
         {
-            FrmNewNote newnote = new FrmNewNote(notes, getDefaultColor());
+            FrmNewNote newnote = new FrmNewNote(notes, GetDefaultColor());
             newnote.Show();
         }
 
@@ -271,10 +296,10 @@ namespace NoteFly
         /// open manage notes window
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">event argument</param>
         private static void MenuManageNotes_Click(object sender, EventArgs e)
         {
-            FrmManageNotes managenotes = new FrmManageNotes(notes, transparency, getDefaultColor());
+            FrmManageNotes managenotes = new FrmManageNotes(notes, transparency, GetDefaultColor());
             managenotes.Show();
         }
 
@@ -282,7 +307,7 @@ namespace NoteFly
         /// Open settings window.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event argument</param>
         private static void MenuSettings_Click(object sender, EventArgs e)
         {
             FrmSettings settings = new FrmSettings(notes);
@@ -293,7 +318,7 @@ namespace NoteFly
         /// Open about window.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event argument</param>
         private static void MenuAbout_Click(object sender, EventArgs e)
         {
             FrmAbout about = new FrmAbout();
@@ -306,21 +331,22 @@ namespace NoteFly
         /// if confirm box is still open then shutdown anyway.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event argument</param>
         private static void MenuExit_Click(object sender, EventArgs e)
         {
             xmlHandler getSetting = new xmlHandler(true);
 
             if (getSetting.getXMLnodeAsBool("confirmexit"))
             {
-                if (!confirmexitshowed) //two times exit in contextmenu systray icon will alway exit.
+                // two times exit in contextmenu systray icon will always exit.
+                if (!confirmexitshowed) 
                 {
                     confirmexitshowed = true;
                     string AssemblyProduct;
                     object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
                     if (attributes.Length == 0)
                     {
-                        AssemblyProduct = "";
+                        AssemblyProduct = String.Empty;
                     }
                     AssemblyProduct = ((AssemblyProductAttribute)attributes[0]).Product;
 

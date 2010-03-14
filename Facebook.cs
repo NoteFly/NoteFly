@@ -28,7 +28,7 @@ namespace NoteFly
     /// </summary>
     public static class FacebookSettings
     {
-        // Fields (4) 
+        // Fields (4) 
 
         /// <summary>
         /// Gets or sets the unix time when the facebook session expires
@@ -56,7 +56,7 @@ namespace NoteFly
     /// </summary>
     public class Facebook
     {
-		// Fields (9) 
+        // Fields(9)
 
         /// <summary>
         /// The API version.
@@ -103,9 +103,9 @@ namespace NoteFly
         /// </summary>
         private string sig;
 
-        // Methods (10) 
+        // Methods(10)
 
-        // Public Methods (5) 
+        // Public Methods(5)
 
         /// <summary>
         /// parser xml response, return errorcode if it returned by facebook.
@@ -235,6 +235,7 @@ namespace NoteFly
                             this.sig = curparm.Substring(7, curparm.Length - 8);
                         }
                     }
+
                     return true;
                 }
                 else
@@ -295,6 +296,7 @@ namespace NoteFly
                     request.Proxy = new WebProxy(settting.getXMLnode("proxyaddr"));
                 }
             }
+
             if (settting.getXMLnodeAsBool("savesession"))
             {
                 try
@@ -332,6 +334,7 @@ namespace NoteFly
                     Log.Write(LogType.exception, fbsessionsave);
                 }
             }
+
             request.Timeout = settting.getXMLnodeAsInt("timeout");
 
             string data = this.CreatePostData(message);
@@ -363,6 +366,7 @@ namespace NoteFly
                     Log.Write(LogType.exception, exc.Message);
                 }
             }
+
             return null;
         }
 
@@ -404,7 +408,7 @@ namespace NoteFly
             }
         }
 
-        // Private Methods (5) 
+        // Private Methods(5)
 
         /// <summary>
         /// Construct a right login url.
@@ -484,7 +488,7 @@ namespace NoteFly
         /// </summary>
         private void ShowFBLoginForm()
         {
-            //grant access.form
+            // Grant access.form
             this.frmLoginFb = new Form();
             this.frmLoginFb.ShowIcon = false;
             this.frmLoginFb.StartPosition = FormStartPosition.CenterScreen;

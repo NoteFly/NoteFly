@@ -13,20 +13,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
-using System;
-using System.Drawing;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-
 namespace NoteFly
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Runtime.InteropServices;
+    using System.Windows.Forms;
+
     /// <summary>
     /// Manage notes class
     /// </summary>
     public partial class FrmManageNotes : Form
     {
         #region Fields (4)
+
+        private const int HT_CAPTION = 0x2;
+        private const int WM_NCLBUTTONDOWN = 0xA1;
 
         //list of notes
         private Notes notes;
@@ -50,7 +53,7 @@ namespace NoteFly
         public FrmManageNotes(Notes notes, bool transparency, int notecolor)
         {
             this.InitializeComponent();
-            skin = new Skin(notecolor);
+            this.skin = new Skin(notecolor);
             this.notes = notes;
             this.transparency = transparency;
             notes.NotesUpdated = false;
@@ -61,13 +64,21 @@ namespace NoteFly
 
         #region Methods (10)
 
+#if win32
+        //for moving form 
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+        //for moving form 
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
         // Private Methods (10) 
+#endif
 
         /// <summary>
         /// Close form
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -77,14 +88,14 @@ namespace NoteFly
         /// The user pressed the delete button for a note.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            Int16 numbernotes = notes.NumNotes;
+            short numbernotes = this.notes.NumNotes;
             if (numbernotes != 0)
             {
-                Int16 curnote = 0;
+                short curnote = 0;
                 try
                 {
                     curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));
@@ -108,7 +119,7 @@ namespace NoteFly
                             return;
                         }
                     }
-                    notes.GetNotes[noteid].Close();
+                    this.notes.GetNotes[noteid].Close();
 
                     try
                     {
@@ -116,7 +127,7 @@ namespace NoteFly
                         Log.Write(LogType.info, Convert.ToString(curnote) + ".xml deleted.");
 
                         //reorder filenames
-                        for (Int16 n = curnote; n < numbernotes; n++)
+                        for (short n = curnote; n < numbernotes; n++)
                         {
                             string orgfile = Path.Combine(this.getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
                             string newfile = Path.Combine(this.getNotesSavePath(), Convert.ToString(n) + ".xml");
@@ -126,10 +137,10 @@ namespace NoteFly
                             }
                             if (n < numbernotes)
                             {
-                                notes.GetNotes[n].NoteID = n;
+                                this.notes.GetNotes[n].NoteID = n;
                             }
                         }
-                        notes.GetNotes.RemoveAt(noteid);
+                        this.notes.GetNotes.RemoveAt(noteid);
                     }
                     catch (FileNotFoundException filenotfoundexc)
                     {
@@ -137,7 +148,7 @@ namespace NoteFly
                     }
                     catch (UnauthorizedAccessException)
                     {
-                        String msgaccessdenied = "Access denied. Delete note " + curnote + ".xml manualy with proper premission.";
+                        string msgaccessdenied = "Access denied. Delete note " + curnote + ".xml manualy with proper premission.";
                         MessageBox.Show(msgaccessdenied);
                         Log.Write(LogType.error, msgaccessdenied);
                     }
@@ -155,24 +166,24 @@ namespace NoteFly
         /// Set a note visible or unvisible
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
-        void cbxNoteVisible_Click(object sender, EventArgs e)
+        /// <param name="e">Event arguments</param>
+        private void cbxNoteVisible_Click(object sender, EventArgs e)
         {
             CheckBox cbx = (CheckBox)sender;
             int n = Convert.ToInt32(cbx.Name) - 1;
-            if ((n <= notes.NumNotes) && (n >= 0))
+            if ((n <= this.notes.NumNotes) && (n >= 0))
             {
-                if (notes.GetNotes[n].Visible == true)
+                if (this.notes.GetNotes[n].Visible == true)
                 {
-                    notes.GetNotes[n].Hide();
-                    notes.GetNotes[n].NoteVisible = false;
+                    this.notes.GetNotes[n].Hide();
+                    this.notes.GetNotes[n].NoteVisible = false;
                 }
                 else
                 {
-                    notes.GetNotes[n].Show();
-                    notes.GetNotes[n].NoteVisible = true;
+                    this.notes.GetNotes[n].Show();
+                    this.notes.GetNotes[n].NoteVisible = true;
                 }
-                notes.GetNotes[n].UpdateThisNote();
+                this.notes.GetNotes[n].UpdateThisNote();
             }
             else
             {
@@ -185,22 +196,22 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesOverview()
         {
-            pnlNotes.Controls.Clear();
-            CleanUp();
+            this.pnlNotes.Controls.Clear();
+            this.CleanUp();
 
             int ypos = 10;
             int newlentitle = ((this.Width - 280) / 4);
 
-            for (Int16 curnote = 0; curnote < notes.NumNotes; curnote++)
+            for (short curnote = 0; curnote < this.notes.NumNotes; curnote++)
             {
                 Label lblNoteTitle = new Label();
                 CheckBox cbxNoteVisible = new CheckBox();
                 Button btnNoteDelete = new Button();
 
-                int titlelength = notes.GetNotes[curnote].NoteTitle.Length;
+                int titlelength = this.notes.GetNotes[curnote].NoteTitle.Length;
                 lblNoteTitle.AutoSize = true;
 
-                lblNoteTitle.Text = ShortenTitle(curnote, newlentitle);
+                lblNoteTitle.Text = this.ShortenTitle(curnote, newlentitle);
 
                 lblNoteTitle.Name = "lbNote" + Convert.ToString(curnote + 1);
                 lblNoteTitle.Location = new Point(2, ypos);
@@ -209,7 +220,7 @@ namespace NoteFly
                 cbxNoteVisible.Text = "visible";
                 cbxNoteVisible.Name = Convert.ToString(curnote + 1);
 
-                if (notes.GetNotes[curnote].Visible == true)
+                if (this.notes.GetNotes[curnote].Visible == true)
                 {
                     cbxNoteVisible.CheckState = CheckState.Checked;
                 }
@@ -220,7 +231,7 @@ namespace NoteFly
                 cbxNoteVisible.Location = new Point(this.Width - 200, ypos);
                 cbxNoteVisible.AutoEllipsis = true;
                 cbxNoteVisible.AutoSize = true;
-                cbxNoteVisible.Click += new EventHandler(cbxNoteVisible_Click);
+                cbxNoteVisible.Click += new EventHandler(this.cbxNoteVisible_Click);
                 cbxNoteVisible.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
 
                 btnNoteDelete.Text = "delete";
@@ -228,13 +239,13 @@ namespace NoteFly
                 btnNoteDelete.BackColor = Color.Orange;
                 btnNoteDelete.Location = new Point(this.Width - 90, ypos - 3);
                 btnNoteDelete.Width = 60;
-                btnNoteDelete.Click += new EventHandler(btnNoteDelete_Click);
+                btnNoteDelete.Click += new EventHandler(this.btnNoteDelete_Click);
                 btnNoteDelete.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
                 btnNoteDelete.Tag = curnote;
 
-                pnlNotes.Controls.Add(lblNoteTitle);
-                pnlNotes.Controls.Add(cbxNoteVisible);
-                pnlNotes.Controls.Add(btnNoteDelete);
+                this.pnlNotes.Controls.Add(lblNoteTitle);
+                this.pnlNotes.Controls.Add(cbxNoteVisible);
+                this.pnlNotes.Controls.Add(btnNoteDelete);
 
                 ypos += 30;
             }
@@ -248,18 +259,18 @@ namespace NoteFly
         /// <returns>A shorter title.</returns>
         private string ShortenTitle(int curnote, int newlentitle)
         {
-            int reallen = notes.GetNotes[curnote].NoteTitle.Length;
+            int reallen = this.notes.GetNotes[curnote].NoteTitle.Length;
             if (newlentitle < 4)
             {
-                return notes.GetNotes[curnote].NoteTitle.Substring(0, 4) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                return this.notes.GetNotes[curnote].NoteTitle.Substring(0, 4) + ".. (ID:" + this.notes.GetNotes[curnote].NoteID + ")";
             }
             else if (reallen > newlentitle)
             {
-                return notes.GetNotes[curnote].NoteTitle.Substring(0, newlentitle) + ".. (ID:" + notes.GetNotes[curnote].NoteID + ")";
+                return this.notes.GetNotes[curnote].NoteTitle.Substring(0, newlentitle) + ".. (ID:" + this.notes.GetNotes[curnote].NoteID + ")";
             }
             else
             {
-                return notes.GetNotes[curnote].NoteTitle + "(ID:" + notes.GetNotes[curnote].NoteID + ")";
+                return this.notes.GetNotes[curnote].NoteTitle + "(ID:" + this.notes.GetNotes[curnote].NoteID + ")";
             }
         }
 
@@ -268,10 +279,10 @@ namespace NoteFly
         /// </summary>
         private void CleanUp()
         {
-            int ctrlnum = pnlNotes.Controls.Count;
+            int ctrlnum = this.pnlNotes.Controls.Count;
             for (int i = 0; i < ctrlnum; i++)
             {
-                pnlNotes.Controls[i].Dispose();
+                this.pnlNotes.Controls[i].Dispose();
             }
         }
 
@@ -279,10 +290,10 @@ namespace NoteFly
         /// FrmManageNotes is activated.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
-            if ((transparency) && (this.skin != null))
+            if (this.transparency && this.skin != null)
             {
                 this.Opacity = 1.0;
             }
@@ -292,12 +303,12 @@ namespace NoteFly
         /// form not active, make tranparent if set.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void frmManageNotes_Deactivate(object sender, EventArgs e)
         {
-            if ((transparency) && (this.skin != null))
+            if (this.transparency && this.skin != null)
             {
-                this.Opacity = skin.GetTransparencylevel();
+                this.Opacity = this.skin.GetTransparencylevel();
                 this.Refresh();
             }
         }
@@ -305,7 +316,7 @@ namespace NoteFly
         /// <summary>
         /// Get the full path of the note folder.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The path where to save notes.</returns>
         private string getNotesSavePath()
         {
             xmlHandler xmlsettings = new xmlHandler(true);
@@ -316,7 +327,7 @@ namespace NoteFly
         /// The manage note form is beening resized.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -331,17 +342,17 @@ namespace NoteFly
         /// Moving note
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
-            pnlHead.BackColor = Color.OrangeRed;
+            this.pnlHead.BackColor = Color.OrangeRed;
             if (e.Button == MouseButtons.Left)
             {
 #if win32
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
 #endif
-                pnlHead.BackColor = Color.Orange;
+                this.pnlHead.BackColor = Color.Orange;
             }
         }
 
@@ -349,41 +360,33 @@ namespace NoteFly
         /// Timer updated the list of notes.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void timerUpdateNotesList_Tick(object sender, EventArgs e)
         {
-            if ((!redrawbusy) && (notes.NotesUpdated))
+            if (!this.redrawbusy && this.notes.NotesUpdated)
             {
-                redrawbusy = true;
+                this.redrawbusy = true;
                 this.DrawNotesOverview();
-                redrawbusy = false;
-                notes.NotesUpdated = false;
+                this.redrawbusy = false;
+                this.notes.NotesUpdated = false;
             }
         }
 
-#if win32
-        //for moving
-        public const int HT_CAPTION = 0x2;
-        //for moving
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        //for moving form 
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
-        //for moving form 
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd,
-                         int msg, int wParam, int lParam);
-
+        /// <summary>
+        /// End resizing the window. Now redraw it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!redrawbusy)
+            if (!this.redrawbusy)
             {
-                redrawbusy = true;
+                this.redrawbusy = true;
                 this.DrawNotesOverview();
-                redrawbusy = false;
+                this.redrawbusy = false;
             }
         }
-#endif
+
         #endregion Methods
     }
 }

@@ -94,6 +94,7 @@ namespace NoteFly
                 {
                     File.Move(errorlog, errorlog + ".old");
                 }
+
                 new Textfile(false, errorlog, null, line.ToString());
             }
         }
@@ -116,7 +117,9 @@ namespace NoteFly
                 {
                     return false;
                 }
+
             }
+
             return false;
         }
     }

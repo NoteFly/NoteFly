@@ -62,52 +62,97 @@ namespace NoteFly
             
             if (checkhtml)
             {
-                this.htmlnodes = new String[91];
-                this.htmlnodes[0] = "A"; this.htmlnodes[1] = "ABBR";
-                this.htmlnodes[2] = "ACRONYM"; this.htmlnodes[3] = "ADDRESS";
-                this.htmlnodes[4] = "APPLET"; this.htmlnodes[5] = "B";
-                this.htmlnodes[6] = "BASE"; this.htmlnodes[7] = "BASEFONT";
-                this.htmlnodes[8] = "BDO"; this.htmlnodes[9] = "BIG";
-                this.htmlnodes[10] = "BLOCKQUOTE"; this.htmlnodes[11] = "BODY";
-                this.htmlnodes[12] = "BR"; this.htmlnodes[13] = "BUTTON";
-                this.htmlnodes[14] = "CAPTION"; this.htmlnodes[15] = "CENTER";
-                this.htmlnodes[16] = "CITE"; this.htmlnodes[17] = "CODE";
-                this.htmlnodes[18] = "COL"; this.htmlnodes[19] = "COLGROUP";
-                this.htmlnodes[20] = "DD"; this.htmlnodes[21] = "DEL";
-                this.htmlnodes[22] = "DFN"; this.htmlnodes[23] = "DIR";
-                this.htmlnodes[24] = "DIV"; this.htmlnodes[25] = "DL";
-                this.htmlnodes[26] = "DT"; this.htmlnodes[27] = "EM";
-                this.htmlnodes[28] = "FIELDSET"; this.htmlnodes[29] = "FONT";
-                this.htmlnodes[30] = "FORM"; this.htmlnodes[31] = "FRAME";
-                this.htmlnodes[32] = "FRAMESET"; this.htmlnodes[33] = "HEAD";
-                this.htmlnodes[34] = "HR"; this.htmlnodes[35] = "HTML";
-                this.htmlnodes[36] = "Hx"; this.htmlnodes[37] = "I";
-                this.htmlnodes[38] = "IFRAME"; this.htmlnodes[39] = "IMG";
-                this.htmlnodes[40] = "INPUT"; this.htmlnodes[41] = "INS";
-                this.htmlnodes[42] = "ISINDEX"; this.htmlnodes[43] = "KBD";
-                this.htmlnodes[44] = "LABEL"; this.htmlnodes[45] = "LEGEND";
-                this.htmlnodes[46] = "LI"; this.htmlnodes[47] = "LINK";
-                this.htmlnodes[48] = "MAP"; this.htmlnodes[49] = "MENU";
-                this.htmlnodes[50] = "META"; this.htmlnodes[51] = "NOFRAMES";
-                this.htmlnodes[52] = "NOSCRIPT"; this.htmlnodes[53] = "OBJECT";
-                this.htmlnodes[54] = "OL"; this.htmlnodes[55] = "OPTGROUP";
-                this.htmlnodes[56] = "OPTION"; this.htmlnodes[57] = "P";
-                this.htmlnodes[58] = "PARAM"; this.htmlnodes[59] = "PRE";
-                this.htmlnodes[60] = "Q"; this.htmlnodes[61] = "S";
-                this.htmlnodes[62] = "SAMP"; this.htmlnodes[63] = "SCRIPT";
-                this.htmlnodes[64] = "SELECT"; this.htmlnodes[65] = "SMALL";
-                this.htmlnodes[66] = "SPAN"; this.htmlnodes[67] = "STRIKE";
-                this.htmlnodes[68] = "STRONG"; this.htmlnodes[69] = "STYLE";
-                this.htmlnodes[70] = "SUB"; this.htmlnodes[71] = "SUP";
-                this.htmlnodes[72] = "TABLE"; this.htmlnodes[73] = "TBODY";
-                this.htmlnodes[74] = "TD"; this.htmlnodes[75] = "TEXTAREA";
-                this.htmlnodes[76] = "TFOOT"; this.htmlnodes[77] = "TH";
-                this.htmlnodes[78] = "THEAD"; this.htmlnodes[79] = "TITLE";
-                this.htmlnodes[80] = "TR"; this.htmlnodes[81] = "TT";
-                this.htmlnodes[82] = "U"; this.htmlnodes[83] = "UL";
-                this.htmlnodes[84] = "VAR"; this.htmlnodes[85] = "H1";
-                this.htmlnodes[86] = "H2"; this.htmlnodes[87] = "H3";
-                this.htmlnodes[88] = "H4"; this.htmlnodes[89] = "H5";
+                this.htmlnodes = new string[91];
+                this.htmlnodes[0] = "A";
+                this.htmlnodes[1] = "ABBR";
+                this.htmlnodes[2] = "ACRONYM";
+                this.htmlnodes[3] = "ADDRESS";
+                this.htmlnodes[4] = "APPLET";
+                this.htmlnodes[5] = "B";
+                this.htmlnodes[6] = "BASE";
+                this.htmlnodes[7] = "BASEFONT";
+                this.htmlnodes[8] = "BDO";
+                this.htmlnodes[9] = "BIG";
+                this.htmlnodes[10] = "BLOCKQUOTE";
+                this.htmlnodes[11] = "BODY";
+                this.htmlnodes[12] = "BR";
+                this.htmlnodes[13] = "BUTTON";
+                this.htmlnodes[14] = "CAPTION";
+                this.htmlnodes[15] = "CENTER";
+                this.htmlnodes[16] = "CITE";
+                this.htmlnodes[17] = "CODE";
+                this.htmlnodes[18] = "COL";
+                this.htmlnodes[19] = "COLGROUP";
+                this.htmlnodes[20] = "DD";
+                this.htmlnodes[21] = "DEL";
+                this.htmlnodes[22] = "DFN";
+                this.htmlnodes[23] = "DIR";
+                this.htmlnodes[24] = "DIV";
+                this.htmlnodes[25] = "DL";
+                this.htmlnodes[26] = "DT";
+                this.htmlnodes[27] = "EM";
+                this.htmlnodes[28] = "FIELDSET";
+                this.htmlnodes[29] = "FONT";
+                this.htmlnodes[30] = "FORM";
+                this.htmlnodes[31] = "FRAME";
+                this.htmlnodes[32] = "FRAMESET";
+                this.htmlnodes[33] = "HEAD";
+                this.htmlnodes[34] = "HR";
+                this.htmlnodes[35] = "HTML";
+                this.htmlnodes[36] = "Hx";
+                this.htmlnodes[37] = "I";
+                this.htmlnodes[38] = "IFRAME";
+                this.htmlnodes[39] = "IMG";
+                this.htmlnodes[40] = "INPUT";
+                this.htmlnodes[41] = "INS";
+                this.htmlnodes[42] = "ISINDEX";
+                this.htmlnodes[43] = "KBD";
+                this.htmlnodes[44] = "LABEL";
+                this.htmlnodes[45] = "LEGEND";
+                this.htmlnodes[46] = "LI";
+                this.htmlnodes[47] = "LINK";
+                this.htmlnodes[48] = "MAP";
+                this.htmlnodes[49] = "MENU";
+                this.htmlnodes[50] = "META";
+                this.htmlnodes[51] = "NOFRAMES";
+                this.htmlnodes[52] = "NOSCRIPT";
+                this.htmlnodes[53] = "OBJECT";
+                this.htmlnodes[54] = "OL";
+                this.htmlnodes[55] = "OPTGROUP";
+                this.htmlnodes[56] = "OPTION";
+                this.htmlnodes[57] = "P";
+                this.htmlnodes[58] = "PARAM";
+                this.htmlnodes[59] = "PRE";
+                this.htmlnodes[60] = "Q";
+                this.htmlnodes[61] = "S";
+                this.htmlnodes[62] = "SAMP";
+                this.htmlnodes[63] = "SCRIPT";
+                this.htmlnodes[64] = "SELECT";
+                this.htmlnodes[65] = "SMALL";
+                this.htmlnodes[66] = "SPAN";
+                this.htmlnodes[67] = "STRIKE";
+                this.htmlnodes[68] = "STRONG";
+                this.htmlnodes[69] = "STYLE";
+                this.htmlnodes[70] = "SUB";
+                this.htmlnodes[71] = "SUP";
+                this.htmlnodes[72] = "TABLE";
+                this.htmlnodes[73] = "TBODY";
+                this.htmlnodes[74] = "TD";
+                this.htmlnodes[75] = "TEXTAREA";
+                this.htmlnodes[76] = "TFOOT";
+                this.htmlnodes[77] = "TH";
+                this.htmlnodes[78] = "THEAD";
+                this.htmlnodes[79] = "TITLE";
+                this.htmlnodes[80] = "TR";
+                this.htmlnodes[81] = "TT";
+                this.htmlnodes[82] = "U";
+                this.htmlnodes[83] = "UL";
+                this.htmlnodes[84] = "VAR";
+                this.htmlnodes[85] = "H1";
+                this.htmlnodes[86] = "H2";
+                this.htmlnodes[87] = "H3";
+                this.htmlnodes[88] = "H4";
+                this.htmlnodes[89] = "H5";
                 this.htmlnodes[90] = "H6";
             }
         }
@@ -124,7 +169,7 @@ namespace NoteFly
         public void CheckSyntaxFull()
         {
             int cursorpos = this.rtbcode.SelectionStart;
-            this.ResetHighlighting(rtbcode);
+            this.ResetHighlighting(this.rtbcode);
 
             bool htmlendnode = false;
             for (int i = 0; i < this.rtbcode.TextLength; i++)
@@ -136,7 +181,7 @@ namespace NoteFly
                         this.posstarttag = i;
                         if (i + 1 < this.rtbcode.TextLength)
                         {
-                            if (this.rtbcode.Text[i+1] == '/')
+                            if (this.rtbcode.Text[i + 1] == '/')
                             {
                                 htmlendnode = true;
                             }
@@ -150,19 +195,20 @@ namespace NoteFly
                             string htmlnodename;
                             if (htmlendnode == true)
                             {
-                                htmlnodename = this.rtbcode.Text.Substring(posstarttag + 2, lengthtillendtag - 2);
+                                htmlnodename = this.rtbcode.Text.Substring(this.posstarttag + 2, lengthtillendtag - 2);
                                 htmlendnode = false;
-                            } else
+                            } 
+                            else
                             {
-                                htmlnodename  = this.rtbcode.Text.Substring(posstarttag + 1, lengthtillendtag - 1);
+                                htmlnodename = this.rtbcode.Text.Substring(this.posstarttag + 1, lengthtillendtag - 1);
                             }
-                            if (ValidingHTMLNode(htmlnodename))
+                            if (this.ValidingHTMLNode(htmlnodename))
                             {
                                 this.ColorText(this.posstarttag, lengthtillendtag + 1, Color.Blue);
                             }
                             else
                             {
-                                this.ColorText(posstarttag, lengthtillendtag + 1, Color.Red);
+                                this.ColorText(this.posstarttag, lengthtillendtag + 1, Color.Red);
                             }
                         }
                     }
@@ -210,7 +256,7 @@ namespace NoteFly
                         {
                             try
                             {
-                                int chkpos = i-1;
+                                int chkpos = i - 1;
                                 if (chkpos < 0)
                                 {
                                     chkpos = 0;
@@ -222,7 +268,8 @@ namespace NoteFly
                                     htmlnodename = this.rtbcode.Text.Substring(i + 1, newcharpos - 1 - i);
                                     break;
                                 }
-                                else if (rtbcode.Text[i] == '/' && rtbcode.Text[chkpos] == '<') //if text starts with \ then condition always false.
+                                // check if text starts with slash then condition is always false.
+                                else if (this.rtbcode.Text[i] == '/' && this.rtbcode.Text[chkpos] == '<') 
                                 {
                                     htmlnodestartpos = i - 1;
                                     htmlnodename = this.rtbcode.Text.Substring(i + 1, newcharpos - 1 - i);
@@ -231,7 +278,7 @@ namespace NoteFly
                             }
                             catch (IndexOutOfRangeException outofrangeexc)
                             {
-                                throw new CustomException(outofrangeexc.Message+" "+outofrangeexc.StackTrace);
+                                throw new CustomException(outofrangeexc.Message + " " + outofrangeexc.StackTrace);
                             }
                         }
 
@@ -239,11 +286,11 @@ namespace NoteFly
                         {
                             if (this.ValidingHTMLNode(htmlnodename))
                             {
-                                this.ColorText(htmlnodestartpos, newcharpos - htmlnodestartpos +1, Color.Blue);
+                                this.ColorText(htmlnodestartpos, newcharpos - htmlnodestartpos + 1, Color.Blue);
                             }
                             else
                             {
-                                this.ColorText(htmlnodestartpos, newcharpos - htmlnodestartpos +1, Color.Red);
+                                this.ColorText(htmlnodestartpos, newcharpos - htmlnodestartpos + 1, Color.Red);
                             }
                         }
                         else
@@ -277,7 +324,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="ishtml">Is it html to check.</param>
         /// <returns>true if it is html</returns>
-        private Boolean ValidingHTMLNode(string ishtml)
+        private bool ValidingHTMLNode(string ishtml)
         {
             for (int i = 1; i < ishtml.Length; i++)
             {
@@ -289,11 +336,12 @@ namespace NoteFly
             }
             for (int n = 0; n < this.htmlnodes.Length; n++)
             {
-                if (ishtml == htmlnodes[n] || ishtml == htmlnodes[n].ToLower())
+                if (ishtml == this.htmlnodes[n] || ishtml == this.htmlnodes[n].ToLower())
                 {
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -315,7 +363,6 @@ namespace NoteFly
                 throw new CustomException("TextHighlighter out of range: " + arg.Source);
             }
         }
-
     }
 
 		#endregion Methods 

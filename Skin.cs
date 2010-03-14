@@ -72,27 +72,31 @@ namespace NoteFly
                     {
                         return Color.Orange; 
                     }
-                    else 
+                    else
                     { 
                         return Color.Gold; 
                     }
+
                 case 1:
                     if (selected) 
                     {
                         return Color.DarkOrange; 
                     }
-                    else {
+                    else
+                    {
                         return Color.Orange; 
                     }
+
                 case 2:
                     if (selected)
                     { 
                         return Color.Gray; 
                     }
-                    else 
+                    else
                     { 
                         return Color.White; 
                     }
+
                 case 3:
                     if (selected) 
                     {
@@ -102,6 +106,7 @@ namespace NoteFly
                     {
                         return Color.LawnGreen;
                     }
+
                 case 4:
                     if (selected)
                     {
@@ -111,6 +116,7 @@ namespace NoteFly
                     {
                         return Color.CornflowerBlue;
                     }
+
                 case 5:
                     if (selected) 
                     {
@@ -120,6 +126,7 @@ namespace NoteFly
                     {
                         return Color.Magenta;
                     }
+
                 case 6:
                     if (selected) 
                     {
@@ -129,6 +136,7 @@ namespace NoteFly
                     {
                         return Color.Red;
                     }
+
                 default:
                     return Color.Gold;
             }
