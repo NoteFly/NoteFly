@@ -74,8 +74,20 @@ namespace NoteFly
         /// The trayicon contextmenu
         /// </summary>
         private static ContextMenuStrip menuTrayIcon;
+
+        /// <summary>
+        /// Is the creation of a new note being showed.
+        /// </summary>
         private static bool newnoteshowed = false;
+
+        /// <summary>
+        /// Notes class has a list an methodes for accessing notes.
+        /// </summary>
         private static Notes notes;
+
+        /// <summary>
+        /// Is transparecy on.
+        /// </summary>
         private static bool transparency = true;
 
 		#endregion Fields 
@@ -83,7 +95,7 @@ namespace NoteFly
 		#region Properties (1) 
 
         /// <summary>
-        /// The application title.
+        /// Gets the application title.
         /// </summary>
         public static string AssemblyTitle
         {
@@ -103,7 +115,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The application version number.
+        /// Gets the application version number.
         /// </summary>
         /// <returns>a string containing the version number of this application in the form of major.minur.build number</returns>
         public static string AssemblyVersion
@@ -126,7 +138,7 @@ namespace NoteFly
         /// <summary>
         /// get actionleftclick setting
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The action setting as short.</returns>
         private static short GetActionLeftClick()
         {
             xmlHandler getSettings = new xmlHandler(true);
@@ -136,7 +148,7 @@ namespace NoteFly
         /// <summary>
         /// get defaultcolor setting
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The default color for note setting as short.</returns>
         private static short GetDefaultColor()
         {
             xmlHandler xmlSettings = new xmlHandler(true);

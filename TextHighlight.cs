@@ -202,6 +202,7 @@ namespace NoteFly
                             {
                                 htmlnodename = this.rtbcode.Text.Substring(this.posstarttag + 1, lengthtillendtag - 1);
                             }
+
                             if (this.ValidingHTMLNode(htmlnodename))
                             {
                                 this.ColorText(this.posstarttag, lengthtillendtag + 1, Color.Blue);
@@ -214,6 +215,7 @@ namespace NoteFly
                     }
                 }
             }
+
             this.rtbcode.SelectionStart = cursorpos;
             this.rtbcode.SelectionLength = 0;
         }
@@ -297,13 +299,13 @@ namespace NoteFly
                         {
                             this.ColorText(newcharpos, newcharpos + 1, Color.Black);
                         }
-
                     }
                     else
                     {
                         this.ColorText(newcharpos, 1, Color.Black);
                     }
                 }
+
                 this.rtbcode.SelectionStart = cursorpos;
                 this.rtbcode.SelectionLength = 0;
             }
@@ -334,6 +336,7 @@ namespace NoteFly
                     break;
                 }
             }
+
             for (int n = 0; n < this.htmlnodes.Length; n++)
             {
                 if (ishtml == this.htmlnodes[n] || ishtml == this.htmlnodes[n].ToLower())

@@ -44,6 +44,7 @@ namespace NoteFly
                 {
                     fs = new FileStream(filename, FileMode.Append);
                 }
+
                 writer = new StreamWriter(fs);
                 if (isnote)
                 {

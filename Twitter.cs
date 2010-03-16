@@ -28,7 +28,7 @@ namespace NoteFly
     /// </summary>
     public class Twitter
     {
-		#region Fields (5) 
+        #region Fields (5)
 
         /// <summary>
         /// The url of twitter.
@@ -54,9 +54,9 @@ namespace NoteFly
 
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (3) 
+        #region Properties (3)
 
         /// <summary>
         /// Gets the URL of the Twitter client.
@@ -71,11 +71,11 @@ namespace NoteFly
             get { return twitterClientUrl; }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (3) 
+        #region Methods (3)
 
-		// Public Methods (2) 
+        // Public Methods (2) 
 
         /// <summary>
         /// Send a tweet to Twitter.
@@ -112,7 +112,8 @@ namespace NoteFly
             }
             return null;
         }
-		// Protected Methods (1) 
+
+        // Protected Methods (1) 
 
         /// <summary>
         /// Executes an HTTP POST command and retrives the information.		
@@ -200,6 +201,6 @@ namespace NoteFly
             return null;
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

@@ -12,7 +12,7 @@
 
 ; version
 !define VERSION "1.0.0" ;version number: major.minor.release
-!define VERSTATUS "rc2" ;alpha, beta, rc, or nothing for final.
+!define VERSTATUS "rc3" ;alpha, beta, rc, or nothing for final.
 
 SetCompressor lzma
 

@@ -266,7 +266,6 @@ namespace NoteFly
                 {
                     try
                     {
-
                         FacebookSettings.Sesionexpires = Convert.ToDouble(strSessionExpires);
                     }
                     catch (InvalidCastException)
@@ -274,6 +273,7 @@ namespace NoteFly
                         throw new CustomException("facebook session expires is not a valid unix (double) valeau.");
                     }
                 }
+
                 FacebookSettings.Sessionsecret = getSettings.getXMLnode("sessionsecret");
                 FacebookSettings.Sessionkey = getSettings.getXMLnode("sessionkey");
             }
@@ -307,6 +307,7 @@ namespace NoteFly
             {
                 this.noteslst[notelstpos].Show();
             }
+
             this.noteslst[notelstpos].CheckThings();
             this.noteslst[notelstpos].UpdateThisNote();
             this.notesupdated = true;
@@ -404,8 +405,10 @@ namespace NoteFly
                     Log.Write(LogType.error, toomanynotes);
                     return;
                 }
+
                 notefile = Path.Combine(this.notesavepath, id + ".xml");
             }
+
             id++;
             notefile = Path.Combine(this.notesavepath, id + ".xml");
             if (File.Exists(notefile))
@@ -414,6 +417,7 @@ namespace NoteFly
                 MessageBox.Show(notemissing);
                 Log.Write(LogType.error, notemissing);
             }
+
             if (firstrun)
             {
                 int tipnotewidth = 320;
@@ -454,6 +458,7 @@ namespace NoteFly
             {
                 throw new CustomException("Cannot write note.");
             }
+
             return notefile;
         }
 

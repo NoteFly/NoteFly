@@ -28,16 +28,33 @@ namespace NoteFly
     {
         #region Fields (4)
 
-        private const int HT_CAPTION = 0x2;
+        /// <summary>
+        /// for transparency
+        /// </summary>
+        private const int HTCAPTION = 0x2;
+        /// <summary>
+        /// for transparency
+        /// </summary>
         private const int WM_NCLBUTTONDOWN = 0xA1;
 
-        //list of notes
+        /// <summary>
+        /// list of notes
+        /// </summary>
         private Notes notes;
-        //flag is redraw is busy
+
+        /// <summary>
+        /// flag is redraw is busy
+        /// </summary>
         private bool redrawbusy = false;
-        //skin colors etc.
+
+        /// <summary>
+        /// skin colors etc.
+        /// </summary>
         private Skin skin;
-        //is transparent
+
+        /// <summary>
+        /// is transparent
+        /// </summary>
         private bool transparency = false;
 
         #endregion Fields
@@ -119,6 +136,7 @@ namespace NoteFly
                             return;
                         }
                     }
+
                     this.notes.GetNotes[noteid].Close();
 
                     try
@@ -135,11 +153,13 @@ namespace NoteFly
                             {
                                 File.Move(orgfile, newfile);
                             }
+
                             if (n < numbernotes)
                             {
                                 this.notes.GetNotes[n].NoteID = n;
                             }
                         }
+
                         this.notes.GetNotes.RemoveAt(noteid);
                     }
                     catch (FileNotFoundException filenotfoundexc)
@@ -183,6 +203,7 @@ namespace NoteFly
                     this.notes.GetNotes[n].Show();
                     this.notes.GetNotes[n].NoteVisible = true;
                 }
+
                 this.notes.GetNotes[n].UpdateThisNote();
             }
             else
@@ -228,6 +249,7 @@ namespace NoteFly
                 {
                     cbxNoteVisible.CheckState = CheckState.Unchecked;
                 }
+
                 cbxNoteVisible.Location = new Point(this.Width - 200, ypos);
                 cbxNoteVisible.AutoEllipsis = true;
                 cbxNoteVisible.AutoSize = true;
@@ -335,6 +357,7 @@ namespace NoteFly
                 this.Cursor = Cursors.SizeNWSE;
                 this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
             }
+
             this.Cursor = Cursors.Default;
         }
 
@@ -350,7 +373,7 @@ namespace NoteFly
             {
 #if win32
                 ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
 #endif
                 this.pnlHead.BackColor = Color.Orange;
             }

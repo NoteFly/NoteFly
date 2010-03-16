@@ -161,6 +161,7 @@ namespace NoteFly
                 {
                     return Color.Orange;
                 }
+
                 return Color.Red;
             }
             else
@@ -204,6 +205,7 @@ namespace NoteFly
                     return font;
                 }
             }
+
             return null;
         }
 

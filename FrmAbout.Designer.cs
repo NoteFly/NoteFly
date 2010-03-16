@@ -3,7 +3,7 @@
     /// <summary>
     /// About window.
     /// </summary>
-    partial class FrmAbout
+    public partial class FrmAbout
     {
         /// <summary>
         /// Required designer variable.
@@ -19,6 +19,7 @@
             {
                 this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
