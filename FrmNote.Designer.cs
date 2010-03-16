@@ -1,9 +1,22 @@
-﻿namespace NoteFly
+﻿//-----------------------------------------------------------------------
+// <copyright file="FrmNote.Designer.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace NoteFly
 {
     /// <summary>
     /// The Note.
     /// </summary>
-    partial class FrmNote
+    public partial class FrmNote
     {
         /// <summary>
         /// Required designer variable.
@@ -20,6 +33,7 @@
             {
                 this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -150,7 +164,7 @@
             this.yellowToolStripMenuItem.ShowShortcutKeys = false;
             this.yellowToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.yellowToolStripMenuItem.Text = "Yellow";
-            this.yellowToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
+            this.yellowToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
             // orangeToolStripMenuItem
             // 
@@ -160,7 +174,7 @@
             this.orangeToolStripMenuItem.ShowShortcutKeys = false;
             this.orangeToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.orangeToolStripMenuItem.Text = "Orange";
-            this.orangeToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
+            this.orangeToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
             // whiteToolStripMenuItem
             // 
@@ -170,7 +184,7 @@
             this.whiteToolStripMenuItem.ShowShortcutKeys = false;
             this.whiteToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.whiteToolStripMenuItem.Text = "White";
-            this.whiteToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
+            this.whiteToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
             // greenToolStripMenuItem
             // 
@@ -180,7 +194,7 @@
             this.greenToolStripMenuItem.ShowShortcutKeys = false;
             this.greenToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.greenToolStripMenuItem.Text = "Green";
-            this.greenToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
+            this.greenToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
             // blueToolStripMenuItem
             // 
@@ -190,7 +204,7 @@
             this.blueToolStripMenuItem.ShowShortcutKeys = false;
             this.blueToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.blueToolStripMenuItem.Text = "Blue";
-            this.blueToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
+            this.blueToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
             // purpleToolStripMenuItem
             // 
@@ -199,7 +213,7 @@
             this.purpleToolStripMenuItem.ShowShortcutKeys = false;
             this.purpleToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.purpleToolStripMenuItem.Text = "Purple";
-            this.purpleToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
+            this.purpleToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
             // redToolStripMenuItem
             // 
@@ -207,7 +221,7 @@
             this.redToolStripMenuItem.Name = "redToolStripMenuItem";
             this.redToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.redToolStripMenuItem.Text = "Red";
-            this.redToolStripMenuItem.Click += new System.EventHandler(this.setColorNote);
+            this.redToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
             // menuSendTo
             // 

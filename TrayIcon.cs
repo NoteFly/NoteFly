@@ -1,18 +1,16 @@
-﻿/* Copyright (C) 2009-2010
- * 
- * This program is free software; you can redistribute it and/or modify it
- * Free Software Foundation; either version 2, or (at your option) any
- * later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
- */
+﻿//-----------------------------------------------------------------------
+// <copyright file="TrayIcon.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
 #define win32
 using System;
 
@@ -28,7 +26,7 @@ namespace NoteFly
     /// </summary>
     public class TrayIcon
     {
-		#region Fields (12) 
+        #region Fields (12)
 
         /// <summary>
         /// container that holds some objects.
@@ -90,9 +88,9 @@ namespace NoteFly
         /// </summary>
         private static bool transparency = true;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (1) 
+        #region Properties (1)
 
         /// <summary>
         /// Gets the application title.
@@ -110,6 +108,7 @@ namespace NoteFly
                         return titleAttribute.Title;
                     }
                 }
+
                 return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
@@ -129,11 +128,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (3) 
+        #region Methods (3)
 
-		// Private Methods (3) 
+        // Private Methods (3) 
 
         /// <summary>
         /// get actionleftclick setting
@@ -153,7 +152,7 @@ namespace NoteFly
         {
             xmlHandler xmlSettings = new xmlHandler(true);
             short color = Convert.ToInt16(xmlSettings.getXMLnodeAsInt("defaultcolor"));
-            
+
             if (color == 7)
             {
                 color = Convert.ToInt16(new Random().Next(0, 7));
@@ -166,7 +165,7 @@ namespace NoteFly
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             components = new System.ComponentModel.Container();
             Application.EnableVisualStyles();
@@ -210,7 +209,8 @@ namespace NoteFly
             icon.Visible = true;
 
             icon.ContextMenuStrip.Name = "MenuTrayIcon";
-            icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] {
+            icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] 
+            {
             menuNewNote,
             menuManageNotes,
             menuSettings,
@@ -254,7 +254,7 @@ namespace NoteFly
             Application.Run();
         }
 
-		#endregion Methods 
+        #endregion Methods
 
         #region menu events
         /// <summary>
@@ -294,10 +294,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// open new note window
+        /// Open new note window.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event argument</param>
         private static void MenuNewNote_Click(object sender, EventArgs e)
         {
             FrmNewNote newnote = new FrmNewNote(notes, GetDefaultColor());
@@ -351,7 +351,7 @@ namespace NoteFly
             if (getSetting.getXMLnodeAsBool("confirmexit"))
             {
                 // two times exit in contextmenu systray icon will always exit.
-                if (!confirmexitshowed) 
+                if (!confirmexitshowed)
                 {
                     confirmexitshowed = true;
                     string AssemblyProduct;
@@ -360,8 +360,8 @@ namespace NoteFly
                     {
                         AssemblyProduct = String.Empty;
                     }
-                    AssemblyProduct = ((AssemblyProductAttribute)attributes[0]).Product;
 
+                    AssemblyProduct = ((AssemblyProductAttribute)attributes[0]).Product;
                     DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + AssemblyProduct + "?", "confirm exit", MessageBoxButtons.YesNo);
                     if (resdlgconfirmexit == DialogResult.No)
                     {
@@ -370,6 +370,7 @@ namespace NoteFly
                     }
                 }
             }
+
             ExitApplication();
         }
 

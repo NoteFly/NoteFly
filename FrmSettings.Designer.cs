@@ -1,7 +1,76 @@
-﻿namespace NoteFly
+﻿//-----------------------------------------------------------------------
+// <copyright file="FrmSettings.Designer.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace NoteFly
 {
-    partial class FrmSettings
+    /// <summary>
+    /// FrmSettings class.
+    /// </summary>
+    public partial class FrmSettings
     {
+        private System.Windows.Forms.CheckBox chxTransparecy;
+        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label lbDefaultNewNoteColor;
+        private System.Windows.Forms.ComboBox cbxDefaultColor;
+        private System.Windows.Forms.NumericUpDown numProcTransparency;
+        private System.Windows.Forms.Label lbTextProc;
+        private System.Windows.Forms.TextBox tbTwitterUser;
+        private System.Windows.Forms.Label lbUsername;
+        private System.Windows.Forms.TextBox tbTwitterPass;
+        private System.Windows.Forms.Label lbPassword;
+        private System.Windows.Forms.CheckBox chxRememberTwPass;
+        private System.Windows.Forms.TabControl tabControlSettings;
+        private System.Windows.Forms.TabPage tabAppearance;
+        private System.Windows.Forms.TabPage tabTwitterAndFacebook;
+        private System.Windows.Forms.TabPage tabAdvance;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.Label lblTextNoteLocation;
+        private System.Windows.Forms.TextBox tbNotesSavePath;
+        private System.Windows.Forms.TextBox tbDefaultEmail;
+        private System.Windows.Forms.Label lbTextDefaultEmail;
+        private System.Windows.Forms.Label lbTextNoteFont;
+        private System.Windows.Forms.ComboBox cbxFontNoteContent;
+        private System.Windows.Forms.Label lbWarningTwitterPassword;
+        private System.Windows.Forms.NumericUpDown numFontSize;
+        private System.Windows.Forms.Label lblTextFontSize;
+        private System.Windows.Forms.Label lblTextpt;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.ComboBox cbxActionLeftClick;
+        private System.Windows.Forms.Label lbText;
+        private System.Windows.Forms.Button btnCrash;
+        private System.Windows.Forms.TabPage tabGeneral;
+        private System.Windows.Forms.CheckBox chxStartOnBootWindows;
+        private System.Windows.Forms.CheckBox chxConfirmLink;
+        private System.Windows.Forms.CheckBox chxConfirmExit;
+        private System.Windows.Forms.CheckBox chxLogErrors;
+        private System.Windows.Forms.ComboBox cbxTextDirection;
+        private System.Windows.Forms.Label lbTextDirection;
+        private System.Windows.Forms.Button btnResetSettings;
+        private System.Windows.Forms.CheckBox cbxDefaultEmailToBlank;
+        private System.Windows.Forms.TabPage tabNetwerk;
+        private System.Windows.Forms.CheckBox chxUseProxy;
+        private System.Windows.Forms.CheckBox chxLogDebug;
+        private System.Windows.Forms.TabPage tabHighlight;
+        private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chxSaveFBSession;
+        private IPTextBox ipTextBox1;
+        private System.Windows.Forms.Label lbTextTwMs;
+        private System.Windows.Forms.Label lbTextTwTimeout;
+        private System.Windows.Forms.NumericUpDown numTimeout;
+        private System.Windows.Forms.CheckBox chxConfirmDeleteNote;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -17,6 +86,7 @@
             {
                 this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -773,58 +843,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.CheckBox chxTransparecy;
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label lbDefaultNewNoteColor;
-        private System.Windows.Forms.ComboBox cbxDefaultColor;
-        private System.Windows.Forms.NumericUpDown numProcTransparency;
-        private System.Windows.Forms.Label lbTextProc;
-        private System.Windows.Forms.TextBox tbTwitterUser;
-        private System.Windows.Forms.Label lbUsername;
-        private System.Windows.Forms.TextBox tbTwitterPass;
-        private System.Windows.Forms.Label lbPassword;
-        private System.Windows.Forms.CheckBox chxRememberTwPass;
-        private System.Windows.Forms.TabControl tabControlSettings;
-        private System.Windows.Forms.TabPage tabAppearance;
-        private System.Windows.Forms.TabPage tabTwitterAndFacebook;
-        private System.Windows.Forms.TabPage tabAdvance;
-        private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.Label lblTextNoteLocation;
-        private System.Windows.Forms.TextBox tbNotesSavePath;
-        private System.Windows.Forms.TextBox tbDefaultEmail;
-        private System.Windows.Forms.Label lbTextDefaultEmail;
-        private System.Windows.Forms.Label lbTextNoteFont;
-        private System.Windows.Forms.ComboBox cbxFontNoteContent;
-        private System.Windows.Forms.Label lbWarningTwitterPassword;
-        private System.Windows.Forms.NumericUpDown numFontSize;
-        private System.Windows.Forms.Label lblTextFontSize;
-        private System.Windows.Forms.Label lblTextpt;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.ComboBox cbxActionLeftClick;
-        private System.Windows.Forms.Label lbText;
-        private System.Windows.Forms.Button btnCrash;
-        private System.Windows.Forms.TabPage tabGeneral;
-        private System.Windows.Forms.CheckBox chxStartOnBootWindows;
-        private System.Windows.Forms.CheckBox chxConfirmLink;
-        private System.Windows.Forms.CheckBox chxConfirmExit;
-        private System.Windows.Forms.CheckBox chxLogErrors;
-        private System.Windows.Forms.ComboBox cbxTextDirection;
-        private System.Windows.Forms.Label lbTextDirection;
-        private System.Windows.Forms.Button btnResetSettings;
-        private System.Windows.Forms.CheckBox cbxDefaultEmailToBlank;
-        private System.Windows.Forms.TabPage tabNetwerk;
-        private System.Windows.Forms.CheckBox chxUseProxy;
-        private System.Windows.Forms.CheckBox chxLogDebug;
-        private System.Windows.Forms.TabPage tabHighlight;
-        private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox chxSaveFBSession;
-        private IPTextBox ipTextBox1;
-        private System.Windows.Forms.Label lbTextTwMs;
-        private System.Windows.Forms.Label lbTextTwTimeout;
-        private System.Windows.Forms.NumericUpDown numTimeout;
-        private System.Windows.Forms.CheckBox chxConfirmDeleteNote;
     }
 }

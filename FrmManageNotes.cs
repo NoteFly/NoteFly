@@ -1,18 +1,16 @@
-﻿/* Copyright (C) 2009-2010
- * 
- * This program is free software; you can redistribute it and/or modify it
- * Free Software Foundation; either version 2, or (at your option) any
- * later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
- */
+﻿//-----------------------------------------------------------------------
+// <copyright file="FrmManageNotes.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace NoteFly
 {
     using System;
@@ -32,10 +30,11 @@ namespace NoteFly
         /// for transparency
         /// </summary>
         private const int HTCAPTION = 0x2;
+
         /// <summary>
         /// for transparency
         /// </summary>
-        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int WMNCLBUTTONDOWN = 0xA1;
 
         /// <summary>
         /// list of notes
@@ -82,14 +81,26 @@ namespace NoteFly
         #region Methods (10)
 
 #if win32
-        //for moving form 
+        /// <summary>
+        /// for moving form 
+        /// </summary>
+        /// <returns>A boolean if mouse is released from dragging.</returns>
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-        //for moving form 
+
+        /// <summary>
+        /// for moving form
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <returns>unsure.</returns>
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-        // Private Methods (10) 
+
 #endif
+        // Private Methods (10) 
 
         /// <summary>
         /// Close form
@@ -116,7 +127,7 @@ namespace NoteFly
                 try
                 {
                     curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));
-                    //curnote = Convert.ToInt16(btn.Tag);
+                    ////curnote = Convert.ToInt16(btn.Tag);
                 }
                 catch (InvalidCastException invexc)
                 {
@@ -141,14 +152,14 @@ namespace NoteFly
 
                     try
                     {
-                        File.Delete(Path.Combine(this.getNotesSavePath(), Convert.ToString(curnote) + ".xml"));
+                        File.Delete(Path.Combine(this.GetNotesSavePath(), Convert.ToString(curnote) + ".xml"));
                         Log.Write(LogType.info, Convert.ToString(curnote) + ".xml deleted.");
 
                         //reorder filenames
                         for (short n = curnote; n < numbernotes; n++)
                         {
-                            string orgfile = Path.Combine(this.getNotesSavePath(), Convert.ToString(n + 1) + ".xml");
-                            string newfile = Path.Combine(this.getNotesSavePath(), Convert.ToString(n) + ".xml");
+                            string orgfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(n + 1) + ".xml");
+                            string newfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(n) + ".xml");
                             if (!File.Exists(newfile))
                             {
                                 File.Move(orgfile, newfile);
@@ -339,7 +350,7 @@ namespace NoteFly
         /// Get the full path of the note folder.
         /// </summary>
         /// <returns>The path where to save notes.</returns>
-        private string getNotesSavePath()
+        private string GetNotesSavePath()
         {
             xmlHandler xmlsettings = new xmlHandler(true);
             return xmlsettings.getXMLnode("notesavepath");
@@ -373,7 +384,7 @@ namespace NoteFly
             {
 #if win32
                 ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                SendMessage(Handle, WMNCLBUTTONDOWN, HTCAPTION, 0);
 #endif
                 this.pnlHead.BackColor = Color.Orange;
             }
@@ -398,8 +409,8 @@ namespace NoteFly
         /// <summary>
         /// End resizing the window. Now redraw it.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">Event argument</param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             if (!this.redrawbusy)

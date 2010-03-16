@@ -1,19 +1,16 @@
-﻿/* Copyright (C) 2009-2010
- * 
- * This program is free software; you can redistribute it and/or modify it
- * Free Software Foundation; either version 2, or (at your option) any
- * later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
- */
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="FrmNote.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace NoteFly
 {
     using System;
@@ -29,13 +26,13 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNote : Form
     {
-		#region Fields (10)
+        #region Fields (10)
 
-        public Notes notes;
-        private const int minvisiblesize = 5;
-        private const int HT_CAPTION = 0x2;
-        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int MINVISIBLESIZE = 5;
+        private const int HTCAPTION = 0x2;
+        private const int WMNCLBUTTONDOWN = 0xA1;
 
+        private Notes notes;
         private TextHighlight highlight;
         private string note, title, twpass;
         private short id, notecolor = 0;
@@ -45,9 +42,9 @@ namespace NoteFly
         private ushort noteWidth, noteHeight;
         private PictureBox pbShowLock;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
@@ -63,7 +60,7 @@ namespace NoteFly
         /// <param name="locY">The Y location on the screen.</param>
         /// <param name="notewidth">The width of the note.</param>
         /// <param name="noteheight">The height of the note.</param>
-        public FrmNote(Notes notes, Int16 id, bool visible, bool ontop, string title, string note, short notecolor, int locX, int locY, int notewidth, int noteheight)
+        public FrmNote(Notes notes, short id, bool visible, bool ontop, string title, string note, short notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             this.notes = notes;
             this.notevisible = visible;
@@ -75,7 +72,7 @@ namespace NoteFly
             this.note = note;
             this.notecolor = notecolor;
 
-            if ((locX + notewidth > minvisiblesize) && (locY + noteheight > minvisiblesize))
+            if ((locX + notewidth > MINVISIBLESIZE) && (locY + noteheight > MINVISIBLESIZE))
             {
                 this.locX = locX;
                 this.locY = locY;
@@ -112,7 +109,7 @@ namespace NoteFly
         /// <param name="title">The note title.</param>
         /// <param name="note">The note content.</param>
         /// <param name="notecolor">The color (number) of the note.</param>
-        public FrmNote(Notes notes, short id, string title, string note, Int16 notecolor)
+        public FrmNote(Notes notes, short id, string title, string note, short notecolor)
         {
             this.skin = new Skin(notecolor);
             this.id = id;
@@ -137,37 +134,52 @@ namespace NoteFly
             notes.NotesUpdated = true;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (4) 
+        #region Properties (4)
 
+        /// <summary>
+        /// Gets or sets the color of the note.
+        /// </summary>
         public short NoteColor
         {
             get
             {
                 return this.notecolor;
             }
+
             set
             {
                 this.notecolor = value;
             }
         }
 
+        /// <summary>
+        /// Gets or sets the note visiblity.
+        /// </summary>
         public bool NoteVisible
         {
             get
             {
                 return this.notevisible;
             }
+
             set
             {
                 this.notevisible = value;
             }
         }
 
+        /// <summary>
+        /// Gets or sets the note content.
+        /// </summary>
         public string NoteContent
         {
-            get { return this.note; }
+            get 
+            {
+                return this.note; 
+            }
+
             set
             {
                 this.note = value;
@@ -184,15 +196,23 @@ namespace NoteFly
             {
                 return this.id;
             }
-            set 
+
+            set
             {
                 this.id = value;
             }
         }
 
+        /// <summary>
+        /// Gets or sets the note title.
+        /// </summary>
         public string NoteTitle
         {
-            get { return this.title; }
+            get 
+            {
+                return this.title; 
+            }
+
             set
             {
                 this.title = value;
@@ -200,16 +220,15 @@ namespace NoteFly
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (32) 
+        #region Methods (32)
 
-		// Public Methods (2) 
+        // Public Methods (2) 
 
         /// <summary>
         /// Check if twitter is enabled and check Syntax.
         /// </summary>
-        /// <param name="ontop">Is the note ontop.</param>
         public void CheckThings()
         {
             this.CheckTwitter(this.notes.TwitterEnabled);
@@ -222,6 +241,7 @@ namespace NoteFly
                 {
                     this.highlight = new TextHighlight(this.rtbNote, this.notes.HighlightHTML);
                 }
+
                 this.highlight.CheckSyntaxFull();
             }
 
@@ -242,7 +262,26 @@ namespace NoteFly
         {
             this.SavePos.RunWorkerAsync();
         }
-		// Private Methods (30) 
+        // Private Methods (30) 
+
+#if win32
+        /// <summary>
+        /// Check internet state.
+        /// </summary>
+        /// <returns>True is connected to internet.</returns>
+        private static bool IsConnectedToInternet()
+        {
+            int Desc;
+            return InternetGetConnectedState(out Desc, 0);
+        }
+
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
+#endif
 
         /// <summary>
         /// Find what password is entered.
@@ -260,14 +299,15 @@ namespace NoteFly
                 passctr[0].BackColor = Color.Red;
                 return;
             }
+
             this.twpass = passctr[0].Text;
             frmAskpass.Close();
             foreach (Control cntrl in frmAskpass.Controls)
             {
                 cntrl.Dispose();
             }
-            frmAskpass.Dispose();
 
+            frmAskpass.Dispose();
             this.Tweetnote();
         }
 
@@ -364,13 +404,13 @@ namespace NoteFly
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
-
             if (this.NoteID > this.notes.NumNotes)
             {
                 string cannotfindnote = "Cannot find note.";
                 MessageBox.Show(cannotfindnote);
                 Log.Write(LogType.error, cannotfindnote);
             }
+
             this.notes.EditNewNote(this.NoteID);
         }
 
@@ -437,10 +477,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Hide note
+        /// Hide note.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments</param>
         private void hideNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.btnCloseNote_Click(sender, e);
@@ -522,10 +562,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Make a note on top
+        /// Make a note on top.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments</param>
         private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.menuOnTop.Checked == true)
@@ -536,6 +576,7 @@ namespace NoteFly
             {
                 this.TopMost = false;
             }
+
             if (!this.notelock && !this.SavePos.IsBusy)
             {
                 this.SavePos.RunWorkerAsync();
@@ -566,6 +607,7 @@ namespace NoteFly
                 this.rtbNote.SelectAll();
                 this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
             }
+
             this.rtbNote.Font = this.skin.GetFontNoteContent();
         }
 
@@ -584,6 +626,7 @@ namespace NoteFly
                     this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
                 }
             }
+
             this.Cursor = Cursors.Default;
         }
 
@@ -616,7 +659,7 @@ namespace NoteFly
             {
 #if win32
                 ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                SendMessage(Handle, WMNCLBUTTONDOWN, HTCAPTION, 0);
 #endif
 
                 if (this.skin != null)
@@ -635,10 +678,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Resize note
+        /// Resize note.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments</param>
         private void pnlResizeWindow_MouseDown(object sender, MouseEventArgs e)
         {
             Cursor = Cursors.SizeNWSE;
@@ -682,7 +725,7 @@ namespace NoteFly
                     this.noteHeight = Convert.ToUInt16(this.Height);
                 }
 
-                if ((this.locX + this.Width > minvisiblesize) && (this.locY + this.Height > minvisiblesize) && (this.notecolor >= 0) && this.notecolor <= this.skin.MaxNotesColors)
+                if ((this.locX + this.Width > MINVISIBLESIZE) && (this.locY + this.Height > MINVISIBLESIZE) && (this.notecolor >= 0) && this.notecolor <= this.skin.MaxNotesColors)
                 {
                     string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
                     xmlHandler updateposnote = new xmlHandler(notefile);
@@ -707,7 +750,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
-        private void setColorNote(object sender, EventArgs e)
+        private void SetColorNote(object sender, EventArgs e)
         {
             short i = 0;
             foreach (ToolStripMenuItem curitem in this.menuNoteColors.DropDownItems)
@@ -725,6 +768,7 @@ namespace NoteFly
                 {
                     curitem.Checked = false;
                 }
+
                 i++;
             }
 
@@ -757,7 +801,11 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
         {
-            if (!this.CheckConnection()) return;
+            if (!this.CheckConnection())
+            {
+                return;
+            }
+
             Facebook fb = new Facebook();
             fb.StartPostingNote(this.note);
         }
@@ -783,6 +831,7 @@ namespace NoteFly
             {
                 sfdlg.FileName = this.title;
             }
+
             sfdlg.Title = "Save note to textfile";
             sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm";
             if (sfdlg.ShowDialog() == DialogResult.OK)
@@ -790,7 +839,6 @@ namespace NoteFly
                 new Textfile(true, sfdlg.FileName, this.title, this.note);
                 Log.Write(LogType.info, "Note (ID:" + this.NoteID + ") saved to textfile.");
             }
-            
         }
 
         /// <summary>
@@ -800,7 +848,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
         {
-            if (!this.CheckConnection()) return;
+            if (!this.CheckConnection())
+            {
+                return;
+            }
 
             if ((String.IsNullOrEmpty(this.note) == false) && (this.note.Length < 140))
             {
@@ -831,7 +882,10 @@ namespace NoteFly
         /// </summary>
         private void Tweetnote()
         {
-            if (!this.CheckConnection()) return;
+            if (!this.CheckConnection())
+            {
+                return;
+            }
 
             xmlHandler getSettings = new xmlHandler(true);
             string twitteruser = getSettings.getXMLnode("twitteruser");
@@ -885,6 +939,7 @@ namespace NoteFly
                     MessageBox.Show(sendtwfail);
                     Log.Write(LogType.error, sendtwfail);
                 }
+
                 this.twpass.Remove(0);
             }
         }
@@ -927,24 +982,6 @@ namespace NoteFly
             }
         }
 
-		#endregion Methods 
-
-#if win32
-        /// <summary>
-        /// Check internet state.
-        /// </summary>
-        /// <returns>True is connected to internet.</returns>
-        private static bool IsConnectedToInternet()
-        {
-            int Desc;
-            return InternetGetConnectedState(out Desc, 0);
-        }
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-        [DllImport("wininet.dll")]
-        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
-#endif
+        #endregion Methods
     }
 }

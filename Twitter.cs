@@ -1,18 +1,17 @@
-﻿/* Copyright (C) 2009-2010
- * 
- * This program is free software; you can redistribute it and/or modify it
- * Free Software Foundation; either version 2, or (at your option) any
- * later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
- */
+﻿//-----------------------------------------------------------------------
+// <copyright file="Twitter.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
+
 namespace NoteFly
 {
     using System;
@@ -28,7 +27,7 @@ namespace NoteFly
     /// </summary>
     public class Twitter
     {
-        #region Fields (5)
+        #region Fields (2)
 
         /// <summary>
         /// The url of twitter.
@@ -36,42 +35,28 @@ namespace NoteFly
         protected const string TwitterBaseUrlFormat = "http://168.143.162.68/{0}/{1}.{2}";
 
         /// <summary>
-        /// The client url
+        /// Gets the URL of the Twitter client.
+        /// Must be in the XML format documented in the "Request Headers" section at:
+        /// http://twitter.pbwiki.com/API-Docs.
+        /// According to the Twitter Fan Wiki at http://twitter.pbwiki.com/API-Docs and supported by
+        /// the Twitter developers, this will be used in the future (hopefully near) to set more information
+        /// in Twitter about the client posting the information as well as future usage in a clients directory.
         /// </summary>
-        private const string twitterClientUrl = "http://www.notefly.tk/";
-        
+        private string twitterClientUrl = "http://www.notefly.tk/";
+
         ////private string source = null;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the Twitter class.
         /// </summary>
         public Twitter()
         {
-
         }
-
         #endregion Constructors
-
-        #region Properties (3)
-
-        /// <summary>
-        /// Gets the URL of the Twitter client.
-        /// Must be in the XML format documented in the "Request Headers" section at:
-        /// http://twitter.pbwiki.com/API-Docs.
-        /// According to the Twitter Fan Wiki at http://twitter.pbwiki.com/API-Docs and supported by
-        /// the Twitter developers, this will be used in the future (hopefully near) to set more information
-        /// in Twitter about the client posting the information as well as future usage in a clients directory.		
-        /// </summary>
-        public string TwitterClientUrl
-        {
-            get { return twitterClientUrl; }
-        }
-
-        #endregion Properties
 
         #region Methods (3)
 
@@ -83,7 +68,7 @@ namespace NoteFly
         /// <param name="userName">The Twitter username</param>
         /// <param name="password">The Twitter password</param>
         /// <param name="status">The tweet, limited to 140 chars.</param>
-        /// <returns></returns>
+        /// <returns>The return valeau.</returns>
         public string Update(string userName, string password, string status)
         {
             //Important: "statuses", "update" and "xml" must be lower case.
@@ -110,13 +95,13 @@ namespace NoteFly
 
                 return xmlDocument;
             }
+
             return null;
         }
-
         // Protected Methods (1) 
 
         /// <summary>
-        /// Executes an HTTP POST command and retrives the information.		
+        /// Executes an HTTP POST command and retrives the information.
         /// This function will automatically include a "source" parameter if the "Source" property is set.
         /// </summary>
         /// <param name="url">The URL to perform the POST operation</param>
@@ -137,20 +122,23 @@ namespace NoteFly
                 {
                     request.Headers.Add("X-Twitter-Client", TrayIcon.AssemblyTitle.Trim());
                 }
+
                 if (!string.IsNullOrEmpty(TrayIcon.AssemblyVersion))
                 {
                     request.Headers.Add("X-Twitter-Version", TrayIcon.AssemblyVersion.Trim());
                 }
-                if (!string.IsNullOrEmpty(this.TwitterClientUrl))
-                {
-                    request.Headers.Add("X-Twitter-URL", this.TwitterClientUrl);
-                }
-                if (!string.IsNullOrEmpty(this.TwitterClientUrl))
-                {
-                    data += "&source=" + HttpUtility.UrlEncode(this.TwitterClientUrl);
-                }
-                byte[] bytes = Encoding.UTF8.GetBytes(data);
 
+                if (!string.IsNullOrEmpty(this.twitterClientUrl))
+                {
+                    request.Headers.Add("X-Twitter-URL", this.twitterClientUrl);
+                }
+
+                if (!string.IsNullOrEmpty(this.twitterClientUrl))
+                {
+                    data += "&source=" + HttpUtility.UrlEncode(this.twitterClientUrl);
+                }
+
+                byte[] bytes = Encoding.UTF8.GetBytes(data);
                 xmlHandler getsettting = new xmlHandler(true);
                 if (getsettting.getXMLnodeAsBool("useproxy") == true)
                 {
@@ -167,8 +155,8 @@ namespace NoteFly
                         request.Proxy = new WebProxy(getsettting.getXMLnode("proxyaddr"));
                     }
                 }
-                request.Timeout = getsettting.getXMLnodeAsInt("timeout");
 
+                request.Timeout = getsettting.getXMLnodeAsInt("timeout");
                 request.ContentLength = bytes.Length;
                 using (Stream requestStream = request.GetRequestStream())
                 {
@@ -198,6 +186,7 @@ namespace NoteFly
             {
                 MessageBox.Show("Twitter username or/and password not filled in.");
             }
+
             return null;
         }
 

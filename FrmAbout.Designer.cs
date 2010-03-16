@@ -1,4 +1,17 @@
-﻿namespace NoteFly
+﻿//-----------------------------------------------------------------------
+// <copyright file="FrmAbout.Designer.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace NoteFly
 {
     /// <summary>
     /// About window.
@@ -11,8 +24,44 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
+        /// The OK button
+        /// </summary>
+        private System.Windows.Forms.Button okButton;
+
+        /// <summary>
+        /// name product label
+        /// </summary>
+        private System.Windows.Forms.Label lblProductName;
+
+        /// <summary>
+        /// version label
+        /// </summary>
+        private System.Windows.Forms.Label lblVersion;
+
+        /// <summary>
+        /// link to official website
+        /// </summary>
+        private System.Windows.Forms.LinkLabel linklblWebsite;
+
+        /// <summary>
+        /// Label with info on how product is licesed.
+        /// </summary>
+        private System.Windows.Forms.Label lblTextLicense;
+
+        /// <summary>
+        /// Label with the version status, alpha, beta, rc or final
+        /// </summary>
+        private System.Windows.Forms.Label lbVersionStatus;
+
+        /// <summary>
+        /// Link to FAQ page, for question about this programme.
+        /// </summary>
+        private System.Windows.Forms.LinkLabel linkLblFAQ;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
+        /// <param name="disposing">is disposing</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))
@@ -37,7 +86,6 @@
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
-            this.timerTextEffect = new System.Windows.Forms.Timer(this.components);
             this.lbVersionStatus = new System.Windows.Forms.Label();
             this.linkLblFAQ = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
@@ -94,10 +142,6 @@
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of GNU General Public License version2";
             // 
-            // timerTextEffect
-            // 
-            this.timerTextEffect.Interval = 50;
-            // 
             // lbVersionStatus
             // 
             this.lbVersionStatus.AutoSize = true;
@@ -146,15 +190,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Label lblProductName;
-        private System.Windows.Forms.Label lblVersion;
-        private System.Windows.Forms.LinkLabel linklblWebsite;
-        private System.Windows.Forms.Label lblTextLicense;
-        private System.Windows.Forms.Timer timerTextEffect;
-        private System.Windows.Forms.Label lbVersionStatus;
-        private System.Windows.Forms.LinkLabel linkLblFAQ;
-
     }
 }

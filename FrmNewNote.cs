@@ -1,18 +1,16 @@
-﻿/* Copyright (C) 2009-2010
- * 
- * This program is free software; you can redistribute it and/or modify it
- * Free Software Foundation; either version 2, or (at your option) any
- * later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
- */
+﻿//-----------------------------------------------------------------------
+// <copyright file="FrmNewNote.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace NoteFly
 {
@@ -26,10 +24,10 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNewNote : Form
     {
-		#region Fields (5) 
+        #region Fields (5)
 #if win32
-        public const int HT_CAPTION = 0x2;
-        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HTCAPTION = 0x2;
+        public const int WMNCLBUTTONDOWN = 0xA1;
 #endif
         private bool editnote = false;
         private int editnoteid = -1;
@@ -38,9 +36,9 @@ namespace NoteFly
         private Skin skin;
         private TextHighlight highlight;
         private bool setupfirsthighlight = false;
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (2) 
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the FrmNewNote class.
@@ -84,17 +82,24 @@ namespace NoteFly
             this.tbTitle.Select();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (18) 
+        #region Methods (18)
 
-		// Private Methods (18) 
+#if win32
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+#endif
+
+        // Private Methods (18) 
 
         /// <summary>
         /// User pressed the accept note button. Note will now be saved.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void btnAddNote_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(this.tbTitle.Text))
@@ -117,6 +122,7 @@ namespace NoteFly
                 {
                     this.notes.DrawNewNote(this.tbTitle.Text, this.rtbNote.Text, this.notecolor);
                 }
+
                 this.Close();
             }
         }
@@ -133,6 +139,7 @@ namespace NoteFly
             {
                 this.notes.GetNotes[posnotelst].Show();
             }
+
             this.Close();
         }
 
@@ -248,6 +255,7 @@ namespace NoteFly
                 this.Cursor = Cursors.SizeNWSE;
                 this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
             }
+
             this.Cursor = Cursors.Default;
         }
 
@@ -265,7 +273,7 @@ namespace NoteFly
                 if (e.Button == MouseButtons.Left)
                 {
                     ReleaseCapture();
-                    SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                    SendMessage(Handle, WMNCLBUTTONDOWN, HTCAPTION, 0);
                     this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(false);
                 }
                 #endif
@@ -288,9 +296,14 @@ namespace NoteFly
         /// <summary>
         /// Redraw reset FrmNewNote.
         /// </summary>
+        /// <param name="title">The new note title.</param>
+        /// <param name="content">The new note content.</param>
         private void ResetNewNoteForm(string title, string content)
         {
-            if (this.skin == null) return;
+            if (this.skin == null)
+            {
+                return;
+            }
 
             this.rtbNote.Font = this.skin.GetFontNoteContent();
 
@@ -367,7 +380,7 @@ namespace NoteFly
         /// <summary>
         /// Set the text direction of the note content.
         /// </summary>
-        private void setTextDirection()
+        private void SetTextDirection()
         {
             if (this.notes.TextDirection == 0)
             {
@@ -378,17 +391,7 @@ namespace NoteFly
                 this.tbTitle.TextAlign = HorizontalAlignment.Right;
             }
         }
-
-
-		#endregion Methods 
-
-        #if win32
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        #endif
-
+        #endregion Methods 
 
         #region highlight controls
         private void tbTitle_Enter(object sender, EventArgs e)
@@ -398,6 +401,7 @@ namespace NoteFly
                 this.tbTitle.BackColor = this.skin.GetObjColor(false, true, false);
             }
         }
+
         private void tbTitle_Leave(object sender, EventArgs e)
         {
             if (this.skin != null)
@@ -405,6 +409,7 @@ namespace NoteFly
                 this.tbTitle.BackColor = this.skin.GetObjColor(false);
             }
         }
+
         private void rtbNote_Enter(object sender, EventArgs e)
         {
             if (this.skin != null)

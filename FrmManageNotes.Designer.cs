@@ -1,10 +1,31 @@
-﻿namespace NoteFly
+﻿//-----------------------------------------------------------------------
+// <copyright file="FrmManageNotes.Designer.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace NoteFly
 {
     /// <summary>
     /// Manage note window
     /// </summary>
-    partial class FrmManageNotes
+    public partial class FrmManageNotes
     {
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label lbTextNotes;
+        private System.Windows.Forms.Label lbTextNoteOptions;
+        private System.Windows.Forms.Panel pnlNotes;
+        private System.Windows.Forms.Panel pnlHead;
+        private System.Windows.Forms.PictureBox pbResizeGrip;
+        private System.Windows.Forms.Timer timerUpdateNotesList;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -20,6 +41,7 @@
             {
                 this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -163,13 +185,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Label lbTextNotes;
-        private System.Windows.Forms.Label lbTextNoteOptions;
-        private System.Windows.Forms.Panel pnlNotes;
-        private System.Windows.Forms.Panel pnlHead;
-        private System.Windows.Forms.PictureBox pbResizeGrip;
-        private System.Windows.Forms.Timer timerUpdateNotesList;
     }
 }

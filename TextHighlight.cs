@@ -1,18 +1,16 @@
-﻿/* Copyright (C) 2009-2010
- * 
- * This program is free software; you can redistribute it and/or modify it
- * Free Software Foundation; either version 2, or (at your option) any
- * later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
- */
+﻿//-----------------------------------------------------------------------
+// <copyright file="TextHighlight.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace NoteFly
 {
     using System;
@@ -24,7 +22,7 @@ namespace NoteFly
     /// </summary>
     public class TextHighlight
     {
-		#region Fields (4) 
+        #region Fields (4) 
 
         /// <summary>
         /// Boolean that tells if html is being checked.
@@ -46,9 +44,9 @@ namespace NoteFly
         /// </summary>
         private RichTextBox rtbcode;
 
-		#endregion Fields 
+        #endregion Fields 
 
-		#region Constructors (1) 
+        #region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the TextHighlight class.
@@ -157,11 +155,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (2) 
+        #region Methods (2)
 
-		// Public Methods (2) 
+        // Public Methods (2) 
 
         /// <summary>
         /// Check syntax of the whole text
@@ -232,7 +230,10 @@ namespace NoteFly
                 int cursorpos = this.rtbcode.SelectionStart;
                 if (this.checkhtml)
                 {
-                    if (newcharpos < 0) { throw new CustomException("negative character location."); }
+                    if (newcharpos < 0) 
+                    {
+                        throw new CustomException("negative character location.");
+                    }
 
                     if (this.rtbcode.Text[newcharpos] == '<')
                     {
@@ -270,7 +271,6 @@ namespace NoteFly
                                     htmlnodename = this.rtbcode.Text.Substring(i + 1, newcharpos - 1 - i);
                                     break;
                                 }
-                                // check if text starts with slash then condition is always false.
                                 else if (this.rtbcode.Text[i] == '/' && this.rtbcode.Text[chkpos] == '<') 
                                 {
                                     htmlnodestartpos = i - 1;
@@ -368,5 +368,5 @@ namespace NoteFly
         }
     }
 
-		#endregion Methods 
+        #endregion Methods
 }

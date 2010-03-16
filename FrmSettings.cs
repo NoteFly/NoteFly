@@ -1,19 +1,16 @@
-﻿/* Copyright (C) 2009
- * 
- * This program is free software; you can redistribute it and/or modify it
- * Free Software Foundation; either version 2, or (at your option) any
- * later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
- */
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="FrmSettings.cs" company="GNU">
+// 
+// This program is free software; you can redistribute it and/or modify it
+// Free Software Foundation; either version 2, 
+// or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace NoteFly
 {
     using System;
@@ -29,15 +26,19 @@ namespace NoteFly
     /// </summary>
     public partial class FrmSettings : Form
     {
-		#region Fields (2) 
+        #region Fields (2)
 
         private Notes notes;
         private xmlHandler xmlsettings;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
+        /// <summary>
+        /// Initializes a new instance of the FrmSettings class.
+        /// </summary>
+        /// <param name="notes">The notes class.</param>
         public FrmSettings(Notes notes)
         {
             this.InitializeComponent();
@@ -59,18 +60,18 @@ namespace NoteFly
                 this.ipTextBox1.Enabled = true;
             }
 
-            this.numProcTransparency.Value = this.getTransparecylevel();
-            this.cbxDefaultColor.SelectedIndex = this.getDefaultColor();
-            this.cbxActionLeftClick.SelectedIndex = this.getActionLeftClick();
+            this.numProcTransparency.Value = this.GetTransparecylevel();
+            this.cbxDefaultColor.SelectedIndex = this.GetDefaultColor();
+            this.cbxActionLeftClick.SelectedIndex = this.GetActionLeftClick();
 
-            this.tbNotesSavePath.Text = this.getNotesSavePath();
-            this.tbTwitterUser.Text = this.getTwitterusername();
-            this.tbTwitterPass.Text = this.getTwitterpassword();
-            this.tbDefaultEmail.Text = this.getDefaultEmail();
+            this.tbNotesSavePath.Text = this.GetNotesSavePath();
+            this.tbTwitterUser.Text = this.GetTwitterusername();
+            this.tbTwitterPass.Text = this.GetTwitterpassword();
+            this.tbDefaultEmail.Text = this.GetDefaultEmail();
 
-            this.cbxTextDirection.SelectedIndex = this.getTextDirection();
-            this.chxStartOnBootWindows.Checked = this.getStatusStartlogin();
-            this.numTimeout.Value = this.getTimeout();
+            this.cbxTextDirection.SelectedIndex = this.GetTextDirection();
+            this.chxStartOnBootWindows.Checked = this.GetStatusStartlogin();
+            this.numTimeout.Value = this.GetTimeout();
 
             if (String.IsNullOrEmpty(this.tbDefaultEmail.Text))
             {
@@ -82,6 +83,7 @@ namespace NoteFly
                 this.tbDefaultEmail.Enabled = true;
                 this.cbxDefaultEmailToBlank.Checked = false;
             }
+
             this.DrawCbxFonts();
 #if DEBUG
             this.btnCrash.Visible = true;
@@ -91,17 +93,17 @@ namespace NoteFly
             boolsetting = null;
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (24) 
+        #region Methods (24)
 
-		// Private Methods (24) 
+        // Private Methods (24) 
 
         /// <summary>
         /// User want to browse for notes save path.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments</param>
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             DialogResult dlgresult = this.folderBrowserDialog1.ShowDialog();
@@ -127,7 +129,7 @@ namespace NoteFly
         /// Don't save any change made.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -144,8 +146,8 @@ namespace NoteFly
         /// Check the form input. If everything is okay
         /// call xmlHandler class to save the xml setting file.
         /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (!Directory.Exists(this.tbNotesSavePath.Text))
@@ -202,15 +204,17 @@ namespace NoteFly
                 MessageBox.Show(emailnotvalid);
                 Log.Write(LogType.error, emailnotvalid);
             }
-            //everything looks okay 
             else
             {
-                string oldnotesavepath = this.getNotesSavePath();
+                //everything looks okay 
+                string oldnotesavepath = this.GetNotesSavePath();
                 if (this.tbNotesSavePath.Text != oldnotesavepath)
                 {
                     this.MoveNotes(this.tbNotesSavePath.Text);
                 }
-                this.xmlsettings.WriteSettings(this.chxTransparecy.Checked,
+
+                this.xmlsettings.WriteSettings(
+                    this.chxTransparecy.Checked,
                     this.numProcTransparency.Value,
                     this.cbxDefaultColor.SelectedIndex,
                     this.cbxActionLeftClick.SelectedIndex,
@@ -293,6 +297,7 @@ namespace NoteFly
                 {
                     throw new Exception("Could not find settings file in application directory.");
                 }
+
                 this.Close();
             }
         }
@@ -300,7 +305,10 @@ namespace NoteFly
         private void cbxDefaultEmailToBlank_CheckedChanged(object sender, EventArgs e)
         {
             this.tbDefaultEmail.Enabled = !this.cbxDefaultEmailToBlank.Checked;
-            if (this.cbxDefaultEmailToBlank.Checked) { this.tbDefaultEmail.Text = String.Empty; }
+            if (this.cbxDefaultEmailToBlank.Checked)
+            {
+                this.tbDefaultEmail.Text = String.Empty;
+            }
         }
 
         /// <summary>
@@ -347,6 +355,7 @@ namespace NoteFly
             {
                 this.cbxFontNoteContent.Items.Add(oneFontFamily.Name);
             }
+
             string curfont = this.xmlsettings.getXMLnode("fontcontent");
             if (String.IsNullOrEmpty(curfont))
             {
@@ -363,8 +372,8 @@ namespace NoteFly
         /// <summary>
         /// Gets setting what happens if user clicks left on trayicon.
         /// </summary>
-        /// <returns></returns>
-        private int getActionLeftClick()
+        /// <returns>The integer setting.</returns>
+        private int GetActionLeftClick()
         {
             return this.xmlsettings.getXMLnodeAsInt("actionleftclick");
         }
@@ -372,8 +381,8 @@ namespace NoteFly
         /// <summary>
         /// Gets the default color.
         /// </summary>
-        /// <returns></returns>
-        private int getDefaultColor()
+        /// <returns>The defaultcolor setting as integer.</returns>
+        private int GetDefaultColor()
         {
             return this.xmlsettings.getXMLnodeAsInt("defaultcolor");
         }
@@ -381,8 +390,8 @@ namespace NoteFly
         /// <summary>
         /// Gets the textdirection setting.
         /// </summary>
-        /// <returns></returns>
-        private int getTextDirection()
+        /// <returns>The text direction setting as integer.</returns>
+        private int GetTextDirection()
         {
             return this.xmlsettings.getXMLnodeAsInt("textdirection");
         }
@@ -426,8 +435,8 @@ namespace NoteFly
         /// Gets if notefly is used to run at logon.
         /// bugfix: 0000006
         /// </summary>
-        /// <returns></returns>
-        private bool getStatusStartlogin()
+        /// <returns>The boolean if it starts at logon.</returns>
+        private bool GetStatusStartlogin()
         {
 #if win32
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -446,23 +455,27 @@ namespace NoteFly
             return false;
         }
 
-        private string getDefaultEmail()
+        private string GetDefaultEmail()
         {
             return this.xmlsettings.getXMLnode("defaultemail");
         }
-        private string getNotesSavePath()
+
+        private string GetNotesSavePath()
         {
             return this.xmlsettings.getXMLnode("notesavepath");
         }
-        private string getProxyAddr()
+
+        private string GetProxyAddr()
         {
             return this.xmlsettings.getXMLnode("proxyaddr");
         }
-        private string getTwitterusername()
+
+        private string GetTwitterusername()
         {
             return this.xmlsettings.getXMLnode("twitteruser");
         }
-        private string getTwitterpassword()
+
+        private string GetTwitterpassword()
         {
             string twpass = this.xmlsettings.getXMLnode("twitterpass");
             if (String.IsNullOrEmpty(twpass))
@@ -470,10 +483,11 @@ namespace NoteFly
                 this.chxRememberTwPass.Checked = false;
                 this.tbTwitterPass.Enabled = false;
             }
+
             return twpass;
         }
 
-        private decimal getTimeout()
+        private decimal GetTimeout()
         {
             int timeout = this.xmlsettings.getXMLnodeAsInt("networktimeout");
             if (timeout < 0)
@@ -487,7 +501,8 @@ namespace NoteFly
             }
 
         }
-        private decimal getTransparecylevel()
+
+        private decimal GetTransparecylevel()
         {
             decimal transparecylvl = Convert.ToDecimal(this.xmlsettings.getXMLnode("transparecylevel"));
             if ((transparecylvl < 1) || (transparecylvl > 100)) 
@@ -505,7 +520,7 @@ namespace NoteFly
         private void MoveNotes(string newpathsavenotes)
         {            
             bool errorshowed = false;
-            string oldpathsavenotes = this.getNotesSavePath();
+            string oldpathsavenotes = this.GetNotesSavePath();
             int id = 1;
             while (File.Exists(Path.Combine(oldpathsavenotes, id + ".xml")) == true)
             {
@@ -533,6 +548,7 @@ namespace NoteFly
                         }
                     }
                 }
+
                 id++;
             }
         }
@@ -542,6 +558,6 @@ namespace NoteFly
             this.ipTextBox1.Enabled = this.chxUseProxy.Checked;
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }
