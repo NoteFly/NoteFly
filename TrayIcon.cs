@@ -354,15 +354,15 @@ namespace NoteFly
                 if (!confirmexitshowed)
                 {
                     confirmexitshowed = true;
-                    string AssemblyProduct;
+                    string assemblyProduct;
                     object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
                     if (attributes.Length == 0)
                     {
-                        AssemblyProduct = String.Empty;
+                        assemblyProduct = String.Empty;
                     }
 
-                    AssemblyProduct = ((AssemblyProductAttribute)attributes[0]).Product;
-                    DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + AssemblyProduct + "?", "confirm exit", MessageBoxButtons.YesNo);
+                    assemblyProduct = ((AssemblyProductAttribute)attributes[0]).Product;
+                    DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + assemblyProduct + "?", "confirm exit", MessageBoxButtons.YesNo);
                     if (resdlgconfirmexit == DialogResult.No)
                     {
                         confirmexitshowed = false;

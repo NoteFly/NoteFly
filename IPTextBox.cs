@@ -55,11 +55,19 @@ namespace NoteFly
 
         // Public Methods (2) 
 
+        /// <summary>
+        /// get the ip address
+        /// </summary>
+        /// <returns>the ip address as string.</returns>
         public string GetIPAddress()
         {
             return this.tbIPaddress.Text;
         }
 
+        /// <summary>
+        /// sets the ip address.
+        /// </summary>
+        /// <param name="addr">the new ip address.</param>
         public void SetIPAddress(string addr)
         {
             this.tbIPaddress.Text = addr;
@@ -94,7 +102,7 @@ namespace NoteFly
                 // ':'
                 if (this.addrtype == IPaddrType.ipv4)
                 {
-                    MessageBox.Show("can't mix ipv4 and ipv6 seperators."); 
+                    MessageBox.Show("can't mix ipv4 and ipv6 seperators.", "error ip address", MessageBoxButtons.OK, MessageBoxIcon.Error); 
                 }
 
                 if (this.tbIPaddress.TextLength == 0)
@@ -157,9 +165,5 @@ namespace NoteFly
         }
 
         #endregion Methods
-
-
-
-
     }
 }

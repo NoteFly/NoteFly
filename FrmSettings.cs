@@ -19,6 +19,7 @@ namespace NoteFly
     using System.Windows.Forms;
 #if win32
     using Microsoft.Win32;
+    using System.Globalization;
 #endif
 
     /// <summary>
@@ -118,7 +119,7 @@ namespace NoteFly
                 else
                 {
                     string dirnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
-                    MessageBox.Show(dirnotexist);
+                    MessageBox.Show(dirnotexist, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Log.Write(LogType.info, dirnotexist);
                 }
             }
@@ -135,6 +136,11 @@ namespace NoteFly
             this.Close();
         }
 
+        /// <summary>
+        /// Test method to see how custom exceptions are handled.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
         private void btnCrash_Click(object sender, EventArgs e)
         {
             #if DEBUG
@@ -284,7 +290,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
-            DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset your settings?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);            
+            DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset your settings?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgres == DialogResult.Yes)
             {
                 string settingsfile = Path.Combine(this.xmlsettings.AppDataFolder, "settings.xml");
@@ -302,6 +308,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// User changed if the default e-mail should be blank or not.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
         private void cbxDefaultEmailToBlank_CheckedChanged(object sender, EventArgs e)
         {
             this.tbDefaultEmail.Enabled = !this.cbxDefaultEmailToBlank.Checked;
@@ -360,7 +371,7 @@ namespace NoteFly
             if (String.IsNullOrEmpty(curfont))
             {
                 string fontnotfound = "Current font not found.";
-                MessageBox.Show(fontnotfound);
+                MessageBox.Show(fontnotfound, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Log.Write(LogType.info, fontnotfound);
             }
             else
@@ -396,41 +407,6 @@ namespace NoteFly
             return this.xmlsettings.getXMLnodeAsInt("textdirection");
         }
 
-        /*
-        private bool getSaveFbSession()
-        {
-            return xmlsettings.getXMLnodeAsBool("savesession");
-        }
-        private bool getAskUrl()
-        {
-            return xmlsettings.getXMLnodeAsBool("askurl");
-        }
-        private bool getConfirmExit()
-        {
-            return xmlsettings.getXMLnodeAsBool("confirmexit");
-        }
-        private bool getHighlightC()
-        {
-            return xmlsettings.getXMLnodeAsBool("highlightC");
-        }
-        private bool getHighlightHTML()
-        {
-            return xmlsettings.getXMLnodeAsBool("highlightHTML");
-        }
-        private bool getUseProxy()
-        {
-            return xmlsettings.getXMLnodeAsBool("useproxy");
-        }
-        private bool getLogError()
-        {
-            return xmlsettings.getXMLnodeAsBool("logerror");
-        }
-        private bool getLogDebugInfo()
-        {
-            return xmlsettings.getXMLnodeAsBool("loginfo");
-        }
-         */
-
         /// <summary>
         /// Gets if notefly is used to run at logon.
         /// bugfix: 0000006
@@ -455,26 +431,46 @@ namespace NoteFly
             return false;
         }
 
+        /// <summary>
+        /// The default email address.
+        /// </summary>
+        /// <returns>default email address as string</returns>
         private string GetDefaultEmail()
         {
             return this.xmlsettings.getXMLnode("defaultemail");
         }
 
+        /// <summary>
+        /// The notes save path.
+        /// </summary>
+        /// <returns>notes save path as string</returns>
         private string GetNotesSavePath()
         {
             return this.xmlsettings.getXMLnode("notesavepath");
         }
 
+        /// <summary>
+        /// The proxy address.
+        /// </summary>
+        /// <returns>proxy address as string</returns>
         private string GetProxyAddr()
         {
             return this.xmlsettings.getXMLnode("proxyaddr");
         }
 
+        /// <summary>
+        /// The twitter username.
+        /// </summary>
+        /// <returns>twitter username as string.</returns>
         private string GetTwitterusername()
         {
             return this.xmlsettings.getXMLnode("twitteruser");
         }
 
+        /// <summary>
+        /// Get the twitter password from the settings.
+        /// </summary>
+        /// <returns>the password as string</returns>
         private string GetTwitterpassword()
         {
             string twpass = this.xmlsettings.getXMLnode("twitterpass");
@@ -487,6 +483,10 @@ namespace NoteFly
             return twpass;
         }
 
+        /// <summary>
+        /// Get the timeout settting.
+        /// </summary>
+        /// <returns>The timeout as decimal.</returns>
         private decimal GetTimeout()
         {
             int timeout = this.xmlsettings.getXMLnodeAsInt("networktimeout");
@@ -499,18 +499,21 @@ namespace NoteFly
             {
                 return timeout;
             }
-
         }
 
+        /// <summary>
+        /// Get the transparecy level.
+        /// </summary>
+        /// <returns>The transparecy level as decimal</returns>
         private decimal GetTransparecylevel()
         {
-            decimal transparecylvl = Convert.ToDecimal(this.xmlsettings.getXMLnode("transparecylevel"));
-            if ((transparecylvl < 1) || (transparecylvl > 100)) 
+            decimal transparecylvl = Convert.ToDecimal(this.xmlsettings.getXMLnode("transparecylevel"), CultureInfo.InvariantCulture.NumberFormat);
+            if ((transparecylvl < 1) || (transparecylvl > 100))
             {
                 MessageBox.Show("transparecylevel out of range.");
                 return 95;
             }
-            else return transparecylvl;
+            else { return transparecylvl; }
         }
 
         /// <summary>
@@ -535,7 +538,7 @@ namespace NoteFly
                         {
                             File.Move(oldfile, newfile);
                         }
-                        else throw new CustomException("File is marked as system file. Did not move.");
+                        else { throw new CustomException("File is marked as system file. Did not move."); }
                     }
                     else
                     {
@@ -553,6 +556,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// The user changed the proxy settings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
         {
             this.ipTextBox1.Enabled = this.chxUseProxy.Checked;

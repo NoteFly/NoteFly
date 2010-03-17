@@ -89,7 +89,7 @@ namespace NoteFly
         public static extern bool ReleaseCapture();
 
         /// <summary>
-        /// for moving form
+        /// For moving form.
         /// </summary>
         /// <param name="hWnd"></param>
         /// <param name="msg"></param>

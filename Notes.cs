@@ -81,7 +81,7 @@ namespace NoteFly
         #region Properties (7)
 
         /// <summary>
-        /// Get or sets if notes HTML content note are highlighted.
+        /// Gets or sets a value indicating whether notes HTML note content is highlighted.
         /// </summary>
         public bool HighlightHTML { get; set; }
 

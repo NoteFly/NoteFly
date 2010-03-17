@@ -115,7 +115,6 @@ namespace NoteFly
                 {
                     return false;
                 }
-
             }
 
             return false;

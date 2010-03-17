@@ -22,7 +22,7 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// The note.
+    /// The note class.
     /// </summary>
     public partial class FrmNote : Form
     {
@@ -155,7 +155,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets or sets the note visiblity.
+        /// Gets or sets a valeau indicating whether the note is visible.
         /// </summary>
         public bool NoteVisible
         {
@@ -730,7 +730,6 @@ namespace NoteFly
                     string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
                     xmlHandler updateposnote = new xmlHandler(notefile);
                     updateposnote.WriteNote(this.Visible, this.TopMost, this.notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
-                    
                 }
                 else if (this.notecolor < 0 || this.notecolor > this.skin.MaxNotesColors)
                 {

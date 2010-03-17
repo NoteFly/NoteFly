@@ -14,10 +14,40 @@
 namespace NoteFly
 {
     /// <summary>
-    /// The Note.
+    /// The Note form class
     /// </summary>
     public partial class FrmNote
     {
+
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Panel pnlHead;
+        private System.Windows.Forms.Button btnCloseNote;
+        private System.Windows.Forms.RichTextBox rtbNote;
+        private System.Windows.Forms.Panel pnlNote;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripNoteOptions;
+        private System.Windows.Forms.ToolStripMenuItem menuEditNote;
+        private System.Windows.Forms.ToolStripMenuItem menuCopyText;
+        private System.Windows.Forms.ToolStripMenuItem menuNoteColors;
+        private System.Windows.Forms.ToolStripMenuItem yellowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem orangeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem whiteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem greenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blueToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pbResizeGrip;
+        private System.Windows.Forms.ToolStripMenuItem purpleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuOnTop;
+        private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
+        private System.Windows.Forms.ToolStripMenuItem menuLockNote;
+        private System.ComponentModel.BackgroundWorker SavePos;
+        private System.Windows.Forms.ToolStripMenuItem menuHideNote;
+        private System.Windows.Forms.ToolStripMenuItem menuSendTo;
+        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToFacebook;
+        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToTwitter;
+        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToEmail;
+        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToTextfile;
+        private System.Windows.Forms.ToolStripMenuItem menuRollUp;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -433,34 +463,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Panel pnlHead;
-        private System.Windows.Forms.Button btnCloseNote;
-        private System.Windows.Forms.RichTextBox rtbNote;
-        private System.Windows.Forms.Panel pnlNote;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripNoteOptions;
-        private System.Windows.Forms.ToolStripMenuItem menuEditNote;
-        private System.Windows.Forms.ToolStripMenuItem menuCopyText;
-        private System.Windows.Forms.ToolStripMenuItem menuNoteColors;
-        private System.Windows.Forms.ToolStripMenuItem yellowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem orangeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem whiteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem greenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem blueToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pbResizeGrip;
-        private System.Windows.Forms.ToolStripMenuItem purpleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem redToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem menuOnTop;
-        private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
-        private System.Windows.Forms.ToolStripMenuItem menuLockNote;
-        private System.ComponentModel.BackgroundWorker SavePos;
-        private System.Windows.Forms.ToolStripMenuItem menuHideNote;
-        private System.Windows.Forms.ToolStripMenuItem menuSendTo;
-        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToFacebook;
-        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToTwitter;
-        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToEmail;
-        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToTextfile;
-        private System.Windows.Forms.ToolStripMenuItem menuRollUp;
     }
 }

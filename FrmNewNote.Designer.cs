@@ -18,6 +18,21 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNewNote
     {
+        private System.Windows.Forms.TextBox tbTitle;
+        private System.Windows.Forms.Label lbTextTitle;
+        private System.Windows.Forms.Button btnAddNote;
+        private System.Windows.Forms.Panel pnlHeadNewNote;
+        private System.Windows.Forms.Panel pnlNoteEdit;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.RichTextBox rtbNote;
+        private System.Windows.Forms.PictureBox pbResizeGrip;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripTextActions;
+        private System.Windows.Forms.ToolStripMenuItem pastTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveNewNoteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cancelNoteToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTip;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -300,21 +315,6 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox tbTitle;
-        private System.Windows.Forms.Label lbTextTitle;
-        private System.Windows.Forms.Button btnAddNote;
-        private System.Windows.Forms.Panel pnlHeadNewNote;
-        private System.Windows.Forms.Panel pnlNoteEdit;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.RichTextBox rtbNote;
-        private System.Windows.Forms.PictureBox pbResizeGrip;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripTextActions;
-        private System.Windows.Forms.ToolStripMenuItem pastTextToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyTextToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveNewNoteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cancelNoteToolStripMenuItem;
-        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

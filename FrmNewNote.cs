@@ -167,7 +167,6 @@ namespace NoteFly
                     this.highlight.CheckSyntaxQuick(this.rtbNote.SelectionStart - 1);
                 }
             }
-            
         }
 
         /// <summary>
@@ -394,6 +393,11 @@ namespace NoteFly
         #endregion Methods 
 
         #region highlight controls
+        /// <summary>
+        /// User entered the title box.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
         private void tbTitle_Enter(object sender, EventArgs e)
         {
             if (this.skin != null)
@@ -402,6 +406,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// User leaved the title box
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
         private void tbTitle_Leave(object sender, EventArgs e)
         {
             if (this.skin != null)
@@ -410,6 +419,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// User entered the note content box
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
         private void rtbNote_Enter(object sender, EventArgs e)
         {
             if (this.skin != null)
@@ -418,6 +432,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// User leaved the note content box.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
         private void rtbNote_Leave(object sender, EventArgs e)
         {
             if (this.skin != null)

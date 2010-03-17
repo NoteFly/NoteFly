@@ -74,8 +74,5 @@ namespace NoteFly
         #endregion
 
         private System.Windows.Forms.TextBox tbIPaddress;
-
-
-
     }
 }

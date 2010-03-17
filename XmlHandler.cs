@@ -15,12 +15,13 @@
 using System;
 using System.IO;
 using System.Xml;
+using System.Globalization;
 
 namespace NoteFly
 {
     class xmlHandler
     {
-        #region Fields (5)
+		#region Fields (5) 
 
         private string appdatafolder = "";
         private string filenm;
@@ -28,9 +29,9 @@ namespace NoteFly
         private XmlTextReader objXmlTextReader;
         private XmlTextWriter objXmlTextWriter;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (2)
+		#region Constructors (2) 
 
         public xmlHandler(bool issetting)
         {
@@ -54,9 +55,9 @@ namespace NoteFly
             this.filenm = filenm;
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Properties (1)
+		#region Properties (1) 
 
         public string AppDataFolder
         {
@@ -66,11 +67,11 @@ namespace NoteFly
             }
         }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Methods (7)
+		#region Methods (11) 
 
-        // Public Methods (5) 
+		// Public Methods (8) 
 
         /// <summary>
         /// Get a xml node
@@ -196,6 +197,81 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Get boolean setting from a note.
+        /// </summary>
+        /// <returns>0 visible
+        /// 1 ontop</returns>
+        public Boolean[] ParserNoteBools()
+        {
+            Boolean[] settings = new Boolean[2];
+            try
+            {
+                objXmlTextReader = new XmlTextReader(filenm);
+                while (objXmlTextReader.Read())
+                {
+                    switch (objXmlTextReader.Name)
+                    {
+                        case "visible":
+                            settings[0] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                        case "ontop":
+                            settings[1] = objXmlTextReader.ReadElementContentAsBoolean();
+                            break;
+                    }
+                }
+            }
+            finally
+            {
+                objXmlTextReader.Close();
+            }
+            return settings;
+        }
+
+        /// <summary>
+        /// Get integer note settings as array
+        /// </summary>
+        /// <returns>0 color
+        /// 1 x
+        /// 2 y
+        /// 3 width
+        /// 4 height</returns>
+        public Int32[] ParserNoteInts()
+        {
+            Int32[] settings = new Int32[5];
+
+            try
+            {
+                objXmlTextReader = new XmlTextReader(filenm);
+                while (objXmlTextReader.Read())
+                {
+                    switch (objXmlTextReader.Name)
+                    {
+                        case "color":
+                            settings[0] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                        case "x":
+                            settings[1] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                        case "y":
+                            settings[2] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                        case "width":
+                            settings[3] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                        case "heigth":
+                            settings[4] = objXmlTextReader.ReadElementContentAsInt();
+                            break;
+                    }
+                }
+            }
+            finally
+            {
+                objXmlTextReader.Close();
+            }
+            return settings;
+        }
+
+        /// <summary>
         /// Get the boolean setting in the settings.xml file as array.
         /// </summary>
         /// <returns>array of boolean settings
@@ -256,81 +332,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get integer note settings as array
-        /// </summary>
-        /// <returns>0 color
-        /// 1 x
-        /// 2 y
-        /// 3 width
-        /// 4 height</returns>
-        public Int32[] ParserNoteInts()
-        {
-            Int32[] settings = new Int32[5];
-
-            try
-            {
-                objXmlTextReader = new XmlTextReader(filenm);
-                while (objXmlTextReader.Read())
-                {
-                    switch (objXmlTextReader.Name)
-                    {
-                        case "color":
-                            settings[0] = objXmlTextReader.ReadElementContentAsInt();
-                            break;
-                        case "x":
-                            settings[1] = objXmlTextReader.ReadElementContentAsInt();
-                            break;
-                        case "y":
-                            settings[2] = objXmlTextReader.ReadElementContentAsInt();
-                            break;
-                        case "width":
-                            settings[3] = objXmlTextReader.ReadElementContentAsInt();
-                            break;
-                        case "heigth":
-                            settings[4] = objXmlTextReader.ReadElementContentAsInt();
-                            break;
-                    }
-                }
-            }
-            finally
-            {
-                objXmlTextReader.Close();
-            }
-            return settings;
-        }
-
-        /// <summary>
-        /// Get boolean setting from a note.
-        /// </summary>
-        /// <returns>0 visible
-        /// 1 ontop</returns>
-        public Boolean[] ParserNoteBools()
-        {
-            Boolean[] settings = new Boolean[2];
-            try
-            {
-                objXmlTextReader = new XmlTextReader(filenm);
-                while (objXmlTextReader.Read())
-                {
-                    switch (objXmlTextReader.Name)
-                    {
-                        case "visible":
-                            settings[0] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                        case "ontop":
-                            settings[1] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                    }
-                }
-            }
-            finally
-            {
-                objXmlTextReader.Close();
-            }
-            return settings;
-        }
-
-        /// <summary>
         /// Write a note xml file.
         /// </summary>
         /// <param name="visible">note is visible</param>
@@ -364,15 +365,15 @@ namespace NoteFly
 
                 WriteXMLBool("ontop", ontop);
 
-                objXmlTextWriter.WriteElementString("color", Convert.ToString(numcolor));
+                objXmlTextWriter.WriteElementString("color", Convert.ToString(numcolor, CultureInfo.InvariantCulture.NumberFormat));
 
                 objXmlTextWriter.WriteElementString("title", title);
 
                 objXmlTextWriter.WriteElementString("content", content);
 
                 objXmlTextWriter.WriteStartElement("location");
-                objXmlTextWriter.WriteElementString("x", Convert.ToString(locX));
-                objXmlTextWriter.WriteElementString("y", Convert.ToString(locY));
+                objXmlTextWriter.WriteElementString("x", Convert.ToString(locX, CultureInfo.InvariantCulture.NumberFormat));
+                objXmlTextWriter.WriteElementString("y", Convert.ToString(locY, CultureInfo.InvariantCulture.NumberFormat));
                 objXmlTextWriter.WriteEndElement();
 
                 objXmlTextWriter.WriteStartElement("size");
@@ -395,7 +396,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Write settings file
+        /// Write settings file.
         /// </summary>
         /// <returns>true if succeed.</returns>
         public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool confirmexit, bool confirmdelete, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr, int timeout, Boolean savefacebooksession)
@@ -415,12 +416,12 @@ namespace NoteFly
 
                 WriteXMLBool("transparecy", transparecy);
 
-                objXmlTextWriter.WriteElementString("transparecylevel", Convert.ToString(transparecylevel));
+                objXmlTextWriter.WriteElementString("transparecylevel", Convert.ToString(transparecylevel, CultureInfo.InvariantCulture.NumberFormat));
 
                 if (numcolor < 0) { throw new CustomException("Impossible selection"); }
                 else
                 {
-                    objXmlTextWriter.WriteElementString("defaultcolor", Convert.ToString(numcolor));
+                    objXmlTextWriter.WriteElementString("defaultcolor", Convert.ToString(numcolor, CultureInfo.InvariantCulture.NumberFormat));
                 }
                 if ((actionleftclick < 0) || (actionleftclick > 3)) { throw new CustomException("action left click unknow"); }
                 else
@@ -472,7 +473,7 @@ namespace NoteFly
 
                 objXmlTextWriter.WriteElementString("proxyaddr", proxyaddr);
 
-                objXmlTextWriter.WriteElementString("timeout", Convert.ToString(timeout));
+                objXmlTextWriter.WriteElementString("timeout", Convert.ToString(timeout, CultureInfo.InvariantCulture.NumberFormat));
 
                 objXmlTextWriter.WriteStartElement("facebook");
 
@@ -481,7 +482,7 @@ namespace NoteFly
                 if (savefacebooksession && !String.IsNullOrEmpty(FacebookSettings.Uid) && !String.IsNullOrEmpty(FacebookSettings.Sessionsecret) && !String.IsNullOrEmpty(FacebookSettings.Sessionkey) && FacebookSettings.Sesionexpires != 0)
                 {
                     objXmlTextWriter.WriteElementString("uid", FacebookSettings.Uid);
-                    objXmlTextWriter.WriteElementString("sesionexpires", Convert.ToString(FacebookSettings.Sesionexpires));
+                    objXmlTextWriter.WriteElementString("sesionexpires", Convert.ToString(FacebookSettings.Sesionexpires, CultureInfo.InvariantCulture.NumberFormat));
                     objXmlTextWriter.WriteElementString("sessionsecret", FacebookSettings.Sessionsecret);
                     objXmlTextWriter.WriteElementString("sessionkey", FacebookSettings.Sessionkey);
                 }
@@ -498,7 +499,7 @@ namespace NoteFly
                 if (twitteruser.Length > 15) { throw new CustomException("Twitter username too long."); }
                 else
                 {
-                    objXmlTextWriter.WriteElementString("twitteruser", Convert.ToString(twitteruser));
+                    objXmlTextWriter.WriteElementString("twitteruser", twitteruser);
                 }
                 if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new CustomException("Twitter password too short."); }
                 else
@@ -523,26 +524,7 @@ namespace NoteFly
 
             return true;
         }
-
-        // Private Methods (2) 
-
-        /// <summary>
-        /// write 1 for true and 0 for false.
-        /// </summary>
-        /// <param name="checknode"></param>
-        private void WriteXMLBool(String element, bool checknode)
-        {
-            objXmlTextWriter.WriteStartElement(element);
-            if (checknode == true)
-            {
-                objXmlTextWriter.WriteString("1");
-            }
-            else
-            {
-                objXmlTextWriter.WriteString("0");
-            }
-            objXmlTextWriter.WriteEndElement();
-        }
+		// Private Methods (3) 
 
         /// <summary>
         /// Does some checks on the file
@@ -588,6 +570,24 @@ namespace NoteFly
 #endif
         }
 
-        #endregion Methods
+        /// <summary>
+        /// write 1 for true and 0 for false.
+        /// </summary>
+        /// <param name="checknode"></param>
+        private void WriteXMLBool(String element, bool checknode)
+        {
+            objXmlTextWriter.WriteStartElement(element);
+            if (checknode == true)
+            {
+                objXmlTextWriter.WriteString("1");
+            }
+            else
+            {
+                objXmlTextWriter.WriteString("0");
+            }
+            objXmlTextWriter.WriteEndElement();
+        }
+
+		#endregion Methods 
     }
 }
