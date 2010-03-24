@@ -34,9 +34,10 @@ namespace NoteFly
 
         private Notes notes;
         private TextHighlight highlight;
-        private string note, title, twpass;
+        private string note, title;
+        private char[] twpass;
         private short id, notecolor = 0;
-        private bool notevisible = true, rolledup = false, notelock = false;
+        private bool rolledup = false, notelock = false;
         private Skin skin;
         private int locX, locY;
         private ushort noteWidth, noteHeight;
@@ -63,10 +64,8 @@ namespace NoteFly
         public FrmNote(Notes notes, short id, bool visible, bool ontop, string title, string note, short notecolor, int locX, int locY, int notewidth, int noteheight)
         {
             this.notes = notes;
-            this.notevisible = visible;
             this.FormBorderStyle = FormBorderStyle.None;
             this.skin = new Skin(notecolor);
-            
             this.id = id;
             this.title = title;
             this.note = note;
@@ -88,7 +87,7 @@ namespace NoteFly
             this.lblTitle.Text = title;
             this.rtbNote.Text = note;
 
-            if (this.notevisible)
+            if (visible)
             {
                 this.SetSizeNote(notewidth, noteheight);
                 this.SetPosNote();
@@ -99,6 +98,7 @@ namespace NoteFly
             {
                 this.Hide();
             }
+            this.Visible = visible;
         }
 
         /// <summary>
@@ -154,6 +154,7 @@ namespace NoteFly
             }
         }
 
+        /*
         /// <summary>
         /// Gets or sets a valeau indicating whether the note is visible.
         /// </summary>
@@ -169,7 +170,7 @@ namespace NoteFly
                 this.notevisible = value;
             }
         }
-
+        */
         /// <summary>
         /// Gets or sets the note content.
         /// </summary>
@@ -285,6 +286,7 @@ namespace NoteFly
 
         /// <summary>
         /// Find what password is entered.
+        /// Make sure the memory gets cleared.
         /// </summary>
         /// <param name="obj">The button user clicked on.</param>
         /// <param name="e">Event arguments</param>
@@ -300,15 +302,22 @@ namespace NoteFly
                 return;
             }
 
-            this.twpass = passctr[0].Text;
+            //this.twpass = passctr[0].Text;
+            this.twpass = new char[passctr[0].Text.Length];
+            for (int n = 0; n < passctr[0].Text.Length; n++)
+            {
+                this.twpass[n] = passctr[0].Text[n];
+            }
+            passctr[0].Text.Remove(0);
             frmAskpass.Close();
+            passctr[0].Name = new Random().Next().ToString();//make it harder to find.
             foreach (Control cntrl in frmAskpass.Controls)
             {
                 cntrl.Dispose();
             }
-
             frmAskpass.Dispose();
             this.Tweetnote();
+            GC.Collect();
         }
 
         /// <summary>
@@ -355,11 +364,11 @@ namespace NoteFly
         {
             if (twitterenabled)
             {
-                this.tsmenuSendToTwitter.Enabled = true;
+                this.tsmenuSendToTwitter.Text = "Twitter";
             }
             else
             {
-                this.tsmenuSendToTwitter.Enabled = false;
+                this.tsmenuSendToTwitter.Text = this.tsmenuSendToTwitter.Text + " (not setup)";
             }
         }
 
@@ -760,7 +769,7 @@ namespace NoteFly
                     this.notecolor = i;
                     string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
                     xmlHandler savenotecolor = new xmlHandler(notefile);
-                    savenotecolor.WriteNote(this.NoteVisible, this.menuOnTop.Checked, this.notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                    savenotecolor.WriteNote(this.Visible, this.menuOnTop.Checked, this.notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
                     Log.Write(LogType.info, "Color note (ID:" + this.NoteID + ") changed.");
                 }
                 else
@@ -888,10 +897,13 @@ namespace NoteFly
 
             xmlHandler getSettings = new xmlHandler(true);
             string twitteruser = getSettings.getXMLnode("twitteruser");
-            string twitterpass = getSettings.getXMLnode("twitterpass");
-            if (!String.IsNullOrEmpty(this.twpass))
+            char[] twitterpass = getSettings.getXMLnode("twitterpass").ToCharArray();
+            if (this.twpass!=null)
             {
-                twitterpass = this.twpass;
+                if (this.twpass.Length > 0)
+                {
+                    twitterpass = this.twpass;
+                }
             }
 
             if (String.IsNullOrEmpty(twitteruser))
@@ -903,7 +915,7 @@ namespace NoteFly
                 settings.Show();
                 return;
             }
-            else if (String.IsNullOrEmpty(this.twpass))
+            else if (twitterpass.Length==0)
             {
                 Form askpass = new Form();
                 askpass.ShowIcon = false;
@@ -928,7 +940,7 @@ namespace NoteFly
             else
             {
                 Twitter twitter = new Twitter();
-                if (twitter.UpdateAsXML(twitteruser, twitterpass, this.note) != null)
+                if (twitter.UpdateAsXML(twitteruser, twitterpass.ToString(), this.note) != null)
                 {
                     MessageBox.Show("Your note is Tweeted.");
                 }
@@ -938,8 +950,12 @@ namespace NoteFly
                     MessageBox.Show(sendtwfail);
                     Log.Write(LogType.error, sendtwfail);
                 }
-
-                this.twpass.Remove(0);
+                //overwrite with zero int.
+                for (int i = 0; i < this.twpass.Length; i++)
+                {
+                    this.twpass[i] = '0';
+                }
+                this.twpass = null;
             }
         }
 

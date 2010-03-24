@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="Notes.cs" company="GNU">
 // 
 // This program is free software; you can redistribute it and/or modify it
@@ -60,6 +60,11 @@ namespace NoteFly
         /// The textdirection, 0 is left to right, 1 is right to left
         /// </summary>
         private short textdirection = 0;
+		
+		/// <summary>
+		/// Is hightlight html enabled.
+		/// </summary>
+        private bool highlighthtml = false;
 
         #endregion Fields
 
@@ -83,7 +88,17 @@ namespace NoteFly
         /// <summary>
         /// Gets or sets a value indicating whether notes HTML note content is highlighted.
         /// </summary>
-        public bool HighlightHTML { get; set; }
+        public bool HighlightHTML
+		{ 
+			get
+			{
+				return this.highlighthtml;
+			}
+			set
+			{
+				this.highlighthtml = value;
+			}
+		}
 
         /// <summary>
         /// Gets a note.

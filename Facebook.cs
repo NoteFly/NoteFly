@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="Facebook.cs" company="GNU">
 // 
 // This program is free software; you can redistribute it and/or modify it
@@ -28,26 +28,69 @@ namespace NoteFly
     public static class FacebookSettings
     {
         // Fields (4) 
-
+		private static double sessionexpires;
+		private static string sessionkey;
+		private static string sessionsecret;
+		private static string uid;
+		
         /// <summary>
         /// Gets or sets the unix time when the facebook session expires
         /// </summary>
-        public static double Sesionexpires { get; set; }
+        public static double Sesionexpires { 
+			get
+			{
+				return sessionexpires;
+			}
+			
+			set
+			{
+				sessionexpires = value;
+			}
+		}
 
         /// <summary>
         /// Gets or sets the session key
         /// </summary>
-        public static string Sessionkey { get; set; }
+        public static string Sessionkey { 
+			get
+				{
+					return sessionkey;
+				}
+				set
+				{
+					sessionkey = value;
+				}
+			}
 
         /// <summary>
         /// Gets or sets the session secret key (gives 24hour access to account)
         /// </summary>
-        public static string Sessionsecret { get; set; }
+        public static string Sessionsecret { 
+				get 
+				{
+					return sessionsecret;
+				}
+				set
+				{
+					sessionsecret = value;
+				}
+			}
 
         /// <summary>
         /// Gets or sets the user id
         /// </summary>
-        public static string Uid { get; set; }
+        public static string Uid 
+			{ 
+				get
+				{
+					return uid;
+				}
+				set
+				{
+					uid = value;
+				}
+				
+			}
     }
 
     /// <summary>
@@ -468,7 +511,7 @@ namespace NoteFly
         {
             string data = "api_key=" + APPKEY + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + FacebookSettings.Sessionkey + "ss=" + sessionsecret + "uid=" + uid + "v=" + APIVERISON + FacebookSettings.Sessionsecret;
 
-            var md5 = MD5.Create();
+            //class md5 = MD5.Create();
             string hash = this.MakeMD5(data);
             if (hash.Length == 32)
             {

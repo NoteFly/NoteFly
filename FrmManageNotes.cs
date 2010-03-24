@@ -207,12 +207,12 @@ namespace NoteFly
                 if (this.notes.GetNotes[n].Visible == true)
                 {
                     this.notes.GetNotes[n].Hide();
-                    this.notes.GetNotes[n].NoteVisible = false;
+                    this.notes.GetNotes[n].Visible = false;
                 }
                 else
                 {
                     this.notes.GetNotes[n].Show();
-                    this.notes.GetNotes[n].NoteVisible = true;
+                    this.notes.GetNotes[n].Visible = true;
                 }
 
                 this.notes.GetNotes[n].UpdateThisNote();
