@@ -69,7 +69,7 @@ namespace NoteFly
         /// <param name="password">The Twitter password</param>
         /// <param name="status">The tweet, limited to 140 chars.</param>
         /// <returns>The return valeau.</returns>
-        public string Update(string userName, string password, string status)
+        public string Update(string userName, char[] password, string status)
         {
             //Important: "statuses", "update" and "xml" must be lower case.
             string url = string.Format(TwitterBaseUrlFormat, "statuses", "update", "xml");
@@ -85,7 +85,7 @@ namespace NoteFly
         /// <param name="password">The twitter password.</param>
         /// <param name="text">The message.</param>
         /// <returns>A xml document as response from the server.</returns>
-        public XmlDocument UpdateAsXML(string userName, string password, string text)
+        public XmlDocument UpdateAsXML(string userName, char[] password, string text)
         {
             string output = this.Update(userName, password, text);
             if (!string.IsNullOrEmpty(output))
@@ -109,13 +109,19 @@ namespace NoteFly
         /// <param name="password">The password to use with the request</param>
         /// <param name="data">The data to post</param> 
         /// <returns>The response of the request, or null if we got 404 or nothing.</returns>
-        protected string ExecutePostCommand(string url, string userName, string password, string data)
+        protected string ExecutePostCommand(string url, string userName, char[] password, string data)
         {
             System.Net.ServicePointManager.Expect100Continue = false;
             WebRequest request = WebRequest.Create(url);
-            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
+            if (!string.IsNullOrEmpty(userName) && password.Length>0)
             {
-                request.Credentials = new NetworkCredential(userName, password);
+                StringBuilder sbpass = new StringBuilder();
+                for (int i = 0; i < password.Length; i++)
+                {
+                    sbpass.Append(password[i]);
+                }
+                request.Credentials = new NetworkCredential(userName, sbpass.ToString());
+                sbpass.Remove(0, password.Length);
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.Method = "POST";
                 if (!string.IsNullOrEmpty(TrayIcon.AssemblyTitle))

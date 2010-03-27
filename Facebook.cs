@@ -28,69 +28,73 @@ namespace NoteFly
     public static class FacebookSettings
     {
         // Fields (4) 
-		private static double sessionexpires;
-		private static string sessionkey;
-		private static string sessionsecret;
-		private static string uid;
-		
+        private static double sessionexpires;
+        private static string sessionkey;
+        private static string sessionsecret;
+        private static string uid;
+
         /// <summary>
         /// Gets or sets the unix time when the facebook session expires
         /// </summary>
         public static double Sesionexpires { 
-			get
-			{
-				return sessionexpires;
-			}
-			
-			set
-			{
-				sessionexpires = value;
-			}
-		}
+            get
+            {
+                return sessionexpires;
+            }
+
+            set
+            {
+                sessionexpires = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the session key
         /// </summary>
-        public static string Sessionkey { 
-			get
-				{
-					return sessionkey;
-				}
-				set
-				{
-					sessionkey = value;
-				}
-			}
+        public static string Sessionkey 
+        {
+            get
+            {
+                return sessionkey;
+            }
+
+            set
+            {
+                sessionkey = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the session secret key (gives 24hour access to account)
         /// </summary>
-        public static string Sessionsecret { 
-				get 
-				{
-					return sessionsecret;
-				}
-				set
-				{
-					sessionsecret = value;
-				}
-			}
+        public static string Sessionsecret
+        {
+            get
+            {
+                return sessionsecret;
+            }
+
+            set
+            {
+                sessionsecret = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the user id
         /// </summary>
-        public static string Uid 
-			{ 
-				get
-				{
-					return uid;
-				}
-				set
-				{
-					uid = value;
-				}
-				
-			}
+        public static string Uid
+        {
+            get
+            {
+                return uid;
+            }
+
+            set
+            {
+                uid = value;
+            }
+        }
     }
 
     /// <summary>
@@ -130,6 +134,11 @@ namespace NoteFly
         /// </summary>
         private const string FBSUCCEEDURL = "http://www.facebook.com/connect/login_success.html";
 
+        /// <summary>
+        /// Title to display in the error messagebox.
+        /// </summary>
+        private const string MSGERRORTITLE = "Error sending note to Facebook";
+        
         /// <summary>
         /// The form with webbrowser
         /// </summary>
@@ -182,53 +191,65 @@ namespace NoteFly
             switch (responsecode)
             {
                 case 0:
-                    string notefbposted = "Your note is posted on your facebook wall.";
+                    string notefbposted = "Your note is succefully posted on your facebook wall.";
                     MessageBox.Show(notefbposted);
                     Log.Write(LogType.info, notefbposted);
                     break;
                 case 1:
                     string unknowfberror = "Unknow facebook error occurred";
-                    MessageBox.Show(unknowfberror);
+                    MessageBox.Show(unknowfberror, MSGERRORTITLE);
                     Log.Write(LogType.error, unknowfberror);
                     break;
                 case 100:
                     string fbinvalidparam = "Invalid paramters.";
-                    MessageBox.Show(fbinvalidparam);
+                    MessageBox.Show(fbinvalidparam, MSGERRORTITLE);
                     Log.Write(LogType.error, fbinvalidparam);
                     break;
                 case 104:
-                    string fbinvalidsig = "Signature was invalid.";
-                    MessageBox.Show(fbinvalidsig);
+                    string fbinvalidsig = "Error: Signature was invalid.";
+                    MessageBox.Show(fbinvalidsig, MSGERRORTITLE);
                     Log.Write(LogType.error, fbinvalidsig);
                     break;
                 case 200:
-                    string fbprimission = "No proper primision to post on your wall.";
-                    MessageBox.Show(fbprimission);
+                    string fbprimission = "Error: No proper primision to post on your wall.";
+                    MessageBox.Show(fbprimission, MSGERRORTITLE);
                     Log.Write(LogType.error, fbprimission);
                     break;
                 case 210:
-                    string fbusernotvisible = "User not visible.\r\nThe user doesn't have permission to act on that object.";
-                    MessageBox.Show(fbusernotvisible);
+                    string fbusernotvisible = "Error: User not visible.\r\nThe user doesn't have permission to act on that object.";
+                    MessageBox.Show(fbusernotvisible, MSGERRORTITLE);
                     Log.Write(LogType.error, fbusernotvisible);
                     break;
+                case 240:
+                    string fberror240 = "Error:   now it's a known problem ";
+                    MessageBox.Show(fberror240, MSGERRORTITLE);
+                    Log.Write(LogType.error, fberror240);
+                    break;
                 case 340:
-                    string fbfeedlimit = "Feed action request limit reached.";
-                    MessageBox.Show(fbfeedlimit);
+                    string fbfeedlimit = "Error: Feed action request limit reached.";
+                    MessageBox.Show(fbfeedlimit, MSGERRORTITLE);
                     Log.Write(LogType.error, fbfeedlimit);
                     break;
                 case -1:
-                    string notparsererrcode = "Could not parser the errorcode that was returned.";
-                    MessageBox.Show(notparsererrcode);
+                    string notparsererrcode = "Error: Could not parser the errorcode that was returned.";
+                    MessageBox.Show(notparsererrcode, MSGERRORTITLE);
                     Log.Write(LogType.error, notparsererrcode);
                     break;
                 default:
-                    string errcode = "Facebook returned unknow errorcode: " + responsecode;
-                    MessageBox.Show(errcode);
+                    string errcode = "Error: Facebook returned unknow errorcode " + responsecode;
+                    MessageBox.Show(errcode, MSGERRORTITLE);
                     Log.Write(LogType.error, errcode);
                     break;
             }
-
-            this.frmLoginFb.Close();
+            try
+            {
+                this.frmLoginFb.Close();
+            }
+            catch (Exception cannotclose)
+            {
+                Log.Write(LogType.error, cannotclose.Message);
+            }
+            
         }
 
         /// <summary>
@@ -270,6 +291,7 @@ namespace NoteFly
                         }
                         else if (curparm.StartsWith("\"secret\":"))
                         {
+                            int seclen = curparm.Length - 1;
                             FacebookSettings.Sessionsecret = curparm.Substring(10, curparm.Length - 11);
                         }
                         else if (curparm.StartsWith("\"sig\":"))
@@ -418,7 +440,7 @@ namespace NoteFly
         public void StartPostingNote(string note)
         {
             this.message = note;
-            if (String.IsNullOrEmpty(FacebookSettings.Sessionkey) || String.IsNullOrEmpty(FacebookSettings.Sessionsecret) || String.IsNullOrEmpty(FacebookSettings.Uid))
+            if (String.IsNullOrEmpty(FacebookSettings.Sessionkey) || FacebookSettings.Sessionsecret.Length==0 || String.IsNullOrEmpty(FacebookSettings.Uid))
             {
                 this.ShowFBLoginForm();
             }
@@ -471,16 +493,22 @@ namespace NoteFly
             string callid = DateTime.Now.Ticks.ToString("x", CultureInfo.InvariantCulture);
             data += "&call_id=" + callid;
             data += "&message=" + message;
-            data += "&method=facebook.stream.publish";
+            string methode = "facebook.stream.publish";
+            data += "&method="+methode;
             data += "&session_key=" + FacebookSettings.Sessionkey;
-            string sessionsecret = "1";
-            data += "&ss=" + sessionsecret;
+            string usesessionsecret = "1";
+            data += "&ss=" + usesessionsecret;
             data += "&uid=" + FacebookSettings.Uid;
             data += "&v=" + APIVERISON;
-
-            string methode = "facebook.stream.publish";
-            data += "&sig=" + this.GenerateSignature(callid, message, methode, FacebookSettings.Sessionkey, sessionsecret, FacebookSettings.Uid);
-            return data;
+            data += "&sig=" + this.GenerateSignature(callid, message, methode, usesessionsecret);
+            if (data.Length > 0)
+            {
+                return data;
+            }
+            else
+            {
+                throw new CustomException("data too small.");
+            }
         }
 
         /// <summary>
@@ -503,15 +531,18 @@ namespace NoteFly
         /// <param name="call_id">Something higher than previous call_id</param>
         /// <param name="message">The content to send.</param>
         /// <param name="methode">The methode for rest api.</param>
-        /// <param name="session_key">The session key.</param>
-        /// <param name="sessionsecret">The session secret</param>
-        /// <param name="uid">The userid</param>
+        /// <param name="sessionsecret">1 for using sessionsecret</param>
         /// <returns>The generated signature based on the parameters.</returns>
-        private string GenerateSignature(string call_id, string message, string methode, string session_key, string sessionsecret, string uid)
+        private string GenerateSignature(string call_id, string message, string methode, string usesessionsecret)
         {
-            string data = "api_key=" + APPKEY + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + FacebookSettings.Sessionkey + "ss=" + sessionsecret + "uid=" + uid + "v=" + APIVERISON + FacebookSettings.Sessionsecret;
+            StringBuilder secret = new StringBuilder();
+            for (int i = 0; i < FacebookSettings.Sessionsecret.Length; i++)
+            {
+                secret.Append(FacebookSettings.Sessionsecret[i]);
+            }
+            MessageBox.Show("secret="+secret);
+            string data = "api_key=" + APPKEY + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + FacebookSettings.Sessionkey + "ss=" + usesessionsecret + "uid=" + FacebookSettings.Uid + "v=" + APIVERISON + secret.ToString();
 
-            //class md5 = MD5.Create();
             string hash = this.MakeMD5(data);
             if (hash.Length == 32)
             {

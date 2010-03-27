@@ -12,7 +12,7 @@
 
 ; version
 !define VERSION "1.0.0" ;version number: major.minor.release
-!define VERSTATUS "rc3" ;alpha, beta, rc, or nothing for final.
+!define VERSTATUS "" ;alpha, beta, rc, or nothing for final.
 
 SetCompressor lzma
 
@@ -115,7 +115,6 @@ Section "main executable (required)"
   
   ; Put file there
   File "NoteFly.exe"
-  File "NoteFly.exe.config" ;config file, optional adds <1kb
   ;File "NoteFly.pdb" ;debuggingsymbols. optional adds ~165kb
   
   SetOverwrite on
@@ -134,14 +133,16 @@ Section "main executable (required)"
     
   ;this should run the app at user level with uac.dll.. if it works, disabled for now.
   ;!insertmacro UAC_AsUser_ExecShell 'open' '$INSTDIR\NoteFly.exe' '/firstrun' '$INSTDIR' ''
-  
+
+  SetShellVarContext all
+  RequestExecutionLevel user
   Exec '"$INSTDIR\NoteFly.exe" /firstrun'   
 SectionEnd
 
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"  
-  
-  ;startmenu shortcut should be for currentuser!
+   SetShellVarContext all
+  ;startmenu shortcut should be for all users or currentuser. Not administrator account.
   CreateDirectory "$SMPROGRAMS\NoteFly"
   CreateShortCut "$SMPROGRAMS\NoteFly\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\NoteFly.exe" "" "$INSTDIR\NoteFly.exe" 0
@@ -159,29 +160,22 @@ Section "Uninstall"
 
   ; Remove files and uninstaller
   Delete $INSTDIR\NoteFly.exe
-  Delete $INSTDIR\NoteFly.exe.config ;if exist, see top
   Delete $INSTDIR\uninstall.exe
-
-  ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\NoteFly\*.*"
-
-  ; Remove directories used
-  RMDir "$SMPROGRAMS\NoteFly"
+  ;Delete $INSTDIR\NoteFly.pdb ;enable if debugging symbols incl.
   
   MessageBox MB_YESNO "Do you want to remove your notes and settings too?" IDYES true IDNO false
   true:
-  ; Deleting all files in application data folder of NoteFly.
-  SetShellVarContext current  
-  Delete "$APPDATA\.NoteFly\*.*" ;FIXME: should not be admin user appdata.
-  RMDir "$APPDATA\.NoteFly"  ;FIXME: should not be admin user appdata.
-  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Run\NoteFly" ;not tested yet
-  
-  Goto next
-  
+     ;Deleting all files in application data folder of NoteFly.
+     SetShellVarContext current
+     Delete "$APPDATA\.NoteFly\*.*" ;FIXME: should not be administrator user appdata.
+     RMDir "$APPDATA\.NoteFly"  ;FIXME: should not be administrator user appdata.
+     DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Run\NoteFly"
+     Goto next
+     
   false:
-  Goto next
+     Goto next
   
   next:     
-  RMDir "$INSTDIR"  
+     RMDir "$INSTDIR"
 
 SectionEnd

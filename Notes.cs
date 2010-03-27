@@ -283,7 +283,7 @@ namespace NoteFly
                     }
                     catch (InvalidCastException)
                     {
-                        throw new CustomException("facebook session expires is not a valid unix (double) valeau.");
+                        throw new CustomException("Facebook session expires, not a valid unix (double) valeua.");
                     }
                 }
 

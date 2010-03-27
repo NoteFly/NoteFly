@@ -15,11 +15,13 @@ namespace NoteFly
 {
     using System;
     using System.ComponentModel;
+    using System.Security.Cryptography;
     using System.Drawing;
 #if win32
     using System.Runtime.InteropServices;
 #endif
     using System.Windows.Forms;
+    using System.Text;
 
     /// <summary>
     /// The note class.
@@ -81,7 +83,7 @@ namespace NoteFly
                 this.locX = 10;
                 this.locY = 10;
             }
-            
+
             notes.NotesUpdated = true;
             this.InitializeComponent();
             this.lblTitle.Text = title;
@@ -154,31 +156,14 @@ namespace NoteFly
             }
         }
 
-        /*
-        /// <summary>
-        /// Gets or sets a valeau indicating whether the note is visible.
-        /// </summary>
-        public bool NoteVisible
-        {
-            get
-            {
-                return this.notevisible;
-            }
-
-            set
-            {
-                this.notevisible = value;
-            }
-        }
-        */
         /// <summary>
         /// Gets or sets the note content.
         /// </summary>
         public string NoteContent
         {
-            get 
+            get
             {
-                return this.note; 
+                return this.note;
             }
 
             set
@@ -209,9 +194,9 @@ namespace NoteFly
         /// </summary>
         public string NoteTitle
         {
-            get 
+            get
             {
-                return this.title; 
+                return this.title;
             }
 
             set
@@ -295,29 +280,38 @@ namespace NoteFly
             Button btnobj = (Button)obj;
             Form frmAskpass = btnobj.FindForm();
 
-            Control[] passctr = frmAskpass.Controls.Find("tbPassword", false);
-            if (String.IsNullOrEmpty(passctr[0].Text))
+            Control[] passwctrl = frmAskpass.Controls.Find("tbPassword", false);
+            if (String.IsNullOrEmpty(passwctrl[0].Text))
             {
-                passctr[0].BackColor = Color.Red;
+                passwctrl[0].BackColor = Color.Red;
                 return;
             }
-
-            //this.twpass = passctr[0].Text;
-            this.twpass = new char[passctr[0].Text.Length];
-            for (int n = 0; n < passctr[0].Text.Length; n++)
+            else
             {
-                this.twpass[n] = passctr[0].Text[n];
+                this.twpass = new char[passwctrl[0].Text.Length];
+                for (int n = 0; n < passwctrl[0].Text.Length; n++)
+                {
+                    this.twpass[n] = passwctrl[0].Text[n];
+                }
+                if (this.twpass.Length <= 0 || this.twpass == null)
+                {
+                    throw new CustomException("buffer underflow");
+                }
+                if (this.twpass.Length > 255)
+                {
+                    throw new CustomException("password too long.");
+                }
+                passwctrl[0].Name = new Random().Next().ToString();//make it harder to find.
+                passwctrl[0].Text.Remove(0);
+                frmAskpass.Close();
+                foreach (Control cntrl in frmAskpass.Controls)
+                {
+                    cntrl.Dispose();
+                }
+                frmAskpass.Dispose();
+                GC.Collect();
+                this.Tweetnote();
             }
-            passctr[0].Text.Remove(0);
-            frmAskpass.Close();
-            passctr[0].Name = new Random().Next().ToString();//make it harder to find.
-            foreach (Control cntrl in frmAskpass.Controls)
-            {
-                cntrl.Dispose();
-            }
-            frmAskpass.Dispose();
-            this.Tweetnote();
-            GC.Collect();
         }
 
         /// <summary>
@@ -339,7 +333,7 @@ namespace NoteFly
         /// <returns>true if there is a coonection, otherwise return false</returns>
         private bool CheckConnection()
         {
-            #if win32
+#if win32
             if (IsConnectedToInternet() == true)
             {
                 return true;
@@ -351,9 +345,9 @@ namespace NoteFly
                 Log.Write(LogType.error, msgNoNetwork);
                 return false;
             }
-            #elif !win32
+#elif !win32
             return true;
-            #endif
+#endif
         }
 
         /// <summary>
@@ -467,9 +461,9 @@ namespace NoteFly
         private void frmNote_Activated(object sender, EventArgs e)
         {
             if (this.notes.Transparency && this.skin != null)
-                {
-                    this.Opacity = 1.0;
-                }
+            {
+                this.Opacity = 1.0;
+            }
         }
 
         /// <summary>
@@ -480,9 +474,9 @@ namespace NoteFly
         private void frmNote_Deactivate(object sender, EventArgs e)
         {
             if (this.notes.Transparency && this.skin != null)
-                {
-                    this.Opacity = this.skin.GetTransparencylevel();
-                }
+            {
+                this.Opacity = this.skin.GetTransparencylevel();
+            }
         }
 
         /// <summary>
@@ -652,9 +646,9 @@ namespace NoteFly
             }
         }
 
-       /// <summary>
-       /// pnlHead the grab area is selected.
-       /// </summary>
+        /// <summary>
+        /// pnlHead the grab area is selected.
+        /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
@@ -725,32 +719,32 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {
-                this.locX = this.Location.X;
-                this.locY = this.Location.Y;
+            this.locX = this.Location.X;
+            this.locY = this.Location.Y;
 
-                if (!this.rolledup)
-                {
-                    this.noteWidth = Convert.ToUInt16(this.Width);
-                    this.noteHeight = Convert.ToUInt16(this.Height);
-                }
+            if (!this.rolledup)
+            {
+                this.noteWidth = Convert.ToUInt16(this.Width);
+                this.noteHeight = Convert.ToUInt16(this.Height);
+            }
 
-                if ((this.locX + this.Width > MINVISIBLESIZE) && (this.locY + this.Height > MINVISIBLESIZE) && (this.notecolor >= 0) && this.notecolor <= this.skin.MaxNotesColors)
-                {
-                    string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
-                    xmlHandler updateposnote = new xmlHandler(notefile);
-                    updateposnote.WriteNote(this.Visible, this.TopMost, this.notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
-                }
-                else if (this.notecolor < 0 || this.notecolor > this.skin.MaxNotesColors)
-                {
-                    throw new CustomException("Note color unknow.");
-                }
-                else
-                {
-                    string msgOutOfScreen = "Position note (ID:" + this.NoteID + ") is out of screen.";
-                    Log.Write(LogType.error, msgOutOfScreen);
-                    MessageBox.Show(msgOutOfScreen);
-                }
-            
+            if ((this.locX + this.Width > MINVISIBLESIZE) && (this.locY + this.Height > MINVISIBLESIZE) && (this.notecolor >= 0) && this.notecolor <= this.skin.MaxNotesColors)
+            {
+                string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
+                xmlHandler updateposnote = new xmlHandler(notefile);
+                updateposnote.WriteNote(this.Visible, this.TopMost, this.notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
+            }
+            else if (this.notecolor < 0 || this.notecolor > this.skin.MaxNotesColors)
+            {
+                throw new CustomException("Note color unknow.");
+            }
+            else
+            {
+                string msgOutOfScreen = "Position note (ID:" + this.NoteID + ") is out of screen.";
+                Log.Write(LogType.error, msgOutOfScreen);
+                MessageBox.Show(msgOutOfScreen);
+            }
+
         }
 
         /// <summary>
@@ -897,14 +891,6 @@ namespace NoteFly
 
             xmlHandler getSettings = new xmlHandler(true);
             string twitteruser = getSettings.getXMLnode("twitteruser");
-            char[] twitterpass = getSettings.getXMLnode("twitterpass").ToCharArray();
-            if (this.twpass!=null)
-            {
-                if (this.twpass.Length > 0)
-                {
-                    twitterpass = this.twpass;
-                }
-            }
 
             if (String.IsNullOrEmpty(twitteruser))
             {
@@ -915,7 +901,11 @@ namespace NoteFly
                 settings.Show();
                 return;
             }
-            else if (twitterpass.Length==0)
+            if (this.twpass == null)
+            {
+                this.twpass = getSettings.getXMLnode("twitterpass").ToCharArray();
+            }
+            if ((this.twpass == null) || (this.twpass.Length <= 0))
             {
                 Form askpass = new Form();
                 askpass.ShowIcon = false;
@@ -940,7 +930,7 @@ namespace NoteFly
             else
             {
                 Twitter twitter = new Twitter();
-                if (twitter.UpdateAsXML(twitteruser, twitterpass.ToString(), this.note) != null)
+                if (twitter.UpdateAsXML(twitteruser, this.twpass, this.note) != null)
                 {
                     MessageBox.Show("Your note is Tweeted.");
                 }
@@ -950,12 +940,6 @@ namespace NoteFly
                     MessageBox.Show(sendtwfail);
                     Log.Write(LogType.error, sendtwfail);
                 }
-                //overwrite with zero int.
-                for (int i = 0; i < this.twpass.Length; i++)
-                {
-                    this.twpass[i] = '0';
-                }
-                this.twpass = null;
             }
         }
 

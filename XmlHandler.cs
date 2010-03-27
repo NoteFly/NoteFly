@@ -479,11 +479,18 @@ namespace NoteFly
 
                 WriteXMLBool("savesession", savefacebooksession);
 
-                if (savefacebooksession && !String.IsNullOrEmpty(FacebookSettings.Uid) && !String.IsNullOrEmpty(FacebookSettings.Sessionsecret) && !String.IsNullOrEmpty(FacebookSettings.Sessionkey) && FacebookSettings.Sesionexpires != 0)
+                if (savefacebooksession && !String.IsNullOrEmpty(FacebookSettings.Uid) && FacebookSettings.Sessionsecret!=null && !String.IsNullOrEmpty(FacebookSettings.Sessionkey) && FacebookSettings.Sesionexpires != 0)
                 {
                     objXmlTextWriter.WriteElementString("uid", FacebookSettings.Uid);
                     objXmlTextWriter.WriteElementString("sesionexpires", Convert.ToString(FacebookSettings.Sesionexpires, CultureInfo.InvariantCulture.NumberFormat));
-                    objXmlTextWriter.WriteElementString("sessionsecret", FacebookSettings.Sessionsecret);
+                    if (FacebookSettings.Sessionsecret.Length == 24)
+                    {
+                        objXmlTextWriter.WriteElementString("sessionsecret", FacebookSettings.Sessionsecret.ToString());
+                    }
+                    else
+                    {
+                        objXmlTextWriter.WriteElementString("sessionsecret", String.Empty);
+                    }
                     objXmlTextWriter.WriteElementString("sessionkey", FacebookSettings.Sessionkey);
                 }
                 else
