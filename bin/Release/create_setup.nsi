@@ -12,24 +12,22 @@
 
 ; version
 !define VERSION "1.0.0" ;version number: major.minor.release
-!define VERSTATUS "" ;alpha, beta, rc, or nothing for final.
+!define VERSTATUS "pre1" ;alpha, beta, rc, or nothing for final.
+!define APPFILE "NoteFly.exe"
 
+Name "NoteFly ${VERSION} ${VERSTATUS}" ; The name of the installer
 SetCompressor lzma
-
-; The name of the installer
-Name "NoteFly ${VERSION} ${VERSTATUS}"
-
-Icon ".\..\..\Resources\installer_logo.ico"
-BrandingText " "
-
-InstProgressFlags smooth
 AllowRootDirInstall false
 CRCCheck on
+InstProgressFlags smooth
 ShowInstDetails show
+SetDatablockOptimize on
+Icon ".\..\..\Resources\installer_logo.ico"
+BrandingText " "
 CompletedText "Installation completed. Please close this installer now."
 
-;put uac.dll in .\setuplib folder to use it. I am not using it yet
-; !addplugindir ".\setuplib\"
+;put uac.dll in .\setuplib folder to use it. 
+;!addplugindir ".\setuplib\"
 
 ; The file to write
 OutFile ".\NoteFly_v${VERSION}${VERSTATUS}.exe"
@@ -44,11 +42,13 @@ InstallDirRegKey HKLM "Software\NoteFly" "Install_Dir"
 ; nsis UAC plugin requires launch at user level.
 RequestExecutionLevel admin
 
-!include WordFunc.nsh
-!insertmacro VersionCompare
- 
 !include LogicLib.nsh
+!include WordFunc.nsh
+!include FileFunc.nsh
 
+!insertmacro VersionCompare
+;!insertmacro GetParent
+;!insertmacro GetPathFromString
 
 Function .onInit
  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "installnotefly") i .r1 ?e'
@@ -73,6 +73,28 @@ Function .onInit
     Abort
   ${EndIf}
 
+;  UAC_Elevate:
+;    UAC::RunElevated 
+;    StrCmp 1223 $0 UAC_ElevationAborted ; UAC dialog aborted by user?
+;    StrCmp 0 $0 0 UAC_Err ; Error?
+;    StrCmp 1 $1 0 UAC_Success ;Are we the real deal or just the wrapper?
+;    Quit
+ 
+;  UAC_Err:
+;    MessageBox mb_iconstop "Unable to elevate, error $0"
+;    Abort
+ 
+;  UAC_ElevationAborted:
+;    ;elevation was aborted, run as normal?
+;    MessageBox mb_iconstop "This installer requires admin access, aborting!"
+;    Abort
+ 
+;  UAC_Success:
+;    StrCmp 1 $3 +4 ;Admin?
+;    StrCmp 3 $1 0 UAC_ElevationAborted ;Try again?
+;    MessageBox mb_iconstop "This installer requires admin access, try again"
+;    goto UAC_Elevate 
+ 
 FunctionEnd
 
 Function GetDotNETVersion
@@ -87,7 +109,36 @@ Function GetDotNETVersion
   Exch $0
 FunctionEnd
 
- 
+Function ExecAppFile    
+  RequestExecutionLevel user
+  Exec '$INSTDIR\${APPFILE} /firstrun' 
+  ;!insertmacro UAC_AsUser_ExecShell 'open' '$INSTDIR\${APPFILE}' '/firstrun' '$INSTDIR' ''  
+FunctionEnd
+
+!macro BadPathsCheck
+StrCpy $R0 $INSTDIR "" -2
+StrCmp $R0 ":\" bad
+StrCpy $R0 $INSTDIR "" -14
+StrCmp $R0 "\Program Files" bad
+StrCpy $R0 $INSTDIR "" -8
+StrCmp $R0 "\Windows" bad
+StrCpy $R0 $INSTDIR "" -6
+StrCmp $R0 "\WinNT" bad
+StrCpy $R0 $INSTDIR "" -9
+StrCmp $R0 "\system32" bad
+StrCpy $R0 $INSTDIR "" -8
+StrCmp $R0 "\Desktop" bad
+StrCpy $R0 $INSTDIR "" -22
+StrCmp $R0 "\Documents and Settings" bad
+StrCpy $R0 $INSTDIR "" -13
+StrCmp $R0 "\My Documents" bad done
+bad:
+  MessageBox MB_OK|MB_ICONSTOP "Install path invalid!"
+  Abort
+done:
+!macroend
+
+
 ;--------------------------------
 
 ; Pages
@@ -108,20 +159,17 @@ UninstPage instfiles
 ; The stuff to install
 Section "main executable (required)"	
  
-  SectionIn RO     
-  
-  ; Set output path to the installation directory.
-  SetOutPath $INSTDIR
-  
-  ; Put file there
-  File "NoteFly.exe"
-  ;File "NoteFly.pdb" ;debuggingsymbols. optional adds ~165kb
-  
-  SetOverwrite on
-  
+  SectionIn RO        
+  SetOverwrite on  
+  RequestExecutionLevel Admin
+    
+  !insertmacro BadPathsCheck
+  SetOutPath $INSTDIR  ;Set output path to the installation directory.   
+  File "${APPFILE}"    ;Put file there  
+  ;File "NoteFly.pdb"  ;debuggingsymbols. optional adds ~165kb
+    
   ; Write the installation path into the registry
-  WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"
-  
+  WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"   
   ; Write the uninstall keys for Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "DisplayName" "NoteFly"  
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "UninstallString" '"$INSTDIR\uninstall.exe"'
@@ -129,23 +177,20 @@ Section "main executable (required)"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "DisplayVersion" "${VERSION}"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
-  WriteUninstaller "uninstall.exe"
-    
-  ;this should run the app at user level with uac.dll.. if it works, disabled for now.
-  ;!insertmacro UAC_AsUser_ExecShell 'open' '$INSTDIR\NoteFly.exe' '/firstrun' '$INSTDIR' ''
-
-  SetShellVarContext all
-  RequestExecutionLevel user
-  Exec '"$INSTDIR\NoteFly.exe" /firstrun'   
+  WriteUninstaller "uninstall.exe"   
+  
+  Call ExecAppFile
 SectionEnd
 
 ; Optional section (can be disabled by the user)
 Section "Start Menu Shortcuts"  
-   SetShellVarContext all
+  SetShellVarContext all
   ;startmenu shortcut should be for all users or currentuser. Not administrator account.
+  ;Call CreateDesktopShortcuts  
+  
   CreateDirectory "$SMPROGRAMS\NoteFly"
   CreateShortCut "$SMPROGRAMS\NoteFly\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\NoteFly.exe" "" "$INSTDIR\NoteFly.exe" 0
+  CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0
   
 SectionEnd
 
@@ -154,6 +199,9 @@ SectionEnd
 ; Uninstaller
 
 Section "Uninstall"  
+
+!insertmacro BadPathsCheck
+
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly"  
   DeleteRegKey HKLM SOFTWARE\NoteFly

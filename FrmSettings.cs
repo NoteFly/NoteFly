@@ -19,7 +19,6 @@ namespace NoteFly
     using System.Windows.Forms;
 #if win32
     using Microsoft.Win32;
-    using System.Globalization;
 #endif
 
     /// <summary>
@@ -507,7 +506,7 @@ namespace NoteFly
         /// <returns>The transparecy level as decimal</returns>
         private decimal GetTransparecylevel()
         {
-            decimal transparecylvl = Convert.ToDecimal(this.xmlsettings.getXMLnode("transparecylevel"), CultureInfo.InvariantCulture.NumberFormat);
+            decimal transparecylvl = Convert.ToDecimal(this.xmlsettings.getXMLnode("transparecylevel"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             if ((transparecylvl < 1) || (transparecylvl > 100))
             {
                 MessageBox.Show("transparecylevel out of range.");
@@ -521,7 +520,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="newpathsavenotes">The new path wear to save the notes to.</param>
         private void MoveNotes(string newpathsavenotes)
-        {            
+        {
             bool errorshowed = false;
             string oldpathsavenotes = this.GetNotesSavePath();
             int id = 1;

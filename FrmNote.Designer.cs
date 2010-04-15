@@ -122,7 +122,9 @@ namespace NoteFly
             this.lblTitle.Size = new System.Drawing.Size(238, 30);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "?";
+            this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.lblTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // pnlHead
             // 
@@ -137,6 +139,7 @@ namespace NoteFly
             this.pnlHead.Size = new System.Drawing.Size(240, 32);
             this.pnlHead.TabIndex = 1;
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // contextMenuStripNoteOptions
             // 
@@ -188,7 +191,7 @@ namespace NoteFly
             this.yellowToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.yellowToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.yellowToolStripMenuItem.Name = "yellowToolStripMenuItem";
-            this.yellowToolStripMenuItem.ShortcutKeyDisplayString = string.Empty;
+            this.yellowToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.yellowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
                         | System.Windows.Forms.Keys.D1)));
             this.yellowToolStripMenuItem.ShowShortcutKeys = false;

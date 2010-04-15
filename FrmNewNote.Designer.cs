@@ -99,7 +99,7 @@ namespace NoteFly
             this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNote.Size = new System.Drawing.Size(271, 196);
             this.rtbNote.TabIndex = 1;
-            this.rtbNote.Text = string.Empty;
+            this.rtbNote.Text = "";
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -199,7 +199,9 @@ namespace NoteFly
             this.pnlHeadNewNote.Name = "pnlHeadNewNote";
             this.pnlHeadNewNote.Size = new System.Drawing.Size(284, 40);
             this.pnlHeadNewNote.TabIndex = 4;
+            this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
+            this.pnlHeadNewNote.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseUp);
             // 
             // btnCancel
             // 

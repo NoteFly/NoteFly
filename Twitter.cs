@@ -113,13 +113,14 @@ namespace NoteFly
         {
             System.Net.ServicePointManager.Expect100Continue = false;
             WebRequest request = WebRequest.Create(url);
-            if (!string.IsNullOrEmpty(userName) && password.Length>0)
+            if (!string.IsNullOrEmpty(userName) && password.Length > 0)
             {
                 StringBuilder sbpass = new StringBuilder();
                 for (int i = 0; i < password.Length; i++)
                 {
                     sbpass.Append(password[i]);
                 }
+
                 request.Credentials = new NetworkCredential(userName, sbpass.ToString());
                 sbpass.Remove(0, password.Length);
                 request.ContentType = "application/x-www-form-urlencoded";

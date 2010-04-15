@@ -29,13 +29,13 @@ namespace NoteFly
         public const int HTCAPTION = 0x2;
         public const int WMNCLBUTTONDOWN = 0xA1;
 #endif
-        private bool editnote = false;
+        private bool editnote = false, setupfirsthighlight = false, moving = false;
         private int editnoteid = -1;
         private short notecolor;
         private Notes notes;
         private Skin skin;
         private TextHighlight highlight;
-        private bool setupfirsthighlight = false;
+        private Point dp;
         #endregion Fields
 
         #region Constructors (2)
@@ -57,8 +57,9 @@ namespace NoteFly
             this.editnoteid = editnoteid;
             this.notes = notes;
             this.ResetNewNoteForm(editnotetitle, editnotecontent);
-            this.tbTitle.Focus();
-            this.tbTitle.Select();
+            this.tbTitle.Text = DateTime.Now.ToString();
+            this.rtbNote.Focus();
+            this.rtbNote.Select();
             if (this.editnote)
             {
                 this.Text = "edit note";
@@ -78,20 +79,14 @@ namespace NoteFly
             this.notecolor = notecolor;
             this.skin = new Skin(notecolor);
             this.ResetNewNoteForm(String.Empty, String.Empty);
-            this.tbTitle.Focus();
-            this.tbTitle.Select();
+            this.tbTitle.Text = DateTime.Now.ToString();
+            this.rtbNote.Focus();
+            this.rtbNote.Select();
         }
 
         #endregion Constructors
 
         #region Methods (18)
-
-#if win32
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-#endif
 
         // Private Methods (18) 
 
@@ -144,7 +139,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// syntax highlighting
+        /// Syntax highlighting.
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">event arguments</param>
@@ -265,17 +260,14 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pnlHeadNewNote_MouseDown(object sender, MouseEventArgs e)
         {
-            if (this.skin != null)
+            if (e.Button == MouseButtons.Left)
             {
-                this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(true);
-                #if win32
-                if (e.Button == MouseButtons.Left)
+                this.moving = true;
+                this.dp = e.Location;
+                if (this.skin != null)
                 {
-                    ReleaseCapture();
-                    SendMessage(Handle, WMNCLBUTTONDOWN, HTCAPTION, 0);
-                    this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(false);
+                    this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(true);
                 }
-                #endif
             }
         }
 
@@ -390,9 +382,7 @@ namespace NoteFly
                 this.tbTitle.TextAlign = HorizontalAlignment.Right;
             }
         }
-        #endregion Methods 
 
-        #region highlight controls
         /// <summary>
         /// User entered the title box.
         /// </summary>
@@ -444,6 +434,79 @@ namespace NoteFly
                 this.rtbNote.BackColor = this.skin.GetObjColor(false);
             }
         }
+
+        /// <summary>
+        /// Move note if pnlHead is being left clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHeadNewNote_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((this.moving) && (e.Button == MouseButtons.Left))
+            {
+                if (this.skin != null)
+                {
+                    this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(true);
+                }
+
+                if (dp.X < e.Location.X)
+                {
+                    if (dp.Y < e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X + 1, this.Location.Y + 1);
+                    }
+                    else if (dp.Y > e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X + 1, this.Location.Y - 1);
+                    }
+                    else
+                    {
+                        this.Location = new Point(this.Location.X + 1, this.Location.Y);
+                    }
+                }
+                else if (dp.X > e.Location.X)
+                {
+                    if (dp.Y < e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X - 1, this.Location.Y + 1);
+                    }
+                    else if (dp.Y > e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
+                    }
+                    else
+                    {
+                        this.Location = new Point(this.Location.X - 1, this.Location.Y);
+                    }
+                }
+                else
+                {
+                    if (dp.Y < e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X, this.Location.Y + 1);
+                    }
+                    else if (dp.Y > e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X, this.Location.Y - 1);
+                    }
+                }
+            }
+            else if (this.skin != null)
+            {
+                this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(false);
+            }
+        }
+
+        /// <summary>
+        ///  End moving note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHeadNewNote_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.moving = false;
+        }
+
         #endregion
-    } 
+    }
 }

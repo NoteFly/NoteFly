@@ -15,14 +15,11 @@ namespace NoteFly
 {
     using System;
     using System.ComponentModel;
-    using System.Security.Cryptography;
     using System.Drawing;
+    using System.Windows.Forms;
 #if win32
     using System.Runtime.InteropServices;
 #endif
-    using System.Windows.Forms;
-    using System.Text;
-
     /// <summary>
     /// The note class.
     /// </summary>
@@ -39,12 +36,12 @@ namespace NoteFly
         private string note, title;
         private char[] twpass;
         private short id, notecolor = 0;
-        private bool rolledup = false, notelock = false;
+        private bool rolledup = false, notelock = false,  moving = false;
         private Skin skin;
         private int locX, locY;
         private ushort noteWidth, noteHeight;
         private PictureBox pbShowLock;
-
+        private Point dp;
         #endregion Fields
 
         #region Constructors (2)
@@ -95,11 +92,14 @@ namespace NoteFly
                 this.SetPosNote();
                 this.TopMost = ontop;
                 this.CheckThings();
+                this.rolledup = false;
+                this.notelock = false;
             }
             else
             {
                 this.Hide();
             }
+
             this.Visible = visible;
         }
 
@@ -134,6 +134,8 @@ namespace NoteFly
             this.SetPosNote();
             this.CheckThings();
             notes.NotesUpdated = true;
+            this.rolledup = false;
+            this.notelock = false;
         }
 
         #endregion Constructors
@@ -211,7 +213,12 @@ namespace NoteFly
         #region Methods (32)
 
         // Public Methods (2) 
-
+#if win32
+        ////[DllImportAttribute("user32.dll")]
+        ////public static extern bool ReleaseCapture();
+        ////[DllImportAttribute("user32.dll")]
+        ////public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+#endif
         /// <summary>
         /// Check if twitter is enabled and check Syntax.
         /// </summary>
@@ -257,16 +264,12 @@ namespace NoteFly
         /// <returns>True is connected to internet.</returns>
         private static bool IsConnectedToInternet()
         {
-            int Desc;
-            return InternetGetConnectedState(out Desc, 0);
+            int desc;
+            return InternetGetConnectedState(out desc, 0);
         }
 
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
         [DllImport("wininet.dll")]
-        private extern static bool InternetGetConnectedState(out int Description, int ReservedValue);
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
 #endif
 
         /// <summary>
@@ -301,7 +304,7 @@ namespace NoteFly
                 {
                     throw new CustomException("password too long.");
                 }
-                passwctrl[0].Name = new Random().Next().ToString();//make it harder to find.
+                passwctrl[0].Name = new Random().Next().ToString();
                 passwctrl[0].Text.Remove(0);
                 frmAskpass.Close();
                 foreach (Control cntrl in frmAskpass.Controls)
@@ -496,10 +499,11 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string locknotemsg = "lock note";
             if (!this.notelock)
             {
                 this.notelock = true;
-                this.menuLockNote.Text = "lock note (click again to unlock)";
+                this.menuLockNote.Text = locknotemsg+" (click again to unlock)";
                 this.CreatePbLock();
                 this.menuNoteColors.Enabled = false;
                 this.menuEditNote.Enabled = false;
@@ -508,7 +512,7 @@ namespace NoteFly
             else
             {
                 this.notelock = false;
-                this.menuLockNote.Text = "lock note";
+                this.menuLockNote.Text = locknotemsg;
                 this.DestroyPbLock();
                 this.menuNoteColors.Enabled = true;
                 this.menuEditNote.Enabled = true;
@@ -547,20 +551,18 @@ namespace NoteFly
         private void menuRollUp_Click(object sender, EventArgs e)
         {
             this.rolledup = !this.rolledup;
-
+            this.menuRollUp.Checked = this.rolledup;
             if (this.rolledup)
             {
                 this.menuRollUp.Text = this.menuRollUp.Text + "(click again to Roll Down)";
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
                 this.Height = this.Height - this.pnlNote.Height;
-                this.menuRollUp.Checked = true;
             }
             else
             {
                 this.menuRollUp.Text = this.menuRollUp.Text.Substring(0, 7);
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
                 this.Height = this.noteHeight;
-                this.menuRollUp.Checked = false;
             }
         }
 
@@ -571,14 +573,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.menuOnTop.Checked == true)
-            {
-                this.TopMost = true;
-            }
-            else
-            {
-                this.TopMost = false;
-            }
+            this.TopMost = this.menuOnTop.Checked;
 
             if (!this.notelock && !this.SavePos.IsBusy)
             {
@@ -653,25 +648,22 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
-            if (this.skin != null)
-            {
-                this.pnlHead.BackColor = this.skin.GetObjColor(true);
-            }
-
             if (e.Button == MouseButtons.Left)
             {
-#if win32
-                ReleaseCapture();
-                SendMessage(Handle, WMNCLBUTTONDOWN, HTCAPTION, 0);
-#endif
+                this.moving = true;
+                this.dp = e.Location;
 
                 if (this.skin != null)
                 {
-                    this.pnlHead.BackColor = this.skin.GetObjColor(false);
+                    this.pnlHead.BackColor = this.skin.GetObjColor(true);
                 }
 
                 this.locX = this.Location.X;
                 this.locY = this.Location.Y;
+            }
+            else if (this.skin != null)
+            {
+                this.pnlHead.BackColor = this.skin.GetObjColor(false);
             }
 
             if (this.SavePos.IsBusy == false)
@@ -700,7 +692,7 @@ namespace NoteFly
             xmlHandler getSettings = new xmlHandler(true);
             if (getSettings.getXMLnodeAsBool("askurl"))
             {
-                DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(this, "Are you sure you want to visted:\r\n" + e.LinkText, "url pressed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     System.Diagnostics.Process.Start(e.LinkText);
@@ -724,8 +716,22 @@ namespace NoteFly
 
             if (!this.rolledup)
             {
-                this.noteWidth = Convert.ToUInt16(this.Width);
-                this.noteHeight = Convert.ToUInt16(this.Height);
+                try
+                {
+                    this.noteWidth = Convert.ToUInt16(this.Width);
+                }
+                catch (InvalidCastException)
+                {
+                    new CustomException("noteWidth cannot be a negative value.");
+                }
+                try
+                {
+                    this.noteHeight = Convert.ToUInt16(this.Height);
+                }
+                catch (InvalidCastException)
+                {
+                    new CustomException("noteHeight cannot be a negative value.");
+                }
             }
 
             if ((this.locX + this.Width > MINVISIBLESIZE) && (this.locY + this.Height > MINVISIBLESIZE) && (this.notecolor >= 0) && this.notecolor <= this.skin.MaxNotesColors)
@@ -754,10 +760,11 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void SetColorNote(object sender, EventArgs e)
         {
+            ToolStripMenuItem selectedmenuitem = (ToolStripMenuItem)sender;
             short i = 0;
             foreach (ToolStripMenuItem curitem in this.menuNoteColors.DropDownItems)
             {
-                if (curitem == sender)
+                if (curitem == selectedmenuitem)
                 {
                     curitem.Checked = true;
                     this.notecolor = i;
@@ -839,7 +846,19 @@ namespace NoteFly
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
                 new Textfile(true, sfdlg.FileName, this.title, this.note);
-                Log.Write(LogType.info, "Note (ID:" + this.NoteID + ") saved to textfile.");
+                string logmsg = "Note (ID:" + this.NoteID + ") saved to ";
+                switch (sfdlg.FilterIndex)
+                {
+                    case 0:
+                        Log.Write(LogType.info, logmsg + "textfile.");
+                        break;
+                    case 1:
+                        Log.Write(LogType.info, logmsg + "htmlfile.");
+                        break;
+                    default:
+                        Log.Write(LogType.info, logmsg + "some file.");
+                        break;
+                }
             }
         }
 
@@ -901,10 +920,12 @@ namespace NoteFly
                 settings.Show();
                 return;
             }
+
             if (this.twpass == null)
             {
                 this.twpass = getSettings.getXMLnode("twitterpass").ToCharArray();
             }
+
             if ((this.twpass == null) || (this.twpass.Length <= 0))
             {
                 Form askpass = new Form();
@@ -981,6 +1002,104 @@ namespace NoteFly
             }
         }
 
+        private void pnlHead_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.moving = false;
+        }
+
+        private void pnlHead_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((this.moving) && (e.Button == MouseButtons.Left))
+            {
+                if (this.skin != null)
+                {
+                    this.pnlHead.BackColor = this.skin.GetObjColor(true);
+                }
+
+                if (dp.X < e.Location.X)
+                {
+                    if (dp.Y < e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X + 1, this.Location.Y + 1);
+                    }
+                    else if (dp.Y > e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X + 1, this.Location.Y - 1);
+                    }
+                    else
+                    {
+                        this.Location = new Point(this.Location.X + 1, this.Location.Y);
+                    }
+                }
+                else if (dp.X > e.Location.X)
+                {
+                    if (dp.Y < e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X - 1, this.Location.Y + 1);
+                    }
+                    else if (dp.Y > e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
+                    }
+                    else
+                    {
+                        this.Location = new Point(this.Location.X - 1, this.Location.Y);
+                    }
+                }
+                else
+                {
+                    if (dp.Y < e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X, this.Location.Y + 1);
+                    }
+                    else if (dp.Y > e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X, this.Location.Y - 1);
+                    }
+                }
+
+                // below comment out the same code, only I consider to it to be slower:
+                //if ((dp.X < e.Location.X) && (dp.Y < e.Location.Y))
+                //{
+                //    this.Location = new Point(this.Location.X + 1, this.Location.Y + 1);
+                //}
+                //else if ((dp.X > e.Location.X) && (dp.Y > e.Location.Y))
+                //{
+                //    this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
+                //}
+                //else if ((dp.X > e.Location.X) && (dp.Y < e.Location.Y))
+                //{
+                //    this.Location = new Point(this.Location.X - 1, this.Location.Y + 1);
+                //}
+                //else if ((dp.X < e.Location.X) && (dp.Y > e.Location.Y))
+                //{
+                //    this.Location = new Point(this.Location.X + 1, this.Location.Y - 1);
+                //}
+                //else if (dp.X < e.Location.X)
+                //{
+                //    this.Location = new Point(this.Location.X + 1, this.Location.Y);
+                //}
+                //else if (dp.X > e.Location.X)
+                //{
+                //    this.Location = new Point(this.Location.X - 1, this.Location.Y);
+                //}
+                //else if (dp.Y < e.Location.Y)
+                //{
+                //    this.Location = new Point(this.Location.X, this.Location.Y + 1);
+                //}
+                //else if (dp.Y > e.Location.Y)
+                //{
+                //    this.Location = new Point(this.Location.X, this.Location.Y - 1);
+                //}
+            }
+            else if (this.skin != null)
+            {
+                this.pnlHead.BackColor = this.skin.GetObjColor(false);
+            }
+        }
+
         #endregion Methods
+
+
     }
 }

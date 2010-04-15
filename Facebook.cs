@@ -11,7 +11,6 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-
 namespace NoteFly
 {
     using System;
@@ -102,7 +101,7 @@ namespace NoteFly
     /// </summary>
     public class Facebook
     {
-        // Fields(9)
+        // Fields(10)
 
         /// <summary>
         /// The API version.
@@ -206,41 +205,42 @@ namespace NoteFly
                     Log.Write(LogType.error, fbinvalidparam);
                     break;
                 case 104:
-                    string fbinvalidsig = "Error: Signature was invalid.";
+                    string fbinvalidsig = "Signature was invalid.";
                     MessageBox.Show(fbinvalidsig, MSGERRORTITLE);
                     Log.Write(LogType.error, fbinvalidsig);
                     break;
                 case 200:
-                    string fbprimission = "Error: No proper primision to post on your wall.";
+                    string fbprimission = "No proper permission to post on your wall.";
                     MessageBox.Show(fbprimission, MSGERRORTITLE);
                     Log.Write(LogType.error, fbprimission);
                     break;
                 case 210:
-                    string fbusernotvisible = "Error: User not visible.\r\nThe user doesn't have permission to act on that object.";
+                    string fbusernotvisible = "User not visible.\r\nThe user doesn't have permission to act on that object.";
                     MessageBox.Show(fbusernotvisible, MSGERRORTITLE);
                     Log.Write(LogType.error, fbusernotvisible);
                     break;
                 case 240:
-                    string fberror240 = "Error:   now it's a known problem ";
+                    string fberror240 = "Know problem.";
                     MessageBox.Show(fberror240, MSGERRORTITLE);
                     Log.Write(LogType.error, fberror240);
                     break;
                 case 340:
-                    string fbfeedlimit = "Error: Feed action request limit reached.";
+                    string fbfeedlimit = "Feed action request limit reached.";
                     MessageBox.Show(fbfeedlimit, MSGERRORTITLE);
                     Log.Write(LogType.error, fbfeedlimit);
                     break;
                 case -1:
-                    string notparsererrcode = "Error: Could not parser the errorcode that was returned.";
+                    string notparsererrcode = "Could not parser the errorcode that was returned.";
                     MessageBox.Show(notparsererrcode, MSGERRORTITLE);
                     Log.Write(LogType.error, notparsererrcode);
                     break;
                 default:
-                    string errcode = "Error: Facebook returned unknow errorcode " + responsecode;
+                    string errcode = "Facebook returned unknow errorcode " + responsecode;
                     MessageBox.Show(errcode, MSGERRORTITLE);
                     Log.Write(LogType.error, errcode);
                     break;
             }
+
             try
             {
                 this.frmLoginFb.Close();
@@ -440,7 +440,7 @@ namespace NoteFly
         public void StartPostingNote(string note)
         {
             this.message = note;
-            if (String.IsNullOrEmpty(FacebookSettings.Sessionkey) || FacebookSettings.Sessionsecret.Length==0 || String.IsNullOrEmpty(FacebookSettings.Uid))
+            if (String.IsNullOrEmpty(FacebookSettings.Sessionkey) || FacebookSettings.Sessionsecret.Length == 0 || String.IsNullOrEmpty(FacebookSettings.Uid))
             {
                 this.ShowFBLoginForm();
             }
@@ -494,7 +494,7 @@ namespace NoteFly
             data += "&call_id=" + callid;
             data += "&message=" + message;
             string methode = "facebook.stream.publish";
-            data += "&method="+methode;
+            data += "&method=" + methode;
             data += "&session_key=" + FacebookSettings.Sessionkey;
             string usesessionsecret = "1";
             data += "&ss=" + usesessionsecret;
@@ -540,7 +540,7 @@ namespace NoteFly
             {
                 secret.Append(FacebookSettings.Sessionsecret[i]);
             }
-            MessageBox.Show("secret="+secret);
+
             string data = "api_key=" + APPKEY + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + FacebookSettings.Sessionkey + "ss=" + usesessionsecret + "uid=" + FacebookSettings.Uid + "v=" + APIVERISON + secret.ToString();
 
             string hash = this.MakeMD5(data);

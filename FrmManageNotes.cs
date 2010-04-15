@@ -56,6 +56,16 @@ namespace NoteFly
         /// </summary>
         private bool transparency = false;
 
+        /// <summary>
+        /// value indicating wether this form is moving.
+        /// </summary>
+        private bool moving = false;
+
+        /// <summary>
+        /// Delta point
+        /// </summary>
+        private Point dp;
+
         #endregion Fields
 
         #region Constructors (1)
@@ -80,26 +90,6 @@ namespace NoteFly
 
         #region Methods (10)
 
-#if win32
-        /// <summary>
-        /// for moving form 
-        /// </summary>
-        /// <returns>A boolean if mouse is released from dragging.</returns>
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        /// <summary>
-        /// For moving form.
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="msg"></param>
-        /// <param name="wParam"></param>
-        /// <param name="lParam"></param>
-        /// <returns>unsure.</returns>
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-
-#endif
         // Private Methods (10) 
 
         /// <summary>
@@ -126,8 +116,8 @@ namespace NoteFly
                 short curnote = 0;
                 try
                 {
-                    curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));
-                    ////curnote = Convert.ToInt16(btn.Tag);
+                    ////curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));
+                    curnote = Convert.ToInt16(btn.Tag);
                 }
                 catch (InvalidCastException invexc)
                 {
@@ -379,14 +369,11 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
-            this.pnlHead.BackColor = Color.OrangeRed;
             if (e.Button == MouseButtons.Left)
             {
-#if win32
-                ReleaseCapture();
-                SendMessage(Handle, WMNCLBUTTONDOWN, HTCAPTION, 0);
-#endif
-                this.pnlHead.BackColor = Color.Orange;
+                this.moving = true;
+                this.pnlHead.BackColor = Color.OrangeRed;
+                this.dp = e.Location;
             }
         }
 
@@ -419,6 +406,76 @@ namespace NoteFly
                 this.DrawNotesOverview();
                 this.redrawbusy = false;
             }
+        }
+
+        /// <summary>
+        /// Move note if pnlHead is being left clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((this.moving) && (e.Button == MouseButtons.Left))
+            {
+                this.pnlHead.BackColor = Color.OrangeRed;
+
+                if (dp.X < e.Location.X)
+                {
+                    if (dp.Y < e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X + 1, this.Location.Y + 1);
+                    }
+                    else if (dp.Y > e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X + 1, this.Location.Y - 1);
+                    }
+                    else
+                    {
+                        this.Location = new Point(this.Location.X + 1, this.Location.Y);
+                    }
+                }
+                else if (dp.X > e.Location.X)
+                {
+                    if (dp.Y < e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X - 1, this.Location.Y + 1);
+                    }
+                    else if (dp.Y > e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
+                    }
+                    else
+                    {
+                        this.Location = new Point(this.Location.X - 1, this.Location.Y);
+                    }
+                }
+                else
+                {
+                    if (dp.Y < e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X, this.Location.Y + 1);
+                    }
+                    else if (dp.Y > e.Location.Y)
+                    {
+                        this.Location = new Point(this.Location.X, this.Location.Y - 1);
+                    }
+                }
+            }
+            else
+            {
+                this.pnlHead.BackColor = Color.Orange;
+            }
+        }
+
+        /// <summary>
+        /// End moving note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.moving = false;
+            this.pnlHead.BackColor = Color.Orange;
         }
 
         #endregion Methods

@@ -130,7 +130,9 @@ namespace NoteFly
             this.pnlHead.Name = "pnlHead";
             this.pnlHead.Size = new System.Drawing.Size(340, 28);
             this.pnlHead.TabIndex = 8;
+            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // pbResizeGrip
             // 
@@ -175,7 +177,7 @@ namespace NoteFly
             this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.Transparent;
             this.Deactivate += new System.EventHandler(this.frmManageNotes_Deactivate);
-            this.Activated += new System.EventHandler(this.frmManageNotes_Activated);            
+            this.Activated += new System.EventHandler(this.frmManageNotes_Activated);
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();

@@ -13,7 +13,6 @@
 //-----------------------------------------------------------------------
 #define win32
 using System;
-
 [assembly: CLSCompliant(true)]
 namespace NoteFly
 {
@@ -215,7 +214,7 @@ namespace NoteFly
             menuManageNotes,
             menuSettings,
             menuAbout,
-            menuExit});
+            menuExit} );
             icon.ContextMenuStrip.ShowImageMargin = false;
             icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
 

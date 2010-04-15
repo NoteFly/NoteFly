@@ -23,6 +23,11 @@ namespace NoteFly
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary>
+        /// ip address box
+        /// </summary>
+        private System.Windows.Forms.TextBox tbIPaddress;
+
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
@@ -33,6 +38,7 @@ namespace NoteFly
             {
                 this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -72,7 +78,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox tbIPaddress;
     }
 }
