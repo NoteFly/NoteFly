@@ -49,11 +49,6 @@ namespace NoteFly
         private System.Windows.Forms.Label lblTextLicense;
 
         /// <summary>
-        /// Label with the version status, alpha, beta, rc or final
-        /// </summary>
-        private System.Windows.Forms.Label lbVersionStatus;
-
-        /// <summary>
         /// Link to FAQ page, for question about this programme.
         /// </summary>
         private System.Windows.Forms.LinkLabel linkLblFAQ;
@@ -80,13 +75,11 @@ namespace NoteFly
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.okButton = new System.Windows.Forms.Button();
             this.lblProductName = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
-            this.lbVersionStatus = new System.Windows.Forms.Label();
             this.linkLblFAQ = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
@@ -140,16 +133,8 @@ namespace NoteFly
             this.lblTextLicense.Name = "lblTextLicense";
             this.lblTextLicense.Size = new System.Drawing.Size(225, 44);
             this.lblTextLicense.TabIndex = 30;
-            this.lblTextLicense.Text = "This programme is released under the terms of GNU General Public License version2";
-            // 
-            // lbVersionStatus
-            // 
-            this.lbVersionStatus.AutoSize = true;
-            this.lbVersionStatus.Location = new System.Drawing.Point(87, 33);
-            this.lbVersionStatus.Name = "lbVersionStatus";
-            this.lbVersionStatus.Size = new System.Drawing.Size(28, 13);
-            this.lbVersionStatus.TabIndex = 32;
-            this.lbVersionStatus.Text = "RC2";
+            this.lblTextLicense.Text = "This programme is released under the terms of GNU General Public License version2" +
+                "";
             // 
             // linkLblFAQ
             // 
@@ -169,7 +154,6 @@ namespace NoteFly
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(235, 171);
             this.Controls.Add(this.linkLblFAQ);
-            this.Controls.Add(this.lbVersionStatus);
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);
             this.Controls.Add(this.lblVersion);

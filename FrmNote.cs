@@ -440,7 +440,7 @@ namespace NoteFly
 
             string defaultemail = xmlsettings.getXMLnode("defaultemail");
 
-            if (!String.IsNullOrEmpty(this.title) && String.IsNullOrEmpty(emailnote))
+            if (!String.IsNullOrEmpty(this.title) && (!String.IsNullOrEmpty(emailnote))) //bugfix #0000008
             {
                 System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + this.title + "&body=" + emailnote);
             }

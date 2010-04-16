@@ -259,12 +259,12 @@ namespace NoteFly
 
                 btnNoteDelete.Text = "delete";
                 btnNoteDelete.Name = "btnNoteDel" + Convert.ToString(curnote + 1);
+                btnNoteDelete.Tag = curnote;
                 btnNoteDelete.BackColor = Color.Orange;
                 btnNoteDelete.Location = new Point(this.Width - 90, ypos - 3);
                 btnNoteDelete.Width = 60;
                 btnNoteDelete.Click += new EventHandler(this.btnNoteDelete_Click);
                 btnNoteDelete.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
-                btnNoteDelete.Tag = curnote;
 
                 this.pnlNotes.Controls.Add(lblNoteTitle);
                 this.pnlNotes.Controls.Add(cbxNoteVisible);

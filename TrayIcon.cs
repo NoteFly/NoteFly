@@ -250,6 +250,10 @@ namespace NoteFly
             menuExit.Text = "E&xit";
             menuExit.Click += new System.EventHandler(MenuExit_Click);
 
+            if (firstrun)
+            {
+                icon.ShowBalloonTip(3000, "I'm here.", "You can access NoteFly functions via this systray icon.", ToolTipIcon.Info);
+            }
             Application.Run();
         }
 
