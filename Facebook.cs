@@ -251,15 +251,7 @@ namespace NoteFly
                     break;
             }
 
-            try
-            {
-                this.frmLoginFb.Close();
-            }
-            catch (Exception cannotclose)
-            {
-                Log.Write(LogType.error, cannotclose.Message);
-            }
-            
+            this.frmLoginFb.Close();
         }
 
         /// <summary>
@@ -403,8 +395,8 @@ namespace NoteFly
                 catch (Exception fbsessionexc)
                 {
                     string fbsessionsave = "Cannot save facebook session.\r\n" + fbsessionexc.StackTrace;
-                    MessageBox.Show(fbsessionsave);
                     Log.Write(LogType.exception, fbsessionsave);
+                    MessageBox.Show(fbsessionsave);
                 }
             }
 
@@ -430,13 +422,13 @@ namespace NoteFly
                 catch (TimeoutException)
                 {
                     string contimeout = "connection timeout";
-                    MessageBox.Show(contimeout);
                     Log.Write(LogType.error, contimeout);
+                    MessageBox.Show(contimeout);
                 }
                 catch (Exception exc)
                 {
-                    MessageBox.Show("Exception: " + exc.Message);
                     Log.Write(LogType.exception, exc.Message);
+                    MessageBox.Show("Exception: " + exc.Message);
                 }
             }
 

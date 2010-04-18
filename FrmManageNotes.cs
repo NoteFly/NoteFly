@@ -113,21 +113,19 @@ namespace NoteFly
             short numbernotes = this.notes.NumNotes;
             if (numbernotes != 0)
             {
-                short curnote = 0;
+                short curnote = -1;
                 try
                 {
-                    curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));
-                    //curnote = Convert.ToInt16(btn.Tag);
+                    curnote = Convert.ToInt16(btn.Tag);
                 }
                 catch (InvalidCastException invexc)
                 {
                     throw new CustomException(invexc.Message + " " + invexc.StackTrace);
                 }
 
-                if (btn.Name == "btnNoteDel" + curnote)
+                if (curnote >= 0)
                 {
-                    int noteid = Convert.ToInt32(curnote) - 1;
-
+                    int noteid = curnote;
                     xmlHandler settings = new xmlHandler(true);
                     if (settings.getXMLnodeAsBool("confirmdelete"))
                     {
@@ -170,15 +168,11 @@ namespace NoteFly
                     catch (UnauthorizedAccessException)
                     {
                         string msgaccessdenied = "Access denied. Delete note " + curnote + ".xml manualy with proper premission.";
-                        MessageBox.Show(msgaccessdenied);
                         Log.Write(LogType.error, msgaccessdenied);
+                        MessageBox.Show(msgaccessdenied);
                     }
 
                     this.DrawNotesOverview();
-                }
-                else
-                {
-                    throw new CustomException("Note to delete not found.");
                 }
             }
         }
