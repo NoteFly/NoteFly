@@ -126,7 +126,8 @@ namespace NoteFly
         /// <summary>
         /// The URL of the REST server page.
         /// </summary>
-        private const string FBRESTSERVERURL = "http://api.facebook.com/restserver.php";
+        //private const string FBRESTSERVERURL = "http://api.facebook.com/restserver.php";
+        private const string FBRESTSERVERURL = "https://api.facebook.com/restserver.php";
 
         /// <summary>
         /// URL to figure out if signed in has succeed.
@@ -507,7 +508,7 @@ namespace NoteFly
             data += "&session_key=" + FacebookSettings.Sessionkey;
             string usesessionsecret = "1";
             data += "&ss=" + usesessionsecret;
-            data += "&uid=" + FacebookSettings.Uid;
+            data += "&uid=0"; //use 0 not FacebookSettings.Uid;  bug: #0000007
             data += "&v=" + APIVERISON;
             data += "&sig=" + this.GenerateSignature(callid, message, methode, usesessionsecret);
             if (data.Length > 0)
@@ -550,7 +551,7 @@ namespace NoteFly
                 secret.Append(FacebookSettings.Sessionsecret[i]);
             }
 
-            string data = "api_key=" + APPKEY + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + FacebookSettings.Sessionkey + "ss=" + usesessionsecret + "uid=" + FacebookSettings.Uid + "v=" + APIVERISON + secret.ToString();
+            string data = "api_key=" + APPKEY + "call_id=" + call_id + "message=" + message + "method=" + methode + "session_key=" + FacebookSettings.Sessionkey + "ss=" + usesessionsecret + "uid=0" + "v=" + APIVERISON + secret.ToString(); //use 0 not FacebookSettings.Uid  bug: #0000007
 
             string hash = this.MakeMD5(data);
             if (hash.Length == 32)
