@@ -22,7 +22,7 @@ namespace NoteFly
     /// </summary>
     public class TextHighlight
     {
-        #region Fields (4) 
+        #region Fields (4)
 
         /// <summary>
         /// Boolean that tells if html is being checked.
@@ -44,9 +44,11 @@ namespace NoteFly
         /// </summary>
         private RichTextBox rtbcode;
 
-        #endregion Fields 
+        private bool[] htmlstructure;
 
-        #region Constructors (1) 
+        #endregion Fields
+
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the TextHighlight class.
@@ -57,10 +59,10 @@ namespace NoteFly
         {
             this.rtbcode = rtb;
             this.checkhtml = checkhtml;
-            
+
             if (checkhtml)
             {
-                this.htmlnodes = new string[91];
+                this.htmlnodes = new string[92];
                 this.htmlnodes[0] = "A";
                 this.htmlnodes[1] = "ABBR";
                 this.htmlnodes[2] = "ACRONYM";
@@ -94,64 +96,67 @@ namespace NoteFly
                 this.htmlnodes[30] = "FORM";
                 this.htmlnodes[31] = "FRAME";
                 this.htmlnodes[32] = "FRAMESET";
-                this.htmlnodes[33] = "HEAD";
-                this.htmlnodes[34] = "HR";
-                this.htmlnodes[35] = "HTML";
-                this.htmlnodes[36] = "Hx";
-                this.htmlnodes[37] = "I";
-                this.htmlnodes[38] = "IFRAME";
-                this.htmlnodes[39] = "IMG";
-                this.htmlnodes[40] = "INPUT";
-                this.htmlnodes[41] = "INS";
-                this.htmlnodes[42] = "ISINDEX";
-                this.htmlnodes[43] = "KBD";
-                this.htmlnodes[44] = "LABEL";
-                this.htmlnodes[45] = "LEGEND";
-                this.htmlnodes[46] = "LI";
-                this.htmlnodes[47] = "LINK";
-                this.htmlnodes[48] = "MAP";
-                this.htmlnodes[49] = "MENU";
-                this.htmlnodes[50] = "META";
-                this.htmlnodes[51] = "NOFRAMES";
-                this.htmlnodes[52] = "NOSCRIPT";
-                this.htmlnodes[53] = "OBJECT";
-                this.htmlnodes[54] = "OL";
-                this.htmlnodes[55] = "OPTGROUP";
-                this.htmlnodes[56] = "OPTION";
-                this.htmlnodes[57] = "P";
-                this.htmlnodes[58] = "PARAM";
-                this.htmlnodes[59] = "PRE";
-                this.htmlnodes[60] = "Q";
-                this.htmlnodes[61] = "S";
-                this.htmlnodes[62] = "SAMP";
-                this.htmlnodes[63] = "SCRIPT";
-                this.htmlnodes[64] = "SELECT";
-                this.htmlnodes[65] = "SMALL";
-                this.htmlnodes[66] = "SPAN";
-                this.htmlnodes[67] = "STRIKE";
-                this.htmlnodes[68] = "STRONG";
-                this.htmlnodes[69] = "STYLE";
-                this.htmlnodes[70] = "SUB";
-                this.htmlnodes[71] = "SUP";
-                this.htmlnodes[72] = "TABLE";
-                this.htmlnodes[73] = "TBODY";
-                this.htmlnodes[74] = "TD";
-                this.htmlnodes[75] = "TEXTAREA";
-                this.htmlnodes[76] = "TFOOT";
-                this.htmlnodes[77] = "TH";
-                this.htmlnodes[78] = "THEAD";
-                this.htmlnodes[79] = "TITLE";
-                this.htmlnodes[80] = "TR";
-                this.htmlnodes[81] = "TT";
-                this.htmlnodes[82] = "U";
-                this.htmlnodes[83] = "UL";
-                this.htmlnodes[84] = "VAR";
-                this.htmlnodes[85] = "H1";
-                this.htmlnodes[86] = "H2";
-                this.htmlnodes[87] = "H3";
-                this.htmlnodes[88] = "H4";
-                this.htmlnodes[89] = "H5";
-                this.htmlnodes[90] = "H6";
+                this.htmlnodes[33] = "H1";
+                this.htmlnodes[34] = "H2";
+                this.htmlnodes[35] = "H3";
+                this.htmlnodes[36] = "H4";
+                this.htmlnodes[37] = "H5";
+                this.htmlnodes[38] = "H6";
+                this.htmlnodes[39] = "HEAD";
+                this.htmlnodes[40] = "HR";
+                this.htmlnodes[41] = "HTML";
+                this.htmlnodes[42] = "Hx";
+                this.htmlnodes[43] = "I";
+                this.htmlnodes[44] = "IFRAME";
+                this.htmlnodes[45] = "IMG";
+                this.htmlnodes[46] = "INPUT";
+                this.htmlnodes[47] = "INS";
+                this.htmlnodes[48] = "ISINDEX";
+                this.htmlnodes[49] = "KBD";
+                this.htmlnodes[50] = "LABEL";
+                this.htmlnodes[51] = "LEGEND";
+                this.htmlnodes[52] = "LI";
+                this.htmlnodes[53] = "LINK";
+                this.htmlnodes[54] = "MAP";
+                this.htmlnodes[55] = "MENU";
+                this.htmlnodes[56] = "META";
+                this.htmlnodes[57] = "NOFRAMES";
+                this.htmlnodes[58] = "NOSCRIPT";
+                this.htmlnodes[59] = "OBJECT";
+                this.htmlnodes[60] = "OL";
+                this.htmlnodes[61] = "OPTGROUP";
+                this.htmlnodes[62] = "OPTION";
+                this.htmlnodes[63] = "P";
+                this.htmlnodes[64] = "PARAM";
+                this.htmlnodes[65] = "PRE";
+                this.htmlnodes[66] = "Q";
+                this.htmlnodes[67] = "S";
+                this.htmlnodes[68] = "SAMP";
+                this.htmlnodes[69] = "SCRIPT";
+                this.htmlnodes[70] = "SELECT";
+                this.htmlnodes[71] = "SMALL";
+                this.htmlnodes[72] = "SPAN";
+                this.htmlnodes[73] = "STRIKE";
+                this.htmlnodes[74] = "STRONG";
+                this.htmlnodes[75] = "STYLE";
+                this.htmlnodes[76] = "SUB";
+                this.htmlnodes[77] = "SUP";
+                this.htmlnodes[78] = "TABLE";
+                this.htmlnodes[79] = "TBODY";
+                this.htmlnodes[80] = "TD";
+                this.htmlnodes[81] = "TEXTAREA";
+                this.htmlnodes[82] = "TFOOT";
+                this.htmlnodes[83] = "TH";
+                this.htmlnodes[84] = "THEAD";
+                this.htmlnodes[85] = "TITLE";
+                this.htmlnodes[86] = "TR";
+                this.htmlnodes[87] = "TT";
+                this.htmlnodes[88] = "U";
+                this.htmlnodes[89] = "UL";
+                this.htmlnodes[90] = "VAR";
+                this.htmlnodes[91] = "!--";
+
+                this.htmlstructure = new bool[91];
             }
         }
 
@@ -177,16 +182,18 @@ namespace NoteFly
                     if (this.rtbcode.Text[i] == '<')
                     {
                         this.posstarttag = i;
-                        if (i + 1 < this.rtbcode.TextLength)
-                        {
-                            if (this.rtbcode.Text[i + 1] == '/')
-                            {
-                                htmlendnode = true;
-                            }
-                        }
                     }
                     else if (this.rtbcode.Text[i] == '>')
                     {
+                        if (this.rtbcode.Text[posstarttag + 1] == '/')
+                        {
+                            htmlendnode = true;
+                        }
+                        else
+                        {
+                            htmlendnode = false;
+                        }
+
                         int lengthtillendtag = i - this.posstarttag;
                         if (lengthtillendtag > 1)
                         {
@@ -194,14 +201,13 @@ namespace NoteFly
                             if (htmlendnode == true)
                             {
                                 htmlnodename = this.rtbcode.Text.Substring(this.posstarttag + 2, lengthtillendtag - 2);
-                                htmlendnode = false;
-                            } 
+                            }
                             else
                             {
                                 htmlnodename = this.rtbcode.Text.Substring(this.posstarttag + 1, lengthtillendtag - 1);
                             }
 
-                            if (this.ValidingHTMLNode(htmlnodename))
+                            if (this.ValidingHTMLNode(htmlnodename, htmlendnode))
                             {
                                 this.ColorText(this.posstarttag, lengthtillendtag + 1, Color.Blue);
                             }
@@ -226,11 +232,10 @@ namespace NoteFly
         {
             if (newcharpos > 0)
             {
-                //MessageBox.Show("u tikte: " + rtbcode.Text[newcharpos]);
                 int cursorpos = this.rtbcode.SelectionStart;
                 if (this.checkhtml)
                 {
-                    if (newcharpos < 0) 
+                    if (newcharpos < 0)
                     {
                         throw new CustomException("negative character location.");
                     }
@@ -255,6 +260,7 @@ namespace NoteFly
                     {
                         string htmlnodename = String.Empty;
                         int htmlnodestartpos = -1;
+                        bool htmlendnode = false;
                         for (int i = newcharpos; i >= 0; i--)
                         {
                             try
@@ -271,10 +277,11 @@ namespace NoteFly
                                     htmlnodename = this.rtbcode.Text.Substring(i + 1, newcharpos - 1 - i);
                                     break;
                                 }
-                                else if (this.rtbcode.Text[i] == '/' && this.rtbcode.Text[chkpos] == '<') 
+                                else if (this.rtbcode.Text[i] == '/' && this.rtbcode.Text[chkpos] == '<')
                                 {
                                     htmlnodestartpos = i - 1;
                                     htmlnodename = this.rtbcode.Text.Substring(i + 1, newcharpos - 1 - i);
+                                    htmlendnode = true;
                                     break;
                                 }
                             }
@@ -286,7 +293,7 @@ namespace NoteFly
 
                         if ((!String.IsNullOrEmpty(htmlnodename)) && (htmlnodestartpos != -1))
                         {
-                            if (this.ValidingHTMLNode(htmlnodename))
+                            if (this.ValidingHTMLNode(htmlnodename, htmlendnode))
                             {
                                 this.ColorText(htmlnodestartpos, newcharpos - htmlnodestartpos + 1, Color.Blue);
                             }
@@ -319,6 +326,10 @@ namespace NoteFly
         {
             rtb.SelectAll();
             rtb.SelectionColor = Color.Black;
+            for (int i = 0; i < this.htmlstructure.Length; i++)
+            {
+                this.htmlstructure[i] = false;
+            }
         }
 
         /// <summary>
@@ -326,7 +337,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="ishtml">Is it html to check.</param>
         /// <returns>true if it is html</returns>
-        private bool ValidingHTMLNode(string ishtml)
+        private bool ValidingHTMLNode(string ishtml, bool endnode)
         {
             for (int i = 1; i < ishtml.Length; i++)
             {
@@ -339,8 +350,27 @@ namespace NoteFly
 
             for (int n = 0; n < this.htmlnodes.Length; n++)
             {
-                if (ishtml == this.htmlnodes[n] || ishtml == this.htmlnodes[n].ToLower())
+                if (ishtml.ToUpper() == this.htmlnodes[n])
                 {
+                    if (endnode)
+                    {
+                        this.htmlstructure[n] = false;
+                    }
+                    else
+                    {
+                        if (!this.htmlstructure[n])
+                        {
+                            this.htmlstructure[n] = true;
+                        }
+                        else
+                        {
+                            //could be a structure problem.
+                            //TODO check if endtag ommiting is allowed before returning false.
+                            
+                            //return false;
+                        }
+                    }
+
                     return true;
                 }
             }

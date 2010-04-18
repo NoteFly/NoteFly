@@ -57,7 +57,6 @@ namespace NoteFly
             this.editnoteid = editnoteid;
             this.notes = notes;
             this.ResetNewNoteForm(editnotetitle, editnotecontent);
-            this.tbTitle.Text = DateTime.Now.ToString();
             this.rtbNote.Focus();
             this.rtbNote.Select();
             if (this.editnote)
@@ -313,10 +312,6 @@ namespace NoteFly
                 this.tbTitle.TextAlign = HorizontalAlignment.Right;
                 this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
             }
-
-            this.pnlNoteEdit.Refresh();
-            this.rtbNote.Refresh();
-            this.pnlHeadNewNote.Refresh();
 
             this.tbTitle.Text = title;
             this.rtbNote.Text = content;

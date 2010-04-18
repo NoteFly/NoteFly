@@ -116,8 +116,8 @@ namespace NoteFly
                 short curnote = 0;
                 try
                 {
-                    ////curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));
-                    curnote = Convert.ToInt16(btn.Tag);
+                    curnote = Convert.ToInt16(btn.Name.Substring(10, btn.Name.Length - 10));
+                    //curnote = Convert.ToInt16(btn.Tag);
                 }
                 catch (InvalidCastException invexc)
                 {

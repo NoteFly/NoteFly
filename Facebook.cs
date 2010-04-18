@@ -191,53 +191,62 @@ namespace NoteFly
             {
                 case 0:
                     string notefbposted = "Your note is succefully posted on your facebook wall.";
-                    MessageBox.Show(notefbposted);
                     Log.Write(LogType.info, notefbposted);
+                    MessageBox.Show(notefbposted);
                     break;
+
                 case 1:
                     string unknowfberror = "Unknow facebook error occurred";
-                    MessageBox.Show(unknowfberror, MSGERRORTITLE);
                     Log.Write(LogType.error, unknowfberror);
+                    MessageBox.Show(unknowfberror, MSGERRORTITLE);
                     break;
+
                 case 100:
                     string fbinvalidparam = "Invalid paramters.";
-                    MessageBox.Show(fbinvalidparam, MSGERRORTITLE);
                     Log.Write(LogType.error, fbinvalidparam);
+                    MessageBox.Show(fbinvalidparam, MSGERRORTITLE);
                     break;
+
                 case 104:
                     string fbinvalidsig = "Signature was invalid.";
-                    MessageBox.Show(fbinvalidsig, MSGERRORTITLE);
                     Log.Write(LogType.error, fbinvalidsig);
+                    MessageBox.Show(fbinvalidsig, MSGERRORTITLE);
                     break;
+
                 case 200:
                     string fbprimission = "No proper permission to post on your wall.";
-                    MessageBox.Show(fbprimission, MSGERRORTITLE);
                     Log.Write(LogType.error, fbprimission);
+                    MessageBox.Show(fbprimission, MSGERRORTITLE);
                     break;
+
                 case 210:
                     string fbusernotvisible = "User not visible.\r\nThe user doesn't have permission to act on that object.";
-                    MessageBox.Show(fbusernotvisible, MSGERRORTITLE);
                     Log.Write(LogType.error, fbusernotvisible);
+                    MessageBox.Show(fbusernotvisible, MSGERRORTITLE);
                     break;
+
                 case 240:
-                    string fberror240 = "Know problem.";
-                    MessageBox.Show(fberror240, MSGERRORTITLE);
+                    string fberror240 = "Message not encoden?";
                     Log.Write(LogType.error, fberror240);
+                    MessageBox.Show(fberror240, MSGERRORTITLE);
                     break;
+
                 case 340:
                     string fbfeedlimit = "Feed action request limit reached.";
-                    MessageBox.Show(fbfeedlimit, MSGERRORTITLE);
                     Log.Write(LogType.error, fbfeedlimit);
+                    MessageBox.Show(fbfeedlimit, MSGERRORTITLE);
                     break;
+
                 case -1:
                     string notparsererrcode = "Could not parser the errorcode that was returned.";
-                    MessageBox.Show(notparsererrcode, MSGERRORTITLE);
                     Log.Write(LogType.error, notparsererrcode);
+                    MessageBox.Show(notparsererrcode, MSGERRORTITLE);
                     break;
+
                 default:
                     string errcode = "Facebook returned unknow errorcode " + responsecode;
-                    MessageBox.Show(errcode, MSGERRORTITLE);
                     Log.Write(LogType.error, errcode);
+                    MessageBox.Show(errcode, MSGERRORTITLE);
                     break;
             }
 

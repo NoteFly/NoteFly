@@ -241,7 +241,7 @@ namespace NoteFly
             this.btnAddNote.Name = "btnAddNote";
             this.btnAddNote.Size = new System.Drawing.Size(27, 23);
             this.btnAddNote.TabIndex = 2;
-            this.toolTip.SetToolTip(this.btnAddNote, "accept new note (enter)");
+            this.toolTip.SetToolTip(this.btnAddNote, "accept new note (Ctrl+S)");
             this.btnAddNote.UseMnemonic = false;
             this.btnAddNote.UseVisualStyleBackColor = true;
             this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
