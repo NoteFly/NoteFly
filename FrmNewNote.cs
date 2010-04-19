@@ -11,6 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -25,10 +26,6 @@ namespace NoteFly
     public partial class FrmNewNote : Form
     {
         #region Fields (5)
-#if win32
-        public const int HTCAPTION = 0x2;
-        public const int WMNCLBUTTONDOWN = 0xA1;
-#endif
         private bool editnote = false, setupfirsthighlight = false, moving = false;
         private int editnoteid = -1;
         private short notecolor;

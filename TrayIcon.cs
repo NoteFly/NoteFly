@@ -11,7 +11,8 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define win32
+#define windows //platform can be: windows, linux, macos
+
 using System;
 [assembly: CLSCompliant(true)]
 namespace NoteFly
@@ -169,7 +170,6 @@ namespace NoteFly
             components = new System.ComponentModel.Container();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);
-
             transparency = true;
             bool firstrun = false;
 
@@ -179,6 +179,17 @@ namespace NoteFly
                 if (System.Environment.GetCommandLineArgs()[1] == "/firstrun")
                 {
                     firstrun = true;
+                    /*
+#if windows
+                    System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                    System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
+                    bool IsAdmin = principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+                    if (IsAdmin)
+                    {
+                        MessageBox.Show("You are now running notefly as elevated Administrator, which is not necessary.", "(Elevated) administrator");
+                    }
+#endif
+                     */
                 }
                 else if (System.Environment.GetCommandLineArgs()[1] == "/disabletransparency")
                 {
@@ -252,7 +263,7 @@ namespace NoteFly
 
             if (firstrun)
             {
-                icon.ShowBalloonTip(3000, "I'm here.", "You can access NoteFly functions via this systray icon.", ToolTipIcon.Info);
+                icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this systray icon.", ToolTipIcon.Info);
             }
             Application.Run();
         }

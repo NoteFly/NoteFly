@@ -11,6 +11,8 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
+#define windows //platform can be: windows, linux, macos
+
 namespace NoteFly
 {
     using System;
@@ -450,6 +452,7 @@ namespace NoteFly
             }
 
 #if DEBUG
+#warning Stress test enabled
             Log.Write(LogType.info, "start stress test");
             this.LoadNotesStressTest(10);
             Log.Write(LogType.info, "finished stress test");

@@ -11,13 +11,15 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
+#define windows //platform can be: windows, linux, macos
+
 namespace NoteFly
 {
     using System;
     using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
-#if win32
+#if windows
     using Microsoft.Win32;
 #endif
 
@@ -240,7 +242,7 @@ namespace NoteFly
                     this.ipTextBox1.GetIPAddress(),
                     Convert.ToInt32(this.numTimeout.Value),
                     this.chxSaveFBSession.Checked);
-#if win32
+#if windows
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
                 {
@@ -413,7 +415,7 @@ namespace NoteFly
         /// <returns>The boolean if it starts at logon.</returns>
         private bool GetStatusStartlogin()
         {
-#if win32
+#if windows
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {

@@ -11,13 +11,15 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
+#define windows //platform can be: windows, linux, macos
+
 namespace NoteFly
 {
     using System;
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
-#if win32
+#if windows
     using System.Runtime.InteropServices;
 #endif
     /// <summary>
@@ -28,8 +30,6 @@ namespace NoteFly
         #region Fields (10)
 
         private const int MINVISIBLESIZE = 5;
-        private const int HTCAPTION = 0x2;
-        private const int WMNCLBUTTONDOWN = 0xA1;
 
         private Notes notes;
         private TextHighlight highlight;
@@ -213,12 +213,7 @@ namespace NoteFly
         #region Methods (32)
 
         // Public Methods (2) 
-#if win32
-        ////[DllImportAttribute("user32.dll")]
-        ////public static extern bool ReleaseCapture();
-        ////[DllImportAttribute("user32.dll")]
-        ////public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-#endif
+
         /// <summary>
         /// Check if twitter is enabled and check Syntax.
         /// </summary>
@@ -257,7 +252,7 @@ namespace NoteFly
         }
         // Private Methods (30) 
 
-#if win32
+#if windows
         /// <summary>
         /// Check internet state.
         /// </summary>
@@ -336,7 +331,7 @@ namespace NoteFly
         /// <returns>true if there is a coonection, otherwise return false</returns>
         private bool CheckConnection()
         {
-#if win32
+#if windows
             if (IsConnectedToInternet() == true)
             {
                 return true;
@@ -348,7 +343,7 @@ namespace NoteFly
                 Log.Write(LogType.error, msgNoNetwork);
                 return false;
             }
-#elif !win32
+#elif !windows
             return true;
 #endif
         }
@@ -359,13 +354,14 @@ namespace NoteFly
         /// <param name="twitterenabled">Is twitter enabled.</param>
         private void CheckTwitter(bool twitterenabled)
         {
+            const string STWITTER = "twitter";
             if (twitterenabled)
             {
-                this.tsmenuSendToTwitter.Text = "Twitter";
+                this.tsmenuSendToTwitter.Text = STWITTER;
             }
             else
             {
-                this.tsmenuSendToTwitter.Text = this.tsmenuSendToTwitter.Text + " (not setup)";
+                this.tsmenuSendToTwitter.Text = STWITTER + " (not setup)";
             }
         }
 
@@ -429,9 +425,9 @@ namespace NoteFly
         {
             string emailnote;
 
-#if win32
+#if windows
             emailnote = this.note.Replace("\r\n", "%0D%0A");
-#elif mac
+#elif macos
             emailnote = note.Replace("\r", "%0D%0A");
 #elif linux                        
             emailnote = this.note.Replace("\n", "%0D%0A");
@@ -499,25 +495,26 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string locknotemsg = "lock note";
-            if (!this.notelock)
+            const string locknotemsg = "lock note";
+            if (this.notelock)
             {
-                this.notelock = true;
-                this.menuLockNote.Text = locknotemsg+" (click again to unlock)";
-                this.CreatePbLock();
-                this.menuNoteColors.Enabled = false;
-                this.menuEditNote.Enabled = false;
-                this.menuOnTop.Enabled = false;
+                this.notelock = false;
+                this.DestroyPbLock();
+                this.menuLockNote.Text = locknotemsg;
+                this.pbResizeGrip.Visible = true;
             }
             else
             {
-                this.notelock = false;
-                this.menuLockNote.Text = locknotemsg;
-                this.DestroyPbLock();
-                this.menuNoteColors.Enabled = true;
-                this.menuEditNote.Enabled = true;
-                this.menuOnTop.Enabled = true;
+                this.notelock = true;
+                this.CreatePbLock();
+                this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
+                this.pbResizeGrip.Visible = false;
             }
+
+            this.menuNoteColors.Enabled = !this.notelock;
+            this.menuEditNote.Enabled = !this.notelock;
+            this.menuOnTop.Enabled = !this.notelock;
+            this.menuRollUp.Enabled = !this.notelock;
         }
 
         /// <summary>
@@ -527,11 +524,12 @@ namespace NoteFly
         {
             this.pbShowLock = new PictureBox();
             this.pbShowLock.Name = "pbShowLock";
-            this.pbShowLock.Location = new Point(this.btnCloseNote.Location.X - 24, 8);
             this.pbShowLock.Size = new Size(16, 16);
+            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8); 
             this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
             this.pbShowLock.Visible = true;
             this.pnlHead.Controls.Add(this.pbShowLock);
+            this.pbShowLock.BringToFront();
         }
 
         /// <summary>
@@ -1057,40 +1055,6 @@ namespace NoteFly
                         this.Location = new Point(this.Location.X, this.Location.Y - 1);
                     }
                 }
-
-                // below comment out the same code, only I consider to it to be slower:
-                //if ((dp.X < e.Location.X) && (dp.Y < e.Location.Y))
-                //{
-                //    this.Location = new Point(this.Location.X + 1, this.Location.Y + 1);
-                //}
-                //else if ((dp.X > e.Location.X) && (dp.Y > e.Location.Y))
-                //{
-                //    this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
-                //}
-                //else if ((dp.X > e.Location.X) && (dp.Y < e.Location.Y))
-                //{
-                //    this.Location = new Point(this.Location.X - 1, this.Location.Y + 1);
-                //}
-                //else if ((dp.X < e.Location.X) && (dp.Y > e.Location.Y))
-                //{
-                //    this.Location = new Point(this.Location.X + 1, this.Location.Y - 1);
-                //}
-                //else if (dp.X < e.Location.X)
-                //{
-                //    this.Location = new Point(this.Location.X + 1, this.Location.Y);
-                //}
-                //else if (dp.X > e.Location.X)
-                //{
-                //    this.Location = new Point(this.Location.X - 1, this.Location.Y);
-                //}
-                //else if (dp.Y < e.Location.Y)
-                //{
-                //    this.Location = new Point(this.Location.X, this.Location.Y + 1);
-                //}
-                //else if (dp.Y > e.Location.Y)
-                //{
-                //    this.Location = new Point(this.Location.X, this.Location.Y - 1);
-                //}
             }
             else if (this.skin != null)
             {
@@ -1099,7 +1063,5 @@ namespace NoteFly
         }
 
         #endregion Methods
-
-
     }
 }

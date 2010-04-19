@@ -11,6 +11,8 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
+#define windows //platform can be: windows, linux, macos
+
 namespace NoteFly
 {
     using System;
@@ -188,6 +190,8 @@ namespace NoteFly
                 }
             }
 
+            const string SFACEBOOK = "Facebook";
+
             switch (responsecode)
             {
                 case 0:
@@ -197,61 +201,59 @@ namespace NoteFly
                     break;
 
                 case 1:
-                    string unknowfberror = "Unknow facebook error occurred";
+                    string unknowfberror = "Unknow " + SFACEBOOK + " error occurred";
                     Log.Write(LogType.error, unknowfberror);
                     MessageBox.Show(unknowfberror, MSGERRORTITLE);
                     break;
 
                 case 100:
-                    string fbinvalidparam = "Invalid paramters.";
+                    string fbinvalidparam = SFACEBOOK+" Invalid paramters.";
                     Log.Write(LogType.error, fbinvalidparam);
                     MessageBox.Show(fbinvalidparam, MSGERRORTITLE);
                     break;
 
                 case 104:
-                    string fbinvalidsig = "Signature was invalid.";
+                    string fbinvalidsig = SFACEBOOK+" signature was invalid.";
                     Log.Write(LogType.error, fbinvalidsig);
                     MessageBox.Show(fbinvalidsig, MSGERRORTITLE);
                     break;
 
                 case 200:
-                    string fbprimission = "No proper permission to post on your wall.";
+                    string fbprimission = SFACEBOOK+" no proper permission to post on your wall.";
                     Log.Write(LogType.error, fbprimission);
                     MessageBox.Show(fbprimission, MSGERRORTITLE);
                     break;
 
                 case 210:
-                    string fbusernotvisible = "User not visible.\r\nThe user doesn't have permission to act on that object.";
+                    string fbusernotvisible = SFACEBOOK+" user not visible.\r\nThe user doesn't have permission to act on that object.";
                     Log.Write(LogType.error, fbusernotvisible);
                     MessageBox.Show(fbusernotvisible, MSGERRORTITLE);
                     break;
 
                 case 240:
-                    string fberror240 = "Message not encoden?";
+                    string fberror240 = SFACEBOOK+" uid wrong.";
                     Log.Write(LogType.error, fberror240);
                     MessageBox.Show(fberror240, MSGERRORTITLE);
                     break;
 
                 case 340:
-                    string fbfeedlimit = "Feed action request limit reached.";
+                    string fbfeedlimit = SFACEBOOK+" feed action request limit reached.";
                     Log.Write(LogType.error, fbfeedlimit);
                     MessageBox.Show(fbfeedlimit, MSGERRORTITLE);
                     break;
 
                 case -1:
-                    string notparsererrcode = "Could not parser the errorcode that was returned.";
+                    string notparsererrcode = SFACEBOOK+" could not parser the errorcode that was returned.";
                     Log.Write(LogType.error, notparsererrcode);
                     MessageBox.Show(notparsererrcode, MSGERRORTITLE);
                     break;
 
                 default:
-                    string errcode = "Facebook returned unknow errorcode " + responsecode;
+                    string errcode = SFACEBOOK+" returned unknow errorcode " + responsecode;
                     Log.Write(LogType.error, errcode);
                     MessageBox.Show(errcode, MSGERRORTITLE);
                     break;
             }
-
-            this.frmLoginFb.Close();
         }
 
         /// <summary>

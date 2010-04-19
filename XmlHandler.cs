@@ -11,14 +11,15 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-
-using System;
-using System.IO;
-using System.Xml;
-using System.Globalization;
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
+    using System;
+    using System.IO;
+    using System.Xml;
+    using System.Globalization;
+
     class xmlHandler
     {
 		#region Fields (5) 
@@ -568,11 +569,11 @@ namespace NoteFly
         /// </summary>
         private void SetAppdataFolder()
         {
-#if win32
+#if windows
             appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\." + TrayIcon.AssemblyTitle + "\\";
 #elif linux
             appdatafolder = "~\\.NoteFly\\";
-#elif mac
+#elif macos
             appdatafolder = "???"
 #endif
         }
