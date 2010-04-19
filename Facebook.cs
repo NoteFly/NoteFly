@@ -392,6 +392,7 @@ namespace NoteFly
                         boolsettings[7],
                         settting.getXMLnode("proxyaddr"),
                         settting.getXMLnodeAsInt("timeout"),
+                        true,
                         boolsettings[8]);
                 }
                 catch (Exception fbsessionexc)

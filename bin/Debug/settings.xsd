@@ -27,6 +27,7 @@
         <xs:element name="useproxy" type="xs:boolean" />
         <xs:element name="proxyaddr" type="xs:string" />
         <xs:element name="networktimeout" type="xs:int" />
+        <xs:element name="firstrun" type="xs:boolean" />
         <xs:element name="facebook">
           <xs:complexType>
             <xs:sequence>

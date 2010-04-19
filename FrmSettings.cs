@@ -241,6 +241,7 @@ namespace NoteFly
                     this.chxUseProxy.Checked,
                     this.ipTextBox1.GetIPAddress(),
                     Convert.ToInt32(this.numTimeout.Value),
+                    true,
                     this.chxSaveFBSession.Checked);
 #if windows
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);

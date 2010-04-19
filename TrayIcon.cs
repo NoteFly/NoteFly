@@ -176,7 +176,7 @@ namespace NoteFly
             //disabletransparency parameter is for OS that don't support transparency, so they still can launch this programme.
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
-                if (System.Environment.GetCommandLineArgs()[1] == "/firstrun")
+                if (System.Environment.GetCommandLineArgs()[1] == "/forcefirstrun")
                 {
                     firstrun = true;
                     /*

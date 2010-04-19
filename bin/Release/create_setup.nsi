@@ -12,7 +12,7 @@
 
 ; version
 !define VERSION "1.0.0" ;version number: major.minor.release
-!define VERSTATUS "pre1" ;alpha, beta, rc, or nothing for final.
+!define VERSTATUS ""    ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 
 Name "NoteFly ${VERSION} ${VERSTATUS}" ; The name of the installer
@@ -45,10 +45,7 @@ RequestExecutionLevel admin
 !include LogicLib.nsh
 !include WordFunc.nsh
 !include FileFunc.nsh
-
 !insertmacro VersionCompare
-;!insertmacro GetParent
-;!insertmacro GetPathFromString
 
 Function .onInit
  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "installnotefly") i .r1 ?e'
@@ -72,28 +69,6 @@ Function .onInit
     MessageBox MB_OK|MB_ICONSTOP ".NET framework v2.0 or newer is required. You have $0.\r\nPlease update."
     Abort
   ${EndIf}
-
-;  UAC_Elevate:
-;    UAC::RunElevated 
-;    StrCmp 1223 $0 UAC_ElevationAborted ; UAC dialog aborted by user?
-;    StrCmp 0 $0 0 UAC_Err ; Error?
-;    StrCmp 1 $1 0 UAC_Success ;Are we the real deal or just the wrapper?
-;    Quit
- 
-;  UAC_Err:
-;    MessageBox mb_iconstop "Unable to elevate, error $0"
-;    Abort
- 
-;  UAC_ElevationAborted:
-;    ;elevation was aborted, run as normal?
-;    MessageBox mb_iconstop "This installer requires admin access, aborting!"
-;    Abort
- 
-;  UAC_Success:
-;    StrCmp 1 $3 +4 ;Admin?
-;    StrCmp 3 $1 0 UAC_ElevationAborted ;Try again?
-;    MessageBox mb_iconstop "This installer requires admin access, try again"
-;    goto UAC_Elevate 
  
 FunctionEnd
 
@@ -107,12 +82,6 @@ Function GetDotNETVersion
  
   Pop $1
   Exch $0
-FunctionEnd
-
-Function ExecAppFile    
-  RequestExecutionLevel user
-  Exec '$INSTDIR\${APPFILE} /firstrun' 
-  ;!insertmacro UAC_AsUser_ExecShell 'open' '$INSTDIR\${APPFILE}' '/firstrun' '$INSTDIR' ''  
 FunctionEnd
 
 !macro BadPathsCheck
@@ -133,7 +102,7 @@ StrCmp $R0 "\Documents and Settings" bad
 StrCpy $R0 $INSTDIR "" -13
 StrCmp $R0 "\My Documents" bad done
 bad:
-  MessageBox MB_OK|MB_ICONSTOP "Install path invalid!"
+  MessageBox MB_OK|MB_ICONSTOP "Install path is invalid. Please choice a other installation path."
   Abort
 done:
 !macroend
@@ -142,7 +111,6 @@ done:
 ;--------------------------------
 
 ; Pages
-
  PageEx license
    LicenseText "License agreement"
    LicenseData "license.txt"
@@ -158,16 +126,12 @@ UninstPage instfiles
 
 ; The stuff to install
 Section "main executable (required)"	
- 
-  SectionIn RO        
+  SectionIn RO
   SetOverwrite on  
-  RequestExecutionLevel Admin
-    
   !insertmacro BadPathsCheck
   SetOutPath $INSTDIR  ;Set output path to the installation directory.   
-  File "${APPFILE}"    ;Put file there  
+  File "${APPFILE}"
   ;File "NoteFly.pdb"  ;debuggingsymbols. optional adds ~165kb
-    
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"   
   ; Write the uninstall keys for Windows
@@ -178,26 +142,24 @@ Section "main executable (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
   WriteUninstaller "uninstall.exe"   
-  
-  Call ExecAppFile
 SectionEnd
 
-; Optional section (can be disabled by the user)
+Section "Desktop Shortcut"
+  SetShellVarContext current
+  CreateShortCut "$DESKTOP\NoteFly.lnk" "$INSTDIR\${APPFILE}"
+SectionEnd
+
 Section "Start Menu Shortcuts"  
   SetShellVarContext all
-  ;startmenu shortcut should be for all users or currentuser. Not administrator account.
-  ;Call CreateDesktopShortcuts  
-  
+  ;startmenu shortcut should be for all users or currentuser Not administrator account.
   CreateDirectory "$SMPROGRAMS\NoteFly"
   CreateShortCut "$SMPROGRAMS\NoteFly\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0
-  
 SectionEnd
 
 ;--------------------------------
 
 ; Uninstaller
-
 Section "Uninstall"  
 
 !insertmacro BadPathsCheck
@@ -215,8 +177,8 @@ Section "Uninstall"
   true:
      ;Deleting all files in application data folder of NoteFly.
      SetShellVarContext current
-     Delete "$APPDATA\.NoteFly\*.*" ;FIXME: should not be administrator user appdata.
-     RMDir "$APPDATA\.NoteFly"  ;FIXME: should not be administrator user appdata.
+     Delete "$APPDATA\.NoteFly\*.*" ;BUG: should not be administrator user appdata.
+     RMDir "$APPDATA\.NoteFly"      ;BUG: should not be administrator user appdata.
      DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Run\NoteFly"
      Goto next
      

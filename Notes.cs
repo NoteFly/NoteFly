@@ -76,10 +76,14 @@ namespace NoteFly
         /// Initializes a new instance of the Notes class.
         /// </summary>
         /// <param name="firstrun">Is this appliction to run for the first time, with /firstrun parameter.</param>
-        public Notes(bool firstrun)
+        public Notes(bool forcefirstrun)
         {
             this.noteslst = new List<FrmNote>();
-            this.SetSettings();
+            bool firstrun = this.SetSettings();
+            if (forcefirstrun)
+            {
+                firstrun = true;
+            }
             this.LoadNotes(firstrun);
         }
 
@@ -252,7 +256,8 @@ namespace NoteFly
         /// <summary>
         /// check settings and set variables
         /// </summary>
-        public void SetSettings()
+        /// <returns>true if first time started.</returns>
+        public bool SetSettings()
         {
             xmlHandler getSettings = new xmlHandler(true);
 
@@ -292,6 +297,15 @@ namespace NoteFly
 
                 FacebookSettings.Sessionsecret = getSettings.getXMLnode("sessionsecret");
                 FacebookSettings.Sessionkey = getSettings.getXMLnode("sessionkey");
+            }
+
+            if (getSettings.getXMLnodeAsBool("firstrun"))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
@@ -385,7 +399,7 @@ namespace NoteFly
         {
             if (!Directory.Exists(this.notesavepath))
             {
-                string notefoldernoteexist = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
+                const string notefoldernoteexist = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
                 DialogResult result = MessageBox.Show(notefoldernoteexist, "notefolder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
@@ -416,7 +430,7 @@ namespace NoteFly
                 id++;
                 if (this.CheckLimitNotes(id))
                 {
-                    string toomanynotes = "Too many notes to load.";
+                    const string toomanynotes = "Too many notes to load.";
                     MessageBox.Show(toomanynotes);
                     Log.Write(LogType.error, toomanynotes);
                     return;
@@ -442,13 +456,38 @@ namespace NoteFly
                 int tipnoteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2));
                 StringBuilder notecontent = new StringBuilder();
                 notecontent.AppendLine("This is a example note.");
-                notecontent.Append("Please close the installer now.");
                 notecontent.AppendLine("You can chance colour of this note by rightclicking on this note.");
                 notecontent.AppendLine("You can delete this note, by rightclicking the systray icon choice manage notes");
                 notecontent.AppendLine("and then press delete note button for this particuler note.");
                 notecontent.AppendLine("By clicking on the cross on this note this note will be hidden.");
                 notecontent.AppendLine("You can get it back with the manage notes window.");
                 this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+
+                xmlHandler settting = new xmlHandler(true);
+                bool[] boolsettings = settting.ParserSettingsBool();
+                settting.WriteSettings(
+                    boolsettings[0],
+                    Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")),
+                    settting.getXMLnodeAsInt("defaultcolor"),
+                    settting.getXMLnodeAsInt("actionleftclick"),
+                    boolsettings[1],
+                    settting.getXMLnode("fontcontent"),
+                    Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")),
+                    settting.getXMLnodeAsInt("textdirection"),
+                    settting.getXMLnode("notesavepath"),
+                    settting.getXMLnode("defaultemail"),
+                    boolsettings[4],
+                    boolsettings[5],
+                    boolsettings[6],
+                    settting.getXMLnode("twitteruser"),
+                    settting.getXMLnode("twitterpass"),
+                    boolsettings[2],
+                    boolsettings[3],
+                    boolsettings[7],
+                    settting.getXMLnode("proxyaddr"),
+                    settting.getXMLnodeAsInt("timeout"),
+                    true,
+                    boolsettings[8]);
             }
 
 #if DEBUG

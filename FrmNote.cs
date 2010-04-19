@@ -997,6 +997,9 @@ namespace NoteFly
                 case 6:
                     this.redToolStripMenuItem.Checked = true;
                     break;
+                default:
+                    new CustomException("unknow color selected.");
+                    break;
             }
         }
 

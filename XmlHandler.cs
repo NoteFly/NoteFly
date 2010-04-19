@@ -45,7 +45,7 @@ namespace NoteFly
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, true, "", "", true, false, false, "", 10000, true);
+                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, true, "", "", true, false, false, "", 10000, false, true);
                 }
             }
         }
@@ -400,7 +400,7 @@ namespace NoteFly
         /// Write settings file.
         /// </summary>
         /// <returns>true if succeed.</returns>
-        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool confirmexit, bool confirmdelete, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr, int timeout, Boolean savefacebooksession)
+        public bool WriteSettings(bool transparecy, decimal transparecylevel, int numcolor, int actionleftclick, bool askurl, string fontcontent, decimal fontsize, int textdirection, string notesavepath, string defaultemail, bool highlightHTML, bool confirmexit, bool confirmdelete, string twitteruser, string twitterpass, bool logerror, bool loginfo, bool useproxy, string proxyaddr, int timeout, bool firstrun, bool savefacebooksession)
         {
             if (!this.issetting)
             {
@@ -460,8 +460,9 @@ namespace NoteFly
                 WriteXMLBool("loginfo", loginfo);
 
                 objXmlTextWriter.WriteStartElement("syntaxhighlight");
+
                 WriteXMLBool("highlightHTML", highlightHTML);
-                //WriteXMLBool("highlightC", highlightC);
+
                 objXmlTextWriter.WriteEndElement();
 
                 WriteXMLBool("confirmexit", confirmexit);
@@ -474,7 +475,9 @@ namespace NoteFly
 
                 objXmlTextWriter.WriteElementString("proxyaddr", proxyaddr);
 
-                objXmlTextWriter.WriteElementString("timeout", Convert.ToString(timeout, CultureInfo.InvariantCulture.NumberFormat));
+                objXmlTextWriter.WriteElementString("networktimeout", Convert.ToString(timeout, CultureInfo.InvariantCulture.NumberFormat));
+
+                WriteXMLBool("firstrun", firstrun);
 
                 objXmlTextWriter.WriteStartElement("facebook");
 
