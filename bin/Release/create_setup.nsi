@@ -145,7 +145,7 @@ Section "main executable (required)"
 SectionEnd
 
 Section "Desktop Shortcut"
-  SetShellVarContext current
+  SetShellVarContext all
   CreateShortCut "$DESKTOP\NoteFly.lnk" "$INSTDIR\${APPFILE}"
 SectionEnd
 
