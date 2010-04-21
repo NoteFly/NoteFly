@@ -45,7 +45,7 @@ namespace NoteFly
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 95, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, true, "", "", true, false, false, "", 10000, false, true);
+                    WriteSettings(true, 90, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, true, "", "", true, false, false, "", 10000, false, true);
                 }
             }
         }
@@ -541,7 +541,7 @@ namespace NoteFly
         /// Does some checks on the file
         /// - Is the file empty?
         /// - Is the file too large?
-        /// </summary>        
+        /// </summary>
         private void CheckFile()
         {
             if (File.Exists(filenm) == true)

@@ -499,7 +499,7 @@ namespace NoteFly
             }
             else
             {
-                return timeout;
+                return Convert.ToDecimal(timeout);
             }
         }
 
