@@ -44,6 +44,9 @@ namespace NoteFly
         /// </summary>
         private RichTextBox rtbcode;
 
+        /// <summary>
+        /// The number of HTML nodes NoteFly knows.
+        /// </summary>
         private const int NUMHTMLNODES = 94;
 
         private bool[] htmlstructure;

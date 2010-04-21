@@ -29,9 +29,24 @@ namespace NoteFly
     public static class FacebookSettings
     {
         // Fields (4) 
+        /// <summary>
+        /// unix time as double that tells when facebook session is expired
+        /// </summary>
         private static double sessionexpires;
+
+        /// <summary>
+        /// The current session key
+        /// </summary>
         private static string sessionkey;
+
+        /// <summary>
+        /// The current session secret
+        /// </summary>
         private static string sessionsecret;
+        
+        /// <summary>
+        /// The user id that posts on facebook.
+        /// </summary>
         private static string uid;
 
         /// <summary>
@@ -207,43 +222,43 @@ namespace NoteFly
                     break;
 
                 case 100:
-                    string fbinvalidparam = SFACEBOOK+" Invalid paramters.";
+                    string fbinvalidparam = SFACEBOOK + " Invalid paramters.";
                     Log.Write(LogType.error, fbinvalidparam);
                     MessageBox.Show(fbinvalidparam, MSGERRORTITLE);
                     break;
 
                 case 104:
-                    string fbinvalidsig = SFACEBOOK+" signature was invalid.";
+                    string fbinvalidsig = SFACEBOOK + " signature was invalid.";
                     Log.Write(LogType.error, fbinvalidsig);
                     MessageBox.Show(fbinvalidsig, MSGERRORTITLE);
                     break;
 
                 case 200:
-                    string fbprimission = SFACEBOOK+" no proper permission to post on your wall.";
+                    string fbprimission = SFACEBOOK + " no proper permission to post on your wall.";
                     Log.Write(LogType.error, fbprimission);
                     MessageBox.Show(fbprimission, MSGERRORTITLE);
                     break;
 
                 case 210:
-                    string fbusernotvisible = SFACEBOOK+" user not visible.\r\nThe user doesn't have permission to act on that object.";
+                    string fbusernotvisible = SFACEBOOK + " user not visible.\r\nThe user doesn't have permission to act on that object.";
                     Log.Write(LogType.error, fbusernotvisible);
                     MessageBox.Show(fbusernotvisible, MSGERRORTITLE);
                     break;
 
                 case 240:
-                    string fberror240 = SFACEBOOK+" uid wrong.";
+                    string fberror240 = SFACEBOOK + " userid(uid) wrong.";
                     Log.Write(LogType.error, fberror240);
                     MessageBox.Show(fberror240, MSGERRORTITLE);
                     break;
 
                 case 340:
-                    string fbfeedlimit = SFACEBOOK+" feed action request limit reached.";
+                    string fbfeedlimit = SFACEBOOK + " feed action request limit reached.";
                     Log.Write(LogType.error, fbfeedlimit);
                     MessageBox.Show(fbfeedlimit, MSGERRORTITLE);
                     break;
 
                 case -1:
-                    string notparsererrcode = SFACEBOOK+" could not parser the errorcode that was returned.";
+                    string notparsererrcode = SFACEBOOK + " could not parser the errorcode that was returned.";
                     Log.Write(LogType.error, notparsererrcode);
                     MessageBox.Show(notparsererrcode, MSGERRORTITLE);
                     break;

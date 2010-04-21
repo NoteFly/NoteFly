@@ -102,7 +102,7 @@ StrCmp $R0 "\Documents and Settings" bad
 StrCpy $R0 $INSTDIR "" -13
 StrCmp $R0 "\My Documents" bad done
 bad:
-  MessageBox MB_OK|MB_ICONSTOP "Install path is invalid. Please choice a other installation path."
+  MessageBox MB_OK|MB_ICONSTOP "Install path is invalid. Please choice an other installation path."
   Abort
 done:
 !macroend
@@ -172,20 +172,7 @@ Section "Uninstall"
   Delete $INSTDIR\NoteFly.exe
   Delete $INSTDIR\uninstall.exe
   ;Delete $INSTDIR\NoteFly.pdb ;enable if debugging symbols incl.
-  
-  MessageBox MB_YESNO "Do you want to remove your notes and settings too?" IDYES true IDNO false
-  true:
-     ;Deleting all files in application data folder of NoteFly.
-     SetShellVarContext current
-     Delete "$APPDATA\.NoteFly\*.*" ;BUG: should not be administrator user appdata.
-     RMDir "$APPDATA\.NoteFly"      ;BUG: should not be administrator user appdata.
-     DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Run\NoteFly"
-     Goto next
-     
-  false:
-     Goto next
-  
-  next:     
-     RMDir "$INSTDIR"
+           
+  RMDir "$INSTDIR"
 
 SectionEnd
