@@ -59,7 +59,7 @@ namespace NoteFly
             this.chxSaveFBSession.Checked = boolsetting[8];
             if (boolsetting[6])
             {
-                this.ipTextBox1.Enabled = true;
+                this.iptbProxyAddress.Enabled = true;
             }
 
             this.numProcTransparency.Value = this.GetTransparecylevel();
@@ -120,8 +120,8 @@ namespace NoteFly
                 else
                 {
                     string dirnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
-                    MessageBox.Show(dirnotexist, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Log.Write(LogType.info, dirnotexist);
+                    MessageBox.Show(dirnotexist, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -160,56 +160,56 @@ namespace NoteFly
             if (!Directory.Exists(this.tbNotesSavePath.Text))
             {
                 string invalidfoldersavenote = "Invalid folder for saving notes folder.";
+                Log.Write(LogType.info, invalidfoldersavenote);
                 MessageBox.Show(invalidfoldersavenote);
                 this.tabControlSettings.SelectedTab = this.tabGeneral;
-                Log.Write(LogType.info, invalidfoldersavenote);
             }
             else if (String.IsNullOrEmpty(this.cbxFontNoteContent.Text) == true)
             {
                 string nofont = "Select a font.";
+                Log.Write(LogType.info, nofont);
                 MessageBox.Show(nofont);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
-                Log.Write(LogType.info, nofont);
             }
             else if ((this.numFontSize.Value < 4) || (this.numFontSize.Value > 128))
             {
                 string invalidfontsize = "Font size invalid. minmal 4pt maximal 128pt";
+                Log.Write(LogType.info, invalidfontsize);
                 MessageBox.Show(invalidfontsize);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
-                Log.Write(LogType.info, invalidfontsize);
             }
             else if (this.cbxTextDirection.SelectedIndex > 1)
             {
                 string noknowtextdir = "Settings text direction unknow.";
+                Log.Write(LogType.error, noknowtextdir);
                 MessageBox.Show(noknowtextdir);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
-                Log.Write(LogType.error, noknowtextdir);
             }
             else if ((this.chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) ||
                 (this.chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
             {
                 string notallowcheckstate = "checkstate not allowed.";
+                Log.Write(LogType.error, notallowcheckstate);
                 MessageBox.Show(notallowcheckstate);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
-                Log.Write(LogType.error, notallowcheckstate);
             }
             else if (this.tbTwitterUser.Text.Length > 16)
             {
                 string twnametoolong = "Settings Twitter: username is too long.";
-                MessageBox.Show(twnametoolong);
                 Log.Write(LogType.error, twnametoolong);
+                MessageBox.Show(twnametoolong);
             }
             else if ((this.tbTwitterPass.Text.Length < 6) && (this.chxRememberTwPass.Checked == true))
             {
                 string twpaswtooshort = "Settings Twitter: password is too short.";
-                MessageBox.Show(twpaswtooshort);
                 Log.Write(LogType.error, twpaswtooshort);
+                MessageBox.Show(twpaswtooshort);
             }
             else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.cbxDefaultEmailToBlank.Checked))
             {
                 string emailnotvalid = "Settings advance: default emailadres not valid.";
-                MessageBox.Show(emailnotvalid);
                 Log.Write(LogType.error, emailnotvalid);
+                MessageBox.Show(emailnotvalid);
             }
             else
             {
@@ -239,7 +239,7 @@ namespace NoteFly
                     this.chxLogErrors.Checked,
                     this.chxLogDebug.Checked,
                     this.chxUseProxy.Checked,
-                    this.ipTextBox1.GetIPAddress(),
+                    this.iptbProxyAddress.GetIPAddress(),
                     Convert.ToInt32(this.numTimeout.Value),
                     true,
                     this.chxSaveFBSession.Checked);
@@ -255,8 +255,8 @@ namespace NoteFly
                         }
                         catch (UnauthorizedAccessException unauthexc)
                         {
-                            MessageBox.Show(unauthexc.Message);
                             Log.Write(LogType.exception, unauthexc.Message);
+                            MessageBox.Show(unauthexc.Message);
                         }
                         catch (Exception exc)
                         {
@@ -274,8 +274,8 @@ namespace NoteFly
                 else
                 {
                     string regkeynotexistfound = "Run subkey in registery does not exist. Or it cannot be found.";
-                    MessageBox.Show(regkeynotexistfound);
                     Log.Write(LogType.error, regkeynotexistfound);
+                    MessageBox.Show(regkeynotexistfound);
                 }
 #endif
                 this.notes.SetSettings();
@@ -373,8 +373,8 @@ namespace NoteFly
             if (String.IsNullOrEmpty(curfont))
             {
                 string fontnotfound = "Current font not found.";
+                Log.Write(LogType.error, fontnotfound);
                 MessageBox.Show(fontnotfound, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log.Write(LogType.info, fontnotfound);
             }
             else
             {
@@ -547,9 +547,10 @@ namespace NoteFly
                         if (!errorshowed)
                         {
                             string fileexist = "File " + id + ".xml already exist in new folder.";
+                            Log.Write(LogType.error, fileexist);
                             MessageBox.Show(fileexist);
                             errorshowed = true;
-                            Log.Write(LogType.error, fileexist);
+                            
                         }
                     }
                 }
@@ -565,7 +566,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
         {
-            this.ipTextBox1.Enabled = this.chxUseProxy.Checked;
+            this.iptbProxyAddress.Enabled = this.chxUseProxy.Checked;
         }
 
         #endregion Methods

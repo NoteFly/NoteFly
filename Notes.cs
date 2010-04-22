@@ -431,8 +431,8 @@ namespace NoteFly
                 if (this.CheckLimitNotes(id))
                 {
                     const string toomanynotes = "Too many notes to load.";
-                    MessageBox.Show(toomanynotes);
                     Log.Write(LogType.error, toomanynotes);
+                    MessageBox.Show(toomanynotes);
                     return;
                 }
 
@@ -488,6 +488,8 @@ namespace NoteFly
                     settting.getXMLnodeAsInt("timeout"),
                     true,
                     boolsettings[8]);
+
+                Log.Write(LogType.info, "firstrun occurre"); //by default not logged.
             }
 
 #if DEBUG

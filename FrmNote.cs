@@ -339,8 +339,8 @@ namespace NoteFly
             else
             {
                 string msgNoNetwork = "There is no network connection.";
-                MessageBox.Show(msgNoNetwork);
                 Log.Write(LogType.error, msgNoNetwork);
+                MessageBox.Show(msgNoNetwork);
                 return false;
             }
 #elif !windows
@@ -409,8 +409,8 @@ namespace NoteFly
             if (this.NoteID > this.notes.NumNotes)
             {
                 string cannotfindnote = "Cannot find note.";
-                MessageBox.Show(cannotfindnote);
                 Log.Write(LogType.error, cannotfindnote);
+                MessageBox.Show(cannotfindnote);
             }
 
             this.notes.EditNewNote(this.NoteID);
@@ -891,8 +891,8 @@ namespace NoteFly
             else
             {
                 string emptynote = "Note is empty.";
-                MessageBox.Show(emptynote);
                 Log.Write(LogType.error, emptynote);
+                MessageBox.Show(emptynote);
             }
         }
 
@@ -912,8 +912,8 @@ namespace NoteFly
             if (String.IsNullOrEmpty(twitteruser))
             {
                 string notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
-                MessageBox.Show(notwusername);
                 Log.Write(LogType.error, notwusername);
+                MessageBox.Show(notwusername);
                 FrmSettings settings = new FrmSettings(this.notes);
                 settings.Show();
                 return;
@@ -956,8 +956,8 @@ namespace NoteFly
                 else
                 {
                     string sendtwfail = "Sending note to twitter failed.";
-                    MessageBox.Show(sendtwfail);
                     Log.Write(LogType.error, sendtwfail);
+                    MessageBox.Show(sendtwfail);
                 }
             }
         }

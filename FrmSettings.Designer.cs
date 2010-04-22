@@ -65,7 +65,7 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxSyntaxHighlightHTML;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chxSaveFBSession;
-        private IPTextBox ipTextBox1;
+        private IPTextBox iptbProxyAddress;
         private System.Windows.Forms.Label lbTextTwMs;
         private System.Windows.Forms.Label lbTextTwTimeout;
         private System.Windows.Forms.NumericUpDown numTimeout;
@@ -141,7 +141,9 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lbTextTwTimeout = new System.Windows.Forms.Label();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.chxConfirmDeleteNote = new System.Windows.Forms.CheckBox();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
             this.cbxDefaultEmailToBlank = new System.Windows.Forms.CheckBox();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
@@ -149,8 +151,6 @@ namespace NoteFly
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.ipTextBox1 = new NoteFly.IPTextBox();
-            this.chxConfirmDeleteNote = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -466,7 +466,7 @@ namespace NoteFly
             // 
             // lbTextDirection
             // 
-            this.lbTextDirection.AccessibleDescription = string.Empty;
+            this.lbTextDirection.AccessibleDescription = "";
             this.lbTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lbTextDirection.AutoSize = true;
             this.lbTextDirection.Location = new System.Drawing.Point(18, 165);
@@ -626,7 +626,7 @@ namespace NoteFly
             this.tabNetwerk.Controls.Add(this.numTimeout);
             this.tabNetwerk.Controls.Add(this.lbTextTwTimeout);
             this.tabNetwerk.Controls.Add(this.chxConfirmLink);
-            this.tabNetwerk.Controls.Add(this.ipTextBox1);
+            this.tabNetwerk.Controls.Add(this.iptbProxyAddress);
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
             this.tabNetwerk.Name = "tabNetwerk";
             this.tabNetwerk.Padding = new System.Windows.Forms.Padding(3);
@@ -705,6 +705,16 @@ namespace NoteFly
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.Location = new System.Drawing.Point(24, 58);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.chxConfirmDeleteNote);
@@ -720,6 +730,18 @@ namespace NoteFly
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
+            // 
+            // chxConfirmDeleteNote
+            // 
+            this.chxConfirmDeleteNote.AutoSize = true;
+            this.chxConfirmDeleteNote.Checked = true;
+            this.chxConfirmDeleteNote.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmDeleteNote.Location = new System.Drawing.Point(14, 88);
+            this.chxConfirmDeleteNote.Name = "chxConfirmDeleteNote";
+            this.chxConfirmDeleteNote.Size = new System.Drawing.Size(125, 17);
+            this.chxConfirmDeleteNote.TabIndex = 23;
+            this.chxConfirmDeleteNote.Text = "Confirm deleting note";
+            this.chxConfirmDeleteNote.UseVisualStyleBackColor = true;
             // 
             // chxLogDebug
             // 
@@ -785,28 +807,6 @@ namespace NoteFly
             this.lbTextDefaultEmail.Size = new System.Drawing.Size(162, 13);
             this.lbTextDefaultEmail.TabIndex = 17;
             this.lbTextDefaultEmail.Text = "default email address to send to: ";
-            // 
-            // ipTextBox1
-            // 
-            this.ipTextBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ipTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ipTextBox1.Enabled = false;
-            this.ipTextBox1.Location = new System.Drawing.Point(24, 58);
-            this.ipTextBox1.Name = "ipTextBox1";
-            this.ipTextBox1.Size = new System.Drawing.Size(228, 20);
-            this.ipTextBox1.TabIndex = 19;
-            // 
-            // chxConfirmDeleteNote
-            // 
-            this.chxConfirmDeleteNote.AutoSize = true;
-            this.chxConfirmDeleteNote.Checked = true;
-            this.chxConfirmDeleteNote.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmDeleteNote.Location = new System.Drawing.Point(14, 88);
-            this.chxConfirmDeleteNote.Name = "chxConfirmDeleteNote";
-            this.chxConfirmDeleteNote.Size = new System.Drawing.Size(125, 17);
-            this.chxConfirmDeleteNote.TabIndex = 23;
-            this.chxConfirmDeleteNote.Text = "Confirm deleting note";
-            this.chxConfirmDeleteNote.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 

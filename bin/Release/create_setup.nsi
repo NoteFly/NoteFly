@@ -57,7 +57,7 @@ Function .onInit
    
   Call GetDotNETVersion
   Pop $0
-  ${If} $0 == "not found"
+  ${If} $0 == ".NET not found"
     MessageBox MB_OK|MB_ICONSTOP ".NET framework 2.0 is not installed.\r\nPlease get .NET framework 2.0 from:\r\n http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5 "
     Abort
   ${EndIf}
@@ -131,7 +131,6 @@ Section "main executable (required)"
   !insertmacro BadPathsCheck
   SetOutPath $INSTDIR  ;Set output path to the installation directory.   
   File "${APPFILE}"
-  ;File "NoteFly.pdb"  ;debuggingsymbols. optional adds ~165kb
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"   
   ; Write the uninstall keys for Windows
@@ -171,7 +170,6 @@ Section "Uninstall"
   ; Remove files and uninstaller
   Delete $INSTDIR\NoteFly.exe
   Delete $INSTDIR\uninstall.exe
-  ;Delete $INSTDIR\NoteFly.pdb ;enable if debugging symbols incl.
            
   RMDir "$INSTDIR"
 
