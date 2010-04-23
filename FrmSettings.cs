@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="FrmSettings.cs" company="GNU">
 // 
 // This program is free software; you can redistribute it and/or modify it
@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -72,7 +72,9 @@ namespace NoteFly
             this.tbDefaultEmail.Text = this.GetDefaultEmail();
 
             this.cbxTextDirection.SelectedIndex = this.GetTextDirection();
+#if windows
             this.chxStartOnBootWindows.Checked = this.GetStatusStartlogin();
+#endif
             this.numTimeout.Value = this.GetTimeout();
 
             if (String.IsNullOrEmpty(this.tbDefaultEmail.Text))
@@ -185,14 +187,18 @@ namespace NoteFly
                 MessageBox.Show(noknowtextdir);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((this.chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) ||
-                (this.chxStartOnBootWindows.CheckState == CheckState.Indeterminate) || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
+            else if ((this.chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) 
+			        #if windows 
+			         || (this.chxStartOnBootWindows.CheckState == CheckState.Indeterminate)
+			         #endif 
+			         || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
             {
                 string notallowcheckstate = "checkstate not allowed.";
                 Log.Write(LogType.error, notallowcheckstate);
                 MessageBox.Show(notallowcheckstate);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
+
             else if (this.tbTwitterUser.Text.Length > 16)
             {
                 string twnametoolong = "Settings Twitter: username is too long.";

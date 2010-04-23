@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="XmlHandler.cs" company="GNU">
 // 
 // This program is free software; you can redistribute it and/or modify it
@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -45,7 +45,16 @@ namespace NoteFly
                 if (File.Exists(filenm) == false)
                 {
                     //write default settings.
-                    WriteSettings(true, 90, 0, 1, true, "Verdana", 10, 0, appdatafolder, "", false, false, true, "", "", true, false, false, "", 10000, false, true);
+                    WriteSettings(true, 90, 0, 1, true,
+#if windows
+					              "Verdana",
+#elif linux
+					              "FreeSans",
+#elif macos
+					              "FreeSans",
+#endif
+					              
+					              10, 0, appdatafolder, "", false, false, true, "", "", true, false, false, "", 10000, false, true);
                 }
             }
         }
@@ -575,7 +584,7 @@ namespace NoteFly
 #if windows
             appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\." + TrayIcon.AssemblyTitle + "\\";
 #elif linux
-            appdatafolder = "~\\.NoteFly\\";
+            appdatafolder = System.Environment.GetEnvironmentVariable("HOME") +"/.NoteFly/";
 #elif macos
             appdatafolder = "???"
 #endif

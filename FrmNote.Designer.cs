@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="FrmNote.Designer.cs" company="GNU">
 // 
 // This program is free software; you can redistribute it and/or modify it
@@ -11,6 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
+#define linux
 namespace NoteFly
 {
     /// <summary>
@@ -436,7 +437,7 @@ namespace NoteFly
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gold;
             this.CancelButton = this.btnCloseNote;
-            this.ClientSize = new System.Drawing.Size(240, 240);
+			this.ClientSize = new System.Drawing.Size(240, 240);
             this.ContextMenuStrip = this.contextMenuStripNoteOptions;
             this.ControlBox = false;
             this.Controls.Add(this.pnlNote);

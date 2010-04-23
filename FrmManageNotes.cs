@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="FrmManageNotes.cs" company="GNU">
 // 
 // This program is free software; you can redistribute it and/or modify it
@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {

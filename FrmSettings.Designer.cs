@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="FrmSettings.Designer.cs" company="GNU">
 // 
 // This program is free software; you can redistribute it and/or modify it
@@ -11,6 +11,8 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
+#define linux
+
 namespace NoteFly
 {
     /// <summary>
@@ -50,7 +52,9 @@ namespace NoteFly
         private System.Windows.Forms.Label lbText;
         private System.Windows.Forms.Button btnCrash;
         private System.Windows.Forms.TabPage tabGeneral;
+#if windows
         private System.Windows.Forms.CheckBox chxStartOnBootWindows;
+#endif
         private System.Windows.Forms.CheckBox chxConfirmLink;
         private System.Windows.Forms.CheckBox chxConfirmExit;
         private System.Windows.Forms.CheckBox chxLogErrors;
@@ -116,7 +120,9 @@ namespace NoteFly
             this.btnResetSettings = new System.Windows.Forms.Button();
             this.cbxActionLeftClick = new System.Windows.Forms.ComboBox();
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
+#if windows
             this.chxStartOnBootWindows = new System.Windows.Forms.CheckBox();
+#endif
             this.lbText = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
@@ -347,7 +353,9 @@ namespace NoteFly
             this.tabGeneral.Controls.Add(this.btnResetSettings);
             this.tabGeneral.Controls.Add(this.cbxActionLeftClick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
+#if windows
             this.tabGeneral.Controls.Add(this.chxStartOnBootWindows);
+#endif
             this.tabGeneral.Controls.Add(this.lbText);
             this.tabGeneral.Controls.Add(this.btnBrowse);
             this.tabGeneral.Controls.Add(this.tbNotesSavePath);
@@ -394,6 +402,7 @@ namespace NoteFly
             this.chxConfirmExit.TabIndex = 20;
             this.chxConfirmExit.Text = "Confirm shutdown application.";
             this.chxConfirmExit.UseVisualStyleBackColor = true;
+#if windows
             // 
             // chxStartOnBootWindows
             // 
@@ -404,6 +413,7 @@ namespace NoteFly
             this.chxStartOnBootWindows.TabIndex = 10;
             this.chxStartOnBootWindows.Text = "Start automatically on logon.";
             this.chxStartOnBootWindows.UseVisualStyleBackColor = true;
+#endif
             // 
             // lbText
             // 
