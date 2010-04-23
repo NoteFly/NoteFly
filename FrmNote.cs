@@ -872,7 +872,7 @@ namespace NoteFly
                 return;
             }
 
-            if ((String.IsNullOrEmpty(this.note) == false) && (this.note.Length < 140))
+            if ((String.IsNullOrEmpty(this.note) == false) && (this.note.Length <= 140))
             {
                 this.Tweetnote();
                 Log.Write(LogType.info, "Note send to twitter.");
