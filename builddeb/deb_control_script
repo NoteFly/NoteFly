@@ -8,7 +8,14 @@ Essential: no
 Maintainer: d9ping <tomheefteenwebsite@hotmail.com>
 Bugs: http://www.notefly.tk/mantis/
 Depends: mono-runtime,libmono-system2.0-cil,libmono-winforms2.0-cil,libmono2.0-cil,libmono-security2.0-cil,ttf-freefont
-Breaks: 
 Description: A small advance note application.
-
+ -Change color of notes.
+ -Make a note sticky on top.
+ -Make notes transparent.
+ -Create an e-mail of a note.
+ -Send a note to your Facebook wall.
+ -Tweet a note to your twitter account.
+ -Resize notes how big or small you want it.
+ -Syntax highlighting for html content notes.
+ -Fully xml based.
 
