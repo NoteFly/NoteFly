@@ -22,7 +22,7 @@ CRCCheck on
 InstProgressFlags smooth
 ShowInstDetails show
 SetDatablockOptimize on
-Icon ".\..\..\Resources\installer_logo.ico"
+Icon ".\..\..\Resources\icon_small.ico"
 BrandingText " "
 CompletedText "Installation completed. Please close this installer now."
 
