@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -595,13 +595,16 @@ namespace NoteFly
             if (this.notes.TextDirection == 0)
             {
                 this.lblTitle.TextAlign = ContentAlignment.TopLeft;
+                this.rtbNote.SelectAll(); //fix bug: #0000012
                 this.rtbNote.SelectionAlignment = HorizontalAlignment.Left;
+                this.rtbNote.RightToLeft = RightToLeft.No;
             }
             else if (this.notes.TextDirection == 1)
             {
                 this.lblTitle.TextAlign = ContentAlignment.TopRight;
                 this.rtbNote.SelectAll();
                 this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
+                this.rtbNote.RightToLeft = RightToLeft.Yes;
             }
 
             this.rtbNote.Font = this.skin.GetFontNoteContent();

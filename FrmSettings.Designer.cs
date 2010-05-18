@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {

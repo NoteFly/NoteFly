@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -131,7 +131,7 @@ namespace NoteFly
                     xmlHandler settings = new xmlHandler(true);
                     if (settings.getXMLnodeAsBool("confirmdelete"))
                     {
-                        DialogResult deleteres = MessageBox.Show("Are you sure you want to delete note (ID:" + noteid + ") ?", "delete note?", MessageBoxButtons.YesNo);
+                        DialogResult deleteres = MessageBox.Show("Are you sure you want to delete note (ID:" + curnote + ") ?", "delete note?", MessageBoxButtons.YesNo);
                         if (deleteres == DialogResult.No)
                         {
                             return;
@@ -187,25 +187,25 @@ namespace NoteFly
         private void cbxNoteVisible_Click(object sender, EventArgs e)
         {
             CheckBox cbx = (CheckBox)sender;
-            int n = Convert.ToInt32(cbx.Name) - 1;
-            if ((n <= this.notes.NumNotes) && (n >= 0))
+            int noteid = Convert.ToInt32(cbx.Name);
+            if ((noteid <= this.notes.NumNotes) && (noteid >= 0))
             {
-                if (this.notes.GetNotes[n].Visible == true)
+                if (this.notes.GetNotes[noteid].Visible == true)
                 {
-                    this.notes.GetNotes[n].Hide();
-                    this.notes.GetNotes[n].Visible = false;
+                    this.notes.GetNotes[noteid].Hide();
+                    this.notes.GetNotes[noteid].Visible = false;
                 }
                 else
                 {
-                    this.notes.GetNotes[n].Show();
-                    this.notes.GetNotes[n].Visible = true;
+                    this.notes.GetNotes[noteid].Show();
+                    this.notes.GetNotes[noteid].Visible = true;
                 }
 
-                this.notes.GetNotes[n].UpdateThisNote();
+                this.notes.GetNotes[noteid].UpdateThisNote();
             }
             else
             {
-                throw new CustomException("note not found.");
+                throw new CustomException("Note not found. Looking for noteid:" + noteid);
             }
         }
 
@@ -236,7 +236,7 @@ namespace NoteFly
                 lblNoteTitle.Anchor = (AnchorStyles.Left | AnchorStyles.Top);
 
                 cbxNoteVisible.Text = "visible";
-                cbxNoteVisible.Name = Convert.ToString(curnote + 1);
+                cbxNoteVisible.Name = Convert.ToString(curnote);
 
                 if (this.notes.GetNotes[curnote].Visible == true)
                 {

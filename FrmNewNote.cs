@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -60,6 +60,7 @@ namespace NoteFly
             {
                 this.Text = "edit note";
             }
+            this.BringToFront(); //default is this, but this forces it. bug: #0000014
         }
 
         /// <summary>
@@ -78,6 +79,7 @@ namespace NoteFly
             this.tbTitle.Text = DateTime.Now.ToString();
             this.rtbNote.Focus();
             this.rtbNote.Select();
+            this.BringToFront();
         }
 
         #endregion Constructors

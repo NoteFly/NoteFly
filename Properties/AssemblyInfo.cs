@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NoteFly")]
-[assembly: AssemblyDescription("a note application with varouis extra feaures.")]
+[assembly: AssemblyDescription("an small advance note application")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NoteFly")]
