@@ -181,11 +181,11 @@ namespace NoteFly
         {
             if (Clipboard.ContainsText())
             {
-                this.pastTextToolStripMenuItem.Enabled = true;
+                this.menuPasteToContent.Enabled = true;
             }
             else
             {
-                this.pastTextToolStripMenuItem.Enabled = false;
+                this.menuPasteToContent.Enabled = false;
             }
         }
 
@@ -499,6 +499,16 @@ namespace NoteFly
         private void pnlHeadNewNote_MouseUp(object sender, MouseEventArgs e)
         {
             this.moving = false;
+        }
+        
+        /// <summary>
+        /// Set this note ontop, CheckOnClick is set to true.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuStickyOnTop_Click(object sender, EventArgs e)
+        {
+            this.TopMost = this.menuStickyOnTop.Checked;
         }
 
         #endregion

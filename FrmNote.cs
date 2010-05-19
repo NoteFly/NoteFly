@@ -565,7 +565,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Make a note on top.
+        /// Make a note on top (and save note) CheckOnClick is set to true.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments</param>

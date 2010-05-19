@@ -156,7 +156,7 @@ namespace NoteFly
             this.menuLockNote,
             this.menuHideNote});
             this.contextMenuStripNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(216, 202);
+            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(216, 224);
             this.contextMenuStripNoteOptions.Text = "-=menu=-";
             this.contextMenuStripNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
             // 
@@ -323,9 +323,9 @@ namespace NoteFly
             // 
             this.menuOnTop.CheckOnClick = true;
             this.menuOnTop.Name = "menuOnTop";
-            this.menuOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.menuOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
             this.menuOnTop.Size = new System.Drawing.Size(215, 22);
-            this.menuOnTop.Text = "Sticky &on top";
+            this.menuOnTop.Text = "Sticky on &top";
             this.menuOnTop.Click += new System.EventHandler(this.OnTopToolStripMenuItem_Click);
             // 
             // menuRollUp
@@ -438,7 +438,7 @@ namespace NoteFly
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gold;
             this.CancelButton = this.btnCloseNote;
-			this.ClientSize = new System.Drawing.Size(240, 240);
+            this.ClientSize = new System.Drawing.Size(240, 240);
             this.ContextMenuStrip = this.contextMenuStripNoteOptions;
             this.ControlBox = false;
             this.Controls.Add(this.pnlNote);

@@ -27,10 +27,10 @@ namespace NoteFly
         private System.Windows.Forms.RichTextBox rtbNote;
         private System.Windows.Forms.PictureBox pbResizeGrip;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTextActions;
-        private System.Windows.Forms.ToolStripMenuItem pastTextToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyTextToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveNewNoteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cancelNoteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuPasteToContent;
+        private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
+        private System.Windows.Forms.ToolStripMenuItem menuSaveNewNote;
+        private System.Windows.Forms.ToolStripMenuItem menuCancelNewNote;
         private System.Windows.Forms.ToolTip toolTip;
 
         /// <summary>
@@ -64,10 +64,10 @@ namespace NoteFly
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNewNote));
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.saveNewNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cancelNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pastTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSaveNewNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCancelNewNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPasteToContent = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.lbTextTitle = new System.Windows.Forms.Label();
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
@@ -76,6 +76,7 @@ namespace NoteFly
             this.pnlNoteEdit = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.menuStickyOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.pnlNoteEdit.SuspendLayout();
@@ -109,49 +110,50 @@ namespace NoteFly
             // contextMenuStripTextActions
             // 
             this.contextMenuStripTextActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveNewNoteToolStripMenuItem,
-            this.cancelNoteToolStripMenuItem,
-            this.pastTextToolStripMenuItem,
-            this.copyTextToolStripMenuItem});
+            this.menuSaveNewNote,
+            this.menuStickyOnTop,
+            this.menuPasteToContent,
+            this.menuCopyContent,
+            this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 92);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 136);
             // 
-            // saveNewNoteToolStripMenuItem
+            // menuSaveNewNote
             // 
-            this.saveNewNoteToolStripMenuItem.Image = global::NoteFly.Properties.Resources.accept;
-            this.saveNewNoteToolStripMenuItem.Name = "saveNewNoteToolStripMenuItem";
-            this.saveNewNoteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveNewNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.saveNewNoteToolStripMenuItem.Text = "Save note";
-            this.saveNewNoteToolStripMenuItem.Click += new System.EventHandler(this.btnAddNote_Click);
+            this.menuSaveNewNote.Image = global::NoteFly.Properties.Resources.accept;
+            this.menuSaveNewNote.Name = "menuSaveNewNote";
+            this.menuSaveNewNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.menuSaveNewNote.Size = new System.Drawing.Size(288, 22);
+            this.menuSaveNewNote.Text = "&Save note";
+            this.menuSaveNewNote.Click += new System.EventHandler(this.btnAddNote_Click);
             // 
-            // cancelNoteToolStripMenuItem
+            // menuCancelNewNote
             // 
-            this.cancelNoteToolStripMenuItem.Image = global::NoteFly.Properties.Resources.cancel;
-            this.cancelNoteToolStripMenuItem.Name = "cancelNoteToolStripMenuItem";
-            this.cancelNoteToolStripMenuItem.ShortcutKeyDisplayString = "Escape";
-            this.cancelNoteToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.cancelNoteToolStripMenuItem.Text = "Cancel note";
-            this.cancelNoteToolStripMenuItem.Click += new System.EventHandler(this.btnCancel_Click);
+            this.menuCancelNewNote.Image = global::NoteFly.Properties.Resources.cancel;
+            this.menuCancelNewNote.Name = "menuCancelNewNote";
+            this.menuCancelNewNote.ShortcutKeyDisplayString = "Escape";
+            this.menuCancelNewNote.Size = new System.Drawing.Size(288, 22);
+            this.menuCancelNewNote.Text = "Canc&el note";
+            this.menuCancelNewNote.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // pastTextToolStripMenuItem
+            // menuPasteToContent
             // 
-            this.pastTextToolStripMenuItem.Name = "pastTextToolStripMenuItem";
-            this.pastTextToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.menuPasteToContent.Name = "menuPasteToContent";
+            this.menuPasteToContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
                         | System.Windows.Forms.Keys.P)));
-            this.pastTextToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.pastTextToolStripMenuItem.Text = "Past to note content";
-            this.pastTextToolStripMenuItem.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
+            this.menuPasteToContent.Size = new System.Drawing.Size(288, 22);
+            this.menuPasteToContent.Text = "&Paste to note content";
+            this.menuPasteToContent.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
             // 
-            // copyTextToolStripMenuItem
+            // menuCopyContent
             // 
-            this.copyTextToolStripMenuItem.Name = "copyTextToolStripMenuItem";
-            this.copyTextToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.menuCopyContent.Name = "menuCopyContent";
+            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
                         | System.Windows.Forms.Keys.C)));
-            this.copyTextToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.copyTextToolStripMenuItem.Text = "Copy current note content";
-            this.copyTextToolStripMenuItem.DropDownOpening += new System.EventHandler(this.copyTextToolStripMenuItem_DropDownOpening);
-            this.copyTextToolStripMenuItem.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
+            this.menuCopyContent.Size = new System.Drawing.Size(288, 22);
+            this.menuCopyContent.Text = "&Copy current note content";
+            this.menuCopyContent.DropDownOpening += new System.EventHandler(this.copyTextToolStripMenuItem_DropDownOpening);
+            this.menuCopyContent.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
             // 
             // tbTitle
             // 
@@ -282,6 +284,15 @@ namespace NoteFly
             this.toolTip.InitialDelay = 800;
             this.toolTip.ReshowDelay = 100;
             // 
+            // menuStickyOnTop
+            // 
+            this.menuStickyOnTop.CheckOnClick = true;
+            this.menuStickyOnTop.Name = "menuStickyOnTop";
+            this.menuStickyOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.menuStickyOnTop.Size = new System.Drawing.Size(288, 22);
+            this.menuStickyOnTop.Text = "Sticky on &top";
+            this.menuStickyOnTop.Click += new System.EventHandler(this.menuStickyOnTop_Click);
+            // 
             // FrmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
@@ -317,6 +328,9 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.ToolStripMenuItem menuStickyOnTop;
+
     }
 }
 
