@@ -417,30 +417,23 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// E-mail note is selected.
+        /// E-mail an note. Start default mail client with subject and content, if possible.
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
         private void emailToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string emailnote;
-
-#if windows
-            emailnote = this.note.Replace("\r\n", "%0D%0A");
-#elif macos
-            emailnote = note.Replace("\r", "%0D%0A");
-#elif linux                        
-            emailnote = this.note.Replace("\n", "%0D%0A");
-#endif
+            string emailnote = System.Web.HttpUtility.UrlEncode(this.note).Replace("+", " ");
+            string emailtitle = System.Web.HttpUtility.UrlEncode(this.title);
+            
             xmlHandler xmlsettings = new xmlHandler(true);
-
             string defaultemail = xmlsettings.getXMLnode("defaultemail");
 
-            if (!String.IsNullOrEmpty(this.title) && (!String.IsNullOrEmpty(emailnote))) //bugfix #0000008
+            if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote))) //bugfix #0000008
             {
                 System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + this.title + "&body=" + emailnote);
             }
-            else if (!String.IsNullOrEmpty(this.title))
+            else if (!String.IsNullOrEmpty(emailtitle))
             {
                 System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + this.title);
             }
