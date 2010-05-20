@@ -445,8 +445,25 @@ namespace NoteFly
 
                 int dpx = e.Location.X - oldp.X;
                 int dpy = e.Location.Y - oldp.Y;
+#if linux
+                if (dpx > 8)
+                {
+                    dpx = 8;
+                } 
+                else if (dpx < -8)
+                {
+                    dpx = -8;
+                }
+                if (dpy > 8)
+                {
+                    dpy = 8;
+                }
+                else if (dpy < -8)
+                {
+                    dpy = -8;
+                }
+#endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
-
                 /*
                 if (oldp.X < e.Location.X)
                 {
