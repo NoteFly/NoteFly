@@ -190,7 +190,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
-    <Content Include="Resources\logo.png" />
+    <Content Include="Resources\icon_big.ico" />
+    <Content Include="Resources\icon_big.png" />
+    <Content Include="Resources\icon_small.ico" />
+    <Content Include="Resources\icon_small.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -32,7 +32,7 @@ namespace NoteFly
         private Notes notes;
         private Skin skin;
         private TextHighlight highlight;
-        private Point dp;
+        private Point oldp;
         #endregion Fields
 
         #region Constructors (2)
@@ -261,7 +261,7 @@ namespace NoteFly
             if (e.Button == MouseButtons.Left)
             {
                 this.moving = true;
-                this.dp = e.Location;
+                this.oldp = e.Location;
                 if (this.skin != null)
                 {
                     this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(true);
@@ -443,13 +443,18 @@ namespace NoteFly
                     this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(true);
                 }
 
-                if (dp.X < e.Location.X)
+                int dpx = e.Location.X - oldp.X;
+                int dpy = e.Location.Y - oldp.Y;
+                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
+
+                /*
+                if (oldp.X < e.Location.X)
                 {
-                    if (dp.Y < e.Location.Y)
+                    if (oldp.Y < e.Location.Y)
                     {
                         this.Location = new Point(this.Location.X + 1, this.Location.Y + 1);
                     }
-                    else if (dp.Y > e.Location.Y)
+                    else if (oldp.Y > e.Location.Y)
                     {
                         this.Location = new Point(this.Location.X + 1, this.Location.Y - 1);
                     }
@@ -458,13 +463,13 @@ namespace NoteFly
                         this.Location = new Point(this.Location.X + 1, this.Location.Y);
                     }
                 }
-                else if (dp.X > e.Location.X)
+                else if (oldp.X > e.Location.X)
                 {
-                    if (dp.Y < e.Location.Y)
+                    if (oldp.Y < e.Location.Y)
                     {
                         this.Location = new Point(this.Location.X - 1, this.Location.Y + 1);
                     }
-                    else if (dp.Y > e.Location.Y)
+                    else if (oldp.Y > e.Location.Y)
                     {
                         this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
                     }
@@ -475,15 +480,16 @@ namespace NoteFly
                 }
                 else
                 {
-                    if (dp.Y < e.Location.Y)
+                    if (oldp.Y < e.Location.Y)
                     {
                         this.Location = new Point(this.Location.X, this.Location.Y + 1);
                     }
-                    else if (dp.Y > e.Location.Y)
+                    else if (oldp.Y > e.Location.Y)
                     {
                         this.Location = new Point(this.Location.X, this.Location.Y - 1);
                     }
                 }
+                 */
             }
             else if (this.skin != null)
             {

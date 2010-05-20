@@ -41,7 +41,7 @@ namespace NoteFly
         private int locX, locY;
         private ushort noteWidth, noteHeight;
         private PictureBox pbShowLock;
-        private Point dp;
+        private Point oldp;
         #endregion Fields
 
         #region Constructors (2)
@@ -645,7 +645,7 @@ namespace NoteFly
             if (e.Button == MouseButtons.Left)
             {
                 this.moving = true;
-                this.dp = e.Location;
+                this.oldp = e.Location;
 
                 if (this.skin != null)
                 {
@@ -1013,47 +1013,9 @@ namespace NoteFly
                     this.pnlHead.BackColor = this.skin.GetObjColor(true);
                 }
 
-                if (dp.X < e.Location.X)
-                {
-                    if (dp.Y < e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X + 1, this.Location.Y + 1);
-                    }
-                    else if (dp.Y > e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X + 1, this.Location.Y - 1);
-                    }
-                    else
-                    {
-                        this.Location = new Point(this.Location.X + 1, this.Location.Y);
-                    }
-                }
-                else if (dp.X > e.Location.X)
-                {
-                    if (dp.Y < e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X - 1, this.Location.Y + 1);
-                    }
-                    else if (dp.Y > e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
-                    }
-                    else
-                    {
-                        this.Location = new Point(this.Location.X - 1, this.Location.Y);
-                    }
-                }
-                else
-                {
-                    if (dp.Y < e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X, this.Location.Y + 1);
-                    }
-                    else if (dp.Y > e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X, this.Location.Y - 1);
-                    }
-                }
+                int dpx = e.Location.X - oldp.X;
+                int dpy = e.Location.Y - oldp.Y;
+                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
             }
             else if (this.skin != null)
             {
