@@ -34,15 +34,15 @@
 	</Company_Info>
 	<Program_Info>
 		<Program_Name>NoteFly</Program_Name>
-		<Program_Version>1.0.0</Program_Version>
-		<Program_Release_Month>04</Program_Release_Month>
-		<Program_Release_Day>22</Program_Release_Day>
+		<Program_Version>1.0.1</Program_Version>
+		<Program_Release_Month>05</Program_Release_Month>
+		<Program_Release_Day>21</Program_Release_Day>
 		<Program_Release_Year>2010</Program_Release_Year>
 		<Program_Cost_Dollars>0</Program_Cost_Dollars>
 		<Program_Cost_Other_Code />
 		<Program_Cost_Other />
 		<Program_Type>Freeware</Program_Type>
-		<Program_Release_Status>Major Update</Program_Release_Status>
+		<Program_Release_Status>Minor Update</Program_Release_Status>
 		<Program_Install_Support>Install and Uninstall</Program_Install_Support>
 		<Program_OS_Support>Win2000,Win7 x32,Win7 x64,WinServer,WinVista,WinVista x64,WinXP</Program_OS_Support>
 		<Program_Language>English</Program_Language>
@@ -104,13 +104,7 @@ features:
 		</Download_URLs>
 	</Web_Info>
 	<Permissions>
-		<Distribution_Permissions>If the distribution and/or use of the Program is restricted in
-certain countries either by patents or by copyrighted interfaces, the
-original copyright holder who places the Program under this License
-may add an explicit geographical distribution limitation excluding
-those countries, so that distribution is permitted only in or among
-countries not thus excluded.  In such case, this License incorporates
-the limitation as if written in the body of this License.</Distribution_Permissions>
+		<Distribution_Permissions />
 		<EULA>                    GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991
 
