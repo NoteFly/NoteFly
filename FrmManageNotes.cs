@@ -199,6 +199,7 @@ namespace NoteFly
                 {
                     this.notes.GetNotes[noteid].Show();
                     this.notes.GetNotes[noteid].Visible = true;
+                    this.notes.GetNotes[noteid].CheckThings();
                 }
 
                 this.notes.GetNotes[noteid].UpdateThisNote();

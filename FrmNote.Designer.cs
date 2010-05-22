@@ -26,7 +26,7 @@ namespace NoteFly
         private System.Windows.Forms.Button btnCloseNote;
         private System.Windows.Forms.RichTextBox rtbNote;
         private System.Windows.Forms.Panel pnlNote;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripNoteOptions;
+        private System.Windows.Forms.ContextMenuStrip menuFrmNoteOptions;
         private System.Windows.Forms.ToolStripMenuItem menuEditNote;
         private System.Windows.Forms.ToolStripMenuItem menuCopyText;
         private System.Windows.Forms.ToolStripMenuItem menuNoteColors;
@@ -44,10 +44,10 @@ namespace NoteFly
         private System.ComponentModel.BackgroundWorker SavePos;
         private System.Windows.Forms.ToolStripMenuItem menuHideNote;
         private System.Windows.Forms.ToolStripMenuItem menuSendTo;
-        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToFacebook;
-        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToTwitter;
-        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToEmail;
-        private System.Windows.Forms.ToolStripMenuItem tsmenuSendToTextfile;
+        private System.Windows.Forms.ToolStripMenuItem menuSendToFacebook;
+        private System.Windows.Forms.ToolStripMenuItem menuSendToTwitter;
+        private System.Windows.Forms.ToolStripMenuItem menuSendToEmail;
+        private System.Windows.Forms.ToolStripMenuItem menuSendToTextfile;
         private System.Windows.Forms.ToolStripMenuItem menuRollUp;
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace NoteFly
             this.components = new System.ComponentModel.Container();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlHead = new System.Windows.Forms.Panel();
-            this.contextMenuStripNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuFrmNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuEditNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNoteColors = new System.Windows.Forms.ToolStripMenuItem();
             this.yellowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,10 +91,10 @@ namespace NoteFly
             this.purpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendTo = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmenuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmenuSendToTwitter = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmenuSendToFacebook = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmenuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSendToTwitter = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSendToFacebook = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyText = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,7 +107,7 @@ namespace NoteFly
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.SavePos = new System.ComponentModel.BackgroundWorker();
             this.pnlHead.SuspendLayout();
-            this.contextMenuStripNoteOptions.SuspendLayout();
+            this.menuFrmNoteOptions.SuspendLayout();
             this.pnlNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             this.SuspendLayout();
@@ -132,7 +132,7 @@ namespace NoteFly
             // 
             this.pnlHead.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHead.ContextMenuStrip = this.contextMenuStripNoteOptions;
+            this.pnlHead.ContextMenuStrip = this.menuFrmNoteOptions;
             this.pnlHead.Controls.Add(this.btnCloseNote);
             this.pnlHead.Controls.Add(this.lblTitle);
             this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
@@ -143,9 +143,9 @@ namespace NoteFly
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
-            // contextMenuStripNoteOptions
+            // menuFrmNoteOptions
             // 
-            this.contextMenuStripNoteOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuFrmNoteOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuEditNote,
             this.menuNoteColors,
             this.menuSendTo,
@@ -155,10 +155,10 @@ namespace NoteFly
             this.menuRollUp,
             this.menuLockNote,
             this.menuHideNote});
-            this.contextMenuStripNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.contextMenuStripNoteOptions.Size = new System.Drawing.Size(216, 224);
-            this.contextMenuStripNoteOptions.Text = "-=menu=-";
-            this.contextMenuStripNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
+            this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 224);
+            this.menuFrmNoteOptions.Text = "-=menu=-";
+            this.menuFrmNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
             // 
             // menuEditNote
             // 
@@ -197,7 +197,7 @@ namespace NoteFly
             this.yellowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
                         | System.Windows.Forms.Keys.D1)));
             this.yellowToolStripMenuItem.ShowShortcutKeys = false;
-            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.yellowToolStripMenuItem.Text = "Yellow";
             this.yellowToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -207,7 +207,7 @@ namespace NoteFly
             this.orangeToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.orangeToolStripMenuItem.Name = "orangeToolStripMenuItem";
             this.orangeToolStripMenuItem.ShowShortcutKeys = false;
-            this.orangeToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.orangeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.orangeToolStripMenuItem.Text = "Orange";
             this.orangeToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -217,7 +217,7 @@ namespace NoteFly
             this.whiteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.whiteToolStripMenuItem.Name = "whiteToolStripMenuItem";
             this.whiteToolStripMenuItem.ShowShortcutKeys = false;
-            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.whiteToolStripMenuItem.Text = "White";
             this.whiteToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -227,7 +227,7 @@ namespace NoteFly
             this.greenToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.greenToolStripMenuItem.Name = "greenToolStripMenuItem";
             this.greenToolStripMenuItem.ShowShortcutKeys = false;
-            this.greenToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.greenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.greenToolStripMenuItem.Text = "Green";
             this.greenToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -237,7 +237,7 @@ namespace NoteFly
             this.blueToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.blueToolStripMenuItem.Name = "blueToolStripMenuItem";
             this.blueToolStripMenuItem.ShowShortcutKeys = false;
-            this.blueToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.blueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.blueToolStripMenuItem.Text = "Blue";
             this.blueToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -246,7 +246,7 @@ namespace NoteFly
             this.purpleToolStripMenuItem.BackColor = System.Drawing.Color.Fuchsia;
             this.purpleToolStripMenuItem.Name = "purpleToolStripMenuItem";
             this.purpleToolStripMenuItem.ShowShortcutKeys = false;
-            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.purpleToolStripMenuItem.Text = "Purple";
             this.purpleToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -254,52 +254,52 @@ namespace NoteFly
             // 
             this.redToolStripMenuItem.BackColor = System.Drawing.Color.Red;
             this.redToolStripMenuItem.Name = "redToolStripMenuItem";
-            this.redToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.redToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.redToolStripMenuItem.Text = "Red";
             this.redToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
             // menuSendTo
             // 
             this.menuSendTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmenuSendToEmail,
-            this.tsmenuSendToTwitter,
-            this.tsmenuSendToFacebook,
-            this.tsmenuSendToTextfile});
+            this.menuSendToEmail,
+            this.menuSendToTwitter,
+            this.menuSendToFacebook,
+            this.menuSendToTextfile});
             this.menuSendTo.Name = "menuSendTo";
             this.menuSendTo.Size = new System.Drawing.Size(215, 22);
             this.menuSendTo.Text = "&Send to";
             // 
-            // tsmenuSendToEmail
+            // menuSendToEmail
             // 
-            this.tsmenuSendToEmail.Name = "tsmenuSendToEmail";
-            this.tsmenuSendToEmail.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.tsmenuSendToEmail.Size = new System.Drawing.Size(166, 22);
-            this.tsmenuSendToEmail.Text = "E-&mail";
-            this.tsmenuSendToEmail.Click += new System.EventHandler(this.emailToolStripMenuItem_Click);
+            this.menuSendToEmail.Name = "menuSendToEmail";
+            this.menuSendToEmail.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.menuSendToEmail.Size = new System.Drawing.Size(166, 22);
+            this.menuSendToEmail.Text = "E-&mail";
+            this.menuSendToEmail.Click += new System.EventHandler(this.emailToolStripMenuItem_Click);
             // 
-            // tsmenuSendToTwitter
+            // menuSendToTwitter
             // 
-            this.tsmenuSendToTwitter.Name = "tsmenuSendToTwitter";
-            this.tsmenuSendToTwitter.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.tsmenuSendToTwitter.Size = new System.Drawing.Size(166, 22);
-            this.tsmenuSendToTwitter.Text = "&Twitter";
-            this.tsmenuSendToTwitter.Click += new System.EventHandler(this.tsmenuSendToTwitter_Click);
+            this.menuSendToTwitter.Name = "menuSendToTwitter";
+            this.menuSendToTwitter.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.menuSendToTwitter.Size = new System.Drawing.Size(166, 22);
+            this.menuSendToTwitter.Text = "&Twitter";
+            this.menuSendToTwitter.Click += new System.EventHandler(this.tsmenuSendToTwitter_Click);
             // 
-            // tsmenuSendToFacebook
+            // menuSendToFacebook
             // 
-            this.tsmenuSendToFacebook.Name = "tsmenuSendToFacebook";
-            this.tsmenuSendToFacebook.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.tsmenuSendToFacebook.Size = new System.Drawing.Size(166, 22);
-            this.tsmenuSendToFacebook.Text = "Face&Book";
-            this.tsmenuSendToFacebook.Click += new System.EventHandler(this.tsmenuSendToFacebook_Click);
+            this.menuSendToFacebook.Name = "menuSendToFacebook";
+            this.menuSendToFacebook.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+            this.menuSendToFacebook.Size = new System.Drawing.Size(166, 22);
+            this.menuSendToFacebook.Text = "Face&Book";
+            this.menuSendToFacebook.Click += new System.EventHandler(this.tsmenuSendToFacebook_Click);
             // 
-            // tsmenuSendToTextfile
+            // menuSendToTextfile
             // 
-            this.tsmenuSendToTextfile.Name = "tsmenuSendToTextfile";
-            this.tsmenuSendToTextfile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.tsmenuSendToTextfile.Size = new System.Drawing.Size(166, 22);
-            this.tsmenuSendToTextfile.Text = "Text&file";
-            this.tsmenuSendToTextfile.Click += new System.EventHandler(this.tsmenuSendToTextfile_Click);
+            this.menuSendToTextfile.Name = "menuSendToTextfile";
+            this.menuSendToTextfile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.menuSendToTextfile.Size = new System.Drawing.Size(166, 22);
+            this.menuSendToTextfile.Text = "Text&file";
+            this.menuSendToTextfile.Click += new System.EventHandler(this.tsmenuSendToTextfile_Click);
             // 
             // menuCopyTitle
             // 
@@ -380,7 +380,7 @@ namespace NoteFly
             this.rtbNote.BackColor = System.Drawing.Color.Gold;
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNote.CausesValidation = false;
-            this.rtbNote.ContextMenuStrip = this.contextMenuStripNoteOptions;
+            this.rtbNote.ContextMenuStrip = this.menuFrmNoteOptions;
             this.rtbNote.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbNote.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNote.ForeColor = System.Drawing.Color.Black;
@@ -405,7 +405,7 @@ namespace NoteFly
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlNote.BackColor = System.Drawing.Color.Gold;
             this.pnlNote.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlNote.ContextMenuStrip = this.contextMenuStripNoteOptions;
+            this.pnlNote.ContextMenuStrip = this.menuFrmNoteOptions;
             this.pnlNote.Controls.Add(this.pbResizeGrip);
             this.pnlNote.Controls.Add(this.rtbNote);
             this.pnlNote.Location = new System.Drawing.Point(0, 31);
@@ -439,7 +439,7 @@ namespace NoteFly
             this.BackColor = System.Drawing.Color.Gold;
             this.CancelButton = this.btnCloseNote;
             this.ClientSize = new System.Drawing.Size(240, 240);
-            this.ContextMenuStrip = this.contextMenuStripNoteOptions;
+            this.ContextMenuStrip = this.menuFrmNoteOptions;
             this.ControlBox = false;
             this.Controls.Add(this.pnlNote);
             this.Controls.Add(this.pnlHead);
@@ -459,7 +459,7 @@ namespace NoteFly
             this.Deactivate += new System.EventHandler(this.frmNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNote_Activated);
             this.pnlHead.ResumeLayout(false);
-            this.contextMenuStripNoteOptions.ResumeLayout(false);
+            this.menuFrmNoteOptions.ResumeLayout(false);
             this.pnlNote.ResumeLayout(false);
             this.pnlNote.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();

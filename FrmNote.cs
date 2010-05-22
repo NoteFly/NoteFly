@@ -219,9 +219,9 @@ namespace NoteFly
         /// </summary>
         public void CheckThings()
         {
-            this.CheckTwitter(this.notes.TwitterEnabled);
-
             this.PaintColorNote();
+
+            this.SetTextMenuTwitter(this.notes.TwitterEnabled);
 
             if (this.notes.HighlightHTML == true)
             {
@@ -349,19 +349,19 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Enabled or disable tsmenuSendToTwitter based on if twitter is enabled.
+        /// Set text tsmenuSendToTwitter based on if twitter is enabled.
         /// </summary>
         /// <param name="twitterenabled">Is twitter enabled.</param>
-        private void CheckTwitter(bool twitterenabled)
+        private void SetTextMenuTwitter(bool twitterenabled)
         {
             const string STWITTER = "twitter";
             if (twitterenabled)
             {
-                this.tsmenuSendToTwitter.Text = STWITTER;
+                this.menuSendToTwitter.Text = STWITTER;
             }
             else
             {
-                this.tsmenuSendToTwitter.Text = STWITTER + " (not setup)";
+                this.menuSendToTwitter.Text = STWITTER + " (not setup)";
             }
         }
 
