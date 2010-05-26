@@ -169,7 +169,14 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(this.rtbNote.Text);
+            if (String.IsNullOrEmpty(rtbNote.Text))
+            {
+                Log.Write(LogType.error, "No content to copy.");
+            }
+            else
+            {
+                Clipboard.SetText(this.rtbNote.Text);
+            }
         }
 
         /// <summary>
@@ -534,6 +541,22 @@ namespace NoteFly
             this.TopMost = this.menuStickyOnTop.Checked;
         }
 
+        /// <summary>
+        /// Avoid that if there is no content the user select to copy the content.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contextMenuStripTextActions_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.rtbNote.TextLength == 0)
+            {
+                this.menuCopyContent.Enabled = false;
+            }
+            else
+            {
+                this.menuCopyContent.Enabled = true;
+            }
+        }
         #endregion
     }
 }

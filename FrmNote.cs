@@ -488,7 +488,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            const string locknotemsg = "lock note";
+            const string locknotemsg = "&Lock note";
             if (this.notelock)
             {
                 this.notelock = false;

@@ -65,9 +65,10 @@ namespace NoteFly
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuSaveNewNote = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCancelNewNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStickyOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPasteToContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCancelNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.lbTextTitle = new System.Windows.Forms.Label();
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
@@ -76,7 +77,6 @@ namespace NoteFly
             this.pnlNoteEdit = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.menuStickyOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.pnlNoteEdit.SuspendLayout();
@@ -117,6 +117,7 @@ namespace NoteFly
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
             this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 136);
+            this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
             // 
@@ -127,14 +128,14 @@ namespace NoteFly
             this.menuSaveNewNote.Text = "&Save note";
             this.menuSaveNewNote.Click += new System.EventHandler(this.btnAddNote_Click);
             // 
-            // menuCancelNewNote
+            // menuStickyOnTop
             // 
-            this.menuCancelNewNote.Image = global::NoteFly.Properties.Resources.cancel;
-            this.menuCancelNewNote.Name = "menuCancelNewNote";
-            this.menuCancelNewNote.ShortcutKeyDisplayString = "Escape";
-            this.menuCancelNewNote.Size = new System.Drawing.Size(288, 22);
-            this.menuCancelNewNote.Text = "Canc&el note";
-            this.menuCancelNewNote.Click += new System.EventHandler(this.btnCancel_Click);
+            this.menuStickyOnTop.CheckOnClick = true;
+            this.menuStickyOnTop.Name = "menuStickyOnTop";
+            this.menuStickyOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.menuStickyOnTop.Size = new System.Drawing.Size(288, 22);
+            this.menuStickyOnTop.Text = "Sticky on &top";
+            this.menuStickyOnTop.Click += new System.EventHandler(this.menuStickyOnTop_Click);
             // 
             // menuPasteToContent
             // 
@@ -154,6 +155,15 @@ namespace NoteFly
             this.menuCopyContent.Text = "&Copy current note content";
             this.menuCopyContent.DropDownOpening += new System.EventHandler(this.copyTextToolStripMenuItem_DropDownOpening);
             this.menuCopyContent.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
+            // 
+            // menuCancelNewNote
+            // 
+            this.menuCancelNewNote.Image = global::NoteFly.Properties.Resources.cancel;
+            this.menuCancelNewNote.Name = "menuCancelNewNote";
+            this.menuCancelNewNote.ShortcutKeyDisplayString = "Escape";
+            this.menuCancelNewNote.Size = new System.Drawing.Size(288, 22);
+            this.menuCancelNewNote.Text = "Canc&el note";
+            this.menuCancelNewNote.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // tbTitle
             // 
@@ -283,15 +293,6 @@ namespace NoteFly
             this.toolTip.AutoPopDelay = 6000;
             this.toolTip.InitialDelay = 800;
             this.toolTip.ReshowDelay = 100;
-            // 
-            // menuStickyOnTop
-            // 
-            this.menuStickyOnTop.CheckOnClick = true;
-            this.menuStickyOnTop.Name = "menuStickyOnTop";
-            this.menuStickyOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.menuStickyOnTop.Size = new System.Drawing.Size(288, 22);
-            this.menuStickyOnTop.Text = "Sticky on &top";
-            this.menuStickyOnTop.Click += new System.EventHandler(this.menuStickyOnTop_Click);
             // 
             // FrmNewNote
             // 

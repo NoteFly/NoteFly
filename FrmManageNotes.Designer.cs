@@ -114,7 +114,7 @@ namespace NoteFly
             this.pnlNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlNotes.Location = new System.Drawing.Point(0, 28);
             this.pnlNotes.Name = "pnlNotes";
-            this.pnlNotes.Size = new System.Drawing.Size(340, 153);
+            this.pnlNotes.Size = new System.Drawing.Size(340, 233);
             this.pnlNotes.TabIndex = 7;
             // 
             // pnlHead
@@ -140,7 +140,7 @@ namespace NoteFly
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(324, 184);
+            this.pbResizeGrip.Location = new System.Drawing.Point(324, 264);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
@@ -162,7 +162,7 @@ namespace NoteFly
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Orange;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(340, 200);
+            this.ClientSize = new System.Drawing.Size(340, 280);
             this.Controls.Add(this.pbResizeGrip);
             this.Controls.Add(this.pnlHead);
             this.Controls.Add(this.pnlNotes);

@@ -197,7 +197,7 @@ namespace NoteFly
             this.yellowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
                         | System.Windows.Forms.Keys.D1)));
             this.yellowToolStripMenuItem.ShowShortcutKeys = false;
-            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.yellowToolStripMenuItem.Text = "Yellow";
             this.yellowToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -207,7 +207,7 @@ namespace NoteFly
             this.orangeToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.orangeToolStripMenuItem.Name = "orangeToolStripMenuItem";
             this.orangeToolStripMenuItem.ShowShortcutKeys = false;
-            this.orangeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.orangeToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.orangeToolStripMenuItem.Text = "Orange";
             this.orangeToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -217,7 +217,7 @@ namespace NoteFly
             this.whiteToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.whiteToolStripMenuItem.Name = "whiteToolStripMenuItem";
             this.whiteToolStripMenuItem.ShowShortcutKeys = false;
-            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.whiteToolStripMenuItem.Text = "White";
             this.whiteToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -227,7 +227,7 @@ namespace NoteFly
             this.greenToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.greenToolStripMenuItem.Name = "greenToolStripMenuItem";
             this.greenToolStripMenuItem.ShowShortcutKeys = false;
-            this.greenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.greenToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.greenToolStripMenuItem.Text = "Green";
             this.greenToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -237,7 +237,7 @@ namespace NoteFly
             this.blueToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.blueToolStripMenuItem.Name = "blueToolStripMenuItem";
             this.blueToolStripMenuItem.ShowShortcutKeys = false;
-            this.blueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.blueToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.blueToolStripMenuItem.Text = "Blue";
             this.blueToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -246,7 +246,7 @@ namespace NoteFly
             this.purpleToolStripMenuItem.BackColor = System.Drawing.Color.Fuchsia;
             this.purpleToolStripMenuItem.Name = "purpleToolStripMenuItem";
             this.purpleToolStripMenuItem.ShowShortcutKeys = false;
-            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.purpleToolStripMenuItem.Text = "Purple";
             this.purpleToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -254,7 +254,7 @@ namespace NoteFly
             // 
             this.redToolStripMenuItem.BackColor = System.Drawing.Color.Red;
             this.redToolStripMenuItem.Name = "redToolStripMenuItem";
-            this.redToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.redToolStripMenuItem.Text = "Red";
             this.redToolStripMenuItem.Click += new System.EventHandler(this.SetColorNote);
             // 
@@ -333,7 +333,7 @@ namespace NoteFly
             this.menuRollUp.Name = "menuRollUp";
             this.menuRollUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.menuRollUp.Size = new System.Drawing.Size(215, 22);
-            this.menuRollUp.Text = "Roll up";
+            this.menuRollUp.Text = "&Roll up";
             this.menuRollUp.Click += new System.EventHandler(this.menuRollUp_Click);
             // 
             // menuLockNote
