@@ -36,7 +36,7 @@ namespace NoteFly
         private string note, title;
         private char[] twpass;
         private short id, notecolor = 0;
-        private bool rolledup = false, notelock = false,  moving = false;
+        private bool rolledup = false, notelock = false, moving = false;
         private Skin skin;
         private int locX, locY;
         private ushort noteWidth, noteHeight;
@@ -425,7 +425,7 @@ namespace NoteFly
         {
             string emailnote = System.Web.HttpUtility.UrlEncode(this.note).Replace("+", " ");
             string emailtitle = System.Web.HttpUtility.UrlEncode(this.title);
-            
+
             xmlHandler xmlsettings = new xmlHandler(true);
             string defaultemail = xmlsettings.getXMLnode("defaultemail");
 
@@ -518,7 +518,7 @@ namespace NoteFly
             this.pbShowLock = new PictureBox();
             this.pbShowLock.Name = "pbShowLock";
             this.pbShowLock.Size = new Size(16, 16);
-            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8); 
+            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
             this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
             this.pbShowLock.Visible = true;
             this.pnlHead.Controls.Add(this.pbShowLock);
@@ -551,7 +551,7 @@ namespace NoteFly
             }
             else
             {
-                this.menuRollUp.Text = this.menuRollUp.Text.Substring(0, 7);
+                this.menuRollUp.Text = this.menuRollUp.Text.Substring(0, 8);
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
                 this.Height = this.noteHeight;
             }
@@ -826,14 +826,26 @@ namespace NoteFly
             sfdlg.ValidateNames = true;
             sfdlg.CheckPathExists = true;
             sfdlg.OverwritePrompt = true;
-            if (this.title.Length > 100)
+
+            //strip forbidden filename characters:
+            System.Text.StringBuilder suggestfilenamesafe = new System.Text.StringBuilder();
+            char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
+            for (int pos = 0; (pos < this.title.Length) && (pos<=100); pos++)
             {
-                sfdlg.FileName = this.title.Substring(0, 100);
+                bool isforbiddenchar = false;
+                for (int fc = 0; fc < forbiddenchars.Length; fc++)
+                {
+                    if (this.title[pos] == forbiddenchars[fc])
+                    {
+                        isforbiddenchar = true;
+                    }
+                }
+                if (!isforbiddenchar)
+                {
+                    suggestfilenamesafe.Append(this.title[pos]);
+                }
             }
-            else
-            {
-                sfdlg.FileName = this.title;
-            }
+            sfdlg.FileName = suggestfilenamesafe.ToString();
 
             sfdlg.Title = "Save note to textfile";
             sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm";
