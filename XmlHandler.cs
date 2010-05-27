@@ -462,7 +462,7 @@ namespace NoteFly
                 {
                     objXmlTextWriter.WriteElementString("notesavepath", notesavepath);
                 }
-                else { throw new CustomException("Directory does not exist"); }
+                else { throw new CustomException("Directory " + notesavepath + " does not exist."); }
 
                 WriteXMLBool("logerror", logerror);
 
@@ -556,7 +556,17 @@ namespace NoteFly
             if (File.Exists(filenm) == true)
             {
                 FileInfo checkfile = new FileInfo(filenm);
-                if (checkfile.Length == 0)
+#if windows
+                if (checkfile.Attributes == FileAttributes.System)
+                {
+                    throw new CustomException("File " + filenm + " is a system file.");
+                }
+                else if (checkfile.Attributes == FileAttributes.ReadOnly)
+                {
+                    Log.Write(LogType.error, filenm + " is readonly and should not be readonly.");
+                }
+#endif
+                else if (checkfile.Length == 0)
                 {
                     throw new CustomException("File " + filenm + " is empty");
                 }
@@ -573,6 +583,7 @@ namespace NoteFly
                 {
                     throw new CustomException("File " + filenm + " is way too big.");
                 }
+
             }
         }
 

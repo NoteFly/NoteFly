@@ -920,7 +920,7 @@ namespace NoteFly
             if (String.IsNullOrEmpty(twitteruser))
             {
                 string notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
-                Log.Write(LogType.error, notwusername);
+                Log.Write(LogType.error, notwusername.Replace("\r\n", ""));
                 MessageBox.Show(notwusername);
                 FrmSettings settings = new FrmSettings(this.notes);
                 settings.Show();
