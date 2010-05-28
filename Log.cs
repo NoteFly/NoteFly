@@ -33,7 +33,7 @@ namespace NoteFly
         error,
 
         /// <summary>
-        /// Something happend that is woth notecing , for instance note got deleted.
+        /// Something happend that is worth nothing, for instance an note got deleted.
         /// </summary>
         info
     }
@@ -72,7 +72,7 @@ namespace NoteFly
             line.AppendLine(message);
             bool logerror = false;
             bool loginfo = false;
-            string errorlog = Path.Combine("%TEMP%", "debug.log");
+            string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), "debug.log");
             try
             {
                 xmlHandler getsettings = new xmlHandler(true);

@@ -385,7 +385,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(this.note);
+            if (!String.IsNullOrEmpty(this.note))
+            {
+                Clipboard.SetText(this.note);
+            }
         }
 
         /// <summary>
@@ -395,7 +398,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(this.title);
+            if (!String.IsNullOrEmpty(this.title))
+            {
+                Clipboard.SetText(this.title);
+            }
         }
 
         /// <summary>
@@ -590,15 +596,16 @@ namespace NoteFly
                 this.lblTitle.TextAlign = ContentAlignment.TopLeft;
                 this.rtbNote.SelectAll(); //fix bug: #0000012
                 this.rtbNote.SelectionAlignment = HorizontalAlignment.Left;
-                this.rtbNote.RightToLeft = RightToLeft.No;
+                //this.rtbNote.RightToLeft = RightToLeft.No;
             }
             else if (this.notes.TextDirection == 1)
             {
                 this.lblTitle.TextAlign = ContentAlignment.TopRight;
                 this.rtbNote.SelectAll();
                 this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
-                this.rtbNote.RightToLeft = RightToLeft.Yes;
+                //this.rtbNote.RightToLeft = RightToLeft.Yes; //will make the contextmenu act not right.
             }
+            this.rtbNote.SelectionStart = 0;
 
             this.rtbNote.Font = this.skin.GetFontNoteContent();
         }

@@ -291,7 +291,7 @@ namespace NoteFly
                     }
                     catch (InvalidCastException)
                     {
-                        throw new CustomException("Facebook session expires, not a valid unix (double) valeua.");
+                        throw new CustomException("Facebook session expires, not a valid unix (double) value.");
                     }
                 }
 
@@ -419,12 +419,22 @@ namespace NoteFly
             while (File.Exists(notefile) == true)
             {
                 xmlHandler parserNote = new xmlHandler(notefile);
-
-                bool[] noteSettingBool = parserNote.ParserNoteBools();
-                string title = parserNote.getXMLnode("title");
-                string content = parserNote.getXMLnode("content");
-                int[] noteSettingsInt = parserNote.ParserNoteInts();
-                short notecolor = Convert.ToInt16(noteSettingsInt[0]);
+                bool[] noteSettingBool;
+                string title, content;
+                int[] noteSettingsInt;
+                short notecolor;
+                try
+                {
+                    noteSettingBool = parserNote.ParserNoteBools();
+                    title = parserNote.getXMLnode("title");
+                    content = parserNote.getXMLnode("content");
+                    noteSettingsInt = parserNote.ParserNoteInts();
+                    notecolor = Convert.ToInt16(noteSettingsInt[0]);
+                }
+                catch (Exception exc)
+                {
+                    throw new CustomException("Note parser error, " + exc.Message);
+                }
 
                 this.noteslst.Add(this.CreateNote(noteSettingBool[0], noteSettingBool[1], title, content, notecolor, noteSettingsInt[1], noteSettingsInt[2], noteSettingsInt[3], noteSettingsInt[4]));
                 id++;
