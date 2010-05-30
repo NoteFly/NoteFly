@@ -11,7 +11,7 @@
 ;
 
 ; version
-!define VERSION "1.0.1" ;version number: major.minor.release
+!define VERSION "1.0.2" ;version number: major.minor.release
 !define VERSTATUS ""    ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 
@@ -24,10 +24,10 @@ ShowInstDetails show
 SetDatablockOptimize on
 Icon ".\..\..\Resources\icon_small.ico"
 BrandingText " "
-CompletedText "Installation completed. Please close this installer now."
-
-;put uac.dll in .\setuplib folder to use it. 
-;!addplugindir ".\setuplib\"
+VIProductVersion "${VERSION}.0"
+VIAddVersionKey "ProductName" "NoteFly"
+VIAddVersionKey "FileDescription" "note taking application"
+CompletedText "Installation completed. You can close the installer now."
 
 ; The file to write
 OutFile ".\NoteFly_v${VERSION}${VERSTATUS}.exe"
@@ -45,9 +45,11 @@ RequestExecutionLevel admin
 !include LogicLib.nsh
 !include WordFunc.nsh
 !include FileFunc.nsh
-!insertmacro VersionCompare
+
+;!insertmacro VersionCompare
 
 Function .onInit
+
  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "installnotefly") i .r1 ?e'
  Pop $R0
  
@@ -58,7 +60,15 @@ Function .onInit
   Call GetDotNETVersion
   Pop $0
   ${If} $0 == ".NET not found"
-    MessageBox MB_OK|MB_ICONSTOP ".NET framework 2.0 is not installed.\r\nPlease get .NET framework 2.0 from:\r\n http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5 "
+  
+  MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework 2.0 is not installed. \\
+  $\n Please get .NET framework 2.0. Press ok to get to the website.\\" IDOK downloadDotNet
+  Abort
+   Goto done
+  
+  downloadDotNet:
+    ExecShell "open" "http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5"
+  done:
     Abort
   ${EndIf}
  
@@ -66,10 +76,18 @@ Function .onInit
  
   ${VersionCompare} $0 "2.0" $1
   ${If} $1 == 2
-    MessageBox MB_OK|MB_ICONSTOP ".NET framework v2.0 or newer is required. You have $0.\r\nPlease update."
+    MessageBox MB_OK|MB_ICONSTOP ".NET framework v2.0 or newer is required. You have $0. Please update first."
     Abort
   ${EndIf}
- 
+  
+  #check if administrator.
+    userInfo::getAccountType
+    pop $0
+    strCmp $0 "Admin" +3
+    messageBox MB_OK "You need to have administrator rights to install NoteFly"
+    Abort
+    return
+
 FunctionEnd
 
 Function GetDotNETVersion
@@ -107,7 +125,6 @@ bad:
 done:
 !macroend
 
-
 ;--------------------------------
 
 ; Pages
@@ -124,12 +141,18 @@ UninstPage instfiles
 
 ;--------------------------------
 
-; The stuff to install
+; The files to install
 Section "main executable (required)"	
   SectionIn RO
   SetOverwrite on  
+  
+  ;using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in (optimized version, KillProcDLL.dll only)
+  KillProcDLL::KillProc "NoteFly.exe" 
+  sleep 200
+
   !insertmacro BadPathsCheck
-  SetOutPath $INSTDIR  ;Set output path to the installation directory.   
+  SetOutPath $INSTDIR  ;Set output path to the installation directory.
+
   File "${APPFILE}"
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"   
@@ -161,16 +184,20 @@ SectionEnd
 ; Uninstaller
 Section "Uninstall"  
 
-!insertmacro BadPathsCheck
-
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly"  
   DeleteRegKey HKLM SOFTWARE\NoteFly
 
   ; Remove files and uninstaller
-  Delete $INSTDIR\NoteFly.exe
+  Delete $INSTDIR\${APPFILE}
   Delete $INSTDIR\uninstall.exe
            
   RMDir "$INSTDIR"
+  
+  SetShellVarContext all
+  Delete "$SMPROGRAMS\NoteFly\NoteFly.lnk"
+  Delete "$SMPROGRAMS\NoteFly\Uninstall.lnk"
+  RMDir "$SMPROGRAMS\NoteFly"
+
 
 SectionEnd
