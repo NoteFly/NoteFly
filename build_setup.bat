@@ -14,6 +14,11 @@ REM Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 
 @echo off
 
+echo strip reloc info.
+
+REM change this path to where Inno StripReloc tool is installed.
+"C:\Program Files\StripReloc_v1.13\StripReloc.exe" .\bin\Release\NoteFly.exe
+
 echo building setup...
 
 REM change this path to where NSIS is installed.

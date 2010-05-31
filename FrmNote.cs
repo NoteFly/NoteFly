@@ -241,6 +241,9 @@ namespace NoteFly
             {
                 this.menuOnTop.Checked = false;
             }
+
+            this.rtbNote.DetectUrls = true;
+            this.rtbNote.Text += ""; //causes TextChanged event so rescan for URL's happens
         }
 
         /// <summary>

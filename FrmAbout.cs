@@ -49,7 +49,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.notefly.tk/faq.php");
+            LoadUrl("http://www.notefly.tk/faq.php");
         }
 
         /// <summary>
@@ -59,7 +59,23 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.notefly.tk/");
+            LoadUrl("http://www.notefly.tk/");
+        }
+
+        /// <summary>
+        /// Load a url link. Throws error if inpossible, e.g: no http protocol handler registered.
+        /// </summary>
+        /// <param name="url">the link</param>
+        private void LoadUrl(string url)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(url);
+            }
+            catch (Exception exc)
+            {
+                throw new CustomException("Browser load error " + exc.Message + " details: " + exc.StackTrace);
+            }
         }
 
         /// <summary>
