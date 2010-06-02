@@ -13,7 +13,7 @@ REM along with this program; if not, write to the Free Software
 REM Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 @echo off
 set path7z="C:\Program Files\7-Zip\7z.exe"
-set VERSION="1.0.1"
+set VERSION="1.0.2"
 REM versionstatus: alpha, beta, rc1, rc2 or nothing for final.
 set VERSIONSTATUS="" 
 
@@ -23,7 +23,7 @@ echo 7-zip(7z.exe) should be installed in: %path7z%
 pause
 IF NOT EXIST %path7z% GOTO NO7ZDIR
 
-%path7z% a -tzip "%cd%\bin\Release\source archives\src_NoteFly_v%VERSION%%VERSIONSTATUS%.zip" -r %cd%\*.cs %cd%\*.resx %cd%\*.config %cd%\*.sln %cd%\*.csproj %cd%\*.eqconfig%cd%\*.png %cd%\*.ico %cd%\*.bat %cd%\*.xsd %cd%\*.manifest %cd%\*.nsi %cd%\*.settings %cd%\*.zargo %cd%\*.uml %cd%\*.csproj.user %cd%\*.pkgxml
+%path7z% a -tzip "%cd%\bin\Release\source archives\src_NoteFly_v%VERSION%%VERSIONSTATUS%.zip" -r %cd%\*.cs %cd%\*.resx %cd%\*.config %cd%\*.sln %cd%\*.csproj %cd%\*.eqconfig%cd%\*.png %cd%\*.ico %cd%\*.bat %cd%\*.xsd %cd%\*.manifest %cd%\*.nsi %cd%\*.settings %cd%\*.zargo %cd%\*.uml %cd%\*.csproj.user %cd%\*.pkgxml %cd%\*.in
 
 echo done.
 pause
