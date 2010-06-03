@@ -448,7 +448,7 @@ namespace NoteFly
             }
             else
             {
-                string msgNoTitleContent = "Note has no title and content.";
+                string msgNoTitleContent = "Note has no title+content.";
                 Log.Write(LogType.error, msgNoTitleContent);
                 MessageBox.Show(msgNoTitleContent);
             }
@@ -726,7 +726,7 @@ namespace NoteFly
                 }
                 catch (InvalidCastException)
                 {
-                    new CustomException("noteWidth cannot be a negative value.");
+                    new CustomException("noteWidth cannot be negative value.");
                 }
                 try
                 {
@@ -734,7 +734,7 @@ namespace NoteFly
                 }
                 catch (InvalidCastException)
                 {
-                    new CustomException("noteHeight cannot be a negative value.");
+                    new CustomException("noteHeight cannot be negative value.");
                 }
             }
 
@@ -893,13 +893,12 @@ namespace NoteFly
             if ((String.IsNullOrEmpty(this.note) == false) && (this.note.Length <= 140))
             {
                 this.Tweetnote();
-                Log.Write(LogType.info, "Note send to twitter.");
             }
             else if (this.note.Length > 140)
             {
                 DialogResult result;
                 string shrttweet = this.note.Substring(0, 140);
-                result = MessageBox.Show("Your note is more than the 140 chars. Do you want to publish only the first 140 characters? ", "too long note", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                result = MessageBox.Show("Your note is more than the 140 chars.\r\nDo you want to publish only the first 140 characters? ", "Too long", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     this.Tweetnote();
@@ -967,13 +966,16 @@ namespace NoteFly
             else
             {
                 Twitter twitter = new Twitter();
+                const string twitterleadmgs = "Sending note to twitter ";
                 if (twitter.UpdateAsXML(twitteruser, this.twpass, this.note) != null)
                 {
-                    MessageBox.Show("Your note is Tweeted.");
+                    string sendtwsucces = twitterleadmgs + "succeded.";
+                    Log.Write(LogType.info, sendtwsucces);
+                    MessageBox.Show(sendtwsucces);
                 }
                 else
                 {
-                    string sendtwfail = "Sending note to twitter failed.";
+                    string sendtwfail = twitterleadmgs + "failed.";
                     Log.Write(LogType.error, sendtwfail);
                     MessageBox.Show(sendtwfail);
                 }

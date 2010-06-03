@@ -121,7 +121,7 @@ namespace NoteFly
                 }
                 else
                 {
-                    string dirnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
+                    const string dirnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
                     Log.Write(LogType.info, dirnotexist);
                     MessageBox.Show(dirnotexist, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -161,39 +161,39 @@ namespace NoteFly
         {
             if (!Directory.Exists(this.tbNotesSavePath.Text))
             {
-                string invalidfoldersavenote = "Invalid folder for saving notes folder.";
+                const string invalidfoldersavenote = "Invalid folder for saving notes folder.";
                 Log.Write(LogType.info, invalidfoldersavenote);
                 MessageBox.Show(invalidfoldersavenote);
                 this.tabControlSettings.SelectedTab = this.tabGeneral;
             }
             else if (String.IsNullOrEmpty(this.cbxFontNoteContent.Text) == true)
             {
-                string nofont = "Select a font.";
+                const string nofont = "Select a font.";
                 Log.Write(LogType.info, nofont);
                 MessageBox.Show(nofont);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((this.numFontSize.Value < 4) || (this.numFontSize.Value > 128))
             {
-                string invalidfontsize = "Font size invalid. minmal 4pt maximal 128pt";
+                const string invalidfontsize = "Font size invalid. minimal 4pt max. 128pt";
                 Log.Write(LogType.info, invalidfontsize);
                 MessageBox.Show(invalidfontsize);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if (this.cbxTextDirection.SelectedIndex > 1)
             {
-                string noknowtextdir = "Settings text direction unknow.";
+                const string noknowtextdir = "Settings text direction unknow.";
                 Log.Write(LogType.error, noknowtextdir);
                 MessageBox.Show(noknowtextdir);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((this.chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) 
-			        #if windows 
-			         || (this.chxStartOnBootWindows.CheckState == CheckState.Indeterminate)
-			         #endif 
-			         || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
+                    #if windows 
+                      || (this.chxStartOnBootWindows.CheckState == CheckState.Indeterminate)
+                   #endif 
+                      || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
             {
-                string notallowcheckstate = "checkstate not allowed.";
+                const string notallowcheckstate = "Checkstate not allowed.";
                 Log.Write(LogType.error, notallowcheckstate);
                 MessageBox.Show(notallowcheckstate);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
@@ -201,19 +201,19 @@ namespace NoteFly
 
             else if (this.tbTwitterUser.Text.Length > 16)
             {
-                string twnametoolong = "Settings Twitter: username is too long.";
+                const string twnametoolong = "Settings Twitter: username is too long.";
                 Log.Write(LogType.error, twnametoolong);
                 MessageBox.Show(twnametoolong);
             }
             else if ((this.tbTwitterPass.Text.Length < 6) && (this.chxRememberTwPass.Checked == true))
             {
-                string twpaswtooshort = "Settings Twitter: password is too short.";
+                const string twpaswtooshort = "Settings Twitter: password is too short.";
                 Log.Write(LogType.error, twpaswtooshort);
                 MessageBox.Show(twpaswtooshort);
             }
             else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.cbxDefaultEmailToBlank.Checked))
             {
-                string emailnotvalid = "Settings advance: default emailadres not valid.";
+                const string emailnotvalid = "Settings advance: default emailadres not valid.";
                 Log.Write(LogType.error, emailnotvalid);
                 MessageBox.Show(emailnotvalid);
             }
@@ -279,7 +279,7 @@ namespace NoteFly
                 }
                 else
                 {
-                    string regkeynotexistfound = "Run subkey in registery does not exist. Or it cannot be found.";
+                    const string regkeynotexistfound = "Run subkey in registery does not exist.\r\nOr it cannot be found.";
                     Log.Write(LogType.error, regkeynotexistfound);
                     MessageBox.Show(regkeynotexistfound);
                 }
@@ -378,7 +378,7 @@ namespace NoteFly
             string curfont = this.xmlsettings.getXMLnode("fontcontent");
             if (String.IsNullOrEmpty(curfont))
             {
-                string fontnotfound = "Current font not found.";
+                const string fontnotfound = "Current font not found.";
                 Log.Write(LogType.error, fontnotfound);
                 MessageBox.Show(fontnotfound, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

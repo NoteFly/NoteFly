@@ -289,9 +289,9 @@ namespace NoteFly
                     {
                         FacebookSettings.Sesionexpires = Convert.ToDouble(strSessionExpires);
                     }
-                    catch (InvalidCastException)
+                    catch (InvalidCastException invcastexc)
                     {
-                        throw new CustomException("Facebook session expires, not a valid unix (double) value.");
+                        throw new CustomException("sessionexpires not valid. "+invcastexc.Message);
                     }
                 }
 

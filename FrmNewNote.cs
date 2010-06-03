@@ -103,7 +103,7 @@ namespace NoteFly
             else if (String.IsNullOrEmpty(this.rtbNote.Text))
             {
                 this.rtbNote.BackColor = this.skin.GetObjColor(false, false, true);
-                this.rtbNote.Text = "Please type any note content, like this for example.";
+                this.rtbNote.Text = "Please enter some content.";
             }
             else
             {
@@ -236,10 +236,11 @@ namespace NoteFly
             }
             else
             {
-                string emptyclipboard = "Clipboard is empty/no text in it.";
+                const string emptyclipboard = "There is no text on the clipboard.";
                 MessageBox.Show(emptyclipboard);
                 Log.Write(LogType.error, emptyclipboard);
             }
+
         }
 
         /// <summary>
@@ -471,49 +472,6 @@ namespace NoteFly
                 }
 #endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
-                /*
-                if (oldp.X < e.Location.X)
-                {
-                    if (oldp.Y < e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X + 1, this.Location.Y + 1);
-                    }
-                    else if (oldp.Y > e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X + 1, this.Location.Y - 1);
-                    }
-                    else
-                    {
-                        this.Location = new Point(this.Location.X + 1, this.Location.Y);
-                    }
-                }
-                else if (oldp.X > e.Location.X)
-                {
-                    if (oldp.Y < e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X - 1, this.Location.Y + 1);
-                    }
-                    else if (oldp.Y > e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
-                    }
-                    else
-                    {
-                        this.Location = new Point(this.Location.X - 1, this.Location.Y);
-                    }
-                }
-                else
-                {
-                    if (oldp.Y < e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X, this.Location.Y + 1);
-                    }
-                    else if (oldp.Y > e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X, this.Location.Y - 1);
-                    }
-                }
-                 */
             }
             else if (this.skin != null)
             {
@@ -530,7 +488,7 @@ namespace NoteFly
         {
             this.moving = false;
         }
-        
+
         /// <summary>
         /// Set this note ontop, CheckOnClick is set to true.
         /// </summary>

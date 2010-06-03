@@ -19,6 +19,7 @@ echo strip reloc info.
 REM change this path to where Inno StripReloc tool is installed.
 "C:\Program Files\StripReloc_v1.13\StripReloc.exe" .\bin\Release\NoteFly.exe
 
+pause
 echo building setup...
 
 REM change this path to where NSIS is installed.

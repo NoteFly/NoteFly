@@ -27,7 +27,7 @@ BrandingText " "
 VIProductVersion "${VERSION}.0"
 VIAddVersionKey "ProductName" "NoteFly"
 VIAddVersionKey "FileDescription" "note taking application"
-CompletedText "Installation completed. You can close the installer now."
+CompletedText "Installation completed."
 
 ; The file to write
 OutFile ".\NoteFly_v${VERSION}${VERSTATUS}.exe"
@@ -61,8 +61,8 @@ Function .onInit
   Pop $0
   ${If} $0 == ".NET not found"
   
-  MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework 2.0 is not installed. \\
-  $\n Please get .NET framework 2.0. Press ok to get to the website.\\" IDOK downloadDotNet
+  MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework 2.0 is not installed.\\
+  $\nPlease get .NET framework 2.0. Press OK to go to the website.\\" IDOK downloadDotNet
   Abort
    Goto done
   
