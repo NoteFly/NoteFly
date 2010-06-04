@@ -34,9 +34,9 @@
 	</Company_Info>
 	<Program_Info>
 		<Program_Name>NoteFly</Program_Name>
-		<Program_Version>1.0.1</Program_Version>
-		<Program_Release_Month>05</Program_Release_Month>
-		<Program_Release_Day>21</Program_Release_Day>
+		<Program_Version>1.0.2</Program_Version>
+		<Program_Release_Month>06</Program_Release_Month>
+		<Program_Release_Day>03</Program_Release_Day>
 		<Program_Release_Year>2010</Program_Release_Year>
 		<Program_Cost_Dollars>0</Program_Cost_Dollars>
 		<Program_Cost_Other_Code />
@@ -97,7 +97,7 @@ features:
 			<Application_XML_File_URL>http://www.notefly.tk/svn/notefly/wiki/pad_notefly.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://www.notefly.tk/download.php?file=NoteFly_v1.0.0.exe</Primary_Download_URL>
+			<Primary_Download_URL>http://www.notefly.tk/download.php?file=NoteFly_v1.0.2.exe</Primary_Download_URL>
 			<Secondary_Download_URL />
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
