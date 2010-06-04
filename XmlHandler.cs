@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -566,7 +566,7 @@ namespace NoteFly
                     Log.Write(LogType.error, filenm + " is readonly and should not be readonly.");
                 }
 #endif
-                else if (checkfile.Length == 0)
+                if (checkfile.Length == 0)
                 {
                     throw new CustomException("File " + filenm + " is empty");
                 }

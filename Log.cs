@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="Log.cs" company="GNU">
 // 
 // This program is free software; you can redistribute it and/or modify it
@@ -11,6 +11,8 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
+#define linux //platform can be: windows, linux, macos
+
 namespace NoteFly
 {
     using System;
@@ -72,7 +74,11 @@ namespace NoteFly
             line.AppendLine(message);
             bool logerror = false;
             bool loginfo = false;
+#if window
             string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), "debug.log");
+#elif linux
+			string errorlog = "/tmp/debug.log";
+#endif
             try
             {
                 xmlHandler getsettings = new xmlHandler(true);
