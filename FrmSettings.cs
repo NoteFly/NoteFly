@@ -518,7 +518,9 @@ namespace NoteFly
             decimal transparecylvl = Convert.ToDecimal(this.xmlsettings.getXMLnode("transparecylevel"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             if ((transparecylvl < 1) || (transparecylvl > 100))
             {
-                MessageBox.Show("transparecylevel out of range.");
+                String translvlrang = "transparecylevel out of range.";
+                Log.Write(LogType.error, translvlrang);
+                MessageBox.Show(translvlrang);
                 return 95;
             }
             else { return transparecylvl; }
@@ -556,7 +558,6 @@ namespace NoteFly
                             Log.Write(LogType.error, fileexist);
                             MessageBox.Show(fileexist);
                             errorshowed = true;
-                            
                         }
                     }
                 }

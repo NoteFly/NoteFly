@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Log.cs" />
     <Compile Include="Notes.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Textfile.cs" />
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
