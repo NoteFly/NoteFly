@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -113,55 +113,56 @@ namespace NoteFly
         {
             Button btn = (Button)sender;
             short numbernotes = this.notes.NumNotes;
-            if (numbernotes != 0)
+            if (this.notes.NumNotes != 0)
             {
-                short curnote = -1;
+                short noteposlst = -1;
                 try
                 {
-                    curnote = Convert.ToInt16(btn.Tag);
+                    noteposlst = Convert.ToInt16(btn.Tag);
                 }
                 catch (InvalidCastException invexc)
                 {
                     throw new CustomException(invexc.Message + " " + invexc.StackTrace);
                 }
 
-                if (curnote >= 0)
+                if (noteposlst >= 0)
                 {
-                    int noteid = curnote;
+                    int noteid = noteposlst + 1;
                     xmlHandler settings = new xmlHandler(true);
                     if (settings.getXMLnodeAsBool("confirmdelete"))
                     {
-                        DialogResult deleteres = MessageBox.Show("Are you sure you want to delete note (ID:" + curnote + ") ?", "delete note?", MessageBoxButtons.YesNo);
+                        DialogResult deleteres = MessageBox.Show("Are you sure you want to delete note (ID:" + noteid + ") ?", "delete note?", MessageBoxButtons.YesNo);
                         if (deleteres == DialogResult.No)
                         {
                             return;
                         }
                     }
 
-                    this.notes.GetNotes[noteid].Close();
+                    this.notes.GetNotes[noteposlst].Close();
+                    this.notes.GetNotes.RemoveAt(noteposlst);
 
                     try
                     {
-                        File.Delete(Path.Combine(this.GetNotesSavePath(), Convert.ToString(curnote) + ".xml"));
-                        Log.Write(LogType.info, Convert.ToString(curnote) + ".xml deleted.");
+                        File.Delete(Path.Combine(this.GetNotesSavePath(), Convert.ToString(noteid) + ".xml"));
+                        Log.Write(LogType.info, Convert.ToString(noteid) + ".xml deleted.");
 
                         //reorder filenames
-                        for (short n = curnote; n < numbernotes; n++)
+                        for (int id = noteid; id < numbernotes; id++)
                         {
-                            string orgfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(n + 1) + ".xml");
-                            string newfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(n) + ".xml");
+                            string orgfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id + 1) + ".xml");
+                            string newfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id) + ".xml");
                             if (!File.Exists(newfile))
                             {
                                 File.Move(orgfile, newfile);
                             }
-
-                            if (n < numbernotes)
+                            try
                             {
-                                this.notes.GetNotes[n].NoteID = n;
+                                this.notes.GetNotes[id].NoteID = Convert.ToInt16(id);
+                            }
+                            catch
+                            {
                             }
                         }
-
-                        this.notes.GetNotes.RemoveAt(noteid);
                     }
                     catch (FileNotFoundException filenotfoundexc)
                     {
@@ -169,7 +170,7 @@ namespace NoteFly
                     }
                     catch (UnauthorizedAccessException)
                     {
-                        string msgaccessdenied = "Access denied. Delete note " + curnote + ".xml manualy with proper premission.";
+                        string msgaccessdenied = "Access denied. Delete note " + noteid + ".xml manually with proper premission.";
                         Log.Write(LogType.error, msgaccessdenied);
                         MessageBox.Show(msgaccessdenied);
                     }
@@ -437,50 +438,6 @@ namespace NoteFly
                 }
 #endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
-
-                /*
-                if (oldp.X < e.Location.X)
-                {
-                    if (oldp.Y < e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X + 1, this.Location.Y + 1);
-                    }
-                    else if (oldp.Y > e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X + 1, this.Location.Y - 1);
-                    }
-                    else
-                    {
-                        this.Location = new Point(this.Location.X + 1, this.Location.Y);
-                    }
-                }
-                else if (oldp.X > e.Location.X)
-                {
-                    if (oldp.Y < e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X - 1, this.Location.Y + 1);
-                    }
-                    else if (oldp.Y > e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X - 1, this.Location.Y - 1);
-                    }
-                    else
-                    {
-                        this.Location = new Point(this.Location.X - 1, this.Location.Y);
-                    }
-                }
-                else
-                {
-                    if (oldp.Y < e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X, this.Location.Y + 1);
-                    }
-                    else if (oldp.Y > e.Location.Y)
-                    {
-                        this.Location = new Point(this.Location.X, this.Location.Y - 1);
-                    }
-                }
-                 */
             }
             else
             {
