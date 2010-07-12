@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -74,7 +74,7 @@ namespace NoteFly
             line.AppendLine(message);
             bool logerror = false;
             bool loginfo = false;
-#if window
+#if windows
             string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), "debug.log");
 #elif linux
 			string errorlog = "/tmp/debug.log";

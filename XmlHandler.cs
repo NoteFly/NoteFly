@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -363,10 +363,10 @@ namespace NoteFly
 
             try
             {
-                objXmlTextWriter = new XmlTextWriter(this.filenm, null);
+                objXmlTextWriter = new XmlTextWriter(this.filenm, System.Text.Encoding.UTF8);
 
                 objXmlTextWriter.Formatting = Formatting.Indented;
-
+                
                 objXmlTextWriter.WriteStartDocument();
 
                 objXmlTextWriter.WriteStartElement("note");
@@ -418,7 +418,7 @@ namespace NoteFly
 
             try
             {
-                objXmlTextWriter = new XmlTextWriter(filenm, null);
+                objXmlTextWriter = new XmlTextWriter(filenm, System.Text.Encoding.UTF8);
                 objXmlTextWriter.Formatting = Formatting.Indented;
 
                 objXmlTextWriter.WriteStartDocument();
