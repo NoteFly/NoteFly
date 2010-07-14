@@ -11,7 +11,7 @@
 ;
 
 ; version
-!define VERSION "1.0.2" ;version number: major.minor.release
+!define VERSION "1.0.3" ;version number: major.minor.release
 !define VERSTATUS ""    ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 
@@ -148,7 +148,7 @@ Section "main executable (required)"
   
   ;using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in (optimized version, KillProcDLL.dll only)
   KillProcDLL::KillProc "NoteFly.exe" 
-  sleep 200
+  sleep 250
 
   !insertmacro BadPathsCheck
   SetOutPath $INSTDIR  ;Set output path to the installation directory.

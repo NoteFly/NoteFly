@@ -13,7 +13,7 @@ REM along with this program; if not, write to the Free Software
 REM Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 @echo off
 set path7z="C:\Program Files\7-Zip\7z.exe"
-set VERSION="1.0.2"
+set VERSION="1.0.3"
 REM versionstatus: alpha, beta, rc1, rc2 or nothing for final.
 set VERSIONSTATUS="" 
 
