@@ -156,7 +156,7 @@ namespace NoteFly
             this.menuLockNote,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 224);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 202);
             this.menuFrmNoteOptions.Text = "-=menu=-";
             this.menuFrmNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
             // 
@@ -359,14 +359,16 @@ namespace NoteFly
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCloseNote.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCloseNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCloseNote.Font = new System.Drawing.Font("Kartika", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCloseNote.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCloseNote.Location = new System.Drawing.Point(200, 4);
-            this.btnCloseNote.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCloseNote.Margin = new System.Windows.Forms.Padding(1);
             this.btnCloseNote.Name = "btnCloseNote";
             this.btnCloseNote.Size = new System.Drawing.Size(31, 23);
             this.btnCloseNote.TabIndex = 1;
             this.btnCloseNote.TabStop = false;
             this.btnCloseNote.Text = "X";
+            this.btnCloseNote.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCloseNote.UseCompatibleTextRendering = true;
             this.btnCloseNote.UseVisualStyleBackColor = true;
             this.btnCloseNote.Click += new System.EventHandler(this.btnCloseNote_Click);
             // 
@@ -392,11 +394,7 @@ namespace NoteFly
             this.rtbNote.ReadOnly = true;
             this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNote.ShortcutsEnabled = false;
-#if windows
             this.rtbNote.Size = new System.Drawing.Size(221, 184);
-#elif linux
-			this.rtbNote.Size = new System.Drawing.Size(221, 144);
-#endif
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
             this.rtbNote.Text = "?";
@@ -414,11 +412,7 @@ namespace NoteFly
             this.pnlNote.Controls.Add(this.rtbNote);
             this.pnlNote.Location = new System.Drawing.Point(0, 31);
             this.pnlNote.Name = "pnlNote";
-#if windows			
             this.pnlNote.Size = new System.Drawing.Size(240, 209);
-#elif linux
-			this.pnlNote.Size = new System.Drawing.Size(234, 169);
-#endif
             this.pnlNote.TabIndex = 4;
             // 
             // pbResizeGrip
@@ -426,11 +420,7 @@ namespace NoteFly
             this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-#if windows
             this.pbResizeGrip.Location = new System.Drawing.Point(223, 191);
-#elif linux
-			this.pbResizeGrip.Location = new System.Drawing.Point(223, 151);
-#endif
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
@@ -450,11 +440,7 @@ namespace NoteFly
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gold;
             this.CancelButton = this.btnCloseNote;
-#if windows
             this.ClientSize = new System.Drawing.Size(240, 240);
-#elif linux
-			this.ClientSize = new System.Drawing.Size(240, 204);
-#endif
             this.ContextMenuStrip = this.menuFrmNoteOptions;
             this.ControlBox = false;
             this.Controls.Add(this.pnlNote);
