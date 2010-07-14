@@ -27,7 +27,7 @@ BrandingText " "
 VIProductVersion "${VERSION}.0"
 VIAddVersionKey "ProductName" "NoteFly"
 VIAddVersionKey "FileDescription" "note taking application"
-CompletedText "Installation completed."
+;CompletedText "Installation completed."
 
 ; The file to write
 OutFile ".\NoteFly_v${VERSION}${VERSTATUS}.exe"

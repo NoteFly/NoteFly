@@ -23,7 +23,7 @@ echo 7-zip(7z.exe) should be installed in: %path7z%
 pause
 IF NOT EXIST %path7z% GOTO NO7ZDIR
 
-%path7z% a -tzip "%cd%\bin\Release\source archives\src_NoteFly_v%VERSION%%VERSIONSTATUS%.zip" -r %cd%\*.cs %cd%\*.resx %cd%\*.config %cd%\*.sh %cd%\deb_control_script %cd%\*.desktop %cd%\*.sln %cd%\*.csproj %cd%\*.eqconfig%cd%\*.png %cd%\*.ico %cd%\*.bat %cd%\*.xsd %cd%\*.manifest %cd%\*.nsi %cd%\*.settings %cd%\*.zargo %cd%\*.uml %cd%\*.csproj.user %cd%\*.pkgxml %cd%\*.in
+%path7z% a -tzip "%cd%\bin\Release\source archives\src_NoteFly_v%VERSION%%VERSIONSTATUS%.zip" -r %cd%\*.cs %cd%\*.resx %cd%\*.config %cd%\*.sh %cd%\deb_control_script %cd%\license.txt %cd%\*.desktop %cd%\*.sln %cd%\*.csproj %cd%\*.eqconfig%cd%\*.png %cd%\*.ico %cd%\*.bat %cd%\*.xsd %cd%\*.manifest %cd%\*.nsi %cd%\*.settings %cd%\*.zargo %cd%\*.uml %cd%\*.csproj.user %cd%\*.pkgxml %cd%\*.in
 
 echo done.
 pause
