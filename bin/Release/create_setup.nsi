@@ -12,7 +12,7 @@
 
 ; version
 !define VERSION "1.0.3" ;version number: major.minor.release
-!define VERSTATUS ""    ;alpha, beta, rc, or nothing for final.
+!define VERSTATUS "b"    ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 
 Name "NoteFly ${VERSION} ${VERSTATUS}" ; The name of the installer

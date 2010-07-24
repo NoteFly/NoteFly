@@ -1,4 +1,4 @@
-﻿<config>
+<config>
   <OutputFolder>$(AppDir)-Profiled</OutputFolder>
   <ReportFolderNetFull>$(SystemRoot)\Temp\EQATECProfilerLogs</ReportFolderNetFull>
   <ReportFolderNetCF>\Temp\EQATECProfilerLogs</ReportFolderNetCF>

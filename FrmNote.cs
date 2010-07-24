@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -1048,6 +1048,7 @@ namespace NoteFly
                 {
                     dpx = -8;
                 }
+
                 if (dpy > 8)
                 {
                     dpy = 8;

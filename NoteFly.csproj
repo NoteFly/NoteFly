@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +37,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <ReleaseVersion>1.0</ReleaseVersion>
     <Win32Resource>icons.res</Win32Resource>
+    <newfilesearch>OnLoad</newfilesearch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +49,12 @@
     <WarningLevel>2</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeBuild" />
+      </CustomCommands>
+    </CustomCommands>
+    <LangVersion>ISO-2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -59,6 +66,7 @@
     <DebugSymbols>true</DebugSymbols>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <LangVersion>ISO-2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -154,7 +162,9 @@
     <None Include="build_setup.bat" />
     <None Include="make_archive.bat" />
     <None Include="Resources\hoekje.png" />
-    <None Include="strongkey_notefly.pfx" />
+    <None Include="strongkey_notefly.pfx">
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </None>
     <None Include="bin\Debug\app.eqconfig" />
     <None Include="bin\Release\create_setup.nsi" />
     <None Include="Resources\locknote.png" />
@@ -165,6 +175,56 @@
       <DependentUpon>IPTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\trayicon.ico" />
+    <None Include="FrmAbout.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="Properties\Resources.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="Resources\icon_scalable.svg">
+      <Visible>False</Visible>
+    </None>
+    <None Include="builddeb\deb_control_script">
+      <Visible>False</Visible>
+    </None>
+    <None Include="builddeb\notefly_1.0.2_all.deb">
+      <Visible>False</Visible>
+    </None>
+    <None Include="builddeb\post-uninstall.sh">
+      <Visible>False</Visible>
+    </None>
+    <None Include="builddeb\setbin.sh">
+      <Visible>False</Visible>
+    </None>
+    <None Include="wiki\classdiagram.uml">
+      <Visible>False</Visible>
+    </None>
+    <None Include="wiki\classdiagram.zargo">
+      <Visible>False</Visible>
+    </None>
+    <None Include="wiki\classdiagram_info.txt">
+      <Visible>False</Visible>
+    </None>
+    <None Include="wiki\pad_notefly.xml">
+      <Visible>False</Visible>
+    </None>
+    <None Include="FrmManageNotes.resources" />
+    <None Include="FrmNewNote.resources" />
+    <None Include="FrmNote.resources" />
+    <None Include="FrmSettings.resources" />
+    <None Include="IPTextBox.resources" />
+    <None Include="NoteFly.csproj.user">
+      <Visible>False</Visible>
+    </None>
+    <None Include="NoteFly.suo">
+      <Visible>False</Visible>
+    </None>
+    <None Include="NoteFly.userprefs">
+      <Visible>False</Visible>
+    </None>
+    <None Include="notefly.in">
+      <Visible>False</Visible>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -192,6 +252,10 @@
     <Content Include="Resources\icon_big.png" />
     <Content Include="Resources\icon_small.ico" />
     <Content Include="Resources\icon_small.png" />
+    <Content Include="builddeb\desktop.desktop">
+      <DeployService-TargetDirectoryId>Linux.DesktopApplications</DeployService-TargetDirectoryId>
+      <Visible>False</Visible>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -205,8 +269,11 @@
     <MonoDevelop>
       <Properties>
         <Policies>
-          <StandardHeader inheritsSet="GPLv2License" />
+          <StandardHeader IncludeInNewFiles="False" inheritsSet="GPLv2License" />
+          <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="application/x-resource" />
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="MSBuild" />
         </Policies>
+        <Deployment.LinuxDeployData generateScript="false" />
         <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile">
           <BuildFilesVar />
           <DeployFilesVar />
