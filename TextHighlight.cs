@@ -20,14 +20,9 @@ namespace NoteFly
     /// <summary>
     /// helper class for text highlight in notes.
     /// </summary>
-    public class TextHighlight
+    public static class TextHighlight
     {
         #region Fields (4)
-
-        /// <summary>
-        /// Boolean that tells if html is being checked.
-        /// </summary>
-        private bool checkhtml;
 
         /// <summary>
         /// A array of possible HTML nodes.
@@ -38,11 +33,6 @@ namespace NoteFly
         /// The start position of a html tag.
         /// </summary>
         private int posstarttag = 0;
-
-        /// <summary>
-        /// The rich content of the note.
-        /// </summary>
-        private RichTextBox rtbcode;
 
         /// <summary>
         /// The number of HTML nodes NoteFly knows.
@@ -67,16 +57,18 @@ namespace NoteFly
         /// </summary>
         /// <param name="rtb">The richedit note content</param>
         /// <param name="checkhtml">indicteds wheter html is gonna be checked</param>
-        public TextHighlight(RichTextBox rtb, bool checkhtml)
+        public TextHighlight()
         {
             this.rtbcode = rtb;
             this.checkhtml = checkhtml;
 
-            if (checkhtml)
+            if (Settings.HighlightHTML)
             {
                 this.htmlnodes = new string[NUMHTMLNODES];
                 this.htmlendtagpolicy = new short[NUMHTMLNODES];
 
+                //TODO: read the following out a external file.
+                /*
                 this.htmlnodes[0] = "A";            this.htmlendtagpolicy[0] = 1; 
                 this.htmlnodes[1] = "ABBR";         this.htmlendtagpolicy[1] = 1;
                 this.htmlnodes[2] = "ACRONYM";      this.htmlendtagpolicy[2] = 1;
@@ -171,7 +163,7 @@ namespace NoteFly
                 this.htmlnodes[91] = "UL";          this.htmlendtagpolicy[91] = 1;
                 this.htmlnodes[92] = "VAR";         this.htmlendtagpolicy[92] = 1;
                 this.htmlnodes[93] = "!--";         this.htmlendtagpolicy[93] = 0;
-
+                */
                 this.htmlstructure = new bool[NUMHTMLNODES];
             }
         }

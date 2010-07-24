@@ -14,56 +14,67 @@
 namespace NoteFly
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     /// <summary>
     /// The setting class.
     /// </summary>
-    class Settings
+    public static class Settings
     {
-        public Boolean Transparency { get; set; }
+        public bool NotesTransparencyEnabled { get; set; }
 
-        public int ProcTransparency { get; set; }
+        public int NotesTransparencyLevel { get; set; }
 
-        public int DefaultColor { get; set; }
+        public int NotesDefaultColor { get; set; }
+        
+        public int NotesTextdirection { get; set; }
+        
+        public string NotesSavepath { get; set; }
 
-        public int ActionLeftClick { get; set; }
+        public int TrayiconActionLeftclick { get; set; }
+       
+        public string FontTitleFamily { get; set; }
+       
+        public int FontTitleSize { get; set; }
+       
+        public string FontContentFamily { get; set; }
 
-        public Boolean ConfirmLink { get; set; }
+        public Decimal FontContentSize { get; set; }
 
-        public String fontcontent { get; set; }
+        public bool HighlightHTML { get; set; }
+        
+        public bool HighlightHyperlinks { get; set; }
+        
+        public bool HighlightPHP { get; set; }
+        
+        public bool HighlightSQL { get; set; }
 
-        public Decimal fontsize { get; set; }
+        public bool ConfirmLinkclick { get; set; }
+        
+        public bool ConfirmExit { get; set; }
 
-        public int textdirection { get; set; }
+        public bool ConfirmDeletenote { get; set; }
 
-        public String notesavepath { get; set; }
+        public string Defaultemail { get; set; }
+	    
+        public string SocialTwitterUsername { get; set; }
 
-        public String defaultemail { get; set; }
+        public string SocialTwitterpassword { get; set; }
 
-        public Boolean highlightHTML { get; set; }
+        public bool SocialFacebookSavesession { get; set; }
 
-        public Boolean confirmexit { get; set; }
+        public bool NetworkProxyuse { get; set; }
 
-        public Boolean confirmdelete { get; set; }
+        public string NetworkProxyaddr { get; set; }
 
-        public String twitteruser { get; set; }
+        public int NetworkTimeout { get; set; }
+        
+        public bool ProgramFirstrun { get; set; }
+        
+        public bool ProgramLogError { get; set; }
+        
+        public bool ProgramLogException { get; set; }
 
-        public String twitterpassword { get; set; }
+        public bool ProgramLogInfo { get; set; }
 
-        public Boolean logerror { get; set; }
-
-        public Boolean loginfo { get; set; }
-
-        public Boolean useproxy { get; set; }
-
-        public String proxyddr { get; set; }
-
-        public int timeout { get; set; }
-
-        public Boolean firstrun { get; set; }
-
-        public Boolean savefacebooksession { get; set; }
     }
 }
