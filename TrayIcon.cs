@@ -19,7 +19,7 @@ namespace NoteFly
 {
     using System.Drawing;
     using System.Reflection;
-    using System.Windows.Forms;
+    //using System.Windows.Forms;
 
     /// <summary>
     /// Startup class.
@@ -165,21 +165,62 @@ namespace NoteFly
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main()
+        private static void Main(string[] args)
         {
             components = new System.ComponentModel.Container();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(true);
-            transparency = true;
-            bool firstrun = false;
-
-            //disabletransparency parameter is for OS that don't support transparency, so they still can launch this programme.
-            if (System.Environment.GetCommandLineArgs().Length > 1)
+            
+			
+			//TODO load settings from settings.xml file and set Settings class.
+			
+			
+			
+			if (System.Environment.GetCommandLineArgs().Length > 1)
             {
-                if (System.Environment.GetCommandLineArgs()[1] == "/forcefirstrun")
-                {
-                    firstrun = true;
-                    /*
+				foreach (string arg in args)
+				{
+					switch (arg)
+					{	
+						//Forces the programme to setup the first run notefly info again.
+						case "/forcefirstrun":
+							Settings.ProgramFirstrun = true;
+							break;
+						
+						//disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
+						//because transparency is on by default.
+						case "/disabletransparency":							
+							Settings.NotesTransparencyEnabled = false;
+							break;
+						
+						//Turn off all highlighting functions in case highlighting was turned on and it let NoteFly crash on startup.
+						case "/disablehighlighting":
+							Settings.HighlightHyperlinks = false;
+							Settings.HighlightHTML = false;
+							Settings.HighlightPHP = false;
+							Settings.HighlightSQL = false;
+							break;
+						
+						//Turn off all social functions on startup.
+						case "/disablesocial":
+							Settings.SocialEmailEnabled = false;
+							Settings.SocialFacebookEnabled = false;
+							Settings.SocialTwitterEnabled = false;
+							break;
+						
+						//Turn all logging features on at startup. 
+						//Handy in case NoteFly crashes at startup and logging was turned off.
+						case "/logall":
+							Settings.ProgramLogException = true;
+							Settings.ProgramLogError = true;
+							Settings.ProgramLogInfo = true;
+							break;
+							
+					}
+				}
+			}
+			
+			/*
 #if windows
                     System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
                     System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
@@ -190,12 +231,7 @@ namespace NoteFly
                     }
 #endif
                      */
-                }
-                else if (System.Environment.GetCommandLineArgs()[1] == "/disabletransparency")
-                {
-                    transparency = false;
-                }
-            }
+                        
 
             //start loading notes.
             notes = new Notes(firstrun);
@@ -229,36 +265,64 @@ namespace NoteFly
             icon.ContextMenuStrip.ShowImageMargin = false;
             icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
 
+			FontStyle menufontstyle = FontStyle.Regular;
+			
             // MenuNewNote
             menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             menuNewNote.Name = "MenuNewNote";
             menuNewNote.Size = new System.Drawing.Size(144, 22);
-            menuNewNote.Text = "&Create a new note";
-            menuNewNote.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
+            menuNewNote.Text = "&Create a new note";			
+			if (Settings.TrayiconCreatenotebold)
+			{
+            	fontstyle = FontStyle.Bold;
+			}
+			menuNewNote.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
             menuNewNote.Click += new System.EventHandler(MenuNewNote_Click);
             // MenuManageNotes
             menuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             menuManageNotes.Name = "listToolStripMenuItem";
             menuManageNotes.Size = new System.Drawing.Size(144, 22);
             menuManageNotes.Text = "&Manage notes";
+			if (Settings.TrayiconManagenotesbold)
+			{
+            	fontstyle = FontStyle.Bold;
+			} else {
+				fontstyle = FontStyle.Regular;
+			}
+			menuManageNotes.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
             menuManageNotes.Click += new System.EventHandler(MenuManageNotes_Click);
             // MenuSettings
             menuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             menuSettings.Name = "MenuSettings";
             menuSettings.Size = new System.Drawing.Size(144, 22);
             menuSettings.Text = "&Settings";
+			if (Settings.TrayiconSettingsbold)
+			{
+            	fontstyle = FontStyle.Bold;
+			} else {
+				fontstyle = FontStyle.Regular;
+			}
+			menuSettings.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
             menuSettings.Click += new System.EventHandler(MenuSettings_Click);
             // MenuAbout
             menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             menuAbout.Name = "MenuAbout";
             menuAbout.Size = new System.Drawing.Size(144, 22);
             menuAbout.Text = "About";
+			menuSettings.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
             menuAbout.Click += new System.EventHandler(MenuAbout_Click);
             // MenuExit
             menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             menuExit.Name = "MenuExit";
             menuExit.Size = new System.Drawing.Size(144, 22);
             menuExit.Text = "E&xit";
+			if (Settings.TrayiconExitbold)
+			{
+            	fontstyle = FontStyle.Bold;
+			} else {
+				fontstyle = FontStyle.Regular;
+			}
+			menuExitNotes.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
             menuExit.Click += new System.EventHandler(MenuExit_Click);
 
             if (firstrun)
