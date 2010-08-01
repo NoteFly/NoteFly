@@ -84,7 +84,7 @@ namespace NoteFly
 
         public static bool SocialFacebookSavesession { get; set; }
 
-        public static bool SocialFacebookUseSSL { get; set; }	
+        public static bool SocialFacebookUseSSL { get; set; }
 
         public static int NetworkConnectionTimeout { get; set; }
 
@@ -93,20 +93,20 @@ namespace NoteFly
         public static bool NetworkProxyEnabled { get; set; }
 
         public static string NetworkProxyAddress { get; set; }
-		
-		public static bool UpdatescheckEnabled { get; set; }
-		
-		public static int UpdatecheckEverydays { get; set; }
-		
-		public static bool UpdatecheckTodaydone { get; set; }
-		
-		public static int UpdatecheckDay { get; set; }
-		
-		public static int UpdateheckMonth { get; set; }
-		
-		public static int UpdatecheckYear { get; set; }
 
-        public static bool ProgramFirstrun { get; set; }	
+        public static bool UpdatescheckEnabled { get; set; }
+
+        public static int UpdatecheckEverydays { get; set; }
+
+        public static bool UpdatecheckTodaydone { get; set; }
+
+        public static int UpdatecheckDay { get; set; }
+
+        public static int UpdateheckMonth { get; set; }
+
+        public static int UpdatecheckYear { get; set; }
+
+        public static bool ProgramFirstrun { get; set; }
 
         public static bool ProgramLogError { get; set; }
 

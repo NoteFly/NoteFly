@@ -27,8 +27,6 @@ namespace NoteFly
         private string appdatafolder = "";
         private string filenm;
         private bool issetting;
-        private XmlTextReader objXmlTextReader;
-        private XmlTextWriter objXmlTextWriter;
 
 		#endregion Fields 
 
@@ -44,17 +42,7 @@ namespace NoteFly
                 this.filenm = Path.Combine(appdatafolder, "settings.xml");
                 if (File.Exists(filenm) == false)
                 {
-                    //write default settings.
-                    WriteSettings(true, 90, 0, 1, true,
-#if windows
-					              "Verdana",
-#elif linux
-					              "FreeSans",
-#elif macos
-					              "FreeSans",
-#endif
-					              
-					              10, 0, appdatafolder, "", false, false, true, "", "", true, false, false, "", 10000, false, true);
+                    
                 }
             }
         }
@@ -63,6 +51,7 @@ namespace NoteFly
         {
             SetAppdataFolder();
             this.filenm = filenm;
+            this.issetting = false;
         }
 
 		#endregion Constructors 
@@ -82,6 +71,189 @@ namespace NoteFly
 		#region Methods (11) 
 
 		// Public Methods (8) 
+
+        /// <summary>
+        /// Loads the settings file and set the settings in the
+        /// static Settings class in memory.
+        /// </summary>
+        public void LoadSettings()
+        {
+            XmlTextReader xmlreader = null;
+            try
+            {
+                xmlreader = new XmlTextReader(filenm);
+                if (xmlreader.Encoding != System.Text.Encoding.UTF8)
+                {
+                    //wrong encoding 
+                    throw new CustomException("Xml setting file has the wrong encoding.");
+                }
+                if (xmlreader.CanReadBinaryContent == true)
+                {
+                    //we dont want that.
+                    throw new CustomException("xmlTextReader shouldnt read binary.");
+                }
+                xmlreader.EntityHandling = EntityHandling.ExpandCharEntities;
+                xmlreader.ProhibitDtd = true;
+
+                while (xmlreader.Read())
+                {
+                    switch (xmlreader.Name)
+                    {
+                        //booleans
+                        case "ConfirmDeletenote":
+                            Settings.ConfirmDeletenote = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "ConfirmExit":
+                            Settings.ConfirmExit = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "ConfirmLinkclick":
+                            Settings.ConfirmLinkclick = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "FontTitleStylebold":
+                            Settings.FontTitleStylebold = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "HighlightHTML":
+                            Settings.HighlightHTML = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "HighlightHyperlinks":
+                            Settings.HighlightHyperlinks = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "HighlightPHP":
+                            Settings.HighlightPHP = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "HighlightSQL":
+                            Settings.HighlightSQL = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "NetworkConnectionForceipv6":
+                            Settings.NetworkConnectionForceipv6 = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "NetworkProxyEnabled":
+                            Settings.NetworkProxyEnabled = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "NotesClosebtnHidenotepermanently":
+                            Settings.NotesClosebtnHidenotepermanently = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "NotesClosebtnTooltipenabled":
+                            Settings.NotesClosebtnTooltipenabled = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "NotesTransparencyEnabled":
+                            Settings.NotesTransparencyEnabled = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "ProgramFirstrun":
+                            Settings.ProgramFirstrun = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "ProgramLogError":
+                            Settings.ProgramLogError = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "ProgramLogException":
+                            Settings.ProgramLogException = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "ProgramLogInfo":
+                            Settings.ProgramLogInfo = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "SocialEmailEnabled":
+                            Settings.SocialEmailEnabled = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "SocialFacebookEnabled":
+                            Settings.SocialFacebookEnabled = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "SocialFacebookSavesession":
+                            Settings.SocialFacebookSavesession = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "SocialFacebookUseSSL":
+                            Settings.SocialFacebookUseSSL = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "SocialTwitterEnabled":
+                            Settings.SocialTwitterEnabled = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "SocialTwitterUseSSL":
+                            Settings.SocialTwitterUseSSL = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "TrayiconCreatenotebold":
+                            Settings.TrayiconCreatenotebold = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "TrayiconExitbold":
+                            Settings.TrayiconExitbold = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "TrayiconManagenotesbold":
+                            Settings.TrayiconManagenotesbold = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "TrayiconSettingsbold":
+                            Settings.TrayiconSettingsbold = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "UpdatecheckTodaydone":
+                            Settings.UpdatecheckTodaydone = xmlreader.ReadElementContentAsBoolean();
+                            break;
+                        case "UpdatescheckEnabled":
+                            Settings.UpdatescheckEnabled = xmlreader.ReadElementContentAsBoolean();
+                            break;
+
+                        //ints
+                        case "FontContentSize":
+                            Settings.FontContentSize = xmlreader.ReadElementContentAsInt();
+                            break;
+                        case "FontTextdirection":
+                            Settings.FontTextdirection = xmlreader.ReadElementContentAsInt();
+                            break;
+                        case "FontTitleSize":
+                            Settings.FontTitleSize = xmlreader.ReadElementContentAsInt();
+                            break;
+                        case "NetworkConnectionTimeout":
+                            Settings.NetworkConnectionTimeout = xmlreader.ReadElementContentAsInt();
+                            break;
+                        case "NotesDefaultColor":
+                            Settings.NotesDefaultColor = xmlreader.ReadElementContentAsInt();
+                            break;
+                        case "NotesTransparencyLevel":
+                            Settings.NotesTransparencyLevel = xmlreader.ReadElementContentAsInt(); ;
+                            break;
+                        case "TrayiconLeftclickaction":
+                            Settings.TrayiconLeftclickaction = xmlreader.ReadElementContentAsInt();
+                            break;
+                        case "UpdatecheckDay":
+                            Settings.UpdatecheckDay = xmlreader.ReadElementContentAsInt();
+                            break;
+                        case "UpdatecheckEverydays":
+                            Settings.UpdatecheckEverydays = xmlreader.ReadElementContentAsInt();
+                            break;
+                        case "UpdatecheckYear":
+                            Settings.UpdatecheckYear = xmlreader.ReadElementContentAsInt();
+                            break;
+                        case "UpdateheckMonth":
+                            Settings.UpdateheckMonth = xmlreader.ReadElementContentAsInt();
+                            break;
+
+                        //strings (put at bottom in the settings file for more performance because then there are less characters to skip)
+                        case "FontContentFamily":
+                            Settings.FontContentFamily = xmlreader.ReadElementContentAsString();
+                            break;
+                        case "FontTitleFamily":
+                            Settings.FontTitleFamily = xmlreader.ReadElementContentAsString();
+                            break;
+                        case "NetworkProxyAddress":
+                            Settings.NetworkProxyAddress = xmlreader.ReadElementContentAsString();
+                            break;
+                        case "NotesSavepath":
+                            Settings.NotesSavepath = xmlreader.ReadElementContentAsString();
+                            break;
+                        case "SocialEmailDefaultadres":
+                            Settings.SocialEmailDefaultadres = xmlreader.ReadElementContentAsString();
+                            break;
+                        case "SocialTwitterpassword":
+                            Settings.SocialTwitterpassword = xmlreader.ReadElementContentAsString();
+                            break;
+                        case "SocialTwitterUsername":
+                            Settings.SocialTwitterUsername = xmlreader.ReadElementContentAsString();
+                            break;
+                    }
+                }
+            }
+            finally
+            {
+                xmlreader.Close();
+
+            }
+        }
 
         /// <summary>
         /// Get a xml node
@@ -282,66 +454,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the boolean setting in the settings.xml file as array.
-        /// </summary>
-        /// <returns>array of boolean settings
-        /// 0 transparecy
-        /// 1 askurl
-        /// 2 logerror
-        /// 3 loginfo
-        /// 4 highlightHTML
-        /// 5 confirmexit
-        /// 6 confirmdelete
-        /// 7 useproxy
-        /// 8 savesession</returns>
-        public Boolean[] ParserSettingsBool()
-        {
-            Boolean[] boolsetting = new Boolean[9];
-            try
-            {
-                objXmlTextReader = new XmlTextReader(filenm);
-                while (objXmlTextReader.Read())
-                {
-                    switch (objXmlTextReader.Name)
-                    {
-                        case "transparecy":
-                            boolsetting[0] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                        case "askurl":
-                            boolsetting[1] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                        case "logerror":
-                            boolsetting[2] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                        case "loginfo":
-                            boolsetting[3] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                        case "highlightHTML":
-                            boolsetting[4] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                        case "confirmexit":
-                            boolsetting[5] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                        case "confirmdelete":
-                            boolsetting[6] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                        case "useproxy":
-                            boolsetting[7] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                        case "savesession":
-                            boolsetting[8] = objXmlTextReader.ReadElementContentAsBoolean();
-                            break;
-                    }
-                }
-            }
-            finally
-            {
-                objXmlTextReader.Close();
-            }
-            return boolsetting;
-        }
-
-        /// <summary>
         /// Write a note xml file.
         /// </summary>
         /// <param name="visible">note is visible</param>
@@ -354,7 +466,7 @@ namespace NoteFly
         /// <param name="notewidth">width in pixels of the note</param>
         /// <param name="noteheight">height in pixels of the note</param>
         /// <returns></returns>
-        public bool WriteNote(bool visible, bool ontop, Int16 numcolor, string title, string content, int locX, int locY, int notewidth, int noteheight)
+        public bool WriteNote()
         {
             if (issetting)
             {

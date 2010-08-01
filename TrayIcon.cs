@@ -168,10 +168,9 @@ namespace NoteFly
         private static void Main(string[] args)
         {
             components = new System.ComponentModel.Container();
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(true);
-            
-			
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
+
 			//TODO load settings from settings.xml file and set Settings class.
 			
 			
