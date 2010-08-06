@@ -61,16 +61,14 @@ namespace NoteFly
             {
                 this.iptbProxyAddress.Enabled = true;
             }
-
+            this.iptbProxyAddress.SetIPAddress(this.GetProxyAddr());
             this.numProcTransparency.Value = this.GetTransparecylevel();
             this.cbxDefaultColor.SelectedIndex = this.GetDefaultColor();
             this.cbxActionLeftClick.SelectedIndex = this.GetActionLeftClick();
-
             this.tbNotesSavePath.Text = this.GetNotesSavePath();
             this.tbTwitterUser.Text = this.GetTwitterusername();
             this.tbTwitterPass.Text = this.GetTwitterpassword();
-            this.tbDefaultEmail.Text = this.GetDefaultEmail();					
-			
+            this.tbDefaultEmail.Text = this.GetDefaultEmail();	
             this.cbxTextDirection.SelectedIndex = this.GetTextDirection();
 #if windows
             this.chxStartOnBootWindows.Checked = this.GetStatusStartlogin();
