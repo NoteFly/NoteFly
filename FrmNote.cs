@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -677,6 +677,20 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Save note after moving
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void pnlHead_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.moving = false;
+            if (!this.notelock && !this.SavePos.IsBusy)
+            {
+                SavePos.RunWorkerAsync();
+            }
+        }
+
+        /// <summary>
         /// Resize note.
         /// </summary>
         /// <param name="sender">Sender object.</param>
@@ -1021,11 +1035,11 @@ namespace NoteFly
             }
         }
 
-        private void pnlHead_MouseUp(object sender, MouseEventArgs e)
-        {
-            this.moving = false;
-        }
-
+        /// <summary>
+        /// Moving note
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pnlHead_MouseMove(object sender, MouseEventArgs e)
         {
             if ((this.moving) && (e.Button == MouseButtons.Left))

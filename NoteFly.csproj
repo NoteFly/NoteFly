@@ -36,8 +36,10 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <ReleaseVersion>1.0</ReleaseVersion>
-    <Win32Resource>icons.res</Win32Resource>
+    <Win32Resource>
+    </Win32Resource>
     <newfilesearch>OnLoad</newfilesearch>
+    <ApplicationIcon>icon_big.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -143,7 +145,6 @@
     </Compile>
     <None Include="app.config" />
     <None Include="clean_settings.bat" />
-    <None Include="icons.res" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1116,6 +1117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
+    <Content Include="icon_big.ico" />
     <Content Include="Resources\icon_big.ico" />
     <Content Include="Resources\icon_big.png" />
     <Content Include="Resources\icon_small.ico" />
