@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="IPTextBox.cs" company="GNU">
 // 
 // This program is free software; you can redistribute it and/or modify it
@@ -135,7 +135,7 @@ namespace NoteFly
 
                 if (this.addrtype == IPaddrType.ipv6) 
                 {
-                    MessageBox.Show("can't mix ipv4 and ipv6 seperators. Don't use dots for ip v6."); 
+                    MessageBox.Show("can't mix ipv4 and ipv6 seperators. Don't use dots for IPv6."); 
                 }
 
                 this.addrtype = IPaddrType.ipv4;
@@ -154,7 +154,7 @@ namespace NoteFly
             }
             else if (k == 8 || k == 16 || k == 37 || k == 39 || k == 46)
             {
-                //shift, backspace, left. right, delete  key
+                //shift, backspace, left. right, delete key
                 e.SuppressKeyPress = false;
             }
             else

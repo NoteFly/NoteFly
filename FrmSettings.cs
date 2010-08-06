@@ -69,8 +69,8 @@ namespace NoteFly
             this.tbNotesSavePath.Text = this.GetNotesSavePath();
             this.tbTwitterUser.Text = this.GetTwitterusername();
             this.tbTwitterPass.Text = this.GetTwitterpassword();
-            this.tbDefaultEmail.Text = this.GetDefaultEmail();
-
+            this.tbDefaultEmail.Text = this.GetDefaultEmail();					
+			
             this.cbxTextDirection.SelectedIndex = this.GetTextDirection();
 #if windows
             this.chxStartOnBootWindows.Checked = this.GetStatusStartlogin();

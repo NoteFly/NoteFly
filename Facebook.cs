@@ -310,7 +310,6 @@ namespace NoteFly
                         }
                         else if (curparm.StartsWith("\"secret\":"))
                         {
-                            int seclen = curparm.Length - 1;
                             FacebookSettings.Sessionsecret = curparm.Substring(10, curparm.Length - 11);
                         }
                         else if (curparm.StartsWith("\"sig\":"))

@@ -227,19 +227,13 @@ namespace NoteFly
                 Label lblNoteTitle = new Label();
                 CheckBox cbxNoteVisible = new CheckBox();
                 Button btnNoteDelete = new Button();
-
-                int titlelength = this.notes.GetNotes[curnote].NoteTitle.Length;
                 lblNoteTitle.AutoSize = true;
-
                 lblNoteTitle.Text = this.ShortenTitle(curnote, newlentitle);
-
                 lblNoteTitle.Name = "lbNote" + Convert.ToString(curnote + 1);
                 lblNoteTitle.Location = new Point(2, ypos);
                 lblNoteTitle.Anchor = (AnchorStyles.Left | AnchorStyles.Top);
-
                 cbxNoteVisible.Text = "visible";
                 cbxNoteVisible.Name = Convert.ToString(curnote);
-
                 if (this.notes.GetNotes[curnote].Visible == true)
                 {
                     cbxNoteVisible.CheckState = CheckState.Checked;
