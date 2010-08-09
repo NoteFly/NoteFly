@@ -229,8 +229,13 @@ namespace NoteFly
                 {
                     this.highlight = new TextHighlight(this.rtbNote, this.notes.HighlightHTML);
                 }
-
                 this.highlight.CheckSyntaxFull();
+            }
+            else
+            {
+                this.rtbNote.SelectAll();
+                this.rtbNote.SelectionColor = Color.Black;
+                this.rtbNote.SelectionLength = 0;
             }
 
             if (this.TopMost)

@@ -271,9 +271,13 @@ namespace NoteFly
                 this.transparecy = false;
             }
 
-            if (getSettings.getXMLnodeAsBool("highlightHTML"))
+            if (getSettings.getXMLnodeAsBool("highlightHTML") == true)
             {
                 this.HighlightHTML = true;
+            }
+            else
+            {
+                this.HighlightHTML = false;
             }
 
             this.notesavepath = getSettings.getXMLnode("notesavepath");
