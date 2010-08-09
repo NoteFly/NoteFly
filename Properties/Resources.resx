@@ -130,4 +130,37 @@
   <data name="locknote" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\locknote.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="settings_emailnotvalid" xml:space="preserve">
+    <value>Given default emailadres is not valid.</value>
+  </data>
+  <data name="settings_filealreadyexist" xml:space="preserve">
+    <value>Problem moving notes to new folder, the note already exist in the new folder.</value>
+  </data>
+  <data name="settings_fontnotecontentnotfound" xml:space="preserve">
+    <value>Current font for note content cannot be found.</value>
+  </data>
+  <data name="settings_invalidfoldersavenote" xml:space="preserve">
+    <value>Invalid folder for saving notes folder.</value>
+  </data>
+  <data name="settings_invalidfontsize" xml:space="preserve">
+    <value>Font size invalid. Minimal 4pt maximum 128pt allowed.</value>
+  </data>
+  <data name="settings_nofont" xml:space="preserve">
+    <value>Select a font.</value>
+  </data>
+  <data name="settings_noknowtextdir" xml:space="preserve">
+    <value>Settings text direction invalid.</value>
+  </data>
+  <data name="settings_notallowcheckstate" xml:space="preserve">
+    <value>Checkstate not allowed.</value>
+  </data>
+  <data name="settings_regkeynotexist" xml:space="preserve">
+    <value>Run key in registery does not exist.</value>
+  </data>
+  <data name="settings_twitternametoolong" xml:space="preserve">
+    <value>Twitter username is too long.</value>
+  </data>
+  <data name="settings_twitterpaswtooshort" xml:space="preserve">
+    <value>Twitter password is too short.</value>
+  </data>
 </root>
