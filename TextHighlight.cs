@@ -187,7 +187,9 @@ namespace NoteFly
         /// </summary>
         public void CheckSyntaxFull()
         {
-            int cursorpos = this.rtbcode.SelectionStart;
+            this.rtbcode.Select(0, 0);
+            this.rtbcode.SelectionColor = Color.Black;
+            int cursorpos = 0;
             this.ResetHighlighting(this.rtbcode);
 
             bool htmlendnode = false;
@@ -231,6 +233,13 @@ namespace NoteFly
                             {
                                 this.ColorText(this.posstarttag, lengthtillendtag + 1, Color.Red);
                             }
+                            /*
+                            if (this.rtbcode.Text.Length > (i + 1))
+                            {
+                                this.rtbcode.Select(i+1, 0);
+                                this.rtbcode.SelectionColor = Color.Black;
+                            }
+                            */
                         }
                     }
                 }

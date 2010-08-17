@@ -69,7 +69,7 @@ namespace NoteFly
             this.title = title;
             this.note = note;
             this.notecolor = notecolor;
-
+            
             if ((locX + notewidth > MINVISIBLESIZE) && (locY + noteheight > MINVISIBLESIZE))
             {
                 this.locX = locX;
@@ -229,7 +229,6 @@ namespace NoteFly
                 {
                     this.highlight = new TextHighlight(this.rtbNote, this.notes.HighlightHTML);
                 }
-                this.highlight.CheckSyntaxFull();
             }
             else
             {
@@ -249,6 +248,11 @@ namespace NoteFly
 
             this.rtbNote.DetectUrls = true;
             this.rtbNote.Text += ""; //causes TextChanged event so rescan for URL's happens
+
+            if (this.notes.HighlightHTML == true)
+            {
+                this.highlight.CheckSyntaxFull();
+            }
         }
 
         /// <summary>
@@ -346,7 +350,7 @@ namespace NoteFly
             }
             else
             {
-                string msgNoNetwork = "There is no network connection.";
+                const string msgNoNetwork = "There is no network connection.";
                 Log.Write(LogType.error, msgNoNetwork);
                 MessageBox.Show(msgNoNetwork);
                 return false;
@@ -614,7 +618,7 @@ namespace NoteFly
                 //this.rtbNote.RightToLeft = RightToLeft.Yes; //will make the contextmenu act not right.
             }
             this.rtbNote.SelectionStart = 0;
-
+            this.rtbNote.Select(0, 0);
             this.rtbNote.Font = this.skin.GetFontNoteContent();
         }
 
