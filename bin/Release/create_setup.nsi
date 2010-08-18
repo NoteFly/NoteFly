@@ -27,7 +27,6 @@ BrandingText " "
 VIProductVersion "${VERSION}.0"
 VIAddVersionKey "ProductName" "NoteFly"
 VIAddVersionKey "FileDescription" "note taking application"
-;CompletedText "Installation completed."
 
 ; The file to write
 OutFile ".\NoteFly_v${VERSION}${VERSTATUS}.exe"
@@ -146,14 +145,14 @@ Section "main executable (required)"
   SectionIn RO
   SetOverwrite on  
   
-  ;using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in (optimized version, KillProcDLL.dll only)
-  KillProcDLL::KillProc "NoteFly.exe" 
-  sleep 250
-
+  ;Check installation directory and set output path to the installation directory.
   !insertmacro BadPathsCheck
-  SetOutPath $INSTDIR  ;Set output path to the installation directory.
+  SetOutPath $INSTDIR 
+  
+  ;Kill running NoteFly if any, using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in (optimized version, KillProcDLL.dll only)
+  KillProcDLL::KillProc "${APPFILE}" 
+  sleep 300
 
-  File "${APPFILE}"
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"   
   ; Write the uninstall keys for Windows
@@ -163,7 +162,11 @@ Section "main executable (required)"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "DisplayVersion" "${VERSION}"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
+  
+  ; write the files main executable and uninstaller.
+  File "${APPFILE}"
   WriteUninstaller "uninstall.exe"   
+  
 SectionEnd
 
 Section "Desktop Shortcut"

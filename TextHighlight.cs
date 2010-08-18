@@ -197,50 +197,44 @@ namespace NoteFly
             {
                 if (this.checkhtml)
                 {
-                    if (this.rtbcode.Text[i] == '<')
+                    switch (this.rtbcode.Text[i])
                     {
-                        this.posstarttag = i;
-                    }
-                    else if (this.rtbcode.Text[i] == '>')
-                    {
-                        if (this.rtbcode.Text[posstarttag + 1] == '/')
-                        {
-                            htmlendnode = true;
-                        }
-                        else
-                        {
-                            htmlendnode = false;
-                        }
-
-                        int lengthtillendtag = i - this.posstarttag;
-                        if (lengthtillendtag > 1)
-                        {
-                            string htmlnodename;
-                            if (htmlendnode == true)
+                        case '<':
+                            this.posstarttag = i;
+                            break;
+                        case '>':
+                            if (this.rtbcode.Text[posstarttag + 1] == '/')
                             {
-                                htmlnodename = this.rtbcode.Text.Substring(this.posstarttag + 2, lengthtillendtag - 2);
+                                htmlendnode = true;
                             }
                             else
                             {
-                                htmlnodename = this.rtbcode.Text.Substring(this.posstarttag + 1, lengthtillendtag - 1);
+                                htmlendnode = false;
                             }
 
-                            if (this.ValidingHTMLNode(htmlnodename, htmlendnode))
+                            int lengthtillendtag = i - this.posstarttag;
+                            if (lengthtillendtag > 1)
                             {
-                                this.ColorText(this.posstarttag, lengthtillendtag + 1, Color.Blue);
+                                string htmlnodename;
+                                if (htmlendnode == true)
+                                {
+                                    htmlnodename = this.rtbcode.Text.Substring(this.posstarttag + 2, lengthtillendtag - 2);
+                                }
+                                else
+                                {
+                                    htmlnodename = this.rtbcode.Text.Substring(this.posstarttag + 1, lengthtillendtag - 1);
+                                }
+
+                                if (this.ValidingHTMLNode(htmlnodename, htmlendnode))
+                                {
+                                    this.ColorText(this.posstarttag, lengthtillendtag + 1, Color.Blue);
+                                }
+                                else
+                                {
+                                    this.ColorText(this.posstarttag, lengthtillendtag + 1, Color.Red);
+                                }
                             }
-                            else
-                            {
-                                this.ColorText(this.posstarttag, lengthtillendtag + 1, Color.Red);
-                            }
-                            /*
-                            if (this.rtbcode.Text.Length > (i + 1))
-                            {
-                                this.rtbcode.Select(i+1, 0);
-                                this.rtbcode.SelectionColor = Color.Black;
-                            }
-                            */
-                        }
+                            break;
                     }
                 }
             }
@@ -269,15 +263,14 @@ namespace NoteFly
                     {
                         for (int i = newcharpos; i > 0; i--)
                         {
-                            if (this.rtbcode.Text[i] == '<')
+                            switch (this.rtbcode.Text[i])
                             {
-                                this.ColorText(newcharpos, 1, Color.Red);
-                                break;
-                            }
-                            else if (this.rtbcode.Text[i] == '>')
-                            {
-                                this.ColorText(newcharpos, 1, Color.Black);
-                                break;
+                                case '<':
+                                    this.ColorText(newcharpos, 1, Color.Red);
+                                    break;
+                                case '>':
+                                    this.ColorText(newcharpos, 1, Color.Black);
+                                    break;
                             }
                         }
                     }
