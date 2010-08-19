@@ -1,0 +1,9 @@
+E: notefly: changelog-file-missing-in-native-package
+E: notefly: copyright-should-refer-to-common-license-file-for-lgpl
+W: notefly: possible-unindented-list-in-extended-description
+W: notefly: maintainer-not-full-name d9ping
+W: notefly: unknown-section Utilities
+W: notefly: binary-without-manpage usr/bin/notefly
+W: notefly: desktop-command-not-in-package /usr/share/applications/notefly.desktop mono
+W: notefly: executable-not-elf-or-script ./usr/bin/notefly
+W: notefly: maintainer-script-ignores-errors postrm

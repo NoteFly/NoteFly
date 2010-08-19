@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=notefly
+Version=1.0
+Exec=mono /usr/bin/notefly
+Comment=note taking application
+Icon=/media/truecrypt1/Public/sourcecode/Projects_Csharp/notefly/Resources/icon_big.png
+Type=Application
+Terminal=false
+StartupNotify=true
+Encoding=UTF-8
+Categories=Utility;

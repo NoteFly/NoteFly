@@ -1,11 +1,10 @@
 Package: notefly
 Version: 1.0.4
 Section: Utilities
-Homepage: http://www.notefly.tk/
-Architecture: all
-Essential: no
 Maintainer: d9ping <tomheefteenwebsite@hotmail.com>
-Bugs: http://www.notefly.tk/bugs/
+Homepage: http://www.notefly.tk/
+Priority: standard
+Architecture: all
 Depends: mono-runtime,libmono-system2.0-cil,libmono-winforms2.0-cil,libmono2.0-cil,libmono-security2.0-cil,ttf-freefont
 Description: A small advance note application.
  -Change color of notes.
