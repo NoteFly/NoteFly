@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -169,7 +169,7 @@ namespace NoteFly
         /// <summary>
         /// The signature of the request.
         /// </summary>
-        private string sig;
+		private string sig;
 
         // Methods(10)
 
@@ -280,6 +280,7 @@ namespace NoteFly
         /// <returns>True if url is on the succeed page</returns>
         public bool IsSucceedUrl(string url)
         {
+			this.sig = "";
             if (url.StartsWith(FBSUCCEEDURL) == true)
             {
                 string parm = url.ToString().Substring(60, url.Length - 61);

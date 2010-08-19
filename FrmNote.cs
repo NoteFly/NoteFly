@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -699,6 +699,7 @@ namespace NoteFly
             }
         }
 
+		/*
         /// <summary>
         /// Resize note.
         /// </summary>
@@ -708,6 +709,7 @@ namespace NoteFly
         {
             Cursor = Cursors.SizeNWSE;
         }
+		*/
 
         /// <summary>
         /// Hyperlink clicked.
@@ -951,7 +953,7 @@ namespace NoteFly
             {
                 string notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
                 Log.Write(LogType.error, notwusername.Replace("\r\n", ""));
-                MessageBox.Show(notwusername);
+                MessageBox.Show(notwusername, "setup twitter");
                 FrmSettings settings = new FrmSettings(this.notes);
                 settings.Show();
                 return;

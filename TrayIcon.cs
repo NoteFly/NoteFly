@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos //platform can be: windows, linux, macos
 
 using System;
 [assembly: CLSCompliant(true)]

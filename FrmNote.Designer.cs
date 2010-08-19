@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -138,7 +138,11 @@ namespace NoteFly
             this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
+#if windows
             this.pnlHead.Size = new System.Drawing.Size(240, 32);
+#elif linux
+			this.pnlHead.Size = new System.Drawing.Size(240, 26);
+#endif
             this.pnlHead.TabIndex = 1;
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
@@ -360,10 +364,18 @@ namespace NoteFly
             this.btnCloseNote.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCloseNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseNote.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+#if windows
             this.btnCloseNote.Location = new System.Drawing.Point(200, 4);
+#elif linux
+			this.btnCloseNote.Location = new System.Drawing.Point(200, 2);
+#endif
             this.btnCloseNote.Margin = new System.Windows.Forms.Padding(1);
             this.btnCloseNote.Name = "btnCloseNote";
+#if windows
             this.btnCloseNote.Size = new System.Drawing.Size(31, 23);
+#elif linux
+			this.btnCloseNote.Size = new System.Drawing.Size(31, 18);
+#endif
             this.btnCloseNote.TabIndex = 1;
             this.btnCloseNote.TabStop = false;
             this.btnCloseNote.Text = "X";
@@ -410,9 +422,17 @@ namespace NoteFly
             this.pnlNote.ContextMenuStrip = this.menuFrmNoteOptions;
             this.pnlNote.Controls.Add(this.pbResizeGrip);
             this.pnlNote.Controls.Add(this.rtbNote);
+#if windows
             this.pnlNote.Location = new System.Drawing.Point(0, 31);
+#elif linux
+			this.pnlNote.Location = new System.Drawing.Point(0, 24);
+#endif
             this.pnlNote.Name = "pnlNote";
+#if windows
             this.pnlNote.Size = new System.Drawing.Size(240, 209);
+#elif linux
+			this.pnlNote.Size = new System.Drawing.Size(234, 212);
+#endif
             this.pnlNote.TabIndex = 4;
             // 
             // pbResizeGrip
@@ -420,7 +440,11 @@ namespace NoteFly
             this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
+#if windows
             this.pbResizeGrip.Location = new System.Drawing.Point(223, 191);
+#elif linux
+			this.pbResizeGrip.Location = new System.Drawing.Point(218, 194);
+#endif
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);

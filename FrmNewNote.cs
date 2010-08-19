@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -54,12 +54,13 @@ namespace NoteFly
             this.editnoteid = editnoteid;
             this.notes = notes;
             this.ResetNewNoteForm(editnotetitle, editnotecontent);
-            this.rtbNote.Focus();
+            this.SetTextDirection();
+			this.rtbNote.Focus();
             this.rtbNote.Select();
             if (this.editnote)
             {
                 this.Text = "edit note";
-            }
+            }			
             this.BringToFront(); //default is this, but this forces it. bug: #0000014
         }
 
@@ -76,6 +77,7 @@ namespace NoteFly
             this.notecolor = notecolor;
             this.skin = new Skin(notecolor);
             this.ResetNewNoteForm(String.Empty, String.Empty);
+			this.SetTextDirection();
             this.tbTitle.Text = DateTime.Now.ToString();
             this.rtbNote.Focus();
             this.rtbNote.Select();

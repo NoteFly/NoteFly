@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -413,14 +413,13 @@ namespace NoteFly
             return this.xmlsettings.getXMLnodeAsInt("textdirection");
         }
 
+#if windows
         /// <summary>
-        /// Gets if notefly is used to run at logon.
-        /// bugfix: 0000006
+        /// Gets if notefly is used to run at logon. Windows only methode.
         /// </summary>
         /// <returns>The boolean if it starts at logon.</returns>
         private bool GetStatusStartlogin()
         {
-#if windows
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {
@@ -432,11 +431,12 @@ namespace NoteFly
                 {
                     return false;
                 }
-            }
-#endif
-            return false;
+            } else {
+            	return false;
+			}
         }
-
+		#endif
+		
         /// <summary>
         /// The default email address.
         /// </summary>

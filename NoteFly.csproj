@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -36,8 +36,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <ReleaseVersion>1.0</ReleaseVersion>
-    <Win32Resource>
-    </Win32Resource>
     <newfilesearch>OnLoad</newfilesearch>
     <ApplicationIcon>icon_big.ico</ApplicationIcon>
   </PropertyGroup>
@@ -65,7 +63,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DebugSymbols>true</DebugSymbols>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <LangVersion>ISO-2</LangVersion>
@@ -219,9 +216,6 @@
       <Visible>False</Visible>
     </None>
     <None Include="notefly.in">
-      <Visible>False</Visible>
-    </None>
-    <None Include="FrmManageNotes.cs.bak">
       <Visible>False</Visible>
     </None>
     <None Include=".git\COMMIT_EDITMSG">
@@ -1082,38 +1076,255 @@
     <None Include="Resources %28kopie%29\trayicon.ico">
       <Visible>False</Visible>
     </None>
-    <None Include="NoteFly.csproj.bak">
+    <None Include="FrmManageNotes.resources">
       <Visible>False</Visible>
     </None>
-    <None Include="Settings.cs.bak">
+    <None Include=".git\FETCH_HEAD">
       <Visible>False</Visible>
     </None>
-    <None Include="TextHighlight.cs.bak">
+    <None Include=".git\ORIG_HEAD">
       <Visible>False</Visible>
     </None>
-    <None Include="TrayIcon.cs.bak">
+    <None Include=".git\objects\02\94a81da2c5497bee4df8daa808649b4503aec4">
       <Visible>False</Visible>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+    <None Include=".git\objects\03\a4fc6b162c6b8fd9d82d6ad82a863768859178">
       <Visible>False</Visible>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+    </None>
+    <None Include=".git\objects\04\97abcef3668ab84d46a11c3bfaf2b777e535c2">
       <Visible>False</Visible>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+    </None>
+    <None Include=".git\objects\07\4ddce4d9ecb113f81cb436553fd13dae58fdc7">
       <Visible>False</Visible>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+    </None>
+    <None Include=".git\objects\0a\47d84b1168a1f1274ecacc28ef1063558bed15">
       <Visible>False</Visible>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+    </None>
+    <None Include=".git\objects\11\bb3d2c5553e1295034b32802f0a7f32812b1ff">
       <Visible>False</Visible>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+    </None>
+    <None Include=".git\objects\13\2280a445986d7ce7bc67f9fedf2943f3af03ed">
       <Visible>False</Visible>
-    </BootstrapperPackage>
+    </None>
+    <None Include=".git\objects\15\fcc188be8167c65e32e2c29e27ffeca290179f">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\20\ed94fb20de0926ecf13517ac68784383d83373">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\23\4e1b9ae1b92f7902e70686c60b989831a5c446">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\24\c9f0fcd4beb709fff54ab3ffb08012fd8e9e83">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\27\bbf27044cc1de4597d2fa2d49eedc3d2396a9c">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\2a\4bd0e59a0f1a625fe6dccb8135819c0b62712e">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\2d\f9a7a06e4e27c820d856fe937ccc46b3b1399c">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\31\57ff21d2891ea2f99a270cfc74decc5e59a362">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\33\50d26e0ac7aa5a776dd5b4cc03b4cc1175df2e">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\38\cd85a28c6801600999158eb2f186db6e39df90">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\3c\512980faf9464c61a5927265083f3525dbdeac">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\44\8e0dc829b1c6a642a22b053cb299d16546f962">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\4f\4c0c32ea25f46a9c6cf3959ba6cce975ee489f">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\5b\70202f451146576180b6ea17516556c1478ca2">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\5d\4325205af9dbb9d5a9b3ddeeb38681a65acfbd">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\62\ebc441fc37b776bcdad99c7ee6320719126f56">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\72\ecd706c51ff7bc0c6a0c9929510f6ddcd645bb">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\7d\734f1e2d511bc11f113ba6c9e29a3b1a9cd471">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\7e\5256843eb0c71e48465c34bdcce9d2be22d51c">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\81\ca3466a035f53b92ba20c01bd494e58a342722">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\91\f60ad8d49dc0d9c29a393836595959427cea0f">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\95\ae32c77b972701aa4c5d1496edb1de8d38f3a7">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\9d\4989884d741450b55e6bbc0638104d3d85c0c0">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\9e\8ae4e9d29fe933aff3acf84ff2eee1a0f5ff7c">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\a3\5c12817af6edf8012982a0393d9dfd5791df3a">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\a4\23c2de2c3cbcbf02121184aec16eb21fb13aef">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\ab\1e98be869eebfd30ae33913894b9d8c471d355">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\af\1c6390176a0850f535f3a9e58a0396d32fccc6">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\b2\d788a2e94ba901bf3e165492bde6b39ccc0967">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\b2\fd2231c581a9c859874aab321d451eb32e8b8d">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\b3\c13bf14496c079adf893b824d5ecc055a31e8e">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\b7\f7f3279352d0be669675590e7b30f38a96a97c">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\b8\c106886ecbadf1b456e3ebc57ea71c6ee539fa">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\c1\5b5f0415bf2fc7252a6902e35f9ca96f985a2d">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\c2\947c53bb0d3b8f96e0f983db28f22f0728a25d">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\c6\ab9750152e57c21d74dd54e84cf395bcf4074e">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\c7\6f2de17e6582f955907182cad93f8a79ebbc2e">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\cb\bf0dd10d59702414d9ff007141490264d5552f">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\d3\a0095ae290f97e4679e4b9e981ff5626d515bf">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\e0\770f23710c96374ceeb2cfe34e9bb96f600ae9">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\e4\c4134fa879d8468e7e57727de1bbe9acf777f7">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\ea\190adfa2ddb2fbf52fa9e6ec87c724526ad0f5">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\ea\5383f30a9bcabb78b17e790972ff89af31c03d">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\f2\5791aabc473d3a0ad9e3296498aba40bee1a90">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\fb\259639b90a980ce91482b23fcaf71fa6877ae5">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\ff\130a82a7634b9b38429cbb588b7715597e5a38">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\objects\ff\2d364f474d58c422bc7f8d8e313126feb30842">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\refs\tags\1.0.3b">
+      <Visible>False</Visible>
+    </None>
+    <None Include=".git\refs\tags\1.0.4">
+      <Visible>False</Visible>
+    </None>
+    <None Include="Properties\Resources1.Designer.cs">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Debug\NoteFly.FrmAbout.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Debug\NoteFly.FrmManageNotes.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Debug\NoteFly.FrmNewNote.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Debug\NoteFly.FrmNote.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Debug\NoteFly.FrmSettings.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Debug\NoteFly.IPTextBox.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Debug\NoteFly.Properties.Resources.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Debug\NoteFly.csproj.FileListAbsolute.txt">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Debug\NoteFly.csproj.GenerateResource.Cache">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Release\NoteFly.FrmAbout.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Release\NoteFly.FrmManageNotes.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Release\NoteFly.FrmNewNote.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Release\NoteFly.FrmNote.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Release\NoteFly.FrmSettings.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Release\NoteFly.IPTextBox.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Release\NoteFly.Properties.Resources.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Release\NoteFly.csproj.FileListAbsolute.txt">
+      <Visible>False</Visible>
+    </None>
+    <None Include="obj\Release\NoteFly.csproj.GenerateResource.Cache">
+      <Visible>False</Visible>
+    </None>
+    <None Include="FrmNewNote.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="FrmNote.cs.bak">
+      <Visible>False</Visible>
+    </None>
+    <None Include="FrmNote.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="FrmSettings.resources">
+      <Visible>False</Visible>
+    </None>
+    <None Include="IPTextBox.resources">
+      <Visible>False</Visible>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
@@ -1141,7 +1352,6 @@
         <Policies>
           <StandardHeader IncludeInNewFiles="False" inheritsSet="GPLv2License" />
           <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="application/x-resource" />
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="MSBuild" />
         </Policies>
         <Deployment.LinuxDeployData generateScript="false" />
         <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile">

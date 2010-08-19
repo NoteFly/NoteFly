@@ -11,6 +11,8 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
+#define linux //platform can be: windows, linux, macos
+
 namespace NoteFly
 {
     /// <summary>
@@ -278,7 +280,11 @@ namespace NoteFly
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
+#if windows
             this.pbResizeGrip.Location = new System.Drawing.Point(266, 193);
+#elif linux
+			this.pbResizeGrip.Location = new System.Drawing.Point(267, 198);
+#endif
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
