@@ -29,44 +29,9 @@ namespace NoteFly
         #region Fields (9)
 
         /// <summary>
-        /// The default number color.
-        /// </summary>
-        private short defaultcolor = 1;
-
-        /// <summary>
-        /// Path to where notes are saved.
-        /// </summary>
-        private string notesavepath;
-
-        /// <summary>
         /// The list with all notes.
         /// </summary>
         private List<FrmNote> noteslst;
-
-        /// <summary>
-        /// Are notes updated.
-        /// </summary>
-        private bool notesupdated = false;
-
-        /// <summary>
-        /// Transparecy enabled.
-        /// </summary>
-        private bool transparecy = false;
-
-        /// <summary>
-        /// Twitter enabled.
-        /// </summary>
-        private bool twitterenabled = false;
-
-        /// <summary>
-        /// The textdirection, 0 is left to right, 1 is right to left
-        /// </summary>
-        private short textdirection = 0;
-
-        /// <summary>
-        /// Is hightlight html enabled.
-        /// </summary>
-        private bool highlighthtml = false;
 
         #endregion Fields
 
@@ -79,7 +44,7 @@ namespace NoteFly
         public Notes(bool forcefirstrun)
         {
             this.noteslst = new List<FrmNote>();
-            bool firstrun = this.SetSettings();
+            bool firstrun = Settings.ProgramFirstrun;
             if (forcefirstrun)
             {
                 firstrun = true;
@@ -92,56 +57,13 @@ namespace NoteFly
         #region Properties (7)
 
         /// <summary>
-        /// Gets or sets a value indicating whether notes HTML note content is highlighted.
-        /// </summary>
-        public bool HighlightHTML
-        {
-            get
-            {
-                return this.highlighthtml;
-            }
-
-            set
-            {
-                this.highlighthtml = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets a note.
+        /// Gets a notes.
         /// </summary>
         public List<FrmNote> GetNotes
         {
             get
             {
                 return this.noteslst;
-            }
-        }
-
-        /// <summary>
-        /// Gets the path where notes are saved.
-        /// </summary>
-        public string NoteSavePath
-        {
-            get
-            {
-                return this.notesavepath;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether notes are updated.
-        /// </summary>
-        public bool NotesUpdated
-        {
-            get
-            {
-                return this.notesupdated;
-            }
-
-            set
-            {
-                this.notesupdated = value;
             }
         }
 
@@ -162,44 +84,6 @@ namespace NoteFly
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether transparency is enabled.
-        /// </summary>
-        public bool Transparency
-        {
-            get
-            {
-                return this.transparecy;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether twitter is enabled.
-        /// </summary>
-        public bool TwitterEnabled
-        {
-            get
-            {
-                return this.twitterenabled;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether textdirection is left to right(0) or right to left(1).
-        /// </summary>
-        public short TextDirection
-        {
-            get
-            {
-                return this.textdirection;
-            }
-
-            set
-            {
-                this.textdirection = value;
-            }
-        }
-
         #endregion Properties
 
         #region Methods (10)
@@ -214,7 +98,7 @@ namespace NoteFly
             try
             {
                 short newid = Convert.ToInt16(this.noteslst.Count + 1);
-                string notefilenm = this.SaveNewNote(newid, title, content, this.defaultcolor);
+                string notefilenm = this.SaveNewNote(newid, title, content, Convert.ToInt16(Settings.NotesDefaultColor));
                 Log.Write(LogType.info, "note created: " + notefilenm);
                 if (String.IsNullOrEmpty(notefilenm))
                 {
@@ -254,62 +138,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// check settings and set variables
-        /// </summary>
-        /// <returns>true if first time started.</returns>
-        public bool SetSettings()
-        {
-            xmlHandler getSettings = new xmlHandler(true);
-
-            this.defaultcolor = Convert.ToInt16(getSettings.getXMLnodeAsInt("defaultcolor"));
-            if (getSettings.getXMLnodeAsBool("transparecy") == true)
-            {
-                this.transparecy = true;
-            }
-            else
-            {
-                this.transparecy = false;
-            }
-
-            if (getSettings.getXMLnodeAsBool("highlightHTML"))
-            {
-                this.HighlightHTML = true;
-            }
-
-            this.notesavepath = getSettings.getXMLnode("notesavepath");
-            this.textdirection = Convert.ToInt16(getSettings.getXMLnodeAsInt("textdirection"));
-            this.twitterenabled = !String.IsNullOrEmpty(getSettings.getXMLnode("twitteruser"));
-            if (getSettings.getXMLnodeAsBool("savesession") == true)
-            {
-                FacebookSettings.Uid = getSettings.getXMLnode("uid");
-                string strSessionExpires = getSettings.getXMLnode("sesionexpires");
-                if (!String.IsNullOrEmpty(strSessionExpires))
-                {
-                    try
-                    {
-                        FacebookSettings.Sesionexpires = Convert.ToDouble(strSessionExpires);
-                    }
-                    catch (InvalidCastException invcastexc)
-                    {
-                        throw new CustomException("sessionexpires not valid. "+invcastexc.Message);
-                    }
-                }
-
-                FacebookSettings.Sessionsecret = getSettings.getXMLnode("sessionsecret");
-                FacebookSettings.Sessionkey = getSettings.getXMLnode("sessionkey");
-            }
-
-            if (getSettings.getXMLnodeAsBool("firstrun"))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
         /// Update all fonts (family/size etc.) for all notes.
         /// </summary>
         public void UpdateAllFonts()
@@ -340,7 +168,7 @@ namespace NoteFly
 
             this.noteslst[notelstpos].CheckThings();
             this.noteslst[notelstpos].UpdateThisNote();
-            this.notesupdated = true;
+
             Log.Write(LogType.info, ("Update note ID:" + noteid));
         }
 
@@ -397,7 +225,7 @@ namespace NoteFly
         /// <param name="firstrun">is it the first run?</param>
         private void LoadNotes(bool firstrun)
         {
-            if (!Directory.Exists(this.notesavepath))
+            if (!Directory.Exists(Settings.NotesSavepath))
             {
                 const string notefoldernoteexist = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
                 DialogResult result = MessageBox.Show(notefoldernoteexist, "notefolder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -410,12 +238,14 @@ namespace NoteFly
                 {
                     Log.Write(LogType.error, (notefoldernoteexist + " Yes"));
                     xmlHandler getAppdata = new xmlHandler(true);
-                    this.notesavepath = getAppdata.AppDataFolder;
+                    Settings.NotesSavepath = getAppdata.AppDataFolder;
                 }
             }
 
             ushort id = 1;
-            string notefile = Path.Combine(this.notesavepath, id + ".xml");
+            string[] notefiles = Directory.GetFiles(Settings.NotesSavepath, "*.note");
+            /*
+            string notefile = Path.Combine(Settings.NotesSavepath, id + ".note");
             while (File.Exists(notefile) == true)
             {
                 xmlHandler parserNote = new xmlHandler(notefile);
@@ -448,7 +278,6 @@ namespace NoteFly
 
                 notefile = Path.Combine(this.notesavepath, id + ".xml");
             }
-
             id++;
             notefile = Path.Combine(this.notesavepath, id + ".xml");
             if (File.Exists(notefile))
@@ -457,6 +286,7 @@ namespace NoteFly
                 MessageBox.Show(notemissing);
                 Log.Write(LogType.error, notemissing);
             }
+            */
 
             if (firstrun)
             {

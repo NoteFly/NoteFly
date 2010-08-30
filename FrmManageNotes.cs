@@ -84,7 +84,6 @@ namespace NoteFly
             this.skin = new Skin(notecolor);
             this.notes = notes;
             this.transparency = transparency;
-            notes.NotesUpdated = false;
             this.DrawNotesOverview();
         }
 

@@ -137,9 +137,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="app.config" />
     <None Include="clean_settings.bat" />
     <None Include="icons.res" />

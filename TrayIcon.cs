@@ -19,6 +19,7 @@ namespace NoteFly
 {
     using System.Drawing;
     using System.Reflection;
+    using System.Windows.Forms;
     //using System.Windows.Forms;
 
     /// <summary>

@@ -32,7 +32,6 @@ namespace NoteFly
         private const int MINVISIBLESIZE = 5;
 
         private Notes notes;
-        private TextHighlight highlight;
         private string note, title;
         private char[] twpass;
         private short id, notecolor = 0;
@@ -81,7 +80,6 @@ namespace NoteFly
                 this.locY = 10;
             }
 
-            notes.NotesUpdated = true;
             this.InitializeComponent();
             this.lblTitle.Text = title;
             this.rtbNote.Text = note;
@@ -133,7 +131,6 @@ namespace NoteFly
             this.rtbNote.Text = note;
             this.SetPosNote();
             this.CheckThings();
-            notes.NotesUpdated = true;
             this.rolledup = false;
             this.notelock = false;
         }
@@ -221,17 +218,9 @@ namespace NoteFly
         {
             this.PaintColorNote();
 
-            this.SetTextMenuTwitter(this.notes.TwitterEnabled);
+            this.SetTextMenuTwitter(Settings.SocialTwitterEnabled);
 
-            if (this.notes.HighlightHTML == true)
-            {
-                if (this.highlight == null)
-                {
-                    this.highlight = new TextHighlight(this.rtbNote, this.notes.HighlightHTML);
-                }
-
-                this.highlight.CheckSyntaxFull();
-            }
+            TextHighlight.CheckSyntaxFull(rtbNote);
 
             if (this.TopMost)
             {

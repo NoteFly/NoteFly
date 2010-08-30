@@ -22,10 +22,7 @@ namespace NoteFly
         private System.Windows.Forms.Label lbTextTitle;
         private System.Windows.Forms.Button btnAddNote;
         private System.Windows.Forms.Panel pnlHeadNewNote;
-        private System.Windows.Forms.Panel pnlNoteEdit;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.RichTextBox rtbNote;
-        private System.Windows.Forms.PictureBox pbResizeGrip;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTextActions;
         private System.Windows.Forms.ToolStripMenuItem menuPasteToContent;
         private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
@@ -62,7 +59,6 @@ namespace NoteFly
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNewNote));
-            this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuSaveNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStickyOnTop = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,38 +70,16 @@ namespace NoteFly
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddNote = new System.Windows.Forms.Button();
-            this.pnlNoteEdit = new System.Windows.Forms.Panel();
-            this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.rtbNote = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
-            this.pnlNoteEdit.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             this.SuspendLayout();
-            // 
-            // rtbNote
-            // 
-            this.rtbNote.AcceptsTab = true;
-            this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbNote.BackColor = System.Drawing.Color.Gold;
-            this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbNote.ContextMenuStrip = this.contextMenuStripTextActions;
-            this.rtbNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.rtbNote.Location = new System.Drawing.Point(3, 3);
-            this.rtbNote.MaxLength = 999999;
-            this.rtbNote.Name = "rtbNote";
-            this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbNote.Size = new System.Drawing.Size(271, 196);
-            this.rtbNote.TabIndex = 1;
-            this.rtbNote.Text = "";
-            this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
-            this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
-            this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
-            this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
-            this.rtbNote.TextChanged += new System.EventHandler(this.Checksyntax);
             // 
             // contextMenuStripTextActions
             // 
@@ -116,7 +90,7 @@ namespace NoteFly
             this.menuCopyContent,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 136);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 114);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -249,7 +223,7 @@ namespace NoteFly
             this.btnAddNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
             this.btnAddNote.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAddNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNote.Location = new System.Drawing.Point(219, 5);
+            this.btnAddNote.Location = new System.Drawing.Point(220, 6);
             this.btnAddNote.Name = "btnAddNote";
             this.btnAddNote.Size = new System.Drawing.Size(27, 23);
             this.btnAddNote.TabIndex = 2;
@@ -258,41 +232,157 @@ namespace NoteFly
             this.btnAddNote.UseVisualStyleBackColor = true;
             this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
             // 
-            // pnlNoteEdit
-            // 
-            this.pnlNoteEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlNoteEdit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlNoteEdit.Controls.Add(this.rtbNote);
-            this.pnlNoteEdit.Controls.Add(this.pbResizeGrip);
-            this.pnlNoteEdit.Location = new System.Drawing.Point(0, 38);
-            this.pnlNoteEdit.Name = "pnlNoteEdit";
-            this.pnlNoteEdit.Size = new System.Drawing.Size(284, 211);
-            this.pnlNoteEdit.TabIndex = 0;
-            this.pnlNoteEdit.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlNoteEdit_MouseClick);
-            // 
-            // pbResizeGrip
-            // 
-            this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
-            this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(266, 193);
-            this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
-            this.pbResizeGrip.Name = "pbResizeGrip";
-            this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
-            this.pbResizeGrip.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbResizeGrip.TabIndex = 6;
-            this.pbResizeGrip.TabStop = false;
-            this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
-            // 
             // toolTip
             // 
             this.toolTip.AutomaticDelay = 800;
             this.toolTip.AutoPopDelay = 6000;
             this.toolTip.InitialDelay = 800;
             this.toolTip.ReshowDelay = 100;
+            // 
+            // rtbNote
+            // 
+            this.rtbNote.AcceptsTab = true;
+            this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbNote.BackColor = System.Drawing.Color.Khaki;
+            this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbNote.ContextMenuStrip = this.contextMenuStripTextActions;
+            this.rtbNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.rtbNote.Location = new System.Drawing.Point(8, 46);
+            this.rtbNote.MaxLength = 999999;
+            this.rtbNote.Name = "rtbNote";
+            this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbNote.Size = new System.Drawing.Size(264, 162);
+            this.rtbNote.TabIndex = 1;
+            this.rtbNote.Text = "";
+            this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
+            this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
+            this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
+            this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
+            this.rtbNote.TextChanged += new System.EventHandler(this.Checksyntax);
+            // 
+            // button1
+            // 
+            this.button1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button1.CausesValidation = false;
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button1.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(12, 214);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(27, 23);
+            this.button1.TabIndex = 10;
+            this.button1.TabStop = false;
+            this.button1.Text = "B";
+            this.toolTip.SetToolTip(this.button1, "bold");
+            this.button1.UseMnemonic = false;
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button2.BackColor = System.Drawing.Color.Transparent;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button2.CausesValidation = false;
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button2.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(45, 214);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(26, 23);
+            this.button2.TabIndex = 11;
+            this.button2.TabStop = false;
+            this.button2.Text = "i";
+            this.toolTip.SetToolTip(this.button2, "Italic");
+            this.button2.UseMnemonic = false;
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.button3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button3.BackColor = System.Drawing.Color.Transparent;
+            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button3.CausesValidation = false;
+            this.button3.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button3.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Location = new System.Drawing.Point(109, 215);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(27, 23);
+            this.button3.TabIndex = 12;
+            this.button3.TabStop = false;
+            this.button3.Text = "S";
+            this.toolTip.SetToolTip(this.button3, "Striketrough");
+            this.button3.UseMnemonic = false;
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            this.button4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.button4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button4.BackColor = System.Drawing.Color.Transparent;
+            this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button4.CausesValidation = false;
+            this.button4.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button4.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(167, 215);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(31, 24);
+            this.button4.TabIndex = 13;
+            this.button4.TabStop = false;
+            this.button4.Text = "¶";
+            this.toolTip.SetToolTip(this.button4, "Striketrough");
+            this.button4.UseCompatibleTextRendering = true;
+            this.button4.UseMnemonic = false;
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // button5
+            // 
+            this.button5.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.button5.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button5.BackColor = System.Drawing.Color.Transparent;
+            this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button5.CausesValidation = false;
+            this.button5.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button5.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button5.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.button5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Location = new System.Drawing.Point(77, 215);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(26, 23);
+            this.button5.TabIndex = 14;
+            this.button5.TabStop = false;
+            this.button5.Text = "U";
+            this.toolTip.SetToolTip(this.button5, "Italic");
+            this.button5.UseMnemonic = false;
+            this.button5.UseVisualStyleBackColor = false;
             // 
             // FrmNewNote
             // 
@@ -306,7 +396,12 @@ namespace NoteFly
             this.ClientSize = new System.Drawing.Size(284, 249);
             this.ContextMenuStrip = this.contextMenuStripTextActions;
             this.ControlBox = false;
-            this.Controls.Add(this.pnlNoteEdit);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.rtbNote);
             this.Controls.Add(this.pnlHeadNewNote);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -321,9 +416,6 @@ namespace NoteFly
             this.contextMenuStripTextActions.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
-            this.pnlNoteEdit.ResumeLayout(false);
-            this.pnlNoteEdit.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -331,6 +423,12 @@ namespace NoteFly
         #endregion
 
         private System.Windows.Forms.ToolStripMenuItem menuStickyOnTop;
+        private System.Windows.Forms.RichTextBox rtbNote;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
 
     }
 }

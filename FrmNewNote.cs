@@ -31,7 +31,7 @@ namespace NoteFly
         private short notecolor;
         private Notes notes;
         private Skin skin;
-        private TextHighlight highlight;
+        //private TextHighlight highlight;
         private Point oldp;
         #endregion Fields
 
@@ -137,32 +137,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Syntax highlighting.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event arguments</param>
-        private void Checksyntax(object sender, EventArgs e)
-        {
-            if (this.notes.HighlightHTML == true)
-            {
-                if (this.highlight == null)
-                {
-                    this.highlight = new TextHighlight(this.rtbNote, this.notes.HighlightHTML);
-                    this.setupfirsthighlight = true;
-                }
-                else if (this.setupfirsthighlight)
-                {
-                    this.highlight.CheckSyntaxFull();
-                    this.setupfirsthighlight = false;
-                }
-                else if ((this.highlight != null) && (!String.IsNullOrEmpty(this.rtbNote.Text)))
-                {
-                    this.highlight.CheckSyntaxQuick(this.rtbNote.SelectionStart - 1);
-                }
-            }
-        }
-
-        /// <summary>
         /// Copy the note content.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -203,7 +177,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmNewNote_Activated(object sender, EventArgs e)
         {
-            if (this.notes.Transparency)
+            if (Settings.NotesTransparencyEnabled)
             {
                 this.Opacity = 1.0;
             }
@@ -216,7 +190,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmNewNote_Deactivate(object sender, EventArgs e)
         {
-            if (this.notes.Transparency && this.skin != null)
+            if (Settings.NotesTransparencyEnabled && this.skin != null)
             {
                 this.Opacity = this.skin.GetTransparencylevel();
                 this.Refresh();
