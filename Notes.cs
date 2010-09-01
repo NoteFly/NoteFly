@@ -243,7 +243,7 @@ namespace NoteFly
             }
 
             ushort id = 1;
-            string[] notefiles = Directory.GetFiles(Settings.NotesSavepath, "*.note");
+            string[] notefiles = Directory.GetFiles(Settings.NotesSavepath, "*.");
             /*
             string notefile = Path.Combine(Settings.NotesSavepath, id + ".note");
             while (File.Exists(notefile) == true)
@@ -303,33 +303,9 @@ namespace NoteFly
                 notecontent.AppendLine("You can get it back with the manage notes window.");
                 this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
 
-                xmlHandler settting = new xmlHandler(true);
-                bool[] boolsettings = settting.ParserSettingsBool();
-                settting.WriteSettings(
-                    boolsettings[0],
-                    Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")),
-                    settting.getXMLnodeAsInt("defaultcolor"),
-                    settting.getXMLnodeAsInt("actionleftclick"),
-                    boolsettings[1],
-                    settting.getXMLnode("fontcontent"),
-                    Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")),
-                    settting.getXMLnodeAsInt("textdirection"),
-                    settting.getXMLnode("notesavepath"),
-                    settting.getXMLnode("defaultemail"),
-                    boolsettings[4],
-                    boolsettings[5],
-                    boolsettings[6],
-                    settting.getXMLnode("twitteruser"),
-                    settting.getXMLnode("twitterpass"),
-                    boolsettings[2],
-                    boolsettings[3],
-                    boolsettings[7],
-                    settting.getXMLnode("proxyaddr"),
-                    settting.getXMLnodeAsInt("timeout"),
-                    true,
-                    boolsettings[8]);
-
-                Log.Write(LogType.info, "firstrun occurre"); //by default not logged.
+                xmlUtil.
+                
+                Log.Write(LogType.info, "firstrun occurre");
             }
 
 #if DEBUG

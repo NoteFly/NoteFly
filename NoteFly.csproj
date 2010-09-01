@@ -110,6 +110,7 @@
       <DependentUpon>IPTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Log.cs" />
+    <Compile Include="Note.cs" />
     <Compile Include="Notes.cs" />
     <Compile Include="Properties\Resources1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -150,7 +151,7 @@
     <Compile Include="Skin.cs" />
     <Compile Include="TextHighlight.cs" />
     <Compile Include="Twitter.cs" />
-    <Compile Include="XmlHandler.cs" />
+    <Compile Include="XmlUtil.cs" />
     <None Include="Resources\accept.png" />
     <None Include="Resources\cancel.png" />
     <None Include="bin\Debug\note.xsd" />

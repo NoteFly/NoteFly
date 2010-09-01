@@ -175,8 +175,7 @@ namespace NoteFly
         /// <returns>Transparencylevel as double</returns>
         public double GetTransparencylevel()
         {
-            xmlHandler getSettings = new xmlHandler(true);
-            double transparecylevel = Convert.ToDouble(getSettings.getXMLnodeAsInt("transparecylevel")) / 100;
+            double transparecylevel = Convert.ToDouble(Settings.NotesTransparencyLevel) / 100;
             if (transparecylevel > 0 && transparecylevel <= 100)
             {
                 return transparecylevel;
@@ -184,46 +183,6 @@ namespace NoteFly
             else
             {
                 throw new CustomException("invalid transparencylevel");
-            }
-        }
-
-        /// <summary>
-        /// Get the font for the note.
-        /// </summary>
-        /// <returns>null if error.</returns>
-        public Font GetFontNoteContent()
-        {
-            xmlHandler getSettings = new xmlHandler(true);
-            string fontname = getSettings.getXMLnode("fontcontent");
-            
-            foreach (FontFamily curfont in FontFamily.Families)
-            {
-                if (curfont.Name.ToString() == fontname)
-                {
-                    Font font = new Font(curfont, this.GetFontNoteSize(getSettings));
-                    return font;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Get the font size of the note.
-        /// </summary>
-        /// <param name="getSettings">XmlHandler class</param>
-        /// <returns>fontsize as a float number </returns>
-        private float GetFontNoteSize(xmlHandler getSettings)
-        {
-            getSettings = new xmlHandler(true);
-            int fontsize = getSettings.getXMLnodeAsInt("fontsize");
-            if ((fontsize > 1) && (fontsize <= 96))
-            {
-                return fontsize;
-            }
-            else
-            {
-                return 10;
             }
         }
 

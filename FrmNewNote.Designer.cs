@@ -71,12 +71,13 @@ namespace NoteFly
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddNote = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.rtbNote = new System.Windows.Forms.RichTextBox();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.SuspendLayout();
@@ -86,11 +87,12 @@ namespace NoteFly
             this.contextMenuStripTextActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuSaveNewNote,
             this.menuStickyOnTop,
+            this.importToolStripMenuItem,
             this.menuPasteToContent,
             this.menuCopyContent,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 114);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 158);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -239,30 +241,6 @@ namespace NoteFly
             this.toolTip.InitialDelay = 800;
             this.toolTip.ReshowDelay = 100;
             // 
-            // rtbNote
-            // 
-            this.rtbNote.AcceptsTab = true;
-            this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbNote.BackColor = System.Drawing.Color.Khaki;
-            this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbNote.ContextMenuStrip = this.contextMenuStripTextActions;
-            this.rtbNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.rtbNote.Location = new System.Drawing.Point(8, 46);
-            this.rtbNote.MaxLength = 999999;
-            this.rtbNote.Name = "rtbNote";
-            this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbNote.Size = new System.Drawing.Size(264, 162);
-            this.rtbNote.TabIndex = 1;
-            this.rtbNote.Text = "";
-            this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
-            this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
-            this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
-            this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
-            this.rtbNote.TextChanged += new System.EventHandler(this.Checksyntax);
-            // 
             // button1
             // 
             this.button1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -384,6 +362,36 @@ namespace NoteFly
             this.button5.UseMnemonic = false;
             this.button5.UseVisualStyleBackColor = false;
             // 
+            // rtbNote
+            // 
+            this.rtbNote.AcceptsTab = true;
+            this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbNote.BackColor = System.Drawing.Color.Khaki;
+            this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbNote.ContextMenuStrip = this.contextMenuStripTextActions;
+            this.rtbNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.rtbNote.Location = new System.Drawing.Point(8, 46);
+            this.rtbNote.MaxLength = 999999;
+            this.rtbNote.Name = "rtbNote";
+            this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbNote.Size = new System.Drawing.Size(264, 162);
+            this.rtbNote.TabIndex = 1;
+            this.rtbNote.Text = "";
+            this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
+            this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
+            this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
+            this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
+            this.importToolStripMenuItem.Text = "Import..";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
             // FrmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
@@ -429,6 +437,7 @@ namespace NoteFly
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
 
     }
 }

@@ -31,7 +31,7 @@ namespace NoteFly
         #region Fields (2)
 
         private Notes notes;
-        private xmlHandler xmlsettings;
+        //private xmlHandler xmlsettings;
 
         #endregion Fields
 

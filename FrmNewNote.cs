@@ -490,5 +490,15 @@ namespace NoteFly
             }
         }
         #endregion
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openfiledlg = new OpenFileDialog();
+            openfiledlg.Title = "open file";
+            openfiledlg.Multiselect = false;
+            openfiledlg.Filter = "text file (*.txt)|testerdetest.";
+            openfiledlg.ShowDialog();
+            
+        }
     }
 }

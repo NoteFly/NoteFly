@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos //platform can be: windows, linux, macos
 
 using System;
 [assembly: CLSCompliant(true)]
@@ -20,7 +20,6 @@ namespace NoteFly
     using System.Drawing;
     using System.Reflection;
     using System.Windows.Forms;
-    //using System.Windows.Forms;
 
     /// <summary>
     /// Startup class.
@@ -126,6 +125,21 @@ namespace NoteFly
                 int minorver = Assembly.GetExecutingAssembly().GetName().Version.Minor;
                 int buildver = Assembly.GetExecutingAssembly().GetName().Version.Build;
                 return majorver + "." + minorver + "." + buildver;
+            }
+        }
+
+        public static string AppDataFolder
+        {
+            get
+            {
+                #if windows
+                string appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\." + TrayIcon.AssemblyTitle + "\\";
+                #elif linux
+                string appdatafolder = System.Environment.GetEnvironmentVariable("HOME") + "/.NoteFly/";
+                #elif macos
+                string appdatafolder = "???"
+                #endif
+                return appdatafolder;
             }
         }
 

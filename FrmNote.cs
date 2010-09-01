@@ -31,7 +31,6 @@ namespace NoteFly
 
         private const int MINVISIBLESIZE = 5;
 
-        private Notes notes;
         private string note, title;
         private char[] twpass;
         private short id, notecolor = 0;
@@ -59,9 +58,9 @@ namespace NoteFly
         /// <param name="locY">The Y location on the screen.</param>
         /// <param name="notewidth">The width of the note.</param>
         /// <param name="noteheight">The height of the note.</param>
-        public FrmNote(Notes notes, short id, bool visible, bool ontop, string title, string note, short notecolor, int locX, int locY, int notewidth, int noteheight)
+        public FrmNote(Note note)
         {
-            this.notes = notes;
+            //this.notes = notes;
             this.FormBorderStyle = FormBorderStyle.None;
             this.skin = new Skin(notecolor);
             this.id = id;

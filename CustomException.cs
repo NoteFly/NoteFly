@@ -30,10 +30,8 @@ namespace NoteFly
         public CustomException(string message)
             : base("Exception: " + message)
         {
-            // check if error loging is enabled
-            xmlHandler getsetting = new xmlHandler(true);
-            
-            if (getsetting.getXMLnodeAsBool("logerror") == true)
+            // check if exception logging is enabled
+            if (Settings.ProgramLogException)
             {
                 Log.Write(LogType.exception, message);
             }
