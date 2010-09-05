@@ -1,14 +1,20 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmManageNotes.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 #define linux //platform can be: windows, linux, macos
@@ -127,8 +133,7 @@ namespace NoteFly
                 if (noteposlst >= 0)
                 {
                     int noteid = noteposlst + 1;
-                    xmlHandler settings = new xmlHandler(true);
-                    if (settings.getXMLnodeAsBool("confirmdelete"))
+                    if (Settings.ConfirmDeletenote)
                     {
                         DialogResult deleteres = MessageBox.Show("Are you sure you want to delete note (ID:" + noteid + ") ?", "delete note?", MessageBoxButtons.YesNo);
                         if (deleteres == DialogResult.No)
@@ -156,7 +161,7 @@ namespace NoteFly
                             }
                             try
                             {
-                                this.notes.GetNotes[id].NoteID = Convert.ToInt16(id);
+                                //this.notes.GetNotes[id].NoteID = Convert.ToInt16(id);
                             }
                             catch
                             {

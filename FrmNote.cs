@@ -1,14 +1,20 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNote.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 #define windows //platform can be: windows, linux, macos
@@ -31,13 +37,13 @@ namespace NoteFly
 
         private const int MINVISIBLESIZE = 5;
 
-        private string note, title;
+        //private string note, title;
         private char[] twpass;
-        private short id, notecolor = 0;
-        private bool rolledup = false, notelock = false, moving = false;
+        //private short id, notecolor = 0;
+        private bool moving = false;
         private Skin skin;
-        private int locX, locY;
-        private ushort noteWidth, noteHeight;
+        //private int locX, locY;
+        //private ushort noteWidth, noteHeight;
         private PictureBox pbShowLock;
         private Point oldp;
         #endregion Fields
@@ -47,164 +53,28 @@ namespace NoteFly
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
         /// </summary>
-        /// <param name="notes">The class with access to all notes.</param>
-        /// <param name="id">The id of the note.</param>
-        /// <param name="visible">Is the note visible.</param>
-        /// <param name="ontop">Is the note on top.</param>
-        /// <param name="title">The title of the note.</param>
-        /// <param name="note">the content of the note.</param>
-        /// <param name="notecolor">The default note color.</param>
-        /// <param name="locX">The X location on the screen.</param>
-        /// <param name="locY">The Y location on the screen.</param>
-        /// <param name="notewidth">The width of the note.</param>
-        /// <param name="noteheight">The height of the note.</param>
+        /// <param name="note">note data class.</param>
         public FrmNote(Note note)
         {
-            //this.notes = notes;
+            if (!note.Visible)
+            {
+                throw new CustomException("Form should not be created. visible is set false.");
+                //return;
+            }
+
             this.FormBorderStyle = FormBorderStyle.None;
-            this.skin = new Skin(notecolor);
-            this.id = id;
-            this.title = title;
-            this.note = note;
-            this.notecolor = notecolor;
-
-            if ((locX + notewidth > MINVISIBLESIZE) && (locY + noteheight > MINVISIBLESIZE))
-            {
-                this.locX = locX;
-                this.locY = locY;
-            }
-            else
-            {
-                this.locX = 10;
-                this.locY = 10;
-            }
-
+            this.lblTitle.Text = note.Title;
+            this.rtbNote.Text = note.Content;
+            this.skin = new Skin(note.Color);
             this.InitializeComponent();
-            this.lblTitle.Text = title;
-            this.rtbNote.Text = note;
-
-            if (visible)
-            {
-                this.SetSizeNote(notewidth, noteheight);
-                this.SetPosNote();
-                this.TopMost = ontop;
-                this.CheckThings();
-                this.rolledup = false;
-                this.notelock = false;
-            }
-            else
-            {
-                this.Hide();
-            }
-
-            this.Visible = visible;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the FrmNote class.
-        /// </summary>
-        /// <param name="notes">The class with access to all notes</param>
-        /// <param name="id">The note id.</param>
-        /// <param name="title">The note title.</param>
-        /// <param name="note">The note content.</param>
-        /// <param name="notecolor">The color (number) of the note.</param>
-        public FrmNote(Notes notes, short id, string title, string note, short notecolor)
-        {
-            this.skin = new Skin(notecolor);
-            this.id = id;
-            this.title = title;
-            this.note = note;
-            //this.transparency = transparency;
-            this.notecolor = notecolor;
-            //set default location note
-            this.locX = 10;
-            this.locY = 10;
-            //set width and height to default
-            this.Width = 240;
-            this.Height = 240;
-            this.notes = notes;
-            this.InitializeComponent();
-
             this.PaintColorNote();
-            this.lblTitle.Text = title;
-            this.rtbNote.Text = note;
+            this.SetSizeNote(note.Width, note.Height);
             this.SetPosNote();
+            this.TopMost = note.Ontop;
             this.CheckThings();
-            this.rolledup = false;
-            this.notelock = false;
         }
 
         #endregion Constructors
-
-        #region Properties (4)
-
-        /// <summary>
-        /// Gets or sets the color of the note.
-        /// </summary>
-        public short NoteColor
-        {
-            get
-            {
-                return this.notecolor;
-            }
-
-            set
-            {
-                this.notecolor = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the note content.
-        /// </summary>
-        public string NoteContent
-        {
-            get
-            {
-                return this.note;
-            }
-
-            set
-            {
-                this.note = value;
-                this.rtbNote.Text = this.note;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the note id.
-        /// </summary>
-        public short NoteID
-        {
-            get
-            {
-                return this.id;
-            }
-
-            set
-            {
-                this.id = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the note title.
-        /// </summary>
-        public string NoteTitle
-        {
-            get
-            {
-                return this.title;
-            }
-
-            set
-            {
-                this.title = value;
-                this.lblTitle.Text = this.title;
-            }
-        }
-
-        #endregion Properties
 
         #region Methods (32)
 
@@ -312,7 +182,7 @@ namespace NoteFly
         private void btnCloseNote_Click(object sender, EventArgs e)
         {
             this.Visible = false;
-            this.notes.NotesUpdated = true;
+            //this.notes.NotesUpdated = true;
             this.Hide();
         }
 

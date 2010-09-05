@@ -1,14 +1,20 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmSettings.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 #define windows //platform can be: windows, linux, macos
@@ -271,7 +277,7 @@ namespace NoteFly
                     MessageBox.Show(NoteFly.Properties.Resources.settings_regkeynotexist);
                 }
 #endif
-                this.notes.SetSettings();
+                //this.notes.SetSettings();
                 this.notes.UpdateAllFonts();
                 Log.Write(LogType.info, "settings updated.");
                 this.Close();
@@ -288,11 +294,11 @@ namespace NoteFly
             DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset all the settings to default?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgres == DialogResult.Yes)
             {
-                string settingsfile = Path.Combine(this.xmlsettings.AppDataFolder, "settings.xml");
+                string settingsfile = Path.Combine(TrayIcon.AppDataFolder, "settings.xml");
                 if (File.Exists(settingsfile))
                 {
                     File.Delete(settingsfile);
-                    this.xmlsettings = new xmlHandler(true);
+                    //this.xmlsettings = new xmlHandler(true);
                 }
                 else
                 {

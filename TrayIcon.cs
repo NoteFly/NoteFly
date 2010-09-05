@@ -1,14 +1,20 @@
 //-----------------------------------------------------------------------
 // <copyright file="TrayIcon.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 #define windows //platform can be: windows, linux, macos //platform can be: windows, linux, macos
@@ -150,23 +156,13 @@ namespace NoteFly
         // Private Methods (3) 
 
         /// <summary>
-        /// get actionleftclick setting
-        /// </summary>
-        /// <returns>The action setting as short.</returns>
-        private static short GetActionLeftClick()
-        {
-            xmlHandler getSettings = new xmlHandler(true);
-            return Convert.ToInt16(getSettings.getXMLnodeAsInt("actionleftclick"));
-        }
-
-        /// <summary>
         /// get defaultcolor setting
         /// </summary>
         /// <returns>The default color for note setting as short.</returns>
         private static short GetDefaultColor()
         {
-            xmlHandler xmlSettings = new xmlHandler(true);
-            short color = Convert.ToInt16(xmlSettings.getXMLnodeAsInt("defaultcolor"));
+            //xmlHandler xmlSettings = new xmlHandler(true);
+            short color = Convert.ToInt16(Settings.NotesDefaultColor);
 
             if (color == 7)
             {
@@ -361,7 +357,15 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                short actionleftclick = GetActionLeftClick();
+                short actionleftclick = 1;
+                try
+                {
+                    actionleftclick = Convert.ToInt16(Settings.TrayiconLeftclickaction);
+                }
+                catch
+                {
+                    throw new Exception("actionleftclick datatype wrong.");
+                }
                 if (actionleftclick == 1)
                 {
                     for (int i = 0; i < notes.NumNotes; i++)

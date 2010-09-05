@@ -72,27 +72,22 @@ namespace NoteFly
             }
 
             line.AppendLine(message);
-            bool logerror = false;
-            bool loginfo = false;
 #if windows
             string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), "debug.log");
 #elif linux
-			string errorlog = "/tmp/debug.log";
+            string errorlog = "/tmp/debug.log";
 #endif
             try
             {
-                xmlHandler getsettings = new xmlHandler(true);
-                errorlog = Path.Combine(getsettings.AppDataFolder, "debug.log");
-                logerror = getsettings.getXMLnodeAsBool("logerror");
-                loginfo = getsettings.getXMLnodeAsBool("loginfo");
+                errorlog = Path.Combine(TrayIcon.AppDataFolder, "debug.log");
             }
             catch (Exception)
             {
-                line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot get log settings.");
-                logerror = true;
+                line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot set log path.");//was error but now exception because error could not be logged.
+                Settings.ProgramLogError = true;
             }
 
-            if ((typemsg == LogType.exception) || (logerror && typemsg == LogType.error) || (loginfo && typemsg == LogType.info))
+            if ((Settings.ProgramLogException || typemsg == LogType.exception) || (Settings.ProgramLogError && typemsg == LogType.error) || (Settings.ProgramLogInfo && typemsg == LogType.info))
             {
                 if (CheckFileSize(errorlog))
                 {

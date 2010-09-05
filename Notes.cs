@@ -1,14 +1,20 @@
 //-----------------------------------------------------------------------
 // <copyright file="Notes.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 #define windows //platform can be: windows, linux, macos
@@ -104,11 +110,11 @@ namespace NoteFly
                 {
                     throw new CustomException("cannot create filename.");
                 }
-
-                FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
-                this.noteslst.Add(newnote);
-                newnote.StartPosition = FormStartPosition.Manual;
-                newnote.Show();
+//todo
+                //FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
+                //this.noteslst.Add(newnote);
+                //newnote.StartPosition = FormStartPosition.Manual;
+                //newnote.Show();
             }
             catch (Exception exc)
             {
@@ -125,11 +131,11 @@ namespace NoteFly
             int noteslistpos = noteid - 1;
             if ((noteslistpos >= 0) && (noteslistpos <= this.NumNotes))
             {
-                string title = this.noteslst[noteslistpos].NoteTitle;
-                string content = this.noteslst[noteslistpos].NoteContent;
-                short color = this.noteslst[noteslistpos].NoteColor;
-                FrmNewNote newnote = new FrmNewNote(this, color, noteid, title, content);
-                newnote.Show();
+                //string title = this.noteslst[noteslistpos].NoteTitle;
+                //string content = this.noteslst[noteslistpos].NoteContent;
+                //short color = this.noteslst[noteslistpos].NoteColor;
+                //FrmNewNote newnote = new FrmNewNote(this, color, noteid, title, content);
+                //newnote.Show();
             }
             else
             {
@@ -158,9 +164,9 @@ namespace NoteFly
         public void UpdateNote(int noteid, string title, string content, bool visible)
         {
             int notelstpos = noteid - 1;
-            this.noteslst[notelstpos].NoteTitle = title;
-            this.noteslst[notelstpos].NoteContent = content;
-            this.noteslst[notelstpos].Visible = visible;
+            //this.noteslst[notelstpos].NoteTitle = title;
+            //this.noteslst[notelstpos].NoteContent = content;
+            //this.noteslst[notelstpos].Visible = visible;
             if (visible)
             {
                 this.noteslst[notelstpos].Show();
@@ -205,19 +211,19 @@ namespace NoteFly
         /// <param name="notewidth">The note width</param>
         /// <param name="noteheight">The note height</param>
         /// <returns>A FrmNote object</returns>
-        private FrmNote CreateNote(bool visible, bool ontop, string title, string content, short notecolor, int locX, int locY, int notewidth, int noteheight)
-        {
-            try
-            {
-                short newid = Convert.ToInt16(this.noteslst.Count + 1);
-                FrmNote newnote = new FrmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewidth, noteheight);
-                return newnote;
-            }
-            catch (Exception exc)
-            {
-                throw new CustomException(exc.Message + " " + exc.StackTrace);
-            }
-        }
+        //private FrmNote CreateNote(bool visible, bool ontop, string title, string content, short notecolor, int locX, int locY, int notewidth, int noteheight)
+        //{
+        //    try
+        //    {
+        //        short newid = Convert.ToInt16(this.noteslst.Count + 1);
+        //        //FrmNote newnote = new FrmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewidth, noteheight);
+        //        //return newnote;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw new CustomException(exc.Message + " " + exc.StackTrace);
+        //    }
+        //}
 
         /// <summary>
         /// Loads all notes.
@@ -237,8 +243,8 @@ namespace NoteFly
                 else
                 {
                     Log.Write(LogType.error, (notefoldernoteexist + " Yes"));
-                    xmlHandler getAppdata = new xmlHandler(true);
-                    Settings.NotesSavepath = getAppdata.AppDataFolder;
+                    //xmlHandler getAppdata = new xmlHandler(true);
+                    Settings.NotesSavepath = TrayIcon.AppDataFolder;
                 }
             }
 
@@ -303,7 +309,7 @@ namespace NoteFly
                 notecontent.AppendLine("You can get it back with the manage notes window.");
                 this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
 
-                xmlUtil.
+                //xmlUtil.
                 
                 Log.Write(LogType.info, "firstrun occurre");
             }
