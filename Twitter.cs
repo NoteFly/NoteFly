@@ -35,6 +35,8 @@ namespace NoteFly
     {
         #region Fields (2)
 
+        private OAuth.OAuthBase oauth;
+
         /// <summary>
         /// The url of twitter.
         /// </summary>

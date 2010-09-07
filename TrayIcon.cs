@@ -34,6 +34,11 @@ namespace NoteFly
     {
         #region Fields (12)
 
+        private FrmNewNote frmnewnote;
+        private FrmSettings frmsettings;
+        private FrmManageNotes frmmanagenotes;
+        private FrmAbout frmabout;
+
         /// <summary>
         /// container that holds some objects.
         /// </summary>
@@ -65,11 +70,6 @@ namespace NoteFly
         private static ToolStripMenuItem menuManageNotes;
 
         /// <summary>
-        /// New note menu option
-        /// </summary>
-        private static ToolStripMenuItem menuNewNote;
-
-        /// <summary>
         /// Settings application menu option
         /// </summary>
         private static ToolStripMenuItem menuSettings;
@@ -87,12 +87,7 @@ namespace NoteFly
         /// <summary>
         /// Notes class has a list an methodes for accessing notes.
         /// </summary>
-        private static Notes notes;
-
-        /// <summary>
-        /// Is transparecy on.
-        /// </summary>
-        private static bool transparency = true;
+        private Notes notes;
 
         #endregion Fields
 

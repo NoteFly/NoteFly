@@ -30,101 +30,12 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// All settings needed for a facebook session.
-    /// </summary>
-    public static class FacebookSettings
-    {
-        // Fields (4) 
-        /// <summary>
-        /// unix time as double that tells when facebook session is expired
-        /// </summary>
-        private static double sessionexpires;
-
-        /// <summary>
-        /// The current session key
-        /// </summary>
-        private static string sessionkey;
-
-        /// <summary>
-        /// The current session secret
-        /// </summary>
-        private static string sessionsecret;
-        
-        /// <summary>
-        /// The user id that posts on facebook.
-        /// </summary>
-        private static string uid;
-
-        /// <summary>
-        /// Gets or sets the unix time when the facebook session expires
-        /// </summary>
-        public static double Sesionexpires { 
-            get
-            {
-                return sessionexpires;
-            }
-
-            set
-            {
-                sessionexpires = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the session key
-        /// </summary>
-        public static string Sessionkey 
-        {
-            get
-            {
-                return sessionkey;
-            }
-
-            set
-            {
-                sessionkey = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the session secret key (gives 24hour access to account)
-        /// </summary>
-        public static string Sessionsecret
-        {
-            get
-            {
-                return sessionsecret;
-            }
-
-            set
-            {
-                sessionsecret = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the user id
-        /// </summary>
-        public static string Uid
-        {
-            get
-            {
-                return uid;
-            }
-
-            set
-            {
-                uid = value;
-            }
-        }
-    }
-
-    /// <summary>
     /// Communicates with facebook.
     /// </summary>
     public class Facebook
     {
         // Fields(10)
+        private OAuth.OAuthBase oauth;
 
         /// <summary>
         /// The API version.

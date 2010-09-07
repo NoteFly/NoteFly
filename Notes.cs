@@ -37,7 +37,8 @@ namespace NoteFly
         /// <summary>
         /// The list with all notes.
         /// </summary>
-        private List<FrmNote> noteslst;
+        private List<Note> notes;
+        private List<FrmNote> notesfrms;
 
         #endregion Fields
 
@@ -49,7 +50,9 @@ namespace NoteFly
         /// <param name="firstrun">Is this appliction to run for the first time, with /firstrun parameter.</param>
         public Notes(bool forcefirstrun)
         {
-            this.noteslst = new List<FrmNote>();
+            this.notes = new List<Note>();
+            this.notesfrms = new List<FrmNote>();
+
             bool firstrun = Settings.ProgramFirstrun;
             if (forcefirstrun)
             {
@@ -65,11 +68,11 @@ namespace NoteFly
         /// <summary>
         /// Gets a notes.
         /// </summary>
-        public List<FrmNote> GetNotes
+        public List<Note>Notes
         {
             get
             {
-                return this.noteslst;
+                return this.notes;
             }
         }
 
@@ -80,7 +83,7 @@ namespace NoteFly
         {
             get
             {
-                short numnotes = Convert.ToInt16(this.noteslst.Count);
+                short numnotes = Convert.ToInt16(this.notes.Count);
                 if (numnotes > 255)
                 {
                     throw new Exception("Too many notes.");
@@ -103,7 +106,7 @@ namespace NoteFly
         {
             try
             {
-                short newid = Convert.ToInt16(this.noteslst.Count + 1);
+                short newid = Convert.ToInt16(this.notes.Count + 1);
                 string notefilenm = this.SaveNewNote(newid, title, content, Convert.ToInt16(Settings.NotesDefaultColor));
                 Log.Write(LogType.info, "note created: " + notefilenm);
                 if (String.IsNullOrEmpty(notefilenm))
@@ -148,7 +151,7 @@ namespace NoteFly
         /// </summary>
         public void UpdateAllFonts()
         {
-            foreach (FrmNote curfrmnote in this.noteslst)
+            foreach (FrmNote curfrmnote in this.notes)
             {
                 curfrmnote.CheckThings();
             }

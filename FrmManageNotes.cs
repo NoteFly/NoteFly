@@ -232,7 +232,7 @@ namespace NoteFly
                 CheckBox cbxNoteVisible = new CheckBox();
                 Button btnNoteDelete = new Button();
 
-                int titlelength = this.notes.GetNotes[curnote].NoteTitle.Length;
+                Note note = this.notes.GetNotes[curnote];
                 lblNoteTitle.AutoSize = true;
 
                 lblNoteTitle.Text = this.ShortenTitle(curnote, newlentitle);

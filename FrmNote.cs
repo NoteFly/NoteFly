@@ -36,12 +36,8 @@ namespace NoteFly
         #region Fields (10)
 
         private const int MINVISIBLESIZE = 5;
-
-        //private string note, title;
-        private char[] twpass;
         //private short id, notecolor = 0;
         private bool moving = false;
-        private Skin skin;
         //private int locX, locY;
         //private ushort noteWidth, noteHeight;
         private PictureBox pbShowLock;
@@ -65,7 +61,6 @@ namespace NoteFly
             this.FormBorderStyle = FormBorderStyle.None;
             this.lblTitle.Text = note.Title;
             this.rtbNote.Text = note.Content;
-            this.skin = new Skin(note.Color);
             this.InitializeComponent();
             this.PaintColorNote();
             this.SetSizeNote(note.Width, note.Height);

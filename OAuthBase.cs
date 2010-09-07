@@ -79,7 +79,7 @@ namespace OAuth {
 
         //
         // List of know and used oauth parameters' names
-        //        
+        //
 		protected const string OAuthConsumerKeyKey = "oauth_consumer_key";
 		protected const string OAuthCallbackKey = "oauth_callback";
 		protected const string OAuthVersionKey = "oauth_version";
