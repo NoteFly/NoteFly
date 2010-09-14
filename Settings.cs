@@ -92,6 +92,10 @@ namespace NoteFly
 
         public static bool SocialFacebookUseSSL { get; set; }
 
+        public static string SocialFacebookSessionKey { get; set; } //Decreated, use OAuth instead.
+        public static string SocialFacebookSessionSecret { get; set; } //Decreated
+        public static string SocialFacebookSessionExpires { get; set; } //Decreated
+
         public static int NetworkConnectionTimeout { get; set; }
 
         public static bool NetworkConnectionForceipv6 { get; set; } //e.g. set ipv6.facebook.com
@@ -100,17 +104,17 @@ namespace NoteFly
 
         public static string NetworkProxyAddress { get; set; }
 
-        public static bool UpdatescheckEnabled { get; set; }
+        public static bool UpdatecheckEnabled { get; set; }
 
-        public static int UpdatecheckEverydays { get; set; }
+        public static int  UpdatecheckEverydays { get; set; }
 
         public static bool UpdatecheckTodaydone { get; set; }
 
-        public static int UpdatecheckDay { get; set; }
+        public static int  UpdatecheckDay { get; set; }
 
-        public static int UpdateheckMonth { get; set; }
+        public static int  UpdatecheckMonth { get; set; }
 
-        public static int UpdatecheckYear { get; set; }
+        public static int  UpdatecheckYear { get; set; }
 
         public static bool ProgramFirstrun { get; set; }
 

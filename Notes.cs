@@ -66,17 +66,6 @@ namespace NoteFly
         #region Properties (7)
 
         /// <summary>
-        /// Gets a notes.
-        /// </summary>
-        public List<Note>Notes
-        {
-            get
-            {
-                return this.notes;
-            }
-        }
-
-        /// <summary>
         /// Gets the number of notes.
         /// </summary>
         public short NumNotes
@@ -151,10 +140,10 @@ namespace NoteFly
         /// </summary>
         public void UpdateAllFonts()
         {
-            foreach (FrmNote curfrmnote in this.notes)
-            {
-                curfrmnote.CheckThings();
-            }
+            //foreach (FrmNote curfrmnote in this.notes)
+            //{
+            //    curfrmnote.CheckThings();
+            //}
         }
 
         /// <summary>
@@ -172,11 +161,11 @@ namespace NoteFly
             //this.noteslst[notelstpos].Visible = visible;
             if (visible)
             {
-                this.noteslst[notelstpos].Show();
+                this.notesfrm[notelstpos].Show();
             }
 
-            this.noteslst[notelstpos].CheckThings();
-            this.noteslst[notelstpos].UpdateThisNote();
+            this.notes[notelstpos].CheckThings();
+            this.notes[notelstpos].UpdateThisNote();
 
             Log.Write(LogType.info, ("Update note ID:" + noteid));
         }
@@ -336,7 +325,7 @@ namespace NoteFly
         private string SaveNewNote(int id, string title, string text, short numcolor)
         {
             string notefile = Path.Combine(this.notesavepath, id + ".xml");
-            xmlHandler xmlnote = new xmlHandler(notefile);
+            //xmlHandler xmlnote = new xmlHandler(notefile);
             if (xmlnote.WriteNote(true, false, numcolor, title, text, 10, 10, 240, 240) == false)
             {
                 throw new CustomException("Cannot write note.");

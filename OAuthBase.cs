@@ -243,7 +243,7 @@ namespace OAuth {
             normalizedUrl += url.AbsolutePath;
             normalizedRequestParameters = NormalizeRequestParameters(parameters);
 
-            StringBuilder signatureBase = new StringBuilder();			
+            StringBuilder signatureBase = new StringBuilder();
             signatureBase.AppendFormat("{0}&", httpMethod.ToUpper());
             signatureBase.AppendFormat("{0}&", UrlEncode(normalizedUrl));
             signatureBase.AppendFormat("{0}", UrlEncode(normalizedRequestParameters));
@@ -291,9 +291,9 @@ namespace OAuth {
 			normalizedRequestParameters = null;
 
             switch (signatureType) {
-                case SignatureTypes.PLAINTEXT:					
+                case SignatureTypes.PLAINTEXT:
                     return HttpUtility.UrlEncode(string.Format("{0}&{1}", consumerSecret, tokenSecret));
-                case SignatureTypes.HMACSHA1:					
+                case SignatureTypes.HMACSHA1:
 					string signatureBase = GenerateSignatureBase(url, consumerKey, token, tokenSecret, httpMethod, timeStamp, nonce, HMACSHA1SignatureType, out normalizedUrl, out normalizedRequestParameters);
 
                     HMACSHA1 hmacsha1 = new HMACSHA1();
@@ -308,13 +308,13 @@ namespace OAuth {
         }
 
         /// <summary>
-        /// Generate the timestamp for the signature        
+        /// Generate the timestamp for the signature
         /// </summary>
         /// <returns></returns>
         public virtual string GenerateTimeStamp() {
             // Default implementation of UNIX time of the current UTC time
             TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return Convert.ToInt64(ts.TotalSeconds).ToString();            
+            return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace OAuth {
         /// <returns></returns>
         public virtual string GenerateNonce() {
             // Just a simple implementation of a random number between 123400 and 9999999
-            return random.Next(123400, 9999999).ToString();            
+            return random.Next(123400, 9999999).ToString();
         }
 
 	}

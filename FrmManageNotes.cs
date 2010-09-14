@@ -55,11 +55,6 @@ namespace NoteFly
         private bool redrawbusy = false;
 
         /// <summary>
-        /// skin colors etc.
-        /// </summary>
-        private Skin skin;
-
-        /// <summary>
         /// is transparent
         /// </summary>
         private bool transparency = false;
@@ -84,11 +79,9 @@ namespace NoteFly
         /// <param name="notes">The class notes, with access to all the notes.</param>
         /// <param name="transparency">Is transparency enabled</param>
         /// <param name="notecolor">The default note color.</param>
-        public FrmManageNotes(Notes notes, bool transparency, int notecolor)
+        public FrmManageNotes()
         {
             this.InitializeComponent();
-            this.skin = new Skin(notecolor);
-            this.notes = notes;
             this.transparency = transparency;
             this.DrawNotesOverview();
         }
@@ -142,8 +135,8 @@ namespace NoteFly
                         }
                     }
 
-                    this.notes.GetNotes[noteposlst].Close();
-                    this.notes.GetNotes.RemoveAt(noteposlst);
+                    //this.notes.GetNotes[noteposlst].Close();
+                    //this.notes.GetNotes.RemoveAt(noteposlst);
 
                     try
                     {

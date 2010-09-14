@@ -153,7 +153,7 @@ namespace NoteFly
                             Settings.UpdatecheckTodaydone = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "UpdatescheckEnabled":
-                            Settings.UpdatescheckEnabled = xmlread.ReadElementContentAsBoolean();
+                            Settings.UpdatecheckEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
 
                         //ints
@@ -188,7 +188,7 @@ namespace NoteFly
                             Settings.UpdatecheckYear = xmlread.ReadElementContentAsInt();
                             break;
                         case "UpdateheckMonth":
-                            Settings.UpdateheckMonth = xmlread.ReadElementContentAsInt();
+                            Settings.UpdatecheckMonth = xmlread.ReadElementContentAsInt();
                             break;
 
                         //strings (put at bottom in the settings file for more performance because then there are less characters to skip)

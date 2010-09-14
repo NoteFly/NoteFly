@@ -36,7 +36,6 @@ namespace NoteFly
         private int editnoteid = -1;
         private short notecolor;
         private Notes notes;
-        private Skin skin;
         //private TextHighlight highlight;
         private Point oldp;
         #endregion Fields
@@ -56,7 +55,6 @@ namespace NoteFly
             this.InitializeComponent();
             this.editnote = true;
             this.notecolor = notecolor;
-            this.skin = new Skin(notecolor);
             this.editnoteid = editnoteid;
             this.notes = notes;
             this.ResetNewNoteForm(editnotetitle, editnotecontent);
@@ -80,7 +78,6 @@ namespace NoteFly
             this.editnote = false;
             this.notes = notes;
             this.notecolor = notecolor;
-            this.skin = new Skin(notecolor);
             this.ResetNewNoteForm(String.Empty, String.Empty);
             this.tbTitle.Text = DateTime.Now.ToString();
             this.rtbNote.Focus();
@@ -103,12 +100,12 @@ namespace NoteFly
         {
             if (String.IsNullOrEmpty(this.tbTitle.Text))
             {
-                this.tbTitle.BackColor = this.skin.GetObjColor(false, false, true);
+                //this.tbTitle.BackColor = this.skin.GetObjColor(false, false, true);
                 this.tbTitle.Text = DateTime.Now.ToString();
             }
             else if (String.IsNullOrEmpty(this.rtbNote.Text))
             {
-                this.rtbNote.BackColor = this.skin.GetObjColor(false, false, true);
+                //this.rtbNote.BackColor = this.skin.GetObjColor(false, false, true);
                 this.rtbNote.Text = "Please enter some content.";
             }
             else
@@ -136,7 +133,7 @@ namespace NoteFly
             int posnotelst = this.editnoteid - 1;
             if (this.editnote && posnotelst >= 0 && posnotelst < this.notes.NumNotes)
             {
-                this.notes.GetNotes[posnotelst].Show();
+                //this.notes.GetNotes[posnotelst].Show();
             }
 
             this.Close();

@@ -18,6 +18,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 #define windows //platform can be: windows, linux, macos
+/*
+ * Decreated class, use OAuth instead.
+ * 
+ */
 
 namespace NoteFly
 {
@@ -188,6 +192,7 @@ namespace NoteFly
             }
         }
 
+		/*
         /// <summary>
         /// Check the url if facebook navigated to the succeed page
         /// meaning that we have a session.
@@ -250,7 +255,8 @@ namespace NoteFly
 
             return false;
         }
-
+	*/
+		
         /// <summary>
         /// Generate a md5 hash from the given string.
         /// </summary>
@@ -462,6 +468,7 @@ namespace NoteFly
             }
         }
 
+		/*
         /// <summary>
         /// Create a signature based on serveral parameters.
         /// </summary>
@@ -490,7 +497,7 @@ namespace NoteFly
                 throw new CustomException("Cannot generate MD5 hash.");
             }
         }
-
+		 */
         /// <summary>
         /// create a form with webbrowser and navigate to
         /// the facebook login page for this application.
