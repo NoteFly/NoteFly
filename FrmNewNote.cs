@@ -503,5 +503,14 @@ namespace NoteFly
             openfiledlg.ShowDialog();
             
         }
+
+        private void btnTextBold_Click(object sender, EventArgs e)
+        {
+            if (this.rtbNote.SelectionLength > 0)
+            {
+                @"{\rtf1\ansi\b{"+this.rtbNote.Text.Substring(this.rtbNote.SelectionStart, this.rtbNote.SelectionLength))+  "}\b0.}";
+                
+            }
+        }
     }
 }

@@ -62,6 +62,7 @@ namespace NoteFly
             this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuSaveNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStickyOnTop = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPasteToContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCancelNewNote = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,13 +72,12 @@ namespace NoteFly
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddNote = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnTextBold = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.rtbNote = new System.Windows.Forms.RichTextBox();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.SuspendLayout();
@@ -112,6 +112,13 @@ namespace NoteFly
             this.menuStickyOnTop.Size = new System.Drawing.Size(288, 22);
             this.menuStickyOnTop.Text = "Sticky on &top";
             this.menuStickyOnTop.Click += new System.EventHandler(this.menuStickyOnTop_Click);
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
+            this.importToolStripMenuItem.Text = "Import..";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // menuPasteToContent
             // 
@@ -158,8 +165,8 @@ namespace NoteFly
             this.tbTitle.Size = new System.Drawing.Size(176, 22);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
-            this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             this.tbTitle.Enter += new System.EventHandler(this.tbTitle_Enter);
+            this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             // 
             // lbTextTitle
             // 
@@ -187,8 +194,8 @@ namespace NoteFly
             this.pnlHeadNewNote.Name = "pnlHeadNewNote";
             this.pnlHeadNewNote.Size = new System.Drawing.Size(284, 40);
             this.pnlHeadNewNote.TabIndex = 4;
-            this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
+            this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.pnlHeadNewNote.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseUp);
             // 
             // btnCancel
@@ -241,29 +248,30 @@ namespace NoteFly
             this.toolTip.InitialDelay = 800;
             this.toolTip.ReshowDelay = 100;
             // 
-            // button1
+            // btnTextBold
             // 
-            this.button1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.CausesValidation = false;
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button1.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(12, 214);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(27, 23);
-            this.button1.TabIndex = 10;
-            this.button1.TabStop = false;
-            this.button1.Text = "B";
-            this.toolTip.SetToolTip(this.button1, "bold");
-            this.button1.UseMnemonic = false;
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnTextBold.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextBold.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnTextBold.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextBold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextBold.CausesValidation = false;
+            this.btnTextBold.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnTextBold.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextBold.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextBold.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTextBold.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextBold.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextBold.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextBold.Location = new System.Drawing.Point(12, 214);
+            this.btnTextBold.Name = "btnTextBold";
+            this.btnTextBold.Size = new System.Drawing.Size(27, 23);
+            this.btnTextBold.TabIndex = 10;
+            this.btnTextBold.TabStop = false;
+            this.btnTextBold.Text = "B";
+            this.toolTip.SetToolTip(this.btnTextBold, "bold text");
+            this.btnTextBold.UseMnemonic = false;
+            this.btnTextBold.UseVisualStyleBackColor = false;
+            this.btnTextBold.Click += new System.EventHandler(this.btnTextBold_Click);
             // 
             // button2
             // 
@@ -285,7 +293,7 @@ namespace NoteFly
             this.button2.TabIndex = 11;
             this.button2.TabStop = false;
             this.button2.Text = "i";
-            this.toolTip.SetToolTip(this.button2, "Italic");
+            this.toolTip.SetToolTip(this.button2, "Italic text");
             this.button2.UseMnemonic = false;
             this.button2.UseVisualStyleBackColor = false;
             // 
@@ -309,7 +317,7 @@ namespace NoteFly
             this.button3.TabIndex = 12;
             this.button3.TabStop = false;
             this.button3.Text = "S";
-            this.toolTip.SetToolTip(this.button3, "Striketrough");
+            this.toolTip.SetToolTip(this.button3, "Striketrough text");
             this.button3.UseMnemonic = false;
             this.button3.UseVisualStyleBackColor = false;
             // 
@@ -327,13 +335,13 @@ namespace NoteFly
             this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(167, 215);
+            this.button4.Location = new System.Drawing.Point(142, 215);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(31, 24);
             this.button4.TabIndex = 13;
             this.button4.TabStop = false;
             this.button4.Text = "¶";
-            this.toolTip.SetToolTip(this.button4, "Striketrough");
+            this.toolTip.SetToolTip(this.button4, "show hidden characters");
             this.button4.UseCompatibleTextRendering = true;
             this.button4.UseMnemonic = false;
             this.button4.UseVisualStyleBackColor = false;
@@ -358,7 +366,7 @@ namespace NoteFly
             this.button5.TabIndex = 14;
             this.button5.TabStop = false;
             this.button5.Text = "U";
-            this.toolTip.SetToolTip(this.button5, "Italic");
+            this.toolTip.SetToolTip(this.button5, "Underline text");
             this.button5.UseMnemonic = false;
             this.button5.UseVisualStyleBackColor = false;
             // 
@@ -385,13 +393,6 @@ namespace NoteFly
             this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
             this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
             // 
-            // importToolStripMenuItem
-            // 
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.importToolStripMenuItem.Text = "Import..";
-            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
-            // 
             // FrmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
@@ -405,10 +406,10 @@ namespace NoteFly
             this.ContextMenuStrip = this.contextMenuStripTextActions;
             this.ControlBox = false;
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnTextBold);
             this.Controls.Add(this.rtbNote);
             this.Controls.Add(this.pnlHeadNewNote);
             this.DoubleBuffered = true;
@@ -419,8 +420,8 @@ namespace NoteFly
             this.Name = "FrmNewNote";
             this.Text = "New note";
             this.TransparencyKey = System.Drawing.Color.LightPink;
-            this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);
+            this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.contextMenuStripTextActions.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
@@ -432,7 +433,7 @@ namespace NoteFly
 
         private System.Windows.Forms.ToolStripMenuItem menuStickyOnTop;
         private System.Windows.Forms.RichTextBox rtbNote;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnTextBold;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
