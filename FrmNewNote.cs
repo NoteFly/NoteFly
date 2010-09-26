@@ -491,8 +491,7 @@ namespace NoteFly
             {
                 this.menuCopyContent.Enabled = true;
             }
-        }
-        #endregion
+        }        
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -500,17 +499,53 @@ namespace NoteFly
             openfiledlg.Title = "open file";
             openfiledlg.Multiselect = false;
             openfiledlg.Filter = "text file (*.txt)|testerdetest.";
-            openfiledlg.ShowDialog();
-            
+            openfiledlg.ShowDialog();            
+        }
+		
+		/// <summary>
+        /// Check if selection length of rtbNote is larger than zero.
+        /// </summary>
+		private bool checksellen()
+        {
+            if (this.rtbNote.SelectedText.Length > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
-        private void btnTextBold_Click(object sender, EventArgs e)
+		/// <summary>
+        /// Removes 1 fontsyle from the fontsyles of the checkstyle rtb text.
+		/// This methode does not check if selection lenght is okay.
+        /// </summary>
+        private FontStyle removestyle(FontStyle checkstyles, FontStyle removestyle)
         {
-            if (this.rtbNote.SelectionLength > 0)
+            FontStyle newstyles = checkstyles;
+            newstyles -= removestyle;
+            return newstyles;
+        }
+
+        /// <summary>
+        /// Make note content text bold, or if the selected text is already bold
+		/// then remove the bold style.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTextBold_Click(object sender, EventArgs e)
+        {		
+		    if (checksellen())
             {
-                @"{\rtf1\ansi\b{"+this.rtbNote.Text.Substring(this.rtbNote.SelectionStart, this.rtbNote.SelectionLength))+  "}\b0.}";
-                
+                if (this.rtbNote.SelectionFont.Style.HasFlag(FontStyle.Bold))
+                {                    
+                    this.rtbNote.SelectionFont = new System.Drawing.Font(this.rtbNote.SelectionFont.FontFamily, this.rtbNote.SelectionFont.SizeInPoints, removestyle(this.rtbNote.SelectionFont.Style, FontStyle.Bold));
+                }
+                else
+                {
+                    this.rtbNote.SelectionFont = new System.Drawing.Font(this.rtbNote.SelectionFont.FontFamily, this.rtbNote.SelectionFont.SizeInPoints, (this.rtbNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
+                }
             }
         }
+		
+		#endregion
     }
 }
