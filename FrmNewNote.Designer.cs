@@ -73,7 +73,7 @@ namespace NoteFly
             this.btnAddNote = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnTextBold = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnTextItalic = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -92,7 +92,7 @@ namespace NoteFly
             this.menuCopyContent,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 158);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 136);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -165,8 +165,8 @@ namespace NoteFly
             this.tbTitle.Size = new System.Drawing.Size(176, 22);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
-            this.tbTitle.Enter += new System.EventHandler(this.tbTitle_Enter);
             this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
+            this.tbTitle.Enter += new System.EventHandler(this.tbTitle_Enter);
             // 
             // lbTextTitle
             // 
@@ -194,8 +194,8 @@ namespace NoteFly
             this.pnlHeadNewNote.Name = "pnlHeadNewNote";
             this.pnlHeadNewNote.Size = new System.Drawing.Size(284, 40);
             this.pnlHeadNewNote.TabIndex = 4;
-            this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
             this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
+            this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
             this.pnlHeadNewNote.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseUp);
             // 
             // btnCancel
@@ -273,29 +273,30 @@ namespace NoteFly
             this.btnTextBold.UseVisualStyleBackColor = false;
             this.btnTextBold.Click += new System.EventHandler(this.btnTextBold_Click);
             // 
-            // button2
+            // btnTextItalic
             // 
-            this.button2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button2.BackColor = System.Drawing.Color.Transparent;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button2.CausesValidation = false;
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button2.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(45, 214);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(26, 23);
-            this.button2.TabIndex = 11;
-            this.button2.TabStop = false;
-            this.button2.Text = "i";
-            this.toolTip.SetToolTip(this.button2, "Italic text");
-            this.button2.UseMnemonic = false;
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnTextItalic.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextItalic.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnTextItalic.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextItalic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextItalic.CausesValidation = false;
+            this.btnTextItalic.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnTextItalic.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextItalic.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextItalic.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTextItalic.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextItalic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextItalic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextItalic.Location = new System.Drawing.Point(45, 214);
+            this.btnTextItalic.Name = "btnTextItalic";
+            this.btnTextItalic.Size = new System.Drawing.Size(26, 23);
+            this.btnTextItalic.TabIndex = 11;
+            this.btnTextItalic.TabStop = false;
+            this.btnTextItalic.Text = "i";
+            this.toolTip.SetToolTip(this.btnTextItalic, "Italic text");
+            this.btnTextItalic.UseMnemonic = false;
+            this.btnTextItalic.UseVisualStyleBackColor = false;
+            this.btnTextItalic.Click += new System.EventHandler(this.btnTextItalic_Click);
             // 
             // button3
             // 
@@ -408,7 +409,7 @@ namespace NoteFly
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnTextItalic);
             this.Controls.Add(this.btnTextBold);
             this.Controls.Add(this.rtbNote);
             this.Controls.Add(this.pnlHeadNewNote);
@@ -420,8 +421,8 @@ namespace NoteFly
             this.Name = "FrmNewNote";
             this.Text = "New note";
             this.TransparencyKey = System.Drawing.Color.LightPink;
-            this.Activated += new System.EventHandler(this.frmNewNote_Activated);
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
+            this.Activated += new System.EventHandler(this.frmNewNote_Activated);
             this.contextMenuStripTextActions.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
@@ -434,7 +435,7 @@ namespace NoteFly
         private System.Windows.Forms.ToolStripMenuItem menuStickyOnTop;
         private System.Windows.Forms.RichTextBox rtbNote;
         private System.Windows.Forms.Button btnTextBold;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnTextItalic;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;

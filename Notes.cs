@@ -85,6 +85,32 @@ namespace NoteFly
         #endregion Properties
 
         #region Methods (10)
+
+        public bool GetNoteVisible(int id)
+        {
+            return this.notes[id].Visible;
+        }
+
+        public void SetNoteVisible(int id, bool newvaleau)
+        {
+            this.notes[id].Visible = newvaleau;
+        }
+
+        public FrmNote GetNoteFrm(int noteid)
+        {
+            for (int i = 0; i < this.notesfrms.Count; i++)
+            {
+                if (this.notesfrms[i].ID == noteid)
+                {
+                    return this.notesfrms[i];
+                }
+            }
+            //is not created.
+            
+            
+
+        }
+
         /// <summary>
         /// Draws a new note and saves the xml note file.(call to SaveNewNote)
         /// </summary>
@@ -95,7 +121,7 @@ namespace NoteFly
         {
             try
             {
-                short newid = Convert.ToInt16(this.notes.Count + 1);
+                short newid = Convert.ToInt16(this.NumNotes + 1);
                 string notefilenm = this.SaveNewNote(newid, title, content, Convert.ToInt16(Settings.NotesDefaultColor));
                 Log.Write(LogType.info, "note created: " + notefilenm);
                 if (String.IsNullOrEmpty(notefilenm))
@@ -144,30 +170,6 @@ namespace NoteFly
             //{
             //    curfrmnote.CheckThings();
             //}
-        }
-
-        /// <summary>
-        /// Update a note
-        /// </summary>
-        /// <param name="noteid">id of note</param>
-        /// <param name="title">the new title</param>
-        /// <param name="content">new content</param>
-        /// <param name="visible">is the note visible</param>
-        public void UpdateNote(int noteid, string title, string content, bool visible)
-        {
-            int notelstpos = noteid - 1;
-            //this.noteslst[notelstpos].NoteTitle = title;
-            //this.noteslst[notelstpos].NoteContent = content;
-            //this.noteslst[notelstpos].Visible = visible;
-            if (visible)
-            {
-                this.notesfrm[notelstpos].Show();
-            }
-
-            this.notes[notelstpos].CheckThings();
-            this.notes[notelstpos].UpdateThisNote();
-
-            Log.Write(LogType.info, ("Update note ID:" + noteid));
         }
 
         // Private Methods (4) 
@@ -303,7 +305,7 @@ namespace NoteFly
 
                 //xmlUtil.
                 
-                Log.Write(LogType.info, "firstrun occurre");
+                Log.Write(LogType.info, "firstrun occur");
             }
 
 #if DEBUG

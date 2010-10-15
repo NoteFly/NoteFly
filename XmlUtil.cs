@@ -28,18 +28,18 @@ namespace NoteFly
 
     static class xmlUtil
     {
-        #region Fields (2) 
+        #region Fields (2)
 
         static public XmlTextReader xmlread = null;
         static public XmlTextWriter xmlwrite = null;
         const String SETTINGSFILE = "settings.xml";
 
-        #endregion Fields 
+        #endregion Fields
 
 
-		#region Methods (11) 
+        #region Methods (11)
 
-		// Public Methods (8) 
+        // Public Methods (8) 
 
         /// <summary>
         /// Loads the settings file and set the settings in the
@@ -369,24 +369,24 @@ namespace NoteFly
 
                 xmlwrite.WriteStartElement("note");
 
-                WriteXMLBool("visible", visible);
+                WriteXMLBool("visible", note.Visible);
 
-                WriteXMLBool("ontop", ontop);
+                WriteXMLBool("ontop", note.Ontop);
 
-                xmlwrite.WriteElementString("color", Convert.ToString(numcolor, CultureInfo.InvariantCulture.NumberFormat));
+                //xmlwrite.WriteElementString("color", );
 
-                xmlwrite.WriteElementString("title", title);
+                xmlwrite.WriteElementString("title", note.Title);
 
-                xmlwrite.WriteElementString("content", content);
+                xmlwrite.WriteElementString("content", note.Content);
 
                 xmlwrite.WriteStartElement("location");
-                xmlwrite.WriteElementString("x", Convert.ToString(locX, CultureInfo.InvariantCulture.NumberFormat));
-                xmlwrite.WriteElementString("y", Convert.ToString(locY, CultureInfo.InvariantCulture.NumberFormat));
+                xmlwrite.WriteElementString("x", note.X.ToString());
+                xmlwrite.WriteElementString("y", note.Y.ToString());
                 xmlwrite.WriteEndElement();
 
                 xmlwrite.WriteStartElement("size");
-                xmlwrite.WriteElementString("width", Convert.ToString(notewidth));
-                xmlwrite.WriteElementString("heigth", Convert.ToString(noteheight));
+                xmlwrite.WriteElementString("width", Convert.ToString(note.Width));
+                xmlwrite.WriteElementString("heigth", Convert.ToString(note.Height));
                 xmlwrite.WriteEndElement();
 
                 xmlwrite.WriteEndElement();
@@ -485,7 +485,7 @@ namespace NoteFly
 
                 WriteXMLBool("savesession", savefacebooksession);
 
-                if (savefacebooksession && !String.IsNullOrEmpty(FacebookSettings.Uid) && FacebookSettings.Sessionsecret!=null && !String.IsNullOrEmpty(FacebookSettings.Sessionkey) && FacebookSettings.Sesionexpires != 0)
+                if (savefacebooksession && !String.IsNullOrEmpty(FacebookSettings.Uid) && FacebookSettings.Sessionsecret != null && !String.IsNullOrEmpty(FacebookSettings.Sessionkey) && FacebookSettings.Sesionexpires != 0)
                 {
                     objXmlTextWriter.WriteElementString("uid", FacebookSettings.Uid);
                     objXmlTextWriter.WriteElementString("sesionexpires", Convert.ToString(FacebookSettings.Sesionexpires, CultureInfo.InvariantCulture.NumberFormat));
@@ -537,7 +537,7 @@ namespace NoteFly
 
             return true;
         }
-		// Private Methods (3) 
+        // Private Methods (3) 
 
         /// <summary>
         /// Does some checks on the file
@@ -590,6 +590,6 @@ namespace NoteFly
             xmlwrite.WriteEndElement();
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

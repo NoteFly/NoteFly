@@ -499,7 +499,7 @@ namespace NoteFly
             openfiledlg.Title = "open file";
             openfiledlg.Multiselect = false;
             openfiledlg.Filter = "text file (*.txt)|testerdetest.";
-            openfiledlg.ShowDialog();            
+            openfiledlg.ShowDialog();
         }
 		
 		/// <summary>
@@ -514,9 +514,9 @@ namespace NoteFly
             return false;
         }
 
-		/// <summary>
+        /// <summary>
         /// Removes 1 fontsyle from the fontsyles of the checkstyle rtb text.
-		/// This methode does not check if selection lenght is okay.
+        /// This methode does not check if selection lenght is okay.
         /// </summary>
         private FontStyle removestyle(FontStyle checkstyles, FontStyle removestyle)
         {
@@ -526,17 +526,28 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Legacy methode for HasFlag methode which is not availible in .NET 2.0.
+        /// </summary>
+        /// <param name="allstyles"></param>
+        /// <param name="checkstyle"></param>
+        /// <returns></returns>
+        private bool hasfontstyle(FontStyle thestyles, FontStyle checkstyle)
+        {
+            return Enum.IsDefined(Type.GetType("Boolean"), checkstyle);
+        }
+
+        /// <summary>
         /// Make note content text bold, or if the selected text is already bold
 		/// then remove the bold style.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnTextBold_Click(object sender, EventArgs e)
-        {		
-		    if (checksellen())
+        {
+            if (checksellen())
             {
-                if (this.rtbNote.SelectionFont.Style.HasFlag(FontStyle.Bold))
-                {                    
+                if (hasfontstyle(this.rtbNote.SelectionFont.Style, FontStyle.Bold))
+                {
                     this.rtbNote.SelectionFont = new System.Drawing.Font(this.rtbNote.SelectionFont.FontFamily, this.rtbNote.SelectionFont.SizeInPoints, removestyle(this.rtbNote.SelectionFont.Style, FontStyle.Bold));
                 }
                 else
@@ -545,7 +556,21 @@ namespace NoteFly
                 }
             }
         }
-		
-		#endregion
+
+        private void btnTextItalic_Click(object sender, EventArgs e)
+        {
+            if (checksellen())
+            {
+                if (hasfontstyle(this.rtbNote.SelectionFont.Style, FontStyle.Italic))
+                {
+                    this.rtbNote.SelectionFont = new System.Drawing.Font(this.rtbNote.SelectionFont.FontFamily, this.rtbNote.SelectionFont.SizeInPoints, removestyle(this.rtbNote.SelectionFont.Style, FontStyle.Italic));
+                }
+                else
+                {
+                    this.rtbNote.SelectionFont = new System.Drawing.Font(this.rtbNote.SelectionFont.FontFamily, this.rtbNote.SelectionFont.SizeInPoints, (this.rtbNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
+                }
+            }
+        }
+        #endregion
     }
 }

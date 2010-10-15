@@ -35,6 +35,7 @@ namespace NoteFly
     {
         #region Fields (10)
 
+        private int noteid;
         private const int MINVISIBLESIZE = 5;
         //private short id, notecolor = 0;
         private bool moving = false;
@@ -52,6 +53,8 @@ namespace NoteFly
         /// <param name="note">note data class.</param>
         public FrmNote(Note note)
         {
+            this.noteid = note.Id;
+
             if (!note.Visible)
             {
                 throw new CustomException("Form should not be created. visible is set false.");
@@ -70,6 +73,14 @@ namespace NoteFly
         }
 
         #endregion Constructors
+
+        public int ID
+        {
+            get
+            {
+                return this.noteid;
+            }
+        }
 
         #region Methods (32)
 
@@ -142,29 +153,29 @@ namespace NoteFly
             }
             else
             {
-                this.twpass = new char[passwctrl[0].Text.Length];
-                for (int n = 0; n < passwctrl[0].Text.Length; n++)
-                {
-                    this.twpass[n] = passwctrl[0].Text[n];
-                }
-                if (this.twpass.Length <= 0 || this.twpass == null)
-                {
-                    throw new CustomException("buffer underflow");
-                }
-                if (this.twpass.Length > 255)
-                {
-                    throw new CustomException("password too long.");
-                }
-                passwctrl[0].Name = new Random().Next().ToString();
-                passwctrl[0].Text.Remove(0);
-                frmAskpass.Close();
-                foreach (Control cntrl in frmAskpass.Controls)
-                {
-                    cntrl.Dispose();
-                }
-                frmAskpass.Dispose();
-                GC.Collect();
-                this.Tweetnote();
+                //this.twpass = new char[passwctrl[0].Text.Length];
+                //for (int n = 0; n < passwctrl[0].Text.Length; n++)
+                //{
+                //    this.twpass[n] = passwctrl[0].Text[n];
+                //}
+                //if (this.twpass.Length <= 0 || this.twpass == null)
+                //{
+                //    throw new CustomException("buffer underflow");
+                //}
+                //if (this.twpass.Length > 255)
+                //{
+                //    throw new CustomException("password too long.");
+                //}
+                //passwctrl[0].Name = new Random().Next().ToString();
+                //passwctrl[0].Text.Remove(0);
+                //frmAskpass.Close();
+                //foreach (Control cntrl in frmAskpass.Controls)
+                //{
+                //    cntrl.Dispose();
+                //}
+                //frmAskpass.Dispose();
+                //GC.Collect();
+                //this.Tweetnote();
             }
         }
 

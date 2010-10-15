@@ -188,19 +188,20 @@ namespace NoteFly
             int noteid = Convert.ToInt32(cbx.Name);
             if ((noteid <= this.notes.NumNotes) && (noteid >= 0))
             {
-                if (this.notes.GetNotes[noteid].Visible == true)
+                this.notes.SetNoteVisible(noteid, !this.notes.GetNoteVisible(noteid));
+
+                if (this.notes.GetNoteVisible(noteid) == true)
                 {
-                    this.notes.GetNotes[noteid].Hide();
-                    this.notes.GetNotes[noteid].Visible = false;
+                    this.notes.GetNoteFrm(noteid).Show();
+                    //this.notes.GetNoteFrm(noteid).CheckThings();
                 }
                 else
                 {
-                    this.notes.GetNotes[noteid].Show();
-                    this.notes.GetNotes[noteid].Visible = true;
-                    this.notes.GetNotes[noteid].CheckThings();
+                    this.notes.GetNoteFrm(noteid).Close();
+
                 }
 
-                this.notes.GetNotes[noteid].UpdateThisNote();
+                //this.notes.GetNotes[noteid].UpdateThisNote();
             }
             else
             {
