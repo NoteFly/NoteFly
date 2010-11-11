@@ -228,7 +228,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="nodename"></param>
         /// <returns>return node as string</returns>
-        static public String getcontentstring(string filename, string nodename)
+        static public String GetContentString(string filename, string nodename)
         {
             try
             {
@@ -272,7 +272,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="nodename"></param>
         /// <returns></returns>
-        static public bool getcontentbool(string filename, string nodename)
+        static public bool GetContentBool(string filename, string nodename)
         {
             xmlread = new XmlTextReader(filename);
             try
@@ -311,7 +311,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="nodename"></param>
         /// <returns>return node as integer, -1 if error</returns>
-        static public int getcontentint(string filename, string nodename)
+        static public int GetContentInt(string filename, string nodename)
         {
             xmlread = new XmlTextReader(filename);
             try
@@ -373,6 +373,8 @@ namespace NoteFly
 
                 WriteXMLBool("ontop", note.Ontop);
 
+                WriteXMLBool("locked", note.Locked);
+
                 //xmlwrite.WriteElementString("color", );
 
                 xmlwrite.WriteElementString("title", note.Title);
@@ -398,8 +400,7 @@ namespace NoteFly
                 xmlwrite.Flush();
                 xmlwrite.Close();
             }
-            CheckFile();
-
+            //CheckFile();
             return true;
         }
 
@@ -411,169 +412,155 @@ namespace NoteFly
         {
             try
             {
-                xmlwrite = new XmlTextWriter(SETTINGFILE, System.Text.Encoding.UTF8);
+                xmlwrite = new XmlTextWriter(SETTINGSFILE, System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
 
                 xmlwrite.WriteStartDocument();
-                xmlwrite.WriteStartElement("settings");
+                xmlwrite.WriteStartElement("Settings");
 
-                WriteXMLBool("transparecy", Settings.NotesTransparencyEnabled);
+                WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
+                WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
+                WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
+                WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
 
-                xmlwrite.WriteElementString("transparecylevel", Convert.ToString(Settings.NotesTransparencyLevel, CultureInfo.InvariantCulture.NumberFormat));
-
-                if (Settings.NotesDefaultColor < 0) { throw new CustomException("Impossible selection"); }
+                WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
+                xmlwrite.WriteElementString("NotesTransparencyLevel", Convert.ToString(Settings.NotesTransparencyLevel, CultureInfo.InvariantCulture.NumberFormat));
+                if ((Settings.NotesDefaultColor < 0) || (Settings.NotesDefaultColor >= 8)) { throw new CustomException("unknown defaultcolor."); }
                 else
                 {
-                    xmlwrite.WriteElementString("defaultcolor", Convert.ToString(Settings.NotesDefaultColor, CultureInfo.InvariantCulture.NumberFormat));
+                    xmlwrite.WriteElementString("NotesDefaultColor", Convert.ToString(Settings.NotesDefaultColor, CultureInfo.InvariantCulture.NumberFormat));
                 }
+                if (!Directory.Exists(Settings.NotesSavepath)) { throw new CustomException("Directory " + Settings.NotesSavepath + " does not exist."); }
+                else
+                {
+                    xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
+                }
+
                 if ((Settings.TrayiconLeftclickaction < 0) || (Settings.TrayiconLeftclickaction > 3)) { throw new CustomException("action left click unknow"); }
                 else
                 {
-                    xmlwrite.WriteElementString("actionleftclick", Convert.ToString(Settings.TrayiconLeftclickaction));
+                    xmlwrite.WriteElementString("TrayiconLeftclickaction", Convert.ToString(Settings.TrayiconLeftclickaction));
                 }
-                if (numcolor >= 8) { throw new CustomException("default color unknow"); }
+
+
+                if (String.IsNullOrEmpty(Settings.FontContentFamily)) { throw new CustomException("No font"); }
                 else
                 {
-                    objXmlTextWriter.WriteElementString("defaultcolor", Convert.ToString(numcolor));
+                    xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                 }
-
-                WriteXMLBool("askurl", askurl);
-
-                if (String.IsNullOrEmpty(fontcontent)) { throw new CustomException("No font"); }
+                xmlwrite.WriteElementString("FontContentSize", Convert.ToString(Settings.FontContentSize));
+                if ((Settings.FontTextdirection < 0) || (Settings.FontTextdirection > 2)) { throw new CustomException("Unknown text direction"); }
                 else
                 {
-                    objXmlTextWriter.WriteElementString("fontcontent", fontcontent);
+                    xmlwrite.WriteElementString("FontTextdirection", Convert.ToString(Settings.FontTextdirection));
                 }
-                objXmlTextWriter.WriteElementString("fontsize", Convert.ToString(fontsize));
 
-                if ((textdirection < 0) || (textdirection > 2)) { throw new CustomException("Invalid text direction"); }
-                else
-                {
-                    objXmlTextWriter.WriteElementString("textdirection", Convert.ToString(textdirection));
-                }
-                if (Directory.Exists(notesavepath))
-                {
-                    objXmlTextWriter.WriteElementString("notesavepath", notesavepath);
-                }
-                else { throw new CustomException("Directory " + notesavepath + " does not exist."); }
+                xmlwrite.WriteStartElement("Highlight"); //start subtree Highlight
 
-                WriteXMLBool("logerror", logerror);
+                WriteXMLBool("HighlightHyperlinks", Settings.HighlightHyperlinks);
+                WriteXMLBool("highlightHTML", Settings.HighlightHTML);
+                WriteXMLBool("HighlightPHP", Settings.HighlightPHP);
+                WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
 
-                WriteXMLBool("loginfo", loginfo);
+                xmlwrite.WriteEndElement(); //end subtree highlight
 
-                objXmlTextWriter.WriteStartElement("syntaxhighlight");
+                WriteXMLBool("ConfirmDeletenote", Settings.ConfirmDeletenote);
+                WriteXMLBool("ConfirmExit", Settings.ConfirmExit);
+                WriteXMLBool("ConfirmLinkclick", Settings.ConfirmLinkclick);
 
-                WriteXMLBool("highlightHTML", highlightHTML);
 
-                objXmlTextWriter.WriteEndElement();
+                WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
+                xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
+                xmlwrite.WriteElementString("NetworkConnectionTimeout", Convert.ToString(Settings.NetworkConnectionTimeout, CultureInfo.InvariantCulture.NumberFormat));
 
-                WriteXMLBool("confirmexit", confirmexit);
 
-                WriteXMLBool("confirmdelete", confirmdelete);
+                xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.SocialEmailDefaultadres);
 
-                objXmlTextWriter.WriteElementString("defaultemail", defaultemail);
+                
 
-                WriteXMLBool("useproxy", useproxy);
-
-                objXmlTextWriter.WriteElementString("proxyaddr", proxyaddr);
-
-                objXmlTextWriter.WriteElementString("networktimeout", Convert.ToString(timeout, CultureInfo.InvariantCulture.NumberFormat));
-
-                WriteXMLBool("firstrun", firstrun);
-
-                objXmlTextWriter.WriteStartElement("facebook");
-
-                WriteXMLBool("savesession", savefacebooksession);
-
-                if (savefacebooksession && !String.IsNullOrEmpty(FacebookSettings.Uid) && FacebookSettings.Sessionsecret != null && !String.IsNullOrEmpty(FacebookSettings.Sessionkey) && FacebookSettings.Sesionexpires != 0)
-                {
-                    objXmlTextWriter.WriteElementString("uid", FacebookSettings.Uid);
-                    objXmlTextWriter.WriteElementString("sesionexpires", Convert.ToString(FacebookSettings.Sesionexpires, CultureInfo.InvariantCulture.NumberFormat));
-                    if (FacebookSettings.Sessionsecret.Length == 24)
+                xmlwrite.WriteStartElement("facebook"); //start subtree facebook
+                    WriteXMLBool("SocialFacebookSavesession", Settings.SocialFacebookSavesession);
+                    if (!String.IsNullOrEmpty(Settings.SocialFacebookSessionSecret) &&
+                        !String.IsNullOrEmpty(Settings.SocialFacebookSessionKey) &&
+                        Settings.SocialFacebookSavesession == true)
                     {
-                        objXmlTextWriter.WriteElementString("sessionsecret", FacebookSettings.Sessionsecret.ToString());
+                        xmlwrite.WriteElementString("SocialFacebookSessionExpires", Convert.ToString(Settings.SocialFacebookSessionExpires, CultureInfo.InvariantCulture.NumberFormat));
+                        xmlwrite.WriteElementString("SocialFacebookSessionSecret", Settings.SocialFacebookSessionSecret);
+                        xmlwrite.WriteElementString("SocialFacebookSessionKey", Settings.SocialFacebookSessionKey);
                     }
                     else
                     {
-                        objXmlTextWriter.WriteElementString("sessionsecret", String.Empty);
+                        xmlwrite.WriteElementString("SocialFacebookSessionExpires", String.Empty);
+                        xmlwrite.WriteElementString("SocialFacebookSessionSecret", String.Empty);
+                        xmlwrite.WriteElementString("SocialFacebookSessionKey", String.Empty);
                     }
-                    objXmlTextWriter.WriteElementString("sessionkey", FacebookSettings.Sessionkey);
-                }
-                else
-                {
-                    objXmlTextWriter.WriteElementString("uid", String.Empty);
-                    objXmlTextWriter.WriteElementString("sesionexpires", String.Empty);
-                    objXmlTextWriter.WriteElementString("sessionsecret", String.Empty);
-                    objXmlTextWriter.WriteElementString("sessionkey", String.Empty);
-                }
-                objXmlTextWriter.WriteEndElement();
+                xmlwrite.WriteEndElement(); //end subtree facebook
 
-                objXmlTextWriter.WriteStartElement("twitter");
-                if (twitteruser.Length > 15) { throw new CustomException("Twitter username too long."); }
-                else
-                {
-                    objXmlTextWriter.WriteElementString("twitteruser", twitteruser);
-                }
-                if ((twitterpass.Length < 6) && (twitterpass != "")) { throw new CustomException("Twitter password too short."); }
-                else
-                {
-                    if (twitterpass.Length > 255) { throw new CustomException("Twitter password too long."); }
+                xmlwrite.WriteStartElement("twitter"); //start subtree twitter
+                    if (Settings.SocialTwitterUsername.Length > 15) { throw new CustomException("Twitter username too long."); }
+                    else
+                    {
+                        xmlwrite.WriteElementString("SocialTwitterUsername", Settings.SocialTwitterUsername);
+                    }
 
-                    objXmlTextWriter.WriteElementString("twitterpass", twitterpass);
-                }
+                    if ((Settings.SocialTwitterpassword.Length < 6) && (String.IsNullOrEmpty(Settings.SocialTwitterpassword))) { throw new CustomException("Twitter password too short."); }
+                    else
+                    {
+                        xmlwrite.WriteElementString("SocialTwitterpassword", Settings.SocialTwitterpassword);
+                    }
+                xmlwrite.WriteEndElement(); //end subtree twitter.
 
-                objXmlTextWriter.WriteEndElement();
 
-                objXmlTextWriter.WriteEndElement();
-                objXmlTextWriter.WriteEndDocument();
+                xmlwrite.WriteEndElement();
+                xmlwrite.WriteEndDocument();
             }
             finally
             {
-                objXmlTextWriter.Flush();
-                objXmlTextWriter.Close();
+                xmlwrite.Flush();
+                xmlwrite.Close();
             }
-
-            CheckFile();
+            //CheckFile();
 
             return true;
         }
         // Private Methods (3) 
 
-        /// <summary>
-        /// Does some checks on the file
-        /// - Is the file empty?
-        /// - Is the file too large?
-        /// </summary>
-        static private void CheckFile(string filenm)
-        {
-            if (File.Exists(filenm) == true)
-            {
-                FileInfo checkfile = new FileInfo(filenm);
-#if windows
-                if (checkfile.Attributes == FileAttributes.System)
+        /*
+                /// <summary>
+                /// Does some checks on the file
+                /// - Is the file empty?
+                /// - Is the file too large?
+                /// </summary>
+                static private void CheckFile(string filenm)
                 {
-                    throw new CustomException("File " + filenm + " is a system file.");
+                    if (File.Exists(filenm) == true)
+                    {
+                        FileInfo checkfile = new FileInfo(filenm);
+        #if windows
+                        if (checkfile.Attributes == FileAttributes.System)
+                        {
+                            throw new CustomException("File " + filenm + " is a system file.");
+                        }
+                        else if (checkfile.Attributes == FileAttributes.ReadOnly)
+                        {
+                            Log.Write(LogType.error, filenm + " is readonly and should not be readonly.");
+                        }
+        #endif
+                        if (checkfile.Length == 0)
+                        {
+                            throw new CustomException("File " + filenm + " is empty");
+                        }
+                        //check if larger that 10 MB
+                        else if (checkfile.Length > 10485760)
+                        {
+                            throw new CustomException("File " + filenm + " is way too big.");
+                        }
+                    }
                 }
-                else if (checkfile.Attributes == FileAttributes.ReadOnly)
-                {
-                    Log.Write(LogType.error, filenm + " is readonly and should not be readonly.");
-                }
-#endif
-                if (checkfile.Length == 0)
-                {
-                    throw new CustomException("File " + filenm + " is empty");
-                }
-                //check if larger that 10 MB
-                else if (checkfile.Length > 10485760)
-                {
-                    throw new CustomException("File " + filenm + " is way too big.");
-                }
+        */
 
-            }
-        }
-
         /// <summary>
-        /// write 1 for true and 0 for false.
+        /// Write xml 1 valaue for true and 0 for false.
         /// </summary>
         /// <param name="checknode"></param>
         static private void WriteXMLBool(String element, bool checknode)

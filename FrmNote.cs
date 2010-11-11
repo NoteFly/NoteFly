@@ -33,19 +33,17 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNote : Form
     {
-        #region Fields (10)
+        #region Fields (4)
 
-        private int noteid;
-        private const int MINVISIBLESIZE = 5;
-        //private short id, notecolor = 0;
-        private bool moving = false;
-        //private int locX, locY;
-        //private ushort noteWidth, noteHeight;
-        private PictureBox pbShowLock;
+        private Note note;
         private Point oldp;
+        private PictureBox pbShowLock;
+        private bool moving = false;
+        private const int MINVISIBLESIZE = 5;
+        
         #endregion Fields
 
-        #region Constructors (2)
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
@@ -53,34 +51,19 @@ namespace NoteFly
         /// <param name="note">note data class.</param>
         public FrmNote(Note note)
         {
-            this.noteid = note.Id;
+            this.InitializeComponent();
 
-            if (!note.Visible)
-            {
-                throw new CustomException("Form should not be created. visible is set false.");
-                //return;
-            }
-
-            this.FormBorderStyle = FormBorderStyle.None;
+            this.CheckThings();
+            
+            this.SetBounds(note.X, note.Y, note.Width, note.Height);
             this.lblTitle.Text = note.Title;
             this.rtbNote.Text = note.Content;
-            this.InitializeComponent();
-            this.PaintColorNote();
-            this.SetSizeNote(note.Width, note.Height);
-            this.SetPosNote();
             this.TopMost = note.Ontop;
-            this.CheckThings();
+
+            this.note = note;
         }
 
         #endregion Constructors
-
-        public int ID
-        {
-            get
-            {
-                return this.noteid;
-            }
-        }
 
         #region Methods (32)
 
@@ -91,7 +74,7 @@ namespace NoteFly
         /// </summary>
         public void CheckThings()
         {
-            this.PaintColorNote();
+            //this.PaintColorNote();
 
             this.SetTextMenuTwitter(Settings.SocialTwitterEnabled);
 
@@ -252,9 +235,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(this.note))
+            if (!String.IsNullOrEmpty(this.rtbNote.Text))
             {
-                Clipboard.SetText(this.note);
+                Clipboard.SetText(this.rtbNote.Text);
             }
         }
 
@@ -265,9 +248,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(this.title))
+            if (!String.IsNullOrEmpty(this.lblTitle.Text))
             {
-                Clipboard.SetText(this.title);
+                Clipboard.SetText(this.lblTitle.Text);
             }
         }
 
@@ -278,15 +261,14 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            if (this.NoteID > this.notes.NumNotes)
-            {
-                string cannotfindnote = "Cannot find note.";
-                Log.Write(LogType.error, cannotfindnote);
-                MessageBox.Show(cannotfindnote);
-            }
-
-            this.notes.EditNewNote(this.NoteID);
+            //this.hide();
+            //if (this.NoteID > this.notes.NumNotes)
+            //{
+            //    string cannotfindnote = "Cannot find note.";
+            //    Log.Write(LogType.error, cannotfindnote);
+            //    MessageBox.Show(cannotfindnote);
+            //}
+            //this.notes.EditNewNote(this.NoteID);
         }
 
         /// <summary>
@@ -296,19 +278,16 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void emailToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string emailnote = System.Web.HttpUtility.UrlEncode(this.note).Replace("+", " ");
-            string emailtitle = System.Web.HttpUtility.UrlEncode(this.title);
-
-            xmlHandler xmlsettings = new xmlHandler(true);
-            string defaultemail = xmlsettings.getXMLnode("defaultemail");
+            string emailnote = System.Web.HttpUtility.UrlEncode(this.rtbNote.Text).Replace("+", " ");
+            string emailtitle = System.Web.HttpUtility.UrlEncode(this.lblTitle.Text);
 
             if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote))) //bugfix #0000008
             {
-                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + this.title + "&body=" + emailnote);
+                System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
             }
             else if (!String.IsNullOrEmpty(emailtitle))
             {
-                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + this.title);
+                System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text);
             }
             else
             {
@@ -325,7 +304,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmNote_Activated(object sender, EventArgs e)
         {
-            if (this.notes.Transparency && this.skin != null)
+            if (Settings.NotesTransparencyEnabled)
             {
                 this.Opacity = 1.0;
             }
@@ -338,9 +317,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmNote_Deactivate(object sender, EventArgs e)
         {
-            if (this.notes.Transparency && this.skin != null)
+            if (Settings.NotesTransparencyEnabled)
             {
-                this.Opacity = this.skin.GetTransparencylevel();
+                this.Opacity = Settings.NotesTransparencyLevel;
             }
         }
 
@@ -362,7 +341,7 @@ namespace NoteFly
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             const string locknotemsg = "&Lock note";
-            if (this.notelock)
+            if ()
             {
                 this.notelock = false;
                 this.DestroyPbLock();
@@ -448,34 +427,34 @@ namespace NoteFly
         /// <summary>
         /// Get the color of the note and paint it.
         /// </summary>
-        private void PaintColorNote()
-        {
-            this.skin = new Skin(this.notecolor);
-            Color normalcolor = this.skin.GetObjColor(false);
+        //private void PaintColorNote()
+        //{
+        //    this.skin = new Skin(this.notecolor);
+        //    Color normalcolor = this.skin.GetObjColor(false);
 
-            this.BackColor = normalcolor;
-            this.pnlHead.BackColor = normalcolor;
-            this.pnlNote.BackColor = normalcolor;
-            this.rtbNote.BackColor = normalcolor;
+        //    this.BackColor = normalcolor;
+        //    this.pnlHead.BackColor = normalcolor;
+        //    this.pnlNote.BackColor = normalcolor;
+        //    this.rtbNote.BackColor = normalcolor;
 
-            if (this.notes.TextDirection == 0)
-            {
-                this.lblTitle.TextAlign = ContentAlignment.TopLeft;
-                this.rtbNote.SelectAll(); //fix bug: #0000012
-                this.rtbNote.SelectionAlignment = HorizontalAlignment.Left;
-                //this.rtbNote.RightToLeft = RightToLeft.No;
-            }
-            else if (this.notes.TextDirection == 1)
-            {
-                this.lblTitle.TextAlign = ContentAlignment.TopRight;
-                this.rtbNote.SelectAll();
-                this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
-                //this.rtbNote.RightToLeft = RightToLeft.Yes; //will make the contextmenu act not right.
-            }
-            this.rtbNote.SelectionStart = 0;
+        //    if (this.notes.TextDirection == 0)
+        //    {
+        //        this.lblTitle.TextAlign = ContentAlignment.TopLeft;
+        //        this.rtbNote.SelectAll(); //fix bug: #0000012
+        //        this.rtbNote.SelectionAlignment = HorizontalAlignment.Left;
+        //        //this.rtbNote.RightToLeft = RightToLeft.No;
+        //    }
+        //    else if (this.notes.TextDirection == 1)
+        //    {
+        //        this.lblTitle.TextAlign = ContentAlignment.TopRight;
+        //        this.rtbNote.SelectAll();
+        //        this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
+        //        //this.rtbNote.RightToLeft = RightToLeft.Yes; //will make the contextmenu act not right.
+        //    }
+        //    this.rtbNote.SelectionStart = 0;
 
-            this.rtbNote.Font = this.skin.GetFontNoteContent();
-        }
+        //    this.rtbNote.Font = this.skin.GetFontNoteContent();
+        //}
 
         /// <summary>
         /// Resize note
@@ -650,14 +629,6 @@ namespace NoteFly
             }
 
             this.PaintColorNote();
-        }
-
-        /// <summary>
-        /// Set the position of frmNote
-        /// </summary>
-        private void SetPosNote()
-        {
-            this.Location = new Point(this.locX, this.locY);
         }
 
         /// <summary>

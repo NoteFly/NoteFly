@@ -282,97 +282,97 @@ namespace NoteFly
         /// <returns>response code (as json or xml?)</returns>
         public string PostStream(string message)
         {
-            WebRequest request = WebRequest.Create(FBRESTSERVERURL);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-
-            xmlHandler settting = new xmlHandler(true);
-            if (settting.getXMLnodeAsBool("useproxy") == true)
-            {
-                string addr = settting.getXMLnode("proxyaddr");
-                if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0" || addr == "255.255.255.255")
-                {
-                    string novalidproxy = "Proxy address is not given";
-                    MessageBox.Show(novalidproxy);
-                    Log.Write(LogType.error, novalidproxy);
-                    return String.Empty;
-                }
-                else
-                {
-                    request.Proxy = new WebProxy(settting.getXMLnode("proxyaddr"));
-                }
-            }
-
-            if (settting.getXMLnodeAsBool("savesession"))
-            {
-                try
-                {
-                    bool[] boolsettings = settting.ParserSettingsBool();
-
-                    settting.WriteSettings(
-                        boolsettings[0],
-                        Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), 
-                        settting.getXMLnodeAsInt("defaultcolor"),
-                        settting.getXMLnodeAsInt("actionleftclick"),
-                        boolsettings[1],
-                        settting.getXMLnode("fontcontent"),
-                        Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")),
-                        settting.getXMLnodeAsInt("textdirection"),
-                        settting.getXMLnode("notesavepath"),
-                        settting.getXMLnode("defaultemail"),
-                        boolsettings[4],
-                        boolsettings[5],
-                        boolsettings[6],
-                        settting.getXMLnode("twitteruser"),
-                        settting.getXMLnode("twitterpass"),
-                        boolsettings[2],
-                        boolsettings[3],
-                        boolsettings[7],
-                        settting.getXMLnode("proxyaddr"),
-                        settting.getXMLnodeAsInt("timeout"),
-                        true,
-                        boolsettings[8]);
-                }
-                catch (Exception fbsessionexc)
-                {
-                    string fbsessionsave = "Cannot save facebook session.\r\n" + fbsessionexc.StackTrace;
-                    Log.Write(LogType.exception, fbsessionsave);
-                    MessageBox.Show(fbsessionsave);
-                }
-            }
-
-            request.Timeout = settting.getXMLnodeAsInt("timeout");
-
-            string data = this.CreatePostData(message);
-
-            byte[] bytes = Encoding.UTF8.GetBytes(data);
-            request.ContentLength = bytes.Length;
-            using (Stream requestStream = request.GetRequestStream())
-            {
-                requestStream.Write(bytes, 0, bytes.Length);
-                try
-                {
-                    using (WebResponse response = request.GetResponse())
-                    {
-                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                        {
-                            return reader.ReadToEnd();
-                        }
-                    }
-                }
-                catch (TimeoutException)
-                {
-                    string contimeout = "connection timeout";
-                    Log.Write(LogType.error, contimeout);
-                    MessageBox.Show(contimeout);
-                }
-                catch (Exception exc)
-                {
-                    Log.Write(LogType.exception, exc.Message);
-                    MessageBox.Show("Exception: " + exc.Message);
-                }
-            }
-
+//            WebRequest request = WebRequest.Create(FBRESTSERVERURL);
+//            request.Method = "POST";
+//            request.ContentType = "application/x-www-form-urlencoded";
+//
+//            xmlHandler settting = new xmlHandler(true);
+//            if (settting.getXMLnodeAsBool("useproxy") == true)
+//            {
+//                string addr = settting.getXMLnode("proxyaddr");
+//                if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0" || addr == "255.255.255.255")
+//                {
+//                    string novalidproxy = "Proxy address is not given";
+//                    MessageBox.Show(novalidproxy);
+//                    Log.Write(LogType.error, novalidproxy);
+//                    return String.Empty;
+//                }
+//                else
+//                {
+//                    request.Proxy = new WebProxy(settting.getXMLnode("proxyaddr"));
+//                }
+//            }
+//
+//            if (settting.getXMLnodeAsBool("savesession"))
+//            {
+//                try
+//                {
+//                    bool[] boolsettings = settting.ParserSettingsBool();
+//
+//                    settting.WriteSettings(
+//                        boolsettings[0],
+//                        Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), 
+//                        settting.getXMLnodeAsInt("defaultcolor"),
+//                        settting.getXMLnodeAsInt("actionleftclick"),
+//                        boolsettings[1],
+//                        settting.getXMLnode("fontcontent"),
+//                        Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")),
+//                        settting.getXMLnodeAsInt("textdirection"),
+//                        settting.getXMLnode("notesavepath"),
+//                        settting.getXMLnode("defaultemail"),
+//                        boolsettings[4],
+//                        boolsettings[5],
+//                        boolsettings[6],
+//                        settting.getXMLnode("twitteruser"),
+//                        settting.getXMLnode("twitterpass"),
+//                        boolsettings[2],
+//                        boolsettings[3],
+//                        boolsettings[7],
+//                        settting.getXMLnode("proxyaddr"),
+//                        settting.getXMLnodeAsInt("timeout"),
+//                        true,
+//                        boolsettings[8]);
+//                }
+//                catch (Exception fbsessionexc)
+//                {
+//                    string fbsessionsave = "Cannot save facebook session.\r\n" + fbsessionexc.StackTrace;
+//                    Log.Write(LogType.exception, fbsessionsave);
+//                    MessageBox.Show(fbsessionsave);
+//                }
+//            }
+//
+//            request.Timeout = settting.getXMLnodeAsInt("timeout");
+//
+//            string data = this.CreatePostData(message);
+//
+//            byte[] bytes = Encoding.UTF8.GetBytes(data);
+//            request.ContentLength = bytes.Length;
+//            using (Stream requestStream = request.GetRequestStream())
+//            {
+//                requestStream.Write(bytes, 0, bytes.Length);
+//                try
+//                {
+//                    using (WebResponse response = request.GetResponse())
+//                    {
+//                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+//                        {
+//                            return reader.ReadToEnd();
+//                        }
+//                    }
+//                }
+//                catch (TimeoutException)
+//                {
+//                    string contimeout = "connection timeout";
+//                    Log.Write(LogType.error, contimeout);
+//                    MessageBox.Show(contimeout);
+//                }
+//                catch (Exception exc)
+//                {
+//                    Log.Write(LogType.exception, exc.Message);
+//                    MessageBox.Show("Exception: " + exc.Message);
+//                }
+//            }
+//
             return null;
         }
 
@@ -382,36 +382,36 @@ namespace NoteFly
         /// <param name="note">The note to post</param>
         public void StartPostingNote(string note)
         {
-            this.message = note;
-            if (String.IsNullOrEmpty(FacebookSettings.Sessionkey) || FacebookSettings.Sessionsecret.Length == 0 || String.IsNullOrEmpty(FacebookSettings.Uid))
-            {
-                this.ShowFBLoginForm();
-            }
-            else
-            {
-                System.DateTime dtexpiressession = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
-                dtexpiressession = dtexpiressession.AddSeconds(FacebookSettings.Sesionexpires);
-
-                if (dtexpiressession.Month == DateTime.Now.Month)
-                {
-                    if ((dtexpiressession.Day == DateTime.Now.Day + 1) || ((dtexpiressession.Day == DateTime.Now.Day) && (dtexpiressession.Hour > DateTime.Now.Hour)))
-                    {
-                        this.CheckResponse(this.PostStream(this.message));
-                    }
-                    else
-                    {
-                        this.ShowFBLoginForm();
-                    }
-                }
-                else if ((dtexpiressession.Month + 1 == DateTime.Now.Month) && (dtexpiressession.Day == 1))
-                {
-                    this.CheckResponse(this.PostStream(this.message));
-                }
-                else
-                {
-                    this.ShowFBLoginForm();
-                }
-            }
+//            this.message = note;
+//            if (String.IsNullOrEmpty(FacebookSettings.Sessionkey) || FacebookSettings.Sessionsecret.Length == 0 || String.IsNullOrEmpty(FacebookSettings.Uid))
+//            {
+//                this.ShowFBLoginForm();
+//            }
+//            else
+//            {
+//                System.DateTime dtexpiressession = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+//                dtexpiressession = dtexpiressession.AddSeconds(FacebookSettings.Sesionexpires);
+//
+//                if (dtexpiressession.Month == DateTime.Now.Month)
+//                {
+//                    if ((dtexpiressession.Day == DateTime.Now.Day + 1) || ((dtexpiressession.Day == DateTime.Now.Day) && (dtexpiressession.Hour > DateTime.Now.Hour)))
+//                    {
+//                        this.CheckResponse(this.PostStream(this.message));
+//                    }
+//                    else
+//                    {
+//                        this.ShowFBLoginForm();
+//                    }
+//                }
+//                else if ((dtexpiressession.Month + 1 == DateTime.Now.Month) && (dtexpiressession.Day == 1))
+//                {
+//                    this.CheckResponse(this.PostStream(this.message));
+//                }
+//                else
+//                {
+//                    this.ShowFBLoginForm();
+//                }
+//            }
         }
 
         // Private Methods(5)

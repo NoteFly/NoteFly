@@ -51,9 +51,8 @@ namespace NoteFly
         public Notes(bool forcefirstrun)
         {
             this.notes = new List<Note>();
-            this.notesfrms = new List<FrmNote>();
-
             bool firstrun = Settings.ProgramFirstrun;
+
             if (forcefirstrun)
             {
                 firstrun = true;
@@ -94,21 +93,6 @@ namespace NoteFly
         public void SetNoteVisible(int id, bool newvaleau)
         {
             this.notes[id].Visible = newvaleau;
-        }
-
-        public FrmNote GetNoteFrm(int noteid)
-        {
-            for (int i = 0; i < this.notesfrms.Count; i++)
-            {
-                if (this.notesfrms[i].ID == noteid)
-                {
-                    return this.notesfrms[i];
-                }
-            }
-            //is not created.
-            
-            
-
         }
 
         /// <summary>
@@ -166,10 +150,10 @@ namespace NoteFly
         /// </summary>
         public void UpdateAllFonts()
         {
-            //foreach (FrmNote curfrmnote in this.notes)
-            //{
-            //    curfrmnote.CheckThings();
-            //}
+            foreach (Note curnote in this.notes)
+            {
+                curnote.frmnote.CheckThings();
+            }
         }
 
         // Private Methods (4) 
@@ -244,49 +228,8 @@ namespace NoteFly
 
             ushort id = 1;
             string[] notefiles = Directory.GetFiles(Settings.NotesSavepath, "*.");
-            /*
-            string notefile = Path.Combine(Settings.NotesSavepath, id + ".note");
-            while (File.Exists(notefile) == true)
-            {
-                xmlHandler parserNote = new xmlHandler(notefile);
-                bool[] noteSettingBool;
-                string title, content;
-                int[] noteSettingsInt;
-                short notecolor;
-                try
-                {
-                    noteSettingBool = parserNote.ParserNoteBools();
-                    title = parserNote.getXMLnode("title");
-                    content = parserNote.getXMLnode("content");
-                    noteSettingsInt = parserNote.ParserNoteInts();
-                    notecolor = Convert.ToInt16(noteSettingsInt[0]);
-                }
-                catch (Exception exc)
-                {
-                    throw new CustomException("Note parser error, " + exc.Message);
-                }
 
-                this.noteslst.Add(this.CreateNote(noteSettingBool[0], noteSettingBool[1], title, content, notecolor, noteSettingsInt[1], noteSettingsInt[2], noteSettingsInt[3], noteSettingsInt[4]));
-                id++;
-                if (this.CheckLimitNotes(id))
-                {
-                    const string toomanynotes = "Too many notes to load.";
-                    Log.Write(LogType.error, toomanynotes);
-                    MessageBox.Show(toomanynotes);
-                    return;
-                }
-
-                notefile = Path.Combine(this.notesavepath, id + ".xml");
-            }
-            id++;
-            notefile = Path.Combine(this.notesavepath, id + ".xml");
-            if (File.Exists(notefile))
-            {
-                string notemissing = this.notesavepath + Convert.ToString(id - 1) + ".xml is missing.";
-                MessageBox.Show(notemissing);
-                Log.Write(LogType.error, notemissing);
-            }
-            */
+            
 
             if (firstrun)
             {
@@ -301,10 +244,10 @@ namespace NoteFly
                 notecontent.AppendLine("and then press delete note button for this particuler note.");
                 notecontent.AppendLine("By clicking on the cross on this note this note will be hidden.");
                 notecontent.AppendLine("You can get it back with the manage notes window.");
-                this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+                //this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
 
                 //xmlUtil.
-                
+
                 Log.Write(LogType.info, "firstrun occur");
             }
 

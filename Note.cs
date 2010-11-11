@@ -25,10 +25,19 @@ namespace NoteFly
 
     public class Note
     {
+        public FrmNote frmnote;
         private DateTime datecreated;
 
         /// <summary>
-        /// Loading a note.
+        /// Creating a new note instance, completly new note.
+        /// </summary>
+        public Note()
+        {
+            datecreated = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Creating a new note instance, loading a note form file.
         /// </summary>
         /// <param name="created"></param>
         public Note(DateTime datecreated)
@@ -36,16 +45,9 @@ namespace NoteFly
             this.datecreated = datecreated;
         }
 
-        /// <summary>
-        /// Creating a new note
-        /// </summary>
-        public Note()
-        {
-            datecreated = DateTime.Now;
-        }
-
+        public string Title { get; set; }
         public bool Visible { get; set; }
-        public bool Ontop  { get; set; }
+        public bool Ontop { get; set; }
         public bool RolledUp { get; set; }
         public bool Locked { get; set; }
         public short Id { get; set; }
@@ -54,6 +56,46 @@ namespace NoteFly
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+
+        /// <summary>
+        /// Create a new Form with this note.
+        /// </summary>
+        public void CreateForm()
+        {
+            this.frmnote = new FrmNote(this);
+        }
+
+        /// <summary>
+        /// Cleanu resources.
+        /// </summary>
+        public void DestroyForm()
+        {
+            this.frmnote.Close();
+            this.frmnote = null;
+            GC.Collect();
+        }
+
+        /// <summary>
+        /// Gets the content of this note from the frmnote
+        /// </summary>
+        public string Content
+        {
+            get
+            {
+                if (frmnote != null)
+                {
+                    //return frmnote;
+                }
+                else
+                {
+                    return "stub.";
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets date time created.
+        /// </summary>
         public DateTime DateCreated
         {
             get
@@ -61,8 +103,5 @@ namespace NoteFly
                 return this.datecreated;
             }
         }
-        public string Title { get; set; }
-        public string Content { get; set; }
-        
     }
 }

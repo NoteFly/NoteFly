@@ -31,8 +31,8 @@ namespace OAuth {
         /// </summary>
         public enum SignatureTypes {
             HMACSHA1,
-            PLAINTEXT,
-            RSASHA1
+            PLAINTEXT
+            //RSASHA1
         }
 
         /// <summary>
@@ -300,8 +300,8 @@ namespace OAuth {
                     hmacsha1.Key = Encoding.ASCII.GetBytes(string.Format("{0}&{1}", UrlEncode(consumerSecret), string.IsNullOrEmpty(tokenSecret) ? "" : UrlEncode(tokenSecret)));
 
                     return GenerateSignatureUsingHash(signatureBase, hmacsha1);                                        
-                case SignatureTypes.RSASHA1:
-                    throw new NotImplementedException();
+                //case SignatureTypes.RSASHA1:
+                    //throw new NotImplementedException();
                 default:
                     throw new ArgumentException("Unknown signature type", "signatureType");
             }
