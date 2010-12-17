@@ -25,6 +25,7 @@ namespace NoteFly
 
     public class Note
     {
+        //public field to access rtbNote directly, check if not null when not created/"not visible"
         public FrmNote frmnote;
         private DateTime datecreated;
 
@@ -58,7 +59,8 @@ namespace NoteFly
         public int Height { get; set; }
 
         /// <summary>
-        /// Create a new Form with this note.
+        /// Create a new frmNote with this note.
+        /// The note now has to be visible to the user.
         /// </summary>
         public void CreateForm()
         {
@@ -66,7 +68,8 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Cleanu resources.
+        /// Cleanup frmNote resources.
+        /// The note is made not visible to user and form isn't required anymore.
         /// </summary>
         public void DestroyForm()
         {
@@ -76,25 +79,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets the content of this note from the frmnote
-        /// </summary>
-        public string Content
-        {
-            get
-            {
-                if (frmnote != null)
-                {
-                    //return frmnote;
-                }
-                else
-                {
-                    return "stub.";
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets date time created.
+        /// Gets date and time when this note was created.
         /// </summary>
         public DateTime DateCreated
         {

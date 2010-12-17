@@ -375,7 +375,7 @@ namespace NoteFly
 
                 WriteXMLBool("locked", note.Locked);
 
-                //xmlwrite.WriteElementString("color", );
+                xmlwrite.WriteElementString("color", note.Color.ToString());
 
                 xmlwrite.WriteElementString("title", note.Title);
 
@@ -468,15 +468,11 @@ namespace NoteFly
                 WriteXMLBool("ConfirmExit", Settings.ConfirmExit);
                 WriteXMLBool("ConfirmLinkclick", Settings.ConfirmLinkclick);
 
-
                 WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
                 xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
                 xmlwrite.WriteElementString("NetworkConnectionTimeout", Convert.ToString(Settings.NetworkConnectionTimeout, CultureInfo.InvariantCulture.NumberFormat));
 
-
                 xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.SocialEmailDefaultadres);
-
-                
 
                 xmlwrite.WriteStartElement("facebook"); //start subtree facebook
                     WriteXMLBool("SocialFacebookSavesession", Settings.SocialFacebookSavesession);
@@ -523,8 +519,8 @@ namespace NoteFly
 
             return true;
         }
-        // Private Methods (3) 
 
+        // Private Methods (2)
         /*
                 /// <summary>
                 /// Does some checks on the file

@@ -51,47 +51,31 @@ namespace NoteFly
         /// <param name="note">note data class.</param>
         public FrmNote(Note note)
         {
-            this.InitializeComponent();
+            this.note = note;
 
-            this.CheckThings();
-            
+            this.InitializeComponent();
             this.SetBounds(note.X, note.Y, note.Width, note.Height);
             this.lblTitle.Text = note.Title;
-            this.rtbNote.Text = note.Content;
             this.TopMost = note.Ontop;
+            this.menuOnTop.Checked = note.Ontop;
+            this.SetTextMenuTwitter(Settings.SocialTwitterEnabled);
+            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
+            
+            //TODO: load content.
 
-            this.note = note;
+            TextHighlight.CheckSyntaxFull(rtbNote);
+            //causes TextChanged event so there is a rescan for URL's:
+            if (this.rtbNote.DetectUrls)
+            {
+                this.rtbNote.Text += "";
+            }
         }
 
         #endregion Constructors
 
         #region Methods (32)
 
-        // Public Methods (2) 
-
-        /// <summary>
-        /// Check if twitter is enabled and check Syntax.
-        /// </summary>
-        public void CheckThings()
-        {
-            //this.PaintColorNote();
-
-            this.SetTextMenuTwitter(Settings.SocialTwitterEnabled);
-
-            TextHighlight.CheckSyntaxFull(rtbNote);
-
-            if (this.TopMost)
-            {
-                this.menuOnTop.Checked = true;
-            }
-            else
-            {
-                this.menuOnTop.Checked = false;
-            }
-
-            this.rtbNote.DetectUrls = true;
-            this.rtbNote.Text += ""; //causes TextChanged event so rescan for URL's happens
-        }
+        // Public Methods (1) 
 
         /// <summary>
         /// Save the setting of the note.
@@ -116,6 +100,11 @@ namespace NoteFly
         [DllImport("wininet.dll")]
         private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
 #endif
+
+
+
+
+
 
         /// <summary>
         /// Find what password is entered.
@@ -334,35 +323,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Lock the note and show a lock.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            const string locknotemsg = "&Lock note";
-            if ()
-            {
-                this.notelock = false;
-                this.DestroyPbLock();
-                this.menuLockNote.Text = locknotemsg;
-                this.pbResizeGrip.Visible = true;
-            }
-            else
-            {
-                this.notelock = true;
-                this.CreatePbLock();
-                this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
-                this.pbResizeGrip.Visible = false;
-            }
-
-            this.menuNoteColors.Enabled = !this.notelock;
-            this.menuEditNote.Enabled = !this.notelock;
-            this.menuOnTop.Enabled = !this.notelock;
-            this.menuRollUp.Enabled = !this.notelock;
-        }
-
-        /// <summary>
         /// Create a PictureBox with lock picture.
         /// </summary>
         private void CreatePbLock()
@@ -387,25 +347,54 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Lock the note and show a lock.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            const string locknotemsg = "&Lock note";
+            note.Locked = !note.Locked;
+            if (note.Locked)
+            {
+                this.CreatePbLock();
+                this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
+            }
+            else
+            {
+                this.DestroyPbLock();
+                this.menuLockNote.Text = locknotemsg;
+            }
+
+            this.pbResizeGrip.Visible = !note.Locked;
+            this.menuNoteColors.Enabled = !note.Locked;
+            this.menuEditNote.Enabled = !note.Locked;
+            this.menuOnTop.Enabled = !note.Locked;
+            this.menuRollUp.Enabled = !note.Locked;
+        }
+
+        /// <summary>
         /// Roll the note up and down.
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
         private void menuRollUp_Click(object sender, EventArgs e)
         {
-            this.rolledup = !this.rolledup;
-            this.menuRollUp.Checked = this.rolledup;
-            if (this.rolledup)
+            const string rollupmsg = "&Roll up";
+            this.note.RolledUp = !this.note.RolledUp;
+            this.menuRollUp.Checked = !this.note.RolledUp;
+
+            if (this.note.RolledUp)
             {
-                this.menuRollUp.Text = this.menuRollUp.Text + "(click again to Roll Down)";
+                this.menuRollUp.Text = rollupmsg + "(click again to Roll Down)";
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
-                this.Height = this.Height - this.pnlNote.Height;
+                this.Height = this.pnlHead.Height;
             }
             else
             {
-                this.menuRollUp.Text = this.menuRollUp.Text.Substring(0, 8);
+                this.menuRollUp.Text = rollupmsg;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
-                this.Height = this.noteHeight;
+                this.Height = this.pnlHead.Height + this.pnlNote.Height;
             }
         }
 
@@ -558,45 +547,47 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.locX = this.Location.X;
-            this.locY = this.Location.Y;
 
-            if (!this.rolledup)
-            {
-                try
-                {
-                    this.noteWidth = Convert.ToUInt16(this.Width);
-                }
-                catch (InvalidCastException)
-                {
-                    new CustomException("noteWidth cannot be negative value.");
-                }
-                try
-                {
-                    this.noteHeight = Convert.ToUInt16(this.Height);
-                }
-                catch (InvalidCastException)
-                {
-                    new CustomException("noteHeight cannot be negative value.");
-                }
-            }
 
-            if ((this.locX + this.Width > MINVISIBLESIZE) && (this.locY + this.Height > MINVISIBLESIZE) && (this.notecolor >= 0) && this.notecolor <= this.skin.MaxNotesColors)
-            {
-                string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
-                xmlHandler updateposnote = new xmlHandler(notefile);
-                updateposnote.WriteNote(this.Visible, this.TopMost, this.notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
-            }
-            else if (this.notecolor < 0 || this.notecolor > this.skin.MaxNotesColors)
-            {
-                throw new CustomException("Note color unknow.");
-            }
-            else
-            {
-                string msgOutOfScreen = "Position note (ID:" + this.NoteID + ") is out of screen.";
-                Log.Write(LogType.error, msgOutOfScreen);
-                MessageBox.Show(msgOutOfScreen);
-            }
+            //this.locX = this.Location.X;
+            //this.locY = this.Location.Y;
+
+            //if (!this.rolledup)
+            //{
+            //    try
+            //    {
+            //        this.noteWidth = Convert.ToUInt16(this.Width);
+            //    }
+            //    catch (InvalidCastException)
+            //    {
+            //        new CustomException("noteWidth cannot be negative value.");
+            //    }
+            //    try
+            //    {
+            //        this.noteHeight = Convert.ToUInt16(this.Height);
+            //    }
+            //    catch (InvalidCastException)
+            //    {
+            //        new CustomException("noteHeight cannot be negative value.");
+            //    }
+            //}
+
+            //if ((this.locX + this.Width > MINVISIBLESIZE) && (this.locY + this.Height > MINVISIBLESIZE) && (this.notecolor >= 0) && this.notecolor <= this.skin.MaxNotesColors)
+            //{
+            //    string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
+            //    xmlHandler updateposnote = new xmlHandler(notefile);
+            //    updateposnote.WriteNote(this.Visible, this.TopMost, this.notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
+            //}
+            //else if (this.notecolor < 0 || this.notecolor > this.skin.MaxNotesColors)
+            //{
+            //    throw new CustomException("Note color unknow.");
+            //}
+            //else
+            //{
+            //    string msgOutOfScreen = "Position note (ID:" + this.NoteID + ") is out of screen.";
+            //    Log.Write(LogType.error, msgOutOfScreen);
+            //    MessageBox.Show(msgOutOfScreen);
+            //}
 
         }
 

@@ -112,7 +112,7 @@ namespace NoteFly
             {
                 if (this.editnote)
                 {
-                    this.notes.UpdateNote(this.editnoteid, this.tbTitle.Text, this.rtbNote.Text, true);
+                    //this.notes.UpdateNote(this.editnoteid, this.tbTitle.Text, this.rtbNote.Text, true);
                 }
                 else
                 {
