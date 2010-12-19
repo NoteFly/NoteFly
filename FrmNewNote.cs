@@ -32,57 +32,48 @@ namespace NoteFly
     public partial class FrmNewNote : Form
     {
         #region Fields (5)
-        private bool editnote = false, setupfirsthighlight = false, moving = false;
-        private int editnoteid = -1;
-        private short notecolor;
+
         private Notes notes;
-        //private TextHighlight highlight;
+        private Note note;
         private Point oldp;
+        private bool moving = false;
+
         #endregion Fields
 
         #region Constructors (2)
 
         /// <summary>
-        /// Initializes a new instance of the FrmNewNote class.
+        /// Initializes a new instance of the FrmNewNote class for a new note.
+        /// </summary>
+        /// <param name="notes">The class with access to all notes.</param>
+        /// <param name="notecolor">The default note color.</param>
+        public FrmNewNote(Notes notes)
+        {
+            this.InitializeComponent();
+            this.notes = notes;
+            this.note = null;
+            this.Text = "new note";
+            this.SetFontSettings();
+            this.tbTitle.Text = DateTime.Now.ToString();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the FrmNewNote class for editing a exist note.
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
         /// <param name="notecolor">the default note color.</param>
         /// <param name="editnoteid">The noteid to edit.</param>
         /// <param name="editnotetitle">The title of the note to edit.</param>
         /// <param name="editnotecontent">The content of the note to edit.</param>
-        public FrmNewNote(Notes notes, short notecolor, int editnoteid, string editnotetitle, string editnotecontent)
+        public FrmNewNote(Notes notes, Note note)
         {
             this.InitializeComponent();
-            this.editnote = true;
-            this.notecolor = notecolor;
-            this.editnoteid = editnoteid;
             this.notes = notes;
-            this.ResetNewNoteForm(editnotetitle, editnotecontent);
-            this.rtbNote.Focus();
-            this.rtbNote.Select();
-            if (this.editnote)
-            {
-                this.Text = "edit note";
-            }
-            this.BringToFront(); //default is this, but this forces it. bug: #0000014
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the FrmNewNote class.
-        /// </summary>
-        /// <param name="notes">The class with access to all notes.</param>
-        /// <param name="notecolor">The default note color.</param>
-        public FrmNewNote(Notes notes, short notecolor)
-        {
-            this.InitializeComponent();
-            this.editnote = false;
-            this.notes = notes;
-            this.notecolor = notecolor;
-            this.ResetNewNoteForm(String.Empty, String.Empty);
-            this.tbTitle.Text = DateTime.Now.ToString();
-            this.rtbNote.Focus();
-            this.rtbNote.Select();
-            this.BringToFront();
+            this.note = note;
+            this.Text = "edit note";
+            this.SetFontSettings();
+            this.tbTitle.Text = note.Title;
+            this.rtbNewNote.Rtf = note.GetContent();
         }
 
         #endregion Constructors
@@ -90,6 +81,35 @@ namespace NoteFly
         #region Methods (18)
 
         // Private Methods (18) 
+
+        /// <summary>
+        /// Set the font and textdirection FrmNewNote.
+        /// </summary>
+        /// <param name="title">The new note title.</param>
+        /// <param name="content">The new note content.</param>
+        private void SetFontSettings()
+        {
+            this.rtbNewNote.Font = new Font(Settings.FontContentFamily, rtbNewNote.Font.Size);
+            switch (Settings.FontTextdirection)
+            {
+                case 1:
+                    this.tbTitle.TextAlign = HorizontalAlignment.Left;
+                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Left;
+                    break;
+                case 2:
+                    this.tbTitle.TextAlign = HorizontalAlignment.Right;
+                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Right;
+                    break;
+                default:
+                    this.tbTitle.TextAlign = HorizontalAlignment.Left;
+                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Left;
+                    break;
+            }
+
+            this.rtbNewNote.Focus();
+            this.rtbNewNote.Select();
+            this.BringToFront();
+        }
 
         /// <summary>
         /// User pressed the accept note button. Note will now be saved.
@@ -103,22 +123,21 @@ namespace NoteFly
                 //this.tbTitle.BackColor = this.skin.GetObjColor(false, false, true);
                 this.tbTitle.Text = DateTime.Now.ToString();
             }
-            else if (String.IsNullOrEmpty(this.rtbNote.Text))
+            else if (String.IsNullOrEmpty(this.rtbNewNote.Text))
             {
                 //this.rtbNote.BackColor = this.skin.GetObjColor(false, false, true);
-                this.rtbNote.Text = "Please enter some content.";
+                this.rtbNewNote.Text = "Please enter some content.";
             }
             else
             {
-                if (this.editnote)
+                if (this.note == null)
                 {
-                    //this.notes.UpdateNote(this.editnoteid, this.tbTitle.Text, this.rtbNote.Text, true);
+                    short color = 1;
+                    this.note = this.notes.CreateNote(this.tbTitle.Text, color, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
-                else
-                {
-                    this.notes.DrawNewNote(this.tbTitle.Text, this.rtbNote.Text, this.notecolor);
-                }
-
+                
+                this.notes.SaveNote(this.note, this.rtbNewNote.Rtf);
+                
                 this.Close();
             }
         }
@@ -131,7 +150,7 @@ namespace NoteFly
         private void btnCancel_Click(object sender, EventArgs e)
         {
             int posnotelst = this.editnoteid - 1;
-            if (this.editnote && posnotelst >= 0 && posnotelst < this.notes.NumNotes)
+            if (this.editnote && posnotelst >= 0 && posnotelst < this.notes.CountNotes)
             {
                 //this.notes.GetNotes[posnotelst].Show();
             }
@@ -146,13 +165,13 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(rtbNote.Text))
+            if (String.IsNullOrEmpty(rtbNewNote.Text))
             {
                 Log.Write(LogType.error, "No content to copy.");
             }
             else
             {
-                Clipboard.SetText(this.rtbNote.Text);
+                Clipboard.SetText(this.rtbNewNote.Text);
             }
         }
 
@@ -209,7 +228,7 @@ namespace NoteFly
         {
             if (Clipboard.ContainsText())
             {
-                this.rtbNote.Text = this.rtbNote.Text + Clipboard.GetText();
+                this.rtbNewNote.Text = this.rtbNewNote.Text + Clipboard.GetText();
             }
             else
             {
@@ -265,40 +284,6 @@ namespace NoteFly
             {
                 this.contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
             }
-        }
-
-        /// <summary>
-        /// Redraw reset FrmNewNote.
-        /// </summary>
-        /// <param name="title">The new note title.</param>
-        /// <param name="content">The new note content.</param>
-        private void ResetNewNoteForm(string title, string content)
-        {
-            if (this.skin == null)
-            {
-                return;
-            }
-
-            this.rtbNote.Font = Settings.FontContentFamily; //this.skin.GetFontNoteContent();
-
-            Color normalcolor = this.skin.GetObjColor(false);
-            this.pnlNoteEdit.BackColor = normalcolor;
-            this.rtbNote.BackColor = normalcolor;
-            this.pnlHeadNewNote.BackColor = normalcolor;
-
-            if (this.notes.TextDirection == 0)
-            {
-                this.tbTitle.TextAlign = HorizontalAlignment.Left;
-                this.rtbNote.SelectionAlignment = HorizontalAlignment.Left;
-            }
-            else if (this.notes.TextDirection == 1)
-            {
-                this.tbTitle.TextAlign = HorizontalAlignment.Right;
-                this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
-            }
-
-            this.tbTitle.Text = title;
-            this.rtbNote.Text = content;
         }
 
         /// <summary>
@@ -397,7 +382,7 @@ namespace NoteFly
         {
             if (this.skin != null)
             {
-                this.rtbNote.BackColor = this.skin.GetObjColor(false, true, false);
+                this.rtbNewNote.BackColor = this.skin.GetObjColor(false, true, false);
             }
         }
 
@@ -410,7 +395,7 @@ namespace NoteFly
         {
             if (this.skin != null)
             {
-                this.rtbNote.BackColor = this.skin.GetObjColor(false);
+                this.rtbNewNote.BackColor = this.skin.GetObjColor(false);
             }
         }
 
@@ -434,7 +419,7 @@ namespace NoteFly
                 if (dpx > 8)
                 {
                     dpx = 8;
-                } 
+                }
                 else if (dpx < -8)
                 {
                     dpx = -8;
@@ -483,7 +468,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void contextMenuStripTextActions_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (this.rtbNote.TextLength == 0)
+            if (this.rtbNewNote.TextLength == 0)
             {
                 this.menuCopyContent.Enabled = false;
             }
@@ -491,7 +476,7 @@ namespace NoteFly
             {
                 this.menuCopyContent.Enabled = true;
             }
-        }        
+        }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -501,13 +486,13 @@ namespace NoteFly
             openfiledlg.Filter = "text file (*.txt)|testerdetest.";
             openfiledlg.ShowDialog();
         }
-		
-		/// <summary>
+
+        /// <summary>
         /// Check if selection length of rtbNote is larger than zero.
         /// </summary>
-		private bool checksellen()
+        private bool checksellen()
         {
-            if (this.rtbNote.SelectedText.Length > 0)
+            if (this.rtbNewNote.SelectedText.Length > 0)
             {
                 return true;
             }
@@ -538,7 +523,7 @@ namespace NoteFly
 
         /// <summary>
         /// Make note content text bold, or if the selected text is already bold
-		/// then remove the bold style.
+        /// then remove the bold style.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -546,13 +531,13 @@ namespace NoteFly
         {
             if (checksellen())
             {
-                if (hasfontstyle(this.rtbNote.SelectionFont.Style, FontStyle.Bold))
+                if (hasfontstyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Bold))
                 {
-                    this.rtbNote.SelectionFont = new System.Drawing.Font(this.rtbNote.SelectionFont.FontFamily, this.rtbNote.SelectionFont.SizeInPoints, removestyle(this.rtbNote.SelectionFont.Style, FontStyle.Bold));
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Bold));
                 }
                 else
                 {
-                    this.rtbNote.SelectionFont = new System.Drawing.Font(this.rtbNote.SelectionFont.FontFamily, this.rtbNote.SelectionFont.SizeInPoints, (this.rtbNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
                 }
             }
         }
@@ -561,13 +546,13 @@ namespace NoteFly
         {
             if (checksellen())
             {
-                if (hasfontstyle(this.rtbNote.SelectionFont.Style, FontStyle.Italic))
+                if (hasfontstyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Italic))
                 {
-                    this.rtbNote.SelectionFont = new System.Drawing.Font(this.rtbNote.SelectionFont.FontFamily, this.rtbNote.SelectionFont.SizeInPoints, removestyle(this.rtbNote.SelectionFont.Style, FontStyle.Italic));
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Italic));
                 }
                 else
                 {
-                    this.rtbNote.SelectionFont = new System.Drawing.Font(this.rtbNote.SelectionFont.FontFamily, this.rtbNote.SelectionFont.SizeInPoints, (this.rtbNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
                 }
             }
         }

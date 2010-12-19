@@ -32,18 +32,18 @@ namespace NoteFly
     /// </summary>
     public class Notes
     {
-        #region Fields (9)
+        #region Fields (1)
 
         /// <summary>
         /// The list with all notes.
         /// </summary>
         private List<Note> notes;
-        private List<FrmNote> notesfrms;
 
         #endregion Fields
 
         #region Constructors (1)
 
+        //private List<FrmNote> notesfrms;
         /// <summary>
         /// Initializes a new instance of the Notes class.
         /// </summary>
@@ -62,61 +62,69 @@ namespace NoteFly
 
         #endregion Constructors
 
-        #region Properties (7)
+        #region Properties (1)
 
-        /// <summary>
-        /// Gets the number of notes.
-        /// </summary>
-        public short NumNotes
+        public int CountNotes
         {
             get
             {
-                short numnotes = Convert.ToInt16(this.notes.Count);
-                if (numnotes > 255)
-                {
-                    throw new Exception("Too many notes.");
-                }
-
-                return numnotes;
+                return this.notes.Count;
             }
         }
 
         #endregion Properties
 
-        #region Methods (10)
+        #region Methods (8)
 
-        public bool GetNoteVisible(int id)
-        {
-            return this.notes[id].Visible;
-        }
-
-        public void SetNoteVisible(int id, bool newvaleau)
-        {
-            this.notes[id].Visible = newvaleau;
-        }
+        // Public Methods (5) 
 
         /// <summary>
-        /// Draws a new note and saves the xml note file.(call to SaveNewNote)
+        /// Create a new note object with some default settings.
         /// </summary>
-        /// <param name="title">The title of the note.</param>
+        /// <param name="title"></param>
+        /// <param name="color"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <returns></returns>
+        public Note CreateNote(String title, short color, int x, int y, int width, int height)
+        {
+            Note newnote = new Note(DateTime.Now);
+            newnote.Id = this.NextId();
+            newnote.Title = title;
+            newnote.Color = color;
+            newnote.Visible = true;
+            newnote.Locked = false;
+            newnote.RolledUp = false;
+            newnote.Ontop = false;
+            newnote.X = x;
+            newnote.Y = y;
+            newnote.Width = width;
+            newnote.Height = height;
+            return newnote;
+        }
+
+
+        /// <summary>
+        /// Save an note.
+        /// </summary>
+        /// <param name="note">the note (with all settings).</param>
         /// <param name="content">The note content</param>
-        /// <param name="notecolor">Note color number</param>
-        public void DrawNewNote(string title, string content, short notecolor)
+        public void SaveNote(Note note, string content)
         {
             try
             {
-                short newid = Convert.ToInt16(this.NumNotes + 1);
-                string notefilenm = this.SaveNewNote(newid, title, content, Convert.ToInt16(Settings.NotesDefaultColor));
-                Log.Write(LogType.info, "note created: " + notefilenm);
-                if (String.IsNullOrEmpty(notefilenm))
+                string notefile = this.NewNoteFilename(note.Id, note.Title);
+
+                if (String.IsNullOrEmpty(notefile))
                 {
                     throw new CustomException("cannot create filename.");
                 }
-//todo
-                //FrmNote newnote = new FrmNote(this, newid, title, content, notecolor);
-                //this.noteslst.Add(newnote);
-                //newnote.StartPosition = FormStartPosition.Manual;
-                //newnote.Show();
+                if (xmlUtil.WriteNote(notefile, note, content))
+                {
+                    Log.Write(LogType.info, "note created: " + notefile);
+                }
             }
             catch (Exception exc)
             {
@@ -125,48 +133,72 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Edit a note.
+        /// Gets if note is visible.
         /// </summary>
-        /// <param name="noteid">The note id number of the note to edit.</param>
-        public void EditNewNote(int noteid)
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool GetNoteVisible(int id)
         {
-            int noteslistpos = noteid - 1;
-            if ((noteslistpos >= 0) && (noteslistpos <= this.NumNotes))
+            return this.notes[id].Visible;
+        }
+
+        /// <summary>
+        /// Sets visiblitly note.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newvisible"></param>
+        public void SetNoteVisible(int id, bool newvisible)
+        {
+            this.notes[id].Visible = newvisible;
+        }
+
+        /// <summary>
+        /// Create a string used for filename of the note based on the note id and 
+        /// title of the note limited to the first 16 characters.
+        /// </summary>
+        /// <param name="noteid"></param>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        private string NewNoteFilename(int id, string title)
+        {
+            if (title.Length > 16)
             {
-                //string title = this.noteslst[noteslistpos].NoteTitle;
-                //string content = this.noteslst[noteslistpos].NoteContent;
-                //short color = this.noteslst[noteslistpos].NoteColor;
-                //FrmNewNote newnote = new FrmNewNote(this, color, noteid, title, content);
-                //newnote.Show();
+                return Path.Combine(Settings.NotesSavepath, id + title.Substring(0, 16) + ".nfn");
             }
             else
             {
-                throw new CustomException("Note not found in memory.");
+                return Path.Combine(Settings.NotesSavepath, id + title + ".nfn");
             }
         }
 
         /// <summary>
-        /// Update all fonts (family/size etc.) for all notes.
+        /// Update all fonts settings for all notes.
         /// </summary>
         public void UpdateAllFonts()
         {
             foreach (Note curnote in this.notes)
             {
-                curnote.frmnote.CheckThings();
+                //todo
             }
         }
 
-        // Private Methods (4) 
+        /// <summary>
+        /// Gets the next new noteid.
+        /// </summary>
+        /// <returns></returns>
+        private int NextId()
+        {
+            return this.CountNotes + 1;
+        }
 
         /// <summary>
-        /// This method set a limit to how many notes can be loaded.
-        /// This is to prevent a hang.
+        /// This method set a limit on how many notes can be loaded before a 
         /// </summary>
         /// <param name="id">the note id to check.</param>
-        /// <returns>true when limit is reached.</returns>
-        private bool CheckLimitNotes(int id)
+        /// <returns>true when limit is reached, and a warning about too many notes should be showed.</returns>
+        private bool CheckLimitNotes(int noteid)
         {
-            if (id > 255)
+            if (noteid > Settings.NotesWarnLimit)
             {
                 return true;
             }
@@ -175,33 +207,6 @@ namespace NoteFly
                 return false;
             }
         }
-
-        /// <summary>
-        /// Create a new FrmNote.
-        /// </summary>
-        /// <param name="visible">Is the note visible</param>
-        /// <param name="ontop">Is the note on top</param>
-        /// <param name="title">The note title</param>
-        /// <param name="content">The note content</param>
-        /// <param name="notecolor">Color note, 0 Gold, 1 orange, 2 White, 3 LawnGreen, 4 CornflowerBlue, 5 Magenta, 6 Red</param>
-        /// <param name="locX">X coordinate</param>
-        /// <param name="locY">Y coordinate</param>
-        /// <param name="notewidth">The note width</param>
-        /// <param name="noteheight">The note height</param>
-        /// <returns>A FrmNote object</returns>
-        //private FrmNote CreateNote(bool visible, bool ontop, string title, string content, short notecolor, int locX, int locY, int notewidth, int noteheight)
-        //{
-        //    try
-        //    {
-        //        short newid = Convert.ToInt16(this.noteslst.Count + 1);
-        //        //FrmNote newnote = new FrmNote(this, newid, visible, ontop, title, content, notecolor, locX, locY, notewidth, noteheight);
-        //        //return newnote;
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        throw new CustomException(exc.Message + " " + exc.StackTrace);
-        //    }
-        //}
 
         /// <summary>
         /// Loads all notes.
@@ -221,15 +226,18 @@ namespace NoteFly
                 else
                 {
                     Log.Write(LogType.error, (notefoldernoteexist + " Yes"));
-                    //xmlHandler getAppdata = new xmlHandler(true);
                     Settings.NotesSavepath = TrayIcon.AppDataFolder;
                 }
             }
 
-            ushort id = 1;
-            string[] notefiles = Directory.GetFiles(Settings.NotesSavepath, "*.");
+            int id = 1;
 
-            
+            string[] notefiles = Directory.GetFiles(Settings.NotesSavepath, "*.nfn"); //nfn, stands for: NoteFly Note
+
+            if (CheckLimitNotes(notefiles.Length))
+            {
+                MessageBox.Show("Test");
+            }
 
             if (firstrun)
             {
@@ -257,26 +265,6 @@ namespace NoteFly
             this.LoadNotesStressTest(10);
             Log.Write(LogType.info, "finished stress test");
 #endif
-        }
-
-        /// <summary>
-        /// Save the note to xml file.
-        /// </summary>
-        /// <param name="id">note id number.</param>
-        /// <param name="title">the title of the note.</param>
-        /// <param name="text">the content of the note.</param>
-        /// <param name="numcolor">the color number.</param>
-        /// <returns>filepath of the created note.</returns>
-        private string SaveNewNote(int id, string title, string text, short numcolor)
-        {
-            string notefile = Path.Combine(this.notesavepath, id + ".xml");
-            //xmlHandler xmlnote = new xmlHandler(notefile);
-            if (xmlnote.WriteNote(true, false, numcolor, title, text, 10, 10, 240, 240) == false)
-            {
-                throw new CustomException("Cannot write note.");
-            }
-
-            return notefile;
         }
 
         #endregion Methods

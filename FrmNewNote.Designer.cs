@@ -77,7 +77,7 @@ namespace NoteFly
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.rtbNote = new System.Windows.Forms.RichTextBox();
+            this.rtbNewNote = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             this.SuspendLayout();
@@ -371,28 +371,28 @@ namespace NoteFly
             this.button5.UseMnemonic = false;
             this.button5.UseVisualStyleBackColor = false;
             // 
-            // rtbNote
+            // rtbNewNote
             // 
-            this.rtbNote.AcceptsTab = true;
-            this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.rtbNewNote.AcceptsTab = true;
+            this.rtbNewNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbNote.BackColor = System.Drawing.Color.Khaki;
-            this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbNote.ContextMenuStrip = this.contextMenuStripTextActions;
-            this.rtbNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.rtbNote.Location = new System.Drawing.Point(8, 46);
-            this.rtbNote.MaxLength = 999999;
-            this.rtbNote.Name = "rtbNote";
-            this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbNote.Size = new System.Drawing.Size(264, 162);
-            this.rtbNote.TabIndex = 1;
-            this.rtbNote.Text = "";
-            this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
-            this.rtbNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
-            this.rtbNote.Enter += new System.EventHandler(this.rtbNote_Enter);
-            this.rtbNote.Leave += new System.EventHandler(this.rtbNote_Leave);
+            this.rtbNewNote.BackColor = System.Drawing.Color.Khaki;
+            this.rtbNewNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbNewNote.ContextMenuStrip = this.contextMenuStripTextActions;
+            this.rtbNewNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbNewNote.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.rtbNewNote.Location = new System.Drawing.Point(8, 46);
+            this.rtbNewNote.MaxLength = 999999;
+            this.rtbNewNote.Name = "rtbNewNote";
+            this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbNewNote.Size = new System.Drawing.Size(264, 162);
+            this.rtbNewNote.TabIndex = 1;
+            this.rtbNewNote.Text = "";
+            this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
+            this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
+            this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
+            this.rtbNewNote.Leave += new System.EventHandler(this.rtbNote_Leave);
             // 
             // FrmNewNote
             // 
@@ -411,7 +411,7 @@ namespace NoteFly
             this.Controls.Add(this.button4);
             this.Controls.Add(this.btnTextItalic);
             this.Controls.Add(this.btnTextBold);
-            this.Controls.Add(this.rtbNote);
+            this.Controls.Add(this.rtbNewNote);
             this.Controls.Add(this.pnlHeadNewNote);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -419,7 +419,6 @@ namespace NoteFly
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(50, 50);
             this.Name = "FrmNewNote";
-            this.Text = "New note";
             this.TransparencyKey = System.Drawing.Color.LightPink;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);
@@ -433,7 +432,7 @@ namespace NoteFly
         #endregion
 
         private System.Windows.Forms.ToolStripMenuItem menuStickyOnTop;
-        private System.Windows.Forms.RichTextBox rtbNote;
+        private System.Windows.Forms.RichTextBox rtbNewNote;
         private System.Windows.Forms.Button btnTextBold;
         private System.Windows.Forms.Button btnTextItalic;
         private System.Windows.Forms.Button button3;

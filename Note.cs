@@ -51,7 +51,7 @@ namespace NoteFly
         public bool Ontop { get; set; }
         public bool RolledUp { get; set; }
         public bool Locked { get; set; }
-        public short Id { get; set; }
+        public int Id { get; set; }
         public short Color { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
@@ -65,6 +65,7 @@ namespace NoteFly
         public void CreateForm()
         {
             this.frmnote = new FrmNote(this);
+            this.Visible = true;
         }
 
         /// <summary>
@@ -75,6 +76,7 @@ namespace NoteFly
         {
             this.frmnote.Close();
             this.frmnote = null;
+            this.Visible = false;
             GC.Collect();
         }
 
@@ -86,6 +88,23 @@ namespace NoteFly
             get
             {
                 return this.datecreated;
+            }
+        }
+
+        /// <summary>
+        /// Gets the content of the note from the file.
+        /// </summary>
+        /// <returns></returns>
+        public string GetContent()
+        {
+            if (this.frmnote == null)
+            {
+                String filename = Settings.NotesSavepath + "/"+ this.Id + this.Title.Substring(0,20);
+                return xmlUtil.GetContentString(filename, "Content");
+            }
+            else
+            {
+                return this.frmnote.rtbNote.Rtf;
             }
         }
     }

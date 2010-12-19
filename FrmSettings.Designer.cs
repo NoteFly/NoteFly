@@ -639,7 +639,7 @@ namespace NoteFly
             this.tabControlSocialNetworks.Location = new System.Drawing.Point(-4, 3);
             this.tabControlSocialNetworks.Name = "tabControlSocialNetworks";
             this.tabControlSocialNetworks.SelectedIndex = 0;
-            this.tabControlSocialNetworks.Size = new System.Drawing.Size(343, 227);
+            this.tabControlSocialNetworks.Size = new System.Drawing.Size(393, 272);
             this.tabControlSocialNetworks.TabIndex = 14;
             // 
             // tabEmail
@@ -650,7 +650,7 @@ namespace NoteFly
             this.tabEmail.Controls.Add(this.tbDefaultEmail);
             this.tabEmail.Location = new System.Drawing.Point(4, 22);
             this.tabEmail.Name = "tabEmail";
-            this.tabEmail.Size = new System.Drawing.Size(335, 201);
+            this.tabEmail.Size = new System.Drawing.Size(385, 246);
             this.tabEmail.TabIndex = 2;
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;

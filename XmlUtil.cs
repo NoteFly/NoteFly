@@ -358,7 +358,7 @@ namespace NoteFly
         /// <param name="notewidth">width in pixels of the note</param>
         /// <param name="noteheight">height in pixels of the note</param>
         /// <returns></returns>
-        static public bool WriteNote(string filename, Note note)
+        static public bool WriteNote(string filename, Note note, string content)
         {
             xmlwrite = new XmlTextWriter(filename, System.Text.Encoding.UTF8);
             try
@@ -379,7 +379,7 @@ namespace NoteFly
 
                 xmlwrite.WriteElementString("title", note.Title);
 
-                xmlwrite.WriteElementString("content", note.Content);
+                xmlwrite.WriteElementString("content", content);
 
                 xmlwrite.WriteStartElement("location");
                 xmlwrite.WriteElementString("x", note.X.ToString());

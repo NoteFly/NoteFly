@@ -32,66 +32,78 @@ namespace NoteFly
     /// </summary>
     public class TrayIcon
     {
-        #region Fields (12)
-
-        private FrmNewNote frmnewnote;
-        private FrmSettings frmsettings;
-        private FrmManageNotes frmmanagenotes;
-        private FrmAbout frmabout;
+		#region Fields (15) 
 
         /// <summary>
         /// container that holds some objects.
         /// </summary>
         private static System.ComponentModel.IContainer components = null;
-
         /// <summary>
         /// indicated wheter confirm exit is showed.
         /// </summary>
         private static bool confirmexitshowed = false;
-
+        private FrmAbout frmabout;
+        private FrmManageNotes frmmanagenotes;
+        private FrmNewNote frmnewnote;
+        private FrmSettings frmsettings;
         /// <summary>
         /// The trayicon itself.
         /// </summary>
         private static NotifyIcon icon;
-
         /// <summary>
         /// About menu option
         /// </summary>
         private static ToolStripMenuItem menuAbout;
-
         /// <summary>
         /// Exit menu option
         /// </summary>
         private static ToolStripMenuItem menuExit;
-
         /// <summary>
         /// Manage notes menu option
         /// </summary>
         private static ToolStripMenuItem menuManageNotes;
-
+        /// <summary>
+        /// New note menu option
+        /// </summary>
+        private static ToolStripMenuItem menuNewNote;
         /// <summary>
         /// Settings application menu option
         /// </summary>
         private static ToolStripMenuItem menuSettings;
-
         /// <summary>
         /// The trayicon contextmenu
         /// </summary>
         private static ContextMenuStrip menuTrayIcon;
-
         /// <summary>
         /// Is the creation of a new note being showed.
         /// </summary>
         private static bool newnoteshowed = false;
-
         /// <summary>
         /// Notes class has a list an methodes for accessing notes.
         /// </summary>
         private Notes notes;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (1)
+		#region Properties (3) 
+
+        /// <summary>
+        /// Gets the application data folder.
+        /// </summary>
+        public static string AppDataFolder
+        {
+            get
+            {
+                #if windows
+                string appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\." + TrayIcon.AssemblyTitle + "\\";
+                #elif linux
+                string appdatafolder = System.Environment.GetEnvironmentVariable("HOME") + "/.NoteFly/";
+                #elif macos
+                string appdatafolder = "???"
+                #endif
+                return appdatafolder;
+            }
+        }
 
         /// <summary>
         /// Gets the application title.
@@ -129,26 +141,11 @@ namespace NoteFly
             }
         }
 
-        public static string AppDataFolder
-        {
-            get
-            {
-                #if windows
-                string appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\." + TrayIcon.AssemblyTitle + "\\";
-                #elif linux
-                string appdatafolder = System.Environment.GetEnvironmentVariable("HOME") + "/.NoteFly/";
-                #elif macos
-                string appdatafolder = "???"
-                #endif
-                return appdatafolder;
-            }
-        }
+		#endregion Properties 
 
-        #endregion Properties
+		#region Methods (2) 
 
-        #region Methods (3)
-
-        // Private Methods (3) 
+		// Private Methods (2) 
 
         /// <summary>
         /// get defaultcolor setting
@@ -337,7 +334,9 @@ namespace NoteFly
             Application.Run();
         }
 
-        #endregion Methods
+		#endregion Methods 
+
+
 
         #region menu events
         /// <summary>
@@ -357,10 +356,11 @@ namespace NoteFly
                 {
                     actionleftclick = Convert.ToInt16(Settings.TrayiconLeftclickaction);
                 }
-                catch
+                catch (InvalidCastException castexc)
                 {
                     throw new Exception("actionleftclick datatype wrong.");
                 }
+
                 if (actionleftclick == 1)
                 {
                     for (int i = 0; i < notes.NumNotes; i++)
@@ -437,9 +437,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private static void MenuExit_Click(object sender, EventArgs e)
         {
-            xmlHandler getSetting = new xmlHandler(true);
-
-            if (getSetting.getXMLnodeAsBool("confirmexit"))
+            if (Settings.ConfirmExit)
             {
                 // two times exit in contextmenu systray icon will always exit.
                 if (!confirmexitshowed)

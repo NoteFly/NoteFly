@@ -52,22 +52,24 @@ namespace NoteFly
         public FrmNote(Note note)
         {
             this.note = note;
-
             this.InitializeComponent();
             this.SetBounds(note.X, note.Y, note.Width, note.Height);
-            this.lblTitle.Text = note.Title;
+            
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
-            this.SetTextMenuTwitter(Settings.SocialTwitterEnabled);
-            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
-            
-            //TODO: load content.
 
+            this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
+            this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
+            this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
+            
+            this.lblTitle.Text = note.Title;
+            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
+            this.rtbNote.Rtf = note.GetContent();
             TextHighlight.CheckSyntaxFull(rtbNote);
-            //causes TextChanged event so there is a rescan for URL's:
+            
             if (this.rtbNote.DetectUrls)
             {
-                this.rtbNote.Text += "";
+                this.rtbNote.Text += "";//causes TextChanged event so there is a rescan for URL's:
             }
         }
 
@@ -100,11 +102,6 @@ namespace NoteFly
         [DllImport("wininet.dll")]
         private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
 #endif
-
-
-
-
-
 
         /// <summary>
         /// Find what password is entered.
@@ -191,7 +188,7 @@ namespace NoteFly
         /// Set text tsmenuSendToTwitter based on if twitter is enabled.
         /// </summary>
         /// <param name="twitterenabled">Is twitter enabled.</param>
-        private void SetTextMenuTwitter(bool twitterenabled)
+        private void SetTextMenuTwitter()
         {
             const string STWITTER = "twitter";
             if (twitterenabled)
@@ -200,8 +197,12 @@ namespace NoteFly
             }
             else
             {
-                this.menuSendToTwitter.Text = STWITTER + " (not setup)";
+                this.menuSendToTwitter.Text = (STWITTER + " (not setup)");
             }
+        }
+
+        private void SetTextMenuFacebook()
+        {
         }
 
         /// <summary>

@@ -32,23 +32,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-        #region Fields (4)
-
-        /// <summary>
-        /// for transparency
-        /// </summary>
-        //private const int HTCAPTION = 0x2;
-
-        /// <summary>
-        /// for transparency
-        /// </summary>
-        //private const int WMNCLBUTTONDOWN = 0xA1;
-
-        /// <summary>
-        /// list of notes
-        /// </summary>
-        private Notes notes;
-
+        #region Fields ()
         /// <summary>
         /// flag is redraw is busy
         /// </summary>
@@ -65,6 +49,11 @@ namespace NoteFly
         private bool moving = false;
 
         /// <summary>
+        /// notes
+        /// </summary>
+        private Notes notes;
+
+        /// <summary>
         /// Delta point
         /// </summary>
         private Point oldp;
@@ -79,10 +68,10 @@ namespace NoteFly
         /// <param name="notes">The class notes, with access to all the notes.</param>
         /// <param name="transparency">Is transparency enabled</param>
         /// <param name="notecolor">The default note color.</param>
-        public FrmManageNotes()
+        public FrmManageNotes(Notes notes)
         {
             this.InitializeComponent();
-            this.transparency = transparency;
+            this.notes = notes;
             this.DrawNotesOverview();
         }
 
@@ -110,8 +99,8 @@ namespace NoteFly
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            short numbernotes = this.notes.NumNotes;
-            if (this.notes.NumNotes != 0)
+            //short numbernotes = this.notes.CountNotes;
+            if (this.notes.CountNotes != 0)
             {
                 short noteposlst = -1;
                 try
@@ -144,7 +133,7 @@ namespace NoteFly
                         Log.Write(LogType.info, Convert.ToString(noteid) + ".xml deleted.");
 
                         //reorder filenames
-                        for (int id = noteid; id < numbernotes; id++)
+                        for (int id = noteid; id < this.notes.CountNotes; id++)
                         {
                             string orgfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id + 1) + ".xml");
                             string newfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id) + ".xml");
@@ -186,22 +175,18 @@ namespace NoteFly
         {
             CheckBox cbx = (CheckBox)sender;
             int noteid = Convert.ToInt32(cbx.Name);
-            if ((noteid <= this.notes.NumNotes) && (noteid >= 0))
+            if ((noteid <= this.notes.CountNotes) && (noteid >= 0))
             {
                 this.notes.SetNoteVisible(noteid, !this.notes.GetNoteVisible(noteid));
 
-                if (this.notes.GetNoteVisible(noteid) == true)
+                if (this.notes.GetNoteVisible(noteid))
                 {
-                    this.notes.GetNoteFrm(noteid).Show();
-                    //this.notes.GetNoteFrm(noteid).CheckThings();
+                    this.notes.SetNoteVisible(noteid, true);
                 }
                 else
                 {
-                    this.notes.GetNoteFrm(noteid).Close();
-
+                    this.notes.SetNoteVisible(noteid, false);
                 }
-
-                //this.notes.GetNotes[noteid].UpdateThisNote();
             }
             else
             {

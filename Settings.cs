@@ -36,6 +36,8 @@ namespace NoteFly
 
         public static bool NotesClosebtnHidenotepermanently { get; set; }
 
+        public static int NotesWarnLimit { get; set; }
+
         public static string NotesSavepath { get; set; }
 
         public static int TrayiconLeftclickaction { get; set; }
