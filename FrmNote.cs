@@ -35,6 +35,7 @@ namespace NoteFly
     {
         #region Fields (4)
 
+        private Notes notes;
         private Note note;
         private Point oldp;
         private PictureBox pbShowLock;
@@ -49,24 +50,24 @@ namespace NoteFly
         /// Initializes a new instance of the FrmNote class.
         /// </summary>
         /// <param name="note">note data class.</param>
-        public FrmNote(Note note)
+        public FrmNote(Notes notes, Note note)
         {
+            this.notes = notes;
             this.note = note;
             this.InitializeComponent();
             this.SetBounds(note.X, note.Y, note.Width, note.Height);
-            
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
-
             this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
             this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
             this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
-            
             this.lblTitle.Text = note.Title;
-            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
             this.rtbNote.Rtf = note.GetContent();
-            TextHighlight.CheckSyntaxFull(rtbNote);
-            
+            if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
+            {
+                TextHighlight.CheckSyntaxFull(rtbNote);
+            }
+            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
             if (this.rtbNote.DetectUrls)
             {
                 this.rtbNote.Text += "";//causes TextChanged event so there is a rescan for URL's:
@@ -87,21 +88,6 @@ namespace NoteFly
             this.SavePos.RunWorkerAsync();
         }
         // Private Methods (30) 
-
-#if windows
-        /// <summary>
-        /// Check internet state.
-        /// </summary>
-        /// <returns>True is connected to internet.</returns>
-        private static bool IsConnectedToInternet()
-        {
-            int desc;
-            return InternetGetConnectedState(out desc, 0);
-        }
-
-        [DllImport("wininet.dll")]
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-#endif
 
         /// <summary>
         /// Find what password is entered.
@@ -161,6 +147,13 @@ namespace NoteFly
             this.Hide();
         }
 
+        
+#if windows
+        [DllImport("wininet.dll")]
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+
+#endif
+
         /// <summary>
         /// Check if there is internet connection, if not warn user.
         /// </summary>
@@ -168,7 +161,8 @@ namespace NoteFly
         private bool CheckConnection()
         {
 #if windows
-            if (IsConnectedToInternet() == true)
+            int desc;
+            if (InternetGetConnectedState(out desc, 0))
             {
                 return true;
             }
@@ -182,27 +176,6 @@ namespace NoteFly
 #elif !windows
             return true;
 #endif
-        }
-
-        /// <summary>
-        /// Set text tsmenuSendToTwitter based on if twitter is enabled.
-        /// </summary>
-        /// <param name="twitterenabled">Is twitter enabled.</param>
-        private void SetTextMenuTwitter()
-        {
-            const string STWITTER = "twitter";
-            if (twitterenabled)
-            {
-                this.menuSendToTwitter.Text = STWITTER;
-            }
-            else
-            {
-                this.menuSendToTwitter.Text = (STWITTER + " (not setup)");
-            }
-        }
-
-        private void SetTextMenuFacebook()
-        {
         }
 
         /// <summary>
@@ -251,14 +224,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //this.hide();
-            //if (this.NoteID > this.notes.NumNotes)
-            //{
-            //    string cannotfindnote = "Cannot find note.";
-            //    Log.Write(LogType.error, cannotfindnote);
-            //    MessageBox.Show(cannotfindnote);
-            //}
-            //this.notes.EditNewNote(this.NoteID);
+            //this.notes.
         }
 
         /// <summary>
@@ -408,7 +374,7 @@ namespace NoteFly
         {
             this.TopMost = this.menuOnTop.Checked;
 
-            if (!this.notelock && !this.SavePos.IsBusy)
+            if (!this.note.Locked && !this.SavePos.IsBusy)
             {
                 this.SavePos.RunWorkerAsync();
             }
@@ -455,7 +421,7 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (!this.notelock)
+                if (!this.note.Locked)
                 {
                     this.Cursor = Cursors.SizeNWSE;
                     this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
@@ -472,7 +438,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!this.notelock && !this.SavePos.IsBusy)
+            if (!this.note.Locked && !this.SavePos.IsBusy)
             {
                 this.SavePos.RunWorkerAsync();
             }
@@ -490,20 +456,18 @@ namespace NoteFly
                 this.moving = true;
                 this.oldp = e.Location;
 
-                if (this.skin != null)
-                {
-                    this.pnlHead.BackColor = this.skin.GetObjColor(true);
-                }
+                //if (this.skin != null)
+                //{
+                //    this.pnlHead.BackColor = this.skin.GetObjColor(true);
+                //}
 
-                this.locX = this.Location.X;
-                this.locY = this.Location.Y;
             }
-            else if (this.skin != null)
-            {
-                this.pnlHead.BackColor = this.skin.GetObjColor(false);
-            }
+            //else if (this.skin != null)
+            //{
+            //    this.pnlHead.BackColor = this.skin.GetObjColor(false);
+            //}
 
-            if (this.SavePos.IsBusy == false)
+            if (!this.SavePos.IsBusy)
             {
                 this.SavePos.RunWorkerAsync();
             }
@@ -526,8 +490,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            xmlHandler getSettings = new xmlHandler(true);
-            if (getSettings.getXMLnodeAsBool("askurl"))
+            //xmlHandler getSettings = new xmlHandler(true);
+            //if (getSettings.getXMLnodeAsBool("askurl"))
+            if (Settings.ConfirmLinkclick)
             {
                 DialogResult result = MessageBox.Show(this, "Are you sure you want to visted:\r\n" + e.LinkText, "url pressed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -548,47 +513,18 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {
-
-
-            //this.locX = this.Location.X;
-            //this.locY = this.Location.Y;
-
-            //if (!this.rolledup)
-            //{
-            //    try
-            //    {
-            //        this.noteWidth = Convert.ToUInt16(this.Width);
-            //    }
-            //    catch (InvalidCastException)
-            //    {
-            //        new CustomException("noteWidth cannot be negative value.");
-            //    }
-            //    try
-            //    {
-            //        this.noteHeight = Convert.ToUInt16(this.Height);
-            //    }
-            //    catch (InvalidCastException)
-            //    {
-            //        new CustomException("noteHeight cannot be negative value.");
-            //    }
-            //}
-
-            //if ((this.locX + this.Width > MINVISIBLESIZE) && (this.locY + this.Height > MINVISIBLESIZE) && (this.notecolor >= 0) && this.notecolor <= this.skin.MaxNotesColors)
-            //{
-            //    string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
-            //    xmlHandler updateposnote = new xmlHandler(notefile);
-            //    updateposnote.WriteNote(this.Visible, this.TopMost, this.notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
-            //}
-            //else if (this.notecolor < 0 || this.notecolor > this.skin.MaxNotesColors)
-            //{
-            //    throw new CustomException("Note color unknow.");
-            //}
-            //else
-            //{
-            //    string msgOutOfScreen = "Position note (ID:" + this.NoteID + ") is out of screen.";
-            //    Log.Write(LogType.error, msgOutOfScreen);
-            //    MessageBox.Show(msgOutOfScreen);
-            //}
+            if ((this.Location.X + this.Width > MINVISIBLESIZE) && (this.Location.Y + this.Height > MINVISIBLESIZE))
+            {
+                string notefile = this.notes.NewNoteFilename(this.note.Id, this.note.Title);
+                string notefilepath = System.IO.Path.Combine(Settings.NotesSavepath, notefile);
+                xmlUtil.WriteNote(notefilepath, this.note, this.rtbNote.Rtf);
+            }
+            else
+            {
+                string msgOutOfScreen = "Position note (ID:" + this.note.Id + ") is out of screen.";
+                Log.Write(LogType.error, msgOutOfScreen);
+                MessageBox.Show(msgOutOfScreen);
+            }
 
         }
 
@@ -606,11 +542,11 @@ namespace NoteFly
                 if (curitem == selectedmenuitem)
                 {
                     curitem.Checked = true;
-                    this.notecolor = i;
-                    string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
-                    xmlHandler savenotecolor = new xmlHandler(notefile);
-                    savenotecolor.WriteNote(this.Visible, this.menuOnTop.Checked, this.notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
-                    Log.Write(LogType.info, "Color note (ID:" + this.NoteID + ") changed.");
+                    //this.notecolor = i;
+                    //string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
+                    //xmlHandler savenotecolor = new xmlHandler(notefile);
+                    //savenotecolor.WriteNote(this.Visible, this.menuOnTop.Checked, this.notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+                    //Log.Write(LogType.info, "Color note (ID:" + this.NoteID + ") changed.");
                 }
                 else
                 {
@@ -620,7 +556,7 @@ namespace NoteFly
                 i++;
             }
 
-            this.PaintColorNote();
+            //this.PaintColorNote();
         }
 
         /// <summary>
@@ -821,7 +757,7 @@ namespace NoteFly
                 curitem.Checked = false;
             }
 
-            switch (this.notecolor)
+            switch (this.note.Color)
             {
                 case 0:
                     this.yellowToolStripMenuItem.Checked = true;
@@ -894,4 +830,5 @@ namespace NoteFly
 
         #endregion Methods
     }
+
 }

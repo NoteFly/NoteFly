@@ -25,15 +25,16 @@ namespace NoteFly
 
     public class Note
     {
-        //public field to access rtbNote directly, check if not null when not created/"not visible"
+        private Notes notes;
         public FrmNote frmnote;
         private DateTime datecreated;
 
         /// <summary>
         /// Creating a new note instance, completly new note.
         /// </summary>
-        public Note()
+        public Note(Notes notes)
         {
+            this.notes = notes;
             datecreated = DateTime.Now;
         }
 
@@ -41,8 +42,9 @@ namespace NoteFly
         /// Creating a new note instance, loading a note form file.
         /// </summary>
         /// <param name="created"></param>
-        public Note(DateTime datecreated)
+        public Note(Notes notes, DateTime datecreated)
         {
+            this.notes = notes;
             this.datecreated = datecreated;
         }
 
@@ -59,12 +61,23 @@ namespace NoteFly
         public int Height { get; set; }
 
         /// <summary>
+        /// Gets date and time when this note was created.
+        /// </summary>
+        public DateTime DateCreated
+        {
+            get
+            {
+                return this.datecreated;
+            }
+        }
+
+        /// <summary>
         /// Create a new frmNote with this note.
         /// The note now has to be visible to the user.
         /// </summary>
         public void CreateForm()
         {
-            this.frmnote = new FrmNote(this);
+            this.frmnote = new FrmNote(this.notes, this);
             this.Visible = true;
         }
 
@@ -78,17 +91,6 @@ namespace NoteFly
             this.frmnote = null;
             this.Visible = false;
             GC.Collect();
-        }
-
-        /// <summary>
-        /// Gets date and time when this note was created.
-        /// </summary>
-        public DateTime DateCreated
-        {
-            get
-            {
-                return this.datecreated;
-            }
         }
 
         /// <summary>

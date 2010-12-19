@@ -149,12 +149,11 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            int posnotelst = this.editnoteid - 1;
-            if (this.editnote && posnotelst >= 0 && posnotelst < this.notes.CountNotes)
-            {
-                //this.notes.GetNotes[posnotelst].Show();
-            }
-
+            //int posnotelst = this.editnoteid - 1;
+            //if (this.editnote && posnotelst >= 0 && posnotelst < this.notes.CountNotes)
+            //{
+            //    //this.notes.GetNotes[posnotelst].Show();
+            //}
             this.Close();
         }
 

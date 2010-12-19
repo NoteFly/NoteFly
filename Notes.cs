@@ -90,7 +90,7 @@ namespace NoteFly
         /// <returns></returns>
         public Note CreateNote(String title, short color, int x, int y, int width, int height)
         {
-            Note newnote = new Note(DateTime.Now);
+            Note newnote = new Note(this, DateTime.Now);
             newnote.Id = this.NextId();
             newnote.Title = title;
             newnote.Color = color;
@@ -159,7 +159,7 @@ namespace NoteFly
         /// <param name="noteid"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        private string NewNoteFilename(int id, string title)
+        public string NewNoteFilename(int id, string title)
         {
             if (title.Length > 16)
             {
