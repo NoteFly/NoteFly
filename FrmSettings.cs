@@ -67,7 +67,7 @@ namespace NoteFly
             this.iptbProxyAddress.Enabled = Settings.NetworkProxyEnabled;
 
             this.numProcTransparency.Value = Settings.NotesTransparencyLevel;
-            this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultColor;
+            this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr; //-1
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
             this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
             this.cbxActionLeftClick.SelectedIndex = Settings.TrayiconLeftclickaction;
@@ -79,11 +79,11 @@ namespace NoteFly
                 this.chxSocialEmailDefaultaddressBlank.Checked = true;
             }
             this.tbTwitterUser.Text = Settings.SocialTwitterUsername;
-            this.tbTwitterPass.Text = Settings.SocialTwitterpassword;
-            if (String.IsNullOrEmpty(Settings.SocialTwitterpassword))
-            {
-                this.chxRememberTwPass.Checked = true;
-            }
+            //this.tbTwitterPass.Text = Settings.SocialTwitterpassword;
+            //if (String.IsNullOrEmpty(Settings.SocialTwitterpassword))
+            //{
+            //    this.chxRememberTwPass.Checked = true;
+            //}
             this.chxSocialFacebookEnabled.Checked = Settings.SocialFacebookEnabled;
             this.chxSaveFBSession.Checked = Settings.SocialFacebookSavesession;
 

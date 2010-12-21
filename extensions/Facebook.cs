@@ -438,12 +438,12 @@ namespace NoteFly
             data += "&message=" + message;
             string methode = "facebook.stream.publish";
             data += "&method=" + methode;
-            data += "&session_key=" + FacebookSettings.Sessionkey;
+            //data += "&session_key=" + FacebookSettings.Sessionkey;
             string usesessionsecret = "1";
             data += "&ss=" + usesessionsecret;
             data += "&uid=0"; //use 0 not FacebookSettings.Uid;  bug: #0000007
             data += "&v=" + APIVERISON;
-            data += "&sig=" + this.GenerateSignature(callid, message, methode, usesessionsecret);
+            //data += "&sig=" + this.GenerateSignature(callid, message, methode, usesessionsecret);
             if (data.Length > 0)
             {
                 return data;
@@ -461,11 +461,11 @@ namespace NoteFly
         /// <param name="e">webbrowser event arguments</param>
         private void FbWeb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
-            if (this.IsSucceedUrl(e.Url.ToString()) == true)
-            {
+            //if (this.IsSucceedUrl(e.Url.ToString()) == true)
+            //{
                 this.CheckResponse(this.PostStream(this.message));
                 this.frmLoginFb.Close();
-            }
+            //}
         }
 
 		/*

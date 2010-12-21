@@ -17,7 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -26,6 +26,7 @@ namespace NoteFly
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
+    using System.Data;
 
     /// <summary>
     /// Manage notes class
@@ -37,11 +38,6 @@ namespace NoteFly
         /// flag is redraw is busy
         /// </summary>
         private bool redrawbusy = false;
-
-        /// <summary>
-        /// is transparent
-        /// </summary>
-        private bool transparency = false;
 
         /// <summary>
         /// value indicating wether this form is moving.
@@ -72,7 +68,7 @@ namespace NoteFly
         {
             this.InitializeComponent();
             this.notes = notes;
-            this.DrawNotesOverview();
+            this.DrawNotesGrid();
         }
 
         #endregion Constructors
@@ -92,77 +88,112 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Deletes the notes in memory and files that are selected in a Gridview.
+        /// </summary>
+        /// <param name="id"></param>
+        private void DeleteNotesSelectedRowsGrid(DataGridViewSelectedRowCollection rows)
+        {
+            //this.dataGridView1.SelectedRows;
+            int[] deletedids = new int[rows.Count];
+            for (int r = 0; r < rows.Count; r++)
+            {
+                int id = Convert.ToInt32(rows[r].Cells["ID"]);
+                string filename = this.notes.NewNoteFilename(id, this.notes.GetNote(id).Title);
+                try
+                {
+                    string filepath = Path.Combine(Settings.NotesSavepath, filename);
+                    File.Delete(filepath);
+                    if (Settings.ProgramLogInfo)
+                    {
+                        Log.Write(LogType.info, filepath + " deleted.");
+                    }
+                }
+                catch (FileNotFoundException filenotfoundexc)
+                {
+                    throw new CustomException(filenotfoundexc.Message);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    string msgaccessdenied = "Access denied. delete note " + filename + " manually with proper premission.";
+                    Log.Write(LogType.error, msgaccessdenied);
+                    MessageBox.Show(msgaccessdenied);
+                }
+                deletedids[r] = id;
+                this.notes.RemoveNote(id);
+            }
+
+            string[] files = Directory.GetFiles(Settings.NotesSavepath, ".nfn");
+            //reorder filenames
+            for (int i = 0; i < deletedids.Length; i++)
+            {
+            }
+
+            //        //reorder filenames
+            //        for (int id = noteid; id < this.notes.CountNotes; id++)
+            //        {
+            //            string orgfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id + 1) + ".xml");
+            //            string newfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id) + ".xml");
+            //            if (!File.Exists(newfile))
+            //            {
+            //                File.Move(orgfile, newfile);
+            //            }
+            //            try
+            //            {
+            //                //this.notes.GetNotes[id].NoteID = Convert.ToInt16(id);
+            //            }
+            //            catch
+            //            {
+            //            }
+            //        }
+            //    }
+            //    catch (FileNotFoundException filenotfoundexc)
+            //    {
+            //        throw new CustomException(filenotfoundexc.Message);
+            //    }
+            //    catch (UnauthorizedAccessException)
+            //    {
+            //        string msgaccessdenied = "Access denied. Delete note " + noteid + ".xml manually with proper premission.";
+            //        Log.Write(LogType.error, msgaccessdenied);
+            //        MessageBox.Show(msgaccessdenied);
+            //    }
+        }
+
+        /// <summary>
         /// The user pressed the delete button for a note.
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            //short numbernotes = this.notes.CountNotes;
-            if (this.notes.CountNotes != 0)
+            if (this.dataGridView1.SelectedRows.Count == 0)
             {
-                short noteposlst = -1;
-                try
+                MessageBox.Show("Nothing selected.");
+            }
+            else
+            {
+                if (Settings.ConfirmDeletenote)
                 {
-                    noteposlst = Convert.ToInt16(btn.Tag);
+                    DialogResult deleteres = MessageBox.Show("Are you sure you want to delete the selected note(s)?", "delete?", MessageBoxButtons.YesNo);
+                    if (deleteres == DialogResult.Yes)
+                    {
+                        this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
+                    }
                 }
-                catch (InvalidCastException invexc)
+                else
                 {
-                    throw new CustomException(invexc.Message + " " + invexc.StackTrace);
+                    this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
                 }
 
-                if (noteposlst >= 0)
+                if (this.notes.CountNotes > 0)
                 {
-                    int noteid = noteposlst + 1;
-                    if (Settings.ConfirmDeletenote)
-                    {
-                        DialogResult deleteres = MessageBox.Show("Are you sure you want to delete note (ID:" + noteid + ") ?", "delete note?", MessageBoxButtons.YesNo);
-                        if (deleteres == DialogResult.No)
-                        {
-                            return;
-                        }
-                    }
-
-                    //this.notes.GetNotes[noteposlst].Close();
-                    //this.notes.GetNotes.RemoveAt(noteposlst);
-
-                    try
-                    {
-                        File.Delete(Path.Combine(this.GetNotesSavePath(), Convert.ToString(noteid) + ".xml"));
-                        Log.Write(LogType.info, Convert.ToString(noteid) + ".xml deleted.");
-
-                        //reorder filenames
-                        for (int id = noteid; id < this.notes.CountNotes; id++)
-                        {
-                            string orgfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id + 1) + ".xml");
-                            string newfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id) + ".xml");
-                            if (!File.Exists(newfile))
-                            {
-                                File.Move(orgfile, newfile);
-                            }
-                            try
-                            {
-                                //this.notes.GetNotes[id].NoteID = Convert.ToInt16(id);
-                            }
-                            catch
-                            {
-                            }
-                        }
-                    }
-                    catch (FileNotFoundException filenotfoundexc)
-                    {
-                        throw new CustomException(filenotfoundexc.Message);
-                    }
-                    catch (UnauthorizedAccessException)
-                    {
-                        string msgaccessdenied = "Access denied. Delete note " + noteid + ".xml manually with proper premission.";
-                        Log.Write(LogType.error, msgaccessdenied);
-                        MessageBox.Show(msgaccessdenied);
-                    }
-
-                    this.DrawNotesOverview();
+                    this.btnNoteDelete.Enabled = true;
                 }
+                else
+                {
+                    this.btnNoteDelete.Enabled = false;
+                }
+
+                this.DrawNotesGrid();
             }
         }
 
@@ -197,62 +228,24 @@ namespace NoteFly
         /// <summary>
         /// Draw a list of all notes.
         /// </summary>
-        private void DrawNotesOverview()
+        private void DrawNotesGrid()
         {
-            this.pnlNotes.Controls.Clear();
-            this.CleanUp();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("Title", typeof(string));
+            dt.Columns.Add("Showed", typeof(bool));
+            dt.Columns.Add("Color", typeof(int));
 
-            int ypos = 10;
-            int newlentitle = ((this.Width - 280) / 4);
-
-            for (short curnote = 0; curnote < this.notes.NumNotes; curnote++)
+            for (int id = 1; id <= this.notes.CountNotes; id++)
             {
-                Label lblNoteTitle = new Label();
-                CheckBox cbxNoteVisible = new CheckBox();
-                Button btnNoteDelete = new Button();
-
-                Note note = this.notes.GetNotes[curnote];
-                lblNoteTitle.AutoSize = true;
-
-                lblNoteTitle.Text = this.ShortenTitle(curnote, newlentitle);
-
-                lblNoteTitle.Name = "lbNote" + Convert.ToString(curnote + 1);
-                lblNoteTitle.Location = new Point(2, ypos);
-                lblNoteTitle.Anchor = (AnchorStyles.Left | AnchorStyles.Top);
-
-                cbxNoteVisible.Text = "visible";
-                cbxNoteVisible.Name = Convert.ToString(curnote);
-
-                if (this.notes.GetNotes[curnote].Visible == true)
-                {
-                    cbxNoteVisible.CheckState = CheckState.Checked;
-                }
-                else
-                {
-                    cbxNoteVisible.CheckState = CheckState.Unchecked;
-                }
-
-                cbxNoteVisible.Location = new Point(this.Width - 200, ypos);
-                cbxNoteVisible.AutoEllipsis = true;
-                cbxNoteVisible.AutoSize = true;
-                cbxNoteVisible.Click += new EventHandler(this.cbxNoteVisible_Click);
-                cbxNoteVisible.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
-
-                btnNoteDelete.Text = "delete";
-                btnNoteDelete.Name = "btnNoteDel" + Convert.ToString(curnote + 1);
-                btnNoteDelete.Tag = curnote;
-                btnNoteDelete.BackColor = Color.Orange;
-                btnNoteDelete.Location = new Point(this.Width - 90, ypos - 3);
-                btnNoteDelete.Width = 60;
-                btnNoteDelete.Click += new EventHandler(this.btnNoteDelete_Click);
-                btnNoteDelete.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
-
-                this.pnlNotes.Controls.Add(lblNoteTitle);
-                this.pnlNotes.Controls.Add(cbxNoteVisible);
-                this.pnlNotes.Controls.Add(btnNoteDelete);
-
-                ypos += 30;
+                DataRow dr = dt.NewRow();
+                dr["ID"] = this.notes.GetNote(id).Id;
+                dr["Title"] = this.notes.GetNote(id).Title;
+                dr["Showed"] = this.notes.GetNote(id).Visible;
+                dr["Color"] = this.notes.GetNote(id).SkinNr;
             }
+
+            this.dataGridView1.DataSource = dt;
         }
 
         /// <summary>
@@ -261,34 +254,22 @@ namespace NoteFly
         /// <param name="curnote">The note id.</param>
         /// <param name="newlentitle">The maximum lenght to limit the title to.</param>
         /// <returns>A shorter title.</returns>
-        private string ShortenTitle(int curnote, int newlentitle)
-        {
-            int reallen = this.notes.GetNotes[curnote].NoteTitle.Length;
-            if (newlentitle < 4)
-            {
-                return this.notes.GetNotes[curnote].NoteTitle.Substring(0, 4) + ".. (ID:" + this.notes.GetNotes[curnote].NoteID + ")";
-            }
-            else if (reallen > newlentitle)
-            {
-                return this.notes.GetNotes[curnote].NoteTitle.Substring(0, newlentitle) + ".. (ID:" + this.notes.GetNotes[curnote].NoteID + ")";
-            }
-            else
-            {
-                return this.notes.GetNotes[curnote].NoteTitle + "(ID:" + this.notes.GetNotes[curnote].NoteID + ")";
-            }
-        }
-
-        /// <summary>
-        /// Dispose all children controls of pnlNotes control.
-        /// </summary>
-        private void CleanUp()
-        {
-            int ctrlnum = this.pnlNotes.Controls.Count;
-            for (int i = 0; i < ctrlnum; i++)
-            {
-                this.pnlNotes.Controls[i].Dispose();
-            }
-        }
+        //private string ShortenTitle(int curnote, int newlentitle)
+        //{
+        //    int reallen = this.notes.GetNotes[curnote].NoteTitle.Length;
+        //    if (newlentitle < 4)
+        //    {
+        //        return this.notes.GetNotes[curnote].NoteTitle.Substring(0, 4) + ".. (ID:" + this.notes.GetNotes[curnote].NoteID + ")";
+        //    }
+        //    else if (reallen > newlentitle)
+        //    {
+        //        return this.notes.GetNotes[curnote].NoteTitle.Substring(0, newlentitle) + ".. (ID:" + this.notes.GetNotes[curnote].NoteID + ")";
+        //    }
+        //    else
+        //    {
+        //        return this.notes.GetNotes[curnote].NoteTitle + "(ID:" + this.notes.GetNotes[curnote].NoteID + ")";
+        //    }
+        //}
 
         /// <summary>
         /// FrmManageNotes is activated.
@@ -297,9 +278,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
-            if (this.transparency && this.skin != null)
+            if (Settings.NotesTransparencyEnabled)
             {
                 this.Opacity = 1.0;
+                this.Refresh();
             }
         }
 
@@ -310,21 +292,18 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmManageNotes_Deactivate(object sender, EventArgs e)
         {
-            if (this.transparency && this.skin != null)
+            if (Settings.NotesTransparencyEnabled)
             {
-                this.Opacity = this.skin.GetTransparencylevel();
-                this.Refresh();
+                try
+                {
+                    this.Opacity = (double)Settings.NotesTransparencyLevel;
+                    this.Refresh();
+                }
+                catch (InvalidCastException)
+                {
+                    throw new CustomException("Transparency level not a integer or double.");
+                }
             }
-        }
-
-        /// <summary>
-        /// Get the full path of the note folder.
-        /// </summary>
-        /// <returns>The path where to save notes.</returns>
-        private string GetNotesSavePath()
-        {
-            xmlHandler xmlsettings = new xmlHandler(true);
-            return xmlsettings.getXMLnode("notesavepath");
         }
 
         /// <summary>
@@ -365,26 +344,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void timerUpdateNotesList_Tick(object sender, EventArgs e)
         {
-            if (!this.redrawbusy && this.notes.NotesUpdated)
-            {
-                this.redrawbusy = true;
-                this.DrawNotesOverview();
-                this.redrawbusy = false;
-                this.notes.NotesUpdated = false;
-            }
-        }
-
-        /// <summary>
-        /// End resizing the window. Now redraw it.
-        /// </summary>
-        /// <param name="sender">The sender object.</param>
-        /// <param name="e">Event argument</param>
-        private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
-        {
             if (!this.redrawbusy)
             {
                 this.redrawbusy = true;
-                this.DrawNotesOverview();
+                this.DrawNotesGrid();
                 this.redrawbusy = false;
             }
         }
@@ -406,7 +369,7 @@ namespace NoteFly
                 if (dpx > 8)
                 {
                     dpx = 8;
-                } 
+                }
                 else if (dpx < -8)
                 {
                     dpx = -8;
@@ -437,7 +400,7 @@ namespace NoteFly
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
             this.moving = false;
-            this.pnlHead.BackColor = Color.Orange;
+            //this.pnlHead.BackColor = Color.Orange;
         }
 
         #endregion Methods

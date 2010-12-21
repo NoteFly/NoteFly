@@ -26,6 +26,7 @@ namespace NoteFly
     using System.IO;
     using System.Text;
     using System.Windows.Forms;
+    using System.Drawing;
 
     /// <summary>
     /// This class has a list of all notes.
@@ -39,6 +40,15 @@ namespace NoteFly
         /// </summary>
         private List<Note> notes;
 
+        /// <summary>
+        /// List with all skins for notes.
+        /// </summary>
+        private List<Skin> skins;
+
+        //private const Color unknowclr = Color.Yellow;
+
+        private const string fileextension = ".nfn";
+
         #endregion Fields
 
         #region Constructors (1)
@@ -51,7 +61,9 @@ namespace NoteFly
         public Notes(bool forcefirstrun)
         {
             this.notes = new List<Note>();
-            bool firstrun = Settings.ProgramFirstrun;
+            this.skins = new List<Skin>();
+
+            bool firstrun = Settings.ProgramFirstrun; //settings has to been loaded before please.
 
             if (forcefirstrun)
             {
@@ -64,6 +76,9 @@ namespace NoteFly
 
         #region Properties (1)
 
+        /// <summary>
+        /// The number of notes there are.
+        /// </summary>
         public int CountNotes
         {
             get
@@ -88,12 +103,12 @@ namespace NoteFly
         /// <param name="height"></param>
         /// <param name="width"></param>
         /// <returns></returns>
-        public Note CreateNote(String title, short color, int x, int y, int width, int height)
+        public Note CreateNote(String title, int skinnr, int x, int y, int width, int height)
         {
             Note newnote = new Note(this, DateTime.Now);
             newnote.Id = this.NextId();
             newnote.Title = title;
-            newnote.Color = color;
+            newnote.SkinNr = skinnr;
             newnote.Visible = true;
             newnote.Locked = false;
             newnote.RolledUp = false;
@@ -105,6 +120,17 @@ namespace NoteFly
             return newnote;
         }
 
+        /// <summary>
+        /// Gets a note, by the noteid
+        /// Index starts at 1.
+        /// </summary>
+        /// <param name="nr"></param>
+        /// <returns></returns>
+        public Note GetNote(int id)
+        {
+            int nr = id - 1;
+            return this.notes[nr];
+        }
 
         /// <summary>
         /// Save an note.
@@ -161,15 +187,105 @@ namespace NoteFly
         /// <returns></returns>
         public string NewNoteFilename(int id, string title)
         {
+            title = title.Trim(); //TODO: check illegal characters
             if (title.Length > 16)
             {
-                return Path.Combine(Settings.NotesSavepath, id + title.Substring(0, 16) + ".nfn");
+                return Path.Combine(Settings.NotesSavepath, id + "-" + title.Substring(0, 16) + fileextension);
             }
             else
             {
-                return Path.Combine(Settings.NotesSavepath, id + title + ".nfn");
+                return Path.Combine(Settings.NotesSavepath, id + "-" + title + fileextension);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        public void RemoveNote(int id)
+        {
+            for (int i = 0; i < this.CountNotes; i++)
+            {
+                if (this.notes[i].Id == id)
+                {
+                    this.notes[i].DestroyForm();
+                    this.notes.RemoveAt(id);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Bring all notes to front of all other windows.
+        /// </summary>
+        public void BringToFrontNotes()
+        {
+            for (int i = 0; i < this.notes.Count; i++)
+            {
+                if (this.notes[i].Visible)
+                {
+                    try
+                    {
+                        this.notes[i].frmnote.BringToFront();
+                    }
+                    catch (NullReferenceException)
+                    {
+                        throw new CustomException("Visible is set true but form is null.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the foreground color.
+        /// </summary>
+        /// <param name="skinnr"></param>
+        /// <returns></returns>
+        public System.Drawing.Color GetForegoundColor(int skinnr)
+        {
+            return GetColor(1, skinnr);
+        }
+
+        /// <summary>
+        /// Gets the background color.
+        /// </summary>
+        /// <param name="skinnr"></param>
+        /// <returns></returns>
+        public System.Drawing.Color GetBackgroundColor(int skinnr)
+        {
+            return GetColor(2, skinnr);
+        }
+
+        /// <summary>
+        /// Gets the highlight color.
+        /// </summary>
+        /// <param name="skinnr"></param>
+        /// <returns></returns>
+        public System.Drawing.Color GetHighlightColor(int skinnr)
+        {
+            return GetColor(3, skinnr);
+        }
+
+        private System.Drawing.Color GetColor(int type, int skinnr)
+        {
+            foreach (Skin skin in this.skins)
+            {
+                if (skin.Nr == skinnr)
+                {
+                    switch (type)
+                    {
+                        case 1:
+                            return skin.ForegroundClr;
+                        case 2:
+                            return skin.BackgroundClr;
+                        case 3:
+                            return skin.HighlightClr;
+                    }
+                }
+            }
+            return Color.White; //default in error.
+        }
+
 
         /// <summary>
         /// Update all fonts settings for all notes.
@@ -239,6 +355,8 @@ namespace NoteFly
                 MessageBox.Show("Test");
             }
 
+            //this.CreateNote(
+
             if (firstrun)
             {
                 int tipnotewidth = 320;
@@ -253,9 +371,6 @@ namespace NoteFly
                 notecontent.AppendLine("By clicking on the cross on this note this note will be hidden.");
                 notecontent.AppendLine("You can get it back with the manage notes window.");
                 //this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
-
-                //xmlUtil.
-
                 Log.Write(LogType.info, "firstrun occur");
             }
 

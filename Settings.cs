@@ -30,7 +30,7 @@ namespace NoteFly
 
         public static  int NotesTransparencyLevel { get; set; }
 
-        public static int NotesDefaultColor { get; set; }
+        public static int NotesDefaultSkinnr { get; set; }
 
         public static bool NotesClosebtnTooltipenabled { get; set; }
 
@@ -84,15 +84,15 @@ namespace NoteFly
 
         public static string SocialTwitterUsername { get; set; }
 
-        public static string SocialTwitterpassword { get; set; }
+        //public static string SocialTwitterpassword { get; set; } //Decreated, use OAuth instead.
 
-        public static bool SocialTwitterUseSSL { get; set; } //default on and not changed throw gui.
+        public static bool SocialTwitterUseSSL { get; set; } //on by default and not changable with gui.
 
         public static bool SocialFacebookEnabled { get; set; }
 
         public static bool SocialFacebookSavesession { get; set; }
 
-        public static bool SocialFacebookUseSSL { get; set; }
+        public static bool SocialFacebookUseSSL { get; set; } //on by default and not changable with gui.
 
         public static string SocialFacebookSessionKey { get; set; } //Decreated, use OAuth instead.
         public static string SocialFacebookSessionSecret { get; set; } //Decreated

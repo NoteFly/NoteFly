@@ -17,7 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -211,9 +211,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmNewNote_Deactivate(object sender, EventArgs e)
         {
-            if (Settings.NotesTransparencyEnabled && this.skin != null)
+            if (Settings.NotesTransparencyEnabled)
             {
-                this.Opacity = this.skin.GetTransparencylevel();
+                this.Opacity = Settings.NotesTransparencyLevel;
                 this.Refresh();
             }
         }
@@ -265,10 +265,7 @@ namespace NoteFly
             {
                 this.moving = true;
                 this.oldp = e.Location;
-                if (this.skin != null)
-                {
-                    this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(true);
-                }
+                this.pnlHeadNewNote.BackColor = this.notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
             }
         }
 
@@ -293,8 +290,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            xmlHandler getSettings = new xmlHandler(true);
-            if (getSettings.getXMLnodeAsBool("askurl"))
+            if (Settings.ConfirmLinkclick)
             {
                 DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -333,14 +329,15 @@ namespace NoteFly
 
         /// <summary>
         /// Set the text direction of the note content.
+        /// 
         /// </summary>
         private void SetTextDirection()
         {
-            if (this.notes.TextDirection == 0)
+            if (Settings.FontTextdirection == 0)
             {
                 this.tbTitle.TextAlign = HorizontalAlignment.Left;
             }
-            else if (this.notes.TextDirection == 1)
+            else if (Settings.FontTextdirection == 1)
             {
                 this.tbTitle.TextAlign = HorizontalAlignment.Right;
             }
@@ -353,10 +350,7 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void tbTitle_Enter(object sender, EventArgs e)
         {
-            if (this.skin != null)
-            {
-                this.tbTitle.BackColor = this.skin.GetObjColor(false, true, false);
-            }
+            this.tbTitle.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
         }
 
         /// <summary>
@@ -366,10 +360,7 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void tbTitle_Leave(object sender, EventArgs e)
         {
-            if (this.skin != null)
-            {
-                this.tbTitle.BackColor = this.skin.GetObjColor(false);
-            }
+            this.tbTitle.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
         }
 
         /// <summary>
@@ -379,10 +370,7 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void rtbNote_Enter(object sender, EventArgs e)
         {
-            if (this.skin != null)
-            {
-                this.rtbNewNote.BackColor = this.skin.GetObjColor(false, true, false);
-            }
+            this.rtbNewNote.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
         }
 
         /// <summary>
@@ -392,10 +380,7 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void rtbNote_Leave(object sender, EventArgs e)
         {
-            if (this.skin != null)
-            {
-                this.rtbNewNote.BackColor = this.skin.GetObjColor(false);
-            }
+            this.rtbNewNote.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
         }
 
         /// <summary>
@@ -407,10 +392,7 @@ namespace NoteFly
         {
             if ((this.moving) && (e.Button == MouseButtons.Left))
             {
-                if (this.skin != null)
-                {
-                    this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(true);
-                }
+                this.pnlHeadNewNote.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
 
                 int dpx = e.Location.X - oldp.X;
                 int dpy = e.Location.Y - oldp.Y;
@@ -434,9 +416,9 @@ namespace NoteFly
 #endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
             }
-            else if (this.skin != null)
+            else 
             {
-                this.pnlHeadNewNote.BackColor = this.skin.GetObjColor(false);
+                this.pnlHeadNewNote.BackColor = notes.GetForegoundColor(Settings.NotesDefaultSkinnr);
             }
         }
 

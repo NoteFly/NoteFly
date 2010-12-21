@@ -35,7 +35,7 @@ namespace NoteFly
         error,
 
         /// <summary>
-        /// Something happend that is worth nothing, for instance an note got deleted.
+        /// Something happend that is worth logging for instance an note got deleted.
         /// </summary>
         info
     }
@@ -45,6 +45,8 @@ namespace NoteFly
     /// </summary>
     public static class Log
     {
+        private const string debuglogfilename = "debug.log";
+
         /// <summary>
         /// Write and append a message to the logfile.
         /// </summary>
@@ -73,13 +75,13 @@ namespace NoteFly
 
             line.AppendLine(message);
 #if windows
-            string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), "debug.log");
+            string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), debuglogfilename);
 #elif linux
-            string errorlog = "/tmp/debug.log";
+            string errorlog = "/tmp/"+debuglogfilename;
 #endif
             try
             {
-                errorlog = Path.Combine(TrayIcon.AppDataFolder, "debug.log");
+                errorlog = Path.Combine(TrayIcon.AppDataFolder, debuglogfilename);
             }
             catch (Exception)
             {

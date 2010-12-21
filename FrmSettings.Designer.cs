@@ -708,7 +708,7 @@ namespace NoteFly
             this.tabTwitter.Location = new System.Drawing.Point(4, 22);
             this.tabTwitter.Name = "tabTwitter";
             this.tabTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTwitter.Size = new System.Drawing.Size(335, 201);
+            this.tabTwitter.Size = new System.Drawing.Size(385, 246);
             this.tabTwitter.TabIndex = 0;
             this.tabTwitter.Text = "Twitter";
             this.tabTwitter.UseVisualStyleBackColor = true;
@@ -739,7 +739,7 @@ namespace NoteFly
             this.tabFacebook.Location = new System.Drawing.Point(4, 22);
             this.tabFacebook.Name = "tabFacebook";
             this.tabFacebook.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFacebook.Size = new System.Drawing.Size(335, 201);
+            this.tabFacebook.Size = new System.Drawing.Size(385, 246);
             this.tabFacebook.TabIndex = 1;
             this.tabFacebook.Text = "Facebook";
             this.tabFacebook.UseVisualStyleBackColor = true;
@@ -938,10 +938,11 @@ namespace NoteFly
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(360, 240);
             this.Name = "FrmSettings";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Settings";
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).EndInit();
             this.tabControlSettings.ResumeLayout(false);

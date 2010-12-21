@@ -185,10 +185,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            if (this.skin != null)
-            {
-                this.pnlHead.BackColor = this.skin.GetObjColor(false);
-            }
+            this.pnlHead.BackColor = this.notes.GetForegoundColor(this.note.SkinNr);
         }
 
         /// <summary>
@@ -582,8 +579,8 @@ namespace NoteFly
                 return;
             }
 
-            Facebook fb = new Facebook();
-            fb.StartPostingNote(this.note);
+            //Facebook fb = new Facebook();
+            //fb.StartPostingNote(this.note);
         }
 
         /// <summary>
@@ -603,19 +600,19 @@ namespace NoteFly
             //strip forbidden filename characters:
             System.Text.StringBuilder suggestfilenamesafe = new System.Text.StringBuilder();
             char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
-            for (int pos = 0; (pos < this.title.Length) && (pos<=100); pos++)
+            for (int pos = 0; (pos < this.note.Title.Length) && (pos<=100); pos++)
             {
                 bool isforbiddenchar = false;
                 for (int fc = 0; fc < forbiddenchars.Length; fc++)
                 {
-                    if (this.title[pos] == forbiddenchars[fc])
+                    if (this.note.Title[pos] == forbiddenchars[fc])
                     {
                         isforbiddenchar = true;
                     }
                 }
                 if (!isforbiddenchar)
                 {
-                    suggestfilenamesafe.Append(this.title[pos]);
+                    suggestfilenamesafe.Append(this.note.Title[pos]);
                 }
             }
             sfdlg.FileName = suggestfilenamesafe.ToString();
@@ -624,7 +621,7 @@ namespace NoteFly
             sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm";
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
-                new Textfile(true, sfdlg.FileName, this.title, this.note);
+                //new Textfile(true, sfdlg.FileName, this.note.Title, this.note);
                 string logmsg = "Note (ID:" + this.NoteID + ") saved to ";
                 switch (sfdlg.FilterIndex)
                 {
@@ -653,27 +650,21 @@ namespace NoteFly
                 return;
             }
 
-            if ((String.IsNullOrEmpty(this.note) == false) && (this.note.Length <= 140))
-            {
-                this.Tweetnote();
-            }
-            else if (this.note.Length > 140)
-            {
-                DialogResult result;
-                string shrttweet = this.note.Substring(0, 140);
-                result = MessageBox.Show("Your note is more than the 140 chars.\r\nDo you want to publish only the first 140 characters? ", "Too long", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    this.Tweetnote();
-                    Log.Write(LogType.info, "Shorted note send to twitter.");
-                }
-            }
-            else
-            {
-                string emptynote = "Note is empty.";
-                Log.Write(LogType.error, emptynote);
-                MessageBox.Show(emptynote);
-            }
+            //if (this.rtbNote.Text.Length <= 140)
+            //{
+            //    this.Tweetnote();
+            //}
+            //else if (this.rtbNote.Text.Length > 140)
+            //{
+            //    DialogResult result;
+            //    string shrttweet = this.note.Substring(0, 140);
+            //    result = MessageBox.Show("Your note is more than the 140 chars.\r\nDo you want to publish only the first 140 characters? ", "Too long", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //    if (result == DialogResult.Yes)
+            //    {
+            //        this.Tweetnote();
+            //        Log.Write(LogType.info, "Shorted note send to twitter.");
+            //    }
+            //}
         }
 
         /// <summary>

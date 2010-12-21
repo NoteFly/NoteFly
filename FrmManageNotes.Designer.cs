@@ -54,18 +54,18 @@ namespace NoteFly
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmManageNotes));
             this.btnClose = new System.Windows.Forms.Button();
             this.pnlHead = new System.Windows.Forms.Panel();
+            this.lbTextWindowTitle = new System.Windows.Forms.Label();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.timerUpdateNotesList = new System.Windows.Forms.Timer(this.components);
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShowed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colColor = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnNoteDelete = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -73,6 +73,7 @@ namespace NoteFly
             // 
             // btnClose
             // 
+            this.btnClose.AccessibleName = "close";
             this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnClose.BackColor = System.Drawing.Color.DarkOrange;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -83,6 +84,8 @@ namespace NoteFly
             this.btnClose.Size = new System.Drawing.Size(32, 23);
             this.btnClose.TabIndex = 0;
             this.btnClose.Text = "X";
+            this.btnClose.UseCompatibleTextRendering = true;
+            this.btnClose.UseMnemonic = false;
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -92,7 +95,7 @@ namespace NoteFly
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlHead.BackColor = System.Drawing.Color.Orange;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHead.Controls.Add(this.label1);
+            this.pnlHead.Controls.Add(this.lbTextWindowTitle);
             this.pnlHead.Controls.Add(this.btnClose);
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
@@ -101,6 +104,16 @@ namespace NoteFly
             this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
+            // 
+            // lbTextWindowTitle
+            // 
+            this.lbTextWindowTitle.AutoSize = true;
+            this.lbTextWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTextWindowTitle.Location = new System.Drawing.Point(8, 5);
+            this.lbTextWindowTitle.Name = "lbTextWindowTitle";
+            this.lbTextWindowTitle.Size = new System.Drawing.Size(102, 18);
+            this.lbTextWindowTitle.TabIndex = 1;
+            this.lbTextWindowTitle.Text = "Manage notes";
             // 
             // pbResizeGrip
             // 
@@ -116,7 +129,6 @@ namespace NoteFly
             this.pbResizeGrip.TabIndex = 9;
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
-            this.pbResizeGrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseUp);
             // 
             // timerUpdateNotesList
             // 
@@ -150,63 +162,6 @@ namespace NoteFly
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(427, 245);
             this.dataGridView1.TabIndex = 11;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.Wheat;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(222, 36);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(109, 23);
-            this.button4.TabIndex = 15;
-            this.button4.Text = "restore all from file";
-            this.button4.UseCompatibleTextRendering = true;
-            this.button4.UseVisualStyleBackColor = false;
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.Wheat;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(12, 36);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(105, 23);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "show selected";
-            this.button1.UseCompatibleTextRendering = true;
-            this.button1.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.Wheat;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(123, 36);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(93, 23);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "delete selected";
-            this.button2.UseCompatibleTextRendering = true;
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.Wheat;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(334, 36);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(105, 23);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "backup all to file";
-            this.button3.UseCompatibleTextRendering = true;
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
             // 
             // colId
             // 
@@ -243,6 +198,55 @@ namespace NoteFly
             this.colColor.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.colColor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.Wheat;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Location = new System.Drawing.Point(222, 36);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(109, 23);
+            this.button4.TabIndex = 15;
+            this.button4.Text = "restore all from file";
+            this.button4.UseCompatibleTextRendering = true;
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Wheat;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(12, 36);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(105, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "show selected";
+            this.button1.UseCompatibleTextRendering = true;
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // btnNoteDelete
+            // 
+            this.btnNoteDelete.BackColor = System.Drawing.Color.Wheat;
+            this.btnNoteDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNoteDelete.Location = new System.Drawing.Point(123, 36);
+            this.btnNoteDelete.Name = "btnNoteDelete";
+            this.btnNoteDelete.Size = new System.Drawing.Size(93, 23);
+            this.btnNoteDelete.TabIndex = 17;
+            this.btnNoteDelete.Text = "delete selected";
+            this.btnNoteDelete.UseCompatibleTextRendering = true;
+            this.btnNoteDelete.UseVisualStyleBackColor = false;
+            this.btnNoteDelete.Click += new System.EventHandler(this.btnNoteDelete_Click);
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.Wheat;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(334, 36);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(105, 23);
+            this.button3.TabIndex = 18;
+            this.button3.Text = "backup all to file";
+            this.button3.UseCompatibleTextRendering = true;
+            this.button3.UseVisualStyleBackColor = false;
+            // 
             // FrmManageNotes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -251,7 +255,7 @@ namespace NoteFly
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(451, 322);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnNoteDelete);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
@@ -283,9 +287,9 @@ namespace NoteFly
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnNoteDelete;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbTextWindowTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colShowed;

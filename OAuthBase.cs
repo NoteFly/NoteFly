@@ -94,7 +94,7 @@ namespace OAuth {
         protected const string PlainTextSignatureType = "PLAINTEXT";
         protected const string RSASHA1SignatureType = "RSA-SHA1";
 
-        protected Random random = new Random();
+        protected Random random = new Random(); //review randomness, based on Donald E. Knuth's subtractive random number generator algorithm. Is based on clock.
 
         protected string unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
 

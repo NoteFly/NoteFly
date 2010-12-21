@@ -25,8 +25,9 @@ namespace NoteFly
 
     public class Note
     {
-        private Notes notes;
         public FrmNote frmnote;
+
+        private Notes notes;
         private DateTime datecreated;
 
         /// <summary>
@@ -48,13 +49,13 @@ namespace NoteFly
             this.datecreated = datecreated;
         }
 
+        public int Id { get; set; }
         public string Title { get; set; }
         public bool Visible { get; set; }
         public bool Ontop { get; set; }
         public bool RolledUp { get; set; }
         public bool Locked { get; set; }
-        public int Id { get; set; }
-        public short Color { get; set; }
+        public int SkinNr { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }

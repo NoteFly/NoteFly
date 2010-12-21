@@ -170,7 +170,7 @@ namespace NoteFly
                             Settings.NetworkConnectionTimeout = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesDefaultColor":
-                            Settings.NotesDefaultColor = xmlread.ReadElementContentAsInt();
+                            Settings.NotesDefaultSkinnr = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesTransparencyLevel":
                             Settings.NotesTransparencyLevel = xmlread.ReadElementContentAsInt(); ;
@@ -207,9 +207,9 @@ namespace NoteFly
                         case "SocialEmailDefaultadres":
                             Settings.SocialEmailDefaultadres = xmlread.ReadElementContentAsString();
                             break;
-                        case "SocialTwitterpassword":
-                            Settings.SocialTwitterpassword = xmlread.ReadElementContentAsString();
-                            break;
+                        //case "SocialTwitterpassword":
+                        //    Settings.SocialTwitterpassword = xmlread.ReadElementContentAsString();
+                        //    break;
                         case "SocialTwitterUsername":
                             Settings.SocialTwitterUsername = xmlread.ReadElementContentAsString();
                             break;
@@ -367,6 +367,8 @@ namespace NoteFly
 
                 xmlwrite.WriteStartDocument();
 
+                xmlwrite.WriteComment("NoteFly Note 2.x");
+
                 xmlwrite.WriteStartElement("note");
 
                 WriteXMLBool("visible", note.Visible);
@@ -375,7 +377,7 @@ namespace NoteFly
 
                 WriteXMLBool("locked", note.Locked);
 
-                xmlwrite.WriteElementString("color", note.Color.ToString());
+                xmlwrite.WriteElementString("skin", note.SkinNr.ToString());
 
                 xmlwrite.WriteElementString("title", note.Title);
 
@@ -425,10 +427,10 @@ namespace NoteFly
 
                 WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
                 xmlwrite.WriteElementString("NotesTransparencyLevel", Convert.ToString(Settings.NotesTransparencyLevel, CultureInfo.InvariantCulture.NumberFormat));
-                if ((Settings.NotesDefaultColor < 0) || (Settings.NotesDefaultColor >= 8)) { throw new CustomException("unknown defaultcolor."); }
+                if (Settings.NotesDefaultSkinnr < 0) { throw new CustomException("unknown defaultcolor."); }
                 else
                 {
-                    xmlwrite.WriteElementString("NotesDefaultColor", Convert.ToString(Settings.NotesDefaultColor, CultureInfo.InvariantCulture.NumberFormat));
+                    xmlwrite.WriteElementString("NotesDefaultColor", Convert.ToString(Settings.NotesDefaultSkinnr, CultureInfo.InvariantCulture.NumberFormat));
                 }
                 if (!Directory.Exists(Settings.NotesSavepath)) { throw new CustomException("Directory " + Settings.NotesSavepath + " does not exist."); }
                 else
@@ -499,11 +501,11 @@ namespace NoteFly
                         xmlwrite.WriteElementString("SocialTwitterUsername", Settings.SocialTwitterUsername);
                     }
 
-                    if ((Settings.SocialTwitterpassword.Length < 6) && (String.IsNullOrEmpty(Settings.SocialTwitterpassword))) { throw new CustomException("Twitter password too short."); }
-                    else
-                    {
-                        xmlwrite.WriteElementString("SocialTwitterpassword", Settings.SocialTwitterpassword);
-                    }
+                    //if ((Settings.SocialTwitterpassword.Length < 6) && (String.IsNullOrEmpty(Settings.SocialTwitterpassword))) { throw new CustomException("Twitter password too short."); }
+                    //else
+                    //{
+                    //    xmlwrite.WriteElementString("SocialTwitterpassword", Settings.SocialTwitterpassword);
+                    //}
                 xmlwrite.WriteEndElement(); //end subtree twitter.
 
 
