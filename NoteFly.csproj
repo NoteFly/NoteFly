@@ -141,6 +141,7 @@
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="bin\Debug\skins.xsd" />
     <None Include="clean_settings.bat" />
     <None Include="icons.res" />
     <None Include="Properties\app.manifest" />

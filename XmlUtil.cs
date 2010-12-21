@@ -25,15 +25,17 @@ namespace NoteFly
     using System.IO;
     using System.Xml;
     using System.Globalization;
+    using System.Reflection;
+    using System.Collections.Generic;
 
-    static class xmlUtil
+    public static class xmlUtil
     {
         #region Fields (2)
 
-        static public XmlTextReader xmlread = null;
-        static public XmlTextWriter xmlwrite = null;
-        const String SETTINGSFILE = "settings.xml";
-
+        private static XmlTextReader xmlread = null;
+        private static XmlTextWriter xmlwrite = null;
+        private const string SETTINGSFILE = "settings.xml";
+        private const string SKINFILE = "skins.xml";
         #endregion Fields
 
 
@@ -45,11 +47,16 @@ namespace NoteFly
         /// Loads the settings file and set the settings in the
         /// static Settings class in memory.
         /// </summary>
-        static public void LoadSettings()
+        public static void LoadSettings()
         {
             try
             {
-                xmlread = new XmlTextReader(SETTINGSFILE);
+                string settingsfilepath = Path.Combine(TrayIcon.AppDataFolder, SETTINGSFILE);
+                if (!File.Exists(settingsfilepath))
+                {
+                    throw new CustomException(SETTINGSFILE + " not found.");
+                }
+                xmlread = new XmlTextReader(settingsfilepath);
                 if (xmlread.Encoding != System.Text.Encoding.UTF8)
                 {
                     //wrong encoding 
@@ -191,7 +198,7 @@ namespace NoteFly
                             Settings.UpdatecheckMonth = xmlread.ReadElementContentAsInt();
                             break;
 
-                        //strings (put at bottom in the settings file for more performance because then there are less characters to skip)
+                        //strings (put at bottom in the settings file for more performance because then there are less characters to compare/skip)
                         case "FontContentFamily":
                             Settings.FontContentFamily = xmlread.ReadElementContentAsString();
                             break;
@@ -228,7 +235,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="nodename"></param>
         /// <returns>return node as string</returns>
-        static public String GetContentString(string filename, string nodename)
+        public static string GetContentString(string filename, string nodename)
         {
             try
             {
@@ -272,7 +279,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="nodename"></param>
         /// <returns></returns>
-        static public bool GetContentBool(string filename, string nodename)
+        public static bool GetContentBool(string filename, string nodename)
         {
             xmlread = new XmlTextReader(filename);
             try
@@ -407,14 +414,56 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Gets all skins
+        /// </summary>
+        /// <returns></returns>
+        public static List<Skin> LoadSkins()
+        {
+            List<Skin> skins = new List<Skin>();
+            xmlread = new XmlTextReader(Path.Combine(Assembly.GetExecutingAssembly().Location, SKINFILE));
+            Skin curskin = null;
+            while (xmlread.Read())
+            {
+                switch (xmlread.Name)
+                {
+                    case "skin":
+                        if (curskin != null)
+                        {
+                            skins.Add(curskin);
+                        }
+                        curskin = new Skin();
+                        break;
+                    case "Nr":
+                        curskin.Nr = xmlread.ReadElementContentAsInt();
+                        break;
+                    case "Name":
+                        curskin.Name = xmlread.ReadElementContentAsString();
+                        break;
+                    case "ForegroundColor":
+                        curskin.Name = xmlread.ReadElementContentAsString();
+                        break;
+                    case "BackgroundColor":
+                        curskin.Name = xmlread.ReadElementContentAsString();
+                        break;
+                    case "HighlightColor":
+                        curskin.Name = xmlread.ReadElementContentAsString();
+                        break;
+                }
+                
+            }
+            
+            return skins;
+        }
+
+        /// <summary>
         /// Write settings file.
         /// </summary>
         /// <returns>true if succeed.</returns>
-        static public bool WriteSettings()
+        public static bool WriteSettings()
         {
             try
             {
-                xmlwrite = new XmlTextWriter(SETTINGSFILE, System.Text.Encoding.UTF8);
+                xmlwrite = new XmlTextWriter(Path.Combine(TrayIcon.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
 
                 xmlwrite.WriteStartDocument();
@@ -561,7 +610,7 @@ namespace NoteFly
         /// Write xml 1 valaue for true and 0 for false.
         /// </summary>
         /// <param name="checknode"></param>
-        static private void WriteXMLBool(String element, bool checknode)
+        private static void WriteXMLBool(String element, bool checknode)
         {
             xmlwrite.WriteStartElement(element);
             if (checknode == true)

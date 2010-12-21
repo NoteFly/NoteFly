@@ -418,7 +418,7 @@ namespace NoteFly
             }
             else 
             {
-                this.pnlHeadNewNote.BackColor = notes.GetForegoundColor(Settings.NotesDefaultSkinnr);
+                this.pnlHeadNewNote.BackColor = notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
             }
         }
 

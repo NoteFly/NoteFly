@@ -34,10 +34,9 @@ namespace NoteFly
     /// </summary>
     public partial class FrmSettings : Form
     {
-        #region Fields (2)
+        #region Fields (1)
 
         private Notes notes;
-        //private xmlHandler xmlsettings;
 
         #endregion Fields
 

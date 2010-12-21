@@ -185,7 +185,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            this.pnlHead.BackColor = this.notes.GetForegoundColor(this.note.SkinNr);
+            this.pnlHead.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
         }
 
         /// <summary>
@@ -622,7 +622,7 @@ namespace NoteFly
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
                 //new Textfile(true, sfdlg.FileName, this.note.Title, this.note);
-                string logmsg = "Note (ID:" + this.NoteID + ") saved to ";
+                string logmsg = "Note (ID:" + this.note.Id + ") saved to ";
                 switch (sfdlg.FilterIndex)
                 {
                     case 0:
@@ -645,94 +645,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
         {
-            if (!this.CheckConnection())
-            {
-                return;
-            }
-
-            //if (this.rtbNote.Text.Length <= 140)
-            //{
-            //    this.Tweetnote();
-            //}
-            //else if (this.rtbNote.Text.Length > 140)
-            //{
-            //    DialogResult result;
-            //    string shrttweet = this.note.Substring(0, 140);
-            //    result = MessageBox.Show("Your note is more than the 140 chars.\r\nDo you want to publish only the first 140 characters? ", "Too long", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            //    if (result == DialogResult.Yes)
-            //    {
-            //        this.Tweetnote();
-            //        Log.Write(LogType.info, "Shorted note send to twitter.");
-            //    }
-            //}
-        }
-
-        /// <summary>
-        /// Tweet a note.
-        /// </summary>
-        private void Tweetnote()
-        {
-            if (!this.CheckConnection())
-            {
-                return;
-            }
-
-            xmlHandler getSettings = new xmlHandler(true);
-            string twitteruser = getSettings.getXMLnode("twitteruser");
-
-            if (String.IsNullOrEmpty(twitteruser))
-            {
-                string notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
-                Log.Write(LogType.error, notwusername.Replace("\r\n", ""));
-                MessageBox.Show(notwusername);
-                FrmSettings settings = new FrmSettings(this.notes);
-                settings.Show();
-                return;
-            }
-
-            if (this.twpass == null)
-            {
-                this.twpass = getSettings.getXMLnode("twitterpass").ToCharArray();
-            }
-
-            if ((this.twpass == null) || (this.twpass.Length <= 0))
-            {
-                Form askpass = new Form();
-                askpass.ShowIcon = false;
-                askpass.Height = 80;
-                askpass.Width = 280;
-                askpass.Text = "Twitter password needed";
-                askpass.Show();
-                TextBox tbpass = new TextBox();
-                tbpass.Location = new Point(10, 10);
-                tbpass.Width = 160;
-                tbpass.Name = "tbPassword";
-                tbpass.PasswordChar = 'X';
-                Button btnOk = new Button();
-                btnOk.Location = new Point(180, 10);
-                btnOk.Text = "Ok";
-                btnOk.Width = 80;
-                btnOk.Name = "btnOk";
-                btnOk.Click += this.Askpassok;
-                askpass.Controls.Add(tbpass);
-                askpass.Controls.Add(btnOk);
-            }
-            else
+            if (this.CheckConnection())
             {
                 Twitter twitter = new Twitter();
-                const string twitterleadmgs = "Sending note to twitter ";
-                if (twitter.UpdateAsXML(twitteruser, this.twpass, this.note) != null)
-                {
-                    string sendtwsucces = twitterleadmgs + "succeded.";
-                    Log.Write(LogType.info, sendtwsucces);
-                    MessageBox.Show(sendtwsucces);
-                }
-                else
-                {
-                    string sendtwfail = twitterleadmgs + "failed.";
-                    Log.Write(LogType.error, sendtwfail);
-                    MessageBox.Show(sendtwfail);
-                }
+                //TODO: call windows from here.
             }
         }
 
@@ -748,7 +664,7 @@ namespace NoteFly
                 curitem.Checked = false;
             }
 
-            switch (this.note.Color)
+            switch (this.note.SkinNr)
             {
                 case 0:
                     this.yellowToolStripMenuItem.Checked = true;
@@ -786,10 +702,7 @@ namespace NoteFly
         {
             if ((this.moving) && (e.Button == MouseButtons.Left))
             {
-                if (this.skin != null)
-                {
-                    this.pnlHead.BackColor = this.skin.GetObjColor(true);
-                }
+                this.pnlHead.BackColor = this.notes.GetBackgroundColor(this.note.SkinNr);
 
                 int dpx = e.Location.X - oldp.X;
                 int dpy = e.Location.Y - oldp.Y;
@@ -813,9 +726,9 @@ namespace NoteFly
 #endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
             }
-            else if (this.skin != null)
+            else
             {
-                this.pnlHead.BackColor = this.skin.GetObjColor(false);
+                this.pnlHead.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
             }
         }
 

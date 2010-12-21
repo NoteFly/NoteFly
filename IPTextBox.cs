@@ -80,7 +80,7 @@ namespace NoteFly
         }
         
         /// <summary>
-        /// Filter out illgale charcters.
+        /// Filter out illgale characters.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments</param>
@@ -114,7 +114,7 @@ namespace NoteFly
                 if (this.tbIPaddress.TextLength == 0)
                 {
                     e.SuppressKeyPress = true;
-                    //MessageBox.Show("IP v6 adress cannot start with a doublepoint.");
+                    //MessageBox.Show("IP v6 adress cannot start with ':'");
                 }
 
                 this.addrtype = IPaddrType.ipv6;
@@ -141,7 +141,7 @@ namespace NoteFly
 
                 if (this.addrtype == IPaddrType.ipv6) 
                 {
-                    MessageBox.Show("can't mix ipv4 and ipv6 seperators. Don't use dots for ip v6."); 
+                    MessageBox.Show("can't mix ipv4 and ipv6 seperators. Don't use dots for ip v6 adress."); 
                 }
 
                 this.addrtype = IPaddrType.ipv4;

@@ -26,29 +26,29 @@ namespace NoteFly
     /// <summary>
     /// helper class for text highlight in notes.
     /// </summary>
-    static public class TextHighlight
+    public static class TextHighlight
     {
         #region Fields (4)
 
         /// <summary>
         /// For highlighting itself: The start position of a html node.
         /// </summary>
-        static private int posstarttag = 0;
+        private static int posstarttag = 0;
 
 
         /// <summary>
         /// A array of possible HTML nodes.
         /// </summary>
-        static private string[] htmlnodes;
+        private static string[] htmlnodes;
 
         /// <summary>
         /// 0 is endtag not required
         /// 1 is endtag required
         /// 2 is endtag forbidden
         /// </summary>
-        static private short[] htmlendtagpolicy;
+        private static short[] htmlendtagpolicy;
 
-        static private bool[] htmlstructure;
+        private static bool[] htmlstructure;
 
         #endregion Fields
 

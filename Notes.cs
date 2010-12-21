@@ -62,6 +62,7 @@ namespace NoteFly
         {
             this.notes = new List<Note>();
             this.skins = new List<Skin>();
+            this.skins = xmlUtil.LoadSkins();
 
             bool firstrun = Settings.ProgramFirstrun; //settings has to been loaded before please.
 
@@ -241,7 +242,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="skinnr"></param>
         /// <returns></returns>
-        public System.Drawing.Color GetForegoundColor(int skinnr)
+        public System.Drawing.Color GetForegroundColor(int skinnr)
         {
             return GetColor(1, skinnr);
         }
