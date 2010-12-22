@@ -9,7 +9,7 @@ namespace NoteFly
     {
 		#region Fields (5) 
 
-        public int Nr;
+        public int Nr; //position
         public string Name;
         public Color ForegroundClr;
         public Color BackgroundClr;
@@ -17,17 +17,5 @@ namespace NoteFly
 
 		#endregion Fields 
 
-		#region Constructors (1) 
-
-        //public Skin(int nr, string name, Color foregoundclr, Color backgorundclr, Color highlightclr)
-        //{
-        //    this.Nr = nr;
-        //    this.Name = name;
-        //    this.ForegroundClr = foregoundclr;
-        //    this.BackgroundClr = backgorundclr;
-        //    this.HighlightClr = highlightclr;
-        //}
-
-		#endregion Constructors 
     }
 }

@@ -47,26 +47,27 @@ namespace NoteFly
         /// Loads the settings file and set the settings in the
         /// static Settings class in memory.
         /// </summary>
-        public static void LoadSettings()
+        /// <returns>true if file settings exists.</returns>
+        public static bool LoadSettings()
         {
+            string settingsfilepath = Path.Combine(TrayIcon.AppDataFolder, SETTINGSFILE);
+            if (!File.Exists(settingsfilepath))
+            {
+                return false;
+            }
             try
             {
-                string settingsfilepath = Path.Combine(TrayIcon.AppDataFolder, SETTINGSFILE);
-                if (!File.Exists(settingsfilepath))
-                {
-                    throw new CustomException(SETTINGSFILE + " not found.");
-                }
                 xmlread = new XmlTextReader(settingsfilepath);
-                if (xmlread.Encoding != System.Text.Encoding.UTF8)
-                {
-                    //wrong encoding 
-                    throw new CustomException("Xml setting file has the wrong encoding. It should be " + System.Text.Encoding.UTF8.BodyName);
-                }
-                if (xmlread.CanReadBinaryContent == true)
-                {
-                    //we dont want that.
-                    throw new CustomException("xmlTextReader shouldnt read binary.");
-                }
+                //if (xmlread.CanReadBinaryContent == true)
+                //{
+                //    //we dont want that.
+                //    throw new CustomException("XmlTextReader should not read binary.");
+                //}
+                //if (xmlread.Encoding.EncodingName != "UTF-8")
+                //{
+                //    //wrong encoding 
+                //    throw new CustomException("Xml setting file has the wrong encoding. It should be " + System.Text.Encoding.UTF8.BodyName);
+                //}
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
                 xmlread.ProhibitDtd = true;
 
@@ -132,9 +133,9 @@ namespace NoteFly
                         case "SocialFacebookEnabled":
                             Settings.SocialFacebookEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "SocialFacebookSavesession":
-                            Settings.SocialFacebookSavesession = xmlread.ReadElementContentAsBoolean();
-                            break;
+                        //case "SocialFacebookSavesession":
+                        //    Settings.SocialFacebookSavesession = xmlread.ReadElementContentAsBoolean();
+                        //    break;
                         case "SocialFacebookUseSSL":
                             Settings.SocialFacebookUseSSL = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -155,12 +156,6 @@ namespace NoteFly
                             break;
                         case "TrayiconSettingsbold":
                             Settings.TrayiconSettingsbold = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "UpdatecheckTodaydone":
-                            Settings.UpdatecheckTodaydone = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "UpdatescheckEnabled":
-                            Settings.UpdatecheckEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
 
                         //ints
@@ -185,17 +180,8 @@ namespace NoteFly
                         case "TrayiconLeftclickaction":
                             Settings.TrayiconLeftclickaction = xmlread.ReadElementContentAsInt();
                             break;
-                        case "UpdatecheckDay":
-                            Settings.UpdatecheckDay = xmlread.ReadElementContentAsInt();
-                            break;
                         case "UpdatecheckEverydays":
                             Settings.UpdatecheckEverydays = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "UpdatecheckYear":
-                            Settings.UpdatecheckYear = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "UpdateheckMonth":
-                            Settings.UpdatecheckMonth = xmlread.ReadElementContentAsInt();
                             break;
 
                         //strings (put at bottom in the settings file for more performance because then there are less characters to compare/skip)
@@ -214,11 +200,11 @@ namespace NoteFly
                         case "SocialEmailDefaultadres":
                             Settings.SocialEmailDefaultadres = xmlread.ReadElementContentAsString();
                             break;
-                        //case "SocialTwitterpassword":
-                        //    Settings.SocialTwitterpassword = xmlread.ReadElementContentAsString();
-                        //    break;
                         case "SocialTwitterUsername":
                             Settings.SocialTwitterUsername = xmlread.ReadElementContentAsString();
+                            break;
+                        case "UpdatecheckLastDate":
+                            Settings.UpdatecheckLastDate = xmlread.ReadElementContentAsDateTime();
                             break;
                     }
                 }
@@ -226,8 +212,8 @@ namespace NoteFly
             finally
             {
                 xmlread.Close();
-
             }
+            return true;
         }
 
         /// <summary>
@@ -419,41 +405,75 @@ namespace NoteFly
         /// <returns></returns>
         public static List<Skin> LoadSkins()
         {
+            string skinfilepath = Path.Combine(TrayIcon.AppDataFolder, SKINFILE);
+            if (!File.Exists(skinfilepath)) {
+                WriteDefaultSkins(skinfilepath);
+            }
             List<Skin> skins = new List<Skin>();
-            xmlread = new XmlTextReader(Path.Combine(Assembly.GetExecutingAssembly().Location, SKINFILE));
+            xmlread = new XmlTextReader(skinfilepath);
             Skin curskin = null;
+            UInt16 numskins = 0;
             while (xmlread.Read())
             {
                 switch (xmlread.Name)
                 {
                     case "skin":
-                        if (curskin != null)
+                        if (curskin != null && numskins <255)
                         {
                             skins.Add(curskin);
                         }
                         curskin = new Skin();
                         break;
                     case "Nr":
-                        curskin.Nr = xmlread.ReadElementContentAsInt();
+                        numskins++;
+                        curskin.Nr = numskins;
                         break;
                     case "Name":
                         curskin.Name = xmlread.ReadElementContentAsString();
                         break;
                     case "ForegroundColor":
-                        curskin.Name = xmlread.ReadElementContentAsString();
+                        curskin.ForegroundClr = ConvToClr(xmlread.ReadElementContentAsString());
                         break;
                     case "BackgroundColor":
-                        curskin.Name = xmlread.ReadElementContentAsString();
+                        curskin.BackgroundClr = ConvToClr(xmlread.ReadElementContentAsString());
                         break;
                     case "HighlightColor":
-                        curskin.Name = xmlread.ReadElementContentAsString();
+                        curskin.HighlightClr = ConvToClr(xmlread.ReadElementContentAsString());
                         break;
                 }
-                
             }
             
             return skins;
         }
+
+        private static System.Drawing.Color ConvToClr(string colorstring)
+        {
+            //HEX color
+            return System.Drawing.ColorTranslator.FromHtml(colorstring);
+
+            //DECIMAL color, commented out in favor of HEX notation for speed.
+            //string[] parts = new string[3];
+            //parts = colorstring.Split(',');
+            //try
+            //{
+            //    UInt16 redchannel = Convert.ToUInt16(parts[0].Trim());
+            //    UInt16 greenchannel = Convert.ToUInt16(parts[1].Trim());
+            //    UInt16 bluechannel = Convert.ToUInt16(parts[2].Trim());
+            //    return System.Drawing.Color.FromArgb(redchannel, greenchannel, bluechannel);
+            //}
+            //catch
+            //{
+            //    if (colorstring.Length < 100)
+            //    {
+            //        throw new CustomException("Cannot parser: " + colorstring);
+            //    }
+            //    else
+            //    {
+            //        throw new CustomException("Cannot parser: " + colorstring.Substring(0, 100)+" ..");
+            //    }
+            //}
+        }
+
 
         /// <summary>
         /// Write settings file.
@@ -526,40 +546,44 @@ namespace NoteFly
                 xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.SocialEmailDefaultadres);
 
                 xmlwrite.WriteStartElement("facebook"); //start subtree facebook
-                    WriteXMLBool("SocialFacebookSavesession", Settings.SocialFacebookSavesession);
-                    if (!String.IsNullOrEmpty(Settings.SocialFacebookSessionSecret) &&
-                        !String.IsNullOrEmpty(Settings.SocialFacebookSessionKey) &&
-                        Settings.SocialFacebookSavesession == true)
-                    {
-                        xmlwrite.WriteElementString("SocialFacebookSessionExpires", Convert.ToString(Settings.SocialFacebookSessionExpires, CultureInfo.InvariantCulture.NumberFormat));
-                        xmlwrite.WriteElementString("SocialFacebookSessionSecret", Settings.SocialFacebookSessionSecret);
-                        xmlwrite.WriteElementString("SocialFacebookSessionKey", Settings.SocialFacebookSessionKey);
-                    }
-                    else
-                    {
-                        xmlwrite.WriteElementString("SocialFacebookSessionExpires", String.Empty);
-                        xmlwrite.WriteElementString("SocialFacebookSessionSecret", String.Empty);
-                        xmlwrite.WriteElementString("SocialFacebookSessionKey", String.Empty);
-                    }
+                //WriteXMLBool("SocialFacebookSavesession", Settings.SocialFacebookSavesession);
+                //if (!String.IsNullOrEmpty(Settings.SocialFacebookSessionSecret) &&
+                //    !String.IsNullOrEmpty(Settings.SocialFacebookSessionKey) &&
+                //    Settings.SocialFacebookSavesession == true)
+                //{
+                //    xmlwrite.WriteElementString("SocialFacebookSessionExpires", Convert.ToString(Settings.SocialFacebookSessionExpires, CultureInfo.InvariantCulture.NumberFormat));
+                //    xmlwrite.WriteElementString("SocialFacebookSessionSecret", Settings.SocialFacebookSessionSecret);
+                //    xmlwrite.WriteElementString("SocialFacebookSessionKey", Settings.SocialFacebookSessionKey);
+                //}
+                //else
+                //{
+                //    xmlwrite.WriteElementString("SocialFacebookSessionExpires", String.Empty);
+                //    xmlwrite.WriteElementString("SocialFacebookSessionSecret", String.Empty);
+                //    xmlwrite.WriteElementString("SocialFacebookSessionKey", String.Empty);
+                //}
                 xmlwrite.WriteEndElement(); //end subtree facebook
 
                 xmlwrite.WriteStartElement("twitter"); //start subtree twitter
-                    if (Settings.SocialTwitterUsername.Length > 15) { throw new CustomException("Twitter username too long."); }
-                    else
-                    {
-                        xmlwrite.WriteElementString("SocialTwitterUsername", Settings.SocialTwitterUsername);
-                    }
+                if (Settings.SocialTwitterUsername.Length > 15) { throw new CustomException("Twitter username too long."); }
+                else
+                {
+                    xmlwrite.WriteElementString("SocialTwitterUsername", Settings.SocialTwitterUsername);
+                }
 
-                    //if ((Settings.SocialTwitterpassword.Length < 6) && (String.IsNullOrEmpty(Settings.SocialTwitterpassword))) { throw new CustomException("Twitter password too short."); }
-                    //else
-                    //{
-                    //    xmlwrite.WriteElementString("SocialTwitterpassword", Settings.SocialTwitterpassword);
-                    //}
+                //if ((Settings.SocialTwitterpassword.Length < 6) && (String.IsNullOrEmpty(Settings.SocialTwitterpassword))) { throw new CustomException("Twitter password too short."); }
+                //else
+                //{
+                //    xmlwrite.WriteElementString("SocialTwitterpassword", Settings.SocialTwitterpassword);
+                //}
                 xmlwrite.WriteEndElement(); //end subtree twitter.
 
 
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
+            }
+            catch (CustomException)
+            {
+                return false;
             }
             finally
             {
@@ -571,40 +595,100 @@ namespace NoteFly
             return true;
         }
 
-        // Private Methods (2)
-        /*
-                /// <summary>
-                /// Does some checks on the file
-                /// - Is the file empty?
-                /// - Is the file too large?
-                /// </summary>
-                static private void CheckFile(string filenm)
-                {
-                    if (File.Exists(filenm) == true)
-                    {
-                        FileInfo checkfile = new FileInfo(filenm);
-        #if windows
-                        if (checkfile.Attributes == FileAttributes.System)
-                        {
-                            throw new CustomException("File " + filenm + " is a system file.");
-                        }
-                        else if (checkfile.Attributes == FileAttributes.ReadOnly)
-                        {
-                            Log.Write(LogType.error, filenm + " is readonly and should not be readonly.");
-                        }
-        #endif
-                        if (checkfile.Length == 0)
-                        {
-                            throw new CustomException("File " + filenm + " is empty");
-                        }
-                        //check if larger that 10 MB
-                        else if (checkfile.Length > 10485760)
-                        {
-                            throw new CustomException("File " + filenm + " is way too big.");
-                        }
-                    }
-                }
-        */
+        /// <summary>
+        /// Write the default settings.
+        /// Used for if SETTINGSFILE is not created yet.
+        /// </summary>
+        /// <returns></returns>
+        public static bool WriteDefaultSettings()
+        {
+            Settings.ConfirmDeletenote = true;
+            Settings.ConfirmExit = false;
+            Settings.ConfirmLinkclick = true;
+            Settings.FontContentFamily = "Arial";
+            Settings.FontContentSize = 11;
+            Settings.FontTextdirection = 1;
+            Settings.FontTitleFamily = "Arial";
+            Settings.FontTitleSize = 14;
+            Settings.FontTitleStylebold = true;
+            Settings.HighlightHTML = false;
+            Settings.HighlightHyperlinks = true;
+            Settings.HighlightPHP = false;
+            Settings.HighlightSQL = false;
+            Settings.NetworkConnectionForceipv6 = false;
+            Settings.NetworkConnectionTimeout = 8000;
+            Settings.NetworkProxyAddress = "";
+            Settings.NetworkProxyEnabled = false;
+            Settings.NotesClosebtnHidenotepermanently = true;
+            Settings.NotesClosebtnTooltipenabled = false;
+            Settings.NotesDefaultSkinnr = 1;
+            Settings.NotesSavepath = TrayIcon.AppDataFolder;
+            Settings.NotesTransparencyEnabled = true;
+            Settings.NotesTransparencyLevel = 90;
+            Settings.NotesWarnLimit = 1000;
+            Settings.ProgramFirstrun = true;
+            Settings.ProgramLogError = true;
+            Settings.ProgramLogException = true;
+            Settings.ProgramLogInfo = false;
+            Settings.SocialEmailDefaultadres = "";
+            Settings.SocialEmailEnabled = true;
+            Settings.SocialFacebookEnabled = true;
+            Settings.SocialFacebookUseSSL = true;
+            Settings.SocialTwitterEnabled = true;
+            Settings.SocialTwitterUsername = "";
+            Settings.SocialTwitterUseSSL = true;
+            Settings.TrayiconCreatenotebold = true;
+            Settings.TrayiconExitbold = false;
+            Settings.TrayiconLeftclickaction = 1;
+            Settings.TrayiconManagenotesbold = false;
+            Settings.TrayiconSettingsbold = false;
+            Settings.UpdatecheckEverydays = 0; //0 is disabled.
+            Settings.UpdatecheckLastDate = DateTime.Today;
+
+            try
+            {
+                WriteSettings();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Writes the default skins to the SKINFILE.
+        /// Used for if SKINFILE is not created yet.
+        /// </summary>
+        /// <param name="filename"></param>
+        private static void WriteDefaultSkins(string filename)
+        {
+            try
+            {
+                xmlwrite = new XmlTextWriter(filename, System.Text.Encoding.UTF8);
+                xmlwrite.Formatting = Formatting.Indented;
+                xmlwrite.WriteStartDocument();
+                xmlwrite.WriteStartElement("skins");
+                xmlwrite.WriteStartElement("skin");
+                xmlwrite.WriteElementString("Name", "yellow");
+                xmlwrite.WriteElementString("ForegroundColor", "#FFD800");
+                xmlwrite.WriteElementString("BackgroundColor", "#E5B61B");
+                xmlwrite.WriteElementString("HighlightColor", "#FFE677");
+                xmlwrite.WriteEndElement();
+                xmlwrite.WriteStartElement("skin");
+                xmlwrite.WriteElementString("Name", "orange");
+                xmlwrite.WriteElementString("ForegroundColor", "#FF6A00");
+                xmlwrite.WriteElementString("BackgroundColor", "#EF6F1F");
+                xmlwrite.WriteElementString("HighlightColor", "#FF6247");
+                xmlwrite.WriteEndElement();
+                xmlwrite.WriteEndElement();
+                xmlwrite.WriteEndDocument();
+            }
+            finally
+            {
+                xmlwrite.Close();
+            }
+        }
 
         /// <summary>
         /// Write xml 1 valaue for true and 0 for false.

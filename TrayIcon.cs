@@ -105,9 +105,9 @@ namespace NoteFly
             get
             {
 #if windows
-                string appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\." + TrayIcon.AssemblyTitle + "\\";
+                string appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.NoteFly2\\";
 #elif linux
-                string appdatafolder = System.Environment.GetEnvironmentVariable("HOME") + "/.NoteFly/";
+                string appdatafolder = System.Environment.GetEnvironmentVariable("HOME") + "/.NoteFly2/";
 #elif macos
                 string appdatafolder = "???"
 #endif
@@ -166,7 +166,13 @@ namespace NoteFly
             components = new System.ComponentModel.Container();
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
-            xmlUtil.LoadSettings();
+
+            if (!xmlUtil.LoadSettings())
+            {
+                xmlUtil.WriteDefaultSettings();
+            }
+            
+
             bool forcefirstrun = false;
             //override settings with supported parameters
             if (System.Environment.GetCommandLineArgs().Length > 1)

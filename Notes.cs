@@ -393,30 +393,28 @@ namespace NoteFly
         /// <param name="maxnotes">How many notes to create.</param>
         private void LoadNotesStressTest(int maxnotes)
         {
-            Random ran = new Random();
+            Random rnd = new Random();
+
+            if (this.CheckLimitNotes(maxnotes))
+            {
+                const string maxnoteslimit = "";
+                MessageBox.Show(maxnoteslimit);
+                Log.Write(LogType.error, maxnoteslimit);
+                return;
+            }
 
             for (int id = 1; id <= maxnotes; id++)
             {
-                bool visible = true;
-                bool ontop = false;
                 string title = "test nr." + id + " testalongtitlesoiteasytoseeifresizingofmanagenoteisdonecorrectlyblablabla";
-                string content = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
-                                 "warning: To prevent this note from saving don't move or touch it!";
-                short notecolor = Convert.ToInt16(ran.Next(0, 6));
-                int noteLocX = ran.Next(0, 360);
-                int noteLocY = ran.Next(0, 240);
+                int skinnr = rnd.Next(0, 6);
+                int noteLocX = rnd.Next(0, 360);
+                int noteLocY = rnd.Next(0, 240);
                 int notewidth = 180;
                 int noteheight = 180;
-
-                this.noteslst.Add(this.CreateNote(visible, ontop, title, content, notecolor, noteLocX, noteLocY, notewidth, noteheight));
-
-                if (this.CheckLimitNotes(id))
-                {
-                    string maxnoteslimit = "Maximum notes limit reached.";
-                    MessageBox.Show(maxnoteslimit);
-                    Log.Write(LogType.error, maxnoteslimit);
-                    return;
-                }
+                Note testnote = this.CreateNote(title, skinnr, noteLocX, noteLocY, notewidth, noteheight);
+                testnote.frmnote.rtbNote.Text = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
+                     "warning: To prevent this note from saving don't move or touch it!";
+                this.notes.Add(testnote);
             }
         }
 #endif
