@@ -22,6 +22,7 @@ namespace NoteFly
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.IO;
 
     public class Note
     {
@@ -40,7 +41,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Creating a new note instance, loading a note form file.
+        /// Creating a new note instance, loading a note from file.
         /// </summary>
         /// <param name="created"></param>
         public Note(Notes notes, DateTime datecreated)
@@ -102,13 +103,26 @@ namespace NoteFly
         {
             if (this.frmnote == null)
             {
-                String filename = Settings.NotesSavepath + "/"+ this.Id + this.Title.Substring(0,20);
-                return xmlUtil.GetContentString(filename, "Content");
+                string notefilepath = Path.Combine(Settings.NotesSavepath, this.notes.NewNoteFilename(this.Id, this.Title));
+                if (File.Exists(notefilepath))
+                {
+                    return xmlUtil.GetContentString(notefilepath, "Content");
+                }
+                else
+                {
+                    //error
+                    throw new CustomException("Cannot read note content, note not found.");
+                }
             }
             else
             {
                 return this.frmnote.rtbNote.Rtf;
             }
+        }
+
+        public string GetSkinName()
+        {
+            return this.notes.GetSkinName(this.SkinNr);
         }
     }
 }

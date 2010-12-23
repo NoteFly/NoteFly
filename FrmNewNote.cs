@@ -25,6 +25,7 @@ namespace NoteFly
     using System.Drawing;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
+    using System.IO;
 
     /// <summary>
     /// Class to create new note.
@@ -46,7 +47,6 @@ namespace NoteFly
         /// Initializes a new instance of the FrmNewNote class for a new note.
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
-        /// <param name="notecolor">The default note color.</param>
         public FrmNewNote(Notes notes)
         {
             this.InitializeComponent();
@@ -61,10 +61,7 @@ namespace NoteFly
         /// Initializes a new instance of the FrmNewNote class for editing a exist note.
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
-        /// <param name="notecolor">the default note color.</param>
-        /// <param name="editnoteid">The noteid to edit.</param>
-        /// <param name="editnotetitle">The title of the note to edit.</param>
-        /// <param name="editnotecontent">The content of the note to edit.</param>
+        /// <param name="note">the note to edit.</param>
         public FrmNewNote(Notes notes, Note note)
         {
             this.InitializeComponent();
@@ -120,24 +117,22 @@ namespace NoteFly
         {
             if (String.IsNullOrEmpty(this.tbTitle.Text))
             {
-                //this.tbTitle.BackColor = this.skin.GetObjColor(false, false, true);
                 this.tbTitle.Text = DateTime.Now.ToString();
             }
             else if (String.IsNullOrEmpty(this.rtbNewNote.Text))
             {
-                //this.rtbNote.BackColor = this.skin.GetObjColor(false, false, true);
                 this.rtbNewNote.Text = "Please enter some content.";
             }
             else
             {
                 if (this.note == null)
                 {
-                    short color = 1;
-                    this.note = this.notes.CreateNote(this.tbTitle.Text, color, this.Location.X, this.Location.Y, this.Width, this.Height);
+                    this.note = this.notes.CreateNote(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
-                
-                this.notes.SaveNote(this.note, this.rtbNewNote.Rtf);
-                
+                if (this.note != null)
+                {
+                    this.notes.SaveNote(this.note, this.rtbNewNote.Rtf);
+                }
                 this.Close();
             }
         }
@@ -328,22 +323,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Set the text direction of the note content.
-        /// 
-        /// </summary>
-        private void SetTextDirection()
-        {
-            if (Settings.FontTextdirection == 0)
-            {
-                this.tbTitle.TextAlign = HorizontalAlignment.Left;
-            }
-            else if (Settings.FontTextdirection == 1)
-            {
-                this.tbTitle.TextAlign = HorizontalAlignment.Right;
-            }
-        }
-
-        /// <summary>
         /// User entered the title box.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -464,8 +443,27 @@ namespace NoteFly
             OpenFileDialog openfiledlg = new OpenFileDialog();
             openfiledlg.Title = "open file";
             openfiledlg.Multiselect = false;
-            openfiledlg.Filter = "text file (*.txt)|testerdetest.";
-            openfiledlg.ShowDialog();
+            openfiledlg.Filter = "text file (*.txt)|*.txt";
+            openfiledlg.CheckFileExists = true;
+            openfiledlg.CheckPathExists = true;
+            DialogResult res = openfiledlg.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                FileStream fs = null;
+                StreamReader reader = null;
+                try
+                {
+                    if (File.Exists( openfiledlg.FileName))
+                    {
+                        reader = new StreamReader(openfiledlg.FileName, true); //detect encoding
+                        rtbNewNote.Text = reader.ReadToEnd();
+                    }
+                }
+                finally
+                {
+                    reader.Close();
+                }
+            }
         }
 
         /// <summary>
@@ -492,17 +490,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Legacy methode for HasFlag methode which is not availible in .NET 2.0.
-        /// </summary>
-        /// <param name="allstyles"></param>
-        /// <param name="checkstyle"></param>
-        /// <returns></returns>
-        private bool hasfontstyle(FontStyle thestyles, FontStyle checkstyle)
-        {
-            return Enum.IsDefined(Type.GetType("Boolean"), checkstyle);
-        }
-
-        /// <summary>
         /// Make note content text bold, or if the selected text is already bold
         /// then remove the bold style.
         /// </summary>
@@ -512,7 +499,7 @@ namespace NoteFly
         {
             if (checksellen())
             {
-                if (hasfontstyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Bold))
+                if (this.rtbNewNote.SelectionFont.Bold)
                 {
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Bold));
                 }
@@ -527,7 +514,7 @@ namespace NoteFly
         {
             if (checksellen())
             {
-                if (hasfontstyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Italic))
+                if (this.rtbNewNote.SelectionFont.Italic)
                 {
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Italic));
                 }
@@ -537,6 +524,37 @@ namespace NoteFly
                 }
             }
         }
+
+        private void btnTextUnderline_Click(object sender, EventArgs e)
+        {
+            if (this.rtbNewNote.SelectionFont.Underline)
+            {
+                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Underline));
+            }
+            else
+            {
+                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
+            }
+        }
+
+        private void btnTextStriketrough_Click(object sender, EventArgs e)
+        {
+            if (this.rtbNewNote.SelectionFont.Strikeout)
+            {
+                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Strikeout));
+            }
+            else
+            {
+                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
+            }
+        }
+
+        private void btnTextHidden_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("todo");
+            //this.rtbNewNote.en
+        }
+
         #endregion
     }
 }

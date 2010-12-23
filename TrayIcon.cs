@@ -170,6 +170,7 @@ namespace NoteFly
             if (!xmlUtil.LoadSettings())
             {
                 xmlUtil.WriteDefaultSettings();
+                xmlUtil.LoadSettings();
             }
             
 
@@ -311,7 +312,7 @@ namespace NoteFly
             menuAbout.Name = "MenuAbout";
             menuAbout.Size = new System.Drawing.Size(144, 22);
             menuAbout.Text = "About";
-            menuSettings.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
+            menuAbout.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
             menuAbout.Click += new System.EventHandler(MenuAbout_Click);
             // MenuExit
             menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;

@@ -143,7 +143,6 @@ namespace NoteFly
             try
             {
                 string notefile = this.NewNoteFilename(note.Id, note.Title);
-
                 if (String.IsNullOrEmpty(notefile))
                 {
                     throw new CustomException("cannot create filename.");
@@ -157,6 +156,34 @@ namespace NoteFly
             {
                 throw new CustomException(exc.Message + " " + exc.StackTrace);
             }
+        }
+
+        /// <summary>
+        /// Strip forbidden filename characters
+        /// </summary>
+        /// <param name="orgname"></param>
+        /// <returns></returns>
+        private string StripForbiddenFilenameChars(String orgname)
+        {
+            System.Text.StringBuilder newfilename = new System.Text.StringBuilder();
+            char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
+            bool isforbiddenchar = false;
+            for (int pos = 0; (pos < orgname.Length); pos++)
+            {
+                isforbiddenchar = false;
+                for (int fc = 0; fc < forbiddenchars.Length; fc++)
+                {
+                    if (orgname[pos] == forbiddenchars[fc])
+                    {
+                        isforbiddenchar = true;
+                    }
+                }
+                if (!isforbiddenchar)
+                {
+                    newfilename.Append(orgname[pos]);
+                }
+            }
+            return newfilename.ToString();
         }
 
         /// <summary>
@@ -188,7 +215,7 @@ namespace NoteFly
         /// <returns></returns>
         public string NewNoteFilename(int id, string title)
         {
-            title = title.Trim(); //TODO: check illegal characters
+            title = StripForbiddenFilenameChars(title);
             if (title.Length > 16)
             {
                 return Path.Combine(Settings.NotesSavepath, id + "-" + title.Substring(0, 16) + fileextension);
@@ -313,9 +340,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="id">the note id to check.</param>
         /// <returns>true when limit is reached, and a warning about too many notes should be showed.</returns>
-        private bool CheckLimitNotes(int noteid)
+        private bool CheckLimitNotes(int number)
         {
-            if (noteid > Settings.NotesWarnLimit)
+            if (number > Settings.NotesWarnLimit)
             {
                 return true;
             }
@@ -353,10 +380,19 @@ namespace NoteFly
 
             if (CheckLimitNotes(notefiles.Length))
             {
-                MessageBox.Show("Test");
+                MessageBox.Show("Too many notes,");
             }
 
-            //this.CreateNote(
+            for (int i = 0; i < notefiles.Length; i++)
+            {
+                Note note = xmlUtil.LoadNote(this, notefiles[i]);
+                note.Id = NextId();
+                this.notes.Add(note);
+                if (note.Visible)
+                {
+                    note.CreateForm();
+                }
+            }
 
             if (firstrun)
             {
@@ -378,7 +414,7 @@ namespace NoteFly
 #if DEBUG
 #warning Stress test enabled
             Log.Write(LogType.info, "start stress test");
-            this.LoadNotesStressTest(10);
+            this.LoadNotesStressTest(5);
             Log.Write(LogType.info, "finished stress test");
 #endif
         }
@@ -412,11 +448,25 @@ namespace NoteFly
                 int notewidth = 180;
                 int noteheight = 180;
                 Note testnote = this.CreateNote(title, skinnr, noteLocX, noteLocY, notewidth, noteheight);
+                testnote.CreateForm();
                 testnote.frmnote.rtbNote.Text = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
                      "warning: To prevent this note from saving don't move or touch it!";
+                
                 this.notes.Add(testnote);
             }
         }
 #endif
+
+        public string GetSkinName(int skinnr)
+        {
+            foreach (Skin curskin in this.skins)
+            {
+                if (curskin.Nr == skinnr)
+                {
+                    return curskin.Name;
+                }
+            }
+            return "";
+        }
     }
 }

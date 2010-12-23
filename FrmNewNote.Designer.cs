@@ -74,9 +74,9 @@ namespace NoteFly
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnTextBold = new System.Windows.Forms.Button();
             this.btnTextItalic = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnTextStriketrough = new System.Windows.Forms.Button();
+            this.btnTextHidden = new System.Windows.Forms.Button();
+            this.btnTextUnderline = new System.Windows.Forms.Button();
             this.rtbNewNote = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
@@ -262,7 +262,7 @@ namespace NoteFly
             this.btnTextBold.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextBold.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTextBold.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTextBold.Location = new System.Drawing.Point(12, 214);
+            this.btnTextBold.Location = new System.Drawing.Point(2, 214);
             this.btnTextBold.Name = "btnTextBold";
             this.btnTextBold.Size = new System.Drawing.Size(27, 23);
             this.btnTextBold.TabIndex = 10;
@@ -287,7 +287,7 @@ namespace NoteFly
             this.btnTextItalic.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextItalic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTextItalic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTextItalic.Location = new System.Drawing.Point(45, 214);
+            this.btnTextItalic.Location = new System.Drawing.Point(35, 214);
             this.btnTextItalic.Name = "btnTextItalic";
             this.btnTextItalic.Size = new System.Drawing.Size(26, 23);
             this.btnTextItalic.TabIndex = 11;
@@ -298,78 +298,81 @@ namespace NoteFly
             this.btnTextItalic.UseVisualStyleBackColor = false;
             this.btnTextItalic.Click += new System.EventHandler(this.btnTextItalic_Click);
             // 
-            // button3
+            // btnTextStriketrough
             // 
-            this.button3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.button3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button3.BackColor = System.Drawing.Color.Transparent;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button3.CausesValidation = false;
-            this.button3.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button3.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(109, 215);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(27, 23);
-            this.button3.TabIndex = 12;
-            this.button3.TabStop = false;
-            this.button3.Text = "S";
-            this.toolTip.SetToolTip(this.button3, "Striketrough text");
-            this.button3.UseMnemonic = false;
-            this.button3.UseVisualStyleBackColor = false;
+            this.btnTextStriketrough.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextStriketrough.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnTextStriketrough.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextStriketrough.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextStriketrough.CausesValidation = false;
+            this.btnTextStriketrough.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnTextStriketrough.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextStriketrough.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextStriketrough.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTextStriketrough.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextStriketrough.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextStriketrough.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextStriketrough.Location = new System.Drawing.Point(99, 214);
+            this.btnTextStriketrough.Name = "btnTextStriketrough";
+            this.btnTextStriketrough.Size = new System.Drawing.Size(27, 23);
+            this.btnTextStriketrough.TabIndex = 12;
+            this.btnTextStriketrough.TabStop = false;
+            this.btnTextStriketrough.Text = "S";
+            this.toolTip.SetToolTip(this.btnTextStriketrough, "Striketrough text");
+            this.btnTextStriketrough.UseMnemonic = false;
+            this.btnTextStriketrough.UseVisualStyleBackColor = false;
+            this.btnTextStriketrough.Click += new System.EventHandler(this.btnTextStriketrough_Click);
             // 
-            // button4
+            // btnTextHidden
             // 
-            this.button4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.button4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button4.BackColor = System.Drawing.Color.Transparent;
-            this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button4.CausesValidation = false;
-            this.button4.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button4.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button4.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(142, 215);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(31, 24);
-            this.button4.TabIndex = 13;
-            this.button4.TabStop = false;
-            this.button4.Text = "¶";
-            this.toolTip.SetToolTip(this.button4, "show hidden characters");
-            this.button4.UseCompatibleTextRendering = true;
-            this.button4.UseMnemonic = false;
-            this.button4.UseVisualStyleBackColor = false;
+            this.btnTextHidden.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextHidden.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnTextHidden.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextHidden.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextHidden.CausesValidation = false;
+            this.btnTextHidden.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnTextHidden.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextHidden.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextHidden.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTextHidden.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextHidden.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextHidden.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextHidden.Location = new System.Drawing.Point(132, 214);
+            this.btnTextHidden.Name = "btnTextHidden";
+            this.btnTextHidden.Size = new System.Drawing.Size(31, 23);
+            this.btnTextHidden.TabIndex = 13;
+            this.btnTextHidden.TabStop = false;
+            this.btnTextHidden.Text = "¶";
+            this.toolTip.SetToolTip(this.btnTextHidden, "show hidden characters");
+            this.btnTextHidden.UseCompatibleTextRendering = true;
+            this.btnTextHidden.UseMnemonic = false;
+            this.btnTextHidden.UseVisualStyleBackColor = false;
+            this.btnTextHidden.Click += new System.EventHandler(this.btnTextHidden_Click);
             // 
-            // button5
+            // btnTextUnderline
             // 
-            this.button5.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.button5.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button5.BackColor = System.Drawing.Color.Transparent;
-            this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button5.CausesValidation = false;
-            this.button5.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button5.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button5.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.button5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(77, 215);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(26, 23);
-            this.button5.TabIndex = 14;
-            this.button5.TabStop = false;
-            this.button5.Text = "U";
-            this.toolTip.SetToolTip(this.button5, "Underline text");
-            this.button5.UseMnemonic = false;
-            this.button5.UseVisualStyleBackColor = false;
+            this.btnTextUnderline.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextUnderline.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnTextUnderline.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextUnderline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextUnderline.CausesValidation = false;
+            this.btnTextUnderline.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnTextUnderline.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextUnderline.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextUnderline.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTextUnderline.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextUnderline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextUnderline.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextUnderline.Location = new System.Drawing.Point(67, 214);
+            this.btnTextUnderline.Name = "btnTextUnderline";
+            this.btnTextUnderline.Size = new System.Drawing.Size(26, 23);
+            this.btnTextUnderline.TabIndex = 14;
+            this.btnTextUnderline.TabStop = false;
+            this.btnTextUnderline.Text = "U";
+            this.toolTip.SetToolTip(this.btnTextUnderline, "Underline text");
+            this.btnTextUnderline.UseMnemonic = false;
+            this.btnTextUnderline.UseVisualStyleBackColor = false;
+            this.btnTextUnderline.Click += new System.EventHandler(this.btnTextUnderline_Click);
             // 
             // rtbNewNote
             // 
@@ -382,11 +385,11 @@ namespace NoteFly
             this.rtbNewNote.ContextMenuStrip = this.contextMenuStripTextActions;
             this.rtbNewNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNewNote.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.rtbNewNote.Location = new System.Drawing.Point(8, 46);
+            this.rtbNewNote.Location = new System.Drawing.Point(2, 41);
             this.rtbNewNote.MaxLength = 999999;
             this.rtbNewNote.Name = "rtbNewNote";
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbNewNote.Size = new System.Drawing.Size(264, 162);
+            this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
             this.rtbNewNote.TabIndex = 1;
             this.rtbNewNote.Text = "";
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
@@ -403,16 +406,16 @@ namespace NoteFly
             this.BackColor = System.Drawing.Color.Gold;
             this.CancelButton = this.btnCancel;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(284, 249);
+            this.ClientSize = new System.Drawing.Size(284, 239);
             this.ContextMenuStrip = this.contextMenuStripTextActions;
             this.ControlBox = false;
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.btnTextItalic);
-            this.Controls.Add(this.btnTextBold);
-            this.Controls.Add(this.rtbNewNote);
             this.Controls.Add(this.pnlHeadNewNote);
+            this.Controls.Add(this.btnTextUnderline);
+            this.Controls.Add(this.btnTextHidden);
+            this.Controls.Add(this.btnTextStriketrough);
+            this.Controls.Add(this.rtbNewNote);
+            this.Controls.Add(this.btnTextBold);
+            this.Controls.Add(this.btnTextItalic);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -435,9 +438,9 @@ namespace NoteFly
         private System.Windows.Forms.RichTextBox rtbNewNote;
         private System.Windows.Forms.Button btnTextBold;
         private System.Windows.Forms.Button btnTextItalic;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnTextStriketrough;
+        private System.Windows.Forms.Button btnTextHidden;
+        private System.Windows.Forms.Button btnTextUnderline;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
 
     }
