@@ -67,6 +67,8 @@ namespace NoteFly
         public FrmManageNotes(Notes notes)
         {
             this.InitializeComponent();
+
+            this.SetDataGridViewColumsWidth();
             this.notes = notes;
             this.DrawNotesGrid();
         }
@@ -85,6 +87,20 @@ namespace NoteFly
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// Sets every colom of the datagridview to a reasonable width.
+        /// </summary>
+        private void SetDataGridViewColumsWidth()
+        {
+            if (this.dataGridView1.Width <= 0) { return; }
+            const int colidfixedwidth = 30;
+            int partunit = ((this.dataGridView1.Width - colidfixedwidth) / 10);
+            this.dataGridView1.Columns["colid"].Width = colidfixedwidth;
+            this.dataGridView1.Columns["coltitle"].Width = 5 * partunit;
+            this.dataGridView1.Columns["colvisible"].Width = 2 * partunit;
+            this.dataGridView1.Columns["colskin"].Width = 3 * partunit;
         }
 
         /// <summary>
@@ -230,22 +246,20 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ID", typeof(int));
-            dt.Columns.Add("Title", typeof(string));
-            dt.Columns.Add("Showed", typeof(bool));
-            dt.Columns.Add("Color", typeof(int));
-
             for (int id = 1; id <= this.notes.CountNotes; id++)
             {
-                DataRow dr = dt.NewRow();
-                dr["ID"] = this.notes.GetNote(id).Id;
-                dr["Title"] = this.notes.GetNote(id).Title;
-                dr["Showed"] = this.notes.GetNote(id).Visible;
-                dr["Color"] = this.notes.GetNote(id).SkinNr;
+                string visible = "False";
+                if (this.notes.GetNote(id).Visible)
+                {
+                    visible = "True";
+                }
+                string[] rowArray = new string[] { this.notes.GetNote(id).Id.ToString(), this.notes.GetNote(id).Title, visible, this.notes.GetNote(id).SkinNr.ToString() };
+                //dr["ID"] = this.notes.GetNote(id).Id;
+                //dr["Title"] = this.notes.GetNote(id).Title;
+                //dr["Showed"] = this.notes.GetNote(id).Visible;
+                //dr["Color"] = this.notes.GetNote(id).SkinNr;
+                this.dataGridView1.Rows.Add(rowArray[0]);
             }
-
-            this.dataGridView1.DataSource = dt;
         }
 
         /// <summary>

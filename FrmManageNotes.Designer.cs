@@ -58,14 +58,14 @@ namespace NoteFly
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.timerUpdateNotesList = new System.Windows.Forms.Timer(this.components);
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShowed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colColor = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.button4 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnNoteDelete = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.colid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.coltitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colvisible = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colskin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -132,7 +132,6 @@ namespace NoteFly
             // 
             // timerUpdateNotesList
             // 
-            this.timerUpdateNotesList.Enabled = true;
             this.timerUpdateNotesList.Interval = 1000;
             this.timerUpdateNotesList.Tick += new System.EventHandler(this.timerUpdateNotesList_Tick);
             // 
@@ -148,55 +147,19 @@ namespace NoteFly
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colId,
-            this.colTitle,
-            this.colShowed,
-            this.colColor});
+            this.colid,
+            this.coltitle,
+            this.colvisible,
+            this.colskin});
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.GridColor = System.Drawing.Color.Black;
             this.dataGridView1.Location = new System.Drawing.Point(12, 65);
-            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(427, 245);
             this.dataGridView1.TabIndex = 11;
-            // 
-            // colId
-            // 
-            this.colId.HeaderText = "ID";
-            this.colId.Name = "colId";
-            this.colId.Width = 30;
-            // 
-            // colTitle
-            // 
-            this.colTitle.HeaderText = "Title";
-            this.colTitle.Name = "colTitle";
-            this.colTitle.Width = 200;
-            // 
-            // colShowed
-            // 
-            this.colShowed.HeaderText = "Showed";
-            this.colShowed.MinimumWidth = 30;
-            this.colShowed.Name = "colShowed";
-            this.colShowed.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colShowed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colShowed.Width = 50;
-            // 
-            // colColor
-            // 
-            this.colColor.HeaderText = "Color";
-            this.colColor.Items.AddRange(new object[] {
-            "yellow",
-            "orange",
-            "green",
-            "blue",
-            "purple",
-            "white"});
-            this.colColor.Name = "colColor";
-            this.colColor.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colColor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // button4
             // 
@@ -247,6 +210,29 @@ namespace NoteFly
             this.button3.UseCompatibleTextRendering = true;
             this.button3.UseVisualStyleBackColor = false;
             // 
+            // colid
+            // 
+            this.colid.HeaderText = "nr";
+            this.colid.Name = "colid";
+            this.colid.Width = 25;
+            // 
+            // coltitle
+            // 
+            this.coltitle.HeaderText = "title";
+            this.coltitle.Name = "coltitle";
+            this.coltitle.Width = 200;
+            // 
+            // colvisible
+            // 
+            this.colvisible.HeaderText = "visible";
+            this.colvisible.Name = "colvisible";
+            this.colvisible.Width = 50;
+            // 
+            // colskin
+            // 
+            this.colskin.HeaderText = "skin";
+            this.colskin.Name = "colskin";
+            // 
             // FrmManageNotes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,9 +276,9 @@ namespace NoteFly
         private System.Windows.Forms.Button btnNoteDelete;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label lbTextWindowTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colShowed;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colColor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn coltitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colvisible;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colskin;
     }
 }

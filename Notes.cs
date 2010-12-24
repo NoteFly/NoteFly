@@ -163,7 +163,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="orgname"></param>
         /// <returns></returns>
-        private string StripForbiddenFilenameChars(String orgname)
+        public string StripForbiddenFilenameChars(String orgname)
         {
             System.Text.StringBuilder newfilename = new System.Text.StringBuilder();
             char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
@@ -215,14 +215,14 @@ namespace NoteFly
         /// <returns></returns>
         public string NewNoteFilename(int id, string title)
         {
-            title = StripForbiddenFilenameChars(title);
+            string title2 = StripForbiddenFilenameChars(title);
             if (title.Length > 16)
             {
-                return Path.Combine(Settings.NotesSavepath, id + "-" + title.Substring(0, 16) + fileextension);
+                return Path.Combine(Settings.NotesSavepath, id + "-" + title2.Substring(0, 16) + fileextension);
             }
             else
             {
-                return Path.Combine(Settings.NotesSavepath, id + "-" + title + fileextension);
+                return Path.Combine(Settings.NotesSavepath, id + "-" + title2 + fileextension);
             }
         }
 
@@ -448,9 +448,9 @@ namespace NoteFly
                 int notewidth = 180;
                 int noteheight = 180;
                 Note testnote = this.CreateNote(title, skinnr, noteLocX, noteLocY, notewidth, noteheight);
-                testnote.CreateForm();
-                testnote.frmnote.rtbNote.Text = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
-                     "warning: To prevent this note from saving don't move or touch it!";
+                //testnote.CreateForm();
+                //testnote.frmnote.rtbNote.Text = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
+                //     "warning: To prevent this note from saving don't move or touch it!";
                 
                 this.notes.Add(testnote);
             }

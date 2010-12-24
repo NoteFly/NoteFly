@@ -34,6 +34,7 @@ namespace NoteFly
 
         private const string SETTINGSFILE = "settings.xml";
         private const string SKINFILE = "skins.xml";
+        private const string NOTEVERSION = "2";
         private static XmlTextReader xmlread = null;
         private static XmlTextWriter xmlwrite = null;
 
@@ -191,7 +192,7 @@ namespace NoteFly
                 //    throw new CustomException("Xml setting file has the wrong encoding. It should be " + System.Text.Encoding.UTF8.BodyName);
                 //}
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
-                xmlread.ProhibitDtd = true;
+                xmlread.ProhibitDtd = true; //decreated.
 
                 while (xmlread.Read())
                 {
@@ -279,7 +280,6 @@ namespace NoteFly
                         case "TrayiconSettingsbold":
                             Settings.TrayiconSettingsbold = xmlread.ReadElementContentAsBoolean();
                             break;
-
                         //ints
                         case "FontContentSize":
                             Settings.FontContentSize = xmlread.ReadElementContentAsInt();
@@ -308,8 +308,7 @@ namespace NoteFly
                         case "UpdatecheckEverydays":
                             Settings.UpdatecheckEverydays = xmlread.ReadElementContentAsInt();
                             break;
-
-                        //strings (put at bottom in the settings file for more performance because then there are less characters to compare/skip)
+                        //strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
                         case "FontContentFamily":
                             Settings.FontContentFamily = xmlread.ReadElementContentAsString();
                             break;
@@ -329,7 +328,7 @@ namespace NoteFly
                             Settings.SocialTwitterUsername = xmlread.ReadElementContentAsString();
                             break;
                         case "UpdatecheckLastDate":
-                            Settings.UpdatecheckLastDate = xmlread.ReadElementContentAsDateTime();
+                            Settings.UpdatecheckLastDate = xmlread.ReadElementContentAsString();
                             break;
                     }
                 }
@@ -493,7 +492,7 @@ namespace NoteFly
             Settings.TrayiconManagenotesbold = false;
             Settings.TrayiconSettingsbold = false;
             Settings.UpdatecheckEverydays = 0; //0 is disabled.
-            Settings.UpdatecheckLastDate = DateTime.Today;
+            Settings.UpdatecheckLastDate = DateTime.Now.ToString();
 
             try
             {
@@ -526,8 +525,8 @@ namespace NoteFly
             try
             {
                 xmlwrite.WriteStartDocument();
-                xmlwrite.WriteComment(" format: 2.0");
                 xmlwrite.WriteStartElement("note");
+                xmlwrite.WriteAttributeString("version", NOTEVERSION);
                 WriteXMLBool("visible", note.Visible);
                 WriteXMLBool("ontop", note.Ontop);
                 WriteXMLBool("locked", note.Locked);
@@ -564,112 +563,61 @@ namespace NoteFly
             {
                 xmlwrite = new XmlTextWriter(Path.Combine(TrayIcon.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
-
                 xmlwrite.WriteStartDocument();
-                xmlwrite.WriteStartElement("Settings");
-
-                WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
-                WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
-                WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
-                WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
-
-                WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
-                xmlwrite.WriteElementString("NotesTransparencyLevel", Convert.ToString(Settings.NotesTransparencyLevel, CultureInfo.InvariantCulture.NumberFormat));
-                if (Settings.NotesDefaultSkinnr < 0) { throw new CustomException("unknown defaultcolor."); }
-                else
-                {
-                    xmlwrite.WriteElementString("NotesDefaultColor", Convert.ToString(Settings.NotesDefaultSkinnr, CultureInfo.InvariantCulture.NumberFormat));
-                }
-                if (!Directory.Exists(Settings.NotesSavepath)) { throw new CustomException("Directory " + Settings.NotesSavepath + " does not exist."); }
-                else
-                {
-                    xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
-                }
-                if (String.IsNullOrEmpty(Settings.FontContentFamily)) { throw new CustomException("No font"); }
-                else
-                {
-                    xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
-                }
-                xmlwrite.WriteElementString("FontContentSize", Convert.ToString(Settings.FontContentSize));
-                if ((Settings.FontTextdirection < 0) || (Settings.FontTextdirection > 2)) { throw new CustomException("Unknown text direction"); }
-                else
-                {
-                    xmlwrite.WriteElementString("FontTextdirection", Convert.ToString(Settings.FontTextdirection));
-                }
-                xmlwrite.WriteStartElement("Highlight"); //start subtree Highlight
-
-                WriteXMLBool("HighlightHyperlinks", Settings.HighlightHyperlinks);
-                WriteXMLBool("highlightHTML", Settings.HighlightHTML);
-                WriteXMLBool("HighlightPHP", Settings.HighlightPHP);
-                WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
-
-                xmlwrite.WriteEndElement(); //end subtree highlight
-
-                WriteXMLBool("ConfirmDeletenote", Settings.ConfirmDeletenote);
+                xmlwrite.WriteStartElement("settings");
+                //bools
+                WriteXMLBool("ConfirmDeleteNote", Settings.ConfirmDeletenote);
                 WriteXMLBool("ConfirmExit", Settings.ConfirmExit);
                 WriteXMLBool("ConfirmLinkclick", Settings.ConfirmLinkclick);
-
+                WriteXMLBool("FontTitleStylebold", Settings.FontTitleStylebold);
+                WriteXMLBool("HighlightHTML", Settings.HighlightHTML);
+                WriteXMLBool("HighlightHyperlinks", Settings.HighlightHyperlinks);
+                WriteXMLBool("HighlightPHP", Settings.HighlightPHP);
+                WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
+                WriteXMLBool("NetworkConnectionForceipv6", Settings.NetworkConnectionForceipv6);
                 WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
-                xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
-                xmlwrite.WriteElementString("NetworkConnectionTimeout", Convert.ToString(Settings.NetworkConnectionTimeout, CultureInfo.InvariantCulture.NumberFormat));
-
-                xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.SocialEmailDefaultadres);
-
-                xmlwrite.WriteStartElement("facebook"); //start subtree facebook
-                //WriteXMLBool("SocialFacebookSavesession", Settings.SocialFacebookSavesession);
-                //if (!String.IsNullOrEmpty(Settings.SocialFacebookSessionSecret) &&
-                //    !String.IsNullOrEmpty(Settings.SocialFacebookSessionKey) &&
-                //    Settings.SocialFacebookSavesession == true)
-                //{
-                //    xmlwrite.WriteElementString("SocialFacebookSessionExpires", Convert.ToString(Settings.SocialFacebookSessionExpires, CultureInfo.InvariantCulture.NumberFormat));
-                //    xmlwrite.WriteElementString("SocialFacebookSessionSecret", Settings.SocialFacebookSessionSecret);
-                //    xmlwrite.WriteElementString("SocialFacebookSessionKey", Settings.SocialFacebookSessionKey);
-                //}
-                //else
-                //{
-                //    xmlwrite.WriteElementString("SocialFacebookSessionExpires", String.Empty);
-                //    xmlwrite.WriteElementString("SocialFacebookSessionSecret", String.Empty);
-                //    xmlwrite.WriteElementString("SocialFacebookSessionKey", String.Empty);
-                //}
-                xmlwrite.WriteEndElement(); //end subtree facebook
-
-                xmlwrite.WriteStartElement("twitter"); //start subtree twitter
-                if (Settings.SocialTwitterUsername.Length > 15) { throw new CustomException("Twitter username too long."); }
-                else
-                {
-                    xmlwrite.WriteElementString("SocialTwitterUsername", Settings.SocialTwitterUsername);
-                }
-
-                //if ((Settings.SocialTwitterpassword.Length < 6) && (String.IsNullOrEmpty(Settings.SocialTwitterpassword))) { throw new CustomException("Twitter password too short."); }
-                //else
-                //{
-                //    xmlwrite.WriteElementString("SocialTwitterpassword", Settings.SocialTwitterpassword);
-                //}
-                xmlwrite.WriteEndElement(); //end subtree twitter.
-                if ((Settings.TrayiconLeftclickaction < 0) || (Settings.TrayiconLeftclickaction > 3)) { throw new CustomException("action left click unknow"); }
-                else
-                {
-                    xmlwrite.WriteElementString("TrayiconLeftclickaction", Convert.ToString(Settings.TrayiconLeftclickaction));
-                }
+                WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
+                WriteXMLBool("NotesClosebtnTooltipenabled", Settings.NotesClosebtnTooltipenabled);
+                WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
+                WriteXMLBool("ProgramFirstrun",Settings.ProgramFirstrun);
+                WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
+                WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
+                WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
+                WriteXMLBool("SocialEmailEnabled", Settings.SocialEmailEnabled);
+                WriteXMLBool("SocialFacebookEnabled", Settings.SocialFacebookEnabled);
+                WriteXMLBool("SocialFacebookSavesession", Settings.SocialFacebookSavesession);
+                WriteXMLBool("SocialFacebookUseSSL", Settings.SocialFacebookUseSSL);
+                WriteXMLBool("SocialTwitterEnabled", Settings.SocialTwitterEnabled);
+                WriteXMLBool("SocialTwitterUseSSL", Settings.SocialTwitterUseSSL);
                 WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
+                WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
                 WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
                 WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
-                WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
-
+                //ints
+                xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString() );
+                xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString());
+                xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString());
+                xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString());
+                xmlwrite.WriteElementString("NotesClosebtnTooltipenabled", Settings.NotesDefaultSkinnr.ToString());
+                xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString());
+                xmlwrite.WriteElementString("NotesWarnLimit",Settings.NotesWarnLimit.ToString());
+                xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString());
+                xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString());
+                //strings
+                xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
+                xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
+                xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
+                xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
+                xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
+                xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.SocialEmailDefaultadres);
+                xmlwrite.WriteElementString("SocialTwitterUsername", Settings.SocialTwitterUsername);
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
-            }
-            catch (CustomException)
+            } finally
             {
-                return false;
-            }
-            finally
-            {
-                xmlwrite.Flush();
                 xmlwrite.Close();
             }
             //CheckFile();
-
             return true;
         }
         // Private Methods (3) 
@@ -744,7 +692,7 @@ namespace NoteFly
         private static void WriteXMLBool(String element, bool checknode)
         {
             xmlwrite.WriteStartElement(element);
-            if (checknode == true)
+            if (checknode)
             {
                 xmlwrite.WriteString("1");
             }

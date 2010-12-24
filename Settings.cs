@@ -108,7 +108,7 @@ namespace NoteFly
 
         public static int  UpdatecheckEverydays { get; set; }
 
-        public static DateTime  UpdatecheckLastDate { get; set; }
+        public static string  UpdatecheckLastDate { get; set; }
 
         public static bool ProgramFirstrun { get; set; }
 
