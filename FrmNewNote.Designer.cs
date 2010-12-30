@@ -78,8 +78,10 @@ namespace NoteFly
             this.btnTextHidden = new System.Windows.Forms.Button();
             this.btnTextUnderline = new System.Windows.Forms.Button();
             this.rtbNewNote = new System.Windows.Forms.RichTextBox();
+            this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStripTextActions
@@ -397,6 +399,19 @@ namespace NoteFly
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
             this.rtbNewNote.Leave += new System.EventHandler(this.rtbNote_Leave);
             // 
+            // pbResizeGrip
+            // 
+            this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
+            this.pbResizeGrip.Location = new System.Drawing.Point(267, 222);
+            this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
+            this.pbResizeGrip.Name = "pbResizeGrip";
+            this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
+            this.pbResizeGrip.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbResizeGrip.TabIndex = 15;
+            this.pbResizeGrip.TabStop = false;
+            // 
             // FrmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
@@ -409,6 +424,7 @@ namespace NoteFly
             this.ClientSize = new System.Drawing.Size(284, 239);
             this.ContextMenuStrip = this.contextMenuStripTextActions;
             this.ControlBox = false;
+            this.Controls.Add(this.pbResizeGrip);
             this.Controls.Add(this.pnlHeadNewNote);
             this.Controls.Add(this.btnTextUnderline);
             this.Controls.Add(this.btnTextHidden);
@@ -428,7 +444,9 @@ namespace NoteFly
             this.contextMenuStripTextActions.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -442,6 +460,7 @@ namespace NoteFly
         private System.Windows.Forms.Button btnTextHidden;
         private System.Windows.Forms.Button btnTextUnderline;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pbResizeGrip;
 
     }
 }

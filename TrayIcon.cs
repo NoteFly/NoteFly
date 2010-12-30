@@ -173,8 +173,7 @@ namespace NoteFly
                 xmlUtil.LoadSettings();
             }
             
-
-            bool forcefirstrun = false;
+            //bool forcefirstrun = false;
             //override settings with supported parameters
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
@@ -184,8 +183,7 @@ namespace NoteFly
                     {
                         //Forces the programme to setup the first run notefly info again.
                         case "/forcefirstrun":
-                            forcefirstrun = true;
-                            //Settings.ProgramFirstrun = true;
+                            Settings.ProgramFirstrun = true;
                             break;
 
                         //disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
@@ -233,7 +231,7 @@ namespace NoteFly
             */
 
             //start loading notes.
-            notes = new Notes(forcefirstrun);
+            notes = new Notes();
 
             //start building icon and icon contextmenu
             icon = new System.Windows.Forms.NotifyIcon(components);
@@ -329,8 +327,7 @@ namespace NoteFly
             }
             menuExit.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
             menuExit.Click += new System.EventHandler(MenuExit_Click);
-
-            if (Settings.ProgramFirstrun || forcefirstrun)
+            if (Settings.ProgramFirstrun)
             {
                 icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);
             }

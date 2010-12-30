@@ -81,6 +81,7 @@ namespace NoteFly
         {
             this.frmnote = new FrmNote(this.notes, this);
             this.Visible = true;
+            this.frmnote.Show();
         }
 
         /// <summary>
@@ -106,7 +107,7 @@ namespace NoteFly
                 string notefilepath = Path.Combine(Settings.NotesSavepath, this.notes.NewNoteFilename(this.Id, this.Title));
                 if (File.Exists(notefilepath))
                 {
-                    return xmlUtil.GetContentString(notefilepath, "Content");
+                    return xmlUtil.GetContentString(notefilepath, "content");
                 }
                 else
                 {

@@ -240,13 +240,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                this.Cursor = Cursors.SizeNWSE;
-                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
-            }
 
-            this.Cursor = Cursors.Default;
         }
 
         /// <summary>
@@ -556,5 +550,6 @@ namespace NoteFly
         }
 
         #endregion
+
     }
 }

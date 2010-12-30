@@ -118,7 +118,7 @@ namespace NoteFly
             if (dlgresult == DialogResult.OK)
             {
                 string newpathsavenotes = this.folderBrowserDialog1.SelectedPath;
-                
+
                 if (Directory.Exists(newpathsavenotes))
                 {
                     this.tbNotesSavePath.Text = this.folderBrowserDialog1.SelectedPath;
@@ -150,9 +150,9 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void btnCrash_Click(object sender, EventArgs e)
         {
-            #if DEBUG
+#if DEBUG
             throw new CustomException("This is a crash test, to test if exceptions are thrown correctly.");
-            #endif
+#endif
         }
 
         /// <summary>
@@ -187,11 +187,11 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_noknowtextdir);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((this.chxHighlightHTML.CheckState == CheckState.Indeterminate) 
-                    #if windows 
-                      || (this.chxStartOnBootWindows.CheckState == CheckState.Indeterminate)
-                   #endif 
-                      || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
+            else if ((this.chxHighlightHTML.CheckState == CheckState.Indeterminate)
+#if windows
+ || (this.chxStartOnBootWindows.CheckState == CheckState.Indeterminate)
+#endif
+ || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
             {
                 Log.Write(LogType.error, NoteFly.Properties.Resources.settings_notallowcheckstate);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_notallowcheckstate);
@@ -204,12 +204,14 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_twitternametoolong);
                 this.tabControlSettings.SelectedTab = this.tabSocialNetworks;
             }
+            /*
             else if ((this.tbTwitterPass.Text.Length < 6) && (this.chxRememberTwPass.Checked == true))
             {
                 Log.Write(LogType.error, NoteFly.Properties.Resources.settings_twitterpaswtooshort);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_twitterpaswtooshort);
                 this.tabControlSettings.SelectedTab = this.tabSocialNetworks;
             }
+            */
             else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.chxSocialEmailDefaultaddressBlank.Checked))
             {
                 Log.Write(LogType.error, NoteFly.Properties.Resources.settings_emailnotvalid);
@@ -404,38 +406,37 @@ namespace NoteFly
         /// <summary>
         /// Move note files.
         /// </summary>
-        /// <param name="newpathsavenotes">The new path wear to save the notes to.</param>
+        /// <param name="newpathsavenotes">The new path to save the notes to.</param>
         private void MoveNotes(string oldsavenotespath, string newsavenotespath)
         {
             bool errorshowed = false;
-            int id = 1;
-            while (File.Exists(Path.Combine(oldsavenotespath, id + ".xml")) == true)
+            if (!Directory.Exists(oldsavenotespath))
             {
-                if (Directory.Exists(oldsavenotespath))
+                return;
+            }
+            string[] files = Directory.GetFiles(oldsavenotespath, "*.nfn");
+            for (int i = 0; i < files.Length; i++)
+            {
+                string oldfile = Path.Combine(oldsavenotespath, files[i]);
+                string newfile = Path.Combine(newsavenotespath, files[i]);
+                if (!File.Exists(newfile))
                 {
-                    string oldfile = Path.Combine(oldsavenotespath, id + ".xml");
-                    string newfile = Path.Combine(newsavenotespath, id + ".xml");
-                    if (!File.Exists(newfile))
+                    FileInfo fi = new FileInfo(oldfile);
+                    if (fi.Attributes != FileAttributes.System)
                     {
-                        FileInfo fi = new FileInfo(oldfile);
-                        if (fi.Attributes != FileAttributes.System)
-                        {
-                            File.Move(oldfile, newfile);
-                        }
-                        else { throw new CustomException("File is marked as system file. Did not move."); }
+                        File.Move(oldfile, newfile);
                     }
-                    else
+                    else { throw new CustomException("File is marked as system file. Did not move."); }
+                }
+                else
+                {
+                    if (!errorshowed)
                     {
-                        if (!errorshowed)
-                        {
-                            Log.Write(LogType.error, NoteFly.Properties.Resources.settings_filealreadyexist);
-                            MessageBox.Show(NoteFly.Properties.Resources.settings_filealreadyexist);
-                            errorshowed = true;
-                        }
+                        Log.Write(LogType.error, NoteFly.Properties.Resources.settings_filealreadyexist);
+                        MessageBox.Show(NoteFly.Properties.Resources.settings_filealreadyexist);
+                        errorshowed = true;
                     }
                 }
-
-                id++;
             }
         }
 

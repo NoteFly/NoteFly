@@ -33,7 +33,7 @@ namespace NoteFly
     /// </summary>
     public class Notes
     {
-        #region Fields (1)
+        #region Fields (2)
 
         /// <summary>
         /// The list with all notes.
@@ -57,20 +57,12 @@ namespace NoteFly
         /// <summary>
         /// Initializes a new instance of the Notes class.
         /// </summary>
-        /// <param name="firstrun">Is this appliction to run for the first time, with /firstrun parameter.</param>
-        public Notes(bool forcefirstrun)
+        public Notes()
         {
             this.notes = new List<Note>();
             this.skins = new List<Skin>();
             this.skins = xmlUtil.LoadSkins();
-
-            bool firstrun = Settings.ProgramFirstrun; //settings has to been loaded before please.
-
-            if (forcefirstrun)
-            {
-                firstrun = true;
-            }
-            this.LoadNotes(firstrun);
+            this.LoadNotes(Settings.ProgramFirstrun);
         }
 
         #endregion Constructors
@@ -87,6 +79,14 @@ namespace NoteFly
                 return this.notes.Count;
             }
         }
+
+        //public int CountSkins
+        //{
+        //    get
+        //    {
+        //        return this.skins.Count;
+        //    }
+        //}
 
         #endregion Properties
 
@@ -187,26 +187,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets if note is visible.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public bool GetNoteVisible(int id)
-        {
-            return this.notes[id].Visible;
-        }
-
-        /// <summary>
-        /// Sets visiblitly note.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="newvisible"></param>
-        public void SetNoteVisible(int id, bool newvisible)
-        {
-            this.notes[id].Visible = newvisible;
-        }
-
-        /// <summary>
         /// Create a string used for filename of the note based on the note id and 
         /// title of the note limited to the first 16 characters.
         /// </summary>
@@ -227,7 +207,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Remove a note with a particalur id from the notes list.
         /// </summary>
         /// <param name="id"></param>
         public void RemoveNote(int id)
@@ -242,6 +222,36 @@ namespace NoteFly
                 }
             }
         }
+
+        /// <summary>
+        /// Gets a string array with all the skin names.
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetSkinsNames()
+        {
+            string[] skinnames = new string[this.skins.Count];
+            for (int i = 0; i < skinnames.Length; i++)
+            {
+                skinnames[i] = this.skins[i].Name;
+            }
+            return skinnames;
+        }
+
+        /*
+        /// <summary>
+        /// Gets a Color array with all foreground colors of skins
+        /// </summary>
+        /// <returns></returns>
+        public Color[] GetSkinsForegroundColors()
+        {
+            Color[] skinfgcolors = new Color[this.skins.Count];
+            for (int i = 0; i < skinfgcolors.Length; i++)
+			{
+			    skinfgcolors[i] = this.skins[i].ForegroundClr;
+			}
+            return skinfgcolors;
+        }
+         */
 
         /// <summary>
         /// Bring all notes to front of all other windows.
@@ -353,9 +363,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Loads all notes.
+        /// Loads all notes files.
         /// </summary>
-        /// <param name="firstrun">is it the first run?</param>
+        /// <param name="firstrun">true if it is the first run</param>
         private void LoadNotes(bool firstrun)
         {
             if (!Directory.Exists(Settings.NotesSavepath))
@@ -374,10 +384,7 @@ namespace NoteFly
                 }
             }
 
-            int id = 1;
-
             string[] notefiles = Directory.GetFiles(Settings.NotesSavepath, "*.nfn"); //nfn, stands for: NoteFly Note
-
             if (CheckLimitNotes(notefiles.Length))
             {
                 MessageBox.Show("Too many notes,");
@@ -468,5 +475,6 @@ namespace NoteFly
             }
             return "";
         }
+
     }
 }

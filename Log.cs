@@ -54,12 +54,14 @@ namespace NoteFly
         /// <param name="message">The message to log</param>
         public static void Write(LogType typemsg, string message)
         {
+            if (!Settings.ProgramLogInfo && typemsg == LogType.info) return;
+            else if (!Settings.ProgramLogError && typemsg == LogType.error) return;
+            else if (!Settings.ProgramLogException && typemsg == LogType.exception) return;
             StringBuilder line = new StringBuilder(DateTime.Now.ToString());
             while (line.Length < 19)
             {
                 line.Append(" ");
             }
-
             switch (typemsg)
             {
                 case LogType.exception:

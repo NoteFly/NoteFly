@@ -49,7 +49,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="nodename"></param>
         /// <returns></returns>
-        public static bool GetContentBool(string filename, string nodename)
+        private static bool GetContentBool(string filename, string nodename)
         {
             xmlread = new XmlTextReader(filename);
             try
@@ -88,7 +88,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="nodename"></param>
         /// <returns>return node as integer, -1 if error</returns>
-        static public int GetContentInt(string filename, string nodename)
+        private static int GetContentInt(string filename, string nodename)
         {
             xmlread = new XmlTextReader(filename);
             try
@@ -341,11 +341,17 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets all skins
+        /// Gets all skins from skin file.
+        /// create Application data folder if does not exist.
+        /// Create default SKINFILE if not exist.
         /// </summary>
         /// <returns></returns>
         public static List<Skin> LoadSkins()
         {
+            if (!Directory.Exists(TrayIcon.AppDataFolder))
+            {
+                Directory.CreateDirectory(TrayIcon.AppDataFolder);
+            }
             string skinfilepath = Path.Combine(TrayIcon.AppDataFolder, SKINFILE);
             if (!File.Exists(skinfilepath))
             {
@@ -355,6 +361,7 @@ namespace NoteFly
             xmlread = new XmlTextReader(skinfilepath);
             Skin curskin = null;
             int numskins = 0;
+            bool endtag = false;
             while (xmlread.Read())
             {
                 switch (xmlread.Name)
@@ -366,11 +373,18 @@ namespace NoteFly
                         }
                         break;
                     case "skin":
-                        if (curskin != null && numskins < 255)
+                        if (endtag)
                         {
-                            skins.Add(curskin);
+                            if (curskin != null && numskins < 255)
+                            {
+                                skins.Add(curskin);
+                            }
                         }
-                        curskin = new Skin();
+                        else if (!endtag)
+                        {
+                            curskin = new Skin();
+                        }
+                        endtag = !endtag;
                         break;
                     case "Nr":
                         curskin.Nr = numskins++;
@@ -389,10 +403,15 @@ namespace NoteFly
                         break;
                 }
             }
-
             return skins;
         }
 
+        /// <summary>
+        /// Load a note file.
+        /// </summary>
+        /// <param name="n">pointer to notes</param>
+        /// <param name="notefilepath"></param>
+        /// <returns>An note object</returns>
         public static Note LoadNote(Notes n, string notefilepath)
         {
             DateTime created = File.GetCreationTime(notefilepath);
@@ -422,12 +441,11 @@ namespace NoteFly
                         case "width":
                             note.Width = xmlread.ReadElementContentAsInt();
                             break;
-                        case "height":
+                        case "heigth":
                             note.Height = xmlread.ReadElementContentAsInt();
                             break;
                         case "skin":
                             string skinname = xmlread.ReadElementContentAsString();
-                            //todo.
                             note.SkinNr = 1;
                             break;
                         case "title":
@@ -441,7 +459,6 @@ namespace NoteFly
                 xmlread.Close();
             }
             return note;
-            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -663,7 +680,7 @@ namespace NoteFly
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument();
                 xmlwrite.WriteStartElement("skins");
-                xmlwrite.WriteAttributeString("count", "2");//for performance set list capiti, not required.
+                xmlwrite.WriteAttributeString("count", "2"); //for performance, not required.
                 xmlwrite.WriteStartElement("skin");
                 xmlwrite.WriteElementString("Name", "yellow");
                 xmlwrite.WriteElementString("ForegroundColor", "#FFD800");

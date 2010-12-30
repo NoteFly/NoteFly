@@ -107,13 +107,12 @@ namespace NoteFly
         /// Deletes the notes in memory and files that are selected in a Gridview.
         /// </summary>
         /// <param name="id"></param>
-        private void DeleteNotesSelectedRowsGrid(DataGridViewSelectedRowCollection rows)
+        private void DeleteNotesSelectedRowsGrid(DataGridViewSelectedRowCollection selrows)
         {
-            //this.dataGridView1.SelectedRows;
-            int[] deletedids = new int[rows.Count];
-            for (int r = 0; r < rows.Count; r++)
+            int[] deletedids = new int[selrows.Count];
+            for (int r = 0; r < selrows.Count; r++)
             {
-                int id = Convert.ToInt32(rows[r].Cells["ID"]);
+                int id = Convert.ToInt32(selrows[r].Cells["ID"]);
                 string filename = this.notes.NewNoteFilename(id, this.notes.GetNote(id).Title);
                 try
                 {
@@ -224,15 +223,13 @@ namespace NoteFly
             int noteid = Convert.ToInt32(cbx.Name);
             if ((noteid <= this.notes.CountNotes) && (noteid >= 0))
             {
-                this.notes.SetNoteVisible(noteid, !this.notes.GetNoteVisible(noteid));
-
-                if (this.notes.GetNoteVisible(noteid))
+                if (this.notes.GetNote(noteid).Visible)
                 {
-                    this.notes.SetNoteVisible(noteid, true);
+                    this.notes.GetNote(noteid).DestroyForm(); //sets visible false
                 }
                 else
                 {
-                    this.notes.SetNoteVisible(noteid, false);
+                    this.notes.GetNote(noteid).CreateForm(); //sets visible true
                 }
             }
             else

@@ -55,9 +55,9 @@ namespace NoteFly
             this.notes = notes;
             this.note = note;
             this.InitializeComponent();
-            this.SetBounds(note.X, note.Y, note.Width, note.Height);
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
+            this.SetBounds(note.X, note.Y, note.Width, note.Height);
             this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
             this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
             this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
@@ -71,6 +71,24 @@ namespace NoteFly
             if (this.rtbNote.DetectUrls)
             {
                 this.rtbNote.Text += "";//causes TextChanged event so there is a rescan for URL's:
+            }
+
+            string[] skinnames = notes.GetSkinsNames();
+            for (int i = 0; i < skinnames.Length; i++)
+            {
+                ToolStripMenuItem tsi = new ToolStripMenuItem();
+                tsi.Name = "menuSkin"+skinnames[i];
+                tsi.Text = skinnames[i];
+                if (note.SkinNr == i)
+                {
+                    tsi.Checked = true;
+                }
+                else
+                {
+                    tsi.Checked = false;
+                }
+                tsi.BackColor = notes.GetForegroundColor(i);
+                this.menuNoteColors.DropDownItems.Add(tsi);
             }
         }
 
@@ -221,7 +239,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //this.notes.
+            //TODO load NewEditNote.cs 
+            this.note.DestroyForm();
         }
 
         /// <summary>
@@ -234,7 +253,7 @@ namespace NoteFly
             string emailnote = System.Web.HttpUtility.UrlEncode(this.rtbNote.Text).Replace("+", " ");
             string emailtitle = System.Web.HttpUtility.UrlEncode(this.lblTitle.Text);
 
-            if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote))) //bugfix #0000008
+            if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote)))
             {
                 System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
             }
@@ -512,9 +531,8 @@ namespace NoteFly
         {
             if ((this.Location.X + this.Width > MINVISIBLESIZE) && (this.Location.Y + this.Height > MINVISIBLESIZE))
             {
-                string notefile = this.notes.NewNoteFilename(this.note.Id, this.note.Title);
-                string notefilepath = System.IO.Path.Combine(Settings.NotesSavepath, notefile);
-                xmlUtil.WriteNote(notefilepath, this.note, this.rtbNote.Rtf);
+                string notefilepath = this.notes.NewNoteFilename(this.note.Id, this.note.Title);
+                //xmlUtil.WriteNote(notefilepath, this.note, this.rtbNote.Rtf);
             }
             else
             {
@@ -522,7 +540,7 @@ namespace NoteFly
                 Log.Write(LogType.error, msgOutOfScreen);
                 MessageBox.Show(msgOutOfScreen);
             }
-
+            int i = 2;
         }
 
         /// <summary>
@@ -552,8 +570,6 @@ namespace NoteFly
 
                 i++;
             }
-
-            //this.PaintColorNote();
         }
 
         /// <summary>
@@ -596,28 +612,8 @@ namespace NoteFly
             sfdlg.ValidateNames = true;
             sfdlg.CheckPathExists = true;
             sfdlg.OverwritePrompt = true;
-
-            //strip forbidden filename characters:
-            System.Text.StringBuilder suggestfilenamesafe = new System.Text.StringBuilder();
-            char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
-            for (int pos = 0; (pos < this.note.Title.Length) && (pos<=100); pos++)
-            {
-                bool isforbiddenchar = false;
-                for (int fc = 0; fc < forbiddenchars.Length; fc++)
-                {
-                    if (this.note.Title[pos] == forbiddenchars[fc])
-                    {
-                        isforbiddenchar = true;
-                    }
-                }
-                if (!isforbiddenchar)
-                {
-                    suggestfilenamesafe.Append(this.note.Title[pos]);
-                }
-            }
-            sfdlg.FileName = suggestfilenamesafe.ToString();
-
-            sfdlg.Title = "Save note to textfile";
+            sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
+            sfdlg.Title = "Save note to textfile.";
             sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm";
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
@@ -630,9 +626,6 @@ namespace NoteFly
                         break;
                     case 1:
                         Log.Write(LogType.info, logmsg + "htmlfile.");
-                        break;
-                    default:
-                        Log.Write(LogType.info, logmsg + "some file.");
                         break;
                 }
             }
@@ -662,34 +655,6 @@ namespace NoteFly
             foreach (ToolStripMenuItem curitem in this.menuNoteColors.DropDownItems)
             {
                 curitem.Checked = false;
-            }
-
-            switch (this.note.SkinNr)
-            {
-                case 0:
-                    this.yellowToolStripMenuItem.Checked = true;
-                    break;
-                case 1:
-                    this.orangeToolStripMenuItem.Checked = true;
-                    break;
-                case 2:
-                    this.whiteToolStripMenuItem.Checked = true;
-                    break;
-                case 3:
-                    this.greenToolStripMenuItem.Checked = true;
-                    break;
-                case 4:
-                    this.blueToolStripMenuItem.Checked = true;
-                    break;
-                case 5:
-                    this.purpleToolStripMenuItem.Checked = true;
-                    break;
-                case 6:
-                    this.redToolStripMenuItem.Checked = true;
-                    break;
-                default:
-                    new CustomException("unknow color selected.");
-                    break;
             }
         }
 
