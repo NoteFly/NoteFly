@@ -127,9 +127,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="nr"></param>
         /// <returns></returns>
-        public Note GetNote(int id)
+        public Note GetNote(int noteid)
         {
-            int nr = id - 1;
+            int nr = noteid - 1;
             return this.notes[nr];
         }
 
@@ -321,7 +321,8 @@ namespace NoteFly
                     }
                 }
             }
-            return Color.White; //default in error.
+            Log.Write(LogType.error, "cant get color. type:"+type+" skinnr"+skinnr);
+            return Color.White;
         }
 
 

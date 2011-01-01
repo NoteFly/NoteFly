@@ -239,7 +239,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO load NewEditNote.cs 
+            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note);
+            frmnewnote.Show();
             this.note.DestroyForm();
         }
 
@@ -403,12 +404,10 @@ namespace NoteFly
         //{
         //    this.skin = new Skin(this.notecolor);
         //    Color normalcolor = this.skin.GetObjColor(false);
-
         //    this.BackColor = normalcolor;
         //    this.pnlHead.BackColor = normalcolor;
         //    this.pnlNote.BackColor = normalcolor;
         //    this.rtbNote.BackColor = normalcolor;
-
         //    if (this.notes.TextDirection == 0)
         //    {
         //        this.lblTitle.TextAlign = ContentAlignment.TopLeft;
@@ -471,17 +470,7 @@ namespace NoteFly
             {
                 this.moving = true;
                 this.oldp = e.Location;
-
-                //if (this.skin != null)
-                //{
-                //    this.pnlHead.BackColor = this.skin.GetObjColor(true);
-                //}
-
             }
-            //else if (this.skin != null)
-            //{
-            //    this.pnlHead.BackColor = this.skin.GetObjColor(false);
-            //}
 
             if (!this.SavePos.IsBusy)
             {
@@ -594,9 +583,6 @@ namespace NoteFly
             {
                 return;
             }
-
-            //Facebook fb = new Facebook();
-            //fb.StartPostingNote(this.note);
         }
 
         /// <summary>
@@ -658,11 +644,21 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
             this.moving = false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pnlHead_MouseMove(object sender, MouseEventArgs e)
         {
             if ((this.moving) && (e.Button == MouseButtons.Left))

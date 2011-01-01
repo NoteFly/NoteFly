@@ -53,39 +53,29 @@ namespace NoteFly
             //read setting and display them correctly.
             this.chxLogErrors.Checked = Settings.ProgramLogError;
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
-
             this.chxConfirmExit.Checked = Settings.ConfirmExit;
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
             this.chxConfirmDeleteNote.Checked = Settings.ConfirmDeletenote;
-
             this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
             this.chxHighlightHTML.Checked = Settings.HighlightHTML;
-
             this.chxUseProxy.Checked = Settings.NetworkProxyEnabled;
             this.iptbProxyAddress.Enabled = Settings.NetworkProxyEnabled;
-
             this.numProcTransparency.Value = Settings.NotesTransparencyLevel;
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr; //-1
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
             this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
             this.cbxActionLeftClick.SelectedIndex = Settings.TrayiconLeftclickaction;
-
             this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
             this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;
             if (String.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
             {
                 this.chxSocialEmailDefaultaddressBlank.Checked = true;
             }
+            this.chxSocialTwitterEnabled.Checked = Settings.SocialTwitterEnabled;
             this.tbTwitterUser.Text = Settings.SocialTwitterUsername;
-            //this.tbTwitterPass.Text = Settings.SocialTwitterpassword;
-            //if (String.IsNullOrEmpty(Settings.SocialTwitterpassword))
-            //{
-            //    this.chxRememberTwPass.Checked = true;
-            //}
             this.chxSocialFacebookEnabled.Checked = Settings.SocialFacebookEnabled;
             this.chxSaveFBSession.Checked = Settings.SocialFacebookSavesession;
-
             this.numTimeout.Value = Settings.NetworkConnectionTimeout;
             this.chxUseProxy.Checked = Settings.NetworkProxyEnabled;
             this.iptbProxyAddress.SetIPAddress(Settings.NetworkProxyAddress);
@@ -278,7 +268,6 @@ namespace NoteFly
                     MessageBox.Show(NoteFly.Properties.Resources.settings_regkeynotexist);
                 }
 #endif
-                //this.notes.SetSettings();
                 this.notes.UpdateAllFonts();
                 Log.Write(LogType.info, "settings updated.");
                 this.Close();
