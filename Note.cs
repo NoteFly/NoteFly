@@ -90,10 +90,10 @@ namespace NoteFly
         /// </summary>
         public void DestroyForm()
         {
-            this.frmnote.Close();
-            this.frmnote = null;
-            this.Visible = false;
-            GC.Collect();
+                this.frmnote.Close();
+                this.frmnote = null;
+                this.Visible = false;
+                GC.Collect();
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace NoteFly
         {
             if (this.frmnote == null)
             {
-                string notefilepath = Path.Combine(Settings.NotesSavepath, this.notes.NewNoteFilename(this.Id, this.Title));
+                string notefilepath = Path.Combine(Settings.NotesSavepath, this.notes.GetNoteFilename(this.Id, this.Title));
                 if (File.Exists(notefilepath))
                 {
                     return xmlUtil.GetContentString(notefilepath, "content");

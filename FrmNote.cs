@@ -520,7 +520,7 @@ namespace NoteFly
         {
             if ((this.Location.X + this.Width > MINVISIBLESIZE) && (this.Location.Y + this.Height > MINVISIBLESIZE))
             {
-                string notefilepath = this.notes.NewNoteFilename(this.note.Id, this.note.Title);
+                string notefilepath = this.notes.GetNoteFilename(this.note.Id, this.note.Title);
                 //xmlUtil.WriteNote(notefilepath, this.note, this.rtbNote.Rtf);
             }
             else

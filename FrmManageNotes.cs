@@ -113,7 +113,7 @@ namespace NoteFly
             for (int r = 0; r < selrows.Count; r++)
             {
                 int id = Convert.ToInt32(selrows[r].Cells["ID"]);
-                string filename = this.notes.NewNoteFilename(id, this.notes.GetNote(id).Title);
+                string filename = this.notes.GetNoteFilename(id, this.notes.GetNote(id).Title);
                 try
                 {
                     string filepath = Path.Combine(Settings.NotesSavepath, filename);

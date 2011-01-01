@@ -1,12 +1,30 @@
-﻿using NoteFly;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Drawing;
-using System.Text;
-using System.IO;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Notes.cs" company="GNU">
+//  NoteFly a note application.
+//  Copyright (C) 2010-2011  Tom
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace NoteFlyTests
 {
-    
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Text;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NoteFly;
     
     /// <summary>
     ///This is a test class for NotesTest and is intended
@@ -15,7 +33,6 @@ namespace NoteFlyTests
     [TestClass()]
     public class NotesTest
     {
-
 
         private TestContext testContextInstance;
 
@@ -86,7 +103,7 @@ namespace NoteFlyTests
         [TestMethod()]
         public void SaveNoteTest()
         {
-            Notes target = new Notes(); // TODO: Initialize to an appropriate value
+            Notes target = new Notes();
             Note note = new Note(target);
             note.Title = "testnote";
             note.Id = 999;
@@ -100,7 +117,7 @@ namespace NoteFlyTests
             note.Locked = false;
             string content = "this is a test note.";
             target.SaveNote(note, content);
-            string notefilepath = target.NewNoteFilename(note.Id, note.Title);
+            string notefilepath = target.GetNoteFilename(note.Id, note.Title);
             if (!File.Exists(notefilepath))
             {
                 Assert.Fail("Note file doesnt exist.");
@@ -118,14 +135,14 @@ namespace NoteFlyTests
         [TestMethod()]
         public void RemoveNoteTest()
         {
-            Notes_Accessor target = new Notes_Accessor();
-            target.LoadNotes(false); //create at least demo note with firstrun.
-            int noteid = 1;
-            Note notebefore = target.GetNote(noteid);
-            target.RemoveNote(noteid);
-            if (target.notes.Contains(notebefore))
+            Notes target = new Notes();
+            Note newnote = target.CreateNote("test note", 1, 90, 90, 100, 100);
+            target.AddNote(newnote);
+            int numnotesbefore = target.CountNotes;
+            target.RemoveNote(newnote.Id);
+            if (target.CountNotes != numnotesbefore - 1)
             {
-                Assert.Fail(" - ");
+                Assert.Fail("Number of notes different then excepted.");
             }
         }
 
@@ -139,7 +156,7 @@ namespace NoteFlyTests
             int id = 1;
             string title = "test";
             string expected = Settings.NotesSavepath+"1-test.nfn";
-            string actualfinamepath = target.NewNoteFilename(id, title);
+            string actualfinamepath = target.GetNoteFilename(id, title);
             Assert.AreEqual(expected, actualfinamepath, "excepted filename and path are incorrect.");
         }
 
@@ -153,14 +170,14 @@ namespace NoteFlyTests
             string[] expected = new string[2];
             expected[0] = "yellow";
             expected[1] = "orange";
-            //expected[2] = "white";
             string[] actual = target.GetSkinsNames();
-            StringBuilder skinnames = new StringBuilder();
             for (int i = 0; i < actual.Length; i++)
             {
-                skinnames.Append(actual[i]+",");
+                if (expected[i].ToString() != actual[i].ToString())
+                {
+                    Assert.Fail("GetSkinsNamesTest did not produce the excepted result.");
+                }
             }
-            Assert.AreEqual(expected, actual, "skins names doesn't match, actual:"+skinnames.ToString());
         }
 
         /// <summary>
@@ -169,13 +186,41 @@ namespace NoteFlyTests
         [TestMethod()]
         public void GetSkinNameTest()
         {
-            Notes target = new Notes(); // TODO: Initialize to an appropriate value
-            int skinnr = 0; // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
-            string actual;
-            actual = target.GetSkinName(skinnr);
+            Notes target = new Notes();
+            int skinnr = 0;
+            string expected = "yellow";
+            string actual = target.GetSkinName(skinnr);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for GetForegroundColor
+        ///</summary>
+        [TestMethod()]
+        public void GetForegroundColorTest()
+        {
+            Notes target = new Notes();
+            int skinnr = 0;
+            string hexforegroundcolor = "#FFD800";
+            Color expected = System.Drawing.ColorTranslator.FromHtml(hexforegroundcolor);
+            Color actual;
+            actual = target.GetForegroundColor(skinnr);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        ///A test for GetBackgroundColor
+        ///</summary>
+        [TestMethod()]
+        public void GetBackgroundColorTest()
+        {
+            Notes target = new Notes();
+            int skinnr = 0;
+            string hexbackgroundcolor = "#E5B61B";
+            Color expected = System.Drawing.ColorTranslator.FromHtml(hexbackgroundcolor);
+            Color actual;
+            actual = target.GetBackgroundColor(skinnr);
+            Assert.AreEqual(expected, actual);
         }
 
         /// <summary>
@@ -186,41 +231,10 @@ namespace NoteFlyTests
         {
             Notes target = new Notes();
             int skinnr = 0; //yellow skin
-            
-            ColorConverter expected = new ColorConverter();
-
+            string hexhighlightcolor = "#FFE677";
+            Color expected = System.Drawing.ColorTranslator.FromHtml(hexhighlightcolor);
             Color actual = target.GetHighlightColor(skinnr);
             Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
-        ///A test for GetForegroundColor
-        ///</summary>
-        [TestMethod()]
-        public void GetForegroundColorTest()
-        {
-            Notes target = new Notes(); // TODO: Initialize to an appropriate value
-            int skinnr = 0; // TODO: Initialize to an appropriate value
-            Color expected = new Color(); // TODO: Initialize to an appropriate value
-            Color actual;
-            actual = target.GetForegroundColor(skinnr);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for GetBackgroundColor
-        ///</summary>
-        [TestMethod()]
-        public void GetBackgroundColorTest()
-        {
-            Notes target = new Notes(); // TODO: Initialize to an appropriate value
-            int skinnr = 0; // TODO: Initialize to an appropriate value
-            Color expected = new Color(); // TODO: Initialize to an appropriate value
-            Color actual;
-            actual = target.GetBackgroundColor(skinnr);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -229,18 +243,32 @@ namespace NoteFlyTests
         [TestMethod()]
         public void CreateNoteTest()
         {
-            Notes target = new Notes(); // TODO: Initialize to an appropriate value
-            string title = string.Empty; // TODO: Initialize to an appropriate value
-            int skinnr = 0; // TODO: Initialize to an appropriate value
-            int x = 0; // TODO: Initialize to an appropriate value
-            int y = 0; // TODO: Initialize to an appropriate value
-            int width = 0; // TODO: Initialize to an appropriate value
-            int height = 0; // TODO: Initialize to an appropriate value
-            Note expected = null; // TODO: Initialize to an appropriate value
-            Note actual;
-            actual = target.CreateNote(title, skinnr, x, y, width, height);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Notes target = new Notes();
+            string title = "test123";
+            int skinnr = 0;
+            int x = 400;
+            int y = 300;
+            int width = 200;
+            int height = 100;
+            Note actual = target.CreateNote(title, skinnr, x, y, width, height);
+
+            Assert.IsNotNull(actual, "CreateNoteTest failed to create Note object.");
+            if (actual.DateCreated.Date != DateTime.Now.Date)
+            {
+                Assert.Fail("Note DateCreated not good.");
+            }
+            if (actual.Title != "test123")
+            {
+                Assert.Fail("Note title not good.");
+            }
+            if (actual.X != 400 && actual.Y != 300)
+            {
+                Assert.Fail("Note has wrong X,Y coordinates.");
+            }
+            if (actual.Width != 200 && actual.Height != 100)
+            {
+                Assert.Fail("Note has wrong size");
+            }
         }
     }
 }

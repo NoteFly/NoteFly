@@ -136,26 +136,38 @@ namespace NoteFly
         /// <summary>
         /// Save an note.
         /// </summary>
-        /// <param name="note">the note (with all settings).</param>
+        /// <param name="note">the note (with all settings except large content).</param>
         /// <param name="content">The note content</param>
-        public void SaveNote(Note note, string content)
+        /// <returns>true on succeed.</returns>
+        public bool SaveNote(Note note, string content)
         {
             try
             {
-                string notefile = this.NewNoteFilename(note.Id, note.Title);
+                string notefile = this.GetNoteFilename(note.Id, note.Title);
                 if (String.IsNullOrEmpty(notefile))
                 {
                     throw new CustomException("cannot create filename.");
                 }
-                if (xmlUtil.WriteNote(notefile, note, content))
+                else if (xmlUtil.WriteNote(notefile, note, content))
                 {
                     Log.Write(LogType.info, "note created: " + notefile);
+                    return true;
                 }
             }
             catch (Exception exc)
             {
                 throw new CustomException(exc.Message + " " + exc.StackTrace);
             }
+            return false;
+        }
+
+        /// <summary>
+        /// Add a new note the the notes list.
+        /// </summary>
+        /// <param name="note">The note to be added.</param>
+        public void AddNote(Note note)
+        {
+            this.notes.Add(note);
         }
 
         /// <summary>
@@ -193,7 +205,7 @@ namespace NoteFly
         /// <param name="noteid"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public string NewNoteFilename(int id, string title)
+        public string GetNoteFilename(int id, string title)
         {
             string title2 = StripForbiddenFilenameChars(title);
             if (title.Length > 16)
@@ -207,17 +219,20 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Remove a note with a particalur id from the notes list.
+        /// Remove a note with a particalur noteid from the notes list.
         /// </summary>
-        /// <param name="id"></param>
-        public void RemoveNote(int id)
+        /// <param name="noteid">The noteId starts at 1</param>
+        public void RemoveNote(int noteid)
         {
-            for (int i = 0; i < this.CountNotes; i++)
+            for (int i = 0; i < this.notes.Count; i++)
             {
-                if (this.notes[i].Id == id)
+                if (this.notes[i].Id == noteid)
                 {
-                    this.notes[i].DestroyForm();
-                    this.notes.RemoveAt(id);
+                    if (this.notes[i].frmnote != null)
+                    {
+                        this.notes[i].DestroyForm();
+                    }
+                    this.notes.RemoveAt(i);
                     break;
                 }
             }
@@ -325,6 +340,22 @@ namespace NoteFly
             return Color.White;
         }
 
+        /// <summary>
+        /// Get the name of a skin by the skinnr.
+        /// </summary>
+        /// <param name="skinnr">The skin number (starts at index 0)</param>
+        /// <returns>The name of the skin, e.g. Yellow</returns>
+        public string GetSkinName(int skinnr)
+        {
+            foreach (Skin curskin in this.skins)
+            {
+                if (curskin.Nr == skinnr)
+                {
+                    return curskin.Name;
+                }
+            }
+            return "";
+        }
 
         /// <summary>
         /// Update all fonts settings for all notes.
@@ -464,18 +495,6 @@ namespace NoteFly
             }
         }
 #endif
-
-        public string GetSkinName(int skinnr)
-        {
-            foreach (Skin curskin in this.skins)
-            {
-                if (curskin.Nr == skinnr)
-                {
-                    return curskin.Name;
-                }
-            }
-            return "";
-        }
 
     }
 }
