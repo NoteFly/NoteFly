@@ -83,7 +83,7 @@ namespace NoteFly
 #endif
             try
             {
-                errorlog = Path.Combine(TrayIcon.AppDataFolder, debuglogfilename);
+                errorlog = Path.Combine(Program.AppDataFolder, debuglogfilename);
             }
             catch (Exception)
             {

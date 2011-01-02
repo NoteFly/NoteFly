@@ -14,7 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
-    <StartupObject>NoteFly.TrayIcon</StartupObject>
+    <StartupObject>
+    </StartupObject>
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <AssemblyOriginatorKeyFile>strongkey_notefly.pfx</AssemblyOriginatorKeyFile>
@@ -110,6 +111,7 @@
       <DependentUpon>IPTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Log.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Notes.cs" />
     <Compile Include="OAuthBase.cs" />

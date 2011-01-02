@@ -19,219 +19,83 @@
 //-----------------------------------------------------------------------
 #define windows //platform can be: windows, linux, macos //platform can be: windows, linux, macos
 
-using System;
-[assembly: CLSCompliant(true)]
 namespace NoteFly
 {
+    using System;
     using System.Drawing;
     using System.Reflection;
     using System.Windows.Forms;
 
-    /// <summary>
-    /// Startup class.
-    /// </summary>
     public class TrayIcon
     {
-        #region Fields (15)
 
         /// <summary>
         /// container that holds some objects.
         /// </summary>
-        private static System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
+
         /// <summary>
         /// indicated wheter confirm exit is showed.
         /// </summary>
-        private static bool confirmexitshowed = false;
+        private bool confirmexitshowed = false;
 
         /// <summary>
         /// Is the creation of a new note being showed.
         /// </summary>
-        private static bool frmnewnoteshowed = false;
+        private bool frmnewnoteshowed = false;
 
-        private static FrmAbout frmabout;
-        private static FrmManageNotes frmmanagenotes;
-        private static FrmNewNote frmnewnote;
-        private static FrmSettings frmsettings;
+        private FrmAbout frmabout;
+        private FrmManageNotes frmmanagenotes;
+        private FrmNewNote frmnewnote;
+        private FrmSettings frmsettings;
 
         /// <summary>
         /// Notes class has a list an methodes for accessing notes.
         /// </summary>
-        private static Notes notes;
+        private Notes notes;
 
         /// <summary>
         /// The trayicon itself.
         /// </summary>
-        private static NotifyIcon icon;
+        private NotifyIcon icon;
 
         /// <summary>
         /// The trayicon contextmenu
         /// </summary>
-        private static ContextMenuStrip menuTrayIcon;
+        private ContextMenuStrip menuTrayIcon;
 
         /// <summary>
         /// New note menu option
         /// </summary>
-        private static ToolStripMenuItem menuNewNote;
+        private ToolStripMenuItem menuNewNote;
 
         /// <summary>
         /// Manage notes menu option
         /// </summary>
-        private static ToolStripMenuItem menuManageNotes;
+        private ToolStripMenuItem menuManageNotes;
 
         /// <summary>
         /// Settings application menu option
         /// </summary>
-        private static ToolStripMenuItem menuSettings;
+        private ToolStripMenuItem menuSettings;
 
         /// <summary>
         /// About menu option
         /// </summary>
-        private static ToolStripMenuItem menuAbout;
+        private ToolStripMenuItem menuAbout;
 
         /// <summary>
         /// Exit menu option
         /// </summary>
-        private static ToolStripMenuItem menuExit;
-
-        #endregion Fields
-
-        #region Properties (3)
-
-        /// <summary>
-        /// Gets the application data folder.
-        /// </summary>
-        public static string AppDataFolder
-        {
-            get
-            {
-#if windows
-                string appdatafolder = System.Environment.GetEnvironmentVariable("APPDATA") + "\\.NoteFly2\\";
-#elif linux
-                string appdatafolder = System.Environment.GetEnvironmentVariable("HOME") + "/.NoteFly2/";
-#elif macos
-                string appdatafolder = "???"
-#endif
-                return appdatafolder;
-            }
-        }
-
-        /// <summary>
-        /// Gets the application title.
-        /// </summary>
-        public static string AssemblyTitle
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0)
-                {
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (!String.IsNullOrEmpty(titleAttribute.Title))
-                    {
-                        return titleAttribute.Title;
-                    }
-                }
-
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
-            }
-        }
-
-        /// <summary>
-        /// Gets the application version number.
-        /// </summary>
-        /// <returns>a string containing the version number of this application in the form of major.minur.build number</returns>
-        public static string AssemblyVersion
-        {
-            get
-            {
-                int majorver = Assembly.GetExecutingAssembly().GetName().Version.Major;
-                int minorver = Assembly.GetExecutingAssembly().GetName().Version.Minor;
-                int buildver = Assembly.GetExecutingAssembly().GetName().Version.Build;
-                return majorver + "." + minorver + "." + buildver;
-            }
-        }
-
-        #endregion Properties
-
-        #region Methods (2)
-
-        // Private Methods (2) 
+        private ToolStripMenuItem menuExit;
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
-        private static void Main(string[] args)
+        public TrayIcon(Notes notes)
         {
+            this.notes = notes;
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.Application.EnableVisualStyles();
-            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
-
-            if (!xmlUtil.LoadSettings())
-            {
-                xmlUtil.WriteDefaultSettings();
-                xmlUtil.LoadSettings();
-            }
-            
-            //bool forcefirstrun = false;
-            //override settings with supported parameters
-            if (System.Environment.GetCommandLineArgs().Length > 1)
-            {
-                foreach (string arg in args)
-                {
-                    switch (arg)
-                    {
-                        //Forces the programme to setup the first run notefly info again.
-                        case "/forcefirstrun":
-                            Settings.ProgramFirstrun = true;
-                            break;
-
-                        //disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
-                        //because transparency is on by default.
-                        case "/disabletransparency":
-                            Settings.NotesTransparencyEnabled = false;
-                            break;
-
-                        //Turn off all highlighting functions in case highlighting was turned on and it let NoteFly crash on startup.
-                        case "/disablehighlighting":
-                            Settings.HighlightHyperlinks = false;
-                            Settings.HighlightHTML = false;
-                            Settings.HighlightPHP = false;
-                            Settings.HighlightSQL = false;
-                            break;
-
-                        //Turn off all social functions on startup.
-                        case "/disablesocial":
-                            Settings.SocialEmailEnabled = false;
-                            Settings.SocialFacebookEnabled = false;
-                            Settings.SocialTwitterEnabled = false;
-                            break;
-
-                        //Turn all logging features on at startup. 
-                        //Handy in case NoteFly crashes at startup and logging was turned off.
-                        case "/logall":
-                            Settings.ProgramLogException = true;
-                            Settings.ProgramLogError = true;
-                            Settings.ProgramLogInfo = true;
-                            break;
-                    }
-                }
-            }
-
-            /*
-            #if windows
-                                System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
-                                System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
-                                bool IsAdmin = principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
-                                if (IsAdmin)
-                                {
-                                    MessageBox.Show("You are now running notefly as elevated Administrator, which is not necessary.", "(Elevated) administrator");
-                                }
-            #endif
-            */
-
-            //start loading notes.
-            notes = new Notes();
 
             //start building icon and icon contextmenu
             icon = new System.Windows.Forms.NotifyIcon(components);
@@ -253,17 +117,10 @@ namespace NoteFly
 
             icon.ContextMenuStrip.Name = "MenuTrayIcon";
             icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] 
-            {
-            menuNewNote,
-            menuManageNotes,
-            menuSettings,
-            menuAbout,
-            menuExit});
+            { menuNewNote,menuManageNotes,menuSettings,menuAbout,menuExit});
             icon.ContextMenuStrip.ShowImageMargin = false;
             icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
-
             FontStyle menufontstyle = FontStyle.Regular;
-
             // MenuNewNote
             menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             menuNewNote.Name = "MenuNewNote";
@@ -327,6 +184,16 @@ namespace NoteFly
             }
             menuExit.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
             menuExit.Click += new System.EventHandler(MenuExit_Click);
+
+#if windows
+            System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+            System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
+            if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
+            {
+                MessageBox.Show("You are now running "+Program.AssemblyTitle+" as elevated Administrator.", "(Elevated) administrator");
+            }
+#endif
+
             if (Settings.ProgramFirstrun)
             {
                 icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);
@@ -334,11 +201,6 @@ namespace NoteFly
             Application.Run();
         }
 
-        #endregion Methods
-
-
-
-        #region menu events
         /// <summary>
         /// There is left clicked on the icon.
         /// If actionleftclick is 0 do nothing.
@@ -347,7 +209,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
-        private static void Icon_Click(object sender, MouseEventArgs e)
+        private void Icon_Click(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -376,7 +238,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event argument</param>
-        private static void MenuNewNote_Click(object sender, EventArgs e)
+        private void MenuNewNote_Click(object sender, EventArgs e)
         {
             FrmNewNote newnotefrm = new FrmNewNote(notes);
             newnotefrm.Show();
@@ -387,7 +249,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">event argument</param>
-        private static void MenuManageNotes_Click(object sender, EventArgs e)
+        private void MenuManageNotes_Click(object sender, EventArgs e)
         {
             FrmManageNotes frmmanagenotes = new FrmManageNotes(notes);
             frmmanagenotes.Show();
@@ -398,7 +260,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event argument</param>
-        private static void MenuSettings_Click(object sender, EventArgs e)
+        private void MenuSettings_Click(object sender, EventArgs e)
         {
             FrmSettings settings = new FrmSettings(notes);
             settings.Show();
@@ -409,7 +271,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event argument</param>
-        private static void MenuAbout_Click(object sender, EventArgs e)
+        private void MenuAbout_Click(object sender, EventArgs e)
         {
             FrmAbout frmabout = new FrmAbout();
             frmabout.Show();
@@ -418,11 +280,11 @@ namespace NoteFly
         /// <summary>
         /// User request to shutdown application.
         /// Check if confirm box is needed. 
-        /// if confirm box is still open then shutdown anyway.
+        /// If confirm box is still open and menuExit_Click event is fired then shutdown application anyway.
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event argument</param>
-        private static void MenuExit_Click(object sender, EventArgs e)
+        private void MenuExit_Click(object sender, EventArgs e)
         {
             if (Settings.ConfirmExit)
             {
@@ -430,15 +292,7 @@ namespace NoteFly
                 if (!confirmexitshowed)
                 {
                     confirmexitshowed = true;
-                    string assemblyProduct;
-                    object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                    if (attributes.Length == 0)
-                    {
-                        assemblyProduct = String.Empty;
-                    }
-
-                    assemblyProduct = ((AssemblyProductAttribute)attributes[0]).Product;
-                    DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + assemblyProduct + "?", "confirm exit", MessageBoxButtons.YesNo);
+                    DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + Program.AssemblyTitle + "?", "confirm exit", MessageBoxButtons.YesNo);
                     if (resdlgconfirmexit == DialogResult.No)
                     {
                         confirmexitshowed = false;
@@ -446,19 +300,8 @@ namespace NoteFly
                     }
                 }
             }
-
-            ExitApplication();
-        }
-
-        /// <summary>
-        /// Terminate application
-        /// </summary>
-        private static void ExitApplication()
-        {
             components.Dispose();
             Application.Exit();
         }
-
-        #endregion
     }
 }

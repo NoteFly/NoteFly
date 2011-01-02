@@ -173,7 +173,7 @@ namespace NoteFly
         /// <returns>true if file settings exists.</returns>
         public static bool LoadSettings()
         {
-            string settingsfilepath = Path.Combine(TrayIcon.AppDataFolder, SETTINGSFILE);
+            string settingsfilepath = Path.Combine(Program.AppDataFolder, SETTINGSFILE);
             if (!File.Exists(settingsfilepath))
             {
                 return false;
@@ -181,19 +181,8 @@ namespace NoteFly
             try
             {
                 xmlread = new XmlTextReader(settingsfilepath);
-                //if (xmlread.CanReadBinaryContent == true)
-                //{
-                //    //we dont want that.
-                //    throw new CustomException("XmlTextReader should not read binary.");
-                //}
-                //if (xmlread.Encoding.EncodingName != "UTF-8")
-                //{
-                //    //wrong encoding 
-                //    throw new CustomException("Xml setting file has the wrong encoding. It should be " + System.Text.Encoding.UTF8.BodyName);
-                //}
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
                 xmlread.ProhibitDtd = true; //decreated.
-
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)
@@ -331,6 +320,10 @@ namespace NoteFly
                             Settings.UpdatecheckLastDate = xmlread.ReadElementContentAsString();
                             break;
                     }
+                    if (xmlread.Depth > 8)
+                    {
+                        break;
+                    }
                 }
             }
             finally
@@ -348,17 +341,18 @@ namespace NoteFly
         /// <returns></returns>
         public static List<Skin> LoadSkins()
         {
-            if (!Directory.Exists(TrayIcon.AppDataFolder))
+            if (!Directory.Exists(Program.AppDataFolder))
             {
-                Directory.CreateDirectory(TrayIcon.AppDataFolder);
+                Directory.CreateDirectory(Program.AppDataFolder);
             }
-            string skinfilepath = Path.Combine(TrayIcon.AppDataFolder, SKINFILE);
+            string skinfilepath = Path.Combine(Program.AppDataFolder, SKINFILE);
             if (!File.Exists(skinfilepath))
             {
                 WriteDefaultSkins(skinfilepath);
             }
             List<Skin> skins = new List<Skin>();
             xmlread = new XmlTextReader(skinfilepath);
+            xmlread.ProhibitDtd = true;
             Skin curskin = null;
             int numskins = 0;
             bool endtag = false;
@@ -402,6 +396,10 @@ namespace NoteFly
                         curskin.HighlightClr = ConvToClr(xmlread.ReadElementContentAsString());
                         break;
                 }
+                if (xmlread.Depth > 5)
+                {
+                    break;
+                }
             }
             return skins;
         }
@@ -417,6 +415,7 @@ namespace NoteFly
             DateTime created = File.GetCreationTime(notefilepath);
             Note note = new Note(n, created);
             xmlread = new XmlTextReader(notefilepath);
+            xmlread.ProhibitDtd = true;
             try
             {
                 while (xmlread.Read())
@@ -488,7 +487,7 @@ namespace NoteFly
             Settings.NotesClosebtnHidenotepermanently = true;
             Settings.NotesClosebtnTooltipenabled = false;
             Settings.NotesDefaultSkinnr = 1;
-            Settings.NotesSavepath = TrayIcon.AppDataFolder;
+            Settings.NotesSavepath = Program.AppDataFolder;
             Settings.NotesTransparencyEnabled = true;
             Settings.NotesTransparencyLevel = 90;
             Settings.NotesWarnLimit = 1000;
@@ -578,7 +577,7 @@ namespace NoteFly
         {
             try
             {
-                xmlwrite = new XmlTextWriter(Path.Combine(TrayIcon.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
+                xmlwrite = new XmlTextWriter(Path.Combine(Program.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument();
                 xmlwrite.WriteStartElement("settings");

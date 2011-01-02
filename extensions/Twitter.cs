@@ -133,14 +133,14 @@ namespace NoteFly
                 sbpass.Remove(0, password.Length);
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.Method = "POST";
-                if (!string.IsNullOrEmpty(TrayIcon.AssemblyTitle))
+                if (!string.IsNullOrEmpty(Program.AssemblyTitle))
                 {
-                    request.Headers.Add("X-Twitter-Client", TrayIcon.AssemblyTitle.Trim());
+                    request.Headers.Add("X-Twitter-Client", Program.AssemblyTitle.Trim());
                 }
 
-                if (!string.IsNullOrEmpty(TrayIcon.AssemblyVersion))
+                if (!string.IsNullOrEmpty(Program.AssemblyVersion))
                 {
-                    request.Headers.Add("X-Twitter-Version", TrayIcon.AssemblyVersion.Trim());
+                    request.Headers.Add("X-Twitter-Version", Program.AssemblyVersion.Trim());
                 }
 
                 if (!string.IsNullOrEmpty(this.twitterClientUrl))

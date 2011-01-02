@@ -33,18 +33,18 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNote : Form
     {
-        #region Fields (4)
+		#region Fields (6) 
 
-        private Notes notes;
+        private const int MINVISIBLESIZE = 5;
+        private bool moving = false;
         private Note note;
+        private Notes notes;
         private Point oldp;
         private PictureBox pbShowLock;
-        private bool moving = false;
-        private const int MINVISIBLESIZE = 5;
-        
-        #endregion Fields
 
-        #region Constructors (1)
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
@@ -92,11 +92,11 @@ namespace NoteFly
             }
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (32)
+		#region Methods (30) 
 
-        // Public Methods (1) 
+		// Public Methods (1) 
 
         /// <summary>
         /// Save the setting of the note.
@@ -105,52 +105,7 @@ namespace NoteFly
         {
             this.SavePos.RunWorkerAsync();
         }
-        // Private Methods (30) 
-
-        /// <summary>
-        /// Find what password is entered.
-        /// Make sure the memory gets cleared.
-        /// </summary>
-        /// <param name="obj">The button user clicked on.</param>
-        /// <param name="e">Event arguments</param>
-        private void Askpassok(object obj, EventArgs e)
-        {
-            Button btnobj = (Button)obj;
-            Form frmAskpass = btnobj.FindForm();
-
-            Control[] passwctrl = frmAskpass.Controls.Find("tbPassword", false);
-            if (String.IsNullOrEmpty(passwctrl[0].Text))
-            {
-                passwctrl[0].BackColor = Color.Red;
-                return;
-            }
-            else
-            {
-                //this.twpass = new char[passwctrl[0].Text.Length];
-                //for (int n = 0; n < passwctrl[0].Text.Length; n++)
-                //{
-                //    this.twpass[n] = passwctrl[0].Text[n];
-                //}
-                //if (this.twpass.Length <= 0 || this.twpass == null)
-                //{
-                //    throw new CustomException("buffer underflow");
-                //}
-                //if (this.twpass.Length > 255)
-                //{
-                //    throw new CustomException("password too long.");
-                //}
-                //passwctrl[0].Name = new Random().Next().ToString();
-                //passwctrl[0].Text.Remove(0);
-                //frmAskpass.Close();
-                //foreach (Control cntrl in frmAskpass.Controls)
-                //{
-                //    cntrl.Dispose();
-                //}
-                //frmAskpass.Dispose();
-                //GC.Collect();
-                //this.Tweetnote();
-            }
-        }
+		// Private Methods (29) 
 
         /// <summary>
         /// The user pressed the cross on the note,
@@ -164,13 +119,6 @@ namespace NoteFly
             //this.notes.NotesUpdated = true;
             this.Hide();
         }
-
-        
-#if windows
-        [DllImport("wininet.dll")]
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-
-#endif
 
         /// <summary>
         /// Check if there is internet connection, if not warn user.
@@ -230,6 +178,30 @@ namespace NoteFly
             {
                 Clipboard.SetText(this.lblTitle.Text);
             }
+        }
+
+        /// <summary>
+        /// Create a PictureBox with lock picture.
+        /// </summary>
+        private void CreatePbLock()
+        {
+            this.pbShowLock = new PictureBox();
+            this.pbShowLock.Name = "pbShowLock";
+            this.pbShowLock.Size = new Size(16, 16);
+            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
+            this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
+            this.pbShowLock.Visible = true;
+            this.pnlHead.Controls.Add(this.pbShowLock);
+            this.pbShowLock.BringToFront();
+        }
+
+        /// <summary>
+        /// Removes and freese memory lock picture.
+        /// </summary>
+        private void DestroyPbLock()
+        {
+            this.pbShowLock.Visible = false;
+            this.pbShowLock.Dispose();
         }
 
         /// <summary>
@@ -304,30 +276,6 @@ namespace NoteFly
         private void hideNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.btnCloseNote_Click(sender, e);
-        }
-
-        /// <summary>
-        /// Create a PictureBox with lock picture.
-        /// </summary>
-        private void CreatePbLock()
-        {
-            this.pbShowLock = new PictureBox();
-            this.pbShowLock.Name = "pbShowLock";
-            this.pbShowLock.Size = new Size(16, 16);
-            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
-            this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
-            this.pbShowLock.Visible = true;
-            this.pnlHead.Controls.Add(this.pbShowLock);
-            this.pbShowLock.BringToFront();
-        }
-
-        /// <summary>
-        /// Removes and freese memory lock picture.
-        /// </summary>
-        private void DestroyPbLock()
-        {
-            this.pbShowLock.Visible = false;
-            this.pbShowLock.Dispose();
         }
 
         /// <summary>
@@ -426,7 +374,6 @@ namespace NoteFly
 
         //    this.rtbNote.Font = this.skin.GetFontNoteContent();
         //}
-
         /// <summary>
         /// Resize note
         /// </summary>
@@ -476,6 +423,55 @@ namespace NoteFly
             {
                 this.SavePos.RunWorkerAsync();
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((this.moving) && (e.Button == MouseButtons.Left))
+            {
+                this.pnlHead.BackColor = this.notes.GetBackgroundColor(this.note.SkinNr);
+
+                int dpx = e.Location.X - oldp.X;
+                int dpy = e.Location.Y - oldp.Y;
+#if linux
+                if (dpx > 8)
+                {
+                    dpx = 8;
+                } 
+                else if (dpx < -8)
+                {
+                    dpx = -8;
+                }
+                if (dpy > 8)
+                {
+                    dpy = 8;
+                }
+                else if (dpy < -8)
+                {
+                    dpy = -8;
+                }
+#endif
+                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
+            }
+            else
+            {
+                this.pnlHead.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.moving = false;
         }
 
         /// <summary>
@@ -529,7 +525,6 @@ namespace NoteFly
                 Log.Write(LogType.error, msgOutOfScreen);
                 MessageBox.Show(msgOutOfScreen);
             }
-            int i = 2;
         }
 
         /// <summary>
@@ -540,25 +535,28 @@ namespace NoteFly
         private void SetColorNote(object sender, EventArgs e)
         {
             ToolStripMenuItem selectedmenuitem = (ToolStripMenuItem)sender;
-            short i = 0;
-            foreach (ToolStripMenuItem curitem in this.menuNoteColors.DropDownItems)
-            {
-                if (curitem == selectedmenuitem)
-                {
-                    curitem.Checked = true;
-                    //this.notecolor = i;
-                    //string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
-                    //xmlHandler savenotecolor = new xmlHandler(notefile);
-                    //savenotecolor.WriteNote(this.Visible, this.menuOnTop.Checked, this.notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
-                    //Log.Write(LogType.info, "Color note (ID:" + this.NoteID + ") changed.");
-                }
-                else
-                {
-                    curitem.Checked = false;
-                }
+            selectedmenuitem.Checked = true;
+            //
+            // this was  pointless silly:
+            //short i = 0;
+            //foreach (ToolStripMenuItem curitem in this.menuNoteColors.DropDownItems)
+            //{
+            //    if (curitem == selectedmenuitem)
+            //    {
+            //        curitem.Checked = true;
+            //        //this.notecolor = i;
+            //        //string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
+            //        //xmlHandler savenotecolor = new xmlHandler(notefile);
+            //        //savenotecolor.WriteNote(this.Visible, this.menuOnTop.Checked, this.notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
+            //        //Log.Write(LogType.info, "Color note (ID:" + this.NoteID + ") changed.");
+            //    }
+            //    else
+            //    {
+            //        curitem.Checked = false;
+            //    }
 
-                i++;
-            }
+            //    i++;
+            //}
         }
 
         /// <summary>
@@ -644,56 +642,12 @@ namespace NoteFly
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pnlHead_MouseUp(object sender, MouseEventArgs e)
-        {
-            this.moving = false;
-        }
+		#endregion Methods 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pnlHead_MouseMove(object sender, MouseEventArgs e)
-        {
-            if ((this.moving) && (e.Button == MouseButtons.Left))
-            {
-                this.pnlHead.BackColor = this.notes.GetBackgroundColor(this.note.SkinNr);
-
-                int dpx = e.Location.X - oldp.X;
-                int dpy = e.Location.Y - oldp.Y;
-#if linux
-                if (dpx > 8)
-                {
-                    dpx = 8;
-                } 
-                else if (dpx < -8)
-                {
-                    dpx = -8;
-                }
-                if (dpy > 8)
-                {
-                    dpy = 8;
-                }
-                else if (dpy < -8)
-                {
-                    dpy = -8;
-                }
+#if windows
+        [DllImport("wininet.dll")]
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
 #endif
-                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
-            }
-            else
-            {
-                this.pnlHead.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
-            }
-        }
-
-        #endregion Methods
     }
 
 }

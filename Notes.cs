@@ -412,7 +412,7 @@ namespace NoteFly
                 else
                 {
                     Log.Write(LogType.error, (notefoldernoteexist + " Yes"));
-                    Settings.NotesSavepath = TrayIcon.AppDataFolder;
+                    Settings.NotesSavepath = Program.AppDataFolder;
                 }
             }
 
@@ -421,12 +421,12 @@ namespace NoteFly
             {
                 MessageBox.Show("Too many notes,");
             }
-
+            this.notes.Capacity = notefiles.Length;
             for (int i = 0; i < notefiles.Length; i++)
             {
                 Note note = xmlUtil.LoadNote(this, notefiles[i]);
                 note.Id = NextId();
-                this.notes.Add(note);
+                this.AddNote(note);
                 if (note.Visible)
                 {
                     note.CreateForm();

@@ -37,9 +37,9 @@ namespace NoteFly
         public FrmAbout()
         {
             this.InitializeComponent();
-            this.Text = "About " + TrayIcon.AssemblyTitle;
-            this.lblProductName.Text = TrayIcon.AssemblyTitle;
-            this.lblVersion.Text = String.Format("Version {0}", TrayIcon.AssemblyVersion);
+            this.Text = "About " + Program.AssemblyTitle;
+            this.lblProductName.Text = Program.AssemblyTitle;
+            this.lblVersion.Text = String.Format("Version {0}", Program.AssemblyVersion);
         }
 
         #endregion Constructors

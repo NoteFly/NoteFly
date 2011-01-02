@@ -125,14 +125,22 @@ namespace NoteFly
             }
             else
             {
+                bool newnote = false;
                 if (this.note == null)
                 {
+                    newnote = true;
                     this.note = this.notes.CreateNote(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
-                if (this.note != null)
+
+                if (this.notes.SaveNote(this.note, this.rtbNewNote.Rtf))
                 {
-                    this.notes.SaveNote(this.note, this.rtbNewNote.Rtf);
+                    if (newnote)
+                    {
+                        this.notes.AddNote(this.note);
+                    }
+                    this.note.CreateForm();
                 }
+
                 this.Close();
             }
         }
@@ -438,7 +446,7 @@ namespace NoteFly
             DialogResult res = openfiledlg.ShowDialog();
             if (res == DialogResult.OK)
             {
-                FileStream fs = null;
+                //FileStream fs = null;
                 StreamReader reader = null;
                 try
                 {

@@ -61,7 +61,7 @@ namespace NoteFlyTests
         public static void MyClassInitialize(TestContext testContext)
         {
             Settings.NotesWarnLimit = 1000;
-            Settings.NotesSavepath = TrayIcon.AppDataFolder;
+            Settings.NotesSavepath = Program.AppDataFolder;
         }
         //
         //Use ClassCleanup to run code after all tests in a class have run
@@ -150,7 +150,7 @@ namespace NoteFlyTests
         ///A test for NewNoteFilename
         ///</summary>
         [TestMethod()]
-        public void NewNoteFilenameTest()
+        public void GetNoteFilenameTest()
         {
             Notes target = new Notes(); 
             int id = 1;

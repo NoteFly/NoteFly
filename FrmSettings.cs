@@ -242,7 +242,7 @@ namespace NoteFly
                     {
                         try
                         {
-                            key.SetValue(TrayIcon.AssemblyTitle, "\"" + Application.ExecutablePath + "\"");
+                            key.SetValue(Program.AssemblyTitle, "\"" + Application.ExecutablePath + "\"");
                         }
                         catch (UnauthorizedAccessException unauthexc)
                         {
@@ -256,9 +256,9 @@ namespace NoteFly
                     }
                     else if (this.chxStartOnBootWindows.Checked == false)
                     {
-                        if (key.GetValue(TrayIcon.AssemblyTitle, null) != null)
+                        if (key.GetValue(Program.AssemblyTitle, null) != null)
                         {
-                            key.DeleteValue(TrayIcon.AssemblyTitle, false);
+                            key.DeleteValue(Program.AssemblyTitle, false);
                         }
                     }
                 }
@@ -284,7 +284,7 @@ namespace NoteFly
             DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset all the settings to default?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgres == DialogResult.Yes)
             {
-                string settingsfile = Path.Combine(TrayIcon.AppDataFolder, "settings.xml");
+                string settingsfile = Path.Combine(Program.AppDataFolder, "settings.xml");
                 if (File.Exists(settingsfile))
                 {
                     File.Delete(settingsfile);
