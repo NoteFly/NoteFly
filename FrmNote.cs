@@ -314,7 +314,7 @@ namespace NoteFly
         {
             const string rollupmsg = "&Roll up";
             this.note.RolledUp = !this.note.RolledUp;
-            this.menuRollUp.Checked = !this.note.RolledUp;
+            this.menuRollUp.Checked = this.note.RolledUp;
 
             if (this.note.RolledUp)
             {
@@ -326,7 +326,7 @@ namespace NoteFly
             {
                 this.menuRollUp.Text = rollupmsg;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
-                this.Height = this.pnlHead.Height + this.pnlNote.Height;
+                this.Height = note.Height;
             }
         }
 
