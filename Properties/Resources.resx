@@ -130,14 +130,26 @@
   <data name="locknote" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\locknote.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="settings_dirdoesnotexist" xml:space="preserve">
+    <value>Directory does not exist.\r\nPlease choice a valid directory.</value>
+  </data>
+  <data name="settings_dirdoesnotexisttitle" xml:space="preserve">
+    <value>Directory not found</value>
+  </data>
   <data name="settings_emailnotvalid" xml:space="preserve">
     <value>Given default emailadres is not valid.</value>
+  </data>
+  <data name="settings_excsystemfilenotmoved" xml:space="preserve">
+    <value>File is marked as system file. Did not move.</value>
   </data>
   <data name="settings_filealreadyexist" xml:space="preserve">
     <value>Problem moving notes to new folder, the note already exist in the new folder.</value>
   </data>
   <data name="settings_fontnotecontentnotfound" xml:space="preserve">
     <value>Current font for note content cannot be found.</value>
+  </data>
+  <data name="settings_infoupdated" xml:space="preserve">
+    <value>Settings updated</value>
   </data>
   <data name="settings_invalidfoldersavenote" xml:space="preserve">
     <value>Invalid folder for saving notes folder.</value>
@@ -156,6 +168,12 @@
   </data>
   <data name="settings_regkeynotexist" xml:space="preserve">
     <value>Run key in registery does not exist.</value>
+  </data>
+  <data name="settings_sureresetdefault" xml:space="preserve">
+    <value>Are you sure, you want to reset all the settings to default?</value>
+  </data>
+  <data name="settings_sureresetdefaulttitle" xml:space="preserve">
+    <value>Reset settings?</value>
   </data>
   <data name="settings_twitternametoolong" xml:space="preserve">
     <value>Twitter username is too long.</value>

@@ -44,6 +44,7 @@ namespace NoteFly
 
         // Public Methods (8) 
 
+        /*
         /// <summary>
         /// get xml node boolean valaue
         /// </summary>
@@ -121,12 +122,13 @@ namespace NoteFly
             //error not found
             return -1;
         }
+        */
 
         /// <summary>
-        /// Get a xml node and return the valuae as string.
+        /// Get a xml node and return the value as string.
         /// </summary>
         /// <param name="nodename"></param>
-        /// <returns>return node as string</returns>
+        /// <returns>return node content as string, empty if not found</returns>
         public static string GetContentString(string filename, string nodename)
         {
             try
@@ -150,7 +152,7 @@ namespace NoteFly
             {
                 if (xmlread.Name == nodename)
                 {
-                    string xmlnodecontent = "";
+                    string xmlnodecontent = String.Empty;
                     try
                     {
                         xmlnodecontent = xmlread.ReadElementContentAsString();
@@ -163,7 +165,7 @@ namespace NoteFly
                 }
             }
             //error node not found.
-            return "";
+            return String.Empty;
         }
 
         /// <summary>
@@ -182,7 +184,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(settingsfilepath);
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
-                xmlread.ProhibitDtd = true; //decreated.
+                xmlread.ProhibitDtd = true; //goves decreated warning in vs2010.
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)
@@ -444,8 +446,11 @@ namespace NoteFly
                             note.Height = xmlread.ReadElementContentAsInt();
                             break;
                         case "skin":
-                            string skinname = xmlread.ReadElementContentAsString();
-                            note.SkinNr = 1;
+                            int skinnr = n.GetSkinNr(xmlread.ReadElementContentAsString());
+                            if (skinnr >= 0)
+                            {
+                                note.SkinNr = skinnr;
+                            }
                             break;
                         case "title":
                             note.Title = xmlread.ReadElementContentAsString();
@@ -482,7 +487,7 @@ namespace NoteFly
             Settings.HighlightSQL = false;
             Settings.NetworkConnectionForceipv6 = false;
             Settings.NetworkConnectionTimeout = 8000;
-            Settings.NetworkProxyAddress = "";
+            Settings.NetworkProxyAddress = String.Empty;
             Settings.NetworkProxyEnabled = false;
             Settings.NotesClosebtnHidenotepermanently = true;
             Settings.NotesClosebtnTooltipenabled = false;
@@ -495,12 +500,12 @@ namespace NoteFly
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
-            Settings.SocialEmailDefaultadres = "";
+            Settings.SocialEmailDefaultadres = String.Empty;
             Settings.SocialEmailEnabled = true;
             Settings.SocialFacebookEnabled = true;
             Settings.SocialFacebookUseSSL = true;
             Settings.SocialTwitterEnabled = true;
-            Settings.SocialTwitterUsername = "";
+            Settings.SocialTwitterUsername = String.Empty;
             Settings.SocialTwitterUseSSL = true;
             Settings.TrayiconLeftclickaction = 1;
             Settings.TrayiconCreatenotebold = true;
@@ -679,7 +684,7 @@ namespace NoteFly
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument();
                 xmlwrite.WriteStartElement("skins");
-                xmlwrite.WriteAttributeString("count", "2"); //for performance, not required.
+                xmlwrite.WriteAttributeString("count", "2"); //for performance predefine list Capacity, not required.
                 xmlwrite.WriteStartElement("skin");
                 xmlwrite.WriteElementString("Name", "yellow");
                 xmlwrite.WriteElementString("ForegroundColor", "#FFD800");
@@ -692,6 +697,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("BackgroundColor", "#EF6F1F");
                 xmlwrite.WriteElementString("HighlightColor", "#FF6247");
                 xmlwrite.WriteEndElement();
+                //todo: add more
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
             }

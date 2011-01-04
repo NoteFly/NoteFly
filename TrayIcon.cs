@@ -40,14 +40,13 @@ namespace NoteFly
         private bool confirmexitshowed = false;
 
         /// <summary>
-        /// Is the creation of a new note being showed.
+        /// Is the creation of a new note being showed, so double left clicking isnt creating two notes at once.
         /// </summary>
         private bool frmnewnoteshowed = false;
 
-        private FrmAbout frmabout;
-        private FrmManageNotes frmmanagenotes;
-        private FrmNewNote frmnewnote;
-        private FrmSettings frmsettings;
+        //private FrmAbout frmabout;
+        //private FrmManageNotes frmmanagenotes;
+        //private FrmSettings frmsettings;
 
         /// <summary>
         /// Notes class has a list an methodes for accessing notes.
@@ -251,7 +250,7 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void MenuManageNotes_Click(object sender, EventArgs e)
         {
-            FrmManageNotes frmmanagenotes = new FrmManageNotes(notes);
+            FrmManageNotes frmmanagenotes = new FrmManageNotes(this.notes);
             frmmanagenotes.Show();
         }
 
@@ -262,8 +261,8 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuSettings_Click(object sender, EventArgs e)
         {
-            FrmSettings settings = new FrmSettings(notes);
-            settings.Show();
+            FrmSettings frmsettings = new FrmSettings(this.notes);
+            frmsettings.Show();
         }
 
         /// <summary>
@@ -274,7 +273,7 @@ namespace NoteFly
         private void MenuAbout_Click(object sender, EventArgs e)
         {
             FrmAbout frmabout = new FrmAbout();
-            frmabout.Show();
+            frmabout.ShowDialog();
         }
 
         /// <summary>

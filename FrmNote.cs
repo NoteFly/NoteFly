@@ -456,7 +456,7 @@ namespace NoteFly
                     dpy = -8;
                 }
 #endif
-                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
+                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
             }
             else
             {

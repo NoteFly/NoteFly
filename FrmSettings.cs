@@ -49,8 +49,49 @@ namespace NoteFly
         public FrmSettings(Notes notes)
         {
             this.InitializeComponent();
+            this.notes = notes;
+            this.DrawCbxFonts();
+            this.SetControlsBySettings();
+#if windows
+            this.chxStartOnBootWindows.Checked = this.GetStatusStartlogin();
+#endif
+        }
 
-            //read setting and display them correctly.
+        #endregion Constructors
+
+        #region Methods (24)
+
+        // Private Methods (24) 
+
+        /// <summary>
+        /// User want to browse for notes save path.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments</param>
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            DialogResult dlgresult = this.folderBrowserDialog1.ShowDialog();
+            if (dlgresult == DialogResult.OK)
+            {
+                string newpathsavenotes = this.folderBrowserDialog1.SelectedPath;
+
+                if (Directory.Exists(newpathsavenotes))
+                {
+                    this.tbNotesSavePath.Text = this.folderBrowserDialog1.SelectedPath;
+                }
+                else
+                {
+                    Log.Write(LogType.info, NoteFly.Properties.Resources.settings_dirdoesnotexist);
+                    MessageBox.Show(NoteFly.Properties.Resources.settings_dirdoesnotexist, NoteFly.Properties.Resources.settings_dirdoesnotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Read setting and set controls to display them correctly.
+        /// </summary>
+        private void SetControlsBySettings()
+        {
             this.chxLogErrors.Checked = Settings.ProgramLogError;
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
             this.chxConfirmExit.Checked = Settings.ConfirmExit;
@@ -79,47 +120,6 @@ namespace NoteFly
             this.numTimeout.Value = Settings.NetworkConnectionTimeout;
             this.chxUseProxy.Checked = Settings.NetworkProxyEnabled;
             this.iptbProxyAddress.SetIPAddress(Settings.NetworkProxyAddress);
-
-#if windows
-            this.chxStartOnBootWindows.Checked = this.GetStatusStartlogin();
-#endif
-
-            this.DrawCbxFonts();
-#if DEBUG
-            this.btnCrash.Visible = true;
-#endif
-            this.notes = notes;
-        }
-
-        #endregion Constructors
-
-        #region Methods (24)
-
-        // Private Methods (24) 
-
-        /// <summary>
-        /// User want to browse for notes save path.
-        /// </summary>
-        /// <param name="sender">Sender object.</param>
-        /// <param name="e">Event arguments</param>
-        private void btnBrowse_Click(object sender, EventArgs e)
-        {
-            DialogResult dlgresult = this.folderBrowserDialog1.ShowDialog();
-            if (dlgresult == DialogResult.OK)
-            {
-                string newpathsavenotes = this.folderBrowserDialog1.SelectedPath;
-
-                if (Directory.Exists(newpathsavenotes))
-                {
-                    this.tbNotesSavePath.Text = this.folderBrowserDialog1.SelectedPath;
-                }
-                else
-                {
-                    const string dirnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
-                    Log.Write(LogType.info, dirnotexist);
-                    MessageBox.Show(dirnotexist, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
         }
 
         /// <summary>
@@ -131,18 +131,6 @@ namespace NoteFly
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        /// <summary>
-        /// Test method to see how custom exceptions are handled.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event arguments</param>
-        private void btnCrash_Click(object sender, EventArgs e)
-        {
-#if DEBUG
-            throw new CustomException("This is a crash test, to test if exceptions are thrown correctly.");
-#endif
         }
 
         /// <summary>
@@ -214,7 +202,8 @@ namespace NoteFly
                 string oldnotesavepath = Settings.NotesSavepath;
                 if (this.tbNotesSavePath.Text != oldnotesavepath)
                 {
-                    this.MoveNotes(oldnotesavepath, this.tbNotesSavePath.Text); //TODO: seperate thread
+                    this.MoveNotes(oldnotesavepath, this.tbNotesSavePath.Text);
+                    //TODO: seperate thread
                 }
 
                 Settings.ConfirmDeletenote = chxConfirmDeleteNote.Checked;
@@ -269,7 +258,7 @@ namespace NoteFly
                 }
 #endif
                 this.notes.UpdateAllFonts();
-                Log.Write(LogType.info, "settings updated.");
+                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
                 this.Close();
             }
         }
@@ -281,21 +270,11 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
-            DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset all the settings to default?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dlgres = MessageBox.Show(NoteFly.Properties.Resources.settings_sureresetdefault, NoteFly.Properties.Resources.settings_sureresetdefaulttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgres == DialogResult.Yes)
             {
-                string settingsfile = Path.Combine(Program.AppDataFolder, "settings.xml");
-                if (File.Exists(settingsfile))
-                {
-                    File.Delete(settingsfile);
-                    //this.xmlsettings = new xmlHandler(true);
-                }
-                else
-                {
-                    throw new Exception("Could not find settings file in application directory.");
-                }
-
-                this.Close();
+                xmlUtil.WriteDefaultSettings();
+                this.SetControlsBySettings();
             }
         }
 
@@ -379,7 +358,7 @@ namespace NoteFly
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {
-                if (key.GetValue("NoteFly", null) != null)
+                if (key.GetValue(Program.AssemblyTitle, null) != null)
                 {
                     return true;
                 }
@@ -415,7 +394,7 @@ namespace NoteFly
                     {
                         File.Move(oldfile, newfile);
                     }
-                    else { throw new CustomException("File is marked as system file. Did not move."); }
+                    else { throw new CustomException(NoteFly.Properties.Resources.settings_excsystemfilenotmoved); }
                 }
                 else
                 {
@@ -437,6 +416,11 @@ namespace NoteFly
         private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
         {
             this.iptbProxyAddress.Enabled = this.chxUseProxy.Checked;
+        }
+
+        private void cbxCheckUpdates_CheckedChanged(object sender, EventArgs e)
+        {
+            this.numUpdateCheckDays.Enabled = this.chxCheckUpdates.Checked;
         }
 
         #endregion Methods

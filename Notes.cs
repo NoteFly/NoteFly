@@ -239,6 +239,35 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Get the skinnr that belongs by a name.
+        /// If not found return -1.
+        /// </summary>
+        /// <param name="skinname"></param>
+        /// <returns></returns>
+        public int GetSkinNr(string skinname)
+        {
+            foreach (Skin curskin in this.skins)
+            {
+                if (curskin.Name == skinname)
+                {
+                    return curskin.Nr;
+                }
+            }
+            Log.Write(LogType.error, "SkinNr not found for skinname:" + skinname);
+            return -1;
+        }
+
+        /// <summary>
+        /// Get the name of a skin by the skinnr.
+        /// </summary>
+        /// <param name="skinnr">The skin number (starts at index 0)</param>
+        /// <returns>The name of the skin, e.g. Yellow</returns>
+        public string GetSkinName(int skinnr)
+        {
+            return this.skins[skinnr].Name;
+        }
+
+        /// <summary>
         /// Gets a string array with all the skin names.
         /// </summary>
         /// <returns></returns>
@@ -251,22 +280,6 @@ namespace NoteFly
             }
             return skinnames;
         }
-
-        /*
-        /// <summary>
-        /// Gets a Color array with all foreground colors of skins
-        /// </summary>
-        /// <returns></returns>
-        public Color[] GetSkinsForegroundColors()
-        {
-            Color[] skinfgcolors = new Color[this.skins.Count];
-            for (int i = 0; i < skinfgcolors.Length; i++)
-			{
-			    skinfgcolors[i] = this.skins[i].ForegroundClr;
-			}
-            return skinfgcolors;
-        }
-         */
 
         /// <summary>
         /// Bring all notes to front of all other windows.
@@ -341,23 +354,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the name of a skin by the skinnr.
-        /// </summary>
-        /// <param name="skinnr">The skin number (starts at index 0)</param>
-        /// <returns>The name of the skin, e.g. Yellow</returns>
-        public string GetSkinName(int skinnr)
-        {
-            foreach (Skin curskin in this.skins)
-            {
-                if (curskin.Nr == skinnr)
-                {
-                    return curskin.Name;
-                }
-            }
-            return "";
-        }
-
-        /// <summary>
         /// Update all fonts settings for all notes.
         /// </summary>
         public void UpdateAllFonts()
@@ -421,7 +417,10 @@ namespace NoteFly
             {
                 MessageBox.Show("Too many notes,");
             }
-            this.notes.Capacity = notefiles.Length;
+            else
+            {
+                this.notes.Capacity = notefiles.Length;
+            }
             for (int i = 0; i < notefiles.Length; i++)
             {
                 Note note = xmlUtil.LoadNote(this, notefiles[i]);
@@ -458,8 +457,6 @@ namespace NoteFly
 #endif
         }
 
-        #endregion Methods
-
 #if DEBUG
         /// <summary>
         /// Methode that creates some notes with a hardcoded text and random color 
@@ -494,7 +491,9 @@ namespace NoteFly
                 this.notes.Add(testnote);
             }
         }
-#endif
+    #endif
+
+    #endregion Methods
 
     }
 }
