@@ -495,7 +495,7 @@ namespace NoteFly
             Settings.NotesSavepath = Program.AppDataFolder;
             Settings.NotesTransparencyEnabled = true;
             Settings.NotesTransparencyLevel = 90;
-            Settings.NotesWarnLimit = 1000;
+            Settings.NotesWarnLimit = 200;
             Settings.ProgramFirstrun = true;
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
@@ -575,7 +575,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Write settings file, TODO rewrite
+        /// Write settings file.
         /// </summary>
         /// <returns>true if succeed.</returns>
         public static bool WriteSettings()

@@ -55,7 +55,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LoadUrl("http://www.notefly.tk/faq.php");
+            LoadUrl("www.notefly.tk/faq.php");
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LoadUrl("http://www.notefly.tk/");
+            LoadUrl("www.notefly.tk/");
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace NoteFly
         {
             try
             {
-                System.Diagnostics.Process.Start(url);
+                System.Diagnostics.Process.Start( new System.Diagnostics.ProcessStartInfo("http://"+url));
             }
             catch (Exception exc)
             {

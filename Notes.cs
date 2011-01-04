@@ -431,7 +431,6 @@ namespace NoteFly
                     note.CreateForm();
                 }
             }
-
             if (firstrun)
             {
                 int tipnotewidth = 320;
@@ -446,7 +445,9 @@ namespace NoteFly
                 notecontent.AppendLine("By clicking on the cross on this note this note will be hidden.");
                 notecontent.AppendLine("You can get it back with the manage notes window.");
                 //this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+                Settings.ProgramFirstrun = false;
                 Log.Write(LogType.info, "firstrun occur");
+                xmlUtil.WriteSettings();
             }
 
 #if DEBUG

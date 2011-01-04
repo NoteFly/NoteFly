@@ -185,11 +185,12 @@ namespace NoteFly
             menuExit.Click += new System.EventHandler(MenuExit_Click);
 
 #if windows
+            //security measure, warn if runned as administrator.
             System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
             System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
             if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
             {
-                MessageBox.Show("You are now running "+Program.AssemblyTitle+" as elevated Administrator.", "(Elevated) administrator");
+                MessageBox.Show("You are now running "+Program.AssemblyTitle+" as elevated Administrator.\r\nWhich is not recommended.", "(Elevated) administrator");
             }
 #endif
 
