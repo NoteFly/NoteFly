@@ -143,7 +143,6 @@ namespace NoteFly
             {
                 throw new CustomException(filenotfoundexc.Message);
             }
-
             if (xmlread == null)
             {
                 throw new CustomException("XmlTextReader object is null.");
@@ -184,7 +183,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(settingsfilepath);
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
-                xmlread.ProhibitDtd = true; //goves decreated warning in vs2010.
+                xmlread.ProhibitDtd = true; //gives decreated warning in vs2010.
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)
@@ -378,12 +377,10 @@ namespace NoteFly
                         }
                         else if (!endtag)
                         {
+                            numskins++;
                             curskin = new Skin();
                         }
                         endtag = !endtag;
-                        break;
-                    case "Nr":
-                        curskin.Nr = numskins++;
                         break;
                     case "Name":
                         curskin.Name = xmlread.ReadElementContentAsString();
@@ -398,9 +395,9 @@ namespace NoteFly
                         curskin.HighlightClr = ConvToClr(xmlread.ReadElementContentAsString());
                         break;
                 }
-                if (xmlread.Depth > 5)
+                if (xmlread.Depth > 3)
                 {
-                    break;
+                    throw new CustomException("Skin file corrupted: "+SKINFILE);
                 }
             }
             return skins;
@@ -412,49 +409,55 @@ namespace NoteFly
         /// <param name="n">pointer to notes</param>
         /// <param name="notefilepath"></param>
         /// <returns>An note object</returns>
-        public static Note LoadNote(Notes n, string notefilepath)
+        public static Note LoadNote(Notes n, string notefilename)
         {
-            DateTime created = File.GetCreationTime(notefilepath);
-            Note note = new Note(n, created);
-            xmlread = new XmlTextReader(notefilepath);
+            Note note = new Note(n, notefilename);
+            xmlread = new XmlTextReader(Path.Combine(Settings.NotesSavepath, notefilename));
             xmlread.ProhibitDtd = true;
             try
             {
                 while (xmlread.Read())
                 {
-                    switch (xmlread.Name)
+                    if (xmlread.Name != String.Empty)
                     {
-                        case "visible":
-                            note.Visible = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "ontop":
-                            note.Ontop = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "locked":
-                            note.Locked = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "x":
-                            note.X = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "y":
-                            note.Y = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "width":
-                            note.Width = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "heigth":
-                            note.Height = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "skin":
-                            int skinnr = n.GetSkinNr(xmlread.ReadElementContentAsString());
-                            if (skinnr >= 0)
-                            {
-                                note.SkinNr = skinnr;
-                            }
-                            break;
-                        case "title":
-                            note.Title = xmlread.ReadElementContentAsString();
-                            break;
+                        switch (xmlread.Name)
+                        {
+                            case "visible":
+                                note.Visible = xmlread.ReadElementContentAsBoolean();
+                                break;
+                            case "ontop":
+                                note.Ontop = xmlread.ReadElementContentAsBoolean();
+                                break;
+                            case "locked":
+                                note.Locked = xmlread.ReadElementContentAsBoolean();
+                                break;
+                            case "x":
+                                note.X = xmlread.ReadElementContentAsInt();
+                                break;
+                            case "y":
+                                note.Y = xmlread.ReadElementContentAsInt();
+                                break;
+                            case "width":
+                                note.Width = xmlread.ReadElementContentAsInt();
+                                break;
+                            case "heigth":
+                                note.Height = xmlread.ReadElementContentAsInt();
+                                break;
+                            case "skin":
+                                int skinnr = n.GetSkinNr(xmlread.ReadElementContentAsString());
+                                if (skinnr >= 0)
+                                {
+                                    note.SkinNr = skinnr;
+                                }
+                                break;
+                            case "title":
+                                note.Title = xmlread.ReadElementContentAsString();
+                                break;
+                        }
+                        if (xmlread.Depth > 5)
+                        {
+                            throw new CustomException("note file corrupted: " + notefilename);
+                        }
                     }
                 }
             }
@@ -514,7 +517,6 @@ namespace NoteFly
             Settings.TrayiconSettingsbold = false;
             Settings.UpdatecheckEverydays = 0; //0 is disabled.
             Settings.UpdatecheckLastDate = DateTime.Now.ToString();
-
             try
             {
                 WriteSettings();
@@ -539,9 +541,9 @@ namespace NoteFly
         /// <param name="notewidth">width in pixels of the note</param>
         /// <param name="noteheight">height in pixels of the note</param>
         /// <returns></returns>
-        public static bool WriteNote(string filename, Note note, string content)
+        public static bool WriteNote(string notefilename, Note note, string content)
         {
-            xmlwrite = new XmlTextWriter(filename, System.Text.Encoding.UTF8);
+            xmlwrite = new XmlTextWriter(Path.Combine(Settings.NotesSavepath, notefilename), System.Text.Encoding.UTF8);
             xmlwrite.Formatting = Formatting.Indented;
             try
             {
@@ -684,20 +686,58 @@ namespace NoteFly
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument();
                 xmlwrite.WriteStartElement("skins");
-                xmlwrite.WriteAttributeString("count", "2"); //for performance predefine list Capacity, not required.
+                xmlwrite.WriteAttributeString("count", "7"); //for performance predefine list Capacity, not required.
+                
                 xmlwrite.WriteStartElement("skin");
                 xmlwrite.WriteElementString("Name", "yellow");
                 xmlwrite.WriteElementString("ForegroundColor", "#FFD800");
                 xmlwrite.WriteElementString("BackgroundColor", "#E5B61B");
-                xmlwrite.WriteElementString("HighlightColor", "#FFE677");
+                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
                 xmlwrite.WriteEndElement();
+
                 xmlwrite.WriteStartElement("skin");
                 xmlwrite.WriteElementString("Name", "orange");
                 xmlwrite.WriteElementString("ForegroundColor", "#FF6A00");
                 xmlwrite.WriteElementString("BackgroundColor", "#EF6F1F");
-                xmlwrite.WriteElementString("HighlightColor", "#FF6247");
+                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
                 xmlwrite.WriteEndElement();
-                //todo: add more
+
+                xmlwrite.WriteStartElement("skin");
+                xmlwrite.WriteElementString("Name", "white");
+                xmlwrite.WriteElementString("ForegroundColor", "#FFFFFF");
+                xmlwrite.WriteElementString("BackgroundColor", "#26262C");
+                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+                xmlwrite.WriteEndElement();
+
+                xmlwrite.WriteStartElement("skin");
+                xmlwrite.WriteElementString("Name", "green");
+                xmlwrite.WriteElementString("ForegroundColor", "#6FE200");
+                xmlwrite.WriteElementString("BackgroundColor", "#008000");
+                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+                xmlwrite.WriteEndElement();
+
+                xmlwrite.WriteStartElement("skin");
+                xmlwrite.WriteElementString("Name", "blue");
+                xmlwrite.WriteElementString("ForegroundColor", "#5A86D5");
+                xmlwrite.WriteElementString("BackgroundColor", "#1A1AFF");
+                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+                xmlwrite.WriteEndElement();
+
+                xmlwrite.WriteStartElement("skin");
+                xmlwrite.WriteElementString("Name", "purple");
+                xmlwrite.WriteElementString("ForegroundColor", "#FF1AFF");
+                xmlwrite.WriteElementString("BackgroundColor", "#8B1A8B");
+                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+                xmlwrite.WriteEndElement();
+
+                xmlwrite.WriteStartElement("skin");
+                xmlwrite.WriteElementString("Name", "red");
+                xmlwrite.WriteElementString("ForegroundColor", "#FF1A1A");
+                xmlwrite.WriteElementString("BackgroundColor", "#7A1515");
+                xmlwrite.WriteElementString("HighlightColor", "#FFA500");
+                xmlwrite.WriteEndElement();
+
+                
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
             }

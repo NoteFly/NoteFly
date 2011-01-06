@@ -7,9 +7,8 @@ namespace NoteFly
 {
     public class Skin
     {
-		#region Fields (5) 
+		#region Fields (4) 
 
-        public int Nr; //position
         public string Name;
         public Color ForegroundClr;
         public Color BackgroundClr;

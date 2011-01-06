@@ -327,6 +327,7 @@ namespace NoteFly
         private void tbTitle_Enter(object sender, EventArgs e)
         {
             this.tbTitle.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
+            SetToolbarEnabled(false);
         }
 
         /// <summary>
@@ -337,6 +338,7 @@ namespace NoteFly
         private void tbTitle_Leave(object sender, EventArgs e)
         {
             this.tbTitle.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
+            SetToolbarEnabled(true);
         }
 
         /// <summary>
@@ -347,6 +349,7 @@ namespace NoteFly
         private void rtbNote_Enter(object sender, EventArgs e)
         {
             this.rtbNewNote.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
+            SetToolbarEnabled(true);
         }
 
         /// <summary>
@@ -357,6 +360,14 @@ namespace NoteFly
         private void rtbNote_Leave(object sender, EventArgs e)
         {
             this.rtbNewNote.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
+        }
+
+        private void SetToolbarEnabled(bool enabled)
+        {
+            this.btnTextBold.Enabled = enabled;
+            this.btnTextItalic.Enabled = enabled;
+            this.btnTextStriketrough.Enabled = enabled;
+            this.btnTextUnderline.Enabled = enabled;
         }
 
         /// <summary>
@@ -435,6 +446,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openfiledlg = new OpenFileDialog();
@@ -507,6 +523,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Italic text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTextItalic_Click(object sender, EventArgs e)
         {
             if (checksellen())
@@ -522,6 +543,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Underline text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTextUnderline_Click(object sender, EventArgs e)
         {
             if (this.rtbNewNote.SelectionFont.Underline)
@@ -534,6 +560,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Striketrough text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTextStriketrough_Click(object sender, EventArgs e)
         {
             if (this.rtbNewNote.SelectionFont.Strikeout)
@@ -546,13 +577,6 @@ namespace NoteFly
             }
         }
 
-        private void btnTextHidden_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("todo");
-            //this.rtbNewNote.en
-        }
-
         #endregion
-
     }
 }

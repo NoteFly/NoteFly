@@ -75,7 +75,6 @@ namespace NoteFly
             this.btnTextBold = new System.Windows.Forms.Button();
             this.btnTextItalic = new System.Windows.Forms.Button();
             this.btnTextStriketrough = new System.Windows.Forms.Button();
-            this.btnTextHidden = new System.Windows.Forms.Button();
             this.btnTextUnderline = new System.Windows.Forms.Button();
             this.rtbNewNote = new System.Windows.Forms.RichTextBox();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
@@ -325,32 +324,6 @@ namespace NoteFly
             this.btnTextStriketrough.UseVisualStyleBackColor = false;
             this.btnTextStriketrough.Click += new System.EventHandler(this.btnTextStriketrough_Click);
             // 
-            // btnTextHidden
-            // 
-            this.btnTextHidden.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnTextHidden.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnTextHidden.BackColor = System.Drawing.Color.Transparent;
-            this.btnTextHidden.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTextHidden.CausesValidation = false;
-            this.btnTextHidden.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnTextHidden.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnTextHidden.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextHidden.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.btnTextHidden.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnTextHidden.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextHidden.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTextHidden.Location = new System.Drawing.Point(132, 214);
-            this.btnTextHidden.Name = "btnTextHidden";
-            this.btnTextHidden.Size = new System.Drawing.Size(31, 23);
-            this.btnTextHidden.TabIndex = 13;
-            this.btnTextHidden.TabStop = false;
-            this.btnTextHidden.Text = "¶";
-            this.toolTip.SetToolTip(this.btnTextHidden, "show hidden characters");
-            this.btnTextHidden.UseCompatibleTextRendering = true;
-            this.btnTextHidden.UseMnemonic = false;
-            this.btnTextHidden.UseVisualStyleBackColor = false;
-            this.btnTextHidden.Click += new System.EventHandler(this.btnTextHidden_Click);
-            // 
             // btnTextUnderline
             // 
             this.btnTextUnderline.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -427,7 +400,6 @@ namespace NoteFly
             this.Controls.Add(this.pbResizeGrip);
             this.Controls.Add(this.pnlHeadNewNote);
             this.Controls.Add(this.btnTextUnderline);
-            this.Controls.Add(this.btnTextHidden);
             this.Controls.Add(this.btnTextStriketrough);
             this.Controls.Add(this.rtbNewNote);
             this.Controls.Add(this.btnTextBold);
@@ -457,7 +429,6 @@ namespace NoteFly
         private System.Windows.Forms.Button btnTextBold;
         private System.Windows.Forms.Button btnTextItalic;
         private System.Windows.Forms.Button btnTextStriketrough;
-        private System.Windows.Forms.Button btnTextHidden;
         private System.Windows.Forms.Button btnTextUnderline;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.PictureBox pbResizeGrip;

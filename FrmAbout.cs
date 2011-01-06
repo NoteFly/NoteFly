@@ -71,7 +71,7 @@ namespace NoteFly
         /// <summary>
         /// Load a url link. Throws error if inpossible, e.g: no http protocol handler registered.
         /// </summary>
-        /// <param name="url">the link</param>
+        /// <param name="url">the url without prefix</param>
         private void LoadUrl(string url)
         {
             try

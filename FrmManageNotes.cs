@@ -112,8 +112,8 @@ namespace NoteFly
             int[] deletedids = new int[selrows.Count];
             for (int r = 0; r < selrows.Count; r++)
             {
-                int id = Convert.ToInt32(selrows[r].Cells["ID"]);
-                string filename = this.notes.GetNoteFilename(id, this.notes.GetNote(id).Title);
+                int nr = Convert.ToInt32(selrows[r].Cells["nr"]);
+                string filename = this.notes.GetNote(nr).Filename;
                 try
                 {
                     string filepath = Path.Combine(Settings.NotesSavepath, filename);
@@ -133,8 +133,8 @@ namespace NoteFly
                     Log.Write(LogType.error, msgaccessdenied);
                     MessageBox.Show(msgaccessdenied);
                 }
-                deletedids[r] = id;
-                this.notes.RemoveNote(id);
+                //deletedids[r] = id;
+                this.notes.RemoveNote(nr);
             }
 
             string[] files = Directory.GetFiles(Settings.NotesSavepath, ".nfn");
@@ -243,14 +243,14 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
-            for (int id = 1; id <= this.notes.CountNotes; id++)
+            for (int i = 0; i <= this.notes.CountNotes; i++)
             {
                 string visible = "False";
-                if (this.notes.GetNote(id).Visible)
+                if (this.notes.GetNote(i).Visible)
                 {
                     visible = "True";
                 }
-                string[] rowArray = new string[] { this.notes.GetNote(id).Id.ToString(), this.notes.GetNote(id).Title, visible, this.notes.GetNote(id).SkinNr.ToString() };
+                string[] rowArray = new string[] { i.ToString(), this.notes.GetNote(i).Title, visible, this.notes.GetNote(i).SkinNr.ToString() };
                 //dr["ID"] = this.notes.GetNote(id).Id;
                 //dr["Title"] = this.notes.GetNote(id).Title;
                 //dr["Showed"] = this.notes.GetNote(id).Visible;

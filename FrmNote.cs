@@ -27,6 +27,7 @@ namespace NoteFly
     using System.Windows.Forms;
 #if windows
     using System.Runtime.InteropServices;
+    using System.IO;
 #endif
     /// <summary>
     /// The note class.
@@ -491,8 +492,6 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            //xmlHandler getSettings = new xmlHandler(true);
-            //if (getSettings.getXMLnodeAsBool("askurl"))
             if (Settings.ConfirmLinkclick)
             {
                 DialogResult result = MessageBox.Show(this, "Are you sure you want to visted:\r\n" + e.LinkText, "url pressed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -516,14 +515,13 @@ namespace NoteFly
         {
             if ((this.Location.X + this.Width > MINVISIBLESIZE) && (this.Location.Y + this.Height > MINVISIBLESIZE))
             {
-                string notefilepath = this.notes.GetNoteFilename(this.note.Id, this.note.Title);
+                string notefilepath = Path.Combine(Settings.NotesSavepath, this.note.Filename);
                 //xmlUtil.WriteNote(notefilepath, this.note, this.rtbNote.Rtf);
             }
             else
             {
-                string msgOutOfScreen = "Position note (ID:" + this.note.Id + ") is out of screen.";
+                string msgOutOfScreen = "Position note is out of screen.";
                 Log.Write(LogType.error, msgOutOfScreen);
-                MessageBox.Show(msgOutOfScreen);
             }
         }
 
@@ -602,7 +600,7 @@ namespace NoteFly
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
                 //new Textfile(true, sfdlg.FileName, this.note.Title, this.note);
-                string logmsg = "Note (ID:" + this.note.Id + ") saved to ";
+                string logmsg = "Note saved to ";
                 switch (sfdlg.FilterIndex)
                 {
                     case 0:

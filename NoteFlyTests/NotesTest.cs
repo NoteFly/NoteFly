@@ -104,27 +104,22 @@ namespace NoteFlyTests
         public void SaveNoteTest()
         {
             Notes target = new Notes();
-            Note note = new Note(target);
-            note.Title = "testnote";
-            note.Id = 999;
-            note.RolledUp = false;;
-            note.X = 80;
-            note.Y = 80;
-            note.Height = 100;
-            note.Width = 100;
-            note.RolledUp = false;
-            note.Ontop = false;
-            note.Locked = false;
-            string content = "this is a test note.";
-            target.SaveNote(note, content);
-            string notefilepath = target.GetNoteFilename(note.Id, note.Title);
+            Note newnote = target.CreateNote("this is a test note", 1, 100, 100, 360, 280);
+            newnote.RolledUp = false;
+            newnote.RolledUp = false;
+            newnote.Ontop = false;
+            newnote.Locked = false;
+            target.SaveNote(newnote, "");
+            string notefilepath = Path.Combine(Settings.NotesSavepath, newnote.Filename);
             if (!File.Exists(notefilepath))
             {
                 Assert.Fail("Note file doesnt exist.");
             }
             else
             {
-                //test done, delete test note file.
+                //todo: more testing.
+
+                //test done, delete test file.
                 File.Delete(notefilepath);
             }
         }
@@ -138,39 +133,36 @@ namespace NoteFlyTests
             Notes target = new Notes();
             Note newnote = target.CreateNote("test note", 1, 90, 90, 100, 100);
             target.AddNote(newnote);
-            int numnotesbefore = target.CountNotes;
-            target.RemoveNote(newnote.Id);
-            if (target.CountNotes != numnotesbefore - 1)
+            int notelastpos = target.CountNotes - 1;
+            target.RemoveNote(notelastpos);
+            int excepted = notelastpos - 1;
+            if (target.CountNotes != excepted)
             {
-                Assert.Fail("Number of notes different then excepted.");
+                Assert.Fail("Number of notes: " + target.CountNotes + ", different then excepted: " + excepted);
             }
         }
 
         /// <summary>
-        ///A test for NewNoteFilename
-        ///</summary>
-        [TestMethod()]
-        public void GetNoteFilenameTest()
-        {
-            Notes target = new Notes(); 
-            int id = 1;
-            string title = "test";
-            string expected = Settings.NotesSavepath+"1-test.nfn";
-            string actualfinamepath = target.GetNoteFilename(id, title);
-            Assert.AreEqual(expected, actualfinamepath, "excepted filename and path are incorrect.");
-        }
-
-        /// <summary>
         ///A test for GetSkinsNames
+        ///Only passes for default unmodified skins.xml file.
         ///</summary>
         [TestMethod()]
         public void GetSkinsNamesTest()
         {
-            Notes target = new Notes(); // TODO: Initialize to an appropriate value
-            string[] expected = new string[2];
+            Notes target = new Notes();
+            string[] expected = new string[7];
             expected[0] = "yellow";
             expected[1] = "orange";
+            expected[2] = "white";
+            expected[3] = "green";
+            expected[4] = "blue";
+            expected[5] = "purple";
+            expected[6] = "red";
             string[] actual = target.GetSkinsNames();
+            if (actual.Length > expected.Length)
+            {
+                Assert.Inconclusive("Skins.xml can be modified or test failed because more skins are returned.");
+            }
             for (int i = 0; i < actual.Length; i++)
             {
                 if (expected[i].ToString() != actual[i].ToString())
@@ -231,7 +223,7 @@ namespace NoteFlyTests
         {
             Notes target = new Notes();
             int skinnr = 0; //yellow skin
-            string hexhighlightcolor = "#FFE677";
+            string hexhighlightcolor = "#FF0000";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexhighlightcolor);
             Color actual = target.GetHighlightColor(skinnr);
             Assert.AreEqual(expected, actual);
@@ -244,7 +236,7 @@ namespace NoteFlyTests
         public void CreateNoteTest()
         {
             Notes target = new Notes();
-            string title = "test123";
+            string title = "123456789abc";
             int skinnr = 0;
             int x = 400;
             int y = 300;
@@ -253,11 +245,7 @@ namespace NoteFlyTests
             Note actual = target.CreateNote(title, skinnr, x, y, width, height);
 
             Assert.IsNotNull(actual, "CreateNoteTest failed to create Note object.");
-            if (actual.DateCreated.Date != DateTime.Now.Date)
-            {
-                Assert.Fail("Note DateCreated not good.");
-            }
-            if (actual.Title != "test123")
+            if (actual.Title != "123456789abc")
             {
                 Assert.Fail("Note title not good.");
             }

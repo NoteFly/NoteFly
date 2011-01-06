@@ -27,30 +27,25 @@ namespace NoteFly
     public class Note
     {
         public FrmNote frmnote;
-
         private Notes notes;
-        private DateTime datecreated;
+        private string filename;
 
         /// <summary>
         /// Creating a new note instance, completly new note.
         /// </summary>
-        public Note(Notes notes)
+        public Note(Notes notes, string filename)
         {
             this.notes = notes;
-            datecreated = DateTime.Now;
+            this.filename = filename;
         }
 
-        /// <summary>
-        /// Creating a new note instance, loading a note from file.
-        /// </summary>
-        /// <param name="created"></param>
-        public Note(Notes notes, DateTime datecreated)
+        public string Filename
         {
-            this.notes = notes;
-            this.datecreated = datecreated;
+            get
+            {
+                return this.filename;
+            }
         }
-
-        public int Id { get; set; }
         public string Title { get; set; }
         public bool Visible { get; set; }
         public bool Ontop { get; set; }
@@ -61,17 +56,6 @@ namespace NoteFly
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-
-        /// <summary>
-        /// Gets date and time when this note was created.
-        /// </summary>
-        public DateTime DateCreated
-        {
-            get
-            {
-                return this.datecreated;
-            }
-        }
 
         /// <summary>
         /// Create a new frmNote with this note.
@@ -90,10 +74,10 @@ namespace NoteFly
         /// </summary>
         public void DestroyForm()
         {
-                this.frmnote.Close();
-                this.frmnote = null;
-                this.Visible = false;
-                GC.Collect();
+            this.frmnote.Close();
+            this.frmnote = null;
+            this.Visible = false;
+            GC.Collect();
         }
 
         /// <summary>
@@ -104,7 +88,7 @@ namespace NoteFly
         {
             if (this.frmnote == null)
             {
-                string notefilepath = Path.Combine(Settings.NotesSavepath, this.notes.GetNoteFilename(this.Id, this.Title));
+                string notefilepath = Path.Combine(Settings.NotesSavepath, this.Filename); //this.notes.GetNoteFilename(this.Title)
                 if (File.Exists(notefilepath))
                 {
                     return xmlUtil.GetContentString(notefilepath, "content");
@@ -112,7 +96,7 @@ namespace NoteFly
                 else
                 {
                     //error
-                    throw new CustomException("Cannot read note content, note not found.");
+                    throw new CustomException("Cannot read note content, note not found: " + notefilepath);
                 }
             }
             else
