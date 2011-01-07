@@ -28,13 +28,15 @@ namespace NoteFly
     using System.Windows.Forms;
     using System.Drawing;
     using System.Collections;
+    using System.Globalization;
+    using System.Threading;
 
     /// <summary>
     /// This class has a list of all notes.
     /// </summary>
     public class Notes
     {
-		#region Fields (3) 
+        #region Fields (3)
 
         /// <summary>
         /// EXTENSION
@@ -49,9 +51,9 @@ namespace NoteFly
         /// </summary>
         private List<Skin> skins;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         //private List<FrmNote> notesfrms;
         /// <summary>
@@ -65,9 +67,9 @@ namespace NoteFly
             this.LoadNotes(Settings.ProgramFirstrun);
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (1) 
+        #region Properties (1)
 
         /// <summary>
         /// The number of notes there are.
@@ -80,11 +82,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (18) 
+        #region Methods (18)
 
-		// Public Methods (14) 
+        // Public Methods (14) 
 
         /// <summary>
         /// Add a new note the the notes list.
@@ -116,13 +118,6 @@ namespace NoteFly
             }
         }
 
-        //public int CountSkins
-        //{
-        //    get
-        //    {
-        //        return this.skins.Count;
-        //    }
-        //}
         /// <summary>
         /// Create a new note object with some default settings.
         /// </summary>
@@ -150,16 +145,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets the background color.
-        /// </summary>
-        /// <param name="skinnr"></param>
-        /// <returns></returns>
-        public System.Drawing.Color GetBackgroundColor(int skinnr)
-        {
-            return GetColor(2, skinnr);
-        }
-
-        /// <summary>
         /// Gets the foreground color.
         /// </summary>
         /// <param name="skinnr"></param>
@@ -167,6 +152,16 @@ namespace NoteFly
         public System.Drawing.Color GetForegroundColor(int skinnr)
         {
             return GetColor(1, skinnr);
+        }
+
+        /// <summary>
+        /// Gets the background color.
+        /// </summary>
+        /// <param name="skinnr"></param>
+        /// <returns></returns>
+        public System.Drawing.Color GetBackgroundColor(int skinnr)
+        {
+            return GetColor(2, skinnr);
         }
 
         /// <summary>
@@ -260,10 +255,14 @@ namespace NoteFly
                 {
                     throw new CustomException("cannot create filename.");
                 }
-                else if (xmlUtil.WriteNote(notefile, note, content))
+                else
                 {
-                    Log.Write(LogType.info, "note created: " + notefile);
-                    return true;
+                    note.Filename = notefile;
+                    if (xmlUtil.WriteNote(notefile, note, content))
+                    {
+                        Log.Write(LogType.info, "note created: " + notefile);
+                        return true;
+                    }
                 }
             }
             catch (Exception exc)
@@ -311,7 +310,7 @@ namespace NoteFly
                 //todo
             }
         }
-		// Private Methods (4) 
+        // Private Methods (4) 
 
         /// <summary>
         /// This method set a limit on how many notes can be loaded before a 
@@ -355,13 +354,59 @@ namespace NoteFly
         {
             string title2 = StripForbiddenFilenameChars(title);
             const int limitlenfile = 8;
+            string newfile;
             if (title2.Length > limitlenfile)
             {
-                return title2.Substring(0, limitlenfile) + NOTEEXTENSION;
+                newfile = title2.Substring(0, limitlenfile) + NOTEEXTENSION;
             }
             else
             {
-                return title2 + NOTEEXTENSION;
+                newfile = title2 + NOTEEXTENSION;
+            }
+
+            if (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)))
+            {
+                newfile = Checknewfilename(newfile, limitlenfile, '#');
+                return newfile;
+            }
+            else
+            {
+                return newfile;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Empty string on all used.</returns>
+        private string Checknewfilename(string newfile, int limitlenfile, char sepchar)
+        {
+            int num = 1;
+            int lenfilecounter = 3;
+            int numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
+            while (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)) && (numlen <= lenfilecounter))
+            {
+                numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
+                newfile = newfile.Substring(0, limitlenfile - numlen - 1) + sepchar + num + NOTEEXTENSION;
+                num++;
+            }
+            if (numlen > lenfilecounter)
+            {
+                sepchar++;
+                if (sepchar < 47)
+                {
+                    return Checknewfilename(newfile, limitlenfile, sepchar);
+                }
+                else
+                {
+                    //give up.
+                    //todo: find a better way to handle this.
+                    throw new CustomException("Please use different title, filenames based on title seems to be all taken.");
+                }
+            }
+            else
+            {
+                return newfile;
             }
         }
 
@@ -374,7 +419,7 @@ namespace NoteFly
             if (!Directory.Exists(Settings.NotesSavepath))
             {
                 const string notefoldernoteexist = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
-                DialogResult result = MessageBox.Show(notefoldernoteexist, "notefolder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                DialogResult result = MessageBox.Show(notefoldernoteexist, "Notes folder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
                     Log.Write(LogType.error, (notefoldernoteexist + " No"));
@@ -387,24 +432,40 @@ namespace NoteFly
                 }
             }
             /*
-            string[] notefiles = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly);
-            for (int i = 0; i < notefiles.Length; i++)
+            //loops twice
+            string[] notefilespath = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly);
+            string[] notefiles = new string[notefilespath.Length];
+            for (int i = 0; i < notefilespath.Length; i++)
             {
-                notefiles[i] = Path.GetFileName(notefiles[i]); //memory gaps
+                notefiles[i] = Path.GetFileName(notefilespath[i]);
             }
             */
-            // /*
+
+            /*
+            //loops twice
+            DirectoryInfo notessavedirinfo = new DirectoryInfo(Settings.NotesSavepath);
+            FileInfo[] notefilesinfo = notessavedirinfo.GetFiles("*" + NOTEEXTENSION);
+            string[] notefiles = new string[notefilesinfo.Length];
+            for (int i = 0; i < notefiles.Length; i++)
+            {
+                notefiles[i] = notefilesinfo[i].Name;
+            }
+            */
+
+            // /* 
+            //loops once:
             string[] notefiles = new string[65533]; //FAT32 files per directory limit, -4 files: settings.xml, skins.xml, debug.log and debug.log.old
-            int n =0;
-            IEnumerator notefilesenumerator = (Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly).GetEnumerator());
+            int n = 0;
+            IEnumerator notefilesenumerator = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly).GetEnumerator();
             while (notefilesenumerator.MoveNext())
             {
-                string filepath = (string)notefilesenumerator.Current; //slow cast
+                string filepath = notefilesenumerator.Current.ToString();
                 notefiles[n] = (Path.GetFileName(filepath));
                 n++;
             }
-            Array.Resize(ref notefiles, n); //not NETCF v2.0 
+            Array.Resize(ref notefiles, n); //not in NET CF v2.0 
             // */
+
             if (CheckLimitNotes(notefiles.Length))
             {
                 DialogResult dlgres = MessageBox.Show("Their are many notes loading can take a while, do you want continu?", "contine?", MessageBoxButtons.YesNo);
@@ -428,6 +489,16 @@ namespace NoteFly
                 }
             }
 
+            //do multi core opt.
+            //int ncores = Environment.ProcessorCount;
+            //for (int startthread = 0; startthread < ncores; startthread++)
+            //{
+                //NoteLoader noteloader = new NoteLoader();
+                //Thread t = new Thread(   );
+                //t.Start();
+            //}
+
+
             if (firstrun)
             {
                 int tipnotewidth = 320;
@@ -447,15 +518,17 @@ namespace NoteFly
                 xmlUtil.WriteSettings();
             }
 
-#if DEBUG
-#warning Stress test enabled
-            Log.Write(LogType.info, "start stress test");
-            this.LoadNotesStressTest(5);
-            Log.Write(LogType.info, "finished stress test");
-#endif
+  
+
+//#if DEBUG
+//#warning Stress test enabled
+            //Log.Write(LogType.info, "start stress test");
+            //this.LoadNotesStressTest(5);
+            //Log.Write(LogType.info, "finished stress test");
+//#endif
         }
 
-		#endregion Methods 
+        #endregion Methods
 
 #if DEBUG
         /// <summary>
@@ -463,26 +536,46 @@ namespace NoteFly
         /// for stress testing this application.
         /// </summary>
         /// <param name="maxnotes">How many notes to create.</param>
-        private void LoadNotesStressTest(int maxnotes)
-        {
-            Random rnd = new Random();
-
-            for (int id = 1; id <= maxnotes; id++)
-            {
-                string title = "test nr." + id + " testalongtitlesoiteasytoseeifresizingofmanagenoteisdonecorrectlyblablabla";
-                int skinnr = rnd.Next(0, 6);
-                int noteLocX = rnd.Next(0, 360);
-                int noteLocY = rnd.Next(0, 240);
-                int notewidth = 180;
-                int noteheight = 180;
-                Note testnote = this.CreateNote(title, skinnr, noteLocX, noteLocY, notewidth, noteheight);
-                //testnote.CreateForm();
-                //testnote.frmnote.rtbNote.Text = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
-                //     "warning: To prevent this note from saving don't move or touch it!";
+        //private void LoadNotesStressTest(int maxnotes)
+        //{
+        //    Random rnd = new Random();
+        //    for (int id = 1; id <= maxnotes; id++)
+        //    {
+        //        string title = "test nr." + id + " testalongtitlesoiteasytoseeifresizingofmanagenoteisdonecorrectlyblablabla";
+        //        int skinnr = rnd.Next(0, 6);
+        //        int noteLocX = rnd.Next(0, 360);
+        //        int noteLocY = rnd.Next(0, 240);
+        //        int notewidth = 180;
+        //        int noteheight = 180;
+        //        Note testnote = this.CreateNote(title, skinnr, noteLocX, noteLocY, notewidth, noteheight);
+        //        //testnote.CreateForm();
+        //        //testnote.frmnote.rtbNote.Text = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
+        //        //     "warning: To prevent this note from saving don't move or touch it!";
                 
-                this.notes.Add(testnote);
-            }
-        }
+        //        this.notes.Add(testnote);
+        //    }
+        //}
 #endif
     }
+
+    //public class NoteLoader
+    //{
+    //    /// <summary>
+    //    /// This method that will be called when the thread is started
+    //    /// </summary>
+    //    /// <returns></returns>
+    //    public void Work(Notes notes, string[] notefiles)
+    //    {
+    //        int ncores = Environment.ProcessorCount;
+    //        for (int i = 0; i < notefiles.Length; i += ncores)
+    //        {
+    //            Note note = xmlUtil.LoadNote(notes, notefiles[i]); //not thread-safe.
+    //            notes.AddNote(note);
+    //            if (note.Visible)
+    //            {
+    //                note.CreateForm();
+    //            }
+    //        }
+    //    }
+    //};
 }

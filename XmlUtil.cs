@@ -582,6 +582,7 @@ namespace NoteFly
         /// <returns>true if succeed.</returns>
         public static bool WriteSettings()
         {
+            NumberFormatInfo numfmtinfo = CultureInfo.InvariantCulture.NumberFormat;
             try
             {
                 xmlwrite = new XmlTextWriter(Path.Combine(Program.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
@@ -617,15 +618,15 @@ namespace NoteFly
                 WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
                 WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
                 //ints
-                xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString() );
-                xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString());
-                xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString());
-                xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString());
-                xmlwrite.WriteElementString("NotesClosebtnTooltipenabled", Settings.NotesDefaultSkinnr.ToString());
-                xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString());
-                xmlwrite.WriteElementString("NotesWarnLimit",Settings.NotesWarnLimit.ToString());
-                xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString());
-                xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString());
+                xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesClosebtnTooltipenabled", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesWarnLimit", Settings.NotesWarnLimit.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
                 //strings
                 xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);

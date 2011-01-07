@@ -45,6 +45,17 @@ namespace NoteFly
             {
                 return this.filename;
             }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    this.filename = value;
+                }
+                else
+                {
+                    throw new CustomException("Filename is null or empty.");
+                }
+            }
         }
         public string Title { get; set; }
         public bool Visible { get; set; }

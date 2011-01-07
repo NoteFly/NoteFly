@@ -131,7 +131,7 @@ namespace NoteFly
                     newnote = true;
                     this.note = this.notes.CreateNote(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
-
+                note.Title = this.tbTitle.Text;
                 if (this.notes.SaveNote(this.note, this.rtbNewNote.Rtf))
                 {
                     if (newnote)
@@ -139,9 +139,9 @@ namespace NoteFly
                         this.notes.AddNote(this.note);
                     }
                     this.note.CreateForm();
+                    this.note.GetContent();
+                    this.Close();
                 }
-
-                this.Close();
             }
         }
 

@@ -243,14 +243,14 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
-            for (int i = 0; i <= this.notes.CountNotes; i++)
+            for (int i = 0; i < this.notes.CountNotes; i++)
             {
                 string visible = "False";
                 if (this.notes.GetNote(i).Visible)
                 {
                     visible = "True";
                 }
-                string[] rowArray = new string[] { i.ToString(), this.notes.GetNote(i).Title, visible, this.notes.GetNote(i).SkinNr.ToString() };
+                string[] rowArray = new string[] { (i+1).ToString(), this.notes.GetNote(i).Title, visible, this.notes.GetNote(i).SkinNr.ToString() };
                 //dr["ID"] = this.notes.GetNote(id).Id;
                 //dr["Title"] = this.notes.GetNote(id).Title;
                 //dr["Showed"] = this.notes.GetNote(id).Visible;
