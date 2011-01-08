@@ -29,7 +29,7 @@ namespace NoteFly
         private System.Windows.Forms.ContextMenuStrip menuFrmNoteOptions;
         private System.Windows.Forms.ToolStripMenuItem menuEditNote;
         private System.Windows.Forms.ToolStripMenuItem menuCopyText;
-        private System.Windows.Forms.ToolStripMenuItem menuNoteColors;
+        private System.Windows.Forms.ToolStripMenuItem menuNoteSkins;
         private System.Windows.Forms.PictureBox pbResizeGrip;
         private System.Windows.Forms.ToolStripMenuItem menuOnTop;
         private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
@@ -68,14 +68,14 @@ namespace NoteFly
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent(System.Drawing.Color setclr)
+        private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlHead = new System.Windows.Forms.Panel();
             this.menuFrmNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuEditNote = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNoteColors = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNoteSkins = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendTo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToTwitter = new System.Windows.Forms.ToolStripMenuItem();
@@ -133,7 +133,7 @@ namespace NoteFly
             // 
             this.menuFrmNoteOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuEditNote,
-            this.menuNoteColors,
+            this.menuNoteSkins,
             this.menuSendTo,
             this.menuCopyTitle,
             this.menuCopyText,
@@ -142,7 +142,7 @@ namespace NoteFly
             this.menuLockNote,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 202);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 224);
             this.menuFrmNoteOptions.Text = "-=menu=-";
             this.menuFrmNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
             // 
@@ -156,13 +156,13 @@ namespace NoteFly
             this.menuEditNote.Text = "&Edit note";
             this.menuEditNote.Click += new System.EventHandler(this.editTToolStripMenuItem_Click);
             // 
-            // menuNoteColors
+            // menuNoteSkins
             // 
-            this.menuNoteColors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.menuNoteColors.Name = "menuNoteColors";
-            this.menuNoteColors.Size = new System.Drawing.Size(215, 22);
-            this.menuNoteColors.Text = "&Color";
-            this.menuNoteColors.DropDownOpening += new System.EventHandler(this.updateMenuNoteColor);
+            this.menuNoteSkins.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuNoteSkins.Name = "menuNoteSkins";
+            this.menuNoteSkins.Size = new System.Drawing.Size(215, 22);
+            this.menuNoteSkins.Text = "&Color";
+            this.menuNoteSkins.DropDownOpening += new System.EventHandler(this.updateMenuNoteColor);
             // 
             // menuSendTo
             // 
@@ -283,7 +283,6 @@ namespace NoteFly
             this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbNote.BackColor = setclr;
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNote.CausesValidation = false;
             this.rtbNote.ContextMenuStrip = this.menuFrmNoteOptions;
@@ -342,7 +341,6 @@ namespace NoteFly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = setclr;
             this.CancelButton = this.btnCloseNote;
             this.ClientSize = new System.Drawing.Size(240, 240);
             this.ContextMenuStrip = this.menuFrmNoteOptions;

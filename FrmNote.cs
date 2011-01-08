@@ -55,9 +55,12 @@ namespace NoteFly
         {
             this.notes = notes;
             this.note = note;
-            this.InitializeComponent(notes.GetForegroundColor(note.SkinNr));
-            //this.BackColor = notes.GetForegroundColor(note.SkinNr);
-            //this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.InitializeComponent();
+            
+            this.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
+
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
             this.SetBounds(note.X, note.Y, note.Width, note.Height);
@@ -91,7 +94,8 @@ namespace NoteFly
                     tsi.Checked = false;
                 }
                 tsi.BackColor = notes.GetForegroundColor(i);
-                this.menuNoteColors.DropDownItems.Add(tsi);
+                tsi.Click += new EventHandler(menuNoteSkins_skin_Click);
+                this.menuNoteSkins.DropDownItems.Add(tsi);
             }
         }
 
@@ -121,6 +125,21 @@ namespace NoteFly
             this.Visible = false;
             //this.notes.NotesUpdated = true;
             this.Hide();
+        }
+
+        /// <summary>
+        /// A new skin is selected for this note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuNoteSkins_skin_Click(object sender, EventArgs e)
+        {
+            ToolStripItem tsi = (ToolStripItem) sender;
+            note.SkinNr = notes.GetSkinNr(tsi.Text);
+            this.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
+            //todo: save.
         }
 
         /// <summary>
@@ -302,7 +321,7 @@ namespace NoteFly
             }
 
             this.pbResizeGrip.Visible = !note.Locked;
-            this.menuNoteColors.Enabled = !note.Locked;
+            this.menuNoteSkins.Enabled = !note.Locked;
             this.menuEditNote.Enabled = !note.Locked;
             this.menuOnTop.Enabled = !note.Locked;
             this.menuRollUp.Enabled = !note.Locked;
@@ -636,7 +655,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void updateMenuNoteColor(object sender, EventArgs e)
         {
-            foreach (ToolStripMenuItem curitem in this.menuNoteColors.DropDownItems)
+            foreach (ToolStripMenuItem curitem in this.menuNoteSkins.DropDownItems)
             {
                 curitem.Checked = false;
             }
