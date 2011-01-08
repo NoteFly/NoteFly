@@ -431,17 +431,17 @@ namespace NoteFly
                             case "locked":
                                 note.Locked = xmlread.ReadElementContentAsBoolean();
                                 break;
-                            case "x":
-                                note.X = xmlread.ReadElementContentAsInt();
-                                break;
-                            case "y":
-                                note.Y = xmlread.ReadElementContentAsInt();
-                                break;
                             case "width":
                                 note.Width = xmlread.ReadElementContentAsInt();
                                 break;
                             case "heigth":
                                 note.Height = xmlread.ReadElementContentAsInt();
+                                break;
+							case "x":
+                                note.X = xmlread.ReadElementContentAsInt();
+                                break;
+                            case "y":
+                                note.Y = xmlread.ReadElementContentAsInt();
                                 break;
                             case "skin":
                                 int skinnr = n.GetSkinNr(xmlread.ReadElementContentAsString());
@@ -622,7 +622,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesClosebtnTooltipenabled", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesWarnLimit", Settings.NotesWarnLimit.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));

@@ -1,52 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="settings">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="transparecy" type="xs:boolean" />
-        <xs:element name="transparecylevel" type="xs:int" />
-        <xs:element name="defaultcolor" type="xs:int" />
-        <xs:element name="actionleftclick" type="xs:int" />
-        <xs:element name="askurl" type="xs:boolean" />
-        <xs:element name="fontcontent" type="xs:string" />
-        <xs:element name="fontsize" type="xs:int" />
-        <xs:element name="textdirection" type="xs:int" />
-        <xs:element name="notesavepath" type="xs:string" />
-        <xs:element name="logerror" type="xs:boolean" />
-        <xs:element name="loginfo" type="xs:boolean" />
-        <xs:element name="syntaxhighlight">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="highlightHTML" type="xs:boolean" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="confirmexit" type="xs:boolean" />
-        <xs:element name="confirmdelete" type="xs:boolean" />
-        <xs:element name="defaultemail" type="xs:string" />
-        <xs:element name="useproxy" type="xs:boolean" />
-        <xs:element name="proxyaddr" type="xs:string" />
-        <xs:element name="networktimeout" type="xs:int" />
-        <xs:element name="firstrun" type="xs:boolean" />
-        <xs:element name="facebook">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="savesession" type="xs:string" />
-              <xs:element name="uid" type="xs:string" />
-              <xs:element name="sessionexpires" type="xs:string" />
-              <xs:element name="sessionexpires" type="xs:string" />
-              <xs:element name="sessionkey" type="xs:string" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>        
-        <xs:element name="twitter">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="twitteruser" type="xs:string" />
-              <xs:element name="twitterpass" type="xs:string" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
+        <xs:element name="ConfirmDeleteNote" type="xs:boolean" />
+        <xs:element name="ConfirmExit" type="xs:boolean" />
+        <xs:element name="ConfirmLinkclick" type="xs:boolean" />
+        <xs:element name="FontTitleStylebold" type="xs:boolean" />
+        <xs:element name="HighlightHTML" type="xs:boolean" />
+        <xs:element name="HighlightHyperlinks" type="xs:boolean" />
+        <xs:element name="HighlightPHP" type="xs:boolean" />
+        <xs:element name="HighlightSQL" type="xs:boolean" />
+        <xs:element name="NetworkConnectionForceipv6" type="xs:boolean" />
+        <xs:element name="NetworkProxyEnabled" type="xs:boolean" />
+        <xs:element name="NotesClosebtnHidenotepermanently" type="xs:boolean"/>
+        <xs:element name="NotesClosebtnTooltipenabled" type="xs:boolean" />
+        <xs:element name="NotesTransparencyEnabled" type="xs:boolean" />
+        <xs:element name="ProgramFirstrun" type="xs:boolean" />
+        <xs:element name="ProgramLogError" type="xs:boolean" />
+        <xs:element name="ProgramLogException" type="xs:boolean" />
+        <xs:element name="ProgramLogInfo" type="xs:boolean" />
+        <xs:element name="SocialEmailEnabled" type="xs:boolean" />
+        <xs:element name="SocialFacebookEnabled" type="xs:boolean" />
+        <xs:element name="SocialFacebookSavesession" type="xs:boolean" />
+        <xs:element name="SocialFacebookUseSSL" type="xs:boolean" />
+        <xs:element name="SocialTwitterEnabled" type="xs:boolean" />
+        <xs:element name="SocialTwitterUseSSL" type="xs:boolean" />
+        <xs:element name="TrayiconCreatenotebold" type="xs:boolean" />
+        <xs:element name="TrayiconExitbold" type="xs:boolean" />
+        <xs:element name="TrayiconManagenotesbold" type="xs:boolean" />
+        <xs:element name="TrayiconSettingsbold" type="xs:boolean" />
+
+        <xs:element name="FontContentSize" type="xs:int" />
+        <xs:element name="FontTextdirection" type="xs:int" />
+        <xs:element name="FontTitleSize" type="xs:int" />
+        <xs:element name="NetworkConnectionTimeout" type="xs:int" />
+        <xs:element name="NotesDefaultSkinnr" type="xs:int" />
+        <xs:element name="NotesTransparencyLevel" type="xs:int" />
+        <xs:element name="NotesWarnLimit" type="xs:int" />
+        <xs:element name="TrayiconLeftclickaction" type="xs:int" />
+
+        <xs:element name="UpdatecheckEverydays" type="xs:int" />
+        <xs:element name="UpdatecheckLastDate" type="xs:string" />
+        <xs:element name="FontContentFamily" type="xs:string" />
+        <xs:element name="FontTitleFamily" type="xs:string" />
+        <xs:element name="NetworkProxyAddress" type="xs:string" />
+        <xs:element name="NotesSavepath" type="xs:string" />
+        <xs:element name="SocialEmailDefaultadres" type="xs:string" />
+        <xs:element name="SocialTwitterUsername" type="xs:string" />
+        
       </xs:sequence>
     </xs:complexType>
   </xs:element>

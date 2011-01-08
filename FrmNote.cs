@@ -55,7 +55,9 @@ namespace NoteFly
         {
             this.notes = notes;
             this.note = note;
-            this.InitializeComponent();
+            this.InitializeComponent(notes.GetForegroundColor(note.SkinNr));
+            //this.BackColor = notes.GetForegroundColor(note.SkinNr);
+            //this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
             this.SetBounds(note.X, note.Y, note.Width, note.Height);

@@ -13,6 +13,7 @@
 //-----------------------------------------------------------------------
 #define windows //platform can be: windows, linux, macos
 
+using System.Drawing;
 namespace NoteFly
 {
     /// <summary>
@@ -67,7 +68,7 @@ namespace NoteFly
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private void InitializeComponent(System.Drawing.Color setclr)
         {
             this.components = new System.ComponentModel.Container();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -141,7 +142,7 @@ namespace NoteFly
             this.menuLockNote,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 224);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 202);
             this.menuFrmNoteOptions.Text = "-=menu=-";
             this.menuFrmNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
             // 
@@ -282,7 +283,7 @@ namespace NoteFly
             this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbNote.BackColor = System.Drawing.Color.Gold;
+            this.rtbNote.BackColor = setclr;
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNote.CausesValidation = false;
             this.rtbNote.ContextMenuStrip = this.menuFrmNoteOptions;
@@ -308,7 +309,7 @@ namespace NoteFly
             this.pnlNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlNote.BackColor = System.Drawing.Color.Gold;
+            this.pnlNote.BackColor = System.Drawing.Color.Transparent;
             this.pnlNote.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlNote.ContextMenuStrip = this.menuFrmNoteOptions;
             this.pnlNote.Controls.Add(this.pbResizeGrip);
@@ -341,7 +342,7 @@ namespace NoteFly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gold;
+            this.BackColor = setclr;
             this.CancelButton = this.btnCloseNote;
             this.ClientSize = new System.Drawing.Size(240, 240);
             this.ContextMenuStrip = this.menuFrmNoteOptions;
@@ -349,7 +350,7 @@ namespace NoteFly
             this.Controls.Add(this.pnlNote);
             this.Controls.Add(this.pnlHead);
             this.DoubleBuffered = true;
-            this.ForeColor = System.Drawing.Color.Black;
+            this.ForeColor = System.Drawing.SystemColors.Desktop;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Location = new System.Drawing.Point(100, 50);
             this.MaximizeBox = false;

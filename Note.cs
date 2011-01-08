@@ -99,7 +99,7 @@ namespace NoteFly
         {
             if (this.frmnote == null)
             {
-                string notefilepath = Path.Combine(Settings.NotesSavepath, this.Filename); //this.notes.GetNoteFilename(this.Title)
+                string notefilepath = Path.Combine(Settings.NotesSavepath, this.Filename);
                 if (File.Exists(notefilepath))
                 {
                     return xmlUtil.GetContentString(notefilepath, "content");
