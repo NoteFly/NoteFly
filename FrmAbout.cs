@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmAbout.cs" company="GNU">
 //  NoteFly a note application.
-//  Copyright (C) 2010  Tom
+//  Copyright (C) 2010-2011  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LoadUrl("www.notefly.tk/faq.php");
+            Program.LoadLink("http://www.notefly.tk/faq.php");
         }
 
         /// <summary>
@@ -65,23 +65,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LoadUrl("www.notefly.tk/");
-        }
-
-        /// <summary>
-        /// Load a url link. Throws error if inpossible, e.g: no http protocol handler registered.
-        /// </summary>
-        /// <param name="url">the url without prefix</param>
-        private void LoadUrl(string url)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start( new System.Diagnostics.ProcessStartInfo("http://"+url));
-            }
-            catch (Exception exc)
-            {
-                throw new CustomException("Browser load error " + exc.Message + " details: " + exc.StackTrace);
-            }
+            Program.LoadLink("http://www.notefly.tk/");
         }
 
         /// <summary>

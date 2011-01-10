@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmManageNotes.cs" company="GNU">
 //  NoteFly a note application.
-//  Copyright (C) 2010  Tom
+//  Copyright (C) 2010-2011  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -137,7 +137,7 @@ namespace NoteFly
                 this.notes.RemoveNote(nr);
             }
 
-            string[] files = Directory.GetFiles(Settings.NotesSavepath, ".nfn");
+            string[] files = Directory.GetFiles(Settings.NotesSavepath, "*.nfn");
             //reorder filenames
             for (int i = 0; i < deletedids.Length; i++)
             {

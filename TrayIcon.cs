@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="TrayIcon.cs" company="GNU">
 //  NoteFly a note application.
-//  Copyright (C) 2010  Tom
+//  Copyright (C) 2010-2011  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -198,7 +198,6 @@ namespace NoteFly
             {
                 icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);
             }
-            Application.Run();
         }
 
         /// <summary>

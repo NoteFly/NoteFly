@@ -1,14 +1,20 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNote.Designer.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010-2011  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 #define windows //platform can be: windows, linux, macos
@@ -142,7 +148,7 @@ namespace NoteFly
             this.menuLockNote,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 224);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 202);
             this.menuFrmNoteOptions.Text = "-=menu=-";
             this.menuFrmNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
             // 
@@ -287,6 +293,7 @@ namespace NoteFly
             this.rtbNote.CausesValidation = false;
             this.rtbNote.ContextMenuStrip = this.menuFrmNoteOptions;
             this.rtbNote.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rtbNote.DetectUrls = false;
             this.rtbNote.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNote.ForeColor = System.Drawing.Color.Black;
             this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
@@ -301,6 +308,7 @@ namespace NoteFly
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
             this.rtbNote.Text = "?";
+            this.rtbNote.Visible = false;
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             // 
             // pnlNote

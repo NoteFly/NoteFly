@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TrayIcon.cs" company="GNU">
 //  NoteFly a note application.
-//  Copyright (C) 2010  Tom
+//  Copyright (C) 2010-2011  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -26,17 +26,20 @@ namespace NoteFly
     using System.Collections.Generic;
     using System.Text;
     using System.Reflection;
+#if DEBUG
+    using System.Diagnostics;
+#endif
 
     public class Program
     {
-		#region Fields (2) 
+        #region Fields (2)
 
         private static Notes notes;
         private static TrayIcon trayicon;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (3) 
+        #region Properties (3)
 
         /// <summary>
         /// Gets the application data folder.
@@ -94,18 +97,18 @@ namespace NoteFly
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (1) 
+        #region Methods (1)
 
-		// Public Methods (1) 
+        // Public Methods (1) 
 
         /// <summary>
         /// Main entry point programme.
         /// load settings, parser parameters, create notes list and trayicon.
         /// </summary>
         /// <param name="args">parameters</param>
-        [STAThread]
+        //[ STAThread ]
         public static void Main(string[] args)
         {
 #if windows
@@ -122,13 +125,22 @@ namespace NoteFly
             Environment.SetEnvironmentVariable("TMP", String.Empty);
             // */
 #endif
+
+#if DEBUG
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+#endif
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
             if (!xmlUtil.LoadSettings())
             {
                 xmlUtil.WriteDefaultSettings();
                 xmlUtil.LoadSettings();
             }
-            
+#if DEBUG
+            stopwatch.Stop();
+            Log.Write(LogType.info, "Settings load time: " + stopwatch.ElapsedMilliseconds + " ms");
+#endif
+            bool visualstyle = true;
             //override settings with supported parameters
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
@@ -165,13 +177,84 @@ namespace NoteFly
                             Settings.ProgramLogError = true;
                             Settings.ProgramLogInfo = true;
                             break;
+                        case "/disablevisualstyles":
+                            visualstyle = false; //about ~400ms slower on my system on display time.
+                            break;
                     }
                 }
             }
+            if (visualstyle)
+            {
+                System.Windows.Forms.Application.EnableVisualStyles();
+            }
             notes = new Notes();
             trayicon = new TrayIcon(notes);
+            System.Windows.Forms.Application.Run();
         }
 
-		#endregion Methods 
+        /// <summary>
+        /// If set ask the user if the want to load the link.
+        /// </summary>
+        /// <param name="url">the uniform resource location</param>
+        public static void LoadLink(string uri_text)
+        {
+            if (Settings.ConfirmLinkclick)
+            {
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Are you sure you want to visted: " + uri_text, "Are you sure?", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    Program.LoadURI(uri_text);
+                }
+            }
+            else
+            {
+                Program.LoadURI(uri_text);
+            }
+        }
+
+        /// <summary>
+        /// Actual loads the url.
+        /// Also provide some cursor feedback.
+        /// </summary>
+        /// <param name="uri"></param>
+        private static void LoadURI(string uri_text)
+        {
+            try
+            {
+                UriBuilder uri = null;
+                try
+                {
+                    uri = new UriBuilder(uri_text);
+                }
+                catch (UriFormatException)
+                {
+                    return;
+                }
+                if (String.IsNullOrEmpty(uri.Scheme))
+                {
+                    uri.Scheme = "http://";
+                }
+                ProcessStartInfo procstartinfo = new ProcessStartInfo(uri.Uri.AbsoluteUri.ToString());
+                procstartinfo.ErrorDialog = true;
+                //procstartinfo.UseShellExecute = true;
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.AppStarting;
+                try
+                {
+                    System.Diagnostics.Process.Start(procstartinfo);
+                }
+                catch (System.ComponentModel.Win32Exception w32exc)
+                {
+                    Log.Write(LogType.exception, w32exc.Message);
+                    //ErrorDialog is already showed.
+                    return;
+                }
+            }
+            finally
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            }
+        }
+
+        #endregion Methods
     }
 }

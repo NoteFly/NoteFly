@@ -29,8 +29,10 @@ namespace NoteFly
     using System.Drawing;
     using System.Collections;
     using System.Globalization;
-    using System.Threading;
+#if DEBUG
+    using System.Diagnostics;
 
+#endif
     /// <summary>
     /// This class has a list of all notes.
     /// </summary>
@@ -237,7 +239,14 @@ namespace NoteFly
             {
                 this.notes[pos].DestroyForm();
             }
-            this.notes.RemoveAt(pos);
+            if (pos > this.notes.Count || pos < 0)
+            {
+                throw new CustomException("Cannot find note to remove.");
+            }
+            else
+            {
+                this.notes.RemoveAt(pos);
+            }
         }
 
         /// <summary>
@@ -250,17 +259,23 @@ namespace NoteFly
         {
             try
             {
-                string notefile = this.GetNoteFilename(note.Title);
-                if (String.IsNullOrEmpty(notefile))
+                if (String.IsNullOrEmpty(note.Filename))
                 {
-                    throw new CustomException("cannot create filename.");
+                    string notefile = this.GetNoteFilename(note.Title);
+                    if (String.IsNullOrEmpty(notefile))
+                    {
+                        throw new CustomException("cannot create filename.");
+                    }
+                    else
+                    {
+                        note.Filename = notefile;
+                    }
                 }
                 else
                 {
-                    note.Filename = notefile;
-                    if (xmlUtil.WriteNote(notefile, note, content))
+                    if (xmlUtil.WriteNote(note.Filename, note, content))
                     {
-                        Log.Write(LogType.info, "note created: " + notefile);
+                        Log.Write(LogType.info, "note created: " + note.Filename);
                         return true;
                     }
                 }
@@ -329,6 +344,12 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="skinnr"></param>
+        /// <returns></returns>
         private System.Drawing.Color GetColor(int type, int skinnr)
         {
             switch (type)
@@ -399,9 +420,8 @@ namespace NoteFly
                 }
                 else
                 {
-                    //give up.
-                    //todo: find a better way to handle this.
-                    throw new CustomException("Please use different title, filenames based on title seems to be all taken.");
+                    Log.Write(LogType.exception, "All suggested filenames to save this note based on title seems to be taken.");
+                    return "";
                 }
             }
             else
@@ -431,8 +451,12 @@ namespace NoteFly
                     Settings.NotesSavepath = Program.AppDataFolder;
                 }
             }
+#if DEBUG
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+#endif
             /*
-            //loops twice
+            //loops twice, but fastest with 7 notes.
             string[] notefilespath = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly);
             string[] notefiles = new string[notefilespath.Length];
             for (int i = 0; i < notefilespath.Length; i++)
@@ -440,7 +464,6 @@ namespace NoteFly
                 notefiles[i] = Path.GetFileName(notefilespath[i]);
             }
             */
-
             /*
             //loops twice
             DirectoryInfo notessavedirinfo = new DirectoryInfo(Settings.NotesSavepath);
@@ -451,9 +474,8 @@ namespace NoteFly
                 notefiles[i] = notefilesinfo[i].Name;
             }
             */
-
             // /* 
-            //loops once:
+            //loops once, but slowest with 7 notes.
             string[] notefiles = new string[65533]; //FAT32 files per directory limit, -4 files: settings.xml, skins.xml, debug.log and debug.log.old
             int n = 0;
             IEnumerator notefilesenumerator = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly).GetEnumerator();
@@ -465,7 +487,11 @@ namespace NoteFly
             }
             Array.Resize(ref notefiles, n); //not in NET CF v2.0 
             // */
-
+#if DEBUG
+            stopwatch.Stop();
+            Settings.ProgramLogInfo = true;
+            Log.Write(LogType.info, "Notes search time:  " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
+#endif
             if (CheckLimitNotes(notefiles.Length))
             {
                 DialogResult dlgres = MessageBox.Show("Their are many notes loading can take a while, do you want continu?", "contine?", MessageBoxButtons.YesNo);
@@ -478,27 +504,33 @@ namespace NoteFly
             {
                 this.notes.Capacity = notefiles.Length;
             }
-
+#if DEBUG
+            stopwatch.Reset();
+            stopwatch.Start();
+#endif
             for (int i = 0; i < notefiles.Length; i++)
             {
                 Note note = xmlUtil.LoadNote(this, notefiles[i]);
                 this.AddNote(note);
-                if (note.Visible)
+            }
+#if DEBUG
+            stopwatch.Stop();
+            Log.Write(LogType.info, "Notes read time:    " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
+            stopwatch.Reset();
+            stopwatch.Start();
+#endif
+            for (int i = 0; i < notefiles.Length; i++)
+            {
+                if (this.notes[i].Visible)
                 {
-                    note.CreateForm();
+                    this.notes[i].CreateForm();
                 }
             }
-
-            //do multi core opt.
-            //int ncores = Environment.ProcessorCount;
-            //for (int startthread = 0; startthread < ncores; startthread++)
-            //{
-                //NoteLoader noteloader = new NoteLoader();
-                //Thread t = new Thread(   );
-                //t.Start();
-            //}
-
-
+            
+#if DEBUG
+            stopwatch.Stop();
+            Log.Write(LogType.info, "Notes display time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
+#endif
             if (firstrun)
             {
                 int tipnotewidth = 320;
@@ -517,15 +549,12 @@ namespace NoteFly
                 Log.Write(LogType.info, "firstrun occur");
                 xmlUtil.WriteSettings();
             }
-
-  
-
-//#if DEBUG
-//#warning Stress test enabled
+            //#if DEBUG
+            //#warning Stress test enabled
             //Log.Write(LogType.info, "start stress test");
             //this.LoadNotesStressTest(5);
             //Log.Write(LogType.info, "finished stress test");
-//#endif
+            //#endif
         }
 
         #endregion Methods
@@ -551,31 +580,10 @@ namespace NoteFly
         //        //testnote.CreateForm();
         //        //testnote.frmnote.rtbNote.Text = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
         //        //     "warning: To prevent this note from saving don't move or touch it!";
-                
         //        this.notes.Add(testnote);
         //    }
         //}
+
 #endif
     }
-
-    //public class NoteLoader
-    //{
-    //    /// <summary>
-    //    /// This method that will be called when the thread is started
-    //    /// </summary>
-    //    /// <returns></returns>
-    //    public void Work(Notes notes, string[] notefiles)
-    //    {
-    //        int ncores = Environment.ProcessorCount;
-    //        for (int i = 0; i < notefiles.Length; i += ncores)
-    //        {
-    //            Note note = xmlUtil.LoadNote(notes, notefiles[i]); //not thread-safe.
-    //            notes.AddNote(note);
-    //            if (note.Visible)
-    //            {
-    //                note.CreateForm();
-    //            }
-    //        }
-    //    }
-    //};
 }

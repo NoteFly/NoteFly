@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNote.cs" company="GNU">
 //  NoteFly a note application.
-//  Copyright (C) 2010  Tom
+//  Copyright (C) 2010-2011  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -56,11 +56,11 @@ namespace NoteFly
             this.notes = notes;
             this.note = note;
             this.InitializeComponent();
-            
+            //this.SuspendLayout();
+            this.rtbNote.Rtf = note.GetContent();
             this.BackColor = notes.GetForegroundColor(note.SkinNr);
             this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
             this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
-
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
             this.SetBounds(note.X, note.Y, note.Width, note.Height);
@@ -68,22 +68,16 @@ namespace NoteFly
             this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
             this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
             this.lblTitle.Text = note.Title;
-            this.rtbNote.Rtf = note.GetContent();
+            this.rtbNote.Visible = true;
             if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
             {
                 TextHighlight.CheckSyntaxFull(rtbNote);
             }
-            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
-            if (this.rtbNote.DetectUrls)
-            {
-                this.rtbNote.Text += "";//causes TextChanged event so there is a rescan for URL's:
-            }
-
             string[] skinnames = notes.GetSkinsNames();
             for (int i = 0; i < skinnames.Length; i++)
             {
                 ToolStripMenuItem tsi = new ToolStripMenuItem();
-                tsi.Name = "menuSkin"+skinnames[i];
+                tsi.Name = "menuSkin" + skinnames[i];
                 tsi.Text = skinnames[i];
                 if (note.SkinNr == i)
                 {
@@ -96,6 +90,12 @@ namespace NoteFly
                 tsi.BackColor = notes.GetForegroundColor(i);
                 tsi.Click += new EventHandler(menuNoteSkins_skin_Click);
                 this.menuNoteSkins.DropDownItems.Add(tsi);
+            }
+            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
+            //this.ResumeLayout();
+            if (this.rtbNote.DetectUrls)
+            {
+                this.rtbNote.Text += "";//causes TextChanged event so there is a rescan for URL's:
             }
         }
 
@@ -372,12 +372,6 @@ namespace NoteFly
         /// </summary>
         //private void PaintColorNote()
         //{
-        //    this.skin = new Skin(this.notecolor);
-        //    Color normalcolor = this.skin.GetObjColor(false);
-        //    this.BackColor = normalcolor;
-        //    this.pnlHead.BackColor = normalcolor;
-        //    this.pnlNote.BackColor = normalcolor;
-        //    this.rtbNote.BackColor = normalcolor;
         //    if (this.notes.TextDirection == 0)
         //    {
         //        this.lblTitle.TextAlign = ContentAlignment.TopLeft;
@@ -513,18 +507,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            if (Settings.ConfirmLinkclick)
-            {
-                DialogResult result = MessageBox.Show(this, "Are you sure you want to visted:\r\n" + e.LinkText, "url pressed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    System.Diagnostics.Process.Start(e.LinkText);
-                }
-            }
-            else
-            {
-                System.Diagnostics.Process.Start(e.LinkText);
-            }
+            Program.LoadLink(e.LinkText);
         }
 
         /// <summary>
@@ -544,38 +527,6 @@ namespace NoteFly
                 string msgOutOfScreen = "Position note is out of screen.";
                 Log.Write(LogType.error, msgOutOfScreen);
             }
-        }
-
-        /// <summary>
-        /// Set the color of the note.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void SetColorNote(object sender, EventArgs e)
-        {
-            ToolStripMenuItem selectedmenuitem = (ToolStripMenuItem)sender;
-            selectedmenuitem.Checked = true;
-            //
-            // this was  pointless silly:
-            //short i = 0;
-            //foreach (ToolStripMenuItem curitem in this.menuNoteColors.DropDownItems)
-            //{
-            //    if (curitem == selectedmenuitem)
-            //    {
-            //        curitem.Checked = true;
-            //        //this.notecolor = i;
-            //        //string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
-            //        //xmlHandler savenotecolor = new xmlHandler(notefile);
-            //        //savenotecolor.WriteNote(this.Visible, this.menuOnTop.Checked, this.notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
-            //        //Log.Write(LogType.info, "Color note (ID:" + this.NoteID + ") changed.");
-            //    }
-            //    else
-            //    {
-            //        curitem.Checked = false;
-            //    }
-
-            //    i++;
-            //}
         }
 
         /// <summary>

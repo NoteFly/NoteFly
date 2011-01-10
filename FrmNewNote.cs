@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNewNote.cs" company="GNU">
 //  NoteFly a note application.
-//  Copyright (C) 2010  Tom
+//  Copyright (C) 2010-2011  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -132,6 +132,7 @@ namespace NoteFly
                     this.note = this.notes.CreateNote(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
                 note.Title = this.tbTitle.Text;
+                note.Visible = true;
                 if (this.notes.SaveNote(this.note, this.rtbNewNote.Rtf))
                 {
                     if (newnote)
@@ -139,7 +140,6 @@ namespace NoteFly
                         this.notes.AddNote(this.note);
                     }
                     this.note.CreateForm();
-                    this.note.GetContent();
                     this.Close();
                 }
             }
@@ -282,28 +282,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            if (Settings.ConfirmLinkclick)
-            {
-                DialogResult result = MessageBox.Show(this, "Are you sure you want to visted: " + e.LinkText, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    this.LoadUrl(e.LinkText);
-                }
-            }
-            else
-            {
-                this.LoadUrl(e.LinkText);
-            }
-        }
-
-        /// <summary>
-        /// Load a url
-        /// </summary>
-        /// <param name="url">the url to load.</param>
-        private void LoadUrl(string url)
-        {
-            System.Diagnostics.Process.Start(url.Trim());
-            Log.Write(LogType.info, "Link clicked.");
+            Program.LoadLink(e.LinkText);
         }
 
         /// <summary>

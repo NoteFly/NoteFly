@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="XmlUtil.cs" company="GNU">
 //  NoteFly a note application.
-//  Copyright (C) 2010  Tom
+//  Copyright (C) 2010-2011  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -437,7 +437,7 @@ namespace NoteFly
                             case "heigth":
                                 note.Height = xmlread.ReadElementContentAsInt();
                                 break;
-							case "x":
+                            case "x":
                                 note.X = xmlread.ReadElementContentAsInt();
                                 break;
                             case "y":
@@ -531,18 +531,13 @@ namespace NoteFly
         /// <summary>
         /// Write a note xml file.
         /// </summary>
-        /// <param name="visible">note is visible</param>
-        /// <param name="ontop">note is on top of other windows</param>
-        /// <param name="numcolor">color number of note</param>
-        /// <param name="title">the title of the note</param>
-        /// <param name="content">the content of the note</param>
-        /// <param name="locX">X location of note on screen</param>
-        /// <param name="locY">Y location of note on screen</param>
-        /// <param name="notewidth">width in pixels of the note</param>
-        /// <param name="noteheight">height in pixels of the note</param>
-        /// <returns></returns>
+        /// <param name="notefilename">the filename not path</param>
+        /// <param name="note">The note object</param>
+        /// <param name="content">The note content</param>
+        /// <returns>true on succeeded</returns>
         public static bool WriteNote(string notefilename, Note note, string content)
         {
+            bool succeeded = false;
             xmlwrite = new XmlTextWriter(Path.Combine(Settings.NotesSavepath, notefilename), System.Text.Encoding.UTF8);
             xmlwrite.Formatting = Formatting.Indented;
             try
@@ -566,6 +561,11 @@ namespace NoteFly
                 xmlwrite.WriteElementString("content", content);
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
+                succeeded = true;
+            }
+            catch
+            {
+                succeeded = false;
             }
             finally
             {
@@ -573,7 +573,7 @@ namespace NoteFly
                 xmlwrite.Close();
             }
             //CheckFile();
-            return true;
+            return succeeded;
         }
 
         /// <summary>
