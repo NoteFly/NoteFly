@@ -129,8 +129,12 @@ namespace NoteFly
         /// </summary>
         /// <param name="nodename"></param>
         /// <returns>return node content as string, empty if not found</returns>
-        public static string GetContentString(string filename, string nodename)
+        public static string GetContentString(string filename, string nodename, uint linenumoffsetcontent)
         {
+#if DEBUG
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+            stopwatch.Start();
+#endif
             try
             {
                 xmlread = new XmlTextReader(filename);
@@ -147,23 +151,34 @@ namespace NoteFly
             {
                 throw new CustomException("XmlTextReader object is null.");
             }
+            const bool disablelineopt = false;
             while (xmlread.Read())
             {
-                if (xmlread.Name == nodename)
+                if (xmlread.LineNumber == linenumoffsetcontent || disablelineopt) //faster than comparing xmlread.name
                 {
-                    string xmlnodecontent = String.Empty;
-                    try
+                    if (xmlread.Name == nodename)
                     {
-                        xmlnodecontent = xmlread.ReadElementContentAsString();
+                        string xmlnodecontent = String.Empty;
+                        try
+                        {
+                            xmlnodecontent = xmlread.ReadElementContentAsString();
+                        }
+                        finally
+                        {
+                            xmlread.Close();
+                        }
+#if DEBUG
+                        stopwatch.Stop();
+                        Log.Write(LogType.info, "Read content time:  " + stopwatch.ElapsedTicks + " ticks"); //blocking display time ~200ms/7
+#endif
+                        return xmlnodecontent;
                     }
-                    finally
-                    {
-                        xmlread.Close();
-                    }
-                    return xmlnodecontent;
                 }
             }
             //error node not found.
+            #if DEBUG
+            stopwatch.Stop();
+            #endif
             return String.Empty;
         }
 
@@ -414,6 +429,7 @@ namespace NoteFly
             Note note = new Note(n, notefilename);
             xmlread = new XmlTextReader(Path.Combine(Settings.NotesSavepath, notefilename));
             xmlread.ProhibitDtd = true;
+            bool isset_linenumoffsetcontent = false;
             try
             {
                 while (xmlread.Read())
@@ -452,6 +468,13 @@ namespace NoteFly
                                 break;
                             case "title":
                                 note.Title = xmlread.ReadElementContentAsString();
+                                break;
+                            case "content":
+                                if (!isset_linenumoffsetcontent)
+                                {
+                                    note.linenumoffsetcontent = Convert.ToUInt32(xmlread.LineNumber);
+                                    isset_linenumoffsetcontent = true;
+                                }
                                 break;
                         }
                         if (xmlread.Depth > 5)

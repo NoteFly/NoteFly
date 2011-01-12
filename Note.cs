@@ -26,7 +26,8 @@ namespace NoteFly
 
     public class Note
     {
-        public FrmNote frmnote;
+        public uint linenumoffsetcontent = 0;
+        private FrmNote frmnote;
         private Notes notes;
         private string filename;
 
@@ -85,7 +86,10 @@ namespace NoteFly
         /// </summary>
         public void DestroyForm()
         {
-            this.frmnote.Close();
+            if (this.frmnote != null)
+            {
+                this.frmnote.Close();
+            }
             this.frmnote = null;
             this.Visible = false;
             GC.Collect();
@@ -102,7 +106,7 @@ namespace NoteFly
                 string notefilepath = Path.Combine(Settings.NotesSavepath, this.Filename);
                 if (File.Exists(notefilepath))
                 {
-                    return xmlUtil.GetContentString(notefilepath, "content");
+                    return xmlUtil.GetContentString(notefilepath, "content", this.linenumoffsetcontent); // this.contentlinenumoffset
                 }
                 else
                 {
@@ -119,6 +123,11 @@ namespace NoteFly
         public string GetSkinName()
         {
             return this.notes.GetSkinName(this.SkinNr);
+        }
+
+        public void BringToFront()
+        {
+            this.frmnote.BringToFront();
         }
     }
 }

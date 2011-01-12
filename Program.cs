@@ -234,7 +234,7 @@ namespace NoteFly
                 {
                     uri.Scheme = "http://";
                 }
-                ProcessStartInfo procstartinfo = new ProcessStartInfo(uri.Uri.AbsoluteUri.ToString());
+                System.Diagnostics.ProcessStartInfo procstartinfo = new System.Diagnostics.ProcessStartInfo(uri.Uri.AbsoluteUri.ToString());
                 procstartinfo.ErrorDialog = true;
                 //procstartinfo.UseShellExecute = true;
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.AppStarting;

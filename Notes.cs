@@ -110,7 +110,7 @@ namespace NoteFly
                 {
                     try
                     {
-                        this.notes[i].frmnote.BringToFront();
+                        this.notes[i].BringToFront();
                     }
                     catch (NullReferenceException)
                     {
@@ -235,10 +235,7 @@ namespace NoteFly
         /// <param name="pos">The noteId starts at 1</param>
         public void RemoveNote(int pos)
         {
-            if (this.notes[pos].frmnote != null)
-            {
-                this.notes[pos].DestroyForm();
-            }
+            this.notes[pos].DestroyForm();
             if (pos > this.notes.Count || pos < 0)
             {
                 throw new CustomException("Cannot find note to remove.");
