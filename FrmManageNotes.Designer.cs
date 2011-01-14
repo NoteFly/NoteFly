@@ -58,14 +58,14 @@ namespace NoteFly
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.timerUpdateNotesList = new System.Windows.Forms.Timer(this.components);
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnNoteDelete = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.colid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.coltitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colvisible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colskin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnNoteDelete = new System.Windows.Forms.Button();
+            this.btnBackAllNotes = new System.Windows.Forms.Button();
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -161,6 +161,29 @@ namespace NoteFly
             this.dataGridView1.Size = new System.Drawing.Size(427, 245);
             this.dataGridView1.TabIndex = 11;
             // 
+            // colid
+            // 
+            this.colid.HeaderText = "nr";
+            this.colid.Name = "colid";
+            this.colid.Width = 25;
+            // 
+            // coltitle
+            // 
+            this.coltitle.HeaderText = "title";
+            this.coltitle.Name = "coltitle";
+            this.coltitle.Width = 200;
+            // 
+            // colvisible
+            // 
+            this.colvisible.HeaderText = "visible";
+            this.colvisible.Name = "colvisible";
+            this.colvisible.Width = 50;
+            // 
+            // colskin
+            // 
+            this.colskin.HeaderText = "skin";
+            this.colskin.Name = "colskin";
+            // 
             // button4
             // 
             this.button4.BackColor = System.Drawing.Color.Wheat;
@@ -198,40 +221,18 @@ namespace NoteFly
             this.btnNoteDelete.UseVisualStyleBackColor = false;
             this.btnNoteDelete.Click += new System.EventHandler(this.btnNoteDelete_Click);
             // 
-            // button3
+            // btnBackAllNotes
             // 
-            this.button3.BackColor = System.Drawing.Color.Wheat;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(334, 36);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(105, 23);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "backup all to file";
-            this.button3.UseCompatibleTextRendering = true;
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // colid
-            // 
-            this.colid.HeaderText = "nr";
-            this.colid.Name = "colid";
-            this.colid.Width = 25;
-            // 
-            // coltitle
-            // 
-            this.coltitle.HeaderText = "title";
-            this.coltitle.Name = "coltitle";
-            this.coltitle.Width = 200;
-            // 
-            // colvisible
-            // 
-            this.colvisible.HeaderText = "visible";
-            this.colvisible.Name = "colvisible";
-            this.colvisible.Width = 50;
-            // 
-            // colskin
-            // 
-            this.colskin.HeaderText = "skin";
-            this.colskin.Name = "colskin";
+            this.btnBackAllNotes.BackColor = System.Drawing.Color.Wheat;
+            this.btnBackAllNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBackAllNotes.Location = new System.Drawing.Point(334, 36);
+            this.btnBackAllNotes.Name = "btnBackAllNotes";
+            this.btnBackAllNotes.Size = new System.Drawing.Size(105, 23);
+            this.btnBackAllNotes.TabIndex = 18;
+            this.btnBackAllNotes.Text = "backup all to file";
+            this.btnBackAllNotes.UseCompatibleTextRendering = true;
+            this.btnBackAllNotes.UseVisualStyleBackColor = false;
+            this.btnBackAllNotes.Click += new System.EventHandler(this.btnBackAllNotes_Click);
             // 
             // FrmManageNotes
             // 
@@ -240,7 +241,7 @@ namespace NoteFly
             this.BackColor = System.Drawing.Color.Orange;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(451, 322);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnBackAllNotes);
             this.Controls.Add(this.btnNoteDelete);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button1);
@@ -274,7 +275,7 @@ namespace NoteFly
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnNoteDelete;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnBackAllNotes;
         private System.Windows.Forms.Label lbTextWindowTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn colid;
         private System.Windows.Forms.DataGridViewTextBoxColumn coltitle;

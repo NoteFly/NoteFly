@@ -108,7 +108,7 @@ namespace NoteFly
         /// load settings, parser parameters, create notes list and trayicon.
         /// </summary>
         /// <param name="args">parameters</param>
-        //[ STAThread ]
+        [ STAThread ]
         public static void Main(string[] args)
         {
 #if windows

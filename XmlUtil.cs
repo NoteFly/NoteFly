@@ -667,6 +667,48 @@ namespace NoteFly
             //CheckFile();
             return true;
         }
+
+        public static bool WriteNotesBackupFile(string filenamepath, Notes notes)
+        {
+            bool succeeded = false;
+            try {
+                xmlwrite = new XmlTextWriter(filenamepath, System.Text.Encoding.UTF8);
+                xmlwrite.Formatting = Formatting.Indented;
+                xmlwrite.WriteStartDocument();
+                xmlwrite.WriteStartElement("backupnotes");
+                xmlwrite.WriteAttributeString("number", notes.CountNotes.ToString());
+                for (int i = 0; i < notes.CountNotes; i++)
+                {
+                    xmlwrite.WriteStartElement("note");
+                    xmlwrite.WriteAttributeString("version", NOTEVERSION);
+                    WriteXMLBool("visible", notes.GetNote(i).Visible);
+                    WriteXMLBool("ontop", notes.GetNote(i).Ontop);
+                    WriteXMLBool("locked", notes.GetNote(i).Locked);
+                    xmlwrite.WriteStartElement("location");
+                    xmlwrite.WriteElementString("x", notes.GetNote(i).X.ToString());
+                    xmlwrite.WriteElementString("y", notes.GetNote(i).Y.ToString());
+                    xmlwrite.WriteEndElement();
+                    xmlwrite.WriteStartElement("size");
+                    xmlwrite.WriteElementString("width", notes.GetNote(i).Width.ToString() );
+                    xmlwrite.WriteElementString("heigth", notes.GetNote(i).Height.ToString() );
+                    xmlwrite.WriteEndElement();
+                    xmlwrite.WriteElementString("skin", notes.GetNote(i).GetSkinName());
+                    xmlwrite.WriteElementString("title", notes.GetNote(i).Title);
+                    xmlwrite.WriteElementString("content", notes.GetNote(i).GetContent());
+                    xmlwrite.WriteEndElement();
+                }
+
+                xmlwrite.WriteEndElement();
+                xmlwrite.WriteEndDocument();
+                succeeded =true;
+            }
+            finally
+            {
+                xmlwrite.Close();
+            }
+            return succeeded;
+        }
+
         // Private Methods (3) 
 
         private static System.Drawing.Color ConvToClr(string colorstring)

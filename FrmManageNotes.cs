@@ -414,6 +414,27 @@ namespace NoteFly
             //this.pnlHead.BackColor = Color.Orange;
         }
 
+        /// <summary>
+        /// Request to backup all notes to a file.
+        /// Ask where to save then do it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBackAllNotes_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savebackupdlg = new SaveFileDialog();
+            savebackupdlg.CheckPathExists = true;
+            savebackupdlg.DefaultExt = "nfbak"; //noteflybackup
+            savebackupdlg.OverwritePrompt = true;
+            savebackupdlg.Title = "Where to save backup all notes file.";
+            savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|.nfbak";
+            DialogResult savebackupdlgres = savebackupdlg.ShowDialog();
+            if (savebackupdlgres == DialogResult.OK)
+            {
+                xmlUtil.WriteNotesBackupFile(savebackupdlg.FileName, notes);
+            }
+        }
+
         #endregion Methods
     }
 }
