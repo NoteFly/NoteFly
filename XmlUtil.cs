@@ -305,7 +305,7 @@ namespace NoteFly
                             Settings.NotesWarnLimit = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesTransparencyLevel":
-                            Settings.NotesTransparencyLevel = xmlread.ReadElementContentAsInt(); ;
+                            Settings.NotesTransparencyLevel = xmlread.ReadElementContentAsDouble();
                             break;
                         case "TrayiconLeftclickaction":
                             Settings.TrayiconLeftclickaction = xmlread.ReadElementContentAsInt();
@@ -520,7 +520,7 @@ namespace NoteFly
             Settings.NotesDefaultSkinnr = 1;
             Settings.NotesSavepath = Program.AppDataFolder;
             Settings.NotesTransparencyEnabled = true;
-            Settings.NotesTransparencyLevel = 90;
+            Settings.NotesTransparencyLevel = 0.9;
             Settings.NotesWarnLimit = 200;
             Settings.ProgramFirstrun = true;
             Settings.ProgramLogError = true;

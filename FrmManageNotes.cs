@@ -33,30 +33,24 @@ namespace NoteFly
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-        #region Fields ()
-        /// <summary>
-        /// flag is redraw is busy
-        /// </summary>
-        private bool redrawbusy = false;
-
-        /// <summary>
-        /// value indicating wether this form is moving.
-        /// </summary>
-        private bool moving = false;
+		#region Fields (4) 
 
         /// <summary>
         /// notes
         /// </summary>
         private Notes notes;
-
         /// <summary>
         /// Delta point
         /// </summary>
         private Point oldp;
+        /// <summary>
+        /// flag is redraw is busy
+        /// </summary>
+        private bool redrawbusy = false;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (1)
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmManageNotes class.
@@ -67,17 +61,37 @@ namespace NoteFly
         public FrmManageNotes(Notes notes)
         {
             this.InitializeComponent();
-
-            this.SetDataGridViewColumsWidth();
             this.notes = notes;
             this.DrawNotesGrid();
+            this.SetDataGridViewColumsWidth();
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (10)
+		#region Methods (13) 
 
-        // Private Methods (10) 
+		// Private Methods (13) 
+
+        /// <summary>
+        /// Request to backup all notes to a file.
+        /// Ask where to save then do it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBackAllNotes_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savebackupdlg = new SaveFileDialog();
+            savebackupdlg.CheckPathExists = true;
+            savebackupdlg.DefaultExt = "nfbak"; //noteflybackup
+            savebackupdlg.OverwritePrompt = true;
+            savebackupdlg.Title = "Where to save backup all notes file.";
+            savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|.nfbak";
+            DialogResult savebackupdlgres = savebackupdlg.ShowDialog();
+            if (savebackupdlgres == DialogResult.OK)
+            {
+                xmlUtil.WriteNotesBackupFile(savebackupdlg.FileName, notes);
+            }
+        }
 
         /// <summary>
         /// Close form
@@ -87,90 +101,6 @@ namespace NoteFly
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        /// <summary>
-        /// Sets every colom of the datagridview to a reasonable width.
-        /// </summary>
-        private void SetDataGridViewColumsWidth()
-        {
-            if (this.dataGridView1.Width <= 0) { return; }
-            const int colidfixedwidth = 30;
-            int partunit = ((this.dataGridView1.Width - colidfixedwidth) / 10);
-            this.dataGridView1.Columns["colid"].Width = colidfixedwidth;
-            this.dataGridView1.Columns["coltitle"].Width = 5 * partunit;
-            this.dataGridView1.Columns["colvisible"].Width = 2 * partunit;
-            this.dataGridView1.Columns["colskin"].Width = 3 * partunit;
-        }
-
-        /// <summary>
-        /// Deletes the notes in memory and files that are selected in a Gridview.
-        /// </summary>
-        /// <param name="id"></param>
-        private void DeleteNotesSelectedRowsGrid(DataGridViewSelectedRowCollection selrows)
-        {
-            int[] deletedids = new int[selrows.Count];
-            for (int r = 0; r < selrows.Count; r++)
-            {
-                int nr = Convert.ToInt32(selrows[r].Cells["nr"]);
-                string filename = this.notes.GetNote(nr).Filename;
-                try
-                {
-                    string filepath = Path.Combine(Settings.NotesSavepath, filename);
-                    File.Delete(filepath);
-                    if (Settings.ProgramLogInfo)
-                    {
-                        Log.Write(LogType.info, filepath + " deleted.");
-                    }
-                }
-                catch (FileNotFoundException filenotfoundexc)
-                {
-                    throw new CustomException(filenotfoundexc.Message);
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    string msgaccessdenied = "Access denied. delete note " + filename + " manually with proper premission.";
-                    Log.Write(LogType.error, msgaccessdenied);
-                    MessageBox.Show(msgaccessdenied);
-                }
-                //deletedids[r] = id;
-                this.notes.RemoveNote(nr);
-            }
-
-            string[] files = Directory.GetFiles(Settings.NotesSavepath, "*.nfn");
-            //reorder filenames
-            for (int i = 0; i < deletedids.Length; i++)
-            {
-            }
-
-            //        //reorder filenames
-            //        for (int id = noteid; id < this.notes.CountNotes; id++)
-            //        {
-            //            string orgfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id + 1) + ".xml");
-            //            string newfile = Path.Combine(this.GetNotesSavePath(), Convert.ToString(id) + ".xml");
-            //            if (!File.Exists(newfile))
-            //            {
-            //                File.Move(orgfile, newfile);
-            //            }
-            //            try
-            //            {
-            //                //this.notes.GetNotes[id].NoteID = Convert.ToInt16(id);
-            //            }
-            //            catch
-            //            {
-            //            }
-            //        }
-            //    }
-            //    catch (FileNotFoundException filenotfoundexc)
-            //    {
-            //        throw new CustomException(filenotfoundexc.Message);
-            //    }
-            //    catch (UnauthorizedAccessException)
-            //    {
-            //        string msgaccessdenied = "Access denied. Delete note " + noteid + ".xml manually with proper premission.";
-            //        Log.Write(LogType.error, msgaccessdenied);
-            //        MessageBox.Show(msgaccessdenied);
-            //    }
         }
 
         /// <summary>
@@ -239,48 +169,67 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Deletes the notes in memory and files that are selected in a Gridview.
+        /// </summary>
+        /// <param name="id"></param>
+        private void DeleteNotesSelectedRowsGrid(DataGridViewSelectedRowCollection selrows)
+        {
+            int[] deletedids = new int[selrows.Count];
+            for (int r = 0; r < selrows.Count; r++)
+            {
+                int nr = Convert.ToInt32(selrows[r].Cells["nr"]);
+                string filename = this.notes.GetNote(nr).Filename;
+                try
+                {
+                    string filepath = Path.Combine(Settings.NotesSavepath, filename);
+                    File.Delete(filepath);
+                    if (Settings.ProgramLogInfo)
+                    {
+                        Log.Write(LogType.info, filepath + " deleted.");
+                    }
+                }
+                catch (FileNotFoundException filenotfoundexc)
+                {
+                    throw new CustomException(filenotfoundexc.Message);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    string msgaccessdenied = "Access denied. delete note " + filename + " manually with proper premission.";
+                    Log.Write(LogType.error, msgaccessdenied);
+                    MessageBox.Show(msgaccessdenied);
+                }
+                //deletedids[r] = id;
+                this.notes.RemoveNote(nr);
+            }
+            string[] files = Directory.GetFiles(Settings.NotesSavepath, "*.nfn");
+        }
+
+        /// <summary>
         /// Draw a list of all notes.
         /// </summary>
         private void DrawNotesGrid()
         {
+            DataTable datatable = new DataTable();
+            this.dataGridView1.DataSource = datatable;
+            datatable.Columns.Add("nr", typeof(String));
+            datatable.Columns["nr"].AutoIncrement = true;
+            datatable.Columns.Add("title", typeof(String));
+            datatable.Columns.Add("visible", typeof(Boolean));
+            datatable.Columns.Add("skin", typeof(String));
+            datatable.DefaultView.AllowEdit = false;
+            datatable.DefaultView.AllowNew = false;
             for (int i = 0; i < this.notes.CountNotes; i++)
             {
-                string visible = "False";
-                if (this.notes.GetNote(i).Visible)
-                {
-                    visible = "True";
-                }
-                string[] rowArray = new string[] { (i+1).ToString(), this.notes.GetNote(i).Title, visible, this.notes.GetNote(i).SkinNr.ToString() };
-                //dr["ID"] = this.notes.GetNote(id).Id;
-                //dr["Title"] = this.notes.GetNote(id).Title;
-                //dr["Showed"] = this.notes.GetNote(id).Visible;
-                //dr["Color"] = this.notes.GetNote(id).SkinNr;
-                this.dataGridView1.Rows.Add(rowArray[0]);
+                DataRow dr = datatable.NewRow();
+                dr[0] = i;
+                dr[1] = this.notes.GetNote(i).Title;
+                dr[2] = this.notes.GetNote(i).Visible;
+                dr[3] = notes.GetSkinName(this.notes.GetNote(i).SkinNr);
+                datatable.Rows.Add(dr);
+                //dataGridView1.Rows[i].Cells["skin"].Style.BackColor = notes.GetForegroundColor(this.notes.GetNote(i).SkinNr);
             }
-        }
 
-        /// <summary>
-        /// Limit the title.
-        /// </summary>
-        /// <param name="curnote">The note id.</param>
-        /// <param name="newlentitle">The maximum lenght to limit the title to.</param>
-        /// <returns>A shorter title.</returns>
-        //private string ShortenTitle(int curnote, int newlentitle)
-        //{
-        //    int reallen = this.notes.GetNotes[curnote].NoteTitle.Length;
-        //    if (newlentitle < 4)
-        //    {
-        //        return this.notes.GetNotes[curnote].NoteTitle.Substring(0, 4) + ".. (ID:" + this.notes.GetNotes[curnote].NoteID + ")";
-        //    }
-        //    else if (reallen > newlentitle)
-        //    {
-        //        return this.notes.GetNotes[curnote].NoteTitle.Substring(0, newlentitle) + ".. (ID:" + this.notes.GetNotes[curnote].NoteID + ")";
-        //    }
-        //    else
-        //    {
-        //        return this.notes.GetNotes[curnote].NoteTitle + "(ID:" + this.notes.GetNotes[curnote].NoteID + ")";
-        //    }
-        //}
+        }
 
         /// <summary>
         /// FrmManageNotes is activated.
@@ -291,8 +240,15 @@ namespace NoteFly
         {
             if (Settings.NotesTransparencyEnabled)
             {
-                this.Opacity = 1.0;
-                this.Refresh();
+                try
+                {
+                    this.Opacity = 1.0;
+                    this.Refresh();
+                }
+                catch (InvalidCastException)
+                {
+                    throw new CustomException("Transparency level not a integer or double.");
+                }
             }
         }
 
@@ -342,24 +298,8 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.moving = true;
                 this.pnlHead.BackColor = Color.OrangeRed;
                 this.oldp = e.Location;
-            }
-        }
-
-        /// <summary>
-        /// Timer updated the list of notes.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void timerUpdateNotesList_Tick(object sender, EventArgs e)
-        {
-            if (!this.redrawbusy)
-            {
-                this.redrawbusy = true;
-                this.DrawNotesGrid();
-                this.redrawbusy = false;
             }
         }
 
@@ -370,7 +310,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void pnlHead_MouseMove(object sender, MouseEventArgs e)
         {
-            if ((this.moving) && (e.Button == MouseButtons.Left))
+            if (e.Button == MouseButtons.Left)
             {
                 this.pnlHead.BackColor = Color.OrangeRed;
 
@@ -404,37 +344,29 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// End moving note.
+        /// End moving FrmManageNotes.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
-            this.moving = false;
-            //this.pnlHead.BackColor = Color.Orange;
+
         }
 
         /// <summary>
-        /// Request to backup all notes to a file.
-        /// Ask where to save then do it.
+        /// Sets every colom of the datagridview to a reasonable width.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnBackAllNotes_Click(object sender, EventArgs e)
+        private void SetDataGridViewColumsWidth()
         {
-            SaveFileDialog savebackupdlg = new SaveFileDialog();
-            savebackupdlg.CheckPathExists = true;
-            savebackupdlg.DefaultExt = "nfbak"; //noteflybackup
-            savebackupdlg.OverwritePrompt = true;
-            savebackupdlg.Title = "Where to save backup all notes file.";
-            savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|.nfbak";
-            DialogResult savebackupdlgres = savebackupdlg.ShowDialog();
-            if (savebackupdlgres == DialogResult.OK)
-            {
-                xmlUtil.WriteNotesBackupFile(savebackupdlg.FileName, notes);
-            }
+            if (this.dataGridView1.Width <= 0) { return; }
+            const int colidfixedwidth = 30;
+            int partunit = ((this.dataGridView1.Width - colidfixedwidth) / 10);
+            this.dataGridView1.Columns["nr"].Width = 1 * colidfixedwidth;
+            this.dataGridView1.Columns["title"].Width = 6 * partunit;
+            this.dataGridView1.Columns["visible"].Width = 1 * partunit;
+            this.dataGridView1.Columns["skin"].Width = 3 * partunit;
         }
 
-        #endregion Methods
+		#endregion Methods 
     }
 }

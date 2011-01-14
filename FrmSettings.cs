@@ -102,7 +102,8 @@ namespace NoteFly
             this.chxHighlightHTML.Checked = Settings.HighlightHTML;
             this.chxUseProxy.Checked = Settings.NetworkProxyEnabled;
             this.iptbProxyAddress.Enabled = Settings.NetworkProxyEnabled;
-            this.numProcTransparency.Value = Settings.NotesTransparencyLevel;
+            Decimal dectranslvl = Convert.ToDecimal(Settings.NotesTransparencyLevel*100);
+            this.numProcTransparency.Value = dectranslvl;
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr; //-1
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
             this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
@@ -216,6 +217,7 @@ namespace NoteFly
                 Settings.HighlightSQL = chxHighlightSQL.Checked;
 
                 Settings.NotesTransparencyEnabled = chxTransparecy.Checked;
+                Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
                 Settings.NetworkProxyEnabled = chxUseProxy.Checked;
 
                 Settings.SocialEmailEnabled = chxSocialEmailEnabled.Checked;

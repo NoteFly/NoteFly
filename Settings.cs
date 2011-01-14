@@ -28,7 +28,7 @@ namespace NoteFly
     {
         public static bool NotesTransparencyEnabled { get; set; }
 
-        public static  int NotesTransparencyLevel { get; set; }
+        public static double NotesTransparencyLevel { get; set; }
 
         public static int NotesDefaultSkinnr { get; set; }
 
