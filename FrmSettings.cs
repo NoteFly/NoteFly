@@ -52,9 +52,6 @@ namespace NoteFly
             this.notes = notes;
             this.DrawCbxFonts();
             this.SetControlsBySettings();
-#if windows
-            this.chxStartOnBootWindows.Checked = this.GetStatusStartlogin();
-#endif
         }
 
         #endregion Constructors
@@ -92,35 +89,56 @@ namespace NoteFly
         /// </summary>
         private void SetControlsBySettings()
         {
-            this.chxLogErrors.Checked = Settings.ProgramLogError;
-            this.chxLogDebug.Checked = Settings.ProgramLogInfo;
+            //tab: General
+#if windows
+            this.chxStartOnLogin.Checked = this.GetStartOnLogin();
+#endif
             this.chxConfirmExit.Checked = Settings.ConfirmExit;
-            this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
             this.chxConfirmDeleteNote.Checked = Settings.ConfirmDeletenote;
-            this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
-            this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
-            this.chxHighlightHTML.Checked = Settings.HighlightHTML;
-            this.chxUseProxy.Checked = Settings.NetworkProxyEnabled;
-            this.iptbProxyAddress.Enabled = Settings.NetworkProxyEnabled;
-            Decimal dectranslvl = Convert.ToDecimal(Settings.NotesTransparencyLevel*100);
-            this.numProcTransparency.Value = dectranslvl;
-            this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr; //-1
-            this.tbNotesSavePath.Text = Settings.NotesSavepath;
+            this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;
+            //tab: Appearance
+            this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
+            this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
+            this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
+            this.cbxFontNoteContent.SelectedValue = Settings.FontContentFamily;
+            this.numFontSize.Value = Settings.FontContentSize;
             this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
-            this.cbxActionLeftClick.SelectedIndex = Settings.TrayiconLeftclickaction;
-            this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
+            //tab: Highlight
+            this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
+            this.chxHighlightHTML.Checked = Settings.HighlightHTML;
+            this.chxHighlightPHP.Checked = Settings.HighlightPHP;
+            this.chxHighlightSQL.Checked = Settings.HighlightSQL;
+            //tab: social networks
             this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;
+            this.chxSocialEmailDefaultaddressBlank.Checked = false ;
             if (String.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
             {
                 this.chxSocialEmailDefaultaddressBlank.Checked = true;
             }
+            this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
             this.chxSocialTwitterEnabled.Checked = Settings.SocialTwitterEnabled;
             this.tbTwitterUser.Text = Settings.SocialTwitterUsername;
             this.chxSocialFacebookEnabled.Checked = Settings.SocialFacebookEnabled;
             this.chxSaveFBSession.Checked = Settings.SocialFacebookSavesession;
+            //tab: Network
+            if (Settings.UpdatecheckEverydays > 0)
+            {
+                this.chxCheckUpdates.Checked = true;
+                this.numUpdateCheckDays.Value = Convert.ToDecimal(Settings.UpdatecheckEverydays);
+                this.numUpdateCheckDays.Enabled = true;
+            }
+            else
+            {
+                this.numUpdateCheckDays.Enabled = false;
+            }
+            this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;
+            this.iptbProxyAddress.IPAddress = Settings.NetworkProxyAddress;
+            this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
             this.numTimeout.Value = Settings.NetworkConnectionTimeout;
-            this.chxUseProxy.Checked = Settings.NetworkProxyEnabled;
-            this.iptbProxyAddress.SetIPAddress(Settings.NetworkProxyAddress);
+            //tab: Advance
+            this.tbNotesSavePath.Text = Settings.NotesSavepath;
+            this.chxLogErrors.Checked = Settings.ProgramLogError;
+            this.chxLogDebug.Checked = Settings.ProgramLogInfo;
         }
 
         /// <summary>
@@ -168,7 +186,7 @@ namespace NoteFly
             }
             else if ((this.chxHighlightHTML.CheckState == CheckState.Indeterminate)
 #if windows
- || (this.chxStartOnBootWindows.CheckState == CheckState.Indeterminate)
+ || (this.chxStartOnLogin.CheckState == CheckState.Indeterminate)
 #endif
  || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
             {
@@ -206,30 +224,43 @@ namespace NoteFly
                     this.MoveNotes(oldnotesavepath, this.tbNotesSavePath.Text);
                     //TODO: seperate thread
                 }
-
-                Settings.ConfirmDeletenote = chxConfirmDeleteNote.Checked;
-                Settings.ConfirmExit = chxConfirmExit.Checked;
-                Settings.ConfirmLinkclick = chxConfirmLink.Checked;
-
-                Settings.HighlightHyperlinks = chxHighlightHyperlinks.Checked;
-                Settings.HighlightHTML = chxHighlightHTML.Checked;
-                Settings.HighlightPHP = chxHighlightPHP.Checked;
-                Settings.HighlightSQL = chxHighlightSQL.Checked;
-
-                Settings.NotesTransparencyEnabled = chxTransparecy.Checked;
+                //tab: General
+                Settings.ConfirmExit = this.chxConfirmExit.Checked;
+                Settings.ConfirmDeletenote = this.chxConfirmDeleteNote.Checked;
+                Settings.TrayiconLeftclickaction = this.cbxActionLeftclick.SelectedIndex;
+                //tab: Appearance
+                Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
                 Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
-                Settings.NetworkProxyEnabled = chxUseProxy.Checked;
-
-                Settings.SocialEmailEnabled = chxSocialEmailEnabled.Checked;
-                Settings.SocialTwitterEnabled = chxSocialTwitterEnabled.Checked;
-                Settings.SocialFacebookEnabled = chxSocialFacebookEnabled.Checked;
-
-
+                Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
+                Settings.FontContentSize = this.numFontSize.Value;
+                Settings.FontTextdirection = this.cbxTextDirection.SelectedIndex;
+                //tab: Highlight
+                Settings.HighlightHyperlinks = this.chxHighlightHyperlinks.Checked;
+                Settings.HighlightHTML = this.chxHighlightHTML.Checked;
+                Settings.HighlightPHP = this.chxHighlightPHP.Checked;
+                Settings.HighlightSQL = this.chxHighlightSQL.Checked;
+                //tab: Social networks
+                Settings.SocialEmailEnabled = this.chxSocialEmailEnabled.Checked;
+                Settings.SocialEmailDefaultadres = this.tbDefaultEmail.Text;
+                Settings.SocialTwitterEnabled = this.chxSocialTwitterEnabled.Checked;
+                Settings.SocialTwitterUsername = this.tbTwitterUser.Text;
+                Settings.SocialFacebookEnabled = this.chxSocialFacebookEnabled.Checked;
+                Settings.SocialFacebookSavesession = this.chxSaveFBSession.Checked;
+                //tab: Network
+                Settings.UpdatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value);
+                Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
+                Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
+                Settings.NetworkProxyAddress = this.iptbProxyAddress.IPAddress;
+                Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
+                //tab: Advance
+                Settings.NotesSavepath = this.tbNotesSavePath.Text;
+                Settings.ProgramLogError = this.chxLogErrors.Checked;
+                Settings.ProgramLogInfo = this.chxLogDebug.Checked;
 #if windows
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
                 {
-                    if (this.chxStartOnBootWindows.Checked == true)
+                    if (this.chxStartOnLogin.Checked == true)
                     {
                         try
                         {
@@ -245,7 +276,7 @@ namespace NoteFly
                             throw new CustomException(exc.Message + " " + exc.StackTrace);
                         }
                     }
-                    else if (this.chxStartOnBootWindows.Checked == false)
+                    else if (this.chxStartOnLogin.Checked == false)
                     {
                         if (key.GetValue(Program.AssemblyTitle, null) != null)
                         {
@@ -301,15 +332,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.chxRememberTwPass.Checked == true)
-            {
-                this.tbTwitterPass.Enabled = true;
-            }
-            else
-            {
-                this.tbTwitterPass.Enabled = false;
-                this.tbTwitterPass.Text = String.Empty;
-            }
+            this.tbTwitterPass.Enabled = this.chxRememberTwPass.Checked;
+            this.tbTwitterPass.Text = String.Empty;
         }
 
         /// <summary>
@@ -319,14 +343,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.chxTransparecy.Checked == false)
-            {
-                this.numProcTransparency.Enabled = false;
-            }
-            else if (this.chxTransparecy.Checked == true)
-            {
-                this.numProcTransparency.Enabled = true;
-            }
+            this.numProcTransparency.Enabled = this.chxTransparecy.Checked;
         }
 
         /// <summary>
@@ -354,7 +371,7 @@ namespace NoteFly
         /// Gets if notefly is used to run at logon.
         /// </summary>
         /// <returns>The boolean if it starts at logon.</returns>
-        private bool GetStatusStartlogin()
+        private bool GetStartOnLogin()
         {
 #if windows
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -417,7 +434,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
         {
-            this.iptbProxyAddress.Enabled = this.chxUseProxy.Checked;
+            this.iptbProxyAddress.Enabled = this.chxProxyEnabled.Checked;
         }
 
         private void cbxCheckUpdates_CheckedChanged(object sender, EventArgs e)

@@ -27,19 +27,13 @@ namespace NoteFly
     /// </summary>
     public partial class IPTextBox : UserControl
     {
+		#region Fields (1) 
+
         private IPaddrType addrtype;
 
-        #region Constructors (1)
+		#endregion Fields 
 
-        /// <summary>
-        /// Initializes a new instance of the IPTextBox class.
-        /// </summary>
-        public IPTextBox()
-        {
-            this.InitializeComponent();
-        }
-
-        #endregion Constructors
+		#region Enums (1) 
 
         /// <summary>
         /// The types of address
@@ -57,28 +51,44 @@ namespace NoteFly
             ipv6
         }
 
-        #region Methods (2)
+		#endregion Enums 
 
-        // Public Methods (2) 
+		#region Constructors (1) 
 
         /// <summary>
-        /// get the ip address
+        /// Initializes a new instance of the IPTextBox class.
+        /// </summary>
+        public IPTextBox()
+        {
+            this.InitializeComponent();
+        }
+
+		#endregion Constructors 
+
+		#region Properties (1) 
+
+/// <summary>
+        /// The ip address
         /// </summary>
         /// <returns>the ip address as string.</returns>
-        public string GetIPAddress()
+        public string IPAddress
         {
+            get
+            {
             return this.tbIPaddress.Text;
+            } 
+            set
+            {
+                this.tbIPaddress.Text = value;
+            }
         }
 
-        /// <summary>
-        /// sets the ip address.
-        /// </summary>
-        /// <param name="addr">the new ip address.</param>
-        public void SetIPAddress(string addr)
-        {
-            this.tbIPaddress.Text = addr;
-        }
-        
+		#endregion Properties 
+
+		#region Methods (1) 
+
+		// Private Methods (1) 
+
         /// <summary>
         /// Filter out illgale characters.
         /// </summary>
@@ -170,6 +180,6 @@ namespace NoteFly
             }
         }
 
-        #endregion Methods
+		#endregion Methods 
     }
 }
