@@ -133,14 +133,23 @@ namespace NoteFly
                 }
                 note.Title = this.tbTitle.Text;
                 note.Visible = true;
-                if (this.notes.SaveNote(this.note, this.rtbNewNote.Rtf))
+                if (String.IsNullOrEmpty(note.Filename))
+                {
+                    note.Filename = this.notes.GetNoteFilename(note.Title);
+                }
+                if (xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNewNote.Rtf))
                 {
                     if (newnote)
                     {
                         this.notes.AddNote(this.note);
                     }
                     this.note.CreateForm();
+
                     this.Close();
+                }
+                else
+                {
+                    throw new CustomException("Could not write note");
                 }
             }
         }

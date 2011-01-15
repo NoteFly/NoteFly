@@ -101,18 +101,9 @@ namespace NoteFly
 
 		#endregion Constructors 
 
-		#region Methods (30) 
+		#region Methods (28) 
 
-		// Public Methods (1) 
-
-        /// <summary>
-        /// Save the setting of the note.
-        /// </summary>
-        public void UpdateThisNote()
-        {
-            this.SavePos.RunWorkerAsync();
-        }
-		// Private Methods (29) 
+		// Private Methods (28) 
 
         /// <summary>
         /// The user pressed the cross on the note,
@@ -122,24 +113,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnCloseNote_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
-            //this.notes.NotesUpdated = true;
-            this.Hide();
-        }
-
-        /// <summary>
-        /// A new skin is selected for this note.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuNoteSkins_skin_Click(object sender, EventArgs e)
-        {
-            ToolStripItem tsi = (ToolStripItem) sender;
-            note.SkinNr = notes.GetSkinNr(tsi.Text);
-            this.BackColor = notes.GetForegroundColor(note.SkinNr);
-            this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
-            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
-            //todo: save.
+            this.note.Visible = false;
+            xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNote.Rtf);
+            this.note.DestroyForm();
         }
 
         /// <summary>
@@ -307,8 +283,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.note.Locked = !this.note.Locked;
+            this.menuLockNote.Checked = this.note.Locked;
+
             const string locknotemsg = "&Lock note";
-            note.Locked = !note.Locked;
             if (note.Locked)
             {
                 this.CreatePbLock();
@@ -319,12 +297,29 @@ namespace NoteFly
                 this.DestroyPbLock();
                 this.menuLockNote.Text = locknotemsg;
             }
-
             this.pbResizeGrip.Visible = !note.Locked;
             this.menuNoteSkins.Enabled = !note.Locked;
             this.menuEditNote.Enabled = !note.Locked;
             this.menuOnTop.Enabled = !note.Locked;
             this.menuRollUp.Enabled = !note.Locked;
+        }
+
+        /// <summary>
+        /// A new skin is selected for this note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuNoteSkins_skin_Click(object sender, EventArgs e)
+        {
+            ToolStripItem tsi = (ToolStripItem) sender;
+            note.SkinNr = notes.GetSkinNr(tsi.Text);
+            this.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
+            if (!this.SavePos.IsBusy)
+            {
+                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+            }
         }
 
         /// <summary>
@@ -334,10 +329,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void menuRollUp_Click(object sender, EventArgs e)
         {
-            const string rollupmsg = "&Roll up";
             this.note.RolledUp = !this.note.RolledUp;
             this.menuRollUp.Checked = this.note.RolledUp;
 
+            const string rollupmsg = "&Roll up";
             if (this.note.RolledUp)
             {
                 this.menuRollUp.Text = rollupmsg + "(click again to Roll Down)";
@@ -359,37 +354,16 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.TopMost = this.menuOnTop.Checked;
+            this.note.Ontop = !this.note.Ontop;
+            this.menuOnTop.Checked = this.note.Ontop;
 
-            if (!this.note.Locked && !this.SavePos.IsBusy)
+            this.TopMost = this.note.Ontop;
+            if (!this.SavePos.IsBusy)
             {
-                this.SavePos.RunWorkerAsync();
+                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
-        /// <summary>
-        /// Get the color of the note and paint it.
-        /// </summary>
-        //private void PaintColorNote()
-        //{
-        //    if (this.notes.TextDirection == 0)
-        //    {
-        //        this.lblTitle.TextAlign = ContentAlignment.TopLeft;
-        //        this.rtbNote.SelectAll(); //fix bug: #0000012
-        //        this.rtbNote.SelectionAlignment = HorizontalAlignment.Left;
-        //        //this.rtbNote.RightToLeft = RightToLeft.No;
-        //    }
-        //    else if (this.notes.TextDirection == 1)
-        //    {
-        //        this.lblTitle.TextAlign = ContentAlignment.TopRight;
-        //        this.rtbNote.SelectAll();
-        //        this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
-        //        //this.rtbNote.RightToLeft = RightToLeft.Yes; //will make the contextmenu act not right.
-        //    }
-        //    this.rtbNote.SelectionStart = 0;
-
-        //    this.rtbNote.Font = this.skin.GetFontNoteContent();
-        //}
         /// <summary>
         /// Resize note
         /// </summary>
@@ -405,7 +379,6 @@ namespace NoteFly
                     this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
                 }
             }
-
             this.Cursor = Cursors.Default;
         }
 
@@ -416,9 +389,12 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
+            this.note.Width = this.Width;
+            this.note.Height = this.Height;
+
             if (!this.note.Locked && !this.SavePos.IsBusy)
             {
-                this.SavePos.RunWorkerAsync();
+                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -433,11 +409,6 @@ namespace NoteFly
             {
                 this.moving = true;
                 this.oldp = e.Location;
-            }
-
-            if (!this.SavePos.IsBusy)
-            {
-                this.SavePos.RunWorkerAsync();
             }
         }
 
@@ -481,13 +452,20 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Stoped moving note, save position.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
+            this.note.X = this.Location.X;
+            this.note.Y = this.Location.Y;
+
             this.moving = false;
+            if (!this.SavePos.IsBusy)
+            {
+                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+            }
         }
 
         /// <summary>
@@ -520,24 +498,16 @@ namespace NoteFly
             if ((this.Location.X + this.Width > MINVISIBLESIZE) && (this.Location.Y + this.Height > MINVISIBLESIZE))
             {
                 string notefilepath = Path.Combine(Settings.NotesSavepath, this.note.Filename);
-                //xmlUtil.WriteNote(notefilepath, this.note, this.rtbNote.Rtf);
+                this.note.X = this.Location.X;
+                this.note.Y = this.Location.Y;
+                string rtf = (string)e.Argument;
+                xmlUtil.WriteNote(this.note, notes.GetSkinName(this.note.SkinNr), rtf);
             }
             else
             {
-                string msgOutOfScreen = "Position note is out of screen.";
+                const string msgOutOfScreen = "Note not saved. Position note is out of screen.";
                 Log.Write(LogType.error, msgOutOfScreen);
             }
-        }
-
-        /// <summary>
-        /// Set the size of FrmNote.
-        /// </summary>
-        /// <param name="width">The new width of FrmNote.</param>
-        /// <param name="height">The new height of FrmNote.</param>
-        private void SetSizeNote(int width, int height)
-        {
-            this.Width = width;
-            this.Height = height;
         }
 
         /// <summary>

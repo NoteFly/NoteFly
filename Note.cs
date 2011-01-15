@@ -96,6 +96,21 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Display this frmnote to the foreground.
+        /// </summary>
+        public void BringToFront()
+        {
+            if (this.frmnote != null)
+            {
+                this.frmnote.BringToFront();
+            }
+            else
+            {
+                throw new CustomException("FrmNote not yet created, can't bring this note to foreground.");
+            }
+        }
+
+        /// <summary>
         /// Gets the content of the note from the file.
         /// </summary>
         /// <returns></returns>
@@ -118,16 +133,6 @@ namespace NoteFly
             {
                 return this.frmnote.rtbNote.Rtf;
             }
-        }
-
-        public string GetSkinName()
-        {
-            return this.notes.GetSkinName(this.SkinNr);
-        }
-
-        public void BringToFront()
-        {
-            this.frmnote.BringToFront();
         }
     }
 }

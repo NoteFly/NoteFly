@@ -38,7 +38,7 @@ namespace NoteFly
     /// </summary>
     public class Notes
     {
-        #region Fields (3)
+		#region Fields (3) 
 
         /// <summary>
         /// EXTENSION
@@ -53,9 +53,9 @@ namespace NoteFly
         /// </summary>
         private List<Skin> skins;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (1)
+		#region Constructors (1) 
 
         //private List<FrmNote> notesfrms;
         /// <summary>
@@ -69,9 +69,9 @@ namespace NoteFly
             this.LoadNotes(Settings.ProgramFirstrun);
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Properties (1)
+		#region Properties (1) 
 
         /// <summary>
         /// The number of notes there are.
@@ -84,11 +84,11 @@ namespace NoteFly
             }
         }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Methods (18)
+		#region Methods (18) 
 
-        // Public Methods (14) 
+		// Public Methods (13) 
 
         /// <summary>
         /// Add a new note the the notes list.
@@ -235,8 +235,7 @@ namespace NoteFly
         /// <param name="pos">The noteId starts at 1</param>
         public void RemoveNote(int pos)
         {
-            this.notes[pos].DestroyForm();
-            if (pos > this.notes.Count || pos < 0)
+            if (pos >= this.notes.Count || pos < 0)
             {
                 throw new CustomException("Cannot find note to remove.");
             }
@@ -244,44 +243,6 @@ namespace NoteFly
             {
                 this.notes.RemoveAt(pos);
             }
-        }
-
-        /// <summary>
-        /// Save an note.
-        /// </summary>
-        /// <param name="note">the note (with all settings except large content).</param>
-        /// <param name="content">The note content</param>
-        /// <returns>true on succeed.</returns>
-        public bool SaveNote(Note note, string content)
-        {
-            try
-            {
-                if (String.IsNullOrEmpty(note.Filename))
-                {
-                    string notefile = this.GetNoteFilename(note.Title);
-                    if (String.IsNullOrEmpty(notefile))
-                    {
-                        throw new CustomException("cannot create filename.");
-                    }
-                    else
-                    {
-                        note.Filename = notefile;
-                    }
-                }
-                else
-                {
-                    if (xmlUtil.WriteNote(note.Filename, note, content))
-                    {
-                        Log.Write(LogType.info, "note created: " + note.Filename);
-                        return true;
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                throw new CustomException(exc.Message + " " + exc.StackTrace);
-            }
-            return false;
         }
 
         /// <summary>
@@ -322,7 +283,7 @@ namespace NoteFly
                 //todo
             }
         }
-        // Private Methods (4) 
+		// Private Methods (5) 
 
         /// <summary>
         /// This method set a limit on how many notes can be loaded before a 
@@ -338,58 +299,6 @@ namespace NoteFly
             else
             {
                 return false;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="skinnr"></param>
-        /// <returns></returns>
-        private System.Drawing.Color GetColor(int type, int skinnr)
-        {
-            switch (type)
-            {
-                case 1:
-                    return this.skins[skinnr].ForegroundClr;
-                case 2:
-                    return this.skins[skinnr].BackgroundClr;
-                case 3:
-                    return this.skins[skinnr].HighlightClr;
-            }
-            Log.Write(LogType.error, "cant get color. type:" + type + " skinnr" + skinnr);
-            return Color.White;
-        }
-
-        /// <summary>
-        /// Create a string used for filename of the note based on the
-        /// title of the note limited to the first xx characters.
-        /// </summary>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        private string GetNoteFilename(string title)
-        {
-            string title2 = StripForbiddenFilenameChars(title);
-            const int limitlenfile = 8;
-            string newfile;
-            if (title2.Length > limitlenfile)
-            {
-                newfile = title2.Substring(0, limitlenfile) + NOTEEXTENSION;
-            }
-            else
-            {
-                newfile = title2 + NOTEEXTENSION;
-            }
-
-            if (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)))
-            {
-                newfile = Checknewfilename(newfile, limitlenfile, '#');
-                return newfile;
-            }
-            else
-            {
-                return newfile;
             }
         }
 
@@ -420,6 +329,58 @@ namespace NoteFly
                     Log.Write(LogType.exception, "All suggested filenames to save this note based on title seems to be taken.");
                     return "";
                 }
+            }
+            else
+            {
+                return newfile;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="skinnr"></param>
+        /// <returns></returns>
+        private System.Drawing.Color GetColor(int type, int skinnr)
+        {
+            switch (type)
+            {
+                case 1:
+                    return this.skins[skinnr].ForegroundClr;
+                case 2:
+                    return this.skins[skinnr].BackgroundClr;
+                case 3:
+                    return this.skins[skinnr].HighlightClr;
+            }
+            Log.Write(LogType.error, "cant get color. type:" + type + " skinnr" + skinnr);
+            return Color.White;
+        }
+
+        /// <summary>
+        /// Create a string used for filename of the note based on the
+        /// title of the note limited to the first xx characters.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public string GetNoteFilename(string title)
+        {
+            string title2 = StripForbiddenFilenameChars(title);
+            const int limitlenfile = 8;
+            string newfile;
+            if (title2.Length > limitlenfile)
+            {
+                newfile = title2.Substring(0, limitlenfile) + NOTEEXTENSION;
+            }
+            else
+            {
+                newfile = title2 + NOTEEXTENSION;
+            }
+
+            if (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)))
+            {
+                newfile = Checknewfilename(newfile, limitlenfile, '#');
+                return newfile;
             }
             else
             {
@@ -554,7 +515,7 @@ namespace NoteFly
             //#endif
         }
 
-        #endregion Methods
+		#endregion Methods 
 
 #if DEBUG
         /// <summary>
@@ -580,7 +541,6 @@ namespace NoteFly
         //        this.notes.Add(testnote);
         //    }
         //}
-
 #endif
     }
 }

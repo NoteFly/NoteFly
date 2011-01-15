@@ -98,33 +98,6 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        ///A test for SaveNote
-        ///</summary>
-        [TestMethod()]
-        public void SaveNoteTest()
-        {
-            Notes target = new Notes();
-            Note newnote = target.CreateNote("this is a test note", 1, 100, 100, 360, 280);
-            newnote.RolledUp = false;
-            newnote.RolledUp = false;
-            newnote.Ontop = false;
-            newnote.Locked = false;
-            target.SaveNote(newnote, "");
-            string notefilepath = Path.Combine(Settings.NotesSavepath, newnote.Filename);
-            if (!File.Exists(notefilepath))
-            {
-                Assert.Fail("Note file doesnt exist.");
-            }
-            else
-            {
-                //todo: more testing.
-
-                //test done, delete test file.
-                File.Delete(notefilepath);
-            }
-        }
-
-        /// <summary>
         ///A test for RemoveNote
         ///</summary>
         [TestMethod()]
@@ -133,12 +106,12 @@ namespace NoteFlyTests
             Notes target = new Notes();
             Note newnote = target.CreateNote("test note", 1, 90, 90, 100, 100);
             target.AddNote(newnote);
-            int notelastpos = target.CountNotes - 1;
-            target.RemoveNote(notelastpos);
-            int excepted = notelastpos - 1;
-            if (target.CountNotes != excepted)
+            int notelastpos = target.CountNotes;
+            target.RemoveNote(notelastpos-1);
+            int exceptedcountnotesnow = notelastpos - 1;
+            if (target.CountNotes != exceptedcountnotesnow)
             {
-                Assert.Fail("Number of notes: " + target.CountNotes + ", different then excepted: " + excepted);
+                Assert.Fail("Number of notes: " + target.CountNotes + ", different then excepted: " + exceptedcountnotesnow);
             }
         }
 

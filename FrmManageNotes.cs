@@ -139,6 +139,7 @@ namespace NoteFly
                 }
 
                 this.DrawNotesGrid();
+                this.SetDataGridViewColumsWidth();
             }
         }
 
@@ -177,16 +178,18 @@ namespace NoteFly
             int[] deletedids = new int[selrows.Count];
             for (int r = 0; r < selrows.Count; r++)
             {
-                int nr = Convert.ToInt32(selrows[r].Cells["nr"]);
+                int nr = selrows[r].Index;
                 string filename = this.notes.GetNote(nr).Filename;
                 try
                 {
+                    this.notes.GetNote(nr).DestroyForm();
                     string filepath = Path.Combine(Settings.NotesSavepath, filename);
                     File.Delete(filepath);
                     if (Settings.ProgramLogInfo)
                     {
                         Log.Write(LogType.info, filepath + " deleted.");
                     }
+                    this.notes.RemoveNote(nr);
                 }
                 catch (FileNotFoundException filenotfoundexc)
                 {
@@ -198,10 +201,8 @@ namespace NoteFly
                     Log.Write(LogType.error, msgaccessdenied);
                     MessageBox.Show(msgaccessdenied);
                 }
-                //deletedids[r] = id;
-                this.notes.RemoveNote(nr);
+
             }
-            string[] files = Directory.GetFiles(Settings.NotesSavepath, "*.nfn");
         }
 
         /// <summary>
@@ -228,7 +229,6 @@ namespace NoteFly
                 datatable.Rows.Add(dr);
                 //dataGridView1.Rows[i].Cells["skin"].Style.BackColor = notes.GetForegroundColor(this.notes.GetNote(i).SkinNr);
             }
-
         }
 
         /// <summary>
