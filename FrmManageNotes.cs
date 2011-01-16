@@ -33,7 +33,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-		#region Fields (4) 
+        #region Fields (4)
 
         /// <summary>
         /// notes
@@ -48,9 +48,9 @@ namespace NoteFly
         /// </summary>
         private bool redrawbusy = false;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the FrmManageNotes class.
@@ -66,11 +66,11 @@ namespace NoteFly
             this.SetDataGridViewColumsWidth();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (13) 
+        #region Methods (13)
 
-		// Private Methods (13) 
+        // Private Methods (13) 
 
         /// <summary>
         /// Request to backup all notes to a file.
@@ -82,9 +82,9 @@ namespace NoteFly
         {
             SaveFileDialog savebackupdlg = new SaveFileDialog();
             savebackupdlg.CheckPathExists = true;
-            savebackupdlg.DefaultExt = "nfbak"; //noteflybackup
             savebackupdlg.OverwritePrompt = true;
-            savebackupdlg.Title = "Where to save backup all notes file.";
+            savebackupdlg.DefaultExt = "nfbak"; //noteflybackup
+            savebackupdlg.Title = "Where to save the backup of all NoteFly notes.";
             savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|.nfbak";
             DialogResult savebackupdlgres = savebackupdlg.ShowDialog();
             if (savebackupdlgres == DialogResult.OK)
@@ -143,6 +143,7 @@ namespace NoteFly
             }
         }
 
+        /*
         /// <summary>
         /// Set a note visible or unvisible
         /// </summary>
@@ -168,6 +169,7 @@ namespace NoteFly
                 throw new CustomException("Note not found. Looking for noteid:" + noteid);
             }
         }
+         */
 
         /// <summary>
         /// Deletes the notes in memory and files that are selected in a Gridview.
@@ -201,7 +203,6 @@ namespace NoteFly
                     Log.Write(LogType.error, msgaccessdenied);
                     MessageBox.Show(msgaccessdenied);
                 }
-
             }
         }
 
@@ -263,7 +264,7 @@ namespace NoteFly
             {
                 try
                 {
-                    this.Opacity = (double)Settings.NotesTransparencyLevel;
+                    this.Opacity = Settings.NotesTransparencyLevel;
                     this.Refresh();
                 }
                 catch (InvalidCastException)
@@ -350,7 +351,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
-
+            this.pnlHead.BackColor = Color.Orange;
         }
 
         /// <summary>
@@ -367,6 +368,58 @@ namespace NoteFly
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;
         }
 
-		#endregion Methods 
+        /// <summary>
+        /// Request to restore all notes from a backup file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnRestoreAllNotes_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openbackupdlg = new OpenFileDialog();
+            openbackupdlg.CheckPathExists = true;
+            openbackupdlg.CheckFileExists = true;
+            openbackupdlg.Multiselect = false;
+            openbackupdlg.DefaultExt = "nfbak"; //noteflybackup
+            openbackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
+            openbackupdlg.Title = "Restore all notes";
+            DialogResult openbackupdlgres = openbackupdlg.ShowDialog();
+            if (openbackupdlgres == DialogResult.OK)
+            {
+                if (openbackupdlg.FilterIndex == 1)
+                {
+                    if (this.notes.CountNotes > 0)
+                    {
+                        DialogResult eraseres = MessageBox.Show("Erase all current notes?", "Are you sure?", MessageBoxButtons.YesNoCancel);
+                        if (eraseres == DialogResult.Yes)
+                        {
+                            Log.Write(LogType.info, "Erased all notes for restoring notes backup.");
+                            for (int i = 0; i < this.notes.CountNotes; i++)
+                            {
+                                //this.notes.GetNote(i).DestroyForm();
+                                File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
+                            }
+                        }
+                        else if (eraseres == DialogResult.Cancel)
+                        {
+                            Log.Write(LogType.info, "Cancelled restore notes backup.");
+                            return;
+                        }
+                    }
+
+                    for (int i = 0; i < this.notes.CountNotes; i++)
+                    {
+                        this.notes.GetNote(i).DestroyForm();
+                        this.notes.RemoveNote(i);
+                    }
+
+                    xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
+                    this.notes.LoadNotes(false);
+                    this.DrawNotesGrid();
+                    this.SetDataGridViewColumsWidth();
+                }
+            }
+        }
+
+        #endregion Methods
     }
 }

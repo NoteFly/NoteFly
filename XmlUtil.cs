@@ -30,7 +30,7 @@ namespace NoteFly
 
     public static class xmlUtil
     {
-		#region Fields (5) 
+        #region Fields (5)
 
         private const string NOTEVERSION = "2";
         private const string SETTINGSFILE = "settings.xml";
@@ -38,11 +38,11 @@ namespace NoteFly
         private static XmlTextReader xmlread = null;
         private static XmlTextWriter xmlwrite = null;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Methods (11) 
+        #region Methods (11)
 
-		// Public Methods (8) 
+        // Public Methods (8) 
 
         /// <summary>
         /// Get a xml node and return the value as string.
@@ -72,15 +72,8 @@ namespace NoteFly
                 throw new CustomException("XmlTextReader object is null.");
             }
             const bool disablelineopt = false;
-            /*
-            if (linenumoffsetcontent == 0)
-            {
-                disablelineopt = true;
-            }
-             */
             try
             {
-
                 while (xmlread.Read())
                 {
                     if (xmlread.LineNumber == linenumoffsetcontent || disablelineopt) //faster than comparing xmlread.name
@@ -90,8 +83,8 @@ namespace NoteFly
                             string xmlnodecontent = String.Empty;
                             xmlnodecontent = xmlread.ReadElementContentAsString();
 #if DEBUG
-                        stopwatch.Stop();
-                        Log.Write(LogType.info, "Read content time:  " + stopwatch.ElapsedTicks + " ticks"); //blocking display time ~200ms/7
+                            stopwatch.Stop();
+                            Log.Write(LogType.info, "Read content time:  " + stopwatch.ElapsedTicks + " ticks"); //blocking display time ~200ms/7
 #endif
                             return xmlnodecontent;
                         }
@@ -103,9 +96,9 @@ namespace NoteFly
                 xmlread.Close();
             }
             //error node not found.
-            #if DEBUG
+#if DEBUG
             stopwatch.Stop();
-            #endif
+#endif
             return String.Empty;
         }
 
@@ -115,69 +108,100 @@ namespace NoteFly
         /// <param name="n">pointer to notes</param>
         /// <param name="notefilepath"></param>
         /// <returns>An note object</returns>
-        public static Note LoadNote(Notes n, string notefilename)
+        public static Note LoadNoteFile(Notes n, string notefilename)
         {
             Note note = new Note(n, notefilename);
             xmlread = new XmlTextReader(Path.Combine(Settings.NotesSavepath, notefilename));
             xmlread.ProhibitDtd = true;
-            bool isset_linenumoffsetcontent = false;
             try
             {
-                while (xmlread.Read())
-                {
-                    if (xmlread.Name != String.Empty)
-                    {
-                        switch (xmlread.Name)
-                        {
-                            case "visible":
-                                note.Visible = xmlread.ReadElementContentAsBoolean();
-                                break;
-                            case "ontop":
-                                note.Ontop = xmlread.ReadElementContentAsBoolean();
-                                break;
-                            case "locked":
-                                note.Locked = xmlread.ReadElementContentAsBoolean();
-                                break;
-                            case "width":
-                                note.Width = xmlread.ReadElementContentAsInt();
-                                break;
-                            case "heigth":
-                                note.Height = xmlread.ReadElementContentAsInt();
-                                break;
-                            case "x":
-                                note.X = xmlread.ReadElementContentAsInt();
-                                break;
-                            case "y":
-                                note.Y = xmlread.ReadElementContentAsInt();
-                                break;
-                            case "skin":
-                                int skinnr = n.GetSkinNr(xmlread.ReadElementContentAsString());
-                                if (skinnr >= 0)
-                                {
-                                    note.SkinNr = skinnr;
-                                }
-                                break;
-                            case "title":
-                                note.Title = xmlread.ReadElementContentAsString();
-                                break;
-                            case "content":
-                                if (!isset_linenumoffsetcontent)
-                                {
-                                    note.linenumoffsetcontent = Convert.ToUInt32(xmlread.LineNumber);
-                                    isset_linenumoffsetcontent = true;
-                                }
-                                break;
-                        }
-                        if (xmlread.Depth > 5)
-                        {
-                            throw new CustomException("note file corrupted: " + notefilename);
-                        }
-                    }
-                }
+                note = ParserNoteNode(n, note, 0);
             }
             finally
             {
                 xmlread.Close();
+            }
+            return note;
+        }
+
+        /// <summary>
+        /// Parser a note node in a xml file, 
+        /// readnotenum is the number of note node to be parser and returned as note object.
+        /// </summary>
+        /// <returns>a note object</returns>
+        private static Note ParserNoteNode(Notes n, Note note, int readnotenum)
+        {
+            bool isset_linenumoffsetcontent = false;
+            int curnotenum = -1;
+            bool endnode = false;
+            while (xmlread.Read())
+            {
+                if (xmlread.Name != String.Empty)
+                {
+                    switch (xmlread.Name)
+                    {
+                        case "note":
+                            if (!endnode)
+                            {
+                                curnotenum++;
+                            }
+                            if (curnotenum < readnotenum)
+                            {
+                                xmlread.Skip();
+                            }
+                            else if (curnotenum > readnotenum)
+                            {
+                                return note;
+                            }
+                            else
+                            {
+                                endnode = !endnode;
+                            }
+                            break;
+                        case "visible":
+                            note.Visible = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "ontop":
+                            note.Ontop = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "locked":
+                            note.Locked = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "width":
+                            note.Width = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "heigth":
+                            note.Height = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "x":
+                            note.X = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "y":
+                            note.Y = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "skin":
+                            int skinnr = n.GetSkinNr(xmlread.ReadElementContentAsString());
+                            if (skinnr >= 0)
+                            {
+                                note.SkinNr = skinnr;
+                            }
+                            break;
+                        case "title":
+                            note.Title = xmlread.ReadElementContentAsString();
+                            break;
+                        case "content":
+                            if (!isset_linenumoffsetcontent)
+                            {
+                                note.linenumoffsetcontent = Convert.ToUInt32(xmlread.LineNumber);
+                                isset_linenumoffsetcontent = true;
+                            }
+                            break;
+                    }
+                    if (xmlread.Depth > 5)
+                    {
+                        throw new CustomException("note file corrupted");
+                    }
+                }
             }
             return note;
         }
@@ -412,7 +436,7 @@ namespace NoteFly
                 }
                 if (xmlread.Depth > 3)
                 {
-                    throw new CustomException("Skin file corrupted: "+SKINFILE);
+                    throw new CustomException("Skin file corrupted: " + SKINFILE);
                 }
             }
             return skins;
@@ -493,25 +517,7 @@ namespace NoteFly
                 xmlwrite = new System.Xml.XmlTextWriter(Path.Combine(Settings.NotesSavepath, note.Filename), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = System.Xml.Formatting.Indented;
                 xmlwrite.WriteStartDocument();
-                xmlwrite.WriteStartElement("note");
-                xmlwrite.WriteAttributeString("version", NOTEVERSION );
-                WriteXMLBool("visible", note.Visible);
-                WriteXMLBool("ontop", note.Ontop);
-                WriteXMLBool("locked", note.Locked);
-                xmlwrite.WriteStartElement("location");
-                xmlwrite.WriteElementString("x", note.X.ToString());
-                xmlwrite.WriteElementString("y", note.Y.ToString());
-                xmlwrite.WriteEndElement();
-                xmlwrite.WriteStartElement("size");
-                xmlwrite.WriteElementString("width", Convert.ToString(note.Width));
-                xmlwrite.WriteElementString("heigth", Convert.ToString(note.Height));
-                xmlwrite.WriteEndElement();
-                xmlwrite.WriteElementString("skin", skinname);
-                xmlwrite.WriteElementString("title", note.Title);
-                note.linenumoffsetcontent=16;
-                xmlwrite.WriteElementString("content", content);
-                
-                xmlwrite.WriteEndElement();
+                WriteNoteBody(note, skinname, content);
                 xmlwrite.WriteEndDocument();
                 succeeded = true;
             }
@@ -527,10 +533,45 @@ namespace NoteFly
             return succeeded;
         }
 
+        /// <summary>
+        /// Write the note node with properties.
+        /// </summary>
+        /// <param name="note">The note object.</param>
+        /// <param name="skinname">The skinname used by this note.</param>
+        /// <param name="content">The note content.</param>
+        private static void WriteNoteBody(Note note, string skinname, string content)
+        {
+            xmlwrite.WriteStartElement("note");
+            xmlwrite.WriteAttributeString("version", NOTEVERSION);
+            WriteXMLBool("visible", note.Visible);
+            WriteXMLBool("ontop", note.Ontop);
+            WriteXMLBool("locked", note.Locked);
+            xmlwrite.WriteStartElement("location");
+            xmlwrite.WriteElementString("x", note.X.ToString());
+            xmlwrite.WriteElementString("y", note.Y.ToString());
+            xmlwrite.WriteEndElement();
+            xmlwrite.WriteStartElement("size");
+            xmlwrite.WriteElementString("width", Convert.ToString(note.Width));
+            xmlwrite.WriteElementString("heigth", Convert.ToString(note.Height));
+            xmlwrite.WriteEndElement();
+            xmlwrite.WriteElementString("skin", skinname);
+            xmlwrite.WriteElementString("title", note.Title);
+            note.linenumoffsetcontent = 16;
+            xmlwrite.WriteElementString("content", content);
+            xmlwrite.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Write a file with all notes as backup.
+        /// </summary>
+        /// <param name="filenamepath"></param>
+        /// <param name="notes"></param>
+        /// <returns></returns>
         public static bool WriteNotesBackupFile(string filenamepath, Notes notes)
         {
             bool succeeded = false;
-            try {
+            try
+            {
                 xmlwrite = new XmlTextWriter(filenamepath, System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument();
@@ -538,34 +579,71 @@ namespace NoteFly
                 xmlwrite.WriteAttributeString("number", notes.CountNotes.ToString());
                 for (int i = 0; i < notes.CountNotes; i++)
                 {
-                    xmlwrite.WriteStartElement("note");
-                    xmlwrite.WriteAttributeString("version", NOTEVERSION );
-                    WriteXMLBool("visible", notes.GetNote(i).Visible);
-                    WriteXMLBool("ontop", notes.GetNote(i).Ontop);
-                    WriteXMLBool("locked", notes.GetNote(i).Locked);
-                    xmlwrite.WriteStartElement("location");
-                    xmlwrite.WriteElementString("x", notes.GetNote(i).X.ToString());
-                    xmlwrite.WriteElementString("y", notes.GetNote(i).Y.ToString());
-                    xmlwrite.WriteEndElement();
-                    xmlwrite.WriteStartElement("size");
-                    xmlwrite.WriteElementString("width", notes.GetNote(i).Width.ToString() );
-                    xmlwrite.WriteElementString("heigth", notes.GetNote(i).Height.ToString() );
-                    xmlwrite.WriteEndElement();
-                    xmlwrite.WriteElementString("skin", notes.GetSkinName(notes.GetNote(i).SkinNr) );
-                    xmlwrite.WriteElementString("title", notes.GetNote(i).Title);
-                    xmlwrite.WriteElementString("content", notes.GetNote(i).GetContent());
-                    xmlwrite.WriteEndElement();
+                    string skinname = notes.GetSkinName(notes.GetNote(i).SkinNr);
+                    WriteNoteBody(notes.GetNote(i), skinname, notes.GetNote(i).GetContent());
                 }
 
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
-                succeeded =true;
+                succeeded = true;
             }
             finally
             {
                 xmlwrite.Close();
             }
             return succeeded;
+        }
+
+        /// <summary>
+        /// Read all notes from a notes backup file and return a array with all the notes.
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        public static void LoadNotesBackup(Notes n, string filepath)
+        {
+            xmlread = new XmlTextReader(filepath);
+            int numnotes = 0;
+            bool endnode = false;
+            try
+            {
+                while (xmlread.Read())
+                {
+                    if (xmlread.Name == "note")
+                    {
+                        if (!endnode)
+                        {
+                            numnotes++;
+                        }
+                        endnode = !endnode;
+                    }
+                }
+            }
+            finally
+            {
+                xmlread.Close();
+            }
+            for (int i = 0; i < numnotes; i++)
+            {
+                xmlread = new XmlTextReader(filepath);
+                
+                Note importnote = new Note(n, n.GetNoteFilename("import" + i + Notes.NOTEEXTENSION));
+                string content;
+                try
+                {
+                    importnote = ParserNoteNode(n, importnote, i);
+                    content = GetContentString(filepath, "content", importnote.linenumoffsetcontent);
+                }
+                finally
+                {
+                    xmlread.Close();
+                }
+                string skinname = n.GetSkinName(importnote.SkinNr);
+
+                if (!WriteNote(importnote, skinname, content))
+                {
+                    System.Windows.Forms.MessageBox.Show("Test");
+                }
+            }
         }
 
         /// <summary>
@@ -595,7 +673,7 @@ namespace NoteFly
                 WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
                 WriteXMLBool("NotesClosebtnTooltipenabled", Settings.NotesClosebtnTooltipenabled);
                 WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
-                WriteXMLBool("ProgramFirstrun",Settings.ProgramFirstrun);
+                WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
                 WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
                 WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
                 WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
@@ -629,15 +707,21 @@ namespace NoteFly
                 xmlwrite.WriteElementString("SocialTwitterUsername", Settings.SocialTwitterUsername);
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
-            } finally
+            }
+            finally
             {
                 xmlwrite.Close();
             }
             //CheckFile();
             return true;
         }
-		// Private Methods (3) 
+        // Private Methods (3) 
 
+        /// <summary>
+        /// Convert HEX color to color object.
+        /// </summary>
+        /// <param name="colorstring"></param>
+        /// <returns></returns>
         private static System.Drawing.Color ConvToClr(string colorstring)
         {
             //HEX color
@@ -675,62 +759,68 @@ namespace NoteFly
         {
             try
             {
+                const string node = "skin";
+                const string name = "Name";
+                const string fgclr = "ForegroundColor";
+                const string bgclr = "BackgroundColor";
+                const string hlclr = "HighlightColor";
+
                 xmlwrite = new XmlTextWriter(filename, System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument();
                 xmlwrite.WriteStartElement("skins");
                 xmlwrite.WriteAttributeString("count", "7"); //for performance predefine list Capacity, not required.
-                
-                xmlwrite.WriteStartElement("skin");
-                xmlwrite.WriteElementString("Name", "yellow");
-                xmlwrite.WriteElementString("ForegroundColor", "#FFD800");
-                xmlwrite.WriteElementString("BackgroundColor", "#E5B61B");
-                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+
+                xmlwrite.WriteStartElement(node);
+                xmlwrite.WriteElementString(name, "yellow");
+                xmlwrite.WriteElementString(fgclr, "#FFD800");
+                xmlwrite.WriteElementString(bgclr, "#E5B61B");
+                xmlwrite.WriteElementString(hlclr, "#FF0000");
                 xmlwrite.WriteEndElement();
 
-                xmlwrite.WriteStartElement("skin");
-                xmlwrite.WriteElementString("Name", "orange");
-                xmlwrite.WriteElementString("ForegroundColor", "#FF6A00");
-                xmlwrite.WriteElementString("BackgroundColor", "#EF6F1F");
-                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+                xmlwrite.WriteStartElement(node);
+                xmlwrite.WriteElementString(name, "orange");
+                xmlwrite.WriteElementString(fgclr, "#FF6A00");
+                xmlwrite.WriteElementString(bgclr, "#EF6F1F");
+                xmlwrite.WriteElementString(hlclr, "#FF0000");
                 xmlwrite.WriteEndElement();
 
-                xmlwrite.WriteStartElement("skin");
-                xmlwrite.WriteElementString("Name", "white");
-                xmlwrite.WriteElementString("ForegroundColor", "#FFFFFF");
-                xmlwrite.WriteElementString("BackgroundColor", "#26262C");
-                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+                xmlwrite.WriteStartElement(node);
+                xmlwrite.WriteElementString(name, "white");
+                xmlwrite.WriteElementString(fgclr, "#FFFFFF");
+                xmlwrite.WriteElementString(bgclr, "#26262C");
+                xmlwrite.WriteElementString(hlclr, "#FF0000");
                 xmlwrite.WriteEndElement();
 
-                xmlwrite.WriteStartElement("skin");
-                xmlwrite.WriteElementString("Name", "green");
-                xmlwrite.WriteElementString("ForegroundColor", "#6FE200");
-                xmlwrite.WriteElementString("BackgroundColor", "#008000");
-                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+                xmlwrite.WriteStartElement(node);
+                xmlwrite.WriteElementString(name, "green");
+                xmlwrite.WriteElementString(fgclr, "#6FE200");
+                xmlwrite.WriteElementString(bgclr, "#008000");
+                xmlwrite.WriteElementString(hlclr, "#FF0000");
                 xmlwrite.WriteEndElement();
 
-                xmlwrite.WriteStartElement("skin");
-                xmlwrite.WriteElementString("Name", "blue");
-                xmlwrite.WriteElementString("ForegroundColor", "#5A86D5");
-                xmlwrite.WriteElementString("BackgroundColor", "#1A1AFF");
-                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+                xmlwrite.WriteStartElement(node);
+                xmlwrite.WriteElementString(name, "blue");
+                xmlwrite.WriteElementString(fgclr, "#5A86D5");
+                xmlwrite.WriteElementString(bgclr, "#1A1AFF");
+                xmlwrite.WriteElementString(hlclr, "#FF0000");
                 xmlwrite.WriteEndElement();
 
-                xmlwrite.WriteStartElement("skin");
-                xmlwrite.WriteElementString("Name", "purple");
-                xmlwrite.WriteElementString("ForegroundColor", "#FF1AFF");
-                xmlwrite.WriteElementString("BackgroundColor", "#8B1A8B");
-                xmlwrite.WriteElementString("HighlightColor", "#FF0000");
+                xmlwrite.WriteStartElement(node);
+                xmlwrite.WriteElementString(name, "purple");
+                xmlwrite.WriteElementString(fgclr, "#FF1AFF");
+                xmlwrite.WriteElementString(bgclr, "#8B1A8B");
+                xmlwrite.WriteElementString(hlclr, "#FF0000");
                 xmlwrite.WriteEndElement();
 
-                xmlwrite.WriteStartElement("skin");
-                xmlwrite.WriteElementString("Name", "red");
-                xmlwrite.WriteElementString("ForegroundColor", "#FF1A1A");
-                xmlwrite.WriteElementString("BackgroundColor", "#7A1515");
-                xmlwrite.WriteElementString("HighlightColor", "#FFA500");
+                xmlwrite.WriteStartElement(node);
+                xmlwrite.WriteElementString(name, "red");
+                xmlwrite.WriteElementString(fgclr, "#FF1A1A");
+                xmlwrite.WriteElementString(bgclr, "#7A1515");
+                xmlwrite.WriteElementString(hlclr, "#FFA500");
                 xmlwrite.WriteEndElement();
 
-                
+
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
             }
@@ -758,6 +848,6 @@ namespace NoteFly
             xmlwrite.WriteEndElement();
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

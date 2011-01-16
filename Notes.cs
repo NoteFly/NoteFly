@@ -201,7 +201,7 @@ namespace NoteFly
         /// If not found return -1.
         /// </summary>
         /// <param name="skinname"></param>
-        /// <returns></returns>
+        /// <returns>The skinnr, if not found then -1 is returned.</returns>
         public int GetSkinNr(string skinname)
         {
             for (int i = 0; i < this.skins.Count; i++)
@@ -230,7 +230,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Close a note form and remove a note from the notes list.
+        /// Remove a note from the notes list.
         /// </summary>
         /// <param name="pos">The noteId starts at 1</param>
         public void RemoveNote(int pos)
@@ -389,10 +389,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Loads all notes files.
+        /// Loads all note files in the NotesSavepath.
         /// </summary>
         /// <param name="firstrun">true if it is the first run</param>
-        private void LoadNotes(bool firstrun)
+        public void LoadNotes(bool firstrun)
         {
             if (!Directory.Exists(Settings.NotesSavepath))
             {
@@ -468,7 +468,7 @@ namespace NoteFly
 #endif
             for (int i = 0; i < notefiles.Length; i++)
             {
-                Note note = xmlUtil.LoadNote(this, notefiles[i]);
+                Note note = xmlUtil.LoadNoteFile(this, notefiles[i]);
                 this.AddNote(note);
             }
 #if DEBUG
@@ -491,10 +491,20 @@ namespace NoteFly
 #endif
             if (firstrun)
             {
-                int tipnotewidth = 320;
-                int tipnoteheight = 280;
-                int tipnoteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (tipnotewidth / 2));
-                int tipnoteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (tipnoteheight / 2));
+                CreateFirstrunNote();
+            }
+        }
+
+        /// <summary>
+        /// Create a demo note with instruction 
+        /// (Should be the first time that NoteFly is runned displayed only.)
+        /// </summary>
+        private void CreateFirstrunNote()
+        {
+                const int notewidth = 320;
+                const int noteheight = 280;
+                int tipnoteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (notewidth / 2));
+                int tipnoteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (noteheight / 2));
                 StringBuilder notecontent = new StringBuilder();
                 notecontent.AppendLine("This is a example note.");
                 notecontent.AppendLine("You can chance colour of this note by rightclicking on this note.");
@@ -506,41 +516,8 @@ namespace NoteFly
                 Settings.ProgramFirstrun = false;
                 Log.Write(LogType.info, "firstrun occur");
                 xmlUtil.WriteSettings();
-            }
-            //#if DEBUG
-            //#warning Stress test enabled
-            //Log.Write(LogType.info, "start stress test");
-            //this.LoadNotesStressTest(5);
-            //Log.Write(LogType.info, "finished stress test");
-            //#endif
         }
 
 		#endregion Methods 
-
-#if DEBUG
-        /// <summary>
-        /// Methode that creates some notes with a hardcoded text and random color 
-        /// for stress testing this application.
-        /// </summary>
-        /// <param name="maxnotes">How many notes to create.</param>
-        //private void LoadNotesStressTest(int maxnotes)
-        //{
-        //    Random rnd = new Random();
-        //    for (int id = 1; id <= maxnotes; id++)
-        //    {
-        //        string title = "test nr." + id + " testalongtitlesoiteasytoseeifresizingofmanagenoteisdonecorrectlyblablabla";
-        //        int skinnr = rnd.Next(0, 6);
-        //        int noteLocX = rnd.Next(0, 360);
-        //        int noteLocY = rnd.Next(0, 240);
-        //        int notewidth = 180;
-        //        int noteheight = 180;
-        //        Note testnote = this.CreateNote(title, skinnr, noteLocX, noteLocY, notewidth, noteheight);
-        //        //testnote.CreateForm();
-        //        //testnote.frmnote.rtbNote.Text = "This is a stress test creating a lot of notes, to see how fast or slow it loads.\r\n" +
-        //        //     "warning: To prevent this note from saving don't move or touch it!";
-        //        this.notes.Add(testnote);
-        //    }
-        //}
-#endif
     }
 }

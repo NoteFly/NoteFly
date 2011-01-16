@@ -59,7 +59,7 @@ namespace NoteFly
             this.pnlHead = new System.Windows.Forms.Panel();
             this.lbTextWindowTitle = new System.Windows.Forms.Label();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnRestoreAllNotes = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnNoteDelete = new System.Windows.Forms.Button();
             this.btnBackAllNotes = new System.Windows.Forms.Button();
@@ -128,17 +128,18 @@ namespace NoteFly
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
-            // button4
+            // btnRestoreAllNotes
             // 
-            this.button4.BackColor = System.Drawing.Color.Wheat;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(222, 36);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(109, 23);
-            this.button4.TabIndex = 15;
-            this.button4.Text = "restore all from file";
-            this.button4.UseCompatibleTextRendering = true;
-            this.button4.UseVisualStyleBackColor = false;
+            this.btnRestoreAllNotes.BackColor = System.Drawing.Color.Wheat;
+            this.btnRestoreAllNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRestoreAllNotes.Location = new System.Drawing.Point(222, 36);
+            this.btnRestoreAllNotes.Name = "btnRestoreAllNotes";
+            this.btnRestoreAllNotes.Size = new System.Drawing.Size(109, 23);
+            this.btnRestoreAllNotes.TabIndex = 15;
+            this.btnRestoreAllNotes.Text = "restore all from file";
+            this.btnRestoreAllNotes.UseCompatibleTextRendering = true;
+            this.btnRestoreAllNotes.UseVisualStyleBackColor = false;
+            this.btnRestoreAllNotes.Click += new System.EventHandler(this.btnRestoreAllNotes_Click);
             // 
             // button1
             // 
@@ -253,7 +254,7 @@ namespace NoteFly
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnBackAllNotes);
             this.Controls.Add(this.btnNoteDelete);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.btnRestoreAllNotes);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pbResizeGrip);
             this.Controls.Add(this.pnlHead);
@@ -279,7 +280,7 @@ namespace NoteFly
 
         #endregion
 
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnRestoreAllNotes;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnNoteDelete;
         private System.Windows.Forms.Button btnBackAllNotes;
