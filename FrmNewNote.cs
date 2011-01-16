@@ -26,6 +26,7 @@ namespace NoteFly
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using System.IO;
+    using System.Text;
 
     /// <summary>
     /// Class to create new note.
@@ -391,7 +392,7 @@ namespace NoteFly
 #endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
             }
-            else 
+            else
             {
                 this.pnlHeadNewNote.BackColor = notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
             }
@@ -444,20 +445,62 @@ namespace NoteFly
             OpenFileDialog openfiledlg = new OpenFileDialog();
             openfiledlg.Title = "open file";
             openfiledlg.Multiselect = false;
-            openfiledlg.Filter = "text file (*.txt)|*.txt";
+            openfiledlg.Filter = "Plain text file (*.txt)|*.txt|PNotes note (*.pnote)|*.pnote|KeyNote NF note (*knt)|*knt";
             openfiledlg.CheckFileExists = true;
             openfiledlg.CheckPathExists = true;
             DialogResult res = openfiledlg.ShowDialog();
             if (res == DialogResult.OK)
             {
-                //FileStream fs = null;
                 StreamReader reader = null;
                 try
                 {
-                    if (File.Exists( openfiledlg.FileName))
+                    if (File.Exists(openfiledlg.FileName))
                     {
                         reader = new StreamReader(openfiledlg.FileName, true); //detect encoding
-                        rtbNewNote.Text = reader.ReadToEnd();
+                        if (openfiledlg.FilterIndex == 1)
+                        {
+                            rtbNewNote.Text = reader.ReadToEnd();
+                        }
+                        else if (openfiledlg.FilterIndex == 2)
+                        {
+                            rtbNewNote.Rtf = reader.ReadToEnd();
+                            SetDefaultFontFamilyAndSize();
+                        }
+                        else if (openfiledlg.FilterIndex == 3)
+                        {
+                            uint linenum = 0;
+                            string curline = reader.ReadLine();//no CR+LF characters
+                            if (curline == "#!GFKNT 2.0")
+                            {
+                                while (curline != "%:")
+                                {
+                                    curline = reader.ReadLine();
+                                    linenum++;
+                                    if (linenum > 100) //should normally be except %: around line 42.
+                                    {
+                                        MessageBox.Show("Cannot find KeyNote NF note content.");
+                                    }
+                                }
+                                curline = reader.ReadLine();
+                                StringBuilder sb = new StringBuilder(curline);
+                                while (curline != "%%")
+                                {
+                                    curline = reader.ReadLine();
+                                    sb.Append(curline);
+                                    linenum++;
+                                    if (linenum > 5000) //limit to 5000 lines.
+                                    {
+                                        break;
+                                    }
+                                }
+                                this.rtbNewNote.Rtf = sb.ToString();
+                                SetDefaultFontFamilyAndSize();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Not a KeyNote NF note.");
+                            }
+                        }
                     }
                 }
                 finally
@@ -465,6 +508,13 @@ namespace NoteFly
                     reader.Close();
                 }
             }
+        }
+
+        private void SetDefaultFontFamilyAndSize()
+        {
+            rtbNewNote.SelectAll();
+            rtbNewNote.Font = new Font(Settings.FontContentFamily, (float)Settings.FontContentSize);
+            rtbNewNote.Select(0, 0);
         }
 
         /// <summary>
