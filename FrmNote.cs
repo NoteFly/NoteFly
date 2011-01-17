@@ -58,17 +58,28 @@ namespace NoteFly
             this.InitializeComponent();
             //this.SuspendLayout();
             this.rtbNote.Rtf = note.GetContent();
+            this.rtbNote.Font = new Font(Settings.FontContentFamily, Settings.FontContentSize);
+
             this.BackColor = notes.GetForegroundColor(note.SkinNr);
             this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
             this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
+            
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
+
+            this.SetRollupNote();
+
+            this.SetLockedNote();
+
             this.SetBounds(note.X, note.Y, note.Width, note.Height);
+
             this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
             this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
             this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
+            
             this.lblTitle.Text = note.Title;
-            this.rtbNote.Visible = true;
+            this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize);
+
             if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
             {
                 TextHighlight.CheckSyntaxFull(rtbNote);
@@ -179,30 +190,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Create a PictureBox with lock picture.
-        /// </summary>
-        private void CreatePbLock()
-        {
-            this.pbShowLock = new PictureBox();
-            this.pbShowLock.Name = "pbShowLock";
-            this.pbShowLock.Size = new Size(16, 16);
-            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
-            this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
-            this.pbShowLock.Visible = true;
-            this.pnlHead.Controls.Add(this.pbShowLock);
-            this.pbShowLock.BringToFront();
-        }
-
-        /// <summary>
-        /// Removes and freese memory lock picture.
-        /// </summary>
-        private void DestroyPbLock()
-        {
-            this.pbShowLock.Visible = false;
-            this.pbShowLock.Dispose();
-        }
-
-        /// <summary>
         /// Edit note is clicked.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -277,6 +264,29 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// A new skin is selected for this note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuNoteSkins_skin_Click(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem curtsi in this.menuNoteSkins.DropDownItems)
+            {
+                curtsi.Checked = false;
+            }
+            ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
+            tsi.Checked = true;
+            this.note.SkinNr = notes.GetSkinNr(tsi.Text);
+            this.BackColor = notes.GetForegroundColor(this.note.SkinNr);
+            this.rtbNote.BackColor = notes.GetForegroundColor(this.note.SkinNr);
+            this.pnlHead.BackColor = notes.GetForegroundColor(this.note.SkinNr);
+            if (!this.SavePos.IsBusy)
+            {
+                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+        }
+
+        /// <summary>
         /// Lock the note and show a lock.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -284,8 +294,18 @@ namespace NoteFly
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.note.Locked = !this.note.Locked;
-            this.menuLockNote.Checked = this.note.Locked;
 
+            this.SetLockedNote();
+
+            if (!this.SavePos.IsBusy)
+            {
+                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+        }
+
+        private void SetLockedNote()
+        {
+            this.menuLockNote.Checked = note.Locked;
             const string locknotemsg = "&Lock note";
             if (note.Locked)
             {
@@ -305,24 +325,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// A new skin is selected for this note.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuNoteSkins_skin_Click(object sender, EventArgs e)
-        {
-            ToolStripItem tsi = (ToolStripItem) sender;
-            note.SkinNr = notes.GetSkinNr(tsi.Text);
-            this.BackColor = notes.GetForegroundColor(note.SkinNr);
-            this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
-            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
-            if (!this.SavePos.IsBusy)
-            {
-                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
-            }
-        }
-
-        /// <summary>
         /// Roll the note up and down.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -330,8 +332,18 @@ namespace NoteFly
         private void menuRollUp_Click(object sender, EventArgs e)
         {
             this.note.RolledUp = !this.note.RolledUp;
-            this.menuRollUp.Checked = this.note.RolledUp;
+            
+            this.SetRollupNote();
 
+            if (!this.SavePos.IsBusy)
+            {
+                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+        }
+
+        private void SetRollupNote()
+        {
+            this.menuRollUp.Checked = this.note.RolledUp;
             const string rollupmsg = "&Roll up";
             if (this.note.RolledUp)
             {
@@ -576,9 +588,43 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void updateMenuNoteColor(object sender, EventArgs e)
         {
-            foreach (ToolStripMenuItem curitem in this.menuNoteSkins.DropDownItems)
+            //for (int i = 0; i < this.menuNoteSkins.DropDownItems.Count; i++)
+            //{
+            //    if (note.SkinNr == i)
+            //    {
+            //        this.menuNoteSkins.DropDownItems[i].Text = this.menuNoteSkins.DropDownItems[i].Text + "(current)";
+            //    }
+            //}
+            //foreach (ToolStripMenuItem curitem in this.menuNoteSkins.DropDownItems)
+            //{
+            //    curitem.Checked = false;
+            //}
+        }
+
+        /// <summary>
+        /// Create a PictureBox with lock picture.
+        /// </summary>
+        private void CreatePbLock()
+        {
+            this.pbShowLock = new PictureBox();
+            this.pbShowLock.Name = "pbShowLock";
+            this.pbShowLock.Size = new Size(16, 16);
+            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
+            this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
+            this.pbShowLock.Visible = true;
+            this.pnlHead.Controls.Add(this.pbShowLock);
+            this.pbShowLock.BringToFront();
+        }
+
+        /// <summary>
+        /// Removes and freese memory lock picture.
+        /// </summary>
+        private void DestroyPbLock()
+        {
+            if (pbShowLock != null)
             {
-                curitem.Checked = false;
+                this.pbShowLock.Visible = false;
+                this.pbShowLock.Dispose();
             }
         }
 

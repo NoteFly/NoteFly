@@ -54,13 +54,13 @@ namespace NoteFly
 
         public static string FontTitleFamily { get; set; }
 
-        public static int FontTitleSize { get; set; }
+        public static float FontTitleSize { get; set; }
 
         public static bool FontTitleStylebold { get; set; }
 
         public static string FontContentFamily { get; set; }
 
-        public static Decimal FontContentSize { get; set; }
+        public static float FontContentSize { get; set; }
 
         public static bool HighlightHTML { get; set; }
 

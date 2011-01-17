@@ -20,13 +20,8 @@ namespace NoteFly
     /// </summary>
     public partial class FrmSettings
     {
-        private System.Windows.Forms.CheckBox chxTransparecy;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label lbDefaultNewNoteColor;
-        private System.Windows.Forms.ComboBox cbxDefaultColor;
-        private System.Windows.Forms.NumericUpDown numProcTransparency;
-        private System.Windows.Forms.Label lbTextProc;
         private System.Windows.Forms.TextBox tbTwitterUser;
         private System.Windows.Forms.Label lbUsername;
         private System.Windows.Forms.TextBox tbTwitterPass;
@@ -39,12 +34,7 @@ namespace NoteFly
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Label lblTextNoteLocation;
         private System.Windows.Forms.TextBox tbNotesSavePath;
-        private System.Windows.Forms.Label lbTextNoteFont;
-        private System.Windows.Forms.ComboBox cbxFontNoteContent;
         private System.Windows.Forms.Label lbWarningTwitterPassword;
-        private System.Windows.Forms.NumericUpDown numFontSize;
-        private System.Windows.Forms.Label lblTextFontSize;
-        private System.Windows.Forms.Label lblTextpt;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ComboBox cbxActionLeftclick;
         private System.Windows.Forms.Label lbText;
@@ -55,8 +45,6 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxConfirmLink;
         private System.Windows.Forms.CheckBox chxConfirmExit;
         private System.Windows.Forms.CheckBox chxLogErrors;
-        private System.Windows.Forms.ComboBox cbxTextDirection;
-        private System.Windows.Forms.Label lbTextDirection;
         private System.Windows.Forms.Button btnResetSettings;
         private System.Windows.Forms.TabPage tabNetwerk;
         private System.Windows.Forms.CheckBox chxProxyEnabled;
@@ -99,13 +87,8 @@ namespace NoteFly
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
-            this.chxTransparecy = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.lbDefaultNewNoteColor = new System.Windows.Forms.Label();
-            this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
-            this.numProcTransparency = new System.Windows.Forms.NumericUpDown();
-            this.lbTextProc = new System.Windows.Forms.Label();
             this.tbTwitterUser = new System.Windows.Forms.TextBox();
             this.lbUsername = new System.Windows.Forms.Label();
             this.tbTwitterPass = new System.Windows.Forms.TextBox();
@@ -119,15 +102,23 @@ namespace NoteFly
             this.chxStartOnLogin = new System.Windows.Forms.CheckBox();
             this.lbText = new System.Windows.Forms.Label();
             this.tabAppearance = new System.Windows.Forms.TabPage();
+            this.tabAppearanceColors = new System.Windows.Forms.TabControl();
+            this.tabPageLooks = new System.Windows.Forms.TabPage();
+            this.chxTransparecy = new System.Windows.Forms.CheckBox();
+            this.lbDefaultNewNoteColor = new System.Windows.Forms.Label();
+            this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
+            this.numProcTransparency = new System.Windows.Forms.NumericUpDown();
+            this.lbTextProc = new System.Windows.Forms.Label();
+            this.tabPageFonts = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numFontSizeTitle = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbxFontNoteTitle = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lbTextDirection = new System.Windows.Forms.Label();
             this.cbxTextDirection = new System.Windows.Forms.ComboBox();
             this.lblTextpt = new System.Windows.Forms.Label();
-            this.numFontSize = new System.Windows.Forms.NumericUpDown();
+            this.numFontSizeContent = new System.Windows.Forms.NumericUpDown();
             this.lblTextFontSize = new System.Windows.Forms.Label();
             this.lbTextNoteFont = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
@@ -160,6 +151,7 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lbTextTwTimeout = new System.Windows.Forms.Label();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
             this.btnResetSettings = new System.Windows.Forms.Button();
@@ -168,13 +160,15 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).BeginInit();
+            this.tabAppearanceColors.SuspendLayout();
+            this.tabPageLooks.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
+            this.tabPageFonts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numFontSizeTitle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFontSizeContent)).BeginInit();
             this.tabHighlight.SuspendLayout();
             this.tabSocialNetworks.SuspendLayout();
             this.tabControlSocialNetworks.SuspendLayout();
@@ -186,22 +180,6 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
             this.tabAdvance.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // chxTransparecy
-            // 
-            this.chxTransparecy.AutoSize = true;
-            this.chxTransparecy.BackColor = System.Drawing.SystemColors.Control;
-            this.chxTransparecy.CausesValidation = false;
-            this.chxTransparecy.Checked = true;
-            this.chxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chxTransparecy.Location = new System.Drawing.Point(38, 25);
-            this.chxTransparecy.Name = "chxTransparecy";
-            this.chxTransparecy.Size = new System.Drawing.Size(129, 18);
-            this.chxTransparecy.TabIndex = 1;
-            this.chxTransparecy.Text = "Enable transparency";
-            this.chxTransparecy.UseVisualStyleBackColor = false;
-            this.chxTransparecy.CheckedChanged += new System.EventHandler(this.cbxTransparecy_CheckedChanged);
             // 
             // btnOK
             // 
@@ -226,71 +204,6 @@ namespace NoteFly
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // lbDefaultNewNoteColor
-            // 
-            this.lbDefaultNewNoteColor.AutoSize = true;
-            this.lbDefaultNewNoteColor.Location = new System.Drawing.Point(36, 65);
-            this.lbDefaultNewNoteColor.Name = "lbDefaultNewNoteColor";
-            this.lbDefaultNewNoteColor.Size = new System.Drawing.Size(119, 13);
-            this.lbDefaultNewNoteColor.TabIndex = 4;
-            this.lbDefaultNewNoteColor.Text = "Defaul color new notes:";
-            // 
-            // cbxDefaultColor
-            // 
-            this.cbxDefaultColor.AccessibleDescription = "Defaul color for new note.";
-            this.cbxDefaultColor.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
-            this.cbxDefaultColor.BackColor = System.Drawing.Color.LightGray;
-            this.cbxDefaultColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxDefaultColor.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxDefaultColor.FormattingEnabled = true;
-            this.cbxDefaultColor.Items.AddRange(new object[] {
-            "Yellow",
-            "Orange",
-            "White",
-            "Green",
-            "Blue",
-            "Purple",
-            "Red",
-            "Random/suprise me!"});
-            this.cbxDefaultColor.Location = new System.Drawing.Point(173, 62);
-            this.cbxDefaultColor.MaxDropDownItems = 5;
-            this.cbxDefaultColor.Name = "cbxDefaultColor";
-            this.cbxDefaultColor.Size = new System.Drawing.Size(139, 21);
-            this.cbxDefaultColor.TabIndex = 5;
-            // 
-            // numProcTransparency
-            // 
-            this.numProcTransparency.BackColor = System.Drawing.Color.LightGray;
-            this.numProcTransparency.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numProcTransparency.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numProcTransparency.Location = new System.Drawing.Point(173, 25);
-            this.numProcTransparency.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numProcTransparency.Name = "numProcTransparency";
-            this.numProcTransparency.Size = new System.Drawing.Size(46, 20);
-            this.numProcTransparency.TabIndex = 6;
-            this.numProcTransparency.Value = new decimal(new int[] {
-            90,
-            0,
-            0,
-            0});
-            // 
-            // lbTextProc
-            // 
-            this.lbTextProc.AutoSize = true;
-            this.lbTextProc.Location = new System.Drawing.Point(225, 30);
-            this.lbTextProc.Name = "lbTextProc";
-            this.lbTextProc.Size = new System.Drawing.Size(47, 13);
-            this.lbTextProc.TabIndex = 7;
-            this.lbTextProc.Text = "% visible";
             // 
             // tbTwitterUser
             // 
@@ -346,20 +259,18 @@ namespace NoteFly
             // 
             // tabControlSettings
             // 
-            this.tabControlSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlSettings.Controls.Add(this.tabGeneral);
             this.tabControlSettings.Controls.Add(this.tabAppearance);
             this.tabControlSettings.Controls.Add(this.tabHighlight);
             this.tabControlSettings.Controls.Add(this.tabSocialNetworks);
             this.tabControlSettings.Controls.Add(this.tabNetwerk);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
+            this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControlSettings.HotTrack = true;
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(400, 307);
+            this.tabControlSettings.Size = new System.Drawing.Size(394, 307);
             this.tabControlSettings.TabIndex = 17;
             // 
             // tabGeneral
@@ -372,7 +283,7 @@ namespace NoteFly
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(392, 281);
+            this.tabGeneral.Size = new System.Drawing.Size(386, 281);
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -439,57 +350,160 @@ namespace NoteFly
             // 
             // tabAppearance
             // 
-            this.tabAppearance.Controls.Add(this.label5);
-            this.tabAppearance.Controls.Add(this.numericUpDown1);
-            this.tabAppearance.Controls.Add(this.label4);
-            this.tabAppearance.Controls.Add(this.comboBox1);
-            this.tabAppearance.Controls.Add(this.label3);
-            this.tabAppearance.Controls.Add(this.lbTextDirection);
-            this.tabAppearance.Controls.Add(this.cbxTextDirection);
-            this.tabAppearance.Controls.Add(this.lblTextpt);
-            this.tabAppearance.Controls.Add(this.numFontSize);
-            this.tabAppearance.Controls.Add(this.lblTextFontSize);
-            this.tabAppearance.Controls.Add(this.lbTextNoteFont);
-            this.tabAppearance.Controls.Add(this.cbxFontNoteContent);
-            this.tabAppearance.Controls.Add(this.chxTransparecy);
-            this.tabAppearance.Controls.Add(this.lbDefaultNewNoteColor);
-            this.tabAppearance.Controls.Add(this.cbxDefaultColor);
-            this.tabAppearance.Controls.Add(this.numProcTransparency);
-            this.tabAppearance.Controls.Add(this.lbTextProc);
+            this.tabAppearance.Controls.Add(this.tabAppearanceColors);
             this.tabAppearance.Location = new System.Drawing.Point(4, 22);
             this.tabAppearance.Name = "tabAppearance";
             this.tabAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppearance.Size = new System.Drawing.Size(392, 281);
+            this.tabAppearance.Size = new System.Drawing.Size(386, 281);
             this.tabAppearance.TabIndex = 0;
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
             // 
+            // tabAppearanceColors
+            // 
+            this.tabAppearanceColors.Controls.Add(this.tabPageLooks);
+            this.tabAppearanceColors.Controls.Add(this.tabPageFonts);
+            this.tabAppearanceColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabAppearanceColors.Location = new System.Drawing.Point(3, 3);
+            this.tabAppearanceColors.Name = "tabAppearanceColors";
+            this.tabAppearanceColors.SelectedIndex = 0;
+            this.tabAppearanceColors.Size = new System.Drawing.Size(380, 275);
+            this.tabAppearanceColors.TabIndex = 28;
+            // 
+            // tabPageLooks
+            // 
+            this.tabPageLooks.Controls.Add(this.chxTransparecy);
+            this.tabPageLooks.Controls.Add(this.lbDefaultNewNoteColor);
+            this.tabPageLooks.Controls.Add(this.cbxDefaultColor);
+            this.tabPageLooks.Controls.Add(this.numProcTransparency);
+            this.tabPageLooks.Controls.Add(this.lbTextProc);
+            this.tabPageLooks.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLooks.Name = "tabPageLooks";
+            this.tabPageLooks.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLooks.Size = new System.Drawing.Size(372, 249);
+            this.tabPageLooks.TabIndex = 0;
+            this.tabPageLooks.Text = "Looks";
+            this.tabPageLooks.UseVisualStyleBackColor = true;
+            // 
+            // chxTransparecy
+            // 
+            this.chxTransparecy.AutoSize = true;
+            this.chxTransparecy.BackColor = System.Drawing.SystemColors.Control;
+            this.chxTransparecy.CausesValidation = false;
+            this.chxTransparecy.Checked = true;
+            this.chxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chxTransparecy.Location = new System.Drawing.Point(18, 28);
+            this.chxTransparecy.Name = "chxTransparecy";
+            this.chxTransparecy.Size = new System.Drawing.Size(158, 18);
+            this.chxTransparecy.TabIndex = 8;
+            this.chxTransparecy.Text = "Enable transparency notes";
+            this.chxTransparecy.UseVisualStyleBackColor = false;
+            // 
+            // lbDefaultNewNoteColor
+            // 
+            this.lbDefaultNewNoteColor.AutoSize = true;
+            this.lbDefaultNewNoteColor.Location = new System.Drawing.Point(15, 80);
+            this.lbDefaultNewNoteColor.Name = "lbDefaultNewNoteColor";
+            this.lbDefaultNewNoteColor.Size = new System.Drawing.Size(118, 13);
+            this.lbDefaultNewNoteColor.TabIndex = 9;
+            this.lbDefaultNewNoteColor.Text = "Default skin new notes:";
+            // 
+            // cbxDefaultColor
+            // 
+            this.cbxDefaultColor.AccessibleDescription = "Defaul color for new note.";
+            this.cbxDefaultColor.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
+            this.cbxDefaultColor.BackColor = System.Drawing.Color.LightGray;
+            this.cbxDefaultColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxDefaultColor.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxDefaultColor.FormattingEnabled = true;
+            this.cbxDefaultColor.Location = new System.Drawing.Point(154, 77);
+            this.cbxDefaultColor.MaxDropDownItems = 5;
+            this.cbxDefaultColor.Name = "cbxDefaultColor";
+            this.cbxDefaultColor.Size = new System.Drawing.Size(139, 21);
+            this.cbxDefaultColor.TabIndex = 10;
+            // 
+            // numProcTransparency
+            // 
+            this.numProcTransparency.BackColor = System.Drawing.Color.LightGray;
+            this.numProcTransparency.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numProcTransparency.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numProcTransparency.Location = new System.Drawing.Point(182, 26);
+            this.numProcTransparency.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numProcTransparency.Name = "numProcTransparency";
+            this.numProcTransparency.Size = new System.Drawing.Size(46, 20);
+            this.numProcTransparency.TabIndex = 11;
+            this.numProcTransparency.Value = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            // 
+            // lbTextProc
+            // 
+            this.lbTextProc.AutoSize = true;
+            this.lbTextProc.Location = new System.Drawing.Point(234, 30);
+            this.lbTextProc.Name = "lbTextProc";
+            this.lbTextProc.Size = new System.Drawing.Size(47, 13);
+            this.lbTextProc.TabIndex = 12;
+            this.lbTextProc.Text = "% visible";
+            // 
+            // tabPageFonts
+            // 
+            this.tabPageFonts.Controls.Add(this.label5);
+            this.tabPageFonts.Controls.Add(this.numFontSizeTitle);
+            this.tabPageFonts.Controls.Add(this.label4);
+            this.tabPageFonts.Controls.Add(this.cbxFontNoteTitle);
+            this.tabPageFonts.Controls.Add(this.label3);
+            this.tabPageFonts.Controls.Add(this.lbTextDirection);
+            this.tabPageFonts.Controls.Add(this.cbxTextDirection);
+            this.tabPageFonts.Controls.Add(this.lblTextpt);
+            this.tabPageFonts.Controls.Add(this.numFontSizeContent);
+            this.tabPageFonts.Controls.Add(this.lblTextFontSize);
+            this.tabPageFonts.Controls.Add(this.lbTextNoteFont);
+            this.tabPageFonts.Controls.Add(this.cbxFontNoteContent);
+            this.tabPageFonts.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFonts.Name = "tabPageFonts";
+            this.tabPageFonts.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFonts.Size = new System.Drawing.Size(372, 249);
+            this.tabPageFonts.TabIndex = 1;
+            this.tabPageFonts.Text = "Fonts";
+            this.tabPageFonts.UseVisualStyleBackColor = true;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(217, 166);
+            this.label5.Location = new System.Drawing.Point(182, 51);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(16, 13);
-            this.label5.TabIndex = 27;
+            this.label5.TabIndex = 39;
             this.label5.Text = "pt";
             // 
-            // numericUpDown1
+            // numFontSizeTitle
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(173, 164);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numFontSizeTitle.Location = new System.Drawing.Point(138, 49);
+            this.numFontSizeTitle.Maximum = new decimal(new int[] {
             96,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.numFontSizeTitle.Minimum = new decimal(new int[] {
             4,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(38, 20);
-            this.numericUpDown1.TabIndex = 26;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numFontSizeTitle.Name = "numFontSizeTitle";
+            this.numFontSizeTitle.Size = new System.Drawing.Size(38, 20);
+            this.numFontSizeTitle.TabIndex = 38;
+            this.numFontSizeTitle.Value = new decimal(new int[] {
             14,
             0,
             0,
@@ -498,31 +512,31 @@ namespace NoteFly
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(84, 166);
+            this.label4.Location = new System.Drawing.Point(49, 51);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(71, 13);
-            this.label4.TabIndex = 25;
+            this.label4.TabIndex = 37;
             this.label4.Text = "Font size title:";
             // 
-            // comboBox1
+            // cbxFontNoteTitle
             // 
-            this.comboBox1.AccessibleDescription = "Font size notes";
-            this.comboBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
-            this.comboBox1.DropDownHeight = 140;
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.IntegralHeight = false;
-            this.comboBox1.Location = new System.Drawing.Point(173, 137);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(182, 21);
-            this.comboBox1.TabIndex = 24;
+            this.cbxFontNoteTitle.AccessibleDescription = "Font size notes";
+            this.cbxFontNoteTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
+            this.cbxFontNoteTitle.DropDownHeight = 140;
+            this.cbxFontNoteTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxFontNoteTitle.IntegralHeight = false;
+            this.cbxFontNoteTitle.Location = new System.Drawing.Point(138, 22);
+            this.cbxFontNoteTitle.Name = "cbxFontNoteTitle";
+            this.cbxFontNoteTitle.Size = new System.Drawing.Size(182, 21);
+            this.cbxFontNoteTitle.TabIndex = 36;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(105, 140);
+            this.label3.Location = new System.Drawing.Point(70, 25);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 13);
-            this.label3.TabIndex = 23;
+            this.label3.TabIndex = 35;
             this.label3.Text = "Font title:";
             // 
             // lbTextDirection
@@ -530,10 +544,10 @@ namespace NoteFly
             this.lbTextDirection.AccessibleDescription = "";
             this.lbTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lbTextDirection.AutoSize = true;
-            this.lbTextDirection.Location = new System.Drawing.Point(84, 97);
+            this.lbTextDirection.Location = new System.Drawing.Point(50, 159);
             this.lbTextDirection.Name = "lbTextDirection";
             this.lbTextDirection.Size = new System.Drawing.Size(71, 13);
-            this.lbTextDirection.TabIndex = 22;
+            this.lbTextDirection.TabIndex = 34;
             this.lbTextDirection.Text = "Text direction";
             // 
             // cbxTextDirection
@@ -546,37 +560,37 @@ namespace NoteFly
             this.cbxTextDirection.Items.AddRange(new object[] {
             "Left to right",
             "Right to left"});
-            this.cbxTextDirection.Location = new System.Drawing.Point(173, 94);
+            this.cbxTextDirection.Location = new System.Drawing.Point(138, 156);
             this.cbxTextDirection.Name = "cbxTextDirection";
             this.cbxTextDirection.Size = new System.Drawing.Size(182, 21);
-            this.cbxTextDirection.TabIndex = 21;
+            this.cbxTextDirection.TabIndex = 33;
             // 
             // lblTextpt
             // 
             this.lblTextpt.AutoSize = true;
-            this.lblTextpt.Location = new System.Drawing.Point(217, 232);
+            this.lblTextpt.Location = new System.Drawing.Point(182, 117);
             this.lblTextpt.Name = "lblTextpt";
             this.lblTextpt.Size = new System.Drawing.Size(16, 13);
-            this.lblTextpt.TabIndex = 14;
+            this.lblTextpt.TabIndex = 32;
             this.lblTextpt.Text = "pt";
             // 
-            // numFontSize
+            // numFontSizeContent
             // 
-            this.numFontSize.Location = new System.Drawing.Point(173, 225);
-            this.numFontSize.Maximum = new decimal(new int[] {
+            this.numFontSizeContent.Location = new System.Drawing.Point(138, 110);
+            this.numFontSizeContent.Maximum = new decimal(new int[] {
             96,
             0,
             0,
             0});
-            this.numFontSize.Minimum = new decimal(new int[] {
+            this.numFontSizeContent.Minimum = new decimal(new int[] {
             4,
             0,
             0,
             0});
-            this.numFontSize.Name = "numFontSize";
-            this.numFontSize.Size = new System.Drawing.Size(38, 20);
-            this.numFontSize.TabIndex = 13;
-            this.numFontSize.Value = new decimal(new int[] {
+            this.numFontSizeContent.Name = "numFontSizeContent";
+            this.numFontSizeContent.Size = new System.Drawing.Size(38, 20);
+            this.numFontSizeContent.TabIndex = 31;
+            this.numFontSizeContent.Value = new decimal(new int[] {
             10,
             0,
             0,
@@ -585,19 +599,19 @@ namespace NoteFly
             // lblTextFontSize
             // 
             this.lblTextFontSize.AutoSize = true;
-            this.lblTextFontSize.Location = new System.Drawing.Point(64, 227);
+            this.lblTextFontSize.Location = new System.Drawing.Point(29, 112);
             this.lblTextFontSize.Name = "lblTextFontSize";
             this.lblTextFontSize.Size = new System.Drawing.Size(91, 13);
-            this.lblTextFontSize.TabIndex = 12;
+            this.lblTextFontSize.TabIndex = 30;
             this.lblTextFontSize.Text = "Font size content:";
             // 
             // lbTextNoteFont
             // 
             this.lbTextNoteFont.AutoSize = true;
-            this.lbTextNoteFont.Location = new System.Drawing.Point(85, 198);
+            this.lbTextNoteFont.Location = new System.Drawing.Point(50, 83);
             this.lbTextNoteFont.Name = "lbTextNoteFont";
             this.lbTextNoteFont.Size = new System.Drawing.Size(70, 13);
-            this.lbTextNoteFont.TabIndex = 9;
+            this.lbTextNoteFont.TabIndex = 29;
             this.lbTextNoteFont.Text = "Font content:";
             // 
             // cbxFontNoteContent
@@ -607,10 +621,10 @@ namespace NoteFly
             this.cbxFontNoteContent.DropDownHeight = 140;
             this.cbxFontNoteContent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxFontNoteContent.IntegralHeight = false;
-            this.cbxFontNoteContent.Location = new System.Drawing.Point(173, 195);
+            this.cbxFontNoteContent.Location = new System.Drawing.Point(138, 80);
             this.cbxFontNoteContent.Name = "cbxFontNoteContent";
             this.cbxFontNoteContent.Size = new System.Drawing.Size(182, 21);
-            this.cbxFontNoteContent.TabIndex = 8;
+            this.cbxFontNoteContent.TabIndex = 28;
             // 
             // tabHighlight
             // 
@@ -621,7 +635,7 @@ namespace NoteFly
             this.tabHighlight.Location = new System.Drawing.Point(4, 22);
             this.tabHighlight.Name = "tabHighlight";
             this.tabHighlight.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHighlight.Size = new System.Drawing.Size(392, 281);
+            this.tabHighlight.Size = new System.Drawing.Size(386, 281);
             this.tabHighlight.TabIndex = 5;
             this.tabHighlight.Text = "Highlight";
             this.tabHighlight.UseVisualStyleBackColor = true;
@@ -672,7 +686,7 @@ namespace NoteFly
             this.tabSocialNetworks.Location = new System.Drawing.Point(4, 22);
             this.tabSocialNetworks.Name = "tabSocialNetworks";
             this.tabSocialNetworks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSocialNetworks.Size = new System.Drawing.Size(392, 281);
+            this.tabSocialNetworks.Size = new System.Drawing.Size(386, 281);
             this.tabSocialNetworks.TabIndex = 1;
             this.tabSocialNetworks.Text = "Social networks";
             this.tabSocialNetworks.UseVisualStyleBackColor = true;
@@ -686,7 +700,7 @@ namespace NoteFly
             this.tabControlSocialNetworks.Location = new System.Drawing.Point(3, 3);
             this.tabControlSocialNetworks.Name = "tabControlSocialNetworks";
             this.tabControlSocialNetworks.SelectedIndex = 0;
-            this.tabControlSocialNetworks.Size = new System.Drawing.Size(386, 275);
+            this.tabControlSocialNetworks.Size = new System.Drawing.Size(380, 275);
             this.tabControlSocialNetworks.TabIndex = 14;
             // 
             // tabEmail
@@ -697,7 +711,7 @@ namespace NoteFly
             this.tabEmail.Controls.Add(this.tbDefaultEmail);
             this.tabEmail.Location = new System.Drawing.Point(4, 22);
             this.tabEmail.Name = "tabEmail";
-            this.tabEmail.Size = new System.Drawing.Size(378, 249);
+            this.tabEmail.Size = new System.Drawing.Size(372, 249);
             this.tabEmail.TabIndex = 2;
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
@@ -755,7 +769,7 @@ namespace NoteFly
             this.tabTwitter.Location = new System.Drawing.Point(4, 22);
             this.tabTwitter.Name = "tabTwitter";
             this.tabTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTwitter.Size = new System.Drawing.Size(385, 246);
+            this.tabTwitter.Size = new System.Drawing.Size(372, 249);
             this.tabTwitter.TabIndex = 0;
             this.tabTwitter.Text = "Twitter";
             this.tabTwitter.UseVisualStyleBackColor = true;
@@ -786,7 +800,7 @@ namespace NoteFly
             this.tabFacebook.Location = new System.Drawing.Point(4, 22);
             this.tabFacebook.Name = "tabFacebook";
             this.tabFacebook.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFacebook.Size = new System.Drawing.Size(385, 246);
+            this.tabFacebook.Size = new System.Drawing.Size(372, 249);
             this.tabFacebook.TabIndex = 1;
             this.tabFacebook.Text = "Facebook";
             this.tabFacebook.UseVisualStyleBackColor = true;
@@ -837,7 +851,7 @@ namespace NoteFly
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
             this.tabNetwerk.Name = "tabNetwerk";
             this.tabNetwerk.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNetwerk.Size = new System.Drawing.Size(392, 281);
+            this.tabNetwerk.Size = new System.Drawing.Size(386, 281);
             this.tabNetwerk.TabIndex = 4;
             this.tabNetwerk.Text = "Network";
             this.tabNetwerk.UseVisualStyleBackColor = true;
@@ -966,6 +980,17 @@ namespace NoteFly
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.chxLogDebug);
@@ -976,7 +1001,7 @@ namespace NoteFly
             this.tabAdvance.Controls.Add(this.tbNotesSavePath);
             this.tabAdvance.Location = new System.Drawing.Point(4, 22);
             this.tabAdvance.Name = "tabAdvance";
-            this.tabAdvance.Size = new System.Drawing.Size(392, 281);
+            this.tabAdvance.Size = new System.Drawing.Size(386, 281);
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
@@ -1042,17 +1067,6 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
-            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1068,14 +1082,18 @@ namespace NoteFly
             this.Name = "FrmSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Settings";
-            ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).EndInit();
             this.tabControlSettings.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
             this.tabAppearance.ResumeLayout(false);
-            this.tabAppearance.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numFontSize)).EndInit();
+            this.tabAppearanceColors.ResumeLayout(false);
+            this.tabPageLooks.ResumeLayout(false);
+            this.tabPageLooks.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).EndInit();
+            this.tabPageFonts.ResumeLayout(false);
+            this.tabPageFonts.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numFontSizeTitle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFontSizeContent)).EndInit();
             this.tabHighlight.ResumeLayout(false);
             this.tabHighlight.PerformLayout();
             this.tabSocialNetworks.ResumeLayout(false);
@@ -1115,10 +1133,25 @@ namespace NoteFly
         private System.Windows.Forms.Label lbTextCheckforupdatesevery;
         private System.Windows.Forms.NumericUpDown numUpdateCheckDays;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TabControl tabAppearanceColors;
+        private System.Windows.Forms.TabPage tabPageLooks;
+        private System.Windows.Forms.CheckBox chxTransparecy;
+        private System.Windows.Forms.Label lbDefaultNewNoteColor;
+        private System.Windows.Forms.ComboBox cbxDefaultColor;
+        private System.Windows.Forms.NumericUpDown numProcTransparency;
+        private System.Windows.Forms.Label lbTextProc;
+        private System.Windows.Forms.TabPage tabPageFonts;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown numFontSizeTitle;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbxFontNoteTitle;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbTextDirection;
+        private System.Windows.Forms.ComboBox cbxTextDirection;
+        private System.Windows.Forms.Label lblTextpt;
+        private System.Windows.Forms.NumericUpDown numFontSizeContent;
+        private System.Windows.Forms.Label lblTextFontSize;
+        private System.Windows.Forms.Label lbTextNoteFont;
+        private System.Windows.Forms.ComboBox cbxFontNoteContent;
     }
 }

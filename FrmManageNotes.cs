@@ -85,7 +85,7 @@ namespace NoteFly
             savebackupdlg.OverwritePrompt = true;
             savebackupdlg.DefaultExt = "nfbak"; //noteflybackup
             savebackupdlg.Title = "Where to save the backup of all NoteFly notes.";
-            savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|.nfbak";
+            savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
             DialogResult savebackupdlgres = savebackupdlg.ShowDialog();
             if (savebackupdlgres == DialogResult.OK)
             {
@@ -143,34 +143,6 @@ namespace NoteFly
             }
         }
 
-        /*
-        /// <summary>
-        /// Set a note visible or unvisible
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void cbxNoteVisible_Click(object sender, EventArgs e)
-        {
-            CheckBox cbx = (CheckBox)sender;
-            int noteid = Convert.ToInt32(cbx.Name);
-            if ((noteid <= this.notes.CountNotes) && (noteid >= 0))
-            {
-                if (this.notes.GetNote(noteid).Visible)
-                {
-                    this.notes.GetNote(noteid).DestroyForm(); //sets visible false
-                }
-                else
-                {
-                    this.notes.GetNote(noteid).CreateForm(); //sets visible true
-                }
-            }
-            else
-            {
-                throw new CustomException("Note not found. Looking for noteid:" + noteid);
-            }
-        }
-         */
-
         /// <summary>
         /// Deletes the notes in memory and files that are selected in a Gridview.
         /// </summary>
@@ -215,21 +187,34 @@ namespace NoteFly
             this.dataGridView1.DataSource = datatable;
             datatable.Columns.Add("nr", typeof(String));
             datatable.Columns["nr"].AutoIncrement = true;
+            datatable.Columns["nr"].Unique = true;
             datatable.Columns.Add("title", typeof(String));
             datatable.Columns.Add("visible", typeof(Boolean));
             datatable.Columns.Add("skin", typeof(String));
             datatable.DefaultView.AllowEdit = false;
             datatable.DefaultView.AllowNew = false;
+            this.dataGridView1.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView1.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView1.RowPostPaint += new DataGridViewRowPostPaintEventHandler(dataGridView1_RowPostPaint);
             for (int i = 0; i < this.notes.CountNotes; i++)
             {
                 DataRow dr = datatable.NewRow();
-                dr[0] = i;
+                dr[0] = i + 1; //enduser counting ;)
                 dr[1] = this.notes.GetNote(i).Title;
                 dr[2] = this.notes.GetNote(i).Visible;
                 dr[3] = notes.GetSkinName(this.notes.GetNote(i).SkinNr);
                 datatable.Rows.Add(dr);
-                //dataGridView1.Rows[i].Cells["skin"].Style.BackColor = notes.GetForegroundColor(this.notes.GetNote(i).SkinNr);
             }
+        }
+
+        /// <summary>
+        /// Color the skin cell with the foreground color of the skin in this cell.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetForegroundColor(notes.GetNote(e.RowIndex).SkinNr); //notes.GetForegroundColor(notes.GetNote(e.RowIndex).SkinNr);
         }
 
         /// <summary>
@@ -416,6 +401,29 @@ namespace NoteFly
                     this.notes.LoadNotes(false);
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Toggle visibility selected notes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnShowSelectedNotes_Click(object sender, EventArgs e)
+        {
+            DataGridViewSelectedRowCollection selectedrows = this.dataGridView1.SelectedRows;
+            foreach (DataGridViewRow selrow in selectedrows)
+            {
+                selrow.Cells["visible"].Value = !this.notes.GetNote(selrow.Index).Visible;
+                this.notes.GetNote(selrow.Index).Visible = !this.notes.GetNote(selrow.Index).Visible;
+                if (this.notes.GetNote(selrow.Index).Visible)
+                {
+                    this.notes.GetNote(selrow.Index).CreateForm();
+                }
+                else
+                {
+                    this.notes.GetNote(selrow.Index).DestroyForm();
                 }
             }
         }

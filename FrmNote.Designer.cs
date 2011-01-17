@@ -308,7 +308,6 @@ namespace NoteFly
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
             this.rtbNote.Text = "?";
-            this.rtbNote.Visible = false;
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             // 
             // pnlNote

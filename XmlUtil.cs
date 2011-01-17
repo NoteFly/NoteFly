@@ -161,11 +161,11 @@ namespace NoteFly
                         case "visible":
                             note.Visible = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "ontop":
-                            note.Ontop = xmlread.ReadElementContentAsBoolean();
-                            break;
                         case "locked":
                             note.Locked = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "ontop":
+                            note.Ontop = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "width":
                             note.Width = xmlread.ReadElementContentAsInt();
@@ -309,7 +309,7 @@ namespace NoteFly
                         case "TrayiconSettingsbold":
                             Settings.TrayiconSettingsbold = xmlread.ReadElementContentAsBoolean();
                             break;
-                        //ints
+                        //ints / doubles
                         case "FontContentSize":
                             Settings.FontContentSize = xmlread.ReadElementContentAsInt();
                             break;
@@ -455,7 +455,7 @@ namespace NoteFly
             Settings.FontContentFamily = "Arial";
             Settings.FontContentSize = 11;
             Settings.FontTextdirection = 1;
-            Settings.FontTitleFamily = "Arial";
+            Settings.FontTitleFamily = "Arial Black";
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;
             Settings.HighlightHTML = false;

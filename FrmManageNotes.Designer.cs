@@ -60,7 +60,7 @@ namespace NoteFly
             this.lbTextWindowTitle = new System.Windows.Forms.Label();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.btnRestoreAllNotes = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnShowSelectedNotes = new System.Windows.Forms.Button();
             this.btnNoteDelete = new System.Windows.Forms.Button();
             this.btnBackAllNotes = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -141,17 +141,18 @@ namespace NoteFly
             this.btnRestoreAllNotes.UseVisualStyleBackColor = false;
             this.btnRestoreAllNotes.Click += new System.EventHandler(this.btnRestoreAllNotes_Click);
             // 
-            // button1
+            // btnShowSelectedNotes
             // 
-            this.button1.BackColor = System.Drawing.Color.Wheat;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(12, 36);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(105, 23);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "show selected";
-            this.button1.UseCompatibleTextRendering = true;
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnShowSelectedNotes.BackColor = System.Drawing.Color.Wheat;
+            this.btnShowSelectedNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShowSelectedNotes.Location = new System.Drawing.Point(12, 36);
+            this.btnShowSelectedNotes.Name = "btnShowSelectedNotes";
+            this.btnShowSelectedNotes.Size = new System.Drawing.Size(105, 23);
+            this.btnShowSelectedNotes.TabIndex = 16;
+            this.btnShowSelectedNotes.Text = "show selected";
+            this.btnShowSelectedNotes.UseCompatibleTextRendering = true;
+            this.btnShowSelectedNotes.UseVisualStyleBackColor = false;
+            this.btnShowSelectedNotes.Click += new System.EventHandler(this.btnShowSelectedNotes_Click);
             // 
             // btnNoteDelete
             // 
@@ -253,9 +254,9 @@ namespace NoteFly
             this.ClientSize = new System.Drawing.Size(451, 322);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnBackAllNotes);
-            this.Controls.Add(this.btnNoteDelete);
             this.Controls.Add(this.btnRestoreAllNotes);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnShowSelectedNotes);
+            this.Controls.Add(this.btnNoteDelete);
             this.Controls.Add(this.pbResizeGrip);
             this.Controls.Add(this.pnlHead);
             this.DoubleBuffered = true;
@@ -281,7 +282,7 @@ namespace NoteFly
         #endregion
 
         private System.Windows.Forms.Button btnRestoreAllNotes;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnShowSelectedNotes;
         private System.Windows.Forms.Button btnNoteDelete;
         private System.Windows.Forms.Button btnBackAllNotes;
         private System.Windows.Forms.Label lbTextWindowTitle;

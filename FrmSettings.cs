@@ -101,8 +101,11 @@ namespace NoteFly
             this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
             this.cbxFontNoteContent.SelectedValue = Settings.FontContentFamily;
-            this.numFontSize.Value = Settings.FontContentSize;
+            this.numFontSizeContent.Value = Convert.ToDecimal(Settings.FontContentSize);
             this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
+            this.cbxFontNoteContent.Text = Settings.FontContentFamily;
+            this.cbxFontNoteTitle.Text = Settings.FontTitleFamily;
+            this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
             //tab: Highlight
             this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
             this.chxHighlightHTML.Checked = Settings.HighlightHTML;
@@ -172,7 +175,13 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_nofont);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((this.numFontSize.Value < 4) || (this.numFontSize.Value > 128))
+            else if ((this.numFontSizeContent.Value < 4) || (this.numFontSizeContent.Value > 128))
+            {
+                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_invalidfontsize);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_invalidfontsize);
+                this.tabControlSettings.SelectedTab = this.tabAppearance;
+            }
+            else if ((this.numFontSizeTitle.Value < 4) || (this.numFontSizeTitle.Value > 128))
             {
                 Log.Write(LogType.info, NoteFly.Properties.Resources.settings_invalidfontsize);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_invalidfontsize);
@@ -221,8 +230,8 @@ namespace NoteFly
                 string oldnotesavepath = Settings.NotesSavepath;
                 if (this.tbNotesSavePath.Text != oldnotesavepath)
                 {
-                    this.MoveNotes(oldnotesavepath, this.tbNotesSavePath.Text);
-                    //TODO: seperate thread
+                    this.MoveNotes(oldnotesavepath, this.tbNotesSavePath.Text);//TODO: put on seperate thread
+                    
                 }
                 //tab: General
                 Settings.ConfirmExit = this.chxConfirmExit.Checked;
@@ -232,7 +241,10 @@ namespace NoteFly
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
                 Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
                 Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
-                Settings.FontContentSize = this.numFontSize.Value;
+                Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();//todo: test, i forgot
+                Settings.FontContentSize = (float)this.numFontSizeContent.Value;
+                Settings.FontTitleFamily = this.cbxFontNoteTitle.SelectedItem.ToString();//todo: test
+                Settings.FontTitleSize = (float)this.numFontSizeTitle.Value;
                 Settings.FontTextdirection = this.cbxTextDirection.SelectedIndex;
                 //tab: Highlight
                 Settings.HighlightHyperlinks = this.chxHighlightHyperlinks.Checked;
@@ -353,18 +365,10 @@ namespace NoteFly
         {
             foreach (FontFamily oneFontFamily in FontFamily.Families)
             {
+                this.cbxFontNoteTitle.Items.Add(oneFontFamily.Name);
                 this.cbxFontNoteContent.Items.Add(oneFontFamily.Name);
             }
-
-            if (String.IsNullOrEmpty(Settings.FontContentFamily))
-            {
-                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_fontnotecontentnotfound);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_fontnotecontentnotfound, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                this.cbxFontNoteContent.Text = Settings.FontContentFamily;
-            }
+            this.cbxDefaultColor.Items.AddRange(this.notes.GetSkinsNames());
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace NoteFly
 
     public class Note
     {
-        public uint linenumoffsetcontent = 0;
+        public uint linenumoffsetcontent;
         private FrmNote frmnote;
         private Notes notes;
         private string filename;
@@ -58,12 +58,16 @@ namespace NoteFly
                 }
             }
         }
+
+        //showed in managenotes.
         public string Title { get; set; }
         public bool Visible { get; set; }
+        public int SkinNr { get; set; }
+
+        //not showed.
         public bool Ontop { get; set; }
         public bool RolledUp { get; set; }
         public bool Locked { get; set; }
-        public int SkinNr { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }
@@ -90,8 +94,8 @@ namespace NoteFly
             {
                 this.frmnote.Close();
             }
-            this.frmnote = null;
             this.Visible = false;
+            this.frmnote = null;
             GC.Collect();
         }
 
