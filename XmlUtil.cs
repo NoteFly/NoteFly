@@ -388,6 +388,7 @@ namespace NoteFly
             string skinfilepath = Path.Combine(Program.AppDataFolder, SKINFILE);
             if (!File.Exists(skinfilepath))
             {
+                Log.Write(LogType.info, "writing default skins.xml");
                 WriteDefaultSkins(skinfilepath);
             }
             List<Skin> skins = new List<Skin>();
@@ -516,7 +517,7 @@ namespace NoteFly
             {
                 xmlwrite = new System.Xml.XmlTextWriter(Path.Combine(Settings.NotesSavepath, note.Filename), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = System.Xml.Formatting.Indented;
-                xmlwrite.WriteStartDocument();
+                xmlwrite.WriteStartDocument(true); //standalone
                 WriteNoteBody(note, skinname, content);
                 xmlwrite.WriteEndDocument();
                 succeeded = true;
@@ -574,7 +575,7 @@ namespace NoteFly
             {
                 xmlwrite = new XmlTextWriter(filenamepath, System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument();
+                xmlwrite.WriteStartDocument(true);//standalone
                 xmlwrite.WriteStartElement("backupnotes");
                 xmlwrite.WriteAttributeString("number", notes.CountNotes.ToString());
                 for (int i = 0; i < notes.CountNotes; i++)
@@ -602,6 +603,7 @@ namespace NoteFly
         public static void LoadNotesBackup(Notes n, string filepath)
         {
             xmlread = new XmlTextReader(filepath);
+            xmlread.ProhibitDtd = true;
             int numnotes = 0;
             bool endnode = false;
             try
@@ -625,8 +627,8 @@ namespace NoteFly
             for (int i = 0; i < numnotes; i++)
             {
                 xmlread = new XmlTextReader(filepath);
-                
-                Note importnote = new Note(n, n.GetNoteFilename("import" + i + Notes.NOTEEXTENSION));
+                xmlread.ProhibitDtd = true;
+                Note importnote = new Note(n, n.GetNoteFilename("import" + i));
                 string content;
                 try
                 {
@@ -657,7 +659,7 @@ namespace NoteFly
             {
                 xmlwrite = new XmlTextWriter(Path.Combine(Program.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument();
+                xmlwrite.WriteStartDocument(true); //standalone
                 xmlwrite.WriteStartElement("settings");
                 //bools
                 WriteXMLBool("ConfirmDeleteNote", Settings.ConfirmDeletenote);
@@ -688,8 +690,8 @@ namespace NoteFly
                 WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
                 WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
                 //ints
-                xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
@@ -702,9 +704,9 @@ namespace NoteFly
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                 xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
                 xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
-                xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
                 xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.SocialEmailDefaultadres);
                 xmlwrite.WriteElementString("SocialTwitterUsername", Settings.SocialTwitterUsername);
+                xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
             }
@@ -759,68 +761,24 @@ namespace NoteFly
         {
             try
             {
-                const string node = "skin";
-                const string name = "Name";
-                const string fgclr = "ForegroundColor";
-                const string bgclr = "BackgroundColor";
-                const string hlclr = "HighlightColor";
-
                 xmlwrite = new XmlTextWriter(filename, System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument();
+                xmlwrite.WriteStartDocument(true);//standalone
                 xmlwrite.WriteStartElement("skins");
                 xmlwrite.WriteAttributeString("count", "7"); //for performance predefine list Capacity, not required.
-
-                xmlwrite.WriteStartElement(node);
-                xmlwrite.WriteElementString(name, "yellow");
-                xmlwrite.WriteElementString(fgclr, "#FFD800");
-                xmlwrite.WriteElementString(bgclr, "#E5B61B");
-                xmlwrite.WriteElementString(hlclr, "#FF0000");
-                xmlwrite.WriteEndElement();
-
-                xmlwrite.WriteStartElement(node);
-                xmlwrite.WriteElementString(name, "orange");
-                xmlwrite.WriteElementString(fgclr, "#FF6A00");
-                xmlwrite.WriteElementString(bgclr, "#EF6F1F");
-                xmlwrite.WriteElementString(hlclr, "#FF0000");
-                xmlwrite.WriteEndElement();
-
-                xmlwrite.WriteStartElement(node);
-                xmlwrite.WriteElementString(name, "white");
-                xmlwrite.WriteElementString(fgclr, "#FFFFFF");
-                xmlwrite.WriteElementString(bgclr, "#26262C");
-                xmlwrite.WriteElementString(hlclr, "#FF0000");
-                xmlwrite.WriteEndElement();
-
-                xmlwrite.WriteStartElement(node);
-                xmlwrite.WriteElementString(name, "green");
-                xmlwrite.WriteElementString(fgclr, "#6FE200");
-                xmlwrite.WriteElementString(bgclr, "#008000");
-                xmlwrite.WriteElementString(hlclr, "#FF0000");
-                xmlwrite.WriteEndElement();
-
-                xmlwrite.WriteStartElement(node);
-                xmlwrite.WriteElementString(name, "blue");
-                xmlwrite.WriteElementString(fgclr, "#5A86D5");
-                xmlwrite.WriteElementString(bgclr, "#1A1AFF");
-                xmlwrite.WriteElementString(hlclr, "#FF0000");
-                xmlwrite.WriteEndElement();
-
-                xmlwrite.WriteStartElement(node);
-                xmlwrite.WriteElementString(name, "purple");
-                xmlwrite.WriteElementString(fgclr, "#FF1AFF");
-                xmlwrite.WriteElementString(bgclr, "#8B1A8B");
-                xmlwrite.WriteElementString(hlclr, "#FF0000");
-                xmlwrite.WriteEndElement();
-
-                xmlwrite.WriteStartElement(node);
-                xmlwrite.WriteElementString(name, "red");
-                xmlwrite.WriteElementString(fgclr, "#FF1A1A");
-                xmlwrite.WriteElementString(bgclr, "#7A1515");
-                xmlwrite.WriteElementString(hlclr, "#FFA500");
-                xmlwrite.WriteEndElement();
-
-
+                string[] name  = new string[7] { "yellow", "orange", "white",  "green",  "blue",   "purple", "red" };
+                string[] fgclr = new string[7] { "FFD800", "FF6A00", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A" };
+                string[] bgclr = new string[7] { "E5B61B", "EF6F1F", "26262C", "008000", "1A1AFF", "8B1A8B", "7A1515" };
+                string[] hlclr = new string[7] { "FF0000", "FF0000", "FF0000", "FF0000", "FF0000", "FF0000", "FF0000" };//todo
+                for (int i = 0; i < 7; i++)
+                {
+                    xmlwrite.WriteStartElement("skin");
+                    xmlwrite.WriteElementString("Name", name[i]);
+                    xmlwrite.WriteElementString("ForegroundColor", "#"+fgclr[i]);
+                    xmlwrite.WriteElementString("BackgroundColor", "#"+bgclr[i]);
+                    xmlwrite.WriteElementString("HighlightColor",  "#"+hlclr[i]);
+                    xmlwrite.WriteEndElement();
+                }
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
             }

@@ -380,7 +380,8 @@ namespace NoteFly
                             Log.Write(LogType.info, "Erased all notes for restoring notes backup.");
                             for (int i = 0; i < this.notes.CountNotes; i++)
                             {
-                                //this.notes.GetNote(i).DestroyForm();
+                                this.notes.GetNote(i).DestroyForm();
+                                this.notes.RemoveNote(i);
                                 File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
                             }
                         }
@@ -390,13 +391,7 @@ namespace NoteFly
                             return;
                         }
                     }
-
-                    for (int i = 0; i < this.notes.CountNotes; i++)
-                    {
-                        this.notes.GetNote(i).DestroyForm();
-                        this.notes.RemoveNote(i);
-                    }
-
+                    Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
                     xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
                     this.notes.LoadNotes(false);
                     this.DrawNotesGrid();
