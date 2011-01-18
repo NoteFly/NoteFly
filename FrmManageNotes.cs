@@ -381,8 +381,8 @@ namespace NoteFly
                             for (int i = 0; i < this.notes.CountNotes; i++)
                             {
                                 this.notes.GetNote(i).DestroyForm();
-                                this.notes.RemoveNote(i);
                                 File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
+                                this.notes.RemoveNote(i);
                             }
                         }
                         else if (eraseres == DialogResult.Cancel)

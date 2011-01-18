@@ -734,9 +734,9 @@ namespace NoteFly
             //parts = colorstring.Split(',');
             //try
             //{
-            //    UInt16 redchannel = Convert.ToUInt16(parts[0].Trim());
-            //    UInt16 greenchannel = Convert.ToUInt16(parts[1].Trim());
-            //    UInt16 bluechannel = Convert.ToUInt16(parts[2].Trim());
+            //    UInt8 redchannel = Convert.ToUInt16(parts[0].Trim());
+            //    UInt8 greenchannel = Convert.ToUInt16(parts[1].Trim());
+            //    UInt8 bluechannel = Convert.ToUInt16(parts[2].Trim());
             //    return System.Drawing.Color.FromArgb(redchannel, greenchannel, bluechannel);
             //}
             //catch
@@ -770,7 +770,7 @@ namespace NoteFly
                 string[] fgclr = new string[7] { "FFD800", "FF6A00", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A" };
                 string[] bgclr = new string[7] { "E5B61B", "EF6F1F", "26262C", "008000", "1A1AFF", "8B1A8B", "7A1515" };
                 string[] hlclr = new string[7] { "FF0000", "FF0000", "FF0000", "FF0000", "FF0000", "FF0000", "FF0000" };//todo
-                for (int i = 0; i < 7; i++)
+                for (UInt16 i = 0; i < 7; i++)
                 {
                     xmlwrite.WriteStartElement("skin");
                     xmlwrite.WriteElementString("Name", name[i]);
