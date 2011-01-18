@@ -98,6 +98,7 @@ namespace NoteFly
             this.pnlNote = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.SavePos = new System.ComponentModel.BackgroundWorker();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.pnlHead.SuspendLayout();
             this.menuFrmNoteOptions.SuspendLayout();
             this.pnlNote.SuspendLayout();
@@ -149,8 +150,7 @@ namespace NoteFly
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
             this.menuFrmNoteOptions.Size = new System.Drawing.Size(216, 202);
-            this.menuFrmNoteOptions.Text = "-=menu=-";
-            this.menuFrmNoteOptions.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripNoteOptions_Closed);
+            this.menuFrmNoteOptions.Text = "-menu-";
             // 
             // menuEditNote
             // 
@@ -168,7 +168,6 @@ namespace NoteFly
             this.menuNoteSkins.Name = "menuNoteSkins";
             this.menuNoteSkins.Size = new System.Drawing.Size(215, 22);
             this.menuNoteSkins.Text = "&Color";
-            this.menuNoteSkins.DropDownOpening += new System.EventHandler(this.updateMenuNoteColor);
             // 
             // menuSendTo
             // 
@@ -279,6 +278,7 @@ namespace NoteFly
             this.btnCloseNote.TabIndex = 1;
             this.btnCloseNote.TabStop = false;
             this.btnCloseNote.Text = "X";
+            this.toolTip.SetToolTip(this.btnCloseNote, "Hide this note");
             this.btnCloseNote.UseVisualStyleBackColor = true;
             this.btnCloseNote.Click += new System.EventHandler(this.btnCloseNote_Click);
             // 
@@ -344,6 +344,10 @@ namespace NoteFly
             // 
             this.SavePos.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
             // 
+            // toolTip
+            // 
+            this.toolTip.Active = false;
+            // 
             // FrmNote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -381,5 +385,6 @@ namespace NoteFly
         #endregion
 
         public System.Windows.Forms.RichTextBox rtbNote;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
