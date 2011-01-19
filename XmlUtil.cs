@@ -455,7 +455,7 @@ namespace NoteFly
             Settings.ConfirmLinkclick = true;
             Settings.FontContentFamily = "Arial";
             Settings.FontContentSize = 11;
-            Settings.FontTextdirection = 1;
+            Settings.FontTextdirection = 0;
             Settings.FontTitleFamily = "Arial Black";
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;

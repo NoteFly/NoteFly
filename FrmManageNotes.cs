@@ -161,7 +161,7 @@ namespace NoteFly
                     File.Delete(filepath);
                     if (Settings.ProgramLogInfo)
                     {
-                        Log.Write(LogType.info, filepath + " deleted.");
+                        Log.Write(LogType.info, "Deleted note: "+filepath);
                     }
                     this.notes.RemoveNote(nr);
                 }

@@ -34,7 +34,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNote : Form
     {
-		#region Fields (6) 
+        #region Fields (6)
 
         private const int MINVISIBLESIZE = 5;
         private bool moving = false;
@@ -43,9 +43,9 @@ namespace NoteFly
         private Point oldp;
         private PictureBox pbShowLock;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
@@ -59,12 +59,27 @@ namespace NoteFly
             this.InitializeComponent();
             //this.SuspendLayout();
             this.rtbNote.Rtf = note.GetContent();
+            if (Settings.FontTitleStylebold)
+            {
+                this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
+            }
+            else
+            {
+                this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
+            }
             this.rtbNote.Font = new Font(Settings.FontContentFamily, Settings.FontContentSize);
-
+            if (Settings.FontTextdirection == 0)
+            {
+                this.rtbNote.RightToLeft = RightToLeft.No;
+            }
+            else if (Settings.FontTextdirection == 1)
+            {
+                this.rtbNote.RightToLeft = RightToLeft.Yes;
+            }
             this.BackColor = notes.GetForegroundColor(note.SkinNr);
             this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
             this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
-            
+
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
 
@@ -113,11 +128,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (28) 
+        #region Methods (28)
 
-		// Private Methods (28) 
+        // Private Methods (28) 
 
         /// <summary>
         /// The user pressed the cross on the note,
@@ -332,7 +347,7 @@ namespace NoteFly
         private void menuRollUp_Click(object sender, EventArgs e)
         {
             this.note.RolledUp = !this.note.RolledUp;
-            
+
             this.SetRollupNote();
 
             if (!this.SavePos.IsBusy)
@@ -615,7 +630,7 @@ namespace NoteFly
             GC.Collect();
         }
 
-		#endregion Methods 
+        #endregion Methods
 
 #if windows
         [DllImport("wininet.dll")]
