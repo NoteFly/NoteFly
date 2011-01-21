@@ -26,7 +26,8 @@ namespace NoteFly
 
     public class Note
     {
-        public uint linenumoffsetcontent;
+        public string tempcontent;
+
         private FrmNote frmnote;
         private Notes notes;
         private string filename;
@@ -125,7 +126,7 @@ namespace NoteFly
                 string notefilepath = Path.Combine(Settings.NotesSavepath, this.Filename);
                 if (File.Exists(notefilepath))
                 {
-                    return xmlUtil.GetContentString(notefilepath, "content", this.linenumoffsetcontent); // this.contentlinenumoffset
+                    return xmlUtil.GetContentString(notefilepath, "content");
                 }
                 else
                 {

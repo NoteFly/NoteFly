@@ -71,7 +71,18 @@ namespace NoteFly
             this.Text = "edit note";
             this.SetFontSettings();
             this.tbTitle.Text = note.Title;
-            this.rtbNewNote.Rtf = note.GetContent();
+            if (String.IsNullOrEmpty(this.note.tempcontent))
+            {
+                this.rtbNewNote.Rtf = note.GetContent();
+            }
+            else
+            {
+                this.rtbNewNote.Rtf = this.note.tempcontent;
+                //clear memory:
+                this.note.tempcontent = String.Empty;
+                this.note.tempcontent = null;
+            }
+            
         }
 
         #endregion Constructors

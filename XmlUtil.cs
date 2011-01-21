@@ -49,7 +49,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="nodename"></param>
         /// <returns>return node content as string, empty if not found</returns>
-        public static string GetContentString(string filename, string nodename, uint linenumoffsetcontent)
+        public static string GetContentString(string filename, string nodename)
         {
 #if DEBUG
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
@@ -71,23 +71,19 @@ namespace NoteFly
             {
                 throw new CustomException("XmlTextReader object is null.");
             }
-            const bool disablelineopt = false;
             try
             {
                 while (xmlread.Read())
                 {
-                    if (xmlread.LineNumber == linenumoffsetcontent || disablelineopt) //faster than comparing xmlread.name
+                    if (xmlread.Name == nodename)
                     {
-                        if (xmlread.Name == nodename)
-                        {
-                            string xmlnodecontent = String.Empty;
-                            xmlnodecontent = xmlread.ReadElementContentAsString();
+                        string xmlnodecontent = String.Empty;
+                        xmlnodecontent = xmlread.ReadElementContentAsString();
 #if DEBUG
-                            stopwatch.Stop();
-                            Log.Write(LogType.info, "Read content time:  " + stopwatch.ElapsedTicks + " ticks"); //blocking display time ~200ms/7
+                        stopwatch.Stop();
+                        Log.Write(LogType.info, "Read content time:  " + stopwatch.ElapsedTicks + " ticks"); //blocking display time ~200ms/7
 #endif
-                            return xmlnodecontent;
-                        }
+                        return xmlnodecontent;
                     }
                 }
             }
@@ -190,10 +186,9 @@ namespace NoteFly
                             note.Title = xmlread.ReadElementContentAsString();
                             break;
                         case "content":
-                            if (!isset_linenumoffsetcontent)
+                            if (note.Visible)
                             {
-                                note.linenumoffsetcontent = Convert.ToUInt32(xmlread.LineNumber);
-                                isset_linenumoffsetcontent = true;
+                                note.tempcontent = xmlread.ReadElementContentAsString();
                             }
                             break;
                     }
@@ -557,7 +552,6 @@ namespace NoteFly
             xmlwrite.WriteEndElement();
             xmlwrite.WriteElementString("skin", skinname);
             xmlwrite.WriteElementString("title", note.Title);
-            note.linenumoffsetcontent = 16;
             xmlwrite.WriteElementString("content", content);
             xmlwrite.WriteEndElement();
         }
@@ -633,7 +627,7 @@ namespace NoteFly
                 try
                 {
                     importnote = ParserNoteNode(n, importnote, i);
-                    content = GetContentString(filepath, "content", importnote.linenumoffsetcontent);
+                    content = GetContentString(filepath, "content");
                 }
                 finally
                 {
@@ -766,7 +760,7 @@ namespace NoteFly
                 xmlwrite.WriteStartDocument(true);//standalone
                 xmlwrite.WriteStartElement("skins");
                 xmlwrite.WriteAttributeString("count", "7"); //for performance predefine list Capacity, not required.
-                string[] name  = new string[7] { "yellow", "orange", "white",  "green",  "blue",   "purple", "red" };
+                string[] name = new string[7] { "yellow", "orange", "white", "green", "blue", "purple", "red" };
                 string[] fgclr = new string[7] { "FFD800", "FF6A00", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A" };
                 string[] bgclr = new string[7] { "E5B61B", "EF6F1F", "26262C", "008000", "1A1AFF", "8B1A8B", "7A1515" };
                 string[] hlclr = new string[7] { "FF0000", "FF0000", "FF0000", "FF0000", "FF0000", "FF0000", "FF0000" };//todo
@@ -774,9 +768,9 @@ namespace NoteFly
                 {
                     xmlwrite.WriteStartElement("skin");
                     xmlwrite.WriteElementString("Name", name[i]);
-                    xmlwrite.WriteElementString("ForegroundColor", "#"+fgclr[i]);
-                    xmlwrite.WriteElementString("BackgroundColor", "#"+bgclr[i]);
-                    xmlwrite.WriteElementString("HighlightColor",  "#"+hlclr[i]);
+                    xmlwrite.WriteElementString("ForegroundColor", "#" + fgclr[i]);
+                    xmlwrite.WriteElementString("BackgroundColor", "#" + bgclr[i]);
+                    xmlwrite.WriteElementString("HighlightColor", "#" + hlclr[i]);
                     xmlwrite.WriteEndElement();
                 }
                 xmlwrite.WriteEndElement();

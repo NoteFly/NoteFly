@@ -58,7 +58,17 @@ namespace NoteFly
             this.note = note;
             this.InitializeComponent();
             //this.SuspendLayout();
-            this.rtbNote.Rtf = note.GetContent();
+            if (String.IsNullOrEmpty(this.note.tempcontent))
+            {
+                this.rtbNote.Rtf = note.GetContent();
+            }
+            else
+            {
+                this.rtbNote.Rtf = this.note.tempcontent;
+                //clear memory:
+                this.note.tempcontent = String.Empty;
+                this.note.tempcontent = null;
+            }
             if (Settings.FontTitleStylebold)
             {
                 this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
