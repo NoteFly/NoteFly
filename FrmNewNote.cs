@@ -33,31 +33,16 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNewNote : Form
     {
-        #region Fields (5)
+		#region Fields (4) 
 
-        private Notes notes;
-        private Note note;
-        private Point oldp;
         private bool moving = false;
+        private Note note;
+        private Notes notes;
+        private Point oldp;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (2)
-
-        /// <summary>
-        /// Initializes a new instance of the FrmNewNote class for a new note.
-        /// </summary>
-        /// <param name="notes">The class with access to all notes.</param>
-        public FrmNewNote(Notes notes)
-        {
-            this.InitializeComponent();
-            this.notes = notes;
-            this.note = null;
-            this.Text = "new note";
-            this.SetFontSettings();
-            this.tbTitle.Text = DateTime.Now.ToString();
-            this.toolTip.Active = Settings.NotesTooltipsEnabled;
-        }
+		#region Constructors (2) 
 
         /// <summary>
         /// Initializes a new instance of the FrmNewNote class for editing a exist note.
@@ -83,43 +68,34 @@ namespace NoteFly
                 this.note.tempcontent = String.Empty;
                 this.note.tempcontent = null;
             }
+            this.pnlHeadNewNote.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
+            this.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
         }
 
-        #endregion Constructors
-
-        #region Methods (18)
-
-        // Private Methods (18) 
-
         /// <summary>
-        /// Set the font and textdirection FrmNewNote.
+        /// Initializes a new instance of the FrmNewNote class for a new note.
         /// </summary>
-        /// <param name="title">The new note title.</param>
-        /// <param name="content">The new note content.</param>
-        private void SetFontSettings()
+        /// <param name="notes">The class with access to all notes.</param>
+        public FrmNewNote(Notes notes)
         {
-            this.rtbNewNote.Font = new Font(Settings.FontContentFamily, rtbNewNote.Font.Size);
-            switch (Settings.FontTextdirection)
-            {
-                case 1:
-                    this.tbTitle.TextAlign = HorizontalAlignment.Left;
-                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Left;
-                    break;
-                case 2:
-                    this.tbTitle.TextAlign = HorizontalAlignment.Right;
-                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Right;
-                    break;
-                default:
-                    this.tbTitle.TextAlign = HorizontalAlignment.Left;
-                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Left;
-                    break;
-            }
-
-            this.rtbNewNote.Focus();
-            this.rtbNewNote.Select();
-            this.BringToFront();
+            this.InitializeComponent();
+            this.notes = notes;
+            this.note = null;
+            this.Text = "new note";
+            this.SetFontSettings();
+            this.tbTitle.Text = DateTime.Now.ToString();
+            //this.note.SkinNr = Settings.NotesDefaultSkinnr;
+            this.BackColor = this.notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
+            this.pnlHeadNewNote.BackColor = this.notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
+            this.toolTip.Active = Settings.NotesTooltipsEnabled;
         }
+
+		#endregion Constructors 
+
+		#region Methods (30) 
+
+		// Private Methods (30) 
 
         /// <summary>
         /// User pressed the accept note button. Note will now be saved.
@@ -180,6 +156,110 @@ namespace NoteFly
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// Make note content text bold, or if the selected text is already bold
+        /// then remove the bold style.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTextBold_Click(object sender, EventArgs e)
+        {
+            if (checksellen())
+            {
+                if (this.rtbNewNote.SelectionFont.Bold)
+                {
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Bold));
+                }
+                else
+                {
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Italic text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTextItalic_Click(object sender, EventArgs e)
+        {
+            if (checksellen())
+            {
+                if (this.rtbNewNote.SelectionFont.Italic)
+                {
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Italic));
+                }
+                else
+                {
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Striketrough text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTextStriketrough_Click(object sender, EventArgs e)
+        {
+            if (this.rtbNewNote.SelectionFont.Strikeout)
+            {
+                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Strikeout));
+            }
+            else
+            {
+                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
+            }
+        }
+
+        /// <summary>
+        /// Underline text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTextUnderline_Click(object sender, EventArgs e)
+        {
+            if (this.rtbNewNote.SelectionFont.Underline)
+            {
+                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Underline));
+            }
+            else
+            {
+                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
+            }
+        }
+
+        /// <summary>
+        /// Check if selection length of rtbNote is larger than zero.
+        /// </summary>
+        private bool checksellen()
+        {
+            if (this.rtbNewNote.SelectedText.Length > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Avoid that if there is no content the user select to copy the content.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contextMenuStripTextActions_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.rtbNewNote.TextLength == 0)
+            {
+                this.menuCopyContent.Enabled = false;
+            }
+            else
+            {
+                this.menuCopyContent.Enabled = true;
+            }
         }
 
         /// <summary>
@@ -244,205 +324,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Pasting text as note content.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void pastTextToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Clipboard.ContainsText())
-            {
-                this.rtbNewNote.Text = this.rtbNewNote.Text + Clipboard.GetText();
-            }
-            else
-            {
-                const string emptyclipboard = "There is no text on the clipboard.";
-                MessageBox.Show(emptyclipboard);
-                Log.Write(LogType.error, emptyclipboard);
-            }
-        }
-
-        /// <summary>
-        /// Moving the note.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void pnlHeadNewNote_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                this.moving = true;
-                this.oldp = e.Location;
-                this.pnlHeadNewNote.BackColor = this.notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
-            }
-        }
-
-        /// <summary>
-        /// Show context menu.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void pnlNoteEdit_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                this.contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
-            }
-        }
-
-        /// <summary>
-        /// A hyperlink is clicked, check settings to see if confirm launch dialog have
-        /// to be showed, if not then directly launch the URL.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            Program.LoadLink(e.LinkText);
-        }
-
-        /// <summary>
-        /// Force context menu to show up.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void rtbNote_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                this.contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
-            }
-        }
-
-        /// <summary>
-        /// User entered the title box.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event arguments</param>
-        private void tbTitle_Enter(object sender, EventArgs e)
-        {
-            this.tbTitle.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
-            SetToolbarEnabled(false);
-        }
-
-        /// <summary>
-        /// User leaved the title box
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event arguments</param>
-        private void tbTitle_Leave(object sender, EventArgs e)
-        {
-            this.tbTitle.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
-            SetToolbarEnabled(true);
-        }
-
-        /// <summary>
-        /// User entered the note content box
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event arguments</param>
-        private void rtbNote_Enter(object sender, EventArgs e)
-        {
-            this.rtbNewNote.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
-            SetToolbarEnabled(true);
-        }
-
-        /// <summary>
-        /// User leaved the note content box.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event arguments</param>
-        private void rtbNote_Leave(object sender, EventArgs e)
-        {
-            this.rtbNewNote.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
-        }
-
-        private void SetToolbarEnabled(bool enabled)
-        {
-            this.btnTextBold.Enabled = enabled;
-            this.btnTextItalic.Enabled = enabled;
-            this.btnTextStriketrough.Enabled = enabled;
-            this.btnTextUnderline.Enabled = enabled;
-        }
-
-        /// <summary>
-        /// Move note if pnlHead is being left clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pnlHeadNewNote_MouseMove(object sender, MouseEventArgs e)
-        {
-            if ((this.moving) && (e.Button == MouseButtons.Left))
-            {
-                this.pnlHeadNewNote.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
-
-                int dpx = e.Location.X - oldp.X;
-                int dpy = e.Location.Y - oldp.Y;
-#if linux
-                if (dpx > 8)
-                {
-                    dpx = 8;
-                }
-                else if (dpx < -8)
-                {
-                    dpx = -8;
-                }
-                if (dpy > 8)
-                {
-                    dpy = 8;
-                }
-                else if (dpy < -8)
-                {
-                    dpy = -8;
-                }
-#endif
-                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
-            }
-            else
-            {
-                this.pnlHeadNewNote.BackColor = notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
-            }
-        }
-
-        /// <summary>
-        ///  End moving note.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pnlHeadNewNote_MouseUp(object sender, MouseEventArgs e)
-        {
-            this.moving = false;
-        }
-
-        /// <summary>
-        /// Set this note ontop, CheckOnClick is set to true.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuStickyOnTop_Click(object sender, EventArgs e)
-        {
-            this.TopMost = this.menuStickyOnTop.Checked;
-        }
-
-        /// <summary>
-        /// Avoid that if there is no content the user select to copy the content.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void contextMenuStripTextActions_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (this.rtbNewNote.TextLength == 0)
-            {
-                this.menuCopyContent.Enabled = false;
-            }
-            else
-            {
-                this.menuCopyContent.Enabled = true;
-            }
-        }
-
-        /// <summary>
-        /// 
+        /// Import a file as note.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -516,108 +398,32 @@ namespace NoteFly
             }
         }
 
-        private void SetDefaultFontFamilyAndSize()
-        {
-            rtbNewNote.SelectAll();
-            rtbNewNote.Font = new Font(Settings.FontContentFamily, (float)Settings.FontContentSize);
-            rtbNewNote.Select(0, 0);
-        }
-
         /// <summary>
-        /// Check if selection length of rtbNote is larger than zero.
-        /// </summary>
-        private bool checksellen()
-        {
-            if (this.rtbNewNote.SelectedText.Length > 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Removes 1 fontsyle from the fontsyles of the checkstyle rtb text.
-        /// This methode does not check if selection lenght is okay.
-        /// </summary>
-        private FontStyle removestyle(FontStyle checkstyles, FontStyle removestyle)
-        {
-            FontStyle newstyles = checkstyles;
-            newstyles -= removestyle;
-            return newstyles;
-        }
-
-        /// <summary>
-        /// Make note content text bold, or if the selected text is already bold
-        /// then remove the bold style.
+        /// Set this note ontop, CheckOnClick is set to true.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnTextBold_Click(object sender, EventArgs e)
+        private void menuStickyOnTop_Click(object sender, EventArgs e)
         {
-            if (checksellen())
-            {
-                if (this.rtbNewNote.SelectionFont.Bold)
-                {
-                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Bold));
-                }
-                else
-                {
-                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
-                }
-            }
+            this.TopMost = this.menuStickyOnTop.Checked;
         }
 
         /// <summary>
-        /// Italic text
+        /// Pasting text as note content.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnTextItalic_Click(object sender, EventArgs e)
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void pastTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (checksellen())
+            if (Clipboard.ContainsText())
             {
-                if (this.rtbNewNote.SelectionFont.Italic)
-                {
-                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Italic));
-                }
-                else
-                {
-                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Underline text
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnTextUnderline_Click(object sender, EventArgs e)
-        {
-            if (this.rtbNewNote.SelectionFont.Underline)
-            {
-                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Underline));
+                this.rtbNewNote.Text = this.rtbNewNote.Text + Clipboard.GetText();
             }
             else
             {
-                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
-            }
-        }
-
-        /// <summary>
-        /// Striketrough text
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnTextStriketrough_Click(object sender, EventArgs e)
-        {
-            if (this.rtbNewNote.SelectionFont.Strikeout)
-            {
-                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Strikeout));
-            }
-            else
-            {
-                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
+                const string emptyclipboard = "There is no text on the clipboard.";
+                MessageBox.Show(emptyclipboard);
+                Log.Write(LogType.error, emptyclipboard);
             }
         }
 
@@ -636,6 +442,212 @@ namespace NoteFly
             this.Cursor = Cursors.Default;
         }
 
-        #endregion
+        /// <summary>
+        /// Moving the note.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void pnlHeadNewNote_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.moving = true;
+                this.oldp = e.Location;
+                this.pnlHeadNewNote.BackColor = this.notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
+            }
+        }
+
+        /// <summary>
+        /// Move note if pnlHead is being left clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHeadNewNote_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((this.moving) && (e.Button == MouseButtons.Left))
+            {
+                this.pnlHeadNewNote.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
+
+                int dpx = e.Location.X - oldp.X;
+                int dpy = e.Location.Y - oldp.Y;
+#if linux
+                if (dpx > 8)
+                {
+                    dpx = 8;
+                }
+                else if (dpx < -8)
+                {
+                    dpx = -8;
+                }
+                if (dpy > 8)
+                {
+                    dpy = 8;
+                }
+                else if (dpy < -8)
+                {
+                    dpy = -8;
+                }
+#endif
+                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
+            }
+            else
+            {
+                this.pnlHeadNewNote.BackColor = notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
+            }
+        }
+
+        /// <summary>
+        ///  End moving note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHeadNewNote_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.moving = false;
+        }
+
+        /// <summary>
+        /// Show context menu.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void pnlNoteEdit_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                this.contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
+            }
+        }
+
+        /// <summary>
+        /// Removes 1 fontsyle from the fontsyles of the checkstyle rtb text.
+        /// This methode does not check if selection lenght is okay.
+        /// </summary>
+        private FontStyle removestyle(FontStyle checkstyles, FontStyle removestyle)
+        {
+            FontStyle newstyles = checkstyles;
+            newstyles -= removestyle;
+            return newstyles;
+        }
+
+        /// <summary>
+        /// User entered the note content box.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
+        private void rtbNote_Enter(object sender, EventArgs e)
+        {
+            this.rtbNewNote.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
+            SetToolbarEnabled(true);
+        }
+
+        /// <summary>
+        /// User leaved the note content box.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
+        private void rtbNote_Leave(object sender, EventArgs e)
+        {
+            this.rtbNewNote.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
+        }
+
+        /// <summary>
+        /// A hyperlink is clicked, check settings to see if confirm launch dialog have
+        /// to be showed, if not then directly launch the URL.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Program.LoadLink(e.LinkText);
+        }
+
+        /// <summary>
+        /// Force context menu to show up.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void rtbNote_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                this.contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
+            }
+        }
+
+        /// <summary>
+        /// Set font family and size.
+        /// </summary>
+        private void SetDefaultFontFamilyAndSize()
+        {
+            rtbNewNote.SelectAll();
+            rtbNewNote.Font = new Font(Settings.FontContentFamily, (float)Settings.FontContentSize);
+            rtbNewNote.Select(0, 0);
+        }
+
+        /// <summary>
+        /// Set the font and textdirection FrmNewNote.
+        /// </summary>
+        /// <param name="title">The new note title.</param>
+        /// <param name="content">The new note content.</param>
+        private void SetFontSettings()
+        {
+            this.rtbNewNote.Font = new Font(Settings.FontContentFamily, rtbNewNote.Font.Size);
+            switch (Settings.FontTextdirection)
+            {
+                case 1:
+                    this.tbTitle.TextAlign = HorizontalAlignment.Left;
+                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Left;
+                    break;
+                case 2:
+                    this.tbTitle.TextAlign = HorizontalAlignment.Right;
+                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Right;
+                    break;
+                default:
+                    this.tbTitle.TextAlign = HorizontalAlignment.Left;
+                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Left;
+                    break;
+            }
+
+            this.rtbNewNote.Focus();
+            this.rtbNewNote.Select();
+            this.BringToFront();
+        }
+
+        /// <summary>
+        /// Toggle toolbar buttons.
+        /// </summary>
+        /// <param name="enabled"></param>
+        private void SetToolbarEnabled(bool enabled)
+        {
+            this.btnTextBold.Enabled = enabled;
+            this.btnTextItalic.Enabled = enabled;
+            this.btnTextStriketrough.Enabled = enabled;
+            this.btnTextUnderline.Enabled = enabled;
+        }
+
+        /// <summary>
+        /// User entered the title box.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
+        private void tbTitle_Enter(object sender, EventArgs e)
+        {
+            this.tbTitle.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
+            SetToolbarEnabled(false);
+        }
+
+        /// <summary>
+        /// User leaved the title box
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event arguments</param>
+        private void tbTitle_Leave(object sender, EventArgs e)
+        {
+            this.tbTitle.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
+            SetToolbarEnabled(true);
+        }
+
+		#endregion Methods 
     }
 }

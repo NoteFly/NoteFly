@@ -151,7 +151,6 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lbTextTwTimeout = new System.Windows.Forms.Label();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
             this.btnResetSettings = new System.Windows.Forms.Button();
@@ -160,6 +159,9 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.cbxFontNoteTitleBold = new System.Windows.Forms.CheckBox();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
+            this.cbxShowTooltips = new System.Windows.Forms.CheckBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -372,6 +374,7 @@ namespace NoteFly
             // 
             // tabPageLooks
             // 
+            this.tabPageLooks.Controls.Add(this.cbxShowTooltips);
             this.tabPageLooks.Controls.Add(this.chxTransparecy);
             this.tabPageLooks.Controls.Add(this.lbDefaultNewNoteColor);
             this.tabPageLooks.Controls.Add(this.cbxDefaultColor);
@@ -458,6 +461,7 @@ namespace NoteFly
             // 
             // tabPageFonts
             // 
+            this.tabPageFonts.Controls.Add(this.cbxFontNoteTitleBold);
             this.tabPageFonts.Controls.Add(this.label5);
             this.tabPageFonts.Controls.Add(this.numFontSizeTitle);
             this.tabPageFonts.Controls.Add(this.label4);
@@ -980,17 +984,6 @@ namespace NoteFly
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
-            // 
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.chxLogDebug);
@@ -1066,6 +1059,39 @@ namespace NoteFly
             this.tbNotesSavePath.Size = new System.Drawing.Size(294, 20);
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
+            // 
+            // cbxFontNoteTitleBold
+            // 
+            this.cbxFontNoteTitleBold.AutoSize = true;
+            this.cbxFontNoteTitleBold.Checked = true;
+            this.cbxFontNoteTitleBold.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxFontNoteTitleBold.Location = new System.Drawing.Point(215, 50);
+            this.cbxFontNoteTitleBold.Name = "cbxFontNoteTitleBold";
+            this.cbxFontNoteTitleBold.Size = new System.Drawing.Size(46, 17);
+            this.cbxFontNoteTitleBold.TabIndex = 40;
+            this.cbxFontNoteTitleBold.Text = "bold";
+            this.cbxFontNoteTitleBold.UseVisualStyleBackColor = true;
+            // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
+            // cbxShowTooltips
+            // 
+            this.cbxShowTooltips.AutoSize = true;
+            this.cbxShowTooltips.Location = new System.Drawing.Point(18, 133);
+            this.cbxShowTooltips.Name = "cbxShowTooltips";
+            this.cbxShowTooltips.Size = new System.Drawing.Size(89, 17);
+            this.cbxShowTooltips.TabIndex = 13;
+            this.cbxShowTooltips.Text = "Show tooltips";
+            this.cbxShowTooltips.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 
@@ -1153,5 +1179,7 @@ namespace NoteFly
         private System.Windows.Forms.Label lblTextFontSize;
         private System.Windows.Forms.Label lbTextNoteFont;
         private System.Windows.Forms.ComboBox cbxFontNoteContent;
+        private System.Windows.Forms.CheckBox cbxFontNoteTitleBold;
+        private System.Windows.Forms.CheckBox cbxShowTooltips;
     }
 }

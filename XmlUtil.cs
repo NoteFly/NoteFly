@@ -127,7 +127,6 @@ namespace NoteFly
         /// <returns>a note object</returns>
         private static Note ParserNoteNode(Notes n, Note note, int readnotenum)
         {
-            bool isset_linenumoffsetcontent = false;
             int curnotenum = -1;
             bool endnode = false;
             while (xmlread.Read())

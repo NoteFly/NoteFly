@@ -180,7 +180,9 @@ namespace NoteFly
             this.lbTextTitle.Text = "Title:";
             this.lbTextTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lbTextTitle.UseCompatibleTextRendering = true;
+            this.lbTextTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.lbTextTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
+            this.lbTextTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseUp);
             // 
             // pnlHeadNewNote
             // 

@@ -100,11 +100,14 @@ namespace NoteFly
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
             this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
+            this.cbxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
+            this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.FontTitleSize);
             this.cbxFontNoteContent.SelectedValue = Settings.FontContentFamily;
             this.numFontSizeContent.Value = Convert.ToDecimal(Settings.FontContentSize);
             this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
             this.cbxFontNoteContent.Text = Settings.FontContentFamily;
             this.cbxFontNoteTitle.Text = Settings.FontTitleFamily;
+            this.cbxFontNoteTitleBold.Checked = Settings.FontTitleStylebold;
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
             //tab: Highlight
             this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
@@ -241,8 +244,10 @@ namespace NoteFly
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
                 Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
                 Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
+                Settings.NotesTooltipsEnabled = this.cbxShowTooltips.Checked;
                 Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();//todo: test, i forgot
                 Settings.FontContentSize = (float)this.numFontSizeContent.Value;
+                Settings.FontTitleStylebold = this.cbxFontNoteTitleBold.Checked;
                 Settings.FontTitleFamily = this.cbxFontNoteTitle.SelectedItem.ToString();//todo: test
                 Settings.FontTitleSize = (float)this.numFontSizeTitle.Value;
                 Settings.FontTextdirection = this.cbxTextDirection.SelectedIndex;
@@ -302,8 +307,9 @@ namespace NoteFly
                     MessageBox.Show(NoteFly.Properties.Resources.settings_regkeynotexist);
                 }
 #endif
-                this.notes.UpdateAllFonts();
+                xmlUtil.WriteSettings();
                 Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
+                this.notes.UpdateAllNoteForms();
                 this.Close();
             }
         }

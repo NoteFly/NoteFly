@@ -112,6 +112,9 @@ namespace NoteFly
             this.lbTextWindowTitle.Size = new System.Drawing.Size(102, 18);
             this.lbTextWindowTitle.TabIndex = 1;
             this.lbTextWindowTitle.Text = "Manage notes";
+            this.lbTextWindowTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
+            this.lbTextWindowTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.lbTextWindowTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // pbResizeGrip
             // 

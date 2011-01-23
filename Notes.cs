@@ -274,13 +274,13 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Update all fonts settings for all notes.
+        /// Update all note forms.
         /// </summary>
-        public void UpdateAllFonts()
+        public void UpdateAllNoteForms()
         {
             foreach (Note curnote in this.notes)
             {
-                //todo
+                curnote.UpdateForm();
             }
         }
         // Private Methods (5) 

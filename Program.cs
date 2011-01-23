@@ -178,10 +178,6 @@ namespace NoteFly
                             Settings.ProgramLogError = true;
                             Settings.ProgramLogInfo = true;
                             break;
-                        //overwrite settings file with default settings.
-                        case "/resetsettings":
-                            xmlUtil.WriteDefaultSettings();
-                            break;
                         //turn off xp visual style.
                         case "/disablevisualstyles":
                             visualstyle = false; //about ~400ms slower on my system on display time.
@@ -189,6 +185,10 @@ namespace NoteFly
                         //rescue option for notes loading out of screen.
                         case "/resetpositions":
                             resetpositions = true;
+                            break;
+                       //overwrite settings file with default settings.
+                        case "/resetsettings":
+                            xmlUtil.WriteDefaultSettings();
                             break;
                     }
                 }

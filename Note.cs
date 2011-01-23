@@ -140,5 +140,18 @@ namespace NoteFly
                 return this.frmnote.rtbNote.Rtf;
             }
         }
+
+        /// <summary>
+        /// Update the form.
+        /// </summary>
+        public void UpdateForm()
+        {
+            if (frmnote != null)
+            {
+                frmnote.UpdateForm(false);
+                frmnote.UpdateForm(true);
+            }
+        }
+
     }
 }

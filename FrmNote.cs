@@ -57,7 +57,14 @@ namespace NoteFly
             this.notes = notes;
             this.note = note;
             this.InitializeComponent();
+            
             //this.SuspendLayout();
+            this.UpdateForm(false);
+
+            this.lblTitle.Text = note.Title;
+            this.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
             if (String.IsNullOrEmpty(this.note.tempcontent))
             {
                 this.rtbNote.Rtf = note.GetContent();
@@ -69,49 +76,11 @@ namespace NoteFly
                 this.note.tempcontent = String.Empty;
                 this.note.tempcontent = null;
             }
-            if (Settings.FontTitleStylebold)
-            {
-                this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
-            }
-            else
-            {
-                this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
-            }
-            this.rtbNote.Font = new Font(Settings.FontContentFamily, Settings.FontContentSize);
-            if (Settings.FontTextdirection == 0)
-            {
-                this.rtbNote.RightToLeft = RightToLeft.No;
-            }
-            else if (Settings.FontTextdirection == 1)
-            {
-                this.rtbNote.RightToLeft = RightToLeft.Yes;
-            }
-            this.BackColor = notes.GetForegroundColor(note.SkinNr);
-            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
-            this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
-
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
-
             this.SetRollupNote();
-
             this.SetLockedNote();
-
             this.SetBounds(note.X, note.Y, note.Width, note.Height);
-
-            this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
-            this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
-            this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
-
-            this.toolTip.Active = Settings.NotesTooltipsEnabled;
-
-            this.lblTitle.Text = note.Title;
-            this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize);
-
-            if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
-            {
-                TextHighlight.CheckSyntaxFull(rtbNote);
-            }
             string[] skinnames = notes.GetSkinsNames();
             for (int i = 0; i < skinnames.Length; i++)
             {
@@ -130,17 +99,77 @@ namespace NoteFly
                 tsi.Click += new EventHandler(menuNoteSkins_skin_Click);
                 this.menuNoteSkins.DropDownItems.Add(tsi);
             }
-            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
-            //this.ResumeLayout();
-            if (this.rtbNote.DetectUrls)
-            {
-                this.rtbNote.Text += "";//causes TextChanged event so there is a rescan for URL's:
-            }
+
+            this.UpdateForm(true);
         }
 
         #endregion Constructors
 
         #region Methods (28)
+
+        /// <summary>
+        /// Set some settings
+        /// </summary>
+        public void UpdateForm(bool contentset)
+        {
+            if (!contentset)
+            {
+                this.rtbNote.Font = new Font(Settings.FontContentFamily, Settings.FontContentSize);
+                if (Settings.FontTitleStylebold)
+                {
+                    this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
+                }
+                else
+                {
+                    this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
+                }
+                if (Settings.FontTextdirection == 0)
+                {
+                    this.rtbNote.RightToLeft = RightToLeft.No;
+                }
+                else if (Settings.FontTextdirection == 1)
+                {
+                    this.rtbNote.RightToLeft = RightToLeft.Yes;
+                }
+                this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
+                this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
+                this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
+                this.toolTip.Active = Settings.NotesTooltipsEnabled;
+            }
+            else
+            {
+                if (this.lblTitle.Height + this.lblTitle.Location.Y > pnlHead.Height)
+                {
+                    const int maxheightpnlheah = 64;
+                    if (this.lblTitle.Height < maxheightpnlheah)
+                    {
+                        pnlHead.Height = this.lblTitle.Height;
+                    }
+                    else
+                    {
+                        pnlHead.Height = maxheightpnlheah;
+                    }
+                    pnlNote.Size = new Size(pnlNote.Width, this.Height - pnlHead.Height);
+                    pnlNote.Location = new Point(pnlNote.Location.X, pnlHead.Height);
+                }
+                else
+                {
+                    const int defaulftheight = 32;
+                    pnlHead.Height = defaulftheight;
+                    pnlHead.Size = new Size(this.Width, this.Height - pnlHead.Height);
+                    pnlNote.Location = new Point(0, defaulftheight);
+                }
+                if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
+                {
+                    TextHighlight.CheckSyntaxFull(rtbNote);
+                }
+                this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
+                if (this.rtbNote.DetectUrls)
+                {
+                    this.rtbNote.Text += "";//causes TextChanged event so there is a rescan for URL's:
+                }
+            }
+        }
 
         // Private Methods (28) 
 
@@ -448,6 +477,7 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
+                this.pnlHead.BackColor = notes.GetBackgroundColor(note.SkinNr);
                 this.moving = true;
                 this.oldp = e.Location;
             }
@@ -462,15 +492,13 @@ namespace NoteFly
         {
             if ((this.moving) && (e.Button == MouseButtons.Left))
             {
-                this.pnlHead.BackColor = this.notes.GetBackgroundColor(this.note.SkinNr);
-
                 int dpx = e.Location.X - oldp.X;
                 int dpy = e.Location.Y - oldp.Y;
 #if linux
                 if (dpx > 8)
                 {
                     dpx = 8;
-                } 
+                }
                 else if (dpx < -8)
                 {
                     dpx = -8;
@@ -485,10 +513,6 @@ namespace NoteFly
                 }
 #endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
-            }
-            else
-            {
-                this.pnlHead.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
             }
         }
 
@@ -507,6 +531,7 @@ namespace NoteFly
             {
                 this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
             }
+            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
         }
 
         /// <summary>
@@ -640,12 +665,42 @@ namespace NoteFly
             GC.Collect();
         }
 
+        /// <summary>
+        /// Check if some text is selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuFrmNoteOptions_Opening(object sender, CancelEventArgs e)
+        {
+            if (rtbNote.SelectedText.Length >= 1)
+            {
+                this.menuCopySelected.Enabled = true;
+            }
+            else
+            {
+                this.menuCopySelected.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Copy the selected text in the rtbNote control
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuCopySelected_Click(object sender, EventArgs e)
+        {
+            if (rtbNote.SelectedText.Length >= 1)
+            {
+                Clipboard.SetText(this.rtbNote.SelectedText);
+            }
+        }
+
         #endregion Methods
 
 #if windows
         [DllImport("wininet.dll")]
         private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-#endif
+        #endif
     }
 
 }
