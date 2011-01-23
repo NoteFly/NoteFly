@@ -32,7 +32,7 @@ namespace NoteFly
 
         public static int NotesDefaultSkinnr { get; set; }
 
-        public static bool NotesClosebtnTooltipenabled { get; set; }
+        public static bool NotesTooltipsEnabled { get; set; }
 
         public static bool NotesClosebtnHidenotepermanently { get; set; }
 

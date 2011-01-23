@@ -393,7 +393,7 @@ namespace NoteFly
                     }
                     Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
                     xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
-                    this.notes.LoadNotes(false);
+                    this.notes.LoadNotes(false, false);
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
                 }

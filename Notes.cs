@@ -38,7 +38,7 @@ namespace NoteFly
     /// </summary>
     public class Notes
     {
-		#region Fields (3) 
+        #region Fields (3)
 
         /// <summary>
         /// EXTENSION
@@ -53,25 +53,25 @@ namespace NoteFly
         /// </summary>
         private List<Skin> skins;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         //private List<FrmNote> notesfrms;
         /// <summary>
         /// Initializes a new instance of the Notes class.
         /// </summary>
-        public Notes()
+        public Notes(bool resetpositions)
         {
             this.notes = new List<Note>();
             this.skins = new List<Skin>();
             this.skins = xmlUtil.LoadSkins();
-            this.LoadNotes(Settings.ProgramFirstrun);
+            this.LoadNotes(Settings.ProgramFirstrun, resetpositions);
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (1) 
+        #region Properties (1)
 
         /// <summary>
         /// The number of notes there are.
@@ -84,11 +84,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (18) 
+        #region Methods (18)
 
-		// Public Methods (13) 
+        // Public Methods (13) 
 
         /// <summary>
         /// Add a new note the the notes list.
@@ -283,7 +283,7 @@ namespace NoteFly
                 //todo
             }
         }
-		// Private Methods (5) 
+        // Private Methods (5) 
 
         /// <summary>
         /// This method set a limit on how many notes can be loaded before a 
@@ -392,7 +392,7 @@ namespace NoteFly
         /// Loads all note files in the NotesSavepath.
         /// </summary>
         /// <param name="firstrun">true if it is the first run</param>
-        public void LoadNotes(bool firstrun)
+        public void LoadNotes(bool firstrun, bool resetpositions)
         {
             if (!Directory.Exists(Settings.NotesSavepath))
             {
@@ -469,6 +469,11 @@ namespace NoteFly
             for (int i = 0; i < notefiles.Length; i++)
             {
                 Note note = xmlUtil.LoadNoteFile(this, notefiles[i]);
+                if (resetpositions)
+                {
+                    note.X = 10;
+                    note.Y = 10;
+                }
                 this.AddNote(note);
             }
 #if DEBUG
@@ -484,7 +489,7 @@ namespace NoteFly
                     this.notes[i].CreateForm();
                 }
             }
-            
+
 #if DEBUG
             stopwatch.Stop();
             Log.Write(LogType.info, "Notes display time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
@@ -501,23 +506,23 @@ namespace NoteFly
         /// </summary>
         private void CreateFirstrunNote()
         {
-                const int notewidth = 320;
-                const int noteheight = 280;
-                int tipnoteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (notewidth / 2));
-                int tipnoteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (noteheight / 2));
-                StringBuilder notecontent = new StringBuilder();
-                notecontent.AppendLine("This is a example note.");
-                notecontent.AppendLine("You can chance colour of this note by rightclicking on this note.");
-                notecontent.AppendLine("You can delete this note, by rightclicking the systray icon choice manage notes");
-                notecontent.AppendLine("and then press delete note button for this particuler note.");
-                notecontent.AppendLine("By clicking on the cross on this note this note will be hidden.");
-                notecontent.AppendLine("You can get it back with the manage notes window.");
-                //this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
-                Settings.ProgramFirstrun = false;
-                Log.Write(LogType.info, "firstrun occur");
-                xmlUtil.WriteSettings();
+            const int notewidth = 320;
+            const int noteheight = 280;
+            int tipnoteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (notewidth / 2));
+            int tipnoteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (noteheight / 2));
+            StringBuilder notecontent = new StringBuilder();
+            notecontent.AppendLine("This is a example note.");
+            notecontent.AppendLine("You can chance colour of this note by rightclicking on this note.");
+            notecontent.AppendLine("You can delete this note, by rightclicking the systray icon choice manage notes");
+            notecontent.AppendLine("and then press delete note button for this particuler note.");
+            notecontent.AppendLine("By clicking on the cross on this note this note will be hidden.");
+            notecontent.AppendLine("You can get it back with the manage notes window.");
+            //this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
+            Settings.ProgramFirstrun = false;
+            Log.Write(LogType.info, "firstrun occur");
+            xmlUtil.WriteSettings();
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

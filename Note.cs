@@ -76,7 +76,7 @@ namespace NoteFly
 
         /// <summary>
         /// Create a new frmNote with this note.
-        /// The note now has to be visible to the user.
+        /// visible is set to true.
         /// </summary>
         public void CreateForm()
         {
@@ -96,6 +96,7 @@ namespace NoteFly
                 this.frmnote.Close();
             }
             this.Visible = false;
+            this.tempcontent = null;
             this.frmnote = null;
             GC.Collect();
         }

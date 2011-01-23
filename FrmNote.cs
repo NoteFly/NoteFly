@@ -103,7 +103,7 @@ namespace NoteFly
             this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
             this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
 
-            this.toolTip.Active = Settings.NotesClosebtnTooltipenabled;
+            this.toolTip.Active = Settings.NotesTooltipsEnabled;
 
             this.lblTitle.Text = note.Title;
             this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize);

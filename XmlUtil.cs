@@ -253,11 +253,11 @@ namespace NoteFly
                         case "NetworkProxyEnabled":
                             Settings.NetworkProxyEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "NotesTooltipsEnabled":
+                            Settings.NotesTooltipsEnabled = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "NotesClosebtnHidenotepermanently":
                             Settings.NotesClosebtnHidenotepermanently = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "NotesClosebtnTooltipenabled":
-                            Settings.NotesClosebtnTooltipenabled = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "NotesTransparencyEnabled":
                             Settings.NotesTransparencyEnabled = xmlread.ReadElementContentAsBoolean();
@@ -462,8 +462,8 @@ namespace NoteFly
             Settings.NetworkConnectionTimeout = 8000;
             Settings.NetworkProxyAddress = String.Empty;
             Settings.NetworkProxyEnabled = false;
+            Settings.NotesTooltipsEnabled = true;
             Settings.NotesClosebtnHidenotepermanently = true;
-            Settings.NotesClosebtnTooltipenabled = false;
             Settings.NotesDefaultSkinnr = 1;
             Settings.NotesSavepath = Program.AppDataFolder;
             Settings.NotesTransparencyEnabled = true;
@@ -666,8 +666,8 @@ namespace NoteFly
                 WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
                 WriteXMLBool("NetworkConnectionForceipv6", Settings.NetworkConnectionForceipv6);
                 WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
-                WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
-                WriteXMLBool("NotesClosebtnTooltipenabled", Settings.NotesClosebtnTooltipenabled);
+                WriteXMLBool("NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
+                WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);                
                 WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
                 WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
                 WriteXMLBool("ProgramLogError", Settings.ProgramLogError);

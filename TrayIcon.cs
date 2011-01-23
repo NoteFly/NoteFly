@@ -28,7 +28,6 @@ namespace NoteFly
 
     public class TrayIcon
     {
-
         /// <summary>
         /// container that holds some objects.
         /// </summary>

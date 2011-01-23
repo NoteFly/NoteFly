@@ -141,6 +141,7 @@ namespace NoteFly
             Log.Write(LogType.info, "Settings load time: " + stopwatch.ElapsedMilliseconds + " ms");
 #endif
             bool visualstyle = true;
+            bool resetpositions = false;
             //override settings with supported parameters
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
@@ -177,8 +178,17 @@ namespace NoteFly
                             Settings.ProgramLogError = true;
                             Settings.ProgramLogInfo = true;
                             break;
+                        //overwrite settings file with default settings.
+                        case "/resetsettings":
+                            xmlUtil.WriteDefaultSettings();
+                            break;
+                        //turn off xp visual style.
                         case "/disablevisualstyles":
                             visualstyle = false; //about ~400ms slower on my system on display time.
+                            break;
+                        //rescue option for notes loading out of screen.
+                        case "/resetpositions":
+                            resetpositions = true;
                             break;
                     }
                 }
@@ -187,7 +197,7 @@ namespace NoteFly
             {
                 System.Windows.Forms.Application.EnableVisualStyles();
             }
-            notes = new Notes();
+            notes = new Notes(resetpositions);
             trayicon = new TrayIcon(notes);
             System.Windows.Forms.Application.Run();
         }

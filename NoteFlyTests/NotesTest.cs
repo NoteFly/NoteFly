@@ -90,7 +90,7 @@ namespace NoteFlyTests
         [TestMethod()]
         public void StripForbiddenFilenameCharsTest()
         {
-            Notes target = new Notes();
+            Notes target = new Notes(false);
             string orgname = "a?b<c>d:e*|f\\g/h";
             string expected = "abcdefgh";
             string actual = target.StripForbiddenFilenameChars(orgname);
@@ -103,7 +103,7 @@ namespace NoteFlyTests
         [TestMethod()]
         public void RemoveNoteTest()
         {
-            Notes target = new Notes();
+            Notes target = new Notes(false);
             Note newnote = target.CreateNote("test note", 1, 90, 90, 100, 100);
             target.AddNote(newnote);
             int notelastpos = target.CountNotes;
@@ -122,7 +122,7 @@ namespace NoteFlyTests
         [TestMethod()]
         public void GetSkinsNamesTest()
         {
-            Notes target = new Notes();
+            Notes target = new Notes(false);
             string[] expected = new string[7];
             expected[0] = "yellow";
             expected[1] = "orange";
@@ -151,7 +151,7 @@ namespace NoteFlyTests
         [TestMethod()]
         public void GetSkinNameTest()
         {
-            Notes target = new Notes();
+            Notes target = new Notes(false);
             int skinnr = 0;
             string expected = "yellow";
             string actual = target.GetSkinName(skinnr);
@@ -164,7 +164,7 @@ namespace NoteFlyTests
         [TestMethod()]
         public void GetForegroundColorTest()
         {
-            Notes target = new Notes();
+            Notes target = new Notes(false);
             int skinnr = 0;
             string hexforegroundcolor = "#FFD800";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexforegroundcolor);
@@ -179,7 +179,7 @@ namespace NoteFlyTests
         [TestMethod()]
         public void GetBackgroundColorTest()
         {
-            Notes target = new Notes();
+            Notes target = new Notes(false);
             int skinnr = 0;
             string hexbackgroundcolor = "#E5B61B";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexbackgroundcolor);
@@ -194,7 +194,7 @@ namespace NoteFlyTests
         [TestMethod()]
         public void GetHighlightColorTest()
         {
-            Notes target = new Notes();
+            Notes target = new Notes(false);
             int skinnr = 0; //yellow skin
             string hexhighlightcolor = "#FF0000";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexhighlightcolor);
@@ -208,7 +208,7 @@ namespace NoteFlyTests
         [TestMethod()]
         public void CreateNoteTest()
         {
-            Notes target = new Notes();
+            Notes target = new Notes(false);
             string title = "123456789abc";
             int skinnr = 0;
             int x = 400;

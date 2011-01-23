@@ -56,6 +56,7 @@ namespace NoteFly
             this.Text = "new note";
             this.SetFontSettings();
             this.tbTitle.Text = DateTime.Now.ToString();
+            this.toolTip.Active = Settings.NotesTooltipsEnabled;
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace NoteFly
                 this.note.tempcontent = String.Empty;
                 this.note.tempcontent = null;
             }
-            
+            this.toolTip.Active = Settings.NotesTooltipsEnabled;
         }
 
         #endregion Constructors
@@ -155,9 +156,14 @@ namespace NoteFly
                     {
                         this.notes.AddNote(this.note);
                     }
+                    this.note.tempcontent = rtbNewNote.Rtf;
                     this.note.CreateForm();
-
+                    if (this.note.tempcontent != null)
+                    {
+                        this.note.tempcontent = null;
+                    }
                     this.Close();
+                    GC.Collect();
                 }
                 else
                 {
@@ -254,17 +260,6 @@ namespace NoteFly
                 MessageBox.Show(emptyclipboard);
                 Log.Write(LogType.error, emptyclipboard);
             }
-
-        }
-
-        /// <summary>
-        /// Resizing the note.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
-        {
-
         }
 
         /// <summary>
@@ -624,6 +619,21 @@ namespace NoteFly
             {
                 this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
             }
+        }
+
+        /// <summary>
+        /// Resizing the FtmNewNote form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Cursor = Cursors.SizeNWSE;
+                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
+            }
+            this.Cursor = Cursors.Default;
         }
 
         #endregion
