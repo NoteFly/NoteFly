@@ -7,12 +7,13 @@ namespace NoteFly
 {
     public class Skin
     {
-		#region Fields (4) 
+		#region Fields (5) 
 
         public string Name;
         public Color ForegroundClr;
         public Color BackgroundClr;
         public Color HighlightClr;
+        public Color TextClr;
 
 		#endregion Fields 
 

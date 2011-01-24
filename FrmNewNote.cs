@@ -68,8 +68,12 @@ namespace NoteFly
                 this.note.tempcontent = String.Empty;
                 this.note.tempcontent = null;
             }
-            this.pnlHeadNewNote.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
+
             this.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
+            this.pnlHeadNewNote.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
+            this.lbTextTitle.ForeColor = this.notes.GetTextColor(this.note.SkinNr);
+            this.tbTitle.ForeColor = this.notes.GetTextColor(this.note.SkinNr);
+            this.rtbNewNote.ForeColor = this.notes.GetTextColor(this.note.SkinNr);
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
         }
 
@@ -85,9 +89,11 @@ namespace NoteFly
             this.Text = "new note";
             this.SetFontSettings();
             this.tbTitle.Text = DateTime.Now.ToString();
-            //this.note.SkinNr = Settings.NotesDefaultSkinnr;
+
             this.BackColor = this.notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
             this.pnlHeadNewNote.BackColor = this.notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
+            this.lbTextTitle.ForeColor = this.notes.GetTextColor(Settings.NotesDefaultSkinnr);
+            this.rtbNewNote.ForeColor = this.notes.GetTextColor(Settings.NotesDefaultSkinnr);
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
         }
 

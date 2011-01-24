@@ -177,6 +177,16 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Gets the highlight color.
+        /// </summary>
+        /// <param name="skinnr"></param>
+        /// <returns></returns>
+        public System.Drawing.Color GetTextColor(int skinnr)
+        {
+            return GetColor(4, skinnr);
+        }
+
+        /// <summary>
         /// Gets a note, by position in list
         /// </summary>
         /// <param name="pos">note position in list notes</param>
@@ -352,6 +362,8 @@ namespace NoteFly
                     return this.skins[skinnr].BackgroundClr;
                 case 3:
                     return this.skins[skinnr].HighlightClr;
+                case 4:
+                    return this.skins[skinnr].TextClr;
             }
             Log.Write(LogType.error, "cant get color. type:" + type + " skinnr" + skinnr);
             return Color.White;

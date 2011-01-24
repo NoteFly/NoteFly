@@ -10,6 +10,7 @@
           <xs:element name="ForegroundColor" type="xs:string" />
           <xs:element name="BackgroundColor" type="xs:string" />
           <xs:element name="HighlightColor" type="xs:string" />
+          <xs:element name="TextColor" type="xs:string" />
          </xs:sequence>
         </xs:complexType>
        </xs:element>

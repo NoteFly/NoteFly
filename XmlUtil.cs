@@ -428,6 +428,9 @@ namespace NoteFly
                     case "HighlightColor":
                         curskin.HighlightClr = ConvToClr(xmlread.ReadElementContentAsString());
                         break;
+                    case "TextColor":
+                        curskin.TextClr = ConvToClr(xmlread.ReadElementContentAsString());
+                        break;
                 }
                 if (xmlread.Depth > 3)
                 {
@@ -758,18 +761,21 @@ namespace NoteFly
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument(true);//standalone
                 xmlwrite.WriteStartElement("skins");
-                xmlwrite.WriteAttributeString("count", "7"); //for performance predefine list Capacity, not required.
-                string[] name = new string[7] { "yellow", "orange", "white", "green", "blue", "purple", "red" };
-                string[] fgclr = new string[7] { "FFD800", "FF6A00", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A" };
-                string[] bgclr = new string[7] { "E5B61B", "EF6F1F", "26262C", "008000", "1A1AFF", "8B1A8B", "7A1515" };
-                string[] hlclr = new string[7] { "FF0000", "FF0000", "FF0000", "FF0000", "FF0000", "FF0000", "FF0000" };//todo
-                for (UInt16 i = 0; i < 7; i++)
+                const int numskins = 8;
+                xmlwrite.WriteAttributeString("count", numskins.ToString()); //for performance predefine list Capacity, not required.
+                string[] name = new string[numskins] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark" };
+                string[] fgclr = new string[numskins] { "FFD800", "FF6A00", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A", "002626" };
+                string[] bgclr = new string[numskins] { "E5B61B", "EF6F1F", "26262C", "008000", "1A1AFF", "8B1A8B", "7A1515", "494949" };
+                string[] hlclr = new string[numskins] { "FFED7C", "FFC49E", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "000624" };
+                string[] txclr = new string[numskins] { "000000", "000000", "000000", "000000", "000000", "000000", "000000", "FFFFFF" };
+                for (UInt16 i = 0; i < numskins; i++)
                 {
                     xmlwrite.WriteStartElement("skin");
                     xmlwrite.WriteElementString("Name", name[i]);
                     xmlwrite.WriteElementString("ForegroundColor", "#" + fgclr[i]);
                     xmlwrite.WriteElementString("BackgroundColor", "#" + bgclr[i]);
                     xmlwrite.WriteElementString("HighlightColor", "#" + hlclr[i]);
+                    xmlwrite.WriteElementString("TextColor", "#" + txclr[i]);
                     xmlwrite.WriteEndElement();
                 }
                 xmlwrite.WriteEndElement();

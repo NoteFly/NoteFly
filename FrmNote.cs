@@ -57,7 +57,7 @@ namespace NoteFly
             this.notes = notes;
             this.note = note;
             this.InitializeComponent();
-            
+
             //this.SuspendLayout();
             this.UpdateForm(false);
 
@@ -96,6 +96,7 @@ namespace NoteFly
                     tsi.Checked = false;
                 }
                 tsi.BackColor = notes.GetForegroundColor(i);
+                tsi.ForeColor = notes.GetTextColor(i);
                 tsi.Click += new EventHandler(menuNoteSkins_skin_Click);
                 this.menuNoteSkins.DropDownItems.Add(tsi);
             }
@@ -114,7 +115,9 @@ namespace NoteFly
         {
             if (!contentset)
             {
+                this.rtbNote.ForeColor = notes.GetTextColor(this.note.SkinNr);
                 this.rtbNote.Font = new Font(Settings.FontContentFamily, Settings.FontContentSize);
+                this.lblTitle.ForeColor = notes.GetTextColor(this.note.SkinNr);
                 if (Settings.FontTitleStylebold)
                 {
                     this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
@@ -330,6 +333,8 @@ namespace NoteFly
             this.BackColor = notes.GetForegroundColor(this.note.SkinNr);
             this.rtbNote.BackColor = notes.GetForegroundColor(this.note.SkinNr);
             this.pnlHead.BackColor = notes.GetForegroundColor(this.note.SkinNr);
+            this.lblTitle.ForeColor = notes.GetTextColor(this.note.SkinNr);
+            this.rtbNote.ForeColor = notes.GetTextColor(this.note.SkinNr);
             if (!this.SavePos.IsBusy)
             {
                 this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
@@ -700,7 +705,7 @@ namespace NoteFly
 #if windows
         [DllImport("wininet.dll")]
         private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-        #endif
+#endif
     }
 
 }
