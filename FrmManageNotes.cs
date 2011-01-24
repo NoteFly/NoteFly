@@ -33,24 +33,26 @@ namespace NoteFly
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-        #region Fields (4)
+		#region Fields (3) 
 
         /// <summary>
         /// notes
         /// </summary>
         private Notes notes;
+
         /// <summary>
         /// Delta point
         /// </summary>
         private Point oldp;
+
         /// <summary>
         /// flag is redraw is busy
         /// </summary>
         private bool redrawbusy = false;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (1)
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmManageNotes class.
@@ -66,11 +68,11 @@ namespace NoteFly
             this.SetDataGridViewColumsWidth();
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (13)
+		#region Methods (15) 
 
-        // Private Methods (13) 
+		// Private Methods (15) 
 
         /// <summary>
         /// Request to backup all notes to a file.
@@ -144,6 +146,92 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Request to restore all notes from a backup file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnRestoreAllNotes_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openbackupdlg = new OpenFileDialog();
+            openbackupdlg.CheckPathExists = true;
+            openbackupdlg.CheckFileExists = true;
+            openbackupdlg.Multiselect = false;
+            openbackupdlg.DefaultExt = "nfbak"; //noteflybackup
+            openbackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
+            openbackupdlg.Title = "Restore all notes";
+            DialogResult openbackupdlgres = openbackupdlg.ShowDialog();
+            if (openbackupdlgres == DialogResult.OK)
+            {
+                if (openbackupdlg.FilterIndex == 1)
+                {
+                    if (this.notes.CountNotes > 0)
+                    {
+                        DialogResult eraseres = MessageBox.Show("Erase all current notes?", "Are you sure?", MessageBoxButtons.YesNoCancel);
+                        if (eraseres == DialogResult.Yes)
+                        {
+                            Log.Write(LogType.info, "Erased all notes for restoring notes backup.");
+                            for (int i = 0; i < this.notes.CountNotes; i++)
+                            {
+                                this.notes.GetNote(i).DestroyForm();
+                                File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
+                                this.notes.RemoveNote(i);
+                            }
+                        }
+                        else if (eraseres == DialogResult.Cancel)
+                        {
+                            Log.Write(LogType.info, "Cancelled restore notes backup.");
+                            return;
+                        }
+                    }
+                    Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
+                    xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
+                    this.notes.LoadNotes(false, false);
+                    this.DrawNotesGrid();
+                    this.SetDataGridViewColumsWidth();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Toggle visibility selected notes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnShowSelectedNotes_Click(object sender, EventArgs e)
+        {
+            DataGridViewSelectedRowCollection selectedrows = this.dataGridView1.SelectedRows;
+            foreach (DataGridViewRow selrow in selectedrows)
+            {
+                selrow.Cells["visible"].Value = !this.notes.GetNote(selrow.Index).Visible;
+                this.notes.GetNote(selrow.Index).Visible = !this.notes.GetNote(selrow.Index).Visible;
+                if (this.notes.GetNote(selrow.Index).Visible)
+                {
+                    this.notes.GetNote(selrow.Index).CreateForm();
+                }
+                else
+                {
+                    this.notes.GetNote(selrow.Index).DestroyForm();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Color the skin cell with the foreground color of the skin in this cell.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetForegroundColor(notes.GetNote(e.RowIndex).SkinNr);
+            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextColor(notes.GetNote(e.RowIndex).SkinNr);
+            if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr))
+            {
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr);
+            }
+            System.Threading.Thread.Sleep(5);
+        }
+
+        /// <summary>
         /// Deletes the notes in memory and files that are selected in a Gridview.
         /// </summary>
         /// <param name="id"></param>
@@ -205,16 +293,6 @@ namespace NoteFly
                 dr[3] = notes.GetSkinName(this.notes.GetNote(i).SkinNr);
                 datatable.Rows.Add(dr);
             }
-        }
-
-        /// <summary>
-        /// Color the skin cell with the foreground color of the skin in this cell.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
-        {
-            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetForegroundColor(notes.GetNote(e.RowIndex).SkinNr); //notes.GetForegroundColor(notes.GetNote(e.RowIndex).SkinNr);
         }
 
         /// <summary>
@@ -353,76 +431,6 @@ namespace NoteFly
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;
         }
 
-        /// <summary>
-        /// Request to restore all notes from a backup file.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnRestoreAllNotes_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openbackupdlg = new OpenFileDialog();
-            openbackupdlg.CheckPathExists = true;
-            openbackupdlg.CheckFileExists = true;
-            openbackupdlg.Multiselect = false;
-            openbackupdlg.DefaultExt = "nfbak"; //noteflybackup
-            openbackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
-            openbackupdlg.Title = "Restore all notes";
-            DialogResult openbackupdlgres = openbackupdlg.ShowDialog();
-            if (openbackupdlgres == DialogResult.OK)
-            {
-                if (openbackupdlg.FilterIndex == 1)
-                {
-                    if (this.notes.CountNotes > 0)
-                    {
-                        DialogResult eraseres = MessageBox.Show("Erase all current notes?", "Are you sure?", MessageBoxButtons.YesNoCancel);
-                        if (eraseres == DialogResult.Yes)
-                        {
-                            Log.Write(LogType.info, "Erased all notes for restoring notes backup.");
-                            for (int i = 0; i < this.notes.CountNotes; i++)
-                            {
-                                this.notes.GetNote(i).DestroyForm();
-                                File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
-                                this.notes.RemoveNote(i);
-                            }
-                        }
-                        else if (eraseres == DialogResult.Cancel)
-                        {
-                            Log.Write(LogType.info, "Cancelled restore notes backup.");
-                            return;
-                        }
-                    }
-                    Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
-                    xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
-                    this.notes.LoadNotes(false, false);
-                    this.DrawNotesGrid();
-                    this.SetDataGridViewColumsWidth();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Toggle visibility selected notes.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnShowSelectedNotes_Click(object sender, EventArgs e)
-        {
-            DataGridViewSelectedRowCollection selectedrows = this.dataGridView1.SelectedRows;
-            foreach (DataGridViewRow selrow in selectedrows)
-            {
-                selrow.Cells["visible"].Value = !this.notes.GetNote(selrow.Index).Visible;
-                this.notes.GetNote(selrow.Index).Visible = !this.notes.GetNote(selrow.Index).Visible;
-                if (this.notes.GetNote(selrow.Index).Visible)
-                {
-                    this.notes.GetNote(selrow.Index).CreateForm();
-                }
-                else
-                {
-                    this.notes.GetNote(selrow.Index).DestroyForm();
-                }
-            }
-        }
-
-        #endregion Methods
+		#endregion Methods 
     }
 }

@@ -108,13 +108,13 @@ namespace NoteFly
             {
                 if (this.notes[i].Visible)
                 {
-                    try
+                    if (notes[i] == null)
                     {
-                        this.notes[i].BringToFront();
+                        throw new CustomException("Note object is null.");
                     }
-                    catch (NullReferenceException)
+                    else
                     {
-                        throw new CustomException("Visible is set true but form is null.");
+                        this.notes[i].BringNoteToFront();
                     }
                 }
             }

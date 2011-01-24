@@ -104,15 +104,12 @@ namespace NoteFly
         /// <summary>
         /// Display this frmnote to the foreground.
         /// </summary>
-        public void BringToFront()
+        public void BringNoteToFront()
         {
             if (this.frmnote != null)
             {
                 this.frmnote.BringToFront();
-            }
-            else
-            {
-                throw new CustomException("FrmNote not yet created, can't bring this note to foreground.");
+                this.frmnote.Activate();
             }
         }
 
