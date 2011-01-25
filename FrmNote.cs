@@ -143,25 +143,23 @@ namespace NoteFly
             {
                 if (this.lblTitle.Height + this.lblTitle.Location.Y > pnlHead.Height)
                 {
-                    const int maxheightpnlheah = 64;
-                    if (this.lblTitle.Height < maxheightpnlheah)
+                    const int maxheightpnlhead = 64;
+                    if (this.lblTitle.Height < maxheightpnlhead)
                     {
-                        pnlHead.Height = this.lblTitle.Height;
+                        this.pnlHead.Height = this.lblTitle.Height;
                     }
                     else
                     {
-                        pnlHead.Height = maxheightpnlheah;
+                        this.pnlHead.Height = maxheightpnlhead;
                     }
-                    pnlNote.Size = new Size(pnlNote.Width, this.Height - pnlHead.Height);
-                    pnlNote.Location = new Point(pnlNote.Location.X, pnlHead.Height);
                 }
                 else
                 {
-                    const int defaulftheight = 32;
-                    pnlHead.Height = defaulftheight;
-                    pnlHead.Size = new Size(this.Width, this.Height - pnlHead.Height);
-                    pnlNote.Location = new Point(0, defaulftheight);
+                    const int defaulftminheight = 32;
+                    this.pnlHead.Height = defaulftminheight;
                 }
+                this.pnlNote.Location = new Point(0, pnlHead.Height-1);
+                this.pnlNote.Size = new Size(this.Width, this.Height - pnlHead.Height+1);
                 if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
                 {
                     TextHighlight.CheckSyntaxFull(rtbNote);

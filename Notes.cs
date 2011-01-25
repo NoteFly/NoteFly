@@ -357,9 +357,9 @@ namespace NoteFly
             switch (type)
             {
                 case 1:
-                    return this.skins[skinnr].ForegroundClr;
+                    return this.skins[skinnr].PrimaryClr;
                 case 2:
-                    return this.skins[skinnr].BackgroundClr;
+                    return this.skins[skinnr].SelectClr;
                 case 3:
                     return this.skins[skinnr].HighlightClr;
                 case 4:

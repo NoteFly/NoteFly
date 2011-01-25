@@ -10,12 +10,11 @@ namespace NoteFly
 		#region Fields (5) 
 
         public string Name;
-        public Color ForegroundClr;
-        public Color BackgroundClr;
+        public Color PrimaryClr;
+        public Color SelectClr;
         public Color HighlightClr;
         public Color TextClr;
 
 		#endregion Fields 
-
     }
 }
