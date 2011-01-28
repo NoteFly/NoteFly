@@ -162,7 +162,7 @@ namespace NoteFly
                 this.pnlNote.Size = new Size(this.Width, this.Height - pnlHead.Height+1);
                 if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
                 {
-                    TextHighlight.CheckSyntaxFull(rtbNote);
+                    //Highlight.CheckSyntaxFull(rtbNote, note.SkinNr, notes);
                 }
                 this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
                 if (this.rtbNote.DetectUrls)
@@ -192,8 +192,9 @@ namespace NoteFly
 
         /// <summary>
         /// Check if there is internet connection, if not warn user.
+        /// Uses windows API, other platforms return always true at the moment.
         /// </summary>
-        /// <returns>true if there is a coonection, otherwise return false</returns>
+        /// <returns>true if there is a connection, otherwise return false</returns>
         private bool CheckConnection()
         {
 #if windows
@@ -586,7 +587,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
         {
-            if (!this.CheckConnection())
+            if (this.CheckConnection())
             {
                 Facebook facebook = new Facebook();
                 //TODO: call windows from here.
@@ -701,7 +702,7 @@ namespace NoteFly
         #endregion Methods
 
 #if windows
-        [DllImport("wininet.dll")]
+        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
         private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
 #endif
     }

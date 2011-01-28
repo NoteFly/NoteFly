@@ -27,6 +27,9 @@ namespace NoteFly
     using System.Globalization;
     using System.Reflection;
     using System.Collections.Generic;
+    using System.Net;
+    using System.Windows.Forms;
+    using System.Text;
 
     public static class xmlUtil
     {
@@ -666,7 +669,7 @@ namespace NoteFly
                 WriteXMLBool("NetworkConnectionForceipv6", Settings.NetworkConnectionForceipv6);
                 WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
                 WriteXMLBool("NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
-                WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);                
+                WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
                 WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
                 WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
                 WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
@@ -800,6 +803,92 @@ namespace NoteFly
                 xmlwrite.WriteString("0");
             }
             xmlwrite.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Get the new version as a integer array with first major
+        /// second valeau the minor version and the third valeau being the release version.
+        /// </summary>
+        /// <returns>the newest version as integer array, 
+        /// any negative valeau(-1 by default) considered as error.</returns>
+        public static Int16[] GetLatestVersion()
+        {
+            Int16[] version = new Int16[3];
+            version[0] = -1;
+            version[1] = -1;
+            version[2] = -1;
+            try
+            {
+                System.Net.ServicePointManager.Expect100Continue = false;
+                System.Net.ServicePointManager.DefaultConnectionLimit = 1;
+                WebRequest request = WebRequest.Create("http://checkversion.notefly.tk/latestversion.xml");
+                request.Method = "GET";
+                request.ContentType = "text/xml";
+                request.Timeout = Settings.NetworkConnectionTimeout;
+                request.Headers.Add("X-Client", Program.AssemblyTitle+" "+Program.AssemblyVersion);
+                request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+                Stream responsestream;
+                using (WebResponse response = request.GetResponse())
+                {
+                    responsestream = response.GetResponseStream();
+                    xmlread = new XmlTextReader(responsestream);
+                    while (xmlread.Read())
+                    {
+                        switch (xmlread.Name)
+                        {
+                            case "major":
+                                version[0] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
+                                break;
+                            case "minor":
+                                version[1] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
+                                break;
+                            case "release":
+                                version[2] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
+                                break;
+                            default:
+                                break;
+                        }
+                        if (xmlread.Depth > 3)
+                        {
+                            xmlread.Close();
+                        }
+                    }
+                }
+            }
+            catch (System.Net.WebException webexc)
+            {
+                MessageBox.Show(webexc.Message);
+                Log.Write(LogType.error, "No access to latest version.");
+            }
+            finally
+            {
+                if (xmlread != null)
+                {
+                    xmlread.Close();
+                }
+            }
+            return version;
+        }
+
+        /// <summary>
+        /// Return a array of keywords used for the prgramming language we are doing a syntax check on.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static string[] ParserLanguageLexical(string file)
+        {
+            xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, "lang_htm.xml"));
+            string[] keywords = null;
+            while (xmlread.Read())
+            {
+                if (xmlread.Name == "Keywords")
+                {
+                    keywords = xmlread.ReadElementContentAsString().Split(' ');
+                    break;
+                }
+            }
+            xmlread.Close();
+            return keywords;
         }
 
         #endregion Methods

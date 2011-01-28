@@ -28,6 +28,8 @@ namespace NoteFly
     using System.Reflection;
 #if DEBUG
     using System.Diagnostics;
+    using System.IO;
+    using System.Threading;
 #endif
 
     public class Program
@@ -57,6 +59,18 @@ namespace NoteFly
 #else
                 return "COMPILE_ERROR";
 #endif
+            }
+        }
+
+        /// <summary>
+        /// The folder where NoteFly is installed.
+        /// Folder where assebly is located.
+        /// </summary>
+        public static string InstallFolder
+        {
+            get
+            {
+                return Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
             }
         }
 
@@ -103,6 +117,11 @@ namespace NoteFly
 
         // Public Methods (1) 
 
+        #if windows
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        public static extern bool SetDllDirectory(string pathName);
+        #endif
+
         /// <summary>
         /// Main entry point programme.
         /// load settings, parser parameters, create notes list and trayicon.
@@ -117,15 +136,15 @@ namespace NoteFly
             //NoteFly uses APPDATA and TEMP variables and systemroot is required for opening link.
             //This is OS specific 
             // /*
-            Environment.SetEnvironmentVariable("PATH", String.Empty);
-            Environment.SetEnvironmentVariable("windir", String.Empty);
-            Environment.SetEnvironmentVariable("SystemDrive", String.Empty);
+            SetDllDirectory(""); //removes notefly folder as ddl search path
+            Environment.SetEnvironmentVariable("PATH", String.Empty);//removes dangourse %PATH% as dll search path
+            Environment.SetEnvironmentVariable("windir", String.Empty);//removes %windir%
             Environment.SetEnvironmentVariable("ProgramFiles", String.Empty);
+            Environment.SetEnvironmentVariable("SystemDrive", String.Empty);
             Environment.SetEnvironmentVariable("CommonProgramFiles", String.Empty);
-            Environment.SetEnvironmentVariable("TMP", String.Empty);
+            Environment.SetEnvironmentVariable("TMP", String.Empty); //removes %TMP%, NoteFly uses %TEMP% instead only.
             // */
 #endif
-
 #if DEBUG
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -199,7 +218,29 @@ namespace NoteFly
             }
             notes = new Notes(resetpositions);
             trayicon = new TrayIcon(notes);
+
+            if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
+            {
+                Highlight.InitHighlighter();
+            }
+
+            //todo: making more than PoC.
+            if (Settings.UpdatecheckEverydays > 0)
+            {
+                Thread updatethread = new Thread(updatecheck);
+                updatethread.Start();
+            }
+
             System.Windows.Forms.Application.Run();
+        }
+
+        /// <summary>
+        /// Do update.
+        /// </summary>
+        public static void updatecheck()
+        {
+            Int16[] latestversion = xmlUtil.GetLatestVersion();
+            System.Windows.Forms.MessageBox.Show("latest version is: " + latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " ", "updates..");
         }
 
         /// <summary>

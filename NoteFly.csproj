@@ -154,7 +154,7 @@
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="TextHighlight.cs" />
+    <Compile Include="Highlight.cs" />
     <Compile Include="extensions\Twitter.cs" />
     <Compile Include="XmlUtil.cs" />
     <None Include="Resources\accept.png" />

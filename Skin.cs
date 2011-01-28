@@ -10,7 +10,7 @@ namespace NoteFly
 		#region Fields (5) 
 
         public string Name;
-        public Color PrimaryClr;
+        public Color PrimaryClr; //non nullable type.
         public Color SelectClr;
         public Color HighlightClr;
         public Color TextClr;
