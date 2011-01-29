@@ -290,7 +290,7 @@ namespace NoteFly
                 if (!confirmexitshowed)
                 {
                     confirmexitshowed = true;
-                    DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + Program.AssemblyTitle + "?", "confirm exit", MessageBoxButtons.YesNo);
+                    DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + Program.AssemblyTitle + "?", "confirm exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (resdlgconfirmexit == DialogResult.No)
                     {
                         confirmexitshowed = false;

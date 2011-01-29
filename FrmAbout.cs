@@ -29,6 +29,9 @@ namespace NoteFly
     /// </summary>
     public partial class FrmAbout : Form
     {
+        private const string NOTEFLYWEBSITEURI = "http://www.notefly.tk/";
+        private const string NOTEFLYFAQURI = "http://www.notefly.tk/faq.php";
+
         #region Constructors (1) 
 
         /// <summary>
@@ -39,7 +42,7 @@ namespace NoteFly
             this.InitializeComponent();
             this.Text = "About " + Program.AssemblyTitle;
             this.lblProductName.Text = Program.AssemblyTitle;
-            this.lblVersion.Text = String.Format("Version {0}", Program.AssemblyVersion);
+            this.lblVersion.Text = String.Format("Version "+Program.AssemblyVersionAsString);
         }
 
         #endregion Constructors
@@ -55,7 +58,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Program.LoadLink("http://www.notefly.tk/faq.php");
+            Program.LoadLink(NOTEFLYFAQURI);
+            this.Close();
         }
 
         /// <summary>
@@ -65,7 +69,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Program.LoadLink("http://www.notefly.tk/");
+            Program.LoadLink(NOTEFLYWEBSITEURI);
+            this.Close();
         }
 
         /// <summary>

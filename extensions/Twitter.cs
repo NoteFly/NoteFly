@@ -138,9 +138,9 @@ namespace NoteFly
                     request.Headers.Add("X-Twitter-Client", Program.AssemblyTitle.Trim());
                 }
 
-                if (!string.IsNullOrEmpty(Program.AssemblyVersion))
+                if (!string.IsNullOrEmpty(Program.AssemblyVersionAsString))
                 {
-                    request.Headers.Add("X-Twitter-Version", Program.AssemblyVersion.Trim());
+                    request.Headers.Add("X-Twitter-Version", Program.AssemblyVersionAsString);
                 }
 
                 if (!string.IsNullOrEmpty(this.twitterClientUrl))

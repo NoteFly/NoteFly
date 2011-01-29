@@ -38,6 +38,7 @@ namespace NoteFly
 
         private static Notes notes;
         private static TrayIcon trayicon;
+        private const string DOWNLOADPAGE = "http://www.notefly.tk/downloads.php";
 
         #endregion Fields
 
@@ -96,18 +97,14 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets the application version number.
+        /// Get the version of this programme as a formatted string.
         /// </summary>
-        /// <returns>a string containing the version number of this application in the form of major.minur.build number</returns>
-        public static string AssemblyVersion
+        public static string AssemblyVersionAsString
         {
             get
             {
-                int majorver = Assembly.GetExecutingAssembly().GetName().Version.Major;
-                int minorver = Assembly.GetExecutingAssembly().GetName().Version.Minor;
-                int releasever = Assembly.GetExecutingAssembly().GetName().Version.Build;
-                int buildnumber = Assembly.GetExecutingAssembly().GetName().Version.Revision;
-                return majorver + "." + minorver + "." + releasever + "." + buildnumber;
+                Int16[] version = GetVersion();
+                return version[0] + "." + version[1] + "." + version[2];
             }
         }
 
@@ -224,23 +221,62 @@ namespace NoteFly
                 Highlight.InitHighlighter();
             }
 
-            //todo: making more than PoC.
             if (Settings.UpdatecheckEverydays > 0)
             {
-                Thread updatethread = new Thread(updatecheck);
-                updatethread.Start();
+                DateTime lastupdate = DateTime.Parse(Settings.UpdatecheckLastDate);
+                if (lastupdate.AddDays(Settings.UpdatecheckEverydays) <= DateTime.Now)
+                {
+                    Thread updatethread = new Thread(updatecheck);
+                    updatethread.Start();
+                }
             }
 
             System.Windows.Forms.Application.Run();
         }
 
         /// <summary>
-        /// Do update.
+        /// Do update check.
         /// </summary>
         public static void updatecheck()
         {
+            Thread.Sleep(500);
+            Settings.UpdatecheckLastDate = DateTime.Now.ToString();
+            xmlUtil.WriteSettings();
+            Int16[] thisversion = GetVersion();
             Int16[] latestversion = xmlUtil.GetLatestVersion();
-            System.Windows.Forms.MessageBox.Show("latest version is: " + latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " ", "updates..");
+            bool updateavailible = false;
+            for (int i = 0; i < thisversion.Length; i++)
+            {
+                if (thisversion[i] < latestversion[i] && latestversion[i] >=0)
+                {
+                    updateavailible = true;
+                    break;
+                }
+            }
+
+            if (updateavailible)
+            {
+                System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show("There's a new version availible.\r\nDo you want to go to the download page now?", "update availible", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
+                if (updres == System.Windows.Forms.DialogResult.Yes)
+                {
+                    Program.LoadURI(DOWNLOADPAGE);
+                    Thread.Sleep(10);
+                    System.Windows.Forms.Application.Exit();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the application version number as an array.
+        /// </summary>
+        /// <returns>a string containing the version number of this application in the form of major.minur.build number</returns>
+        public static short[] GetVersion()
+        {
+            short[] version = new short[3];
+            version[0] = Convert.ToInt16(Assembly.GetExecutingAssembly().GetName().Version.Major);
+            version[1] = Convert.ToInt16(Assembly.GetExecutingAssembly().GetName().Version.Minor);
+            version[2] = Convert.ToInt16(Assembly.GetExecutingAssembly().GetName().Version.Build);
+            return version;
         }
 
         /// <summary>

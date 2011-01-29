@@ -38,6 +38,7 @@ namespace NoteFly
         private const string NOTEVERSION = "2";
         private const string SETTINGSFILE = "settings.xml";
         private const string SKINFILE = "skins.xml";
+        private const string UPDATEURL = "http://checkversion.notefly.tk/latestversion.xml";
         private static XmlTextReader xmlread = null;
         private static XmlTextWriter xmlwrite = null;
 
@@ -821,17 +822,22 @@ namespace NoteFly
             {
                 System.Net.ServicePointManager.Expect100Continue = false;
                 System.Net.ServicePointManager.DefaultConnectionLimit = 1;
-                WebRequest request = WebRequest.Create("http://checkversion.notefly.tk/latestversion.xml");
+                WebRequest request = WebRequest.Create(UPDATEURL);
                 request.Method = "GET";
                 request.ContentType = "text/xml";
                 request.Timeout = Settings.NetworkConnectionTimeout;
-                request.Headers.Add("X-Client", Program.AssemblyTitle+" "+Program.AssemblyVersion);
+                request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString);
+                if (Settings.NetworkProxyEnabled && !String.IsNullOrEmpty(Settings.NetworkProxyAddress))
+                {
+                    request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
+                }
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
                 Stream responsestream;
                 using (WebResponse response = request.GetResponse())
                 {
                     responsestream = response.GetResponseStream();
                     xmlread = new XmlTextReader(responsestream);
+                    xmlread.ProhibitDtd = true;
                     while (xmlread.Read())
                     {
                         switch (xmlread.Name)
@@ -858,7 +864,7 @@ namespace NoteFly
             catch (System.Net.WebException webexc)
             {
                 MessageBox.Show(webexc.Message);
-                Log.Write(LogType.error, "No access to latest version.");
+                Log.Write(LogType.error, "updating "+webexc.Message);
             }
             finally
             {
@@ -867,6 +873,7 @@ namespace NoteFly
                     xmlread.Close();
                 }
             }
+            Log.Write(LogType.info, "update check done.");
             return version;
         }
 
@@ -874,7 +881,7 @@ namespace NoteFly
         /// Return a array of keywords used for the prgramming language we are doing a syntax check on.
         /// </summary>
         /// <param name="file"></param>
-        /// <returns></returns>
+        /// <returns>An array of keyword used for hightlighting.</returns>
         public static string[] ParserLanguageLexical(string file)
         {
             xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, "lang_htm.xml"));
