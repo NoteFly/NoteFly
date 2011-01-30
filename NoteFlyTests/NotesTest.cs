@@ -123,7 +123,7 @@ namespace NoteFlyTests
         public void GetSkinsNamesTest()
         {
             Notes target = new Notes(false);
-            string[] expected = new string[7];
+            string[] expected = new string[8];
             expected[0] = "yellow";
             expected[1] = "orange";
             expected[2] = "white";
@@ -131,6 +131,7 @@ namespace NoteFlyTests
             expected[4] = "blue";
             expected[5] = "purple";
             expected[6] = "red";
+            expected[7] = "dark";
             string[] actual = target.GetSkinsNames();
             if (actual.Length > expected.Length)
             {
@@ -162,11 +163,11 @@ namespace NoteFlyTests
         ///A test for GetForegroundColor
         ///</summary>
         [TestMethod()]
-        public void GetForegroundColorTest()
+        public void GetPrimaryColorTest()
         {
             Notes target = new Notes(false);
             int skinnr = 0;
-            string hexforegroundcolor = "#FFD800";
+            string hexforegroundcolor = "#FFEF14";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexforegroundcolor);
             Color actual;
             actual = target.GetPrimaryClr(skinnr);
@@ -177,11 +178,11 @@ namespace NoteFlyTests
         ///A test for GetBackgroundColor
         ///</summary>
         [TestMethod()]
-        public void GetBackgroundColorTest()
+        public void GetSelectColorTest()
         {
             Notes target = new Notes(false);
             int skinnr = 0;
-            string hexbackgroundcolor = "#E5B61B";
+            string hexbackgroundcolor = "#F7A90E";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexbackgroundcolor);
             Color actual;
             actual = target.GetSelectClr(skinnr);
@@ -196,7 +197,7 @@ namespace NoteFlyTests
         {
             Notes target = new Notes(false);
             int skinnr = 0; //yellow skin
-            string hexhighlightcolor = "#FF0000";
+            string hexhighlightcolor = "#FFED7C";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexhighlightcolor);
             Color actual = target.GetHighlightClr(skinnr);
             Assert.AreEqual(expected, actual);

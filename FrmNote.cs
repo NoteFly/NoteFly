@@ -124,6 +124,10 @@ namespace NoteFly
                 }
                 else
                 {
+                    if (Settings.FontTitleSize < 6)
+                    {
+                        Settings.FontTitleSize = 6;
+                    }
                     this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
                 }
                 if (Settings.FontTextdirection == 0)
