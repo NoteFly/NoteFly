@@ -76,6 +76,8 @@ namespace NoteFly
             this.btnTextItalic = new System.Windows.Forms.Button();
             this.btnTextStriketrough = new System.Windows.Forms.Button();
             this.btnTextUnderline = new System.Windows.Forms.Button();
+            this.btnFontSmaller = new System.Windows.Forms.Button();
+            this.btnFontBigger = new System.Windows.Forms.Button();
             this.rtbNewNote = new System.Windows.Forms.RichTextBox();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.contextMenuStripTextActions.SuspendLayout();
@@ -158,12 +160,12 @@ namespace NoteFly
             this.tbTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbTitle.CausesValidation = false;
             this.tbTitle.ContextMenuStrip = this.contextMenuStripTextActions;
-            this.tbTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbTitle.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbTitle.ImeMode = System.Windows.Forms.ImeMode.On;
             this.tbTitle.Location = new System.Drawing.Point(38, 6);
             this.tbTitle.MaxLength = 255;
             this.tbTitle.Name = "tbTitle";
-            this.tbTitle.Size = new System.Drawing.Size(176, 24);
+            this.tbTitle.Size = new System.Drawing.Size(176, 23);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
             this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
@@ -208,7 +210,7 @@ namespace NoteFly
             this.btnCancel.BackgroundImage = global::NoteFly.Properties.Resources.cancel;
             this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnCancel.CausesValidation = false;
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.No;
             this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -229,7 +231,7 @@ namespace NoteFly
             this.btnAddNote.BackgroundImage = global::NoteFly.Properties.Resources.accept;
             this.btnAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnAddNote.CausesValidation = false;
-            this.btnAddNote.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnAddNote.DialogResult = System.Windows.Forms.DialogResult.Yes;
             this.btnAddNote.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnAddNote.FlatAppearance.BorderSize = 0;
             this.btnAddNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
@@ -246,10 +248,7 @@ namespace NoteFly
             // 
             // toolTip
             // 
-            this.toolTip.AutomaticDelay = 800;
-            this.toolTip.AutoPopDelay = 6000;
-            this.toolTip.InitialDelay = 800;
-            this.toolTip.ReshowDelay = 100;
+            this.toolTip.AutomaticDelay = 300;
             // 
             // btnTextBold
             // 
@@ -260,7 +259,7 @@ namespace NoteFly
             this.btnTextBold.CausesValidation = false;
             this.btnTextBold.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnTextBold.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextBold.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTextBold.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnTextBold.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextBold.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTextBold.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -285,7 +284,7 @@ namespace NoteFly
             this.btnTextItalic.CausesValidation = false;
             this.btnTextItalic.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnTextItalic.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextItalic.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTextItalic.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnTextItalic.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextItalic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTextItalic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -310,7 +309,7 @@ namespace NoteFly
             this.btnTextStriketrough.CausesValidation = false;
             this.btnTextStriketrough.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnTextStriketrough.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextStriketrough.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTextStriketrough.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnTextStriketrough.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextStriketrough.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTextStriketrough.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -335,7 +334,7 @@ namespace NoteFly
             this.btnTextUnderline.CausesValidation = false;
             this.btnTextUnderline.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnTextUnderline.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextUnderline.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnTextUnderline.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnTextUnderline.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextUnderline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTextUnderline.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -351,6 +350,56 @@ namespace NoteFly
             this.btnTextUnderline.UseVisualStyleBackColor = false;
             this.btnTextUnderline.Click += new System.EventHandler(this.btnTextUnderline_Click);
             // 
+            // btnFontSmaller
+            // 
+            this.btnFontSmaller.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnFontSmaller.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnFontSmaller.BackColor = System.Drawing.Color.Transparent;
+            this.btnFontSmaller.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnFontSmaller.CausesValidation = false;
+            this.btnFontSmaller.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnFontSmaller.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnFontSmaller.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnFontSmaller.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnFontSmaller.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFontSmaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFontSmaller.Location = new System.Drawing.Point(174, 214);
+            this.btnFontSmaller.Name = "btnFontSmaller";
+            this.btnFontSmaller.Size = new System.Drawing.Size(27, 23);
+            this.btnFontSmaller.TabIndex = 16;
+            this.btnFontSmaller.TabStop = false;
+            this.btnFontSmaller.Text = "A";
+            this.toolTip.SetToolTip(this.btnFontSmaller, "Smaller text");
+            this.btnFontSmaller.UseCompatibleTextRendering = true;
+            this.btnFontSmaller.UseMnemonic = false;
+            this.btnFontSmaller.UseVisualStyleBackColor = false;
+            this.btnFontSmaller.Click += new System.EventHandler(this.btnFontSmaller_Click);
+            // 
+            // btnFontBigger
+            // 
+            this.btnFontBigger.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnFontBigger.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnFontBigger.BackColor = System.Drawing.Color.Transparent;
+            this.btnFontBigger.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnFontBigger.CausesValidation = false;
+            this.btnFontBigger.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnFontBigger.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnFontBigger.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnFontBigger.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnFontBigger.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFontBigger.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFontBigger.Location = new System.Drawing.Point(141, 214);
+            this.btnFontBigger.Name = "btnFontBigger";
+            this.btnFontBigger.Size = new System.Drawing.Size(27, 23);
+            this.btnFontBigger.TabIndex = 17;
+            this.btnFontBigger.TabStop = false;
+            this.btnFontBigger.Text = "A";
+            this.toolTip.SetToolTip(this.btnFontBigger, "Bigger test");
+            this.btnFontBigger.UseCompatibleTextRendering = true;
+            this.btnFontBigger.UseMnemonic = false;
+            this.btnFontBigger.UseVisualStyleBackColor = false;
+            this.btnFontBigger.Click += new System.EventHandler(this.btnFontBigger_Click);
+            // 
             // rtbNewNote
             // 
             this.rtbNewNote.AcceptsTab = true;
@@ -360,7 +409,8 @@ namespace NoteFly
             this.rtbNewNote.BackColor = System.Drawing.Color.Khaki;
             this.rtbNewNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNewNote.ContextMenuStrip = this.contextMenuStripTextActions;
-            this.rtbNewNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbNewNote.DetectUrls = false;
+            this.rtbNewNote.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNewNote.ImeMode = System.Windows.Forms.ImeMode.On;
             this.rtbNewNote.Location = new System.Drawing.Point(2, 41);
             this.rtbNewNote.MaxLength = 999999;
@@ -400,6 +450,8 @@ namespace NoteFly
             this.ClientSize = new System.Drawing.Size(284, 239);
             this.ContextMenuStrip = this.contextMenuStripTextActions;
             this.ControlBox = false;
+            this.Controls.Add(this.btnFontBigger);
+            this.Controls.Add(this.btnFontSmaller);
             this.Controls.Add(this.pbResizeGrip);
             this.Controls.Add(this.pnlHeadNewNote);
             this.Controls.Add(this.btnTextUnderline);
@@ -435,6 +487,8 @@ namespace NoteFly
         private System.Windows.Forms.Button btnTextUnderline;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.PictureBox pbResizeGrip;
+        private System.Windows.Forms.Button btnFontSmaller;
+        private System.Windows.Forms.Button btnFontBigger;
 
     }
 }

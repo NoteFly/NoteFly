@@ -31,17 +31,39 @@ namespace NoteFly
     /// </summary>
     public static class Highlight
     {
-		#region Fields (3) 
+		#region Fields (4) 
 
+        private static bool isinit = false;
         private static string[] keywords_html;
         private static string[] keywords_php;
         private static string[] keywords_sql;
 
 		#endregion Fields 
 
-		#region Methods (6) 
+		#region Methods (3) 
 
-		// Public Methods (3) 
+		// Public Methods (2) 
+
+        /// <summary>
+        /// Clear the keywords list.
+        /// </summary>
+        public static void DeinitHighlighter()
+        {
+            isinit = false;
+            if (keywords_html != null)
+            {
+                keywords_html = null;
+            }
+            if (keywords_php != null)
+            {
+                keywords_php = null;
+            }
+            if (keywords_sql != null)
+            {
+                keywords_sql = null;
+            }
+            GC.Collect();
+        }
 
         /// <summary>
         /// Check syntax of the whole text
@@ -50,7 +72,6 @@ namespace NoteFly
         //{
         //    int cursorpos = rtbcode.SelectionStart;
         //    ResetHighlighting(rtbcode, skinnr, notes);
-
         //    bool htmlendnode = false;
         //    for (int i = 0; i < rtbcode.TextLength; i++)
         //    {
@@ -70,7 +91,6 @@ namespace NoteFly
         //                {
         //                    htmlendnode = false;
         //                }
-
         //                int lengthtillendtag = i - posstarttag;
         //                if (lengthtillendtag > 1)
         //                {
@@ -146,7 +166,6 @@ namespace NoteFly
         //                        {
         //                            chkpos = 0;
         //                        }
-
         //                        if (rtbcode.Text[i] == '<')
         //                        {
         //                            htmlnodestartpos = i;
@@ -188,14 +207,13 @@ namespace NoteFly
         //                ColorText(rtbcode, newcharpos, 1, Color.Black);
         //            }
         //        }
-
         //        rtbcode.SelectionStart = cursorpos;
         //        rtbcode.SelectionLength = 0;
         //    }
         //}
 
         /// <summary>
-        /// Initializes TextHighlighter
+        /// Initializes TextHighlighter fill the keywords lists.
         /// </summary>
         /// <param name="rtb">The richedit note content</param>
         /// <param name="checkhtml">indicteds wheter html is gonna be checked</param>
@@ -214,8 +232,9 @@ namespace NoteFly
             {
                 keywords_sql = xmlUtil.ParserLanguageLexical("lang_htm.xml");
             }
+            isinit = true;
         }
-		// Private Methods (3) 
+		// Private Methods (1) 
 
         /// <summary>
         /// Color some part of the rich edit text.
@@ -316,7 +335,7 @@ namespace NoteFly
         //    return false;
         //}
 
-		#endregion Methods 
+        #endregion Methods
     }
 
 }

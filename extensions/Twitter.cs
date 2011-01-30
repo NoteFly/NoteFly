@@ -176,7 +176,6 @@ namespace NoteFly
                 using (Stream requestStream = request.GetRequestStream())
                 {
                     requestStream.Write(bytes, 0, bytes.Length);
-
                     try
                     {
                         using (WebResponse response = request.GetResponse())
@@ -201,7 +200,6 @@ namespace NoteFly
             {
                 MessageBox.Show("Twitter username or/and password not filled in.");
             }
-
             return null;
         }
 

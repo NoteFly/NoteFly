@@ -56,6 +56,7 @@ namespace NoteFly
             this.note = note;
             this.Text = "edit note";
             this.SetFontSettings();
+            this.SetColorsForm(this.note.SkinNr);
             this.tbTitle.Text = note.Title;
             if (String.IsNullOrEmpty(this.note.tempcontent))
             {
@@ -69,12 +70,9 @@ namespace NoteFly
                 this.note.tempcontent = null;
             }
 
-            this.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
-            this.pnlHeadNewNote.BackColor = this.notes.GetForegroundColor(this.note.SkinNr);
-            this.lbTextTitle.ForeColor = this.notes.GetTextColor(this.note.SkinNr);
-            this.tbTitle.ForeColor = this.notes.GetTextColor(this.note.SkinNr);
-            this.rtbNewNote.ForeColor = this.notes.GetTextColor(this.note.SkinNr);
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
+            this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
+            this.tbTitle.Select();
         }
 
         /// <summary>
@@ -87,14 +85,12 @@ namespace NoteFly
             this.notes = notes;
             this.note = null;
             this.Text = "new note";
-            this.SetFontSettings();
             this.tbTitle.Text = DateTime.Now.ToString();
-
-            this.BackColor = this.notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
-            this.pnlHeadNewNote.BackColor = this.notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
-            this.lbTextTitle.ForeColor = this.notes.GetTextColor(Settings.NotesDefaultSkinnr);
-            this.rtbNewNote.ForeColor = this.notes.GetTextColor(Settings.NotesDefaultSkinnr);
+            this.SetColorsForm(Settings.NotesDefaultSkinnr);
+            this.SetFontSettings();
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
+            this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
+            this.tbTitle.Select();
         }
 
 		#endregion Constructors 
@@ -102,6 +98,33 @@ namespace NoteFly
 		#region Methods (30) 
 
 		// Private Methods (30) 
+
+        /// <summary>
+        /// Set all the form colors by the skinnr.
+        /// </summary>
+        /// <param name="skinnr"></param>
+        private void SetColorsForm(int skinnr)
+        {
+            this.BackColor = this.notes.GetPrimaryClr(skinnr);
+            this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(skinnr);
+            this.lbTextTitle.ForeColor = this.notes.GetTextClr(skinnr);
+            this.rtbNewNote.ForeColor = this.notes.GetTextClr(skinnr);
+            this.tbTitle.BackColor = this.notes.GetHighlightClr(skinnr);
+
+            this.btnTextBold.ForeColor = this.notes.GetTextClr(skinnr);
+            this.btnTextItalic.ForeColor = this.notes.GetTextClr(skinnr);
+            this.btnTextStriketrough.ForeColor = this.notes.GetTextClr(skinnr);
+            this.btnTextUnderline.ForeColor = this.notes.GetTextClr(skinnr);
+            this.btnFontBigger.ForeColor = this.notes.GetTextClr(skinnr);
+            this.btnFontSmaller.ForeColor = this.notes.GetTextClr(skinnr);
+
+            this.btnTextBold.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+            this.btnTextItalic.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+            this.btnTextStriketrough.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+            this.btnTextUnderline.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+            this.btnFontBigger.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+            this.btnFontSmaller.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+        }
 
         /// <summary>
         /// User pressed the accept note button. Note will now be saved.
@@ -161,6 +184,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            if (this.note != null)
+            {
+                this.note.CreateForm();
+            }
             this.Close();
         }
 
@@ -212,13 +239,16 @@ namespace NoteFly
         /// <param name="e"></param>
         private void btnTextStriketrough_Click(object sender, EventArgs e)
         {
-            if (this.rtbNewNote.SelectionFont.Strikeout)
+            if (checksellen())
             {
-                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Strikeout));
-            }
-            else
-            {
-                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
+                if (this.rtbNewNote.SelectionFont.Strikeout)
+                {
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Strikeout));
+                }
+                else
+                {
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
+                }
             }
         }
 
@@ -229,13 +259,53 @@ namespace NoteFly
         /// <param name="e"></param>
         private void btnTextUnderline_Click(object sender, EventArgs e)
         {
-            if (this.rtbNewNote.SelectionFont.Underline)
+            if (checksellen())
             {
-                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Underline));
+                if (this.rtbNewNote.SelectionFont.Underline)
+                {
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Underline));
+                }
+                else
+                {
+                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
+                }
             }
-            else
+        }
+
+        /// <summary>
+        /// Make text bigger.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFontBigger_Click(object sender, EventArgs e)
+        {
+            if (checksellen())
             {
-                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
+                ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints+1);
+            }
+        }
+
+        /// <summary>
+        /// Make text smaller.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFontSmaller_Click(object sender, EventArgs e)
+        {
+            if (checksellen())
+            {
+                ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints - 1);
+            }
+        }
+
+        private void ChangeFontSizeSelected(float newsize)
+        {
+            if ((newsize < 6) || (newsize > 108))
+            {
+                return;
+            }
+            else {
+                this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, newsize);
             }
         }
 
@@ -459,7 +529,14 @@ namespace NoteFly
             {
                 this.moving = true;
                 this.oldp = e.Location;
-                this.pnlHeadNewNote.BackColor = this.notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
+                if (this.note != null)
+                {
+                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(this.note.SkinNr);
+                }
+                else
+                {
+                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(Settings.NotesDefaultSkinnr);
+                }
             }
         }
 
@@ -472,8 +549,14 @@ namespace NoteFly
         {
             if ((this.moving) && (e.Button == MouseButtons.Left))
             {
-                this.pnlHeadNewNote.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
-
+                if (this.note != null)
+                {
+                    this.pnlHeadNewNote.BackColor = notes.GetSelectClr(this.note.SkinNr);
+                }
+                else
+                {
+                    this.pnlHeadNewNote.BackColor = notes.GetSelectClr(Settings.NotesDefaultSkinnr);
+                }
                 int dpx = e.Location.X - oldp.X;
                 int dpy = e.Location.Y - oldp.Y;
 #if linux
@@ -496,10 +579,12 @@ namespace NoteFly
 #endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
             }
+            /*
             else
             {
-                this.pnlHeadNewNote.BackColor = notes.GetForegroundColor(Settings.NotesDefaultSkinnr);
+                this.pnlHeadNewNote.BackColor = notes.GetPrimaryClr(Settings.NotesDefaultSkinnr);
             }
+            */
         }
 
         /// <summary>
@@ -510,6 +595,14 @@ namespace NoteFly
         private void pnlHeadNewNote_MouseUp(object sender, MouseEventArgs e)
         {
             this.moving = false;
+            if (this.note != null)
+            {
+                this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+            }
+            else
+            {
+                this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(Settings.NotesDefaultSkinnr);
+            }
         }
 
         /// <summary>
@@ -543,7 +636,14 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void rtbNote_Enter(object sender, EventArgs e)
         {
-            this.rtbNewNote.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
+            if (this.note != null)
+            {
+                this.rtbNewNote.BackColor = notes.GetHighlightClr(this.note.SkinNr);
+            }
+            else
+            {
+                this.rtbNewNote.BackColor = notes.GetHighlightClr(Settings.NotesDefaultSkinnr);
+            }
             SetToolbarEnabled(true);
         }
 
@@ -554,7 +654,14 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void rtbNote_Leave(object sender, EventArgs e)
         {
-            this.rtbNewNote.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
+            if (this.note != null)
+            {
+                this.rtbNewNote.BackColor = notes.GetSelectClr(this.note.SkinNr);
+            }
+            else
+            {
+                this.rtbNewNote.BackColor = notes.GetSelectClr(Settings.NotesDefaultSkinnr);
+            }
         }
 
         /// <summary>
@@ -598,6 +705,7 @@ namespace NoteFly
         /// <param name="content">The new note content.</param>
         private void SetFontSettings()
         {
+            this.tbTitle.Font = new Font(Settings.FontTitleFamily, 11);
             this.rtbNewNote.Font = new Font(Settings.FontContentFamily, rtbNewNote.Font.Size);
             switch (Settings.FontTextdirection)
             {
@@ -630,6 +738,8 @@ namespace NoteFly
             this.btnTextItalic.Enabled = enabled;
             this.btnTextStriketrough.Enabled = enabled;
             this.btnTextUnderline.Enabled = enabled;
+            this.btnFontBigger.Enabled = enabled;
+            this.btnFontSmaller.Enabled = enabled;
         }
 
         /// <summary>
@@ -639,7 +749,14 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void tbTitle_Enter(object sender, EventArgs e)
         {
-            this.tbTitle.BackColor = notes.GetHighlightColor(Settings.NotesDefaultSkinnr);
+            if (this.note != null)
+            {
+                this.tbTitle.BackColor = notes.GetHighlightClr(this.note.SkinNr);
+            }
+            else
+            {
+                this.tbTitle.BackColor = notes.GetHighlightClr(Settings.NotesDefaultSkinnr);
+            }
             SetToolbarEnabled(false);
         }
 
@@ -650,10 +767,17 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void tbTitle_Leave(object sender, EventArgs e)
         {
-            this.tbTitle.BackColor = notes.GetBackgroundColor(Settings.NotesDefaultSkinnr);
+            if (this.note != null)
+            {
+                this.tbTitle.BackColor = notes.GetSelectClr(this.note.SkinNr);
+            }
+            else
+            {
+                this.tbTitle.BackColor = notes.GetSelectClr(Settings.NotesDefaultSkinnr);
+            }
             SetToolbarEnabled(true);
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

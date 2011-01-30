@@ -57,7 +57,7 @@ namespace NoteFly
         private System.Windows.Forms.Label lbTextTwMs;
         private System.Windows.Forms.Label lbTextTwTimeout;
         private System.Windows.Forms.NumericUpDown numTimeout;
-        private System.Windows.Forms.CheckBox chxConfirmDeleteNote;
+        private System.Windows.Forms.CheckBox chxConfirmDeletenote;
 
         /// <summary>
         /// Required designer variable.
@@ -96,7 +96,7 @@ namespace NoteFly
             this.chxRememberTwPass = new System.Windows.Forms.CheckBox();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
-            this.chxConfirmDeleteNote = new System.Windows.Forms.CheckBox();
+            this.chxConfirmDeletenote = new System.Windows.Forms.CheckBox();
             this.cbxActionLeftclick = new System.Windows.Forms.ComboBox();
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
             this.chxStartOnLogin = new System.Windows.Forms.CheckBox();
@@ -104,12 +104,14 @@ namespace NoteFly
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabAppearanceColors = new System.Windows.Forms.TabControl();
             this.tabPageLooks = new System.Windows.Forms.TabPage();
+            this.cbxShowTooltips = new System.Windows.Forms.CheckBox();
             this.chxTransparecy = new System.Windows.Forms.CheckBox();
             this.lbDefaultNewNoteColor = new System.Windows.Forms.Label();
             this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
             this.numProcTransparency = new System.Windows.Forms.NumericUpDown();
             this.lbTextProc = new System.Windows.Forms.Label();
             this.tabPageFonts = new System.Windows.Forms.TabPage();
+            this.cbxFontNoteTitleBold = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.numFontSizeTitle = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
@@ -151,6 +153,7 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lbTextTwTimeout = new System.Windows.Forms.Label();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
             this.btnResetSettings = new System.Windows.Forms.Button();
@@ -159,9 +162,6 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.cbxFontNoteTitleBold = new System.Windows.Forms.CheckBox();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
-            this.cbxShowTooltips = new System.Windows.Forms.CheckBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -277,7 +277,7 @@ namespace NoteFly
             // 
             // tabGeneral
             // 
-            this.tabGeneral.Controls.Add(this.chxConfirmDeleteNote);
+            this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
             this.tabGeneral.Controls.Add(this.chxStartOnLogin);
@@ -290,17 +290,17 @@ namespace NoteFly
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
-            // chxConfirmDeleteNote
+            // chxConfirmDeletenote
             // 
-            this.chxConfirmDeleteNote.AutoSize = true;
-            this.chxConfirmDeleteNote.Checked = true;
-            this.chxConfirmDeleteNote.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmDeleteNote.Location = new System.Drawing.Point(20, 74);
-            this.chxConfirmDeleteNote.Name = "chxConfirmDeleteNote";
-            this.chxConfirmDeleteNote.Size = new System.Drawing.Size(133, 17);
-            this.chxConfirmDeleteNote.TabIndex = 23;
-            this.chxConfirmDeleteNote.Text = "Confirm deleting notes.";
-            this.chxConfirmDeleteNote.UseVisualStyleBackColor = true;
+            this.chxConfirmDeletenote.AutoSize = true;
+            this.chxConfirmDeletenote.Checked = true;
+            this.chxConfirmDeletenote.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmDeletenote.Location = new System.Drawing.Point(20, 74);
+            this.chxConfirmDeletenote.Name = "chxConfirmDeletenote";
+            this.chxConfirmDeletenote.Size = new System.Drawing.Size(133, 17);
+            this.chxConfirmDeletenote.TabIndex = 23;
+            this.chxConfirmDeletenote.Text = "Confirm deleting notes.";
+            this.chxConfirmDeletenote.UseVisualStyleBackColor = true;
             // 
             // cbxActionLeftclick
             // 
@@ -387,6 +387,16 @@ namespace NoteFly
             this.tabPageLooks.TabIndex = 0;
             this.tabPageLooks.Text = "Looks";
             this.tabPageLooks.UseVisualStyleBackColor = true;
+            // 
+            // cbxShowTooltips
+            // 
+            this.cbxShowTooltips.AutoSize = true;
+            this.cbxShowTooltips.Location = new System.Drawing.Point(18, 133);
+            this.cbxShowTooltips.Name = "cbxShowTooltips";
+            this.cbxShowTooltips.Size = new System.Drawing.Size(89, 17);
+            this.cbxShowTooltips.TabIndex = 13;
+            this.cbxShowTooltips.Text = "Show tooltips";
+            this.cbxShowTooltips.UseVisualStyleBackColor = true;
             // 
             // chxTransparecy
             // 
@@ -482,6 +492,18 @@ namespace NoteFly
             this.tabPageFonts.Text = "Fonts";
             this.tabPageFonts.UseVisualStyleBackColor = true;
             // 
+            // cbxFontNoteTitleBold
+            // 
+            this.cbxFontNoteTitleBold.AutoSize = true;
+            this.cbxFontNoteTitleBold.Checked = true;
+            this.cbxFontNoteTitleBold.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxFontNoteTitleBold.Location = new System.Drawing.Point(215, 50);
+            this.cbxFontNoteTitleBold.Name = "cbxFontNoteTitleBold";
+            this.cbxFontNoteTitleBold.Size = new System.Drawing.Size(46, 17);
+            this.cbxFontNoteTitleBold.TabIndex = 40;
+            this.cbxFontNoteTitleBold.Text = "bold";
+            this.cbxFontNoteTitleBold.UseVisualStyleBackColor = true;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -516,7 +538,7 @@ namespace NoteFly
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(49, 51);
+            this.label4.Location = new System.Drawing.Point(61, 51);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(71, 13);
             this.label4.TabIndex = 37;
@@ -537,7 +559,7 @@ namespace NoteFly
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(70, 25);
+            this.label3.Location = new System.Drawing.Point(82, 25);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 13);
             this.label3.TabIndex = 35;
@@ -548,7 +570,7 @@ namespace NoteFly
             this.lbTextDirection.AccessibleDescription = "";
             this.lbTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lbTextDirection.AutoSize = true;
-            this.lbTextDirection.Location = new System.Drawing.Point(50, 159);
+            this.lbTextDirection.Location = new System.Drawing.Point(50, 183);
             this.lbTextDirection.Name = "lbTextDirection";
             this.lbTextDirection.Size = new System.Drawing.Size(71, 13);
             this.lbTextDirection.TabIndex = 34;
@@ -564,7 +586,7 @@ namespace NoteFly
             this.cbxTextDirection.Items.AddRange(new object[] {
             "Left to right",
             "Right to left"});
-            this.cbxTextDirection.Location = new System.Drawing.Point(138, 156);
+            this.cbxTextDirection.Location = new System.Drawing.Point(138, 180);
             this.cbxTextDirection.Name = "cbxTextDirection";
             this.cbxTextDirection.Size = new System.Drawing.Size(182, 21);
             this.cbxTextDirection.TabIndex = 33;
@@ -572,7 +594,7 @@ namespace NoteFly
             // lblTextpt
             // 
             this.lblTextpt.AutoSize = true;
-            this.lblTextpt.Location = new System.Drawing.Point(182, 117);
+            this.lblTextpt.Location = new System.Drawing.Point(182, 130);
             this.lblTextpt.Name = "lblTextpt";
             this.lblTextpt.Size = new System.Drawing.Size(16, 13);
             this.lblTextpt.TabIndex = 32;
@@ -580,7 +602,7 @@ namespace NoteFly
             // 
             // numFontSizeContent
             // 
-            this.numFontSizeContent.Location = new System.Drawing.Point(138, 110);
+            this.numFontSizeContent.Location = new System.Drawing.Point(138, 123);
             this.numFontSizeContent.Maximum = new decimal(new int[] {
             96,
             0,
@@ -603,20 +625,20 @@ namespace NoteFly
             // lblTextFontSize
             // 
             this.lblTextFontSize.AutoSize = true;
-            this.lblTextFontSize.Location = new System.Drawing.Point(29, 112);
+            this.lblTextFontSize.Location = new System.Drawing.Point(9, 125);
             this.lblTextFontSize.Name = "lblTextFontSize";
-            this.lblTextFontSize.Size = new System.Drawing.Size(91, 13);
+            this.lblTextFontSize.Size = new System.Drawing.Size(123, 13);
             this.lblTextFontSize.TabIndex = 30;
-            this.lblTextFontSize.Text = "Font size content:";
+            this.lblTextFontSize.Text = "default font size content:";
             // 
             // lbTextNoteFont
             // 
             this.lbTextNoteFont.AutoSize = true;
-            this.lbTextNoteFont.Location = new System.Drawing.Point(50, 83);
+            this.lbTextNoteFont.Location = new System.Drawing.Point(30, 101);
             this.lbTextNoteFont.Name = "lbTextNoteFont";
-            this.lbTextNoteFont.Size = new System.Drawing.Size(70, 13);
+            this.lbTextNoteFont.Size = new System.Drawing.Size(102, 13);
             this.lbTextNoteFont.TabIndex = 29;
-            this.lbTextNoteFont.Text = "Font content:";
+            this.lbTextNoteFont.Text = "default font content:";
             // 
             // cbxFontNoteContent
             // 
@@ -625,7 +647,7 @@ namespace NoteFly
             this.cbxFontNoteContent.DropDownHeight = 140;
             this.cbxFontNoteContent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxFontNoteContent.IntegralHeight = false;
-            this.cbxFontNoteContent.Location = new System.Drawing.Point(138, 80);
+            this.cbxFontNoteContent.Location = new System.Drawing.Point(138, 93);
             this.cbxFontNoteContent.Name = "cbxFontNoteContent";
             this.cbxFontNoteContent.Size = new System.Drawing.Size(182, 21);
             this.cbxFontNoteContent.TabIndex = 28;
@@ -984,6 +1006,17 @@ namespace NoteFly
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.chxLogDebug);
@@ -1059,39 +1092,6 @@ namespace NoteFly
             this.tbNotesSavePath.Size = new System.Drawing.Size(294, 20);
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
-            // 
-            // cbxFontNoteTitleBold
-            // 
-            this.cbxFontNoteTitleBold.AutoSize = true;
-            this.cbxFontNoteTitleBold.Checked = true;
-            this.cbxFontNoteTitleBold.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxFontNoteTitleBold.Location = new System.Drawing.Point(215, 50);
-            this.cbxFontNoteTitleBold.Name = "cbxFontNoteTitleBold";
-            this.cbxFontNoteTitleBold.Size = new System.Drawing.Size(46, 17);
-            this.cbxFontNoteTitleBold.TabIndex = 40;
-            this.cbxFontNoteTitleBold.Text = "bold";
-            this.cbxFontNoteTitleBold.UseVisualStyleBackColor = true;
-            // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
-            // 
-            // cbxShowTooltips
-            // 
-            this.cbxShowTooltips.AutoSize = true;
-            this.cbxShowTooltips.Location = new System.Drawing.Point(18, 133);
-            this.cbxShowTooltips.Name = "cbxShowTooltips";
-            this.cbxShowTooltips.Size = new System.Drawing.Size(89, 17);
-            this.cbxShowTooltips.TabIndex = 13;
-            this.cbxShowTooltips.Text = "Show tooltips";
-            this.cbxShowTooltips.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 

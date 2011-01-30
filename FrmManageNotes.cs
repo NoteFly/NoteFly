@@ -222,8 +222,8 @@ namespace NoteFly
         /// <param name="e"></param>
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
-            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetForegroundColor(notes.GetNote(e.RowIndex).SkinNr);
-            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextColor(notes.GetNote(e.RowIndex).SkinNr);
+            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(e.RowIndex).SkinNr);
+            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(e.RowIndex).SkinNr);
             if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr))
             {
                 this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr);

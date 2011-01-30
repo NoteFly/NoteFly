@@ -62,9 +62,9 @@ namespace NoteFly
             this.UpdateForm(false);
 
             this.lblTitle.Text = note.Title;
-            this.BackColor = notes.GetForegroundColor(note.SkinNr);
-            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
-            this.rtbNote.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             if (String.IsNullOrEmpty(this.note.tempcontent))
             {
                 this.rtbNote.Rtf = note.GetContent();
@@ -95,8 +95,8 @@ namespace NoteFly
                 {
                     tsi.Checked = false;
                 }
-                tsi.BackColor = notes.GetForegroundColor(i);
-                tsi.ForeColor = notes.GetTextColor(i);
+                tsi.BackColor = notes.GetPrimaryClr(i);
+                tsi.ForeColor = notes.GetTextClr(i);
                 tsi.Click += new EventHandler(menuNoteSkins_skin_Click);
                 this.menuNoteSkins.DropDownItems.Add(tsi);
             }
@@ -115,9 +115,9 @@ namespace NoteFly
         {
             if (!contentset)
             {
-                this.rtbNote.ForeColor = notes.GetTextColor(this.note.SkinNr);
-                this.rtbNote.Font = new Font(Settings.FontContentFamily, Settings.FontContentSize);
-                this.lblTitle.ForeColor = notes.GetTextColor(this.note.SkinNr);
+                this.rtbNote.ForeColor = notes.GetTextClr(this.note.SkinNr);
+                //this.rtbNote.Font = new Font(Settings.FontContentFamily, Settings.FontContentSize);
+                this.lblTitle.ForeColor = notes.GetTextClr(this.note.SkinNr);
                 if (Settings.FontTitleStylebold)
                 {
                     this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
@@ -329,15 +329,16 @@ namespace NoteFly
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             tsi.Checked = true;
             this.note.SkinNr = notes.GetSkinNr(tsi.Text);
-            this.BackColor = notes.GetForegroundColor(this.note.SkinNr);
-            this.rtbNote.BackColor = notes.GetForegroundColor(this.note.SkinNr);
-            this.pnlHead.BackColor = notes.GetForegroundColor(this.note.SkinNr);
-            this.lblTitle.ForeColor = notes.GetTextColor(this.note.SkinNr);
-            this.rtbNote.ForeColor = notes.GetTextColor(this.note.SkinNr);
+            this.BackColor = notes.GetPrimaryClr(this.note.SkinNr);
+            this.rtbNote.BackColor = notes.GetPrimaryClr(this.note.SkinNr);
+            this.pnlHead.BackColor = notes.GetPrimaryClr(this.note.SkinNr);
+            this.lblTitle.ForeColor = notes.GetTextClr(this.note.SkinNr);
+            this.rtbNote.ForeColor = notes.GetTextClr(this.note.SkinNr);
             if (!this.SavePos.IsBusy)
             {
                 this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
             }
+            Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to "+this.notes.GetSkinName(this.note.SkinNr));
         }
 
         /// <summary>
@@ -481,7 +482,7 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.pnlHead.BackColor = notes.GetBackgroundColor(note.SkinNr);
+                this.pnlHead.BackColor = notes.GetSelectClr(note.SkinNr);
                 this.moving = true;
                 this.oldp = e.Location;
             }
@@ -535,7 +536,7 @@ namespace NoteFly
             {
                 this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
             }
-            this.pnlHead.BackColor = notes.GetForegroundColor(note.SkinNr);
+            this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
         }
 
         /// <summary>
@@ -652,6 +653,9 @@ namespace NoteFly
             this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
             this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
             this.pbShowLock.Visible = true;
+            this.pbShowLock.MouseDown += new MouseEventHandler(pnlHead_MouseDown);
+            this.pbShowLock.MouseMove += new MouseEventHandler(pnlHead_MouseMove);
+            this.pbShowLock.MouseUp += new MouseEventHandler(pnlHead_MouseUp);
             this.pnlHead.Controls.Add(this.pbShowLock);
             this.pbShowLock.BringToFront();
         }

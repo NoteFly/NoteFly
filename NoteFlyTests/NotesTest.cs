@@ -169,7 +169,7 @@ namespace NoteFlyTests
             string hexforegroundcolor = "#FFD800";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexforegroundcolor);
             Color actual;
-            actual = target.GetForegroundColor(skinnr);
+            actual = target.GetPrimaryClr(skinnr);
             Assert.AreEqual(expected, actual);
         }
 
@@ -184,7 +184,7 @@ namespace NoteFlyTests
             string hexbackgroundcolor = "#E5B61B";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexbackgroundcolor);
             Color actual;
-            actual = target.GetBackgroundColor(skinnr);
+            actual = target.GetSelectClr(skinnr);
             Assert.AreEqual(expected, actual);
         }
 
@@ -198,7 +198,7 @@ namespace NoteFlyTests
             int skinnr = 0; //yellow skin
             string hexhighlightcolor = "#FF0000";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexhighlightcolor);
-            Color actual = target.GetHighlightColor(skinnr);
+            Color actual = target.GetHighlightClr(skinnr);
             Assert.AreEqual(expected, actual);
         }
 

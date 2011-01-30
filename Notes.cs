@@ -38,7 +38,7 @@ namespace NoteFly
     /// </summary>
     public class Notes
     {
-        #region Fields (3)
+		#region Fields (3) 
 
         /// <summary>
         /// EXTENSION
@@ -53,9 +53,9 @@ namespace NoteFly
         /// </summary>
         private List<Skin> skins;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (1)
+		#region Constructors (1) 
 
         //private List<FrmNote> notesfrms;
         /// <summary>
@@ -69,9 +69,9 @@ namespace NoteFly
             this.LoadNotes(Settings.ProgramFirstrun, resetpositions);
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Properties (1)
+		#region Properties (1) 
 
         /// <summary>
         /// The number of notes there are.
@@ -84,11 +84,11 @@ namespace NoteFly
             }
         }
 
-        #endregion Properties
+		#endregion Properties 
 
-        #region Methods (18)
+		#region Methods (20) 
 
-        // Public Methods (13) 
+		// Public Methods (16) 
 
         /// <summary>
         /// Add a new note the the notes list.
@@ -147,46 +147,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets the foreground color.
-        /// </summary>
-        /// <param name="skinnr"></param>
-        /// <returns></returns>
-        public System.Drawing.Color GetForegroundColor(int skinnr)
-        {
-            return GetColor(1, skinnr);
-        }
-
-        /// <summary>
-        /// Gets the background color.
-        /// </summary>
-        /// <param name="skinnr"></param>
-        /// <returns></returns>
-        public System.Drawing.Color GetBackgroundColor(int skinnr)
-        {
-            return GetColor(2, skinnr);
-        }
-
-        /// <summary>
-        /// Gets the highlight color.
-        /// </summary>
-        /// <param name="skinnr"></param>
-        /// <returns></returns>
-        public System.Drawing.Color GetHighlightColor(int skinnr)
-        {
-            return GetColor(3, skinnr);
-        }
-
-        /// <summary>
-        /// Gets the highlight color.
-        /// </summary>
-        /// <param name="skinnr"></param>
-        /// <returns></returns>
-        public System.Drawing.Color GetTextColor(int skinnr)
-        {
-            return GetColor(4, skinnr);
-        }
-
-        /// <summary>
         /// Gets a note, by position in list
         /// </summary>
         /// <param name="pos">note position in list notes</param>
@@ -194,179 +154,6 @@ namespace NoteFly
         public Note GetNote(int pos)
         {
             return this.notes[pos];
-        }
-
-        /// <summary>
-        /// Get the name of a skin by the skinnr.
-        /// </summary>
-        /// <param name="skinnr">The skin number (starts at index 0)</param>
-        /// <returns>The name of the skin, e.g. Yellow</returns>
-        public string GetSkinName(int skinnr)
-        {
-            return this.skins[skinnr].Name;
-        }
-
-        /// <summary>
-        /// Get the skinnr that belongs by a name.
-        /// If not found return -1.
-        /// </summary>
-        /// <param name="skinname"></param>
-        /// <returns>The skinnr, if not found then -1 is returned.</returns>
-        public int GetSkinNr(string skinname)
-        {
-            for (int i = 0; i < this.skins.Count; i++)
-            {
-                if (this.skins[i].Name == skinname)
-                {
-                    return i;
-                }
-            }
-            Log.Write(LogType.error, "SkinNr not found for skinname:" + skinname);
-            return -1;
-        }
-
-        /// <summary>
-        /// Gets a string array with all the skin names.
-        /// </summary>
-        /// <returns></returns>
-        public string[] GetSkinsNames()
-        {
-            string[] skinnames = new string[this.skins.Count];
-            for (int i = 0; i < skinnames.Length; i++)
-            {
-                skinnames[i] = this.skins[i].Name;
-            }
-            return skinnames;
-        }
-
-        /// <summary>
-        /// Remove a note from the notes list.
-        /// </summary>
-        /// <param name="pos">The noteId starts at 1</param>
-        public void RemoveNote(int pos)
-        {
-            if (pos >= this.notes.Count || pos < 0)
-            {
-                throw new CustomException("Cannot find note to remove.");
-            }
-            else
-            {
-                this.notes.RemoveAt(pos);
-            }
-        }
-
-        /// <summary>
-        /// Strip forbidden filename characters
-        /// </summary>
-        /// <param name="orgname"></param>
-        /// <returns></returns>
-        public string StripForbiddenFilenameChars(String orgname)
-        {
-            System.Text.StringBuilder newfilename = new System.Text.StringBuilder();
-            char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
-            bool isforbiddenchar = false;
-            for (int pos = 0; (pos < orgname.Length); pos++)
-            {
-                isforbiddenchar = false;
-                for (int fc = 0; fc < forbiddenchars.Length; fc++)
-                {
-                    if (orgname[pos] == forbiddenchars[fc])
-                    {
-                        isforbiddenchar = true;
-                    }
-                }
-                if (!isforbiddenchar)
-                {
-                    newfilename.Append(orgname[pos]);
-                }
-            }
-            return newfilename.ToString();
-        }
-
-        /// <summary>
-        /// Update all note forms.
-        /// </summary>
-        public void UpdateAllNoteForms()
-        {
-            foreach (Note curnote in this.notes)
-            {
-                curnote.UpdateForm();
-            }
-        }
-        // Private Methods (5) 
-
-        /// <summary>
-        /// This method set a limit on how many notes can be loaded before a 
-        /// </summary>
-        /// <param name="id">the note id to check.</param>
-        /// <returns>true when limit is reached, and a warning about too many notes should be showed.</returns>
-        private bool CheckLimitNotes(int number)
-        {
-            if (number > Settings.NotesWarnLimit)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Empty string on all used.</returns>
-        private string Checknewfilename(string newfile, int limitlenfile, char sepchar)
-        {
-            int num = 1;
-            int lenfilecounter = 3;
-            int numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
-            while (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)) && (numlen <= lenfilecounter))
-            {
-                numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
-                newfile = newfile.Substring(0, limitlenfile - numlen - 1) + sepchar + num + NOTEEXTENSION;
-                num++;
-            }
-            if (numlen > lenfilecounter)
-            {
-                sepchar++;
-                if (sepchar < 47)
-                {
-                    return Checknewfilename(newfile, limitlenfile, sepchar);
-                }
-                else
-                {
-                    Log.Write(LogType.exception, "All suggested filenames to save this note based on title seems to be taken.");
-                    return "";
-                }
-            }
-            else
-            {
-                return newfile;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="skinnr"></param>
-        /// <returns></returns>
-        private System.Drawing.Color GetColor(int type, int skinnr)
-        {
-            switch (type)
-            {
-                case 1:
-                    return this.skins[skinnr].PrimaryClr;
-                case 2:
-                    return this.skins[skinnr].SelectClr;
-                case 3:
-                    return this.skins[skinnr].HighlightClr;
-                case 4:
-                    return this.skins[skinnr].TextClr;
-            }
-            Log.Write(LogType.error, "cant get color. type:" + type + " skinnr" + skinnr);
-            return Color.White;
         }
 
         /// <summary>
@@ -398,6 +185,89 @@ namespace NoteFly
             {
                 return newfile;
             }
+        }
+
+        /// <summary>
+        /// Gets the primary color.
+        /// </summary>
+        /// <param name="skinnr">The skin number</param>
+        /// <returns></returns>
+        public System.Drawing.Color GetPrimaryClr(int skinnr)
+        {
+            return GetColor(1, skinnr);
+        }
+
+        /// <summary>
+        /// Gets the selected color.
+        /// </summary>
+        /// <param name="skinnr">The skin number</param>
+        /// <returns>The selected skin color.</returns>
+        public System.Drawing.Color GetSelectClr(int skinnr)
+        {
+            return GetColor(2, skinnr);
+        }
+
+        /// <summary>
+        /// Gets the highlight color.
+        /// </summary>
+        /// <param name="skinnr">The skin number</param>
+        /// <returns></returns>
+        public System.Drawing.Color GetHighlightClr(int skinnr)
+        {
+            return GetColor(3, skinnr);
+        }
+
+        /// <summary>
+        /// Gets the text color.
+        /// </summary>
+        /// <param name="skinnr">The skin number</param>
+        /// <returns></returns>
+        public System.Drawing.Color GetTextClr(int skinnr)
+        {
+            return GetColor(4, skinnr);
+        }
+
+        /// <summary>
+        /// Get the name of a skin by the skinnr.
+        /// </summary>
+        /// <param name="skinnr">The skin number</param>
+        /// <returns>The name of the skin, e.g. Yellow</returns>
+        public string GetSkinName(int skinnr)
+        {
+            return this.skins[skinnr].Name;
+        }
+
+        /// <summary>
+        /// Get the skinnr that belongs by a name.
+        /// If not found return -1.
+        /// </summary>
+        /// <param name="skinname">The skin name.</param>
+        /// <returns>The skinnr, if not found then -1 is returned.</returns>
+        public int GetSkinNr(string skinname)
+        {
+            for (int i = 0; i < this.skins.Count; i++)
+            {
+                if (this.skins[i].Name == skinname)
+                {
+                    return i;
+                }
+            }
+            Log.Write(LogType.error, "SkinNr not found for skinname:" + skinname);
+            return -1;
+        }
+
+        /// <summary>
+        /// Gets a string array with all the skin names.
+        /// </summary>
+        /// <returns>An array with skin names.</returns>
+        public string[] GetSkinsNames()
+        {
+            string[] skinnames = new string[this.skins.Count];
+            for (int i = 0; i < skinnames.Length; i++)
+            {
+                skinnames[i] = this.skins[i].Name;
+            }
+            return skinnames;
         }
 
         /// <summary>
@@ -513,6 +383,113 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Remove a note from the notes list.
+        /// </summary>
+        /// <param name="pos">The note position in the list.</param>
+        public void RemoveNote(int pos)
+        {
+            if (pos >= this.notes.Count || pos < 0)
+            {
+                throw new CustomException("Cannot find note to remove.");
+            }
+            else
+            {
+                this.notes.RemoveAt(pos);
+            }
+        }
+
+        /// <summary>
+        /// Strip forbidden filename characters of a string.
+        /// </summary>
+        /// <param name="orgname">the string to strip forbidden filecharacters from.</param>
+        /// <returns>The filename safe string</returns>
+        public string StripForbiddenFilenameChars(String orgname)
+        {
+            System.Text.StringBuilder newfilename = new System.Text.StringBuilder();
+            char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
+            bool isforbiddenchar = false;
+            for (int pos = 0; (pos < orgname.Length); pos++)
+            {
+                isforbiddenchar = false;
+                for (int fc = 0; fc < forbiddenchars.Length; fc++)
+                {
+                    if (orgname[pos] == forbiddenchars[fc])
+                    {
+                        isforbiddenchar = true;
+                    }
+                }
+                if (!isforbiddenchar)
+                {
+                    newfilename.Append(orgname[pos]);
+                }
+            }
+            return newfilename.ToString();
+        }
+
+        /// <summary>
+        /// Update all note forms.
+        /// </summary>
+        public void UpdateAllNoteForms()
+        {
+            foreach (Note curnote in this.notes)
+            {
+                curnote.UpdateForm();
+            }
+        }
+		// Private Methods (4) 
+
+        /// <summary>
+        /// This method set a limit on how many notes can be loaded before a 
+        /// </summary>
+        /// <param name="id">the note id to check.</param>
+        /// <returns>true when limit is reached, and a warning about too many notes should be showed.</returns>
+        private bool CheckLimitNotes(int number)
+        {
+            if (number > Settings.NotesWarnLimit)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Check if filename already exist if it is then generate a new one.
+        /// </summary>
+        /// <returns>Empty string on all used.</returns>
+        private string Checknewfilename(string newfile, int limitlenfile, char sepchar)
+        {
+            int num = 1;
+            int lenfilecounter = 3;
+            int numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
+            while (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)) && (numlen <= lenfilecounter))
+            {
+                numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
+                newfile = newfile.Substring(0, limitlenfile - numlen - 1) + sepchar + num + NOTEEXTENSION;
+                num++;
+            }
+            if (numlen > lenfilecounter)
+            {
+                sepchar++;
+                if (sepchar < 47)
+                {
+                    return Checknewfilename(newfile, limitlenfile, sepchar);
+                }
+                else
+                {
+                    Log.Write(LogType.exception, "All suggested filenames to save this note based on title seems to be taken.");
+                    return "";
+                }
+            }
+            else
+            {
+                return newfile;
+            }
+        }
+
+        /// <summary>
         /// Create a demo note with instruction 
         /// (Should be the first time that NoteFly is runned displayed only.)
         /// </summary>
@@ -535,6 +512,29 @@ namespace NoteFly
             xmlUtil.WriteSettings();
         }
 
-        #endregion Methods
+        /// <summary>
+        /// Get the color.
+        /// </summary>
+        /// <param name="type">What part of the skin 1 primary-, 2 selected-, 3 hightlight-, 4 text color</param>
+        /// <param name="skinnr">The skin nummer in the skinslist.</param>
+        /// <returns>The request color</returns>
+        private System.Drawing.Color GetColor(int type, int skinnr)
+        {
+            switch (type)
+            {
+                case 1:
+                    return this.skins[skinnr].PrimaryClr;
+                case 2:
+                    return this.skins[skinnr].SelectClr;
+                case 3:
+                    return this.skins[skinnr].HighlightClr;
+                case 4:
+                    return this.skins[skinnr].TextClr;
+            }
+            Log.Write(LogType.error, "Can't get color. type:" + type + " skinnr" + skinnr);
+            return Color.White;
+        }
+
+		#endregion Methods 
     }
 }
