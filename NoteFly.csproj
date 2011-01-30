@@ -164,7 +164,6 @@
     <None Include="build_setup.bat" />
     <None Include="make_archive.bat" />
     <None Include="Resources\hoekje.png" />
-    <None Include="Resources\notefly_v2_classdiagram.cd" />
     <None Include="bin\Debug\app.eqconfig" />
     <None Include="bin\Release\create_setup.nsi" />
     <None Include="Resources\locknote.png" />

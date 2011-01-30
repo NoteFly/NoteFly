@@ -54,9 +54,10 @@ namespace NoteFly
             this.InitializeComponent();
             this.notes = notes;
             this.note = note;
-            this.Text = "edit note";
             this.SetFontSettings();
             this.SetColorsForm(this.note.SkinNr);
+            this.Text = "edit note";
+
             this.tbTitle.Text = note.Title;
             if (String.IsNullOrEmpty(this.note.tempcontent))
             {
@@ -69,7 +70,7 @@ namespace NoteFly
                 this.note.tempcontent = String.Empty;
                 this.note.tempcontent = null;
             }
-
+            
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
             this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
             this.tbTitle.Select();
@@ -83,11 +84,11 @@ namespace NoteFly
         {
             this.InitializeComponent();
             this.notes = notes;
+            this.SetFontSettings();
+            this.SetColorsForm(Settings.NotesDefaultSkinnr);
             this.note = null;
             this.Text = "new note";
             this.tbTitle.Text = DateTime.Now.ToString();
-            this.SetColorsForm(Settings.NotesDefaultSkinnr);
-            this.SetFontSettings();
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
             this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
             this.tbTitle.Select();
@@ -209,6 +210,7 @@ namespace NoteFly
                 {
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
                 }
+                MessageBox.Show(this.rtbNewNote.Rtf, "RTF text set to");
             }
         }
 

@@ -65,6 +65,7 @@ namespace NoteFly
             this.BackColor = notes.GetPrimaryClr(note.SkinNr);
             this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
             if (String.IsNullOrEmpty(this.note.tempcontent))
             {
                 this.rtbNote.Rtf = note.GetContent();
@@ -167,11 +168,6 @@ namespace NoteFly
                 if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
                 {
                     //Highlight.CheckSyntaxFull(rtbNote, note.SkinNr, notes);
-                }
-                this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
-                if (this.rtbNote.DetectUrls)
-                {
-                    this.rtbNote.Text += "";//causes TextChanged event so there is a rescan for URL's:
                 }
             }
         }
