@@ -53,6 +53,8 @@ namespace NoteFly
         /// </summary>
         private List<Skin> skins;
 
+        public bool frmamangenotesneedupdate = false;
+
 		#endregion Fields 
 
 		#region Constructors (1) 

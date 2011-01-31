@@ -33,7 +33,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-		#region Fields (3) 
+        #region Fields (3)
 
         /// <summary>
         /// notes
@@ -50,9 +50,9 @@ namespace NoteFly
         /// </summary>
         private bool redrawbusy = false;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the FrmManageNotes class.
@@ -68,11 +68,11 @@ namespace NoteFly
             this.SetDataGridViewColumsWidth();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (15) 
+        #region Methods (15)
 
-		// Private Methods (15) 
+        // Private Methods (15) 
 
         /// <summary>
         /// Request to backup all notes to a file.
@@ -170,10 +170,10 @@ namespace NoteFly
                         if (eraseres == DialogResult.Yes)
                         {
                             Log.Write(LogType.info, "Erased all notes for restoring notes backup.");
-                            for (int i = 0; i < this.notes.CountNotes; i++)
+                            for (int i = 0; i <= this.notes.CountNotes; i++)
                             {
-                                this.notes.GetNote(i).DestroyForm();
                                 File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
+                                this.notes.GetNote(i).DestroyForm();
                                 this.notes.RemoveNote(i);
                             }
                         }
@@ -188,6 +188,10 @@ namespace NoteFly
                     this.notes.LoadNotes(false, false);
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
+                }
+                if (this.notes.CountNotes > 0)
+                {
+                    this.btnNoteDelete.Enabled = true;
                 }
             }
         }
@@ -222,13 +226,22 @@ namespace NoteFly
         /// <param name="e"></param>
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
-            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(e.RowIndex).SkinNr);
-            this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(e.RowIndex).SkinNr);
-            if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr))
+            if (this.notes.frmamangenotesneedupdate)
             {
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr);
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(e.RowIndex).SkinNr);
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(e.RowIndex).SkinNr);
+                if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr))
+                {
+                    this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr);
+                }
+
+                this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(e.RowIndex).Visible;
+                if (e.RowIndex == this.notes.CountNotes -1)
+                {
+                    this.notes.frmamangenotesneedupdate = false;
+                }
             }
-            System.Threading.Thread.Sleep(5);
+            //System.Threading.Thread.Sleep(5);
         }
 
         /// <summary>
@@ -249,7 +262,7 @@ namespace NoteFly
                     File.Delete(filepath);
                     if (Settings.ProgramLogInfo)
                     {
-                        Log.Write(LogType.info, "Deleted note: "+filepath);
+                        Log.Write(LogType.info, "Deleted note: " + filepath);
                     }
                     this.notes.RemoveNote(nr);
                 }
@@ -271,6 +284,7 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
+            this.notes.frmamangenotesneedupdate = true;
             DataTable datatable = new DataTable();
             this.dataGridView1.DataSource = datatable;
             datatable.Columns.Add("nr", typeof(String));
@@ -431,6 +445,6 @@ namespace NoteFly
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

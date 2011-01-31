@@ -98,6 +98,7 @@ namespace NoteFly
             this.Visible = false;
             this.tempcontent = null;
             this.frmnote = null;
+            this.notes.frmamangenotesneedupdate = true;
             GC.Collect();
         }
 

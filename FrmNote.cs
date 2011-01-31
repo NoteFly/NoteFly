@@ -424,6 +424,7 @@ namespace NoteFly
             {
                 this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
             }
+            this.notes.frmamangenotesneedupdate = true;
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to "+this.notes.GetSkinName(this.note.SkinNr));
         }
 
