@@ -633,7 +633,6 @@ namespace NoteFly
                 try
                 {
                     importnote = ParserNoteNode(n, importnote, i);
-                    content = GetContentString(filepath, "content");
                 }
                 finally
                 {
@@ -641,7 +640,7 @@ namespace NoteFly
                 }
                 string skinname = n.GetSkinName(importnote.SkinNr);
 
-                WriteNote(importnote, skinname, content);
+                WriteNote(importnote, skinname, importnote.tempcontent);
             }
         }
 

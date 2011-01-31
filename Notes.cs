@@ -153,7 +153,14 @@ namespace NoteFly
         /// <returns>The Note object</returns>
         public Note GetNote(int pos)
         {
-            return this.notes[pos];
+            //try
+            //{
+                return this.notes[pos];
+            //}
+            //catch (IndexOutOfRangeException)
+            //{
+            //    throw new CustomException("Can't get this note position: " + pos);
+            //}
         }
 
         /// <summary>
@@ -495,17 +502,17 @@ namespace NoteFly
         /// </summary>
         private void CreateFirstrunNote()
         {
-            const int notewidth = 320;
-            const int noteheight = 280;
-            int tipnoteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (notewidth / 2));
-            int tipnoteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (noteheight / 2));
-            StringBuilder notecontent = new StringBuilder();
-            notecontent.AppendLine("This is a example note.");
-            notecontent.AppendLine("You can chance colour of this note by rightclicking on this note.");
-            notecontent.AppendLine("You can delete this note, by rightclicking the systray icon choice manage notes");
-            notecontent.AppendLine("and then press delete note button for this particuler note.");
-            notecontent.AppendLine("By clicking on the cross on this note this note will be hidden.");
-            notecontent.AppendLine("You can get it back with the manage notes window.");
+            const int notewidth = 260;
+            const int noteheight = 220;
+            int noteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (notewidth / 2));
+            int noteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (noteheight / 2));
+            string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
+
+            Note demonote = this.CreateNote("NoteFly2.0.0", 0, noteposx, noteposy, notewidth, noteheight);
+            xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
+            this.AddNote(demonote);
+            demonote.CreateForm();
+
             //this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
             Settings.ProgramFirstrun = false;
             Log.Write(LogType.info, "firstrun occur");

@@ -226,7 +226,7 @@ namespace NoteFly
                 DateTime lastupdate = DateTime.Parse(Settings.UpdatecheckLastDate);
                 if (lastupdate.AddDays(Settings.UpdatecheckEverydays) <= DateTime.Now)
                 {
-                    Thread updatethread = new Thread(updatecheck);
+                    Thread updatethread = new Thread(UpdateCheck);
                     updatethread.Start();
                 }
             }
@@ -237,7 +237,7 @@ namespace NoteFly
         /// <summary>
         /// Do update check.
         /// </summary>
-        public static void updatecheck()
+        public static void UpdateCheck()
         {
             Thread.Sleep(500);
             Settings.UpdatecheckLastDate = DateTime.Now.ToString();
@@ -260,8 +260,8 @@ namespace NoteFly
                 if (updres == System.Windows.Forms.DialogResult.Yes)
                 {
                     Program.LoadURI(DOWNLOADPAGE);
-                    Thread.Sleep(10);
-                    System.Windows.Forms.Application.Exit();
+                    //Thread.Sleep(10);
+                    //System.Windows.Forms.Application.Exit();
                 }
             }
         }

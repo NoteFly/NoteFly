@@ -34,7 +34,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNote : Form
     {
-        #region Fields (6)
+		#region Fields (6) 
 
         private const int MINVISIBLESIZE = 5;
         private bool moving = false;
@@ -43,9 +43,9 @@ namespace NoteFly
         private Point oldp;
         private PictureBox pbShowLock;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (1)
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
@@ -66,16 +66,23 @@ namespace NoteFly
             this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
-            if (String.IsNullOrEmpty(this.note.tempcontent))
+            try
             {
-                this.rtbNote.Rtf = note.GetContent();
+                if (String.IsNullOrEmpty(this.note.tempcontent))
+                {
+                    this.rtbNote.Rtf = note.GetContent();
+                }
+                else
+                {
+                    this.rtbNote.Rtf = this.note.tempcontent;
+                    //clear memory:
+                    this.note.tempcontent = String.Empty;
+                    this.note.tempcontent = null;
+                }
             }
-            else
+            catch (ArgumentException argexc)
             {
-                this.rtbNote.Rtf = this.note.tempcontent;
-                //clear memory:
-                this.note.tempcontent = String.Empty;
-                this.note.tempcontent = null;
+                Log.Write(LogType.exception, "note "+note.Filename+": "+argexc.Message);
             }
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
@@ -105,9 +112,11 @@ namespace NoteFly
             this.UpdateForm(true);
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (28)
+		#region Methods (31) 
+
+		// Public Methods (1) 
 
         /// <summary>
         /// Set some settings
@@ -171,8 +180,7 @@ namespace NoteFly
                 }
             }
         }
-
-        // Private Methods (28) 
+		// Private Methods (30) 
 
         /// <summary>
         /// The user pressed the cross on the note,
@@ -239,6 +247,37 @@ namespace NoteFly
             {
                 Clipboard.SetText(this.lblTitle.Text);
             }
+        }
+
+        /// <summary>
+        /// Create a PictureBox with lock picture.
+        /// </summary>
+        private void CreatePbLock()
+        {
+            this.pbShowLock = new PictureBox();
+            this.pbShowLock.Name = "pbShowLock";
+            this.pbShowLock.Size = new Size(16, 16);
+            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
+            this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
+            this.pbShowLock.Visible = true;
+            this.pbShowLock.MouseDown += new MouseEventHandler(pnlHead_MouseDown);
+            this.pbShowLock.MouseMove += new MouseEventHandler(pnlHead_MouseMove);
+            this.pbShowLock.MouseUp += new MouseEventHandler(pnlHead_MouseUp);
+            this.pnlHead.Controls.Add(this.pbShowLock);
+            this.pbShowLock.BringToFront();
+        }
+
+        /// <summary>
+        /// Removes the lock picture and free the memory of the picture.
+        /// </summary>
+        private void DestroyPbLock()
+        {
+            if (pbShowLock != null)
+            {
+                this.pbShowLock.Visible = false;
+                this.pbShowLock.Dispose();
+            }
+            GC.Collect();
         }
 
         /// <summary>
@@ -316,6 +355,53 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Lock the note and show a lock.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.note.Locked = !this.note.Locked;
+
+            this.SetLockedNote();
+
+            if (!this.SavePos.IsBusy)
+            {
+                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+        }
+
+        /// <summary>
+        /// Copy the selected text in the rtbNote control
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuCopySelected_Click(object sender, EventArgs e)
+        {
+            if (rtbNote.SelectedText.Length >= 1)
+            {
+                Clipboard.SetText(this.rtbNote.SelectedText);
+            }
+        }
+
+        /// <summary>
+        /// Check if some text is selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuFrmNoteOptions_Opening(object sender, CancelEventArgs e)
+        {
+            if (rtbNote.SelectedText.Length >= 1)
+            {
+                this.menuCopySelected.Enabled = true;
+            }
+            else
+            {
+                this.menuCopySelected.Enabled = false;
+            }
+        }
+
+        /// <summary>
         /// A new skin is selected for this note.
         /// </summary>
         /// <param name="sender">Sender object</param>
@@ -342,48 +428,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Lock the note and show a lock.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.note.Locked = !this.note.Locked;
-
-            this.SetLockedNote();
-
-            if (!this.SavePos.IsBusy)
-            {
-                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
-            }
-        }
-
-        /// <summary>
-        /// Lock the note by disabling serval parts of the form.
-        /// Set the menuLockNote contextmenu to display correctly.
-        /// </summary>
-        private void SetLockedNote()
-        {
-            this.menuLockNote.Checked = note.Locked;
-            const string locknotemsg = "&Lock note";
-            if (note.Locked)
-            {
-                this.CreatePbLock();
-                this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
-            }
-            else
-            {
-                this.DestroyPbLock();
-                this.menuLockNote.Text = locknotemsg;
-            }
-            this.pbResizeGrip.Visible = !note.Locked;
-            this.menuNoteSkins.Enabled = !note.Locked;
-            this.menuEditNote.Enabled = !note.Locked;
-            this.menuOnTop.Enabled = !note.Locked;
-            this.menuRollUp.Enabled = !note.Locked;
-        }
-
-        /// <summary>
         /// Requested to rollup or rolldown the note form.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -397,28 +441,6 @@ namespace NoteFly
             if (!this.SavePos.IsBusy)
             {
                 this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
-            }
-        }
-
-        /// <summary>
-        /// Roll up the note, by setting the height of the form.
-        /// Set the menuRollUp contextmenu to display correctly.
-        /// </summary>
-        private void SetRollupNote()
-        {
-            this.menuRollUp.Checked = this.note.RolledUp;
-            const string rollupmsg = "&Roll up";
-            if (this.note.RolledUp)
-            {
-                this.menuRollUp.Text = rollupmsg + "(click again to Roll Down)";
-                this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
-                this.Height = this.pnlHead.Height;
-            }
-            else
-            {
-                this.menuRollUp.Text = rollupmsg;
-                this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
-                this.Height = note.Height;
             }
         }
 
@@ -582,6 +604,53 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Lock the note by disabling serval parts of the form.
+        /// Set the menuLockNote contextmenu to display correctly.
+        /// </summary>
+        private void SetLockedNote()
+        {
+            this.menuLockNote.Checked = note.Locked;
+            const string locknotemsg = "&Lock note";
+            if (note.Locked)
+            {
+                this.CreatePbLock();
+                this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
+            }
+            else
+            {
+                this.DestroyPbLock();
+                this.menuLockNote.Text = locknotemsg;
+            }
+            this.pbResizeGrip.Visible = !note.Locked;
+            this.menuNoteSkins.Enabled = !note.Locked;
+            this.menuEditNote.Enabled = !note.Locked;
+            this.menuOnTop.Enabled = !note.Locked;
+            this.menuRollUp.Enabled = !note.Locked;
+        }
+
+        /// <summary>
+        /// Roll up the note, by setting the height of the form.
+        /// Set the menuRollUp contextmenu to display correctly.
+        /// </summary>
+        private void SetRollupNote()
+        {
+            this.menuRollUp.Checked = this.note.RolledUp;
+            const string rollupmsg = "&Roll up";
+            if (this.note.RolledUp)
+            {
+                this.menuRollUp.Text = rollupmsg + "(click again to Roll Down)";
+                this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
+                this.Height = this.pnlHead.Height;
+            }
+            else
+            {
+                this.menuRollUp.Text = rollupmsg;
+                this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
+                this.Height = note.Height;
+            }
+        }
+
+        /// <summary>
         /// Send note to Facebook.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -591,21 +660,6 @@ namespace NoteFly
             if (this.CheckConnection())
             {
                 Facebook facebook = new Facebook();
-                //TODO: call windows from here.
-            }
-        }
-
-
-        /// <summary>
-        /// Send note to twitter.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
-        {
-            if (this.CheckConnection())
-            {
-                Twitter twitter = new Twitter();
                 //TODO: call windows from here.
             }
         }
@@ -643,67 +697,20 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Create a PictureBox with lock picture.
+        /// Send note to twitter.
         /// </summary>
-        private void CreatePbLock()
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
         {
-            this.pbShowLock = new PictureBox();
-            this.pbShowLock.Name = "pbShowLock";
-            this.pbShowLock.Size = new Size(16, 16);
-            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
-            this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
-            this.pbShowLock.Visible = true;
-            this.pbShowLock.MouseDown += new MouseEventHandler(pnlHead_MouseDown);
-            this.pbShowLock.MouseMove += new MouseEventHandler(pnlHead_MouseMove);
-            this.pbShowLock.MouseUp += new MouseEventHandler(pnlHead_MouseUp);
-            this.pnlHead.Controls.Add(this.pbShowLock);
-            this.pbShowLock.BringToFront();
-        }
-
-        /// <summary>
-        /// Removes the lock picture and free the memory of the picture.
-        /// </summary>
-        private void DestroyPbLock()
-        {
-            if (pbShowLock != null)
+            if (this.CheckConnection())
             {
-                this.pbShowLock.Visible = false;
-                this.pbShowLock.Dispose();
-            }
-            GC.Collect();
-        }
-
-        /// <summary>
-        /// Check if some text is selected.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuFrmNoteOptions_Opening(object sender, CancelEventArgs e)
-        {
-            if (rtbNote.SelectedText.Length >= 1)
-            {
-                this.menuCopySelected.Enabled = true;
-            }
-            else
-            {
-                this.menuCopySelected.Enabled = false;
+                Twitter twitter = new Twitter();
+                //TODO: call windows from here.
             }
         }
 
-        /// <summary>
-        /// Copy the selected text in the rtbNote control
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuCopySelected_Click(object sender, EventArgs e)
-        {
-            if (rtbNote.SelectedText.Length >= 1)
-            {
-                Clipboard.SetText(this.rtbNote.SelectedText);
-            }
-        }
-
-        #endregion Methods
+		#endregion Methods 
 
 #if windows
         [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
