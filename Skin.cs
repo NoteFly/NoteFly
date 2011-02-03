@@ -5,6 +5,9 @@ using System.Drawing;
 
 namespace NoteFly
 {
+    /// <summary>
+    /// Skin data class.
+    /// </summary>
     public class Skin
     {
 		#region Fields (5) 

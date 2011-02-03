@@ -32,6 +32,9 @@ namespace NoteFly
     using System.Threading;
 #endif
 
+    /// <summary>
+    /// Program class, main entry application.
+    /// </summary>
     public class Program
     {
         #region Fields (2)
@@ -213,13 +216,9 @@ namespace NoteFly
             {
                 System.Windows.Forms.Application.EnableVisualStyles();
             }
+            Highlight.InitHighlighter();
             notes = new Notes(resetpositions);
             trayicon = new TrayIcon(notes);
-
-            if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
-            {
-                Highlight.InitHighlighter();
-            }
 
             if (Settings.UpdatecheckEverydays > 0)
             {
@@ -230,7 +229,7 @@ namespace NoteFly
                     updatethread.Start();
                 }
             }
-
+            Highlight.DeinitHighlighter();
             System.Windows.Forms.Application.Run();
         }
 
@@ -303,7 +302,7 @@ namespace NoteFly
         /// Actual loads the url.
         /// Also provide some cursor feedback.
         /// </summary>
-        /// <param name="uri"></param>
+        /// <param name="uri">The uri to load</param>
         private static void LoadURI(string uri_text)
         {
             try

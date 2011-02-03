@@ -30,7 +30,7 @@ namespace NoteFly
     using System.IO;
 #endif
     /// <summary>
-    /// The note class.
+    /// Note window.
     /// </summary>
     public partial class FrmNote : Form
     {
@@ -125,8 +125,6 @@ namespace NoteFly
         {
             if (!contentset)
             {
-                this.rtbNote.ForeColor = notes.GetTextClr(this.note.SkinNr);
-                //this.rtbNote.Font = new Font(Settings.FontContentFamily, Settings.FontContentSize);
                 this.lblTitle.ForeColor = notes.GetTextClr(this.note.SkinNr);
                 if (Settings.FontTitleStylebold)
                 {
@@ -174,10 +172,9 @@ namespace NoteFly
                 }
                 this.pnlNote.Location = new Point(0, pnlHead.Height-1);
                 this.pnlNote.Size = new Size(this.Width, this.Height - pnlHead.Height+1);
-                if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
-                {
-                    //Highlight.CheckSyntaxFull(rtbNote, note.SkinNr, notes);
-                }
+
+                Highlight.CheckSyntaxFull(this.rtbNote, note.SkinNr, notes);
+                
             }
         }
 		// Private Methods (30) 
@@ -365,9 +362,9 @@ namespace NoteFly
 
             this.SetLockedNote();
 
-            if (!this.SavePos.IsBusy)
+            if (!this.SaveWorker.IsBusy)
             {
-                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -419,12 +416,17 @@ namespace NoteFly
             this.rtbNote.BackColor = notes.GetPrimaryClr(this.note.SkinNr);
             this.pnlHead.BackColor = notes.GetPrimaryClr(this.note.SkinNr);
             this.lblTitle.ForeColor = notes.GetTextClr(this.note.SkinNr);
-            this.rtbNote.ForeColor = notes.GetTextClr(this.note.SkinNr);
-            if (!this.SavePos.IsBusy)
+            if (!Highlight.KeywordsInitialized)
             {
-                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+                Highlight.InitHighlighter();
             }
-            this.notes.frmamangenotesneedupdate = true;
+            Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, notes);
+            if (!this.SaveWorker.IsBusy)
+            {
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+            this.notes.frmmangenotesneedupdate = true;
+            Highlight.DeinitHighlighter();
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to "+this.notes.GetSkinName(this.note.SkinNr));
         }
 
@@ -439,9 +441,9 @@ namespace NoteFly
 
             this.SetRollupNote();
 
-            if (!this.SavePos.IsBusy)
+            if (!this.SaveWorker.IsBusy)
             {
-                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -456,9 +458,9 @@ namespace NoteFly
             this.menuOnTop.Checked = this.note.Ontop;
 
             this.TopMost = this.note.Ontop;
-            if (!this.SavePos.IsBusy)
+            if (!this.SaveWorker.IsBusy)
             {
-                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -490,9 +492,9 @@ namespace NoteFly
             this.note.Width = this.Width;
             this.note.Height = this.Height;
 
-            if (!this.note.Locked && !this.SavePos.IsBusy)
+            if (!this.note.Locked && !this.SaveWorker.IsBusy)
             {
-                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -555,9 +557,9 @@ namespace NoteFly
             this.note.Y = this.Location.Y;
 
             this.moving = false;
-            if (!this.SavePos.IsBusy)
+            if (!this.SaveWorker.IsBusy)
             {
-                this.SavePos.RunWorkerAsync(this.rtbNote.Rtf);
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
             this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
         }
@@ -599,8 +601,7 @@ namespace NoteFly
             }
             else
             {
-                const string msgOutOfScreen = "Note not saved. Position note is out of screen.";
-                Log.Write(LogType.error, msgOutOfScreen);
+                Log.Write(LogType.error, "Note "+this.note.Filename+" not saved. Position note is out of screen.");
             }
         }
 

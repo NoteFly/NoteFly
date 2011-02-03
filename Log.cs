@@ -41,9 +41,9 @@ namespace NoteFly
     }
 
     /// <summary>
-    /// This class write messages to a logfile.
+    /// Log class, for logging.
     /// </summary>
-    public static class Log
+    public class Log
     {
         private const string debuglogfilename = "debug.log";
 

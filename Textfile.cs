@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Textfile.cs" company="GNU">
 //  NoteFly a note application.
-//  Copyright (C) 2010  Tom
+//  Copyright (C) 2010-2011  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ namespace NoteFly
     using System.IO;
 
     /// <summary>
-    /// Save the note as a textfile
+    /// Textfile saving class
     /// </summary>
     public class Textfile
     {

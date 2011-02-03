@@ -18,12 +18,16 @@
 // https://code.google.com/p/oauth/source/browse/code/csharp/OAuthBase.cs
 //-----------------------------------------------------------------------
 using System;
-using System.Security.Cryptography;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
 namespace OAuth {
+
+    /// <summary>
+    /// OAuthBase class.
+    /// </summary>
 	public class OAuthBase {
 
         /// <summary>

@@ -31,7 +31,10 @@ namespace NoteFly
     using System.Windows.Forms;
     using System.Text;
 
-    public static class xmlUtil
+    /// <summary>
+    /// xmlUtil class, for saving and parsering xml.
+    /// </summary>
+    public class xmlUtil
     {
         #region Fields (5)
 
@@ -108,14 +111,14 @@ namespace NoteFly
         /// <param name="n">pointer to notes</param>
         /// <param name="notefilepath"></param>
         /// <returns>An note object</returns>
-        public static Note LoadNoteFile(Notes n, string notefilename)
+        public static Note LoadNoteFile(Notes notes, string notefilename)
         {
-            Note note = new Note(n, notefilename);
+            Note note = new Note(notes, notefilename);
             xmlread = new XmlTextReader(Path.Combine(Settings.NotesSavepath, notefilename));
             xmlread.ProhibitDtd = true;
             try
             {
-                note = ParserNoteNode(n, note, 0);
+                note = ParserNoteNode(notes, note, 0);
             }
             finally
             {
@@ -128,8 +131,11 @@ namespace NoteFly
         /// Parser a note node in a xml file, 
         /// readnotenum is the number of note node to be parser and returned as note object.
         /// </summary>
+        /// <param name="notes">pointer to notes</param>
+        /// <param name="note">the note object to set</param>
+        /// <param name="readnotenum">The number occurance of the note node to be parser (first, sencod etc.)</param>
         /// <returns>a note object</returns>
-        private static Note ParserNoteNode(Notes n, Note note, int readnotenum)
+        private static Note ParserNoteNode(Notes notes, Note note, int readnotenum)
         {
             int curnotenum = -1;
             bool endnode = false;
@@ -179,7 +185,7 @@ namespace NoteFly
                             note.Y = xmlread.ReadElementContentAsInt();
                             break;
                         case "skin":
-                            int skinnr = n.GetSkinNr(xmlread.ReadElementContentAsString());
+                            int skinnr = notes.GetSkinNr(xmlread.ReadElementContentAsString());
                             if (skinnr >= 0)
                             {
                                 note.SkinNr = skinnr;
@@ -885,7 +891,7 @@ namespace NoteFly
             catch (System.Net.WebException webexc)
             {
                 MessageBox.Show(webexc.Message);
-                Log.Write(LogType.error, "updating "+webexc.Message);
+                Log.Write(LogType.error, "updating " + webexc.Message);
             }
             finally
             {
@@ -901,26 +907,39 @@ namespace NoteFly
         /// <summary>
         /// Return a array of keywords used for the prgramming language we are doing a syntax check on.
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="file">the file to parser.</param>
         /// <returns>An array of keyword used for hightlighting.</returns>
-        public static string[] ParserLanguageLexical(string file)
+        public static string[] ParserLanguageLexical(string file, string languagename)
         {
-            xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, file));
-            xmlread.ProhibitDtd = true;
             string[] keywords = null;
-            while (xmlread.Read())
+            try
             {
-                //if (xmlread.Name == language)
-                //{
-                //    xmlreadsub = xmlread.ReadSubtree();
-                // while(xmlreadsub.Read())
-                if (xmlread.Name == "Keywords")
+                xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, file));
+                xmlread.ProhibitDtd = true;
+                bool readsubnodes = false;
+                while (xmlread.Read())
                 {
-                    keywords = xmlread.ReadElementContentAsString().Split(' ');
-                    break;
+                    if (xmlread.Name == "Language" || readsubnodes)
+                    {
+                        if (xmlread.GetAttribute("name") == languagename || readsubnodes)
+                        {
+                            readsubnodes = true;
+                            if (xmlread.Name == "Keywords")
+                            {
+                                keywords = xmlread.ReadElementContentAsString().Split(' ');
+                                readsubnodes = false;
+                                break;
+                            }
+                        } else {
+                            xmlread.Skip();
+                        }
+                    }
                 }
             }
-            xmlread.Close();
+            finally
+            {
+                xmlread.Close();
+            }
             return keywords;
         }
 

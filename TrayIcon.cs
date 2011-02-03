@@ -26,6 +26,9 @@ namespace NoteFly
     using System.Reflection;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// TrayIcon gui object class.
+    /// </summary>
     public class TrayIcon
     {
         /// <summary>
@@ -88,7 +91,7 @@ namespace NoteFly
         private ToolStripMenuItem menuExit;
 
         /// <summary>
-        /// The main entry point for the application.
+        /// Create a new trayicon in the systray.
         /// </summary>
         public TrayIcon(Notes notes)
         {

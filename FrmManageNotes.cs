@@ -29,7 +29,7 @@ namespace NoteFly
     using System.Data;
 
     /// <summary>
-    /// Manage notes class
+    /// Manage notes window
     /// </summary>
     public partial class FrmManageNotes : Form
     {
@@ -58,8 +58,6 @@ namespace NoteFly
         /// Initializes a new instance of the FrmManageNotes class.
         /// </summary>
         /// <param name="notes">The class notes, with access to all the notes.</param>
-        /// <param name="transparency">Is transparency enabled</param>
-        /// <param name="notecolor">The default note color.</param>
         public FrmManageNotes(Notes notes)
         {
             this.InitializeComponent();
@@ -211,12 +209,16 @@ namespace NoteFly
                 if (this.notes.GetNote(selrow.Index).Visible)
                 {
                     this.notes.GetNote(selrow.Index).CreateForm();
+                    this.Activate();
                 }
                 else
                 {
                     this.notes.GetNote(selrow.Index).DestroyForm();
                 }
+                xmlUtil.WriteNote(this.notes.GetNote(selrow.Index), notes.GetSkinName(this.notes.GetNote(selrow.Index).SkinNr), this.notes.GetNote(selrow.Index).GetContent());
             }
+            
+            this.notes.frmmangenotesneedupdate = false;
         }
 
         /// <summary>
@@ -226,7 +228,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
-            if (this.notes.frmamangenotesneedupdate)
+            if (this.notes.frmmangenotesneedupdate)
             {
                 this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(e.RowIndex).SkinNr);
                 this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(e.RowIndex).SkinNr);
@@ -238,7 +240,7 @@ namespace NoteFly
                 this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(e.RowIndex).Visible;
                 if (e.RowIndex == this.notes.CountNotes -1)
                 {
-                    this.notes.frmamangenotesneedupdate = false;
+                    this.notes.frmmangenotesneedupdate = false;
                 }
             }
             //System.Threading.Thread.Sleep(5);
@@ -277,6 +279,7 @@ namespace NoteFly
                     MessageBox.Show(msgaccessdenied);
                 }
             }
+            GC.Collect();
         }
 
         /// <summary>
@@ -284,7 +287,7 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
-            this.notes.frmamangenotesneedupdate = true;
+            this.notes.frmmangenotesneedupdate = true;
             DataTable datatable = new DataTable();
             this.dataGridView1.DataSource = datatable;
             datatable.Columns.Add("nr", typeof(String));

@@ -34,14 +34,14 @@ namespace NoteFly
 
 #endif
     /// <summary>
-    /// This class has a list of all notes.
+    /// Notes class, holds all notes
     /// </summary>
     public class Notes
     {
 		#region Fields (3) 
 
         /// <summary>
-        /// EXTENSION
+        /// The note extension
         /// </summary>
         public const string NOTEEXTENSION = ".nfn";
         /// <summary>
@@ -53,7 +53,7 @@ namespace NoteFly
         /// </summary>
         private List<Skin> skins;
 
-        public bool frmamangenotesneedupdate = false;
+        public bool frmmangenotesneedupdate = false;
 
 		#endregion Fields 
 
@@ -125,13 +125,13 @@ namespace NoteFly
         /// <summary>
         /// Create a new note object with some default settings.
         /// </summary>
-        /// <param name="title"></param>
-        /// <param name="skinnr"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="height"></param>
-        /// <param name="width"></param>
-        /// <returns></returns>
+        /// <param name="title">The title of the note.</param>
+        /// <param name="skinnr">The skinnr</param>
+        /// <param name="x">X-coordinate</param>
+        /// <param name="y">Y-coordinate</param>
+        /// <param name="height">Height of the note</param>
+        /// <param name="width">Width of the note</param>
+        /// <returns>Note object</returns>
         public Note CreateNote(String title, int skinnr, int x, int y, int width, int height)
         {
             Note newnote = new Note(this, this.GetNoteFilename(title));
@@ -169,8 +169,8 @@ namespace NoteFly
         /// Create a string used for filename of the note based on the
         /// title of the note limited to the first xx characters.
         /// </summary>
-        /// <param name="title"></param>
-        /// <returns></returns>
+        /// <param name="title">The title of the note</param>
+        /// <returns>A safe filename based on the title.</returns>
         public string GetNoteFilename(string title)
         {
             string title2 = StripForbiddenFilenameChars(title);
@@ -200,7 +200,7 @@ namespace NoteFly
         /// Gets the primary color.
         /// </summary>
         /// <param name="skinnr">The skin number</param>
-        /// <returns></returns>
+        /// <returns>The primary color</returns>
         public System.Drawing.Color GetPrimaryClr(int skinnr)
         {
             return GetColor(1, skinnr);

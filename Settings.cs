@@ -22,9 +22,9 @@ namespace NoteFly
     using System;
 
     /// <summary>
-    /// The setting class.
+    /// Settings data class.
     /// </summary>
-    public static class Settings
+    public class Settings
     {
         public static bool NotesTransparencyEnabled { get; set; }
 

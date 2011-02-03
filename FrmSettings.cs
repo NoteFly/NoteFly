@@ -246,7 +246,15 @@ namespace NoteFly
 #endif
                 xmlUtil.WriteSettings();
                 Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
+                if (!Highlight.KeywordsInitialized)
+                {
+                    Highlight.InitHighlighter();
+                }
                 this.notes.UpdateAllNoteForms();
+                if (Highlight.KeywordsInitialized)
+                {
+                    Highlight.DeinitHighlighter();
+                }
                 this.Close();
             }
         }
@@ -302,7 +310,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Enable nummericupdown control if transparecy is checked.
+        /// Toggle numProcTransparency enabled
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
@@ -312,7 +320,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The user changed the proxy settings.
+        /// Toggle iptbProxyAddress enabled.
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
@@ -458,6 +466,16 @@ namespace NoteFly
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
         }
 
-		#endregion Methods 
+        /// <summary>
+        /// Toggle tbDefaultEmail enabled.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxSocialEmailDefaultaddressBlank_CheckedChanged(object sender, EventArgs e)
+        {
+            this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
+        }
+
+        #endregion Methods
     }
 }

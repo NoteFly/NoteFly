@@ -24,6 +24,9 @@ namespace NoteFly
     using System.Text;
     using System.IO;
 
+    /// <summary>
+    /// Note data class, holds setting note.
+    /// </summary>
     public class Note
     {
         public string tempcontent;
@@ -41,6 +44,9 @@ namespace NoteFly
             this.filename = filename;
         }
 
+        /// <summary>
+        /// The filename of this note.
+        /// </summary>
         public string Filename
         {
             get
@@ -60,18 +66,45 @@ namespace NoteFly
             }
         }
 
-        //showed in managenotes.
+        /// <summary>
+        /// 
+        /// </summary>
         public string Title { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Visible { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public int SkinNr { get; set; }
-
-        //not showed.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Ontop { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public bool RolledUp { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Locked { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public int X { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public int Y { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public int Width { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public int Height { get; set; }
 
         /// <summary>
@@ -98,7 +131,7 @@ namespace NoteFly
             this.Visible = false;
             this.tempcontent = null;
             this.frmnote = null;
-            this.notes.frmamangenotesneedupdate = true;
+            this.notes.frmmangenotesneedupdate = true;
             GC.Collect();
         }
 

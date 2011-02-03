@@ -40,7 +40,6 @@ namespace NoteFly
         private System.Windows.Forms.ToolStripMenuItem menuOnTop;
         private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
         private System.Windows.Forms.ToolStripMenuItem menuLockNote;
-        private System.ComponentModel.BackgroundWorker SavePos;
         private System.Windows.Forms.ToolStripMenuItem menuHideNote;
         private System.Windows.Forms.ToolStripMenuItem menuSendTo;
         private System.Windows.Forms.ToolStripMenuItem menuSendToFacebook;
@@ -98,7 +97,7 @@ namespace NoteFly
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.pnlNote = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
-            this.SavePos = new System.ComponentModel.BackgroundWorker();
+            this.SaveWorker = new System.ComponentModel.BackgroundWorker();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.pnlHead.SuspendLayout();
             this.menuFrmNoteOptions.SuspendLayout();
@@ -172,7 +171,7 @@ namespace NoteFly
             this.menuNoteSkins.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuNoteSkins.Name = "menuNoteSkins";
             this.menuNoteSkins.Size = new System.Drawing.Size(226, 22);
-            this.menuNoteSkins.Text = "&Color";
+            this.menuNoteSkins.Text = "&Color skin";
             // 
             // menuSendTo
             // 
@@ -354,9 +353,9 @@ namespace NoteFly
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             this.pbResizeGrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseUp);
             // 
-            // SavePos
+            // SaveWorker
             // 
-            this.SavePos.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
+            this.SaveWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
             // 
             // toolTip
             // 
@@ -364,8 +363,7 @@ namespace NoteFly
             // 
             // FrmNote
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnCloseNote;
             this.ClientSize = new System.Drawing.Size(240, 240);
             this.ContextMenuStrip = this.menuFrmNoteOptions;
@@ -402,5 +400,6 @@ namespace NoteFly
         public System.Windows.Forms.RichTextBox rtbNote;
         private System.Windows.Forms.ToolStripMenuItem menuCopySelected;
         public System.Windows.Forms.ToolTip toolTip;
+        private System.ComponentModel.BackgroundWorker SaveWorker;
     }
 }

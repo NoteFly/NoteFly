@@ -24,13 +24,12 @@ namespace NoteFly
     using System.IO;
 
     /// <summary>
-    /// Own exceptions, and log what happend.
+    /// CustomException class
     /// </summary>
     public class CustomException : ApplicationException
     {
         /// <summary>
         /// Initializes a new instance of the CustomException class.
-        /// This let the programme crash.
         /// </summary>
         /// <param name="message">the message to log</param>
         public CustomException(string message)

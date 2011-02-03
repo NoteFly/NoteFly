@@ -23,7 +23,7 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// A editbox made for typing in a IP address their IP version4 or IP version6 address.
+    /// IPTextBox gui object class.
     /// </summary>
     public partial class IPTextBox : UserControl
     {

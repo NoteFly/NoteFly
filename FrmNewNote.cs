@@ -29,7 +29,7 @@ namespace NoteFly
     using System.Text;
 
     /// <summary>
-    /// Class to create new note.
+    /// New and edit note window.
     /// </summary>
     public partial class FrmNewNote : Form
     {

@@ -763,6 +763,7 @@ namespace NoteFly
             this.chxSocialEmailDefaultaddressBlank.TabIndex = 24;
             this.chxSocialEmailDefaultaddressBlank.Text = "blank";
             this.chxSocialEmailDefaultaddressBlank.UseVisualStyleBackColor = true;
+            this.chxSocialEmailDefaultaddressBlank.CheckedChanged += new System.EventHandler(this.chxSocialEmailDefaultaddressBlank_CheckedChanged);
             // 
             // lbTextDefaultEmail
             // 
@@ -778,7 +779,7 @@ namespace NoteFly
             this.tbDefaultEmail.AccessibleDescription = "Editbox default email address";
             this.tbDefaultEmail.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.tbDefaultEmail.Enabled = false;
-            this.tbDefaultEmail.Location = new System.Drawing.Point(69, 80);
+            this.tbDefaultEmail.Location = new System.Drawing.Point(72, 81);
             this.tbDefaultEmail.Name = "tbDefaultEmail";
             this.tbDefaultEmail.Size = new System.Drawing.Size(200, 20);
             this.tbDefaultEmail.TabIndex = 23;
@@ -911,7 +912,7 @@ namespace NoteFly
             this.numUpdateCheckDays.TabIndex = 28;
             this.numUpdateCheckDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numUpdateCheckDays.Value = new decimal(new int[] {
-            7,
+            14,
             0,
             0,
             0});
