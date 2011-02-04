@@ -37,6 +37,9 @@ namespace NoteFly
         private static string[] keywords_html;
         private static string[] keywords_php;
         private static string[] keywords_sql;
+        private const string phpstartkeyword = "<?php";
+        private const string phpendkeyword = "?>";
+        private static string phplinecomment = "//";
 
         #endregion Fields
 
@@ -115,187 +118,114 @@ namespace NoteFly
                     Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
                     InitHighlighter();
                 }
-                int posstarttag = 0;
-                int poslastspace = 0;
-                bool htmlendtag = false;
-                int startphpdoc = 0;
-                int endphpdoc = 0;
+
+                bool ishtmlendtag = false;
+                int posstarthtmltag = 0;
+                int posstartphp = int.MaxValue;
+                int posendphp = int.MaxValue;
+                int posstartphplinecomment = 0;
+                int lencommentline = 0;
+                int poslastphpkeyword = 0;
                 for (int i = 0; i < rtb.TextLength; i++)
                 {
-                    if (Settings.HighlightHTML)
+                    switch (rtb.Text[i])
                     {
-                        if (rtb.Text[i] == '<')
-                        {
-                            posstarttag = i;
-                        }
-                        else if (rtb.Text[i] == '>')
-                        {
-                            htmlendtag = false;
-                            if (rtb.Text[posstarttag + 1] == '/')
+                        case '<':
+                            if (Settings.HighlightPHP)
                             {
-                                htmlendtag = true;
-                            }
-                            int diffstarttagendtag = i - posstarttag;
-                            if (diffstarttagendtag > 0)
-                            {
-                                string htmlnodename;
-                                if (htmlendtag)
+                                if (i + 5 <= rtb.TextLength)
                                 {
-                                    htmlnodename = rtb.Text.Substring(posstarttag + 2, diffstarttagendtag - 2);
-                                }
-                                else
-                                {
-                                    htmlnodename = rtb.Text.Substring(posstarttag + 1, diffstarttagendtag - 1);
-                                }
-
-                                if (ValidatingHtmlTag(htmlnodename, htmlendtag))
-                                {
-                                    ColorText(rtb, posstarttag, diffstarttagendtag + 1, Color.Blue);
-                                }
-                                else
-                                {
-                                    ColorText(rtb, posstarttag, diffstarttagendtag + 1, Color.Red); //+1 for the > character
+                                    if (rtb.Text.Substring(i, 5) == phpstartkeyword)
+                                    {
+                                        //start php part
+                                        posstartphp = i; //+ phpstartkeyword.Length;
+                                        ColorText(rtb, i, phpstartkeyword.Length, Color.Green);
+                                        poslastphpkeyword = posstartphp + phpstartkeyword.Length;
+                                    }
                                 }
                             }
-                        }
-                    }
-                    if ((Settings.HighlightPHP) || (Settings.HighlightSQL))
-                    {
-                        if (rtb.Text[i] == '<' || rtb.Text[i] == '>')
-                        {
-                            if (i + 3 < rtb.Text.Length)
+                            if (Settings.HighlightHTML)
                             {
-                                string isstartphpdoc = rtb.Text.Substring(i, 5);
-                                if (isstartphpdoc.ToLower() == "<?php")
+                                if (i < posstartphp || i > posendphp)
                                 {
-                                    startphpdoc = i;
+                                    posstarthtmltag = i;
                                 }
                             }
-                            else if (i > 1)
+                            break;
+                        case '>':
+                            if (Settings.HighlightPHP)
                             {
-                                if (rtb.Text.Substring(i - 1, 2) == "?>")
+                                if (i > 6)
                                 {
-                                    endphpdoc = i;
+                                    if (rtb.Text.Substring(i - 1, phpendkeyword.Length) == phpendkeyword)
+                                    {
+                                        //end php part
+                                        posendphp = i + phpendkeyword.Length;
+                                        ColorText(rtb, posendphp - phpendkeyword.Length - 1, phpendkeyword.Length, Color.Green);
+                                    }
                                 }
                             }
-                        }
-                        else if (rtb.Text[i] == ' ' || i == rtb.Text.Length - 1)
-                        {
-                            if (i > 1 && i > startphpdoc && i < endphpdoc)
+                            if (Settings.HighlightHTML)
                             {
-                                //php
-                                int diffstartend = i - poslastspace;
-                                string isphp = rtb.Text.Substring(poslastspace, diffstartend);
-                                if (ValidatingPhp(isphp))
+                                if ((i < posstartphp || i > posendphp) && i > 0)
                                 {
-                                    ColorText(rtb, poslastspace, diffstartend, Color.Blue);
-                                }
-                                else
-                                {
-                                    ColorText(rtb, poslastspace, diffstartend, Color.DarkRed);
+                                    int lenhtmltag = i - posstarthtmltag + 1;
+                                    string ishtml = rtb.Text.Substring(posstarthtmltag, lenhtmltag);
+                                    ValidatingHtmlTag(ishtml, rtb, posstarthtmltag, lenhtmltag);
                                 }
                             }
-
-                            poslastspace = i;
-                        }
+                            break;
+                        case '/':
+                            if (Settings.HighlightPHP)
+                            {
+                                if (i < rtb.TextLength && i > posstartphp && i < posendphp)
+                                {
+                                    if (rtb.Text.Substring(i, phplinecomment.Length) == phplinecomment)
+                                    {
+                                        posstartphplinecomment = i;
+                                    }
+                                }
+                            }
+                            break;
+                        case '\n':
+                            if (Settings.HighlightPHP)
+                            {
+                                if (posstartphplinecomment != 0)
+                                {
+                                    lencommentline = i - posstartphplinecomment;
+                                    ColorText(rtb, posstartphplinecomment, lencommentline, Color.Gray);
+                                    posstartphplinecomment = 0;
+                                }
+                                poslastphpkeyword = i + 1; //+1 for '\n'
+                            }
+                            break;
+                        case ' ':
+                            if (Settings.HighlightPHP)
+                            {
+                                if (i > posstartphp && i < posendphp - phpendkeyword.Length)
+                                {
+                                    int lenphpkeyword = i - poslastphpkeyword;
+                                    if (lenphpkeyword > 0)
+                                    {
+                                        string isphp = rtb.Text.Substring(poslastphpkeyword, lenphpkeyword);
+                                        if (ValidatingPhp(isphp))
+                                        {
+                                            ColorText(rtb, poslastphpkeyword, lenphpkeyword, Color.DarkCyan);
+                                        }
+                                        else
+                                        {
+                                            ColorText(rtb, poslastphpkeyword, lenphpkeyword, Color.DarkRed);
+                                        }
+                                    }
+                                    poslastphpkeyword = i + 1; //+1 for ' '
+                                }
+                            }
+                            break;
                     }
                 }
             }
             rtb.SelectionStart = cursorpos;
         }
-
-
-        /// <summary>
-        /// highlight the change.
-        /// </summary>
-        /// <param name="newcharpos">The position where the new charcter is typed.</param>
-        //public static void CheckSyntaxQuick(RichTextBox rtbcode, int newcharpos)
-        //{
-        //    if (newcharpos > 0)
-        //    {
-        //        int cursorpos = rtbcode.SelectionStart;
-        //        if (Settings.HighlightHTML)
-        //        {
-        //            if (newcharpos < 0)
-        //            {
-        //                throw new CustomException("negative character location.");
-        //            }
-
-        //            if (rtbcode.Text[newcharpos] == '<')
-        //            {
-        //                for (int i = newcharpos; i > 0; i--)
-        //                {
-        //                    if (rtbcode.Text[i] == '<')
-        //                    {
-        //                        ColorText(rtbcode, newcharpos, 1, Color.Red);
-        //                        break;
-        //                    }
-        //                    else if (rtbcode.Text[i] == '>')
-        //                    {
-        //                        ColorText(rtbcode, newcharpos, 1, Color.Black);
-        //                        break;
-        //                    }
-        //                }
-        //            }
-        //            else if (rtbcode.Text[newcharpos] == '>')
-        //            {
-        //                string htmlnodename = String.Empty;
-        //                int htmlnodestartpos = -1;
-        //                bool htmlendnode = false;
-        //                for (int i = newcharpos; i >= 0; i--)
-        //                {
-        //                    try
-        //                    {
-        //                        int chkpos = i - 1;
-        //                        if (chkpos < 0)
-        //                        {
-        //                            chkpos = 0;
-        //                        }
-        //                        if (rtbcode.Text[i] == '<')
-        //                        {
-        //                            htmlnodestartpos = i;
-        //                            htmlnodename = rtbcode.Text.Substring(i + 1, newcharpos - 1 - i);
-        //                            break;
-        //                        }
-        //                        else if (rtbcode.Text[i] == '/' && rtbcode.Text[chkpos] == '<')
-        //                        {
-        //                            htmlnodestartpos = i - 1;
-        //                            htmlnodename = rtbcode.Text.Substring(i + 1, newcharpos - 1 - i);
-        //                            htmlendnode = true;
-        //                            break;
-        //                        }
-        //                    }
-        //                    catch (IndexOutOfRangeException outofrangeexc)
-        //                    {
-        //                        throw new CustomException(outofrangeexc.Message + " " + outofrangeexc.StackTrace);
-        //                    }
-        //                }
-
-        //                if ((!String.IsNullOrEmpty(htmlnodename)) && (htmlnodestartpos != -1))
-        //                {
-        //                    if (ValidingHTMLNode(htmlnodename, htmlendnode))
-        //                    {
-        //                        ColorText(rtbcode, htmlnodestartpos, newcharpos - htmlnodestartpos + 1, Color.Blue);
-        //                    }
-        //                    else
-        //                    {
-        //                        ColorText(rtbcode, htmlnodestartpos, newcharpos - htmlnodestartpos + 1, Color.Red);
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    ColorText(rtbcode, newcharpos, newcharpos + 1, Color.Black);
-        //                }
-        //            }
-        //            else
-        //            {
-        //                ColorText(rtbcode, newcharpos, 1, Color.Black);
-        //            }
-        //        }
-        //        rtbcode.SelectionStart = cursorpos;
-        //        rtbcode.SelectionLength = 0;
-        //    }
-        //}
 
         /// <summary>
         /// Color some part of the rich edit text.
@@ -329,25 +259,94 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Find out if it is a html tag.
+        /// Highlight known tag and tag attributes.
         /// </summary>
         /// <param name="ishtml">Is it html to check.</param>
         /// <returns>true if it is html</returns>
-        private static bool ValidatingHtmlTag(string ishtml, bool endtag)
+        private static void ValidatingHtmlTag(string ishtml, RichTextBox rtb, int posstarthtmltag, int lenhtmltag)
         {
-            if (endtag)
+            bool isquotestring = false;
+            int posstartquotestring = int.MaxValue;
+            bool endtag = false;
+            int lenhighlight = 0;
+            if (ishtml[1] == '/')
             {
-                ishtml = ishtml.TrimStart('/');
+                endtag = true;
+                ishtml = ishtml.Remove(1, 1); //e.g. "</title>" becomes "<title>"
             }
-            ishtml = ishtml.ToLower();
-            for (int i = 0; i < keywords_html.Length; i++)
+            if (ishtml.Length > 2)
             {
-                if (ishtml == keywords_html[i])
+                if (ishtml[ishtml.Length - 2] == '/') //finds <br />
                 {
-                    return true;
+                    endtag = true;
+                    if (ishtml[ishtml.Length - 3] == ' ') 
+                    {
+                        ishtml = ishtml.Remove(ishtml.Length - 2, 2); //e.g. <br /> becomes <br>
+                    }
+                    else
+                    {
+                        ishtml = ishtml.Remove(ishtml.Length - 2, 1); //e.g. <wrong/> becomes <wrong>
+                    }
                 }
             }
-            return false;
+            ishtml = ishtml.ToLower(); //e.g. "<BR>" becomes "<br>"
+
+            int lastpos = 1;
+            int posendattributevalue = int.MaxValue;
+            for (int pos = 1; pos < ishtml.Length; pos++)
+            {
+                if (ishtml[pos] == '"' || ishtml[pos] == '\'')
+                {
+                    if (isquotestring)
+                    {
+                        ColorText(rtb, posstarthtmltag+posstartquotestring, (pos - posstartquotestring+1), Color.Gray); //+1 for quote itself
+                    }
+                    else
+                    {
+                        posstartquotestring = pos;
+                    }
+                    isquotestring = !isquotestring;
+                }
+                else if ((ishtml[pos] == ' ') || (ishtml[pos] == '>') && (pos < posstartquotestring))
+                {
+                    string curattribute = ishtml.Substring(lastpos, pos - lastpos);
+                    string[] curattributeparts = curattribute.Split('='); //split atribute name and valeau.
+                    bool attributefound = false;
+                    /*
+                    if (endtag)
+                    {
+                        lenhighlight = pos - lastpos + 1;
+                    }
+                    else
+                    {
+                        lenhighlight = pos - lastpos;
+                    }
+                     */
+                    string curattributename = curattributeparts[0];
+                    if (endtag)
+                    {
+                        lenhighlight = curattributename.Length + 1;
+                    }
+                    else
+                    {
+                        lenhighlight = curattributename.Length;
+                    }
+                    for (int n = 0; n < keywords_html.Length; n++)
+                    {
+                        if (curattributename.Equals(keywords_html[n], StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            attributefound = true;
+                            ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Color.Blue); //known attribute
+                            break;
+                        }
+                    }
+                    if (!attributefound)
+                    {
+                        ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Color.Red);
+                    }
+                    lastpos = pos + 1;
+                }
+            }
         }
 
         /// <summary>
@@ -367,48 +366,6 @@ namespace NoteFly
             }
             return false;
         }
-
-
-        //    int startsearch = 0;
-        //    if (((ishtml[0] > 76) && (ishtml[0] < 91)) || ((ishtml[0] > 108) && (ishtml[0] < 123)))
-        //    {
-        //        startsearch = 55;
-        //    }
-        //    for (int n = startsearch; n < htmltags.Length; n++)
-        //    {
-        //        if (ishtml.ToUpper() == htmltags[n])
-        //        {
-        //            if (endnode)
-        //            {
-        //                htmlstructure[n] = false;
-        //                if (htmlendtagpolicy[n] == 2)
-        //                {
-        //                    //forbidden endtag
-        //                    return false;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (!htmlstructure[n])
-        //                {
-        //                    htmlstructure[n] = true;
-        //                }
-        //                else
-        //                {
-        //                    //Check if endtag ommiting is allowed before returning false.
-        //                    if (htmlendtagpolicy[n] == 1)
-        //                    {
-        //                        return false;
-        //                    }
-        //                }
-        //            }
-
-        //            return true;
-        //        }
-        //    }
-
-        //    return false;
-        //}
 
         #endregion Methods
     }

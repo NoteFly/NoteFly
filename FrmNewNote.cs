@@ -210,7 +210,6 @@ namespace NoteFly
                 {
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
                 }
-                MessageBox.Show(this.rtbNewNote.Rtf, "RTF text set to");
             }
         }
 

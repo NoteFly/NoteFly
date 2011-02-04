@@ -454,6 +454,7 @@ namespace NoteFly
             }
             else
             {
+                this.chxCheckUpdates.Checked = false;
                 this.numUpdateCheckDays.Enabled = false;
             }
             this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;

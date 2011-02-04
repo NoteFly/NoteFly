@@ -46,10 +46,6 @@ namespace NoteFly
         /// </summary>
         private bool frmnewnoteshowed = false;
 
-        //private FrmAbout frmabout;
-        //private FrmManageNotes frmmanagenotes;
-        //private FrmSettings frmsettings;
-
         /// <summary>
         /// Notes class has a list an methodes for accessing notes.
         /// </summary>
@@ -89,6 +85,10 @@ namespace NoteFly
         /// Exit menu option
         /// </summary>
         private ToolStripMenuItem menuExit;
+
+        private static FrmManageNotes frmmanagenotes;
+
+        private FrmSettings frmsettings;
 
         /// <summary>
         /// Create a new trayicon in the systray.
@@ -252,8 +252,21 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void MenuManageNotes_Click(object sender, EventArgs e)
         {
-            FrmManageNotes frmmanagenotes = new FrmManageNotes(this.notes);
-            frmmanagenotes.Show();
+            if (frmmanagenotes == null)
+            {
+                frmmanagenotes = new FrmManageNotes(this.notes);
+                frmmanagenotes.Show();
+            }
+            else if (frmmanagenotes.IsDisposed)
+            {
+                frmmanagenotes = new FrmManageNotes(this.notes);
+                frmmanagenotes.Show();
+            }
+            else
+            {
+                frmmanagenotes.WindowState = FormWindowState.Normal;
+                frmmanagenotes.Activate();
+            }
         }
 
         /// <summary>
@@ -263,8 +276,22 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuSettings_Click(object sender, EventArgs e)
         {
-            FrmSettings frmsettings = new FrmSettings(this.notes);
-            frmsettings.Show();
+            if (frmsettings == null)
+            {
+                this.frmsettings = new FrmSettings(this.notes);
+                this.frmsettings.Show();
+            }
+            else if (this.frmsettings.IsDisposed)
+            {
+                this.frmsettings = new FrmSettings(this.notes);
+                this.frmsettings.Show();
+            }
+            else
+            {
+                this.frmsettings.WindowState = FormWindowState.Normal;
+                this.frmsettings.Activate();
+
+            }
         }
 
         /// <summary>
@@ -303,6 +330,17 @@ namespace NoteFly
             }
             components.Dispose();
             Application.Exit();
+        }
+
+        /// <summary>
+        /// Do a refresh on the FrmManageNotes window if it's created.
+        /// </summary>
+        public static void RefreshFrmManageNotes()
+        {
+            if (frmmanagenotes != null)
+            {
+                frmmanagenotes.Refresh();
+            }
         }
     }
 }

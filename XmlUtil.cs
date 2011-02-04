@@ -463,7 +463,7 @@ namespace NoteFly
             Settings.FontContentFamily = "Arial";
             Settings.FontContentSize = 11;
             Settings.FontTextdirection = 0;
-            Settings.FontTitleFamily = "Arial Black";
+            Settings.FontTitleFamily = "Arial";
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;
             Settings.HighlightHTML = false;
@@ -476,7 +476,7 @@ namespace NoteFly
             Settings.NetworkProxyEnabled = false;
             Settings.NotesTooltipsEnabled = true;
             Settings.NotesClosebtnHidenotepermanently = true;
-            Settings.NotesDefaultSkinnr = 1;
+            Settings.NotesDefaultSkinnr = 0; //default skin: yellow
             Settings.NotesSavepath = Program.AppDataFolder;
             Settings.NotesTransparencyEnabled = true;
             Settings.NotesTransparencyLevel = 0.9;
@@ -771,7 +771,7 @@ namespace NoteFly
                 xmlwrite.WriteAttributeString("count", numskins.ToString()); //for performance predefine list Capacity, not required.
                 string[] name = new string[numskins] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark" };
                 string[] primaryclr = new string[numskins] { "FFEF14", "FFA700", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A", "002626" };
-                string[] selectclr = new string[numskins] { "F7A90E", "C17D00", "26262C", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624" };
+                string[] selectclr = new string[numskins] { "E0D616", "C17D00", "E0E0E0", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624" };
                 string[] highlightclr = new string[numskins] { "FFED7C", "FFD46D", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "494949" };
                 string[] textclr = new string[numskins] { "000000", "000000", "000000", "000000", "000000", "000000", "000000", "FFFFFF" };
                 for (UInt16 i = 0; i < numskins; i++)

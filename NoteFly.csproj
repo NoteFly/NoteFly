@@ -23,7 +23,8 @@
     <GenerateManifests>true</GenerateManifests>
     <ExcludedPermissions>System.Diagnostics.EventLogPermission, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089; System.Data.OleDb.OleDbPermission, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089; System.Data.SqlClient.SqlClientPermission, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ExcludedPermissions>
     <ReleaseVersion>1.0</ReleaseVersion>
-    <Win32Resource>icons.res</Win32Resource>
+    <Win32Resource>
+    </Win32Resource>
     <SignAssembly>true</SignAssembly>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -39,6 +40,8 @@
     <ApplicationVersion>1.0.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ApplicationIcon>icon_big.ico</ApplicationIcon>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -204,10 +207,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
+    <Content Include="icon_big.ico" />
     <Content Include="Resources\icon_big.ico" />
     <Content Include="Resources\icon_big.png" />
     <Content Include="Resources\icon_small.ico" />
     <Content Include="Resources\icon_small.png" />
+    <Content Include="Resources\trayicon_remake.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

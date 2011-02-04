@@ -153,7 +153,6 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lbTextTwTimeout = new System.Windows.Forms.Label();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
             this.btnResetSettings = new System.Windows.Forms.Button();
@@ -162,6 +161,7 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -1007,17 +1007,6 @@ namespace NoteFly
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
-            // 
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.chxLogDebug);
@@ -1094,6 +1083,17 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1105,6 +1105,7 @@ namespace NoteFly
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(360, 240);
             this.Name = "FrmSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;

@@ -132,6 +132,7 @@ namespace NoteFly
             this.tempcontent = null;
             this.frmnote = null;
             this.notes.frmmangenotesneedupdate = true;
+            TrayIcon.RefreshFrmManageNotes();
             GC.Collect();
         }
 

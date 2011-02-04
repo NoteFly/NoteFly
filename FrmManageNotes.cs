@@ -204,18 +204,19 @@ namespace NoteFly
             DataGridViewSelectedRowCollection selectedrows = this.dataGridView1.SelectedRows;
             foreach (DataGridViewRow selrow in selectedrows)
             {
-                selrow.Cells["visible"].Value = !this.notes.GetNote(selrow.Index).Visible;
-                this.notes.GetNote(selrow.Index).Visible = !this.notes.GetNote(selrow.Index).Visible;
-                if (this.notes.GetNote(selrow.Index).Visible)
+                int notepos = GetNoteposBySelrow(selrow.Index);
+                selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).Visible;
+                this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
+                if (this.notes.GetNote(notepos).Visible)
                 {
-                    this.notes.GetNote(selrow.Index).CreateForm();
+                    this.notes.GetNote(notepos).CreateForm();
                     this.Activate();
                 }
                 else
                 {
-                    this.notes.GetNote(selrow.Index).DestroyForm();
+                    this.notes.GetNote(notepos).DestroyForm();
                 }
-                xmlUtil.WriteNote(this.notes.GetNote(selrow.Index), notes.GetSkinName(this.notes.GetNote(selrow.Index).SkinNr), this.notes.GetNote(selrow.Index).GetContent());
+                xmlUtil.WriteNote(this.notes.GetNote(notepos), notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
             }
             
             this.notes.frmmangenotesneedupdate = false;
@@ -230,14 +231,15 @@ namespace NoteFly
         {
             if (this.notes.frmmangenotesneedupdate)
             {
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(e.RowIndex).SkinNr);
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(e.RowIndex).SkinNr);
-                if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr))
+                int notepos = GetNoteposBySelrow(e.RowIndex);
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(notepos).SkinNr);
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(notepos).SkinNr);
+                if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(e.RowIndex).SkinNr);
+                    this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
                 }
 
-                this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(e.RowIndex).Visible;
+                this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
                 if (e.RowIndex == this.notes.CountNotes -1)
                 {
                     this.notes.frmmangenotesneedupdate = false;
@@ -247,26 +249,36 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Get the note position in the list by looking up the nr colom with at the partialer row.
+        /// </summary>
+        /// <param name="rowindex"></param>
+        /// <returns></returns>
+        private int GetNoteposBySelrow(int rowindex)
+        {
+            return Convert.ToInt32(this.dataGridView1.Rows[rowindex].Cells["nr"].Value) - 1;
+        }
+
+        /// <summary>
         /// Deletes the notes in memory and files that are selected in a Gridview.
         /// </summary>
         /// <param name="id"></param>
         private void DeleteNotesSelectedRowsGrid(DataGridViewSelectedRowCollection selrows)
         {
-            int[] deletedids = new int[selrows.Count];
+            int[] deletedselrows = new int[selrows.Count];
             for (int r = 0; r < selrows.Count; r++)
             {
-                int nr = selrows[r].Index;
-                string filename = this.notes.GetNote(nr).Filename;
+                int notepos = GetNoteposBySelrow(selrows[r].Index);
+                string filename = this.notes.GetNote(notepos).Filename;
                 try
                 {
-                    this.notes.GetNote(nr).DestroyForm();
+                    this.notes.GetNote(notepos).DestroyForm();
                     string filepath = Path.Combine(Settings.NotesSavepath, filename);
                     File.Delete(filepath);
                     if (Settings.ProgramLogInfo)
                     {
                         Log.Write(LogType.info, "Deleted note: " + filepath);
                     }
-                    this.notes.RemoveNote(nr);
+                    this.notes.RemoveNote(notepos);
                 }
                 catch (FileNotFoundException filenotfoundexc)
                 {
