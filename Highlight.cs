@@ -125,7 +125,8 @@ namespace NoteFly
                 int posendphp = int.MaxValue;
                 int posstartphplinecomment = 0;
                 int lencommentline = 0;
-                int poslastphpkeyword = 0;
+                int poslastkeyword = 0;
+                bool tagopen = false;
                 for (int i = 0; i < rtb.TextLength; i++)
                 {
                     switch (rtb.Text[i])
@@ -140,19 +141,21 @@ namespace NoteFly
                                         //start php part
                                         posstartphp = i; //+ phpstartkeyword.Length;
                                         ColorText(rtb, i, phpstartkeyword.Length, Color.Green);
-                                        poslastphpkeyword = posstartphp + phpstartkeyword.Length;
+                                        poslastkeyword = posstartphp + phpstartkeyword.Length;
                                     }
                                 }
                             }
                             if (Settings.HighlightHTML)
                             {
-                                if (i < posstartphp || i > posendphp)
+                                if ((i < posstartphp || i > posendphp) && !tagopen)
                                 {
                                     posstarthtmltag = i;
                                 }
                             }
+                            tagopen = true;
                             break;
                         case '>':
+                            tagopen = false;
                             if (Settings.HighlightPHP)
                             {
                                 if (i > 6)
@@ -196,7 +199,7 @@ namespace NoteFly
                                     ColorText(rtb, posstartphplinecomment, lencommentline, Color.Gray);
                                     posstartphplinecomment = 0;
                                 }
-                                poslastphpkeyword = i + 1; //+1 for '\n'
+                                poslastkeyword = i + 1; //+1 for '\n'
                             }
                             break;
                         case ' ':
@@ -204,22 +207,39 @@ namespace NoteFly
                             {
                                 if (i > posstartphp && i < posendphp - phpendkeyword.Length)
                                 {
-                                    int lenphpkeyword = i - poslastphpkeyword;
+                                    int lenphpkeyword = i - poslastkeyword;
                                     if (lenphpkeyword > 0)
                                     {
-                                        string isphp = rtb.Text.Substring(poslastphpkeyword, lenphpkeyword);
+                                        string isphp = rtb.Text.Substring(poslastkeyword, lenphpkeyword);
                                         if (ValidatingPhp(isphp))
                                         {
-                                            ColorText(rtb, poslastphpkeyword, lenphpkeyword, Color.DarkCyan);
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, Color.DarkCyan);
                                         }
                                         else
                                         {
-                                            ColorText(rtb, poslastphpkeyword, lenphpkeyword, Color.DarkRed);
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, Color.DarkRed);
                                         }
                                     }
-                                    poslastphpkeyword = i + 1; //+1 for ' '
+                                    
                                 }
                             }
+                            if (Settings.HighlightSQL)
+                            {
+                                int lensqlkeyword = i - poslastkeyword;
+                                if (lensqlkeyword > 0)
+                                {
+                                    string issql = rtb.Text.Substring(poslastkeyword, lensqlkeyword);
+                                    if (ValidatingSql(issql))
+                                    {
+                                        ColorText(rtb, poslastkeyword, lensqlkeyword, Color.Purple);
+                                    }
+                                    else
+                                    {
+                                        //ColorText(rtb, poslastkeyword, lensqlkeyword, Color.DarkRed);
+                                    }
+                                }
+                            }
+                            poslastkeyword = i + 1; //+1 for ' '
                             break;
                     }
                 }
@@ -267,6 +287,7 @@ namespace NoteFly
         {
             bool isquotestring = false;
             int posstartquotestring = int.MaxValue;
+            int posendquotestring = 0;
             bool endtag = false;
             int lenhighlight = 0;
             if (ishtml[1] == '/')
@@ -279,7 +300,7 @@ namespace NoteFly
                 if (ishtml[ishtml.Length - 2] == '/') //finds <br />
                 {
                     endtag = true;
-                    if (ishtml[ishtml.Length - 3] == ' ') 
+                    if (ishtml[ishtml.Length - 3] == ' ')
                     {
                         ishtml = ishtml.Remove(ishtml.Length - 2, 2); //e.g. <br /> becomes <br>
                     }
@@ -299,7 +320,8 @@ namespace NoteFly
                 {
                     if (isquotestring)
                     {
-                        ColorText(rtb, posstarthtmltag+posstartquotestring, (pos - posstartquotestring+1), Color.Gray); //+1 for quote itself
+                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), Color.Gray); //+1 for quote itself
+                        posendquotestring = pos +1; //+1 for quote itself counts.
                     }
                     else
                     {
@@ -307,44 +329,37 @@ namespace NoteFly
                     }
                     isquotestring = !isquotestring;
                 }
-                else if ((ishtml[pos] == ' ') || (ishtml[pos] == '>') && (pos < posstartquotestring))
+                else if ((ishtml[pos] == '>') || (ishtml[pos] == ' '))
                 {
-                    string curattribute = ishtml.Substring(lastpos, pos - lastpos);
-                    string[] curattributeparts = curattribute.Split('='); //split atribute name and valeau.
-                    bool attributefound = false;
-                    /*
-                    if (endtag)
+                    if (lastpos < posstartquotestring || lastpos > posendquotestring)
                     {
-                        lenhighlight = pos - lastpos + 1;
-                    }
-                    else
-                    {
-                        lenhighlight = pos - lastpos;
-                    }
-                     */
-                    string curattributename = curattributeparts[0];
-                    if (endtag)
-                    {
-                        lenhighlight = curattributename.Length + 1;
-                    }
-                    else
-                    {
-                        lenhighlight = curattributename.Length;
-                    }
-                    for (int n = 0; n < keywords_html.Length; n++)
-                    {
-                        if (curattributename.Equals(keywords_html[n], StringComparison.InvariantCultureIgnoreCase))
+                        string curattribute = ishtml.Substring(lastpos, pos - lastpos);
+                        string[] curattributeparts = curattribute.Split('='); //split atribute name and valeau.
+                        string curattributename = curattributeparts[0];
+                        if (endtag)
                         {
-                            attributefound = true;
-                            ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Color.Blue); //known attribute
-                            break;
+                            lenhighlight = curattributename.Length + 1;
                         }
+                        else
+                        {
+                            lenhighlight = curattributename.Length;
+                        }
+                        bool attributefound = false;
+                        for (int n = 0; n < keywords_html.Length; n++)
+                        {
+                            if (curattributename.Equals(keywords_html[n], StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                attributefound = true;
+                                ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Color.Blue);
+                                break;
+                            }
+                        }
+                        if (!attributefound)
+                        {
+                             ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Color.Red);
+                        }
+                        lastpos = pos + 1; //+1 for ' ' or '>'
                     }
-                    if (!attributefound)
-                    {
-                        ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Color.Red);
-                    }
-                    lastpos = pos + 1;
                 }
             }
         }
@@ -360,6 +375,24 @@ namespace NoteFly
             for (int i = 0; i < keywords_php.Length; i++)
             {
                 if (isphp == keywords_php[i])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Find out if it is a sql keyword.
+        /// </summary>
+        /// <param name="isphp"></param>
+        /// <returns></returns>
+        private static bool ValidatingSql(string issql)
+        {
+            issql.ToLower();
+            for (int i = 0; i < keywords_sql.Length; i++)
+            {
+                if (issql == keywords_sql[i])
                 {
                     return true;
                 }
