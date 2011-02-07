@@ -64,6 +64,12 @@ namespace NoteFly
 
         public static bool HighlightHTML { get; set; }
 
+        public static string HighlightHTMLColorInvalid { get; set; }
+
+        public static string HighlightHTMLColorValid { get; set; }
+
+        public static string HighlightHTMLColorString { get; set; }
+
         public static bool HighlightHyperlinks { get; set; }
 
         public static bool HighlightPHP { get; set; }
@@ -84,15 +90,11 @@ namespace NoteFly
 
         public static string SocialTwitterUsername { get; set; }
 
-        //public static string SocialTwitterpassword { get; set; } //Decreated, use OAuth instead.
-
-        public static bool SocialTwitterUseSSL { get; set; } //on by default and not changable with gui.
+        public static bool SocialTwitterUseSSL { get; set; } //on by default and should not be changable with gui.
 
         public static bool SocialFacebookEnabled { get; set; }
 
-        public static bool SocialFacebookSavesession { get; set; }
-
-        public static bool SocialFacebookUseSSL { get; set; } //on by default and not changable with gui.
+        public static bool SocialFacebookUseSSL { get; set; } //on by default and should not be changable with gui.
 
         //public static string SocialFacebookSessionKey { get; set; } //Decreated, use OAuth instead.
         //public static string SocialFacebookSessionSecret { get; set; } //Decreated

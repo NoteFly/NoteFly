@@ -49,15 +49,13 @@ namespace NoteFly
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
         /// <param name="note">the note to edit.</param>
-        public FrmNewNote(Notes notes, Note note)
+        public FrmNewNote(Notes notes, Note note, Point locfrmnewnote)
         {
-            this.InitializeComponent();
-            this.notes = notes;
+            ConstructFrmNewNote(notes);
+            this.Location = locfrmnewnote;
             this.note = note;
-            this.SetFontSettings();
-            this.SetColorsForm(this.note.SkinNr);
             this.Text = "edit note";
-
+            this.SetColorsForm(this.note.SkinNr);
             this.tbTitle.Text = note.Title;
             if (String.IsNullOrEmpty(this.note.tempcontent))
             {
@@ -70,10 +68,6 @@ namespace NoteFly
                 this.note.tempcontent = String.Empty;
                 this.note.tempcontent = null;
             }
-            
-            this.toolTip.Active = Settings.NotesTooltipsEnabled;
-            this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
-            this.tbTitle.Select();
         }
 
         /// <summary>
@@ -82,16 +76,12 @@ namespace NoteFly
         /// <param name="notes">The class with access to all notes.</param>
         public FrmNewNote(Notes notes)
         {
-            this.InitializeComponent();
-            this.notes = notes;
-            this.SetFontSettings();
-            this.SetColorsForm(Settings.NotesDefaultSkinnr);
+            ConstructFrmNewNote(notes);
+            this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width / 2 - this.Width/2, Screen.PrimaryScreen.WorkingArea.Height / 2 - this.Height/2);
             this.note = null;
             this.Text = "new note";
+            this.SetColorsForm(Settings.NotesDefaultSkinnr);
             this.tbTitle.Text = DateTime.Now.ToString();
-            this.toolTip.Active = Settings.NotesTooltipsEnabled;
-            this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
-            this.tbTitle.Select();
         }
 
 		#endregion Constructors 
@@ -99,6 +89,16 @@ namespace NoteFly
 		#region Methods (30) 
 
 		// Private Methods (30) 
+
+        private void ConstructFrmNewNote(Notes notes)
+        {
+            this.InitializeComponent();
+            this.notes = notes;
+            this.SetFontSettings();
+            this.toolTip.Active = Settings.NotesTooltipsEnabled;
+            this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
+            this.tbTitle.Select();
+        }
 
         /// <summary>
         /// Set all the form colors by the skinnr.
@@ -111,6 +111,7 @@ namespace NoteFly
             this.lbTextTitle.ForeColor = this.notes.GetTextClr(skinnr);
             this.rtbNewNote.ForeColor = this.notes.GetTextClr(skinnr);
             this.tbTitle.BackColor = this.notes.GetHighlightClr(skinnr);
+            this.rtbNewNote.BackColor = this.notes.GetPrimaryClr(skinnr);
 
             this.btnTextBold.ForeColor = this.notes.GetTextClr(skinnr);
             this.btnTextItalic.ForeColor = this.notes.GetTextClr(skinnr);

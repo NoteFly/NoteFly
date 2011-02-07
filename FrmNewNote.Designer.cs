@@ -465,6 +465,7 @@ namespace NoteFly
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(143, 90);
             this.Name = "FrmNewNote";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TransparencyKey = System.Drawing.Color.LightPink;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);

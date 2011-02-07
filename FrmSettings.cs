@@ -199,7 +199,6 @@ namespace NoteFly
                 Settings.SocialTwitterEnabled = this.chxSocialTwitterEnabled.Checked;
                 Settings.SocialTwitterUsername = this.tbTwitterUser.Text;
                 Settings.SocialFacebookEnabled = this.chxSocialFacebookEnabled.Checked;
-                Settings.SocialFacebookSavesession = this.chxSaveFBSession.Checked;
                 //tab: Network
                 Settings.UpdatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value);
                 Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
@@ -444,7 +443,6 @@ namespace NoteFly
             this.chxSocialTwitterEnabled.Checked = Settings.SocialTwitterEnabled;
             this.tbTwitterUser.Text = Settings.SocialTwitterUsername;
             this.chxSocialFacebookEnabled.Checked = Settings.SocialFacebookEnabled;
-            this.chxSaveFBSession.Checked = Settings.SocialFacebookSavesession;
             //tab: Network
             if (Settings.UpdatecheckEverydays > 0)
             {

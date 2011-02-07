@@ -57,7 +57,7 @@ namespace OAuth {
 
             public string Value {
                 get { return value; }
-            }            
+            }
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace OAuth {
         //
         // List of know and used oauth parameters' names
         //
-		protected const string OAuthConsumerKeyKey = "oauth_consumer_key";
+		protected const string OAuthConsumerKey = "oauth_consumer_key";
 		protected const string OAuthCallbackKey = "oauth_callback";
 		protected const string OAuthVersionKey = "oauth_version";
 		protected const string OAuthSignatureMethodKey = "oauth_signature_method";
@@ -96,7 +96,7 @@ namespace OAuth {
 
         protected const string HMACSHA1SignatureType = "HMAC-SHA1";
         protected const string PlainTextSignatureType = "PLAINTEXT";
-        protected const string RSASHA1SignatureType = "RSA-SHA1";
+        //protected const string RSASHA1SignatureType = "RSA-SHA1";
 
         protected Random random = new Random(); //review randomness, based on Donald E. Knuth's subtractive random number generator algorithm. Is based on clock.
 
@@ -231,7 +231,7 @@ namespace OAuth {
             parameters.Add(new QueryParameter(OAuthNonceKey, nonce));
             parameters.Add(new QueryParameter(OAuthTimestampKey, timeStamp));
             parameters.Add(new QueryParameter(OAuthSignatureMethodKey, signatureType));
-            parameters.Add(new QueryParameter(OAuthConsumerKeyKey, consumerKey));
+            parameters.Add(new QueryParameter(OAuthConsumerKey, consumerKey));
 
             if (!string.IsNullOrEmpty(token)) {
                 parameters.Add(new QueryParameter(OAuthTokenKey, token));

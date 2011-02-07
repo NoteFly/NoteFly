@@ -289,9 +289,6 @@ namespace NoteFly
                         case "SocialFacebookEnabled":
                             Settings.SocialFacebookEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
-                        //case "SocialFacebookSavesession":
-                        //    Settings.SocialFacebookSavesession = xmlread.ReadElementContentAsBoolean();
-                        //    break;
                         case "SocialFacebookUseSSL":
                             Settings.SocialFacebookUseSSL = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -342,6 +339,15 @@ namespace NoteFly
                             Settings.UpdatecheckEverydays = xmlread.ReadElementContentAsInt();
                             break;
                         //strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
+                        case "HighlightHTMLColorInvalid":
+                            Settings.HighlightHTMLColorInvalid = xmlread.ReadElementContentAsString();
+                            break;
+                        case "HighlightHTMLColorValid":
+                            Settings.HighlightHTMLColorValid = xmlread.ReadElementContentAsString();
+                            break;
+                        case "HighlightHTMLColorString":
+                            Settings.HighlightHTMLColorString = xmlread.ReadElementContentAsString();
+                            break;
                         case "FontContentFamily":
                             Settings.FontContentFamily = xmlread.ReadElementContentAsString();
                             break;
@@ -467,6 +473,9 @@ namespace NoteFly
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;
             Settings.HighlightHTML = false;
+            Settings.HighlightHTMLColorInvalid = "#FF0000";
+            Settings.HighlightHTMLColorValid = "#0026FF";
+            Settings.HighlightHTMLColorString = "#808080";
             Settings.HighlightHyperlinks = true;
             Settings.HighlightPHP = false;
             Settings.HighlightSQL = false;
@@ -683,7 +692,6 @@ namespace NoteFly
                 WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
                 WriteXMLBool("SocialEmailEnabled", Settings.SocialEmailEnabled);
                 WriteXMLBool("SocialFacebookEnabled", Settings.SocialFacebookEnabled);
-                WriteXMLBool("SocialFacebookSavesession", Settings.SocialFacebookSavesession);
                 WriteXMLBool("SocialFacebookUseSSL", Settings.SocialFacebookUseSSL);
                 WriteXMLBool("SocialTwitterEnabled", Settings.SocialTwitterEnabled);
                 WriteXMLBool("SocialTwitterUseSSL", Settings.SocialTwitterUseSSL);
@@ -702,6 +710,10 @@ namespace NoteFly
                 xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
                 //strings
+                xmlwrite.WriteElementString("HighlightHTMLColorInvalid", Settings.HighlightHTMLColorInvalid);
+                xmlwrite.WriteElementString("HighlightHTMLColorValid", Settings.HighlightHTMLColorValid);
+                xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.HighlightHTMLColorString );
+
                 xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                 xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
@@ -726,7 +738,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="colorstring"></param>
         /// <returns></returns>
-        private static System.Drawing.Color ConvToClr(string colorstring)
+        public static System.Drawing.Color ConvToClr(string colorstring)
         {
             //HEX color
             return System.Drawing.ColorTranslator.FromHtml(colorstring);

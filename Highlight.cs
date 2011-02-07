@@ -320,7 +320,7 @@ namespace NoteFly
                 {
                     if (isquotestring)
                     {
-                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), Color.Gray); //+1 for quote itself
+                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.HighlightHTMLColorString) ); //+1 for quote itself
                         posendquotestring = pos +1; //+1 for quote itself counts.
                     }
                     else
@@ -350,13 +350,13 @@ namespace NoteFly
                             if (curattributename.Equals(keywords_html[n], StringComparison.InvariantCultureIgnoreCase))
                             {
                                 attributefound = true;
-                                ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Color.Blue);
-                                break;
+                                ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.HighlightHTMLColorValid) );
+                                break; 
                             }
                         }
                         if (!attributefound)
                         {
-                             ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Color.Red);
+                             ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.HighlightHTMLColorInvalid));
                         }
                         lastpos = pos + 1; //+1 for ' ' or '>'
                     }

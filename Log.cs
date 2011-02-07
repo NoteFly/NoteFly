@@ -98,7 +98,7 @@ namespace NoteFly
                     File.Move(errorlog, errorlog + ".old");
                 }
 
-                new Textfile(false, errorlog, null, line.ToString());
+                new Textfile(TextfileWriteType.log , errorlog, null, line.ToString());
             }
         }
 

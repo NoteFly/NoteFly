@@ -51,8 +51,6 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxLogDebug;
         private System.Windows.Forms.TabPage tabHighlight;
         private System.Windows.Forms.CheckBox chxHighlightHTML;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox chxSaveFBSession;
         private IPTextBox iptbProxyAddress;
         private System.Windows.Forms.Label lbTextTwMs;
         private System.Windows.Forms.Label lbTextTwTimeout;
@@ -141,8 +139,6 @@ namespace NoteFly
             this.lbWarningTwitterPassword = new System.Windows.Forms.Label();
             this.tabFacebook = new System.Windows.Forms.TabPage();
             this.chxSocialFacebookEnabled = new System.Windows.Forms.CheckBox();
-            this.chxSaveFBSession = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.numUpdateCheckDays = new System.Windows.Forms.NumericUpDown();
@@ -153,6 +149,7 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lbTextTwTimeout = new System.Windows.Forms.Label();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
             this.btnResetSettings = new System.Windows.Forms.Button();
@@ -161,7 +158,8 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -821,9 +819,9 @@ namespace NoteFly
             // 
             // tabFacebook
             // 
-            this.tabFacebook.Controls.Add(this.chxSocialFacebookEnabled);
-            this.tabFacebook.Controls.Add(this.chxSaveFBSession);
             this.tabFacebook.Controls.Add(this.label1);
+            this.tabFacebook.Controls.Add(this.textBox1);
+            this.tabFacebook.Controls.Add(this.chxSocialFacebookEnabled);
             this.tabFacebook.Location = new System.Drawing.Point(4, 22);
             this.tabFacebook.Name = "tabFacebook";
             this.tabFacebook.Padding = new System.Windows.Forms.Padding(3);
@@ -841,27 +839,6 @@ namespace NoteFly
             this.chxSocialFacebookEnabled.TabIndex = 2;
             this.chxSocialFacebookEnabled.Text = "Show send to Facebook";
             this.chxSocialFacebookEnabled.UseVisualStyleBackColor = true;
-            // 
-            // chxSaveFBSession
-            // 
-            this.chxSaveFBSession.AutoSize = true;
-            this.chxSaveFBSession.Checked = true;
-            this.chxSaveFBSession.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxSaveFBSession.Location = new System.Drawing.Point(11, 59);
-            this.chxSaveFBSession.Name = "chxSaveFBSession";
-            this.chxSaveFBSession.Size = new System.Drawing.Size(232, 17);
-            this.chxSaveFBSession.TabIndex = 0;
-            this.chxSaveFBSession.Text = "Save Facebook session.(gives 24h access)";
-            this.chxSaveFBSession.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 79);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(198, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Do not enable this on a public computer.";
             // 
             // tabNetwerk
             // 
@@ -1007,6 +984,17 @@ namespace NoteFly
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.chxLogDebug);
@@ -1083,16 +1071,21 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
-            // iptbProxyAddress
+            // textBox1
             // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
+            this.textBox1.Location = new System.Drawing.Point(127, 68);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(224, 20);
+            this.textBox1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 71);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(110, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Facebook login email:";
             // 
             // FrmSettings
             // 
@@ -1183,5 +1176,7 @@ namespace NoteFly
         private System.Windows.Forms.ComboBox cbxFontNoteContent;
         private System.Windows.Forms.CheckBox cbxFontNoteTitleBold;
         private System.Windows.Forms.CheckBox cbxShowTooltips;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

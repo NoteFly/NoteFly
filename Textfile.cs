@@ -22,6 +22,14 @@ namespace NoteFly
     using System;
     using System.IO;
 
+    public enum TextfileWriteType
+    {
+        log,
+        exporttext,
+        exporthtml,
+        exportphp
+    }
+
     /// <summary>
     /// Textfile saving class
     /// </summary>
@@ -34,30 +42,64 @@ namespace NoteFly
         /// <param name="filename">the filename</param>
         /// <param name="title">the title of the textfile</param>
         /// <param name="content">the content of the textfile</param>
-        public Textfile(bool isnote, string filename, string title, string content)
+        public Textfile(TextfileWriteType writetype, string filename, string title, string content)
         {
             FileStream fs = null;
             StreamWriter writer = null;
             try
             {
-                if (isnote)
+                switch (writetype)
                 {
-                    fs = new FileStream(filename, FileMode.OpenOrCreate);
-                }
-                else
-                {
-                    fs = new FileStream(filename, FileMode.Append);
-                }
-
-                writer = new StreamWriter(fs);
-                if (isnote)
-                {
-                    writer.WriteLine("Title: " + title + "\r\n");
-                    writer.Write(content);
-                }
-                else
-                {
-                    writer.Write(content);
+                    case TextfileWriteType.log:
+                        fs = new FileStream(filename, FileMode.Append);
+                        writer = new StreamWriter(fs);
+                        writer.Write(content);
+                        break;
+                    case TextfileWriteType.exporttext:
+                        fs = new FileStream(filename, FileMode.OpenOrCreate);
+                        writer = new StreamWriter(fs);
+                        writer.WriteLine("Title: " + title + Environment.NewLine);
+                        writer.Write(content);
+                        break;
+                    case TextfileWriteType.exporthtml:
+                        fs = new FileStream(filename, FileMode.OpenOrCreate);
+                        writer = new StreamWriter(fs);
+                        //trying to make turn a incompleet html fragement into a valid html5 document.
+                        if (!content.Contains("<!DOCTYPE"))
+                        {
+                            writer.WriteLine("<!DOCTYPE html>");
+                        }
+                        if (!content.Contains("<html"))
+                        {
+                            writer.WriteLine("<html>");
+                        }
+                        if (!content.Contains("<head>"))
+                        {
+                            writer.WriteLine("<head>");
+                            writer.WriteLine("\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
+                            writer.WriteLine("\t<title>" + title + "</title>");
+                            writer.WriteLine("</head>");
+                        }
+                        if (!content.Contains("<body"))
+                        {
+                            writer.WriteLine("<body>");
+                        }
+                        writer.WriteLine("<h1>" + title + "</h1>");
+                        writer.WriteLine("<p>"+content+"</p>");
+                        if (!content.Contains("</body>"))
+                        {
+                            writer.WriteLine("</body>");
+                        }
+                        if (!content.Contains("</html>"))
+                        {
+                            writer.WriteLine("</html>");
+                        }
+                        break;
+                    case TextfileWriteType.exportphp:
+                        fs = new FileStream(filename, FileMode.OpenOrCreate);
+                        writer = new StreamWriter(fs);
+                        writer.Write(content);
+                        break;
                 }
             }
             finally

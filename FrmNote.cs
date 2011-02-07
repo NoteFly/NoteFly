@@ -24,11 +24,12 @@ namespace NoteFly
     using System;
     using System.ComponentModel;
     using System.Drawing;
+    using System.IO;
     using System.Windows.Forms;
 #if windows
     using System.Runtime.InteropServices;
-    using System.IO;
 #endif
+
     /// <summary>
     /// Note window.
     /// </summary>
@@ -284,7 +285,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note);
+            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note, this.Location);
             frmnewnote.Show();
             this.note.DestroyForm();
         }
@@ -681,19 +682,24 @@ namespace NoteFly
             sfdlg.CheckPathExists = true;
             sfdlg.OverwritePrompt = true;
             sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
-            sfdlg.Title = "Save note to textfile.";
-            sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm";
+            sfdlg.Title = "Save note to file";
+            sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
-                //new Textfile(true, sfdlg.FileName, this.note.Title, this.note);
                 string logmsg = "Note saved to ";
                 switch (sfdlg.FilterIndex)
                 {
-                    case 0:
+                    case 1:
+                        new Textfile(TextfileWriteType.exporttext, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
                         Log.Write(LogType.info, logmsg + "textfile.");
                         break;
-                    case 1:
+                    case 2:
+                        new Textfile(TextfileWriteType.exporthtml, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
                         Log.Write(LogType.info, logmsg + "htmlfile.");
+                        break;
+                    case 3:
+                        new Textfile(TextfileWriteType.exportphp, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
+                        Log.Write(LogType.info, logmsg + "phpfile.");
                         break;
                 }
             }
