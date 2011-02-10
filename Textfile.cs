@@ -22,11 +22,29 @@ namespace NoteFly
     using System;
     using System.IO;
 
+    /// <summary>
+    /// What file type is being written.
+    /// </summary>
     public enum TextfileWriteType
     {
+        /// <summary>
+        /// Writing to a logfile.
+        /// </summary>
         log,
+
+        /// <summary>
+        /// Writing to plain text file.
+        /// </summary>
         exporttext,
+
+        /// <summary>
+        /// Writing to html file.
+        /// </summary>
         exporthtml,
+
+        /// <summary>
+        /// Writing to php file.
+        /// </summary>
         exportphp
     }
 

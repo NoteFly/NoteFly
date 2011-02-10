@@ -39,7 +39,9 @@ namespace NoteFly
         private static string[] keywords_sql;
         private const string phpstartkeyword = "<?php";
         private const string phpendkeyword = "?>";
-        private static string phplinecomment = "//";
+        private static string phpcommentline = "//";
+        private static string phpcommentstart = "/*";
+        private static string phpcommentend = "*/";
 
         #endregion Fields
 
@@ -123,7 +125,8 @@ namespace NoteFly
                 int posstarthtmltag = 0;
                 int posstartphp = int.MaxValue;
                 int posendphp = int.MaxValue;
-                int posstartphplinecomment = 0;
+                int posphpcommentstart = int.MaxValue;
+                bool isphpmultilinecomment = false;
                 int lencommentline = 0;
                 int poslastkeyword = 0;
                 bool tagopen = false;
@@ -139,7 +142,7 @@ namespace NoteFly
                                     if (rtb.Text.Substring(i, 5) == phpstartkeyword)
                                     {
                                         //start php part
-                                        posstartphp = i; //+ phpstartkeyword.Length;
+                                        posstartphp = i;
                                         ColorText(rtb, i, phpstartkeyword.Length, Color.Green);
                                         poslastkeyword = posstartphp + phpstartkeyword.Length;
                                     }
@@ -164,7 +167,7 @@ namespace NoteFly
                                     {
                                         //end php part
                                         posendphp = i + phpendkeyword.Length;
-                                        ColorText(rtb, posendphp - phpendkeyword.Length - 1, phpendkeyword.Length, Color.Green);
+                                        ColorText(rtb, posendphp - phpendkeyword.Length - 1, phpendkeyword.Length, xmlUtil.ConvToClr(Settings.HighlightPHPColorValidfunctions) );
                                     }
                                 }
                             }
@@ -181,11 +184,35 @@ namespace NoteFly
                         case '/':
                             if (Settings.HighlightPHP)
                             {
-                                if (i < rtb.TextLength && i > posstartphp && i < posendphp)
+                                if (i > posstartphp && i < posendphp)
                                 {
-                                    if (rtb.Text.Substring(i, phplinecomment.Length) == phplinecomment)
+                                    if (i < rtb.TextLength - 1)
                                     {
-                                        posstartphplinecomment = i;
+                                        if (rtb.Text.Substring(i, phpcommentline.Length) == phpcommentline)
+                                        {
+                                            if (posphpcommentstart > i)
+                                            {
+                                                isphpmultilinecomment = false;
+                                                posphpcommentstart = i;
+                                            }
+                                        }
+                                        else if (rtb.Text.Substring(i, phpcommentstart.Length) == phpcommentstart)
+                                        {
+                                            isphpmultilinecomment = true;
+                                            posphpcommentstart = i;
+                                        }
+                                    }
+                                    else if (i > 1)
+                                    {
+                                        if (rtb.Text.Substring(i - phpcommentline.Length, phpcommentline.Length) == phpcommentend)
+                                        {
+                                            if (isphpmultilinecomment)
+                                            {
+                                                int lencomment = i - posphpcommentstart;
+                                                ColorText(rtb, posphpcommentstart, lencomment, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment) );
+                                                posphpcommentstart = int.MaxValue;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -193,14 +220,29 @@ namespace NoteFly
                         case '\n':
                             if (Settings.HighlightPHP)
                             {
-                                if (posstartphplinecomment != 0)
+                                if (posphpcommentstart != int.MaxValue)
                                 {
-                                    lencommentline = i - posstartphplinecomment;
-                                    ColorText(rtb, posstartphplinecomment, lencommentline, Color.Gray);
-                                    posstartphplinecomment = 0;
+                                    if (!isphpmultilinecomment)
+                                    {
+                                        lencommentline = i - posphpcommentstart;
+                                        ColorText(rtb, posphpcommentstart, lencommentline, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment) );
+                                        posphpcommentstart = int.MaxValue;
+                                    }
                                 }
-                                poslastkeyword = i + 1; //+1 for '\n'
                             }
+                            if (Settings.HighlightSQL)
+                            {
+                                int lensqlkeyword = i - poslastkeyword;
+                                if (lensqlkeyword > 0)
+                                {
+                                    string issql = rtb.Text.Substring(poslastkeyword, lensqlkeyword);
+                                    if (ValidatingSql(issql))
+                                    {
+                                        ColorText(rtb, poslastkeyword, lensqlkeyword, Color.Purple);
+                                    }
+                                }
+                            }
+                            poslastkeyword = i + 1; //+1 for '\n'
                             break;
                         case ' ':
                             if (Settings.HighlightPHP)
@@ -232,10 +274,6 @@ namespace NoteFly
                                     if (ValidatingSql(issql))
                                     {
                                         ColorText(rtb, poslastkeyword, lensqlkeyword, Color.Purple);
-                                    }
-                                    else
-                                    {
-                                        //ColorText(rtb, poslastkeyword, lensqlkeyword, Color.DarkRed);
                                     }
                                 }
                             }
@@ -371,7 +409,11 @@ namespace NoteFly
         /// <returns></returns>
         private static bool ValidatingPhp(string isphp)
         {
-            isphp.ToLower();
+            isphp = isphp.ToLower();
+            if (keywords_php == null)
+            {
+                InitHighlighter();
+            }
             for (int i = 0; i < keywords_php.Length; i++)
             {
                 if (isphp == keywords_php[i])
@@ -389,7 +431,11 @@ namespace NoteFly
         /// <returns></returns>
         private static bool ValidatingSql(string issql)
         {
-            issql.ToLower();
+            issql = issql.ToLower();
+            if (keywords_sql == null)
+            {
+                InitHighlighter();
+            }
             for (int i = 0; i < keywords_sql.Length; i++)
             {
                 if (issql == keywords_sql[i])

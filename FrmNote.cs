@@ -28,6 +28,7 @@ namespace NoteFly
     using System.Windows.Forms;
 #if windows
     using System.Runtime.InteropServices;
+    using System.Web;
 #endif
 
     /// <summary>
@@ -663,8 +664,21 @@ namespace NoteFly
         {
             if (this.CheckConnection())
             {
-                Facebook facebook = new Facebook();
-                //TODO: call windows from here.
+                string protocolhandler = "http://";
+                if (Settings.SocialFacebookUseSSL)
+                {
+                    protocolhandler = "https://";
+                }
+                string update;
+                if (this.rtbNote.TextLength > 320)
+                {
+                    update = this.rtbNote.Text.Substring(0, 320);
+                }
+                else
+                {
+                    update = this.rtbNote.Text;
+                }
+                Program.LoadLink(protocolhandler + "facebook.com/share.php?mgs=" + HttpUtility.UrlEncode(update));
             }
         }
 
@@ -714,8 +728,20 @@ namespace NoteFly
         {
             if (this.CheckConnection())
             {
-                Twitter twitter = new Twitter();
-                //TODO: call windows from here.
+                string protocolhandler = "http://";
+                if (Settings.SocialTwitterUseSSL) {
+                    protocolhandler = "https://";
+                }
+                string tweet;
+                if (this.rtbNote.TextLength > 140)
+                {
+                    tweet = this.rtbNote.Text.Substring(0, 140);
+                }
+                else
+                {
+                    tweet = this.rtbNote.Text;
+                }
+                Program.LoadLink(protocolhandler + "twitter.com/login?redirect_after_login=%2Fhome%3F" + HttpUtility.UrlEncode(tweet));
             }
         }
 

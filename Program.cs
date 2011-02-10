@@ -199,7 +199,7 @@ namespace NoteFly
                             break;
                         //turn off xp visual style.
                         case "/disablevisualstyles":
-                            visualstyle = false; //about ~400ms slower on my system on display time.
+                            visualstyle = false; //about ~400ms slower on my system on display time notes.
                             break;
                         //rescue option for notes loading out of screen.
                         case "/resetpositions":

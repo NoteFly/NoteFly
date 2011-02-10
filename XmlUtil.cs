@@ -348,6 +348,15 @@ namespace NoteFly
                         case "HighlightHTMLColorString":
                             Settings.HighlightHTMLColorString = xmlread.ReadElementContentAsString();
                             break;
+                        case "HighlightPHPColorComment":
+                            Settings.HighlightPHPColorComment = xmlread.ReadElementContentAsString();
+                            break;
+                        case "HighlightPHPColorDocumentstartend":
+                            Settings.HighlightPHPColorDocumentstartend = xmlread.ReadElementContentAsString();
+                            break;
+                        case "HighlightPHPColorValidfunctions":
+                            Settings.HighlightPHPColorValidfunctions = xmlread.ReadElementContentAsString();
+                            break;
                         case "FontContentFamily":
                             Settings.FontContentFamily = xmlread.ReadElementContentAsString();
                             break;
@@ -478,6 +487,9 @@ namespace NoteFly
             Settings.HighlightHTMLColorString = "#808080";
             Settings.HighlightHyperlinks = true;
             Settings.HighlightPHP = false;
+            Settings.HighlightPHPColorComment = "#333333";
+            Settings.HighlightPHPColorDocumentstartend = "";
+            Settings.HighlightPHPColorValidfunctions = "";
             Settings.HighlightSQL = false;
             Settings.NetworkConnectionForceipv6 = false;
             Settings.NetworkConnectionTimeout = 8000;
@@ -713,7 +725,9 @@ namespace NoteFly
                 xmlwrite.WriteElementString("HighlightHTMLColorInvalid", Settings.HighlightHTMLColorInvalid);
                 xmlwrite.WriteElementString("HighlightHTMLColorValid", Settings.HighlightHTMLColorValid);
                 xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.HighlightHTMLColorString );
-
+                xmlwrite.WriteElementString("HighlightPHPColorComment", Settings.HighlightPHPColorComment);
+                xmlwrite.WriteElementString("HighlightPHPColorDocumentstartend", Settings.HighlightPHPColorDocumentstartend);
+                xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.HighlightPHPColorValidfunctions);
                 xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                 xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);

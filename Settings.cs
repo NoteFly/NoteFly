@@ -74,6 +74,12 @@ namespace NoteFly
 
         public static bool HighlightPHP { get; set; }
 
+        public static string HighlightPHPColorComment { get; set; }
+
+        public static string HighlightPHPColorDocumentstartend { get; set; }
+
+        public static string HighlightPHPColorValidfunctions { get; set; }
+
         public static bool HighlightSQL { get; set; }
 
         public static bool ConfirmLinkclick { get; set; }

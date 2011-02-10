@@ -118,7 +118,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Notes.cs" />
-    <Compile Include="OAuthBase.cs" />
+    <Compile Include="extensions\OAuthBase.cs" />
     <Compile Include="Properties\Resources1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
