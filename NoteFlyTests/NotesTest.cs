@@ -182,7 +182,7 @@ namespace NoteFlyTests
         {
             Notes target = new Notes(false);
             int skinnr = 0;
-            string hexbackgroundcolor = "#F7A90E";
+            string hexbackgroundcolor = "#E0D616"; //was #F7A90E
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexbackgroundcolor);
             Color actual;
             actual = target.GetSelectClr(skinnr);

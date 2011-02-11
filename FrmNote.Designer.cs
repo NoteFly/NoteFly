@@ -41,11 +41,6 @@ namespace NoteFly
         private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
         private System.Windows.Forms.ToolStripMenuItem menuLockNote;
         private System.Windows.Forms.ToolStripMenuItem menuHideNote;
-        private System.Windows.Forms.ToolStripMenuItem menuSendTo;
-        private System.Windows.Forms.ToolStripMenuItem menuSendToFacebook;
-        private System.Windows.Forms.ToolStripMenuItem menuSendToTwitter;
-        private System.Windows.Forms.ToolStripMenuItem menuSendToEmail;
-        private System.Windows.Forms.ToolStripMenuItem menuSendToTextfile;
         private System.Windows.Forms.ToolStripMenuItem menuRollUp;
 
         /// <summary>
@@ -83,8 +78,6 @@ namespace NoteFly
             this.menuNoteSkins = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendTo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSendToTwitter = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSendToFacebook = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
@@ -152,7 +145,7 @@ namespace NoteFly
             this.menuLockNote,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(227, 224);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(227, 246);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -177,43 +170,25 @@ namespace NoteFly
             // 
             this.menuSendTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuSendToEmail,
-            this.menuSendToTwitter,
-            this.menuSendToFacebook,
             this.menuSendToTextfile});
             this.menuSendTo.Name = "menuSendTo";
             this.menuSendTo.Size = new System.Drawing.Size(226, 22);
-            this.menuSendTo.Text = "&Send to";
+            this.menuSendTo.Text = "&Share";
             // 
             // menuSendToEmail
             // 
             this.menuSendToEmail.Name = "menuSendToEmail";
             this.menuSendToEmail.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.menuSendToEmail.Size = new System.Drawing.Size(166, 22);
+            this.menuSendToEmail.Size = new System.Drawing.Size(153, 22);
             this.menuSendToEmail.Text = "E-&mail";
             this.menuSendToEmail.Click += new System.EventHandler(this.emailToolStripMenuItem_Click);
-            // 
-            // menuSendToTwitter
-            // 
-            this.menuSendToTwitter.Name = "menuSendToTwitter";
-            this.menuSendToTwitter.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.menuSendToTwitter.Size = new System.Drawing.Size(166, 22);
-            this.menuSendToTwitter.Text = "&Twitter";
-            this.menuSendToTwitter.Click += new System.EventHandler(this.tsmenuSendToTwitter_Click);
-            // 
-            // menuSendToFacebook
-            // 
-            this.menuSendToFacebook.Name = "menuSendToFacebook";
-            this.menuSendToFacebook.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.menuSendToFacebook.Size = new System.Drawing.Size(166, 22);
-            this.menuSendToFacebook.Text = "Face&Book";
-            this.menuSendToFacebook.Click += new System.EventHandler(this.tsmenuSendToFacebook_Click);
             // 
             // menuSendToTextfile
             // 
             this.menuSendToTextfile.Name = "menuSendToTextfile";
             this.menuSendToTextfile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.menuSendToTextfile.Size = new System.Drawing.Size(166, 22);
-            this.menuSendToTextfile.Text = "Text&file";
+            this.menuSendToTextfile.Size = new System.Drawing.Size(157, 22);
+            this.menuSendToTextfile.Text = "Save &file";
             this.menuSendToTextfile.Click += new System.EventHandler(this.tsmenuSendToTextfile_Click);
             // 
             // menuCopySelected
@@ -401,5 +376,8 @@ namespace NoteFly
         private System.Windows.Forms.ToolStripMenuItem menuCopySelected;
         public System.Windows.Forms.ToolTip toolTip;
         private System.ComponentModel.BackgroundWorker SaveWorker;
+        private System.Windows.Forms.ToolStripMenuItem menuSendTo;
+        private System.Windows.Forms.ToolStripMenuItem menuSendToEmail;
+        private System.Windows.Forms.ToolStripMenuItem menuSendToTextfile;
     }
 }

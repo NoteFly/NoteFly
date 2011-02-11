@@ -149,8 +149,8 @@ namespace NoteFly
                     this.rtbNote.RightToLeft = RightToLeft.Yes;
                 }
                 this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
-                this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
-                this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
+                //this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
+                //this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
                 this.toolTip.Active = Settings.NotesTooltipsEnabled;
             }
             else

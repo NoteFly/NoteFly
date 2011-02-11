@@ -148,7 +148,7 @@ namespace NoteFly
             {
                 Log.Write(LogType.error, NoteFly.Properties.Resources.settings_twitternametoolong);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_twitternametoolong);
-                this.tabControlSettings.SelectedTab = this.tabSocialNetworks;
+                this.tabControlSettings.SelectedTab = this.tabSharing;
             }
             /*
             else if ((this.tbTwitterPass.Text.Length < 6) && (this.chxRememberTwPass.Checked == true))
@@ -177,17 +177,23 @@ namespace NoteFly
                 Settings.ConfirmExit = this.chxConfirmExit.Checked;
                 Settings.ConfirmDeletenote = this.chxConfirmDeletenote.Checked;
                 Settings.TrayiconLeftclickaction = this.cbxActionLeftclick.SelectedIndex;
-                //tab: Appearance
+                //tab: Appearance, looks
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
                 Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
                 Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
                 Settings.NotesTooltipsEnabled = this.cbxShowTooltips.Checked;
-                Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();//todo: test, i forgot
+                //tab: Appearance, fonts
+                Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();
                 Settings.FontContentSize = (float)this.numFontSizeContent.Value;
                 Settings.FontTitleStylebold = this.cbxFontNoteTitleBold.Checked;
-                Settings.FontTitleFamily = this.cbxFontNoteTitle.SelectedItem.ToString();//todo: test
+                Settings.FontTitleFamily = this.cbxFontNoteTitle.SelectedItem.ToString();
                 Settings.FontTitleSize = (float)this.numFontSizeTitle.Value;
                 Settings.FontTextdirection = this.cbxTextDirection.SelectedIndex;
+                //tab: Appearance, trayicon
+                Settings.TrayiconCreatenotebold = this.chxTrayiconBoldNewnote.Checked;
+                Settings.TrayiconManagenotesbold = this.chxTrayiconBoldManagenotes.Checked;
+                Settings.TrayiconSettingsbold = this.chxTrayiconBoldSettings.Checked;
+                Settings.TrayiconExitbold = this.chxTrayiconBoldExit.Checked;
                 //tab: Highlight
                 Settings.HighlightHyperlinks = this.chxHighlightHyperlinks.Checked;
                 Settings.HighlightHTML = this.chxHighlightHTML.Checked;
@@ -295,17 +301,6 @@ namespace NoteFly
             {
                 this.tbDefaultEmail.Text = String.Empty;
             }
-        }
-
-        /// <summary>
-        /// Enable password editbox on checking remember password
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)
-        {
-            this.tbTwitterPass.Enabled = this.chxRememberTwPass.Checked;
-            this.tbTwitterPass.Text = String.Empty;
         }
 
         /// <summary>
@@ -427,6 +422,10 @@ namespace NoteFly
             this.cbxFontNoteTitle.Text = Settings.FontTitleFamily;
             this.cbxFontNoteTitleBold.Checked = Settings.FontTitleStylebold;
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
+            this.chxTrayiconBoldNewnote.Checked = Settings.TrayiconCreatenotebold;
+            this.chxTrayiconBoldManagenotes.Checked = Settings.TrayiconManagenotesbold;
+            this.chxTrayiconBoldSettings.Checked = Settings.TrayiconSettingsbold;
+            this.chxTrayiconBoldExit.Checked = Settings.TrayiconExitbold;
             //tab: Highlight
             this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
             this.chxHighlightHTML.Checked = Settings.HighlightHTML;
