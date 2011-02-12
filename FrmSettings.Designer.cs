@@ -178,7 +178,7 @@ namespace NoteFly
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(184, 23);
             this.btnOK.TabIndex = 2;
-            this.btnOK.Text = "OK";
+            this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -190,7 +190,7 @@ namespace NoteFly
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(188, 23);
             this.btnCancel.TabIndex = 3;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 

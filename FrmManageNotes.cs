@@ -33,26 +33,22 @@ namespace NoteFly
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-        #region Fields (3)
+		#region Fields (5) 
 
+        private const string BTNTEXTHIDE = "&hide selected";
+        private const string BTNTEXTSHOW = "&show selected";
         /// <summary>
         /// notes
         /// </summary>
         private Notes notes;
-
         /// <summary>
         /// Delta point
         /// </summary>
         private Point oldp;
 
-        /// <summary>
-        /// flag is redraw is busy
-        /// </summary>
-        private bool redrawbusy = false;
+		#endregion Fields 
 
-        #endregion Fields
-
-        #region Constructors (1)
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmManageNotes class.
@@ -64,13 +60,21 @@ namespace NoteFly
             this.notes = notes;
             this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
+            if ((bool)this.dataGridView1.Rows[0].Cells["visible"].Value == true)
+            {
+                this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
+            }
+            else
+            {
+                this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
+            }
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (15)
+		#region Methods (18) 
 
-        // Private Methods (15) 
+		// Private Methods (18) 
 
         /// <summary>
         /// Request to backup all notes to a file.
@@ -210,18 +214,35 @@ namespace NoteFly
                 if (this.notes.GetNote(notepos).visible)
                 {
                     this.notes.GetNote(notepos).CreateForm();
-                    this.btnShowSelectedNotes.Text = "Hide selected";
+                    this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
                     this.Activate();
                 }
                 else
                 {
                     this.notes.GetNote(notepos).DestroyForm();
-                    this.btnShowSelectedNotes.Text = "Show selected";
+                    this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
                 }
                 xmlUtil.WriteNote(this.notes.GetNote(notepos), notes.GetSkinName(this.notes.GetNote(notepos).skinNr), this.notes.GetNote(notepos).GetContent());
             }
             
             this.notes.frmmangenotesneedupdate = false;
+        }
+
+        /// <summary>
+        /// Cell clicked in dataGridView1, set hide/show note button text.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if ((bool)this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value == true)
+            {
+                this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
+            }
+            else
+            {
+                this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
+            }
         }
 
         /// <summary>
@@ -247,16 +268,6 @@ namespace NoteFly
                     this.notes.frmmangenotesneedupdate = false;
                 }
             }
-        }
-
-        /// <summary>
-        /// Get the note position in the list by looking up the nr colom with at the partialer row.
-        /// </summary>
-        /// <param name="rowindex"></param>
-        /// <returns></returns>
-        private int GetNoteposBySelrow(int rowindex)
-        {
-            return Convert.ToInt32(this.dataGridView1.Rows[rowindex].Cells["nr"].Value) - 1;
         }
 
         /// <summary>
@@ -368,6 +379,16 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Get the note position in the list by looking up the nr colom with at the partialer row.
+        /// </summary>
+        /// <param name="rowindex"></param>
+        /// <returns></returns>
+        private int GetNoteposBySelrow(int rowindex)
+        {
+            return Convert.ToInt32(this.dataGridView1.Rows[rowindex].Cells["nr"].Value) - 1;
+        }
+
+        /// <summary>
         /// The manage note form is beening resized.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -381,6 +402,11 @@ namespace NoteFly
             }
 
             this.Cursor = Cursors.Default;
+        }
+
+        private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.SetDataGridViewColumsWidth();
         }
 
         /// <summary>
@@ -461,22 +487,6 @@ namespace NoteFly
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;
         }
 
-        /// <summary>
-        /// Cell clicked in dataGridView1, set hide/show note button text.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if ((bool)this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value == true)
-            {
-                this.btnShowSelectedNotes.Text = "Hide selected";
-            }
-            else
-            {
-                this.btnShowSelectedNotes.Text = "Show selected";
-            }
-        }
-        #endregion Methods
+		#endregion Methods 
     }
 }

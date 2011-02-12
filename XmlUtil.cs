@@ -530,7 +530,7 @@ namespace NoteFly
             Settings.trayiconExitbold = false;
             Settings.trayiconManagenotesbold = false;
             Settings.trayiconSettingsbold = false;
-            Settings.updatecheckEverydays = 0; //0 is disabled.
+            Settings.updatecheckEverydays = 14; //0 is disabled.
             Settings.updatecheckLastDate = DateTime.Now.ToString();
             try
             {
@@ -857,12 +857,13 @@ namespace NoteFly
         /// </summary>
         /// <returns>the newest version as integer array, 
         /// any negative valeau(-1 by default) considered as error.</returns>
-        public static Int16[] GetLatestVersion()
+        public static Int16[] GetLatestVersion(out string versionquality)
         {
             Int16[] version = new Int16[3];
             version[0] = -1;
             version[1] = -1;
             version[2] = -1;
+            versionquality = Program.AssemblyVersionQuality;
             try
             {
                 System.Net.ServicePointManager.Expect100Continue = false;
@@ -871,7 +872,7 @@ namespace NoteFly
                 request.Method = "GET";
                 request.ContentType = "text/xml";
                 request.Timeout = Settings.networkConnectionTimeout;
-                request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString);
+                request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString); //for stats and future use.
                 if (Settings.networkProxyEnabled && !String.IsNullOrEmpty(Settings.networkProxyAddress))
                 {
                     request.Proxy = new WebProxy(Settings.networkProxyAddress);
@@ -917,6 +918,13 @@ namespace NoteFly
                                     version[2] = -1;
                                 }
                                 break;
+                            case "quality":
+                                string getquality = xmlread.ReadElementContentAsString().Trim();
+                                if (getquality.Length < 16)
+                                {
+                                    versionquality = getquality;
+                                }
+                                break;
                             default:
                                 break;
                         }
@@ -927,7 +935,10 @@ namespace NoteFly
                     }
                 }
             }
-
+            catch (TimeoutException)
+            {
+                Log.Write(LogType.error, "updating timeout.");
+            }
             catch (System.Net.WebException webexc)
             {
                 MessageBox.Show(webexc.Message);

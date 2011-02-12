@@ -39,15 +39,15 @@ namespace NoteFly
     /// </summary>
     public class Program
     {
-        #region Fields (2)
+		#region Fields (3) 
 
+        private const string DOWNLOADPAGE = "http://www.notefly.tk/downloads.php";
         private static Notes notes;
         private static TrayIcon trayicon;
-        private const string DOWNLOADPAGE = "http://www.notefly.tk/downloads.php";
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Properties (3)
+		#region Properties (5) 
 
         /// <summary>
         /// Gets the application data folder.
@@ -65,18 +65,6 @@ namespace NoteFly
 #else
                 return "COMPILE_ERROR";
 #endif
-            }
-        }
-
-        /// <summary>
-        /// The folder where NoteFly is installed.
-        /// Folder where assebly is located.
-        /// </summary>
-        public static string InstallFolder
-        {
-            get
-            {
-                return Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
             }
         }
 
@@ -113,16 +101,68 @@ namespace NoteFly
             }
         }
 
-        #endregion Properties
+        /// <summary>
+        /// Get the application version quality.
+        /// alpha(=bugs for sure), beta(=bugs are likely), rc(=more testing still needed) or nothing for final(=ready for production)
+        /// </summary>
+        public static string AssemblyVersionQuality
+        {
+            get
+            {
+                return "beta1";
+            }
+        }
 
-        #region Methods (1)
+        /// <summary>
+        /// The folder where NoteFly is installed.
+        /// Folder where assebly is located.
+        /// </summary>
+        public static string InstallFolder
+        {
+            get
+            {
+                return Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
+            }
+        }
 
-        // Public Methods (1) 
+		#endregion Properties 
 
-        #if windows
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-        public static extern bool SetDllDirectory(string pathName);
-        #endif
+		#region Methods (5) 
+
+		// Public Methods (4) 
+
+        /// <summary>
+        /// Gets the application version number as an array.
+        /// </summary>
+        /// <returns>a string containing the version number of this application in the form of major.minur.build number</returns>
+        public static short[] GetVersion()
+        {
+            short[] version = new short[3];
+            version[0] = Convert.ToInt16(Assembly.GetExecutingAssembly().GetName().Version.Major);
+            version[1] = Convert.ToInt16(Assembly.GetExecutingAssembly().GetName().Version.Minor);
+            version[2] = Convert.ToInt16(Assembly.GetExecutingAssembly().GetName().Version.Build);
+            return version;
+        }
+
+        /// <summary>
+        /// If set ask the user if the want to load the link.
+        /// </summary>
+        /// <param name="url">the uniform resource location</param>
+        public static void LoadLink(string uri_text)
+        {
+            if (Settings.confirmLinkclick)
+            {
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Are you sure you want to visted: " + uri_text, "Are you sure?", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    Program.LoadURI(uri_text);
+                }
+            }
+            else
+            {
+                Program.LoadURI(uri_text);
+            }
+        }
 
         /// <summary>
         /// Main entry point programme.
@@ -244,7 +284,8 @@ namespace NoteFly
             Settings.updatecheckLastDate = DateTime.Now.ToString();
             xmlUtil.WriteSettings();
             Int16[] thisversion = GetVersion();
-            Int16[] latestversion = xmlUtil.GetLatestVersion();
+            string latestversionquality = Program.AssemblyVersionQuality;
+            Int16[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality);
             bool updateavailible = false;
             for (int i = 0; i < thisversion.Length; i++)
             {
@@ -255,50 +296,16 @@ namespace NoteFly
                 }
             }
 
-            if (updateavailible)
+            if (updateavailible || Program.AssemblyVersionQuality != latestversionquality)
             {
-                System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show("There's a new version availible.\r\nDo you want to go to the download page now?", "update availible", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
+                System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show("There's a new version availible.\r\nDo you want to go to the download page now?", "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                 if (updres == System.Windows.Forms.DialogResult.Yes)
                 {
                     Program.LoadURI(DOWNLOADPAGE);
-                    //Thread.Sleep(10);
-                    //System.Windows.Forms.Application.Exit();
                 }
             }
         }
-
-        /// <summary>
-        /// Gets the application version number as an array.
-        /// </summary>
-        /// <returns>a string containing the version number of this application in the form of major.minur.build number</returns>
-        public static short[] GetVersion()
-        {
-            short[] version = new short[3];
-            version[0] = Convert.ToInt16(Assembly.GetExecutingAssembly().GetName().Version.Major);
-            version[1] = Convert.ToInt16(Assembly.GetExecutingAssembly().GetName().Version.Minor);
-            version[2] = Convert.ToInt16(Assembly.GetExecutingAssembly().GetName().Version.Build);
-            return version;
-        }
-
-        /// <summary>
-        /// If set ask the user if the want to load the link.
-        /// </summary>
-        /// <param name="url">the uniform resource location</param>
-        public static void LoadLink(string uri_text)
-        {
-            if (Settings.confirmLinkclick)
-            {
-                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Are you sure you want to visted: " + uri_text, "Are you sure?", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
-                if (result == System.Windows.Forms.DialogResult.Yes)
-                {
-                    Program.LoadURI(uri_text);
-                }
-            }
-            else
-            {
-                Program.LoadURI(uri_text);
-            }
-        }
+		// Private Methods (1) 
 
         /// <summary>
         /// Actual loads the url.
@@ -343,6 +350,11 @@ namespace NoteFly
             }
         }
 
-        #endregion Methods
+		#endregion Methods 
+
+        #if windows
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        public static extern bool SetDllDirectory(string pathName);
+        #endif
     }
 }

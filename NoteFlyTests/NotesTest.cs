@@ -232,5 +232,23 @@ namespace NoteFlyTests
                 Assert.Fail("Note has wrong size");
             }
         }
+
+        /// <summary>
+        ///A test for CreateNote
+        ///</summary>
+        [TestMethod()]
+        public void GenerateRandomSkinnrTest()
+        {
+            Notes target = new Notes(false);
+            int n = target.GenerateRandomSkinnr();
+            if (n < 0)
+            {
+                Assert.Fail("Can't smaller than zero.");
+            }
+            if (n > target.GetSkinsNames().Length)
+            {
+                Assert.Fail("Can't choice a skin outside the range. (or if GetSkinsNamesTest failed then this one fails too.)");
+            }
+        }
     }
 }

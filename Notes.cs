@@ -38,8 +38,9 @@ namespace NoteFly
     /// </summary>
     public class Notes
     {
-		#region Fields (3) 
+		#region Fields (4) 
 
+        public bool frmmangenotesneedupdate = false;
         /// <summary>
         /// The note extension
         /// </summary>
@@ -52,8 +53,6 @@ namespace NoteFly
         /// List with all skins for notes.
         /// </summary>
         private List<Skin> skins;
-
-        public bool frmmangenotesneedupdate = false;
 
 		#endregion Fields 
 
@@ -88,9 +87,9 @@ namespace NoteFly
 
 		#endregion Properties 
 
-		#region Methods (20) 
+		#region Methods (21) 
 
-		// Public Methods (16) 
+		// Public Methods (17) 
 
         /// <summary>
         /// Add a new note the the notes list.
@@ -146,6 +145,26 @@ namespace NoteFly
             newnote.width = width;
             newnote.height = height;
             return newnote;
+        }
+
+        /// <summary>
+        /// Generate a random skinnummer.
+        /// </summary>
+        /// <returns></returns>
+        public int GenerateRandomSkinnr()
+        {
+            Random rndgen = new Random();
+            return rndgen.Next(0, this.skins.Count + 1);
+        }
+
+        /// <summary>
+        /// Gets the highlight color.
+        /// </summary>
+        /// <param name="skinnr">The skin number</param>
+        /// <returns></returns>
+        public System.Drawing.Color GetHighlightClr(int skinnr)
+        {
+            return GetColor(3, skinnr);
         }
 
         /// <summary>
@@ -217,26 +236,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets the highlight color.
-        /// </summary>
-        /// <param name="skinnr">The skin number</param>
-        /// <returns></returns>
-        public System.Drawing.Color GetHighlightClr(int skinnr)
-        {
-            return GetColor(3, skinnr);
-        }
-
-        /// <summary>
-        /// Gets the text color.
-        /// </summary>
-        /// <param name="skinnr">The skin number</param>
-        /// <returns></returns>
-        public System.Drawing.Color GetTextClr(int skinnr)
-        {
-            return GetColor(4, skinnr);
-        }
-
-        /// <summary>
         /// Get the name of a skin by the skinnr.
         /// </summary>
         /// <param name="skinnr">The skin number</param>
@@ -277,6 +276,16 @@ namespace NoteFly
                 skinnames[i] = this.skins[i].Name;
             }
             return skinnames;
+        }
+
+        /// <summary>
+        /// Gets the text color.
+        /// </summary>
+        /// <param name="skinnr">The skin number</param>
+        /// <returns></returns>
+        public System.Drawing.Color GetTextClr(int skinnr)
+        {
+            return GetColor(4, skinnr);
         }
 
         /// <summary>
@@ -445,17 +454,6 @@ namespace NoteFly
                 curnote.UpdateForm();
             }
         }
-
-        /// <summary>
-        /// Generate a random skinnummer.
-        /// </summary>
-        /// <returns></returns>
-        public int GenerateRandomSkinnr()
-        {
-            Random rndgen = new Random();
-            return rndgen.Next(0, this.skins.Count + 1);
-        }
-
 		// Private Methods (4) 
 
         /// <summary>

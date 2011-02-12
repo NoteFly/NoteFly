@@ -193,7 +193,14 @@ namespace NoteFly
                 //Settings.socialFacebookEnabled = this.chxSocialFacebookEnabled.Checked;
                 //Settings.socialFacebookEmail = this.tbFacebookEmail.Text;
                 //tab: Network
-                Settings.updatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value);
+                if (this.chxCheckUpdates.Checked)
+                {
+                    Settings.updatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value); Convert.ToInt32(this.numUpdateCheckDays.Value);
+                }
+                else
+                {
+                    Settings.updatecheckEverydays = 0;
+                }
                 Settings.networkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
                 Settings.networkProxyEnabled = this.chxProxyEnabled.Checked;
                 Settings.networkProxyAddress = this.iptbProxyAddress.IPAddress;
@@ -465,11 +472,16 @@ namespace NoteFly
             this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
         }
 
-        #endregion Methods
-
+        /// <summary>
+        /// Toggle cbxDefaultColor enabled.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chxUseRandomDefaultNote_CheckedChanged(object sender, EventArgs e)
         {
             this.cbxDefaultColor.Enabled = !this.chxUseRandomDefaultNote.Checked;
         }
+
+        #endregion Methods
     }
 }

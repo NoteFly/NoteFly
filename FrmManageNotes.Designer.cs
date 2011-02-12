@@ -130,6 +130,7 @@ namespace NoteFly
             this.pbResizeGrip.TabIndex = 9;
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
+            this.pbResizeGrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseUp);
             // 
             // btnRestoreAllNotes
             // 
@@ -139,7 +140,7 @@ namespace NoteFly
             this.btnRestoreAllNotes.Name = "btnRestoreAllNotes";
             this.btnRestoreAllNotes.Size = new System.Drawing.Size(109, 23);
             this.btnRestoreAllNotes.TabIndex = 15;
-            this.btnRestoreAllNotes.Text = "restore all from file";
+            this.btnRestoreAllNotes.Text = "&restore all from file";
             this.btnRestoreAllNotes.UseCompatibleTextRendering = true;
             this.btnRestoreAllNotes.UseVisualStyleBackColor = false;
             this.btnRestoreAllNotes.Click += new System.EventHandler(this.btnRestoreAllNotes_Click);
@@ -152,7 +153,7 @@ namespace NoteFly
             this.btnShowSelectedNotes.Name = "btnShowSelectedNotes";
             this.btnShowSelectedNotes.Size = new System.Drawing.Size(105, 23);
             this.btnShowSelectedNotes.TabIndex = 16;
-            this.btnShowSelectedNotes.Text = "show selected";
+            this.btnShowSelectedNotes.Text = "&show selected";
             this.btnShowSelectedNotes.UseCompatibleTextRendering = true;
             this.btnShowSelectedNotes.UseVisualStyleBackColor = false;
             this.btnShowSelectedNotes.Click += new System.EventHandler(this.btnShowSelectedNotes_Click);
@@ -165,7 +166,7 @@ namespace NoteFly
             this.btnNoteDelete.Name = "btnNoteDelete";
             this.btnNoteDelete.Size = new System.Drawing.Size(93, 23);
             this.btnNoteDelete.TabIndex = 17;
-            this.btnNoteDelete.Text = "delete selected";
+            this.btnNoteDelete.Text = "&delete selected";
             this.btnNoteDelete.UseCompatibleTextRendering = true;
             this.btnNoteDelete.UseVisualStyleBackColor = false;
             this.btnNoteDelete.Click += new System.EventHandler(this.btnNoteDelete_Click);
@@ -178,7 +179,7 @@ namespace NoteFly
             this.btnBackAllNotes.Name = "btnBackAllNotes";
             this.btnBackAllNotes.Size = new System.Drawing.Size(105, 23);
             this.btnBackAllNotes.TabIndex = 18;
-            this.btnBackAllNotes.Text = "backup all to file";
+            this.btnBackAllNotes.Text = "&backup all to file";
             this.btnBackAllNotes.UseCompatibleTextRendering = true;
             this.btnBackAllNotes.UseVisualStyleBackColor = false;
             this.btnBackAllNotes.Click += new System.EventHandler(this.btnBackAllNotes_Click);
@@ -256,6 +257,7 @@ namespace NoteFly
             this.BackColor = System.Drawing.Color.Orange;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(451, 322);
+            this.ControlBox = false;
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnBackAllNotes);
             this.Controls.Add(this.btnRestoreAllNotes);

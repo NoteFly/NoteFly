@@ -135,14 +135,14 @@ namespace NoteFly
             this.menuFrmNoteOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuEditNote,
             this.menuNoteSkins,
-            this.toolStripMenuItem1,
-            this.menuOnTop,
-            this.menuRollUp,
             this.menuSendTo,
+            this.menuOnTop,
             this.menuLockNote,
+            this.toolStripMenuItem1,
+            this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 180);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -161,7 +161,7 @@ namespace NoteFly
             this.menuNoteSkins.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuNoteSkins.Name = "menuNoteSkins";
             this.menuNoteSkins.Size = new System.Drawing.Size(184, 22);
-            this.menuNoteSkins.Text = "&Color skin";
+            this.menuNoteSkins.Text = "S&kin";
             // 
             // toolStripMenuItem1
             // 

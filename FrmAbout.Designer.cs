@@ -133,8 +133,8 @@ namespace NoteFly
             this.lblTextLicense.Name = "lblTextLicense";
             this.lblTextLicense.Size = new System.Drawing.Size(225, 44);
             this.lblTextLicense.TabIndex = 30;
-            this.lblTextLicense.Text = "This programme is released under the terms of GNU General Public License version2" +
-                "";
+            this.lblTextLicense.Text = "This programme is released under the terms of GNU General Public License version3" +
+                "\r\n";
             // 
             // linkLblFAQ
             // 

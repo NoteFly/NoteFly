@@ -42,7 +42,7 @@ namespace NoteFly
             this.InitializeComponent();
             this.Text = "About " + Program.AssemblyTitle;
             this.lblProductName.Text = Program.AssemblyTitle;
-            this.lblVersion.Text = String.Format("Version "+Program.AssemblyVersionAsString);
+            this.lblVersion.Text = String.Format("Version "+Program.AssemblyVersionAsString+" "+Program.AssemblyVersionQuality);
         }
 
         #endregion Constructors
