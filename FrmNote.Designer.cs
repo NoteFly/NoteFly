@@ -74,16 +74,16 @@ namespace NoteFly
             this.menuFrmNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuEditNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNoteSkins = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSendTo = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuLockNote = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.menuRollUp = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSendTo = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuLockNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHideNote = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCloseNote = new System.Windows.Forms.Button();
             this.rtbNote = new System.Windows.Forms.RichTextBox();
@@ -142,7 +142,7 @@ namespace NoteFly
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 180);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -162,6 +162,49 @@ namespace NoteFly
             this.menuNoteSkins.Name = "menuNoteSkins";
             this.menuNoteSkins.Size = new System.Drawing.Size(184, 22);
             this.menuNoteSkins.Text = "S&kin";
+            // 
+            // menuSendTo
+            // 
+            this.menuSendTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSendToEmail,
+            this.menuSendToTextfile});
+            this.menuSendTo.Name = "menuSendTo";
+            this.menuSendTo.Size = new System.Drawing.Size(184, 22);
+            this.menuSendTo.Text = "&Share";
+            // 
+            // menuSendToEmail
+            // 
+            this.menuSendToEmail.Name = "menuSendToEmail";
+            this.menuSendToEmail.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.menuSendToEmail.Size = new System.Drawing.Size(157, 22);
+            this.menuSendToEmail.Text = "E-&mail";
+            this.menuSendToEmail.Click += new System.EventHandler(this.emailToolStripMenuItem_Click);
+            // 
+            // menuSendToTextfile
+            // 
+            this.menuSendToTextfile.Name = "menuSendToTextfile";
+            this.menuSendToTextfile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.menuSendToTextfile.Size = new System.Drawing.Size(157, 22);
+            this.menuSendToTextfile.Text = "Save &file";
+            this.menuSendToTextfile.Click += new System.EventHandler(this.tsmenuSendToTextfile_Click);
+            // 
+            // menuOnTop
+            // 
+            this.menuOnTop.CheckOnClick = true;
+            this.menuOnTop.Name = "menuOnTop";
+            this.menuOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.menuOnTop.Size = new System.Drawing.Size(184, 22);
+            this.menuOnTop.Text = "Sticky on &top";
+            this.menuOnTop.Click += new System.EventHandler(this.OnTopToolStripMenuItem_Click);
+            // 
+            // menuLockNote
+            // 
+            this.menuLockNote.CheckOnClick = true;
+            this.menuLockNote.Name = "menuLockNote";
+            this.menuLockNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.menuLockNote.Size = new System.Drawing.Size(184, 22);
+            this.menuLockNote.Text = "&Lock note";
+            this.menuLockNote.Click += new System.EventHandler(this.locknoteToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -199,15 +242,6 @@ namespace NoteFly
             this.menuCopyTitle.Text = "title";
             this.menuCopyTitle.Click += new System.EventHandler(this.copyTitleToolStripMenuItem_Click);
             // 
-            // menuOnTop
-            // 
-            this.menuOnTop.CheckOnClick = true;
-            this.menuOnTop.Name = "menuOnTop";
-            this.menuOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.menuOnTop.Size = new System.Drawing.Size(184, 22);
-            this.menuOnTop.Text = "Sticky on &top";
-            this.menuOnTop.Click += new System.EventHandler(this.OnTopToolStripMenuItem_Click);
-            // 
             // menuRollUp
             // 
             this.menuRollUp.Name = "menuRollUp";
@@ -215,40 +249,6 @@ namespace NoteFly
             this.menuRollUp.Size = new System.Drawing.Size(184, 22);
             this.menuRollUp.Text = "&Roll up";
             this.menuRollUp.Click += new System.EventHandler(this.menuRollUp_Click);
-            // 
-            // menuSendTo
-            // 
-            this.menuSendTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuSendToEmail,
-            this.menuSendToTextfile});
-            this.menuSendTo.Name = "menuSendTo";
-            this.menuSendTo.Size = new System.Drawing.Size(184, 22);
-            this.menuSendTo.Text = "&Share";
-            // 
-            // menuSendToEmail
-            // 
-            this.menuSendToEmail.Name = "menuSendToEmail";
-            this.menuSendToEmail.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.menuSendToEmail.Size = new System.Drawing.Size(157, 22);
-            this.menuSendToEmail.Text = "E-&mail";
-            this.menuSendToEmail.Click += new System.EventHandler(this.emailToolStripMenuItem_Click);
-            // 
-            // menuSendToTextfile
-            // 
-            this.menuSendToTextfile.Name = "menuSendToTextfile";
-            this.menuSendToTextfile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.menuSendToTextfile.Size = new System.Drawing.Size(157, 22);
-            this.menuSendToTextfile.Text = "Save &file";
-            this.menuSendToTextfile.Click += new System.EventHandler(this.tsmenuSendToTextfile_Click);
-            // 
-            // menuLockNote
-            // 
-            this.menuLockNote.CheckOnClick = true;
-            this.menuLockNote.Name = "menuLockNote";
-            this.menuLockNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.menuLockNote.Size = new System.Drawing.Size(184, 22);
-            this.menuLockNote.Text = "&Lock note";
-            this.menuLockNote.Click += new System.EventHandler(this.locknoteToolStripMenuItem_Click);
             // 
             // menuHideNote
             // 

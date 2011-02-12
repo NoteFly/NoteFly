@@ -396,7 +396,7 @@ namespace NoteFly
             this.btnFontBigger.TabIndex = 17;
             this.btnFontBigger.TabStop = false;
             this.btnFontBigger.Text = "A";
-            this.toolTip.SetToolTip(this.btnFontBigger, "Bigger test");
+            this.toolTip.SetToolTip(this.btnFontBigger, "Bigger text");
             this.btnFontBigger.UseCompatibleTextRendering = true;
             this.btnFontBigger.UseMnemonic = false;
             this.btnFontBigger.UseVisualStyleBackColor = false;

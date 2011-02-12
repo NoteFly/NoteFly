@@ -23,6 +23,7 @@ pause
 %SYSTEMDRIVE%
 cd "%appdata%\.notefly2"
 del settings.xml
+del skins.xml
 
 @echo off
 echo done.
