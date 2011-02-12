@@ -60,9 +60,16 @@ namespace NoteFly
             this.notes = notes;
             this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
-            if ((bool)this.dataGridView1.Rows[0].Cells["visible"].Value == true)
+            if (this.dataGridView1.RowCount > 0)
             {
-                this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
+                if ((bool)this.dataGridView1.Rows[0].Cells["visible"].Value == true)
+                {
+                    this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
+                }
+                else
+                {
+                    this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
+                }
             }
             else
             {
