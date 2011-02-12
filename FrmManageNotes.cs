@@ -242,13 +242,16 @@ namespace NoteFly
         /// <param name="e"></param>
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if ((bool)this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value == true)
+            if (e.RowIndex >= 0)
             {
-                this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
-            }
-            else
-            {
-                this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
+                if ((bool)this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value == true)
+                {
+                    this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
+                }
+                else
+                {
+                    this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
+                }
             }
         }
 
