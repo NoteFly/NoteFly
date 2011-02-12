@@ -1,17 +1,27 @@
 //-----------------------------------------------------------------------
 // <copyright file="Facebook.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
+/*
+ * Decreated class, use OAuth instead.
+ * 
+ */
 
 namespace NoteFly
 {
@@ -24,101 +34,12 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// All settings needed for a facebook session.
-    /// </summary>
-    public static class FacebookSettings
-    {
-        // Fields (4) 
-        /// <summary>
-        /// unix time as double that tells when facebook session is expired
-        /// </summary>
-        private static double sessionexpires;
-
-        /// <summary>
-        /// The current session key
-        /// </summary>
-        private static string sessionkey;
-
-        /// <summary>
-        /// The current session secret
-        /// </summary>
-        private static string sessionsecret;
-        
-        /// <summary>
-        /// The user id that posts on facebook.
-        /// </summary>
-        private static string uid;
-
-        /// <summary>
-        /// Gets or sets the unix time when the facebook session expires
-        /// </summary>
-        public static double Sesionexpires { 
-            get
-            {
-                return sessionexpires;
-            }
-
-            set
-            {
-                sessionexpires = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the session key
-        /// </summary>
-        public static string Sessionkey 
-        {
-            get
-            {
-                return sessionkey;
-            }
-
-            set
-            {
-                sessionkey = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the session secret key (gives 24hour access to account)
-        /// </summary>
-        public static string Sessionsecret
-        {
-            get
-            {
-                return sessionsecret;
-            }
-
-            set
-            {
-                sessionsecret = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the user id
-        /// </summary>
-        public static string Uid
-        {
-            get
-            {
-                return uid;
-            }
-
-            set
-            {
-                uid = value;
-            }
-        }
-    }
-
-    /// <summary>
     /// Communicates with facebook.
     /// </summary>
     public class Facebook
     {
         // Fields(10)
+        //private OAuth.OAuthBase oauth;
 
         /// <summary>
         /// The API version.
@@ -271,6 +192,7 @@ namespace NoteFly
             }
         }
 
+		/*
         /// <summary>
         /// Check the url if facebook navigated to the succeed page
         /// meaning that we have a session.
@@ -333,7 +255,8 @@ namespace NoteFly
 
             return false;
         }
-
+	*/
+		
         /// <summary>
         /// Generate a md5 hash from the given string.
         /// </summary>
@@ -359,97 +282,97 @@ namespace NoteFly
         /// <returns>response code (as json or xml?)</returns>
         public string PostStream(string message)
         {
-            WebRequest request = WebRequest.Create(FBRESTSERVERURL);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-
-            xmlHandler settting = new xmlHandler(true);
-            if (settting.getXMLnodeAsBool("useproxy") == true)
-            {
-                string addr = settting.getXMLnode("proxyaddr");
-                if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0" || addr == "255.255.255.255")
-                {
-                    string novalidproxy = "Proxy address is not given";
-                    MessageBox.Show(novalidproxy);
-                    Log.Write(LogType.error, novalidproxy);
-                    return String.Empty;
-                }
-                else
-                {
-                    request.Proxy = new WebProxy(settting.getXMLnode("proxyaddr"));
-                }
-            }
-
-            if (settting.getXMLnodeAsBool("savesession"))
-            {
-                try
-                {
-                    bool[] boolsettings = settting.ParserSettingsBool();
-
-                    settting.WriteSettings(
-                        boolsettings[0],
-                        Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), 
-                        settting.getXMLnodeAsInt("defaultcolor"),
-                        settting.getXMLnodeAsInt("actionleftclick"),
-                        boolsettings[1],
-                        settting.getXMLnode("fontcontent"),
-                        Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")),
-                        settting.getXMLnodeAsInt("textdirection"),
-                        settting.getXMLnode("notesavepath"),
-                        settting.getXMLnode("defaultemail"),
-                        boolsettings[4],
-                        boolsettings[5],
-                        boolsettings[6],
-                        settting.getXMLnode("twitteruser"),
-                        settting.getXMLnode("twitterpass"),
-                        boolsettings[2],
-                        boolsettings[3],
-                        boolsettings[7],
-                        settting.getXMLnode("proxyaddr"),
-                        settting.getXMLnodeAsInt("timeout"),
-                        true,
-                        boolsettings[8]);
-                }
-                catch (Exception fbsessionexc)
-                {
-                    string fbsessionsave = "Cannot save facebook session.\r\n" + fbsessionexc.StackTrace;
-                    Log.Write(LogType.exception, fbsessionsave);
-                    MessageBox.Show(fbsessionsave);
-                }
-            }
-
-            request.Timeout = settting.getXMLnodeAsInt("timeout");
-
-            string data = this.CreatePostData(message);
-
-            byte[] bytes = Encoding.UTF8.GetBytes(data);
-            request.ContentLength = bytes.Length;
-            using (Stream requestStream = request.GetRequestStream())
-            {
-                requestStream.Write(bytes, 0, bytes.Length);
-                try
-                {
-                    using (WebResponse response = request.GetResponse())
-                    {
-                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                        {
-                            return reader.ReadToEnd();
-                        }
-                    }
-                }
-                catch (TimeoutException)
-                {
-                    string contimeout = "connection timeout";
-                    Log.Write(LogType.error, contimeout);
-                    MessageBox.Show(contimeout);
-                }
-                catch (Exception exc)
-                {
-                    Log.Write(LogType.exception, exc.Message);
-                    MessageBox.Show("Exception: " + exc.Message);
-                }
-            }
-
+//            WebRequest request = WebRequest.Create(FBRESTSERVERURL);
+//            request.Method = "POST";
+//            request.ContentType = "application/x-www-form-urlencoded";
+//
+//            xmlHandler settting = new xmlHandler(true);
+//            if (settting.getXMLnodeAsBool("useproxy") == true)
+//            {
+//                string addr = settting.getXMLnode("proxyaddr");
+//                if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0" || addr == "255.255.255.255")
+//                {
+//                    string novalidproxy = "Proxy address is not given";
+//                    MessageBox.Show(novalidproxy);
+//                    Log.Write(LogType.error, novalidproxy);
+//                    return String.Empty;
+//                }
+//                else
+//                {
+//                    request.Proxy = new WebProxy(settting.getXMLnode("proxyaddr"));
+//                }
+//            }
+//
+//            if (settting.getXMLnodeAsBool("savesession"))
+//            {
+//                try
+//                {
+//                    bool[] boolsettings = settting.ParserSettingsBool();
+//
+//                    settting.WriteSettings(
+//                        boolsettings[0],
+//                        Convert.ToDecimal(settting.getXMLnodeAsInt("transparecylevel")), 
+//                        settting.getXMLnodeAsInt("defaultcolor"),
+//                        settting.getXMLnodeAsInt("actionleftclick"),
+//                        boolsettings[1],
+//                        settting.getXMLnode("fontcontent"),
+//                        Convert.ToDecimal(settting.getXMLnodeAsInt("fontsize")),
+//                        settting.getXMLnodeAsInt("textdirection"),
+//                        settting.getXMLnode("notesavepath"),
+//                        settting.getXMLnode("defaultemail"),
+//                        boolsettings[4],
+//                        boolsettings[5],
+//                        boolsettings[6],
+//                        settting.getXMLnode("twitteruser"),
+//                        settting.getXMLnode("twitterpass"),
+//                        boolsettings[2],
+//                        boolsettings[3],
+//                        boolsettings[7],
+//                        settting.getXMLnode("proxyaddr"),
+//                        settting.getXMLnodeAsInt("timeout"),
+//                        true,
+//                        boolsettings[8]);
+//                }
+//                catch (Exception fbsessionexc)
+//                {
+//                    string fbsessionsave = "Cannot save facebook session.\r\n" + fbsessionexc.StackTrace;
+//                    Log.Write(LogType.exception, fbsessionsave);
+//                    MessageBox.Show(fbsessionsave);
+//                }
+//            }
+//
+//            request.Timeout = settting.getXMLnodeAsInt("timeout");
+//
+//            string data = this.CreatePostData(message);
+//
+//            byte[] bytes = Encoding.UTF8.GetBytes(data);
+//            request.ContentLength = bytes.Length;
+//            using (Stream requestStream = request.GetRequestStream())
+//            {
+//                requestStream.Write(bytes, 0, bytes.Length);
+//                try
+//                {
+//                    using (WebResponse response = request.GetResponse())
+//                    {
+//                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+//                        {
+//                            return reader.ReadToEnd();
+//                        }
+//                    }
+//                }
+//                catch (TimeoutException)
+//                {
+//                    string contimeout = "connection timeout";
+//                    Log.Write(LogType.error, contimeout);
+//                    MessageBox.Show(contimeout);
+//                }
+//                catch (Exception exc)
+//                {
+//                    Log.Write(LogType.exception, exc.Message);
+//                    MessageBox.Show("Exception: " + exc.Message);
+//                }
+//            }
+//
             return null;
         }
 
@@ -459,36 +382,36 @@ namespace NoteFly
         /// <param name="note">The note to post</param>
         public void StartPostingNote(string note)
         {
-            this.message = note;
-            if (String.IsNullOrEmpty(FacebookSettings.Sessionkey) || FacebookSettings.Sessionsecret.Length == 0 || String.IsNullOrEmpty(FacebookSettings.Uid))
-            {
-                this.ShowFBLoginForm();
-            }
-            else
-            {
-                System.DateTime dtexpiressession = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
-                dtexpiressession = dtexpiressession.AddSeconds(FacebookSettings.Sesionexpires);
-
-                if (dtexpiressession.Month == DateTime.Now.Month)
-                {
-                    if ((dtexpiressession.Day == DateTime.Now.Day + 1) || ((dtexpiressession.Day == DateTime.Now.Day) && (dtexpiressession.Hour > DateTime.Now.Hour)))
-                    {
-                        this.CheckResponse(this.PostStream(this.message));
-                    }
-                    else
-                    {
-                        this.ShowFBLoginForm();
-                    }
-                }
-                else if ((dtexpiressession.Month + 1 == DateTime.Now.Month) && (dtexpiressession.Day == 1))
-                {
-                    this.CheckResponse(this.PostStream(this.message));
-                }
-                else
-                {
-                    this.ShowFBLoginForm();
-                }
-            }
+//            this.message = note;
+//            if (String.IsNullOrEmpty(FacebookSettings.Sessionkey) || FacebookSettings.Sessionsecret.Length == 0 || String.IsNullOrEmpty(FacebookSettings.Uid))
+//            {
+//                this.ShowFBLoginForm();
+//            }
+//            else
+//            {
+//                System.DateTime dtexpiressession = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+//                dtexpiressession = dtexpiressession.AddSeconds(FacebookSettings.Sesionexpires);
+//
+//                if (dtexpiressession.Month == DateTime.Now.Month)
+//                {
+//                    if ((dtexpiressession.Day == DateTime.Now.Day + 1) || ((dtexpiressession.Day == DateTime.Now.Day) && (dtexpiressession.Hour > DateTime.Now.Hour)))
+//                    {
+//                        this.CheckResponse(this.PostStream(this.message));
+//                    }
+//                    else
+//                    {
+//                        this.ShowFBLoginForm();
+//                    }
+//                }
+//                else if ((dtexpiressession.Month + 1 == DateTime.Now.Month) && (dtexpiressession.Day == 1))
+//                {
+//                    this.CheckResponse(this.PostStream(this.message));
+//                }
+//                else
+//                {
+//                    this.ShowFBLoginForm();
+//                }
+//            }
         }
 
         // Private Methods(5)
@@ -515,12 +438,12 @@ namespace NoteFly
             data += "&message=" + message;
             string methode = "facebook.stream.publish";
             data += "&method=" + methode;
-            data += "&session_key=" + FacebookSettings.Sessionkey;
+            //data += "&session_key=" + FacebookSettings.Sessionkey;
             string usesessionsecret = "1";
             data += "&ss=" + usesessionsecret;
             data += "&uid=0"; //use 0 not FacebookSettings.Uid;  bug: #0000007
             data += "&v=" + APIVERISON;
-            data += "&sig=" + this.GenerateSignature(callid, message, methode, usesessionsecret);
+            //data += "&sig=" + this.GenerateSignature(callid, message, methode, usesessionsecret);
             if (data.Length > 0)
             {
                 return data;
@@ -538,13 +461,14 @@ namespace NoteFly
         /// <param name="e">webbrowser event arguments</param>
         private void FbWeb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
-            if (this.IsSucceedUrl(e.Url.ToString()) == true)
-            {
+            //if (this.IsSucceedUrl(e.Url.ToString()) == true)
+            //{
                 this.CheckResponse(this.PostStream(this.message));
                 this.frmLoginFb.Close();
-            }
+            //}
         }
 
+		/*
         /// <summary>
         /// Create a signature based on serveral parameters.
         /// </summary>
@@ -573,7 +497,7 @@ namespace NoteFly
                 throw new CustomException("Cannot generate MD5 hash.");
             }
         }
-
+		 */
         /// <summary>
         /// create a form with webbrowser and navigate to
         /// the facebook login page for this application.

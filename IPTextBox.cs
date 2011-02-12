@@ -1,14 +1,20 @@
 //-----------------------------------------------------------------------
 // <copyright file="IPTextBox.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 namespace NoteFly
@@ -17,23 +23,17 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// A editbox made for typing in a IP address their IP version4 or IP version6 address.
+    /// IPTextBox gui object class.
     /// </summary>
     public partial class IPTextBox : UserControl
     {
+		#region Fields (1) 
+
         private IPaddrType addrtype;
 
-        #region Constructors (1)
+		#endregion Fields 
 
-        /// <summary>
-        /// Initializes a new instance of the IPTextBox class.
-        /// </summary>
-        public IPTextBox()
-        {
-            this.InitializeComponent();
-        }
-
-        #endregion Constructors
+		#region Enums (1) 
 
         /// <summary>
         /// The types of address
@@ -51,30 +51,46 @@ namespace NoteFly
             ipv6
         }
 
-        #region Methods (2)
+		#endregion Enums 
 
-        // Public Methods (2) 
+		#region Constructors (1) 
 
         /// <summary>
-        /// get the ip address
+        /// Initializes a new instance of the IPTextBox class.
+        /// </summary>
+        public IPTextBox()
+        {
+            this.InitializeComponent();
+        }
+
+		#endregion Constructors 
+
+		#region Properties (1) 
+
+        /// <summary>
+        /// The ip address
         /// </summary>
         /// <returns>the ip address as string.</returns>
-        public string GetIPAddress()
+        public string IPAddress
         {
+            get
+            {
             return this.tbIPaddress.Text;
+            } 
+            set
+            {
+                this.tbIPaddress.Text = value;
+            }
         }
 
+		#endregion Properties 
+
+		#region Methods (1) 
+
+		// Private Methods (1) 
+
         /// <summary>
-        /// sets the ip address.
-        /// </summary>
-        /// <param name="addr">the new ip address.</param>
-        public void SetIPAddress(string addr)
-        {
-            this.tbIPaddress.Text = addr;
-        }
-        
-        /// <summary>
-        /// Filter out illgale charcters.
+        /// Filter out illgale characters.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments</param>
@@ -108,7 +124,7 @@ namespace NoteFly
                 if (this.tbIPaddress.TextLength == 0)
                 {
                     e.SuppressKeyPress = true;
-                    //MessageBox.Show("IP v6 adress cannot start with a doublepoint.");
+                    //MessageBox.Show("IP v6 adress cannot start with ':'");
                 }
 
                 this.addrtype = IPaddrType.ipv6;
@@ -135,7 +151,7 @@ namespace NoteFly
 
                 if (this.addrtype == IPaddrType.ipv6) 
                 {
-                    MessageBox.Show("can't mix ipv4 and ipv6 seperators. Don't use dots for IPv6."); 
+                    MessageBox.Show("can't mix ipv4 and ipv6 seperators. Don't use dots for ip v6 adress."); 
                 }
 
                 this.addrtype = IPaddrType.ipv4;
@@ -164,6 +180,6 @@ namespace NoteFly
             }
         }
 
-        #endregion Methods
+		#endregion Methods 
     }
 }

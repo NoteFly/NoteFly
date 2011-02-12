@@ -1,350 +1,211 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNote.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010-2011  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
     using System;
     using System.ComponentModel;
     using System.Drawing;
+    using System.IO;
     using System.Windows.Forms;
 #if windows
     using System.Runtime.InteropServices;
+    using System.Web;
 #endif
+
     /// <summary>
-    /// The note class.
+    /// Note window.
     /// </summary>
     public partial class FrmNote : Form
     {
-        #region Fields (10)
+		#region Fields (6) 
 
         private const int MINVISIBLESIZE = 5;
-
+        private bool moving = false;
+        private Note note;
         private Notes notes;
-        private TextHighlight highlight;
-        private string note, title;
-        private char[] twpass;
-        private short id, notecolor = 0;
-        private bool rolledup = false, notelock = false, moving = false;
-        private Skin skin;
-        private int locX, locY;
-        private ushort noteWidth, noteHeight;
-        private PictureBox pbShowLock;
         private Point oldp;
-        #endregion Fields
+        private PictureBox pbShowLock;
 
-        #region Constructors (2)
+		#endregion Fields 
 
-        /// <summary>
-        /// Initializes a new instance of the FrmNote class.
-        /// </summary>
-        /// <param name="notes">The class with access to all notes.</param>
-        /// <param name="id">The id of the note.</param>
-        /// <param name="visible">Is the note visible.</param>
-        /// <param name="ontop">Is the note on top.</param>
-        /// <param name="title">The title of the note.</param>
-        /// <param name="note">the content of the note.</param>
-        /// <param name="notecolor">The default note color.</param>
-        /// <param name="locX">The X location on the screen.</param>
-        /// <param name="locY">The Y location on the screen.</param>
-        /// <param name="notewidth">The width of the note.</param>
-        /// <param name="noteheight">The height of the note.</param>
-        public FrmNote(Notes notes, short id, bool visible, bool ontop, string title, string note, short notecolor, int locX, int locY, int notewidth, int noteheight)
-        {
-            this.notes = notes;
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.skin = new Skin(notecolor);
-            this.id = id;
-            this.title = title;
-            this.note = note;
-            this.notecolor = notecolor;
-            
-            if ((locX + notewidth > MINVISIBLESIZE) && (locY + noteheight > MINVISIBLESIZE))
-            {
-                this.locX = locX;
-                this.locY = locY;
-            }
-            else
-            {
-                this.locX = 10;
-                this.locY = 10;
-            }
-
-            notes.NotesUpdated = true;
-            this.InitializeComponent();
-            this.lblTitle.Text = title;
-            this.rtbNote.Text = note;
-
-            if (visible)
-            {
-                this.SetSizeNote(notewidth, noteheight);
-                this.SetPosNote();
-                this.TopMost = ontop;
-                this.CheckThings();
-                this.rolledup = false;
-                this.notelock = false;
-            }
-            else
-            {
-                this.Hide();
-            }
-
-            this.Visible = visible;
-        }
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
         /// </summary>
-        /// <param name="notes">The class with access to all notes</param>
-        /// <param name="id">The note id.</param>
-        /// <param name="title">The note title.</param>
-        /// <param name="note">The note content.</param>
-        /// <param name="notecolor">The color (number) of the note.</param>
-        public FrmNote(Notes notes, short id, string title, string note, short notecolor)
+        /// <param name="notes">notes class</param>
+        /// <param name="note">note data class.</param>
+        public FrmNote(Notes notes, Note note)
         {
-            this.skin = new Skin(notecolor);
-            this.id = id;
-            this.title = title;
-            this.note = note;
-            //this.transparency = transparency;
-            this.notecolor = notecolor;
-            //set default location note
-            this.locX = 10;
-            this.locY = 10;
-            //set width and height to default
-            this.Width = 240;
-            this.Height = 240;
             this.notes = notes;
+            this.note = note;
             this.InitializeComponent();
 
-            this.PaintColorNote();
-            this.lblTitle.Text = title;
-            this.rtbNote.Text = note;
-            this.SetPosNote();
-            this.CheckThings();
-            notes.NotesUpdated = true;
-            this.rolledup = false;
-            this.notelock = false;
-        }
+            //this.SuspendLayout();
+            this.UpdateForm(false);
 
-        #endregion Constructors
-
-        #region Properties (4)
-
-        /// <summary>
-        /// Gets or sets the color of the note.
-        /// </summary>
-        public short NoteColor
-        {
-            get
+            this.lblTitle.Text = note.Title;
+            this.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
+            try
             {
-                return this.notecolor;
-            }
-
-            set
-            {
-                this.notecolor = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the note content.
-        /// </summary>
-        public string NoteContent
-        {
-            get
-            {
-                return this.note;
-            }
-
-            set
-            {
-                this.note = value;
-                this.rtbNote.Text = this.note;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the note id.
-        /// </summary>
-        public short NoteID
-        {
-            get
-            {
-                return this.id;
-            }
-
-            set
-            {
-                this.id = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the note title.
-        /// </summary>
-        public string NoteTitle
-        {
-            get
-            {
-                return this.title;
-            }
-
-            set
-            {
-                this.title = value;
-                this.lblTitle.Text = this.title;
-            }
-        }
-
-        #endregion Properties
-
-        #region Methods (32)
-
-        // Public Methods (2) 
-
-        /// <summary>
-        /// Check if twitter is enabled and check Syntax.
-        /// </summary>
-        public void CheckThings()
-        {
-            this.PaintColorNote();
-
-            this.SetTextMenuTwitter(this.notes.TwitterEnabled);
-
-            if (this.notes.HighlightHTML == true)
-            {
-                if (this.highlight == null)
+                if (String.IsNullOrEmpty(this.note.tempcontent))
                 {
-                    this.highlight = new TextHighlight(this.rtbNote, this.notes.HighlightHTML);
+                    this.rtbNote.Rtf = note.GetContent();
                 }
+                else
+                {
+                    this.rtbNote.Rtf = this.note.tempcontent;
+                    //clear memory:
+                    this.note.tempcontent = String.Empty;
+                    this.note.tempcontent = null;
+                }
+            }
+            catch (ArgumentException argexc)
+            {
+                Log.Write(LogType.exception, "note "+note.Filename+": "+argexc.Message);
+            }
+            this.TopMost = note.Ontop;
+            this.menuOnTop.Checked = note.Ontop;
+            this.SetRollupNote();
+            this.SetLockedNote();
+            this.SetBounds(note.X, note.Y, note.Width, note.Height);
+            string[] skinnames = notes.GetSkinsNames();
+            for (int i = 0; i < skinnames.Length; i++)
+            {
+                ToolStripMenuItem tsi = new ToolStripMenuItem();
+                tsi.Name = "menuSkin" + skinnames[i];
+                tsi.Text = skinnames[i];
+                if (note.SkinNr == i)
+                {
+                    tsi.Checked = true;
+                }
+                else
+                {
+                    tsi.Checked = false;
+                }
+                tsi.BackColor = notes.GetPrimaryClr(i);
+                tsi.ForeColor = notes.GetTextClr(i);
+                tsi.Click += new EventHandler(menuNoteSkins_skin_Click);
+                this.menuNoteSkins.DropDownItems.Add(tsi);
+            }
+            this.UpdateForm(true);
+        }
+
+		#endregion Constructors 
+
+		#region Methods (31) 
+
+		// Public Methods (1) 
+
+        /// <summary>
+        /// Set some settings
+        /// </summary>
+        public void UpdateForm(bool contentset)
+        {
+            if (!contentset)
+            {
+                this.lblTitle.ForeColor = notes.GetTextClr(this.note.SkinNr);
+                if (Settings.FontTitleStylebold)
+                {
+                    this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
+                }
+                else
+                {
+                    if (Settings.FontTitleSize < 6)
+                    {
+                        Settings.FontTitleSize = 6;
+                    }
+                    this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
+                }
+                if (Settings.FontTextdirection == 0)
+                {
+                    this.rtbNote.RightToLeft = RightToLeft.No;
+                }
+                else if (Settings.FontTextdirection == 1)
+                {
+                    this.rtbNote.RightToLeft = RightToLeft.Yes;
+                }
+                this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
+                //this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
+                //this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
+                this.toolTip.Active = Settings.NotesTooltipsEnabled;
             }
             else
             {
-                this.rtbNote.SelectAll();
-                this.rtbNote.SelectionColor = Color.Black;
-                this.rtbNote.SelectionLength = 0;
-            }
+                if (this.lblTitle.Height + this.lblTitle.Location.Y > pnlHead.Height)
+                {
+                    const int maxheightpnlhead = 64;
+                    if (this.lblTitle.Height < maxheightpnlhead)
+                    {
+                        this.pnlHead.Height = this.lblTitle.Height;
+                    }
+                    else
+                    {
+                        this.pnlHead.Height = maxheightpnlhead;
+                    }
+                }
+                else
+                {
+                    const int defaulftminheight = 32;
+                    this.pnlHead.Height = defaulftminheight;
+                }
+                this.pnlNote.Location = new Point(0, pnlHead.Height-1);
+                this.pnlNote.Size = new Size(this.Width, this.Height - pnlHead.Height+1);
 
-            if (this.TopMost)
-            {
-                this.menuOnTop.Checked = true;
-            }
-            else
-            {
-                this.menuOnTop.Checked = false;
-            }
-
-            this.rtbNote.DetectUrls = true;
-            this.rtbNote.Text += ""; //causes TextChanged event so rescan for URL's happens
-
-            if (this.notes.HighlightHTML == true)
-            {
-                this.highlight.CheckSyntaxFull();
+                Highlight.CheckSyntaxFull(this.rtbNote, note.SkinNr, notes);
+                
             }
         }
-
-        /// <summary>
-        /// Save the setting of the note.
-        /// </summary>
-        public void UpdateThisNote()
-        {
-            this.SavePos.RunWorkerAsync();
-        }
-        // Private Methods (30) 
-
-#if windows
-        /// <summary>
-        /// Check internet state.
-        /// </summary>
-        /// <returns>True is connected to internet.</returns>
-        private static bool IsConnectedToInternet()
-        {
-            int desc;
-            return InternetGetConnectedState(out desc, 0);
-        }
-
-        [DllImport("wininet.dll")]
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-#endif
-
-        /// <summary>
-        /// Find what password is entered.
-        /// Make sure the memory gets cleared.
-        /// </summary>
-        /// <param name="obj">The button user clicked on.</param>
-        /// <param name="e">Event arguments</param>
-        private void Askpassok(object obj, EventArgs e)
-        {
-            Button btnobj = (Button)obj;
-            Form frmAskpass = btnobj.FindForm();
-
-            Control[] passwctrl = frmAskpass.Controls.Find("tbPassword", false);
-            if (String.IsNullOrEmpty(passwctrl[0].Text))
-            {
-                passwctrl[0].BackColor = Color.Red;
-                return;
-            }
-            else
-            {
-                this.twpass = new char[passwctrl[0].Text.Length];
-                for (int n = 0; n < passwctrl[0].Text.Length; n++)
-                {
-                    this.twpass[n] = passwctrl[0].Text[n];
-                }
-                if (this.twpass.Length <= 0 || this.twpass == null)
-                {
-                    throw new CustomException("buffer underflow");
-                }
-                if (this.twpass.Length > 255)
-                {
-                    throw new CustomException("password too long.");
-                }
-                passwctrl[0].Name = new Random().Next().ToString();
-                passwctrl[0].Text.Remove(0);
-                frmAskpass.Close();
-                foreach (Control cntrl in frmAskpass.Controls)
-                {
-                    cntrl.Dispose();
-                }
-                frmAskpass.Dispose();
-                GC.Collect();
-                this.Tweetnote();
-            }
-        }
+		// Private Methods (30) 
 
         /// <summary>
         /// The user pressed the cross on the note,
         /// Hide the note.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnCloseNote_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
-            this.notes.NotesUpdated = true;
-            this.Hide();
+            if (Settings.NotesClosebtnHidenotepermanently)
+            {
+                this.note.Visible = false;
+                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNote.Rtf); //save.
+            }
+            this.note.DestroyForm();
         }
 
         /// <summary>
         /// Check if there is internet connection, if not warn user.
+        /// Uses windows API, other platforms return always true at the moment.
         /// </summary>
-        /// <returns>true if there is a coonection, otherwise return false</returns>
+        /// <returns>true if there is a connection, otherwise return false</returns>
         private bool CheckConnection()
         {
 #if windows
-            if (IsConnectedToInternet() == true)
+            int desc;
+            if (InternetGetConnectedState(out desc, 0))
             {
                 return true;
             }
@@ -361,171 +222,29 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Set text tsmenuSendToTwitter based on if twitter is enabled.
-        /// </summary>
-        /// <param name="twitterenabled">Is twitter enabled.</param>
-        private void SetTextMenuTwitter(bool twitterenabled)
-        {
-            const string STWITTER = "twitter";
-            if (twitterenabled)
-            {
-                this.menuSendToTwitter.Text = STWITTER;
-            }
-            else
-            {
-                this.menuSendToTwitter.Text = STWITTER + " (not setup)";
-            }
-        }
-
-        /// <summary>
-        /// contextMenuStripNoteOptions is closed.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void contextMenuStripNoteOptions_Closed(object sender, ToolStripDropDownClosedEventArgs e)
-        {
-            if (this.skin != null)
-            {
-                this.pnlHead.BackColor = this.skin.GetObjColor(false);
-            }
-        }
-
-        /// <summary>
         /// Copy note content to clipboard.
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(this.note))
+            if (!String.IsNullOrEmpty(this.rtbNote.Text))
             {
-                Clipboard.SetText(this.note);
+                Clipboard.SetText(this.rtbNote.Text);
             }
         }
 
         /// <summary>
         /// Copy note title to clipboard.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(this.title))
+            if (!String.IsNullOrEmpty(this.lblTitle.Text))
             {
-                Clipboard.SetText(this.title);
+                Clipboard.SetText(this.lblTitle.Text);
             }
-        }
-
-        /// <summary>
-        /// Edit note is clicked.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void editTToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            if (this.NoteID > this.notes.NumNotes)
-            {
-                string cannotfindnote = "Cannot find note.";
-                Log.Write(LogType.error, cannotfindnote);
-                MessageBox.Show(cannotfindnote);
-            }
-
-            this.notes.EditNewNote(this.NoteID);
-        }
-
-        /// <summary>
-        /// E-mail an note. Start default mail client with subject and content, if possible.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void emailToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string emailnote = System.Web.HttpUtility.UrlEncode(this.note).Replace("+", " ");
-            string emailtitle = System.Web.HttpUtility.UrlEncode(this.title);
-
-            xmlHandler xmlsettings = new xmlHandler(true);
-            string defaultemail = xmlsettings.getXMLnode("defaultemail");
-
-            if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote))) //bugfix #0000008
-            {
-                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + this.title + "&body=" + emailnote);
-            }
-            else if (!String.IsNullOrEmpty(emailtitle))
-            {
-                System.Diagnostics.Process.Start("mailto:" + defaultemail + "?subject=" + this.title);
-            }
-            else
-            {
-                string msgNoTitleContent = "Note has no title+content.";
-                Log.Write(LogType.error, msgNoTitleContent);
-                MessageBox.Show(msgNoTitleContent);
-            }
-        }
-
-        /// <summary>
-        /// Form got focus, remove transparency.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void frmNote_Activated(object sender, EventArgs e)
-        {
-            if (this.notes.Transparency && this.skin != null)
-            {
-                this.Opacity = 1.0;
-            }
-        }
-
-        /// <summary>
-        /// Form is not active anymore, make transparent if allowed.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void frmNote_Deactivate(object sender, EventArgs e)
-        {
-            if (this.notes.Transparency && this.skin != null)
-            {
-                this.Opacity = this.skin.GetTransparencylevel();
-            }
-        }
-
-        /// <summary>
-        /// Hide note.
-        /// </summary>
-        /// <param name="sender">Sender object.</param>
-        /// <param name="e">Event arguments</param>
-        private void hideNoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.btnCloseNote_Click(sender, e);
-        }
-
-        /// <summary>
-        /// Lock the note and show a lock.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            const string locknotemsg = "&Lock note";
-            if (this.notelock)
-            {
-                this.notelock = false;
-                this.DestroyPbLock();
-                this.menuLockNote.Text = locknotemsg;
-                this.pbResizeGrip.Visible = true;
-            }
-            else
-            {
-                this.notelock = true;
-                this.CreatePbLock();
-                this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
-                this.pbResizeGrip.Visible = false;
-            }
-
-            this.menuNoteColors.Enabled = !this.notelock;
-            this.menuEditNote.Enabled = !this.notelock;
-            this.menuOnTop.Enabled = !this.notelock;
-            this.menuRollUp.Enabled = !this.notelock;
         }
 
         /// <summary>
@@ -539,39 +258,194 @@ namespace NoteFly
             this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
             this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
             this.pbShowLock.Visible = true;
+            this.pbShowLock.MouseDown += new MouseEventHandler(pnlHead_MouseDown);
+            this.pbShowLock.MouseMove += new MouseEventHandler(pnlHead_MouseMove);
+            this.pbShowLock.MouseUp += new MouseEventHandler(pnlHead_MouseUp);
             this.pnlHead.Controls.Add(this.pbShowLock);
             this.pbShowLock.BringToFront();
         }
 
         /// <summary>
-        /// Removes and freese memory lock picture.
+        /// Removes the lock picture and free the memory of the picture.
         /// </summary>
         private void DestroyPbLock()
         {
-            this.pbShowLock.Visible = false;
-            this.pbShowLock.Dispose();
+            if (pbShowLock != null)
+            {
+                this.pbShowLock.Visible = false;
+                this.pbShowLock.Dispose();
+            }
+            GC.Collect();
         }
 
         /// <summary>
-        /// Roll the note up and down.
+        /// Requested to edit this note.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void editTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note, this.Location);
+            frmnewnote.Show();
+            this.note.DestroyForm();
+        }
+
+        /// <summary>
+        /// E-mail an note. Start default mail client with subject and content, if possible.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void emailToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string emailnote = System.Web.HttpUtility.UrlEncode(this.rtbNote.Text).Replace("+", " ");
+            string emailtitle = System.Web.HttpUtility.UrlEncode(this.lblTitle.Text);
+
+            if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote)))
+            {
+                System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
+            }
+            else if (!String.IsNullOrEmpty(emailtitle))
+            {
+                System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text);
+            }
+            else
+            {
+                string msgNoTitleContent = "Note has no title and content.";
+                Log.Write(LogType.error, msgNoTitleContent);
+                MessageBox.Show(msgNoTitleContent);
+            }
+        }
+
+        /// <summary>
+        /// Form got focus, remove transparency.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void frmNote_Activated(object sender, EventArgs e)
+        {
+            if (Settings.NotesTransparencyEnabled)
+            {
+                this.Opacity = 1.0;
+            }
+        }
+
+        /// <summary>
+        /// Form is not active anymore, make transparent if allowed.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void frmNote_Deactivate(object sender, EventArgs e)
+        {
+            if (Settings.NotesTransparencyEnabled)
+            {
+                this.Opacity = Settings.NotesTransparencyLevel;
+            }
+        }
+
+        /// <summary>
+        /// Requested to hide this note form.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments</param>
+        private void hideNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.btnCloseNote_Click(sender, e);
+        }
+
+        /// <summary>
+        /// Lock the note and show a lock.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.note.Locked = !this.note.Locked;
+
+            this.SetLockedNote();
+
+            if (!this.SaveWorker.IsBusy)
+            {
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+        }
+
+        /// <summary>
+        /// Copy the selected text in the rtbNote control
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuCopySelected_Click(object sender, EventArgs e)
+        {
+            if (rtbNote.SelectedText.Length >= 1)
+            {
+                Clipboard.SetText(this.rtbNote.SelectedText);
+            }
+        }
+
+        /// <summary>
+        /// Check if some text is selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuFrmNoteOptions_Opening(object sender, CancelEventArgs e)
+        {
+            if (rtbNote.SelectedText.Length >= 1)
+            {
+                this.menuCopySelected.Enabled = true;
+            }
+            else
+            {
+                this.menuCopySelected.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// A new skin is selected for this note.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void menuNoteSkins_skin_Click(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem curtsi in this.menuNoteSkins.DropDownItems)
+            {
+                curtsi.Checked = false;
+            }
+            ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
+            tsi.Checked = true;
+            this.note.SkinNr = notes.GetSkinNr(tsi.Text);
+            this.BackColor = notes.GetPrimaryClr(this.note.SkinNr);
+            this.rtbNote.BackColor = notes.GetPrimaryClr(this.note.SkinNr);
+            this.pnlHead.BackColor = notes.GetPrimaryClr(this.note.SkinNr);
+            this.lblTitle.ForeColor = notes.GetTextClr(this.note.SkinNr);
+            if (!Highlight.KeywordsInitialized)
+            {
+                Highlight.InitHighlighter();
+            }
+            Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, notes);
+            if (!this.SaveWorker.IsBusy)
+            {
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+            this.notes.frmmangenotesneedupdate = true;
+            Highlight.DeinitHighlighter();
+            TrayIcon.RefreshFrmManageNotes();
+            Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to "+this.notes.GetSkinName(this.note.SkinNr));
+        }
+
+        /// <summary>
+        /// Requested to rollup or rolldown the note form.
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
         private void menuRollUp_Click(object sender, EventArgs e)
         {
-            this.rolledup = !this.rolledup;
-            this.menuRollUp.Checked = this.rolledup;
-            if (this.rolledup)
+            this.note.RolledUp = !this.note.RolledUp;
+
+            this.SetRollupNote();
+
+            if (!this.SaveWorker.IsBusy)
             {
-                this.menuRollUp.Text = this.menuRollUp.Text + "(click again to Roll Down)";
-                this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
-                this.Height = this.Height - this.pnlNote.Height;
-            }
-            else
-            {
-                this.menuRollUp.Text = this.menuRollUp.Text.Substring(0, 8);
-                this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
-                this.Height = this.noteHeight;
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -582,496 +456,85 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.TopMost = this.menuOnTop.Checked;
+            this.note.Ontop = !this.note.Ontop;
+            this.menuOnTop.Checked = this.note.Ontop;
 
-            if (!this.notelock && !this.SavePos.IsBusy)
+            this.TopMost = this.note.Ontop;
+            if (!this.SaveWorker.IsBusy)
             {
-                this.SavePos.RunWorkerAsync();
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
         /// <summary>
-        /// Get the color of the note and paint it.
+        /// Resize the note form because dragging.
         /// </summary>
-        private void PaintColorNote()
-        {
-            this.skin = new Skin(this.notecolor);
-            Color normalcolor = this.skin.GetObjColor(false);
-
-            this.BackColor = normalcolor;
-            this.pnlHead.BackColor = normalcolor;
-            this.pnlNote.BackColor = normalcolor;
-            this.rtbNote.BackColor = normalcolor;
-
-            if (this.notes.TextDirection == 0)
-            {
-                this.lblTitle.TextAlign = ContentAlignment.TopLeft;
-                this.rtbNote.SelectAll(); //fix bug: #0000012
-                this.rtbNote.SelectionAlignment = HorizontalAlignment.Left;
-                //this.rtbNote.RightToLeft = RightToLeft.No;
-            }
-            else if (this.notes.TextDirection == 1)
-            {
-                this.lblTitle.TextAlign = ContentAlignment.TopRight;
-                this.rtbNote.SelectAll();
-                this.rtbNote.SelectionAlignment = HorizontalAlignment.Right;
-                //this.rtbNote.RightToLeft = RightToLeft.Yes; //will make the contextmenu act not right.
-            }
-            this.rtbNote.SelectionStart = 0;
-            this.rtbNote.Select(0, 0);
-            this.rtbNote.Font = this.skin.GetFontNoteContent();
-        }
-
-        /// <summary>
-        /// Resize note
-        /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (!this.notelock)
+                if (!this.note.Locked)
                 {
                     this.Cursor = Cursors.SizeNWSE;
                     this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
                 }
             }
-
             this.Cursor = Cursors.Default;
         }
 
         /// <summary>
         /// Save resized note.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!this.notelock && !this.SavePos.IsBusy)
+            this.note.Width = this.Width;
+            this.note.Height = this.Height;
+
+            if (!this.note.Locked && !this.SaveWorker.IsBusy)
             {
-                this.SavePos.RunWorkerAsync();
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
         /// <summary>
-        /// pnlHead the grab area is selected.
+        /// pnlHead the grab area of the note is selected.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
+                this.pnlHead.BackColor = notes.GetSelectClr(note.SkinNr);
                 this.moving = true;
                 this.oldp = e.Location;
-
-                if (this.skin != null)
-                {
-                    this.pnlHead.BackColor = this.skin.GetObjColor(true);
-                }
-
-                this.locX = this.Location.X;
-                this.locY = this.Location.Y;
-            }
-            else if (this.skin != null)
-            {
-                this.pnlHead.BackColor = this.skin.GetObjColor(false);
-            }
-
-            if (this.SavePos.IsBusy == false)
-            {
-                this.SavePos.RunWorkerAsync();
             }
         }
 
         /// <summary>
-        /// Save note after moving
+        /// The note is dragged with pnlHead.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
-        private void pnlHead_MouseUp(object sender, MouseEventArgs e)
-        {
-            this.moving = false;
-            if (!this.notelock && !this.SavePos.IsBusy)
-            {
-                SavePos.RunWorkerAsync();
-            }
-        }
-
-		/*
-        /// <summary>
-        /// Resize note.
-        /// </summary>
-        /// <param name="sender">Sender object.</param>
-        /// <param name="e">Event arguments</param>
-        private void pnlResizeWindow_MouseDown(object sender, MouseEventArgs e)
-        {
-            Cursor = Cursors.SizeNWSE;
-        }
-		*/
-
-        /// <summary>
-        /// Hyperlink clicked.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            xmlHandler getSettings = new xmlHandler(true);
-            if (getSettings.getXMLnodeAsBool("askurl"))
-            {
-                DialogResult result = MessageBox.Show(this, "Are you sure you want to visted:\r\n" + e.LinkText, "url pressed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    System.Diagnostics.Process.Start(e.LinkText);
-                }
-            }
-            else
-            {
-                System.Diagnostics.Process.Start(e.LinkText);
-            }
-        }
-
-        /// <summary>
-        /// Thread to save note settings.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void SavePos_DoWork(object sender, DoWorkEventArgs e)
-        {
-            this.locX = this.Location.X;
-            this.locY = this.Location.Y;
-
-            if (!this.rolledup)
-            {
-                try
-                {
-                    this.noteWidth = Convert.ToUInt16(this.Width);
-                }
-                catch (InvalidCastException)
-                {
-                    new CustomException("noteWidth cannot be negative value.");
-                }
-                try
-                {
-                    this.noteHeight = Convert.ToUInt16(this.Height);
-                }
-                catch (InvalidCastException)
-                {
-                    new CustomException("noteHeight cannot be negative value.");
-                }
-            }
-
-            if ((this.locX + this.Width > MINVISIBLESIZE) && (this.locY + this.Height > MINVISIBLESIZE) && (this.notecolor >= 0) && this.notecolor <= this.skin.MaxNotesColors)
-            {
-                string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
-                xmlHandler updateposnote = new xmlHandler(notefile);
-                updateposnote.WriteNote(this.Visible, this.TopMost, this.notecolor, this.title, this.note, this.locX, this.locY, this.noteWidth, this.noteHeight);
-            }
-            else if (this.notecolor < 0 || this.notecolor > this.skin.MaxNotesColors)
-            {
-                throw new CustomException("Note color unknow.");
-            }
-            else
-            {
-                string msgOutOfScreen = "Position note (ID:" + this.NoteID + ") is out of screen.";
-                Log.Write(LogType.error, msgOutOfScreen);
-                MessageBox.Show(msgOutOfScreen);
-            }
-
-        }
-
-        /// <summary>
-        /// Set the color of the note.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void SetColorNote(object sender, EventArgs e)
-        {
-            ToolStripMenuItem selectedmenuitem = (ToolStripMenuItem)sender;
-            short i = 0;
-            foreach (ToolStripMenuItem curitem in this.menuNoteColors.DropDownItems)
-            {
-                if (curitem == selectedmenuitem)
-                {
-                    curitem.Checked = true;
-                    this.notecolor = i;
-                    string notefile = System.IO.Path.Combine(this.notes.NoteSavePath, this.id + ".xml");
-                    xmlHandler savenotecolor = new xmlHandler(notefile);
-                    savenotecolor.WriteNote(this.Visible, this.menuOnTop.Checked, this.notecolor, this.title, this.note, this.locX, this.locY, this.Width, this.Height);
-                    Log.Write(LogType.info, "Color note (ID:" + this.NoteID + ") changed.");
-                }
-                else
-                {
-                    curitem.Checked = false;
-                }
-
-                i++;
-            }
-
-            this.PaintColorNote();
-        }
-
-        /// <summary>
-        /// Set the position of frmNote
-        /// </summary>
-        private void SetPosNote()
-        {
-            this.Location = new Point(this.locX, this.locY);
-        }
-
-        /// <summary>
-        /// Set the size of FrmNote.
-        /// </summary>
-        /// <param name="width">The new width of FrmNote.</param>
-        /// <param name="height">The new height of FrmNote.</param>
-        private void SetSizeNote(int width, int height)
-        {
-            this.Width = width;
-            this.Height = height;
-        }
-
-        /// <summary>
-        /// Send note to Facebook.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
-        {
-            if (!this.CheckConnection())
-            {
-                return;
-            }
-
-            Facebook fb = new Facebook();
-            fb.StartPostingNote(this.note);
-        }
-
-        /// <summary>
-        /// Save the note to a plain textfile.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void tsmenuSendToTextfile_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog sfdlg = new SaveFileDialog();
-            sfdlg.DefaultExt = "txt";
-            sfdlg.AddExtension = true;
-            sfdlg.ValidateNames = true;
-            sfdlg.CheckPathExists = true;
-            sfdlg.OverwritePrompt = true;
-
-            //strip forbidden filename characters:
-            System.Text.StringBuilder suggestfilenamesafe = new System.Text.StringBuilder();
-            char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
-            for (int pos = 0; (pos < this.title.Length) && (pos<=100); pos++)
-            {
-                bool isforbiddenchar = false;
-                for (int fc = 0; fc < forbiddenchars.Length; fc++)
-                {
-                    if (this.title[pos] == forbiddenchars[fc])
-                    {
-                        isforbiddenchar = true;
-                    }
-                }
-                if (!isforbiddenchar)
-                {
-                    suggestfilenamesafe.Append(this.title[pos]);
-                }
-            }
-            sfdlg.FileName = suggestfilenamesafe.ToString();
-
-            sfdlg.Title = "Save note to textfile";
-            sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm";
-            if (sfdlg.ShowDialog() == DialogResult.OK)
-            {
-                new Textfile(true, sfdlg.FileName, this.title, this.note);
-                string logmsg = "Note (ID:" + this.NoteID + ") saved to ";
-                switch (sfdlg.FilterIndex)
-                {
-                    case 0:
-                        Log.Write(LogType.info, logmsg + "textfile.");
-                        break;
-                    case 1:
-                        Log.Write(LogType.info, logmsg + "htmlfile.");
-                        break;
-                    default:
-                        Log.Write(LogType.info, logmsg + "some file.");
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Request to tweet note. Check if allow, if so call tweetnote() methode.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
-        {
-            if (!this.CheckConnection())
-            {
-                return;
-            }
-
-            if ((String.IsNullOrEmpty(this.note) == false) && (this.note.Length <= 140))
-            {
-                this.Tweetnote();
-            }
-            else if (this.note.Length > 140)
-            {
-                DialogResult result = MessageBox.Show("Your note is more than the 140 chars.\r\nDo you want to publish only the first 140 characters? ", "Too long", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    this.Tweetnote();
-                    Log.Write(LogType.info, "Shorted note send to twitter.");
-                }
-            }
-            else
-            {
-                string emptynote = "Note is empty.";
-                Log.Write(LogType.error, emptynote);
-                MessageBox.Show(emptynote);
-            }
-        }
-
-        /// <summary>
-        /// Tweet a note.
-        /// </summary>
-        private void Tweetnote()
-        {
-            if (!this.CheckConnection())
-            {
-                return;
-            }
-
-            xmlHandler getSettings = new xmlHandler(true);
-            string twitteruser = getSettings.getXMLnode("twitteruser");
-
-            if (String.IsNullOrEmpty(twitteruser))
-            {
-                string notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
-                Log.Write(LogType.error, notwusername.Replace("\r\n", ""));
-                MessageBox.Show(notwusername, "setup twitter");
-                FrmSettings settings = new FrmSettings(this.notes);
-                settings.Show();
-                return;
-            }
-
-            if (this.twpass == null)
-            {
-                this.twpass = getSettings.getXMLnode("twitterpass").ToCharArray();
-            }
-
-            if ((this.twpass == null) || (this.twpass.Length <= 0))
-            {
-                Form askpass = new Form();
-                askpass.ShowIcon = false;
-                askpass.Height = 80;
-                askpass.Width = 280;
-                askpass.Text = "Twitter password needed";
-                askpass.Show();
-                TextBox tbpass = new TextBox();
-                tbpass.Location = new Point(10, 10);
-                tbpass.Width = 160;
-                tbpass.Name = "tbPassword";
-                tbpass.PasswordChar = 'X';
-                Button btnOk = new Button();
-                btnOk.Location = new Point(180, 10);
-                btnOk.Text = "Ok";
-                btnOk.Width = 80;
-                btnOk.Name = "btnOk";
-                btnOk.Click += this.Askpassok;
-                askpass.Controls.Add(tbpass);
-                askpass.Controls.Add(btnOk);
-            }
-            else
-            {
-                Twitter twitter = new Twitter();
-                const string twitterleadmgs = "Sending note to twitter ";
-                if (twitter.UpdateAsXML(twitteruser, this.twpass, this.note) != null)
-                {
-                    string sendtwsucces = twitterleadmgs + "succeded.";
-                    Log.Write(LogType.info, sendtwsucces);
-                    MessageBox.Show(sendtwsucces);
-                }
-                else
-                {
-                    string sendtwfail = twitterleadmgs + "failed.";
-                    Log.Write(LogType.error, sendtwfail);
-                    MessageBox.Show(sendtwfail);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Change check in menu colors.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void updateMenuNoteColor(object sender, EventArgs e)
-        {
-            foreach (ToolStripMenuItem curitem in this.menuNoteColors.DropDownItems)
-            {
-                curitem.Checked = false;
-            }
-
-            switch (this.notecolor)
-            {
-                case 0:
-                    this.yellowToolStripMenuItem.Checked = true;
-                    break;
-                case 1:
-                    this.orangeToolStripMenuItem.Checked = true;
-                    break;
-                case 2:
-                    this.whiteToolStripMenuItem.Checked = true;
-                    break;
-                case 3:
-                    this.greenToolStripMenuItem.Checked = true;
-                    break;
-                case 4:
-                    this.blueToolStripMenuItem.Checked = true;
-                    break;
-                case 5:
-                    this.purpleToolStripMenuItem.Checked = true;
-                    break;
-                case 6:
-                    this.redToolStripMenuItem.Checked = true;
-                    break;
-                default:
-                    new CustomException("unknow color selected.");
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Moving note
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void pnlHead_MouseMove(object sender, MouseEventArgs e)
         {
             if ((this.moving) && (e.Button == MouseButtons.Left))
             {
-                if (this.skin != null)
-                {
-                    this.pnlHead.BackColor = this.skin.GetObjColor(true);
-                }
-
                 int dpx = e.Location.X - oldp.X;
                 int dpy = e.Location.Y - oldp.Y;
 #if linux
                 if (dpx > 8)
                 {
                     dpx = 8;
-                } 
+                }
                 else if (dpx < -8)
                 {
                     dpx = -8;
                 }
-
                 if (dpy > 8)
                 {
                     dpy = 8;
@@ -1081,14 +544,204 @@ namespace NoteFly
                     dpy = -8;
                 }
 #endif
-                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
-            }
-            else if (this.skin != null)
-            {
-                this.pnlHead.BackColor = this.skin.GetObjColor(false);
+                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
             }
         }
 
-        #endregion Methods
+        /// <summary>
+        /// Stoped moving note, save position.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void pnlHead_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.note.X = this.Location.X;
+            this.note.Y = this.Location.Y;
+
+            this.moving = false;
+            if (!this.SaveWorker.IsBusy)
+            {
+                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+            this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
+        }
+
+        /// <summary>
+        /// Hyperlink clicked.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Program.LoadLink(e.LinkText);
+        }
+
+        /// <summary>
+        /// Thread to save note settings.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void SavePos_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if ((this.Location.X + this.Width > MINVISIBLESIZE) && (this.Location.Y + this.Height > MINVISIBLESIZE))
+            {
+                string notefilepath = Path.Combine(Settings.NotesSavepath, this.note.Filename);
+                this.note.X = this.Location.X;
+                this.note.Y = this.Location.Y;
+                string rtf = (string)e.Argument;
+                xmlUtil.WriteNote(this.note, notes.GetSkinName(this.note.SkinNr), rtf);
+            }
+            else
+            {
+                Log.Write(LogType.error, "Note "+this.note.Filename+" not saved. Position note is out of screen.");
+            }
+        }
+
+        /// <summary>
+        /// Lock the note by disabling serval parts of the form.
+        /// Set the menuLockNote contextmenu to display correctly.
+        /// </summary>
+        private void SetLockedNote()
+        {
+            this.menuLockNote.Checked = note.Locked;
+            const string locknotemsg = "&Lock note";
+            if (note.Locked)
+            {
+                this.CreatePbLock();
+                this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
+            }
+            else
+            {
+                this.DestroyPbLock();
+                this.menuLockNote.Text = locknotemsg;
+            }
+            this.pbResizeGrip.Visible = !note.Locked;
+            this.menuNoteSkins.Enabled = !note.Locked;
+            this.menuEditNote.Enabled = !note.Locked;
+            this.menuOnTop.Enabled = !note.Locked;
+            this.menuRollUp.Enabled = !note.Locked;
+        }
+
+        /// <summary>
+        /// Roll up the note, by setting the height of the form.
+        /// Set the menuRollUp contextmenu to display correctly.
+        /// </summary>
+        private void SetRollupNote()
+        {
+            this.menuRollUp.Checked = this.note.RolledUp;
+            const string rollupmsg = "&Roll up";
+            if (this.note.RolledUp)
+            {
+                this.menuRollUp.Text = rollupmsg + "(click again to Roll Down)";
+                this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
+                this.Height = this.pnlHead.Height;
+            }
+            else
+            {
+                this.menuRollUp.Text = rollupmsg;
+                this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
+                this.Height = note.Height;
+            }
+        }
+
+        /// <summary>
+        /// Send note to Facebook.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
+        {
+            if (this.CheckConnection())
+            {
+                string protocolhandler = "http://";
+                if (Settings.SocialFacebookUseSSL)
+                {
+                    protocolhandler = "https://";
+                }
+                string update;
+                if (this.rtbNote.TextLength > 320)
+                {
+                    update = this.rtbNote.Text.Substring(0, 320);
+                }
+                else
+                {
+                    update = this.rtbNote.Text;
+                }
+                Program.LoadLink(protocolhandler + "facebook.com/share.php?mgs=" + HttpUtility.UrlEncode(update));
+            }
+        }
+
+        /// <summary>
+        /// Save the note to a plain textfile.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void tsmenuSendToTextfile_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfdlg = new SaveFileDialog();
+            sfdlg.DefaultExt = "txt";
+            sfdlg.AddExtension = true;
+            sfdlg.ValidateNames = true;
+            sfdlg.CheckPathExists = true;
+            sfdlg.OverwritePrompt = true;
+            sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
+            sfdlg.Title = "Save note to file";
+            sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
+            if (sfdlg.ShowDialog() == DialogResult.OK)
+            {
+                string logmsg = "Note saved to ";
+                switch (sfdlg.FilterIndex)
+                {
+                    case 1:
+                        new Textfile(TextfileWriteType.exporttext, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
+                        Log.Write(LogType.info, logmsg + "textfile.");
+                        break;
+                    case 2:
+                        new Textfile(TextfileWriteType.exporthtml, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
+                        Log.Write(LogType.info, logmsg + "htmlfile.");
+                        break;
+                    case 3:
+                        new Textfile(TextfileWriteType.exportphp, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
+                        Log.Write(LogType.info, logmsg + "phpfile.");
+                        break;
+                }
+            }
+        }
+
+        /*
+        /// <summary>
+        /// Send note to twitter.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
+        {
+            if (this.CheckConnection())
+            {
+                string protocolhandler = "http://";
+                if (Settings.SocialTwitterUseSSL) {
+                    protocolhandler = "https://";
+                }
+                string tweet;
+                if (this.rtbNote.TextLength > 140)
+                {
+                    tweet = this.rtbNote.Text.Substring(0, 140);
+                }
+                else
+                {
+                    tweet = this.rtbNote.Text;
+                }
+                Program.LoadLink(protocolhandler + "twitter.com/login?redirect_after_login=%2Fhome%3F" + HttpUtility.UrlEncode(tweet));
+            }
+        }
+        */
+
+		#endregion Methods 
+
+#if windows
+        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+#endif
     }
+
 }

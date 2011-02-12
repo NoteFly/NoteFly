@@ -11,8 +11,8 @@
 ;
 
 ; version
-!define VERSION "1.0.4" ;version number: major.minor.release
-!define VERSTATUS ""   ;alpha, beta, rc, or nothing for final.
+!define VERSION "2.0.0" ;version number: major.minor.release
+!define VERSTATUS "beta1"    ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 
 Name "NoteFly ${VERSION} ${VERSTATUS}" ; The name of the installer
@@ -75,7 +75,7 @@ Function .onInit
  
   ${VersionCompare} $0 "2.0" $1
   ${If} $1 == 2
-    MessageBox MB_OK|MB_ICONSTOP ".NET framework v2.0 or newer is required. You have $0. Please update first."
+    MessageBox MB_OK|MB_ICONSTOP ".NET framework v2.0 or newer is required. You have $0. Please update it first."
     Abort
   ${EndIf}
   

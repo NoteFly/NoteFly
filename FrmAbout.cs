@@ -1,14 +1,20 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="frmAbout.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+// <copyright file="FrmAbout.cs" company="GNU">
+//  NoteFly a note application.
+//  Copyright (C) 2010-2011  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 namespace NoteFly
@@ -23,6 +29,9 @@ namespace NoteFly
     /// </summary>
     public partial class FrmAbout : Form
     {
+        private const string NOTEFLYWEBSITEURI = "http://www.notefly.tk/";
+        private const string NOTEFLYFAQURI = "http://www.notefly.tk/faq.php";
+
         #region Constructors (1) 
 
         /// <summary>
@@ -31,9 +40,9 @@ namespace NoteFly
         public FrmAbout()
         {
             this.InitializeComponent();
-            this.Text = "About " + TrayIcon.AssemblyTitle;
-            this.lblProductName.Text = TrayIcon.AssemblyTitle;
-            this.lblVersion.Text = String.Format("Version {0}", TrayIcon.AssemblyVersion);
+            this.Text = "About " + Program.AssemblyTitle;
+            this.lblProductName.Text = Program.AssemblyTitle;
+            this.lblVersion.Text = String.Format("Version "+Program.AssemblyVersionAsString);
         }
 
         #endregion Constructors
@@ -49,7 +58,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LoadUrl("http://www.notefly.tk/faq.php");
+            Program.LoadLink(NOTEFLYFAQURI);
+            this.Close();
         }
 
         /// <summary>
@@ -59,23 +69,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LoadUrl("http://www.notefly.tk/");
-        }
-
-        /// <summary>
-        /// Load a url link. Throws error if inpossible, e.g: no http protocol handler registered.
-        /// </summary>
-        /// <param name="url">the link</param>
-        private void LoadUrl(string url)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start(url);
-            }
-            catch (Exception exc)
-            {
-                throw new CustomException("Browser load error " + exc.Message + " details: " + exc.StackTrace);
-            }
+            Program.LoadLink(NOTEFLYWEBSITEURI);
+            this.Close();
         }
 
         /// <summary>

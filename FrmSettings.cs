@@ -1,17 +1,23 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmSettings.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010-2011  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -28,14 +34,13 @@ namespace NoteFly
     /// </summary>
     public partial class FrmSettings : Form
     {
-        #region Fields (2)
+		#region Fields (1) 
 
         private Notes notes;
-        private xmlHandler xmlsettings;
 
-        #endregion Fields
+		#endregion Fields 
 
-        #region Constructors (1)
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmSettings class.
@@ -44,62 +49,16 @@ namespace NoteFly
         public FrmSettings(Notes notes)
         {
             this.InitializeComponent();
-            this.xmlsettings = new xmlHandler(true);
-            
-            //read setting and display them correctly.
-            bool[] boolsetting = this.xmlsettings.ParserSettingsBool();
-            this.chxTransparecy.Checked = boolsetting[0];
-            this.chxConfirmLink.Checked = boolsetting[1];
-            this.chxLogErrors.Checked = boolsetting[2];
-            this.chxLogDebug.Checked = boolsetting[3];
-            this.chxSyntaxHighlightHTML.Checked = boolsetting[4];
-            this.chxConfirmExit.Checked = boolsetting[5];
-            this.chxConfirmDeleteNote.Checked = boolsetting[6];
-            this.chxUseProxy.Checked = boolsetting[7];
-            this.chxSaveFBSession.Checked = boolsetting[8];
-            if (boolsetting[6])
-            {
-                this.iptbProxyAddress.Enabled = true;
-            }
-            this.iptbProxyAddress.SetIPAddress(this.GetProxyAddr());
-            this.numProcTransparency.Value = this.GetTransparecylevel();
-            this.cbxDefaultColor.SelectedIndex = this.GetDefaultColor();
-            this.cbxActionLeftClick.SelectedIndex = this.GetActionLeftClick();
-            this.tbNotesSavePath.Text = this.GetNotesSavePath();
-            this.tbTwitterUser.Text = this.GetTwitterusername();
-            this.tbTwitterPass.Text = this.GetTwitterpassword();
-            this.tbDefaultEmail.Text = this.GetDefaultEmail();	
-            this.cbxTextDirection.SelectedIndex = this.GetTextDirection();
-#if windows
-            this.chxStartOnBootWindows.Checked = this.GetStatusStartlogin();
-#endif
-            this.numTimeout.Value = this.GetTimeout();
-
-            if (String.IsNullOrEmpty(this.tbDefaultEmail.Text))
-            {
-                this.tbDefaultEmail.Enabled = false;
-                this.cbxDefaultEmailToBlank.Checked = true;
-            }
-            else
-            {
-                this.tbDefaultEmail.Enabled = true;
-                this.cbxDefaultEmailToBlank.Checked = false;
-            }
-
-            this.DrawCbxFonts();
-#if DEBUG
-            this.btnCrash.Visible = true;
-#endif
             this.notes = notes;
-
-            boolsetting = null;
+            this.DrawCbxFonts();
+            this.SetControlsBySettings();
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (24)
+		#region Methods (13) 
 
-        // Private Methods (24) 
+		// Private Methods (13) 
 
         /// <summary>
         /// User want to browse for notes save path.
@@ -112,16 +71,15 @@ namespace NoteFly
             if (dlgresult == DialogResult.OK)
             {
                 string newpathsavenotes = this.folderBrowserDialog1.SelectedPath;
-                
+
                 if (Directory.Exists(newpathsavenotes))
                 {
                     this.tbNotesSavePath.Text = this.folderBrowserDialog1.SelectedPath;
                 }
                 else
                 {
-                    const string dirnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
-                    Log.Write(LogType.info, dirnotexist);
-                    MessageBox.Show(dirnotexist, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Log.Write(LogType.info, NoteFly.Properties.Resources.settings_dirdoesnotexist);
+                    MessageBox.Show(NoteFly.Properties.Resources.settings_dirdoesnotexist, NoteFly.Properties.Resources.settings_dirdoesnotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -138,18 +96,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Test method to see how custom exceptions are handled.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event arguments</param>
-        private void btnCrash_Click(object sender, EventArgs e)
-        {
-            #if DEBUG
-            throw new CustomException("This is a crash test, to test if exceptions are thrown correctly.");
-            #endif
-        }
-
-        /// <summary>
         /// Check the form input. If everything is okay
         /// call xmlHandler class to save the xml setting file.
         /// </summary>
@@ -159,103 +105,125 @@ namespace NoteFly
         {
             if (!Directory.Exists(this.tbNotesSavePath.Text))
             {
-                const string invalidfoldersavenote = "Invalid folder for saving notes folder.";
-                Log.Write(LogType.info, invalidfoldersavenote);
-                MessageBox.Show(invalidfoldersavenote);
+                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_invalidfoldersavenote);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_invalidfoldersavenote);
                 this.tabControlSettings.SelectedTab = this.tabGeneral;
             }
             else if (String.IsNullOrEmpty(this.cbxFontNoteContent.Text) == true)
             {
-                const string nofont = "Select a font.";
-                Log.Write(LogType.info, nofont);
-                MessageBox.Show(nofont);
+                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_nofont);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_nofont);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((this.numFontSize.Value < 4) || (this.numFontSize.Value > 128))
+            else if ((this.numFontSizeContent.Value < 4) || (this.numFontSizeContent.Value > 128))
             {
-                const string invalidfontsize = "Font size invalid. minimal 4pt max. 128pt";
-                Log.Write(LogType.info, invalidfontsize);
-                MessageBox.Show(invalidfontsize);
+                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_invalidfontsize);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_invalidfontsize);
+                this.tabControlSettings.SelectedTab = this.tabAppearance;
+            }
+            else if ((this.numFontSizeTitle.Value < 4) || (this.numFontSizeTitle.Value > 128))
+            {
+                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_invalidfontsize);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_invalidfontsize);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if (this.cbxTextDirection.SelectedIndex > 1)
             {
-                const string noknowtextdir = "Settings text direction unknow.";
-                Log.Write(LogType.error, noknowtextdir);
-                MessageBox.Show(noknowtextdir);
+                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_noknowtextdir);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_noknowtextdir);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((this.chxSyntaxHighlightHTML.CheckState == CheckState.Indeterminate) 
-                    #if windows 
-                      || (this.chxStartOnBootWindows.CheckState == CheckState.Indeterminate)
-                   #endif 
-                      || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
+            else if ((this.chxHighlightHTML.CheckState == CheckState.Indeterminate)
+#if windows
+ || (this.chxStartOnLogin.CheckState == CheckState.Indeterminate)
+#endif
+ || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
             {
-                const string notallowcheckstate = "Checkstate not allowed.";
-                Log.Write(LogType.error, notallowcheckstate);
-                MessageBox.Show(notallowcheckstate);
+                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_notallowcheckstate);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_notallowcheckstate);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
 
             else if (this.tbTwitterUser.Text.Length > 16)
             {
-                const string twnametoolong = "Settings Twitter: username is too long.";
-                Log.Write(LogType.error, twnametoolong);
-                MessageBox.Show(twnametoolong);
+                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_twitternametoolong);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_twitternametoolong);
+                this.tabControlSettings.SelectedTab = this.tabSharing;
             }
+            /*
             else if ((this.tbTwitterPass.Text.Length < 6) && (this.chxRememberTwPass.Checked == true))
             {
-                const string twpaswtooshort = "Settings Twitter: password is too short.";
-                Log.Write(LogType.error, twpaswtooshort);
-                MessageBox.Show(twpaswtooshort);
+                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_twitterpaswtooshort);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_twitterpaswtooshort);
+                this.tabControlSettings.SelectedTab = this.tabSocialNetworks;
             }
-            else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.cbxDefaultEmailToBlank.Checked))
+            */
+            else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.chxSocialEmailDefaultaddressBlank.Checked))
             {
-                const string emailnotvalid = "Settings advance: default emailadres not valid.";
-                Log.Write(LogType.error, emailnotvalid);
-                MessageBox.Show(emailnotvalid);
+                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_emailnotvalid);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_emailnotvalid);
+                this.tabControlSettings.SelectedTab = this.tabAdvance;
             }
             else
             {
                 //everything looks okay 
-                string oldnotesavepath = this.GetNotesSavePath();
+                string oldnotesavepath = Settings.NotesSavepath;
                 if (this.tbNotesSavePath.Text != oldnotesavepath)
                 {
-                    this.MoveNotes(this.tbNotesSavePath.Text);
+                    this.MoveNotes(oldnotesavepath, this.tbNotesSavePath.Text);//TODO: put on seperate thread
+                    
                 }
-
-                this.xmlsettings.WriteSettings(
-                    this.chxTransparecy.Checked,
-                    this.numProcTransparency.Value,
-                    this.cbxDefaultColor.SelectedIndex,
-                    this.cbxActionLeftClick.SelectedIndex,
-                    this.chxConfirmLink.Checked,
-                    this.cbxFontNoteContent.Text, 
-                    this.numFontSize.Value,
-                    this.cbxTextDirection.SelectedIndex,
-                    this.tbNotesSavePath.Text,
-                    this.tbDefaultEmail.Text,
-                    this.chxSyntaxHighlightHTML.Checked,
-                    this.chxConfirmExit.Checked,
-                    this.chxConfirmDeleteNote.Checked,
-                    this.tbTwitterUser.Text,
-                    this.tbTwitterPass.Text,
-                    this.chxLogErrors.Checked,
-                    this.chxLogDebug.Checked,
-                    this.chxUseProxy.Checked,
-                    this.iptbProxyAddress.GetIPAddress(),
-                    Convert.ToInt32(this.numTimeout.Value),
-                    true,
-                    this.chxSaveFBSession.Checked);
+                //tab: General
+                Settings.ConfirmExit = this.chxConfirmExit.Checked;
+                Settings.ConfirmDeletenote = this.chxConfirmDeletenote.Checked;
+                Settings.TrayiconLeftclickaction = this.cbxActionLeftclick.SelectedIndex;
+                //tab: Appearance, looks
+                Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
+                Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
+                Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
+                Settings.NotesTooltipsEnabled = this.cbxShowTooltips.Checked;
+                //tab: Appearance, fonts
+                Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();
+                Settings.FontContentSize = (float)this.numFontSizeContent.Value;
+                Settings.FontTitleStylebold = this.cbxFontNoteTitleBold.Checked;
+                Settings.FontTitleFamily = this.cbxFontNoteTitle.SelectedItem.ToString();
+                Settings.FontTitleSize = (float)this.numFontSizeTitle.Value;
+                Settings.FontTextdirection = this.cbxTextDirection.SelectedIndex;
+                //tab: Appearance, trayicon
+                Settings.TrayiconCreatenotebold = this.chxTrayiconBoldNewnote.Checked;
+                Settings.TrayiconManagenotesbold = this.chxTrayiconBoldManagenotes.Checked;
+                Settings.TrayiconSettingsbold = this.chxTrayiconBoldSettings.Checked;
+                Settings.TrayiconExitbold = this.chxTrayiconBoldExit.Checked;
+                //tab: Highlight
+                Settings.HighlightHyperlinks = this.chxHighlightHyperlinks.Checked;
+                Settings.HighlightHTML = this.chxHighlightHTML.Checked;
+                Settings.HighlightPHP = this.chxHighlightPHP.Checked;
+                Settings.HighlightSQL = this.chxHighlightSQL.Checked;
+                //tab: Social networks
+                Settings.SocialEmailEnabled = this.chxSocialEmailEnabled.Checked;
+                Settings.SocialEmailDefaultadres = this.tbDefaultEmail.Text;
+                Settings.SocialTwitterEnabled = this.chxSocialTwitterEnabled.Checked;
+                Settings.SocialTwitterUsername = this.tbTwitterUser.Text;
+                Settings.SocialFacebookEnabled = this.chxSocialFacebookEnabled.Checked;
+                //tab: Network
+                Settings.UpdatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value);
+                Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
+                Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
+                Settings.NetworkProxyAddress = this.iptbProxyAddress.IPAddress;
+                Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
+                //tab: Advance
+                Settings.NotesSavepath = this.tbNotesSavePath.Text;
+                Settings.ProgramLogError = this.chxLogErrors.Checked;
+                Settings.ProgramLogInfo = this.chxLogDebug.Checked;
 #if windows
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
                 {
-                    if (this.chxStartOnBootWindows.Checked == true)
+                    if (this.chxStartOnLogin.Checked == true)
                     {
                         try
                         {
-                            key.SetValue(TrayIcon.AssemblyTitle, "\"" + Application.ExecutablePath + "\"");
+                            key.SetValue(Program.AssemblyTitle, "\"" + Application.ExecutablePath + "\"");
                         }
                         catch (UnauthorizedAccessException unauthexc)
                         {
@@ -267,24 +235,31 @@ namespace NoteFly
                             throw new CustomException(exc.Message + " " + exc.StackTrace);
                         }
                     }
-                    else if (this.chxStartOnBootWindows.Checked == false)
+                    else if (this.chxStartOnLogin.Checked == false)
                     {
-                        if (key.GetValue(TrayIcon.AssemblyTitle, null) != null)
+                        if (key.GetValue(Program.AssemblyTitle, null) != null)
                         {
-                            key.DeleteValue(TrayIcon.AssemblyTitle, false);
+                            key.DeleteValue(Program.AssemblyTitle, false);
                         }
                     }
                 }
                 else
                 {
-                    const string regkeynotexistfound = "Run subkey in registery does not exist.\r\nOr it cannot be found.";
-                    Log.Write(LogType.error, regkeynotexistfound);
-                    MessageBox.Show(regkeynotexistfound);
+                    Log.Write(LogType.error, NoteFly.Properties.Resources.settings_regkeynotexist);
+                    MessageBox.Show(NoteFly.Properties.Resources.settings_regkeynotexist);
                 }
 #endif
-                this.notes.SetSettings();
-                this.notes.UpdateAllFonts();
-                Log.Write(LogType.info, "settings updated.");
+                xmlUtil.WriteSettings();
+                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
+                if (!Highlight.KeywordsInitialized)
+                {
+                    Highlight.InitHighlighter();
+                }
+                this.notes.UpdateAllNoteForms();
+                if (Highlight.KeywordsInitialized)
+                {
+                    Highlight.DeinitHighlighter();
+                }
                 this.Close();
             }
         }
@@ -296,22 +271,22 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
-            DialogResult dlgres = MessageBox.Show("Are you sure, you want to reset your settings?", "reset settings?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dlgres = MessageBox.Show(NoteFly.Properties.Resources.settings_sureresetdefault, NoteFly.Properties.Resources.settings_sureresetdefaulttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgres == DialogResult.Yes)
             {
-                string settingsfile = Path.Combine(this.xmlsettings.AppDataFolder, "settings.xml");
-                if (File.Exists(settingsfile))
-                {
-                    File.Delete(settingsfile);
-                    this.xmlsettings = new xmlHandler(true);
-                }
-                else
-                {
-                    throw new Exception("Could not find settings file in application directory.");
-                }
-
-                this.Close();
+                xmlUtil.WriteDefaultSettings();
+                this.SetControlsBySettings();
             }
+        }
+
+        /// <summary>
+        /// The user de-/selected checking for updates.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void cbxCheckUpdates_CheckedChanged(object sender, EventArgs e)
+        {
+            this.numUpdateCheckDays.Enabled = this.chxCheckUpdates.Checked;
         }
 
         /// <summary>
@@ -321,46 +296,31 @@ namespace NoteFly
         /// <param name="e">event arguments</param>
         private void cbxDefaultEmailToBlank_CheckedChanged(object sender, EventArgs e)
         {
-            this.tbDefaultEmail.Enabled = !this.cbxDefaultEmailToBlank.Checked;
-            if (this.cbxDefaultEmailToBlank.Checked)
+            this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
+            if (this.chxSocialEmailDefaultaddressBlank.Checked)
             {
                 this.tbDefaultEmail.Text = String.Empty;
             }
         }
 
         /// <summary>
-        /// Enable password editbox on checking remember password
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void cbxRememberTwPass_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.chxRememberTwPass.Checked == true)
-            {
-                this.tbTwitterPass.Enabled = true;
-            }
-            else
-            {
-                this.tbTwitterPass.Enabled = false;
-                this.tbTwitterPass.Text = String.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Enable nummericupdown control if transparecy is checked.
+        /// Toggle numProcTransparency enabled
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
         private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.chxTransparecy.Checked == false)
-            {
-                this.numProcTransparency.Enabled = false;
-            }
-            else if (this.chxTransparecy.Checked == true)
-            {
-                this.numProcTransparency.Enabled = true;
-            }
+            this.numProcTransparency.Enabled = this.chxTransparecy.Checked;
+        }
+
+        /// <summary>
+        /// Toggle iptbProxyAddress enabled.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
+        {
+            this.iptbProxyAddress.Enabled = this.chxProxyEnabled.Checked;
         }
 
         /// <summary>
@@ -370,60 +330,23 @@ namespace NoteFly
         {
             foreach (FontFamily oneFontFamily in FontFamily.Families)
             {
+                this.cbxFontNoteTitle.Items.Add(oneFontFamily.Name);
                 this.cbxFontNoteContent.Items.Add(oneFontFamily.Name);
             }
-
-            string curfont = this.xmlsettings.getXMLnode("fontcontent");
-            if (String.IsNullOrEmpty(curfont))
-            {
-                const string fontnotfound = "Current font not found.";
-                Log.Write(LogType.error, fontnotfound);
-                MessageBox.Show(fontnotfound, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                this.cbxFontNoteContent.Text = curfont;
-            }
-        }
-
-        /// <summary>
-        /// Gets setting what happens if user clicks left on trayicon.
-        /// </summary>
-        /// <returns>The integer setting.</returns>
-        private int GetActionLeftClick()
-        {
-            return this.xmlsettings.getXMLnodeAsInt("actionleftclick");
-        }
-
-        /// <summary>
-        /// Gets the default color.
-        /// </summary>
-        /// <returns>The defaultcolor setting as integer.</returns>
-        private int GetDefaultColor()
-        {
-            return this.xmlsettings.getXMLnodeAsInt("defaultcolor");
-        }
-
-        /// <summary>
-        /// Gets the textdirection setting.
-        /// </summary>
-        /// <returns>The text direction setting as integer.</returns>
-        private int GetTextDirection()
-        {
-            return this.xmlsettings.getXMLnodeAsInt("textdirection");
+            this.cbxDefaultColor.Items.AddRange(this.notes.GetSkinsNames());
         }
 
 #if windows
         /// <summary>
-        /// Gets if notefly is used to run at logon. Windows only methode.
+        /// Gets if notefly is used to run at logon.
         /// </summary>
         /// <returns>The boolean if it starts at logon.</returns>
-        private bool GetStatusStartlogin()
+        private bool GetStartOnLogin()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {
-                if (key.GetValue("NoteFly", null) != null)
+                if (key.GetValue(Program.AssemblyTitle, null) != null)
                 {
                     return true;
                 }
@@ -438,139 +361,118 @@ namespace NoteFly
 		#endif
 		
         /// <summary>
-        /// The default email address.
+        /// Move note files.
         /// </summary>
-        /// <returns>default email address as string</returns>
-        private string GetDefaultEmail()
+        /// <param name="oldsavenotespath">The old path where notes are saved.</param>
+        /// <param name="newpathsavenotes">The new path to save the notes to.</param>
+        private void MoveNotes(string oldsavenotespath, string newsavenotespath)
         {
-            return this.xmlsettings.getXMLnode("defaultemail");
-        }
-
-        /// <summary>
-        /// The notes save path.
-        /// </summary>
-        /// <returns>notes save path as string</returns>
-        private string GetNotesSavePath()
-        {
-            return this.xmlsettings.getXMLnode("notesavepath");
-        }
-
-        /// <summary>
-        /// The proxy address.
-        /// </summary>
-        /// <returns>proxy address as string</returns>
-        private string GetProxyAddr()
-        {
-            return this.xmlsettings.getXMLnode("proxyaddr");
-        }
-
-        /// <summary>
-        /// The twitter username.
-        /// </summary>
-        /// <returns>twitter username as string.</returns>
-        private string GetTwitterusername()
-        {
-            return this.xmlsettings.getXMLnode("twitteruser");
-        }
-
-        /// <summary>
-        /// Get the twitter password from the settings.
-        /// </summary>
-        /// <returns>the password as string</returns>
-        private string GetTwitterpassword()
-        {
-            string twpass = this.xmlsettings.getXMLnode("twitterpass");
-            if (String.IsNullOrEmpty(twpass))
+            bool errorshowed = false;
+            if (!Directory.Exists(oldsavenotespath))
             {
-                this.chxRememberTwPass.Checked = false;
-                this.tbTwitterPass.Enabled = false;
+                return;
             }
-
-            return twpass;
+            string[] files = Directory.GetFiles(oldsavenotespath, "*.nfn");
+            for (int i = 0; i < files.Length; i++)
+            {
+                string oldfile = Path.Combine(oldsavenotespath, files[i]);
+                string newfile = Path.Combine(newsavenotespath, files[i]);
+                if (!File.Exists(newfile))
+                {
+                    FileInfo fi = new FileInfo(oldfile);
+                    if (fi.Attributes != FileAttributes.System)
+                    {
+                        File.Move(oldfile, newfile);
+                    }
+                    else { throw new CustomException(NoteFly.Properties.Resources.settings_excsystemfilenotmoved); }
+                }
+                else
+                {
+                    if (!errorshowed)
+                    {
+                        Log.Write(LogType.error, NoteFly.Properties.Resources.settings_filealreadyexist);
+                        MessageBox.Show(NoteFly.Properties.Resources.settings_filealreadyexist);
+                        errorshowed = true;
+                    }
+                }
+            }
         }
 
         /// <summary>
-        /// Get the timeout settting.
+        /// Read setting and set controls to display them correctly.
         /// </summary>
-        /// <returns>The timeout as decimal.</returns>
-        private decimal GetTimeout()
+        private void SetControlsBySettings()
         {
-            int timeout = this.xmlsettings.getXMLnodeAsInt("networktimeout");
-            if (timeout < 0)
+            //tab: General
+#if windows
+            this.chxStartOnLogin.Checked = this.GetStartOnLogin();
+#endif
+            this.chxConfirmExit.Checked = Settings.ConfirmExit;
+            this.chxConfirmDeletenote.Checked = Settings.ConfirmDeletenote;
+            this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;
+            //tab: Appearance
+            this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
+            this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
+            this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
+            this.cbxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
+            this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.FontTitleSize);
+            this.cbxFontNoteContent.SelectedValue = Settings.FontContentFamily;
+            this.numFontSizeContent.Value = Convert.ToDecimal(Settings.FontContentSize);
+            this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
+            this.cbxFontNoteContent.Text = Settings.FontContentFamily;
+            this.cbxFontNoteTitle.Text = Settings.FontTitleFamily;
+            this.cbxFontNoteTitleBold.Checked = Settings.FontTitleStylebold;
+            this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
+            this.chxTrayiconBoldNewnote.Checked = Settings.TrayiconCreatenotebold;
+            this.chxTrayiconBoldManagenotes.Checked = Settings.TrayiconManagenotesbold;
+            this.chxTrayiconBoldSettings.Checked = Settings.TrayiconSettingsbold;
+            this.chxTrayiconBoldExit.Checked = Settings.TrayiconExitbold;
+            //tab: Highlight
+            this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
+            this.chxHighlightHTML.Checked = Settings.HighlightHTML;
+            this.chxHighlightPHP.Checked = Settings.HighlightPHP;
+            this.chxHighlightSQL.Checked = Settings.HighlightSQL;
+            //tab: social networks
+            this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;
+            this.chxSocialEmailDefaultaddressBlank.Checked = false ;
+            if (String.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
             {
-                Log.Write(LogType.error, "Network timeout not set or negative.");
-                return 10000;
+                this.chxSocialEmailDefaultaddressBlank.Checked = true;
+            }
+            this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
+            this.chxSocialTwitterEnabled.Checked = Settings.SocialTwitterEnabled;
+            this.tbTwitterUser.Text = Settings.SocialTwitterUsername;
+            this.chxSocialFacebookEnabled.Checked = Settings.SocialFacebookEnabled;
+            //tab: Network
+            if (Settings.UpdatecheckEverydays > 0)
+            {
+                this.chxCheckUpdates.Checked = true;
+                this.numUpdateCheckDays.Value = Convert.ToDecimal(Settings.UpdatecheckEverydays);
+                this.numUpdateCheckDays.Enabled = true;
             }
             else
             {
-                return Convert.ToDecimal(timeout);
+                this.chxCheckUpdates.Checked = false;
+                this.numUpdateCheckDays.Enabled = false;
             }
+            this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;
+            this.iptbProxyAddress.IPAddress = Settings.NetworkProxyAddress;
+            this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
+            this.numTimeout.Value = Settings.NetworkConnectionTimeout;
+            //tab: Advance
+            this.tbNotesSavePath.Text = Settings.NotesSavepath;
+            this.chxLogErrors.Checked = Settings.ProgramLogError;
+            this.chxLogDebug.Checked = Settings.ProgramLogInfo;
         }
 
         /// <summary>
-        /// Get the transparecy level.
-        /// </summary>
-        /// <returns>The transparecy level as decimal</returns>
-        private decimal GetTransparecylevel()
-        {
-            decimal transparecylvl = Convert.ToDecimal(this.xmlsettings.getXMLnode("transparecylevel"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-            if ((transparecylvl < 1) || (transparecylvl > 100))
-            {
-                MessageBox.Show("transparecylevel out of range.");
-                return 95;
-            }
-            else { return transparecylvl; }
-        }
-
-        /// <summary>
-        /// Move note files.
-        /// </summary>
-        /// <param name="newpathsavenotes">The new path wear to save the notes to.</param>
-        private void MoveNotes(string newpathsavenotes)
-        {
-            bool errorshowed = false;
-            string oldpathsavenotes = this.GetNotesSavePath();
-            int id = 1;
-            while (File.Exists(Path.Combine(oldpathsavenotes, id + ".xml")) == true)
-            {
-                if (Directory.Exists(newpathsavenotes))
-                {
-                    string oldfile = Path.Combine(oldpathsavenotes, id + ".xml");
-                    string newfile = Path.Combine(newpathsavenotes, id + ".xml");
-                    if (!File.Exists(newfile))
-                    {
-                        FileInfo fi = new FileInfo(oldfile);
-                        if (fi.Attributes != FileAttributes.System)
-                        {
-                            File.Move(oldfile, newfile);
-                        }
-                        else { throw new CustomException("File is marked as system file. Did not move."); }
-                    }
-                    else
-                    {
-                        if (!errorshowed)
-                        {
-                            string fileexist = "File " + id + ".xml already exist in new folder.";
-                            Log.Write(LogType.error, fileexist);
-                            MessageBox.Show(fileexist);
-                            errorshowed = true;
-                            
-                        }
-                    }
-                }
-
-                id++;
-            }
-        }
-
-        /// <summary>
-        /// The user changed the proxy settings.
+        /// Toggle tbDefaultEmail enabled.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
+        private void chxSocialEmailDefaultaddressBlank_CheckedChanged(object sender, EventArgs e)
         {
-            this.iptbProxyAddress.Enabled = this.chxUseProxy.Checked;
+            this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
         }
 
         #endregion Methods

@@ -1,14 +1,20 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Twitter.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -28,6 +34,8 @@ namespace NoteFly
     public class Twitter
     {
         #region Fields (2)
+
+        //private OAuth.OAuthBase oauth;
 
         /// <summary>
         /// The url of twitter.
@@ -125,14 +133,14 @@ namespace NoteFly
                 sbpass.Remove(0, password.Length);
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.Method = "POST";
-                if (!string.IsNullOrEmpty(TrayIcon.AssemblyTitle))
+                if (!string.IsNullOrEmpty(Program.AssemblyTitle))
                 {
-                    request.Headers.Add("X-Twitter-Client", TrayIcon.AssemblyTitle.Trim());
+                    request.Headers.Add("X-Twitter-Client", Program.AssemblyTitle.Trim());
                 }
 
-                if (!string.IsNullOrEmpty(TrayIcon.AssemblyVersion))
+                if (!string.IsNullOrEmpty(Program.AssemblyVersionAsString))
                 {
-                    request.Headers.Add("X-Twitter-Version", TrayIcon.AssemblyVersion.Trim());
+                    request.Headers.Add("X-Twitter-Version", Program.AssemblyVersionAsString);
                 }
 
                 if (!string.IsNullOrEmpty(this.twitterClientUrl))
@@ -146,10 +154,10 @@ namespace NoteFly
                 }
 
                 byte[] bytes = Encoding.UTF8.GetBytes(data);
-                xmlHandler getsettting = new xmlHandler(true);
-                if (getsettting.getXMLnodeAsBool("useproxy") == true)
+                //xmlHandler getsettting = new xmlHandler(true);
+                if (Settings.NetworkProxyEnabled)
                 {
-                    string addr = getsettting.getXMLnode("proxyaddr");
+                    string addr = Settings.NetworkProxyAddress;
                     if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0")
                     {
                         string novalidproxy = "Proxy address is not given/not valid.";
@@ -159,16 +167,15 @@ namespace NoteFly
                     }
                     else
                     {
-                        request.Proxy = new WebProxy(getsettting.getXMLnode("proxyaddr"));
+                        request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                     }
                 }
 
-                request.Timeout = getsettting.getXMLnodeAsInt("timeout");
+                request.Timeout = Settings.NetworkConnectionTimeout;
                 request.ContentLength = bytes.Length;
                 using (Stream requestStream = request.GetRequestStream())
                 {
                     requestStream.Write(bytes, 0, bytes.Length);
-
                     try
                     {
                         using (WebResponse response = request.GetResponse())
@@ -193,10 +200,83 @@ namespace NoteFly
             {
                 MessageBox.Show("Twitter username or/and password not filled in.");
             }
-
             return null;
         }
 
         #endregion Methods
+
+
+        //if (this.rtbNote.Text.Length <= 140)
+        //{
+        //    this.Tweetnote();
+        //}
+        //else if (this.rtbNote.Text.Length > 140)
+        //{
+        //    DialogResult result;
+        //    string shrttweet = this.note.Substring(0, 140);
+        //    result = MessageBox.Show("Your note is more than the 140 chars.\r\nDo you want to publish only the first 140 characters? ", "Too long", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //    if (result == DialogResult.Yes)
+        //    {
+        //        this.Tweetnote();
+        //        Log.Write(LogType.info, "Shorted note send to twitter.");
+        //    }
+        //}
+
+        //string twitteruser = getSettings.getXMLnode("twitteruser");
+
+        //if (String.IsNullOrEmpty(twitteruser))
+        //{
+        //    string notwusername = "You haven't set your twitter username yet.\r\nSettings window will now open.";
+        //    Log.Write(LogType.error, notwusername.Replace("\r\n", ""));
+        //    MessageBox.Show(notwusername);
+        //    FrmSettings settings = new FrmSettings(this.notes);
+        //    settings.Show();
+        //    return;
+        //}
+
+        //if (this.twpass == null)
+        //{
+        //    this.twpass = getSettings.getXMLnode("twitterpass").ToCharArray();
+        //}
+
+        //if ((this.twpass == null) || (this.twpass.Length <= 0))
+        //{
+        //    Form askpass = new Form();
+        //    askpass.ShowIcon = false;
+        //    askpass.Height = 80;
+        //    askpass.Width = 280;
+        //    askpass.Text = "Twitter password needed";
+        //    askpass.Show();
+        //    TextBox tbpass = new TextBox();
+        //    tbpass.Location = new Point(10, 10);
+        //    tbpass.Width = 160;
+        //    tbpass.Name = "tbPassword";
+        //    tbpass.PasswordChar = 'X';
+        //    Button btnOk = new Button();
+        //    btnOk.Location = new Point(180, 10);
+        //    btnOk.Text = "Ok";
+        //    btnOk.Width = 80;
+        //    btnOk.Name = "btnOk";
+        //    btnOk.Click += this.Askpassok;
+        //    askpass.Controls.Add(tbpass);
+        //    askpass.Controls.Add(btnOk);
+        //}
+        //else
+        //{
+        //    Twitter twitter = new Twitter();
+        //    const string twitterleadmgs = "Sending note to twitter ";
+        //    if (twitter.UpdateAsXML(twitteruser, this.twpass, this.note) != null)
+        //    {
+        //        string sendtwsucces = twitterleadmgs + "succeded.";
+        //        Log.Write(LogType.info, sendtwsucces);
+        //        MessageBox.Show(sendtwsucces);
+        //    }
+        //    else
+        //    {
+        //        string sendtwfail = twitterleadmgs + "failed.";
+        //        Log.Write(LogType.error, sendtwfail);
+        //        MessageBox.Show(sendtwfail);
+        //    }
+        //}
     }
 }

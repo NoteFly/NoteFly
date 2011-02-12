@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -35,16 +35,18 @@ namespace NoteFly
         error,
 
         /// <summary>
-        /// Something happend that is worth nothing, for instance an note got deleted.
+        /// Something happend that is worth logging for instance an note got deleted.
         /// </summary>
         info
     }
 
     /// <summary>
-    /// This class write messages to a logfile.
+    /// Log class, for logging.
     /// </summary>
-    public static class Log
+    public class Log
     {
+        private const string debuglogfilename = "debug.log";
+
         /// <summary>
         /// Write and append a message to the logfile.
         /// </summary>
@@ -52,12 +54,14 @@ namespace NoteFly
         /// <param name="message">The message to log</param>
         public static void Write(LogType typemsg, string message)
         {
+            if (!Settings.ProgramLogInfo && typemsg == LogType.info) return;
+            else if (!Settings.ProgramLogError && typemsg == LogType.error) return;
+            else if (!Settings.ProgramLogException && typemsg == LogType.exception) return;
             StringBuilder line = new StringBuilder(DateTime.Now.ToString());
             while (line.Length < 19)
             {
                 line.Append(" ");
             }
-
             switch (typemsg)
             {
                 case LogType.exception:
@@ -72,34 +76,30 @@ namespace NoteFly
             }
 
             line.AppendLine(message);
-            bool logerror = false;
-            bool loginfo = false;
+
 #if windows
-            string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), "debug.log");
+            string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), debuglogfilename);
 #elif linux
-			string errorlog = "/tmp/debug.log";
+            string errorlog = "/tmp/"+debuglogfilename;
 #endif
             try
             {
-                xmlHandler getsettings = new xmlHandler(true);
-                errorlog = Path.Combine(getsettings.AppDataFolder, "debug.log");
-                logerror = getsettings.getXMLnodeAsBool("logerror");
-                loginfo = getsettings.getXMLnodeAsBool("loginfo");
+                errorlog = Path.Combine(Program.AppDataFolder, debuglogfilename);
             }
             catch (Exception)
             {
-                line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot get log settings.");
-                logerror = true;
+                line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot set log path.");//was error but now exception because error could not be logged.
+                Settings.ProgramLogError = true;
             }
 
-            if ((typemsg == LogType.exception) || (logerror && typemsg == LogType.error) || (loginfo && typemsg == LogType.info))
+            if ((Settings.ProgramLogException || typemsg == LogType.exception) || (Settings.ProgramLogError && typemsg == LogType.error) || (Settings.ProgramLogInfo && typemsg == LogType.info))
             {
                 if (CheckFileSize(errorlog))
                 {
                     File.Move(errorlog, errorlog + ".old");
                 }
 
-                new Textfile(false, errorlog, null, line.ToString());
+                new Textfile(TextfileWriteType.log , errorlog, null, line.ToString());
             }
         }
 
