@@ -36,7 +36,7 @@ namespace NoteFly
             : base("Exception: " + message)
         {
             // check if exception logging is enabled
-            if (Settings.ProgramLogException)
+            if (Settings.programLogException)
             {
                 Log.Write(LogType.exception, message);
             }

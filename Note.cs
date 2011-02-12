@@ -69,43 +69,43 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        public string Title; //{ get; set; }
+        public string title; //{ get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public bool Visible; //{ get; set; }
+        public bool visible; //{ get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int SkinNr; //{ get; set; }
+        public int skinNr; //{ get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public bool Ontop; //{ get; set; }
+        public bool ontop; //{ get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public bool RolledUp; //{ get; set; }
+        public bool rolledUp; //{ get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public bool Locked; //{ get; set; }
+        public bool locked; //{ get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int X; //{ get; set; }
+        public int x; //{ get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int Y; //{ get; set; }
+        public int y; //{ get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int Width; //{ get; set; }
+        public int width; //{ get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int Height; //{ get; set; }
+        public int height; //{ get; set; }
 
         /// <summary>
         /// Create a new frmNote with this note.
@@ -114,7 +114,7 @@ namespace NoteFly
         public void CreateForm()
         {
             this.frmnote = new FrmNote(this.notes, this);
-            this.Visible = true;
+            this.visible = true;
             this.frmnote.Show();
         }
 
@@ -128,7 +128,7 @@ namespace NoteFly
             {
                 this.frmnote.Close();
             }
-            this.Visible = false;
+            this.visible = false;
             this.tempcontent = null;
             this.frmnote = null;
             this.notes.frmmangenotesneedupdate = true;
@@ -156,7 +156,7 @@ namespace NoteFly
         {
             if (this.frmnote == null)
             {
-                string notefilepath = Path.Combine(Settings.NotesSavepath, this.Filename);
+                string notefilepath = Path.Combine(Settings.notesSavepath, this.Filename);
                 if (File.Exists(notefilepath))
                 {
                     return xmlUtil.GetContentString(notefilepath, "content");

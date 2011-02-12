@@ -155,9 +155,9 @@ namespace NoteFly
 
                 byte[] bytes = Encoding.UTF8.GetBytes(data);
                 //xmlHandler getsettting = new xmlHandler(true);
-                if (Settings.NetworkProxyEnabled)
+                if (Settings.networkProxyEnabled)
                 {
-                    string addr = Settings.NetworkProxyAddress;
+                    string addr = Settings.networkProxyAddress;
                     if (String.IsNullOrEmpty(addr) || addr == "0.0.0.0")
                     {
                         string novalidproxy = "Proxy address is not given/not valid.";
@@ -167,11 +167,11 @@ namespace NoteFly
                     }
                     else
                     {
-                        request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
+                        request.Proxy = new WebProxy(Settings.networkProxyAddress);
                     }
                 }
 
-                request.Timeout = Settings.NetworkConnectionTimeout;
+                request.Timeout = Settings.networkConnectionTimeout;
                 request.ContentLength = bytes.Length;
                 using (Stream requestStream = request.GetRequestStream())
                 {

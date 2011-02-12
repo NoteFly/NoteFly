@@ -116,7 +116,7 @@ namespace NoteFly
             }
             else
             {
-                if (Settings.ConfirmDeletenote)
+                if (Settings.confirmDeletenote)
                 {
                     DialogResult deleteres = MessageBox.Show("Are you sure you want to delete the selected note(s)?", "delete?", MessageBoxButtons.YesNo);
                     if (deleteres == DialogResult.Yes)
@@ -170,7 +170,7 @@ namespace NoteFly
                             Log.Write(LogType.info, "Erased all notes for restoring notes backup.");
                             for (int i = 0; i <= this.notes.CountNotes; i++)
                             {
-                                File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
+                                File.Delete(Path.Combine(Settings.notesSavepath, this.notes.GetNote(i).Filename));
                                 this.notes.GetNote(i).DestroyForm();
                                 this.notes.RemoveNote(i);
                             }
@@ -205,9 +205,9 @@ namespace NoteFly
             foreach (DataGridViewRow selrow in selectedrows)
             {
                 int notepos = GetNoteposBySelrow(selrow.Index);
-                selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).Visible;
-                this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
-                if (this.notes.GetNote(notepos).Visible)
+                selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).visible;
+                this.notes.GetNote(notepos).visible = !this.notes.GetNote(notepos).visible;
+                if (this.notes.GetNote(notepos).visible)
                 {
                     this.notes.GetNote(notepos).CreateForm();
                     this.Activate();
@@ -216,7 +216,7 @@ namespace NoteFly
                 {
                     this.notes.GetNote(notepos).DestroyForm();
                 }
-                xmlUtil.WriteNote(this.notes.GetNote(notepos), notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+                xmlUtil.WriteNote(this.notes.GetNote(notepos), notes.GetSkinName(this.notes.GetNote(notepos).skinNr), this.notes.GetNote(notepos).GetContent());
             }
             
             this.notes.frmmangenotesneedupdate = false;
@@ -232,14 +232,14 @@ namespace NoteFly
             if (this.notes.frmmangenotesneedupdate)
             {
                 int notepos = GetNoteposBySelrow(e.RowIndex);
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(notepos).SkinNr);
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(notepos).SkinNr);
-                if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(notepos).skinNr);
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(notepos).skinNr);
+                if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).skinNr))
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
+                    this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).skinNr);
                 }
 
-                this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
+                this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).visible;
                 if (e.RowIndex == this.notes.CountNotes -1)
                 {
                     this.notes.frmmangenotesneedupdate = false;
@@ -271,9 +271,9 @@ namespace NoteFly
                 try
                 {
                     this.notes.GetNote(notepos).DestroyForm();
-                    string filepath = Path.Combine(Settings.NotesSavepath, filename);
+                    string filepath = Path.Combine(Settings.notesSavepath, filename);
                     File.Delete(filepath);
-                    if (Settings.ProgramLogInfo)
+                    if (Settings.programLogInfo)
                     {
                         Log.Write(LogType.info, "Deleted note: " + filepath);
                     }
@@ -316,9 +316,9 @@ namespace NoteFly
             {
                 DataRow dr = datatable.NewRow();
                 dr[0] = i + 1; //enduser counting ;)
-                dr[1] = this.notes.GetNote(i).Title;
-                dr[2] = this.notes.GetNote(i).Visible;
-                dr[3] = notes.GetSkinName(this.notes.GetNote(i).SkinNr);
+                dr[1] = this.notes.GetNote(i).title;
+                dr[2] = this.notes.GetNote(i).visible;
+                dr[3] = notes.GetSkinName(this.notes.GetNote(i).skinNr);
                 datatable.Rows.Add(dr);
             }
         }
@@ -330,7 +330,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
-            if (Settings.NotesTransparencyEnabled)
+            if (Settings.notesTransparencyEnabled)
             {
                 try
                 {
@@ -351,11 +351,11 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmManageNotes_Deactivate(object sender, EventArgs e)
         {
-            if (Settings.NotesTransparencyEnabled)
+            if (Settings.notesTransparencyEnabled)
             {
                 try
                 {
-                    this.Opacity = Settings.NotesTransparencyLevel;
+                    this.Opacity = Settings.notesTransparencyLevel;
                     this.Refresh();
                 }
                 catch (InvalidCastException)

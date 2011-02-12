@@ -26,104 +26,104 @@ namespace NoteFly
     /// </summary>
     public class Settings
     {
-        public static bool NotesTransparencyEnabled; //{ get; set; }
+        public static bool notesTransparencyEnabled; //{ get; set; }
 
-        public static double NotesTransparencyLevel;//{ get; set; }
+        public static double notesTransparencyLevel;//{ get; set; }
 
-        public static int NotesDefaultSkinnr;//{ get; set; }
+        public static int notesDefaultSkinnr;//{ get; set; }
 
-        public static bool NotesTooltipsEnabled;//{ get; set; }
+        public static bool notesTooltipsEnabled;//{ get; set; }
 
-        public static bool NotesClosebtnHidenotepermanently;//{ get; set; }
+        public static bool notesClosebtnHidenotepermanently;//{ get; set; }
 
-        public static int NotesWarnLimit;//{ get; set; }
+        public static int notesWarnLimit;//{ get; set; }
 
-        public static string NotesSavepath; //{ get; set; }
+        public static string notesSavepath; //{ get; set; }
 
-        public static int TrayiconLeftclickaction;//{ get; set; }
+        public static int trayiconLeftclickaction;//{ get; set; }
 
-        public static bool TrayiconCreatenotebold;//{ get; set; }
+        public static bool trayiconCreatenotebold;//{ get; set; }
 
-        public static bool TrayiconManagenotesbold;//{ get; set; }
+        public static bool trayiconManagenotesbold;//{ get; set; }
 
-        public static bool TrayiconSettingsbold;//{ get; set; }
+        public static bool trayiconSettingsbold;//{ get; set; }
 
-        public static bool TrayiconExitbold = false;//{ get; set; }
+        public static bool trayiconExitbold;//{ get; set; }
 
-        public static int FontTextdirection = 1;//{ get; set; }
+        public static int fontTextdirection;//{ get; set; }
 
-        public static string FontTitleFamily; //{ get; set; }
+        public static string fontTitleFamily; //{ get; set; }
 
-        public static float FontTitleSize; //{ get; set; }
+        public static float fontTitleSize; //{ get; set; }
 
-        public static bool FontTitleStylebold; //{ get; set; }
+        public static bool fontTitleStylebold; //{ get; set; }
 
-        public static string FontContentFamily; //{ get; set; }
+        public static string fontContentFamily; //{ get; set; }
 
-        public static float FontContentSize; //{ get; set; }
+        public static float fontContentSize; //{ get; set; }
 
-        public static bool HighlightHTML; //{ get; set; }
+        public static bool highlightHTML; //{ get; set; }
 
-        public static string HighlightHTMLColorInvalid; //{ get; set; }
+        public static string highlightHTMLColorInvalid; //{ get; set; }
 
-        public static string HighlightHTMLColorValid; //{ get; set; }
+        public static string highlightHTMLColorValid; //{ get; set; }
 
-        public static string HighlightHTMLColorString; //{ get; set; }
+        public static string highlightHTMLColorString; //{ get; set; }
 
-        public static bool HighlightHyperlinks; //{ get; set; }
+        public static bool highlightHyperlinks; //{ get; set; }
 
-        public static bool HighlightPHP; //{ get; set; }
+        public static bool highlightPHP; //{ get; set; }
 
-        public static string HighlightPHPColorComment; //{ get; set; }
+        public static string highlightPHPColorComment; //{ get; set; }
 
-        public static string HighlightPHPColorDocumentstartend; //{ get; set; }
+        public static string highlightPHPColorDocumentstartend; //{ get; set; }
 
-        public static string HighlightPHPColorValidfunctions; //{ get; set; }
+        public static string highlightPHPColorValidfunctions; //{ get; set; }
 
-        public static bool HighlightSQL; //{ get; set; }
+        public static bool highlightSQL; //{ get; set; }
 
-        public static bool ConfirmLinkclick; //{ get; set; }
+        public static bool confirmLinkclick; //{ get; set; }
 
-        public static bool ConfirmExit; //{ get; set; }
+        public static bool confirmExit; //{ get; set; }
 
-        public static bool ConfirmDeletenote; //{ get; set; }
+        public static bool confirmDeletenote; //{ get; set; }
 
-        public static bool SocialEmailEnabled; //{ get; set; }
+        public static bool socialEmailEnabled; //{ get; set; }
 
-        public static string SocialEmailDefaultadres; //{ get; set; }
+        public static string socialEmailDefaultadres; //{ get; set; }
 
-        public static bool SocialTwitterEnabled; //{ get; set; }
+        public static bool socialTwitterEnabled; //{ get; set; }
 
-        public static string SocialTwitterUsername; //{ get; set; }
+        public static string socialTwitterUsername; //{ get; set; }
 
-        public static bool SocialTwitterUseSSL; //{ get; set; } //on by default and should not be changable with gui.
+        public static bool socialTwitterUseSSL; //{ get; set; } //on by default and should not be changable with gui.
 
-        public static bool SocialFacebookEnabled; //{ get; set; }
+        public static bool socialFacebookEnabled; //{ get; set; }
 
-        public static bool SocialFacebookUseSSL; //{ get; set; } //on by default and should not be changable with gui.
+        public static bool socialFacebookUseSSL; //{ get; set; } //on by default and should not be changable with gui.
 
         //public static string SocialFacebookSessionKey; //{ get; set; } //Decreated, use OAuth instead.
         //public static string SocialFacebookSessionSecret; //{ get; set; } //Decreated
         //public static string SocialFacebookSessionExpires; //{ get; set; } //Decreated
 
-        public static int NetworkConnectionTimeout; //{ get; set; }
+        public static int networkConnectionTimeout; //{ get; set; }
 
-        public static bool NetworkConnectionForceipv6; //{ get; set; } //e.g. set ipv6.facebook.com
+        public static bool networkConnectionForceipv6; //{ get; set; } //e.g. set ipv6.facebook.com
 
-        public static bool NetworkProxyEnabled; //{ get; set; }
+        public static bool networkProxyEnabled; //{ get; set; }
 
-        public static string NetworkProxyAddress; //{ get; set; }
+        public static string networkProxyAddress; //{ get; set; }
 
-        public static int  UpdatecheckEverydays; //{ get; set; }
+        public static int  updatecheckEverydays; //{ get; set; }
 
-        public static string  UpdatecheckLastDate; //{ get; set; }
+        public static string  updatecheckLastDate; //{ get; set; }
 
-        public static bool ProgramFirstrun; //{ get; set; }
+        public static bool programFirstrun; //{ get; set; }
 
-        public static bool ProgramLogError; //{ get; set; }
+        public static bool programLogInfo; //{ get; set; }
 
-        public static bool ProgramLogException; //{ get; set; }
+        public static bool programLogError; //{ get; set; }
 
-        public static bool ProgramLogInfo; //{ get; set; }
+        public static bool programLogException; //{ get; set; }
     }
 }

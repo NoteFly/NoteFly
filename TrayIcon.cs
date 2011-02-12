@@ -127,7 +127,7 @@ namespace NoteFly
             menuNewNote.Name = "MenuNewNote";
             menuNewNote.Size = new System.Drawing.Size(144, 22);
             menuNewNote.Text = "&Create a new note";
-            if (Settings.TrayiconCreatenotebold)
+            if (Settings.trayiconCreatenotebold)
             {
                 menufontstyle = FontStyle.Bold;
             }
@@ -138,7 +138,7 @@ namespace NoteFly
             menuManageNotes.Name = "listToolStripMenuItem";
             menuManageNotes.Size = new System.Drawing.Size(144, 22);
             menuManageNotes.Text = "&Manage notes";
-            if (Settings.TrayiconManagenotesbold)
+            if (Settings.trayiconManagenotesbold)
             {
                 menufontstyle = FontStyle.Bold;
             }
@@ -153,7 +153,7 @@ namespace NoteFly
             menuSettings.Name = "MenuSettings";
             menuSettings.Size = new System.Drawing.Size(144, 22);
             menuSettings.Text = "&Settings";
-            if (Settings.TrayiconSettingsbold)
+            if (Settings.trayiconSettingsbold)
             {
                 menufontstyle = FontStyle.Bold;
             }
@@ -175,7 +175,7 @@ namespace NoteFly
             menuExit.Name = "MenuExit";
             menuExit.Size = new System.Drawing.Size(144, 22);
             menuExit.Text = "E&xit";
-            if (Settings.TrayiconExitbold)
+            if (Settings.trayiconExitbold)
             {
                 menufontstyle = FontStyle.Bold;
             }
@@ -196,7 +196,7 @@ namespace NoteFly
             }
 #endif
 
-            if (Settings.ProgramFirstrun)
+            if (Settings.programFirstrun)
             {
                 icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);
             }
@@ -214,11 +214,11 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (Settings.TrayiconLeftclickaction == 1)
+                if (Settings.trayiconLeftclickaction == 1)
                 {
                     notes.BringToFrontNotes();
                 }
-                else if (Settings.TrayiconLeftclickaction == 2)
+                else if (Settings.trayiconLeftclickaction == 2)
                 {
                     if (!frmnewnoteshowed)
                     {
@@ -314,7 +314,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuExit_Click(object sender, EventArgs e)
         {
-            if (Settings.ConfirmExit)
+            if (Settings.confirmExit)
             {
                 // two times exit in contextmenu systray icon will always exit.
                 if (!confirmexitshowed)

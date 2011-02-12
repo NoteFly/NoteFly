@@ -74,11 +74,15 @@ namespace NoteFly
             this.menuFrmNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuEditNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNoteSkins = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopySelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRollUp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendTo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuRollUp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuLockNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHideNote = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCloseNote = new System.Windows.Forms.Button();
@@ -87,10 +91,6 @@ namespace NoteFly
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.SaveWorker = new System.ComponentModel.BackgroundWorker();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCopySelected = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlHead.SuspendLayout();
             this.menuFrmNoteOptions.SuspendLayout();
             this.pnlNote.SuspendLayout();
@@ -142,7 +142,7 @@ namespace NoteFly
             this.menuLockNote,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 180);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -162,6 +162,59 @@ namespace NoteFly
             this.menuNoteSkins.Name = "menuNoteSkins";
             this.menuNoteSkins.Size = new System.Drawing.Size(184, 22);
             this.menuNoteSkins.Text = "&Color skin";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuCopySelected,
+            this.menuCopyContent,
+            this.menuCopyTitle});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItem1.Text = "&Copy";
+            // 
+            // menuCopySelected
+            // 
+            this.menuCopySelected.Name = "menuCopySelected";
+            this.menuCopySelected.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.menuCopySelected.Size = new System.Drawing.Size(189, 22);
+            this.menuCopySelected.Text = "selected text";
+            this.menuCopySelected.Click += new System.EventHandler(this.menuCopySelected_Click);
+            // 
+            // menuCopyContent
+            // 
+            this.menuCopyContent.Name = "menuCopyContent";
+            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
+            this.menuCopyContent.Size = new System.Drawing.Size(189, 22);
+            this.menuCopyContent.Text = "content";
+            this.menuCopyContent.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
+            // 
+            // menuCopyTitle
+            // 
+            this.menuCopyTitle.Name = "menuCopyTitle";
+            this.menuCopyTitle.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+                        | System.Windows.Forms.Keys.C)));
+            this.menuCopyTitle.Size = new System.Drawing.Size(189, 22);
+            this.menuCopyTitle.Text = "title";
+            this.menuCopyTitle.Click += new System.EventHandler(this.copyTitleToolStripMenuItem_Click);
+            // 
+            // menuOnTop
+            // 
+            this.menuOnTop.CheckOnClick = true;
+            this.menuOnTop.Name = "menuOnTop";
+            this.menuOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.menuOnTop.Size = new System.Drawing.Size(184, 22);
+            this.menuOnTop.Text = "Sticky on &top";
+            this.menuOnTop.Click += new System.EventHandler(this.OnTopToolStripMenuItem_Click);
+            // 
+            // menuRollUp
+            // 
+            this.menuRollUp.Name = "menuRollUp";
+            this.menuRollUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.menuRollUp.Size = new System.Drawing.Size(184, 22);
+            this.menuRollUp.Text = "&Roll up";
+            this.menuRollUp.Click += new System.EventHandler(this.menuRollUp_Click);
             // 
             // menuSendTo
             // 
@@ -187,23 +240,6 @@ namespace NoteFly
             this.menuSendToTextfile.Size = new System.Drawing.Size(157, 22);
             this.menuSendToTextfile.Text = "Save &file";
             this.menuSendToTextfile.Click += new System.EventHandler(this.tsmenuSendToTextfile_Click);
-            // 
-            // menuOnTop
-            // 
-            this.menuOnTop.CheckOnClick = true;
-            this.menuOnTop.Name = "menuOnTop";
-            this.menuOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.menuOnTop.Size = new System.Drawing.Size(184, 22);
-            this.menuOnTop.Text = "Sticky on &top";
-            this.menuOnTop.Click += new System.EventHandler(this.OnTopToolStripMenuItem_Click);
-            // 
-            // menuRollUp
-            // 
-            this.menuRollUp.Name = "menuRollUp";
-            this.menuRollUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.menuRollUp.Size = new System.Drawing.Size(184, 22);
-            this.menuRollUp.Text = "&Roll up";
-            this.menuRollUp.Click += new System.EventHandler(this.menuRollUp_Click);
             // 
             // menuLockNote
             // 
@@ -305,42 +341,6 @@ namespace NoteFly
             // 
             this.toolTip.Active = false;
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuCopySelected,
-            this.menuCopyContent,
-            this.menuCopyTitle});
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.toolStripMenuItem1.Text = "&Copy";
-            // 
-            // menuCopySelected
-            // 
-            this.menuCopySelected.Name = "menuCopySelected";
-            this.menuCopySelected.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.menuCopySelected.Size = new System.Drawing.Size(189, 22);
-            this.menuCopySelected.Text = "selected text";
-            this.menuCopySelected.Click += new System.EventHandler(this.menuCopySelected_Click);
-            // 
-            // menuCopyContent
-            // 
-            this.menuCopyContent.Name = "menuCopyContent";
-            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.C)));
-            this.menuCopyContent.Size = new System.Drawing.Size(189, 22);
-            this.menuCopyContent.Text = "content";
-            this.menuCopyContent.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
-            // 
-            // menuCopyTitle
-            // 
-            this.menuCopyTitle.Name = "menuCopyTitle";
-            this.menuCopyTitle.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
-                        | System.Windows.Forms.Keys.C)));
-            this.menuCopyTitle.Size = new System.Drawing.Size(189, 22);
-            this.menuCopyTitle.Text = "title";
-            this.menuCopyTitle.Click += new System.EventHandler(this.copyTitleToolStripMenuItem_Click);
-            // 
             // FrmNote
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -353,6 +353,7 @@ namespace NoteFly
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.Desktop;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Location = new System.Drawing.Point(100, 50);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1023, 799);

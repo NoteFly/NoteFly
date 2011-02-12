@@ -60,8 +60,8 @@ namespace NoteFlyTests
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
         {
-            Settings.NotesWarnLimit = 1000;
-            Settings.NotesSavepath = Program.AppDataFolder;
+            Settings.notesWarnLimit = 1000;
+            Settings.notesSavepath = Program.AppDataFolder;
         }
         //
         //Use ClassCleanup to run code after all tests in a class have run
@@ -219,15 +219,15 @@ namespace NoteFlyTests
             Note actual = target.CreateNote(title, skinnr, x, y, width, height);
 
             Assert.IsNotNull(actual, "CreateNoteTest failed to create Note object.");
-            if (actual.Title != "123456789abc")
+            if (actual.title != "123456789abc")
             {
                 Assert.Fail("Note title not good.");
             }
-            if (actual.X != 400 && actual.Y != 300)
+            if (actual.x != 400 && actual.y != 300)
             {
                 Assert.Fail("Note has wrong X,Y coordinates.");
             }
-            if (actual.Width != 200 && actual.Height != 100)
+            if (actual.width != 200 && actual.height != 100)
             {
                 Assert.Fail("Note has wrong size");
             }

@@ -55,8 +55,8 @@ namespace NoteFly
             this.Location = locfrmnewnote;
             this.note = note;
             this.Text = "edit note";
-            this.SetColorsForm(this.note.SkinNr);
-            this.tbTitle.Text = note.Title;
+            this.SetColorsForm(this.note.skinNr);
+            this.tbTitle.Text = note.title;
             if (String.IsNullOrEmpty(this.note.tempcontent))
             {
                 this.rtbNewNote.Rtf = note.GetContent();
@@ -80,7 +80,7 @@ namespace NoteFly
             this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width / 2 - this.Width/2, Screen.PrimaryScreen.WorkingArea.Height / 2 - this.Height/2);
             this.note = null;
             this.Text = "new note";
-            this.SetColorsForm(Settings.NotesDefaultSkinnr);
+            this.SetColorsForm(Settings.notesDefaultSkinnr);
             this.tbTitle.Text = DateTime.Now.ToString();
         }
 
@@ -95,8 +95,8 @@ namespace NoteFly
             this.InitializeComponent();
             this.notes = notes;
             this.SetFontSettings();
-            this.toolTip.Active = Settings.NotesTooltipsEnabled;
-            this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
+            this.toolTip.Active = Settings.notesTooltipsEnabled;
+            this.rtbNewNote.DetectUrls = Settings.highlightHyperlinks;
             this.tbTitle.Select();
         }
 
@@ -150,15 +150,15 @@ namespace NoteFly
                 if (this.note == null)
                 {
                     newnote = true;
-                    this.note = this.notes.CreateNote(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
+                    this.note = this.notes.CreateNote(this.tbTitle.Text, Settings.notesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
-                note.Title = this.tbTitle.Text;
-                note.Visible = true;
+                note.title = this.tbTitle.Text;
+                note.visible = true;
                 if (String.IsNullOrEmpty(note.Filename))
                 {
-                    note.Filename = this.notes.GetNoteFilename(note.Title);
+                    note.Filename = this.notes.GetNoteFilename(note.title);
                 }
-                if (xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNewNote.Rtf))
+                if (xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.skinNr), this.rtbNewNote.Rtf))
                 {
                     if (newnote)
                     {
@@ -382,7 +382,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmNewNote_Activated(object sender, EventArgs e)
         {
-            if (Settings.NotesTransparencyEnabled)
+            if (Settings.notesTransparencyEnabled)
             {
                 this.Opacity = 1.0;
             }
@@ -395,9 +395,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmNewNote_Deactivate(object sender, EventArgs e)
         {
-            if (Settings.NotesTransparencyEnabled)
+            if (Settings.notesTransparencyEnabled)
             {
-                this.Opacity = Settings.NotesTransparencyLevel;
+                this.Opacity = Settings.notesTransparencyLevel;
                 this.Refresh();
             }
         }
@@ -534,11 +534,11 @@ namespace NoteFly
                 this.oldp = e.Location;
                 if (this.note != null)
                 {
-                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(this.note.SkinNr);
+                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(this.note.skinNr);
                 }
                 else
                 {
-                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(Settings.NotesDefaultSkinnr);
+                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(Settings.notesDefaultSkinnr);
                 }
             }
         }
@@ -554,11 +554,11 @@ namespace NoteFly
             {
                 if (this.note != null)
                 {
-                    this.pnlHeadNewNote.BackColor = notes.GetSelectClr(this.note.SkinNr);
+                    this.pnlHeadNewNote.BackColor = notes.GetSelectClr(this.note.skinNr);
                 }
                 else
                 {
-                    this.pnlHeadNewNote.BackColor = notes.GetSelectClr(Settings.NotesDefaultSkinnr);
+                    this.pnlHeadNewNote.BackColor = notes.GetSelectClr(Settings.notesDefaultSkinnr);
                 }
                 int dpx = e.Location.X - oldp.X;
                 int dpy = e.Location.Y - oldp.Y;
@@ -600,11 +600,11 @@ namespace NoteFly
             this.moving = false;
             if (this.note != null)
             {
-                this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+                this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
             }
             else
             {
-                this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(Settings.NotesDefaultSkinnr);
+                this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(Settings.notesDefaultSkinnr);
             }
         }
 
@@ -641,11 +641,11 @@ namespace NoteFly
         {
             if (this.note != null)
             {
-                this.rtbNewNote.BackColor = notes.GetHighlightClr(this.note.SkinNr);
+                this.rtbNewNote.BackColor = notes.GetHighlightClr(this.note.skinNr);
             }
             else
             {
-                this.rtbNewNote.BackColor = notes.GetHighlightClr(Settings.NotesDefaultSkinnr);
+                this.rtbNewNote.BackColor = notes.GetHighlightClr(Settings.notesDefaultSkinnr);
             }
             SetToolbarEnabled(true);
         }
@@ -659,11 +659,11 @@ namespace NoteFly
         {
             if (this.note != null)
             {
-                this.rtbNewNote.BackColor = notes.GetSelectClr(this.note.SkinNr);
+                this.rtbNewNote.BackColor = notes.GetSelectClr(this.note.skinNr);
             }
             else
             {
-                this.rtbNewNote.BackColor = notes.GetSelectClr(Settings.NotesDefaultSkinnr);
+                this.rtbNewNote.BackColor = notes.GetSelectClr(Settings.notesDefaultSkinnr);
             }
         }
 
@@ -697,7 +697,7 @@ namespace NoteFly
         private void SetDefaultFontFamilyAndSize()
         {
             rtbNewNote.SelectAll();
-            rtbNewNote.Font = new Font(Settings.FontContentFamily, (float)Settings.FontContentSize);
+            rtbNewNote.Font = new Font(Settings.fontContentFamily, (float)Settings.fontContentSize);
             rtbNewNote.Select(0, 0);
         }
 
@@ -708,9 +708,9 @@ namespace NoteFly
         /// <param name="content">The new note content.</param>
         private void SetFontSettings()
         {
-            this.tbTitle.Font = new Font(Settings.FontTitleFamily, 11);
-            this.rtbNewNote.Font = new Font(Settings.FontContentFamily, rtbNewNote.Font.Size);
-            switch (Settings.FontTextdirection)
+            this.tbTitle.Font = new Font(Settings.fontTitleFamily, 11);
+            this.rtbNewNote.Font = new Font(Settings.fontContentFamily, rtbNewNote.Font.Size);
+            switch (Settings.fontTextdirection)
             {
                 case 1:
                     this.tbTitle.TextAlign = HorizontalAlignment.Left;
@@ -754,11 +754,11 @@ namespace NoteFly
         {
             if (this.note != null)
             {
-                this.tbTitle.BackColor = notes.GetHighlightClr(this.note.SkinNr);
+                this.tbTitle.BackColor = notes.GetHighlightClr(this.note.skinNr);
             }
             else
             {
-                this.tbTitle.BackColor = notes.GetHighlightClr(Settings.NotesDefaultSkinnr);
+                this.tbTitle.BackColor = notes.GetHighlightClr(Settings.notesDefaultSkinnr);
             }
             SetToolbarEnabled(false);
         }
@@ -772,11 +772,11 @@ namespace NoteFly
         {
             if (this.note != null)
             {
-                this.tbTitle.BackColor = notes.GetSelectClr(this.note.SkinNr);
+                this.tbTitle.BackColor = notes.GetSelectClr(this.note.skinNr);
             }
             else
             {
-                this.tbTitle.BackColor = notes.GetSelectClr(Settings.NotesDefaultSkinnr);
+                this.tbTitle.BackColor = notes.GetSelectClr(Settings.notesDefaultSkinnr);
             }
             SetToolbarEnabled(true);
         }

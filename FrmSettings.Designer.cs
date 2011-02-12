@@ -148,6 +148,7 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lbTextTwTimeout = new System.Windows.Forms.Label();
             this.chxConfirmLink = new System.Windows.Forms.CheckBox();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
             this.lblTextLogging = new System.Windows.Forms.Label();
@@ -158,7 +159,6 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -197,7 +197,7 @@ namespace NoteFly
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
-            this.btnCancel.Location = new System.Drawing.Point(4, 313);
+            this.btnCancel.Location = new System.Drawing.Point(0, 313);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(188, 23);
             this.btnCancel.TabIndex = 3;
@@ -679,6 +679,7 @@ namespace NoteFly
             this.tabHighlight.Controls.Add(this.chxHighlightSQL);
             this.tabHighlight.Controls.Add(this.chxHighlightPHP);
             this.tabHighlight.Controls.Add(this.chxHighlightHyperlinks);
+            this.tabHighlight.Controls.Add(this.chxConfirmLink);
             this.tabHighlight.Controls.Add(this.chxHighlightHTML);
             this.tabHighlight.Location = new System.Drawing.Point(4, 22);
             this.tabHighlight.Name = "tabHighlight";
@@ -691,7 +692,7 @@ namespace NoteFly
             // chxHighlightSQL
             // 
             this.chxHighlightSQL.AutoSize = true;
-            this.chxHighlightSQL.Location = new System.Drawing.Point(37, 161);
+            this.chxHighlightSQL.Location = new System.Drawing.Point(37, 189);
             this.chxHighlightSQL.Name = "chxHighlightSQL";
             this.chxHighlightSQL.Size = new System.Drawing.Size(114, 17);
             this.chxHighlightSQL.TabIndex = 16;
@@ -701,7 +702,7 @@ namespace NoteFly
             // chxHighlightPHP
             // 
             this.chxHighlightPHP.AutoSize = true;
-            this.chxHighlightPHP.Location = new System.Drawing.Point(37, 122);
+            this.chxHighlightPHP.Location = new System.Drawing.Point(37, 156);
             this.chxHighlightPHP.Name = "chxHighlightPHP";
             this.chxHighlightPHP.Size = new System.Drawing.Size(115, 17);
             this.chxHighlightPHP.TabIndex = 15;
@@ -721,7 +722,7 @@ namespace NoteFly
             // chxHighlightHTML
             // 
             this.chxHighlightHTML.AutoSize = true;
-            this.chxHighlightHTML.Location = new System.Drawing.Point(37, 84);
+            this.chxHighlightHTML.Location = new System.Drawing.Point(37, 118);
             this.chxHighlightHTML.Name = "chxHighlightHTML";
             this.chxHighlightHTML.Size = new System.Drawing.Size(123, 17);
             this.chxHighlightHTML.TabIndex = 13;
@@ -878,7 +879,6 @@ namespace NoteFly
             this.tabNetwerk.Controls.Add(this.chxProxyEnabled);
             this.tabNetwerk.Controls.Add(this.numTimeout);
             this.tabNetwerk.Controls.Add(this.lbTextTwTimeout);
-            this.tabNetwerk.Controls.Add(this.chxConfirmLink);
             this.tabNetwerk.Controls.Add(this.iptbProxyAddress);
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
             this.tabNetwerk.Name = "tabNetwerk";
@@ -1005,12 +1005,23 @@ namespace NoteFly
             this.chxConfirmLink.AutoSize = true;
             this.chxConfirmLink.Checked = true;
             this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmLink.Location = new System.Drawing.Point(25, 160);
+            this.chxConfirmLink.Location = new System.Drawing.Point(37, 70);
             this.chxConfirmLink.Name = "chxConfirmLink";
             this.chxConfirmLink.Size = new System.Drawing.Size(194, 17);
             this.chxConfirmLink.TabIndex = 18;
             this.chxConfirmLink.Text = "Ask before launching URL, on click";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
+            // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
             // 
             // tabAdvance
             // 
@@ -1110,17 +1121,6 @@ namespace NoteFly
             this.tbNotesSavePath.Size = new System.Drawing.Size(294, 20);
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
-            // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
             // 
             // FrmSettings
             // 

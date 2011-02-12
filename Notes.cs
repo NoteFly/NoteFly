@@ -68,7 +68,7 @@ namespace NoteFly
             this.notes = new List<Note>();
             this.skins = new List<Skin>();
             this.skins = xmlUtil.LoadSkins();
-            this.LoadNotes(Settings.ProgramFirstrun, resetpositions);
+            this.LoadNotes(Settings.programFirstrun, resetpositions);
         }
 
 		#endregion Constructors 
@@ -108,7 +108,7 @@ namespace NoteFly
         {
             for (int i = 0; i < this.notes.Count; i++)
             {
-                if (this.notes[i].Visible)
+                if (this.notes[i].visible)
                 {
                     if (notes[i] == null)
                     {
@@ -135,16 +135,16 @@ namespace NoteFly
         public Note CreateNote(String title, int skinnr, int x, int y, int width, int height)
         {
             Note newnote = new Note(this, this.GetNoteFilename(title));
-            newnote.Title = title;
-            newnote.SkinNr = skinnr;
-            newnote.Visible = true;
-            newnote.Locked = false;
-            newnote.RolledUp = false;
-            newnote.Ontop = false;
-            newnote.X = x;
-            newnote.Y = y;
-            newnote.Width = width;
-            newnote.Height = height;
+            newnote.title = title;
+            newnote.skinNr = skinnr;
+            newnote.visible = true;
+            newnote.locked = false;
+            newnote.rolledUp = false;
+            newnote.ontop = false;
+            newnote.x = x;
+            newnote.y = y;
+            newnote.width = width;
+            newnote.height = height;
             return newnote;
         }
 
@@ -185,7 +185,7 @@ namespace NoteFly
                 newfile = title2 + NOTEEXTENSION;
             }
 
-            if (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)))
+            if (File.Exists(Path.Combine(Settings.notesSavepath, newfile)))
             {
                 newfile = Checknewfilename(newfile, limitlenfile, '#');
                 return newfile;
@@ -285,7 +285,7 @@ namespace NoteFly
         /// <param name="firstrun">true if it is the first run</param>
         public void LoadNotes(bool firstrun, bool resetpositions)
         {
-            if (!Directory.Exists(Settings.NotesSavepath))
+            if (!Directory.Exists(Settings.notesSavepath))
             {
                 const string notefoldernoteexist = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
                 DialogResult result = MessageBox.Show(notefoldernoteexist, "Notes folder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -297,7 +297,7 @@ namespace NoteFly
                 else
                 {
                     Log.Write(LogType.error, (notefoldernoteexist + " Yes"));
-                    Settings.NotesSavepath = Program.AppDataFolder;
+                    Settings.notesSavepath = Program.AppDataFolder;
                 }
             }
 #if DEBUG
@@ -327,7 +327,7 @@ namespace NoteFly
             //loops once, but slowest with 7 notes.
             string[] notefiles = new string[65533]; //FAT32 files per directory limit, -4 files: settings.xml, skins.xml, debug.log and debug.log.old
             int n = 0;
-            IEnumerator notefilesenumerator = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly).GetEnumerator();
+            IEnumerator notefilesenumerator = Directory.GetFiles(Settings.notesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly).GetEnumerator();
             while (notefilesenumerator.MoveNext())
             {
                 string filepath = notefilesenumerator.Current.ToString();
@@ -338,7 +338,7 @@ namespace NoteFly
             // */
 #if DEBUG
             stopwatch.Stop();
-            Settings.ProgramLogInfo = true;
+            Settings.programLogInfo = true;
             Log.Write(LogType.info, "Notes search time:  " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
 #endif
             if (CheckLimitNotes(notefiles.Length))
@@ -362,8 +362,8 @@ namespace NoteFly
                 Note note = xmlUtil.LoadNoteFile(this, notefiles[i]);
                 if (resetpositions)
                 {
-                    note.X = 10;
-                    note.Y = 10;
+                    note.x = 10;
+                    note.y = 10;
                 }
                 this.AddNote(note);
             }
@@ -375,7 +375,7 @@ namespace NoteFly
 #endif
             for (int i = 0; i < notefiles.Length; i++)
             {
-                if (this.notes[i].Visible)
+                if (this.notes[i].visible)
                 {
                     this.notes[i].CreateForm();
                 }
@@ -454,7 +454,7 @@ namespace NoteFly
         /// <returns>true when limit is reached, and a warning about too many notes should be showed.</returns>
         private bool CheckLimitNotes(int number)
         {
-            if (number > Settings.NotesWarnLimit)
+            if (number > Settings.notesWarnLimit)
             {
                 return true;
             }
@@ -473,7 +473,7 @@ namespace NoteFly
             int num = 1;
             int lenfilecounter = 3;
             int numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
-            while (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)) && (numlen <= lenfilecounter))
+            while (File.Exists(Path.Combine(Settings.notesSavepath, newfile)) && (numlen <= lenfilecounter))
             {
                 numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
                 newfile = newfile.Substring(0, limitlenfile - numlen - 1) + sepchar + num + NOTEEXTENSION;
@@ -511,12 +511,12 @@ namespace NoteFly
             string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
 
             Note demonote = this.CreateNote("NoteFly2.0.0", 0, noteposx, noteposy, notewidth, noteheight);
-            xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
+            xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.skinNr), notecontent);
             this.AddNote(demonote);
             demonote.CreateForm();
 
             //this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
-            Settings.ProgramFirstrun = false;
+            Settings.programFirstrun = false;
             Log.Write(LogType.info, "firstrun occur");
             xmlUtil.WriteSettings();
         }
