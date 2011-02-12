@@ -644,33 +644,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Send note to Facebook.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
-        {
-            if (this.CheckConnection())
-            {
-                string protocolhandler = "http://";
-                if (Settings.socialFacebookUseSSL)
-                {
-                    protocolhandler = "https://";
-                }
-                string update;
-                if (this.rtbNote.TextLength > 320)
-                {
-                    update = this.rtbNote.Text.Substring(0, 320);
-                }
-                else
-                {
-                    update = this.rtbNote.Text;
-                }
-                Program.LoadLink(protocolhandler + "facebook.com/share.php?mgs=" + HttpUtility.UrlEncode(update));
-            }
-        }
-
-        /// <summary>
         /// Save the note to a plain textfile.
         /// </summary>
         /// <param name="sender">Sender object</param>
@@ -706,6 +679,35 @@ namespace NoteFly
                 }
             }
         }
+
+        /*
+        /// <summary>
+        /// Send note to Facebook.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
+        {
+            if (this.CheckConnection())
+            {
+                string protocolhandler = "http://";
+                if (Settings.socialFacebookUseSSL)
+                {
+                    protocolhandler = "https://";
+                }
+                string update;
+                if (this.rtbNote.TextLength > 320)
+                {
+                    update = this.rtbNote.Text.Substring(0, 320);
+                }
+                else
+                {
+                    update = this.rtbNote.Text;
+                }
+                Program.LoadLink(protocolhandler + "facebook.com/share.php?mgs=" + HttpUtility.UrlEncode(update));
+            }
+        }
+        */
 
         /*
         /// <summary>

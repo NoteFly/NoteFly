@@ -26,11 +26,13 @@ namespace NoteFly
     using System.Collections.Generic;
     using System.Text;
     using System.Reflection;
-#if DEBUG
-    using System.Diagnostics;
     using System.IO;
     using System.Threading;
+#if DEBUG
+    using System.Diagnostics;
 #endif
+
+
 
     /// <summary>
     /// Program class, main entry application.
@@ -187,8 +189,8 @@ namespace NoteFly
                         //Turn off all social functions on startup.
                         case "/disablesocial":
                             Settings.socialEmailEnabled = false;
-                            Settings.socialFacebookEnabled = false;
-                            Settings.socialTwitterEnabled = false;
+                            //Settings.socialFacebookEnabled = false;
+                            //Settings.socialTwitterEnabled = false;
                             break;
                         //Turn all logging features on at startup. 
                         //Handy in case NoteFly crashes at startup and logging was turned off.

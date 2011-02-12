@@ -143,21 +143,6 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_notallowcheckstate);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-
-            else if (this.tbTwitterUser.Text.Length > 16)
-            {
-                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_twitternametoolong);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_twitternametoolong);
-                this.tabControlSettings.SelectedTab = this.tabSharing;
-            }
-            /*
-            else if ((this.tbTwitterPass.Text.Length < 6) && (this.chxRememberTwPass.Checked == true))
-            {
-                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_twitterpaswtooshort);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_twitterpaswtooshort);
-                this.tabControlSettings.SelectedTab = this.tabSocialNetworks;
-            }
-            */
             else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.chxSocialEmailDefaultaddressBlank.Checked))
             {
                 Log.Write(LogType.error, NoteFly.Properties.Resources.settings_emailnotvalid);
@@ -180,6 +165,7 @@ namespace NoteFly
                 //tab: Appearance, looks
                 Settings.notesTransparencyEnabled = this.chxTransparecy.Checked;
                 Settings.notesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
+                Settings.notesDefaultRandomSkin = chxUseRandomDefaultNote.Checked;
                 Settings.notesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
                 Settings.notesTooltipsEnabled = this.cbxShowTooltips.Checked;
                 //tab: Appearance, fonts
@@ -202,9 +188,10 @@ namespace NoteFly
                 //tab: Social networks
                 Settings.socialEmailEnabled = this.chxSocialEmailEnabled.Checked;
                 Settings.socialEmailDefaultadres = this.tbDefaultEmail.Text;
-                Settings.socialTwitterEnabled = this.chxSocialTwitterEnabled.Checked;
-                Settings.socialTwitterUsername = this.tbTwitterUser.Text;
-                Settings.socialFacebookEnabled = this.chxSocialFacebookEnabled.Checked;
+                //Settings.socialTwitterEnabled = this.chxSocialTwitterEnabled.Checked;
+                //Settings.socialTwitterUsername = this.tbTwitterUser.Text;
+                //Settings.socialFacebookEnabled = this.chxSocialFacebookEnabled.Checked;
+                //Settings.socialFacebookEmail = this.tbFacebookEmail.Text;
                 //tab: Network
                 Settings.updatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value);
                 Settings.networkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
@@ -413,8 +400,10 @@ namespace NoteFly
             //tab: Appearance
             this.chxTransparecy.Checked = Settings.notesTransparencyEnabled;
             this.numProcTransparency.Value = Convert.ToDecimal(Settings.notesTransparencyLevel * 100);
+            this.chxUseRandomDefaultNote.Checked = Settings.notesDefaultRandomSkin;
             this.cbxDefaultColor.SelectedIndex = Settings.notesDefaultSkinnr;
             this.cbxShowTooltips.Checked = Settings.notesTooltipsEnabled;
+            //tab: Appearance, fonts
             this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.fontTitleSize);
             this.cbxFontNoteContent.SelectedValue = Settings.fontContentFamily;
             this.numFontSizeContent.Value = Convert.ToDecimal(Settings.fontContentSize);
@@ -422,7 +411,7 @@ namespace NoteFly
             this.cbxFontNoteContent.Text = Settings.fontContentFamily;
             this.cbxFontNoteTitle.Text = Settings.fontTitleFamily;
             this.cbxFontNoteTitleBold.Checked = Settings.fontTitleStylebold;
-            this.cbxDefaultColor.SelectedIndex = Settings.notesDefaultSkinnr;
+            //tab: Appearance, trayicon
             this.chxTrayiconBoldNewnote.Checked = Settings.trayiconCreatenotebold;
             this.chxTrayiconBoldManagenotes.Checked = Settings.trayiconManagenotesbold;
             this.chxTrayiconBoldSettings.Checked = Settings.trayiconSettingsbold;
@@ -440,9 +429,10 @@ namespace NoteFly
                 this.chxSocialEmailDefaultaddressBlank.Checked = true;
             }
             this.chxSocialEmailEnabled.Checked = Settings.socialEmailEnabled;
-            this.chxSocialTwitterEnabled.Checked = Settings.socialTwitterEnabled;
-            this.tbTwitterUser.Text = Settings.socialTwitterUsername;
-            this.chxSocialFacebookEnabled.Checked = Settings.socialFacebookEnabled;
+            //this.chxSocialTwitterEnabled.Checked = Settings.socialTwitterEnabled;
+            //this.tbTwitterUser.Text = Settings.socialTwitterUsername;
+            //this.chxSocialFacebookEnabled.Checked = Settings.socialFacebookEnabled;
+            //this.tbFacebookEmail.Text = Settings.socialFacebookEmail;
             //tab: Network
             if (Settings.updatecheckEverydays > 0)
             {
@@ -476,5 +466,10 @@ namespace NoteFly
         }
 
         #endregion Methods
+
+        private void chxUseRandomDefaultNote_CheckedChanged(object sender, EventArgs e)
+        {
+            this.cbxDefaultColor.Enabled = !this.chxUseRandomDefaultNote.Checked;
+        }
     }
 }

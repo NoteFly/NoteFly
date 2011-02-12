@@ -445,6 +445,17 @@ namespace NoteFly
                 curnote.UpdateForm();
             }
         }
+
+        /// <summary>
+        /// Generate a random skinnummer.
+        /// </summary>
+        /// <returns></returns>
+        public int GenerateRandomSkinnr()
+        {
+            Random rndgen = new Random();
+            return rndgen.Next(0, this.skins.Count + 1);
+        }
+
 		// Private Methods (4) 
 
         /// <summary>

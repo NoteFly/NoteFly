@@ -67,45 +67,45 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// The note title.
         /// </summary>
-        public string title; //{ get; set; }
+        public string title;
         /// <summary>
-        /// 
+        /// Visablity note.
         /// </summary>
-        public bool visible; //{ get; set; }
+        public bool visible;
         /// <summary>
-        /// 
+        /// The note skin.
         /// </summary>
-        public int skinNr; //{ get; set; }
+        public int skinNr;
         /// <summary>
-        /// 
+        /// Is the note displayed ontop of all windows.
         /// </summary>
-        public bool ontop; //{ get; set; }
+        public bool ontop;
         /// <summary>
-        /// 
+        /// Is the note rolled up.
         /// </summary>
-        public bool rolledUp; //{ get; set; }
+        public bool rolledUp;
         /// <summary>
-        /// 
+        /// Is the note locked.
         /// </summary>
-        public bool locked; //{ get; set; }
+        public bool locked;
         /// <summary>
-        /// 
+        /// The X position of the note.
         /// </summary>
-        public int x; //{ get; set; }
+        public int x;
         /// <summary>
-        /// 
+        ///  The Y position of the note.
         /// </summary>
-        public int y; //{ get; set; }
+        public int y;
         /// <summary>
-        /// 
+        /// The width of the note.
         /// </summary>
-        public int width; //{ get; set; }
+        public int width;
         /// <summary>
-        /// 
+        /// The height of the note.
         /// </summary>
-        public int height; //{ get; set; }
+        public int height;
 
         /// <summary>
         /// Create a new frmNote with this note.

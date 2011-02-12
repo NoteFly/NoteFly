@@ -22,8 +22,6 @@ namespace NoteFly
     {
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.TextBox tbTwitterUser;
-        private System.Windows.Forms.Label lbUsername;
         private System.Windows.Forms.TabControl tabControlSettings;
         private System.Windows.Forms.TabPage tabAppearance;
         private System.Windows.Forms.TabPage tabSharing;
@@ -83,8 +81,6 @@ namespace NoteFly
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.tbTwitterUser = new System.Windows.Forms.TextBox();
-            this.lbUsername = new System.Windows.Forms.Label();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.chxConfirmDeletenote = new System.Windows.Forms.CheckBox();
@@ -95,6 +91,7 @@ namespace NoteFly
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabAppearanceColors = new System.Windows.Forms.TabControl();
             this.tabPageLooks = new System.Windows.Forms.TabPage();
+            this.chxUseRandomDefaultNote = new System.Windows.Forms.CheckBox();
             this.cbxShowTooltips = new System.Windows.Forms.CheckBox();
             this.chxTransparecy = new System.Windows.Forms.CheckBox();
             this.lbDefaultNewNoteColor = new System.Windows.Forms.Label();
@@ -124,6 +121,7 @@ namespace NoteFly
             this.chxHighlightSQL = new System.Windows.Forms.CheckBox();
             this.chxHighlightPHP = new System.Windows.Forms.CheckBox();
             this.chxHighlightHyperlinks = new System.Windows.Forms.CheckBox();
+            this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.chxHighlightHTML = new System.Windows.Forms.CheckBox();
             this.tabSharing = new System.Windows.Forms.TabPage();
             this.tabControlSocialNetworks = new System.Windows.Forms.TabControl();
@@ -132,12 +130,6 @@ namespace NoteFly
             this.chxSocialEmailDefaultaddressBlank = new System.Windows.Forms.CheckBox();
             this.lbTextDefaultEmail = new System.Windows.Forms.Label();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
-            this.tabTwitter = new System.Windows.Forms.TabPage();
-            this.chxSocialTwitterEnabled = new System.Windows.Forms.CheckBox();
-            this.tabFacebook = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.chxSocialFacebookEnabled = new System.Windows.Forms.CheckBox();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.numUpdateCheckDays = new System.Windows.Forms.NumericUpDown();
@@ -147,7 +139,6 @@ namespace NoteFly
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lbTextTwTimeout = new System.Windows.Forms.Label();
-            this.chxConfirmLink = new System.Windows.Forms.CheckBox();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
@@ -173,8 +164,6 @@ namespace NoteFly
             this.tabSharing.SuspendLayout();
             this.tabControlSocialNetworks.SuspendLayout();
             this.tabEmail.SuspendLayout();
-            this.tabTwitter.SuspendLayout();
-            this.tabFacebook.SuspendLayout();
             this.tabNetwerk.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
@@ -204,26 +193,6 @@ namespace NoteFly
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // tbTwitterUser
-            // 
-            this.tbTwitterUser.AccessibleDescription = "Editbox twitter username";
-            this.tbTwitterUser.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
-            this.tbTwitterUser.Location = new System.Drawing.Point(107, 60);
-            this.tbTwitterUser.MaxLength = 16;
-            this.tbTwitterUser.Name = "tbTwitterUser";
-            this.tbTwitterUser.Size = new System.Drawing.Size(240, 20);
-            this.tbTwitterUser.TabIndex = 8;
-            this.tbTwitterUser.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lbUsername
-            // 
-            this.lbUsername.AutoSize = true;
-            this.lbUsername.Location = new System.Drawing.Point(10, 63);
-            this.lbUsername.Name = "lbUsername";
-            this.lbUsername.Size = new System.Drawing.Size(91, 13);
-            this.lbUsername.TabIndex = 9;
-            this.lbUsername.Text = "Twitter username:";
             // 
             // tabControlSettings
             // 
@@ -341,6 +310,7 @@ namespace NoteFly
             // 
             // tabPageLooks
             // 
+            this.tabPageLooks.Controls.Add(this.chxUseRandomDefaultNote);
             this.tabPageLooks.Controls.Add(this.cbxShowTooltips);
             this.tabPageLooks.Controls.Add(this.chxTransparecy);
             this.tabPageLooks.Controls.Add(this.lbDefaultNewNoteColor);
@@ -354,6 +324,17 @@ namespace NoteFly
             this.tabPageLooks.TabIndex = 0;
             this.tabPageLooks.Text = "Looks";
             this.tabPageLooks.UseVisualStyleBackColor = true;
+            // 
+            // chxUseRandomDefaultNote
+            // 
+            this.chxUseRandomDefaultNote.AutoSize = true;
+            this.chxUseRandomDefaultNote.Location = new System.Drawing.Point(18, 120);
+            this.chxUseRandomDefaultNote.Name = "chxUseRandomDefaultNote";
+            this.chxUseRandomDefaultNote.Size = new System.Drawing.Size(191, 17);
+            this.chxUseRandomDefaultNote.TabIndex = 14;
+            this.chxUseRandomDefaultNote.Text = "use random default note skin color.";
+            this.chxUseRandomDefaultNote.UseVisualStyleBackColor = true;
+            this.chxUseRandomDefaultNote.CheckedChanged += new System.EventHandler(this.chxUseRandomDefaultNote_CheckedChanged);
             // 
             // cbxShowTooltips
             // 
@@ -719,6 +700,18 @@ namespace NoteFly
             this.chxHighlightHyperlinks.Text = "Make hyperlinks clickable.";
             this.chxHighlightHyperlinks.UseVisualStyleBackColor = true;
             // 
+            // chxConfirmLink
+            // 
+            this.chxConfirmLink.AutoSize = true;
+            this.chxConfirmLink.Checked = true;
+            this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmLink.Location = new System.Drawing.Point(37, 70);
+            this.chxConfirmLink.Name = "chxConfirmLink";
+            this.chxConfirmLink.Size = new System.Drawing.Size(194, 17);
+            this.chxConfirmLink.TabIndex = 18;
+            this.chxConfirmLink.Text = "Ask before launching URL, on click";
+            this.chxConfirmLink.UseVisualStyleBackColor = true;
+            // 
             // chxHighlightHTML
             // 
             this.chxHighlightHTML.AutoSize = true;
@@ -743,8 +736,6 @@ namespace NoteFly
             // tabControlSocialNetworks
             // 
             this.tabControlSocialNetworks.Controls.Add(this.tabEmail);
-            this.tabControlSocialNetworks.Controls.Add(this.tabTwitter);
-            this.tabControlSocialNetworks.Controls.Add(this.tabFacebook);
             this.tabControlSocialNetworks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlSocialNetworks.Location = new System.Drawing.Point(3, 3);
             this.tabControlSocialNetworks.Name = "tabControlSocialNetworks";
@@ -806,68 +797,6 @@ namespace NoteFly
             this.tbDefaultEmail.Name = "tbDefaultEmail";
             this.tbDefaultEmail.Size = new System.Drawing.Size(200, 20);
             this.tbDefaultEmail.TabIndex = 23;
-            // 
-            // tabTwitter
-            // 
-            this.tabTwitter.Controls.Add(this.chxSocialTwitterEnabled);
-            this.tabTwitter.Controls.Add(this.lbUsername);
-            this.tabTwitter.Controls.Add(this.tbTwitterUser);
-            this.tabTwitter.Location = new System.Drawing.Point(4, 22);
-            this.tabTwitter.Name = "tabTwitter";
-            this.tabTwitter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTwitter.Size = new System.Drawing.Size(372, 249);
-            this.tabTwitter.TabIndex = 0;
-            this.tabTwitter.Text = "Twitter";
-            this.tabTwitter.UseVisualStyleBackColor = true;
-            // 
-            // chxSocialTwitterEnabled
-            // 
-            this.chxSocialTwitterEnabled.AutoSize = true;
-            this.chxSocialTwitterEnabled.Location = new System.Drawing.Point(13, 37);
-            this.chxSocialTwitterEnabled.Name = "chxSocialTwitterEnabled";
-            this.chxSocialTwitterEnabled.Size = new System.Drawing.Size(166, 17);
-            this.chxSocialTwitterEnabled.TabIndex = 14;
-            this.chxSocialTwitterEnabled.Text = "Enable Twitter in share menu.";
-            this.chxSocialTwitterEnabled.UseVisualStyleBackColor = true;
-            // 
-            // tabFacebook
-            // 
-            this.tabFacebook.Controls.Add(this.label1);
-            this.tabFacebook.Controls.Add(this.textBox1);
-            this.tabFacebook.Controls.Add(this.chxSocialFacebookEnabled);
-            this.tabFacebook.Location = new System.Drawing.Point(4, 22);
-            this.tabFacebook.Name = "tabFacebook";
-            this.tabFacebook.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFacebook.Size = new System.Drawing.Size(372, 249);
-            this.tabFacebook.TabIndex = 1;
-            this.tabFacebook.Text = "Facebook";
-            this.tabFacebook.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 64);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(110, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Facebook login email:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(127, 61);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(221, 20);
-            this.textBox1.TabIndex = 3;
-            // 
-            // chxSocialFacebookEnabled
-            // 
-            this.chxSocialFacebookEnabled.AutoSize = true;
-            this.chxSocialFacebookEnabled.Location = new System.Drawing.Point(14, 38);
-            this.chxSocialFacebookEnabled.Name = "chxSocialFacebookEnabled";
-            this.chxSocialFacebookEnabled.Size = new System.Drawing.Size(182, 17);
-            this.chxSocialFacebookEnabled.TabIndex = 2;
-            this.chxSocialFacebookEnabled.Text = "Enable Facebook in share menu.";
-            this.chxSocialFacebookEnabled.UseVisualStyleBackColor = true;
             // 
             // tabNetwerk
             // 
@@ -999,18 +928,6 @@ namespace NoteFly
             this.lbTextTwTimeout.Size = new System.Drawing.Size(66, 13);
             this.lbTextTwTimeout.TabIndex = 24;
             this.lbTextTwTimeout.Text = "timeout time:";
-            // 
-            // chxConfirmLink
-            // 
-            this.chxConfirmLink.AutoSize = true;
-            this.chxConfirmLink.Checked = true;
-            this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmLink.Location = new System.Drawing.Point(37, 70);
-            this.chxConfirmLink.Name = "chxConfirmLink";
-            this.chxConfirmLink.Size = new System.Drawing.Size(194, 17);
-            this.chxConfirmLink.TabIndex = 18;
-            this.chxConfirmLink.Text = "Ask before launching URL, on click";
-            this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
             // iptbProxyAddress
             // 
@@ -1158,10 +1075,6 @@ namespace NoteFly
             this.tabControlSocialNetworks.ResumeLayout(false);
             this.tabEmail.ResumeLayout(false);
             this.tabEmail.PerformLayout();
-            this.tabTwitter.ResumeLayout(false);
-            this.tabTwitter.PerformLayout();
-            this.tabFacebook.ResumeLayout(false);
-            this.tabFacebook.PerformLayout();
             this.tabNetwerk.ResumeLayout(false);
             this.tabNetwerk.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckDays)).EndInit();
@@ -1178,15 +1091,11 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxHighlightSQL;
         private System.Windows.Forms.CheckBox chxHighlightPHP;
         private System.Windows.Forms.TabControl tabControlSocialNetworks;
-        private System.Windows.Forms.TabPage tabTwitter;
-        private System.Windows.Forms.TabPage tabFacebook;
         private System.Windows.Forms.TabPage tabEmail;
         private System.Windows.Forms.CheckBox chxSocialEmailDefaultaddressBlank;
         private System.Windows.Forms.Label lbTextDefaultEmail;
         private System.Windows.Forms.TextBox tbDefaultEmail;
         private System.Windows.Forms.CheckBox chxSocialEmailEnabled;
-        private System.Windows.Forms.CheckBox chxSocialTwitterEnabled;
-        private System.Windows.Forms.CheckBox chxSocialFacebookEnabled;
         private System.Windows.Forms.CheckBox chxCheckUpdates;
         private System.Windows.Forms.Label lbTextCheckforupdatesevery;
         private System.Windows.Forms.NumericUpDown numUpdateCheckDays;
@@ -1213,8 +1122,6 @@ namespace NoteFly
         private System.Windows.Forms.ComboBox cbxFontNoteContent;
         private System.Windows.Forms.CheckBox cbxFontNoteTitleBold;
         private System.Windows.Forms.CheckBox cbxShowTooltips;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lblTextLogging;
         private System.Windows.Forms.CheckBox chxLogExceptions;
         private System.Windows.Forms.TabPage tabPageTrayicon;
@@ -1222,5 +1129,6 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxTrayiconBoldSettings;
         private System.Windows.Forms.CheckBox chxTrayiconBoldManagenotes;
         private System.Windows.Forms.CheckBox chxTrayiconBoldNewnote;
+        private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
     }
 }

@@ -80,6 +80,10 @@ namespace NoteFly
             this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width / 2 - this.Width/2, Screen.PrimaryScreen.WorkingArea.Height / 2 - this.Height/2);
             this.note = null;
             this.Text = "new note";
+            if (Settings.notesDefaultRandomSkin)
+            {
+                Settings.notesDefaultSkinnr = notes.GenerateRandomSkinnr();
+            }
             this.SetColorsForm(Settings.notesDefaultSkinnr);
             this.tbTitle.Text = DateTime.Now.ToString();
         }

@@ -83,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomException.cs" />
-    <Compile Include="extensions\Facebook.cs" />
     <Compile Include="FrmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,7 +161,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Highlight.cs" />
-    <Compile Include="extensions\Twitter.cs" />
     <Compile Include="XmlUtil.cs" />
     <None Include="Resources\accept.png" />
     <None Include="Resources\cancel.png" />

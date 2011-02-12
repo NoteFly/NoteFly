@@ -1,4 +1,4 @@
-; Copyright (C) 2009-2010
+; Copyright (C) 2009-2011
 ;
 ; This program is free software; you can redistribute it and/or modify it
 ; Free Software Foundation; either version 2, or (at your option) any
@@ -14,6 +14,7 @@
 !define VERSION "2.0.0" ;version number: major.minor.release
 !define VERSTATUS "beta1"    ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
+!define LANGFILE "langs.xml"
 
 Name "NoteFly ${VERSION} ${VERSTATUS}" ; The name of the installer
 SetCompressor lzma
@@ -165,6 +166,7 @@ Section "main executable (required)"
   
   ; write the files main executable and uninstaller.
   File "${APPFILE}"
+  File "${LANGFILE}"
   WriteUninstaller "uninstall.exe"   
   
 SectionEnd
@@ -192,8 +194,9 @@ Section "Uninstall"
   DeleteRegKey HKLM SOFTWARE\NoteFly
 
   ; Remove files and uninstaller
-  Delete $INSTDIR\${APPFILE}
-  Delete $INSTDIR\uninstall.exe
+  Delete "$INSTDIR\${APPFILE}"
+  Delete "$INSTDIR\${LANGFILE}"
+  Delete "$INSTDIR\uninstall.exe"
            
   RMDir "$INSTDIR"
   

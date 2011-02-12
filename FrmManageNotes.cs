@@ -210,11 +210,13 @@ namespace NoteFly
                 if (this.notes.GetNote(notepos).visible)
                 {
                     this.notes.GetNote(notepos).CreateForm();
+                    this.btnShowSelectedNotes.Text = "Hide selected";
                     this.Activate();
                 }
                 else
                 {
                     this.notes.GetNote(notepos).DestroyForm();
+                    this.btnShowSelectedNotes.Text = "Show selected";
                 }
                 xmlUtil.WriteNote(this.notes.GetNote(notepos), notes.GetSkinName(this.notes.GetNote(notepos).skinNr), this.notes.GetNote(notepos).GetContent());
             }
@@ -459,6 +461,22 @@ namespace NoteFly
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;
         }
 
+        /// <summary>
+        /// Cell clicked in dataGridView1, set hide/show note button text.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if ((bool)this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value == true)
+            {
+                this.btnShowSelectedNotes.Text = "Hide selected";
+            }
+            else
+            {
+                this.btnShowSelectedNotes.Text = "Show selected";
+            }
+        }
         #endregion Methods
     }
 }

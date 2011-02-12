@@ -286,6 +286,7 @@ namespace NoteFly
                         case "SocialEmailEnabled":
                             Settings.socialEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
+                        /*
                         case "SocialFacebookEnabled":
                             Settings.socialFacebookEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -298,6 +299,7 @@ namespace NoteFly
                         case "SocialTwitterUseSSL":
                             Settings.socialTwitterUseSSL = xmlread.ReadElementContentAsBoolean();
                             break;
+                        */
                         case "TrayiconCreatenotebold":
                             Settings.trayiconCreatenotebold = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -309,6 +311,9 @@ namespace NoteFly
                             break;
                         case "TrayiconSettingsbold":
                             Settings.trayiconSettingsbold = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "NotesDefaultRandomSkin":
+                            Settings.notesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
                             break;
                         //ints / doubles
                         case "FontContentSize":
@@ -323,7 +328,7 @@ namespace NoteFly
                         case "NetworkConnectionTimeout":
                             Settings.networkConnectionTimeout = xmlread.ReadElementContentAsInt();
                             break;
-                        case "NotesDefaultColor":
+                        case "NotesDefaultSkin":
                             Settings.notesDefaultSkinnr = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesWarnLimit":
@@ -369,12 +374,17 @@ namespace NoteFly
                         case "NotesSavepath":
                             Settings.notesSavepath = xmlread.ReadElementContentAsString();
                             break;
+                        /*
                         case "SocialEmailDefaultadres":
                             Settings.socialEmailDefaultadres = xmlread.ReadElementContentAsString();
                             break;
                         case "SocialTwitterUsername":
                             Settings.socialTwitterUsername = xmlread.ReadElementContentAsString();
                             break;
+                        case "SocialFacebookEmail":
+                            Settings.socialFacebookEmail = xmlread.ReadElementContentAsString();
+                            break;
+                         */
                         case "UpdatecheckLastDate":
                             Settings.updatecheckLastDate = xmlread.ReadElementContentAsString();
                             break;
@@ -497,6 +507,7 @@ namespace NoteFly
             Settings.networkProxyEnabled = false;
             Settings.notesTooltipsEnabled = true;
             Settings.notesClosebtnHidenotepermanently = true;
+            Settings.notesDefaultRandomSkin = false;
             Settings.notesDefaultSkinnr = 0; //default skin: yellow
             Settings.notesSavepath = Program.AppDataFolder;
             Settings.notesTransparencyEnabled = true;
@@ -508,11 +519,12 @@ namespace NoteFly
             Settings.programLogInfo = false;
             Settings.socialEmailDefaultadres = String.Empty;
             Settings.socialEmailEnabled = true;
-            Settings.socialFacebookEnabled = true;
-            Settings.socialFacebookUseSSL = true;
-            Settings.socialTwitterEnabled = true;
-            Settings.socialTwitterUsername = String.Empty;
-            Settings.socialTwitterUseSSL = true;
+            //Settings.socialFacebookEmail = String.Empty;
+            //Settings.socialFacebookEnabled = true;
+            //Settings.socialFacebookUseSSL = true;
+            //Settings.socialTwitterUsername = String.Empty;
+            //Settings.socialTwitterEnabled = true;
+            //Settings.socialTwitterUseSSL = true;
             Settings.trayiconLeftclickaction = 1;
             Settings.trayiconCreatenotebold = true;
             Settings.trayiconExitbold = false;
@@ -698,15 +710,16 @@ namespace NoteFly
                 WriteXMLBool("NotesTooltipEnabled", Settings.notesTooltipsEnabled);
                 WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.notesClosebtnHidenotepermanently);
                 WriteXMLBool("NotesTransparencyEnabled", Settings.notesTransparencyEnabled);
+                WriteXMLBool("NotesDefaultRandomSkin", Settings.notesDefaultRandomSkin);
                 WriteXMLBool("ProgramFirstrun", Settings.programFirstrun);
                 WriteXMLBool("ProgramLogError", Settings.programLogError);
                 WriteXMLBool("ProgramLogException", Settings.programLogException);
                 WriteXMLBool("ProgramLogInfo", Settings.programLogInfo);
                 WriteXMLBool("SocialEmailEnabled", Settings.socialEmailEnabled);
-                WriteXMLBool("SocialFacebookEnabled", Settings.socialFacebookEnabled);
-                WriteXMLBool("SocialFacebookUseSSL", Settings.socialFacebookUseSSL);
-                WriteXMLBool("SocialTwitterEnabled", Settings.socialTwitterEnabled);
-                WriteXMLBool("SocialTwitterUseSSL", Settings.socialTwitterUseSSL);
+                //WriteXMLBool("SocialFacebookEnabled", Settings.socialFacebookEnabled);
+                //WriteXMLBool("SocialFacebookUseSSL", Settings.socialFacebookUseSSL);
+                //WriteXMLBool("SocialTwitterEnabled", Settings.socialTwitterEnabled);
+                //WriteXMLBool("SocialTwitterUseSSL", Settings.socialTwitterUseSSL);
                 WriteXMLBool("TrayiconCreatenotebold", Settings.trayiconCreatenotebold);
                 WriteXMLBool("TrayiconExitbold", Settings.trayiconExitbold);
                 WriteXMLBool("TrayiconManagenotesbold", Settings.trayiconManagenotesbold);
@@ -716,7 +729,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("FontContentSize", Settings.fontContentSize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("FontTitleSize", Settings.fontTitleSize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.networkConnectionTimeout.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.notesDefaultSkinnr.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.notesDefaultRandomSkin.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.notesTransparencyLevel.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesWarnLimit", Settings.notesWarnLimit.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.trayiconLeftclickaction.ToString(numfmtinfo));
@@ -733,7 +746,8 @@ namespace NoteFly
                 xmlwrite.WriteElementString("FontTitleFamily", Settings.fontTitleFamily);
                 xmlwrite.WriteElementString("NetworkProxyAddress", Settings.networkProxyAddress);
                 xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.socialEmailDefaultadres);
-                xmlwrite.WriteElementString("SocialTwitterUsername", Settings.socialTwitterUsername);
+                //xmlwrite.WriteElementString("SocialTwitterUsername", Settings.socialTwitterUsername);
+                //xmlwrite.WriteElementString("SocialFacebookEmail", Settings.socialFacebookEmail);
                 xmlwrite.WriteElementString("NotesSavepath", Settings.notesSavepath);
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
@@ -956,11 +970,20 @@ namespace NoteFly
                                 readsubnodes = false;
                                 break;
                             }
-                        } else {
+                        }
+                        else
+                        {
                             xmlread.Skip();
                         }
                     }
                 }
+            }
+            catch (FileNotFoundException)
+            {
+                Log.Write(LogType.exception, "File "+file+" not found.");
+                Settings.highlightHTML = false;
+                Settings.highlightPHP = false;
+                Settings.highlightSQL = false;
             }
             finally
             {
