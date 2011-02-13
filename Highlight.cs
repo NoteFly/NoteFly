@@ -121,7 +121,6 @@ namespace NoteFly
                     InitHighlighter();
                 }
 
-                bool ishtmlendtag = false;
                 int posstarthtmltag = 0;
                 int posstartphp = int.MaxValue;
                 int posendphp = int.MaxValue;
@@ -351,7 +350,6 @@ namespace NoteFly
             ishtml = ishtml.ToLower(); //e.g. "<BR>" becomes "<br>"
 
             int lastpos = 1;
-            int posendattributevalue = int.MaxValue;
             for (int pos = 1; pos < ishtml.Length; pos++)
             {
                 if (ishtml[pos] == '"' || ishtml[pos] == '\'')

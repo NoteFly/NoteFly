@@ -174,6 +174,8 @@ namespace NoteFly
                     {
                         this.note.tempcontent = null;
                     }
+                    this.notes.frmmangenotesneedupdate = true;
+                    TrayIcon.RefreshFrmManageNotes();
                     this.Close();
                     GC.Collect();
                 }

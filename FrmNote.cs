@@ -428,6 +428,7 @@ namespace NoteFly
             this.notes.frmmangenotesneedupdate = true;
             Highlight.DeinitHighlighter();
             TrayIcon.RefreshFrmManageNotes();
+            this.notes.frmmangenotesneedupdate = false;
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to "+this.notes.GetSkinName(this.note.skinNr));
         }
 

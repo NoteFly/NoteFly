@@ -27,13 +27,14 @@ namespace NoteFly
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using System.Data;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Manage notes window
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-		#region Fields (5) 
+        #region Fields (5)
 
         private const string BTNTEXTHIDE = "&hide selected";
         private const string BTNTEXTSHOW = "&show selected";
@@ -46,9 +47,9 @@ namespace NoteFly
         /// </summary>
         private Point oldp;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the FrmManageNotes class.
@@ -77,11 +78,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (18) 
+        #region Methods (18)
 
-		// Private Methods (18) 
+        // Private Methods (18) 
 
         /// <summary>
         /// Request to backup all notes to a file.
@@ -140,17 +141,14 @@ namespace NoteFly
                     this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
                 }
 
+                this.DrawNotesGrid();
+                this.SetDataGridViewColumsWidth();
+
+                this.btnNoteDelete.Enabled = false;
                 if (this.notes.CountNotes > 0)
                 {
                     this.btnNoteDelete.Enabled = true;
                 }
-                else
-                {
-                    this.btnNoteDelete.Enabled = false;
-                }
-
-                this.DrawNotesGrid();
-                this.SetDataGridViewColumsWidth();
             }
         }
 
@@ -231,7 +229,7 @@ namespace NoteFly
                 }
                 xmlUtil.WriteNote(this.notes.GetNote(notepos), notes.GetSkinName(this.notes.GetNote(notepos).skinNr), this.notes.GetNote(notepos).GetContent());
             }
-            
+
             this.notes.frmmangenotesneedupdate = false;
         }
 
@@ -264,6 +262,16 @@ namespace NoteFly
         {
             if (this.notes.frmmangenotesneedupdate)
             {
+                //detect and update add/delete notes.
+                if (this.dataGridView1.RowCount != this.notes.CountNotes)
+                {
+                    DrawNotesGrid();
+                    SetDataGridViewColumsWidth();
+#if !DEBUG
+                    System.Threading.Thread.Sleep(1);
+#endif
+                }
+
                 int notepos = GetNoteposBySelrow(e.RowIndex);
                 this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(notepos).skinNr);
                 this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(notepos).skinNr);
@@ -273,7 +281,8 @@ namespace NoteFly
                 }
 
                 this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).visible;
-                if (e.RowIndex == this.notes.CountNotes -1)
+
+                if (e.RowIndex >= this.dataGridView1.RowCount - 1)
                 {
                     this.notes.frmmangenotesneedupdate = false;
                 }
@@ -281,26 +290,32 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Deletes the notes in memory and files that are selected in a Gridview.
+        /// Deletes the notes in memory and the files that are selected in a Gridview.
+        /// In reverse order, so updating datagridview goes well.
         /// </summary>
         /// <param name="id"></param>
         private void DeleteNotesSelectedRowsGrid(DataGridViewSelectedRowCollection selrows)
         {
-            int[] deletedselrows = new int[selrows.Count];
-            for (int r = 0; r < selrows.Count; r++)
+            List<int> deletenotepos = new List<int>();
+            for (int i = 0; i < selrows.Count; i++)
             {
-                int notepos = GetNoteposBySelrow(selrows[r].Index);
-                string filename = this.notes.GetNote(notepos).Filename;
+                deletenotepos.Add(GetNoteposBySelrow(selrows[i].Index));
+            }
+            deletenotepos.Sort();
+
+            for (int r = deletenotepos.Count - 1; r >= 0; r--)
+            {
+                string filename = this.notes.GetNote(deletenotepos[r]).Filename;
                 try
                 {
-                    this.notes.GetNote(notepos).DestroyForm();
+                    this.notes.GetNote(deletenotepos[r]).DestroyForm();
                     string filepath = Path.Combine(Settings.notesSavepath, filename);
                     File.Delete(filepath);
                     if (Settings.programLogInfo)
                     {
                         Log.Write(LogType.info, "Deleted note: " + filepath);
                     }
-                    this.notes.RemoveNote(notepos);
+                    this.notes.RemoveNote(deletenotepos[r]);
                 }
                 catch (FileNotFoundException filenotfoundexc)
                 {
@@ -358,7 +373,6 @@ namespace NoteFly
                 try
                 {
                     this.Opacity = 1.0;
-                    this.Refresh();
                 }
                 catch (InvalidCastException)
                 {
@@ -379,7 +393,6 @@ namespace NoteFly
                 try
                 {
                     this.Opacity = Settings.notesTransparencyLevel;
-                    this.Refresh();
                 }
                 catch (InvalidCastException)
                 {
@@ -395,7 +408,14 @@ namespace NoteFly
         /// <returns></returns>
         private int GetNoteposBySelrow(int rowindex)
         {
-            return Convert.ToInt32(this.dataGridView1.Rows[rowindex].Cells["nr"].Value) - 1;
+            if (rowindex >= 0)
+            {
+                return Convert.ToInt32(this.dataGridView1.Rows[rowindex].Cells["nr"].Value) - 1;
+            }
+            else
+            {
+                throw new CustomException("Negative rowindex.");
+            }
         }
 
         /// <summary>
@@ -414,6 +434,11 @@ namespace NoteFly
             this.Cursor = Cursors.Default;
         }
 
+        /// <summary>
+        /// Resize ended, set column width
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             this.SetDataGridViewColumsWidth();
@@ -497,6 +522,18 @@ namespace NoteFly
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;
         }
 
-		#endregion Methods 
+        /// <summary>
+        /// A column is sorted, make sure backgroundcolor skin colum get painted again.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            this.notes.frmmangenotesneedupdate = true;
+            TrayIcon.RefreshFrmManageNotes();
+            this.notes.frmmangenotesneedupdate = false;
+        }
+
+        #endregion Methods
     }
 }

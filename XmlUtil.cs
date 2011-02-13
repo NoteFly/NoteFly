@@ -668,7 +668,6 @@ namespace NoteFly
                 xmlread = new XmlTextReader(filepath);
                 xmlread.ProhibitDtd = true;
                 Note importnote = new Note(n, n.GetNoteFilename("import" + i));
-                string content;
                 try
                 {
                     importnote = ParserNoteNode(n, importnote, i);
