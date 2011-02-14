@@ -297,7 +297,7 @@ namespace NoteFly
             this.rtbNote.ReadOnly = true;
             this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNote.ShortcutsEnabled = false;
-            this.rtbNote.Size = new System.Drawing.Size(221, 184);
+            this.rtbNote.Size = new System.Drawing.Size(224, 191);
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
             this.rtbNote.Text = "?";
@@ -311,8 +311,8 @@ namespace NoteFly
             this.pnlNote.BackColor = System.Drawing.Color.Transparent;
             this.pnlNote.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlNote.ContextMenuStrip = this.menuFrmNoteOptions;
-            this.pnlNote.Controls.Add(this.pbResizeGrip);
             this.pnlNote.Controls.Add(this.rtbNote);
+            this.pnlNote.Controls.Add(this.pbResizeGrip);
             this.pnlNote.Location = new System.Drawing.Point(0, 31);
             this.pnlNote.Name = "pnlNote";
             this.pnlNote.Size = new System.Drawing.Size(240, 209);

@@ -307,6 +307,10 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Change the fontsize of the selected text limited from 6pt to 108pt.
+        /// </summary>
+        /// <param name="newsize"></param>
         private void ChangeFontSizeSelected(float newsize)
         {
             if ((newsize < 6) || (newsize > 108))
