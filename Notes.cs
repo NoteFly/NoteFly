@@ -309,6 +309,11 @@ namespace NoteFly
                     Settings.notesSavepath = Program.AppDataFolder;
                 }
             }
+
+            if (firstrun)
+            {
+                ImportingNotesNoteFly1();
+            }
 #if DEBUG
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -363,6 +368,56 @@ namespace NoteFly
             if (firstrun)
             {
                 CreateFirstrunNote();
+            }
+        }
+
+        /// <summary>
+        /// Ask and import notes from NoteFly 1.0.x if application data folder of NoteFly 1.0.x exist.
+        /// </summary>
+        private void ImportingNotesNoteFly1()
+        {
+#if windows
+            string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly");
+#endif
+            if (Directory.Exists(nf1appdata))
+            {
+                DialogResult resdoimport = MessageBox.Show("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?", "Import out NoteFly 1.0.x", MessageBoxButtons.YesNo);
+                if (resdoimport == DialogResult.Yes)
+                {
+                    string nf1settingsfile = Path.Combine(nf1appdata, "settings.xml");
+                    string nf1notesavepath = xmlUtil.GetContentString(nf1settingsfile, "notesavepath");
+                    int noteid = 1;
+                    string nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
+                    while (File.Exists(nf1notefile))
+                    {
+                        string nf1note_title = xmlUtil.GetContentString(nf1notefile, "title");
+                        int nf1note_skinnr = xmlUtil.GetContentInt(nf1notefile, "color");
+                        if (nf1note_skinnr >= this.skins.Count)
+                        {
+                            nf1note_skinnr = 0;
+                        }
+                        bool nf1note_visible = false;
+                        if (xmlUtil.GetContentInt(nf1notefile, "visible") == 1)
+                        {
+                            nf1note_visible = true;
+                        }
+                        Note importnf1note = new Note(this, this.GetNoteFilename(nf1note_title) );
+                        importnf1note.visible = nf1note_visible;
+                        importnf1note.title = nf1note_title;
+                        importnf1note.skinNr = nf1note_skinnr;
+                        importnf1note.ontop = false;
+                        importnf1note.locked = false;
+                        importnf1note.x = xmlUtil.GetContentInt(nf1notefile, "x");
+                        importnf1note.y = xmlUtil.GetContentInt(nf1notefile, "y");
+                        importnf1note.width = xmlUtil.GetContentInt(nf1notefile, "width");
+                        importnf1note.height = xmlUtil.GetContentInt(nf1notefile, "heigth");
+                        string content = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20" + xmlUtil.GetContentString(nf1notefile, "content") + "\\ulnone\\par\r\n}\r\n";
+                        xmlUtil.WriteNote(importnf1note, this.GetSkinName(nf1note_skinnr), content);
+                        noteid++;
+                        nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
+                    }
+                    Log.Write(LogType.info, "Notes notefly 1.0.x imported.");
+                }
             }
         }
 

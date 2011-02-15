@@ -98,11 +98,53 @@ namespace NoteFly
             {
                 xmlread.Close();
             }
-            //error node not found.
 #if DEBUG
             stopwatch.Stop();
 #endif
             return String.Empty;
+        }
+
+
+        /// <summary>
+        /// Get a xml node and return the value as integer.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="nodename"></param>
+        /// <returns></returns>
+        public static int GetContentInt(string filename, string nodename)
+        {
+            try
+            {
+                xmlread = new XmlTextReader(filename);
+            }
+            catch (FileLoadException fileloadexc)
+            {
+                throw new CustomException(fileloadexc.Message);
+            }
+            catch (FileNotFoundException filenotfoundexc)
+            {
+                throw new CustomException(filenotfoundexc.Message);
+            }
+            if (xmlread == null)
+            {
+                throw new CustomException("XmlTextReader object is null.");
+            }
+            try
+            {
+                while (xmlread.Read())
+                {
+                    if (xmlread.Name == nodename)
+                    {
+                        int xmlnodecontent = xmlread.ReadElementContentAsInt();
+                        return xmlnodecontent;
+                    }
+                }
+            }
+            finally
+            {
+                xmlread.Close();
+            }
+            return 0;
         }
 
         /// <summary>
@@ -736,7 +778,7 @@ namespace NoteFly
                 //strings
                 xmlwrite.WriteElementString("HighlightHTMLColorInvalid", Settings.highlightHTMLColorInvalid);
                 xmlwrite.WriteElementString("HighlightHTMLColorValid", Settings.highlightHTMLColorValid);
-                xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.highlightHTMLColorString );
+                xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.highlightHTMLColorString);
                 xmlwrite.WriteElementString("HighlightPHPColorComment", Settings.highlightPHPColorComment);
                 xmlwrite.WriteElementString("HighlightPHPColorDocumentstartend", Settings.highlightPHPColorDocumentstartend);
                 xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.highlightPHPColorValidfunctions);
@@ -990,7 +1032,7 @@ namespace NoteFly
             }
             catch (FileNotFoundException)
             {
-                Log.Write(LogType.exception, "File "+file+" not found.");
+                Log.Write(LogType.exception, "File " + file + " not found.");
                 Settings.highlightHTML = false;
                 Settings.highlightPHP = false;
                 Settings.highlightSQL = false;

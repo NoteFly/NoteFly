@@ -182,14 +182,22 @@ namespace NoteFly
                             for (int i = 0; i <= this.notes.CountNotes; i++)
                             {
                                 File.Delete(Path.Combine(Settings.notesSavepath, this.notes.GetNote(i).Filename));
-                                this.notes.GetNote(i).DestroyForm();
-                                this.notes.RemoveNote(i);
                             }
                         }
                         else if (eraseres == DialogResult.Cancel)
                         {
                             Log.Write(LogType.info, "Cancelled restore notes backup.");
                             return;
+                        }
+
+                        for (int i = 0; i < this.notes.CountNotes; i++)
+                        {
+                            this.notes.GetNote(i).DestroyForm();
+                        }
+
+                        while (this.notes.CountNotes > 0)
+                        {
+                            this.notes.RemoveNote(0);
                         }
                     }
                     Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
@@ -343,10 +351,14 @@ namespace NoteFly
 
         /// <summary>
         /// Draw a list of all notes.
+        /// Sets frmmangenotesneedupdate to true.
         /// </summary>
         private void DrawNotesGrid()
         {
+            this.prevpaintrownr = -1;
+            this.oldprevpaintrownr = -1;
             this.notes.frmmangenotesneedupdate = true;
+
             DataTable datatable = new DataTable();
             this.dataGridView1.DataSource = datatable;
             datatable.Columns.Add("nr", typeof(String));
@@ -363,7 +375,7 @@ namespace NoteFly
             for (int i = 0; i < this.notes.CountNotes; i++)
             {
                 DataRow dr = datatable.NewRow();
-                dr[0] = i + 1; //enduser counting ;)
+                dr[0] = i + 1; //enduser numbering
                 dr[1] = this.notes.GetNote(i).title;
                 dr[2] = this.notes.GetNote(i).visible;
                 dr[3] = notes.GetSkinName(this.notes.GetNote(i).skinNr);
