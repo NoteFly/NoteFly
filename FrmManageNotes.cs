@@ -38,17 +38,22 @@ namespace NoteFly
 
         private const string BTNTEXTHIDE = "&hide selected";
         private const string BTNTEXTSHOW = "&show selected";
+
         /// <summary>
         /// notes
         /// </summary>
         private Notes notes;
+
         /// <summary>
         /// Delta point
         /// </summary>
         private Point oldp;
 
-        private int prevpaintrownr = -1;
-        private int oldprevpaintrownr = -1;
+        /// <summary>
+        /// The previous painted row number.
+        /// </summary>
+        private int prevrownr = -1;
+
         #endregion Fields
 
         #region Constructors (1)
@@ -142,10 +147,8 @@ namespace NoteFly
                 {
                     this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
                 }
-
                 this.DrawNotesGrid();
                 this.SetDataGridViewColumsWidth();
-
                 this.btnNoteDelete.Enabled = false;
                 if (this.notes.CountNotes > 0)
                 {
@@ -289,21 +292,11 @@ namespace NoteFly
 
                 this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).visible;
 
-                if ((e.RowIndex >= this.dataGridView1.RowCount - 1) || (e.RowIndex < prevpaintrownr) )
+                if ((e.RowIndex < prevrownr) || (e.RowIndex >= this.dataGridView1.RowCount - 1))
                 {
                     this.notes.frmmangenotesneedupdate = false;
-                    prevpaintrownr = -1;
                 }
-                else
-                {
-                    if (oldprevpaintrownr == e.RowIndex)
-                    {
-                        this.notes.frmmangenotesneedupdate = false;
-                    }
-                    oldprevpaintrownr = prevpaintrownr;
-                    prevpaintrownr = e.RowIndex;
-                    
-                }
+                prevrownr = e.RowIndex;
             }
         }
 
@@ -355,8 +348,6 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
-            this.prevpaintrownr = -1;
-            this.oldprevpaintrownr = -1;
             this.notes.frmmangenotesneedupdate = true;
 
             DataTable datatable = new DataTable();
@@ -553,9 +544,13 @@ namespace NoteFly
         {
             this.notes.frmmangenotesneedupdate = true;
             TrayIcon.RefreshFrmManageNotes();
-            this.notes.frmmangenotesneedupdate = false;
         }
 
+        /// <summary>
+        /// Scrolling the datagridview.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_Scroll(object sender, ScrollEventArgs e)
         {
             this.notes.frmmangenotesneedupdate = true;

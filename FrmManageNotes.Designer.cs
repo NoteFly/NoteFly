@@ -78,7 +78,7 @@ namespace NoteFly
             this.btnClose.BackColor = System.Drawing.Color.DarkOrange;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(412, 2);
+            this.btnClose.Location = new System.Drawing.Point(406, 2);
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(32, 23);
@@ -99,7 +99,7 @@ namespace NoteFly
             this.pnlHead.Controls.Add(this.btnClose);
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
-            this.pnlHead.Size = new System.Drawing.Size(448, 30);
+            this.pnlHead.Size = new System.Drawing.Size(442, 30);
             this.pnlHead.TabIndex = 8;
             this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
@@ -124,7 +124,7 @@ namespace NoteFly
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(431, 386);
+            this.pbResizeGrip.Location = new System.Drawing.Point(425, 292);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
@@ -247,7 +247,7 @@ namespace NoteFly
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(430, 359);
+            this.dataGridView1.Size = new System.Drawing.Size(424, 265);
             this.dataGridView1.TabIndex = 19;
             this.dataGridView1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dataGridView1_Scroll);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
@@ -268,7 +268,7 @@ namespace NoteFly
             this.pnlContent.Controls.Add(this.btnRestoreAllNotes);
             this.pnlContent.Location = new System.Drawing.Point(0, 29);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(448, 404);
+            this.pnlContent.Size = new System.Drawing.Size(442, 310);
             this.pnlContent.TabIndex = 20;
             // 
             // FrmManageNotes
@@ -277,7 +277,7 @@ namespace NoteFly
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Orange;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(448, 433);
+            this.ClientSize = new System.Drawing.Size(442, 339);
             this.ControlBox = false;
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlHead);
