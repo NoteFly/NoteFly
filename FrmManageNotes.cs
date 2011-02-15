@@ -47,6 +47,8 @@ namespace NoteFly
         /// </summary>
         private Point oldp;
 
+        private int prevpaintrownr = -1;
+        private int oldprevpaintrownr = -1;
         #endregion Fields
 
         #region Constructors (1)
@@ -267,9 +269,6 @@ namespace NoteFly
                 {
                     DrawNotesGrid();
                     SetDataGridViewColumsWidth();
-#if !DEBUG
-                    System.Threading.Thread.Sleep(1);
-#endif
                 }
 
                 int notepos = GetNoteposBySelrow(e.RowIndex);
@@ -282,9 +281,20 @@ namespace NoteFly
 
                 this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).visible;
 
-                if (e.RowIndex >= this.dataGridView1.RowCount - 1)
+                if ((e.RowIndex >= this.dataGridView1.RowCount - 1) || (e.RowIndex < prevpaintrownr) )
                 {
                     this.notes.frmmangenotesneedupdate = false;
+                    prevpaintrownr = -1;
+                }
+                else
+                {
+                    if (oldprevpaintrownr == e.RowIndex)
+                    {
+                        this.notes.frmmangenotesneedupdate = false;
+                    }
+                    oldprevpaintrownr = prevpaintrownr;
+                    prevpaintrownr = e.RowIndex;
+                    
                 }
             }
         }
@@ -532,6 +542,11 @@ namespace NoteFly
             this.notes.frmmangenotesneedupdate = true;
             TrayIcon.RefreshFrmManageNotes();
             this.notes.frmmangenotesneedupdate = false;
+        }
+
+        private void dataGridView1_Scroll(object sender, ScrollEventArgs e)
+        {
+            this.notes.frmmangenotesneedupdate = true;
         }
 
         #endregion Methods

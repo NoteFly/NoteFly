@@ -313,49 +313,24 @@ namespace NoteFly
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 #endif
-            /*
-            //loops twice, but fastest with 7 notes.
-            string[] notefilespath = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly);
+            string[] notefilespath = Directory.GetFiles(Settings.notesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly);
             string[] notefiles = new string[notefilespath.Length];
             for (int i = 0; i < notefilespath.Length; i++)
             {
                 notefiles[i] = Path.GetFileName(notefilespath[i]);
             }
-            */
-            /*
-            //loops twice
-            DirectoryInfo notessavedirinfo = new DirectoryInfo(Settings.NotesSavepath);
-            FileInfo[] notefilesinfo = notessavedirinfo.GetFiles("*" + NOTEEXTENSION);
-            string[] notefiles = new string[notefilesinfo.Length];
-            for (int i = 0; i < notefiles.Length; i++)
-            {
-                notefiles[i] = notefilesinfo[i].Name;
-            }
-            */
-            // /* 
-            //loops once, but slowest with 7 notes.
-            string[] notefiles = new string[65533]; //FAT32 files per directory limit, -4 files: settings.xml, skins.xml, debug.log and debug.log.old
-            int n = 0;
-            IEnumerator notefilesenumerator = Directory.GetFiles(Settings.notesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly).GetEnumerator();
-            while (notefilesenumerator.MoveNext())
-            {
-                string filepath = notefilesenumerator.Current.ToString();
-                notefiles[n] = (Path.GetFileName(filepath));
-                n++;
-            }
-            Array.Resize(ref notefiles, n); //not in NET CF v2.0 
-            // */
+            notefilespath = null;
 #if DEBUG
             stopwatch.Stop();
-            Settings.programLogInfo = true;
-            Log.Write(LogType.info, "Notes search time:  " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
+            Log.Write(LogType.info, "Notes search time:  " + stopwatch.ElapsedTicks.ToString() + " ticks");
 #endif
+            int numloadingnotes = notefiles.Length;
             if (CheckLimitNotes(notefiles.Length))
             {
-                DialogResult dlgres = MessageBox.Show("Their are many notes loading can take a while, do you want continu?", "contine?", MessageBoxButtons.YesNo);
+                DialogResult dlgres = MessageBox.Show("Their are many notes loading this can take a while, do you want to load them all?", "contine loading many notes?", MessageBoxButtons.YesNo);
                 if (dlgres == DialogResult.No)
                 {
-                    return;
+                    numloadingnotes = Settings.notesWarnLimit;
                 }
             }
             else
@@ -366,7 +341,7 @@ namespace NoteFly
             stopwatch.Reset();
             stopwatch.Start();
 #endif
-            for (int i = 0; i < notefiles.Length; i++)
+            for (int i = 0; i < numloadingnotes; i++)
             {
                 Note note = xmlUtil.LoadNoteFile(this, notefiles[i]);
                 if (resetpositions)
@@ -375,15 +350,6 @@ namespace NoteFly
                     note.y = 10;
                 }
                 this.AddNote(note);
-            }
-#if DEBUG
-            stopwatch.Stop();
-            Log.Write(LogType.info, "Notes read time:    " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
-            stopwatch.Reset();
-            stopwatch.Start();
-#endif
-            for (int i = 0; i < notefiles.Length; i++)
-            {
                 if (this.notes[i].visible)
                 {
                     this.notes[i].CreateForm();
@@ -392,7 +358,7 @@ namespace NoteFly
 
 #if DEBUG
             stopwatch.Stop();
-            Log.Write(LogType.info, "Notes display time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
+            Log.Write(LogType.info, "Notes load time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
 #endif
             if (firstrun)
             {
