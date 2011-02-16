@@ -45,7 +45,10 @@ namespace NoteFly
     /// </summary>
     public class Log
     {
-        private const string debuglogfilename = "debug.log";
+        /// <summary>
+        /// The debug log filename.
+        /// </summary>
+        private const string DEBUGLOGFILENAME = "debug.log";
 
         /// <summary>
         /// Write and append a message to the logfile.
@@ -54,14 +57,25 @@ namespace NoteFly
         /// <param name="message">The message to log</param>
         public static void Write(LogType typemsg, string message)
         {
-            if (!Settings.programLogInfo && typemsg == LogType.info) return;
-            else if (!Settings.programLogError && typemsg == LogType.error) return;
-            else if (!Settings.programLogException && typemsg == LogType.exception) return;
+            if (!Settings.programLogInfo && typemsg == LogType.info)
+            {
+                return;
+            }
+            else if (!Settings.programLogError && typemsg == LogType.error)
+            {
+                return;
+            }
+            else if (!Settings.programLogException && typemsg == LogType.exception)
+            {
+                return;
+            }
+
             StringBuilder line = new StringBuilder(DateTime.Now.ToString());
             while (line.Length < 19)
             {
                 line.Append(" ");
             }
+
             switch (typemsg)
             {
                 case LogType.exception:
@@ -76,19 +90,18 @@ namespace NoteFly
             }
 
             line.AppendLine(message);
-
 #if windows
-            string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), debuglogfilename);
+            string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), DEBUGLOGFILENAME);
 #elif linux
             string errorlog = "/tmp/"+debuglogfilename;
 #endif
             try
             {
-                errorlog = Path.Combine(Program.AppDataFolder, debuglogfilename);
+                errorlog = Path.Combine(Program.AppDataFolder, DEBUGLOGFILENAME);
             }
             catch (Exception)
             {
-                line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot set log path.");//was error but now exception because error could not be logged.
+                line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot set log path."); //was error but now exception because error could not be logged.
                 Settings.programLogError = true;
             }
 
@@ -99,7 +112,7 @@ namespace NoteFly
                     File.Move(errorlog, errorlog + ".old");
                 }
 
-                new Textfile(TextfileWriteType.log , errorlog, null, line.ToString());
+                new Textfile(TextfileWriteType.log, errorlog, null, line.ToString());
             }
         }
 

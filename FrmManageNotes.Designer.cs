@@ -18,14 +18,60 @@ namespace NoteFly
     /// </summary>
     public partial class FrmManageNotes
     {
+        /// <summary>
+        /// The close button of FrmMangeNotes
+        /// </summary>
         private System.Windows.Forms.Button btnClose;
+
+        /// <summary>
+        /// An panel the titlebar of the form.
+        /// </summary>
         private System.Windows.Forms.Panel pnlHead;
+
+        /// <summary>
+        /// An picturebox for resizing form.
+        /// </summary>
         private System.Windows.Forms.PictureBox pbResizeGrip;
 
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// button
+        /// </summary>
+        private System.Windows.Forms.Button btnRestoreAllNotes;
+
+        /// <summary>
+        /// button
+        /// </summary>
+        private System.Windows.Forms.Button btnShowSelectedNotes;
+
+        /// <summary>
+        /// button
+        /// </summary>
+        private System.Windows.Forms.Button btnNoteDelete;
+
+        /// <summary>
+        /// button
+        /// </summary>
+        private System.Windows.Forms.Button btnBackAllNotes;
+
+        /// <summary>
+        /// label
+        /// </summary>
+        private System.Windows.Forms.Label lbTextWindowTitle;
+
+        /// <summary>
+        /// datagridview
+        /// </summary>
+        private System.Windows.Forms.DataGridView dataGridView1;
+
+        /// <summary>
+        /// panel
+        /// </summary>
+        private System.Windows.Forms.Panel pnlContent;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -302,13 +348,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnRestoreAllNotes;
-        private System.Windows.Forms.Button btnShowSelectedNotes;
-        private System.Windows.Forms.Button btnNoteDelete;
-        private System.Windows.Forms.Button btnBackAllNotes;
-        private System.Windows.Forms.Label lbTextWindowTitle;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Panel pnlContent;
     }
 }

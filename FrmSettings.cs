@@ -308,6 +308,16 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Toggle tbDefaultEmail enabled.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxSocialEmailDefaultaddressBlank_CheckedChanged(object sender, EventArgs e)
+        {
+            this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
+        }
+
+        /// <summary>
         /// Toggle iptbProxyAddress enabled.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -315,6 +325,16 @@ namespace NoteFly
         private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
         {
             this.iptbProxyAddress.Enabled = this.chxProxyEnabled.Checked;
+        }
+
+        /// <summary>
+        /// Toggle cbxDefaultColor enabled.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxUseRandomDefaultNote_CheckedChanged(object sender, EventArgs e)
+        {
+            this.cbxDefaultColor.Enabled = !this.chxUseRandomDefaultNote.Checked;
         }
 
         /// <summary>
@@ -330,30 +350,6 @@ namespace NoteFly
             this.cbxDefaultColor.Items.AddRange(this.notes.GetSkinsNames());
         }
 
-#if windows
-        /// <summary>
-        /// Gets if notefly is used to run at logon.
-        /// </summary>
-        /// <returns>The boolean if it starts at logon.</returns>
-        private bool GetStartOnLogin()
-        {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            if (key != null)
-            {
-                if (key.GetValue(Program.AssemblyTitle, null) != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            } else {
-            	return false;
-			}
-        }
-		#endif
-		
         /// <summary>
         /// Move note files.
         /// </summary>
@@ -462,26 +458,30 @@ namespace NoteFly
             this.chxLogDebug.Checked = Settings.programLogInfo;
         }
 
-        /// <summary>
-        /// Toggle tbDefaultEmail enabled.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chxSocialEmailDefaultaddressBlank_CheckedChanged(object sender, EventArgs e)
-        {
-            this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
-        }
+		#endregion Methods 
 
+#if windows
         /// <summary>
-        /// Toggle cbxDefaultColor enabled.
+        /// Gets if notefly is used to run at logon.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chxUseRandomDefaultNote_CheckedChanged(object sender, EventArgs e)
+        /// <returns>The boolean if it starts at logon.</returns>
+        private bool GetStartOnLogin()
         {
-            this.cbxDefaultColor.Enabled = !this.chxUseRandomDefaultNote.Checked;
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (key != null)
+            {
+                if (key.GetValue(Program.AssemblyTitle, null) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            } else {
+            	return false;
+			}
         }
-
-        #endregion Methods
+		#endif
     }
 }

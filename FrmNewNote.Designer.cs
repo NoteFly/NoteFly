@@ -20,22 +20,115 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNewNote
     {
+        /// <summary>
+        /// TextBox tbTitle
+        /// </summary>
         private System.Windows.Forms.TextBox tbTitle;
+
+        /// <summary>
+        /// Label lbTextTitle
+        /// </summary>
         private System.Windows.Forms.Label lbTextTitle;
+
+        /// <summary>
+        /// Button btnAddNote
+        /// </summary>
         private System.Windows.Forms.Button btnAddNote;
+
+        /// <summary>
+        /// Panel pnlHeadNewNote
+        /// </summary>
         private System.Windows.Forms.Panel pnlHeadNewNote;
+
+        /// <summary>
+        /// Button btnCancel
+        /// </summary>
         private System.Windows.Forms.Button btnCancel;
+
+        /// <summary>
+        /// ContextMenuStrip contextMenuStripTextActions
+        /// </summary>
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTextActions;
+
+        /// <summary>
+        /// ToolStripMenuItem menuPasteToContent
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuPasteToContent;
+
+        /// <summary>
+        /// ToolStripMenuItem menuCopyContent
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
+
+        /// <summary>
+        /// ToolStripMenuItem menuSaveNewNote
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuSaveNewNote;
+
+        /// <summary>
+        /// ToolStripMenuItem menuCancelNewNote
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuCancelNewNote;
+
+        /// <summary>
+        /// Tooltip toolTip
+        /// </summary>
         private System.Windows.Forms.ToolTip toolTip;
 
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// ToolStripMenuItem menuStickyOnTop
+        /// </summary>
+        private System.Windows.Forms.ToolStripMenuItem menuStickyOnTop;
+
+        /// <summary>
+        /// RichTextBox rtbNewNote
+        /// </summary>
+        private System.Windows.Forms.RichTextBox rtbNewNote;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnTextBold;
+
+        /// <summary>
+        /// Button btnTextItalic
+        /// </summary>
+        private System.Windows.Forms.Button btnTextItalic;
+
+        /// <summary>
+        /// Button btnTextStriketrough
+        /// </summary>
+        private System.Windows.Forms.Button btnTextStriketrough;
+
+        /// <summary>
+        /// Button btnTextUnderline
+        /// </summary>
+        private System.Windows.Forms.Button btnTextUnderline;
+
+        /// <summary>
+        /// ToolStripMenuItem importToolStripMenuItem
+        /// </summary>
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+
+        /// <summary>
+        /// PictureBox pbResizeGrip
+        /// </summary>
+        private System.Windows.Forms.PictureBox pbResizeGrip;
+
+        /// <summary>
+        /// Button btnFontSmaller
+        /// </summary>
+        private System.Windows.Forms.Button btnFontSmaller;
+
+        /// <summary>
+        /// Button btnFontBigger
+        /// </summary>
+        private System.Windows.Forms.Button btnFontBigger;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -420,7 +513,7 @@ namespace NoteFly
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
             this.rtbNewNote.TabIndex = 1;
-            this.rtbNewNote.Text = "";
+            this.rtbNewNote.Text = string.Empty;
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -481,18 +574,6 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStripMenuItem menuStickyOnTop;
-        private System.Windows.Forms.RichTextBox rtbNewNote;
-        private System.Windows.Forms.Button btnTextBold;
-        private System.Windows.Forms.Button btnTextItalic;
-        private System.Windows.Forms.Button btnTextStriketrough;
-        private System.Windows.Forms.Button btnTextUnderline;
-        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pbResizeGrip;
-        private System.Windows.Forms.Button btnFontSmaller;
-        private System.Windows.Forms.Button btnFontBigger;
-
     }
 }
 

@@ -29,10 +29,21 @@ namespace NoteFly
     /// </summary>
     public partial class FrmAbout : Form
     {
-        private const string NOTEFLYWEBSITEURI = "http://www.notefly.tk/";
+		#region Fields (2) 
+
+        /// <summary>
+        /// constant project website frequently asked questions page.
+        /// </summary>
         private const string NOTEFLYFAQURI = "http://www.notefly.tk/faq.php";
 
-        #region Constructors (1) 
+        /// <summary>
+        /// constant project website uri.
+        /// </summary>
+        private const string NOTEFLYWEBSITEURI = "http://www.notefly.tk/";
+
+		#endregion Fields 
+
+		#region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmAbout class.
@@ -42,14 +53,14 @@ namespace NoteFly
             this.InitializeComponent();
             this.Text = "About " + Program.AssemblyTitle;
             this.lblProductName.Text = Program.AssemblyTitle;
-            this.lblVersion.Text = String.Format("Version "+Program.AssemblyVersionAsString+" "+Program.AssemblyVersionQuality);
+            this.lblVersion.Text = String.Format("Version " + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
         }
 
-        #endregion Constructors
+		#endregion Constructors 
 
-        #region Methods (3)
+		#region Methods (3) 
 
-        // Private Methods (3) 
+		// Private Methods (3) 
 
         /// <summary>
         /// The FAQ link is clicked in the about dialog.
@@ -83,6 +94,6 @@ namespace NoteFly
             this.Close();
         }
 
-        #endregion Methods
+		#endregion Methods 
     }
 }

@@ -20,35 +20,145 @@ namespace NoteFly
     /// </summary>
     public partial class FrmSettings
     {
+        /// <summary>
+        /// button
+        /// </summary>
         private System.Windows.Forms.Button btnOK;
+
+        /// <summary>
+        /// button
+        /// </summary>
         private System.Windows.Forms.Button btnCancel;
+
+        /// <summary>
+        /// tabcontrol
+        /// </summary>
         private System.Windows.Forms.TabControl tabControlSettings;
+
+        /// <summary>
+        /// tabpage
+        /// </summary>
         private System.Windows.Forms.TabPage tabAppearance;
+
+        /// <summary>
+        /// tabpage
+        /// </summary>
         private System.Windows.Forms.TabPage tabSharing;
+
+        /// <summary>
+        /// tabpage
+        /// </summary>
         private System.Windows.Forms.TabPage tabAdvance;
+
+        /// <summary>
+        /// button
+        /// </summary>
         private System.Windows.Forms.Button btnBrowse;
+
+        /// <summary>
+        /// label
+        /// </summary>
         private System.Windows.Forms.Label lblTextNoteLocation;
+
+        /// <summary>
+        /// textbox
+        /// </summary>
         private System.Windows.Forms.TextBox tbNotesSavePath;
+
+        /// <summary>
+        /// folderbrowserdialog
+        /// </summary>
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+
+        /// <summary>
+        /// combobox
+        /// </summary>
         private System.Windows.Forms.ComboBox cbxActionLeftclick;
+
+        /// <summary>
+        /// label
+        /// </summary>
         private System.Windows.Forms.Label lbText;
+
+        /// <summary>
+        /// tabpage
+        /// </summary>
         private System.Windows.Forms.TabPage tabGeneral;
+
 #if windows
+        /// <summary>
+        /// checkbox
+        /// </summary>
         private System.Windows.Forms.CheckBox chxStartOnLogin;
 #endif
+        /// <summary>
+        /// checkbox
+        /// </summary>
         private System.Windows.Forms.CheckBox chxConfirmLink;
+
+        /// <summary>
+        /// checkbox
+        /// </summary>
         private System.Windows.Forms.CheckBox chxConfirmExit;
+
+        /// <summary>
+        /// checkbox
+        /// </summary>
         private System.Windows.Forms.CheckBox chxLogErrors;
+
+        /// <summary>
+        /// button
+        /// </summary>
         private System.Windows.Forms.Button btnResetSettings;
+
+        /// <summary>
+        /// tabpage
+        /// </summary>
         private System.Windows.Forms.TabPage tabNetwerk;
+
+        /// <summary>
+        /// checkbox
+        /// </summary>
         private System.Windows.Forms.CheckBox chxProxyEnabled;
+
+        /// <summary>
+        /// checkbox
+        /// </summary>
         private System.Windows.Forms.CheckBox chxLogDebug;
+
+        /// <summary>
+        /// tabpage
+        /// </summary>
         private System.Windows.Forms.TabPage tabHighlight;
+
+        /// <summary>
+        /// checkbox
+        /// </summary>
         private System.Windows.Forms.CheckBox chxHighlightHTML;
+
+        /// <summary>
+        /// IPTextBox user component.
+        /// </summary>
         private IPTextBox iptbProxyAddress;
+
+        /// <summary>
+        /// label
+        /// </summary>
         private System.Windows.Forms.Label lbTextTwMs;
+
+        /// <summary>
+        /// label
+        /// </summary>
         private System.Windows.Forms.Label lbTextTwTimeout;
+
+        /// <summary>
+        /// numericupdown
+        /// </summary>
         private System.Windows.Forms.NumericUpDown numTimeout;
+
+        /// <summary>
+        /// checkbox
+        /// </summary>
         private System.Windows.Forms.CheckBox chxConfirmDeletenote;
 
         /// <summary>

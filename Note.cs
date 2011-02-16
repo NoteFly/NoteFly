@@ -20,8 +20,6 @@
 namespace NoteFly
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.IO;
 
     /// <summary>
@@ -29,10 +27,74 @@ namespace NoteFly
     /// </summary>
     public class Note
     {
+        /// <summary>
+        /// The note title.
+        /// </summary>
+        public string title;
+
+        /// <summary>
+        /// Visablity note.
+        /// </summary>
+        public bool visible;
+
+        /// <summary>
+        /// The note skin.
+        /// </summary>
+        public int skinNr;
+
+        /// <summary>
+        /// Is the note displayed ontop of all windows.
+        /// </summary>
+        public bool ontop;
+
+        /// <summary>
+        /// Is the note rolled up.
+        /// </summary>
+        public bool rolledUp;
+
+        /// <summary>
+        /// Is the note locked.
+        /// </summary>
+        public bool locked;
+
+        /// <summary>
+        /// The X position of the note.
+        /// </summary>
+        public int x;
+
+        /// <summary>
+        ///  The Y position of the note.
+        /// </summary>
+        public int y;
+
+        /// <summary>
+        /// The width of the note.
+        /// </summary>
+        public int width;
+
+        /// <summary>
+        /// The height of the note.
+        /// </summary>
+        public int height;
+
+        /// <summary>
+        /// temporary content.
+        /// </summary>
         public string tempcontent;
 
+        /// <summary>
+        /// The form of this note.
+        /// </summary>
         private FrmNote frmnote;
+
+        /// <summary>
+        /// reference to notes class.
+        /// </summary>
         private Notes notes;
+
+        /// <summary>
+        /// The filename of this note.
+        /// </summary>
         private string filename;
 
         /// <summary>
@@ -65,47 +127,6 @@ namespace NoteFly
                 }
             }
         }
-
-        /// <summary>
-        /// The note title.
-        /// </summary>
-        public string title;
-        /// <summary>
-        /// Visablity note.
-        /// </summary>
-        public bool visible;
-        /// <summary>
-        /// The note skin.
-        /// </summary>
-        public int skinNr;
-        /// <summary>
-        /// Is the note displayed ontop of all windows.
-        /// </summary>
-        public bool ontop;
-        /// <summary>
-        /// Is the note rolled up.
-        /// </summary>
-        public bool rolledUp;
-        /// <summary>
-        /// Is the note locked.
-        /// </summary>
-        public bool locked;
-        /// <summary>
-        /// The X position of the note.
-        /// </summary>
-        public int x;
-        /// <summary>
-        ///  The Y position of the note.
-        /// </summary>
-        public int y;
-        /// <summary>
-        /// The width of the note.
-        /// </summary>
-        public int width;
-        /// <summary>
-        /// The height of the note.
-        /// </summary>
-        public int height;
 
         /// <summary>
         /// Create a new frmNote with this note.

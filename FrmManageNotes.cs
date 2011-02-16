@@ -22,25 +22,36 @@
 namespace NoteFly
 {
     using System;
+    using System.Collections.Generic;
+    using System.Data;
     using System.Drawing;
     using System.IO;
-    using System.Runtime.InteropServices;
     using System.Windows.Forms;
-    using System.Data;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Manage notes window
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-        #region Fields (5)
-
-        private const string BTNTEXTHIDE = "&hide selected";
-        private const string BTNTEXTSHOW = "&show selected";
+        #region Fields (6) 
 
         /// <summary>
-        /// notes
+        /// Constant for btntoggleshownote 
+        /// </summary>
+        private const string BTNPRETEXTHIDENOTE = "&hide" + BTNSUFTEXTHIDENOTE;
+
+        /// <summary>
+        /// Constant for btntoggleshownote
+        /// </summary>
+        private const string BTNPRETEXTSHOWNOTE = "&show" + BTNSUFTEXTHIDENOTE;
+
+        /// <summary>
+        /// Constant for constructing BTNPRETEXTHIDENOTE and BTNPRETEXTSHOWNOTE constant 
+        /// </summary>
+        private const string BTNSUFTEXTHIDENOTE = " selected";
+
+        /// <summary>
+        /// Rereference to notes
         /// </summary>
         private Notes notes;
 
@@ -54,9 +65,9 @@ namespace NoteFly
         /// </summary>
         private int prevrownr = -1;
 
-        #endregion Fields
+        #endregion Fields 
 
-        #region Constructors (1)
+        #region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmManageNotes class.
@@ -72,31 +83,31 @@ namespace NoteFly
             {
                 if ((bool)this.dataGridView1.Rows[0].Cells["visible"].Value == true)
                 {
-                    this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
+                    this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
                 }
                 else
                 {
-                    this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
+                    this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
                 }
             }
             else
             {
-                this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
+                this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
             }
         }
 
-        #endregion Constructors
+        #endregion Constructors 
 
-        #region Methods (18)
+        #region Methods (20) 
 
-        // Private Methods (18) 
+        // Private Methods (20)
 
         /// <summary>
         /// Request to backup all notes to a file.
         /// Ask where to save then do it.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnBackAllNotes_Click(object sender, EventArgs e)
         {
             SaveFileDialog savebackupdlg = new SaveFileDialog();
@@ -108,14 +119,14 @@ namespace NoteFly
             DialogResult savebackupdlgres = savebackupdlg.ShowDialog();
             if (savebackupdlgres == DialogResult.OK)
             {
-                xmlUtil.WriteNotesBackupFile(savebackupdlg.FileName, notes);
+                xmlUtil.WriteNotesBackupFile(savebackupdlg.FileName, this.notes);
             }
         }
 
         /// <summary>
         /// Close form
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -125,7 +136,7 @@ namespace NoteFly
         /// <summary>
         /// The user pressed the delete button for a note.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {
@@ -147,6 +158,7 @@ namespace NoteFly
                 {
                     this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
                 }
+
                 this.DrawNotesGrid();
                 this.SetDataGridViewColumsWidth();
                 this.btnNoteDelete.Enabled = false;
@@ -160,8 +172,8 @@ namespace NoteFly
         /// <summary>
         /// Request to restore all notes from a backup file.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnRestoreAllNotes_Click(object sender, EventArgs e)
         {
             OpenFileDialog openbackupdlg = new OpenFileDialog();
@@ -202,45 +214,50 @@ namespace NoteFly
                         {
                             this.notes.RemoveNote(0);
                         }
+
                     }
+
                     Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
                     xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
                     this.notes.LoadNotes(false, false);
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
                 }
+
                 if (this.notes.CountNotes > 0)
                 {
                     this.btnNoteDelete.Enabled = true;
                 }
+
             }
         }
 
         /// <summary>
         /// Toggle visibility selected notes.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnShowSelectedNotes_Click(object sender, EventArgs e)
         {
             DataGridViewSelectedRowCollection selectedrows = this.dataGridView1.SelectedRows;
             foreach (DataGridViewRow selrow in selectedrows)
             {
-                int notepos = GetNoteposBySelrow(selrow.Index);
+                int notepos = this.GetNoteposBySelrow(selrow.Index);
                 selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).visible;
                 this.notes.GetNote(notepos).visible = !this.notes.GetNote(notepos).visible;
                 if (this.notes.GetNote(notepos).visible)
                 {
                     this.notes.GetNote(notepos).CreateForm();
-                    this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
+                    this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
                     this.Activate();
                 }
                 else
                 {
                     this.notes.GetNote(notepos).DestroyForm();
-                    this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
+                    this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
                 }
-                xmlUtil.WriteNote(this.notes.GetNote(notepos), notes.GetSkinName(this.notes.GetNote(notepos).skinNr), this.notes.GetNote(notepos).GetContent());
+
+                xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).skinNr), this.notes.GetNote(notepos).GetContent());
             }
 
             this.notes.frmmangenotesneedupdate = false;
@@ -249,28 +266,39 @@ namespace NoteFly
         /// <summary>
         /// Cell clicked in dataGridView1, set hide/show note button text.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">DataGridViewCell event arguments</param>
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 if ((bool)this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value == true)
                 {
-                    this.btnShowSelectedNotes.Text = BTNTEXTHIDE;
+                    this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
                 }
                 else
                 {
-                    this.btnShowSelectedNotes.Text = BTNTEXTSHOW;
+                    this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
                 }
             }
         }
 
         /// <summary>
+        /// A column is sorted, make sure backgroundcolor skin colum get painted again.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">DataGridViewCellMouse event arguments</param>
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            this.notes.frmmangenotesneedupdate = true;
+            TrayIcon.RefreshFrmManageNotes();
+        }
+
+        /// <summary>
         /// Color the skin cell with the foreground color of the skin in this cell.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">DataGridViewRowPostPaint event arguments</param>
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             if (this.notes.frmmangenotesneedupdate)
@@ -278,13 +306,13 @@ namespace NoteFly
                 //detect and update add/delete notes.
                 if (this.dataGridView1.RowCount != this.notes.CountNotes)
                 {
-                    DrawNotesGrid();
-                    SetDataGridViewColumsWidth();
+                    this.DrawNotesGrid();
+                    this.SetDataGridViewColumsWidth();
                 }
 
-                int notepos = GetNoteposBySelrow(e.RowIndex);
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = notes.GetPrimaryClr(notes.GetNote(notepos).skinNr);
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = notes.GetTextClr(notes.GetNote(notepos).skinNr);
+                int notepos = this.GetNoteposBySelrow(e.RowIndex);
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).skinNr);
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).skinNr);
                 if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).skinNr))
                 {
                     this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).skinNr);
@@ -292,26 +320,38 @@ namespace NoteFly
 
                 this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).visible;
 
-                if ((e.RowIndex < prevrownr) || (e.RowIndex >= this.dataGridView1.RowCount - 1))
+                if ((e.RowIndex < this.prevrownr) || (e.RowIndex >= this.dataGridView1.RowCount - 1))
                 {
                     this.notes.frmmangenotesneedupdate = false;
                 }
-                prevrownr = e.RowIndex;
+
+                this.prevrownr = e.RowIndex;
             }
+        }
+
+        /// <summary>
+        /// Scrolling the datagridview.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Scroll event arguments</param>
+        private void dataGridView1_Scroll(object sender, ScrollEventArgs e)
+        {
+            this.notes.frmmangenotesneedupdate = true;
         }
 
         /// <summary>
         /// Deletes the notes in memory and the files that are selected in a Gridview.
         /// In reverse order, so updating datagridview goes well.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="selrows">The selected rows in datagridview1</param>
         private void DeleteNotesSelectedRowsGrid(DataGridViewSelectedRowCollection selrows)
         {
             List<int> deletenotepos = new List<int>();
             for (int i = 0; i < selrows.Count; i++)
             {
-                deletenotepos.Add(GetNoteposBySelrow(selrows[i].Index));
+                deletenotepos.Add(this.GetNoteposBySelrow(selrows[i].Index));
             }
+
             deletenotepos.Sort();
 
             for (int r = deletenotepos.Count - 1; r >= 0; r--)
@@ -326,6 +366,7 @@ namespace NoteFly
                     {
                         Log.Write(LogType.info, "Deleted note: " + filepath);
                     }
+
                     this.notes.RemoveNote(deletenotepos[r]);
                 }
                 catch (FileNotFoundException filenotfoundexc)
@@ -339,6 +380,7 @@ namespace NoteFly
                     MessageBox.Show(msgaccessdenied);
                 }
             }
+
             GC.Collect();
         }
 
@@ -352,24 +394,24 @@ namespace NoteFly
 
             DataTable datatable = new DataTable();
             this.dataGridView1.DataSource = datatable;
-            datatable.Columns.Add("nr", typeof(String));
+            datatable.Columns.Add("nr", typeof(string));
             datatable.Columns["nr"].AutoIncrement = true;
             datatable.Columns["nr"].Unique = true;
-            datatable.Columns.Add("title", typeof(String));
-            datatable.Columns.Add("visible", typeof(Boolean));
-            datatable.Columns.Add("skin", typeof(String));
+            datatable.Columns.Add("title", typeof(string));
+            datatable.Columns.Add("visible", typeof(bool));
+            datatable.Columns.Add("skin", typeof(string));
             datatable.DefaultView.AllowEdit = false;
             datatable.DefaultView.AllowNew = false;
             this.dataGridView1.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView1.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridView1.RowPostPaint += new DataGridViewRowPostPaintEventHandler(dataGridView1_RowPostPaint);
+            this.dataGridView1.RowPostPaint += new DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             for (int i = 0; i < this.notes.CountNotes; i++)
             {
                 DataRow dr = datatable.NewRow();
                 dr[0] = i + 1; //enduser numbering
                 dr[1] = this.notes.GetNote(i).title;
                 dr[2] = this.notes.GetNote(i).visible;
-                dr[3] = notes.GetSkinName(this.notes.GetNote(i).skinNr);
+                dr[3] = this.notes.GetSkinName(this.notes.GetNote(i).skinNr);
                 datatable.Rows.Add(dr);
             }
         }
@@ -377,7 +419,7 @@ namespace NoteFly
         /// <summary>
         /// FrmManageNotes is activated.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
@@ -397,7 +439,7 @@ namespace NoteFly
         /// <summary>
         /// form not active, make tranparent if set.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void frmManageNotes_Deactivate(object sender, EventArgs e)
         {
@@ -417,8 +459,8 @@ namespace NoteFly
         /// <summary>
         /// Get the note position in the list by looking up the nr colom with at the partialer row.
         /// </summary>
-        /// <param name="rowindex"></param>
-        /// <returns></returns>
+        /// <param name="rowindex">The selected row index in datagridview1.</param>
+        /// <returns>The position of the note in the list.</returns>
         private int GetNoteposBySelrow(int rowindex)
         {
             if (rowindex >= 0)
@@ -434,7 +476,7 @@ namespace NoteFly
         /// <summary>
         /// The manage note form is beening resized.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
@@ -450,17 +492,19 @@ namespace NoteFly
         /// <summary>
         /// Resize ended, set column width
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             this.SetDataGridViewColumsWidth();
+            this.prevrownr = -1;
+            this.notes.frmmangenotesneedupdate = true;
         }
 
         /// <summary>
-        /// Moving note
+        /// Moving frmManageNotes
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
@@ -472,18 +516,18 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Move note if pnlHead is being left clicked.
+        /// Move FrmManageNotes if pnlHead is being left clicked.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
         private void pnlHead_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 this.pnlHead.BackColor = Color.OrangeRed;
 
-                int dpx = e.Location.X - oldp.X;
-                int dpy = e.Location.Y - oldp.Y;
+                int dpx = e.Location.X - this.oldp.X;
+                int dpy = e.Location.Y - this.oldp.Y;
 #if linux
                 if (dpx > 8)
                 {
@@ -514,8 +558,8 @@ namespace NoteFly
         /// <summary>
         /// End moving FrmManageNotes.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
             this.pnlHead.BackColor = Color.Orange;
@@ -535,27 +579,6 @@ namespace NoteFly
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;
         }
 
-        /// <summary>
-        /// A column is sorted, make sure backgroundcolor skin colum get painted again.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            this.notes.frmmangenotesneedupdate = true;
-            TrayIcon.RefreshFrmManageNotes();
-        }
-
-        /// <summary>
-        /// Scrolling the datagridview.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridView1_Scroll(object sender, ScrollEventArgs e)
-        {
-            this.notes.frmmangenotesneedupdate = true;
-        }
-
-        #endregion Methods
+        #endregion Methods 
     }
 }

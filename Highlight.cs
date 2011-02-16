@@ -31,20 +31,60 @@ namespace NoteFly
     /// </summary>
     public class Highlight
     {
-        #region Fields (4)
+        #region Fields (9) 
 
+        /// <summary>
+        /// The php end document keyword.
+        /// </summary>
+        private static string phpendkeyword = "?>";
+
+        /// <summary>
+        /// The php start document keyword.
+        /// </summary>
+        private static string phpstartkeyword = "<?php";
+
+        /// <summary>
+        /// Keywords used for HTML highlighting.
+        /// </summary>
+        private static string[] keywordshtml;
+
+        /// <summary>
+        /// Keywords used for PHP highlighting.
+        /// </summary>
+        private static string[] keywordsphp;
+
+        /// <summary>
+        /// Keywords used for SQL highlighting.
+        /// </summary>
+        private static string[] keywordssql;
+
+        /// <summary>
+        /// Are keyword initilized
+        /// </summary>
         private static bool keywordsinit = false;
-        private static string[] keywords_html;
-        private static string[] keywords_php;
-        private static string[] keywords_sql;
-        private const string phpstartkeyword = "<?php";
-        private const string phpendkeyword = "?>";
-        private static string phpcommentline = "//";
-        private static string phpcommentstart = "/*";
+
+        /// <summary>
+        /// The php comment end.
+        /// </summary>
         private static string phpcommentend = "*/";
 
-        #endregion Fields
+        /// <summary>
+        /// The comment line.
+        /// </summary>
+        private static string phpcommentline = "//";
 
+        /// <summary>
+        /// The php comment start.
+        /// </summary>
+        private static string phpcommentstart = "/*";
+
+        #endregion Fields 
+
+        #region Properties (1)
+
+        /// <summary>
+        /// Gets a value in indicating whether highlighting keywords are initialized.
+        /// </summary>
         public static bool KeywordsInitialized
         {
             get
@@ -53,62 +93,18 @@ namespace NoteFly
             }
         }
 
-        #region Methods (3)
+        #endregion Properties 
 
-        // Public Methods (2) 
+        #region Methods (8) 
 
-        /// <summary>
-        /// Initializes TextHighlighter fill the keywords lists.
-        /// </summary>
-        /// <param name="rtb">The richedit note content</param>
-        /// <param name="checkhtml">indicteds wheter html is gonna be checked</param>
-        public static void InitHighlighter()
-        {
-            if (Settings.highlightHTML)
-            {
-                keywords_html = xmlUtil.ParserLanguageLexical("langs.xml", "html");
-            }
-
-            if (Settings.highlightPHP)
-            {
-                keywords_php = xmlUtil.ParserLanguageLexical("langs.xml", "php");
-            }
-
-            if (Settings.highlightSQL)
-            {
-                keywords_sql = xmlUtil.ParserLanguageLexical("langs.xml", "sql");
-            }
-
-            keywordsinit = true;
-        }
-
-        /// <summary>
-        /// Clear the keywords list.
-        /// </summary>
-        public static void DeinitHighlighter()
-        {
-            if (keywords_html != null)
-            {
-                keywords_html = null;
-            }
-            if (keywords_php != null)
-            {
-                keywords_php = null;
-            }
-            if (keywords_sql != null)
-            {
-                keywords_sql = null;
-            }
-            keywordsinit = false;
-            GC.Collect();
-        }
+        // Public Methods (3) 
 
         /// <summary>
         /// Check the syntax of alle set languages on the RichTextbox RTF content.
         /// </summary>
-        /// <param name="rtb"></param>
-        /// <param name="skinnr"></param>
-        /// <param name="notes"></param>
+        /// <param name="rtb">The richttextbox with RTF note content.</param>
+        /// <param name="skinnr">The skin number</param>
+        /// <param name="notes">Pointer to notes class.</param>
         public static void CheckSyntaxFull(RichTextBox rtb, int skinnr, Notes notes)
         {
             int cursorpos = rtb.SelectionStart;
@@ -147,6 +143,7 @@ namespace NoteFly
                                     }
                                 }
                             }
+
                             if (Settings.highlightHTML)
                             {
                                 if ((i < posstartphp || i > posendphp) && !tagopen)
@@ -154,6 +151,7 @@ namespace NoteFly
                                     posstarthtmltag = i;
                                 }
                             }
+
                             tagopen = true;
                             break;
                         case '>':
@@ -212,9 +210,12 @@ namespace NoteFly
                                                 posphpcommentstart = int.MaxValue;
                                             }
                                         }
+
                                     }
+
                                 }
                             }
+
                             break;
                         case '\n':
                             if (Settings.highlightPHP)
@@ -229,6 +230,7 @@ namespace NoteFly
                                     }
                                 }
                             }
+
                             if (Settings.highlightSQL)
                             {
                                 int lensqlkeyword = i - poslastkeyword;
@@ -241,6 +243,7 @@ namespace NoteFly
                                     }
                                 }
                             }
+
                             poslastkeyword = i + 1; //+1 for '\n'
                             break;
                         case ' ':
@@ -261,9 +264,9 @@ namespace NoteFly
                                             ColorText(rtb, poslastkeyword, lenphpkeyword, Color.DarkRed);
                                         }
                                     }
-                                    
                                 }
                             }
+
                             if (Settings.highlightSQL)
                             {
                                 int lensqlkeyword = i - poslastkeyword;
@@ -276,19 +279,70 @@ namespace NoteFly
                                     }
                                 }
                             }
+
                             poslastkeyword = i + 1; //+1 for ' '
                             break;
                     }
                 }
             }
+
             rtb.SelectionStart = cursorpos;
         }
 
         /// <summary>
+        /// Clear the keywords list.
+        /// </summary>
+        public static void DeinitHighlighter()
+        {
+            if (keywordshtml != null)
+            {
+                keywordshtml = null;
+            }
+
+            if (keywordsphp != null)
+            {
+                keywordsphp = null;
+            }
+
+            if (keywordssql != null)
+            {
+                keywordssql = null;
+            }
+
+            keywordsinit = false;
+            GC.Collect();
+        }
+
+        /// <summary>
+        /// Initializes TextHighlighter fill the keywords lists.
+        /// </summary>
+        public static void InitHighlighter()
+        {
+            if (Settings.highlightHTML)
+            {
+                keywordshtml = xmlUtil.ParserLanguageLexical("langs.xml", "html");
+            }
+
+            if (Settings.highlightPHP)
+            {
+                keywordsphp = xmlUtil.ParserLanguageLexical("langs.xml", "php");
+            }
+
+            if (Settings.highlightSQL)
+            {
+                keywordssql = xmlUtil.ParserLanguageLexical("langs.xml", "sql");
+            }
+
+            keywordsinit = true;
+        }
+		// Private Methods (5) 
+
+        /// <summary>
         /// Color some part of the rich edit text.
         /// </summary>
-        /// <param name="posstart">The start position</param>
-        /// <param name="len">The lenght</param>
+        /// <param name="rtb">The richtextbox contain the rtf text to apply coloring on.</param>
+        /// <param name="posstart">The start position in the text to start coloring from.</param>
+        /// <param name="len">The lenght of text to color.</param>
         /// <param name="color">The color the text should get.</param>
         private static void ColorText(RichTextBox rtb, int posstart, int len, Color color)
         {
@@ -307,6 +361,8 @@ namespace NoteFly
         /// Make the whole text the default font color.
         /// </summary>
         /// <param name="rtb">The richedit control that hold the note content.</param>
+        /// <param name="skinnr">The skin number of the current note.</param>
+        /// <param name="notes">Reference to notes class.</param>
         private static void ResetHighlighting(RichTextBox rtb, int skinnr, Notes notes)
         {
             rtb.ForeColor = notes.GetTextClr(skinnr);
@@ -319,6 +375,9 @@ namespace NoteFly
         /// Highlight known tag and tag attributes.
         /// </summary>
         /// <param name="ishtml">Is it html to check.</param>
+        /// <param name="rtb">The richtextbox.</param>
+        /// <param name="posstarthtmltag">the start position in the richtextbox.</param>
+        /// <param name="lenhtmltag">The length of the compleet tag.</param>
         /// <returns>true if it is html</returns>
         private static void ValidatingHtmlTag(string ishtml, RichTextBox rtb, int posstarthtmltag, int lenhtmltag)
         {
@@ -332,6 +391,7 @@ namespace NoteFly
                 endtag = true;
                 ishtml = ishtml.Remove(1, 1); //e.g. "</title>" becomes "<title>"
             }
+
             if (ishtml.Length > 2)
             {
                 if (ishtml[ishtml.Length - 2] == '/') //finds <br />
@@ -347,8 +407,8 @@ namespace NoteFly
                     }
                 }
             }
-            ishtml = ishtml.ToLower(); //e.g. "<BR>" becomes "<br>"
 
+            ishtml = ishtml.ToLower(); //e.g. "<BR>" becomes "<br>"
             int lastpos = 1;
             for (int pos = 1; pos < ishtml.Length; pos++)
             {
@@ -363,6 +423,7 @@ namespace NoteFly
                     {
                         posstartquotestring = pos;
                     }
+
                     isquotestring = !isquotestring;
                 }
                 else if ((ishtml[pos] == '>') || (ishtml[pos] == ' '))
@@ -380,20 +441,23 @@ namespace NoteFly
                         {
                             lenhighlight = curattributename.Length;
                         }
+
                         bool attributefound = false;
-                        for (int n = 0; n < keywords_html.Length; n++)
+                        for (int n = 0; n < keywordshtml.Length; n++)
                         {
-                            if (curattributename.Equals(keywords_html[n], StringComparison.InvariantCultureIgnoreCase))
+                            if (curattributename.Equals(keywordshtml[n], StringComparison.InvariantCultureIgnoreCase))
                             {
                                 attributefound = true;
                                 ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.highlightHTMLColorValid) );
                                 break; 
                             }
                         }
+
                         if (!attributefound)
                         {
                              ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.highlightHTMLColorInvalid));
                         }
+
                         lastpos = pos + 1; //+1 for ' ' or '>'
                     }
                 }
@@ -403,40 +467,43 @@ namespace NoteFly
         /// <summary>
         /// Find out if it is a php keyword.
         /// </summary>
-        /// <param name="isphp"></param>
-        /// <returns></returns>
+        /// <param name="isphp">A part to be check if this a php keyword.</param>
+        /// <returns>true if a keyword matches isphp part.</returns>
         private static bool ValidatingPhp(string isphp)
         {
             isphp = isphp.ToLower();
-            if (keywords_php == null)
+            if (keywordsphp == null)
             {
                 InitHighlighter();
             }
-            for (int i = 0; i < keywords_php.Length; i++)
+
+            for (int i = 0; i < keywordsphp.Length; i++)
             {
-                if (isphp == keywords_php[i])
+                if (isphp == keywordsphp[i])
                 {
                     return true;
                 }
             }
+
             return false;
         }
 
         /// <summary>
         /// Find out if it is a sql keyword.
         /// </summary>
-        /// <param name="isphp"></param>
-        /// <returns></returns>
+        /// <param name="issql">The part to be check.</param>
+        /// <returns>true if a keyword matches issql part.</returns>
         private static bool ValidatingSql(string issql)
         {
             issql = issql.ToLower();
-            if (keywords_sql == null)
+            if (keywordssql == null)
             {
                 InitHighlighter();
             }
-            for (int i = 0; i < keywords_sql.Length; i++)
+
+            for (int i = 0; i < keywordssql.Length; i++)
             {
-                if (issql == keywords_sql[i])
+                if (issql == keywordssql[i])
                 {
                     return true;
                 }
@@ -444,7 +511,7 @@ namespace NoteFly
             return false;
         }
 
-        #endregion Methods
+		#endregion Methods 
     }
 
 }

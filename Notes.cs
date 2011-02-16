@@ -416,7 +416,7 @@ namespace NoteFly
                         noteid++;
                         nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
                     }
-                    Log.Write(LogType.info, "Notes notefly 1.0.x imported.");
+                    Log.Write(LogType.info, "Notes from notefly 1.0.x imported.");
                 }
             }
         }

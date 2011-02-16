@@ -27,13 +27,28 @@ namespace NoteFly
     /// </summary>
     public partial class IPTextBox : UserControl
     {
-		#region Fields (1) 
+        #region Fields (1) 
 
+        /// <summary>
+        /// An enumration of the possible IP address types.
+        /// </summary>
         private IPaddrType addrtype;
 
-		#endregion Fields 
+        #endregion Fields 
 
-		#region Enums (1) 
+        #region Constructors (1) 
+
+        /// <summary>
+        /// Initializes a new instance of the IPTextBox class.
+        /// </summary>
+        public IPTextBox()
+        {
+            this.InitializeComponent();
+        }
+
+		#endregion Constructors 
+
+        #region Enums (1)
 
         /// <summary>
         /// The types of address
@@ -51,32 +66,21 @@ namespace NoteFly
             ipv6
         }
 
-		#endregion Enums 
+        #endregion Enums 
 
-		#region Constructors (1) 
-
-        /// <summary>
-        /// Initializes a new instance of the IPTextBox class.
-        /// </summary>
-        public IPTextBox()
-        {
-            this.InitializeComponent();
-        }
-
-		#endregion Constructors 
-
-		#region Properties (1) 
+        #region Properties (1) 
 
         /// <summary>
-        /// The ip address
+        /// Gets or sets the ip address
         /// </summary>
         /// <returns>the ip address as string.</returns>
         public string IPAddress
         {
             get
             {
-            return this.tbIPaddress.Text;
-            } 
+                return this.tbIPaddress.Text;
+            }
+
             set
             {
                 this.tbIPaddress.Text = value;
@@ -85,7 +89,7 @@ namespace NoteFly
 
 		#endregion Properties 
 
-		#region Methods (1) 
+        #region Methods (1) 
 
 		// Private Methods (1) 
 
