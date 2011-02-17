@@ -29,7 +29,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmAbout : Form
     {
-		#region Fields (2) 
+        #region Fields (2) 
 
         /// <summary>
         /// constant project website frequently asked questions page.
@@ -41,9 +41,9 @@ namespace NoteFly
         /// </summary>
         private const string NOTEFLYWEBSITEURI = "http://www.notefly.tk/";
 
-		#endregion Fields 
+        #endregion Fields 
 
-		#region Constructors (1) 
+        #region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmAbout class.
@@ -56,11 +56,11 @@ namespace NoteFly
             this.lblVersion.Text = String.Format("Version " + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
         }
 
-		#endregion Constructors 
+        #endregion Constructors 
 
-		#region Methods (3) 
+        #region Methods (3) 
 
-		// Private Methods (3) 
+        // Private Methods (3) 
 
         /// <summary>
         /// The FAQ link is clicked in the about dialog.
@@ -94,6 +94,6 @@ namespace NoteFly
             this.Close();
         }
 
-		#endregion Methods 
+        #endregion Methods 
     }
 }

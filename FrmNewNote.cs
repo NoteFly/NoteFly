@@ -191,6 +191,7 @@ namespace NoteFly
                         this.notes.AddNote(this.note);
                     }
 
+                    TrayIcon.frmneweditnoteopen = false;
                     Highlight.InitHighlighter();
                     this.note.tempcontent = this.rtbNewNote.Rtf;
                     this.note.CreateForm();

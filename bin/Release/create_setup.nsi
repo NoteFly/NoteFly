@@ -11,8 +11,8 @@
 ;
 
 ; version
-!define VERSION "2.0.0" ;version number: major.minor.release
-!define VERSTATUS "beta1"    ;alpha, beta, rc, or nothing for final.
+!define VERSION "2.0.0"       ;version number: major.minor.release
+!define VERSTATUS "beta2"     ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 !define LANGFILE "langs.xml"
 

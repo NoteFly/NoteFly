@@ -90,6 +90,8 @@ namespace NoteFly
 
         private FrmSettings frmsettings;
 
+        public static bool frmneweditnoteopen = false;
+
         /// <summary>
         /// Create a new trayicon in the systray.
         /// </summary>
@@ -241,6 +243,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuNewNote_Click(object sender, EventArgs e)
         {
+            frmneweditnoteopen = true;
             FrmNewNote newnotefrm = new FrmNewNote(notes);
             newnotefrm.Show();
         }
@@ -290,7 +293,6 @@ namespace NoteFly
             {
                 this.frmsettings.WindowState = FormWindowState.Normal;
                 this.frmsettings.Activate();
-
             }
         }
 
@@ -328,6 +330,16 @@ namespace NoteFly
                     }
                 }
             }
+
+            if (frmneweditnoteopen)
+            {
+                DialogResult resdlg = MessageBox.Show("A note is still open for editing.\r\nAre you sure you want to shutdown?", "confirm exit", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (resdlg == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
             components.Dispose();
             Application.Exit();
         }
