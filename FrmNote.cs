@@ -36,18 +36,41 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNote : Form
     {
-		#region Fields (6) 
+        #region Fields (6) 
 
+        /// <summary>
+        /// Constant for minimal visible
+        /// </summary>
         private const int MINVISIBLESIZE = 5;
+
+        /// <summary>
+        /// is form movind
+        /// </summary>
         private bool moving = false;
+
+        /// <summary>
+        /// reference to note object
+        /// </summary>
         private Note note;
+
+        /// <summary>
+        /// reference to notes object
+        /// </summary>
         private Notes notes;
+
+        /// <summary>
+        /// the old position of the note.
+        /// </summary>
         private Point oldp;
+
+        /// <summary>
+        /// Lock icon picturebox
+        /// </summary>
         private PictureBox pbShowLock;
 
-		#endregion Fields 
+        #endregion Fields 
 
-		#region Constructors (1) 
+        #region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
@@ -58,11 +81,8 @@ namespace NoteFly
         {
             this.notes = notes;
             this.note = note;
-            this.InitializeComponent();
-
-            //this.SuspendLayout();
+            InitializeComponent();
             this.UpdateForm(false);
-
             this.lblTitle.Text = note.title;
             this.BackColor = notes.GetPrimaryClr(note.skinNr);
             this.pnlHead.BackColor = notes.GetPrimaryClr(note.skinNr);
@@ -76,15 +96,15 @@ namespace NoteFly
                 else
                 {
                     this.rtbNote.Rtf = this.note.tempcontent;
-                    //clear memory:
                     this.note.tempcontent = String.Empty;
                     this.note.tempcontent = null;
                 }
             }
             catch (ArgumentException argexc)
             {
-                Log.Write(LogType.exception, "note "+note.Filename+": "+argexc.Message);
+                Log.Write(LogType.exception, "note " + note.Filename + ": " + argexc.Message);
             }
+
             this.TopMost = note.ontop;
             this.menuOnTop.Checked = note.ontop;
             this.SetRollupNote();
@@ -104,19 +124,20 @@ namespace NoteFly
                 {
                     tsi.Checked = false;
                 }
-                tsi.BackColor = notes.GetPrimaryClr(i);
-                tsi.ForeColor = notes.GetTextClr(i);
-                tsi.Click += new EventHandler(menuNoteSkins_skin_Click);
+
+                tsi.BackColor = this.notes.GetPrimaryClr(i);
+                tsi.ForeColor = this.notes.GetTextClr(i);
+                tsi.Click += new EventHandler(this.menuNoteSkins_skin_Click);
                 this.menuNoteSkins.DropDownItems.Add(tsi);
             }
             this.UpdateForm(true);
         }
 
-		#endregion Constructors 
+        #endregion Constructors 
 
-		#region Methods (31) 
+        #region Methods (31) 
 
-		// Public Methods (1) 
+        // Public Methods (1) 
 
         /// <summary>
         /// Set some settings
@@ -125,7 +146,7 @@ namespace NoteFly
         {
             if (!contentset)
             {
-                this.lblTitle.ForeColor = notes.GetTextClr(this.note.skinNr);
+                this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.skinNr);
                 if (Settings.fontTitleStylebold)
                 {
                     this.lblTitle.Font = new Font(Settings.fontTitleFamily, Settings.fontTitleSize, FontStyle.Bold);
@@ -136,6 +157,7 @@ namespace NoteFly
                     {
                         Settings.fontTitleSize = 6;
                     }
+
                     this.lblTitle.Font = new Font(Settings.fontTitleFamily, Settings.fontTitleSize, FontStyle.Regular);
                 }
                 if (Settings.fontTextdirection == 0)
@@ -153,7 +175,7 @@ namespace NoteFly
             }
             else
             {
-                if (this.lblTitle.Height + this.lblTitle.Location.Y > pnlHead.Height)
+                if (this.lblTitle.Height + this.lblTitle.Location.Y > this.pnlHead.Height)
                 {
                     const int maxheightpnlhead = 64;
                     if (this.lblTitle.Height < maxheightpnlhead)
@@ -170,14 +192,15 @@ namespace NoteFly
                     const int defaulftminheight = 32;
                     this.pnlHead.Height = defaulftminheight;
                 }
-                this.pnlNote.Location = new Point(0, pnlHead.Height-1);
-                this.pnlNote.Size = new Size(this.Width, this.Height - pnlHead.Height+1);
+
+                this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
+                this.pnlNote.Size = new Size(this.Width, (this.Height - this.pnlHead.Height + 1));
                 this.rtbNote.DetectUrls = Settings.highlightHyperlinks;
-                Highlight.CheckSyntaxFull(this.rtbNote, note.skinNr, notes);
+                Highlight.CheckSyntaxFull(this.rtbNote, this.note.skinNr, this.notes);
                 
             }
         }
-		// Private Methods (30) 
+        // Private Methods (30) 
 
         /// <summary>
         /// The user pressed the cross on the note,
@@ -192,6 +215,7 @@ namespace NoteFly
                 this.note.visible = false;
                 xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.skinNr), this.rtbNote.Rtf); //save.
             }
+
             this.note.DestroyForm();
         }
 
@@ -257,9 +281,9 @@ namespace NoteFly
             this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
             this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
             this.pbShowLock.Visible = true;
-            this.pbShowLock.MouseDown += new MouseEventHandler(pnlHead_MouseDown);
-            this.pbShowLock.MouseMove += new MouseEventHandler(pnlHead_MouseMove);
-            this.pbShowLock.MouseUp += new MouseEventHandler(pnlHead_MouseUp);
+            this.pbShowLock.MouseDown += new MouseEventHandler(this.pnlHead_MouseDown);
+            this.pbShowLock.MouseMove += new MouseEventHandler(this.pnlHead_MouseMove);
+            this.pbShowLock.MouseUp += new MouseEventHandler(this.pnlHead_MouseUp);
             this.pnlHead.Controls.Add(this.pbShowLock);
             this.pbShowLock.BringToFront();
         }
@@ -269,11 +293,12 @@ namespace NoteFly
         /// </summary>
         private void DestroyPbLock()
         {
-            if (pbShowLock != null)
+            if (this.pbShowLock != null)
             {
                 this.pbShowLock.Visible = false;
                 this.pbShowLock.Dispose();
             }
+
             GC.Collect();
         }
 
@@ -371,11 +396,11 @@ namespace NoteFly
         /// <summary>
         /// Copy the selected text in the rtbNote control
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void menuCopySelected_Click(object sender, EventArgs e)
         {
-            if (rtbNote.SelectedText.Length >= 1)
+            if (this.rtbNote.SelectedText.Length >= 1)
             {
                 Clipboard.SetText(this.rtbNote.SelectedText);
             }
@@ -384,15 +409,15 @@ namespace NoteFly
         /// <summary>
         /// Check if some text is selected.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Cancel event arguments</param>
         private void menuFrmNoteOptions_Opening(object sender, CancelEventArgs e)
         {
-            if (rtbNote.SelectedText.Length >= 1)
+            if (this.rtbNote.SelectedText.Length >= 1)
             {
                 this.menuCopySelected.Enabled = true;
             }
-            else
+            else 
             {
                 this.menuCopySelected.Enabled = false;
             }
@@ -409,22 +434,25 @@ namespace NoteFly
             {
                 curtsi.Checked = false;
             }
+
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             tsi.Checked = true;
-            this.note.skinNr = notes.GetSkinNr(tsi.Text);
-            this.BackColor = notes.GetPrimaryClr(this.note.skinNr);
-            this.rtbNote.BackColor = notes.GetPrimaryClr(this.note.skinNr);
-            this.pnlHead.BackColor = notes.GetPrimaryClr(this.note.skinNr);
-            this.lblTitle.ForeColor = notes.GetTextClr(this.note.skinNr);
+            this.note.skinNr = this.notes.GetSkinNr(tsi.Text);
+            this.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
+            this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
+            this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
+            this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.skinNr);
             if (!Highlight.KeywordsInitialized)
             {
                 Highlight.InitHighlighter();
             }
-            Highlight.CheckSyntaxFull(this.rtbNote, this.note.skinNr, notes);
+
+            Highlight.CheckSyntaxFull(this.rtbNote, this.note.skinNr, this.notes);
             if (!this.SaveWorker.IsBusy)
             {
                 this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
+
             this.notes.frmmangenotesneedupdate = true;
             Highlight.DeinitHighlighter();
             TrayIcon.RefreshFrmManageNotes();
@@ -481,6 +509,7 @@ namespace NoteFly
                     this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
                 }
             }
+
             this.Cursor = Cursors.Default;
         }
 
@@ -494,7 +523,7 @@ namespace NoteFly
             this.note.width = this.Width;
             this.note.height = this.Height;
 
-            if (!this.note.locked && !this.SaveWorker.IsBusy)
+            if (!(this.note.locked && this.SaveWorker.IsBusy))
             {
                 this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
@@ -509,7 +538,7 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.pnlHead.BackColor = notes.GetSelectClr(note.skinNr);
+                this.pnlHead.BackColor = this.notes.GetSelectClr(this.note.skinNr);
                 this.moving = true;
                 this.oldp = e.Location;
             }
@@ -524,8 +553,8 @@ namespace NoteFly
         {
             if ((this.moving) && (e.Button == MouseButtons.Left))
             {
-                int dpx = e.Location.X - oldp.X;
-                int dpy = e.Location.Y - oldp.Y;
+                int dpx = e.Location.X - this.oldp.X;
+                int dpy = e.Location.Y - this.oldp.Y;
 #if linux
                 if (dpx > 8)
                 {
@@ -557,13 +586,13 @@ namespace NoteFly
         {
             this.note.x = this.Location.X;
             this.note.y = this.Location.Y;
-
             this.moving = false;
             if (!this.SaveWorker.IsBusy)
             {
                 this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
-            this.pnlHead.BackColor = notes.GetPrimaryClr(note.skinNr);
+
+            this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
         }
 
         /// <summary>
@@ -589,7 +618,7 @@ namespace NoteFly
                 this.note.x = this.Location.X;
                 this.note.y = this.Location.Y;
                 string rtf = (string)e.Argument;
-                xmlUtil.WriteNote(this.note, notes.GetSkinName(this.note.skinNr), rtf);
+                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.skinNr), rtf);
             }
             else
             {
@@ -603,9 +632,9 @@ namespace NoteFly
         /// </summary>
         private void SetLockedNote()
         {
-            this.menuLockNote.Checked = note.locked;
+            this.menuLockNote.Checked = this.note.locked;
             const string locknotemsg = "&Lock note";
-            if (note.locked)
+            if (this.note.locked)
             {
                 this.CreatePbLock();
                 this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
@@ -615,11 +644,12 @@ namespace NoteFly
                 this.DestroyPbLock();
                 this.menuLockNote.Text = locknotemsg;
             }
-            this.pbResizeGrip.Visible = !note.locked;
-            this.menuNoteSkins.Enabled = !note.locked;
-            this.menuEditNote.Enabled = !note.locked;
-            this.menuOnTop.Enabled = !note.locked;
-            this.menuRollUp.Enabled = !note.locked;
+
+            this.pbResizeGrip.Visible = !this.note.locked;
+            this.menuNoteSkins.Enabled = !this.note.locked;
+            this.menuEditNote.Enabled = !this.note.locked;
+            this.menuOnTop.Enabled = !this.note.locked;
+            this.menuRollUp.Enabled = !this.note.locked;
         }
 
         /// <summary>
@@ -640,7 +670,7 @@ namespace NoteFly
             {
                 this.menuRollUp.Text = rollupmsg;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
-                this.Height = note.height;
+                this.Height = this.note.height;
             }
         }
 
@@ -681,64 +711,7 @@ namespace NoteFly
             }
         }
 
-        /*
-        /// <summary>
-        /// Send note to Facebook.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void tsmenuSendToFacebook_Click(object sender, EventArgs e)
-        {
-            if (this.CheckConnection())
-            {
-                string protocolhandler = "http://";
-                if (Settings.socialFacebookUseSSL)
-                {
-                    protocolhandler = "https://";
-                }
-                string update;
-                if (this.rtbNote.TextLength > 320)
-                {
-                    update = this.rtbNote.Text.Substring(0, 320);
-                }
-                else
-                {
-                    update = this.rtbNote.Text;
-                }
-                Program.LoadLink(protocolhandler + "facebook.com/share.php?mgs=" + HttpUtility.UrlEncode(update));
-            }
-        }
-        */
-
-        /*
-        /// <summary>
-        /// Send note to twitter.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void tsmenuSendToTwitter_Click(object sender, EventArgs e)
-        {
-            if (this.CheckConnection())
-            {
-                string protocolhandler = "http://";
-                if (Settings.SocialTwitterUseSSL) {
-                    protocolhandler = "https://";
-                }
-                string tweet;
-                if (this.rtbNote.TextLength > 140)
-                {
-                    tweet = this.rtbNote.Text.Substring(0, 140);
-                }
-                else
-                {
-                    tweet = this.rtbNote.Text;
-                }
-                Program.LoadLink(protocolhandler + "twitter.com/login?redirect_after_login=%2Fhome%3F" + HttpUtility.UrlEncode(tweet));
-            }
-        }
-        */
-
-		#endregion Methods 
+        #endregion Methods 
 
 #if windows
         [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll

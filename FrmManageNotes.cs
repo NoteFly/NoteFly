@@ -51,6 +51,11 @@ namespace NoteFly
         private const string BTNSUFTEXTHIDENOTE = " selected";
 
         /// <summary>
+        /// Constant for the fixed width of the number note colum in datagridview1.
+        /// </summary>
+        private const int COLNOTENRFIXEDWIDTH = 30;
+
+        /// <summary>
         /// Rereference to notes
         /// </summary>
         private Notes notes;
@@ -249,7 +254,7 @@ namespace NoteFly
                 {
                     this.notes.GetNote(notepos).CreateForm();
                     this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
-                    this.Activate();
+                    //this.Activate();
                 }
                 else
                 {
@@ -291,7 +296,7 @@ namespace NoteFly
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             this.notes.frmmangenotesneedupdate = true;
-            TrayIcon.RefreshFrmManageNotes();
+            this.dataGridView1.Refresh();
         }
 
         /// <summary>
@@ -322,6 +327,7 @@ namespace NoteFly
 
                 if ((e.RowIndex < this.prevrownr) || (e.RowIndex >= this.dataGridView1.RowCount - 1))
                 {
+                    this.prevrownr = -1;
                     this.notes.frmmangenotesneedupdate = false;
                 }
 
@@ -391,6 +397,7 @@ namespace NoteFly
         private void DrawNotesGrid()
         {
             this.notes.frmmangenotesneedupdate = true;
+            this.toolTip.Active = Settings.notesTooltipsEnabled;
 
             DataTable datatable = new DataTable();
             this.dataGridView1.DataSource = datatable;
@@ -571,9 +578,8 @@ namespace NoteFly
         private void SetDataGridViewColumsWidth()
         {
             if (this.dataGridView1.Width <= 0) { return; }
-            const int colidfixedwidth = 30;
-            int partunit = ((this.dataGridView1.Width - colidfixedwidth) / 10);
-            this.dataGridView1.Columns["nr"].Width = 1 * colidfixedwidth;
+            int partunit = ((this.dataGridView1.Width - COLNOTENRFIXEDWIDTH) / 10);
+            this.dataGridView1.Columns["nr"].Width = 1 * COLNOTENRFIXEDWIDTH;
             this.dataGridView1.Columns["title"].Width = 6 * partunit;
             this.dataGridView1.Columns["visible"].Width = 1 * partunit;
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;

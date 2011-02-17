@@ -19,14 +19,17 @@
 //-----------------------------------------------------------------------
 #define windows //platform can be: windows, linux, macos
 
-using System.Drawing;
 namespace NoteFly
 {
+    using System.Drawing;
+
     /// <summary>
     /// The Note form class
     /// </summary>
     public partial class FrmNote
     {
+        public System.Windows.Forms.RichTextBox rtbNote;
+        public System.Windows.Forms.ToolTip toolTip;
 
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel pnlHead;
@@ -40,6 +43,14 @@ namespace NoteFly
         private System.Windows.Forms.ToolStripMenuItem menuLockNote;
         private System.Windows.Forms.ToolStripMenuItem menuHideNote;
         private System.Windows.Forms.ToolStripMenuItem menuRollUp;
+        private System.ComponentModel.BackgroundWorker SaveWorker;
+        private System.Windows.Forms.ToolStripMenuItem menuSendTo;
+        private System.Windows.Forms.ToolStripMenuItem menuSendToEmail;
+        private System.Windows.Forms.ToolStripMenuItem menuSendToTextfile;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem menuCopySelected;
+        private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
+        private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
 
         /// <summary>
         /// Required designer variable.
@@ -340,6 +351,10 @@ namespace NoteFly
             // toolTip
             // 
             this.toolTip.Active = false;
+            this.toolTip.AutomaticDelay = 100;
+            this.toolTip.AutoPopDelay = 1000;
+            this.toolTip.InitialDelay = 200;
+            this.toolTip.ReshowDelay = 20;
             // 
             // FrmNote
             // 
@@ -377,16 +392,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        public System.Windows.Forms.RichTextBox rtbNote;
-        public System.Windows.Forms.ToolTip toolTip;
-        private System.ComponentModel.BackgroundWorker SaveWorker;
-        private System.Windows.Forms.ToolStripMenuItem menuSendTo;
-        private System.Windows.Forms.ToolStripMenuItem menuSendToEmail;
-        private System.Windows.Forms.ToolStripMenuItem menuSendToTextfile;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem menuCopySelected;
-        private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
-        private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
     }
 }

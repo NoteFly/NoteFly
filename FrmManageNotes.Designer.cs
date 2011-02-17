@@ -1,14 +1,20 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmManageNotes.Designer.cs" company="GNU">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
+//  NoteFly a note application.
+//  Copyright (C) 2010-2011  Tom
 //
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
 namespace NoteFly
@@ -19,7 +25,7 @@ namespace NoteFly
     public partial class FrmManageNotes
     {
         /// <summary>
-        /// The close button of FrmMangeNotes
+        /// The close Button of FrmMangeNotes
         /// </summary>
         private System.Windows.Forms.Button btnClose;
 
@@ -39,39 +45,44 @@ namespace NoteFly
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// button
+        /// Button btnRestoreAllNotes
         /// </summary>
         private System.Windows.Forms.Button btnRestoreAllNotes;
 
         /// <summary>
-        /// button
+        /// Button btnShowSelectedNotes
         /// </summary>
         private System.Windows.Forms.Button btnShowSelectedNotes;
 
         /// <summary>
-        /// button
+        /// Button btnNoteDelete
         /// </summary>
         private System.Windows.Forms.Button btnNoteDelete;
 
         /// <summary>
-        /// button
+        /// Button Button
         /// </summary>
         private System.Windows.Forms.Button btnBackAllNotes;
 
         /// <summary>
-        /// label
+        /// Label lbTextWindowTitle
         /// </summary>
         private System.Windows.Forms.Label lbTextWindowTitle;
 
         /// <summary>
-        /// datagridview
+        /// DataGridView dataGridView1
         /// </summary>
         private System.Windows.Forms.DataGridView dataGridView1;
 
         /// <summary>
-        /// panel
+        /// Panel pnlContent
         /// </summary>
         private System.Windows.Forms.Panel pnlContent;
+
+        /// <summary>
+        /// Tooltip tooltip
+        /// </summary>
+        private System.Windows.Forms.ToolTip toolTip;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -95,6 +106,7 @@ namespace NoteFly
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -111,6 +123,7 @@ namespace NoteFly
             this.btnBackAllNotes = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.pnlContent = new System.Windows.Forms.Panel();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -130,6 +143,7 @@ namespace NoteFly
             this.btnClose.Size = new System.Drawing.Size(32, 23);
             this.btnClose.TabIndex = 0;
             this.btnClose.Text = "X";
+            this.toolTip.SetToolTip(this.btnClose, "Close");
             this.btnClose.UseCompatibleTextRendering = true;
             this.btnClose.UseMnemonic = false;
             this.btnClose.UseVisualStyleBackColor = false;
@@ -188,6 +202,7 @@ namespace NoteFly
             this.btnRestoreAllNotes.Size = new System.Drawing.Size(109, 23);
             this.btnRestoreAllNotes.TabIndex = 15;
             this.btnRestoreAllNotes.Text = "&restore all from file";
+            this.toolTip.SetToolTip(this.btnRestoreAllNotes, "Restore notes from a backup file");
             this.btnRestoreAllNotes.UseCompatibleTextRendering = true;
             this.btnRestoreAllNotes.UseVisualStyleBackColor = false;
             this.btnRestoreAllNotes.Click += new System.EventHandler(this.btnRestoreAllNotes_Click);
@@ -201,6 +216,7 @@ namespace NoteFly
             this.btnShowSelectedNotes.Size = new System.Drawing.Size(105, 23);
             this.btnShowSelectedNotes.TabIndex = 16;
             this.btnShowSelectedNotes.Text = "&show selected";
+            this.toolTip.SetToolTip(this.btnShowSelectedNotes, "Show or hide the selected notes");
             this.btnShowSelectedNotes.UseCompatibleTextRendering = true;
             this.btnShowSelectedNotes.UseVisualStyleBackColor = false;
             this.btnShowSelectedNotes.Click += new System.EventHandler(this.btnShowSelectedNotes_Click);
@@ -214,6 +230,7 @@ namespace NoteFly
             this.btnNoteDelete.Size = new System.Drawing.Size(93, 23);
             this.btnNoteDelete.TabIndex = 17;
             this.btnNoteDelete.Text = "&delete selected";
+            this.toolTip.SetToolTip(this.btnNoteDelete, "Delete the selected notes");
             this.btnNoteDelete.UseCompatibleTextRendering = true;
             this.btnNoteDelete.UseVisualStyleBackColor = false;
             this.btnNoteDelete.Click += new System.EventHandler(this.btnNoteDelete_Click);
@@ -227,6 +244,7 @@ namespace NoteFly
             this.btnBackAllNotes.Size = new System.Drawing.Size(105, 23);
             this.btnBackAllNotes.TabIndex = 18;
             this.btnBackAllNotes.Text = "&backup all to file";
+            this.toolTip.SetToolTip(this.btnBackAllNotes, "Backup all notes to a single backup file");
             this.btnBackAllNotes.UseCompatibleTextRendering = true;
             this.btnBackAllNotes.UseVisualStyleBackColor = false;
             this.btnBackAllNotes.Click += new System.EventHandler(this.btnBackAllNotes_Click);
@@ -316,6 +334,13 @@ namespace NoteFly
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Size = new System.Drawing.Size(442, 310);
             this.pnlContent.TabIndex = 20;
+            // 
+            // toolTip
+            // 
+            this.toolTip.AutomaticDelay = 100;
+            this.toolTip.AutoPopDelay = 1000;
+            this.toolTip.InitialDelay = 200;
+            this.toolTip.ReshowDelay = 20;
             // 
             // FrmManageNotes
             // 

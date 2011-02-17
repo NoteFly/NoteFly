@@ -343,7 +343,7 @@ namespace NoteFly
             // 
             // toolTip
             // 
-            this.toolTip.AutomaticDelay = 300;
+            this.toolTip.AutomaticDelay = 100;
             // 
             // btnTextBold
             // 

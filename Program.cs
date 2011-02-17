@@ -39,15 +39,15 @@ namespace NoteFly
     /// </summary>
     public class Program
     {
-		#region Fields (3) 
+        #region Fields (3)
 
         private const string DOWNLOADPAGE = "http://www.notefly.tk/downloads.php";
         private static Notes notes;
         private static TrayIcon trayicon;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Properties (5) 
+        #region Properties (5)
 
         /// <summary>
         /// Gets the application data folder.
@@ -96,7 +96,7 @@ namespace NoteFly
         {
             get
             {
-                Int16[] version = GetVersion();
+                short[] version = GetVersion();
                 return version[0] + "." + version[1] + "." + version[2];
             }
         }
@@ -125,11 +125,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (5) 
+        #region Methods (5)
 
-		// Public Methods (4) 
+        // Public Methods (4) 
 
         /// <summary>
         /// Gets the application version number as an array.
@@ -178,7 +178,7 @@ namespace NoteFly
             //NoteFly uses APPDATA and TEMP variables and systemroot is required for opening link.
             //This is OS specific 
             // /*
-            SetDllDirectory(""); //removes notefly folder as ddl search path
+            SetDllDirectory(String.Empty); //removes notefly folder as ddl search path
             Environment.SetEnvironmentVariable("PATH", String.Empty);//removes dangourse %PATH% as dll search path
             Environment.SetEnvironmentVariable("windir", String.Empty);//removes %windir%
             Environment.SetEnvironmentVariable("ProgramFiles", String.Empty);
@@ -283,9 +283,9 @@ namespace NoteFly
             Thread.Sleep(500);
             Settings.updatecheckLastDate = DateTime.Now.ToString();
             xmlUtil.WriteSettings();
-            Int16[] thisversion = GetVersion();
+            short[] thisversion = GetVersion();
             string latestversionquality = Program.AssemblyVersionQuality;
-            Int16[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality);
+            short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality);
             bool updateavailible = false;
             for (int i = 0; i < thisversion.Length; i++)
             {
@@ -305,7 +305,7 @@ namespace NoteFly
                 }
             }
         }
-		// Private Methods (1) 
+        // Private Methods (1) 
 
         /// <summary>
         /// Actual loads the url.
@@ -350,11 +350,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Methods 
-
-        #if windows
+#if windows
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         public static extern bool SetDllDirectory(string pathName);
-        #endif
+#endif
+
+        #endregion Methods
     }
 }

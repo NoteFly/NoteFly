@@ -97,18 +97,20 @@ namespace NoteFly
             // lblProductName
             // 
             this.lblProductName.AutoSize = true;
-            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductName.ForeColor = System.Drawing.Color.Black;
             this.lblProductName.Location = new System.Drawing.Point(6, 5);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(145, 24);
+            this.lblProductName.Size = new System.Drawing.Size(194, 42);
             this.lblProductName.TabIndex = 26;
-            this.lblProductName.Text = "lblProductName";
+            this.lblProductName.Text = "lblProduct";
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.Location = new System.Drawing.Point(7, 31);
+            this.lblVersion.ForeColor = System.Drawing.Color.DimGray;
+            this.lblVersion.Location = new System.Drawing.Point(12, 47);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(68, 16);
             this.lblVersion.TabIndex = 27;
@@ -129,9 +131,10 @@ namespace NoteFly
             // lblTextLicense
             // 
             this.lblTextLicense.AutoEllipsis = true;
-            this.lblTextLicense.Location = new System.Drawing.Point(7, 60);
+            this.lblTextLicense.ForeColor = System.Drawing.Color.Gray;
+            this.lblTextLicense.Location = new System.Drawing.Point(10, 74);
             this.lblTextLicense.Name = "lblTextLicense";
-            this.lblTextLicense.Size = new System.Drawing.Size(225, 44);
+            this.lblTextLicense.Size = new System.Drawing.Size(222, 41);
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of GNU General Public License version3" +
                 "\r\n";
@@ -167,7 +170,7 @@ namespace NoteFly
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmAbout";
+            this.Text = "About";
             this.ResumeLayout(false);
             this.PerformLayout();
 

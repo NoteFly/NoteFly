@@ -80,7 +80,9 @@ namespace NoteFly
 
         public static string highlightPHPColorDocumentstartend; 
 
-        public static string highlightPHPColorValidfunctions; 
+        public static string highlightPHPColorValidfunctions;
+
+        public static string highlightPHPColorInvalidfunctions;
 
         public static bool highlightSQL; 
 
@@ -111,9 +113,9 @@ namespace NoteFly
 
         public static string networkProxyAddress; 
 
-        public static int  updatecheckEverydays; 
+        public static int updatecheckEverydays; 
 
-        public static string  updatecheckLastDate; 
+        public static string updatecheckLastDate; 
 
         public static bool programFirstrun; 
 

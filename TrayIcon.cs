@@ -98,48 +98,47 @@ namespace NoteFly
         public TrayIcon(Notes notes)
         {
             this.notes = notes;
-            components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
 
             //start building icon and icon contextmenu
-            icon = new System.Windows.Forms.NotifyIcon(components);
-            menuTrayIcon = new System.Windows.Forms.ContextMenuStrip(components);
-            menuTrayIcon.AllowDrop = false;
-            menuNewNote = new System.Windows.Forms.ToolStripMenuItem();
-            menuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
-            menuSettings = new System.Windows.Forms.ToolStripMenuItem();
-            menuAbout = new System.Windows.Forms.ToolStripMenuItem();
-            menuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.icon = new System.Windows.Forms.NotifyIcon(components);
+            this.menuTrayIcon = new System.Windows.Forms.ContextMenuStrip(components);
+            this.menuTrayIcon.AllowDrop = false;
+            this.menuNewNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
 
-            icon = new NotifyIcon(components);
-            icon.ContextMenuStrip = menuTrayIcon;
+            this.icon = new NotifyIcon(components);
+            this.icon.ContextMenuStrip = this.menuTrayIcon;
             Assembly assembly = Assembly.GetExecutingAssembly();
-            icon.Icon = new Icon(assembly.GetManifestResourceStream("NoteFly.Resources.trayicon.ico"));
+            this.icon.Icon = new Icon(assembly.GetManifestResourceStream("NoteFly.Resources.trayicon.ico"));
 
-            icon.MouseClick += new MouseEventHandler(Icon_Click);
-            icon.Visible = true;
+            this.icon.MouseClick += new MouseEventHandler(Icon_Click);
+            this.icon.Visible = true;
 
-            icon.ContextMenuStrip.Name = "MenuTrayIcon";
-            icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] 
-            { menuNewNote,menuManageNotes,menuSettings,menuAbout,menuExit});
-            icon.ContextMenuStrip.ShowImageMargin = false;
-            icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
+            this.icon.ContextMenuStrip.Name = "MenuTrayIcon";
+            this.icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] { this.menuNewNote, this.menuManageNotes, this.menuSettings, this.menuAbout, this.menuExit });
+            this.icon.ContextMenuStrip.ShowImageMargin = false;
+            this.icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
             FontStyle menufontstyle = FontStyle.Regular;
             // MenuNewNote
-            menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            menuNewNote.Name = "MenuNewNote";
-            menuNewNote.Size = new System.Drawing.Size(144, 22);
-            menuNewNote.Text = "&Create a new note";
+            this.menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuNewNote.Name = "MenuNewNote";
+            this.menuNewNote.Size = new System.Drawing.Size(144, 22);
+            this.menuNewNote.Text = "&Create a new note";
             if (Settings.trayiconCreatenotebold)
             {
                 menufontstyle = FontStyle.Bold;
             }
-            menuNewNote.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
-            menuNewNote.Click += new System.EventHandler(MenuNewNote_Click);
+            this.menuNewNote.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
+            this.menuNewNote.Click += new System.EventHandler(MenuNewNote_Click);
             // MenuManageNotes
-            menuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            menuManageNotes.Name = "listToolStripMenuItem";
-            menuManageNotes.Size = new System.Drawing.Size(144, 22);
-            menuManageNotes.Text = "&Manage notes";
+            this.menuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuManageNotes.Name = "listToolStripMenuItem";
+            this.menuManageNotes.Size = new System.Drawing.Size(144, 22);
+            this.menuManageNotes.Text = "&Manage notes";
             if (Settings.trayiconManagenotesbold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -148,13 +147,13 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Regular;
             }
-            menuManageNotes.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
-            menuManageNotes.Click += new System.EventHandler(MenuManageNotes_Click);
+            this.menuManageNotes.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
+            this.menuManageNotes.Click += new System.EventHandler(this.MenuManageNotes_Click);
             // MenuSettings
-            menuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            menuSettings.Name = "MenuSettings";
-            menuSettings.Size = new System.Drawing.Size(144, 22);
-            menuSettings.Text = "&Settings";
+            this.menuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuSettings.Name = "MenuSettings";
+            this.menuSettings.Size = new System.Drawing.Size(144, 22);
+            this.menuSettings.Text = "&Settings";
             if (Settings.trayiconSettingsbold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -163,20 +162,20 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Regular;
             }
-            menuSettings.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
-            menuSettings.Click += new System.EventHandler(MenuSettings_Click);
+            this.menuSettings.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
+            this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // MenuAbout
-            menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            menuAbout.Name = "MenuAbout";
-            menuAbout.Size = new System.Drawing.Size(144, 22);
-            menuAbout.Text = "About";
-            menuAbout.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
-            menuAbout.Click += new System.EventHandler(MenuAbout_Click);
+            this.menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuAbout.Name = "MenuAbout";
+            this.menuAbout.Size = new System.Drawing.Size(144, 22);
+            this.menuAbout.Text = "About";
+            this.menuAbout.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
+            this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             // MenuExit
-            menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            menuExit.Name = "MenuExit";
-            menuExit.Size = new System.Drawing.Size(144, 22);
-            menuExit.Text = "E&xit";
+            this.menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuExit.Name = "MenuExit";
+            this.menuExit.Size = new System.Drawing.Size(144, 22);
+            this.menuExit.Text = "E&xit";
             if (Settings.trayiconExitbold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -185,8 +184,8 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Regular;
             }
-            menuExit.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
-            menuExit.Click += new System.EventHandler(MenuExit_Click);
+            this.menuExit.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
+            this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
 
 #if windows
             //security measure, warn if runned as administrator.
@@ -200,7 +199,7 @@ namespace NoteFly
 
             if (Settings.programFirstrun)
             {
-                icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);
+                this.icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);
             }
         }
 
@@ -218,19 +217,19 @@ namespace NoteFly
             {
                 if (Settings.trayiconLeftclickaction == 1)
                 {
-                    notes.BringToFrontNotes();
+                    this.notes.BringToFrontNotes();
                 }
                 else if (Settings.trayiconLeftclickaction == 2)
                 {
-                    if (!frmnewnoteshowed)
+                    if (!this.frmnewnoteshowed)
                     {
-                        FrmNewNote frmnewnote = new FrmNewNote(notes);
+                        FrmNewNote frmnewnote = new FrmNewNote(this.notes);
                         frmnewnote.Show();
-                        frmnewnoteshowed = true;
+                        this.frmnewnoteshowed = true;
                     }
                     else
                     {
-                        frmnewnoteshowed = false;
+                        this.frmnewnoteshowed = false;
                     }
                 }
             }
@@ -279,7 +278,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuSettings_Click(object sender, EventArgs e)
         {
-            if (frmsettings == null)
+            if (this.frmsettings == null)
             {
                 this.frmsettings = new FrmSettings(this.notes);
                 this.frmsettings.Show();
@@ -319,13 +318,13 @@ namespace NoteFly
             if (Settings.confirmExit)
             {
                 // two times exit in contextmenu systray icon will always exit.
-                if (!confirmexitshowed)
+                if (!this.confirmexitshowed)
                 {
-                    confirmexitshowed = true;
+                    this.confirmexitshowed = true;
                     DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + Program.AssemblyTitle + "?", "confirm exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (resdlgconfirmexit == DialogResult.No)
                     {
-                        confirmexitshowed = false;
+                        this.confirmexitshowed = false;
                         return;
                     }
                 }
@@ -340,7 +339,7 @@ namespace NoteFly
                 }
             }
 
-            components.Dispose();
+            this.components.Dispose();
             Application.Exit();
         }
 

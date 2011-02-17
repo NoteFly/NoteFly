@@ -10,7 +10,7 @@ namespace NoteFly
     /// </summary>
     public class Skin
     {
-		#region Fields (5) 
+        #region Fields (5) 
 
         public string Name;
         public Color PrimaryClr; //non nullable type.
@@ -18,6 +18,6 @@ namespace NoteFly
         public Color HighlightClr;
         public Color TextClr;
 
-		#endregion Fields 
+        #endregion Fields
     }
 }

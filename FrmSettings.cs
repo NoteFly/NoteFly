@@ -34,13 +34,13 @@ namespace NoteFly
     /// </summary>
     public partial class FrmSettings : Form
     {
-		#region Fields (1) 
+        #region Fields (1)
 
         private Notes notes;
 
-		#endregion Fields 
+        #endregion Fields
 
-		#region Constructors (1) 
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the FrmSettings class.
@@ -54,11 +54,11 @@ namespace NoteFly
             this.SetControlsBySettings();
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Methods (13) 
+        #region Methods (13)
 
-		// Private Methods (13) 
+        // Private Methods (13) 
 
         /// <summary>
         /// User want to browse for notes save path.
@@ -165,7 +165,7 @@ namespace NoteFly
                 //tab: Appearance, looks
                 Settings.notesTransparencyEnabled = this.chxTransparecy.Checked;
                 Settings.notesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
-                Settings.notesDefaultRandomSkin = chxUseRandomDefaultNote.Checked;
+                Settings.notesDefaultRandomSkin = this.chxUseRandomDefaultNote.Checked;
                 Settings.notesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
                 Settings.notesTooltipsEnabled = this.cbxShowTooltips.Checked;
                 //tab: Appearance, fonts
@@ -195,7 +195,7 @@ namespace NoteFly
                 //tab: Network
                 if (this.chxCheckUpdates.Checked)
                 {
-                    Settings.updatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value); Convert.ToInt32(this.numUpdateCheckDays.Value);
+                    Settings.updatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value);
                 }
                 else
                 {
@@ -300,7 +300,7 @@ namespace NoteFly
         /// <summary>
         /// Toggle numProcTransparency enabled
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
@@ -310,7 +310,7 @@ namespace NoteFly
         /// <summary>
         /// Toggle tbDefaultEmail enabled.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e"></param>
         private void chxSocialEmailDefaultaddressBlank_CheckedChanged(object sender, EventArgs e)
         {
@@ -320,7 +320,7 @@ namespace NoteFly
         /// <summary>
         /// Toggle iptbProxyAddress enabled.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
         {
@@ -330,7 +330,7 @@ namespace NoteFly
         /// <summary>
         /// Toggle cbxDefaultColor enabled.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e"></param>
         private void chxUseRandomDefaultNote_CheckedChanged(object sender, EventArgs e)
         {
@@ -458,7 +458,7 @@ namespace NoteFly
             this.chxLogDebug.Checked = Settings.programLogInfo;
         }
 
-		#endregion Methods 
+        #endregion Methods
 
 #if windows
         /// <summary>
@@ -478,10 +478,12 @@ namespace NoteFly
                 {
                     return false;
                 }
-            } else {
-            	return false;
-			}
+            } 
+            else
+            {
+                return false;
+            }
         }
-		#endif
+#endif
     }
 }

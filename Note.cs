@@ -100,6 +100,8 @@ namespace NoteFly
         /// <summary>
         /// Creating a new note instance, completly new note.
         /// </summary>
+        /// <param name="notes">Reference to notes.</param>
+        /// <param name="notes">The note filename.</param>
         public Note(Notes notes, string filename)
         {
             this.notes = notes;
@@ -107,7 +109,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The filename of this note.
+        /// Gets or sets the filename of this note.
         /// </summary>
         public string Filename
         {
@@ -172,7 +174,7 @@ namespace NoteFly
         /// <summary>
         /// Gets the content of the note from the file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The rich text formatted note content</returns>
         public string GetContent()
         {
             if (this.frmnote == null)
@@ -199,10 +201,10 @@ namespace NoteFly
         /// </summary>
         public void UpdateForm()
         {
-            if (frmnote != null)
+            if (this.frmnote != null)
             {
-                frmnote.UpdateForm(false);
-                frmnote.UpdateForm(true);
+                this.frmnote.UpdateForm(false);
+                this.frmnote.UpdateForm(true);
             }
         }
 

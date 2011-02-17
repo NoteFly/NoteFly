@@ -46,7 +46,7 @@ namespace NoteFly
             this.InitializeComponent();
         }
 
-		#endregion Constructors 
+        #endregion Constructors 
 
         #region Enums (1)
 
@@ -87,11 +87,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Properties 
+        #endregion Properties 
 
         #region Methods (1) 
 
-		// Private Methods (1) 
+        // Private Methods (1) 
 
         /// <summary>
         /// Filter out illgale characters.
@@ -184,6 +184,6 @@ namespace NoteFly
             }
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

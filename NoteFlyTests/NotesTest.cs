@@ -27,8 +27,8 @@ namespace NoteFlyTests
     using NoteFly;
     
     /// <summary>
-    ///This is a test class for NotesTest and is intended
-    ///to contain all NotesTest Unit Tests
+    /// This is a test class for NotesTest and is intended
+    /// to contain all NotesTest Unit Tests
     ///</summary>
     [TestClass()]
     public class NotesTest
@@ -37,25 +37,23 @@ namespace NoteFlyTests
         private TestContext testContextInstance;
 
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
+        /// Gets or sets the test context which provides
+        /// information about and functionality for the current test run.
         ///</summary>
         public TestContext TestContext
         {
             get
             {
-                return testContextInstance;
+                return this.testContextInstance;
             }
             set
             {
-                testContextInstance = value;
+                this.testContextInstance = value;
             }
         }
 
         #region Additional test attributes
-        // 
         //You can use the following additional attributes as you write your tests:
-        //
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
@@ -63,29 +61,10 @@ namespace NoteFlyTests
             Settings.notesWarnLimit = 1000;
             Settings.notesSavepath = Program.AppDataFolder;
         }
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        
         #endregion
 
         /// <summary>
-        ///A test for StripForbiddenFilenameChars
+        /// A test for StripForbiddenFilenameChars
         ///</summary>
         [TestMethod()]
         public void StripForbiddenFilenameCharsTest()
@@ -115,9 +94,9 @@ namespace NoteFlyTests
             }
         }
 
-        /// <summary>
-        ///A test for GetSkinsNames
-        ///Only passes for default unmodified skins.xml file.
+        ///<summary>
+        /// A test for GetSkinsNames
+        /// Only passes for default unmodified skins.xml file.
         ///</summary>
         [TestMethod()]
         public void GetSkinsNamesTest()
@@ -147,7 +126,7 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        ///A test for GetSkinName
+        /// A test for GetSkinName
         ///</summary>
         [TestMethod()]
         public void GetSkinNameTest()
@@ -160,7 +139,7 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        ///A test for GetForegroundColor
+        /// A test for GetForegroundColor
         ///</summary>
         [TestMethod()]
         public void GetPrimaryColorTest()
@@ -175,7 +154,7 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        ///A test for GetBackgroundColor
+        /// A test for GetBackgroundColor
         ///</summary>
         [TestMethod()]
         public void GetSelectColorTest()
@@ -190,7 +169,7 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        ///A test for GetHighlightColor
+        /// A test for GetHighlightColor
         ///</summary>
         [TestMethod()]
         public void GetHighlightColorTest()
@@ -204,7 +183,7 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        ///A test for CreateNote
+        /// A test for CreateNote
         ///</summary>
         [TestMethod()]
         public void CreateNoteTest()
@@ -234,7 +213,7 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        ///A test for CreateNote
+        /// A test for CreateNote
         ///</summary>
         [TestMethod()]
         public void GenerateRandomSkinnrTest()

@@ -64,6 +64,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
         /// <param name="note">the note to edit.</param>
+        /// <param name="locfrmnewnote">The location of the FrmNewNote</param>
         public FrmNewNote(Notes notes, Note note, Point locfrmnewnote)
         {
             this.ConstructFrmNewNote(notes);
@@ -190,7 +191,6 @@ namespace NoteFly
                     {
                         this.notes.AddNote(this.note);
                     }
-
                     TrayIcon.frmneweditnoteopen = false;
                     Highlight.InitHighlighter();
                     this.note.tempcontent = this.rtbNewNote.Rtf;
@@ -220,6 +220,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            TrayIcon.frmneweditnoteopen = false;
             if (this.note != null)
             {
                 this.note.CreateForm();
@@ -483,7 +484,8 @@ namespace NoteFly
                                 {
                                     curline = reader.ReadLine();
                                     linenum++;
-                                    if (linenum > 50) //should normally be except %: around line 42.
+                                    //should normally be except %: around line 42.
+                                    if (linenum > 50)
                                     {
                                         MessageBox.Show("Cannot find KeyNote NF note content.");
                                     }
@@ -496,7 +498,8 @@ namespace NoteFly
                                     curline = reader.ReadLine();
                                     sb.Append(curline);
                                     linenum++;
-                                    if (linenum > 8000) //limit to 8000 lines.
+                                    //limit to 8000 lines
+                                    if (linenum > 8000)
                                     {
                                         break;
                                     }
@@ -626,14 +629,8 @@ namespace NoteFly
                 }
 
 #endif
-                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy); //bug fix: #0000011
+                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
             }
-            /*
-            else
-            {
-                this.pnlHeadNewNote.BackColor = notes.GetPrimaryClr(Settings.NotesDefaultSkinnr);
-            }
-            */
         }
 
         /// <summary>
@@ -754,8 +751,6 @@ namespace NoteFly
         /// <summary>
         /// Set the font and textdirection FrmNewNote.
         /// </summary>
-        /// <param name="title">The new note title.</param>
-        /// <param name="content">The new note content.</param>
         private void SetFontSettings()
         {
             this.tbTitle.Font = new Font(Settings.fontTitleFamily, 11);

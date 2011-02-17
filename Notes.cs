@@ -38,25 +38,41 @@ namespace NoteFly
     /// </summary>
     public class Notes
     {
-		#region Fields (4) 
+        #region Fields (4)
 
+        /// <summary>
+        /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
+        /// </summary>
         public bool frmmangenotesneedupdate = false;
+
         /// <summary>
         /// The note extension
         /// </summary>
         public const string NOTEEXTENSION = ".nfn";
+
         /// <summary>
         /// The list with all notes.
         /// </summary>
         private List<Note> notes;
+
         /// <summary>
         /// List with all skins for notes.
         /// </summary>
         private List<Skin> skins;
 
-		#endregion Fields 
+        /// <summary>
+        /// The maximum length of the filename.
+        /// </summary>
+        private const int LIMITLENFILE = 8;
 
-		#region Constructors (1) 
+        /// <summary>
+        /// Empty file that hints notefly2 that notefly1 notes folder has been imported.
+        /// </summary>
+        private const string IMPORTEDFLAGFILE = "impnf20.flg";
+
+        #endregion Fields
+
+        #region Constructors (1)
 
         //private List<FrmNote> notesfrms;
         /// <summary>
@@ -70,9 +86,9 @@ namespace NoteFly
             this.LoadNotes(Settings.programFirstrun, resetpositions);
         }
 
-		#endregion Constructors 
+        #endregion Constructors
 
-		#region Properties (1) 
+        #region Properties (1)
 
         /// <summary>
         /// The number of notes there are.
@@ -85,11 +101,11 @@ namespace NoteFly
             }
         }
 
-		#endregion Properties 
+        #endregion Properties
 
-		#region Methods (21) 
+        #region Methods (21)
 
-		// Public Methods (17) 
+        // Public Methods (17) 
 
         /// <summary>
         /// Add a new note the the notes list.
@@ -109,7 +125,7 @@ namespace NoteFly
             {
                 if (this.notes[i].visible)
                 {
-                    if (notes[i] == null)
+                    if (this.notes[i] == null)
                     {
                         throw new CustomException("Note object is null.");
                     }
@@ -131,7 +147,7 @@ namespace NoteFly
         /// <param name="height">Height of the note</param>
         /// <param name="width">Width of the note</param>
         /// <returns>Note object</returns>
-        public Note CreateNote(String title, int skinnr, int x, int y, int width, int height)
+        public Note CreateNote(string title, int skinnr, int x, int y, int width, int height)
         {
             Note newnote = new Note(this, this.GetNoteFilename(title));
             newnote.title = title;
@@ -150,7 +166,7 @@ namespace NoteFly
         /// <summary>
         /// Generate a random skinnummer.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A random skin number/position</returns>
         public int GenerateRandomSkinnr()
         {
             Random rndgen = new Random();
@@ -164,7 +180,7 @@ namespace NoteFly
         /// <returns></returns>
         public System.Drawing.Color GetHighlightClr(int skinnr)
         {
-            return GetColor(3, skinnr);
+            return this.GetColor(3, skinnr);
         }
 
         /// <summary>
@@ -192,12 +208,11 @@ namespace NoteFly
         /// <returns>A safe filename based on the title.</returns>
         public string GetNoteFilename(string title)
         {
-            string title2 = StripForbiddenFilenameChars(title);
-            const int limitlenfile = 8;
+            string title2 = this.StripForbiddenFilenameChars(title);
             string newfile;
-            if (title2.Length > limitlenfile)
+            if (title2.Length > LIMITLENFILE)
             {
-                newfile = title2.Substring(0, limitlenfile) + NOTEEXTENSION;
+                newfile = title2.Substring(0, LIMITLENFILE) + NOTEEXTENSION;
             }
             else
             {
@@ -206,7 +221,7 @@ namespace NoteFly
 
             if (File.Exists(Path.Combine(Settings.notesSavepath, newfile)))
             {
-                newfile = Checknewfilename(newfile, limitlenfile, '#');
+                newfile = this.Checknewfilename(newfile, LIMITLENFILE, '#');
                 return newfile;
             }
             else
@@ -222,7 +237,7 @@ namespace NoteFly
         /// <returns>The primary color</returns>
         public System.Drawing.Color GetPrimaryClr(int skinnr)
         {
-            return GetColor(1, skinnr);
+            return this.GetColor(1, skinnr);
         }
 
         /// <summary>
@@ -232,7 +247,7 @@ namespace NoteFly
         /// <returns>The selected skin color.</returns>
         public System.Drawing.Color GetSelectClr(int skinnr)
         {
-            return GetColor(2, skinnr);
+            return this.GetColor(2, skinnr);
         }
 
         /// <summary>
@@ -282,16 +297,17 @@ namespace NoteFly
         /// Gets the text color.
         /// </summary>
         /// <param name="skinnr">The skin number</param>
-        /// <returns></returns>
+        /// <returns>Color object in text color.</returns>
         public System.Drawing.Color GetTextClr(int skinnr)
         {
-            return GetColor(4, skinnr);
+            return this.GetColor(4, skinnr);
         }
 
         /// <summary>
         /// Loads all note files in the NotesSavepath.
         /// </summary>
         /// <param name="firstrun">true if it is the first run</param>
+        /// <param name="resetpositions">true for reseting all the notes positions</param>
         public void LoadNotes(bool firstrun, bool resetpositions)
         {
             if (!Directory.Exists(Settings.notesSavepath))
@@ -312,7 +328,7 @@ namespace NoteFly
 
             if (firstrun)
             {
-                ImportingNotesNoteFly1();
+                this.ImportingNotesNoteFly1();
             }
 #if DEBUG
             Stopwatch stopwatch = new Stopwatch();
@@ -330,7 +346,7 @@ namespace NoteFly
             Log.Write(LogType.info, "Notes search time:  " + stopwatch.ElapsedTicks.ToString() + " ticks");
 #endif
             int numloadingnotes = notefiles.Length;
-            if (CheckLimitNotes(notefiles.Length))
+            if (this.CheckLimitNotes(notefiles.Length))
             {
                 DialogResult dlgres = MessageBox.Show("Their are many notes loading this can take a while, do you want to load them all?", "contine loading many notes?", MessageBoxButtons.YesNo);
                 if (dlgres == DialogResult.No)
@@ -367,7 +383,7 @@ namespace NoteFly
 #endif
             if (firstrun)
             {
-                CreateFirstrunNote();
+                this.CreateFirstrunNote();
             }
         }
 
@@ -379,9 +395,9 @@ namespace NoteFly
 #if windows
             string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly");
 #endif
-            if (Directory.Exists(nf1appdata))
+            if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE)) ))
             {
-                DialogResult resdoimport = MessageBox.Show("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?", "Import out NoteFly 1.0.x", MessageBoxButtons.YesNo);
+                DialogResult resdoimport = MessageBox.Show("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.", "Import out NoteFly 1.0.x", MessageBoxButtons.YesNo);
                 if (resdoimport == DialogResult.Yes)
                 {
                     string nf1settingsfile = Path.Combine(nf1appdata, "settings.xml");
@@ -416,6 +432,14 @@ namespace NoteFly
                         noteid++;
                         nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
                     }
+                    try
+                    {
+                        File.Create(Path.Combine(nf1appdata, IMPORTEDFLAGFILE));
+                    }
+                    catch
+                    {
+                        Log.Write(LogType.exception, "Could not set import flag in old notes directory.");
+                    }
                     Log.Write(LogType.info, "Notes from notefly 1.0.x imported.");
                 }
             }
@@ -442,7 +466,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="orgname">the string to strip forbidden filecharacters from.</param>
         /// <returns>The filename safe string</returns>
-        public string StripForbiddenFilenameChars(String orgname)
+        public string StripForbiddenFilenameChars(string orgname)
         {
             System.Text.StringBuilder newfilename = new System.Text.StringBuilder();
             char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
@@ -475,12 +499,12 @@ namespace NoteFly
                 curnote.UpdateForm();
             }
         }
-		// Private Methods (4) 
+        // Private Methods (4) 
 
         /// <summary>
         /// This method set a limit on how many notes can be loaded before a 
         /// </summary>
-        /// <param name="id">the note id to check.</param>
+        /// <param name="number">The total number of notes.</param>
         /// <returns>true when limit is reached, and a warning about too many notes should be showed.</returns>
         private bool CheckLimitNotes(int number)
         {
@@ -498,7 +522,7 @@ namespace NoteFly
         /// Check if filename already exist if it is then generate a new one.
         /// </summary>
         /// <returns>Empty string on all used.</returns>
-        private string Checknewfilename(string newfile, int limitlenfile, char sepchar)
+        private string Checknewfilename(string newfile, int usedlimitlengthfile, char sepchar)
         {
             int num = 1;
             int lenfilecounter = 3;
@@ -506,7 +530,7 @@ namespace NoteFly
             while (File.Exists(Path.Combine(Settings.notesSavepath, newfile)) && (numlen <= lenfilecounter))
             {
                 numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
-                newfile = newfile.Substring(0, limitlenfile - numlen - 1) + sepchar + num + NOTEEXTENSION;
+                newfile = newfile.Substring(0, usedlimitlengthfile - numlen - 1) + sepchar + num + NOTEEXTENSION;
                 num++;
             }
             if (numlen > lenfilecounter)
@@ -514,12 +538,12 @@ namespace NoteFly
                 sepchar++;
                 if (sepchar < 47)
                 {
-                    return Checknewfilename(newfile, limitlenfile, sepchar);
+                    return this.Checknewfilename(newfile, usedlimitlengthfile, sepchar);
                 }
                 else
                 {
                     Log.Write(LogType.exception, "All suggested filenames to save this note based on title seems to be taken.");
-                    return "";
+                    return String.Empty;
                 }
             }
             else
@@ -539,13 +563,10 @@ namespace NoteFly
             int noteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (notewidth / 2));
             int noteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (noteheight / 2));
             string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
-
             Note demonote = this.CreateNote("NoteFly2.0.0", 0, noteposx, noteposy, notewidth, noteheight);
             xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.skinNr), notecontent);
             this.AddNote(demonote);
             demonote.CreateForm();
-
-            //this.noteslst.Add(this.CreateNote(true, false, "Example", notecontent.ToString(), 0, tipnoteposx, tipnoteposy, tipnotewidth, tipnoteheight));
             Settings.programFirstrun = false;
             Log.Write(LogType.info, "firstrun occur");
             xmlUtil.WriteSettings();
@@ -574,6 +595,6 @@ namespace NoteFly
             return Color.White;
         }
 
-		#endregion Methods 
+        #endregion Methods
     }
 }

@@ -138,7 +138,7 @@ namespace NoteFly
                                     {
                                         //start php part
                                         posstartphp = i;
-                                        ColorText(rtb, i, phpstartkeyword.Length, Color.Green);
+                                        ColorText(rtb, i, phpstartkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend) );
                                         poslastkeyword = posstartphp + phpstartkeyword.Length;
                                     }
                                 }
@@ -164,7 +164,7 @@ namespace NoteFly
                                     {
                                         //end php part
                                         posendphp = i + phpendkeyword.Length;
-                                        ColorText(rtb, posendphp - phpendkeyword.Length - 1, phpendkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorValidfunctions) );
+                                        ColorText(rtb, (posendphp - phpendkeyword.Length - 1), phpendkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend) );
                                     }
                                 }
                             }
@@ -212,10 +212,8 @@ namespace NoteFly
                                         }
 
                                     }
-
                                 }
                             }
-
                             break;
                         case '\n':
                             if (Settings.highlightPHP)
@@ -257,11 +255,11 @@ namespace NoteFly
                                         string isphp = rtb.Text.Substring(poslastkeyword, lenphpkeyword);
                                         if (ValidatingPhp(isphp))
                                         {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, Color.DarkCyan);
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorValidfunctions));
                                         }
                                         else
                                         {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, Color.DarkRed);
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorInvalidfunctions));
                                         }
                                     }
                                 }
@@ -335,7 +333,7 @@ namespace NoteFly
 
             keywordsinit = true;
         }
-		// Private Methods (5) 
+        // Private Methods (5) 
 
         /// <summary>
         /// Color some part of the rich edit text.
@@ -378,7 +376,6 @@ namespace NoteFly
         /// <param name="rtb">The richtextbox.</param>
         /// <param name="posstarthtmltag">the start position in the richtextbox.</param>
         /// <param name="lenhtmltag">The length of the compleet tag.</param>
-        /// <returns>true if it is html</returns>
         private static void ValidatingHtmlTag(string ishtml, RichTextBox rtb, int posstarthtmltag, int lenhtmltag)
         {
             bool isquotestring = false;
@@ -394,16 +391,18 @@ namespace NoteFly
 
             if (ishtml.Length > 2)
             {
-                if (ishtml[ishtml.Length - 2] == '/') //finds <br />
+                //finds <br />
+                if (ishtml[ishtml.Length - 2] == '/')
                 {
                     endtag = true;
+                    //e.g. <br /> becomes <br> and <wrong/> becomes <wrong>
                     if (ishtml[ishtml.Length - 3] == ' ')
                     {
-                        ishtml = ishtml.Remove(ishtml.Length - 2, 2); //e.g. <br /> becomes <br>
+                        ishtml = ishtml.Remove(ishtml.Length - 2, 2); 
                     }
                     else
                     {
-                        ishtml = ishtml.Remove(ishtml.Length - 2, 1); //e.g. <wrong/> becomes <wrong>
+                        ishtml = ishtml.Remove(ishtml.Length - 2, 1); 
                     }
                 }
             }
@@ -416,8 +415,8 @@ namespace NoteFly
                 {
                     if (isquotestring)
                     {
-                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.highlightHTMLColorString) ); //+1 for quote itself
-                        posendquotestring = pos +1; //+1 for quote itself counts.
+                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.highlightHTMLColorString) );
+                        posendquotestring = pos +1; //+1 for quote itself counts
                     }
                     else
                     {
@@ -511,7 +510,7 @@ namespace NoteFly
             return false;
         }
 
-		#endregion Methods 
+        #endregion Methods 
     }
 
 }

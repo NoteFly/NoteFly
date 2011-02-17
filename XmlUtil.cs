@@ -370,7 +370,10 @@ namespace NoteFly
                         case "NetworkConnectionTimeout":
                             Settings.networkConnectionTimeout = xmlread.ReadElementContentAsInt();
                             break;
-                        case "NotesDefaultSkin":
+                        case "DefaultRandomSkin":
+                            Settings.notesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "NotesDefaultSkinnr":
                             Settings.notesDefaultSkinnr = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesWarnLimit":
@@ -400,6 +403,9 @@ namespace NoteFly
                             break;
                         case "HighlightPHPColorDocumentstartend":
                             Settings.highlightPHPColorDocumentstartend = xmlread.ReadElementContentAsString();
+                            break;
+                        case "HighlightPHPColorInvalidfunctions":
+                            Settings.highlightPHPColorInvalidfunctions = xmlread.ReadElementContentAsString();
                             break;
                         case "HighlightPHPColorValidfunctions":
                             Settings.highlightPHPColorValidfunctions = xmlread.ReadElementContentAsString();
@@ -540,8 +546,9 @@ namespace NoteFly
             Settings.highlightHyperlinks = true;
             Settings.highlightPHP = false;
             Settings.highlightPHPColorComment = "#333333";
-            Settings.highlightPHPColorDocumentstartend = "";
-            Settings.highlightPHPColorValidfunctions = "";
+            Settings.highlightPHPColorDocumentstartend = "#129612";
+            Settings.highlightPHPColorValidfunctions = "#41D87B";
+            Settings.highlightPHPColorInvalidfunctions = "#D90000";
             Settings.highlightSQL = false;
             Settings.networkConnectionForceipv6 = false;
             Settings.networkConnectionTimeout = 8000;
@@ -770,7 +777,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("FontContentSize", Settings.fontContentSize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("FontTitleSize", Settings.fontTitleSize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.networkConnectionTimeout.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.notesDefaultRandomSkin.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.notesDefaultSkinnr.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.notesTransparencyLevel.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesWarnLimit", Settings.notesWarnLimit.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.trayiconLeftclickaction.ToString(numfmtinfo));
@@ -781,6 +788,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.highlightHTMLColorString);
                 xmlwrite.WriteElementString("HighlightPHPColorComment", Settings.highlightPHPColorComment);
                 xmlwrite.WriteElementString("HighlightPHPColorDocumentstartend", Settings.highlightPHPColorDocumentstartend);
+                xmlwrite.WriteElementString("HighlightPHPColorInvalidfunctions", Settings.highlightPHPColorInvalidfunctions);
                 xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.highlightPHPColorValidfunctions);
                 xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.updatecheckLastDate.ToString());
                 xmlwrite.WriteElementString("FontContentFamily", Settings.fontContentFamily);
@@ -855,7 +863,7 @@ namespace NoteFly
                 string[] selectclr = new string[numskins] { "E0D616", "C17D00", "E0E0E0", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624" };
                 string[] highlightclr = new string[numskins] { "FFED7C", "FFD46D", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "494949" };
                 string[] textclr = new string[numskins] { "000000", "000000", "000000", "000000", "000000", "000000", "000000", "FFFFFF" };
-                for (UInt16 i = 0; i < numskins; i++)
+                for (ushort i = 0; i < numskins; i++)
                 {
                     xmlwrite.WriteStartElement("skin");
                     xmlwrite.WriteElementString("Name", name[i]);
@@ -878,7 +886,7 @@ namespace NoteFly
         /// Write 1 value for true and 0 for false.
         /// </summary>
         /// <param name="checknode"></param>
-        private static void WriteXMLBool(String element, bool checknode)
+        private static void WriteXMLBool(string element, bool checknode)
         {
             xmlwrite.WriteStartElement(element);
             if (checknode)
@@ -898,9 +906,9 @@ namespace NoteFly
         /// </summary>
         /// <returns>the newest version as integer array, 
         /// any negative valeau(-1 by default) considered as error.</returns>
-        public static Int16[] GetLatestVersion(out string versionquality)
+        public static short[] GetLatestVersion(out string versionquality)
         {
-            Int16[] version = new Int16[3];
+            short[] version = new short[3];
             version[0] = -1;
             version[1] = -1;
             version[2] = -1;
