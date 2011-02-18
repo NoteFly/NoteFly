@@ -161,6 +161,7 @@ namespace NoteFly
                 //tab: General
                 Settings.confirmExit = this.chxConfirmExit.Checked;
                 Settings.confirmDeletenote = this.chxConfirmDeletenote.Checked;
+                Settings.notesDeleteRecyclebin = this.chxNotesDeleteRecyclebin.Checked;
                 Settings.trayiconLeftclickaction = this.cbxActionLeftclick.SelectedIndex;
                 //tab: Appearance, looks
                 Settings.notesTransparencyEnabled = this.chxTransparecy.Checked;
@@ -399,6 +400,7 @@ namespace NoteFly
 #endif
             this.chxConfirmExit.Checked = Settings.confirmExit;
             this.chxConfirmDeletenote.Checked = Settings.confirmDeletenote;
+            this.chxNotesDeleteRecyclebin.Checked = Settings.notesDeleteRecyclebin;
             this.cbxActionLeftclick.SelectedIndex = Settings.trayiconLeftclickaction;
             //tab: Appearance
             this.chxTransparecy.Checked = Settings.notesTransparencyEnabled;

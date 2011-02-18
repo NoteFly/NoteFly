@@ -259,6 +259,7 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.chxNotesDeleteRecyclebin = new System.Windows.Forms.CheckBox();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -322,6 +323,7 @@ namespace NoteFly
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.chxNotesDeleteRecyclebin);
             this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
@@ -361,7 +363,7 @@ namespace NoteFly
             "Do nothing",
             "Bring notes to front",
             "Create a new note"});
-            this.cbxActionLeftclick.Location = new System.Drawing.Point(145, 109);
+            this.cbxActionLeftclick.Location = new System.Drawing.Point(147, 136);
             this.cbxActionLeftclick.Name = "cbxActionLeftclick";
             this.cbxActionLeftclick.Size = new System.Drawing.Size(163, 21);
             this.cbxActionLeftclick.TabIndex = 16;
@@ -389,7 +391,7 @@ namespace NoteFly
             // lbText
             // 
             this.lbText.AutoSize = true;
-            this.lbText.Location = new System.Drawing.Point(17, 112);
+            this.lbText.Location = new System.Drawing.Point(19, 139);
             this.lbText.Name = "lbText";
             this.lbText.Size = new System.Drawing.Size(122, 13);
             this.lbText.TabIndex = 15;
@@ -1138,6 +1140,16 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
+            // chxNotesDeleteRecyclebin
+            // 
+            this.chxNotesDeleteRecyclebin.AutoSize = true;
+            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(20, 98);
+            this.chxNotesDeleteRecyclebin.Name = "chxNotesDeleteRecyclebin";
+            this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(189, 17);
+            this.chxNotesDeleteRecyclebin.TabIndex = 24;
+            this.chxNotesDeleteRecyclebin.Text = "Move deleted notes to recycle bin.";
+            this.chxNotesDeleteRecyclebin.UseVisualStyleBackColor = true;
+            // 
             // iptbProxyAddress
             // 
             this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -1240,5 +1252,6 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxTrayiconBoldManagenotes;
         private System.Windows.Forms.CheckBox chxTrayiconBoldNewnote;
         private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
+        private System.Windows.Forms.CheckBox chxNotesDeleteRecyclebin;
     }
 }

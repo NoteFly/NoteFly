@@ -27,6 +27,7 @@ namespace NoteFly
     using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
+    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Manage notes window
@@ -345,6 +346,29 @@ namespace NoteFly
             this.notes.frmmangenotesneedupdate = true;
         }
 
+#if windows
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
+        public struct SHFILEOPSTRUCT
+        {
+            public IntPtr hwnd;
+            [MarshalAs(UnmanagedType.U4)]
+            public int wFunc;
+            public string pFrom;
+            public string pTo;
+            public short fFlags;
+            [MarshalAs(UnmanagedType.Bool)]
+            public bool fAnyOperationsAborted;
+            public IntPtr hNameMappings;
+            public string lpszProgressTitle;
+        }
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        static extern int SHFileOperation(ref SHFILEOPSTRUCT FileOp);
+        const int FO_DELETE = 3;
+        const int FOF_ALLOWUNDO = 0x40;
+        const int FOF_NOCONFIRMATION = 0x10;
+#endif
+
         /// <summary>
         /// Deletes the notes in memory and the files that are selected in a Gridview.
         /// In reverse order, so updating datagridview goes well.
@@ -367,11 +391,25 @@ namespace NoteFly
                 {
                     this.notes.GetNote(deletenotepos[r]).DestroyForm();
                     string filepath = Path.Combine(Settings.notesSavepath, filename);
-                    File.Delete(filepath);
-                    if (Settings.programLogInfo)
+                    if (Settings.notesDeleteRecyclebin)
                     {
+#if windows
+                        SHFILEOPSTRUCT shf = new SHFILEOPSTRUCT(); 
+                        shf.wFunc = FO_DELETE; 
+                        shf.fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION; 
+                        shf.pFrom = filepath+"\0"; //double null terminated
+                        SHFileOperation(ref shf);
+#elif linux
+                        File.Move(filepath, Path.Combine(@"$HOME/.Trash/", filename) );
+#endif
+                        Log.Write(LogType.info, "Moved note to Recyclebin: " + filepath);
+                    }
+                    else
+                    {
+                        File.Delete(filepath);
                         Log.Write(LogType.info, "Deleted note: " + filepath);
                     }
+
 
                     this.notes.RemoveNote(deletenotepos[r]);
                 }

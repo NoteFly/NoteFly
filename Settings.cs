@@ -38,6 +38,8 @@ namespace NoteFly
 
         public static bool notesClosebtnHidenotepermanently;
 
+        public static bool notesDeleteRecyclebin;
+
         public static int notesWarnLimit;
 
         public static string notesSavepath;

@@ -310,6 +310,9 @@ namespace NoteFly
                         case "NotesClosebtnHidenotepermanently":
                             Settings.notesClosebtnHidenotepermanently = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "NotesDeleteRecyclebin":
+                            Settings.notesDeleteRecyclebin = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "NotesTransparencyEnabled":
                             Settings.notesTransparencyEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -757,6 +760,7 @@ namespace NoteFly
                 WriteXMLBool("NetworkProxyEnabled", Settings.networkProxyEnabled);
                 WriteXMLBool("NotesTooltipEnabled", Settings.notesTooltipsEnabled);
                 WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.notesClosebtnHidenotepermanently);
+                WriteXMLBool("NotesDeleteRecyclebin", Settings.notesDeleteRecyclebin);
                 WriteXMLBool("NotesTransparencyEnabled", Settings.notesTransparencyEnabled);
                 WriteXMLBool("NotesDefaultRandomSkin", Settings.notesDefaultRandomSkin);
                 WriteXMLBool("ProgramFirstrun", Settings.programFirstrun);
