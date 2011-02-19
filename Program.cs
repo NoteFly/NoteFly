@@ -172,12 +172,12 @@ namespace NoteFly
         [ STAThread ]
         public static void Main(string[] args)
         {
-#if windows
-            //a suggestion to "protect" against insecure Library Loading Vulnerabilities.
+            //a suggestion to "protect" against insecure Dynamic Library Loading vulnerabilities.
             //it does not fix it, it makes it harder to exploit if insecure dll loading exist.
-            //NoteFly uses APPDATA and TEMP variables and systemroot is required for opening link.
-            //This is OS specific 
+            //NoteFly uses APPDATA and TEMP variables and systemroot is required for LinkLabel control.
+            //This is OS specific
             // /*
+#if windows
             SetDllDirectory(String.Empty); //removes notefly folder as ddl search path
             Environment.SetEnvironmentVariable("PATH", String.Empty);//removes dangourse %PATH% as dll search path
             Environment.SetEnvironmentVariable("windir", String.Empty);//removes %windir%

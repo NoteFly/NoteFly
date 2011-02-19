@@ -71,6 +71,11 @@ namespace NoteFly
         /// </summary>
         private int prevrownr = -1;
 
+        /// <summary>
+        /// The prevois of previous painted row number.
+        /// </summary>
+        private int secondprevrownr = -1;
+
         #endregion Fields 
 
         #region Constructors (1) 
@@ -331,8 +336,18 @@ namespace NoteFly
                     this.prevrownr = -1;
                     this.notes.frmmangenotesneedupdate = false;
                 }
-
-                this.prevrownr = e.RowIndex;
+                else
+                {
+                    if (e.RowIndex == secondprevrownr)
+                    {
+                        this.prevrownr = int.MaxValue;
+                    }
+                    else
+                    {
+                        this.secondprevrownr = this.prevrownr;
+                        this.prevrownr = e.RowIndex;
+                    }
+                }
             }
         }
 
