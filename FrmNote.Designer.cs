@@ -28,28 +28,116 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNote
     {
+        /// <summary>
+        /// RichTextBox rtbNote
+        /// </summary>
         public System.Windows.Forms.RichTextBox rtbNote;
-        public System.Windows.Forms.ToolTip toolTip;
 
+        /// <summary>
+        /// ToolTip toolTip
+        /// </summary>
+        private System.Windows.Forms.ToolTip toolTip;
+
+        /// <summary>
+        /// Label lblTitle
+        /// </summary>
         private System.Windows.Forms.Label lblTitle;
+
+        /// <summary>
+        /// Panel pnlHead
+        /// </summary>
         private System.Windows.Forms.Panel pnlHead;
+
+        /// <summary>
+        /// Button btnCloseNote
+        /// </summary>
         private System.Windows.Forms.Button btnCloseNote;
+
+        /// <summary>
+        /// Panel pnlNote
+        /// </summary>
         private System.Windows.Forms.Panel pnlNote;
+
+        /// <summary>
+        /// ContextMenuStrip menuFrmNoteOptions
+        /// </summary>
         private System.Windows.Forms.ContextMenuStrip menuFrmNoteOptions;
+
+        /// <summary>
+        /// ToolStripMenuItem menuEditNote
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuEditNote;
+
+        /// <summary>
+        /// ToolStripMenuItem menuNoteSkins
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuNoteSkins;
+
+        /// <summary>
+        /// PictureBox pbResizeGrip
+        /// </summary>
         private System.Windows.Forms.PictureBox pbResizeGrip;
+
+        /// <summary>
+        /// ToolStripMenuItem menuOnTop
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuOnTop;
+
+        /// <summary>
+        /// ToolStripMenuItem menuLockNote
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuLockNote;
+
+        /// <summary>
+        /// ToolStripMenuItem menuHideNote
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuHideNote;
+
+        /// <summary>
+        /// ToolStripMenuItem menuRollUp
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuRollUp;
+
+        /// <summary>
+        /// BackgroundWorker SaveWorker
+        /// todo: rename
+        /// </summary>
         private System.ComponentModel.BackgroundWorker SaveWorker;
+
+        /// <summary>
+        /// ToolStripMenuItem menuSendTo
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuSendTo;
+
+        /// <summary>
+        /// ToolStripMenuItem menuSendToEmail
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuSendToEmail;
+
+        /// <summary>
+        /// ToolStripMenuItem menuSendToTextfile
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuSendToTextfile;
+
+        /// <summary>
+        /// ToolStripMenuItem ??? 
+        /// todo: rename
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+
+        /// <summary>
+        /// ToolStripMenuItem menuCopySelected
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuCopySelected;
+
+        /// <summary>
+        /// ToolStripMenuItem menuCopyContent
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
+
+        /// <summary>
+        /// ToolStripMenuItem menuCopyTitle
+        /// </summary>
         private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
 
         /// <summary>

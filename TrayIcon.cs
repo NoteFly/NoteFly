@@ -32,6 +32,16 @@ namespace NoteFly
     public class TrayIcon
     {
         /// <summary>
+        /// Used for warning if new note is still open on shutdown application.
+        /// </summary>
+        public static bool frmneweditnoteopen = false;
+
+        /// <summary>
+        /// Reference to FrmManageNotes window.
+        /// </summary>
+        private static FrmManageNotes frmmanagenotes;
+
+        /// <summary>
         /// container that holds some objects.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -86,43 +96,42 @@ namespace NoteFly
         /// </summary>
         private ToolStripMenuItem menuExit;
 
-        private static FrmManageNotes frmmanagenotes;
-
+        /// <summary>
+        /// Reference to FrmSettings window.
+        /// </summary>
         private FrmSettings frmsettings;
 
-        public static bool frmneweditnoteopen = false;
-
         /// <summary>
-        /// Create a new trayicon in the systray.
+        /// CInitializes a new instance of the TrayIcon class. 
+        /// New trayicon in the systray.
         /// </summary>
+        /// <param name="notes">reference to notes class.</param>
         public TrayIcon(Notes notes)
         {
             this.notes = notes;
             this.components = new System.ComponentModel.Container();
 
-            //start building icon and icon contextmenu
-            this.icon = new System.Windows.Forms.NotifyIcon(components);
-            this.menuTrayIcon = new System.Windows.Forms.ContextMenuStrip(components);
+            // Start building icon and icon contextmenu
+            this.icon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.menuTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuTrayIcon.AllowDrop = false;
             this.menuNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
-
-            this.icon = new NotifyIcon(components);
+            this.icon = new NotifyIcon(this.components);
             this.icon.ContextMenuStrip = this.menuTrayIcon;
             Assembly assembly = Assembly.GetExecutingAssembly();
             this.icon.Icon = new Icon(assembly.GetManifestResourceStream("NoteFly.Resources.trayicon.ico"));
-
-            this.icon.MouseClick += new MouseEventHandler(Icon_Click);
+            this.icon.MouseClick += new MouseEventHandler(this.Icon_Click);
             this.icon.Visible = true;
-
             this.icon.ContextMenuStrip.Name = "MenuTrayIcon";
             this.icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] { this.menuNewNote, this.menuManageNotes, this.menuSettings, this.menuAbout, this.menuExit });
             this.icon.ContextMenuStrip.ShowImageMargin = false;
             this.icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
             FontStyle menufontstyle = FontStyle.Regular;
+
             // MenuNewNote
             this.menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuNewNote.Name = "MenuNewNote";
@@ -133,7 +142,8 @@ namespace NoteFly
                 menufontstyle = FontStyle.Bold;
             }
             this.menuNewNote.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
-            this.menuNewNote.Click += new System.EventHandler(MenuNewNote_Click);
+            this.menuNewNote.Click += new System.EventHandler(this.MenuNewNote_Click);
+
             // MenuManageNotes
             this.menuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuManageNotes.Name = "listToolStripMenuItem";
@@ -188,18 +198,29 @@ namespace NoteFly
             this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
 
 #if windows
-            //security measure, warn if runned as administrator.
+            // Security measure, warn if runned as administrator.
             System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
             System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
             if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
             {
-                MessageBox.Show("You are now running "+Program.AssemblyTitle+" as elevated Administrator.\r\nWhich is not recommended.", "(Elevated) administrator");
+                MessageBox.Show("You are now running " + Program.AssemblyTitle + " as elevated Administrator.\r\nWhich is not recommended.", "(Elevated) administrator");
             }
 #endif
 
             if (Settings.programFirstrun)
             {
                 this.icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);
+            }
+        }
+
+        /// <summary>
+        /// Do a refresh on the FrmManageNotes window if it's created.
+        /// </summary>
+        public static void RefreshFrmManageNotes()
+        {
+            if (frmmanagenotes != null)
+            {
+                frmmanagenotes.Refresh();
             }
         }
 
@@ -243,7 +264,7 @@ namespace NoteFly
         private void MenuNewNote_Click(object sender, EventArgs e)
         {
             frmneweditnoteopen = true;
-            FrmNewNote newnotefrm = new FrmNewNote(notes);
+            FrmNewNote newnotefrm = new FrmNewNote(this.notes);
             newnotefrm.Show();
         }
 
@@ -341,17 +362,6 @@ namespace NoteFly
 
             this.components.Dispose();
             Application.Exit();
-        }
-
-        /// <summary>
-        /// Do a refresh on the FrmManageNotes window if it's created.
-        /// </summary>
-        public static void RefreshFrmManageNotes()
-        {
-            if (frmmanagenotes != null)
-            {
-                frmmanagenotes.Refresh();
-            }
         }
     }
 }

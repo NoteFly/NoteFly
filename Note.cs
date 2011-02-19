@@ -98,10 +98,11 @@ namespace NoteFly
         private string filename;
 
         /// <summary>
-        /// Creating a new note instance, completly new note.
+        /// Initializes a new instance of the Note class.
+        /// Completly new note.
         /// </summary>
         /// <param name="notes">Reference to notes.</param>
-        /// <param name="notes">The note filename.</param>
+        /// <param name="filename">The note filename.</param>
         public Note(Notes notes, string filename)
         {
             this.notes = notes;
@@ -117,6 +118,7 @@ namespace NoteFly
             {
                 return this.filename;
             }
+
             set
             {
                 if (!String.IsNullOrEmpty(value))
@@ -151,6 +153,7 @@ namespace NoteFly
             {
                 this.frmnote.Close();
             }
+
             this.visible = false;
             this.tempcontent = null;
             this.frmnote = null;

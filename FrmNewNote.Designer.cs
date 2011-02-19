@@ -91,7 +91,7 @@ namespace NoteFly
         private System.Windows.Forms.RichTextBox rtbNewNote;
 
         /// <summary>
-        /// 
+        /// Button btnTextBold
         /// </summary>
         private System.Windows.Forms.Button btnTextBold;
 

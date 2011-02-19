@@ -67,14 +67,14 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            DialogResult dlgresult = this.folderBrowserDialog1.ShowDialog();
+            DialogResult dlgresult = this.folderBrowserDialogNotessavepath.ShowDialog();
             if (dlgresult == DialogResult.OK)
             {
-                string newpathsavenotes = this.folderBrowserDialog1.SelectedPath;
+                string newpathsavenotes = this.folderBrowserDialogNotessavepath.SelectedPath;
 
                 if (Directory.Exists(newpathsavenotes))
                 {
-                    this.tbNotesSavePath.Text = this.folderBrowserDialog1.SelectedPath;
+                    this.tbNotesSavePath.Text = this.folderBrowserDialogNotessavepath.SelectedPath;
                 }
                 else
                 {
@@ -312,7 +312,7 @@ namespace NoteFly
         /// Toggle tbDefaultEmail enabled.
         /// </summary>
         /// <param name="sender">Sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void chxSocialEmailDefaultaddressBlank_CheckedChanged(object sender, EventArgs e)
         {
             this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
@@ -332,7 +332,7 @@ namespace NoteFly
         /// Toggle cbxDefaultColor enabled.
         /// </summary>
         /// <param name="sender">Sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void chxUseRandomDefaultNote_CheckedChanged(object sender, EventArgs e)
         {
             this.cbxDefaultColor.Enabled = !this.chxUseRandomDefaultNote.Checked;
@@ -355,7 +355,7 @@ namespace NoteFly
         /// Move note files.
         /// </summary>
         /// <param name="oldsavenotespath">The old path where notes are saved.</param>
-        /// <param name="newpathsavenotes">The new path to save the notes to.</param>
+        /// <param name="newsavenotespath">The new path to save the notes to.</param>
         private void MoveNotes(string oldsavenotespath, string newsavenotespath)
         {
             bool errorshowed = false;

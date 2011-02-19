@@ -83,7 +83,7 @@ namespace NoteFly
         #region Properties (1)
 
         /// <summary>
-        /// Gets a value in indicating whether highlighting keywords are initialized.
+        /// Gets a value indicating whether highlighting keywords are initialized.
         /// </summary>
         public static bool KeywordsInitialized
         {
@@ -138,7 +138,7 @@ namespace NoteFly
                                     {
                                         //start php part
                                         posstartphp = i;
-                                        ColorText(rtb, i, phpstartkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend) );
+                                        ColorText(rtb, i, phpstartkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend));
                                         poslastkeyword = posstartphp + phpstartkeyword.Length;
                                     }
                                 }
@@ -164,10 +164,11 @@ namespace NoteFly
                                     {
                                         //end php part
                                         posendphp = i + phpendkeyword.Length;
-                                        ColorText(rtb, (posendphp - phpendkeyword.Length - 1), phpendkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend) );
+                                        ColorText(rtb, (posendphp - phpendkeyword.Length - 1), phpendkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend));
                                     }
                                 }
                             }
+
                             if (Settings.highlightHTML)
                             {
                                 if ((i < posstartphp || i > posendphp) && i > 0)
@@ -177,6 +178,7 @@ namespace NoteFly
                                     ValidatingHtmlTag(ishtml, rtb, posstarthtmltag, lenhtmltag);
                                 }
                             }
+
                             break;
                         case '/':
                             if (Settings.highlightPHP)
@@ -206,13 +208,13 @@ namespace NoteFly
                                             if (isphpmultilinecomment)
                                             {
                                                 int lencomment = i - posphpcommentstart;
-                                                ColorText(rtb, posphpcommentstart, lencomment, xmlUtil.ConvToClr(Settings.highlightPHPColorComment) );
+                                                ColorText(rtb, posphpcommentstart, lencomment, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
                                                 posphpcommentstart = int.MaxValue;
                                             }
                                         }
-
                                     }
                                 }
+
                             }
                             break;
                         case '\n':
@@ -223,7 +225,7 @@ namespace NoteFly
                                     if (!isphpmultilinecomment)
                                     {
                                         lencommentline = i - posphpcommentstart;
-                                        ColorText(rtb, posphpcommentstart, lencommentline, xmlUtil.ConvToClr(Settings.highlightPHPColorComment) );
+                                        ColorText(rtb, posphpcommentstart, lencommentline, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
                                         posphpcommentstart = int.MaxValue;
                                     }
                                 }
@@ -415,8 +417,8 @@ namespace NoteFly
                 {
                     if (isquotestring)
                     {
-                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.highlightHTMLColorString) );
-                        posendquotestring = pos +1; //+1 for quote itself counts
+                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.highlightHTMLColorString));
+                        posendquotestring = pos + 1; //+1 for quote itself counts
                     }
                     else
                     {
@@ -447,7 +449,7 @@ namespace NoteFly
                             if (curattributename.Equals(keywordshtml[n], StringComparison.InvariantCultureIgnoreCase))
                             {
                                 attributefound = true;
-                                ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.highlightHTMLColorValid) );
+                                ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.highlightHTMLColorValid));
                                 break; 
                             }
                         }
@@ -507,6 +509,7 @@ namespace NoteFly
                     return true;
                 }
             }
+
             return false;
         }
 

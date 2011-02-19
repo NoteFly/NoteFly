@@ -26,8 +26,8 @@ namespace NoteFly
     using System.Data;
     using System.Drawing;
     using System.IO;
-    using System.Windows.Forms;
     using System.Runtime.InteropServices;
+    using System.Windows.Forms;
 
     /// <summary>
     /// Manage notes window
@@ -113,6 +113,14 @@ namespace NoteFly
 
         // Private Methods (20)
 
+#if windows
+        private const int FO_DELETE = 3;
+        private const int FOF_ALLOWUNDO = 0x40;
+        private const int FOF_NOCONFIRMATION = 0x10;
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        private static extern int SHFileOperation(ref SHFILEOPSTRUCT FileOp);
+#endif
+
         /// <summary>
         /// Request to backup all notes to a file.
         /// Ask where to save then do it.
@@ -127,6 +135,7 @@ namespace NoteFly
             savebackupdlg.DefaultExt = "nfbak"; //noteflybackup
             savebackupdlg.Title = "Where to save the backup of all NoteFly notes.";
             savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
+            savebackupdlg.FileName = DateTime.Today.ToShortDateString() + ".nfbak";
             DialogResult savebackupdlgres = savebackupdlg.ShowDialog();
             if (savebackupdlgres == DialogResult.OK)
             {
@@ -338,7 +347,7 @@ namespace NoteFly
                 }
                 else
                 {
-                    if (e.RowIndex == secondprevrownr)
+                    if (e.RowIndex == this.secondprevrownr)
                     {
                         this.prevrownr = int.MaxValue;
                     }
@@ -360,29 +369,6 @@ namespace NoteFly
         {
             this.notes.frmmangenotesneedupdate = true;
         }
-
-#if windows
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
-        public struct SHFILEOPSTRUCT
-        {
-            public IntPtr hwnd;
-            [MarshalAs(UnmanagedType.U4)]
-            public int wFunc;
-            public string pFrom;
-            public string pTo;
-            public short fFlags;
-            [MarshalAs(UnmanagedType.Bool)]
-            public bool fAnyOperationsAborted;
-            public IntPtr hNameMappings;
-            public string lpszProgressTitle;
-        }
-
-        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-        static extern int SHFileOperation(ref SHFILEOPSTRUCT FileOp);
-        const int FO_DELETE = 3;
-        const int FOF_ALLOWUNDO = 0x40;
-        const int FOF_NOCONFIRMATION = 0x10;
-#endif
 
         /// <summary>
         /// Deletes the notes in memory and the files that are selected in a Gridview.
@@ -412,7 +398,7 @@ namespace NoteFly
                         SHFILEOPSTRUCT shf = new SHFILEOPSTRUCT(); 
                         shf.wFunc = FO_DELETE; 
                         shf.fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION; 
-                        shf.pFrom = filepath+"\0"; //double null terminated
+                        shf.pFrom = filepath + "\0"; //double null terminated
                         SHFileOperation(ref shf);
 #elif linux
                         File.Move(filepath, Path.Combine(@"$HOME/.Trash/", filename) );
@@ -637,6 +623,23 @@ namespace NoteFly
             this.dataGridView1.Columns["visible"].Width = 1 * partunit;
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;
         }
+
+#if windows
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
+        public struct SHFILEOPSTRUCT
+        {
+            public IntPtr hwnd;
+            [MarshalAs(UnmanagedType.U4)]
+            public int wFunc;
+            public string pFrom;
+            public string pTo;
+            public short fFlags;
+            [MarshalAs(UnmanagedType.Bool)]
+            public bool fAnyOperationsAborted;
+            public IntPtr hNameMappings;
+            public string lpszProgressTitle;
+        }
+#endif
 
         #endregion Methods 
     }

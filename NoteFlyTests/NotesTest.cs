@@ -29,23 +29,26 @@ namespace NoteFlyTests
     /// <summary>
     /// This is a test class for NotesTest and is intended
     /// to contain all NotesTest Unit Tests
-    ///</summary>
+    /// </summary>
     [TestClass()]
     public class NotesTest
     {
-
+        /// <summary>
+        /// The TestContext instance.
+        /// </summary>
         private TestContext testContextInstance;
 
         /// <summary>
         /// Gets or sets the test context which provides
         /// information about and functionality for the current test run.
-        ///</summary>
+        /// </summary>
         public TestContext TestContext
         {
             get
             {
                 return this.testContextInstance;
             }
+
             set
             {
                 this.testContextInstance = value;
@@ -65,7 +68,7 @@ namespace NoteFlyTests
 
         /// <summary>
         /// A test for StripForbiddenFilenameChars
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void StripForbiddenFilenameCharsTest()
         {
@@ -77,8 +80,8 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        ///A test for RemoveNote
-        ///</summary>
+        /// A test for RemoveNote
+        /// </summary>
         [TestMethod()]
         public void RemoveNoteTest()
         {
@@ -86,7 +89,7 @@ namespace NoteFlyTests
             Note newnote = target.CreateNote("test note", 1, 90, 90, 100, 100);
             target.AddNote(newnote);
             int notelastpos = target.CountNotes;
-            target.RemoveNote(notelastpos-1);
+            target.RemoveNote(notelastpos - 1);
             int exceptedcountnotesnow = notelastpos - 1;
             if (target.CountNotes != exceptedcountnotesnow)
             {
@@ -94,10 +97,10 @@ namespace NoteFlyTests
             }
         }
 
-        ///<summary>
+        /// <summary>
         /// A test for GetSkinsNames
         /// Only passes for default unmodified skins.xml file.
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void GetSkinsNamesTest()
         {
@@ -116,6 +119,7 @@ namespace NoteFlyTests
             {
                 Assert.Inconclusive("Skins.xml can be modified or test failed because more skins are returned.");
             }
+
             for (int i = 0; i < actual.Length; i++)
             {
                 if (expected[i].ToString() != actual[i].ToString())
@@ -127,7 +131,7 @@ namespace NoteFlyTests
 
         /// <summary>
         /// A test for GetSkinName
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void GetSkinNameTest()
         {
@@ -140,7 +144,7 @@ namespace NoteFlyTests
 
         /// <summary>
         /// A test for GetForegroundColor
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void GetPrimaryColorTest()
         {
@@ -155,7 +159,7 @@ namespace NoteFlyTests
 
         /// <summary>
         /// A test for GetBackgroundColor
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void GetSelectColorTest()
         {
@@ -170,7 +174,7 @@ namespace NoteFlyTests
 
         /// <summary>
         /// A test for GetHighlightColor
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void GetHighlightColorTest()
         {
@@ -184,7 +188,7 @@ namespace NoteFlyTests
 
         /// <summary>
         /// A test for CreateNote
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void CreateNoteTest()
         {
@@ -202,10 +206,12 @@ namespace NoteFlyTests
             {
                 Assert.Fail("Note title not good.");
             }
+
             if (actual.x != 400 && actual.y != 300)
             {
                 Assert.Fail("Note has wrong X,Y coordinates.");
             }
+
             if (actual.width != 200 && actual.height != 100)
             {
                 Assert.Fail("Note has wrong size");
@@ -214,7 +220,7 @@ namespace NoteFlyTests
 
         /// <summary>
         /// A test for CreateNote
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void GenerateRandomSkinnrTest()
         {
@@ -224,6 +230,7 @@ namespace NoteFlyTests
             {
                 Assert.Fail("Can't smaller than zero.");
             }
+
             if (n > target.GetSkinsNames().Length)
             {
                 Assert.Fail("Can't choice a skin outside the range. (or if GetSkinsNamesTest failed then this one fails too.)");

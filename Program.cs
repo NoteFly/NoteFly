@@ -23,16 +23,12 @@ using System;
 [assembly: CLSCompliant(true)]
 namespace NoteFly
 {
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Reflection;
     using System.IO;
+    using System.Reflection;
     using System.Threading;
 #if DEBUG
     using System.Diagnostics;
 #endif
-
-
 
     /// <summary>
     /// Program class, main entry application.
@@ -41,8 +37,19 @@ namespace NoteFly
     {
         #region Fields (3)
 
+        /// <summary>
+        /// Constant download page url.
+        /// </summary>
         private const string DOWNLOADPAGE = "http://www.notefly.tk/downloads.php";
+
+        /// <summary>
+        /// Reference to notes class.
+        /// </summary>
         private static Notes notes;
+
+        /// <summary>
+        /// Reference to trayicon
+        /// </summary>
         private static TrayIcon trayicon;
 
         #endregion Fields
@@ -90,7 +97,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the version of this programme as a formatted string.
+        /// Gets the version of this programme as a formatted string.
         /// </summary>
         public static string AssemblyVersionAsString
         {
@@ -102,7 +109,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the application version quality.
+        /// Gets the application version quality.
         /// alpha(=bugs for sure), beta(=bugs are likely), rc(=more testing still needed) or nothing for final(=ready for production)
         /// </summary>
         public static string AssemblyVersionQuality
@@ -114,7 +121,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The folder where NoteFly is installed.
+        /// Gets the folder where NoteFly is installed.
         /// Folder where assebly is located.
         /// </summary>
         public static string InstallFolder
@@ -147,7 +154,7 @@ namespace NoteFly
         /// <summary>
         /// If set ask the user if the want to load the link.
         /// </summary>
-        /// <param name="url">the uniform resource location</param>
+        /// <param name="uri_text">the uniform resource location</param>
         public static void LoadLink(string uri_text)
         {
             if (Settings.confirmLinkclick)
@@ -169,7 +176,7 @@ namespace NoteFly
         /// load settings, parser parameters, create notes list and trayicon.
         /// </summary>
         /// <param name="args">parameters</param>
-        [ STAThread ]
+        [STAThread]
         public static void Main(string[] args)
         {
             //a suggestion to "protect" against insecure Dynamic Library Loading vulnerabilities.
@@ -203,61 +210,63 @@ namespace NoteFly
 #endif
             bool visualstyle = true;
             bool resetpositions = false;
-            //override settings with supported parameters
+            // override settings with supported parameters
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
                 foreach (string arg in args)
                 {
                     switch (arg)
                     {
-                        //Forces the programme to setup the first run notefly info again.
+                        // Forces the programme to setup the first run notefly info again.
                         case "/forcefirstrun":
                             Settings.programFirstrun = true;
                             break;
-                        //disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
-                        //because transparency is on by default.
+                        // disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
+                        // because transparency is on by default.
                         case "/disabletransparency":
                             Settings.notesTransparencyEnabled = false;
                             break;
-                        //Turn off all highlighting functions in case highlighting was turned on and it let NoteFly crash on startup.
+                        // Turn off all highlighting functions in case highlighting was turned on and it let NoteFly crash on startup.
                         case "/disablehighlighting":
                             Settings.highlightHyperlinks = false;
                             Settings.highlightHTML = false;
                             Settings.highlightPHP = false;
                             Settings.highlightSQL = false;
                             break;
-                        //Turn off all social functions on startup.
+                        // Turn off all social functions on startup.
                         case "/disablesocial":
                             Settings.socialEmailEnabled = false;
-                            //Settings.socialFacebookEnabled = false;
-                            //Settings.socialTwitterEnabled = false;
+                            ////Settings.socialFacebookEnabled = false;
+                            ////Settings.socialTwitterEnabled = false;
                             break;
-                        //Turn all logging features on at startup. 
-                        //Handy in case NoteFly crashes at startup and logging was turned off.
+                        // Turn all logging features on at startup. 
+                        // Handy in case NoteFly crashes at startup and logging was turned off.
                         case "/logall":
                             Settings.programLogException = true;
                             Settings.programLogError = true;
                             Settings.programLogInfo = true;
                             break;
-                        //turn off xp visual style.
+                        // turn off xp visual style.
                         case "/disablevisualstyles":
-                            visualstyle = false; //about ~400ms slower on my system on display time notes.
+                            visualstyle = false; // about ~400ms slower on my system on display time notes.
                             break;
-                        //rescue option for notes loading out of screen.
+                        // rescue option for notes loading out of screen.
                         case "/resetpositions":
                             resetpositions = true;
                             break;
-                       //overwrite settings file with default settings.
+                       // overwrite settings file with default settings.
                         case "/resetsettings":
                             xmlUtil.WriteDefaultSettings();
                             break;
                     }
                 }
             }
+
             if (visualstyle)
             {
                 System.Windows.Forms.Application.EnableVisualStyles();
             }
+
             Highlight.InitHighlighter();
             notes = new Notes(resetpositions);
             trayicon = new TrayIcon(notes);
@@ -271,6 +280,7 @@ namespace NoteFly
                     updatethread.Start();
                 }
             }
+
             Highlight.DeinitHighlighter();
             System.Windows.Forms.Application.Run();
         }
@@ -289,7 +299,7 @@ namespace NoteFly
             bool updateavailible = false;
             for (int i = 0; i < thisversion.Length; i++)
             {
-                if (thisversion[i] < latestversion[i] && latestversion[i] >=0)
+                if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
                 {
                     updateavailible = true;
                     break;
@@ -311,7 +321,7 @@ namespace NoteFly
         /// Actual loads the url.
         /// Also provide some cursor feedback.
         /// </summary>
-        /// <param name="uri">The uri to load</param>
+        /// <param name="uri_text">The uri to load</param>
         private static void LoadURI(string uri_text)
         {
             try
@@ -325,10 +335,12 @@ namespace NoteFly
                 {
                     return;
                 }
+
                 if (String.IsNullOrEmpty(uri.Scheme))
                 {
                     uri.Scheme = "http://";
                 }
+
                 System.Diagnostics.ProcessStartInfo procstartinfo = new System.Diagnostics.ProcessStartInfo(uri.Uri.AbsoluteUri.ToString());
                 procstartinfo.ErrorDialog = true;
                 //procstartinfo.UseShellExecute = true;
@@ -340,7 +352,6 @@ namespace NoteFly
                 catch (System.ComponentModel.Win32Exception w32exc)
                 {
                     Log.Write(LogType.exception, w32exc.Message);
-                    //ErrorDialog is already showed.
                     return;
                 }
             }
@@ -352,7 +363,7 @@ namespace NoteFly
 
 #if windows
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-        public static extern bool SetDllDirectory(string pathName);
+        private static extern bool SetDllDirectory(string pathName);
 #endif
 
         #endregion Methods

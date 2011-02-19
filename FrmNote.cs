@@ -25,11 +25,10 @@ namespace NoteFly
     using System.ComponentModel;
     using System.Drawing;
     using System.IO;
-    using System.Windows.Forms;
 #if windows
     using System.Runtime.InteropServices;
-    using System.Web;
 #endif
+    using System.Windows.Forms;
 
     /// <summary>
     /// Note window.
@@ -79,9 +78,9 @@ namespace NoteFly
         /// <param name="note">note data class.</param>
         public FrmNote(Notes notes, Note note)
         {
+            InitializeComponent();
             this.notes = notes;
             this.note = note;
-            InitializeComponent();
             this.UpdateForm(false);
             this.lblTitle.Text = note.title;
             this.BackColor = notes.GetPrimaryClr(note.skinNr);
@@ -142,6 +141,7 @@ namespace NoteFly
         /// <summary>
         /// Set some settings
         /// </summary>
+        /// <param name="contentset">boolean if the note rtf content already set.</param>
         public void UpdateForm(bool contentset)
         {
             if (!contentset)
@@ -201,6 +201,10 @@ namespace NoteFly
             }
         }
         // Private Methods (30) 
+#if windows
+        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+#endif
 
         /// <summary>
         /// The user pressed the cross on the note,
@@ -457,7 +461,7 @@ namespace NoteFly
             Highlight.DeinitHighlighter();
             TrayIcon.RefreshFrmManageNotes();
             this.notes.frmmangenotesneedupdate = false;
-            Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to "+this.notes.GetSkinName(this.note.skinNr));
+            Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.skinNr));
         }
 
         /// <summary>
@@ -551,7 +555,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pnlHead_MouseMove(object sender, MouseEventArgs e)
         {
-            if ((this.moving) && (e.Button == MouseButtons.Left))
+            if (this.moving && e.Button == MouseButtons.Left)
             {
                 int dpx = e.Location.X - this.oldp.X;
                 int dpy = e.Location.Y - this.oldp.Y;
@@ -622,7 +626,7 @@ namespace NoteFly
             }
             else
             {
-                Log.Write(LogType.error, "Note "+this.note.Filename+" not saved. Position note is out of screen.");
+                Log.Write(LogType.error, "Note " + this.note.Filename + " not saved. Position note is out of screen.");
             }
         }
 
@@ -712,11 +716,6 @@ namespace NoteFly
         }
 
         #endregion Methods 
-
-#if windows
-        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-#endif
     }
 
 }

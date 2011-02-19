@@ -56,7 +56,7 @@ namespace NoteFly
         /// <summary>
         /// Initializes a new instance of the Textfile class.
         /// </summary>
-        /// <param name="isnote">is a note to be saved.</param>
+        /// <param name="writetype">The TextfileWriteType.</param>
         /// <param name="filename">the filename</param>
         /// <param name="title">the title of the textfile</param>
         /// <param name="content">the content of the textfile</param>
@@ -82,15 +82,17 @@ namespace NoteFly
                     case TextfileWriteType.exporthtml:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
                         writer = new StreamWriter(fs);
-                        //trying to make turn a incompleet html fragement into a valid html5 document.
+                        // trying to make turn a incompleet html fragement into a valid html5 document.
                         if (!content.Contains("<!DOCTYPE"))
                         {
                             writer.WriteLine("<!DOCTYPE html>");
                         }
+
                         if (!content.Contains("<html"))
                         {
                             writer.WriteLine("<html>");
                         }
+
                         if (!content.Contains("<head>"))
                         {
                             writer.WriteLine("<head>");
@@ -98,20 +100,24 @@ namespace NoteFly
                             writer.WriteLine("\t<title>" + title + "</title>");
                             writer.WriteLine("</head>");
                         }
+
                         if (!content.Contains("<body"))
                         {
                             writer.WriteLine("<body>");
                         }
+
                         writer.WriteLine("<h1>" + title + "</h1>");
-                        writer.WriteLine("<p>"+content+"</p>");
+                        writer.WriteLine("<p>" + content + "</p>");
                         if (!content.Contains("</body>"))
                         {
                             writer.WriteLine("</body>");
                         }
+
                         if (!content.Contains("</html>"))
                         {
                             writer.WriteLine("</html>");
                         }
+
                         break;
                     case TextfileWriteType.exportphp:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);

@@ -21,93 +21,93 @@ namespace NoteFly
     public partial class FrmSettings
     {
         /// <summary>
-        /// button
+        /// Button btnOK
         /// </summary>
         private System.Windows.Forms.Button btnOK;
 
         /// <summary>
-        /// button
+        /// Button btnCancel
         /// </summary>
         private System.Windows.Forms.Button btnCancel;
 
         /// <summary>
-        /// tabcontrol
+        /// TabControl tabControlSettings
         /// </summary>
         private System.Windows.Forms.TabControl tabControlSettings;
 
         /// <summary>
-        /// tabpage
+        /// TabPage tabAppearance
         /// </summary>
         private System.Windows.Forms.TabPage tabAppearance;
 
         /// <summary>
-        /// tabpage
+        /// TabPage tabSharing
         /// </summary>
         private System.Windows.Forms.TabPage tabSharing;
 
         /// <summary>
-        /// tabpage
+        /// TabPage tabAdvance
         /// </summary>
         private System.Windows.Forms.TabPage tabAdvance;
 
         /// <summary>
-        /// button
+        /// Button btnBrowse
         /// </summary>
         private System.Windows.Forms.Button btnBrowse;
 
         /// <summary>
-        /// label
+        /// Label lblTextNoteLocation
         /// </summary>
         private System.Windows.Forms.Label lblTextNoteLocation;
 
         /// <summary>
-        /// textbox
+        /// TextBox tbNotesSavePath
         /// </summary>
         private System.Windows.Forms.TextBox tbNotesSavePath;
 
         /// <summary>
-        /// folderbrowserdialog
+        /// FolderBrowserDialog folderBrowserDialogNotessavepath
         /// </summary>
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogNotessavepath;
 
         /// <summary>
-        /// combobox
+        /// ComboBox cbxActionLeftclick
         /// </summary>
         private System.Windows.Forms.ComboBox cbxActionLeftclick;
 
         /// <summary>
-        /// label
+        /// Label lblTextActionLeftClicktTrayicon
         /// </summary>
-        private System.Windows.Forms.Label lbText;
+        private System.Windows.Forms.Label lblTextActionLeftClicktTrayicon;
 
         /// <summary>
-        /// tabpage
+        /// TabPage tabGeneral
         /// </summary>
         private System.Windows.Forms.TabPage tabGeneral;
 
 #if windows
         /// <summary>
-        /// checkbox
+        /// CheckBox chxStartOnLogin
         /// </summary>
         private System.Windows.Forms.CheckBox chxStartOnLogin;
 #endif
         /// <summary>
-        /// checkbox
+        /// CheckBox chxConfirmLink
         /// </summary>
         private System.Windows.Forms.CheckBox chxConfirmLink;
 
         /// <summary>
-        /// checkbox
+        /// CheckBox chxConfirmExit
         /// </summary>
         private System.Windows.Forms.CheckBox chxConfirmExit;
 
         /// <summary>
-        /// checkbox
+        /// CheckBox chxLogErrors
         /// </summary>
         private System.Windows.Forms.CheckBox chxLogErrors;
 
         /// <summary>
-        /// button
+        /// Button btnResetSettings
         /// </summary>
         private System.Windows.Forms.Button btnResetSettings;
 
@@ -117,22 +117,22 @@ namespace NoteFly
         private System.Windows.Forms.TabPage tabNetwerk;
 
         /// <summary>
-        /// checkbox
+        /// CheckBox chxProxyEnabled
         /// </summary>
         private System.Windows.Forms.CheckBox chxProxyEnabled;
 
         /// <summary>
-        /// checkbox
+        /// CheckBox chxLogDebug
         /// </summary>
         private System.Windows.Forms.CheckBox chxLogDebug;
 
         /// <summary>
-        /// tabpage
+        /// TabPage tabHighlight
         /// </summary>
         private System.Windows.Forms.TabPage tabHighlight;
 
         /// <summary>
-        /// checkbox
+        /// CheckBox chxHighlightHTML
         /// </summary>
         private System.Windows.Forms.CheckBox chxHighlightHTML;
 
@@ -142,22 +142,22 @@ namespace NoteFly
         private IPTextBox iptbProxyAddress;
 
         /// <summary>
-        /// label
+        /// Label lblTextNetworkMiliseconds
         /// </summary>
-        private System.Windows.Forms.Label lbTextTwMs;
+        private System.Windows.Forms.Label lblTextNetworkMiliseconds;
 
         /// <summary>
-        /// label
+        /// Label lblTextNetworkTimeout
         /// </summary>
-        private System.Windows.Forms.Label lbTextTwTimeout;
+        private System.Windows.Forms.Label lblTextNetworkTimeout;
 
         /// <summary>
-        /// numericupdown
+        /// NumericUpDown numTimeout
         /// </summary>
         private System.Windows.Forms.NumericUpDown numTimeout;
 
         /// <summary>
-        /// checkbox
+        /// CheckBox chxConfirmDeletenote
         /// </summary>
         private System.Windows.Forms.CheckBox chxConfirmDeletenote;
 
@@ -165,6 +165,226 @@ namespace NoteFly
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// CheckBox chxHighlightHyperlinks
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxHighlightHyperlinks;
+
+        /// <summary>
+        /// CheckBox chxHighlightSQL
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxHighlightSQL;
+
+        /// <summary>
+        /// CheckBox chxHighlightPHP
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxHighlightPHP;
+
+        /// <summary>
+        /// TabControl tabControlSocialNetworks
+        /// </summary>
+        private System.Windows.Forms.TabControl tabControlSocialNetworks;
+
+        /// <summary>
+        /// TabPage tabEmail
+        /// </summary>
+        private System.Windows.Forms.TabPage tabEmail;
+
+        /// <summary>
+        /// CheckBox chxSocialEmailDefaultaddressBlank
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxSocialEmailDefaultaddressBlank;
+
+        /// <summary>
+        /// Label lblTextDefaultEmail
+        /// </summary>
+        private System.Windows.Forms.Label lblTextDefaultEmail;
+
+        /// <summary>
+        /// TextBox tbDefaultEmail
+        /// </summary>
+        private System.Windows.Forms.TextBox tbDefaultEmail;
+
+        /// <summary>
+        /// CheckBox chxSocialEmailEnabled
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxSocialEmailEnabled;
+
+        /// <summary>
+        /// CheckBox chxCheckUpdates
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxCheckUpdates;
+
+        /// <summary>
+        /// Label lblTextCheckforupdatesevery
+        /// </summary>
+        private System.Windows.Forms.Label lblTextCheckforupdatesevery;
+
+        /// <summary>
+        /// NumericUpDown numUpdateCheckDays
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numUpdateCheckDays;
+
+        /// <summary>
+        /// Label lblTextDayAtStartup
+        /// </summary>
+        private System.Windows.Forms.Label lblTextDayAtStartup;
+
+        /// <summary>
+        /// TabControl tabAppearanceColors
+        /// </summary>
+        private System.Windows.Forms.TabControl tabAppearanceColors;
+
+        /// <summary>
+        /// TabPage tabPageLooks
+        /// </summary>
+        private System.Windows.Forms.TabPage tabPageLooks;
+
+        /// <summary>
+        /// CheckBox chxTransparecy
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxTransparecy;
+
+        /// <summary>
+        /// Label lblDefaultNewNoteColor
+        /// </summary>
+        private System.Windows.Forms.Label lblDefaultNewNoteColor;
+
+        /// <summary>
+        /// ComboBox cbxDefaultColor
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxDefaultColor;
+
+        /// <summary>
+        /// NumericUpDown numProcTransparency
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numProcTransparency;
+
+        /// <summary>
+        /// Label lblTextTransparentProcVisible
+        /// </summary>
+        private System.Windows.Forms.Label lblTextTransparentProcVisible;
+
+        /// <summary>
+        /// TabPage tabPageFonts
+        /// </summary>
+        private System.Windows.Forms.TabPage tabPageFonts;
+
+        /// <summary>
+        /// Label lblTextFontTitlePoints
+        /// </summary>
+        private System.Windows.Forms.Label lblTextFontTitlePoints;
+
+        /// <summary>
+        /// NumericUpDown numFontSizeTitle
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numFontSizeTitle;
+
+        /// <summary>
+        /// Label lblTextFontTitleSize
+        /// </summary>
+        private System.Windows.Forms.Label lblTextFontTitleSize;
+
+        /// <summary>
+        /// ComboBox cbxFontNoteTitle
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxFontNoteTitle;
+
+        /// <summary>
+        /// Label lblTextFontTitleFamily
+        /// </summary>
+        private System.Windows.Forms.Label lblTextFontTitleFamily;
+
+        /// <summary>
+        /// Label lblTextDirection
+        /// </summary>
+        private System.Windows.Forms.Label lblTextDirection;
+
+        /// <summary>
+        /// ComboBox cbxTextDirection
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxTextDirection;
+
+        /// <summary>
+        /// Label lblTextFontContentPoints
+        /// </summary>
+        private System.Windows.Forms.Label lblTextFontContentPoints;
+
+        /// <summary>
+        /// NumericUpDown numFontSizeContent
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numFontSizeContent;
+
+        /// <summary>
+        /// Label lblTextFontContentSize
+        /// </summary>
+        private System.Windows.Forms.Label lblTextFontContentSize;
+
+        /// <summary>
+        /// Label lblTextNoteFont
+        /// </summary>
+        private System.Windows.Forms.Label lblTextNoteFont;
+
+        /// <summary>
+        /// ComboBox cbxFontNoteContent
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxFontNoteContent;
+
+        /// <summary>
+        /// CheckBox cbxFontNoteTitleBold
+        /// </summary>
+        private System.Windows.Forms.CheckBox cbxFontNoteTitleBold;
+
+        /// <summary>
+        /// CheckBox cbxShowTooltips
+        /// </summary>
+        private System.Windows.Forms.CheckBox cbxShowTooltips;
+
+        /// <summary>
+        /// Label lblTextLogging
+        /// </summary>
+        private System.Windows.Forms.Label lblTextLogging;
+
+        /// <summary>
+        /// CheckBox chxLogExceptions
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxLogExceptions;
+
+        /// <summary>
+        /// TabPage tabPageTrayicon
+        /// </summary>
+        private System.Windows.Forms.TabPage tabPageTrayicon;
+
+        /// <summary>
+        /// CheckBox chxTrayiconBoldExit
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxTrayiconBoldExit;
+
+        /// <summary>
+        /// CheckBox chxTrayiconBoldSettings
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxTrayiconBoldSettings;
+
+        /// <summary>
+        /// CheckBox chxTrayiconBoldManagenotes
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxTrayiconBoldManagenotes;
+
+        /// <summary>
+        /// CheckBox chxTrayiconBoldNewnote
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxTrayiconBoldNewnote;
+
+        /// <summary>
+        /// CheckBox chxUseRandomDefaultNote
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
+
+        /// <summary>
+        /// CheckBox chxNotesDeleteRecyclebin
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxNotesDeleteRecyclebin;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -193,34 +413,35 @@ namespace NoteFly
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chxNotesDeleteRecyclebin = new System.Windows.Forms.CheckBox();
             this.chxConfirmDeletenote = new System.Windows.Forms.CheckBox();
             this.cbxActionLeftclick = new System.Windows.Forms.ComboBox();
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
             this.chxStartOnLogin = new System.Windows.Forms.CheckBox();
-            this.lbText = new System.Windows.Forms.Label();
+            this.lblTextActionLeftClicktTrayicon = new System.Windows.Forms.Label();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabAppearanceColors = new System.Windows.Forms.TabControl();
             this.tabPageLooks = new System.Windows.Forms.TabPage();
             this.chxUseRandomDefaultNote = new System.Windows.Forms.CheckBox();
             this.cbxShowTooltips = new System.Windows.Forms.CheckBox();
             this.chxTransparecy = new System.Windows.Forms.CheckBox();
-            this.lbDefaultNewNoteColor = new System.Windows.Forms.Label();
+            this.lblDefaultNewNoteColor = new System.Windows.Forms.Label();
             this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
             this.numProcTransparency = new System.Windows.Forms.NumericUpDown();
-            this.lbTextProc = new System.Windows.Forms.Label();
+            this.lblTextTransparentProcVisible = new System.Windows.Forms.Label();
             this.tabPageFonts = new System.Windows.Forms.TabPage();
             this.cbxFontNoteTitleBold = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblTextFontTitlePoints = new System.Windows.Forms.Label();
             this.numFontSizeTitle = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblTextFontTitleSize = new System.Windows.Forms.Label();
             this.cbxFontNoteTitle = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lbTextDirection = new System.Windows.Forms.Label();
+            this.lblTextFontTitleFamily = new System.Windows.Forms.Label();
+            this.lblTextDirection = new System.Windows.Forms.Label();
             this.cbxTextDirection = new System.Windows.Forms.ComboBox();
-            this.lblTextpt = new System.Windows.Forms.Label();
+            this.lblTextFontContentPoints = new System.Windows.Forms.Label();
             this.numFontSizeContent = new System.Windows.Forms.NumericUpDown();
-            this.lblTextFontSize = new System.Windows.Forms.Label();
-            this.lbTextNoteFont = new System.Windows.Forms.Label();
+            this.lblTextFontContentSize = new System.Windows.Forms.Label();
+            this.lblTextNoteFont = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.tabPageTrayicon = new System.Windows.Forms.TabPage();
             this.chxTrayiconBoldExit = new System.Windows.Forms.CheckBox();
@@ -238,17 +459,18 @@ namespace NoteFly
             this.tabEmail = new System.Windows.Forms.TabPage();
             this.chxSocialEmailEnabled = new System.Windows.Forms.CheckBox();
             this.chxSocialEmailDefaultaddressBlank = new System.Windows.Forms.CheckBox();
-            this.lbTextDefaultEmail = new System.Windows.Forms.Label();
+            this.lblTextDefaultEmail = new System.Windows.Forms.Label();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTextDayAtStartup = new System.Windows.Forms.Label();
             this.numUpdateCheckDays = new System.Windows.Forms.NumericUpDown();
-            this.lbTextCheckforupdatesevery = new System.Windows.Forms.Label();
+            this.lblTextCheckforupdatesevery = new System.Windows.Forms.Label();
             this.chxCheckUpdates = new System.Windows.Forms.CheckBox();
-            this.lbTextTwMs = new System.Windows.Forms.Label();
+            this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
-            this.lbTextTwTimeout = new System.Windows.Forms.Label();
+            this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
             this.lblTextLogging = new System.Windows.Forms.Label();
@@ -258,9 +480,7 @@ namespace NoteFly
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.chxNotesDeleteRecyclebin = new System.Windows.Forms.CheckBox();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
+            this.folderBrowserDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -328,7 +548,7 @@ namespace NoteFly
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
             this.tabGeneral.Controls.Add(this.chxStartOnLogin);
-            this.tabGeneral.Controls.Add(this.lbText);
+            this.tabGeneral.Controls.Add(this.lblTextActionLeftClicktTrayicon);
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
@@ -336,6 +556,16 @@ namespace NoteFly
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // chxNotesDeleteRecyclebin
+            // 
+            this.chxNotesDeleteRecyclebin.AutoSize = true;
+            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(20, 98);
+            this.chxNotesDeleteRecyclebin.Name = "chxNotesDeleteRecyclebin";
+            this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(189, 17);
+            this.chxNotesDeleteRecyclebin.TabIndex = 24;
+            this.chxNotesDeleteRecyclebin.Text = "Move deleted notes to recycle bin.";
+            this.chxNotesDeleteRecyclebin.UseVisualStyleBackColor = true;
             // 
             // chxConfirmDeletenote
             // 
@@ -388,14 +618,14 @@ namespace NoteFly
             this.chxStartOnLogin.Text = "Start automatically on logon.";
             this.chxStartOnLogin.UseVisualStyleBackColor = true;
             // 
-            // lbText
+            // lblTextActionLeftClicktTrayicon
             // 
-            this.lbText.AutoSize = true;
-            this.lbText.Location = new System.Drawing.Point(19, 139);
-            this.lbText.Name = "lbText";
-            this.lbText.Size = new System.Drawing.Size(122, 13);
-            this.lbText.TabIndex = 15;
-            this.lbText.Text = "Action left click trayicon:";
+            this.lblTextActionLeftClicktTrayicon.AutoSize = true;
+            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(19, 139);
+            this.lblTextActionLeftClicktTrayicon.Name = "lblTextActionLeftClicktTrayicon";
+            this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(122, 13);
+            this.lblTextActionLeftClicktTrayicon.TabIndex = 15;
+            this.lblTextActionLeftClicktTrayicon.Text = "Action left click trayicon:";
             // 
             // tabAppearance
             // 
@@ -425,10 +655,10 @@ namespace NoteFly
             this.tabPageLooks.Controls.Add(this.chxUseRandomDefaultNote);
             this.tabPageLooks.Controls.Add(this.cbxShowTooltips);
             this.tabPageLooks.Controls.Add(this.chxTransparecy);
-            this.tabPageLooks.Controls.Add(this.lbDefaultNewNoteColor);
+            this.tabPageLooks.Controls.Add(this.lblDefaultNewNoteColor);
             this.tabPageLooks.Controls.Add(this.cbxDefaultColor);
             this.tabPageLooks.Controls.Add(this.numProcTransparency);
-            this.tabPageLooks.Controls.Add(this.lbTextProc);
+            this.tabPageLooks.Controls.Add(this.lblTextTransparentProcVisible);
             this.tabPageLooks.Location = new System.Drawing.Point(4, 22);
             this.tabPageLooks.Name = "tabPageLooks";
             this.tabPageLooks.Padding = new System.Windows.Forms.Padding(3);
@@ -473,14 +703,14 @@ namespace NoteFly
             this.chxTransparecy.Text = "Enable transparency notes";
             this.chxTransparecy.UseVisualStyleBackColor = false;
             // 
-            // lbDefaultNewNoteColor
+            // lblDefaultNewNoteColor
             // 
-            this.lbDefaultNewNoteColor.AutoSize = true;
-            this.lbDefaultNewNoteColor.Location = new System.Drawing.Point(15, 146);
-            this.lbDefaultNewNoteColor.Name = "lbDefaultNewNoteColor";
-            this.lbDefaultNewNoteColor.Size = new System.Drawing.Size(118, 13);
-            this.lbDefaultNewNoteColor.TabIndex = 9;
-            this.lbDefaultNewNoteColor.Text = "Default skin new notes:";
+            this.lblDefaultNewNoteColor.AutoSize = true;
+            this.lblDefaultNewNoteColor.Location = new System.Drawing.Point(15, 146);
+            this.lblDefaultNewNoteColor.Name = "lblDefaultNewNoteColor";
+            this.lblDefaultNewNoteColor.Size = new System.Drawing.Size(118, 13);
+            this.lblDefaultNewNoteColor.TabIndex = 9;
+            this.lblDefaultNewNoteColor.Text = "Default skin new notes:";
             // 
             // cbxDefaultColor
             // 
@@ -520,29 +750,29 @@ namespace NoteFly
             0,
             0});
             // 
-            // lbTextProc
+            // lblTextTransparentProcVisible
             // 
-            this.lbTextProc.AutoSize = true;
-            this.lbTextProc.Location = new System.Drawing.Point(234, 30);
-            this.lbTextProc.Name = "lbTextProc";
-            this.lbTextProc.Size = new System.Drawing.Size(47, 13);
-            this.lbTextProc.TabIndex = 12;
-            this.lbTextProc.Text = "% visible";
+            this.lblTextTransparentProcVisible.AutoSize = true;
+            this.lblTextTransparentProcVisible.Location = new System.Drawing.Point(234, 30);
+            this.lblTextTransparentProcVisible.Name = "lblTextTransparentProcVisible";
+            this.lblTextTransparentProcVisible.Size = new System.Drawing.Size(47, 13);
+            this.lblTextTransparentProcVisible.TabIndex = 12;
+            this.lblTextTransparentProcVisible.Text = "% visible";
             // 
             // tabPageFonts
             // 
             this.tabPageFonts.Controls.Add(this.cbxFontNoteTitleBold);
-            this.tabPageFonts.Controls.Add(this.label5);
+            this.tabPageFonts.Controls.Add(this.lblTextFontTitlePoints);
             this.tabPageFonts.Controls.Add(this.numFontSizeTitle);
-            this.tabPageFonts.Controls.Add(this.label4);
+            this.tabPageFonts.Controls.Add(this.lblTextFontTitleSize);
             this.tabPageFonts.Controls.Add(this.cbxFontNoteTitle);
-            this.tabPageFonts.Controls.Add(this.label3);
-            this.tabPageFonts.Controls.Add(this.lbTextDirection);
+            this.tabPageFonts.Controls.Add(this.lblTextFontTitleFamily);
+            this.tabPageFonts.Controls.Add(this.lblTextDirection);
             this.tabPageFonts.Controls.Add(this.cbxTextDirection);
-            this.tabPageFonts.Controls.Add(this.lblTextpt);
+            this.tabPageFonts.Controls.Add(this.lblTextFontContentPoints);
             this.tabPageFonts.Controls.Add(this.numFontSizeContent);
-            this.tabPageFonts.Controls.Add(this.lblTextFontSize);
-            this.tabPageFonts.Controls.Add(this.lbTextNoteFont);
+            this.tabPageFonts.Controls.Add(this.lblTextFontContentSize);
+            this.tabPageFonts.Controls.Add(this.lblTextNoteFont);
             this.tabPageFonts.Controls.Add(this.cbxFontNoteContent);
             this.tabPageFonts.Location = new System.Drawing.Point(4, 22);
             this.tabPageFonts.Name = "tabPageFonts";
@@ -564,14 +794,14 @@ namespace NoteFly
             this.cbxFontNoteTitleBold.Text = "bold";
             this.cbxFontNoteTitleBold.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // lblTextFontTitlePoints
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(182, 51);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(16, 13);
-            this.label5.TabIndex = 39;
-            this.label5.Text = "pt";
+            this.lblTextFontTitlePoints.AutoSize = true;
+            this.lblTextFontTitlePoints.Location = new System.Drawing.Point(182, 51);
+            this.lblTextFontTitlePoints.Name = "lblTextFontTitlePoints";
+            this.lblTextFontTitlePoints.Size = new System.Drawing.Size(16, 13);
+            this.lblTextFontTitlePoints.TabIndex = 39;
+            this.lblTextFontTitlePoints.Text = "pt";
             // 
             // numFontSizeTitle
             // 
@@ -595,14 +825,14 @@ namespace NoteFly
             0,
             0});
             // 
-            // label4
+            // lblTextFontTitleSize
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(61, 51);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 13);
-            this.label4.TabIndex = 37;
-            this.label4.Text = "Font size title:";
+            this.lblTextFontTitleSize.AutoSize = true;
+            this.lblTextFontTitleSize.Location = new System.Drawing.Point(61, 51);
+            this.lblTextFontTitleSize.Name = "lblTextFontTitleSize";
+            this.lblTextFontTitleSize.Size = new System.Drawing.Size(71, 13);
+            this.lblTextFontTitleSize.TabIndex = 37;
+            this.lblTextFontTitleSize.Text = "Font size title:";
             // 
             // cbxFontNoteTitle
             // 
@@ -616,25 +846,25 @@ namespace NoteFly
             this.cbxFontNoteTitle.Size = new System.Drawing.Size(182, 21);
             this.cbxFontNoteTitle.TabIndex = 36;
             // 
-            // label3
+            // lblTextFontTitleFamily
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(82, 25);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
-            this.label3.TabIndex = 35;
-            this.label3.Text = "Font title:";
+            this.lblTextFontTitleFamily.AutoSize = true;
+            this.lblTextFontTitleFamily.Location = new System.Drawing.Point(82, 25);
+            this.lblTextFontTitleFamily.Name = "lblTextFontTitleFamily";
+            this.lblTextFontTitleFamily.Size = new System.Drawing.Size(50, 13);
+            this.lblTextFontTitleFamily.TabIndex = 35;
+            this.lblTextFontTitleFamily.Text = "Font title:";
             // 
-            // lbTextDirection
+            // lblTextDirection
             // 
-            this.lbTextDirection.AccessibleDescription = "";
-            this.lbTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.lbTextDirection.AutoSize = true;
-            this.lbTextDirection.Location = new System.Drawing.Point(50, 183);
-            this.lbTextDirection.Name = "lbTextDirection";
-            this.lbTextDirection.Size = new System.Drawing.Size(71, 13);
-            this.lbTextDirection.TabIndex = 34;
-            this.lbTextDirection.Text = "Text direction";
+            this.lblTextDirection.AccessibleDescription = string.Empty;
+            this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.lblTextDirection.AutoSize = true;
+            this.lblTextDirection.Location = new System.Drawing.Point(50, 183);
+            this.lblTextDirection.Name = "lblTextDirection";
+            this.lblTextDirection.Size = new System.Drawing.Size(71, 13);
+            this.lblTextDirection.TabIndex = 34;
+            this.lblTextDirection.Text = "Text direction";
             // 
             // cbxTextDirection
             // 
@@ -651,14 +881,14 @@ namespace NoteFly
             this.cbxTextDirection.Size = new System.Drawing.Size(182, 21);
             this.cbxTextDirection.TabIndex = 33;
             // 
-            // lblTextpt
+            // lblTextFontContentPoints
             // 
-            this.lblTextpt.AutoSize = true;
-            this.lblTextpt.Location = new System.Drawing.Point(182, 130);
-            this.lblTextpt.Name = "lblTextpt";
-            this.lblTextpt.Size = new System.Drawing.Size(16, 13);
-            this.lblTextpt.TabIndex = 32;
-            this.lblTextpt.Text = "pt";
+            this.lblTextFontContentPoints.AutoSize = true;
+            this.lblTextFontContentPoints.Location = new System.Drawing.Point(182, 130);
+            this.lblTextFontContentPoints.Name = "lblTextFontContentPoints";
+            this.lblTextFontContentPoints.Size = new System.Drawing.Size(16, 13);
+            this.lblTextFontContentPoints.TabIndex = 32;
+            this.lblTextFontContentPoints.Text = "pt";
             // 
             // numFontSizeContent
             // 
@@ -682,23 +912,23 @@ namespace NoteFly
             0,
             0});
             // 
-            // lblTextFontSize
+            // lblTextFontContentSize
             // 
-            this.lblTextFontSize.AutoSize = true;
-            this.lblTextFontSize.Location = new System.Drawing.Point(9, 125);
-            this.lblTextFontSize.Name = "lblTextFontSize";
-            this.lblTextFontSize.Size = new System.Drawing.Size(123, 13);
-            this.lblTextFontSize.TabIndex = 30;
-            this.lblTextFontSize.Text = "default font size content:";
+            this.lblTextFontContentSize.AutoSize = true;
+            this.lblTextFontContentSize.Location = new System.Drawing.Point(9, 125);
+            this.lblTextFontContentSize.Name = "lblTextFontContentSize";
+            this.lblTextFontContentSize.Size = new System.Drawing.Size(123, 13);
+            this.lblTextFontContentSize.TabIndex = 30;
+            this.lblTextFontContentSize.Text = "default font size content:";
             // 
-            // lbTextNoteFont
+            // lblTextNoteFont
             // 
-            this.lbTextNoteFont.AutoSize = true;
-            this.lbTextNoteFont.Location = new System.Drawing.Point(30, 101);
-            this.lbTextNoteFont.Name = "lbTextNoteFont";
-            this.lbTextNoteFont.Size = new System.Drawing.Size(102, 13);
-            this.lbTextNoteFont.TabIndex = 29;
-            this.lbTextNoteFont.Text = "default font content:";
+            this.lblTextNoteFont.AutoSize = true;
+            this.lblTextNoteFont.Location = new System.Drawing.Point(30, 101);
+            this.lblTextNoteFont.Name = "lblTextNoteFont";
+            this.lblTextNoteFont.Size = new System.Drawing.Size(102, 13);
+            this.lblTextNoteFont.TabIndex = 29;
+            this.lblTextNoteFont.Text = "default font content:";
             // 
             // cbxFontNoteContent
             // 
@@ -859,7 +1089,7 @@ namespace NoteFly
             // 
             this.tabEmail.Controls.Add(this.chxSocialEmailEnabled);
             this.tabEmail.Controls.Add(this.chxSocialEmailDefaultaddressBlank);
-            this.tabEmail.Controls.Add(this.lbTextDefaultEmail);
+            this.tabEmail.Controls.Add(this.lblTextDefaultEmail);
             this.tabEmail.Controls.Add(this.tbDefaultEmail);
             this.tabEmail.Location = new System.Drawing.Point(4, 22);
             this.tabEmail.Name = "tabEmail";
@@ -891,14 +1121,14 @@ namespace NoteFly
             this.chxSocialEmailDefaultaddressBlank.UseVisualStyleBackColor = true;
             this.chxSocialEmailDefaultaddressBlank.CheckedChanged += new System.EventHandler(this.chxSocialEmailDefaultaddressBlank_CheckedChanged);
             // 
-            // lbTextDefaultEmail
+            // lblTextDefaultEmail
             // 
-            this.lbTextDefaultEmail.AutoSize = true;
-            this.lbTextDefaultEmail.Location = new System.Drawing.Point(11, 60);
-            this.lbTextDefaultEmail.Name = "lbTextDefaultEmail";
-            this.lbTextDefaultEmail.Size = new System.Drawing.Size(162, 13);
-            this.lbTextDefaultEmail.TabIndex = 22;
-            this.lbTextDefaultEmail.Text = "default email address to send to: ";
+            this.lblTextDefaultEmail.AutoSize = true;
+            this.lblTextDefaultEmail.Location = new System.Drawing.Point(11, 60);
+            this.lblTextDefaultEmail.Name = "lblTextDefaultEmail";
+            this.lblTextDefaultEmail.Size = new System.Drawing.Size(162, 13);
+            this.lblTextDefaultEmail.TabIndex = 22;
+            this.lblTextDefaultEmail.Text = "default email address to send to: ";
             // 
             // tbDefaultEmail
             // 
@@ -912,14 +1142,14 @@ namespace NoteFly
             // 
             // tabNetwerk
             // 
-            this.tabNetwerk.Controls.Add(this.label2);
+            this.tabNetwerk.Controls.Add(this.lblTextDayAtStartup);
             this.tabNetwerk.Controls.Add(this.numUpdateCheckDays);
-            this.tabNetwerk.Controls.Add(this.lbTextCheckforupdatesevery);
+            this.tabNetwerk.Controls.Add(this.lblTextCheckforupdatesevery);
             this.tabNetwerk.Controls.Add(this.chxCheckUpdates);
-            this.tabNetwerk.Controls.Add(this.lbTextTwMs);
+            this.tabNetwerk.Controls.Add(this.lblTextNetworkMiliseconds);
             this.tabNetwerk.Controls.Add(this.chxProxyEnabled);
             this.tabNetwerk.Controls.Add(this.numTimeout);
-            this.tabNetwerk.Controls.Add(this.lbTextTwTimeout);
+            this.tabNetwerk.Controls.Add(this.lblTextNetworkTimeout);
             this.tabNetwerk.Controls.Add(this.iptbProxyAddress);
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
             this.tabNetwerk.Name = "tabNetwerk";
@@ -929,14 +1159,14 @@ namespace NoteFly
             this.tabNetwerk.Text = "Network";
             this.tabNetwerk.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // lblTextDayAtStartup
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(221, 51);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 13);
-            this.label2.TabIndex = 29;
-            this.label2.Text = "days, at startup";
+            this.lblTextDayAtStartup.AutoSize = true;
+            this.lblTextDayAtStartup.Location = new System.Drawing.Point(221, 51);
+            this.lblTextDayAtStartup.Name = "lblTextDayAtStartup";
+            this.lblTextDayAtStartup.Size = new System.Drawing.Size(79, 13);
+            this.lblTextDayAtStartup.TabIndex = 29;
+            this.lblTextDayAtStartup.Text = "days, at startup";
             // 
             // numUpdateCheckDays
             // 
@@ -963,14 +1193,14 @@ namespace NoteFly
             0,
             0});
             // 
-            // lbTextCheckforupdatesevery
+            // lblTextCheckforupdatesevery
             // 
-            this.lbTextCheckforupdatesevery.AutoSize = true;
-            this.lbTextCheckforupdatesevery.Location = new System.Drawing.Point(25, 51);
-            this.lbTextCheckforupdatesevery.Name = "lbTextCheckforupdatesevery";
-            this.lbTextCheckforupdatesevery.Size = new System.Drawing.Size(126, 13);
-            this.lbTextCheckforupdatesevery.TabIndex = 27;
-            this.lbTextCheckforupdatesevery.Text = "Check for updates every ";
+            this.lblTextCheckforupdatesevery.AutoSize = true;
+            this.lblTextCheckforupdatesevery.Location = new System.Drawing.Point(25, 56);
+            this.lblTextCheckforupdatesevery.Name = "lblTextCheckforupdatesevery";
+            this.lblTextCheckforupdatesevery.Size = new System.Drawing.Size(126, 13);
+            this.lblTextCheckforupdatesevery.TabIndex = 27;
+            this.lblTextCheckforupdatesevery.Text = "Check for updates every ";
             // 
             // chxCheckUpdates
             // 
@@ -983,14 +1213,14 @@ namespace NoteFly
             this.chxCheckUpdates.UseVisualStyleBackColor = true;
             this.chxCheckUpdates.CheckedChanged += new System.EventHandler(this.cbxCheckUpdates_CheckedChanged);
             // 
-            // lbTextTwMs
+            // lblTextNetworkMiliseconds
             // 
-            this.lbTextTwMs.AutoSize = true;
-            this.lbTextTwMs.Location = new System.Drawing.Point(158, 194);
-            this.lbTextTwMs.Name = "lbTextTwMs";
-            this.lbTextTwMs.Size = new System.Drawing.Size(20, 13);
-            this.lbTextTwMs.TabIndex = 25;
-            this.lbTextTwMs.Text = "ms";
+            this.lblTextNetworkMiliseconds.AutoSize = true;
+            this.lblTextNetworkMiliseconds.Location = new System.Drawing.Point(158, 194);
+            this.lblTextNetworkMiliseconds.Name = "lblTextNetworkMiliseconds";
+            this.lblTextNetworkMiliseconds.Size = new System.Drawing.Size(20, 13);
+            this.lblTextNetworkMiliseconds.TabIndex = 25;
+            this.lblTextNetworkMiliseconds.Text = "ms";
             // 
             // chxProxyEnabled
             // 
@@ -1032,14 +1262,25 @@ namespace NoteFly
             0,
             0});
             // 
-            // lbTextTwTimeout
+            // lblTextNetworkTimeout
             // 
-            this.lbTextTwTimeout.AutoSize = true;
-            this.lbTextTwTimeout.Location = new System.Drawing.Point(22, 194);
-            this.lbTextTwTimeout.Name = "lbTextTwTimeout";
-            this.lbTextTwTimeout.Size = new System.Drawing.Size(66, 13);
-            this.lbTextTwTimeout.TabIndex = 24;
-            this.lbTextTwTimeout.Text = "timeout time:";
+            this.lblTextNetworkTimeout.AutoSize = true;
+            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(22, 194);
+            this.lblTextNetworkTimeout.Name = "lblTextNetworkTimeout";
+            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(66, 13);
+            this.lblTextNetworkTimeout.TabIndex = 24;
+            this.lblTextNetworkTimeout.Text = "timeout time:";
+            // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
             // 
             // tabAdvance
             // 
@@ -1140,27 +1381,6 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
-            // chxNotesDeleteRecyclebin
-            // 
-            this.chxNotesDeleteRecyclebin.AutoSize = true;
-            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(20, 98);
-            this.chxNotesDeleteRecyclebin.Name = "chxNotesDeleteRecyclebin";
-            this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(189, 17);
-            this.chxNotesDeleteRecyclebin.TabIndex = 24;
-            this.chxNotesDeleteRecyclebin.Text = "Move deleted notes to recycle bin.";
-            this.chxNotesDeleteRecyclebin.UseVisualStyleBackColor = true;
-            // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
-            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1208,50 +1428,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.CheckBox chxHighlightHyperlinks;
-        private System.Windows.Forms.CheckBox chxHighlightSQL;
-        private System.Windows.Forms.CheckBox chxHighlightPHP;
-        private System.Windows.Forms.TabControl tabControlSocialNetworks;
-        private System.Windows.Forms.TabPage tabEmail;
-        private System.Windows.Forms.CheckBox chxSocialEmailDefaultaddressBlank;
-        private System.Windows.Forms.Label lbTextDefaultEmail;
-        private System.Windows.Forms.TextBox tbDefaultEmail;
-        private System.Windows.Forms.CheckBox chxSocialEmailEnabled;
-        private System.Windows.Forms.CheckBox chxCheckUpdates;
-        private System.Windows.Forms.Label lbTextCheckforupdatesevery;
-        private System.Windows.Forms.NumericUpDown numUpdateCheckDays;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TabControl tabAppearanceColors;
-        private System.Windows.Forms.TabPage tabPageLooks;
-        private System.Windows.Forms.CheckBox chxTransparecy;
-        private System.Windows.Forms.Label lbDefaultNewNoteColor;
-        private System.Windows.Forms.ComboBox cbxDefaultColor;
-        private System.Windows.Forms.NumericUpDown numProcTransparency;
-        private System.Windows.Forms.Label lbTextProc;
-        private System.Windows.Forms.TabPage tabPageFonts;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numFontSizeTitle;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbxFontNoteTitle;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lbTextDirection;
-        private System.Windows.Forms.ComboBox cbxTextDirection;
-        private System.Windows.Forms.Label lblTextpt;
-        private System.Windows.Forms.NumericUpDown numFontSizeContent;
-        private System.Windows.Forms.Label lblTextFontSize;
-        private System.Windows.Forms.Label lbTextNoteFont;
-        private System.Windows.Forms.ComboBox cbxFontNoteContent;
-        private System.Windows.Forms.CheckBox cbxFontNoteTitleBold;
-        private System.Windows.Forms.CheckBox cbxShowTooltips;
-        private System.Windows.Forms.Label lblTextLogging;
-        private System.Windows.Forms.CheckBox chxLogExceptions;
-        private System.Windows.Forms.TabPage tabPageTrayicon;
-        private System.Windows.Forms.CheckBox chxTrayiconBoldExit;
-        private System.Windows.Forms.CheckBox chxTrayiconBoldSettings;
-        private System.Windows.Forms.CheckBox chxTrayiconBoldManagenotes;
-        private System.Windows.Forms.CheckBox chxTrayiconBoldNewnote;
-        private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
-        private System.Windows.Forms.CheckBox chxNotesDeleteRecyclebin;
     }
 }

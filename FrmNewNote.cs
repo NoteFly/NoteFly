@@ -23,10 +23,9 @@ namespace NoteFly
 {
     using System;
     using System.Drawing;
-    using System.Runtime.InteropServices;
-    using System.Windows.Forms;
     using System.IO;
     using System.Text;
+    using System.Windows.Forms;
 
     /// <summary>
     /// New and edit note window.
@@ -93,7 +92,7 @@ namespace NoteFly
         public FrmNewNote(Notes notes)
         {
             this.ConstructFrmNewNote(notes);
-            this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width / 2 - this.Width/2, Screen.PrimaryScreen.WorkingArea.Height / 2 - this.Height/2);
+            this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - this.Width / 2, ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2)));
             this.note = null;
             this.Text = "new note";
             if (Settings.notesDefaultRandomSkin)
@@ -596,7 +595,7 @@ namespace NoteFly
         /// <param name="e">Mouse event arguments</param>
         private void pnlHeadNewNote_MouseMove(object sender, MouseEventArgs e)
         {
-            if ((this.moving) && (e.Button == MouseButtons.Left))
+            if (this.moving && e.Button == MouseButtons.Left)
             {
                 if (this.note != null)
                 {

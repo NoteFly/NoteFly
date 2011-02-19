@@ -23,12 +23,10 @@ namespace NoteFly
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using System.Windows.Forms;
     using System.Drawing;
-    using System.Collections;
     using System.Globalization;
+    using System.IO;
+    using System.Windows.Forms;
 #if DEBUG
     using System.Diagnostics;
 
@@ -41,24 +39,14 @@ namespace NoteFly
         #region Fields (4)
 
         /// <summary>
-        /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
-        /// </summary>
-        public bool frmmangenotesneedupdate = false;
-
-        /// <summary>
         /// The note extension
         /// </summary>
         public const string NOTEEXTENSION = ".nfn";
 
         /// <summary>
-        /// The list with all notes.
+        /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
         /// </summary>
-        private List<Note> notes;
-
-        /// <summary>
-        /// List with all skins for notes.
-        /// </summary>
-        private List<Skin> skins;
+        public bool frmmangenotesneedupdate = false;
 
         /// <summary>
         /// The maximum length of the filename.
@@ -70,6 +58,16 @@ namespace NoteFly
         /// </summary>
         private const string IMPORTEDFLAGFILE = "impnf20.flg";
 
+        /// <summary>
+        /// The list with all notes.
+        /// </summary>
+        private List<Note> notes;
+
+        /// <summary>
+        /// List with all skins for notes.
+        /// </summary>
+        private List<Skin> skins;
+
         #endregion Fields
 
         #region Constructors (1)
@@ -78,6 +76,7 @@ namespace NoteFly
         /// <summary>
         /// Initializes a new instance of the Notes class.
         /// </summary>
+        /// <param name="resetpositions">Boolean true for reseting all notes positions on loading.</param>
         public Notes(bool resetpositions)
         {
             this.notes = new List<Note>();
@@ -91,7 +90,7 @@ namespace NoteFly
         #region Properties (1)
 
         /// <summary>
-        /// The number of notes there are.
+        /// Gets the number of notes there are.
         /// </summary>
         public int CountNotes
         {
@@ -142,10 +141,10 @@ namespace NoteFly
         /// </summary>
         /// <param name="title">The title of the note.</param>
         /// <param name="skinnr">The skinnr</param>
-        /// <param name="x">X-coordinate</param>
-        /// <param name="y">Y-coordinate</param>
-        /// <param name="height">Height of the note</param>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
         /// <param name="width">Width of the note</param>
+        /// <param name="height">Height of the note</param>
         /// <returns>Note object</returns>
         public Note CreateNote(string title, int skinnr, int x, int y, int width, int height)
         {
@@ -170,14 +169,14 @@ namespace NoteFly
         public int GenerateRandomSkinnr()
         {
             Random rndgen = new Random();
-            return rndgen.Next(0, this.skins.Count + 1);
+            return rndgen.Next(0, this.skins.Count);
         }
 
         /// <summary>
         /// Gets the highlight color.
         /// </summary>
         /// <param name="skinnr">The skin number</param>
-        /// <returns></returns>
+        /// <returns>Color object</returns>
         public System.Drawing.Color GetHighlightClr(int skinnr)
         {
             return this.GetColor(3, skinnr);
@@ -275,6 +274,7 @@ namespace NoteFly
                     return i;
                 }
             }
+
             Log.Write(LogType.error, "SkinNr not found for skinname:" + skinname);
             return -1;
         }
@@ -290,6 +290,7 @@ namespace NoteFly
             {
                 skinnames[i] = this.skins[i].Name;
             }
+
             return skinnames;
         }
 
@@ -340,6 +341,7 @@ namespace NoteFly
             {
                 notefiles[i] = Path.GetFileName(notefilespath[i]);
             }
+
             notefilespath = null;
 #if DEBUG
             stopwatch.Stop();
@@ -370,6 +372,7 @@ namespace NoteFly
                     note.x = 10;
                     note.y = 10;
                 }
+
                 this.AddNote(note);
                 if (this.notes[i].visible)
                 {
@@ -384,64 +387,6 @@ namespace NoteFly
             if (firstrun)
             {
                 this.CreateFirstrunNote();
-            }
-        }
-
-        /// <summary>
-        /// Ask and import notes from NoteFly 1.0.x if application data folder of NoteFly 1.0.x exist.
-        /// </summary>
-        private void ImportingNotesNoteFly1()
-        {
-#if windows
-            string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly");
-#endif
-            if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE)) ))
-            {
-                DialogResult resdoimport = MessageBox.Show("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.", "Import out NoteFly 1.0.x", MessageBoxButtons.YesNo);
-                if (resdoimport == DialogResult.Yes)
-                {
-                    string nf1settingsfile = Path.Combine(nf1appdata, "settings.xml");
-                    string nf1notesavepath = xmlUtil.GetContentString(nf1settingsfile, "notesavepath");
-                    int noteid = 1;
-                    string nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
-                    while (File.Exists(nf1notefile))
-                    {
-                        string nf1note_title = xmlUtil.GetContentString(nf1notefile, "title");
-                        int nf1note_skinnr = xmlUtil.GetContentInt(nf1notefile, "color");
-                        if (nf1note_skinnr >= this.skins.Count)
-                        {
-                            nf1note_skinnr = 0;
-                        }
-                        bool nf1note_visible = false;
-                        if (xmlUtil.GetContentInt(nf1notefile, "visible") == 1)
-                        {
-                            nf1note_visible = true;
-                        }
-                        Note importnf1note = new Note(this, this.GetNoteFilename(nf1note_title) );
-                        importnf1note.visible = nf1note_visible;
-                        importnf1note.title = nf1note_title;
-                        importnf1note.skinNr = nf1note_skinnr;
-                        importnf1note.ontop = false;
-                        importnf1note.locked = false;
-                        importnf1note.x = xmlUtil.GetContentInt(nf1notefile, "x");
-                        importnf1note.y = xmlUtil.GetContentInt(nf1notefile, "y");
-                        importnf1note.width = xmlUtil.GetContentInt(nf1notefile, "width");
-                        importnf1note.height = xmlUtil.GetContentInt(nf1notefile, "heigth");
-                        string content = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20" + xmlUtil.GetContentString(nf1notefile, "content") + "\\ulnone\\par\r\n}\r\n";
-                        xmlUtil.WriteNote(importnf1note, this.GetSkinName(nf1note_skinnr), content);
-                        noteid++;
-                        nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
-                    }
-                    try
-                    {
-                        File.Create(Path.Combine(nf1appdata, IMPORTEDFLAGFILE));
-                    }
-                    catch
-                    {
-                        Log.Write(LogType.exception, "Could not set import flag in old notes directory.");
-                    }
-                    Log.Write(LogType.info, "Notes from notefly 1.0.x imported.");
-                }
             }
         }
 
@@ -471,7 +416,7 @@ namespace NoteFly
             System.Text.StringBuilder newfilename = new System.Text.StringBuilder();
             char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
             bool isforbiddenchar = false;
-            for (int pos = 0; (pos < orgname.Length); pos++)
+            for (int pos = 0; pos < orgname.Length; pos++)
             {
                 isforbiddenchar = false;
                 for (int fc = 0; fc < forbiddenchars.Length; fc++)
@@ -481,11 +426,13 @@ namespace NoteFly
                         isforbiddenchar = true;
                     }
                 }
+
                 if (!isforbiddenchar)
                 {
                     newfilename.Append(orgname[pos]);
                 }
             }
+
             return newfilename.ToString();
         }
 
@@ -499,7 +446,69 @@ namespace NoteFly
                 curnote.UpdateForm();
             }
         }
-        // Private Methods (4) 
+        // Private Methods (5) 
+
+        /// <summary>
+        /// Ask and import notes from NoteFly 1.0.x if application data folder of NoteFly 1.0.x exist.
+        /// </summary>
+        private void ImportingNotesNoteFly1()
+        {
+#if windows
+            string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly");
+#endif
+            if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE))))
+            {
+                DialogResult resdoimport = MessageBox.Show("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.", "Import out NoteFly 1.0.x", MessageBoxButtons.YesNo);
+                if (resdoimport == DialogResult.Yes)
+                {
+                    string nf1settingsfile = Path.Combine(nf1appdata, "settings.xml");
+                    string nf1notesavepath = xmlUtil.GetContentString(nf1settingsfile, "notesavepath");
+                    int noteid = 1;
+                    string nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
+                    while (File.Exists(nf1notefile))
+                    {
+                        string nf1note_title = xmlUtil.GetContentString(nf1notefile, "title");
+                        int nf1note_skinnr = xmlUtil.GetContentInt(nf1notefile, "color");
+                        if (nf1note_skinnr >= this.skins.Count)
+                        {
+                            nf1note_skinnr = 0;
+                        }
+
+                        bool nf1note_visible = false;
+                        if (xmlUtil.GetContentInt(nf1notefile, "visible") == 1)
+                        {
+                            nf1note_visible = true;
+                        }
+
+                        Note importnf1note = new Note(this, this.GetNoteFilename(nf1note_title));
+                        importnf1note.visible = nf1note_visible;
+                        importnf1note.title = nf1note_title;
+                        importnf1note.skinNr = nf1note_skinnr;
+                        importnf1note.ontop = false;
+                        importnf1note.locked = false;
+                        importnf1note.x = xmlUtil.GetContentInt(nf1notefile, "x");
+                        importnf1note.y = xmlUtil.GetContentInt(nf1notefile, "y");
+                        importnf1note.width = xmlUtil.GetContentInt(nf1notefile, "width");
+                        importnf1note.height = xmlUtil.GetContentInt(nf1notefile, "heigth");
+                        string content = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20" + xmlUtil.GetContentString(nf1notefile, "content") + "\\ulnone\\par\r\n}\r\n";
+                        xmlUtil.WriteNote(importnf1note, this.GetSkinName(nf1note_skinnr), content);
+                        noteid++;
+                        nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
+                    }
+
+                    try
+                    {
+                        File.Create(Path.Combine(nf1appdata, IMPORTEDFLAGFILE));
+                    }
+                    catch
+                    {
+                        Log.Write(LogType.exception, "Could not set import flag in old notes directory.");
+                    }
+
+                    Log.Write(LogType.info, "Notes from notefly 1.0.x imported.");
+                }
+            }
+        }
 
         /// <summary>
         /// This method set a limit on how many notes can be loaded before a 
@@ -521,6 +530,9 @@ namespace NoteFly
         /// <summary>
         /// Check if filename already exist if it is then generate a new one.
         /// </summary>
+        /// <param name="newfile">The suggested new filename.</param>
+        /// <param name="usedlimitlengthfile">The used file length limit.</param>
+        /// <param name="sepchar">Seperator character.</param>
         /// <returns>Empty string on all used.</returns>
         private string Checknewfilename(string newfile, int usedlimitlengthfile, char sepchar)
         {
@@ -533,6 +545,7 @@ namespace NoteFly
                 newfile = newfile.Substring(0, usedlimitlengthfile - numlen - 1) + sepchar + num + NOTEEXTENSION;
                 num++;
             }
+
             if (numlen > lenfilecounter)
             {
                 sepchar++;
@@ -591,6 +604,7 @@ namespace NoteFly
                 case 4:
                     return this.skins[skinnr].TextClr;
             }
+
             Log.Write(LogType.error, "Can't get color. type:" + type + " skinnr" + skinnr);
             return Color.White;
         }
