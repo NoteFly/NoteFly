@@ -146,6 +146,10 @@ namespace NoteFly
         {
             if (!contentset)
             {
+                if (!Settings.notesTransparencyEnabled)
+                {
+                    this.Opacity = 100;
+                }
                 this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.skinNr);
                 if (Settings.fontTitleStylebold)
                 {
@@ -197,7 +201,6 @@ namespace NoteFly
                 this.pnlNote.Size = new Size(this.Width, (this.Height - this.pnlHead.Height + 1));
                 this.rtbNote.DetectUrls = Settings.highlightHyperlinks;
                 Highlight.CheckSyntaxFull(this.rtbNote, this.note.skinNr, this.notes);
-                
             }
         }
         // Private Methods (30) 

@@ -702,6 +702,7 @@ namespace NoteFly
             this.chxTransparecy.TabIndex = 8;
             this.chxTransparecy.Text = "Enable transparency notes";
             this.chxTransparecy.UseVisualStyleBackColor = false;
+            this.chxTransparecy.CheckedChanged += new System.EventHandler(this.chxTransparecy_CheckedChanged);
             // 
             // lblDefaultNewNoteColor
             // 
@@ -857,7 +858,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = string.Empty;
+            this.lblTextDirection.AccessibleDescription = "";
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.Location = new System.Drawing.Point(50, 183);

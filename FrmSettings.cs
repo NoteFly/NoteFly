@@ -486,6 +486,11 @@ namespace NoteFly
                 return false;
             }
         }
+
+        private void chxTransparecy_CheckedChanged(object sender, EventArgs e)
+        {
+            this.numProcTransparency.Enabled = this.chxTransparecy.Checked;
+        }
 #endif
     }
 }
