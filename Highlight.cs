@@ -31,7 +31,7 @@ namespace NoteFly
     /// </summary>
     public class Highlight
     {
-        #region Fields (9) 
+        #region Fields (9)
 
         /// <summary>
         /// The php end document keyword.
@@ -78,7 +78,7 @@ namespace NoteFly
         /// </summary>
         private static string phpcommentstart = "/*";
 
-        #endregion Fields 
+        #endregion Fields
 
         #region Properties (1)
 
@@ -93,9 +93,9 @@ namespace NoteFly
             }
         }
 
-        #endregion Properties 
+        #endregion Properties
 
-        #region Methods (8) 
+        #region Methods (8)
 
         // Public Methods (3) 
 
@@ -255,13 +255,38 @@ namespace NoteFly
                                     if (lenphpkeyword > 0)
                                     {
                                         string isphp = rtb.Text.Substring(poslastkeyword, lenphpkeyword);
-                                        if (ValidatingPhp(isphp))
+                                        if (ValidatingPhp(isphp) == 1)
                                         {
                                             ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorValidfunctions));
                                         }
-                                        else
+                                        // /*
+                                        else if (ValidatingPhp(isphp) == 2)
                                         {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorInvalidfunctions));
+                                            int poslastquote = int.MaxValue;
+                                            bool isendquote = false;
+                                            for (int n = 0; n < isphp.Length; n++)
+                                            {
+                                                if (isphp[n] == '"')
+                                                {
+                                                    if (isendquote)
+                                                    {
+                                                        int len = (poslastkeyword + n) - poslastquote +1; //+1 for last quote.
+                                                        ColorText(rtb, poslastquote, len, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
+                                                        poslastquote = int.MaxValue;
+                                                        isendquote = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        poslastquote = (poslastkeyword + n);
+                                                        isendquote = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        // */
+                                        else if (ValidatingPhp(isphp) == 0)
+                                        {
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorInvalidfunctions)); //
                                         }
                                     }
                                 }
@@ -400,11 +425,11 @@ namespace NoteFly
                     //e.g. <br /> becomes <br> and <wrong/> becomes <wrong>
                     if (ishtml[ishtml.Length - 3] == ' ')
                     {
-                        ishtml = ishtml.Remove(ishtml.Length - 2, 2); 
+                        ishtml = ishtml.Remove(ishtml.Length - 2, 2);
                     }
                     else
                     {
-                        ishtml = ishtml.Remove(ishtml.Length - 2, 1); 
+                        ishtml = ishtml.Remove(ishtml.Length - 2, 1);
                     }
                 }
             }
@@ -450,13 +475,13 @@ namespace NoteFly
                             {
                                 attributefound = true;
                                 ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.highlightHTMLColorValid));
-                                break; 
+                                break;
                             }
                         }
 
                         if (!attributefound)
                         {
-                             ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.highlightHTMLColorInvalid));
+                            ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.highlightHTMLColorInvalid));
                         }
 
                         lastpos = pos + 1; //+1 for ' ' or '>'
@@ -470,7 +495,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="isphp">A part to be check if this a php keyword.</param>
         /// <returns>true if a keyword matches isphp part.</returns>
-        private static bool ValidatingPhp(string isphp)
+        private static int ValidatingPhp(string isphp)
         {
             isphp = isphp.ToLower();
             if (keywordsphp == null)
@@ -482,11 +507,17 @@ namespace NoteFly
             {
                 if (isphp == keywordsphp[i])
                 {
-                    return true;
+                    return 1;
                 }
             }
-
-            return false;
+            for (int n = 0; n < isphp.Length; n++)
+            {
+                if (isphp[n] == '"')
+                {
+                    return 2;
+                }
+            }
+            return 0;
         }
 
         /// <summary>
@@ -513,7 +544,7 @@ namespace NoteFly
             return false;
         }
 
-        #endregion Methods 
+        #endregion Methods
     }
 
 }
