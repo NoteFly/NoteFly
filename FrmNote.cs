@@ -718,7 +718,23 @@ namespace NoteFly
             }
         }
 
-        #endregion Methods 
+        private void FrmNote_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!e.Cancel)
+            {
+                this.note.visible = false;
+                this.note.tempcontent = null;
+            }
+        }
+
+        private void FrmNote_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.notes.frmmangenotesneedupdate = true;
+            TrayIcon.RefreshFrmManageNotes();
+            
+        }
+
+        #endregion Methods
     }
 
 }

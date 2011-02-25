@@ -469,6 +469,8 @@ namespace NoteFly
             this.TransparencyKey = System.Drawing.SystemColors.Control;
             this.Deactivate += new System.EventHandler(this.frmNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNote_Activated);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmNote_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmNote_FormClosing);
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();
             this.menuFrmNoteOptions.ResumeLayout(false);

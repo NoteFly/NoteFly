@@ -153,12 +153,7 @@ namespace NoteFly
             {
                 this.frmnote.Close();
             }
-
-            this.visible = false;
-            this.tempcontent = null;
             this.frmnote = null;
-            this.notes.frmmangenotesneedupdate = true;
-            TrayIcon.RefreshFrmManageNotes();
             GC.Collect();
         }
 

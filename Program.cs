@@ -17,8 +17,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos //platform can be: windows, linux, macos
 
+#define windows //platform can be: windows, linux, macos //platform can be: windows, linux, macos
 using System;
 [assembly: CLSCompliant(true)]
 namespace NoteFly
@@ -116,7 +116,7 @@ namespace NoteFly
         {
             get
             {
-                return "beta2";
+                return "beta3";
             }
         }
 

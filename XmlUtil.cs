@@ -729,11 +729,15 @@ namespace NoteFly
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
             }
+            catch (AccessViolationException)
+            {
+                Log.Write(LogType.exception, "Premission problem writing: "+Path.Combine(Program.AppDataFolder, SETTINGSFILE));
+                return false;
+            }
             finally
             {
                 xmlwrite.Close();
             }
-            //CheckFile();
             return true;
         }
         // Private Methods (3) 

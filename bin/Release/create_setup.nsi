@@ -1,18 +1,22 @@
-; Copyright (C) 2009-2011
+;  NoteFly a note application.
+;  Copyright (C) 2010-2011  Tom
 ;
-; This program is free software; you can redistribute it and/or modify it
-; Free Software Foundation; either version 2, or (at your option) any
-; later version.
-; 
-; This program is distributed in the hope that it will be useful,
-; but WITHOUT ANY WARRANTY; without even the implied warranty of
-; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-; GNU General Public License for more details.
+;  This program is free software: you can redistribute it and/or modify
+;  it under the terms of the GNU General Public License as published by
+;  the Free Software Foundation, either version 3 of the License, or
+;  (at your option) any later version.
 ;
+;  This program is distributed in the hope that it will be useful,
+;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;  GNU General Public License for more details.
+;
+;  You should have received a copy of the GNU General Public License
+;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ; version
 !define VERSION "2.0.0"       ;version number: major.minor.release
-!define VERSTATUS "beta2"     ;alpha, beta, rc, or nothing for final.
+!define VERSTATUS "beta3"     ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 !define LANGFILE "langs.xml"
 
@@ -93,11 +97,9 @@ FunctionEnd
 Function GetDotNETVersion
   Push $0
   Push $1
- 
   System::Call "mscoree::GetCORVersion(w .r0, i ${NSIS_MAX_STRLEN}, *i) i .r1 ?u"
   StrCmp $1 "error" 0 +2
-    StrCpy $0 "not found"
- 
+  StrCpy $0 "not found"
   Pop $1
   Exch $0
 FunctionEnd
@@ -112,15 +114,9 @@ StrCmp $R0 "\Windows" bad
 StrCpy $R0 $INSTDIR "" -6
 StrCmp $R0 "\WinNT" bad
 StrCpy $R0 $INSTDIR "" -9
-StrCmp $R0 "\system32" bad
-StrCpy $R0 $INSTDIR "" -8
-StrCmp $R0 "\Desktop" bad
-StrCpy $R0 $INSTDIR "" -22
-StrCmp $R0 "\Documents and Settings" bad
-StrCpy $R0 $INSTDIR "" -13
-StrCmp $R0 "\My Documents" bad done
+StrCmp $R0 "\system32" bad done
 bad:
-  MessageBox MB_OK|MB_ICONSTOP "Install path is invalid. Please choice an other installation path."
+  MessageBox MB_OK|MB_ICONWARNING "The current installation path is not recommended. Please choice an other installation path."
   Abort
 done:
 !macroend
@@ -142,20 +138,22 @@ UninstPage instfiles
 ;--------------------------------
 
 ; The files to install
-Section "main executable (required)"	
+Section "main executable (required)"
   SectionIn RO
-  SetOverwrite on  
+  SetOverwrite on
   
-  ;Check installation directory and set output path to the installation directory.
-  !insertmacro BadPathsCheck
-  SetOutPath $INSTDIR 
-  
-  ;Kill running NoteFly if any, using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in (optimized version, KillProcDLL.dll only)
+  ; Kill running NoteFly if still running, using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in (optimized version, KillProcDLL.dll only)
   KillProcDLL::KillProc "${APPFILE}" 
   sleep 300
+  
+  ; Check installation directory 
+  !insertmacro BadPathsCheck
+  
+  ; Set output path to the installation directory.
+  SetOutPath $INSTDIR 
 
   ; Write the installation path into the registry
-  WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"   
+  WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"
   ; Write the uninstall keys for Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "DisplayName" "NoteFly"  
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "UninstallString" '"$INSTDIR\uninstall.exe"'
@@ -165,9 +163,9 @@ Section "main executable (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
   
   ; write the files main executable and uninstaller.
-  File "${APPFILE}"
   File "${LANGFILE}"
-  WriteUninstaller "uninstall.exe"   
+  File "${APPFILE}"
+  WriteUninstaller "uninstall.exe"
   
 SectionEnd
 
@@ -176,7 +174,7 @@ Section "Desktop Shortcut"
   CreateShortCut "$DESKTOP\NoteFly.lnk" "$INSTDIR\${APPFILE}"  ;vista/7 icon default.
 SectionEnd
 
-Section "Start Menu Shortcuts"  
+Section "Start Menu Shortcuts"
   SetShellVarContext all
   ;startmenu shortcut should be for all users or currentuser Not administrator account.
   CreateDirectory "$SMPROGRAMS\NoteFly"
@@ -190,20 +188,23 @@ SectionEnd
 Section "Uninstall"  
 
   ; Remove registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly"  
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly"
   DeleteRegKey HKLM SOFTWARE\NoteFly
 
   ; Remove files and uninstaller
   Delete "$INSTDIR\${APPFILE}"
   Delete "$INSTDIR\${LANGFILE}"
   Delete "$INSTDIR\uninstall.exe"
-           
+  
+  ; Remove directory if empty
   RMDir "$INSTDIR"
   
+  ; Remove startmenu shortcuts
   SetShellVarContext all
   Delete "$SMPROGRAMS\NoteFly\NoteFly.lnk"
   Delete "$SMPROGRAMS\NoteFly\Uninstall.lnk"
+  
+  ; Remove startmenu folder if empty
   RMDir "$SMPROGRAMS\NoteFly"
-
 
 SectionEnd
