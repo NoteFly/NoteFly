@@ -470,7 +470,7 @@ namespace NoteFly
         /// <summary>
         /// Requested to rollup or rolldown the note form.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void menuRollUp_Click(object sender, EventArgs e)
         {
@@ -615,7 +615,7 @@ namespace NoteFly
         /// <summary>
         /// Thread to save note settings.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void SavePos_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -718,6 +718,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// FrmNote is closing
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">FormClosingEvent arguments</param>
         private void FrmNote_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!e.Cancel)
@@ -727,6 +732,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// FrmNote is closed.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">FormClosedEvent arguments</param>
         private void FrmNote_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.notes.frmmangenotesneedupdate = true;

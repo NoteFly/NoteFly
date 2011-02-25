@@ -452,7 +452,7 @@ namespace NoteFly
             OpenFileDialog openfiledlg = new OpenFileDialog();
             openfiledlg.Title = "open file";
             openfiledlg.Multiselect = false;
-            openfiledlg.Filter = "Plain text file (*.txt)|*.txt|PNotes note (*.pnote)|*.pnote|KeyNote NF note (*knt)|*knt";
+            openfiledlg.Filter = "Plain text file (*.txt)|*.txt|PNotes note(*.pnote)|*.pnote|KeyNote NF note (*.knt)|*.knt";
             openfiledlg.CheckFileExists = true;
             openfiledlg.CheckPathExists = true;
             DialogResult res = openfiledlg.ShowDialog();
