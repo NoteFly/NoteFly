@@ -186,7 +186,7 @@ namespace NoteFly
             xmlread.ProhibitDtd = true;
             try
             {
-                note = ParserNoteNode(notes, note, 0);
+                note = ParserNoteNode(notes, note, 0, false);
             }
             finally
             {
@@ -590,13 +590,14 @@ namespace NoteFly
             {
                 xmlwrite = new XmlTextWriter(filenamepath, System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument(true);//standalone
+                xmlwrite.WriteStartDocument(true); //standalone
                 xmlwrite.WriteStartElement("backupnotes");
                 xmlwrite.WriteAttributeString("number", notes.CountNotes.ToString());
                 for (int i = 0; i < notes.CountNotes; i++)
                 {
                     string skinname = notes.GetSkinName(notes.GetNote(i).skinNr);
-                    WriteNoteBody(notes.GetNote(i), skinname, notes.GetNote(i).GetContent());
+                    string content = notes.GetNote(i).GetContent();
+                    WriteNoteBody(notes.GetNote(i), skinname, content);
                 }
 
                 xmlwrite.WriteEndElement();
@@ -646,14 +647,13 @@ namespace NoteFly
                 Note importnote = new Note(notes, notes.GetNoteFilename("import" + i));
                 try
                 {
-                    importnote = ParserNoteNode(notes, importnote, i);
+                    importnote = ParserNoteNode(notes, importnote, i, true);
                 }
                 finally
                 {
                     xmlread.Close();
                 }
                 string skinname = notes.GetSkinName(importnote.skinNr);
-
                 WriteNote(importnote, skinname, importnote.tempcontent);
             }
         }
@@ -941,7 +941,7 @@ namespace NoteFly
         /// <param name="note">the note object to set</param>
         /// <param name="readnotenum">The number occurance of the note node to be parser (first, sencod etc.)</param>
         /// <returns>a note object</returns>
-        private static Note ParserNoteNode(Notes notes, Note note, int readnotenum)
+        private static Note ParserNoteNode(Notes notes, Note note, int readnotenum, bool setallcontent)
         {
             int curnotenum = -1;
             bool endnode = false;
@@ -1004,7 +1004,7 @@ namespace NoteFly
                             note.title = xmlread.ReadElementContentAsString();
                             break;
                         case "content":
-                            if (note.visible)
+                            if ((note.visible) || (setallcontent))
                             {
                                 note.tempcontent = xmlread.ReadElementContentAsString();
                             }

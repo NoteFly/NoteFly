@@ -189,14 +189,14 @@ namespace NoteFly
         /// <returns>The Note object</returns>
         public Note GetNote(int pos)
         {
-            //try
-            //{
+            try
+            {
                 return this.notes[pos];
-            //}
-            //catch (IndexOutOfRangeException)
-            //{
-            //    throw new CustomException("Can't get this note position: " + pos);
-            //}
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new CustomException("Can't get this note position: " + pos);
+            }
         }
 
         /// <summary>

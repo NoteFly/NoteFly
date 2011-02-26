@@ -185,7 +185,7 @@ namespace NoteFly
                 else
                 {
                     //error
-                    throw new CustomException("Cannot read note content, note not found: " + notefilepath);
+                    throw new CustomException("Cannot read note content, note file not found: " + notefilepath);
                 }
             }
             else

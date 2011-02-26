@@ -74,7 +74,7 @@ namespace NoteFly
         /// <summary>
         /// The prevois of previous painted row number.
         /// </summary>
-        private int secondprevrownr = -1;
+        private int secondprevrownr = -2;
 
         #endregion Fields 
 
@@ -178,7 +178,8 @@ namespace NoteFly
                 {
                     this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
                 }
-
+                this.prevrownr = -1;
+                this.secondprevrownr = -2;
                 this.DrawNotesGrid();
                 this.SetDataGridViewColumsWidth();
                 this.btnNoteDelete.Enabled = false;
@@ -187,6 +188,9 @@ namespace NoteFly
                     this.btnNoteDelete.Enabled = true;
                 }
             }
+            this.prevrownr = -1;
+            this.secondprevrownr = -1;
+            this.notes.frmmangenotesneedupdate = true;
         }
 
         /// <summary>
@@ -214,7 +218,7 @@ namespace NoteFly
                         if (eraseres == DialogResult.Yes)
                         {
                             Log.Write(LogType.info, "Erased all notes for restoring notes backup.");
-                            for (int i = 0; i <= this.notes.CountNotes; i++)
+                            for (int i = 0; i < this.notes.CountNotes; i++)
                             {
                                 File.Delete(Path.Combine(Settings.notesSavepath, this.notes.GetNote(i).Filename));
                             }
@@ -267,19 +271,25 @@ namespace NoteFly
                 this.notes.GetNote(notepos).visible = !this.notes.GetNote(notepos).visible;
                 if (this.notes.GetNote(notepos).visible)
                 {
+                    String tempcontent = this.notes.GetNote(notepos).GetContent();
+                    if (tempcontent == String.Empty)
+                    {
+                        Log.Write(LogType.exception, "Note content is empty.");
+                    }
+                    this.notes.GetNote(notepos).tempcontent = tempcontent;
                     this.notes.GetNote(notepos).CreateForm();
                     this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
-                    //this.Activate();
                 }
                 else
                 {
                     this.notes.GetNote(notepos).DestroyForm();
                     this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
                 }
-
+                this.prevrownr = -1;
+                this.secondprevrownr = -2;
                 xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).skinNr), this.notes.GetNote(notepos).GetContent());
             }
-
+            
             this.notes.frmmangenotesneedupdate = false;
         }
 
@@ -350,7 +360,7 @@ namespace NoteFly
                 {
                     if (e.RowIndex == this.secondprevrownr)
                     {
-                        this.prevrownr = int.MaxValue;
+                        this.prevrownr = -1;
                     }
                     else
                     {
@@ -412,7 +422,6 @@ namespace NoteFly
                         Log.Write(LogType.info, "Deleted note: " + filepath);
                     }
 
-
                     this.notes.RemoveNote(deletenotepos[r]);
                 }
                 catch (FileNotFoundException filenotfoundexc)
@@ -426,6 +435,7 @@ namespace NoteFly
                     MessageBox.Show(msgaccessdenied);
                 }
             }
+            DrawNotesGrid();
 
             GC.Collect();
         }
@@ -436,6 +446,8 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
+            this.prevrownr = -1;
+            this.secondprevrownr = -1;
             this.notes.frmmangenotesneedupdate = true;
             this.toolTip.Active = Settings.notesTooltipsEnabled;
 
@@ -544,7 +556,6 @@ namespace NoteFly
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             this.SetDataGridViewColumsWidth();
-            this.prevrownr = -1;
             this.notes.frmmangenotesneedupdate = true;
         }
 
