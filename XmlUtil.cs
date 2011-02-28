@@ -887,14 +887,57 @@ namespace NoteFly
             return version;
         }
 
+        /*
+        public static string[] ParserLanguageCommentkeywords(string file, string languagename)
+        {
+            string[] comments = new string[3];
+            try
+            {
+                xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, file));
+                xmlread.ProhibitDtd = true;
+                while (xmlread.Read())
+                {
+                    if (xmlread.Name == "Language")
+                    {
+                        if (xmlread.GetAttribute("name") == languagename)
+                        {
+                            comments[0] = xmlread.GetAttribute("commentLine");
+                            comments[1] = xmlread.GetAttribute("commentStart");
+                            comments[2] = xmlread.GetAttribute("commentEnd");
+                        }
+                        else
+                        {
+                            xmlread.Skip();
+                        }
+                    }
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                Log.Write(LogType.exception, "File " + file + " not found.");
+            }
+            finally
+            {
+                xmlread.Close();
+            }
+            return comments;
+        }
+         */
+
         /// <summary>
         /// Return a array of keywords used for the prgramming language we are doing a syntax check on.
         /// </summary>
         /// <param name="file">the file to parser.</param>
+        /// <param name="languagename">the language to lookup.</param>
+        /// <param name="varcomments">commentline, commentstart and commentend</param>
         /// <returns>An array of keyword used for hightlighting.</returns>
-        public static string[] ParserLanguageLexical(string file, string languagename)
+        public static string[] ParserLanguageLexical(string file, string languagename, out string[] langcomments)
         {
             string[] keywords = null;
+            langcomments = new string[3];
+            langcomments[0] = string.Empty;
+            langcomments[1] = string.Empty;
+            langcomments[2] = string.Empty;
             try
             {
                 xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, file));
@@ -906,6 +949,13 @@ namespace NoteFly
                     {
                         if (xmlread.GetAttribute("name") == languagename || readsubnodes)
                         {
+                            if (!readsubnodes)
+                            {
+                                langcomments[0] = xmlread.GetAttribute("commentLine");
+                                langcomments[1] = xmlread.GetAttribute("commentStart");
+                                langcomments[2] = xmlread.GetAttribute("commentEnd");
+                            }
+
                             readsubnodes = true;
                             if (xmlread.Name == "Keywords")
                             {

@@ -64,19 +64,39 @@ namespace NoteFly
         private static bool keywordsinit = false;
 
         /// <summary>
-        /// The php comment end.
-        /// </summary>
-        private static string phpcommentend = "*/";
-
-        /// <summary>
         /// The comment line.
         /// </summary>
-        private static string phpcommentline = "//";
+        private static string phpcommentline;
 
         /// <summary>
         /// The php comment start.
         /// </summary>
-        private static string phpcommentstart = "/*";
+        private static string phpcommentstart;
+
+        /// <summary>
+        /// The php comment end.
+        /// </summary>
+        private static string phpcommentend;
+
+        /// <summary>
+        /// html comment start.
+        /// </summary>
+        private static string htmlcommentstart;
+
+        /// <summary>
+        /// html comment end.
+        /// </summary>
+        private static string htmlcommentend;
+
+        /// <summary>
+        /// sql comment start.
+        /// </summary>
+        private static string sqlcommentstart;
+
+        /// <summary>
+        /// sql comment end.
+        /// </summary>
+        private static string sqlcommentend;
 
         #endregion Fields
 
@@ -346,19 +366,27 @@ namespace NoteFly
         /// </summary>
         public static void InitHighlighter()
         {
+            string[] langcomments;
             if (Settings.highlightHTML)
             {
-                keywordshtml = xmlUtil.ParserLanguageLexical("langs.xml", "html");
+                keywordshtml = xmlUtil.ParserLanguageLexical("langs.xml", "html", out langcomments);
+                htmlcommentstart = langcomments[1];
+                htmlcommentend = langcomments[2];
             }
 
             if (Settings.highlightPHP)
             {
-                keywordsphp = xmlUtil.ParserLanguageLexical("langs.xml", "php");
+                keywordsphp = xmlUtil.ParserLanguageLexical("langs.xml", "php", out langcomments);
+                phpcommentline = langcomments[0];
+                phpcommentstart = langcomments[1];
+                phpcommentend = langcomments[2];
             }
 
             if (Settings.highlightSQL)
             {
-                keywordssql = xmlUtil.ParserLanguageLexical("langs.xml", "sql");
+                keywordssql = xmlUtil.ParserLanguageLexical("langs.xml", "sql", out langcomments);
+                sqlcommentstart = langcomments[1];
+                sqlcommentend = langcomments[2];
             }
 
             keywordsinit = true;
