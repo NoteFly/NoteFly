@@ -255,12 +255,16 @@ namespace NoteFly
                                     if (lenphpkeyword > 0)
                                     {
                                         string isphp = rtb.Text.Substring(poslastkeyword, lenphpkeyword);
-                                        if (ValidatingPhp(isphp) == 1)
+                                        int resnode = ValidatingPhp(isphp);
+                                        if (resnode == 1)
                                         {
                                             ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorValidfunctions));
                                         }
-                                        // /*
-                                        else if (ValidatingPhp(isphp) == 2)
+                                        else if (resnode == 3)
+                                        {
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
+                                        }
+                                        else if (resnode == 2)
                                         {
                                             int poslastquote = int.MaxValue;
                                             bool isendquote = false;
@@ -270,7 +274,7 @@ namespace NoteFly
                                                 {
                                                     if (isendquote)
                                                     {
-                                                        int len = (poslastkeyword + n) - poslastquote +1; //+1 for last quote.
+                                                        int len = (poslastkeyword + n) - poslastquote + 1; //+1 for last quote.
                                                         ColorText(rtb, poslastquote, len, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
                                                         poslastquote = int.MaxValue;
                                                         isendquote = false;
@@ -283,8 +287,7 @@ namespace NoteFly
                                                 }
                                             }
                                         }
-                                        // */
-                                        else if (ValidatingPhp(isphp) == 0)
+                                        else if (resnode == 0)
                                         {
                                             ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorInvalidfunctions)); //
                                         }
@@ -503,6 +506,23 @@ namespace NoteFly
                 InitHighlighter();
             }
 
+            //is varable:
+            if (isphp.StartsWith("$") && isphp.Length > 1)
+            {
+                char c = isphp[1];
+                if (c > 58)
+                {
+                    return 3;
+                }
+            }
+
+            //is assign:
+            if (isphp == "=")
+            {
+                return 4;
+            }
+
+            //is know function:
             for (int i = 0; i < keywordsphp.Length; i++)
             {
                 if (isphp == keywordsphp[i])
@@ -510,6 +530,8 @@ namespace NoteFly
                     return 1;
                 }
             }
+
+            //has string:
             for (int n = 0; n < isphp.Length; n++)
             {
                 if (isphp[n] == '"')
@@ -517,6 +539,8 @@ namespace NoteFly
                     return 2;
                 }
             }
+
+            //not valid:
             return 0;
         }
 

@@ -803,7 +803,8 @@ namespace NoteFly
                     request.Proxy = new WebProxy(Settings.networkProxyAddress);
                 }
 
-                request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+                request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore); //do not cache, prevent incorrect cache result.
+                request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
                 Stream responsestream;
                 using (WebResponse response = request.GetResponse())
                 {
@@ -863,6 +864,7 @@ namespace NoteFly
                             xmlread.Close();
                         }
                     }
+                    responsestream.Close();
                 }
             }
             catch (TimeoutException)

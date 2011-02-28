@@ -28,6 +28,7 @@ namespace NoteFly
     using System.Threading;
 #if DEBUG
     using System.Diagnostics;
+    using System.Text;
 #endif
 
     /// <summary>
@@ -308,7 +309,14 @@ namespace NoteFly
 
             if (updateavailible || Program.AssemblyVersionQuality != latestversionquality)
             {
-                System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show("There's a new version availible.\r\nDo you want to go to the download page now?", "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
+                StringBuilder sbmsg = new StringBuilder();
+                sbmsg.AppendLine("There's a new version availible.");
+                sbmsg.Append("Your version: ");
+                sbmsg.AppendLine(Program.AssemblyVersionAsString + " "+Program.AssemblyVersionQuality);
+                sbmsg.Append("New version: ");
+                sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] +" "+ latestversionquality);
+                sbmsg.Append("Do you want to go to the download page now?");
+                System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(),"update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                 if (updres == System.Windows.Forms.DialogResult.Yes)
                 {
                     Program.LoadURI(DOWNLOADPAGE);
