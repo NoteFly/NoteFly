@@ -25,10 +25,10 @@ namespace NoteFly
 {
     using System.IO;
     using System.Reflection;
+    using System.Text;
     using System.Threading;
 #if DEBUG
     using System.Diagnostics;
-    using System.Text;
 #endif
 
     /// <summary>
@@ -351,7 +351,6 @@ namespace NoteFly
 
                 System.Diagnostics.ProcessStartInfo procstartinfo = new System.Diagnostics.ProcessStartInfo(uri.Uri.AbsoluteUri.ToString());
                 procstartinfo.ErrorDialog = true;
-                //procstartinfo.UseShellExecute = true;
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.AppStarting;
                 try
                 {

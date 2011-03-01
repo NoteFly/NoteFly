@@ -867,14 +867,9 @@ namespace NoteFly
                     responsestream.Close();
                 }
             }
-            catch (TimeoutException)
-            {
-                Log.Write(LogType.error, "updating timeout.");
-            }
             catch (System.Net.WebException webexc)
             {
-                MessageBox.Show(webexc.Message);
-                Log.Write(LogType.error, "updating " + webexc.Message);
+                Log.Write(LogType.exception, "update check, " + webexc.Message);
             }
             finally
             {

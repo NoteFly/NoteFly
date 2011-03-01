@@ -88,7 +88,7 @@ Function .onInit
     userInfo::getAccountType
     pop $0
     strCmp $0 "Admin" +3
-    messageBox MB_OK "You need to have administrator rights to install NoteFly"
+    MessageBox MB_OK "You need to have administrator rights to install NoteFly"
     Abort
     return
 
@@ -116,7 +116,7 @@ StrCmp $R0 "\WinNT" bad
 StrCpy $R0 $INSTDIR "" -9
 StrCmp $R0 "\system32" bad done
 bad:
-  MessageBox MB_OK|MB_ICONWARNING "The current installation path is not recommended. Please choice an other installation path."
+  MessageBox MB_OK|MB_ICONSTOP "The current installation path is not recommended. Please choice an other installation path."
   Abort
 done:
 !macroend
@@ -187,10 +187,13 @@ SectionEnd
 ; Uninstaller
 Section "Uninstall"  
 
+  ; Check installation directory 
+  !insertmacro BadPathsCheck
+  
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly"
   DeleteRegKey HKLM SOFTWARE\NoteFly
-
+  
   ; Remove files and uninstaller
   Delete "$INSTDIR\${APPFILE}"
   Delete "$INSTDIR\${LANGFILE}"
