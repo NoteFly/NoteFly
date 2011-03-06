@@ -225,6 +225,14 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Destroy NotifyIcon with ContextMenuStrip and ToolStripMenuItems etc.
+        /// </summary>
+        public void Dispose()
+        {
+            this.components.Dispose();
+        }
+
+        /// <summary>
         /// There is left clicked on the icon.
         /// If actionleftclick is 0 do nothing.
         /// If actionleftclick is 1 actived all notes.

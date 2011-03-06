@@ -286,6 +286,12 @@ namespace NoteFly
             System.Windows.Forms.Application.Run();
         }
 
+        public static void RestartTrayicon()
+        {
+            trayicon.Dispose();
+            trayicon = new TrayIcon(notes);
+        }
+
         /// <summary>
         /// Do update check.
         /// </summary>

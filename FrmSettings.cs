@@ -222,7 +222,7 @@ namespace NoteFly
                         }
                         catch (UnauthorizedAccessException unauthexc)
                         {
-                            Log.Write(LogType.exception, unauthexc.Message);
+                            Log.Write(LogType.exception, "Not enough right to write logon start key to registry."+unauthexc.Message);
                             MessageBox.Show(unauthexc.Message);
                         }
                         catch (Exception exc)
@@ -251,6 +251,7 @@ namespace NoteFly
                     Highlight.InitHighlighter();
                 }
                 this.notes.UpdateAllNoteForms();
+                Program.RestartTrayicon();
                 if (Highlight.KeywordsInitialized)
                 {
                     Highlight.DeinitHighlighter();
