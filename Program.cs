@@ -117,7 +117,7 @@ namespace NoteFly
         {
             get
             {
-                return "beta3";
+                return "beta4";
             }
         }
 
@@ -286,6 +286,9 @@ namespace NoteFly
             System.Windows.Forms.Application.Run();
         }
 
+        /// <summary>
+        /// Dispose the trayicon and create a new one.
+        /// </summary>
         public static void RestartTrayicon()
         {
             trayicon.Dispose();

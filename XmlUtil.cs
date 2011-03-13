@@ -537,7 +537,8 @@ namespace NoteFly
             Settings.updatecheckLastDate = DateTime.Now.ToString();
             try
             {
-                WriteSettings();
+                xmlUtil.WriteSettings();
+                xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE), 2428); //TODO test
                 return true;
             }
             catch (Exception)
@@ -1106,6 +1107,22 @@ namespace NoteFly
             finally
             {
                 xmlwrite.Close();
+            }
+
+            xmlUtil.CheckFile(filename, 1630);
+        }
+
+        /// <summary>
+        /// Checks if filesize is right for a partialer file.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="exceptedfilesize"></param>
+        private static void CheckFile(string filename, long exceptedfilesize)
+        {
+            FileInfo fi = new FileInfo(filename);
+            if (fi.Length != exceptedfilesize)
+            {
+                Log.Write(LogType.exception, filename + " has not excepted filesize. Check if corrupted.");
             }
         }
 
