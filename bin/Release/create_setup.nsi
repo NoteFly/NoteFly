@@ -14,9 +14,8 @@
 ;  You should have received a copy of the GNU General Public License
 ;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-; version
-!define VERSION "2.0.0"       ;version number: major.minor.release
-!define VERSTATUS "beta3"     ;alpha, beta, rc, or nothing for final.
+!define VERSION "2.0.0"       ;version number: major.minor.release/build
+!define VERSTATUS "beta4"     ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 !define LANGFILE "langs.xml"
 
@@ -32,6 +31,9 @@ BrandingText " "
 VIProductVersion "${VERSION}.0"
 VIAddVersionKey "ProductName" "NoteFly"
 VIAddVersionKey "FileDescription" "note taking application"
+VIAddVersionKey "ProductVersion" "${VERSION}.0 ${VERSTATUS}"
+VIAddVersionKey "LegalCopyright" "NoteFly"
+VIAddVersionKey "FileVersion" "${VERSION}.0 ${VERSTATUS}"
 
 ; The file to write
 OutFile ".\NoteFly_v${VERSION}${VERSTATUS}.exe"
@@ -50,8 +52,6 @@ RequestExecutionLevel admin
 !include WordFunc.nsh
 !include FileFunc.nsh
 
-;!insertmacro VersionCompare
-
 Function .onInit
 
  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "installnotefly") i .r1 ?e'
@@ -65,11 +65,9 @@ Function .onInit
   Pop $0
   ${If} $0 == ".NET not found"
   
-  MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework 2.0 is not installed.\\
-  $\nPlease get .NET framework 2.0. Press OK to go to the website.\\" IDOK downloadDotNet
+  MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework 2.0 is not installed.$\nPlease get .NET framework 2.0.$\nPress OK to go to the website to download and install." IDOK downloadDotNet
   Abort
    Goto done
-  
   downloadDotNet:
     ExecShell "open" "http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5"
   done:
@@ -80,7 +78,11 @@ Function .onInit
  
   ${VersionCompare} $0 "2.0" $1
   ${If} $1 == 2
-    MessageBox MB_OK|MB_ICONSTOP ".NET framework v2.0 or newer is required. You have $0. Please update it first."
+    MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework v2.0 or newer is required.$\nPlease get .NET framework 2.0.$\nPress OK to go to the website to download and install." IDOK downloadDotNet2
+     Goto done2
+    downloadDotNet2:
+    ExecShell "open" "http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5"
+    done2:
     Abort
   ${EndIf}
   
@@ -170,8 +172,19 @@ Section "main executable (required)"
 SectionEnd
 
 Section "Desktop Shortcut"
-  SetShellVarContext all
-  CreateShortCut "$DESKTOP\NoteFly.lnk" "$INSTDIR\${APPFILE}"  ;vista/7 icon default.
+SetShellVarContext all
+
+
+; Get the OS version
+nsisos::osversion ; OS plugin from: http://nsis.sourceforge.net/NSIS-OS_plug-in
+StrCpy $R0 $0
+StrCpy $R1 $1
+; Check our version
+${If} $R0 == '5'
+  CreateShortCut "$DESKTOP\NoteFly2.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ;small icon for win. xp.
+${Else}
+  CreateShortCut "$DESKTOP\NoteFly2.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ;large icon
+${EndIf}
 SectionEnd
 
 Section "Start Menu Shortcuts"
@@ -179,7 +192,7 @@ Section "Start Menu Shortcuts"
   ;startmenu shortcut should be for all users or currentuser Not administrator account.
   CreateDirectory "$SMPROGRAMS\NoteFly"
   CreateShortCut "$SMPROGRAMS\NoteFly\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0
+  CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ;large icon
 SectionEnd
 
 ;--------------------------------
@@ -202,6 +215,18 @@ Section "Uninstall"
   ; Remove directory if empty
   RMDir "$INSTDIR"
   
+  IfFileExists "$APPDATA\.NoteFly2\" skipappfoldernotfound
+  MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes and settings?" IDNO keepsettingnotes
+  SetShellVarContext current
+  Delete "$APPDATA\.NoteFly2\settings.xml"
+  Delete "$APPDATA\.NoteFly2\skins.xml"
+  Delete "$APPDATA\.NoteFly2\debug.log"
+  
+  skipappfoldernotfound:
+  keepsettingnotes:
+  ; Remove desktop shortcut
+  Delete "$DESKTOP\NoteFly.lnk"
+    
   ; Remove startmenu shortcuts
   SetShellVarContext all
   Delete "$SMPROGRAMS\NoteFly\NoteFly.lnk"

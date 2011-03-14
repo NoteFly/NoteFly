@@ -22,8 +22,7 @@
     <GenerateManifests>true</GenerateManifests>
     <ExcludedPermissions>System.Diagnostics.EventLogPermission, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089; System.Data.OleDb.OleDbPermission, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089; System.Data.SqlClient.SqlClientPermission, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ExcludedPermissions>
     <ReleaseVersion>2.0</ReleaseVersion>
-    <Win32Resource>
-    </Win32Resource>
+    <Win32Resource>C:\Users\Public\sourcecode\Projects_Csharp\notefly\icons.res</Win32Resource>
     <SignAssembly>true</SignAssembly>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -39,8 +38,8 @@
     <ApplicationVersion>2.0.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ApplicationIcon>icon_big.ico</ApplicationIcon>
-    <NoWin32Manifest>true</NoWin32Manifest>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -153,6 +152,8 @@
     <None Include="app.config" />
     <None Include="bin\Debug\skins.xsd" />
     <None Include="clean_settings.bat" />
+    <None Include="Doxyfile_settings" />
+    <None Include="icons.res" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -203,7 +204,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Release\license.txt" />
-    <Content Include="icon_big.ico" />
     <Content Include="Resources\icon_big.ico" />
     <Content Include="Resources\icon_big.png" />
     <Content Include="Resources\icon_small.ico" />

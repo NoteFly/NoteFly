@@ -27,6 +27,7 @@ namespace NoteFly
     using System.Reflection;
     using System.Text;
     using System.Threading;
+    using System.Diagnostics;
 #if DEBUG
     using System.Diagnostics;
 #endif
@@ -142,7 +143,7 @@ namespace NoteFly
         /// <summary>
         /// Gets the application version number as an array.
         /// </summary>
-        /// <returns>a string containing the version number of this application in the form of major.minur.build number</returns>
+        /// <returns>a string containing the version number of this application in the form of major.minor.build number</returns>
         public static short[] GetVersion()
         {
             short[] version = new short[3];
@@ -268,6 +269,15 @@ namespace NoteFly
                 System.Windows.Forms.Application.EnableVisualStyles();
             }
 
+            if (Program.CheckInstancesRunning() > 1)
+            {
+                System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show("The programme is already running.\nLoad an other instance? (not recommeded)", "already running", System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (dlgres == System.Windows.Forms.DialogResult.No)
+                {
+                    return;
+                }
+            }
+
             Highlight.InitHighlighter();
             notes = new Notes(resetpositions);
             trayicon = new TrayIcon(notes);
@@ -332,7 +342,26 @@ namespace NoteFly
                 }
             }
         }
+
         // Private Methods (1) 
+
+        /// <summary>
+        /// Check number of instance of this application.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private static int CheckInstancesRunning()
+        {
+            int instances = 0;
+            foreach (Process proc in Process.GetProcesses())
+            {
+                if (proc.ProcessName.Equals(Program.AssemblyTitle))
+                {
+                    instances++;
+                }
+            }
+            return instances;
+        } 
 
         /// <summary>
         /// Actual loads the url.
