@@ -227,7 +227,7 @@ namespace NoteFly
                         }
                         catch (Exception exc)
                         {
-                            throw new CustomException(exc.Message + " " + exc.StackTrace);
+                            throw new ApplicationException(exc.Message + " " + exc.StackTrace);
                         }
                     }
                     else if (this.chxStartOnLogin.Checked == false)
@@ -376,7 +376,10 @@ namespace NoteFly
                     {
                         File.Move(oldfile, newfile);
                     }
-                    else { throw new CustomException(NoteFly.Properties.Resources.settings_excsystemfilenotmoved); }
+                    else 
+                    { 
+                        throw new ApplicationException(NoteFly.Properties.Resources.settings_excsystemfilenotmoved); 
+                    }
                 }
                 else
                 {
@@ -397,7 +400,7 @@ namespace NoteFly
         {
             //tab: General
 #if windows
-            this.chxStartOnLogin.Checked = this.GetStartOnLogin();
+            this.chxStartOnLogin.Checked = this.GetStartOnLogon();
 #endif
             this.chxConfirmExit.Checked = Settings.confirmExit;
             this.chxConfirmDeletenote.Checked = Settings.confirmDeletenote;
@@ -468,30 +471,48 @@ namespace NoteFly
         /// Gets if notefly is used to run at logon.
         /// </summary>
         /// <returns>The boolean if it starts at logon.</returns>
-        private bool GetStartOnLogin()
+        private bool GetStartOnLogon()
         {
+            bool staronlogon = false;
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {
                 if (key.GetValue(Program.AssemblyTitle, null) != null)
                 {
-                    return true;
+                    staronlogon = true;
                 }
-                else
-                {
-                    return false;
-                }
-            } 
-            else
-            {
-                return false;
             }
+            return staronlogon;
         }
 
+        /// <summary>
+        /// Toggle enabling numProcTransparency.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
             this.numProcTransparency.Enabled = this.chxTransparecy.Checked;
         }
+
+#if DEBUG
+        /// <summary>
+        /// Test unhandled exception.
+        /// </summary>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int z = 0;
+            int n = 3 / z;
+        }
+
+        /// <summary>
+        /// Test expected application exception.
+        /// </summary>
+        private void button2_Click(object sender, EventArgs e)
+        {
+            throw new ApplicationException("custom fatel error test.");
+        }
+#endif
 #endif
     }
 }

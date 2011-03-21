@@ -81,12 +81,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomException.cs" />
     <Compile Include="FrmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmAbout.Designer.cs">
       <DependentUpon>FrmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmException.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmException.Designer.cs">
+      <DependentUpon>FrmException.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmManageNotes.cs">
       <SubType>Form</SubType>
@@ -132,6 +137,9 @@
     <Compile Include="Textfile.cs" />
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmException.resx">
+      <DependentUpon>FrmException.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmManageNotes.resx">
       <DependentUpon>FrmManageNotes.cs</DependentUpon>
     </EmbeddedResource>

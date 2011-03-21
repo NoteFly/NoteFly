@@ -207,7 +207,7 @@ namespace NoteFly
                 }
                 else
                 {
-                    throw new CustomException("Could not write note");
+                    throw new ApplicationException("Could not write note");
                 }
             }
         }

@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="CustomException.cs" company="GNU">
+// <copyright file="FrmException.cs" company="GNU">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //
@@ -17,29 +17,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-
 namespace NoteFly
 {
     using System;
-    using System.IO;
+    using System.Windows.Forms;
 
-    /// <summary>
-    /// CustomException class
-    /// </summary>
-    public class CustomException : ApplicationException
+    public partial class FrmException : Form
     {
-        /// <summary>
-        /// Initializes a new instance of the CustomException class.
-        /// </summary>
-        /// <param name="message">the message to log</param>
-        public CustomException(string message)
-            : base("Exception: " + message)
+        public FrmException(String excmgs)
         {
-            // check if exception logging is enabled
-            if (Settings.programLogException)
-            {
-                Log.Write(LogType.exception, message);
-            }
+            InitializeComponent();
+            this.tbExceptionMessage.Text = excmgs;
+            this.Text = "oh no.. " + Program.AssemblyTitle + " crashed.";
+        }
+
+        private void btnContinu_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnShutdown_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

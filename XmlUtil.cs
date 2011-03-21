@@ -90,16 +90,16 @@ namespace NoteFly
             }
             catch (FileLoadException fileloadexc)
             {
-                throw new CustomException(fileloadexc.Message);
+                throw new ApplicationException(fileloadexc.Message);
             }
             catch (FileNotFoundException filenotfoundexc)
             {
-                throw new CustomException(filenotfoundexc.Message);
+                throw new ApplicationException(filenotfoundexc.Message);
             }
 
             if (xmlread == null)
             {
-                throw new CustomException("XmlTextReader object is null.");
+                throw new ApplicationException("XmlTextReader object is null.");
             }
 
             try
@@ -142,16 +142,16 @@ namespace NoteFly
             }
             catch (FileLoadException fileloadexc)
             {
-                throw new CustomException(fileloadexc.Message);
+                throw new ApplicationException(fileloadexc.Message);
             }
             catch (FileNotFoundException filenotfoundexc)
             {
-                throw new CustomException(filenotfoundexc.Message);
+                throw new ApplicationException(filenotfoundexc.Message);
             }
 
             if (xmlread == null)
             {
-                throw new CustomException("XmlTextReader object is null.");
+                throw new ApplicationException("XmlTextReader object is null.");
             }
 
             try
@@ -471,7 +471,7 @@ namespace NoteFly
                 }
                 if (xmlread.Depth > 3)
                 {
-                    throw new CustomException("Skin file corrupted: " + SKINFILE);
+                    throw new ApplicationException("Skin file corrupted: " + SKINFILE);
                 }
             }
             return skins;
@@ -1063,7 +1063,7 @@ namespace NoteFly
 
                     if (xmlread.Depth > 5)
                     {
-                        throw new CustomException("note file corrupted");
+                        throw new ApplicationException("note file corrupted");
                     }
                 }
             }

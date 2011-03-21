@@ -426,7 +426,7 @@ namespace NoteFly
                 }
                 catch (FileNotFoundException filenotfoundexc)
                 {
-                    throw new CustomException(filenotfoundexc.Message);
+                    throw new ApplicationException(filenotfoundexc.Message);
                 }
                 catch (UnauthorizedAccessException)
                 {
@@ -490,7 +490,7 @@ namespace NoteFly
                 }
                 catch (InvalidCastException)
                 {
-                    throw new CustomException("Transparency level not a integer or double.");
+                    throw new ApplicationException("Transparency level not a integer or double.");
                 }
             }
         }
@@ -510,7 +510,7 @@ namespace NoteFly
                 }
                 catch (InvalidCastException)
                 {
-                    throw new CustomException("Transparency level not a integer or double.");
+                    throw new ApplicationException("Transparency level not a integer or double.");
                 }
             }
         }
@@ -528,7 +528,7 @@ namespace NoteFly
             }
             else
             {
-                throw new CustomException("Negative rowindex.");
+                throw new ApplicationException("Negative rowindex.");
             }
         }
 

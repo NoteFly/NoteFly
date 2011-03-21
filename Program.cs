@@ -200,6 +200,11 @@ namespace NoteFly
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 #endif
+
+            System.Windows.Forms.Application.ThreadException += new ThreadExceptionEventHandler(UnhanledThreadExceptionHanhler);
+            System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
+
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
             if (!xmlUtil.LoadSettings())
             {
@@ -304,6 +309,47 @@ namespace NoteFly
             trayicon.Dispose();
             trayicon = new TrayIcon(notes);
         }
+
+        /// <summary>
+        /// Unhandled exceptions occur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+            ShowExceptionDlg(e);
+        }
+
+        /// <summary>
+        /// Unhandled thread exceptions occur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private static void UnhanledThreadExceptionHanhler(Object sender, ThreadExceptionEventArgs treadargs)
+        {
+            Exception e = treadargs.Exception;
+            ShowExceptionDlg(e);
+        }
+
+        /// <summary>
+        /// Log exception and show exception dialog.
+        /// </summary>
+        /// <param name="e"></param>
+        private static void ShowExceptionDlg(Exception e)
+        {
+            if (e == null)
+            {
+                e = new Exception("Unknown unhandled Exception was occurred!");
+            }
+            if (Settings.programLogException)
+            {
+                Log.Write(LogType.exception, e.Message + " stacktrace: " + e.StackTrace);
+            }
+            FrmException frmexc = new FrmException(e.Message);
+            frmexc.ShowDialog();
+        }
+
 
         /// <summary>
         /// Do update check.

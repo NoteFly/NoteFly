@@ -127,7 +127,7 @@ namespace NoteFly
                 }
                 else
                 {
-                    throw new CustomException("Filename is null or empty.");
+                    throw new ApplicationException("Filename is null or empty.");
                 }
             }
         }
@@ -184,8 +184,7 @@ namespace NoteFly
                 }
                 else
                 {
-                    //error
-                    throw new CustomException("Cannot read note content, note file not found: " + notefilepath);
+                    throw new ApplicationException("Cannot read note content, note file not found: " + notefilepath);
                 }
             }
             else

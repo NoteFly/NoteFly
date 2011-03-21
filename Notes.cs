@@ -126,7 +126,7 @@ namespace NoteFly
                 {
                     if (this.notes[i] == null)
                     {
-                        throw new CustomException("Note object is null.");
+                        throw new ApplicationException("Note object is null.");
                     }
                     else
                     {
@@ -195,7 +195,7 @@ namespace NoteFly
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw new CustomException("Can't get this note position: " + pos);
+                throw new ApplicationException("Can't get this note position: " + pos);
             }
         }
 
@@ -398,7 +398,7 @@ namespace NoteFly
         {
             if (pos >= this.notes.Count || pos < 0)
             {
-                throw new CustomException("Cannot find note to remove.");
+                throw new ApplicationException("Cannot find note to remove.");
             }
             else
             {
