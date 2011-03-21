@@ -247,6 +247,7 @@ namespace NoteFly
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
                 }
             }
+            this.rtbNewNote.Focus();
         }
 
         /// <summary>
@@ -267,6 +268,7 @@ namespace NoteFly
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
                 }
             }
+            this.rtbNewNote.Focus();
         }
 
         /// <summary>
@@ -287,6 +289,7 @@ namespace NoteFly
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
                 }
             }
+            this.rtbNewNote.Focus();
         }
 
         /// <summary>
@@ -307,6 +310,7 @@ namespace NoteFly
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
                 }
             }
+            this.rtbNewNote.Focus();
         }
 
         /// <summary>
@@ -320,6 +324,7 @@ namespace NoteFly
             {
                 this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints + 1);
             }
+            this.rtbNewNote.Focus();
         }
 
         /// <summary>
@@ -333,6 +338,7 @@ namespace NoteFly
             {
                 this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints - 1);
             }
+            this.rtbNewNote.Focus();
         }
 
         /// <summary>
@@ -344,8 +350,7 @@ namespace NoteFly
             if ((newsize < 6) || (newsize > 108))
             {
                 return;
-            }
-            else {
+            } else {
                 this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, newsize, this.rtbNewNote.SelectionFont.Style);
             }
         }
@@ -825,6 +830,33 @@ namespace NoteFly
             }
 
             this.SetToolbarEnabled(true);
+        }
+
+        /// <summary>
+        /// Handle keyboard shortcuts
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FrmNewNote_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.B:
+                        this.btnTextBold_Click(null, EventArgs.Empty);
+                        break;
+                    case Keys.I:
+                        this.btnTextItalic_Click(null, EventArgs.Empty);
+                        break;
+                    case Keys.U:
+                        this.btnTextUnderline_Click(null, EventArgs.Empty);
+                        break;
+                    case Keys.S:
+                        this.btnTextStriketrough_Click(null, EventArgs.Empty);
+                        break;
+                }
+            }
         }
 
         #endregion Methods

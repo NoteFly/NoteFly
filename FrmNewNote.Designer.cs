@@ -364,7 +364,7 @@ namespace NoteFly
             this.btnTextBold.TabIndex = 10;
             this.btnTextBold.TabStop = false;
             this.btnTextBold.Text = "B";
-            this.toolTip.SetToolTip(this.btnTextBold, "bold text");
+            this.toolTip.SetToolTip(this.btnTextBold, "Bold text (Ctrl+B)");
             this.btnTextBold.UseCompatibleTextRendering = true;
             this.btnTextBold.UseMnemonic = false;
             this.btnTextBold.UseVisualStyleBackColor = false;
@@ -389,7 +389,7 @@ namespace NoteFly
             this.btnTextItalic.TabIndex = 11;
             this.btnTextItalic.TabStop = false;
             this.btnTextItalic.Text = "i";
-            this.toolTip.SetToolTip(this.btnTextItalic, "Italic text");
+            this.toolTip.SetToolTip(this.btnTextItalic, "Italic text (Ctrl+I)");
             this.btnTextItalic.UseCompatibleTextRendering = true;
             this.btnTextItalic.UseMnemonic = false;
             this.btnTextItalic.UseVisualStyleBackColor = false;
@@ -414,7 +414,7 @@ namespace NoteFly
             this.btnTextStriketrough.TabIndex = 12;
             this.btnTextStriketrough.TabStop = false;
             this.btnTextStriketrough.Text = "S";
-            this.toolTip.SetToolTip(this.btnTextStriketrough, "Striketrough text");
+            this.toolTip.SetToolTip(this.btnTextStriketrough, "Striketrough text (Ctrl+s)");
             this.btnTextStriketrough.UseCompatibleTextRendering = true;
             this.btnTextStriketrough.UseMnemonic = false;
             this.btnTextStriketrough.UseVisualStyleBackColor = false;
@@ -439,7 +439,7 @@ namespace NoteFly
             this.btnTextUnderline.TabIndex = 14;
             this.btnTextUnderline.TabStop = false;
             this.btnTextUnderline.Text = "U";
-            this.toolTip.SetToolTip(this.btnTextUnderline, "Underline text");
+            this.toolTip.SetToolTip(this.btnTextUnderline, "Underline text (Ctrl+U)");
             this.btnTextUnderline.UseCompatibleTextRendering = true;
             this.btnTextUnderline.UseMnemonic = false;
             this.btnTextUnderline.UseVisualStyleBackColor = false;
@@ -513,7 +513,7 @@ namespace NoteFly
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
             this.rtbNewNote.TabIndex = 1;
-            this.rtbNewNote.Text = string.Empty;
+            this.rtbNewNote.Text = "";
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -557,6 +557,7 @@ namespace NoteFly
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(143, 90);
             this.Name = "FrmNewNote";
@@ -564,6 +565,7 @@ namespace NoteFly
             this.TransparencyKey = System.Drawing.Color.LightPink;
             this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmNewNote_KeyDown);
             this.contextMenuStripTextActions.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
