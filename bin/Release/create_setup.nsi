@@ -192,7 +192,12 @@ Section "Start Menu Shortcuts"
   ;startmenu shortcut should be for all users or currentuser Not administrator account.
   CreateDirectory "$SMPROGRAMS\NoteFly"
   CreateShortCut "$SMPROGRAMS\NoteFly\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  
+${If} $R0 == '5'
+  CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ;small icon for win. xp.
+${Else}
   CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ;large icon
+${EndIf}
 SectionEnd
 
 ;--------------------------------
