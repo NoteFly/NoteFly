@@ -54,6 +54,11 @@ namespace NoteFly
         /// </summary>
         private Point oldp;
 
+        /// <summary>
+        /// Margin between format buttons and content.
+        /// </summary>
+        private const int MARGIN = 5;
+
         #endregion Fields 
 
         #region Constructors (2) 
@@ -790,6 +795,7 @@ namespace NoteFly
             this.btnTextItalic.Enabled = enabled;
             this.btnTextStriketrough.Enabled = enabled;
             this.btnTextUnderline.Enabled = enabled;
+            this.btnTextBulletlist.Enabled = enabled;
             this.btnFontBigger.Enabled = enabled;
             this.btnFontSmaller.Enabled = enabled;
         }
@@ -852,11 +858,43 @@ namespace NoteFly
                     case Keys.U:
                         this.btnTextUnderline_Click(null, EventArgs.Empty);
                         break;
-                    case Keys.S:
+                    case Keys.T:
                         this.btnTextStriketrough_Click(null, EventArgs.Empty);
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Make buttet item of current selected line(s).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTextBulletlist_Click(object sender, EventArgs e)
+        {
+            if (this.checksellen())
+            {
+                this.rtbNewNote.SelectionBullet = !this.rtbNewNote.SelectionBullet;
+            }
+        }
+
+        /// <summary>
+        /// Show or hide buttons for formatting.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuShowtoolbar_Click(object sender, EventArgs e)
+        {
+            this.menuShowtoolbar.Checked = !this.menuShowtoolbar.Checked;
+            if (this.menuShowtoolbar.Checked)
+            {
+                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - this.btnTextBold.Location.Y + MARGIN);
+            }
+            else
+            {
+                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - (this.btnTextBold.Location.Y + this.btnTextBold.Height));
+            }
+            SetToolbarEnabled(this.menuShowtoolbar.Checked);
         }
 
         #endregion Methods

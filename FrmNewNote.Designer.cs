@@ -113,7 +113,7 @@ namespace NoteFly
         /// <summary>
         /// ToolStripMenuItem importToolStripMenuItem
         /// </summary>
-        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuImportfile;
 
         /// <summary>
         /// PictureBox pbResizeGrip
@@ -157,7 +157,7 @@ namespace NoteFly
             this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuSaveNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStickyOnTop = new System.Windows.Forms.ToolStripMenuItem();
-            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuImportfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPasteToContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCancelNewNote = new System.Windows.Forms.ToolStripMenuItem();
@@ -173,8 +173,10 @@ namespace NoteFly
             this.btnTextUnderline = new System.Windows.Forms.Button();
             this.btnFontSmaller = new System.Windows.Forms.Button();
             this.btnFontBigger = new System.Windows.Forms.Button();
+            this.btnTextBulletlist = new System.Windows.Forms.Button();
             this.rtbNewNote = new System.Windows.Forms.RichTextBox();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
+            this.menuShowtoolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
@@ -184,13 +186,14 @@ namespace NoteFly
             // 
             this.contextMenuStripTextActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuSaveNewNote,
+            this.menuShowtoolbar,
             this.menuStickyOnTop,
-            this.importToolStripMenuItem,
+            this.menuImportfile,
             this.menuPasteToContent,
             this.menuCopyContent,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 136);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 158);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -211,12 +214,12 @@ namespace NoteFly
             this.menuStickyOnTop.Text = "Sticky on &top";
             this.menuStickyOnTop.Click += new System.EventHandler(this.menuStickyOnTop_Click);
             // 
-            // importToolStripMenuItem
+            // menuImportfile
             // 
-            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.importToolStripMenuItem.Text = "Import..";
-            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            this.menuImportfile.Name = "menuImportfile";
+            this.menuImportfile.Size = new System.Drawing.Size(288, 22);
+            this.menuImportfile.Text = "Import..";
+            this.menuImportfile.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // menuPasteToContent
             // 
@@ -414,7 +417,7 @@ namespace NoteFly
             this.btnTextStriketrough.TabIndex = 12;
             this.btnTextStriketrough.TabStop = false;
             this.btnTextStriketrough.Text = "S";
-            this.toolTip.SetToolTip(this.btnTextStriketrough, "Striketrough text (Ctrl+s)");
+            this.toolTip.SetToolTip(this.btnTextStriketrough, "Striketrough text (Ctrl+T)");
             this.btnTextStriketrough.UseCompatibleTextRendering = true;
             this.btnTextStriketrough.UseMnemonic = false;
             this.btnTextStriketrough.UseVisualStyleBackColor = false;
@@ -458,13 +461,13 @@ namespace NoteFly
             this.btnFontSmaller.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnFontSmaller.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFontSmaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFontSmaller.Location = new System.Drawing.Point(174, 214);
+            this.btnFontSmaller.Location = new System.Drawing.Point(207, 214);
             this.btnFontSmaller.Name = "btnFontSmaller";
             this.btnFontSmaller.Size = new System.Drawing.Size(27, 23);
             this.btnFontSmaller.TabIndex = 16;
             this.btnFontSmaller.TabStop = false;
             this.btnFontSmaller.Text = "A";
-            this.toolTip.SetToolTip(this.btnFontSmaller, "Smaller text");
+            this.toolTip.SetToolTip(this.btnFontSmaller, "Smaller text (Ctrl+shift+<)");
             this.btnFontSmaller.UseCompatibleTextRendering = true;
             this.btnFontSmaller.UseMnemonic = false;
             this.btnFontSmaller.UseVisualStyleBackColor = false;
@@ -483,17 +486,43 @@ namespace NoteFly
             this.btnFontBigger.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnFontBigger.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFontBigger.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFontBigger.Location = new System.Drawing.Point(141, 214);
+            this.btnFontBigger.Location = new System.Drawing.Point(174, 214);
             this.btnFontBigger.Name = "btnFontBigger";
             this.btnFontBigger.Size = new System.Drawing.Size(27, 23);
             this.btnFontBigger.TabIndex = 17;
             this.btnFontBigger.TabStop = false;
             this.btnFontBigger.Text = "A";
-            this.toolTip.SetToolTip(this.btnFontBigger, "Bigger text");
+            this.toolTip.SetToolTip(this.btnFontBigger, "Bigger text (Ctrl+shift+>)");
             this.btnFontBigger.UseCompatibleTextRendering = true;
             this.btnFontBigger.UseMnemonic = false;
             this.btnFontBigger.UseVisualStyleBackColor = false;
             this.btnFontBigger.Click += new System.EventHandler(this.btnFontBigger_Click);
+            // 
+            // btnTextBulletlist
+            // 
+            this.btnTextBulletlist.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextBulletlist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnTextBulletlist.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextBulletlist.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextBulletlist.CausesValidation = false;
+            this.btnTextBulletlist.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextBulletlist.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextBulletlist.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnTextBulletlist.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextBulletlist.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextBulletlist.Font = new System.Drawing.Font("Microsoft Sans Serif", 3.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextBulletlist.Location = new System.Drawing.Point(131, 214);
+            this.btnTextBulletlist.Name = "btnTextBulletlist";
+            this.btnTextBulletlist.Size = new System.Drawing.Size(27, 23);
+            this.btnTextBulletlist.TabIndex = 18;
+            this.btnTextBulletlist.TabStop = false;
+            this.btnTextBulletlist.Text = "• aaa\r\n• bbb";
+            this.btnTextBulletlist.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.toolTip.SetToolTip(this.btnTextBulletlist, "Bullit list (Ctrl+shift+L)");
+            this.btnTextBulletlist.UseCompatibleTextRendering = true;
+            this.btnTextBulletlist.UseMnemonic = false;
+            this.btnTextBulletlist.UseVisualStyleBackColor = false;
+            this.btnTextBulletlist.Click += new System.EventHandler(this.btnTextBulletlist_Click);
             // 
             // rtbNewNote
             // 
@@ -533,6 +562,15 @@ namespace NoteFly
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
+            // menuShowtoolbar
+            // 
+            this.menuShowtoolbar.Checked = true;
+            this.menuShowtoolbar.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuShowtoolbar.Name = "menuShowtoolbar";
+            this.menuShowtoolbar.Size = new System.Drawing.Size(288, 22);
+            this.menuShowtoolbar.Text = "Show format tools";
+            this.menuShowtoolbar.Click += new System.EventHandler(this.menuShowtoolbar_Click);
+            // 
             // FrmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
@@ -545,13 +583,14 @@ namespace NoteFly
             this.ClientSize = new System.Drawing.Size(284, 239);
             this.ContextMenuStrip = this.contextMenuStripTextActions;
             this.ControlBox = false;
-            this.Controls.Add(this.btnFontBigger);
-            this.Controls.Add(this.btnFontSmaller);
             this.Controls.Add(this.pbResizeGrip);
             this.Controls.Add(this.pnlHeadNewNote);
+            this.Controls.Add(this.rtbNewNote);
+            this.Controls.Add(this.btnTextBulletlist);
+            this.Controls.Add(this.btnFontBigger);
+            this.Controls.Add(this.btnFontSmaller);
             this.Controls.Add(this.btnTextUnderline);
             this.Controls.Add(this.btnTextStriketrough);
-            this.Controls.Add(this.rtbNewNote);
             this.Controls.Add(this.btnTextBold);
             this.Controls.Add(this.btnTextItalic);
             this.DoubleBuffered = true;
@@ -576,6 +615,9 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnTextBulletlist;
+        private System.Windows.Forms.ToolStripMenuItem menuShowtoolbar;
     }
 }
 

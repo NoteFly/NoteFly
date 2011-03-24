@@ -141,7 +141,7 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Bold;
             }
-            this.menuNewNote.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
+            this.menuNewNote.Font = new Font("Microsoft Sans Serif", Settings.trayiconFontsize, menufontstyle);
             this.menuNewNote.Click += new System.EventHandler(this.MenuNewNote_Click);
 
             // MenuManageNotes
@@ -157,7 +157,7 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Regular;
             }
-            this.menuManageNotes.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
+            this.menuManageNotes.Font = new Font("Microsoft Sans Serif", Settings.trayiconFontsize, menufontstyle);
             this.menuManageNotes.Click += new System.EventHandler(this.MenuManageNotes_Click);
             // MenuSettings
             this.menuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -172,14 +172,14 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Regular;
             }
-            this.menuSettings.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
+            this.menuSettings.Font = new Font("Microsoft Sans Serif", Settings.trayiconFontsize, menufontstyle);
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // MenuAbout
             this.menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuAbout.Name = "MenuAbout";
             this.menuAbout.Size = new System.Drawing.Size(144, 22);
             this.menuAbout.Text = "About";
-            this.menuAbout.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
+            this.menuAbout.Font = new Font("Microsoft Sans Serif", Settings.trayiconFontsize, FontStyle.Regular);
             this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             // MenuExit
             this.menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -194,7 +194,7 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Regular;
             }
-            this.menuExit.Font = new Font("Microsoft Sans Serif", 8.25f, menufontstyle);
+            this.menuExit.Font = new Font("Microsoft Sans Serif", Settings.trayiconFontsize, menufontstyle);
             this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
 
 #if windows

@@ -177,6 +177,7 @@ namespace NoteFly
                 Settings.fontTitleSize = (float)this.numFontSizeTitle.Value;
                 Settings.fontTextdirection = this.cbxTextDirection.SelectedIndex;
                 //tab: Appearance, trayicon
+                Settings.trayiconFontsize = (float)this.numTrayiconFontsize.Value;
                 Settings.trayiconCreatenotebold = this.chxTrayiconBoldNewnote.Checked;
                 Settings.trayiconManagenotesbold = this.chxTrayiconBoldManagenotes.Checked;
                 Settings.trayiconSettingsbold = this.chxTrayiconBoldSettings.Checked;
@@ -208,8 +209,10 @@ namespace NoteFly
                 Settings.confirmLinkclick = this.chxConfirmLink.Checked;
                 //tab: Advance
                 Settings.notesSavepath = this.tbNotesSavePath.Text;
+                
                 Settings.programLogError = this.chxLogErrors.Checked;
                 Settings.programLogInfo = this.chxLogDebug.Checked;
+                Settings.programLogException = this.chxLogExceptions.Checked;
 #if windows
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
@@ -421,6 +424,7 @@ namespace NoteFly
             this.cbxFontNoteTitle.Text = Settings.fontTitleFamily;
             this.cbxFontNoteTitleBold.Checked = Settings.fontTitleStylebold;
             //tab: Appearance, trayicon
+            this.numTrayiconFontsize.Value = Convert.ToDecimal(Settings.trayiconFontsize);
             this.chxTrayiconBoldNewnote.Checked = Settings.trayiconCreatenotebold;
             this.chxTrayiconBoldManagenotes.Checked = Settings.trayiconManagenotesbold;
             this.chxTrayiconBoldSettings.Checked = Settings.trayiconSettingsbold;
@@ -460,8 +464,9 @@ namespace NoteFly
             this.numTimeout.Value = Settings.networkConnectionTimeout;
             //tab: Advance
             this.tbNotesSavePath.Text = Settings.notesSavepath;
-            this.chxLogErrors.Checked = Settings.programLogError;
             this.chxLogDebug.Checked = Settings.programLogInfo;
+            this.chxLogErrors.Checked = Settings.programLogError;
+            this.chxLogExceptions.Checked = Settings.programLogException;
         }
 
         #endregion Methods

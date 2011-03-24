@@ -115,6 +115,10 @@ namespace NoteFlyTests
             expected[6] = "red";
             expected[7] = "dark";
             string[] actual = target.GetSkinsNames();
+            if (actual.Length == 0)
+            {
+                Assert.Fail("Could not get skin names.");
+            }
             if (actual.Length > expected.Length)
             {
                 Assert.Inconclusive("Skins.xml can be modified or test failed because more skins are returned.");

@@ -480,6 +480,9 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
+            this.numTrayiconFontsize = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblFontsizePoints = new System.Windows.Forms.Label();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -499,6 +502,7 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
             this.tabAdvance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTrayiconFontsize)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOK
@@ -945,6 +949,9 @@ namespace NoteFly
             // 
             // tabPageTrayicon
             // 
+            this.tabPageTrayicon.Controls.Add(this.lblFontsizePoints);
+            this.tabPageTrayicon.Controls.Add(this.label1);
+            this.tabPageTrayicon.Controls.Add(this.numTrayiconFontsize);
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldExit);
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldSettings);
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldManagenotes);
@@ -959,7 +966,7 @@ namespace NoteFly
             // chxTrayiconBoldExit
             // 
             this.chxTrayiconBoldExit.AutoSize = true;
-            this.chxTrayiconBoldExit.Location = new System.Drawing.Point(25, 136);
+            this.chxTrayiconBoldExit.Location = new System.Drawing.Point(25, 180);
             this.chxTrayiconBoldExit.Name = "chxTrayiconBoldExit";
             this.chxTrayiconBoldExit.Size = new System.Drawing.Size(127, 17);
             this.chxTrayiconBoldExit.TabIndex = 3;
@@ -969,7 +976,7 @@ namespace NoteFly
             // chxTrayiconBoldSettings
             // 
             this.chxTrayiconBoldSettings.AutoSize = true;
-            this.chxTrayiconBoldSettings.Location = new System.Drawing.Point(25, 100);
+            this.chxTrayiconBoldSettings.Location = new System.Drawing.Point(25, 144);
             this.chxTrayiconBoldSettings.Name = "chxTrayiconBoldSettings";
             this.chxTrayiconBoldSettings.Size = new System.Drawing.Size(148, 17);
             this.chxTrayiconBoldSettings.TabIndex = 2;
@@ -979,7 +986,7 @@ namespace NoteFly
             // chxTrayiconBoldManagenotes
             // 
             this.chxTrayiconBoldManagenotes.AutoSize = true;
-            this.chxTrayiconBoldManagenotes.Location = new System.Drawing.Point(25, 63);
+            this.chxTrayiconBoldManagenotes.Location = new System.Drawing.Point(25, 107);
             this.chxTrayiconBoldManagenotes.Name = "chxTrayiconBoldManagenotes";
             this.chxTrayiconBoldManagenotes.Size = new System.Drawing.Size(178, 17);
             this.chxTrayiconBoldManagenotes.TabIndex = 1;
@@ -991,7 +998,7 @@ namespace NoteFly
             this.chxTrayiconBoldNewnote.AutoSize = true;
             this.chxTrayiconBoldNewnote.Checked = true;
             this.chxTrayiconBoldNewnote.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxTrayiconBoldNewnote.Location = new System.Drawing.Point(25, 28);
+            this.chxTrayiconBoldNewnote.Location = new System.Drawing.Point(25, 72);
             this.chxTrayiconBoldNewnote.Name = "chxTrayiconBoldNewnote";
             this.chxTrayiconBoldNewnote.Size = new System.Drawing.Size(197, 17);
             this.chxTrayiconBoldNewnote.TabIndex = 0;
@@ -1371,6 +1378,53 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
+            // numTrayiconFontsize
+            // 
+            this.numTrayiconFontsize.DecimalPlaces = 2;
+            this.numTrayiconFontsize.Increment = new decimal(new int[] {
+            25,
+            0,
+            0,
+            131072});
+            this.numTrayiconFontsize.Location = new System.Drawing.Point(106, 29);
+            this.numTrayiconFontsize.Maximum = new decimal(new int[] {
+            36,
+            0,
+            0,
+            0});
+            this.numTrayiconFontsize.Minimum = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            this.numTrayiconFontsize.Name = "numTrayiconFontsize";
+            this.numTrayiconFontsize.Size = new System.Drawing.Size(54, 20);
+            this.numTrayiconFontsize.TabIndex = 4;
+            this.numTrayiconFontsize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numTrayiconFontsize.Value = new decimal(new int[] {
+            825,
+            0,
+            0,
+            131072});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(22, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(78, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Fontsize  menu";
+            // 
+            // lblFontsizePoints
+            // 
+            this.lblFontsizePoints.AutoSize = true;
+            this.lblFontsizePoints.Location = new System.Drawing.Point(166, 31);
+            this.lblFontsizePoints.Name = "lblFontsizePoints";
+            this.lblFontsizePoints.Size = new System.Drawing.Size(19, 13);
+            this.lblFontsizePoints.TabIndex = 6;
+            this.lblFontsizePoints.Text = "pt.";
+            // 
             // iptbProxyAddress
             // 
             this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -1424,11 +1478,16 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).EndInit();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTrayiconFontsize)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numTrayiconFontsize;
+        private System.Windows.Forms.Label lblFontsizePoints;
 
     }
 }

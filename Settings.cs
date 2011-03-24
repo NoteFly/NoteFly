@@ -80,6 +80,11 @@ namespace NoteFly
         public static int trayiconLeftclickaction;
 
         /// <summary>
+        /// The trayicon fontsize.
+        /// </summary>
+        public static float trayiconFontsize = 8.25f;
+
+        /// <summary>
         /// Display "Create new note" in bold.
         /// </summary>
         public static bool trayiconCreatenotebold;
@@ -248,26 +253,27 @@ namespace NoteFly
         /// <summary>
         /// The datatime of last update check.
         /// </summary>
-        public static string updatecheckLastDate; 
+        public static string updatecheckLastDate;
 
         /// <summary>
         /// Has this programme been running before.
         /// </summary>
-        public static bool programFirstrun; 
+        public static bool programFirstrun;
 
         /// <summary>
         /// Log debug info.
         /// </summary>
-        public static bool programLogInfo; 
+        public static bool programLogInfo;
 
         /// <summary>
         /// Log errors user makes
         /// </summary>
-        public static bool programLogError; 
+        public static bool programLogError;
 
         /// <summary>
         /// Log exceptions/errors this programme has.
+        /// If undefined then always true.
         /// </summary>
-        public static bool programLogException; 
+        public static bool programLogException = true;
     }
 }
