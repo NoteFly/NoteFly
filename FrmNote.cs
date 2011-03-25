@@ -331,19 +331,28 @@ namespace NoteFly
             string emailnote = System.Web.HttpUtility.UrlEncode(this.rtbNote.Text).Replace("+", " ");
             string emailtitle = System.Web.HttpUtility.UrlEncode(this.lblTitle.Text);
 
-            if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote)))
+            try
             {
-                System.Diagnostics.Process.Start("mailto:" + Settings.socialEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
+                if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote)))
+                {
+                    System.Diagnostics.Process.Start("mailto:" + Settings.socialEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
+                }
+                else if (!String.IsNullOrEmpty(emailtitle))
+                {
+                    System.Diagnostics.Process.Start("mailto:" + Settings.socialEmailDefaultadres + "?subject=" + this.lblTitle.Text);
+                }
+                else
+                {
+                    string msgNoTitleContent = "Note has no title and content.";
+                    Log.Write(LogType.error, msgNoTitleContent);
+                    MessageBox.Show(msgNoTitleContent);
+                }
             }
-            else if (!String.IsNullOrEmpty(emailtitle))
+            catch (AccessViolationException accexc)
             {
-                System.Diagnostics.Process.Start("mailto:" + Settings.socialEmailDefaultadres + "?subject=" + this.lblTitle.Text);
-            }
-            else
-            {
-                string msgNoTitleContent = "Note has no title and content.";
-                Log.Write(LogType.error, msgNoTitleContent);
-                MessageBox.Show(msgNoTitleContent);
+                string msgCantlaunchEmailProtocolhandler = "Access denied. Can't lauch email client by protocol handler";
+                Log.Write(LogType.exception, accexc.Message);
+                MessageBox.Show(msgCantlaunchEmailProtocolhandler);
             }
         }
 

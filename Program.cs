@@ -217,6 +217,8 @@ namespace NoteFly
 #endif
             bool visualstyle = true;
             bool resetpositions = false;
+            bool suspressadminwarn = false;
+
             // override settings with supported parameters
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
@@ -225,48 +227,64 @@ namespace NoteFly
                     switch (arg)
                     {
                         // Forces the programme to setup the first run notefly info again.
-                        case "/forcefirstrun":
+                        case "-forcefirstrun":
                             Settings.programFirstrun = true;
                             break;
                         // disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
                         // because transparency is on by default.
-                        case "/disabletransparency":
+                        case "-disabletransparency":
                             Settings.notesTransparencyEnabled = false;
                             break;
                         // Turn off all highlighting functions in case highlighting was turned on and it let NoteFly crash on startup.
-                        case "/disablehighlighting":
+                        case "-disablehighlighting":
                             Settings.highlightHyperlinks = false;
                             Settings.highlightHTML = false;
                             Settings.highlightPHP = false;
                             Settings.highlightSQL = false;
                             break;
                         // Turn off all social functions on startup.
-                        case "/disablesocial":
+                        case "-disablesocial":
                             Settings.socialEmailEnabled = false;
                             ////Settings.socialFacebookEnabled = false;
                             ////Settings.socialTwitterEnabled = false;
                             break;
                         // Turn all logging features on at startup. 
                         // Handy in case NoteFly crashes at startup and logging was turned off.
-                        case "/logall":
+                        case "-logall":
                             Settings.programLogException = true;
                             Settings.programLogError = true;
                             Settings.programLogInfo = true;
                             break;
                         // turn off xp visual style.
-                        case "/disablevisualstyles":
+                        case "-disablevisualstyles":
                             visualstyle = false; // about ~400ms slower on my system on display time notes.
                             break;
                         // rescue option for notes loading out of screen.
-                        case "/resetpositions":
+                        case "-resetpositions":
                             resetpositions = true;
                             break;
                        // overwrite settings file with default settings.
-                        case "/resetsettings":
+                        case "-resetsettings":
                             xmlUtil.WriteDefaultSettings();
+                            break;
+                        case "-suspressadminwarn":
+                            suspressadminwarn = true;
                             break;
                     }
                 }
+            }
+
+            if (!suspressadminwarn)
+            {
+                #if windows
+                // Security measure, warn if runned with dangours administrator rights.
+                System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
+                if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
+                {
+                    System.Windows.Forms.MessageBox.Show("You are now running " + Program.AssemblyTitle + " as elevated Administrator.\r\nWhich is not recommended.", "Elevated administrator");
+                }
+                #endif
             }
 
             if (visualstyle)

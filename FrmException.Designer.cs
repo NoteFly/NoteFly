@@ -68,7 +68,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 116);
+            this.label2.Location = new System.Drawing.Point(12, 114);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 4;
@@ -84,9 +84,9 @@
             // 
             // lblTextStacktrace
             // 
-            this.lblTextStacktrace.Location = new System.Drawing.Point(12, 74);
+            this.lblTextStacktrace.Location = new System.Drawing.Point(12, 78);
             this.lblTextStacktrace.Name = "lblTextStacktrace";
-            this.lblTextStacktrace.Size = new System.Drawing.Size(310, 33);
+            this.lblTextStacktrace.Size = new System.Drawing.Size(310, 30);
             this.lblTextStacktrace.TabIndex = 8;
             this.lblTextStacktrace.Text = "An techinal stacktrace of the problem is written to logfile which can be used for" +
                 " bug reporting.";

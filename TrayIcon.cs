@@ -197,16 +197,6 @@ namespace NoteFly
             this.menuExit.Font = new Font("Microsoft Sans Serif", Settings.trayiconFontsize, menufontstyle);
             this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
 
-#if windows
-            // Security measure, warn if runned as administrator.
-            System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
-            System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
-            if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
-            {
-                MessageBox.Show("You are now running " + Program.AssemblyTitle + " as elevated Administrator.\r\nWhich is not recommended.", "(Elevated) administrator");
-            }
-#endif
-
             if (Settings.programFirstrun)
             {
                 this.icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);

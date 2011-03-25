@@ -65,7 +65,7 @@ Function .onInit
   Pop $0
   ${If} $0 == ".NET not found"
   
-  MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework 2.0 is not installed.$\nPlease get .NET framework 2.0.$\nPress OK to go to the website to download and install." IDOK downloadDotNet
+  MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework 2.0 is not installed.$\nPlease get .NET framework 2.0.$\nPress OK to go to the website to download and install .NET framework 2.0.$\nService Pack2 or higher for .NET framework 2.0 is also required." IDOK downloadDotNet
   Abort
    Goto done
   downloadDotNet:
@@ -78,7 +78,7 @@ Function .onInit
  
   ${VersionCompare} $0 "2.0" $1
   ${If} $1 == 2
-    MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework v2.0 or newer is required.$\nPlease get .NET framework 2.0.$\nPress OK to go to the website to download and install." IDOK downloadDotNet2
+    MessageBox MB_OKCANCEL|MB_ICONSTOP ".NET framework v2.0 or newer is required.$\nPlease get .NET framework 2.0 with Service Pack2 or higher.$\nPress OK to go to the website to download and install." IDOK downloadDotNet2
      Goto done2
     downloadDotNet2:
     ExecShell "open" "http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5"

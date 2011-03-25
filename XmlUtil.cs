@@ -290,6 +290,9 @@ namespace NoteFly
                             Settings.socialTwitterUseSSL = xmlread.ReadElementContentAsBoolean();
                             break;
                         */
+                        case "TrayiconFontsize":
+                            Settings.trayiconFontsize = xmlread.ReadElementContentAsFloat();
+                            break;
                         case "TrayiconCreatenotebold":
                             Settings.trayiconCreatenotebold = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -528,6 +531,7 @@ namespace NoteFly
             //Settings.socialTwitterUsername = String.Empty;
             //Settings.socialTwitterEnabled = true;
             //Settings.socialTwitterUseSSL = true;
+            Settings.trayiconFontsize = 8.25f;
             Settings.trayiconLeftclickaction = 1;
             Settings.trayiconCreatenotebold = true;
             Settings.trayiconExitbold = false;
@@ -538,7 +542,7 @@ namespace NoteFly
             try
             {
                 xmlUtil.WriteSettings();
-                xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE), 2428); //TODO test
+                xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE), 2473);
                 return true;
             }
             catch (Exception)
@@ -709,6 +713,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.notesDefaultSkinnr.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.notesTransparencyLevel.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesWarnLimit", Settings.notesWarnLimit.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("TrayiconFontsize", Settings.trayiconFontsize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.trayiconLeftclickaction.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.updatecheckEverydays.ToString(numfmtinfo));
                 //strings
