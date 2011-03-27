@@ -118,7 +118,7 @@ StrCmp $R0 "\WinNT" bad
 StrCpy $R0 $INSTDIR "" -9
 StrCmp $R0 "\system32" bad done
 bad:
-  MessageBox MB_OK|MB_ICONSTOP "The current installation path is not recommended. Please choice an other installation path."
+  MessageBox MB_OK|MB_ICONSTOP "The current installation path is not recommended.$\nPlease choice an other installation path."
   Abort
 done:
 !macroend
@@ -171,7 +171,7 @@ Section "main executable (required)"
   
 SectionEnd
 
-Section "Desktop Shortcut"
+Section "Desktop Shortcut (all users)"
 SetShellVarContext all
 
 
@@ -204,40 +204,42 @@ SectionEnd
 
 ; Uninstaller
 Section "Uninstall"  
+  KillProcDLL::KillProc "${APPFILE}" 
+  sleep 300
 
   ; Check installation directory 
   !insertmacro BadPathsCheck
-  
+
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly"
   DeleteRegKey HKLM SOFTWARE\NoteFly
-  
+
   ; Remove files and uninstaller
-  Delete "$INSTDIR\${APPFILE}"
   Delete "$INSTDIR\${LANGFILE}"
   Delete "$INSTDIR\uninstall.exe"
-  
+  Delete "$INSTDIR\${APPFILE}"
   ; Remove directory if empty
   RMDir "$INSTDIR"
+
+  IfFileExists "$APPDATA\.NoteFly2" removeadminappdata postremoveadminappdata
   
-  IfFileExists "$APPDATA\.NoteFly2\" skipappfoldernotfound
-  MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes and settings?" IDNO keepsettingnotes
-  SetShellVarContext current
+  removeadminappdata:
+  ; This is only going to work for the administrator appdata.
+  MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes and settings from administrator account stored at $APPDATA\.NoteFly2\ ?" IDNO keepsettingnotes
   Delete "$APPDATA\.NoteFly2\settings.xml"
   Delete "$APPDATA\.NoteFly2\skins.xml"
   Delete "$APPDATA\.NoteFly2\debug.log"
-  
-  skipappfoldernotfound:
+  Delete "$APPDATA\.NoteFly2\*.nfn"
+  ; Remove directory if empty
+  RMDir "$APPDATA\.NoteFly2"
+  postremoveadminappdata:
   keepsettingnotes:
-  ; Remove desktop shortcut
-  Delete "$DESKTOP\NoteFly.lnk"
-    
-  ; Remove startmenu shortcuts
   SetShellVarContext all
+  ; Remove desktop shortcut
+  Delete "$DESKTOP\NoteFly.lnk"    
+  ; Remove startmenu shortcuts
   Delete "$SMPROGRAMS\NoteFly\NoteFly.lnk"
   Delete "$SMPROGRAMS\NoteFly\Uninstall.lnk"
-  
   ; Remove startmenu folder if empty
   RMDir "$SMPROGRAMS\NoteFly"
-
 SectionEnd
