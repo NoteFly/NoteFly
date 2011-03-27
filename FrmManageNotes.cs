@@ -72,7 +72,7 @@ namespace NoteFly
         private int prevrownr = -1;
 
         /// <summary>
-        /// The prevois of previous painted row number.
+        /// The previous of previous painted row number.
         /// </summary>
         private int secondprevrownr = -2;
 
@@ -244,6 +244,8 @@ namespace NoteFly
                     Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
                     xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
                     this.notes.LoadNotes(false, false);
+                    this.prevrownr = -1;
+                    this.secondprevrownr = -2;
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
                 }
@@ -333,7 +335,7 @@ namespace NoteFly
         {
             if (this.notes.frmmangenotesneedupdate)
             {
-                //detect and update add/delete notes.
+                // detect and update add/delete notes.
                 if (this.dataGridView1.RowCount != this.notes.CountNotes)
                 {
                     this.DrawNotesGrid();
@@ -351,22 +353,18 @@ namespace NoteFly
 
                 this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).visible;
 
-                if ((e.RowIndex < this.prevrownr) || (e.RowIndex >= this.dataGridView1.RowCount - 1))
+                if (e.RowIndex == this.dataGridView1.RowCount-1)
                 {
-                    this.prevrownr = -1;
+                    this.notes.frmmangenotesneedupdate = false;
+                }
+                else if (this.prevrownr < this.secondprevrownr)
+                {
                     this.notes.frmmangenotesneedupdate = false;
                 }
                 else
                 {
-                    if (e.RowIndex == this.secondprevrownr)
-                    {
-                        this.prevrownr = -1;
-                    }
-                    else
-                    {
-                        this.secondprevrownr = this.prevrownr;
-                        this.prevrownr = e.RowIndex;
-                    }
+                    this.secondprevrownr = this.prevrownr;
+                    this.prevrownr = e.RowIndex;
                 }
             }
         }
@@ -378,7 +376,10 @@ namespace NoteFly
         /// <param name="e">Scroll event arguments</param>
         private void dataGridView1_Scroll(object sender, ScrollEventArgs e)
         {
-            this.notes.frmmangenotesneedupdate = true;
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                this.notes.frmmangenotesneedupdate = true;
+            }
         }
 
         /// <summary>
@@ -435,6 +436,8 @@ namespace NoteFly
                     MessageBox.Show(msgaccessdenied);
                 }
             }
+            this.prevrownr = -1;
+            this.secondprevrownr = -2;
             DrawNotesGrid();
 
             GC.Collect();
@@ -447,7 +450,7 @@ namespace NoteFly
         private void DrawNotesGrid()
         {
             this.prevrownr = -1;
-            this.secondprevrownr = -1;
+            this.secondprevrownr = -2;
             this.notes.frmmangenotesneedupdate = true;
             this.toolTip.Active = Settings.notesTooltipsEnabled;
 

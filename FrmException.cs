@@ -21,14 +21,24 @@ namespace NoteFly
 {
     using System;
     using System.Windows.Forms;
+    using System.Text;
 
     public partial class FrmException : Form
     {
-        public FrmException(String excmgs)
+        public FrmException(String excmgs, String excstrace)
         {
             InitializeComponent();
-            this.tbExceptionMessage.Text = excmgs;
             this.Text = "oh no.. " + Program.AssemblyTitle + " crashed.";
+            StringBuilder sbexc = new StringBuilder(excmgs);
+            sbexc.AppendLine();
+            sbexc.AppendLine();
+            sbexc.AppendLine("Stacktrace:");
+            sbexc.AppendLine(excstrace);
+            this.tbExceptionMessage.Text = sbexc.ToString();
+            if (!Settings.programLogException)
+            {
+                this.lblTextStacktrace.Visible = false;
+            }
         }
 
         private void btnContinu_Click(object sender, EventArgs e)

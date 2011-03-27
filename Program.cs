@@ -364,7 +364,7 @@ namespace NoteFly
             {
                 Log.Write(LogType.exception, e.Message + " stacktrace: " + e.StackTrace);
             }
-            FrmException frmexc = new FrmException(e.Message);
+            FrmException frmexc = new FrmException(e.Message, e.StackTrace);
             frmexc.ShowDialog();
         }
 

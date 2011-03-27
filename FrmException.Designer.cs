@@ -31,7 +31,7 @@
             this.lblTextExceptionMessage = new System.Windows.Forms.Label();
             this.btnContinu = new System.Windows.Forms.Button();
             this.btnShutdown = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTextOptions = new System.Windows.Forms.Label();
             this.tbExceptionMessage = new System.Windows.Forms.TextBox();
             this.lblTextStacktrace = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -65,31 +65,31 @@
             this.btnShutdown.UseVisualStyleBackColor = true;
             this.btnShutdown.Click += new System.EventHandler(this.btnShutdown_Click);
             // 
-            // label2
+            // lblTextOptions
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 114);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "options:";
+            this.lblTextOptions.AutoSize = true;
+            this.lblTextOptions.Location = new System.Drawing.Point(12, 114);
+            this.lblTextOptions.Name = "lblTextOptions";
+            this.lblTextOptions.Size = new System.Drawing.Size(44, 13);
+            this.lblTextOptions.TabIndex = 4;
+            this.lblTextOptions.Text = "options:";
             // 
             // tbExceptionMessage
             // 
             this.tbExceptionMessage.Location = new System.Drawing.Point(11, 25);
             this.tbExceptionMessage.Multiline = true;
             this.tbExceptionMessage.Name = "tbExceptionMessage";
-            this.tbExceptionMessage.Size = new System.Drawing.Size(365, 46);
+            this.tbExceptionMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbExceptionMessage.Size = new System.Drawing.Size(365, 69);
             this.tbExceptionMessage.TabIndex = 7;
             // 
             // lblTextStacktrace
             // 
-            this.lblTextStacktrace.Location = new System.Drawing.Point(12, 78);
+            this.lblTextStacktrace.Location = new System.Drawing.Point(12, 97);
             this.lblTextStacktrace.Name = "lblTextStacktrace";
-            this.lblTextStacktrace.Size = new System.Drawing.Size(310, 30);
+            this.lblTextStacktrace.Size = new System.Drawing.Size(364, 17);
             this.lblTextStacktrace.TabIndex = 8;
-            this.lblTextStacktrace.Text = "An techinal stacktrace of the problem is written to logfile which can be used for" +
-                " bug reporting.";
+            this.lblTextStacktrace.Text = "The exception is written to the logfile for bug reporting.";
             // 
             // FrmException
             // 
@@ -98,7 +98,7 @@
             this.ClientSize = new System.Drawing.Size(388, 166);
             this.Controls.Add(this.lblTextStacktrace);
             this.Controls.Add(this.tbExceptionMessage);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblTextOptions);
             this.Controls.Add(this.btnShutdown);
             this.Controls.Add(this.btnContinu);
             this.Controls.Add(this.lblTextExceptionMessage);
@@ -119,7 +119,7 @@
         private System.Windows.Forms.Label lblTextExceptionMessage;
         private System.Windows.Forms.Button btnContinu;
         private System.Windows.Forms.Button btnShutdown;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTextOptions;
         private System.Windows.Forms.TextBox tbExceptionMessage;
         private System.Windows.Forms.Label lblTextStacktrace;
     }

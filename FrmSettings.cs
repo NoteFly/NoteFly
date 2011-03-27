@@ -499,25 +499,6 @@ namespace NoteFly
         {
             this.numProcTransparency.Enabled = this.chxTransparecy.Checked;
         }
-
-#if DEBUG
-        /// <summary>
-        /// Test unhandled exception.
-        /// </summary>
-        private void button1_Click(object sender, EventArgs e)
-        {
-            int z = 0;
-            int n = 3 / z;
-        }
-
-        /// <summary>
-        /// Test expected application exception.
-        /// </summary>
-        private void button2_Click(object sender, EventArgs e)
-        {
-            throw new ApplicationException("custom fatel error test.");
-        }
-#endif
 #endif
     }
 }
