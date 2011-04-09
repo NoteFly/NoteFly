@@ -204,6 +204,5 @@ namespace NoteFly
                 this.frmnote.UpdateForm(true);
             }
         }
-
     }
 }

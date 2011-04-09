@@ -14,12 +14,13 @@
 ;  You should have received a copy of the GNU General Public License
 ;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-!define VERSION "2.0.0"       ;version number: major.minor.release/build
-!define VERSTATUS "beta4"     ;alpha, beta, rc, or nothing for final.
+!define PROJNAME "NoteFly" 
+!define VERSION "2.0.0"       ;version number: major.minor.release
+!define VERSTATUS "rc1"     ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 !define LANGFILE "langs.xml"
 
-Name "NoteFly ${VERSION} ${VERSTATUS}" ; The name of the installer
+Name "${PROJNAME} ${VERSION} ${VERSTATUS}" ; The name of the installer
 SetCompressor lzma
 AllowRootDirInstall false
 CRCCheck on
@@ -29,14 +30,14 @@ SetDatablockOptimize on
 Icon ".\..\..\Resources\icon_small.ico"
 BrandingText " "
 VIProductVersion "${VERSION}.0"
-VIAddVersionKey "ProductName" "NoteFly"
+VIAddVersionKey "ProductName" "${PROJNAME}"
 VIAddVersionKey "FileDescription" "note taking application"
 VIAddVersionKey "ProductVersion" "${VERSION}.0 ${VERSTATUS}"
-VIAddVersionKey "LegalCopyright" "NoteFly"
+VIAddVersionKey "LegalCopyright" "${PROJNAME}"
 VIAddVersionKey "FileVersion" "${VERSION}.0 ${VERSTATUS}"
 
 ; The file to write
-OutFile ".\NoteFly_v${VERSION}${VERSTATUS}.exe"
+OutFile ".\${PROJNAME}_v${VERSION}${VERSTATUS}.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\NoteFly
@@ -174,29 +175,27 @@ SectionEnd
 Section "Desktop Shortcut (all users)"
 SetShellVarContext all
 
-
 ; Get the OS version
 nsisos::osversion ; OS plugin from: http://nsis.sourceforge.net/NSIS-OS_plug-in
 StrCpy $R0 $0
 StrCpy $R1 $1
 ; Check our version
 ${If} $R0 == '5'
-  CreateShortCut "$DESKTOP\NoteFly2.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ;small icon for win. xp.
+  CreateShortCut "$DESKTOP\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ;small icon for win. xp.
 ${Else}
-  CreateShortCut "$DESKTOP\NoteFly2.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ;large icon
+  CreateShortCut "$DESKTOP\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ;large icon
 ${EndIf}
 SectionEnd
 
-Section "Start Menu Shortcuts"
+Section "Start Menu Shortcuts (all users)"
   SetShellVarContext all
-  ;startmenu shortcut should be for all users or currentuser Not administrator account.
-  CreateDirectory "$SMPROGRAMS\NoteFly"
-  CreateShortCut "$SMPROGRAMS\NoteFly\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  CreateDirectory "$SMPROGRAMS\${PROJNAME}"
+  CreateShortCut "$SMPROGRAMS\${PROJNAME}\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   
 ${If} $R0 == '5'
-  CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ;small icon for win. xp.
+  CreateShortCut "$SMPROGRAMS\${PROJNAME}\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ;small icon for win. xp.
 ${Else}
-  CreateShortCut "$SMPROGRAMS\NoteFly\NoteFly.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ;large icon
+  CreateShortCut "$SMPROGRAMS\${PROJNAME}\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ;large icon
 ${EndIf}
 SectionEnd
 
@@ -236,10 +235,10 @@ Section "Uninstall"
   keepsettingnotes:
   SetShellVarContext all
   ; Remove desktop shortcut
-  Delete "$DESKTOP\NoteFly.lnk"    
+  Delete "$DESKTOP\${PROJNAME}.lnk"    
   ; Remove startmenu shortcuts
-  Delete "$SMPROGRAMS\NoteFly\NoteFly.lnk"
-  Delete "$SMPROGRAMS\NoteFly\Uninstall.lnk"
+  Delete "$SMPROGRAMS\${PROJNAME}\${PROJNAME}.lnk"
+  Delete "$SMPROGRAMS\${PROJNAME}\Uninstall.lnk"
   ; Remove startmenu folder if empty
-  RMDir "$SMPROGRAMS\NoteFly"
+  RMDir "$SMPROGRAMS\${PROJNAME}"
 SectionEnd

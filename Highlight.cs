@@ -309,7 +309,7 @@ namespace NoteFly
                                         }
                                         else if (resnode == 0)
                                         {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorInvalidfunctions)); //
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorInvalidfunctions));
                                         }
                                     }
                                 }
@@ -598,5 +598,4 @@ namespace NoteFly
 
         #endregion Methods
     }
-
 }

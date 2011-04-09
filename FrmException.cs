@@ -23,8 +23,16 @@ namespace NoteFly
     using System.Windows.Forms;
     using System.Text;
 
+    /// <summary>
+    /// Exception window
+    /// </summary>
     public partial class FrmException : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the FrmException class.
+        /// </summary>
+        /// <param name="excmgs">Exception message</param>
+        /// <param name="excstrace">Exception stacktrace</param>
         public FrmException(String excmgs, String excstrace)
         {
             InitializeComponent();
@@ -41,11 +49,21 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// The continu button is clicked, try to continu to run.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnContinu_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// The shutdown button is clicked, shutdown this application.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnShutdown_Click(object sender, EventArgs e)
         {
             Application.Exit();

@@ -789,13 +789,14 @@ namespace NoteFly
         /// <param name="versionquality">The latest version quality, e.g: alpha, beta, rc or nothing for final.</param>
         /// <returns>the newest version as integer array, 
         /// any negative valeau(-1 by default) considered as error.</returns>
-        public static short[] GetLatestVersion(out string versionquality)
+        public static short[] GetLatestVersion(out string versionquality, out string downloadurl)
         {
             short[] version = new short[3];
             version[0] = -1;
             version[1] = -1;
             version[2] = -1;
             versionquality = Program.AssemblyVersionQuality;
+            downloadurl = "http://www.notefly.tk/downloads.php";
             try
             {
                 System.Net.ServicePointManager.Expect100Continue = false;
@@ -860,6 +861,14 @@ namespace NoteFly
                                 if (getquality.Length < 16)
                                 {
                                     versionquality = getquality;
+                                }
+
+                                break;
+                            case "downloadurl":
+                                string downloadurlraw = xmlread.ReadContentAsString().Trim();
+                                if ((downloadurlraw.Length > 10) && (downloadurlraw.Length < 255))
+                                {
+                                    downloadurl = downloadurlraw;
                                 }
 
                                 break;

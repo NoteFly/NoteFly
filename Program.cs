@@ -23,14 +23,11 @@ using System;
 [assembly: CLSCompliant(true)]
 namespace NoteFly
 {
+    using System.Diagnostics;
     using System.IO;
     using System.Reflection;
     using System.Text;
     using System.Threading;
-    using System.Diagnostics;
-#if DEBUG
-    using System.Diagnostics;
-#endif
 
     /// <summary>
     /// Program class, main entry application.
@@ -38,11 +35,6 @@ namespace NoteFly
     public class Program
     {
         #region Fields (3)
-
-        /// <summary>
-        /// Constant download page url.
-        /// </summary>
-        private const string DOWNLOADPAGE = "http://www.notefly.tk/downloads.php";
 
         /// <summary>
         /// Reference to notes class.
@@ -329,6 +321,52 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Do update check.
+        /// </summary>
+        public static void UpdateCheck()
+        {
+            Thread.Sleep(500);
+            Settings.updatecheckLastDate = DateTime.Now.ToString();
+            xmlUtil.WriteSettings();
+            short[] thisversion = GetVersion();
+            string latestversionquality = Program.AssemblyVersionQuality;
+            string downloadurl;
+            short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality, out downloadurl);
+            bool updateavailible = false;
+            for (int i = 0; i < thisversion.Length; i++)
+            {
+                if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
+                {
+                    updateavailible = true;
+                    break;
+                }
+            }
+
+            if (updateavailible || Program.AssemblyVersionQuality != latestversionquality)
+            {
+                if (!String.IsNullOrEmpty(downloadurl))
+                {
+                    StringBuilder sbmsg = new StringBuilder();
+                    sbmsg.AppendLine("There's a new version availible.");
+                    sbmsg.Append("Your version: ");
+                    sbmsg.AppendLine(Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+                    sbmsg.Append("New version: ");
+                    sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
+                    sbmsg.Append("Do you want to go to the download page now?");
+                    System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
+                    if (updres == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        Program.LoadURI(downloadurl);
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("Downloadurl is unexcepted unknown.");
+                }
+            }
+        }
+
+        /// <summary>
         /// Unhandled exceptions occur
         /// </summary>
         /// <param name="sender"></param>
@@ -342,8 +380,8 @@ namespace NoteFly
         /// <summary>
         /// Unhandled thread exceptions occur
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="args">ThreadExceptionEvent arguments</param>
         private static void UnhanledThreadExceptionHanhler(Object sender, ThreadExceptionEventArgs treadargs)
         {
             Exception e = treadargs.Exception;
@@ -353,67 +391,27 @@ namespace NoteFly
         /// <summary>
         /// Log exception and show exception dialog.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Exception object</param>
         private static void ShowExceptionDlg(Exception e)
         {
             if (e == null)
             {
                 e = new Exception("Unknown unhandled Exception was occurred!");
             }
+
             if (Settings.programLogException)
             {
                 Log.Write(LogType.exception, e.Message + " stacktrace: " + e.StackTrace);
             }
+
             FrmException frmexc = new FrmException(e.Message, e.StackTrace);
             frmexc.ShowDialog();
         }
 
-
-        /// <summary>
-        /// Do update check.
-        /// </summary>
-        public static void UpdateCheck()
-        {
-            Thread.Sleep(500);
-            Settings.updatecheckLastDate = DateTime.Now.ToString();
-            xmlUtil.WriteSettings();
-            short[] thisversion = GetVersion();
-            string latestversionquality = Program.AssemblyVersionQuality;
-            short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality);
-            bool updateavailible = false;
-            for (int i = 0; i < thisversion.Length; i++)
-            {
-                if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
-                {
-                    updateavailible = true;
-                    break;
-                }
-            }
-
-            if (updateavailible || Program.AssemblyVersionQuality != latestversionquality)
-            {
-                StringBuilder sbmsg = new StringBuilder();
-                sbmsg.AppendLine("There's a new version availible.");
-                sbmsg.Append("Your version: ");
-                sbmsg.AppendLine(Program.AssemblyVersionAsString + " "+Program.AssemblyVersionQuality);
-                sbmsg.Append("New version: ");
-                sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] +" "+ latestversionquality);
-                sbmsg.Append("Do you want to go to the download page now?");
-                System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(),"update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
-                if (updres == System.Windows.Forms.DialogResult.Yes)
-                {
-                    Program.LoadURI(DOWNLOADPAGE);
-                }
-            }
-        }
-
-        // Private Methods (1) 
-
         /// <summary>
         /// Check number of instance of this application.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <returns>The number of instance running</returns>
         private static int CheckInstancesRunning()
         {
             int instances = 0;

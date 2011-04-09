@@ -216,7 +216,6 @@
     <Content Include="Resources\icon_big.png" />
     <Content Include="Resources\icon_small.ico" />
     <Content Include="Resources\icon_small.png" />
-    <Content Include="Resources\trayicon_remake.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
