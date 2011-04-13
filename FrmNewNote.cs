@@ -147,6 +147,7 @@ namespace NoteFly
             this.btnTextItalic.ForeColor = this.notes.GetTextClr(skinnr);
             this.btnTextStriketrough.ForeColor = this.notes.GetTextClr(skinnr);
             this.btnTextUnderline.ForeColor = this.notes.GetTextClr(skinnr);
+            this.btnTextBulletlist.ForeColor = this.notes.GetTextClr(skinnr);
             this.btnFontBigger.ForeColor = this.notes.GetTextClr(skinnr);
             this.btnFontSmaller.ForeColor = this.notes.GetTextClr(skinnr);
 
@@ -154,6 +155,7 @@ namespace NoteFly
             this.btnTextItalic.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
             this.btnTextStriketrough.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
             this.btnTextUnderline.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+            this.btnTextBulletlist.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
             this.btnFontBigger.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
             this.btnFontSmaller.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
         }
