@@ -511,7 +511,7 @@ namespace NoteFly
             try
             {
                 xmlUtil.WriteSettings();
-                xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE), 2473);
+                xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE));
                 return true;
             }
             catch (Exception)
@@ -861,43 +861,6 @@ namespace NoteFly
             return version;
         }
 
-        /*
-        public static string[] ParserLanguageCommentkeywords(string file, string languagename)
-        {
-            string[] comments = new string[3];
-            try
-            {
-                xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, file));
-                xmlread.ProhibitDtd = true;
-                while (xmlread.Read())
-                {
-                    if (xmlread.Name == "Language")
-                    {
-                        if (xmlread.GetAttribute("name") == languagename)
-                        {
-                            comments[0] = xmlread.GetAttribute("commentLine");
-                            comments[1] = xmlread.GetAttribute("commentStart");
-                            comments[2] = xmlread.GetAttribute("commentEnd");
-                        }
-                        else
-                        {
-                            xmlread.Skip();
-                        }
-                    }
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                Log.Write(LogType.exception, "File " + file + " not found.");
-            }
-            finally
-            {
-                xmlread.Close();
-            }
-            return comments;
-        }
-         */
-
         /// <summary>
         /// Return a array of keywords used for the prgramming language we are doing a syntax check on.
         /// </summary>
@@ -1087,7 +1050,7 @@ namespace NoteFly
                 xmlwrite.Close();
             }
 
-            xmlUtil.CheckFile(filename, 1630);
+            xmlUtil.CheckFile(filename);
         }
 
         /// <summary>
@@ -1095,12 +1058,12 @@ namespace NoteFly
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="exceptedfilesize"></param>
-        private static void CheckFile(string filename, long exceptedfilesize)
+        private static void CheckFile(string filename)
         {
             FileInfo fi = new FileInfo(filename);
-            if (fi.Length != exceptedfilesize)
+            if (fi.Length != 0)
             {
-                Log.Write(LogType.exception, filename + " has not excepted filesize. Check if corrupted.");
+                Log.Write(LogType.exception, filename + " is an empty file. Check file is corrupted.");
             }
         }
 

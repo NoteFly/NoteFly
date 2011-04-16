@@ -312,6 +312,23 @@ namespace NoteFly
                 {
                     this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
                 }
+
+                if (e.ColumnIndex == 2)
+                {
+                    int notepos = this.GetNoteposBySelrow(e.RowIndex);
+                    this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
+                    this.dataGridView1.Rows[e.RowIndex].Cells[2].Value = !(bool)this.dataGridView1.Rows[e.RowIndex].Cells[2].Value;
+                    if (this.notes.GetNote(notepos).Visible)
+                    {
+                        this.notes.GetNote(notepos).CreateForm();
+                    }
+                    else
+                    {
+                        this.notes.GetNote(notepos).DestroyForm();
+                    }
+                    
+                    xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+                }
             }
         }
 
