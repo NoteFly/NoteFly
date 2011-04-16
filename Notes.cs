@@ -82,7 +82,7 @@ namespace NoteFly
             this.notes = new List<Note>();
             this.skins = new List<Skin>();
             this.skins = xmlUtil.LoadSkins();
-            this.LoadNotes(Settings.programFirstrun, resetpositions);
+            this.LoadNotes(Settings.ProgramFirstrun, resetpositions);
         }
 
         #endregion Constructors
@@ -218,7 +218,7 @@ namespace NoteFly
                 newfile = title2 + NOTEEXTENSION;
             }
 
-            if (File.Exists(Path.Combine(Settings.notesSavepath, newfile)))
+            if (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)))
             {
                 newfile = this.Checknewfilename(newfile, LIMITLENFILE, '#');
                 return newfile;
@@ -309,9 +309,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="firstrun">true if it is the first run</param>
         /// <param name="resetpositions">true for reseting all the notes positions</param>
-        public void LoadNotes(bool firstrun, bool resetpositions)
+        public void LoadNotes(bool hasbeenfirstrun, bool resetpositions)
         {
-            if (!Directory.Exists(Settings.notesSavepath))
+            if (!Directory.Exists(Settings.NotesSavepath))
             {
                 const string NOTEFOLDERDOESNOTEXIST = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
                 DialogResult result = MessageBox.Show(NOTEFOLDERDOESNOTEXIST, "Notes folder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -323,19 +323,15 @@ namespace NoteFly
                 else
                 {
                     Log.Write(LogType.error, (NOTEFOLDERDOESNOTEXIST + " Yes"));
-                    Settings.notesSavepath = Program.AppDataFolder;
+                    Settings.NotesSavepath = Program.AppDataFolder;
                 }
             }
 
-            if (firstrun)
-            {
-                this.ImportingNotesNoteFly1();
-            }
 #if DEBUG
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 #endif
-            string[] notefilespath = Directory.GetFiles(Settings.notesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly);
+            string[] notefilespath = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly);
             string[] notefiles = new string[notefilespath.Length];
             for (int i = 0; i < notefilespath.Length; i++)
             {
@@ -353,7 +349,7 @@ namespace NoteFly
                 DialogResult dlgres = MessageBox.Show("There are many notes loading this can take a while, do you want to load them all?", "contine loading many notes?", MessageBoxButtons.YesNo);
                 if (dlgres == DialogResult.No)
                 {
-                    numloadingnotes = Settings.notesWarnLimit;
+                    numloadingnotes = Settings.NotesWarnLimit;
                 }
             }
             else
@@ -384,8 +380,9 @@ namespace NoteFly
             stopwatch.Stop();
             Log.Write(LogType.info, "Notes load time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
 #endif
-            if (firstrun)
+            if (!hasbeenfirstrun)
             {
+                this.ImportingNotesNoteFly1();
                 this.CreateFirstrunNote();
             }
         }
@@ -517,7 +514,7 @@ namespace NoteFly
         /// <returns>true when limit is reached, and a warning about too many notes should be showed.</returns>
         private bool CheckLimitNotes(int number)
         {
-            if (number > Settings.notesWarnLimit)
+            if (number > Settings.NotesWarnLimit)
             {
                 return true;
             }
@@ -539,7 +536,7 @@ namespace NoteFly
             int num = 1;
             int lenfilecounter = 3;
             int numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
-            while (File.Exists(Path.Combine(Settings.notesSavepath, newfile)) && (numlen <= lenfilecounter))
+            while (File.Exists(Path.Combine(Settings.NotesSavepath, newfile)) && (numlen <= lenfilecounter))
             {
                 numlen = num.ToString(CultureInfo.InvariantCulture.NumberFormat).Length;
                 newfile = newfile.Substring(0, usedlimitlengthfile - numlen - 1) + sepchar + num + NOTEEXTENSION;
@@ -580,9 +577,7 @@ namespace NoteFly
             xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
             this.AddNote(demonote);
             demonote.CreateForm();
-            Settings.programFirstrun = false;
-            Log.Write(LogType.info, "firstrun occur");
-            xmlUtil.WriteSettings();
+            demonote.BringNoteToFront();
         }
 
         /// <summary>

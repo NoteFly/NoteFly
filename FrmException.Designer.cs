@@ -116,11 +116,34 @@
 
         #endregion
 
+        /// <summary>
+        /// Label lblTextExceptionMessage
+        /// </summary>
         private System.Windows.Forms.Label lblTextExceptionMessage;
+
+        /// <summary>
+        /// Button btnContinu
+        /// </summary>
         private System.Windows.Forms.Button btnContinu;
+
+        /// <summary>
+        /// Button btnShutdown
+        /// </summary>
         private System.Windows.Forms.Button btnShutdown;
+
+        /// <summary>
+        /// Label lblTextOptions
+        /// </summary>
         private System.Windows.Forms.Label lblTextOptions;
+
+        /// <summary>
+        /// TextBox tbExceptionMessage
+        /// </summary>
         private System.Windows.Forms.TextBox tbExceptionMessage;
+
+        /// <summary>
+        /// Label lblTextStacktrace
+        /// </summary>
         private System.Windows.Forms.Label lblTextStacktrace;
     }
 }

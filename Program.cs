@@ -152,7 +152,7 @@ namespace NoteFly
         /// <param name="uri_text">the uniform resource location</param>
         public static void LoadLink(string uri_text)
         {
-            if (Settings.confirmLinkclick)
+            if (Settings.ConfirmLinkclick)
             {
                 System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Are you sure you want to visted: " + uri_text, "Are you sure?", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
                 if (result == System.Windows.Forms.DialogResult.Yes)
@@ -221,26 +221,26 @@ namespace NoteFly
                     {
                         // Forces the programme to setup the first run notefly info again.
                         case "-forcefirstrun":
-                            Settings.programFirstrun = true;
+                            Settings.ProgramFirstrun = true;
                             break;
 
                         // disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
                         // because transparency is on by default.
                         case "-disabletransparency":
-                            Settings.notesTransparencyEnabled = false;
+                            Settings.NotesTransparencyEnabled = false;
                             break;
 
                         // Turn off all highlighting functions in case highlighting was turned on and it let NoteFly crash on startup.
                         case "-disablehighlighting":
-                            Settings.highlightHyperlinks = false;
-                            Settings.highlightHTML = false;
-                            Settings.highlightPHP = false;
-                            Settings.highlightSQL = false;
+                            Settings.HighlightHyperlinks = false;
+                            Settings.HighlightHTML = false;
+                            Settings.HighlightPHP = false;
+                            Settings.HighlightSQL = false;
                             break;
 
                         // Turn off all social functions on startup.
                         case "-disablesocial":
-                            Settings.socialEmailEnabled = false;
+                            Settings.SocialEmailEnabled = false;
                             ////Settings.socialFacebookEnabled = false;
                             ////Settings.socialTwitterEnabled = false;
                             break;
@@ -248,9 +248,9 @@ namespace NoteFly
                         // Turn all logging features on at startup. 
                         // Handy in case NoteFly crashes at startup and logging was turned off.
                         case "-logall":
-                            Settings.programLogException = true;
-                            Settings.programLogError = true;
-                            Settings.programLogInfo = true;
+                            Settings.ProgramLogException = true;
+                            Settings.ProgramLogError = true;
+                            Settings.ProgramLogInfo = true;
                             break;
 
                         // turn off xp visual style.
@@ -307,10 +307,18 @@ namespace NoteFly
             notes = new Notes(resetpositions);
             trayicon = new TrayIcon(notes);
 
-            if (Settings.updatecheckEverydays > 0)
+            if (!Settings.ProgramFirstrun)
             {
-                DateTime lastupdate = DateTime.Parse(Settings.updatecheckLastDate);
-                if (lastupdate.AddDays(Settings.updatecheckEverydays) <= DateTime.Now)
+                // disable the firstrun the next time.
+                Settings.ProgramFirstrun = true;
+                Log.Write(LogType.info, "firstrun occur");
+                xmlUtil.WriteSettings();
+            }
+
+            if (Settings.UpdatecheckEverydays > 0)
+            {
+                DateTime lastupdate = DateTime.Parse(Settings.UpdatecheckLastDate);
+                if (lastupdate.AddDays(Settings.UpdatecheckEverydays) <= DateTime.Now)
                 {
                     Thread updatethread = new Thread(UpdateCheck);
                     updatethread.Start();
@@ -336,7 +344,7 @@ namespace NoteFly
         public static void UpdateCheck()
         {
             Thread.Sleep(500);
-            Settings.updatecheckLastDate = DateTime.Now.ToString();
+            Settings.UpdatecheckLastDate = DateTime.Now.ToString();
             xmlUtil.WriteSettings();
             short[] thisversion = GetVersion();
             string latestversionquality = Program.AssemblyVersionQuality;
@@ -409,7 +417,7 @@ namespace NoteFly
                 e = new Exception("Unknown unhandled Exception was occurred!");
             }
 
-            if (Settings.programLogException)
+            if (Settings.ProgramLogException)
             {
                 Log.Write(LogType.exception, e.Message + " stacktrace: " + e.StackTrace);
             }

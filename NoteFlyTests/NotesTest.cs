@@ -61,8 +61,8 @@ namespace NoteFlyTests
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
         {
-            Settings.notesWarnLimit = 1000;
-            Settings.notesSavepath = Program.AppDataFolder;
+            Settings.NotesWarnLimit = 1000;
+            Settings.NotesSavepath = Program.AppDataFolder;
         }
         #endregion
 

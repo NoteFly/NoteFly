@@ -166,7 +166,7 @@ namespace NoteFly
             }
             else
             {
-                if (Settings.confirmDeletenote)
+                if (Settings.ConfirmDeletenote)
                 {
                     DialogResult deleteres = MessageBox.Show("Are you sure you want to delete the selected note(s)?", "delete?", MessageBoxButtons.YesNo);
                     if (deleteres == DialogResult.Yes)
@@ -220,7 +220,7 @@ namespace NoteFly
                             Log.Write(LogType.info, "Erased all notes for restoring notes backup.");
                             for (int i = 0; i < this.notes.CountNotes; i++)
                             {
-                                File.Delete(Path.Combine(Settings.notesSavepath, this.notes.GetNote(i).Filename));
+                                File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
                             }
                         }
                         else if (eraseres == DialogResult.Cancel)
@@ -403,8 +403,8 @@ namespace NoteFly
                 try
                 {
                     this.notes.GetNote(deletenotepos[r]).DestroyForm();
-                    string filepath = Path.Combine(Settings.notesSavepath, filename);
-                    if (Settings.notesDeleteRecyclebin)
+                    string filepath = Path.Combine(Settings.NotesSavepath, filename);
+                    if (Settings.NotesDeleteRecyclebin)
                     {
 #if windows
                         SHFILEOPSTRUCT shf = new SHFILEOPSTRUCT(); 
@@ -452,7 +452,7 @@ namespace NoteFly
             this.prevrownr = -1;
             this.secondprevrownr = -2;
             this.notes.frmmangenotesneedupdate = true;
-            this.toolTip.Active = Settings.notesTooltipsEnabled;
+            this.toolTip.Active = Settings.NotesTooltipsEnabled;
 
             DataTable datatable = new DataTable();
             this.dataGridView1.DataSource = datatable;
@@ -485,7 +485,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmManageNotes_Activated(object sender, EventArgs e)
         {
-            if (Settings.notesTransparencyEnabled)
+            if (Settings.NotesTransparencyEnabled)
             {
                 try
                 {
@@ -505,11 +505,11 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmManageNotes_Deactivate(object sender, EventArgs e)
         {
-            if (Settings.notesTransparencyEnabled)
+            if (Settings.NotesTransparencyEnabled)
             {
                 try
                 {
-                    this.Opacity = Settings.notesTransparencyLevel;
+                    this.Opacity = Settings.NotesTransparencyLevel;
                 }
                 catch (InvalidCastException)
                 {

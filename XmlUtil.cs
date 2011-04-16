@@ -182,7 +182,7 @@ namespace NoteFly
         public static Note LoadNoteFile(Notes notes, string notefilename)
         {
             Note note = new Note(notes, notefilename);
-            xmlread = new XmlTextReader(Path.Combine(Settings.notesSavepath, notefilename));
+            xmlread = new XmlTextReader(Path.Combine(Settings.NotesSavepath, notefilename));
             xmlread.ProhibitDtd = true;
             try
             {
@@ -220,172 +220,147 @@ namespace NoteFly
                     {
                         //booleans
                         case "ConfirmDeletenote":
-                            Settings.confirmDeletenote = xmlread.ReadElementContentAsBoolean();
+                            Settings.ConfirmDeletenote = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ConfirmExit":
-                            Settings.confirmExit = xmlread.ReadElementContentAsBoolean();
+                            Settings.ConfirmExit = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ConfirmLinkclick":
-                            Settings.confirmLinkclick = xmlread.ReadElementContentAsBoolean();
+                            Settings.ConfirmLinkclick = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "FontTitleStylebold":
-                            Settings.fontTitleStylebold = xmlread.ReadElementContentAsBoolean();
+                            Settings.FontTitleStylebold = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "HighlightHTML":
-                            Settings.highlightHTML = xmlread.ReadElementContentAsBoolean();
+                            Settings.HighlightHTML = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "HighlightHyperlinks":
-                            Settings.highlightHyperlinks = xmlread.ReadElementContentAsBoolean();
+                            Settings.HighlightHyperlinks = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "HighlightPHP":
-                            Settings.highlightPHP = xmlread.ReadElementContentAsBoolean();
+                            Settings.HighlightPHP = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "HighlightSQL":
-                            Settings.highlightSQL = xmlread.ReadElementContentAsBoolean();
+                            Settings.HighlightSQL = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "NetworkConnectionForceipv6":
-                            Settings.networkConnectionForceipv6 = xmlread.ReadElementContentAsBoolean();
-                            break;
+                        ////case "NetworkConnectionForceipv6":
+                            ////Settings.NetworkConnectionForceipv6 = xmlread.ReadElementContentAsBoolean();
+                        ////    break;
                         case "NetworkProxyEnabled":
-                            Settings.networkProxyEnabled = xmlread.ReadElementContentAsBoolean();
+                            Settings.NetworkProxyEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "NotesTooltipEnabled":
-                            Settings.notesTooltipsEnabled = xmlread.ReadElementContentAsBoolean();
+                            Settings.NotesTooltipsEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "NotesClosebtnHidenotepermanently":
-                            Settings.notesClosebtnHidenotepermanently = xmlread.ReadElementContentAsBoolean();
+                            Settings.NotesClosebtnHidenotepermanently = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "NotesDeleteRecyclebin":
-                            Settings.notesDeleteRecyclebin = xmlread.ReadElementContentAsBoolean();
+                            Settings.NotesDeleteRecyclebin = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "NotesTransparencyEnabled":
-                            Settings.notesTransparencyEnabled = xmlread.ReadElementContentAsBoolean();
+                            Settings.NotesTransparencyEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ProgramFirstrun":
-                            Settings.programFirstrun = xmlread.ReadElementContentAsBoolean();
+                            Settings.ProgramFirstrun = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ProgramLogError":
-                            Settings.programLogError = xmlread.ReadElementContentAsBoolean();
+                            Settings.ProgramLogError = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ProgramLogException":
-                            Settings.programLogException = xmlread.ReadElementContentAsBoolean();
+                            Settings.ProgramLogException = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ProgramLogInfo":
-                            Settings.programLogInfo = xmlread.ReadElementContentAsBoolean();
+                            Settings.ProgramLogInfo = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "SocialEmailEnabled":
-                            Settings.socialEmailEnabled = xmlread.ReadElementContentAsBoolean();
+                            Settings.SocialEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
-                        /*
-                        case "SocialFacebookEnabled":
-                            Settings.socialFacebookEnabled = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "SocialFacebookUseSSL":
-                            Settings.socialFacebookUseSSL = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "SocialTwitterEnabled":
-                            Settings.socialTwitterEnabled = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "SocialTwitterUseSSL":
-                            Settings.socialTwitterUseSSL = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        */
                         case "TrayiconFontsize":
-                            Settings.trayiconFontsize = xmlread.ReadElementContentAsFloat();
+                            Settings.TrayiconFontsize = xmlread.ReadElementContentAsFloat();
                             break;
                         case "TrayiconCreatenotebold":
-                            Settings.trayiconCreatenotebold = xmlread.ReadElementContentAsBoolean();
+                            Settings.TrayiconCreatenotebold = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "TrayiconExitbold":
-                            Settings.trayiconExitbold = xmlread.ReadElementContentAsBoolean();
+                            Settings.TrayiconExitbold = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "TrayiconManagenotesbold":
-                            Settings.trayiconManagenotesbold = xmlread.ReadElementContentAsBoolean();
+                            Settings.TrayiconManagenotesbold = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "TrayiconSettingsbold":
-                            Settings.trayiconSettingsbold = xmlread.ReadElementContentAsBoolean();
+                            Settings.TrayiconSettingsbold = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "NotesDefaultRandomSkin":
-                            Settings.notesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
+                            Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
                             break;
                         //ints / doubles
                         case "FontContentSize":
-                            Settings.fontContentSize = xmlread.ReadElementContentAsInt();
+                            Settings.FontContentSize = xmlread.ReadElementContentAsInt();
                             break;
                         case "FontTextdirection":
-                            Settings.fontTextdirection = xmlread.ReadElementContentAsInt();
+                            Settings.FontTextdirection = xmlread.ReadElementContentAsInt();
                             break;
                         case "FontTitleSize":
-                            Settings.fontTitleSize = xmlread.ReadElementContentAsInt();
+                            Settings.FontTitleSize = xmlread.ReadElementContentAsInt();
                             break;
                         case "NetworkConnectionTimeout":
-                            Settings.networkConnectionTimeout = xmlread.ReadElementContentAsInt();
+                            Settings.NetworkConnectionTimeout = xmlread.ReadElementContentAsInt();
                             break;
                         case "DefaultRandomSkin":
-                            Settings.notesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
+                            Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "NotesDefaultSkinnr":
-                            Settings.notesDefaultSkinnr = xmlread.ReadElementContentAsInt();
+                            Settings.NotesDefaultSkinnr = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesWarnLimit":
-                            Settings.notesWarnLimit = xmlread.ReadElementContentAsInt();
+                            Settings.NotesWarnLimit = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesTransparencyLevel":
-                            Settings.notesTransparencyLevel = xmlread.ReadElementContentAsDouble();
+                            Settings.NotesTransparencyLevel = xmlread.ReadElementContentAsDouble();
                             break;
                         case "TrayiconLeftclickaction":
-                            Settings.trayiconLeftclickaction = xmlread.ReadElementContentAsInt();
+                            Settings.TrayiconLeftclickaction = xmlread.ReadElementContentAsInt();
                             break;
                         case "UpdatecheckEverydays":
-                            Settings.updatecheckEverydays = xmlread.ReadElementContentAsInt();
+                            Settings.UpdatecheckEverydays = xmlread.ReadElementContentAsInt();
                             break;
                         //strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
                         case "HighlightHTMLColorInvalid":
-                            Settings.highlightHTMLColorInvalid = xmlread.ReadElementContentAsString();
+                            Settings.HighlightHTMLColorInvalid = xmlread.ReadElementContentAsString();
                             break;
                         case "HighlightHTMLColorValid":
-                            Settings.highlightHTMLColorValid = xmlread.ReadElementContentAsString();
+                            Settings.HighlightHTMLColorValid = xmlread.ReadElementContentAsString();
                             break;
                         case "HighlightHTMLColorString":
-                            Settings.highlightHTMLColorString = xmlread.ReadElementContentAsString();
+                            Settings.HighlightHTMLColorString = xmlread.ReadElementContentAsString();
                             break;
                         case "HighlightPHPColorComment":
-                            Settings.highlightPHPColorComment = xmlread.ReadElementContentAsString();
+                            Settings.HighlightPHPColorComment = xmlread.ReadElementContentAsString();
                             break;
                         case "HighlightPHPColorDocumentstartend":
-                            Settings.highlightPHPColorDocumentstartend = xmlread.ReadElementContentAsString();
+                            Settings.HighlightPHPColorDocumentstartend = xmlread.ReadElementContentAsString();
                             break;
                         case "HighlightPHPColorInvalidfunctions":
-                            Settings.highlightPHPColorInvalidfunctions = xmlread.ReadElementContentAsString();
+                            Settings.HighlightPHPColorInvalidfunctions = xmlread.ReadElementContentAsString();
                             break;
                         case "HighlightPHPColorValidfunctions":
-                            Settings.highlightPHPColorValidfunctions = xmlread.ReadElementContentAsString();
+                            Settings.HighlightPHPColorValidfunctions = xmlread.ReadElementContentAsString();
                             break;
                         case "FontContentFamily":
-                            Settings.fontContentFamily = xmlread.ReadElementContentAsString();
+                            Settings.FontContentFamily = xmlread.ReadElementContentAsString();
                             break;
                         case "FontTitleFamily":
-                            Settings.fontTitleFamily = xmlread.ReadElementContentAsString();
+                            Settings.FontTitleFamily = xmlread.ReadElementContentAsString();
                             break;
                         case "NetworkProxyAddress":
-                            Settings.networkProxyAddress = xmlread.ReadElementContentAsString();
+                            Settings.NetworkProxyAddress = xmlread.ReadElementContentAsString();
                             break;
                         case "NotesSavepath":
-                            Settings.notesSavepath = xmlread.ReadElementContentAsString();
+                            Settings.NotesSavepath = xmlread.ReadElementContentAsString();
                             break;
-                        /*
-                        case "SocialEmailDefaultadres":
-                            Settings.socialEmailDefaultadres = xmlread.ReadElementContentAsString();
-                            break;
-                        case "SocialTwitterUsername":
-                            Settings.socialTwitterUsername = xmlread.ReadElementContentAsString();
-                            break;
-                        case "SocialFacebookEmail":
-                            Settings.socialFacebookEmail = xmlread.ReadElementContentAsString();
-                            break;
-                         */
                         case "UpdatecheckLastDate":
-                            Settings.updatecheckLastDate = xmlread.ReadElementContentAsString();
+                            Settings.UpdatecheckLastDate = xmlread.ReadElementContentAsString();
                             break;
                     }
 
@@ -487,52 +462,52 @@ namespace NoteFly
         /// <returns>True if writing settings succeeded otherwise false.</returns>
         public static bool WriteDefaultSettings()
         {
-            Settings.confirmDeletenote = true;
-            Settings.confirmExit = false;
-            Settings.confirmLinkclick = true;
-            Settings.fontContentFamily = "Arial";
-            Settings.fontContentSize = 11;
-            Settings.fontTextdirection = 0;
-            Settings.fontTitleFamily = "Arial";
-            Settings.fontTitleSize = 14;
-            Settings.fontTitleStylebold = true;
-            Settings.highlightHTML = false;
-            Settings.highlightHTMLColorInvalid = "#FF0000";
-            Settings.highlightHTMLColorValid = "#0026FF";
-            Settings.highlightHTMLColorString = "#808080";
-            Settings.highlightHyperlinks = true;
-            Settings.highlightPHP = false;
-            Settings.highlightPHPColorComment = "#333333";
-            Settings.highlightPHPColorDocumentstartend = "#129612";
-            Settings.highlightPHPColorValidfunctions = "#41D87B";
-            Settings.highlightPHPColorInvalidfunctions = "#D90000";
-            Settings.highlightSQL = false;
-            Settings.networkConnectionForceipv6 = false;
-            Settings.networkConnectionTimeout = 8000;
-            Settings.networkProxyAddress = String.Empty;
-            Settings.networkProxyEnabled = false;
-            Settings.notesTooltipsEnabled = true;
-            Settings.notesClosebtnHidenotepermanently = true;
-            Settings.notesDefaultRandomSkin = false;
-            Settings.notesDefaultSkinnr = 0; // default skin: yellow
-            Settings.notesSavepath = Program.AppDataFolder;
-            Settings.notesTransparencyEnabled = true;
-            Settings.notesTransparencyLevel = 0.9;
-            Settings.notesWarnLimit = 200;
-            Settings.programFirstrun = true;
-            Settings.programLogError = true;
-            Settings.programLogException = true;
-            Settings.programLogInfo = false;
-            Settings.socialEmailDefaultadres = String.Empty;
-            Settings.socialEmailEnabled = true;
-            Settings.trayiconFontsize = 8.25f;
-            Settings.trayiconLeftclickaction = 1;
-            Settings.trayiconCreatenotebold = true;
-            Settings.trayiconExitbold = false;
-            Settings.trayiconManagenotesbold = false;
-            Settings.trayiconSettingsbold = false;
-            Settings.updatecheckEverydays = 14; // 0 is disabled.
-            Settings.updatecheckLastDate = DateTime.Now.ToString();
+            Settings.ConfirmDeletenote = true;
+            Settings.ConfirmExit = false;
+            Settings.ConfirmLinkclick = true;
+            Settings.FontContentFamily = "Arial";
+            Settings.FontContentSize = 11;
+            Settings.FontTextdirection = 0;
+            Settings.FontTitleFamily = "Arial";
+            Settings.FontTitleSize = 14;
+            Settings.FontTitleStylebold = true;
+            Settings.HighlightHTML = false;
+            Settings.HighlightHTMLColorInvalid = "#FF0000";
+            Settings.HighlightHTMLColorValid = "#0026FF";
+            Settings.HighlightHTMLColorString = "#808080";
+            Settings.HighlightHyperlinks = true;
+            Settings.HighlightPHP = false;
+            Settings.HighlightPHPColorComment = "#333333";
+            Settings.HighlightPHPColorDocumentstartend = "#129612";
+            Settings.HighlightPHPColorValidfunctions = "#41D87B";
+            Settings.HighlightPHPColorInvalidfunctions = "#D90000";
+            Settings.HighlightSQL = false;
+            ////Settings.NetworkConnectionForceipv6 = false;
+            Settings.NetworkConnectionTimeout = 8000;
+            Settings.NetworkProxyAddress = String.Empty;
+            Settings.NetworkProxyEnabled = false;
+            Settings.NotesTooltipsEnabled = true;
+            Settings.NotesClosebtnHidenotepermanently = true;
+            Settings.NotesDefaultRandomSkin = false;
+            Settings.NotesDefaultSkinnr = 0; // default skin: yellow
+            Settings.NotesSavepath = Program.AppDataFolder;
+            Settings.NotesTransparencyEnabled = true;
+            Settings.NotesTransparencyLevel = 0.9;
+            Settings.NotesWarnLimit = 200;
+            Settings.ProgramFirstrun = true;
+            Settings.ProgramLogError = true;
+            Settings.ProgramLogException = true;
+            Settings.ProgramLogInfo = false;
+            Settings.SocialEmailDefaultadres = String.Empty;
+            Settings.SocialEmailEnabled = true;
+            Settings.TrayiconFontsize = 8.25f;
+            Settings.TrayiconLeftclickaction = 1;
+            Settings.TrayiconCreatenotebold = true;
+            Settings.TrayiconExitbold = false;
+            Settings.TrayiconManagenotesbold = false;
+            Settings.TrayiconSettingsbold = false;
+            Settings.UpdatecheckEverydays = 14; // 0 is disabled.
+            Settings.UpdatecheckLastDate = DateTime.Now.ToString();
             try
             {
                 xmlUtil.WriteSettings();
@@ -557,7 +532,7 @@ namespace NoteFly
             bool succeeded = false;
             try
             {
-                xmlwrite = new System.Xml.XmlTextWriter(Path.Combine(Settings.notesSavepath, note.Filename), System.Text.Encoding.UTF8);
+                xmlwrite = new System.Xml.XmlTextWriter(Path.Combine(Settings.NotesSavepath, note.Filename), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = System.Xml.Formatting.Indented;
                 xmlwrite.WriteStartDocument(true); //standalone
                 WriteNoteBody(note, skinname, content);
@@ -668,64 +643,58 @@ namespace NoteFly
             {
                 xmlwrite = new XmlTextWriter(Path.Combine(Program.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument(true); //standalone
+                xmlwrite.WriteStartDocument(true); // standalone document
                 xmlwrite.WriteStartElement("settings");
-                //bools
-                WriteXMLBool("ConfirmDeletenote", Settings.confirmDeletenote);
-                WriteXMLBool("ConfirmExit", Settings.confirmExit);
-                WriteXMLBool("ConfirmLinkclick", Settings.confirmLinkclick);
-                WriteXMLBool("FontTitleStylebold", Settings.fontTitleStylebold);
-                WriteXMLBool("HighlightHTML", Settings.highlightHTML);
-                WriteXMLBool("HighlightHyperlinks", Settings.highlightHyperlinks);
-                WriteXMLBool("HighlightPHP", Settings.highlightPHP);
-                WriteXMLBool("HighlightSQL", Settings.highlightSQL);
-                WriteXMLBool("NetworkConnectionForceipv6", Settings.networkConnectionForceipv6);
-                WriteXMLBool("NetworkProxyEnabled", Settings.networkProxyEnabled);
-                WriteXMLBool("NotesTooltipEnabled", Settings.notesTooltipsEnabled);
-                WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.notesClosebtnHidenotepermanently);
-                WriteXMLBool("NotesDeleteRecyclebin", Settings.notesDeleteRecyclebin);
-                WriteXMLBool("NotesTransparencyEnabled", Settings.notesTransparencyEnabled);
-                WriteXMLBool("NotesDefaultRandomSkin", Settings.notesDefaultRandomSkin);
-                WriteXMLBool("ProgramFirstrun", Settings.programFirstrun);
-                WriteXMLBool("ProgramLogError", Settings.programLogError);
-                WriteXMLBool("ProgramLogException", Settings.programLogException);
-                WriteXMLBool("ProgramLogInfo", Settings.programLogInfo);
-                WriteXMLBool("SocialEmailEnabled", Settings.socialEmailEnabled);
-                //WriteXMLBool("SocialFacebookEnabled", Settings.socialFacebookEnabled);
-                //WriteXMLBool("SocialFacebookUseSSL", Settings.socialFacebookUseSSL);
-                //WriteXMLBool("SocialTwitterEnabled", Settings.socialTwitterEnabled);
-                //WriteXMLBool("SocialTwitterUseSSL", Settings.socialTwitterUseSSL);
-                WriteXMLBool("TrayiconCreatenotebold", Settings.trayiconCreatenotebold);
-                WriteXMLBool("TrayiconExitbold", Settings.trayiconExitbold);
-                WriteXMLBool("TrayiconManagenotesbold", Settings.trayiconManagenotesbold);
-                WriteXMLBool("TrayiconSettingsbold", Settings.trayiconSettingsbold);
-                //ints
-                xmlwrite.WriteElementString("FontTextdirection", Settings.fontTextdirection.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("FontContentSize", Settings.fontContentSize.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("FontTitleSize", Settings.fontTitleSize.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.networkConnectionTimeout.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.notesDefaultSkinnr.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.notesTransparencyLevel.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesWarnLimit", Settings.notesWarnLimit.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("TrayiconFontsize", Settings.trayiconFontsize.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.trayiconLeftclickaction.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.updatecheckEverydays.ToString(numfmtinfo));
-                //strings
-                xmlwrite.WriteElementString("HighlightHTMLColorInvalid", Settings.highlightHTMLColorInvalid);
-                xmlwrite.WriteElementString("HighlightHTMLColorValid", Settings.highlightHTMLColorValid);
-                xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.highlightHTMLColorString);
-                xmlwrite.WriteElementString("HighlightPHPColorComment", Settings.highlightPHPColorComment);
-                xmlwrite.WriteElementString("HighlightPHPColorDocumentstartend", Settings.highlightPHPColorDocumentstartend);
-                xmlwrite.WriteElementString("HighlightPHPColorInvalidfunctions", Settings.highlightPHPColorInvalidfunctions);
-                xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.highlightPHPColorValidfunctions);
-                xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.updatecheckLastDate.ToString());
-                xmlwrite.WriteElementString("FontContentFamily", Settings.fontContentFamily);
-                xmlwrite.WriteElementString("FontTitleFamily", Settings.fontTitleFamily);
-                xmlwrite.WriteElementString("NetworkProxyAddress", Settings.networkProxyAddress);
-                xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.socialEmailDefaultadres);
-                //xmlwrite.WriteElementString("SocialTwitterUsername", Settings.socialTwitterUsername);
-                //xmlwrite.WriteElementString("SocialFacebookEmail", Settings.socialFacebookEmail);
-                xmlwrite.WriteElementString("NotesSavepath", Settings.notesSavepath);
+                // booleans
+                WriteXMLBool("ConfirmDeletenote", Settings.ConfirmDeletenote);
+                WriteXMLBool("ConfirmExit", Settings.ConfirmExit);
+                WriteXMLBool("ConfirmLinkclick", Settings.ConfirmLinkclick);
+                WriteXMLBool("FontTitleStylebold", Settings.FontTitleStylebold);
+                WriteXMLBool("HighlightHTML", Settings.HighlightHTML);
+                WriteXMLBool("HighlightHyperlinks", Settings.HighlightHyperlinks);
+                WriteXMLBool("HighlightPHP", Settings.HighlightPHP);
+                WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
+                ////WriteXMLBool("NetworkConnectionForceipv6", Settings.NetworkConnectionForceipv6);
+                WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
+                WriteXMLBool("NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
+                WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
+                WriteXMLBool("NotesDeleteRecyclebin", Settings.NotesDeleteRecyclebin);
+                WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
+                WriteXMLBool("NotesDefaultRandomSkin", Settings.NotesDefaultRandomSkin);
+                WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
+                WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
+                WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
+                WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
+                WriteXMLBool("SocialEmailEnabled", Settings.SocialEmailEnabled);
+                WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
+                WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
+                WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
+                WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
+                // integers
+                xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesWarnLimit", Settings.NotesWarnLimit.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
+                // strings
+                xmlwrite.WriteElementString("HighlightHTMLColorInvalid", Settings.HighlightHTMLColorInvalid);
+                xmlwrite.WriteElementString("HighlightHTMLColorValid", Settings.HighlightHTMLColorValid);
+                xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.HighlightHTMLColorString);
+                xmlwrite.WriteElementString("HighlightPHPColorComment", Settings.HighlightPHPColorComment);
+                xmlwrite.WriteElementString("HighlightPHPColorDocumentstartend", Settings.HighlightPHPColorDocumentstartend);
+                xmlwrite.WriteElementString("HighlightPHPColorInvalidfunctions", Settings.HighlightPHPColorInvalidfunctions);
+                xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.HighlightPHPColorValidfunctions);
+                xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
+                xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
+                xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
+                xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
+                xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.SocialEmailDefaultadres);
+                xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
             }
@@ -798,11 +767,11 @@ namespace NoteFly
                 WebRequest request = WebRequest.Create(UPDATEURL);
                 request.Method = "GET";
                 request.ContentType = "text/xml";
-                request.Timeout = Settings.networkConnectionTimeout;
+                request.Timeout = Settings.NetworkConnectionTimeout;
                 request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString); //for stats and future use.
-                if (Settings.networkProxyEnabled && !String.IsNullOrEmpty(Settings.networkProxyAddress))
+                if (Settings.NetworkProxyEnabled && !String.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
-                    request.Proxy = new WebProxy(Settings.networkProxyAddress);
+                    request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                 }
 
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore); //do not cache, prevent incorrect cache result.
@@ -979,9 +948,9 @@ namespace NoteFly
             catch (FileNotFoundException)
             {
                 Log.Write(LogType.exception, "File " + file + " not found.");
-                Settings.highlightHTML = false;
-                Settings.highlightPHP = false;
-                Settings.highlightSQL = false;
+                Settings.HighlightHTML = false;
+                Settings.HighlightPHP = false;
+                Settings.HighlightSQL = false;
             }
             finally
             {

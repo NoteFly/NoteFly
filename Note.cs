@@ -27,20 +27,32 @@ namespace NoteFly
     /// </summary>
     public class Note
     {
-        /// <summary>
-        /// The note title.
-        /// </summary>
-        private string title;
+        #region Fields (14)
 
         /// <summary>
-        /// Visibility note.
+        /// The filename of this note.
         /// </summary>
-        private bool visible;
+        private string filename;
 
         /// <summary>
-        /// The note skin.
+        /// The form of this note.
         /// </summary>
-        private int skinNr;
+        private FrmNote frmnote;
+
+        /// <summary>
+        /// The height of the note.
+        /// </summary>
+        private int height;
+
+        /// <summary>
+        /// Is the note locked.
+        /// </summary>
+        private bool locked;
+
+        /// <summary>
+        /// reference to notes class.
+        /// </summary>
+        private Notes notes;
 
         /// <summary>
         /// Is the note displayed ontop of all windows.
@@ -53,9 +65,29 @@ namespace NoteFly
         private bool rolledUp;
 
         /// <summary>
-        /// Is the note locked.
+        /// The note skin.
         /// </summary>
-        private bool locked;
+        private int skinNr;
+
+        /// <summary>
+        /// temporary content.
+        /// </summary>
+        private string tempcontent;
+
+        /// <summary>
+        /// The note title.
+        /// </summary>
+        private string title;
+
+        /// <summary>
+        /// Visibility note.
+        /// </summary>
+        private bool visible;
+
+        /// <summary>
+        /// The width of the note.
+        /// </summary>
+        private int width;
 
         /// <summary>
         /// The X position of the note.
@@ -67,35 +99,9 @@ namespace NoteFly
         /// </summary>
         private int y;
 
-        /// <summary>
-        /// The width of the note.
-        /// </summary>
-        private int width;
+        #endregion Fields
 
-        /// <summary>
-        /// The height of the note.
-        /// </summary>
-        private int height;
-
-        /// <summary>
-        /// temporary content.
-        /// </summary>
-        private string tempcontent;
-
-        /// <summary>
-        /// The form of this note.
-        /// </summary>
-        private FrmNote frmnote;
-
-        /// <summary>
-        /// reference to notes class.
-        /// </summary>
-        private Notes notes;
-
-        /// <summary>
-        /// The filename of this note.
-        /// </summary>
-        private string filename;
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the Note class.
@@ -109,51 +115,62 @@ namespace NoteFly
             this.filename = filename;
         }
 
+        #endregion Constructors
+
+        #region Properties (12)
+
         /// <summary>
-        /// The note title.
+        /// Gets or sets the filename of this note.
         /// </summary>
-        public string Title
+        public string Filename
         {
             get
             {
-                return this.title;
+                return this.filename;
             }
 
             set
             {
-                this.title = value;
+                if (!String.IsNullOrEmpty(value))
+                {
+                    this.filename = value;
+                }
+                else
+                {
+                    throw new ApplicationException("Filename is null or empty.");
+                }
             }
         }
 
         /// <summary>
-        /// Visibility note.
+        /// The height of the note.
         /// </summary>
-        public bool Visible
+        public int Height
         {
             get
             {
-                return this.visible;
+                return this.height;
             }
 
             set
             {
-                this.visible = value;
+                this.height = value;
             }
         }
 
         /// <summary>
-        /// The note skin.
+        /// Is the note locked.
         /// </summary>
-        public int SkinNr
+        public bool Locked
         {
             get
             {
-                return this.skinNr;
+                return this.locked;
             }
 
             set
             {
-                this.skinNr = value;
+                this.locked = value;
             }
         }
 
@@ -190,18 +207,82 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Is the note locked.
+        /// The note skin.
         /// </summary>
-        public bool Locked
+        public int SkinNr
         {
             get
             {
-                return this.locked;
+                return this.skinNr;
             }
 
             set
             {
-                this.locked = value;
+                this.skinNr = value;
+            }
+        }
+
+        /// <summary>
+        /// Temporary content note content store.
+        /// </summary>
+        public string Tempcontent
+        {
+            get
+            {
+                return this.tempcontent;
+            }
+
+            set
+            {
+                this.tempcontent = value;
+            }
+        }
+
+        /// <summary>
+        /// The note title.
+        /// </summary>
+        public string Title
+        {
+            get
+            {
+                return this.title;
+            }
+
+            set
+            {
+                this.title = value;
+            }
+        }
+
+        /// <summary>
+        /// Visibility note.
+        /// </summary>
+        public bool Visible
+        {
+            get
+            {
+                return this.visible;
+            }
+
+            set
+            {
+                this.visible = value;
+            }
+        }
+
+        /// <summary>
+        /// The width of the note.
+        /// </summary>
+        public int Width
+        {
+            get
+            {
+                return this.width;
+            }
+
+            set
+            {
+                this.width = value;
             }
         }
 
@@ -237,74 +318,21 @@ namespace NoteFly
             }
         }
 
-        /// <summary>
-        /// The width of the note.
-        /// </summary>
-        public int Width
-        {
-            get
-            {
-                return this.width;
-            }
+        #endregion Properties
 
-            set
-            {
-                this.width = value;
-            }
-        }
+        #region Methods (5)
+
+        // Public Methods (5) 
 
         /// <summary>
-        /// The height of the note.
+        /// Display this frmnote to the foreground.
         /// </summary>
-        public int Height
+        public void BringNoteToFront()
         {
-            get
+            if (this.frmnote != null)
             {
-                return this.height;
-            }
-
-            set
-            {
-                this.height = value;
-            }
-        }
-
-        /// <summary>
-        /// Temporary content note content store.
-        /// </summary>
-        public string Tempcontent
-        {
-            get
-            {
-                return this.tempcontent;
-            }
-
-            set
-            {
-                this.tempcontent = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the filename of this note.
-        /// </summary>
-        public string Filename
-        {
-            get
-            {
-                return this.filename;
-            }
-
-            set
-            {
-                if (!String.IsNullOrEmpty(value))
-                {
-                    this.filename = value;
-                }
-                else
-                {
-                    throw new ApplicationException("Filename is null or empty.");
-                }
+                this.frmnote.BringToFront();
+                this.frmnote.Activate();
             }
         }
 
@@ -335,18 +363,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Display this frmnote to the foreground.
-        /// </summary>
-        public void BringNoteToFront()
-        {
-            if (this.frmnote != null)
-            {
-                this.frmnote.BringToFront();
-                this.frmnote.Activate();
-            }
-        }
-
-        /// <summary>
         /// Gets the content of the note from the file.
         /// </summary>
         /// <returns>The rich text formatted note content</returns>
@@ -354,7 +370,7 @@ namespace NoteFly
         {
             if (this.frmnote == null)
             {
-                string notefilepath = Path.Combine(Settings.notesSavepath, this.Filename);
+                string notefilepath = Path.Combine(Settings.NotesSavepath, this.Filename);
                 if (File.Exists(notefilepath))
                 {
                     return xmlUtil.GetContentString(notefilepath, "content");
@@ -381,5 +397,7 @@ namespace NoteFly
                 this.frmnote.UpdateForm(true);
             }
         }
+
+        #endregion Methods
     }
 }

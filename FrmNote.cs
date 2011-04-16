@@ -146,36 +146,36 @@ namespace NoteFly
         {
             if (!contentset)
             {
-                if (!Settings.notesTransparencyEnabled)
+                if (!Settings.NotesTransparencyEnabled)
                 {
                     this.Opacity = 100;
                 }
                 this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
-                if (Settings.fontTitleStylebold)
+                if (Settings.FontTitleStylebold)
                 {
-                    this.lblTitle.Font = new Font(Settings.fontTitleFamily, Settings.fontTitleSize, FontStyle.Bold);
+                    this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
                 }
                 else
                 {
-                    if (Settings.fontTitleSize < 6)
+                    if (Settings.FontTitleSize < 6)
                     {
-                        Settings.fontTitleSize = 6;
+                        Settings.FontTitleSize = 6;
                     }
 
-                    this.lblTitle.Font = new Font(Settings.fontTitleFamily, Settings.fontTitleSize, FontStyle.Regular);
+                    this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
                 }
-                if (Settings.fontTextdirection == 0)
+                if (Settings.FontTextdirection == 0)
                 {
                     this.rtbNote.RightToLeft = RightToLeft.No;
                 }
-                else if (Settings.fontTextdirection == 1)
+                else if (Settings.FontTextdirection == 1)
                 {
                     this.rtbNote.RightToLeft = RightToLeft.Yes;
                 }
-                this.menuSendToEmail.Enabled = Settings.socialEmailEnabled;
+                this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
                 //this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
                 //this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
-                this.toolTip.Active = Settings.notesTooltipsEnabled;
+                this.toolTip.Active = Settings.NotesTooltipsEnabled;
             }
             else
             {
@@ -199,7 +199,7 @@ namespace NoteFly
 
                 this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
                 this.pnlNote.Size = new Size(this.Width, (this.Height - this.pnlHead.Height + 1));
-                this.rtbNote.DetectUrls = Settings.highlightHyperlinks;
+                this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
                 Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
@@ -217,7 +217,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnCloseNote_Click(object sender, EventArgs e)
         {
-            if (Settings.notesClosebtnHidenotepermanently)
+            if (Settings.NotesClosebtnHidenotepermanently)
             {
                 this.note.Visible = false;
                 xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNote.Rtf); //save.
@@ -335,11 +335,11 @@ namespace NoteFly
             {
                 if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote)))
                 {
-                    System.Diagnostics.Process.Start("mailto:" + Settings.socialEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
+                    System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
                 }
                 else if (!String.IsNullOrEmpty(emailtitle))
                 {
-                    System.Diagnostics.Process.Start("mailto:" + Settings.socialEmailDefaultadres + "?subject=" + this.lblTitle.Text);
+                    System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text);
                 }
                 else
                 {
@@ -363,7 +363,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmNote_Activated(object sender, EventArgs e)
         {
-            if (Settings.notesTransparencyEnabled)
+            if (Settings.NotesTransparencyEnabled)
             {
                 this.Opacity = 1.0;
             }
@@ -376,9 +376,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void frmNote_Deactivate(object sender, EventArgs e)
         {
-            if (Settings.notesTransparencyEnabled)
+            if (Settings.NotesTransparencyEnabled)
             {
-                this.Opacity = Settings.notesTransparencyLevel;
+                this.Opacity = Settings.NotesTransparencyLevel;
             }
         }
 
@@ -630,7 +630,7 @@ namespace NoteFly
         {
             if ((this.Location.X + this.Width > MINVISIBLESIZE) && (this.Location.Y + this.Height > MINVISIBLESIZE))
             {
-                string notefilepath = Path.Combine(Settings.notesSavepath, this.note.Filename);
+                string notefilepath = Path.Combine(Settings.NotesSavepath, this.note.Filename);
                 this.note.X = this.Location.X;
                 this.note.Y = this.Location.Y;
                 string rtf = (string)e.Argument;
@@ -750,7 +750,6 @@ namespace NoteFly
         {
             this.notes.frmmangenotesneedupdate = true;
             TrayIcon.RefreshFrmManageNotes();
-            
         }
 
         #endregion Methods

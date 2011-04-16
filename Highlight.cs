@@ -129,7 +129,7 @@ namespace NoteFly
         {
             int cursorpos = rtb.SelectionStart;
             ResetHighlighting(rtb, skinnr, notes);
-            if (Settings.highlightHTML || Settings.highlightPHP || Settings.highlightSQL)
+            if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
             {
                 if (!keywordsinit)
                 {
@@ -150,7 +150,7 @@ namespace NoteFly
                     switch (rtb.Text[i])
                     {
                         case '<':
-                            if (Settings.highlightPHP)
+                            if (Settings.HighlightPHP)
                             {
                                 if (i + 5 <= rtb.TextLength)
                                 {
@@ -158,13 +158,13 @@ namespace NoteFly
                                     {
                                         // start php part
                                         posstartphp = i;
-                                        ColorText(rtb, i, phpstartkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend));
+                                        ColorText(rtb, i, phpstartkeyword.Length, xmlUtil.ConvToClr(Settings.HighlightPHPColorDocumentstartend));
                                         poslastkeyword = posstartphp + phpstartkeyword.Length;
                                     }
                                 }
                             }
 
-                            if (Settings.highlightHTML)
+                            if (Settings.HighlightHTML)
                             {
                                 if ((i < posstartphp || i > posendphp) && !tagopen)
                                 {
@@ -176,7 +176,7 @@ namespace NoteFly
                             break;
                         case '>':
                             tagopen = false;
-                            if (Settings.highlightPHP)
+                            if (Settings.HighlightPHP)
                             {
                                 if (i > 6)
                                 {
@@ -184,12 +184,12 @@ namespace NoteFly
                                     {
                                         // end php part
                                         posendphp = i + phpendkeyword.Length;
-                                        ColorText(rtb, (posendphp - phpendkeyword.Length - 1), phpendkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend));
+                                        ColorText(rtb, (posendphp - phpendkeyword.Length - 1), phpendkeyword.Length, xmlUtil.ConvToClr(Settings.HighlightPHPColorDocumentstartend));
                                     }
                                 }
                             }
 
-                            if (Settings.highlightHTML)
+                            if (Settings.HighlightHTML)
                             {
                                 if ((i < posstartphp || i > posendphp) && i > 0)
                                 {
@@ -201,7 +201,7 @@ namespace NoteFly
 
                             break;
                         case '/':
-                            if (Settings.highlightPHP)
+                            if (Settings.HighlightPHP)
                             {
                                 if (i > posstartphp && i < posendphp)
                                 {
@@ -228,7 +228,7 @@ namespace NoteFly
                                             if (isphpmultilinecomment)
                                             {
                                                 int lencomment = i - posphpcommentstart;
-                                                ColorText(rtb, posphpcommentstart, lencomment, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
+                                                ColorText(rtb, posphpcommentstart, lencomment, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
                                                 posphpcommentstart = int.MaxValue;
                                             }
                                         }
@@ -237,20 +237,20 @@ namespace NoteFly
                             }
                             break;
                         case '\n':
-                            if (Settings.highlightPHP)
+                            if (Settings.HighlightPHP)
                             {
                                 if (posphpcommentstart != int.MaxValue)
                                 {
                                     if (!isphpmultilinecomment)
                                     {
                                         lencommentline = i - posphpcommentstart;
-                                        ColorText(rtb, posphpcommentstart, lencommentline, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
+                                        ColorText(rtb, posphpcommentstart, lencommentline, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
                                         posphpcommentstart = int.MaxValue;
                                     }
                                 }
                             }
 
-                            if (Settings.highlightSQL)
+                            if (Settings.HighlightSQL)
                             {
                                 int lensqlkeyword = i - poslastkeyword;
                                 if (lensqlkeyword > 0)
@@ -266,7 +266,7 @@ namespace NoteFly
                             poslastkeyword = i + 1;
                             break;
                         case ' ':
-                            if (Settings.highlightPHP)
+                            if (Settings.HighlightPHP)
                             {
                                 if (i > posstartphp && i < posendphp - phpendkeyword.Length)
                                 {
@@ -277,11 +277,11 @@ namespace NoteFly
                                         int resnode = ValidatingPhp(isphp);
                                         if (resnode == 1)
                                         {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorValidfunctions));
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.HighlightPHPColorValidfunctions));
                                         }
                                         else if (resnode == 3)
                                         {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
                                         }
                                         else if (resnode == 2)
                                         {
@@ -294,7 +294,7 @@ namespace NoteFly
                                                     if (isendquote)
                                                     {
                                                         int len = (poslastkeyword + n) - poslastquote + 1;
-                                                        ColorText(rtb, poslastquote, len, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
+                                                        ColorText(rtb, poslastquote, len, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
                                                         poslastquote = int.MaxValue;
                                                         isendquote = false;
                                                     }
@@ -308,13 +308,13 @@ namespace NoteFly
                                         }
                                         else if (resnode == 0)
                                         {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.highlightPHPColorInvalidfunctions));
+                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.HighlightPHPColorInvalidfunctions));
                                         }
                                     }
                                 }
                             }
 
-                            if (Settings.highlightSQL)
+                            if (Settings.HighlightSQL)
                             {
                                 int lensqlkeyword = i - poslastkeyword;
                                 if (lensqlkeyword > 0)
@@ -366,14 +366,14 @@ namespace NoteFly
         public static void InitHighlighter()
         {
             string[] langcomments;
-            if (Settings.highlightHTML)
+            if (Settings.HighlightHTML)
             {
                 keywordshtml = xmlUtil.ParserLanguageLexical("langs.xml", "html", out langcomments);
                 htmlcommentstart = langcomments[1];
                 htmlcommentend = langcomments[2];
             }
 
-            if (Settings.highlightPHP)
+            if (Settings.HighlightPHP)
             {
                 keywordsphp = xmlUtil.ParserLanguageLexical("langs.xml", "php", out langcomments);
                 phpcommentline = langcomments[0];
@@ -381,7 +381,7 @@ namespace NoteFly
                 phpcommentend = langcomments[2];
             }
 
-            if (Settings.highlightSQL)
+            if (Settings.HighlightSQL)
             {
                 keywordssql = xmlUtil.ParserLanguageLexical("langs.xml", "sql", out langcomments);
                 sqlcommentstart = langcomments[1];
@@ -474,7 +474,7 @@ namespace NoteFly
                 {
                     if (isquotestring)
                     {
-                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.highlightHTMLColorString));
+                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.HighlightHTMLColorString));
                         posendquotestring = pos + 1; //+1 for quote itself counts
                     }
                     else
@@ -506,14 +506,14 @@ namespace NoteFly
                             if (curattributename.Equals(keywordshtml[n], StringComparison.InvariantCultureIgnoreCase))
                             {
                                 attributefound = true;
-                                ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.highlightHTMLColorValid));
+                                ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.HighlightHTMLColorValid));
                                 break;
                             }
                         }
 
                         if (!attributefound)
                         {
-                            ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.highlightHTMLColorInvalid));
+                            ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.HighlightHTMLColorInvalid));
                         }
 
                         lastpos = pos + 1; //+1 for ' ' or '>'

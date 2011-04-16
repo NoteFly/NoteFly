@@ -43,7 +43,7 @@ namespace NoteFly
             sbexc.AppendLine("Stacktrace:");
             sbexc.AppendLine(excstrace);
             this.tbExceptionMessage.Text = sbexc.ToString();
-            if (!Settings.programLogException)
+            if (!Settings.ProgramLogException)
             {
                 this.lblTextStacktrace.Visible = false;
             }
