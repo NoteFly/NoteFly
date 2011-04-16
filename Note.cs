@@ -30,57 +30,57 @@ namespace NoteFly
         /// <summary>
         /// The note title.
         /// </summary>
-        public string title;
+        private string title;
 
         /// <summary>
-        /// Visablity note.
+        /// Visibility note.
         /// </summary>
-        public bool visible;
+        private bool visible;
 
         /// <summary>
         /// The note skin.
         /// </summary>
-        public int skinNr;
+        private int skinNr;
 
         /// <summary>
         /// Is the note displayed ontop of all windows.
         /// </summary>
-        public bool ontop;
+        private bool ontop;
 
         /// <summary>
         /// Is the note rolled up.
         /// </summary>
-        public bool rolledUp;
+        private bool rolledUp;
 
         /// <summary>
         /// Is the note locked.
         /// </summary>
-        public bool locked;
+        private bool locked;
 
         /// <summary>
         /// The X position of the note.
         /// </summary>
-        public int x;
+        private int x;
 
         /// <summary>
         ///  The Y position of the note.
         /// </summary>
-        public int y;
+        private int y;
 
         /// <summary>
         /// The width of the note.
         /// </summary>
-        public int width;
+        private int width;
 
         /// <summary>
         /// The height of the note.
         /// </summary>
-        public int height;
+        private int height;
 
         /// <summary>
         /// temporary content.
         /// </summary>
-        public string tempcontent;
+        private string tempcontent;
 
         /// <summary>
         /// The form of this note.
@@ -107,6 +107,182 @@ namespace NoteFly
         {
             this.notes = notes;
             this.filename = filename;
+        }
+
+        /// <summary>
+        /// The note title.
+        /// </summary>
+        public string Title
+        {
+            get
+            {
+                return this.title;
+            }
+
+            set
+            {
+                this.title = value;
+            }
+        }
+
+        /// <summary>
+        /// Visibility note.
+        /// </summary>
+        public bool Visible
+        {
+            get
+            {
+                return this.visible;
+            }
+
+            set
+            {
+                this.visible = value;
+            }
+        }
+
+        /// <summary>
+        /// The note skin.
+        /// </summary>
+        public int SkinNr
+        {
+            get
+            {
+                return this.skinNr;
+            }
+
+            set
+            {
+                this.skinNr = value;
+            }
+        }
+
+        /// <summary>
+        /// Is the note displayed ontop of all windows.
+        /// </summary>
+        public bool Ontop
+        {
+            get
+            {
+                return this.ontop;
+            }
+
+            set
+            {
+                this.ontop = value;
+            }
+        }
+
+        /// <summary>
+        /// Is the note rolled up.
+        /// </summary>
+        public bool RolledUp
+        {
+            get
+            {
+                return this.rolledUp;
+            }
+
+            set
+            {
+                this.rolledUp = value;
+            }
+        }
+
+        /// <summary>
+        /// Is the note locked.
+        /// </summary>
+        public bool Locked
+        {
+            get
+            {
+                return this.locked;
+            }
+
+            set
+            {
+                this.locked = value;
+            }
+        }
+
+        /// <summary>
+        /// The X position of the note on the screen.
+        /// </summary>
+        public int X
+        {
+            get
+            {
+                return this.x;
+            }
+
+            set
+            {
+                this.x = value;
+            }
+        }
+
+        /// <summary>
+        /// The Y position of the note on the screen.
+        /// </summary>
+        public int Y
+        {
+            get
+            {
+                return this.y;
+            }
+
+            set
+            {
+                this.y = value;
+            }
+        }
+
+        /// <summary>
+        /// The width of the note.
+        /// </summary>
+        public int Width
+        {
+            get
+            {
+                return this.width;
+            }
+
+            set
+            {
+                this.width = value;
+            }
+        }
+
+        /// <summary>
+        /// The height of the note.
+        /// </summary>
+        public int Height
+        {
+            get
+            {
+                return this.height;
+            }
+
+            set
+            {
+                this.height = value;
+            }
+        }
+
+        /// <summary>
+        /// Temporary content note content store.
+        /// </summary>
+        public string Tempcontent
+        {
+            get
+            {
+                return this.tempcontent;
+            }
+
+            set
+            {
+                this.tempcontent = value;
+            }
         }
 
         /// <summary>
@@ -153,6 +329,7 @@ namespace NoteFly
             {
                 this.frmnote.Close();
             }
+
             this.frmnote = null;
             GC.Collect();
         }

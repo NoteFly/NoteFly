@@ -22,9 +22,9 @@ namespace NoteFly
     using System;
 
     /// <summary>
-    /// Settings data class.
+    /// Settings struct.
     /// </summary>
-    public class Settings
+    public struct Settings
     {
         /// <summary>
         /// Are notes transparent.
@@ -216,14 +216,6 @@ namespace NoteFly
         /// </summary>
         public static string socialEmailDefaultadres;
 
-        /*
-        public static bool socialTwitterEnabled; 
-        public static string socialTwitterUsername; 
-        public static bool socialTwitterUseSSL;  //on by default and should not be changable with gui.
-        public static bool socialFacebookEnabled;
-        public static string socialFacebookEmail;
-        public static bool socialFacebookUseSSL;  //on by default and should not be changable with gui.
-        */
         /// <summary>
         /// The time a connection is considered not working.
         /// </summary>

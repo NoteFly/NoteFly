@@ -82,21 +82,21 @@ namespace NoteFly
             this.notes = notes;
             this.note = note;
             this.UpdateForm(false);
-            this.lblTitle.Text = note.title;
-            this.BackColor = notes.GetPrimaryClr(note.skinNr);
-            this.pnlHead.BackColor = notes.GetPrimaryClr(note.skinNr);
-            this.rtbNote.BackColor = notes.GetPrimaryClr(note.skinNr);
+            this.lblTitle.Text = note.Title;
+            this.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             try
             {
-                if (String.IsNullOrEmpty(this.note.tempcontent))
+                if (String.IsNullOrEmpty(this.note.Tempcontent))
                 {
                     this.rtbNote.Rtf = note.GetContent();
                 }
                 else
                 {
-                    this.rtbNote.Rtf = this.note.tempcontent;
-                    this.note.tempcontent = String.Empty;
-                    this.note.tempcontent = null;
+                    this.rtbNote.Rtf = this.note.Tempcontent;
+                    this.note.Tempcontent = String.Empty;
+                    this.note.Tempcontent = null;
                 }
             }
             catch (ArgumentException argexc)
@@ -104,18 +104,18 @@ namespace NoteFly
                 Log.Write(LogType.exception, "note " + note.Filename + ": " + argexc.Message);
             }
 
-            this.TopMost = note.ontop;
-            this.menuOnTop.Checked = note.ontop;
+            this.TopMost = note.Ontop;
+            this.menuOnTop.Checked = note.Ontop;
             this.SetRollupNote();
             this.SetLockedNote();
-            this.SetBounds(note.x, note.y, note.width, note.height);
+            this.SetBounds(note.X, note.Y, note.Width, note.Height);
             string[] skinnames = notes.GetSkinsNames();
             for (int i = 0; i < skinnames.Length; i++)
             {
                 ToolStripMenuItem tsi = new ToolStripMenuItem();
                 tsi.Name = "menuSkin" + skinnames[i];
                 tsi.Text = skinnames[i];
-                if (note.skinNr == i)
+                if (note.SkinNr == i)
                 {
                     tsi.Checked = true;
                 }
@@ -150,7 +150,7 @@ namespace NoteFly
                 {
                     this.Opacity = 100;
                 }
-                this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.skinNr);
+                this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
                 if (Settings.fontTitleStylebold)
                 {
                     this.lblTitle.Font = new Font(Settings.fontTitleFamily, Settings.fontTitleSize, FontStyle.Bold);
@@ -200,7 +200,7 @@ namespace NoteFly
                 this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
                 this.pnlNote.Size = new Size(this.Width, (this.Height - this.pnlHead.Height + 1));
                 this.rtbNote.DetectUrls = Settings.highlightHyperlinks;
-                Highlight.CheckSyntaxFull(this.rtbNote, this.note.skinNr, this.notes);
+                Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
         // Private Methods (30) 
@@ -219,8 +219,8 @@ namespace NoteFly
         {
             if (Settings.notesClosebtnHidenotepermanently)
             {
-                this.note.visible = false;
-                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.skinNr), this.rtbNote.Rtf); //save.
+                this.note.Visible = false;
+                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNote.Rtf); //save.
             }
 
             this.note.DestroyForm();
@@ -399,7 +399,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.note.locked = !this.note.locked;
+            this.note.Locked = !this.note.Locked;
 
             this.SetLockedNote();
 
@@ -453,17 +453,17 @@ namespace NoteFly
 
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             tsi.Checked = true;
-            this.note.skinNr = this.notes.GetSkinNr(tsi.Text);
-            this.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
-            this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
-            this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
-            this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.skinNr);
+            this.note.SkinNr = this.notes.GetSkinNr(tsi.Text);
+            this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+            this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+            this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+            this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
             if (!Highlight.KeywordsInitialized)
             {
                 Highlight.InitHighlighter();
             }
 
-            Highlight.CheckSyntaxFull(this.rtbNote, this.note.skinNr, this.notes);
+            Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             if (!this.SaveWorker.IsBusy)
             {
                 this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
@@ -473,7 +473,7 @@ namespace NoteFly
             Highlight.DeinitHighlighter();
             TrayIcon.RefreshFrmManageNotes();
             this.notes.frmmangenotesneedupdate = false;
-            Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.skinNr));
+            Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.SkinNr));
         }
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void menuRollUp_Click(object sender, EventArgs e)
         {
-            this.note.rolledUp = !this.note.rolledUp;
+            this.note.RolledUp = !this.note.RolledUp;
 
             this.SetRollupNote();
 
@@ -500,10 +500,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.note.ontop = !this.note.ontop;
-            this.menuOnTop.Checked = this.note.ontop;
+            this.note.Ontop = !this.note.Ontop;
+            this.menuOnTop.Checked = this.note.Ontop;
 
-            this.TopMost = this.note.ontop;
+            this.TopMost = this.note.Ontop;
             if (!this.SaveWorker.IsBusy)
             {
                 this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
@@ -519,7 +519,7 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (!this.note.locked)
+                if (!this.note.Locked)
                 {
                     this.Cursor = Cursors.SizeNWSE;
                     this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
@@ -536,10 +536,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
-            this.note.width = this.Width;
-            this.note.height = this.Height;
+            this.note.Width = this.Width;
+            this.note.Height = this.Height;
 
-            if (!(this.note.locked && this.SaveWorker.IsBusy))
+            if (!(this.note.Locked && this.SaveWorker.IsBusy))
             {
                 this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
@@ -554,7 +554,7 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.pnlHead.BackColor = this.notes.GetSelectClr(this.note.skinNr);
+                this.pnlHead.BackColor = this.notes.GetSelectClr(this.note.SkinNr);
                 this.moving = true;
                 this.oldp = e.Location;
             }
@@ -600,15 +600,15 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
-            this.note.x = this.Location.X;
-            this.note.y = this.Location.Y;
+            this.note.X = this.Location.X;
+            this.note.Y = this.Location.Y;
             this.moving = false;
             if (!this.SaveWorker.IsBusy)
             {
                 this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
 
-            this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
+            this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
         }
 
         /// <summary>
@@ -631,10 +631,10 @@ namespace NoteFly
             if ((this.Location.X + this.Width > MINVISIBLESIZE) && (this.Location.Y + this.Height > MINVISIBLESIZE))
             {
                 string notefilepath = Path.Combine(Settings.notesSavepath, this.note.Filename);
-                this.note.x = this.Location.X;
-                this.note.y = this.Location.Y;
+                this.note.X = this.Location.X;
+                this.note.Y = this.Location.Y;
                 string rtf = (string)e.Argument;
-                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.skinNr), rtf);
+                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), rtf);
             }
             else
             {
@@ -648,9 +648,9 @@ namespace NoteFly
         /// </summary>
         private void SetLockedNote()
         {
-            this.menuLockNote.Checked = this.note.locked;
+            this.menuLockNote.Checked = this.note.Locked;
             const string locknotemsg = "&Lock note";
-            if (this.note.locked)
+            if (this.note.Locked)
             {
                 this.CreatePbLock();
                 this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
@@ -661,11 +661,11 @@ namespace NoteFly
                 this.menuLockNote.Text = locknotemsg;
             }
 
-            this.pbResizeGrip.Visible = !this.note.locked;
-            this.menuNoteSkins.Enabled = !this.note.locked;
-            this.menuEditNote.Enabled = !this.note.locked;
-            this.menuOnTop.Enabled = !this.note.locked;
-            this.menuRollUp.Enabled = !this.note.locked;
+            this.pbResizeGrip.Visible = !this.note.Locked;
+            this.menuNoteSkins.Enabled = !this.note.Locked;
+            this.menuEditNote.Enabled = !this.note.Locked;
+            this.menuOnTop.Enabled = !this.note.Locked;
+            this.menuRollUp.Enabled = !this.note.Locked;
         }
 
         /// <summary>
@@ -674,9 +674,9 @@ namespace NoteFly
         /// </summary>
         private void SetRollupNote()
         {
-            this.menuRollUp.Checked = this.note.rolledUp;
+            this.menuRollUp.Checked = this.note.RolledUp;
             const string rollupmsg = "&Roll up";
-            if (this.note.rolledUp)
+            if (this.note.RolledUp)
             {
                 this.menuRollUp.Text = rollupmsg + "(click again to Roll Down)";
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
@@ -686,7 +686,7 @@ namespace NoteFly
             {
                 this.menuRollUp.Text = rollupmsg;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
-                this.Height = this.note.height;
+                this.Height = this.note.Height;
             }
         }
 
@@ -703,7 +703,7 @@ namespace NoteFly
             sfdlg.ValidateNames = true;
             sfdlg.CheckPathExists = true;
             sfdlg.OverwritePrompt = true;
-            sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.title);
+            sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
             sfdlg.Title = "Save note to file";
             sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
             if (sfdlg.ShowDialog() == DialogResult.OK)
@@ -712,15 +712,15 @@ namespace NoteFly
                 switch (sfdlg.FilterIndex)
                 {
                     case 1:
-                        new Textfile(TextfileWriteType.exporttext, sfdlg.FileName, this.note.title, this.rtbNote.Text);
+                        new Textfile(TextfileWriteType.exporttext, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
                         Log.Write(LogType.info, logmsg + "textfile.");
                         break;
                     case 2:
-                        new Textfile(TextfileWriteType.exporthtml, sfdlg.FileName, this.note.title, this.rtbNote.Text);
+                        new Textfile(TextfileWriteType.exporthtml, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
                         Log.Write(LogType.info, logmsg + "htmlfile.");
                         break;
                     case 3:
-                        new Textfile(TextfileWriteType.exportphp, sfdlg.FileName, this.note.title, this.rtbNote.Text);
+                        new Textfile(TextfileWriteType.exportphp, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
                         Log.Write(LogType.info, logmsg + "phpfile.");
                         break;
                 }
@@ -736,8 +736,8 @@ namespace NoteFly
         {
             if (!e.Cancel)
             {
-                this.note.visible = false;
-                this.note.tempcontent = null;
+                this.note.Visible = false;
+                this.note.Tempcontent = null;
             }
         }
 

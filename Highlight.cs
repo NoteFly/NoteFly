@@ -156,7 +156,7 @@ namespace NoteFly
                                 {
                                     if (rtb.Text.Substring(i, 5) == phpstartkeyword)
                                     {
-                                        //start php part
+                                        // start php part
                                         posstartphp = i;
                                         ColorText(rtb, i, phpstartkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend));
                                         poslastkeyword = posstartphp + phpstartkeyword.Length;
@@ -182,7 +182,7 @@ namespace NoteFly
                                 {
                                     if (rtb.Text.Substring(i - 1, phpendkeyword.Length) == phpendkeyword)
                                     {
-                                        //end php part
+                                        // end php part
                                         posendphp = i + phpendkeyword.Length;
                                         ColorText(rtb, (posendphp - phpendkeyword.Length - 1), phpendkeyword.Length, xmlUtil.ConvToClr(Settings.highlightPHPColorDocumentstartend));
                                     }
@@ -234,7 +234,6 @@ namespace NoteFly
                                         }
                                     }
                                 }
-
                             }
                             break;
                         case '\n':
@@ -264,7 +263,7 @@ namespace NoteFly
                                 }
                             }
 
-                            poslastkeyword = i + 1; //+1 for '\n'
+                            poslastkeyword = i + 1;
                             break;
                         case ' ':
                             if (Settings.highlightPHP)
@@ -294,7 +293,7 @@ namespace NoteFly
                                                 {
                                                     if (isendquote)
                                                     {
-                                                        int len = (poslastkeyword + n) - poslastquote + 1; //+1 for last quote.
+                                                        int len = (poslastkeyword + n) - poslastquote + 1;
                                                         ColorText(rtb, poslastquote, len, xmlUtil.ConvToClr(Settings.highlightPHPColorComment));
                                                         poslastquote = int.MaxValue;
                                                         isendquote = false;
@@ -328,7 +327,7 @@ namespace NoteFly
                                 }
                             }
 
-                            poslastkeyword = i + 1; //+1 for ' '
+                            poslastkeyword = i + 1;
                             break;
                     }
                 }
@@ -391,6 +390,7 @@ namespace NoteFly
 
             keywordsinit = true;
         }
+
         // Private Methods (5) 
 
         /// <summary>
@@ -453,6 +453,7 @@ namespace NoteFly
                 if (ishtml[ishtml.Length - 2] == '/')
                 {
                     endtag = true;
+
                     //e.g. <br /> becomes <br> and <wrong/> becomes <wrong>
                     if (ishtml[ishtml.Length - 3] == ' ')
                     {

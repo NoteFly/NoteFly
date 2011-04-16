@@ -75,18 +75,18 @@ namespace NoteFly
             this.Location = locfrmnewnote;
             this.note = note;
             this.Text = "edit note";
-            this.SetColorsForm(this.note.skinNr);
-            this.tbTitle.Text = note.title;
-            if (String.IsNullOrEmpty(this.note.tempcontent))
+            this.SetColorsForm(this.note.SkinNr);
+            this.tbTitle.Text = note.Title;
+            if (String.IsNullOrEmpty(this.note.Tempcontent))
             {
                 this.rtbNewNote.Rtf = note.GetContent();
             }
             else
             {
-                this.rtbNewNote.Rtf = this.note.tempcontent;
+                this.rtbNewNote.Rtf = this.note.Tempcontent;
                 //clear memory:
-                this.note.tempcontent = String.Empty;
-                this.note.tempcontent = null;
+                this.note.Tempcontent = String.Empty;
+                this.note.Tempcontent = null;
             }
         }
 
@@ -184,14 +184,14 @@ namespace NoteFly
                     this.note = this.notes.CreateNote(this.tbTitle.Text, Settings.notesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
 
-                this.note.title = this.tbTitle.Text;
-                this.note.visible = true;
+                this.note.Title = this.tbTitle.Text;
+                this.note.Visible = true;
                 if (String.IsNullOrEmpty(this.note.Filename))
                 {
-                    this.note.Filename = this.notes.GetNoteFilename(this.note.title);
+                    this.note.Filename = this.notes.GetNoteFilename(this.note.Title);
                 }
 
-                if (xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.skinNr), this.rtbNewNote.Rtf))
+                if (xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNewNote.Rtf))
                 {
                     if (newnote)
                     {
@@ -199,11 +199,11 @@ namespace NoteFly
                     }
                     TrayIcon.frmneweditnoteopen = false;
                     Highlight.InitHighlighter();
-                    this.note.tempcontent = this.rtbNewNote.Rtf;
+                    this.note.Tempcontent = this.rtbNewNote.Rtf;
                     this.note.CreateForm();
-                    if (this.note.tempcontent != null)
+                    if (this.note.Tempcontent != null)
                     {
-                        this.note.tempcontent = null;
+                        this.note.Tempcontent = null;
                     }
 
                     Highlight.DeinitHighlighter();
@@ -591,7 +591,7 @@ namespace NoteFly
                 this.oldp = e.Location;
                 if (this.note != null)
                 {
-                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(this.note.skinNr);
+                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(this.note.SkinNr);
                 }
                 else
                 {
@@ -611,7 +611,7 @@ namespace NoteFly
             {
                 if (this.note != null)
                 {
-                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(this.note.skinNr);
+                    this.pnlHeadNewNote.BackColor = this.notes.GetSelectClr(this.note.SkinNr);
                 }
                 else
                 {
@@ -654,7 +654,7 @@ namespace NoteFly
             this.moving = false;
             if (this.note != null)
             {
-                this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(this.note.skinNr);
+                this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             }
             else
             {
@@ -698,7 +698,7 @@ namespace NoteFly
         {
             if (this.note != null)
             {
-                this.rtbNewNote.BackColor = this.notes.GetHighlightClr(this.note.skinNr);
+                this.rtbNewNote.BackColor = this.notes.GetHighlightClr(this.note.SkinNr);
             }
             else
             {
@@ -717,7 +717,7 @@ namespace NoteFly
         {
             if (this.note != null)
             {
-                this.rtbNewNote.BackColor = this.notes.GetSelectClr(this.note.skinNr);
+                this.rtbNewNote.BackColor = this.notes.GetSelectClr(this.note.SkinNr);
             }
             else
             {
@@ -811,7 +811,7 @@ namespace NoteFly
         {
             if (this.note != null)
             {
-                this.tbTitle.BackColor = this.notes.GetHighlightClr(this.note.skinNr);
+                this.tbTitle.BackColor = this.notes.GetHighlightClr(this.note.SkinNr);
             }
             else
             {
@@ -830,7 +830,7 @@ namespace NoteFly
         {
             if (this.note != null)
             {
-                this.tbTitle.BackColor = this.notes.GetSelectClr(this.note.skinNr);
+                this.tbTitle.BackColor = this.notes.GetSelectClr(this.note.SkinNr);
             }
             else
             {

@@ -122,7 +122,7 @@ namespace NoteFly
         {
             for (int i = 0; i < this.notes.Count; i++)
             {
-                if (this.notes[i].visible)
+                if (this.notes[i].Visible)
                 {
                     if (this.notes[i] == null)
                     {
@@ -149,16 +149,16 @@ namespace NoteFly
         public Note CreateNote(string title, int skinnr, int x, int y, int width, int height)
         {
             Note newnote = new Note(this, this.GetNoteFilename(title));
-            newnote.title = title;
-            newnote.skinNr = skinnr;
-            newnote.visible = true;
-            newnote.locked = false;
-            newnote.rolledUp = false;
-            newnote.ontop = false;
-            newnote.x = x;
-            newnote.y = y;
-            newnote.width = width;
-            newnote.height = height;
+            newnote.Title = title;
+            newnote.SkinNr = skinnr;
+            newnote.Visible = true;
+            newnote.Locked = false;
+            newnote.RolledUp = false;
+            newnote.Ontop = false;
+            newnote.X = x;
+            newnote.Y = y;
+            newnote.Width = width;
+            newnote.Height = height;
             return newnote;
         }
 
@@ -313,16 +313,16 @@ namespace NoteFly
         {
             if (!Directory.Exists(Settings.notesSavepath))
             {
-                const string notefoldernoteexist = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
-                DialogResult result = MessageBox.Show(notefoldernoteexist, "Notes folder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                const string NOTEFOLDERDOESNOTEXIST = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
+                DialogResult result = MessageBox.Show(NOTEFOLDERDOESNOTEXIST, "Notes folder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
-                    Log.Write(LogType.error, (notefoldernoteexist + " No"));
+                    Log.Write(LogType.error, (NOTEFOLDERDOESNOTEXIST + " No"));
                     return;
                 }
                 else
                 {
-                    Log.Write(LogType.error, (notefoldernoteexist + " Yes"));
+                    Log.Write(LogType.error, (NOTEFOLDERDOESNOTEXIST + " Yes"));
                     Settings.notesSavepath = Program.AppDataFolder;
                 }
             }
@@ -369,12 +369,12 @@ namespace NoteFly
                 Note note = xmlUtil.LoadNoteFile(this, notefiles[i]);
                 if (resetpositions)
                 {
-                    note.x = 10;
-                    note.y = 10;
+                    note.X = 10;
+                    note.Y = 10;
                 }
 
                 this.AddNote(note);
-                if (this.notes[i].visible)
+                if (this.notes[i].Visible)
                 {
                     this.notes[i].CreateForm();
                 }
@@ -481,15 +481,15 @@ namespace NoteFly
                         }
 
                         Note importnf1note = new Note(this, this.GetNoteFilename(nf1note_title));
-                        importnf1note.visible = nf1note_visible;
-                        importnf1note.title = nf1note_title;
-                        importnf1note.skinNr = nf1note_skinnr;
-                        importnf1note.ontop = false;
-                        importnf1note.locked = false;
-                        importnf1note.x = xmlUtil.GetContentInt(nf1notefile, "x");
-                        importnf1note.y = xmlUtil.GetContentInt(nf1notefile, "y");
-                        importnf1note.width = xmlUtil.GetContentInt(nf1notefile, "width");
-                        importnf1note.height = xmlUtil.GetContentInt(nf1notefile, "heigth");
+                        importnf1note.Visible = nf1note_visible;
+                        importnf1note.Title = nf1note_title;
+                        importnf1note.SkinNr = nf1note_skinnr;
+                        importnf1note.Ontop = false;
+                        importnf1note.Locked = false;
+                        importnf1note.X = xmlUtil.GetContentInt(nf1notefile, "x");
+                        importnf1note.Y = xmlUtil.GetContentInt(nf1notefile, "y");
+                        importnf1note.Width = xmlUtil.GetContentInt(nf1notefile, "width");
+                        importnf1note.Height = xmlUtil.GetContentInt(nf1notefile, "heigth");
                         string content = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20" + xmlUtil.GetContentString(nf1notefile, "content") + "\\ulnone\\par\r\n}\r\n";
                         xmlUtil.WriteNote(importnf1note, this.GetSkinName(nf1note_skinnr), content);
                         noteid++;
@@ -577,7 +577,7 @@ namespace NoteFly
             int noteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (noteheight / 2));
             string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
             Note demonote = this.CreateNote("NoteFly2.0.0", 0, noteposx, noteposy, notewidth, noteheight);
-            xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.skinNr), notecontent);
+            xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
             this.AddNote(demonote);
             demonote.CreateForm();
             Settings.programFirstrun = false;

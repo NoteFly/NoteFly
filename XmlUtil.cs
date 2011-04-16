@@ -514,7 +514,7 @@ namespace NoteFly
             Settings.notesTooltipsEnabled = true;
             Settings.notesClosebtnHidenotepermanently = true;
             Settings.notesDefaultRandomSkin = false;
-            Settings.notesDefaultSkinnr = 0; //default skin: yellow
+            Settings.notesDefaultSkinnr = 0; // default skin: yellow
             Settings.notesSavepath = Program.AppDataFolder;
             Settings.notesTransparencyEnabled = true;
             Settings.notesTransparencyLevel = 0.9;
@@ -525,19 +525,13 @@ namespace NoteFly
             Settings.programLogInfo = false;
             Settings.socialEmailDefaultadres = String.Empty;
             Settings.socialEmailEnabled = true;
-            //Settings.socialFacebookEmail = String.Empty;
-            //Settings.socialFacebookEnabled = true;
-            //Settings.socialFacebookUseSSL = true;
-            //Settings.socialTwitterUsername = String.Empty;
-            //Settings.socialTwitterEnabled = true;
-            //Settings.socialTwitterUseSSL = true;
             Settings.trayiconFontsize = 8.25f;
             Settings.trayiconLeftclickaction = 1;
             Settings.trayiconCreatenotebold = true;
             Settings.trayiconExitbold = false;
             Settings.trayiconManagenotesbold = false;
             Settings.trayiconSettingsbold = false;
-            Settings.updatecheckEverydays = 14; //0 is disabled.
+            Settings.updatecheckEverydays = 14; // 0 is disabled.
             Settings.updatecheckLastDate = DateTime.Now.ToString();
             try
             {
@@ -600,7 +594,7 @@ namespace NoteFly
                 xmlwrite.WriteAttributeString("number", notes.CountNotes.ToString());
                 for (int i = 0; i < notes.CountNotes; i++)
                 {
-                    string skinname = notes.GetSkinName(notes.GetNote(i).skinNr);
+                    string skinname = notes.GetSkinName(notes.GetNote(i).SkinNr);
                     string content = notes.GetNote(i).GetContent();
                     WriteNoteBody(notes.GetNote(i), skinname, content);
                 }
@@ -658,8 +652,8 @@ namespace NoteFly
                 {
                     xmlread.Close();
                 }
-                string skinname = notes.GetSkinName(importnote.skinNr);
-                WriteNote(importnote, skinname, importnote.tempcontent);
+                string skinname = notes.GetSkinName(importnote.SkinNr);
+                WriteNote(importnote, skinname, importnote.Tempcontent);
             }
         }
 
@@ -1035,41 +1029,41 @@ namespace NoteFly
 
                             break;
                         case "visible":
-                            note.visible = xmlread.ReadElementContentAsBoolean();
+                            note.Visible = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "locked":
-                            note.locked = xmlread.ReadElementContentAsBoolean();
+                            note.Locked = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ontop":
-                            note.ontop = xmlread.ReadElementContentAsBoolean();
+                            note.Ontop = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "width":
-                            note.width = xmlread.ReadElementContentAsInt();
+                            note.Width = xmlread.ReadElementContentAsInt();
                             break;
                         case "heigth":
-                            note.height = xmlread.ReadElementContentAsInt();
+                            note.Height = xmlread.ReadElementContentAsInt();
                             break;
                         case "x":
-                            note.x = xmlread.ReadElementContentAsInt();
+                            note.X = xmlread.ReadElementContentAsInt();
                             break;
                         case "y":
-                            note.y = xmlread.ReadElementContentAsInt();
+                            note.Y = xmlread.ReadElementContentAsInt();
                             break;
                         case "skin":
                             int skinnr = notes.GetSkinNr(xmlread.ReadElementContentAsString());
                             if (skinnr >= 0)
                             {
-                                note.skinNr = skinnr;
+                                note.SkinNr = skinnr;
                             }
 
                             break;
                         case "title":
-                            note.title = xmlread.ReadElementContentAsString();
+                            note.Title = xmlread.ReadElementContentAsString();
                             break;
                         case "content":
-                            if ((note.visible) || (setallcontent))
+                            if ((note.Visible) || (setallcontent))
                             {
-                                note.tempcontent = xmlread.ReadElementContentAsString();
+                                note.Tempcontent = xmlread.ReadElementContentAsString();
                             }
 
                             break;
@@ -1171,19 +1165,19 @@ namespace NoteFly
         {
             xmlwrite.WriteStartElement("note");
             xmlwrite.WriteAttributeString("version", NOTEVERSION);
-            WriteXMLBool("visible", note.visible);
-            WriteXMLBool("ontop", note.ontop);
-            WriteXMLBool("locked", note.locked);
+            WriteXMLBool("visible", note.Visible);
+            WriteXMLBool("ontop", note.Ontop);
+            WriteXMLBool("locked", note.Locked);
             xmlwrite.WriteStartElement("location");
-            xmlwrite.WriteElementString("x", note.x.ToString());
-            xmlwrite.WriteElementString("y", note.y.ToString());
+            xmlwrite.WriteElementString("x", note.X.ToString());
+            xmlwrite.WriteElementString("y", note.Y.ToString());
             xmlwrite.WriteEndElement();
             xmlwrite.WriteStartElement("size");
-            xmlwrite.WriteElementString("width", Convert.ToString(note.width));
-            xmlwrite.WriteElementString("heigth", Convert.ToString(note.height));
+            xmlwrite.WriteElementString("width", Convert.ToString(note.Width));
+            xmlwrite.WriteElementString("heigth", Convert.ToString(note.Height));
             xmlwrite.WriteEndElement();
             xmlwrite.WriteElementString("skin", skinname);
-            xmlwrite.WriteElementString("title", note.title);
+            xmlwrite.WriteElementString("title", note.Title);
             xmlwrite.WriteElementString("content", content);
             xmlwrite.WriteEndElement();
         }

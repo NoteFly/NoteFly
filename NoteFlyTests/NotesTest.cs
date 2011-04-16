@@ -206,17 +206,17 @@ namespace NoteFlyTests
             Note actual = target.CreateNote(title, skinnr, x, y, width, height);
 
             Assert.IsNotNull(actual, "CreateNoteTest failed to create Note object.");
-            if (actual.title != "123456789abc")
+            if (actual.Title != "123456789abc")
             {
                 Assert.Fail("Note title not good.");
             }
 
-            if (actual.x != 400 && actual.y != 300)
+            if (actual.X != 400 && actual.Y != 300)
             {
                 Assert.Fail("Note has wrong X,Y coordinates.");
             }
 
-            if (actual.width != 200 && actual.height != 100)
+            if (actual.Width != 200 && actual.Height != 100)
             {
                 Assert.Fail("Note has wrong size");
             }

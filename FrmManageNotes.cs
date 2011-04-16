@@ -269,16 +269,16 @@ namespace NoteFly
             foreach (DataGridViewRow selrow in selectedrows)
             {
                 int notepos = this.GetNoteposBySelrow(selrow.Index);
-                selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).visible;
-                this.notes.GetNote(notepos).visible = !this.notes.GetNote(notepos).visible;
-                if (this.notes.GetNote(notepos).visible)
+                selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).Visible;
+                this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
+                if (this.notes.GetNote(notepos).Visible)
                 {
                     String tempcontent = this.notes.GetNote(notepos).GetContent();
                     if (tempcontent == String.Empty)
                     {
                         Log.Write(LogType.exception, "Note content is empty.");
                     }
-                    this.notes.GetNote(notepos).tempcontent = tempcontent;
+                    this.notes.GetNote(notepos).Tempcontent = tempcontent;
                     this.notes.GetNote(notepos).CreateForm();
                     this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
                 }
@@ -289,7 +289,7 @@ namespace NoteFly
                 }
                 this.prevrownr = -1;
                 this.secondprevrownr = -2;
-                xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).skinNr), this.notes.GetNote(notepos).GetContent());
+                xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
             }
             
             this.notes.frmmangenotesneedupdate = false;
@@ -343,15 +343,15 @@ namespace NoteFly
                 }
 
                 int notepos = this.GetNoteposBySelrow(e.RowIndex);
-                this.dataGridView1.Rows[e.RowIndex].Cells["title"].Value = this.notes.GetNote(notepos).title;
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).skinNr);
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).skinNr);
-                if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).skinNr))
+                this.dataGridView1.Rows[e.RowIndex].Cells["title"].Value = this.notes.GetNote(notepos).Title;
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
+                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
+                if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).skinNr);
+                    this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
                 }
 
-                this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).visible;
+                this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
 
                 if (e.RowIndex == this.dataGridView1.RowCount-1)
                 {
@@ -471,9 +471,9 @@ namespace NoteFly
             {
                 DataRow dr = datatable.NewRow();
                 dr[0] = i + 1; //enduser numbering
-                dr[1] = this.notes.GetNote(i).title;
-                dr[2] = this.notes.GetNote(i).visible;
-                dr[3] = this.notes.GetSkinName(this.notes.GetNote(i).skinNr);
+                dr[1] = this.notes.GetNote(i).Title;
+                dr[2] = this.notes.GetNote(i).Visible;
+                dr[3] = this.notes.GetSkinName(this.notes.GetNote(i).SkinNr);
                 datatable.Rows.Add(dr);
             }
         }

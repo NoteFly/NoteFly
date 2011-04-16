@@ -108,9 +108,10 @@ namespace NoteFly
         /// </summary>
         public static string AssemblyVersionQuality
         {
+            // todo change this to RC1 if it qualifies
             get
             {
-                return "beta4";
+                return "beta5";
             }
         }
 
@@ -222,11 +223,13 @@ namespace NoteFly
                         case "-forcefirstrun":
                             Settings.programFirstrun = true;
                             break;
+
                         // disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
                         // because transparency is on by default.
                         case "-disabletransparency":
                             Settings.notesTransparencyEnabled = false;
                             break;
+
                         // Turn off all highlighting functions in case highlighting was turned on and it let NoteFly crash on startup.
                         case "-disablehighlighting":
                             Settings.highlightHyperlinks = false;
@@ -234,12 +237,14 @@ namespace NoteFly
                             Settings.highlightPHP = false;
                             Settings.highlightSQL = false;
                             break;
+
                         // Turn off all social functions on startup.
                         case "-disablesocial":
                             Settings.socialEmailEnabled = false;
                             ////Settings.socialFacebookEnabled = false;
                             ////Settings.socialTwitterEnabled = false;
                             break;
+
                         // Turn all logging features on at startup. 
                         // Handy in case NoteFly crashes at startup and logging was turned off.
                         case "-logall":
@@ -247,18 +252,23 @@ namespace NoteFly
                             Settings.programLogError = true;
                             Settings.programLogInfo = true;
                             break;
+
                         // turn off xp visual style.
                         case "-disablevisualstyles":
                             visualstyle = false; // about ~400ms slower on my system on display time notes.
                             break;
+
                         // rescue option for notes loading out of screen.
                         case "-resetpositions":
                             resetpositions = true;
                             break;
+
                        // overwrite settings file with default settings.
                         case "-resetsettings":
                             xmlUtil.WriteDefaultSettings();
                             break;
+
+                        // don't show a warning if notefly is running with administrator priveledges
                         case "-suspressadminwarn":
                             suspressadminwarn = true;
                             break;
