@@ -8,6 +8,36 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
+        /// Label lblTextExceptionMessage
+        /// </summary>
+        private System.Windows.Forms.Label lblTextExceptionMessage;
+
+        /// <summary>
+        /// Button btnContinu
+        /// </summary>
+        private System.Windows.Forms.Button btnContinu;
+
+        /// <summary>
+        /// Button btnShutdown
+        /// </summary>
+        private System.Windows.Forms.Button btnShutdown;
+
+        /// <summary>
+        /// Label lblTextOptions
+        /// </summary>
+        private System.Windows.Forms.Label lblTextOptions;
+
+        /// <summary>
+        /// TextBox tbExceptionMessage
+        /// </summary>
+        private System.Windows.Forms.TextBox tbExceptionMessage;
+
+        /// <summary>
+        /// Label lblTextStacktrace
+        /// </summary>
+        private System.Windows.Forms.Label lblTextStacktrace;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -115,35 +145,5 @@
         }
 
         #endregion
-
-        /// <summary>
-        /// Label lblTextExceptionMessage
-        /// </summary>
-        private System.Windows.Forms.Label lblTextExceptionMessage;
-
-        /// <summary>
-        /// Button btnContinu
-        /// </summary>
-        private System.Windows.Forms.Button btnContinu;
-
-        /// <summary>
-        /// Button btnShutdown
-        /// </summary>
-        private System.Windows.Forms.Button btnShutdown;
-
-        /// <summary>
-        /// Label lblTextOptions
-        /// </summary>
-        private System.Windows.Forms.Label lblTextOptions;
-
-        /// <summary>
-        /// TextBox tbExceptionMessage
-        /// </summary>
-        private System.Windows.Forms.TextBox tbExceptionMessage;
-
-        /// <summary>
-        /// Label lblTextStacktrace
-        /// </summary>
-        private System.Windows.Forms.Label lblTextStacktrace;
     }
 }

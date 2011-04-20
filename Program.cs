@@ -385,8 +385,8 @@ namespace NoteFly
         /// <summary>
         /// Unhandled exceptions occur
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="args">UnhandledExceptionEvent arguments</param>
         private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
@@ -398,7 +398,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="args">ThreadExceptionEvent arguments</param>
-        private static void UnhanledThreadExceptionHanhler(Object sender, ThreadExceptionEventArgs treadargs)
+        private static void UnhanledThreadExceptionHanhler(object sender, ThreadExceptionEventArgs treadargs)
         {
             Exception e = treadargs.Exception;
             ShowExceptionDlg(e);
@@ -438,6 +438,7 @@ namespace NoteFly
                     instances++;
                 }
             }
+
             return instances;
         } 
 

@@ -58,7 +58,7 @@ namespace NoteFly
         #region Properties (5) 
 
         /// <summary>
-        /// The highlight color of the skin.
+        /// Gets or sets the highlight color of the skin.
         /// </summary>
         public Color HighlightClr
         {
@@ -74,7 +74,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The name of the skin.
+        /// Gets or sets the name of the skin.
         /// </summary>
         public string Name
         {
@@ -90,7 +90,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The primary color of the skin.
+        /// Gets or sets the primary color of the skin.
         /// </summary>
         public Color PrimaryClr
         {
@@ -106,7 +106,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The selection color of the skin.
+        /// Gets or sets  the selection color of the skin.
         /// </summary>
         public Color SelectClr
         {
@@ -122,7 +122,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The text color of the skin.
+        /// Gets or sets  the text color of the skin.
         /// </summary>
         public Color TextClr
         {

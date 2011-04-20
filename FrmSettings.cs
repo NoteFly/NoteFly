@@ -103,6 +103,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnOK_Click(object sender, EventArgs e)
         {
+            // check if the set settings are possible.
             if (!Directory.Exists(this.tbNotesSavePath.Text))
             {
                 Log.Write(LogType.info, NoteFly.Properties.Resources.settings_invalidfoldersavenote);
@@ -151,46 +152,45 @@ namespace NoteFly
             }
             else
             {
-                //everything looks okay 
+                // everything looks okay 
                 string oldnotesavepath = Settings.NotesSavepath;
                 if (this.tbNotesSavePath.Text != oldnotesavepath)
                 {
                     this.MoveNotes(oldnotesavepath, this.tbNotesSavePath.Text); // TODO: put on seperate thread
-                    
                 }
-                //tab: General
+                // tab: General
                 Settings.ConfirmExit = this.chxConfirmExit.Checked;
                 Settings.ConfirmDeletenote = this.chxConfirmDeletenote.Checked;
                 Settings.NotesDeleteRecyclebin = this.chxNotesDeleteRecyclebin.Checked;
                 Settings.TrayiconLeftclickaction = this.cbxActionLeftclick.SelectedIndex;
-                //tab: Appearance, looks
+                // tab: Appearance, looks
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
                 Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
                 Settings.NotesDefaultRandomSkin = this.chxUseRandomDefaultNote.Checked;
                 Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
                 Settings.NotesTooltipsEnabled = this.cbxShowTooltips.Checked;
-                //tab: Appearance, fonts
+                // tab: Appearance, fonts
                 Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();
                 Settings.FontContentSize = (float)this.numFontSizeContent.Value;
                 Settings.FontTitleStylebold = this.cbxFontNoteTitleBold.Checked;
                 Settings.FontTitleFamily = this.cbxFontNoteTitle.SelectedItem.ToString();
                 Settings.FontTitleSize = (float)this.numFontSizeTitle.Value;
                 Settings.FontTextdirection = this.cbxTextDirection.SelectedIndex;
-                //tab: Appearance, trayicon
+                // tab: Appearance, trayicon
                 Settings.TrayiconFontsize = (float)this.numTrayiconFontsize.Value;
                 Settings.TrayiconCreatenotebold = this.chxTrayiconBoldNewnote.Checked;
                 Settings.TrayiconManagenotesbold = this.chxTrayiconBoldManagenotes.Checked;
                 Settings.TrayiconSettingsbold = this.chxTrayiconBoldSettings.Checked;
                 Settings.TrayiconExitbold = this.chxTrayiconBoldExit.Checked;
-                //tab: Highlight
+                // tab: Highlight
                 Settings.HighlightHyperlinks = this.chxHighlightHyperlinks.Checked;
                 Settings.HighlightHTML = this.chxHighlightHTML.Checked;
                 Settings.HighlightPHP = this.chxHighlightPHP.Checked;
                 Settings.HighlightSQL = this.chxHighlightSQL.Checked;
-                //tab: Social networks
+                // tab: Social networks
                 Settings.SocialEmailEnabled = this.chxSocialEmailEnabled.Checked;
                 Settings.SocialEmailDefaultadres = this.tbDefaultEmail.Text;
-                //tab: Network
+                // tab: Network
                 if (this.chxCheckUpdates.Checked)
                 {
                     Settings.UpdatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value);
@@ -203,7 +203,7 @@ namespace NoteFly
                 Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
                 Settings.NetworkProxyAddress = this.iptbProxyAddress.IPAddress;
                 Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
-                //tab: Advance
+                // tab: Advance
                 Settings.NotesSavepath = this.tbNotesSavePath.Text;
                 
                 Settings.ProgramLogError = this.chxLogErrors.Checked;
@@ -221,7 +221,7 @@ namespace NoteFly
                         }
                         catch (UnauthorizedAccessException unauthexc)
                         {
-                            Log.Write(LogType.exception, "Not enough right to write logon start key to registry."+unauthexc.Message);
+                            Log.Write(LogType.exception, "Not enough right to write logon start key to registry." + unauthexc.Message);
                             MessageBox.Show(unauthexc.Message);
                         }
                         catch (Exception exc)
@@ -397,7 +397,7 @@ namespace NoteFly
         /// </summary>
         private void SetControlsBySettings()
         {
-            //tab: General
+            // tab: General
 #if windows
             this.chxStartOnLogin.Checked = this.GetStartOnLogon();
 #endif
@@ -405,13 +405,13 @@ namespace NoteFly
             this.chxConfirmDeletenote.Checked = Settings.ConfirmDeletenote;
             this.chxNotesDeleteRecyclebin.Checked = Settings.NotesDeleteRecyclebin;
             this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;
-            //tab: Appearance
+            // tab: Appearance
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
             this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
             this.chxUseRandomDefaultNote.Checked = Settings.NotesDefaultRandomSkin;
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
             this.cbxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
-            //tab: Appearance, fonts
+            // tab: Appearance, fonts
             this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.FontTitleSize);
             this.cbxFontNoteContent.SelectedValue = Settings.FontContentFamily;
             this.numFontSizeContent.Value = Convert.ToDecimal(Settings.FontContentSize);
@@ -419,26 +419,26 @@ namespace NoteFly
             this.cbxFontNoteContent.Text = Settings.FontContentFamily;
             this.cbxFontNoteTitle.Text = Settings.FontTitleFamily;
             this.cbxFontNoteTitleBold.Checked = Settings.FontTitleStylebold;
-            //tab: Appearance, trayicon
+            // tab: Appearance, trayicon
             this.numTrayiconFontsize.Value = Convert.ToDecimal(Settings.TrayiconFontsize);
             this.chxTrayiconBoldNewnote.Checked = Settings.TrayiconCreatenotebold;
             this.chxTrayiconBoldManagenotes.Checked = Settings.TrayiconManagenotesbold;
             this.chxTrayiconBoldSettings.Checked = Settings.TrayiconSettingsbold;
             this.chxTrayiconBoldExit.Checked = Settings.TrayiconExitbold;
-            //tab: Highlight
+            // tab: Highlight
             this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
             this.chxHighlightHTML.Checked = Settings.HighlightHTML;
             this.chxHighlightPHP.Checked = Settings.HighlightPHP;
             this.chxHighlightSQL.Checked = Settings.HighlightSQL;
-            //tab: social networks
+            // tab: social networks
             this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;
-            this.chxSocialEmailDefaultaddressBlank.Checked = false ;
+            this.chxSocialEmailDefaultaddressBlank.Checked = false;
             if (String.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
             {
                 this.chxSocialEmailDefaultaddressBlank.Checked = true;
             }
             this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
-            //tab: Network
+            // tab: Network
             if (Settings.UpdatecheckEverydays > 0)
             {
                 this.chxCheckUpdates.Checked = true;
@@ -454,7 +454,7 @@ namespace NoteFly
             this.iptbProxyAddress.IPAddress = Settings.NetworkProxyAddress;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
             this.numTimeout.Value = Settings.NetworkConnectionTimeout;
-            //tab: Advance
+            // tab: Advance
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
             this.chxLogErrors.Checked = Settings.ProgramLogError;

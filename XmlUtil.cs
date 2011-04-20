@@ -700,13 +700,14 @@ namespace NoteFly
             }
             catch (AccessViolationException)
             {
-                Log.Write(LogType.exception, "Premission problem writing: "+Path.Combine(Program.AppDataFolder, SETTINGSFILE));
+                Log.Write(LogType.exception, "Premission problem writing: " + Path.Combine(Program.AppDataFolder, SETTINGSFILE));
                 return false;
             }
             finally
             {
                 xmlwrite.Close();
             }
+
             return true;
         }
 
@@ -836,6 +837,7 @@ namespace NoteFly
 
                                 break;
                             default:
+
                                 break;
                         }
                         if (xmlread.Depth > 3)
@@ -857,6 +859,7 @@ namespace NoteFly
                     xmlread.Close();
                 }
             }
+
             Log.Write(LogType.info, "update check done.");
             return version;
         }
@@ -996,7 +999,7 @@ namespace NoteFly
                             note.Title = xmlread.ReadElementContentAsString();
                             break;
                         case "content":
-                            if ((note.Visible) || (setallcontent))
+                            if (note.Visible || setallcontent)
                             {
                                 note.Tempcontent = xmlread.ReadElementContentAsString();
                             }
@@ -1025,7 +1028,7 @@ namespace NoteFly
             {
                 xmlwrite = new XmlTextWriter(filename, System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument(true);//standalone
+                xmlwrite.WriteStartDocument(true); // standalone xml file
                 xmlwrite.WriteStartElement("skins");
                 const int NUMDEFAULTSKINS = 10;
                 xmlwrite.WriteAttributeString("count", NUMDEFAULTSKINS.ToString()); // for performance predefine list Capacity, not required.
@@ -1057,10 +1060,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Checks if filesize is right for a partialer file.
+        /// Checks if filesize is not 0 for a filename 
         /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="exceptedfilesize"></param>
+        /// <param name="filename">The filename to check</param>
         private static void CheckFile(string filename)
         {
             FileInfo fi = new FileInfo(filename);

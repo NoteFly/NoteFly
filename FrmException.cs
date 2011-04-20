@@ -33,7 +33,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="excmgs">Exception message</param>
         /// <param name="excstrace">Exception stacktrace</param>
-        public FrmException(String excmgs, String excstrace)
+        public FrmException(string excmgs, string excstrace)
         {
             InitializeComponent();
             this.Text = "oh no.. " + Program.AssemblyTitle + " crashed.";

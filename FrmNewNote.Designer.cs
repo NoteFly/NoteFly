@@ -131,6 +131,16 @@ namespace NoteFly
         private System.Windows.Forms.Button btnFontBigger;
 
         /// <summary>
+        /// Button btnTextBulletlist
+        /// </summary>
+        private System.Windows.Forms.Button btnTextBulletlist;
+
+        /// <summary>
+        /// ToolStripMenuItem menuShowtoolbar
+        /// </summary>
+        private System.Windows.Forms.ToolStripMenuItem menuShowtoolbar;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -542,7 +552,7 @@ namespace NoteFly
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
             this.rtbNewNote.TabIndex = 1;
-            this.rtbNewNote.Text = "";
+            this.rtbNewNote.Text = string.Empty;
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -615,9 +625,6 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnTextBulletlist;
-        private System.Windows.Forms.ToolStripMenuItem menuShowtoolbar;
     }
 }
 

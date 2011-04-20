@@ -358,7 +358,9 @@ namespace NoteFly
             if ((newsize < 6) || (newsize > 108))
             {
                 return;
-            } else {
+            }
+            else
+            {
                 this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, newsize, this.rtbNewNote.SelectionFont.Style);
             }
         }
@@ -489,7 +491,7 @@ namespace NoteFly
                         else if (openfiledlg.FilterIndex == 3)
                         {
                             uint linenum = 0;
-                            string curline = reader.ReadLine();//no CR+LF characters
+                            string curline = reader.ReadLine(); // no CR+LF characters
                             if (curline == "#!GFKNT 2.0")
                             {
                                 while (curline != "%:")

@@ -238,7 +238,6 @@ namespace NoteFly
                         {
                             this.notes.RemoveNote(0);
                         }
-
                     }
 
                     Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
@@ -273,7 +272,7 @@ namespace NoteFly
                 this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
                 if (this.notes.GetNote(notepos).Visible)
                 {
-                    String tempcontent = this.notes.GetNote(notepos).GetContent();
+                    string tempcontent = this.notes.GetNote(notepos).GetContent();
                     if (tempcontent == String.Empty)
                     {
                         Log.Write(LogType.exception, "Note content is empty.");
@@ -370,7 +369,7 @@ namespace NoteFly
 
                 this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
 
-                if (e.RowIndex == this.dataGridView1.RowCount-1)
+                if (e.RowIndex == this.dataGridView1.RowCount - 1)
                 {
                     this.notes.FrmManageNotesNeedUpdate = false;
                 }
