@@ -197,7 +197,8 @@ namespace NoteFly
                     {
                         this.notes.AddNote(this.note);
                     }
-                    TrayIcon.frmneweditnoteopen = false;
+
+                    TrayIcon.Frmneweditnoteopen = false;
                     Highlight.InitHighlighter();
                     this.note.Tempcontent = this.rtbNewNote.Rtf;
                     this.note.CreateForm();
@@ -207,7 +208,7 @@ namespace NoteFly
                     }
 
                     Highlight.DeinitHighlighter();
-                    this.notes.frmmangenotesneedupdate = true;
+                    this.notes.FrmManageNotesNeedUpdate = true;
                     TrayIcon.RefreshFrmManageNotes();
                     this.Close();
                     GC.Collect();
@@ -226,7 +227,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            TrayIcon.frmneweditnoteopen = false;
+            TrayIcon.Frmneweditnoteopen = false;
             if (this.note != null)
             {
                 this.note.CreateForm();

@@ -143,7 +143,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The height of the note.
+        /// Gets or sets the height of the note.
         /// </summary>
         public int Height
         {
@@ -159,7 +159,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Is the note locked.
+        /// Gets or sets a value indicating whether the note is locked.
         /// </summary>
         public bool Locked
         {
@@ -175,7 +175,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Is the note displayed ontop of all windows.
+        /// Gets or sets a value indicating whether the note displayed ontop of all windows.
         /// </summary>
         public bool Ontop
         {
@@ -191,7 +191,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Is the note rolled up.
+        /// Gets or sets a value indicating whether the note rolled up.
         /// </summary>
         public bool RolledUp
         {
@@ -207,7 +207,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The note skin.
+        /// Gets or sets the note skin.
         /// </summary>
         public int SkinNr
         {
@@ -223,7 +223,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Temporary content note content store.
+        /// Gets or sets temporary content note content store.
         /// </summary>
         public string Tempcontent
         {
@@ -255,7 +255,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Visibility note.
+        /// Gets or sets a value indicating whether the note is visible.
         /// </summary>
         public bool Visible
         {
@@ -271,7 +271,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The width of the note.
+        /// Gets or sets the width of the note.
         /// </summary>
         public int Width
         {
@@ -287,7 +287,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The X position of the note on the screen.
+        /// Gets or sets the X position of the note on the screen.
         /// </summary>
         public int X
         {
@@ -303,7 +303,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The Y position of the note on the screen.
+        /// Gets or sets the Y position of the note on the screen.
         /// </summary>
         public int Y
         {

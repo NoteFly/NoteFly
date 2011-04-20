@@ -178,16 +178,14 @@ namespace NoteFly
             //it does not fix it, it makes it harder to exploit if insecure dll loading exist.
             //NoteFly uses APPDATA and TEMP variables and systemroot is required for LinkLabel control.
             //This is OS specific
-            // /*
 #if windows
-            SetDllDirectory(String.Empty); //removes notefly folder as ddl search path
-            Environment.SetEnvironmentVariable("PATH", String.Empty);//removes dangourse %PATH% as dll search path
-            Environment.SetEnvironmentVariable("windir", String.Empty);//removes %windir%
+            SetDllDirectory(String.Empty);                                // removes notefly folder as ddl search path
+            Environment.SetEnvironmentVariable("PATH", String.Empty);     // removes dangourse %PATH% as dll search path
+            Environment.SetEnvironmentVariable("windir", String.Empty);   // removes %windir%
             Environment.SetEnvironmentVariable("ProgramFiles", String.Empty);
             Environment.SetEnvironmentVariable("SystemDrive", String.Empty);
             Environment.SetEnvironmentVariable("CommonProgramFiles", String.Empty);
-            Environment.SetEnvironmentVariable("TMP", String.Empty); //removes %TMP%, NoteFly uses %TEMP% instead only.
-            // */
+            Environment.SetEnvironmentVariable("TMP", String.Empty);      // removes %TMP%, NoteFly uses %TEMP% instead only.
 #endif
 #if DEBUG
             Stopwatch stopwatch = new Stopwatch();

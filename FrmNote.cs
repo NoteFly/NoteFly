@@ -106,9 +106,9 @@ namespace NoteFly
 
             this.TopMost = note.Ontop;
             this.menuOnTop.Checked = note.Ontop;
-            this.SetRollupNote();
-            this.SetLockedNote();
             this.SetBounds(note.X, note.Y, note.Width, note.Height);
+            this.SetLockedNote();
+            this.SetRollupNote();
             string[] skinnames = notes.GetSkinsNames();
             for (int i = 0; i < skinnames.Length; i++)
             {
@@ -469,10 +469,10 @@ namespace NoteFly
                 this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
 
-            this.notes.frmmangenotesneedupdate = true;
+            this.notes.FrmManageNotesNeedUpdate = true;
             Highlight.DeinitHighlighter();
             TrayIcon.RefreshFrmManageNotes();
-            this.notes.frmmangenotesneedupdate = false;
+            this.notes.FrmManageNotesNeedUpdate = false;
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.SkinNr));
         }
 
@@ -748,7 +748,7 @@ namespace NoteFly
         /// <param name="e">FormClosedEvent arguments</param>
         private void FrmNote_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.notes.frmmangenotesneedupdate = true;
+            this.notes.FrmManageNotesNeedUpdate = true;
             TrayIcon.RefreshFrmManageNotes();
         }
 

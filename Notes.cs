@@ -46,7 +46,7 @@ namespace NoteFly
         /// <summary>
         /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
         /// </summary>
-        public bool frmmangenotesneedupdate = false;
+        private bool frmmanagenotesneedupdate = false;
 
         /// <summary>
         /// The maximum length of the filename.
@@ -97,6 +97,22 @@ namespace NoteFly
             get
             {
                 return this.notes.Count;
+            }
+        }
+
+        /// <summary>
+        /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
+        /// </summary>
+        public bool FrmManageNotesNeedUpdate
+        {
+            get
+            {
+                return this.frmmanagenotesneedupdate;
+            }
+
+            set
+            {
+                this.frmmanagenotesneedupdate = value;
             }
         }
 
@@ -307,7 +323,7 @@ namespace NoteFly
         /// <summary>
         /// Loads all note files in the NotesSavepath.
         /// </summary>
-        /// <param name="firstrun">true if it is the first run</param>
+        /// <param name="hasbeenfirstrun">true if it is the first run</param>
         /// <param name="resetpositions">true for reseting all the notes positions</param>
         public void LoadNotes(bool hasbeenfirstrun, bool resetpositions)
         {
@@ -568,12 +584,12 @@ namespace NoteFly
         /// </summary>
         private void CreateFirstrunNote()
         {
-            const int notewidth = 260;
-            const int noteheight = 220;
-            int noteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (notewidth / 2));
-            int noteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (noteheight / 2));
+            const int DEMONOTEWIDTH = 260;
+            const int DEMONOTEHEIGHT = 220;
+            int noteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (DEMONOTEWIDTH / 2));
+            int noteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (DEMONOTEHEIGHT / 2));
             string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
-            Note demonote = this.CreateNote("NoteFly2.0.0", 0, noteposx, noteposy, notewidth, noteheight);
+            Note demonote = this.CreateNote("NoteFly2.0.0", 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT);
             xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
             this.AddNote(demonote);
             demonote.CreateForm();

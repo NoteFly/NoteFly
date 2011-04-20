@@ -969,6 +969,9 @@ namespace NoteFly
                         case "ontop":
                             note.Ontop = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "rollup":
+                            note.RolledUp = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "width":
                             note.Width = xmlread.ReadElementContentAsInt();
                             break;
@@ -1024,13 +1027,13 @@ namespace NoteFly
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument(true);//standalone
                 xmlwrite.WriteStartElement("skins");
-                const int NUMDEFAULTSKINS = 8;
-                xmlwrite.WriteAttributeString("count", NUMDEFAULTSKINS.ToString()); //for performance predefine list Capacity, not required.
-                string[] name = new string[NUMDEFAULTSKINS] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark" };
-                string[] primaryclr = new string[NUMDEFAULTSKINS] { "FFEF14", "FFA700", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A", "002626" };
-                string[] selectclr = new string[NUMDEFAULTSKINS] { "E0D616", "C17D00", "E0E0E0", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624" };
-                string[] highlightclr = new string[NUMDEFAULTSKINS] { "FFED7C", "FFD46D", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "494949" };
-                string[] textclr = new string[NUMDEFAULTSKINS] { "000000", "000000", "000000", "000000", "000000", "000000", "000000", "FFFFFF" };
+                const int NUMDEFAULTSKINS = 10;
+                xmlwrite.WriteAttributeString("count", NUMDEFAULTSKINS.ToString()); // for performance predefine list Capacity, not required.
+                string[] name = new string[NUMDEFAULTSKINS] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark", "softwhite", "contrastblue" };
+                string[] primaryclr = new string[NUMDEFAULTSKINS] { "FFEF14", "FFA700", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A", "002626", "FFF4C6", "3B47EF" };
+                string[] selectclr = new string[NUMDEFAULTSKINS] { "E0D616", "C17D00", "E0E0E0", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624", "333366", "00137F" };
+                string[] highlightclr = new string[NUMDEFAULTSKINS] { "FFED7C", "FFD46D", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "494949", "FFFFFF", "0026FF" };
+                string[] textclr = new string[NUMDEFAULTSKINS] { "000000", "000000", "000000", "000000", "000000", "000000", "000000", "FFFFFF", "3B47EF", "FFDF23" };
                 for (ushort i = 0; i < NUMDEFAULTSKINS; i++)
                 {
                     xmlwrite.WriteStartElement("skin");
@@ -1100,6 +1103,7 @@ namespace NoteFly
             WriteXMLBool("visible", note.Visible);
             WriteXMLBool("ontop", note.Ontop);
             WriteXMLBool("locked", note.Locked);
+            WriteXMLBool("rollup", note.RolledUp);
             xmlwrite.WriteStartElement("location");
             xmlwrite.WriteElementString("x", note.X.ToString());
             xmlwrite.WriteElementString("y", note.Y.ToString());

@@ -34,7 +34,7 @@ namespace NoteFly
         /// <summary>
         /// Used for warning if new note is still open on shutdown application.
         /// </summary>
-        public static bool frmneweditnoteopen = false;
+        public static bool Frmneweditnoteopen = false;
 
         /// <summary>
         /// Reference to FrmManageNotes window.
@@ -141,6 +141,7 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Bold;
             }
+
             this.menuNewNote.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuNewNote.Click += new System.EventHandler(this.MenuNewNote_Click);
 
@@ -157,6 +158,7 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Regular;
             }
+
             this.menuManageNotes.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuManageNotes.Click += new System.EventHandler(this.MenuManageNotes_Click);
             // MenuSettings
@@ -261,7 +263,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuNewNote_Click(object sender, EventArgs e)
         {
-            frmneweditnoteopen = true;
+            Frmneweditnoteopen = true;
             FrmNewNote newnotefrm = new FrmNewNote(this.notes);
             newnotefrm.Show();
         }
@@ -349,7 +351,7 @@ namespace NoteFly
                 }
             }
 
-            if (frmneweditnoteopen)
+            if (Frmneweditnoteopen)
             {
                 DialogResult resdlg = MessageBox.Show("A note is still open for editing.\r\nAre you sure you want to shutdown?", "confirm exit", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (resdlg == DialogResult.No)

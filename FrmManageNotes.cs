@@ -190,7 +190,7 @@ namespace NoteFly
             }
             this.prevrownr = -1;
             this.secondprevrownr = -1;
-            this.notes.frmmangenotesneedupdate = true;
+            this.notes.FrmManageNotesNeedUpdate = true;
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace NoteFly
                 xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
             }
             
-            this.notes.frmmangenotesneedupdate = false;
+            this.notes.FrmManageNotesNeedUpdate = false;
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace NoteFly
         /// <param name="e">DataGridViewCellMouse event arguments</param>
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            this.notes.frmmangenotesneedupdate = true;
+            this.notes.FrmManageNotesNeedUpdate = true;
             this.dataGridView1.Refresh();
         }
 
@@ -350,7 +350,7 @@ namespace NoteFly
         /// <param name="e">DataGridViewRowPostPaint event arguments</param>
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
-            if (this.notes.frmmangenotesneedupdate)
+            if (this.notes.FrmManageNotesNeedUpdate)
             {
                 // detect and update add/delete notes.
                 if (this.dataGridView1.RowCount != this.notes.CountNotes)
@@ -372,11 +372,11 @@ namespace NoteFly
 
                 if (e.RowIndex == this.dataGridView1.RowCount-1)
                 {
-                    this.notes.frmmangenotesneedupdate = false;
+                    this.notes.FrmManageNotesNeedUpdate = false;
                 }
                 else if (this.prevrownr < this.secondprevrownr)
                 {
-                    this.notes.frmmangenotesneedupdate = false;
+                    this.notes.FrmManageNotesNeedUpdate = false;
                 }
                 else
                 {
@@ -395,7 +395,7 @@ namespace NoteFly
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
-                this.notes.frmmangenotesneedupdate = true;
+                this.notes.FrmManageNotesNeedUpdate = true;
             }
         }
 
@@ -462,13 +462,13 @@ namespace NoteFly
 
         /// <summary>
         /// Draw a list of all notes.
-        /// Sets frmmangenotesneedupdate to true.
+        /// Sets FrmManageNotesNeedUpdate to true.
         /// </summary>
         private void DrawNotesGrid()
         {
             this.prevrownr = -1;
             this.secondprevrownr = -2;
-            this.notes.frmmangenotesneedupdate = true;
+            this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
 
             DataTable datatable = new DataTable();
@@ -576,7 +576,7 @@ namespace NoteFly
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
             this.SetDataGridViewColumsWidth();
-            this.notes.frmmangenotesneedupdate = true;
+            this.notes.FrmManageNotesNeedUpdate = true;
         }
 
         /// <summary>

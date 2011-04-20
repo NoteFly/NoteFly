@@ -63,6 +63,7 @@ namespace NoteFlyTests
         {
             Settings.NotesWarnLimit = 1000;
             Settings.NotesSavepath = Program.AppDataFolder;
+            Settings.ProgramFirstrun = true;
         }
         #endregion
 
@@ -105,7 +106,7 @@ namespace NoteFlyTests
         public void GetSkinsNamesTest()
         {
             Notes target = new Notes(false);
-            string[] expected = new string[8];
+            string[] expected = new string[10];
             expected[0] = "yellow";
             expected[1] = "orange";
             expected[2] = "white";
@@ -114,6 +115,8 @@ namespace NoteFlyTests
             expected[5] = "purple";
             expected[6] = "red";
             expected[7] = "dark";
+            expected[8] = "softwhite";
+            expected[9] = "contrastblue";
             string[] actual = target.GetSkinsNames();
             if (actual.Length == 0)
             {

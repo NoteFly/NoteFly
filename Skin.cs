@@ -29,30 +29,114 @@ namespace NoteFly
         #region Fields (5) 
 
         /// <summary>
+        /// The highlight color of the skin.
+        /// </summary>
+        private Color highlightclr;
+
+        /// <summary>
         /// The name of the skin.
         /// </summary>
-        public string Name;
+        private string name;
 
         /// <summary>
         /// The primary color of the skin.
         /// </summary>
-        public Color PrimaryClr;
+        private Color primaryclr;
 
         /// <summary>
         /// The selection color of the skin.
         /// </summary>
-        public Color SelectClr;
-
-        /// <summary>
-        /// The highlight color of the skin.
-        /// </summary>
-        public Color HighlightClr;
+        private Color selectclr;
 
         /// <summary>
         /// The text color of the skin.
         /// </summary>
-        public Color TextClr;
+        private Color textclr;
 
-        #endregion Fields
+        #endregion Fields 
+
+        #region Properties (5) 
+
+        /// <summary>
+        /// The highlight color of the skin.
+        /// </summary>
+        public Color HighlightClr
+        {
+            get
+            {
+                return this.highlightclr;
+            }
+
+            set
+            {
+                this.highlightclr = value;
+            }
+        }
+
+        /// <summary>
+        /// The name of the skin.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+
+            set
+            {
+                this.name = value;
+            }
+        }
+
+        /// <summary>
+        /// The primary color of the skin.
+        /// </summary>
+        public Color PrimaryClr
+        {
+            get
+            {
+                return this.primaryclr;
+            }
+
+            set
+            {
+                this.primaryclr = value;
+            }
+        }
+
+        /// <summary>
+        /// The selection color of the skin.
+        /// </summary>
+        public Color SelectClr
+        {
+            get
+            {
+                return this.selectclr;
+            }
+
+            set
+            {
+                this.selectclr = value;
+            }
+        }
+
+        /// <summary>
+        /// The text color of the skin.
+        /// </summary>
+        public Color TextClr
+        {
+            get
+            {
+                return this.textclr;
+            }
+
+            set
+            {
+                this.textclr = value;
+            }
+        }
+
+        #endregion Properties 
     }
 }
