@@ -1,5 +1,4 @@
-//-----------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="GNU">
+// <copyright file="AssemblyInfo.cs" company="NoteFly">
 // 
 // This program is free software; you can redistribute it and/or modify it
 // Free Software Foundation; either version 2, 
@@ -10,7 +9,6 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 // </copyright>
-//-----------------------------------------------------------------------
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;

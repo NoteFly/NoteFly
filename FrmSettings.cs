@@ -58,7 +58,7 @@ namespace NoteFly
 
         #region Methods (13)
 
-        // Private Methods (13) 
+        // Private Methods (13)
 
         /// <summary>
         /// User want to browse for notes save path.
@@ -110,7 +110,7 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_invalidfoldersavenote);
                 this.tabControlSettings.SelectedTab = this.tabGeneral;
             }
-            else if (String.IsNullOrEmpty(this.cbxFontNoteContent.Text) == true)
+            else if (string.IsNullOrEmpty(this.cbxFontNoteContent.Text) == true)
             {
                 Log.Write(LogType.info, NoteFly.Properties.Resources.settings_nofont);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_nofont);
@@ -199,6 +199,7 @@ namespace NoteFly
                 {
                     Settings.UpdatecheckEverydays = 0;
                 }
+
                 Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
                 Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
                 Settings.NetworkProxyAddress = this.iptbProxyAddress.IPAddress;
@@ -249,12 +250,14 @@ namespace NoteFly
                 {
                     Highlight.InitHighlighter();
                 }
+
                 this.notes.UpdateAllNoteForms();
                 Program.RestartTrayicon();
                 if (Highlight.KeywordsInitialized)
                 {
                     Highlight.DeinitHighlighter();
                 }
+
                 this.Close();
             }
         }
@@ -294,7 +297,7 @@ namespace NoteFly
             this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
             if (this.chxSocialEmailDefaultaddressBlank.Checked)
             {
-                this.tbDefaultEmail.Text = String.Empty;
+                this.tbDefaultEmail.Text = string.Empty;
             }
         }
 
@@ -348,6 +351,7 @@ namespace NoteFly
                 this.cbxFontNoteTitle.Items.Add(oneFontFamily.Name);
                 this.cbxFontNoteContent.Items.Add(oneFontFamily.Name);
             }
+
             this.cbxDefaultColor.Items.AddRange(this.notes.GetSkinsNames());
         }
 
@@ -363,6 +367,7 @@ namespace NoteFly
             {
                 return;
             }
+
             string[] files = Directory.GetFiles(oldsavenotespath, "*.nfn");
             for (int i = 0; i < files.Length; i++)
             {
@@ -433,10 +438,11 @@ namespace NoteFly
             // tab: social networks
             this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;
             this.chxSocialEmailDefaultaddressBlank.Checked = false;
-            if (String.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
+            if (string.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
             {
                 this.chxSocialEmailDefaultaddressBlank.Checked = true;
             }
+
             this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
             // tab: Network
             if (Settings.UpdatecheckEverydays > 0)
@@ -450,6 +456,7 @@ namespace NoteFly
                 this.chxCheckUpdates.Checked = false;
                 this.numUpdateCheckDays.Enabled = false;
             }
+
             this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;
             this.iptbProxyAddress.IPAddress = Settings.NetworkProxyAddress;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
@@ -479,14 +486,15 @@ namespace NoteFly
                     staronlogon = true;
                 }
             }
+
             return staronlogon;
         }
 
         /// <summary>
         /// Toggle enabling numProcTransparency.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event argument</param>
         private void chxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
             this.numProcTransparency.Enabled = this.chxTransparecy.Checked;

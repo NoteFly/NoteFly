@@ -21,6 +21,7 @@
 #define windows //platform can be: windows, linux, macos //platform can be: windows, linux, macos
 using System;
 [assembly: CLSCompliant(true)]
+
 namespace NoteFly
 {
     using System.Diagnostics;
@@ -80,7 +81,7 @@ namespace NoteFly
                 if (attributes.Length > 0)
                 {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (!String.IsNullOrEmpty(titleAttribute.Title))
+                    if (!string.IsNullOrEmpty(titleAttribute.Title))
                     {
                         return titleAttribute.Title;
                     }
@@ -174,18 +175,20 @@ namespace NoteFly
         [STAThread]
         public static void Main(string[] args)
         {
-            //a suggestion to "protect" against insecure Dynamic Library Loading vulnerabilities.
-            //it does not fix it, it makes it harder to exploit if insecure dll loading exist.
-            //NoteFly uses APPDATA and TEMP variables and systemroot is required for LinkLabel control.
-            //This is OS specific
+            /*
+             * a suggestion to "protect" against insecure Dynamic Library Loading vulnerabilities.
+             * it does not fix it, it makes it harder to exploit if insecure dll loading exist.
+             * NoteFly uses APPDATA and TEMP variables and systemroot is required for LinkLabel control.
+             * This is OS specific
+             */
 #if windows
-            SetDllDirectory(String.Empty);                                // removes notefly folder as ddl search path
-            Environment.SetEnvironmentVariable("PATH", String.Empty);     // removes dangourse %PATH% as dll search path
-            Environment.SetEnvironmentVariable("windir", String.Empty);   // removes %windir%
-            Environment.SetEnvironmentVariable("ProgramFiles", String.Empty);
-            Environment.SetEnvironmentVariable("SystemDrive", String.Empty);
-            Environment.SetEnvironmentVariable("CommonProgramFiles", String.Empty);
-            Environment.SetEnvironmentVariable("TMP", String.Empty);      // removes %TMP%, NoteFly uses %TEMP% instead only.
+            SetDllDirectory(string.Empty);                                // removes notefly folder as ddl search path
+            Environment.SetEnvironmentVariable("PATH", string.Empty);     // removes dangourse %PATH% as dll search path
+            Environment.SetEnvironmentVariable("windir", string.Empty);   // removes %windir%
+            Environment.SetEnvironmentVariable("ProgramFiles", string.Empty);
+            Environment.SetEnvironmentVariable("SystemDrive", string.Empty);
+            Environment.SetEnvironmentVariable("CommonProgramFiles", string.Empty);
+            Environment.SetEnvironmentVariable("TMP", string.Empty);      // removes %TMP%, NoteFly uses %TEMP% instead only.
 #endif
 #if DEBUG
             Stopwatch stopwatch = new Stopwatch();
@@ -360,7 +363,7 @@ namespace NoteFly
 
             if (updateavailible || Program.AssemblyVersionQuality != latestversionquality)
             {
-                if (!String.IsNullOrEmpty(downloadurl))
+                if (!string.IsNullOrEmpty(downloadurl))
                 {
                     StringBuilder sbmsg = new StringBuilder();
                     sbmsg.AppendLine("There's a new version availible.");
@@ -461,7 +464,7 @@ namespace NoteFly
                     return;
                 }
 
-                if (String.IsNullOrEmpty(uri.Scheme))
+                if (string.IsNullOrEmpty(uri.Scheme))
                 {
                     uri.Scheme = "http://";
                 }

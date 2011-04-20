@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FrmAbout.Designer.cs" company="GNU">
+// <copyright file="FrmAbout.Designer.cs" company="NoteFly">
 // 
 // This program is free software; you can redistribute it and/or modify it
 // Free Software Foundation; either version 2, 

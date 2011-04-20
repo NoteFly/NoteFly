@@ -35,6 +35,11 @@ namespace NoteFly
         #region Fields (4) 
 
         /// <summary>
+        /// Margin between format buttons and content.
+        /// </summary>
+        private const int MARGIN = 5;
+
+        /// <summary>
         /// Indicated if the form is being moved.
         /// </summary>
         private bool moving = false;
@@ -54,11 +59,6 @@ namespace NoteFly
         /// </summary>
         private Point oldp;
 
-        /// <summary>
-        /// Margin between format buttons and content.
-        /// </summary>
-        private const int MARGIN = 5;
-
         #endregion Fields 
 
         #region Constructors (2) 
@@ -77,7 +77,7 @@ namespace NoteFly
             this.Text = "edit note";
             this.SetColorsForm(this.note.SkinNr);
             this.tbTitle.Text = note.Title;
-            if (String.IsNullOrEmpty(this.note.Tempcontent))
+            if (string.IsNullOrEmpty(this.note.Tempcontent))
             {
                 this.rtbNewNote.Rtf = note.GetContent();
             }
@@ -85,7 +85,7 @@ namespace NoteFly
             {
                 this.rtbNewNote.Rtf = this.note.Tempcontent;
                 //clear memory:
-                this.note.Tempcontent = String.Empty;
+                this.note.Tempcontent = string.Empty;
                 this.note.Tempcontent = null;
             }
         }
@@ -97,7 +97,7 @@ namespace NoteFly
         public FrmNewNote(Notes notes)
         {
             this.ConstructFrmNewNote(notes);
-            this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - this.Width / 2, ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2)));
+            this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2), (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2));
             this.note = null;
             this.Text = "new note";
             if (Settings.NotesDefaultRandomSkin)
@@ -167,11 +167,11 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnAddNote_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(this.tbTitle.Text))
+            if (string.IsNullOrEmpty(this.tbTitle.Text))
             {
                 this.tbTitle.Text = DateTime.Now.ToString();
             }
-            else if (String.IsNullOrEmpty(this.rtbNewNote.Text))
+            else if (string.IsNullOrEmpty(this.rtbNewNote.Text))
             {
                 this.rtbNewNote.Text = "Please enter some content.";
             }
@@ -186,7 +186,7 @@ namespace NoteFly
 
                 this.note.Title = this.tbTitle.Text;
                 this.note.Visible = true;
-                if (String.IsNullOrEmpty(this.note.Filename))
+                if (string.IsNullOrEmpty(this.note.Filename))
                 {
                     this.note.Filename = this.notes.GetNoteFilename(this.note.Title);
                 }
@@ -255,6 +255,7 @@ namespace NoteFly
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
                 }
             }
+
             this.rtbNewNote.Focus();
         }
 
@@ -276,6 +277,7 @@ namespace NoteFly
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
                 }
             }
+
             this.rtbNewNote.Focus();
         }
 
@@ -297,6 +299,7 @@ namespace NoteFly
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
                 }
             }
+
             this.rtbNewNote.Focus();
         }
 
@@ -318,6 +321,7 @@ namespace NoteFly
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
                 }
             }
+
             this.rtbNewNote.Focus();
         }
 
@@ -332,6 +336,7 @@ namespace NoteFly
             {
                 this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints + 1);
             }
+
             this.rtbNewNote.Focus();
         }
 
@@ -346,6 +351,7 @@ namespace NoteFly
             {
                 this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints - 1);
             }
+
             this.rtbNewNote.Focus();
         }
 
@@ -403,7 +409,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(this.rtbNewNote.Text))
+            if (string.IsNullOrEmpty(this.rtbNewNote.Text))
             {
                 Log.Write(LogType.error, "No content to copy.");
             }
@@ -559,9 +565,9 @@ namespace NoteFly
             }
             else
             {
-                const string emptyclipboard = "There is no text on the clipboard.";
-                MessageBox.Show(emptyclipboard);
-                Log.Write(LogType.error, emptyclipboard);
+                const string EMPTYCLIPBOARD = "There is no text on the clipboard.";
+                MessageBox.Show(EMPTYCLIPBOARD);
+                Log.Write(LogType.error, EMPTYCLIPBOARD);
             }
         }
 
@@ -569,7 +575,7 @@ namespace NoteFly
         /// Resizing the FtmNewNote form.
         /// </summary>
         /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
+        /// <param name="e">Mouse event arguments</param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -585,7 +591,7 @@ namespace NoteFly
         /// Moving the note.
         /// </summary>
         /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
+        /// <param name="e">Mouse event arguments</param>
         private void pnlHeadNewNote_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -846,8 +852,8 @@ namespace NoteFly
         /// <summary>
         /// Handle keyboard shortcuts
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">KeyEvent arguments</param>
         private void FrmNewNote_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control)
@@ -873,8 +879,8 @@ namespace NoteFly
         /// <summary>
         /// Make buttet item of current selected line(s).
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnTextBulletlist_Click(object sender, EventArgs e)
         {
             if (this.checksellen())
@@ -886,8 +892,8 @@ namespace NoteFly
         /// <summary>
         /// Show or hide buttons for formatting.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void menuShowtoolbar_Click(object sender, EventArgs e)
         {
             this.menuShowtoolbar.Checked = !this.menuShowtoolbar.Checked;
@@ -899,7 +905,8 @@ namespace NoteFly
             {
                 this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - (this.btnTextBold.Location.Y + this.btnTextBold.Height));
             }
-            SetToolbarEnabled(this.menuShowtoolbar.Checked);
+
+            this.SetToolbarEnabled(this.menuShowtoolbar.Checked);
         }
 
         #endregion Methods

@@ -56,8 +56,12 @@ namespace NoteFlyTests
         }
 
         #region Additional test attributes
-        //You can use the following additional attributes as you write your tests:
-        //Use ClassInitialize to run code before running the first test in the class
+        // You can use the following additional attributes as you write your tests:
+
+        /// <summary>
+        /// ClassInitialize to run code before running the first test in the class
+        /// </summary>
+        /// <param name="testContext">TestContext</param>
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
         {
@@ -70,7 +74,7 @@ namespace NoteFlyTests
         /// <summary>
         /// A test for StripForbiddenFilenameChars
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void StripForbiddenFilenameCharsTest()
         {
             Notes target = new Notes(false);
@@ -83,7 +87,7 @@ namespace NoteFlyTests
         /// <summary>
         /// A test for RemoveNote
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void RemoveNoteTest()
         {
             Notes target = new Notes(false);
@@ -102,7 +106,7 @@ namespace NoteFlyTests
         /// A test for GetSkinsNames
         /// Only passes for default unmodified skins.xml file.
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void GetSkinsNamesTest()
         {
             Notes target = new Notes(false);
@@ -122,6 +126,7 @@ namespace NoteFlyTests
             {
                 Assert.Fail("Could not get skin names.");
             }
+
             if (actual.Length > expected.Length)
             {
                 Assert.Inconclusive("Skins.xml can be modified or test failed because more skins are returned.");
@@ -139,7 +144,7 @@ namespace NoteFlyTests
         /// <summary>
         /// A test for GetSkinName
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void GetSkinNameTest()
         {
             Notes target = new Notes(false);
@@ -152,7 +157,7 @@ namespace NoteFlyTests
         /// <summary>
         /// A test for GetForegroundColor
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void GetPrimaryColorTest()
         {
             Notes target = new Notes(false);
@@ -167,12 +172,12 @@ namespace NoteFlyTests
         /// <summary>
         /// A test for GetBackgroundColor
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void GetSelectColorTest()
         {
             Notes target = new Notes(false);
             int skinnr = 0;
-            string hexbackgroundcolor = "#E0D616"; //was #F7A90E
+            string hexbackgroundcolor = "#E0D616"; // was #F7A90E
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexbackgroundcolor);
             Color actual;
             actual = target.GetSelectClr(skinnr);
@@ -182,11 +187,11 @@ namespace NoteFlyTests
         /// <summary>
         /// A test for GetHighlightColor
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void GetHighlightColorTest()
         {
             Notes target = new Notes(false);
-            int skinnr = 0; //yellow skin
+            int skinnr = 0; // yellow skin
             string hexhighlightcolor = "#FFED7C";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexhighlightcolor);
             Color actual = target.GetHighlightClr(skinnr);
@@ -196,7 +201,7 @@ namespace NoteFlyTests
         /// <summary>
         /// A test for CreateNote
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void CreateNoteTest()
         {
             Notes target = new Notes(false);
@@ -228,7 +233,7 @@ namespace NoteFlyTests
         /// <summary>
         /// A test for CreateNote
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void GenerateRandomSkinnrTest()
         {
             Notes target = new Notes(false);

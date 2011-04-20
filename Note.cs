@@ -131,7 +131,7 @@ namespace NoteFly
 
             set
             {
-                if (!String.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     this.filename = value;
                 }
@@ -322,7 +322,7 @@ namespace NoteFly
 
         #region Methods (5)
 
-        // Public Methods (5) 
+        // Public Methods (5)
 
         /// <summary>
         /// Display this frmnote to the foreground.
@@ -382,7 +382,7 @@ namespace NoteFly
             }
             else
             {
-                return this.frmnote.rtbNote.Rtf;
+                return this.frmnote.GetContentRTF;
             }
         }
 

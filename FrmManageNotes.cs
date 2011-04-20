@@ -36,6 +36,24 @@ namespace NoteFly
     {
         #region Fields (6) 
 
+#if windows
+        /// <summary>
+        /// Delete the files specified in pFrom.
+        /// </summary>
+        private const int FO_DELETE = 3;
+
+        /// <summary>
+        /// Preserve Undo information, if possible.
+        /// If pFrom does not contain fully qualified path and file names, this flag is ignored.
+        /// </summary>
+        private const int FOF_ALLOWUNDO = 0x40;
+
+        /// <summary>
+        /// Respond with "Yes to All" for any dialog box that is displayed.
+        /// </summary>
+        private const int FOF_NOCONFIRMATION = 0x10;
+#endif
+
         /// <summary>
         /// Constant for btntoggleshownote 
         /// </summary>
@@ -114,9 +132,6 @@ namespace NoteFly
         // Private Methods (20)
 
 #if windows
-        private const int FO_DELETE = 3;
-        private const int FOF_ALLOWUNDO = 0x40;
-        private const int FOF_NOCONFIRMATION = 0x10;
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern int SHFileOperation(ref SHFILEOPSTRUCT FileOp);
 #endif
@@ -178,6 +193,7 @@ namespace NoteFly
                 {
                     this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
                 }
+
                 this.prevrownr = -1;
                 this.secondprevrownr = -2;
                 this.DrawNotesGrid();
@@ -188,6 +204,7 @@ namespace NoteFly
                     this.btnNoteDelete.Enabled = true;
                 }
             }
+
             this.prevrownr = -1;
             this.secondprevrownr = -1;
             this.notes.FrmManageNotesNeedUpdate = true;
@@ -253,7 +270,6 @@ namespace NoteFly
                 {
                     this.btnNoteDelete.Enabled = true;
                 }
-
             }
         }
 
@@ -273,10 +289,11 @@ namespace NoteFly
                 if (this.notes.GetNote(notepos).Visible)
                 {
                     string tempcontent = this.notes.GetNote(notepos).GetContent();
-                    if (tempcontent == String.Empty)
+                    if (tempcontent == string.Empty)
                     {
                         Log.Write(LogType.exception, "Note content is empty.");
                     }
+
                     this.notes.GetNote(notepos).Tempcontent = tempcontent;
                     this.notes.GetNote(notepos).CreateForm();
                     this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
@@ -286,6 +303,7 @@ namespace NoteFly
                     this.notes.GetNote(notepos).DestroyForm();
                     this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
                 }
+
                 this.prevrownr = -1;
                 this.secondprevrownr = -2;
                 xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
@@ -452,10 +470,10 @@ namespace NoteFly
                     MessageBox.Show(msgaccessdenied);
                 }
             }
+
             this.prevrownr = -1;
             this.secondprevrownr = -2;
-            DrawNotesGrid();
-
+            this.DrawNotesGrid();
             GC.Collect();
         }
 
@@ -647,8 +665,12 @@ namespace NoteFly
         /// </summary>
         private void SetDataGridViewColumsWidth()
         {
-            if (this.dataGridView1.Width <= 0) { return; }
-            int partunit = ((this.dataGridView1.Width - COLNOTENRFIXEDWIDTH) / 10);
+            if (this.dataGridView1.Width <= 0)
+            {
+                return;
+            }
+
+            int partunit = (this.dataGridView1.Width - COLNOTENRFIXEDWIDTH) / 10;
             this.dataGridView1.Columns["nr"].Width = 1 * COLNOTENRFIXEDWIDTH;
             this.dataGridView1.Columns["title"].Width = 6 * partunit;
             this.dataGridView1.Columns["visible"].Width = 1 * partunit;
@@ -657,17 +679,52 @@ namespace NoteFly
 
 #if windows
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
+        /// <summary>
+        /// Windows SHFILEOPSTRUCT struct
+        /// </summary>
         public struct SHFILEOPSTRUCT
         {
+            /// <summary>
+            /// A window handle to the dialog box to display information about the status of the file operation.(MSDN)
+            /// </summary>
             public IntPtr hwnd;
             [MarshalAs(UnmanagedType.U4)]
+
+            /// <summary>
+            /// A value that indicates which operation to perform. One of the following values.(MSDN)
+            /// </summary>
             public int wFunc;
+
+            /// <summary>
+            /// A pointer to one or more source file names. These names should be fully-qualified paths to prevent unexpected results.
+            /// </summary>
             public string pFrom;
+
+            /// <summary>
+            /// A pointer to the destination file or directory name.
+            /// </summary>
             public string pTo;
+
+            /// <summary>
+            /// Flags that control the file operation.
+            /// </summary>
             public short fFlags;
+
             [MarshalAs(UnmanagedType.Bool)]
+
+            /// <summary>
+            /// When the function returns, this member contains TRUE if any file operations were aborted before they were completed; otherwise, FALSE.
+            /// </summary>
             public bool fAnyOperationsAborted;
+
+            /// <summary>
+            /// When the function returns, this member contains a handle to a name mapping object that contains the old and new names of the renamed files.
+            /// </summary>
             public IntPtr hNameMappings;
+
+            /// <summary>
+            /// A pointer to the title of a progress dialog box.
+            /// </summary>
             public string lpszProgressTitle;
         }
 #endif

@@ -78,7 +78,7 @@ namespace NoteFly
         /// <param name="note">note data class.</param>
         public FrmNote(Notes notes, Note note)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.notes = notes;
             this.note = note;
             this.UpdateForm(false);
@@ -88,14 +88,14 @@ namespace NoteFly
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             try
             {
-                if (String.IsNullOrEmpty(this.note.Tempcontent))
+                if (string.IsNullOrEmpty(this.note.Tempcontent))
                 {
                     this.rtbNote.Rtf = note.GetContent();
                 }
                 else
                 {
                     this.rtbNote.Rtf = this.note.Tempcontent;
-                    this.note.Tempcontent = String.Empty;
+                    this.note.Tempcontent = string.Empty;
                     this.note.Tempcontent = null;
                 }
             }
@@ -129,12 +129,28 @@ namespace NoteFly
                 tsi.Click += new EventHandler(this.menuNoteSkins_skin_Click);
                 this.menuNoteSkins.DropDownItems.Add(tsi);
             }
+
             this.UpdateForm(true);
         }
 
         #endregion Constructors 
 
-        #region Methods (31) 
+        #region Properties (1) 
+
+        /// <summary>
+        /// Gets the note content as rich text.
+        /// </summary>
+        public string GetContentRTF
+        {
+            get
+            {
+                return this.rtbNote.Rtf;
+            }
+        }
+
+        #endregion Properties 
+
+        #region Methods (30) 
 
         // Public Methods (1) 
 
@@ -150,6 +166,7 @@ namespace NoteFly
                 {
                     this.Opacity = 100;
                 }
+
                 this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
                 if (Settings.FontTitleStylebold)
                 {
@@ -164,6 +181,7 @@ namespace NoteFly
 
                     this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
                 }
+
                 if (Settings.FontTextdirection == 0)
                 {
                     this.rtbNote.RightToLeft = RightToLeft.No;
@@ -172,29 +190,28 @@ namespace NoteFly
                 {
                     this.rtbNote.RightToLeft = RightToLeft.Yes;
                 }
+
                 this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
-                //this.menuSendToTwitter.Enabled = Settings.SocialTwitterEnabled;
-                //this.menuSendToFacebook.Enabled = Settings.SocialFacebookEnabled;
                 this.toolTip.Active = Settings.NotesTooltipsEnabled;
             }
             else
             {
                 if (this.lblTitle.Height + this.lblTitle.Location.Y > this.pnlHead.Height)
                 {
-                    const int maxheightpnlhead = 64;
-                    if (this.lblTitle.Height < maxheightpnlhead)
+                    const int MAXHEIGHTPNLHEAD = 64;
+                    if (this.lblTitle.Height < MAXHEIGHTPNLHEAD)
                     {
                         this.pnlHead.Height = this.lblTitle.Height;
                     }
                     else
                     {
-                        this.pnlHead.Height = maxheightpnlhead;
+                        this.pnlHead.Height = MAXHEIGHTPNLHEAD;
                     }
                 }
                 else
                 {
-                    const int defaulftminheight = 32;
-                    this.pnlHead.Height = defaulftminheight;
+                    const int DEFAULFTMINHEIGHT = 32;
+                    this.pnlHead.Height = DEFAULFTMINHEIGHT;
                 }
 
                 this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
@@ -203,11 +220,7 @@ namespace NoteFly
                 Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
-        // Private Methods (30) 
-#if windows
-        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-#endif
+        // Private Methods (29) 
 
         /// <summary>
         /// The user pressed the cross on the note,
@@ -220,7 +233,7 @@ namespace NoteFly
             if (Settings.NotesClosebtnHidenotepermanently)
             {
                 this.note.Visible = false;
-                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNote.Rtf); //save.
+                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNote.Rtf);
             }
 
             this.note.DestroyForm();
@@ -241,9 +254,9 @@ namespace NoteFly
             }
             else
             {
-                const string msgNoNetwork = "There is no network connection.";
-                Log.Write(LogType.error, msgNoNetwork);
-                MessageBox.Show(msgNoNetwork);
+                const string MSGNONETWORK = "There is no network connection.";
+                Log.Write(LogType.error, MSGNONETWORK);
+                MessageBox.Show(MSGNONETWORK);
                 return false;
             }
 #elif !windows
@@ -258,7 +271,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(this.rtbNote.Text))
+            if (!string.IsNullOrEmpty(this.rtbNote.Text))
             {
                 Clipboard.SetText(this.rtbNote.Text);
             }
@@ -271,7 +284,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(this.lblTitle.Text))
+            if (!string.IsNullOrEmpty(this.lblTitle.Text))
             {
                 Clipboard.SetText(this.lblTitle.Text);
             }
@@ -333,11 +346,11 @@ namespace NoteFly
 
             try
             {
-                if (!String.IsNullOrEmpty(emailtitle) && (!String.IsNullOrEmpty(emailnote)))
+                if (!string.IsNullOrEmpty(emailtitle) && (!string.IsNullOrEmpty(emailnote)))
                 {
                     System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
                 }
-                else if (!String.IsNullOrEmpty(emailtitle))
+                else if (!string.IsNullOrEmpty(emailtitle))
                 {
                     System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text);
                 }
@@ -379,6 +392,31 @@ namespace NoteFly
             if (Settings.NotesTransparencyEnabled)
             {
                 this.Opacity = Settings.NotesTransparencyLevel;
+            }
+        }
+
+        /// <summary>
+        /// FrmNote is closed.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">FormClosedEvent arguments</param>
+        private void FrmNote_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.notes.FrmManageNotesNeedUpdate = true;
+            TrayIcon.RefreshFrmManageNotes();
+        }
+
+        /// <summary>
+        /// FrmNote is closing
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">FormClosingEvent arguments</param>
+        private void FrmNote_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!e.Cancel)
+            {
+                this.note.Visible = false;
+                this.note.Tempcontent = null;
             }
         }
 
@@ -649,16 +687,16 @@ namespace NoteFly
         private void SetLockedNote()
         {
             this.menuLockNote.Checked = this.note.Locked;
-            const string locknotemsg = "&Lock note";
+            const string LOCKNOTEMSG = "&Lock note";
             if (this.note.Locked)
             {
                 this.CreatePbLock();
-                this.menuLockNote.Text = locknotemsg + " (click again to unlock)";
+                this.menuLockNote.Text = LOCKNOTEMSG + " (click again to unlock)";
             }
             else
             {
                 this.DestroyPbLock();
-                this.menuLockNote.Text = locknotemsg;
+                this.menuLockNote.Text = LOCKNOTEMSG;
             }
 
             this.pbResizeGrip.Visible = !this.note.Locked;
@@ -675,16 +713,16 @@ namespace NoteFly
         private void SetRollupNote()
         {
             this.menuRollUp.Checked = this.note.RolledUp;
-            const string rollupmsg = "&Roll up";
+            const string ROLLUPMSG = "&Roll up";
             if (this.note.RolledUp)
             {
-                this.menuRollUp.Text = rollupmsg + "(click again to Roll Down)";
+                this.menuRollUp.Text = ROLLUPMSG + "(click again to Roll Down)";
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
                 this.Height = this.pnlHead.Height;
             }
             else
             {
-                this.menuRollUp.Text = rollupmsg;
+                this.menuRollUp.Text = ROLLUPMSG;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
                 this.Height = this.note.Height;
             }
@@ -727,30 +765,10 @@ namespace NoteFly
             }
         }
 
-        /// <summary>
-        /// FrmNote is closing
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">FormClosingEvent arguments</param>
-        private void FrmNote_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (!e.Cancel)
-            {
-                this.note.Visible = false;
-                this.note.Tempcontent = null;
-            }
-        }
-
-        /// <summary>
-        /// FrmNote is closed.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">FormClosedEvent arguments</param>
-        private void FrmNote_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.notes.FrmManageNotesNeedUpdate = true;
-            TrayIcon.RefreshFrmManageNotes();
-        }
+        #if windows
+        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+        #endif
 
         #endregion Methods
     }

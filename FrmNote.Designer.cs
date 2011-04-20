@@ -31,7 +31,7 @@ namespace NoteFly
         /// <summary>
         /// RichTextBox rtbNote
         /// </summary>
-        public System.Windows.Forms.RichTextBox rtbNote;
+        private System.Windows.Forms.RichTextBox rtbNote;
 
         /// <summary>
         /// ToolTip toolTip

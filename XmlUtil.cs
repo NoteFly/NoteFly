@@ -70,7 +70,7 @@ namespace NoteFly
 
         #region Methods (11)
 
-        // Public Methods (8) 
+        // Public Methods (8)
 
         /// <summary>
         /// Get a xml node and return the value as string.
@@ -108,7 +108,7 @@ namespace NoteFly
                 {
                     if (xmlread.Name == nodename)
                     {
-                        string xmlnodecontent = String.Empty;
+                        string xmlnodecontent = string.Empty;
                         xmlnodecontent = xmlread.ReadElementContentAsString();
 #if DEBUG
                         stopwatch.Stop();
@@ -125,7 +125,7 @@ namespace NoteFly
 #if DEBUG
             stopwatch.Stop();
 #endif
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -213,12 +213,12 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(settingsfilepath);
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
-                xmlread.ProhibitDtd = true; //gives decreated warning in vs2010.
+                xmlread.ProhibitDtd = true; // gives decreated warning in vs2010.
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)
                     {
-                        //booleans
+                        // booleans
                         case "ConfirmDeletenote":
                             Settings.ConfirmDeletenote = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -243,9 +243,6 @@ namespace NoteFly
                         case "HighlightSQL":
                             Settings.HighlightSQL = xmlread.ReadElementContentAsBoolean();
                             break;
-                        ////case "NetworkConnectionForceipv6":
-                            ////Settings.NetworkConnectionForceipv6 = xmlread.ReadElementContentAsBoolean();
-                        ////    break;
                         case "NetworkProxyEnabled":
                             Settings.NetworkProxyEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -294,7 +291,7 @@ namespace NoteFly
                         case "NotesDefaultRandomSkin":
                             Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
                             break;
-                        //ints / doubles
+                        // ints / doubles
                         case "FontContentSize":
                             Settings.FontContentSize = xmlread.ReadElementContentAsInt();
                             break;
@@ -325,7 +322,7 @@ namespace NoteFly
                         case "UpdatecheckEverydays":
                             Settings.UpdatecheckEverydays = xmlread.ReadElementContentAsInt();
                             break;
-                        //strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
+                        // strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
                         case "HighlightHTMLColorInvalid":
                             Settings.HighlightHTMLColorInvalid = xmlread.ReadElementContentAsString();
                             break;
@@ -447,11 +444,13 @@ namespace NoteFly
                         curskin.TextClr = ConvToClr(xmlread.ReadElementContentAsString());
                         break;
                 }
+
                 if (xmlread.Depth > 3)
                 {
                     throw new ApplicationException("Skin file corrupted: " + SKINFILE);
                 }
             }
+
             return skins;
         }
 
@@ -484,7 +483,7 @@ namespace NoteFly
             Settings.HighlightSQL = false;
             ////Settings.NetworkConnectionForceipv6 = false;
             Settings.NetworkConnectionTimeout = 8000;
-            Settings.NetworkProxyAddress = String.Empty;
+            Settings.NetworkProxyAddress = string.Empty;
             Settings.NetworkProxyEnabled = false;
             Settings.NotesTooltipsEnabled = true;
             Settings.NotesClosebtnHidenotepermanently = true;
@@ -498,7 +497,7 @@ namespace NoteFly
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
-            Settings.SocialEmailDefaultadres = String.Empty;
+            Settings.SocialEmailDefaultadres = string.Empty;
             Settings.SocialEmailEnabled = true;
             Settings.TrayiconFontsize = 8.25f;
             Settings.TrayiconLeftclickaction = 1;
@@ -534,7 +533,7 @@ namespace NoteFly
             {
                 xmlwrite = new System.Xml.XmlTextWriter(Path.Combine(Settings.NotesSavepath, note.Filename), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = System.Xml.Formatting.Indented;
-                xmlwrite.WriteStartDocument(true); //standalone
+                xmlwrite.WriteStartDocument(true); // standalone xml file.
                 WriteNoteBody(note, skinname, content);
                 xmlwrite.WriteEndDocument();
                 succeeded = true;
@@ -548,6 +547,7 @@ namespace NoteFly
                 xmlwrite.Flush();
                 xmlwrite.Close();
             }
+
             return succeeded;
         }
 
@@ -564,7 +564,7 @@ namespace NoteFly
             {
                 xmlwrite = new XmlTextWriter(filenamepath, System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument(true); //standalone
+                xmlwrite.WriteStartDocument(true); // standalone xml file.
                 xmlwrite.WriteStartElement("backupnotes");
                 xmlwrite.WriteAttributeString("number", notes.CountNotes.ToString());
                 for (int i = 0; i < notes.CountNotes; i++)
@@ -582,6 +582,7 @@ namespace NoteFly
             {
                 xmlwrite.Close();
             }
+
             return succeeded;
         }
 
@@ -606,6 +607,7 @@ namespace NoteFly
                         {
                             numnotes++;
                         }
+
                         endnode = !endnode;
                     }
                 }
@@ -614,6 +616,7 @@ namespace NoteFly
             {
                 xmlread.Close();
             }
+
             for (int i = 0; i < numnotes; i++)
             {
                 xmlread = new XmlTextReader(filepath);
@@ -627,6 +630,7 @@ namespace NoteFly
                 {
                     xmlread.Close();
                 }
+
                 string skinname = notes.GetSkinName(importnote.SkinNr);
                 WriteNote(importnote, skinname, importnote.Tempcontent);
             }
@@ -711,7 +715,7 @@ namespace NoteFly
             return true;
         }
 
-        // Private Methods (3) 
+        // Private Methods (3)
 
         /// <summary>
         /// Convert HEX color to color object.
@@ -720,30 +724,30 @@ namespace NoteFly
         /// <returns>Color object.</returns>
         public static System.Drawing.Color ConvToClr(string colorstring)
         {
-            //HEX color
+            // HEX color
             return System.Drawing.ColorTranslator.FromHtml(colorstring);
 
-            //DECIMAL color, commented out in favor of HEX notation for speed.
-            //string[] parts = new string[3];
-            //parts = colorstring.Split(',');
-            //try
-            //{
-            //    UInt8 redchannel = Convert.ToUInt16(parts[0].Trim());
-            //    UInt8 greenchannel = Convert.ToUInt16(parts[1].Trim());
-            //    UInt8 bluechannel = Convert.ToUInt16(parts[2].Trim());
-            //    return System.Drawing.Color.FromArgb(redchannel, greenchannel, bluechannel);
-            //}
-            //catch
-            //{
-            //    if (colorstring.Length < 100)
-            //    {
-            //        throw new CustomException("Cannot parser: " + colorstring);
-            //    }
-            //    else
-            //    {
-            //        throw new CustomException("Cannot parser: " + colorstring.Substring(0, 100)+" ..");
-            //    }
-            //}
+            // DECIMAL color, commented out in favor of HEX notation for speed.
+            ////string[] parts = new string[3];
+            ////parts = colorstring.Split(',');
+            ////try
+            ////{
+            ////    UInt8 redchannel = Convert.ToUInt16(parts[0].Trim());
+            ////    UInt8 greenchannel = Convert.ToUInt16(parts[1].Trim());
+            ////    UInt8 bluechannel = Convert.ToUInt16(parts[2].Trim());
+            ////    return System.Drawing.Color.FromArgb(redchannel, greenchannel, bluechannel);
+            ////}
+            ////catch
+            ////{
+            ////    if (colorstring.Length < 100)
+            ////    {
+            ////        throw new CustomException("Cannot parser: " + colorstring);
+            ////    }
+            ////    else
+            ////    {
+            ////        throw new CustomException("Cannot parser: " + colorstring.Substring(0, 100)+" ..");
+            ////    }
+            ////}
         }
 
         /// <summary>
@@ -770,7 +774,7 @@ namespace NoteFly
                 request.ContentType = "text/xml";
                 request.Timeout = Settings.NetworkConnectionTimeout;
                 request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString); //for stats and future use.
-                if (Settings.NetworkProxyEnabled && !String.IsNullOrEmpty(Settings.NetworkProxyAddress))
+                if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                 }
@@ -840,11 +844,13 @@ namespace NoteFly
 
                                 break;
                         }
+
                         if (xmlread.Depth > 3)
                         {
                             xmlread.Close();
                         }
                     }
+
                     responsestream.Close();
                 }
             }
@@ -922,6 +928,7 @@ namespace NoteFly
             {
                 xmlread.Close();
             }
+
             return keywords;
         }
 
@@ -939,7 +946,7 @@ namespace NoteFly
             bool endnode = false;
             while (xmlread.Read())
             {
-                if (xmlread.Name != String.Empty)
+                if (xmlread.Name != string.Empty)
                 {
                     switch (xmlread.Name)
                     {

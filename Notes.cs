@@ -44,11 +44,6 @@ namespace NoteFly
         public const string NOTEEXTENSION = ".nfn";
 
         /// <summary>
-        /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
-        /// </summary>
-        private bool frmmanagenotesneedupdate = false;
-
-        /// <summary>
         /// The maximum length of the filename.
         /// </summary>
         private const int LIMITLENFILE = 8;
@@ -57,6 +52,11 @@ namespace NoteFly
         /// Empty file that hints notefly2 that notefly1 notes folder has been imported.
         /// </summary>
         private const string IMPORTEDFLAGFILE = "impnf20.flg";
+
+        /// <summary>
+        /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
+        /// </summary>
+        private bool frmmanagenotesneedupdate = false;
 
         /// <summary>
         /// The list with all notes.
@@ -72,7 +72,6 @@ namespace NoteFly
 
         #region Constructors (1)
 
-        //private List<FrmNote> notesfrms;
         /// <summary>
         /// Initializes a new instance of the Notes class.
         /// </summary>
@@ -101,7 +100,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
+        /// Gets or sets a boolean indication whether FrmManageNotes datagridview needs to be redrawn.
         /// </summary>
         public bool FrmManageNotesNeedUpdate
         {
@@ -120,7 +119,7 @@ namespace NoteFly
 
         #region Methods (21)
 
-        // Public Methods (17) 
+        // Public Methods (17)
 
         /// <summary>
         /// Add a new note the the notes list.
@@ -569,7 +568,7 @@ namespace NoteFly
                 else
                 {
                     Log.Write(LogType.exception, "All suggested filenames to save this note based on title seems to be taken.");
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
             else
@@ -586,8 +585,8 @@ namespace NoteFly
         {
             const int DEMONOTEWIDTH = 260;
             const int DEMONOTEHEIGHT = 220;
-            int noteposx = ((Screen.PrimaryScreen.WorkingArea.Width / 2) - (DEMONOTEWIDTH / 2));
-            int noteposy = ((Screen.PrimaryScreen.WorkingArea.Height / 2) - (DEMONOTEHEIGHT / 2));
+            int noteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (DEMONOTEWIDTH / 2);
+            int noteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (DEMONOTEHEIGHT / 2);
             string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
             Note demonote = this.CreateNote("NoteFly2.0.0", 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT);
             xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);

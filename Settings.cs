@@ -224,7 +224,7 @@ namespace NoteFly
         /// <summary>
         /// Force to use of IPv6
         /// </summary>
-        //public static bool networkConnectionForceipv6;
+        ////public static bool networkConnectionForceipv6;
 
         /// <summary>
         /// Connect via a proxy.

@@ -117,7 +117,7 @@ namespace NoteFly
 
         #region Methods (8)
 
-        // Public Methods (3) 
+        // Public Methods (3)
 
         /// <summary>
         /// Check the syntax of alle set languages on the RichTextbox RTF content.
@@ -235,6 +235,7 @@ namespace NoteFly
                                     }
                                 }
                             }
+
                             break;
                         case '\n':
                             if (Settings.HighlightPHP)
@@ -300,7 +301,7 @@ namespace NoteFly
                                                     }
                                                     else
                                                     {
-                                                        poslastquote = (poslastkeyword + n);
+                                                        poslastquote = poslastkeyword + n;
                                                         isendquote = true;
                                                     }
                                                 }
@@ -444,17 +445,17 @@ namespace NoteFly
             if (ishtml[1] == '/')
             {
                 endtag = true;
-                ishtml = ishtml.Remove(1, 1); //e.g. "</title>" becomes "<title>"
+                ishtml = ishtml.Remove(1, 1); // e.g. "</title>" becomes "<title>"
             }
 
             if (ishtml.Length > 2)
             {
-                //finds <br />
+                // finds <br />
                 if (ishtml[ishtml.Length - 2] == '/')
                 {
                     endtag = true;
 
-                    //e.g. <br /> becomes <br> and <wrong/> becomes <wrong>
+                    // e.g. <br /> becomes <br> and <wrong/> becomes <wrong>
                     if (ishtml[ishtml.Length - 3] == ' ')
                     {
                         ishtml = ishtml.Remove(ishtml.Length - 2, 2);
@@ -466,7 +467,7 @@ namespace NoteFly
                 }
             }
 
-            ishtml = ishtml.ToLower(); //e.g. "<BR>" becomes "<br>"
+            ishtml = ishtml.ToLower(); // e.g. "<BR>" becomes "<br>"
             int lastpos = 1;
             for (int pos = 1; pos < ishtml.Length; pos++)
             {
@@ -475,7 +476,7 @@ namespace NoteFly
                     if (isquotestring)
                     {
                         ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.HighlightHTMLColorString));
-                        posendquotestring = pos + 1; //+1 for quote itself counts
+                        posendquotestring = pos + 1; // +1 for quote itself counts
                     }
                     else
                     {
@@ -489,7 +490,7 @@ namespace NoteFly
                     if (lastpos < posstartquotestring || lastpos > posendquotestring)
                     {
                         string curattribute = ishtml.Substring(lastpos, pos - lastpos);
-                        string[] curattributeparts = curattribute.Split('='); //split atribute name and valeau.
+                        string[] curattributeparts = curattribute.Split('='); // split atribute name and valeau.
                         string curattributename = curattributeparts[0];
                         if (endtag)
                         {
@@ -516,7 +517,7 @@ namespace NoteFly
                             ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.HighlightHTMLColorInvalid));
                         }
 
-                        lastpos = pos + 1; //+1 for ' ' or '>'
+                        lastpos = pos + 1; // +1 for ' ' or '>'
                     }
                 }
             }
@@ -535,7 +536,7 @@ namespace NoteFly
                 InitHighlighter();
             }
 
-            //is varable:
+            // is var.
             if (isphp.StartsWith("$") && isphp.Length > 1)
             {
                 char c = isphp[1];
@@ -545,13 +546,13 @@ namespace NoteFly
                 }
             }
 
-            //is assign:
+            // is assign:
             if (isphp == "=")
             {
                 return 4;
             }
 
-            //is know function:
+            // is know function:
             for (int i = 0; i < keywordsphp.Length; i++)
             {
                 if (isphp == keywordsphp[i])
@@ -560,7 +561,7 @@ namespace NoteFly
                 }
             }
 
-            //has string:
+            // has string:
             for (int n = 0; n < isphp.Length; n++)
             {
                 if (isphp[n] == '"')
@@ -569,7 +570,7 @@ namespace NoteFly
                 }
             }
 
-            //not valid:
+            // not valid:
             return 0;
         }
 

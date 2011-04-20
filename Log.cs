@@ -108,7 +108,7 @@ namespace NoteFly
             }
             catch (Exception)
             {
-                line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot set log path."); //was error but now exception because error could not be logged.
+                line.AppendLine(DateTime.Now.ToString() + " EXCEPTION: cannot set log path."); // was error but now exception because error could not be logged.
                 Settings.ProgramLogError = true;
             }
 

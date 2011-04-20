@@ -20,8 +20,8 @@
 namespace NoteFly
 {
     using System;
-    using System.Windows.Forms;
     using System.Text;
+    using System.Windows.Forms;
 
     /// <summary>
     /// Exception window
@@ -35,7 +35,7 @@ namespace NoteFly
         /// <param name="excstrace">Exception stacktrace</param>
         public FrmException(string excmgs, string excstrace)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.Text = "oh no.. " + Program.AssemblyTitle + " crashed.";
             StringBuilder sbexc = new StringBuilder(excmgs);
             sbexc.AppendLine();

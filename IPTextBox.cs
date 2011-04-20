@@ -91,7 +91,7 @@ namespace NoteFly
 
         #region Methods (1) 
 
-        // Private Methods (1) 
+        // Private Methods (1)
 
         /// <summary>
         /// Filter out illgale characters.
@@ -174,12 +174,12 @@ namespace NoteFly
             }
             else if (k == 8 || k == 16 || k == 37 || k == 39 || k == 46)
             {
-                //shift, backspace, left. right, delete key
+                // shift, backspace, left. right, delete key
                 e.SuppressKeyPress = false;
             }
             else
             {
-                //MessageBox.Show("key="+k);
+                // MessageBox.Show("key="+k);
                 e.SuppressKeyPress = true;
             }
         }

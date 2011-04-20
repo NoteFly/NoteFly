@@ -102,7 +102,7 @@ namespace NoteFly
         private FrmSettings frmsettings;
 
         /// <summary>
-        /// CInitializes a new instance of the TrayIcon class. 
+        /// Initializes a new instance of the TrayIcon class. 
         /// New trayicon in the systray.
         /// </summary>
         /// <param name="notes">reference to notes class.</param>
@@ -174,6 +174,7 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Regular;
             }
+
             this.menuSettings.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // MenuAbout
@@ -196,6 +197,7 @@ namespace NoteFly
             {
                 menufontstyle = FontStyle.Regular;
             }
+
             this.menuExit.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
             // show balloontip on firstrun about trayicon to access notefly function.
