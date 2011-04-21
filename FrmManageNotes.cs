@@ -194,8 +194,7 @@ namespace NoteFly
                     this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
                 }
 
-                this.prevrownr = -1;
-                this.secondprevrownr = -2;
+                this.resetdatagrid();
                 this.DrawNotesGrid();
                 this.SetDataGridViewColumsWidth();
                 this.btnNoteDelete.Enabled = false;
@@ -205,8 +204,7 @@ namespace NoteFly
                 }
             }
 
-            this.prevrownr = -1;
-            this.secondprevrownr = -1;
+            this.resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
         }
 
@@ -304,8 +302,7 @@ namespace NoteFly
                     this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
                 }
 
-                this.prevrownr = -1;
-                this.secondprevrownr = -2;
+                this.resetdatagrid();
                 xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
             }
             
@@ -356,6 +353,7 @@ namespace NoteFly
         /// <param name="e">DataGridViewCellMouse event arguments</param>
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            this.resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
             this.dataGridView1.Refresh();
         }
@@ -471,10 +469,15 @@ namespace NoteFly
                 }
             }
 
-            this.prevrownr = -1;
-            this.secondprevrownr = -2;
+            ////this.resetdatagrid();
             this.DrawNotesGrid();
             GC.Collect();
+        }
+
+        private void resetdatagrid()
+        {
+            this.prevrownr = -1;
+            this.secondprevrownr = -2;
         }
 
         /// <summary>
@@ -483,8 +486,7 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
-            this.prevrownr = -1;
-            this.secondprevrownr = -2;
+            this.resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
 

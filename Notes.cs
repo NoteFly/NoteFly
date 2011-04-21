@@ -100,7 +100,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets or sets a boolean indication whether FrmManageNotes datagridview needs to be redrawn.
+        /// Gets or sets a value indicating whetherr FrmManageNotes datagridview needs to be redrawn.
         /// </summary>
         public bool FrmManageNotesNeedUpdate
         {

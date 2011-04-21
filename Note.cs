@@ -239,7 +239,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The note title.
+        /// Gets or sets the note title.
         /// </summary>
         public string Title
         {

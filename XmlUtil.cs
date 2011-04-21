@@ -755,6 +755,7 @@ namespace NoteFly
         /// second valeau the minor version and the third valeau being the release version.
         /// </summary>
         /// <param name="versionquality">The latest version quality, e.g: alpha, beta, rc or nothing for final.</param>
+        /// <param name="downloadurl">the download url found</param>
         /// <returns>the newest version as integer array, 
         /// any negative valeau(-1 by default) considered as error.</returns>
         public static short[] GetLatestVersion(out string versionquality, out string downloadurl)
@@ -834,7 +835,7 @@ namespace NoteFly
                                 break;
                             case "downloadurl":
                                 string downloadurlraw = xmlread.ReadContentAsString().Trim();
-                                if ((downloadurlraw.Length > 10) && (downloadurlraw.Length < 255))
+                                if ((downloadurlraw.Length > 10) && (downloadurlraw.Length < 512))
                                 {
                                     downloadurl = downloadurlraw;
                                 }
@@ -1075,7 +1076,7 @@ namespace NoteFly
             FileInfo fi = new FileInfo(filename);
             if (fi.Length != 0)
             {
-                Log.Write(LogType.exception, filename + " is an empty file. Check file is corrupted.");
+                Log.Write(LogType.exception, filename + " is an empty file. File can be corrupted.");
             }
         }
 

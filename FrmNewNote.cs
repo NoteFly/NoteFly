@@ -84,7 +84,7 @@ namespace NoteFly
             else
             {
                 this.rtbNewNote.Rtf = this.note.Tempcontent;
-                //clear memory:
+                // clear memory:
                 this.note.Tempcontent = string.Empty;
                 this.note.Tempcontent = null;
             }
@@ -484,7 +484,7 @@ namespace NoteFly
                 {
                     if (File.Exists(openfiledlg.FileName))
                     {
-                        reader = new StreamReader(openfiledlg.FileName, true); //detect encoding
+                        reader = new StreamReader(openfiledlg.FileName, true); // detect encoding
                         if (openfiledlg.FilterIndex == 1)
                         {
                             this.rtbNewNote.Text = reader.ReadToEnd();
@@ -504,7 +504,7 @@ namespace NoteFly
                                 {
                                     curline = reader.ReadLine();
                                     linenum++;
-                                    //should normally be except %: around line 42.
+                                    // should normally be except %: around line 42.
                                     if (linenum > 50)
                                     {
                                         MessageBox.Show("Cannot find KeyNote NF note content.");
@@ -518,7 +518,7 @@ namespace NoteFly
                                     curline = reader.ReadLine();
                                     sb.Append(curline);
                                     linenum++;
-                                    //limit to 8000 lines
+                                    // limit to 8000 lines
                                     if (linenum > 8000)
                                     {
                                         break;

@@ -109,10 +109,9 @@ namespace NoteFly
         /// </summary>
         public static string AssemblyVersionQuality
         {
-            // todo change this to RC1 if it qualifies
             get
             {
-                return "beta5";
+                return "rc1";
             }
         }
 
