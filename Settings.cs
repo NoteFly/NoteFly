@@ -255,6 +255,11 @@ namespace NoteFly
         public static bool ProgramFirstrun;
 
         /// <summary>
+        /// Suspress a warning that the programme is running with dangerous (evelated) administrator.
+        /// </summary>
+        public static bool ProgramSuspressWarnAdmin;
+
+        /// <summary>
         /// Log debug info.
         /// </summary>
         public static bool ProgramLogInfo;

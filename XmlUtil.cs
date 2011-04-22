@@ -270,6 +270,9 @@ namespace NoteFly
                         case "ProgramLogInfo":
                             Settings.ProgramLogInfo = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "ProgramSuspressWarnAdmin":
+                            Settings.ProgramSuspressWarnAdmin = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "SocialEmailEnabled":
                             Settings.SocialEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -497,6 +500,7 @@ namespace NoteFly
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
+            Settings.ProgramSuspressWarnAdmin = false;
             Settings.SocialEmailDefaultadres = string.Empty;
             Settings.SocialEmailEnabled = true;
             Settings.TrayiconFontsize = 8.25f;
@@ -669,6 +673,7 @@ namespace NoteFly
                 WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
                 WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
                 WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
+                WriteXMLBool("ProgramSuspressWarnAdmin", Settings.ProgramSuspressWarnAdmin);
                 WriteXMLBool("SocialEmailEnabled", Settings.SocialEmailEnabled);
                 WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
                 WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);

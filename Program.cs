@@ -210,7 +210,6 @@ namespace NoteFly
 #endif
             bool visualstyle = true;
             bool resetpositions = false;
-            bool suspressadminwarn = false;
 
             // override settings with supported parameters
             if (System.Environment.GetCommandLineArgs().Length > 1)
@@ -263,31 +262,38 @@ namespace NoteFly
                             resetpositions = true;
                             break;
 
+#if windows
+                        // don't show a warning if notefly is running with administrator priveledges
+                        case "-suspressadminwarn":
+                            Settings.ProgramSuspressWarnAdmin = true;
+                            break;
+#endif
+
                        // overwrite settings file with default settings.
                         case "-resetsettings":
                             xmlUtil.WriteDefaultSettings();
-                            break;
-
-                        // don't show a warning if notefly is running with administrator priveledges
-                        case "-suspressadminwarn":
-                            suspressadminwarn = true;
                             break;
                     }
                 }
             }
 
-            if (!suspressadminwarn)
+#if windows
+            if (!Settings.ProgramSuspressWarnAdmin)
             {
-                #if windows
-                // Security measure, warn if runned with dangours administrator rights.
+                // Security measure, show warning if runned with dangerous administrator rights.
                 System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
                 System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
                 if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
                 {
-                    System.Windows.Forms.MessageBox.Show("You are now running " + Program.AssemblyTitle + " as elevated Administrator.\r\nWhich is not recommended.", "Elevated administrator");
+                    System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show("You are now running " + Program.AssemblyTitle + " as elevated Administrator.\r\nWhich is not recommended because of security.\r\n Press OK if your understand the risks and want to hide this message in the future.", "Elevated administrator", System.Windows.Forms.MessageBoxButtons.OKCancel);
+                    if (dlganswer == System.Windows.Forms.DialogResult.OK)
+                    {
+                        Settings.ProgramSuspressWarnAdmin = true;
+                        xmlUtil.WriteSettings();
+                    }
                 }
-                #endif
             }
+#endif
 
             if (visualstyle)
             {
