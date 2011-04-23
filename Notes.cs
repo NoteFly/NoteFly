@@ -455,7 +455,7 @@ namespace NoteFly
         {
             foreach (Note curnote in this.notes)
             {
-                curnote.UpdateForm();
+                curnote.UpdateNoteForm();
             }
         }
         // Private Methods (5) 
@@ -467,6 +467,8 @@ namespace NoteFly
         {
 #if windows
             string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly");
+#elif linux
+            string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly");
 #endif
             if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE))))
             {

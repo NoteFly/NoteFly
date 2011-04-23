@@ -389,7 +389,7 @@ namespace NoteFly
         /// <summary>
         /// Update the form.
         /// </summary>
-        public void UpdateForm()
+        public void UpdateNoteForm()
         {
             if (this.frmnote != null)
             {

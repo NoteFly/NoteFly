@@ -368,17 +368,31 @@ namespace NoteFly
                 return;
             }
 
-            string[] files = Directory.GetFiles(oldsavenotespath, "*.nfn");
-            for (int i = 0; i < files.Length; i++)
+            string[] notefilespath = Directory.GetFiles(Settings.NotesSavepath, "*" + Notes.NOTEEXTENSION, SearchOption.TopDirectoryOnly);
+            string[] notefiles = new string[notefilespath.Length];
+            for (int i = 0; i < notefilespath.Length; i++)
             {
-                string oldfile = Path.Combine(oldsavenotespath, files[i]);
-                string newfile = Path.Combine(newsavenotespath, files[i]);
+                notefiles[i] = Path.GetFileName(notefilespath[i]);
+            }
+
+            notefilespath = null;
+            for (int i = 0; i < notefiles.Length; i++)
+            {
+                string oldfile = Path.Combine(oldsavenotespath, notefiles[i]);
+                string newfile = Path.Combine(newsavenotespath, notefiles[i]);
                 if (!File.Exists(newfile))
                 {
                     FileInfo fi = new FileInfo(oldfile);
                     if (fi.Attributes != FileAttributes.System)
                     {
-                        File.Move(oldfile, newfile);
+                        try
+                        {
+                            File.Move(oldfile, newfile);
+                        }
+                        catch (UnauthorizedAccessException unauthexc)
+                        {
+                            Log.Write(LogType.error, unauthexc.Message);
+                        }
                     }
                     else 
                     { 

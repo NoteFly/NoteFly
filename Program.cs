@@ -18,7 +18,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#define windows //platform can be: windows, linux, macos //platform can be: windows, linux, macos
+#define windows //platform can be: windows, linux, macos
 using System;
 [assembly: CLSCompliant(true)]
 
@@ -65,7 +65,7 @@ namespace NoteFly
 #elif macos
                 return "???";
 #else
-                return "COMPILE_ERROR";
+                return "COMPILE_ERROR_UNKNOWN_PLATFORM";
 #endif
             }
         }
