@@ -363,7 +363,7 @@ namespace NoteFly
         private void MoveNotes(string oldsavenotespath, string newsavenotespath)
         {
             bool errorshowed = false;
-            if (!Directory.Exists(oldsavenotespath))
+            if (!Directory.Exists(oldsavenotespath) || !Directory.Exists(newsavenotespath))
             {
                 return;
             }
@@ -491,17 +491,17 @@ namespace NoteFly
         /// <returns>The boolean if it starts at logon.</returns>
         private bool GetStartOnLogon()
         {
-            bool staronlogon = false;
+            bool startonlogon = false;
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {
                 if (key.GetValue(Program.AssemblyTitle, null) != null)
                 {
-                    staronlogon = true;
+                    startonlogon = true;
                 }
             }
 
-            return staronlogon;
+            return startonlogon;
         }
 
         /// <summary>
