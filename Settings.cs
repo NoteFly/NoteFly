@@ -248,6 +248,11 @@ namespace NoteFly
         public static string UpdatecheckLastDate;
 
         /// <summary>
+        /// The location where notefly checks for update.
+        /// </summary>
+        public static string UpdatecheckURL;
+
+        /// <summary>
         /// Has this programme been runned before.
         /// If not the demo note is created, balloontip is showed
         /// and NoteFly version 1.0 notes are ask to are imported if they exist.

@@ -52,11 +52,6 @@ namespace NoteFly
         private const string SKINFILE = "skins.xml";
 
         /// <summary>
-        /// The programme update check url.
-        /// </summary>
-        private const string UPDATEURL = "http://www.notefly.tk/latestversion.xml";
-
-        /// <summary>
         /// XmlTextReader object.
         /// </summary>
         private static XmlTextReader xmlread = null;
@@ -362,6 +357,9 @@ namespace NoteFly
                         case "UpdatecheckLastDate":
                             Settings.UpdatecheckLastDate = xmlread.ReadElementContentAsString();
                             break;
+                        case "UpdatecheckURL":
+                            Settings.UpdatecheckURL = xmlread.ReadElementContentAsString();
+                            break;
                     }
 
                     if (xmlread.Depth > 8)
@@ -511,6 +509,7 @@ namespace NoteFly
             Settings.TrayiconSettingsbold = false;
             Settings.UpdatecheckEverydays = 14; // 0 is disabled.
             Settings.UpdatecheckLastDate = DateTime.Now.ToString();
+            Settings.UpdatecheckURL = "http://www.notefly.org/latestversion.xml";
             try
             {
                 xmlUtil.WriteSettings();
@@ -699,6 +698,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("HighlightPHPColorInvalidfunctions", Settings.HighlightPHPColorInvalidfunctions);
                 xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.HighlightPHPColorValidfunctions);
                 xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
+                xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                 xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
                 xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
@@ -770,22 +770,22 @@ namespace NoteFly
             version[1] = -1;
             version[2] = -1;
             versionquality = Program.AssemblyVersionQuality;
-            downloadurl = "http://www.notefly.tk/downloads.php";
+            downloadurl = "http://www.notefly.org/downloads.php";
             try
             {
                 System.Net.ServicePointManager.Expect100Continue = false;
                 System.Net.ServicePointManager.DefaultConnectionLimit = 1;
-                WebRequest request = WebRequest.Create(UPDATEURL);
+                WebRequest request = WebRequest.Create(Settings.UpdatecheckURL);
                 request.Method = "GET";
                 request.ContentType = "text/xml";
                 request.Timeout = Settings.NetworkConnectionTimeout;
-                request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString); //for stats and future use.
+                request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString); // for stats and future use.
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                 }
 
-                request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore); //do not cache, prevent incorrect cache result.
+                request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore); // do not cache, prevent incorrect cache result.
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
                 Stream responsestream;
                 using (WebResponse response = request.GetResponse())

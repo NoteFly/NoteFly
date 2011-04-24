@@ -34,12 +34,12 @@ namespace NoteFly
         /// <summary>
         /// constant project website frequently asked questions page.
         /// </summary>
-        private const string NOTEFLYFAQURI = "http://www.notefly.tk/faq.php";
+        private const string NOTEFLYFAQURI = "http://www.notefly.org/faq.php";
 
         /// <summary>
         /// constant project website uri.
         /// </summary>
-        private const string NOTEFLYWEBSITEURI = "http://www.notefly.tk/";
+        private const string NOTEFLYWEBSITEURI = "http://www.notefly.org/";
 
         #endregion Fields 
 
