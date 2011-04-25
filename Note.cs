@@ -322,8 +322,6 @@ namespace NoteFly
 
         #region Methods (5)
 
-        // Public Methods (5)
-
         /// <summary>
         /// Display this frmnote to the foreground.
         /// </summary>

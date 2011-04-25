@@ -30,7 +30,7 @@ namespace NoteFlyTests
     /// This is a test class for NotesTest and is intended
     /// to contain all NotesTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class NotesTest
     {
         /// <summary>
@@ -61,7 +61,7 @@ namespace NoteFlyTests
         /// <summary>
         /// ClassInitialize to run code before running the first test in the class
         /// </summary>
-        /// <param name="testContext">TestContext</param>
+        /// <param name="testContext">The testContext</param>
         [ClassInitialize]
         public static void MyClassInitialize(TestContext testContext)
         {

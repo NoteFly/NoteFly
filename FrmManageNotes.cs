@@ -129,8 +129,6 @@ namespace NoteFly
 
         #region Methods (20) 
 
-        // Private Methods (20)
-
 #if windows
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern int SHFileOperation(ref SHFILEOPSTRUCT FileOp);
@@ -147,7 +145,7 @@ namespace NoteFly
             SaveFileDialog savebackupdlg = new SaveFileDialog();
             savebackupdlg.CheckPathExists = true;
             savebackupdlg.OverwritePrompt = true;
-            savebackupdlg.DefaultExt = "nfbak"; //noteflybackup
+            savebackupdlg.DefaultExt = "nfbak"; // noteflybackup
             savebackupdlg.Title = "Where to save the backup of all NoteFly notes.";
             savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
             savebackupdlg.FileName = DateTime.Today.ToShortDateString() + ".nfbak";
@@ -219,7 +217,7 @@ namespace NoteFly
             openbackupdlg.CheckPathExists = true;
             openbackupdlg.CheckFileExists = true;
             openbackupdlg.Multiselect = false;
-            openbackupdlg.DefaultExt = "nfbak"; //noteflybackup
+            openbackupdlg.DefaultExt = "nfbak"; // noteflybackup
             openbackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
             openbackupdlg.Title = "Restore all notes";
             DialogResult openbackupdlgres = openbackupdlg.ShowDialog();
@@ -442,7 +440,7 @@ namespace NoteFly
                         SHFILEOPSTRUCT shf = new SHFILEOPSTRUCT(); 
                         shf.wFunc = FO_DELETE; 
                         shf.fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION; 
-                        shf.pFrom = filepath + "\0"; //double null terminated
+                        shf.pFrom = filepath + "\0"; // double null terminated
                         SHFileOperation(ref shf);
 #elif linux
                         File.Move(filepath, Path.Combine(@"$HOME/.Trash/", filename) );
@@ -474,6 +472,9 @@ namespace NoteFly
             GC.Collect();
         }
 
+        /// <summary>
+        /// Reset the previous drawed row numbers in datagridview1.
+        /// </summary>
         private void resetdatagrid()
         {
             this.prevrownr = -1;
@@ -506,7 +507,7 @@ namespace NoteFly
             for (int i = 0; i < this.notes.CountNotes; i++)
             {
                 DataRow dr = datatable.NewRow();
-                dr[0] = i + 1; //enduser numbering
+                dr[0] = i + 1; // enduser numbering
                 dr[1] = this.notes.GetNote(i).Title;
                 dr[2] = this.notes.GetNote(i).Visible;
                 dr[3] = this.notes.GetSkinName(this.notes.GetNote(i).SkinNr);

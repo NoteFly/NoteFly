@@ -60,8 +60,6 @@ namespace NoteFly
 
         #region Methods (3) 
 
-        // Private Methods (3) 
-
         /// <summary>
         /// The FAQ link is clicked in the about dialog.
         /// </summary>

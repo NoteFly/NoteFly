@@ -1,5 +1,8 @@
 ﻿namespace NoteFly
 {
+    /// <summary>
+    /// Exception window
+    /// </summary>
     public partial class FrmException
     {
         /// <summary>

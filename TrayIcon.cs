@@ -34,7 +34,7 @@ namespace NoteFly
         /// <summary>
         /// Used for warning if new note is still open on shutdown application.
         /// </summary>
-        public static bool Frmneweditnoteopen = false;
+        private static bool frmneweditnoteopen = false;
 
         /// <summary>
         /// Reference to FrmManageNotes window.
@@ -161,6 +161,7 @@ namespace NoteFly
 
             this.menuManageNotes.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuManageNotes.Click += new System.EventHandler(this.MenuManageNotes_Click);
+
             // MenuSettings
             this.menuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuSettings.Name = "MenuSettings";
@@ -177,6 +178,7 @@ namespace NoteFly
 
             this.menuSettings.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
+
             // MenuAbout
             this.menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuAbout.Name = "MenuAbout";
@@ -184,6 +186,7 @@ namespace NoteFly
             this.menuAbout.Text = "About";
             this.menuAbout.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
             this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
+
             // MenuExit
             this.menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuExit.Name = "MenuExit";
@@ -200,10 +203,27 @@ namespace NoteFly
 
             this.menuExit.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
+
             // show balloontip on firstrun about trayicon to access notefly function.
             if (!Settings.ProgramFirstrun)
             {
                 this.icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether FrmNewNote is being showed.
+        /// </summary>
+        public static bool Frmneweditnoteopen
+        {
+            get
+            {
+                return frmneweditnoteopen;
+            }
+
+            set
+            {
+                frmneweditnoteopen = value;
             }
         }
 

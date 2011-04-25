@@ -27,7 +27,7 @@ namespace NoteFly
     /// </summary>
     public partial class IPTextBox : UserControl
     {
-        #region Fields (1) 
+        #region Fields (1)
 
         /// <summary>
         /// An enumration of the possible IP address types.
@@ -36,7 +36,7 @@ namespace NoteFly
 
         #endregion Fields 
 
-        #region Constructors (1) 
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the IPTextBox class.
@@ -89,9 +89,7 @@ namespace NoteFly
 
         #endregion Properties 
 
-        #region Methods (1) 
-
-        // Private Methods (1)
+        #region Methods (1)
 
         /// <summary>
         /// Filter out illgale characters.
@@ -128,7 +126,7 @@ namespace NoteFly
                 if (this.tbIPaddress.TextLength == 0)
                 {
                     e.SuppressKeyPress = true;
-                    //MessageBox.Show("IP v6 adress cannot start with ':'");
+                    ////MessageBox.Show("IP v6 adress cannot start with ':'");
                 }
 
                 this.addrtype = IPaddrType.ipv6;

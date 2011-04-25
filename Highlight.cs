@@ -32,22 +32,27 @@ namespace NoteFly
     /// </summary>
     public class Highlight
     {
-        #region Fields (9)
+        #region Fields (13) 
 
         /// <summary>
-        /// The php end document keyword.
+        /// html comment end.
         /// </summary>
-        private static string phpendkeyword = "?>";
+        private static string htmlcommentend;
 
         /// <summary>
-        /// The php start document keyword.
+        /// html comment start.
         /// </summary>
-        private static string phpstartkeyword = "<?php";
+        private static string htmlcommentstart;
 
         /// <summary>
         /// Keywords used for HTML highlighting.
         /// </summary>
         private static string[] keywordshtml;
+
+        /// <summary>
+        /// Are keyword initilized
+        /// </summary>
+        private static bool keywordsinit = false;
 
         /// <summary>
         /// Keywords used for PHP highlighting.
@@ -60,9 +65,9 @@ namespace NoteFly
         private static string[] keywordssql;
 
         /// <summary>
-        /// Are keyword initilized
+        /// The php comment end.
         /// </summary>
-        private static bool keywordsinit = false;
+        private static string phpcommentend;
 
         /// <summary>
         /// The comment line.
@@ -75,33 +80,28 @@ namespace NoteFly
         private static string phpcommentstart;
 
         /// <summary>
-        /// The php comment end.
+        /// The php end document keyword.
         /// </summary>
-        private static string phpcommentend;
+        private static string phpendkeyword = "?>";
 
         /// <summary>
-        /// html comment start.
+        /// The php start document keyword.
         /// </summary>
-        private static string htmlcommentstart;
-
-        /// <summary>
-        /// html comment end.
-        /// </summary>
-        private static string htmlcommentend;
-
-        /// <summary>
-        /// sql comment start.
-        /// </summary>
-        private static string sqlcommentstart;
+        private static string phpstartkeyword = "<?php";
 
         /// <summary>
         /// sql comment end.
         /// </summary>
         private static string sqlcommentend;
 
-        #endregion Fields
+        /// <summary>
+        /// sql comment start.
+        /// </summary>
+        private static string sqlcommentstart;
 
-        #region Properties (1)
+        #endregion Fields 
+
+        #region Properties (1) 
 
         /// <summary>
         /// Gets a value indicating whether highlighting keywords are initialized.
@@ -114,11 +114,9 @@ namespace NoteFly
             }
         }
 
-        #endregion Properties
+        #endregion Properties 
 
-        #region Methods (8)
-
-        // Public Methods (3)
+        #region Methods (8) 
 
         /// <summary>
         /// Check the syntax of alle set languages on the RichTextbox RTF content.
@@ -393,8 +391,6 @@ namespace NoteFly
             keywordsinit = true;
         }
 
-        // Private Methods (5) 
-
         /// <summary>
         /// Color some part of the rich edit text.
         /// </summary>
@@ -599,6 +595,6 @@ namespace NoteFly
             return false;
         }
 
-        #endregion Methods
+        #endregion Methods 
     }
 }

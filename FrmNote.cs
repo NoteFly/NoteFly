@@ -152,8 +152,6 @@ namespace NoteFly
 
         #region Methods (30) 
 
-        // Public Methods (1) 
-
         /// <summary>
         /// Set some settings
         /// </summary>
@@ -220,7 +218,11 @@ namespace NoteFly
                 Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
-        // Private Methods (29) 
+
+#if windows
+        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+#endif
 
         /// <summary>
         /// The user pressed the cross on the note,
@@ -764,11 +766,6 @@ namespace NoteFly
                 }
             }
         }
-
-        #if windows
-        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-        #endif
 
         #endregion Methods
     }

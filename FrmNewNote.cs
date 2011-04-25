@@ -84,6 +84,7 @@ namespace NoteFly
             else
             {
                 this.rtbNewNote.Rtf = this.note.Tempcontent;
+
                 // clear memory:
                 this.note.Tempcontent = string.Empty;
                 this.note.Tempcontent = null;
@@ -112,8 +113,6 @@ namespace NoteFly
         #endregion Constructors 
 
         #region Methods (30) 
-
-        // Private Methods (30) 
 
         /// <summary>
         /// Initialize components FrmNewNote, set font, tooltip and richtextbox settings
@@ -504,6 +503,7 @@ namespace NoteFly
                                 {
                                     curline = reader.ReadLine();
                                     linenum++;
+
                                     // should normally be except %: around line 42.
                                     if (linenum > 50)
                                     {
@@ -518,8 +518,9 @@ namespace NoteFly
                                     curline = reader.ReadLine();
                                     sb.Append(curline);
                                     linenum++;
-                                    // limit to 8000 lines
-                                    if (linenum > 8000)
+
+                                    // limit to 16000 lines
+                                    if (linenum > 16000)
                                     {
                                         break;
                                     }

@@ -119,8 +119,6 @@ namespace NoteFly
 
         #region Methods (21)
 
-        // Public Methods (17)
-
         /// <summary>
         /// Add a new note the the notes list.
         /// </summary>
@@ -458,7 +456,6 @@ namespace NoteFly
                 curnote.UpdateNoteForm();
             }
         }
-        // Private Methods (5) 
 
         /// <summary>
         /// Ask and import notes from NoteFly 1.0.x if application data folder of NoteFly 1.0.x exist.

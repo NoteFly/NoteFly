@@ -112,7 +112,7 @@ namespace NoteFly
         private System.Windows.Forms.Button btnResetSettings;
 
         /// <summary>
-        /// tabpage
+        /// TabPage tabNetwerk
         /// </summary>
         private System.Windows.Forms.TabPage tabNetwerk;
 
@@ -1087,9 +1087,9 @@ namespace NoteFly
             this.chxHighlightSQL.AutoSize = true;
             this.chxHighlightSQL.Location = new System.Drawing.Point(37, 189);
             this.chxHighlightSQL.Name = "chxHighlightSQL";
-            this.chxHighlightSQL.Size = new System.Drawing.Size(177, 17);
+            this.chxHighlightSQL.Size = new System.Drawing.Size(144, 17);
             this.chxHighlightSQL.TabIndex = 16;
-            this.chxHighlightSQL.Text = "Highlight SQL text. (not finished)";
+            this.chxHighlightSQL.Text = "Highlight SQL text. (beta)";
             this.chxHighlightSQL.UseVisualStyleBackColor = true;
             // 
             // chxHighlightPHP
@@ -1097,9 +1097,9 @@ namespace NoteFly
             this.chxHighlightPHP.AutoSize = true;
             this.chxHighlightPHP.Location = new System.Drawing.Point(37, 156);
             this.chxHighlightPHP.Name = "chxHighlightPHP";
-            this.chxHighlightPHP.Size = new System.Drawing.Size(178, 17);
+            this.chxHighlightPHP.Size = new System.Drawing.Size(145, 17);
             this.chxHighlightPHP.TabIndex = 15;
-            this.chxHighlightPHP.Text = "Highlight PHP text. (not finished)";
+            this.chxHighlightPHP.Text = "Highlight PHP text. (beta)";
             this.chxHighlightPHP.UseVisualStyleBackColor = true;
             // 
             // chxHighlightHyperlinks

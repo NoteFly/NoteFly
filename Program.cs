@@ -20,6 +20,7 @@
 
 #define windows //platform can be: windows, linux, macos
 using System;
+
 [assembly: CLSCompliant(true)]
 
 namespace NoteFly
@@ -131,8 +132,6 @@ namespace NoteFly
 
         #region Methods (5)
 
-        // Public Methods (4) 
-
         /// <summary>
         /// Gets the application version number as an array.
         /// </summary>
@@ -170,7 +169,7 @@ namespace NoteFly
         /// Main entry point programme.
         /// load settings, parser parameters, create notes list and trayicon.
         /// </summary>
-        /// <param name="args">parameters</param>
+        /// <param name="args">The programme parameters</param>
         [STAThread]
         public static void Main(string[] args)
         {

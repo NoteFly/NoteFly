@@ -82,6 +82,7 @@ namespace NoteFly
                     case TextfileWriteType.exporthtml:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
                         writer = new StreamWriter(fs);
+
                         // trying to make turn a incompleet html fragement into a valid html5 document.
                         if (!content.Contains("<!DOCTYPE"))
                         {

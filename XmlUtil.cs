@@ -65,8 +65,6 @@ namespace NoteFly
 
         #region Methods (11)
 
-        // Public Methods (8)
-
         /// <summary>
         /// Get a xml node and return the value as string.
         /// </summary>
@@ -289,7 +287,8 @@ namespace NoteFly
                         case "NotesDefaultRandomSkin":
                             Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
                             break;
-                        // ints / doubles
+
+                        // ints and doubles
                         case "FontContentSize":
                             Settings.FontContentSize = xmlread.ReadElementContentAsInt();
                             break;
@@ -320,6 +319,7 @@ namespace NoteFly
                         case "UpdatecheckEverydays":
                             Settings.UpdatecheckEverydays = xmlread.ReadElementContentAsInt();
                             break;
+
                         // strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
                         case "HighlightHTMLColorInvalid":
                             Settings.HighlightHTMLColorInvalid = xmlread.ReadElementContentAsString();
@@ -652,6 +652,7 @@ namespace NoteFly
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument(true); // standalone document
                 xmlwrite.WriteStartElement("settings");
+
                 // booleans
                 WriteXMLBool("ConfirmDeletenote", Settings.ConfirmDeletenote);
                 WriteXMLBool("ConfirmExit", Settings.ConfirmExit);
@@ -678,6 +679,7 @@ namespace NoteFly
                 WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
                 WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
                 WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
+
                 // integers
                 xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
@@ -689,6 +691,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
+
                 // strings
                 xmlwrite.WriteElementString("HighlightHTMLColorInvalid", Settings.HighlightHTMLColorInvalid);
                 xmlwrite.WriteElementString("HighlightHTMLColorValid", Settings.HighlightHTMLColorValid);
@@ -719,8 +722,6 @@ namespace NoteFly
 
             return true;
         }
-
-        // Private Methods (3)
 
         /// <summary>
         /// Convert HEX color to color object.
@@ -780,6 +781,7 @@ namespace NoteFly
                     Log.Write(LogType.exception, "No UpdatecheckURL found in settings");
                     return version;
                 }
+
                 WebRequest request = WebRequest.Create(Settings.UpdatecheckURL);
                 request.Method = "GET";
                 request.ContentType = "text/xml";
