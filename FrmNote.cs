@@ -441,9 +441,9 @@ namespace NoteFly
 
             this.SetLockedNote();
 
-            if (!this.SaveWorker.IsBusy)
+            if (!this.saveWorker.IsBusy)
             {
-                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -502,9 +502,9 @@ namespace NoteFly
             }
 
             Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
-            if (!this.SaveWorker.IsBusy)
+            if (!this.saveWorker.IsBusy)
             {
-                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
 
             this.notes.FrmManageNotesNeedUpdate = true;
@@ -525,9 +525,9 @@ namespace NoteFly
 
             this.SetRollupNote();
 
-            if (!this.SaveWorker.IsBusy)
+            if (!this.saveWorker.IsBusy)
             {
-                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -542,9 +542,9 @@ namespace NoteFly
             this.menuOnTop.Checked = this.note.Ontop;
 
             this.TopMost = this.note.Ontop;
-            if (!this.SaveWorker.IsBusy)
+            if (!this.saveWorker.IsBusy)
             {
-                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -577,9 +577,9 @@ namespace NoteFly
             this.note.Width = this.Width;
             this.note.Height = this.Height;
 
-            if (!(this.note.Locked && this.SaveWorker.IsBusy))
+            if (!(this.note.Locked && this.saveWorker.IsBusy))
             {
-                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -641,9 +641,9 @@ namespace NoteFly
             this.note.X = this.Location.X;
             this.note.Y = this.Location.Y;
             this.moving = false;
-            if (!this.SaveWorker.IsBusy)
+            if (!this.saveWorker.IsBusy)
             {
-                this.SaveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
 
             this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);

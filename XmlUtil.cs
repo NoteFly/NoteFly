@@ -172,7 +172,7 @@ namespace NoteFly
         /// Load a note file.
         /// </summary>
         /// <param name="notes">reference to notes class.</param>
-        /// <param name="notefilepath">The note filename and path.</param>
+        /// <param name="notefilename">The note filename.</param>
         /// <returns>An note object.</returns>
         public static Note LoadNoteFile(Notes notes, string notefilename)
         {
@@ -775,6 +775,11 @@ namespace NoteFly
             {
                 System.Net.ServicePointManager.Expect100Continue = false;
                 System.Net.ServicePointManager.DefaultConnectionLimit = 1;
+                if (string.IsNullOrEmpty(Settings.UpdatecheckURL))
+                {
+                    Log.Write(LogType.exception, "No UpdatecheckURL found in settings");
+                    return version;
+                }
                 WebRequest request = WebRequest.Create(Settings.UpdatecheckURL);
                 request.Method = "GET";
                 request.ContentType = "text/xml";
@@ -839,7 +844,7 @@ namespace NoteFly
 
                                 break;
                             case "downloadurl":
-                                string downloadurlraw = xmlread.ReadContentAsString().Trim();
+                                string downloadurlraw = xmlread.ReadElementContentAsString().Trim();
                                 if ((downloadurlraw.Length > 10) && (downloadurlraw.Length < 512))
                                 {
                                     downloadurl = downloadurlraw;
@@ -881,7 +886,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="file">the file to parser.</param>
         /// <param name="languagename">the language to lookup.</param>
-        /// <param name="varcomments">commentline, commentstart and commentend</param>
+        /// <param name="langcomments">The characters for commenting a line, commenting start and commenting ending</param>
         /// <returns>An array of keyword used for hightlighting.</returns>
         public static string[] ParserLanguageLexical(string file, string languagename, out string[] langcomments)
         {
@@ -945,6 +950,7 @@ namespace NoteFly
         /// <param name="notes">pointer to notes</param>
         /// <param name="note">the note object to set</param>
         /// <param name="readnotenum">The number occurance of the note node to be parser (first, sencod etc.)</param>
+        /// <param name="setallcontent">Force to set the note temporary content variable in the note class even if not visible.</param>
         /// <returns>a note object</returns>
         private static Note ParserNoteNode(Notes notes, Note note, int readnotenum, bool setallcontent)
         {
@@ -1073,13 +1079,13 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Checks if filesize is not 0 for a filename 
+        /// Checks if filesize is not 0 bytes for a filename 
         /// </summary>
         /// <param name="filename">The filename to check</param>
         private static void CheckFile(string filename)
         {
             FileInfo fi = new FileInfo(filename);
-            if (fi.Length != 0)
+            if (fi.Length <= 0)
             {
                 Log.Write(LogType.exception, filename + " is an empty file. File can be corrupted.");
             }

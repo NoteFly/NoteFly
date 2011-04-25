@@ -29,42 +29,42 @@ namespace NoteFly
         /// <summary>
         /// Are notes transparent.
         /// </summary>
-        public static bool NotesTransparencyEnabled;
+        public static bool NotesTransparencyEnabled = true;
 
         /// <summary>
         /// The level of transparency.
         /// </summary>
-        public static double NotesTransparencyLevel;
+        public static double NotesTransparencyLevel = 0.9;
 
         /// <summary>
         /// Use random skin as default new note.
         /// </summary>
-        public static bool NotesDefaultRandomSkin;
+        public static bool NotesDefaultRandomSkin = false;
 
         /// <summary>
         /// The default skin on new note.
         /// </summary>
-        public static int NotesDefaultSkinnr;
+        public static int NotesDefaultSkinnr = 0;
 
         /// <summary>
         /// Are tooltip in programme enabled.
         /// </summary>
-        public static bool NotesTooltipsEnabled;
+        public static bool NotesTooltipsEnabled = true;
 
         /// <summary>
         /// Hide notes permanently on closing them.
         /// </summary>
-        public static bool NotesClosebtnHidenotepermanently;
+        public static bool NotesClosebtnHidenotepermanently = true;
 
         /// <summary>
         /// Move notes to recycle bin on delete.
         /// </summary>
-        public static bool NotesDeleteRecyclebin;
+        public static bool NotesDeleteRecyclebin = false;
 
         /// <summary>
         /// Number of notes a warning shows up that are many notes loading.
         /// </summary>
-        public static int NotesWarnLimit;
+        public static int NotesWarnLimit = 200;
 
         /// <summary>
         /// The folder where to save all notes.
@@ -77,7 +77,7 @@ namespace NoteFly
         /// 1 is bring all notes to front.
         /// 2 is create a new note.
         /// </summary>
-        public static int TrayiconLeftclickaction;
+        public static int TrayiconLeftclickaction = 1;
 
         /// <summary>
         /// The trayicon fontsize.
@@ -87,54 +87,54 @@ namespace NoteFly
         /// <summary>
         /// Display "Create new note" in bold.
         /// </summary>
-        public static bool TrayiconCreatenotebold;
+        public static bool TrayiconCreatenotebold = true;
 
         /// <summary>
         /// Display "Manage notes" in bold.
         /// </summary>
-        public static bool TrayiconManagenotesbold;
+        public static bool TrayiconManagenotesbold = false;
 
         /// <summary>
         /// Display "Settings" in bold.
         /// </summary>
-        public static bool TrayiconSettingsbold;
+        public static bool TrayiconSettingsbold = false;
 
         /// <summary>
         /// Display "Exit" in bold.
         /// </summary>
-        public static bool TrayiconExitbold;
+        public static bool TrayiconExitbold = false;
 
         /// <summary>
         /// The text direction in notes.
         /// 0 is left to right.
         /// 1 is right to left.
         /// </summary>
-        public static int FontTextdirection;
+        public static int FontTextdirection = 0;
 
         /// <summary>
         /// The font family of the title of notes.
         /// </summary>
-        public static string FontTitleFamily; 
+        public static string FontTitleFamily = "Arial";
 
         /// <summary>
         /// The notes title font size.
         /// </summary>
-        public static float FontTitleSize; 
+        public static float FontTitleSize = 14;
 
         /// <summary>
         /// Display the notes title in bold.
         /// </summary>
-        public static bool FontTitleStylebold; 
+        public static bool FontTitleStylebold = true;
 
         /// <summary>
         /// The default font family of notes content.
         /// </summary>
-        public static string FontContentFamily; 
+        public static string FontContentFamily = "Arial";
 
         /// <summary>
         /// The default font size of notes content.
         /// </summary>
-        public static float FontContentSize; 
+        public static float FontContentSize = 11;
 
         /// <summary>
         /// Do HTML highlighting on notes.
@@ -159,12 +159,12 @@ namespace NoteFly
         /// <summary>
         /// Do detect hyperlinks in notes.
         /// </summary>
-        public static bool HighlightHyperlinks; 
+        public static bool HighlightHyperlinks = true;
 
         /// <summary>
         /// Do PHP highlighting.
         /// </summary>
-        public static bool HighlightPHP; 
+        public static bool HighlightPHP = false;
 
         /// <summary>
         /// The PHP comment color
@@ -174,7 +174,7 @@ namespace NoteFly
         /// <summary>
         /// The PHP document start and end keyword colors.
         /// </summary>
-        public static string HighlightPHPColorDocumentstartend; 
+        public static string HighlightPHPColorDocumentstartend;
 
         /// <summary>
         /// The PHP valid function color.
@@ -189,37 +189,37 @@ namespace NoteFly
         /// <summary>
         /// Do SQL highlighting
         /// </summary>
-        public static bool HighlightSQL; 
+        public static bool HighlightSQL = false;
 
         /// <summary>
         /// Confirm the launch of hyperlink.
         /// </summary>
-        public static bool ConfirmLinkclick; 
+        public static bool ConfirmLinkclick = false;
 
         /// <summary>
         /// Confirm the shutdown of this application.
         /// </summary>
-        public static bool ConfirmExit; 
+        public static bool ConfirmExit = false; 
 
         /// <summary>
         /// Confirm the deleting on notes.
         /// </summary>
-        public static bool ConfirmDeletenote; 
+        public static bool ConfirmDeletenote = true;
 
         /// <summary>
         /// Is email sharing enabled.
         /// </summary>
-        public static bool SocialEmailEnabled; 
+        public static bool SocialEmailEnabled = true;
 
         /// <summary>
         /// The default email adres to send to.
         /// </summary>
-        public static string SocialEmailDefaultadres;
+        public static string SocialEmailDefaultadres = string.Empty;
 
         /// <summary>
         /// The time a connection is considered not working.
         /// </summary>
-        public static int NetworkConnectionTimeout; 
+        public static int NetworkConnectionTimeout = 8000;
 
         /// <summary>
         /// Force to use of IPv6
@@ -229,50 +229,51 @@ namespace NoteFly
         /// <summary>
         /// Connect via a proxy.
         /// </summary>
-        public static bool NetworkProxyEnabled; 
+        public static bool NetworkProxyEnabled = false;
 
         /// <summary>
         /// The address of the proxy server.
         /// </summary>
-        public static string NetworkProxyAddress; 
+        public static string NetworkProxyAddress = string.Empty;
 
         /// <summary>
         /// The update check interval in days.
         /// 0 for disabled update checking.
         /// </summary>
-        public static int UpdatecheckEverydays; 
+        public static int UpdatecheckEverydays = 14;
 
         /// <summary>
         /// The datatime of last update check.
+        /// If node not found then default will be start of unix time.
         /// </summary>
-        public static string UpdatecheckLastDate;
+        public static string UpdatecheckLastDate = "1-1-1970 00:00:00";
 
         /// <summary>
         /// The location where notefly checks for update.
         /// </summary>
-        public static string UpdatecheckURL;
+        public static string UpdatecheckURL = "http://www.notefly.org/latestversion.xml";
 
         /// <summary>
         /// Has this programme been runned before.
         /// If not the demo note is created, balloontip is showed
         /// and NoteFly version 1.0 notes are ask to are imported if they exist.
         /// </summary>
-        public static bool ProgramFirstrun;
+        public static bool ProgramFirstrun = false;
 
         /// <summary>
         /// Suspress a warning that the programme is running with dangerous (evelated) administrator.
         /// </summary>
-        public static bool ProgramSuspressWarnAdmin;
+        public static bool ProgramSuspressWarnAdmin = false;
 
         /// <summary>
         /// Log debug info.
         /// </summary>
-        public static bool ProgramLogInfo;
+        public static bool ProgramLogInfo = false;
 
         /// <summary>
         /// Log errors user makes
         /// </summary>
-        public static bool ProgramLogError;
+        public static bool ProgramLogError = true;
 
         /// <summary>
         /// Log exceptions/errors this programme has.

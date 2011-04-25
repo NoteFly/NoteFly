@@ -405,7 +405,7 @@ namespace NoteFly
         /// Unhandled thread exceptions occur
         /// </summary>
         /// <param name="sender">Sender object</param>
-        /// <param name="args">ThreadExceptionEvent arguments</param>
+        /// <param name="treadargs">ThreadExceptionEvent arguments</param>
         private static void UnhanledThreadExceptionHanhler(object sender, ThreadExceptionEventArgs treadargs)
         {
             Exception e = treadargs.Exception;

@@ -62,7 +62,7 @@ namespace NoteFlyTests
         /// ClassInitialize to run code before running the first test in the class
         /// </summary>
         /// <param name="testContext">TestContext</param>
-        [ClassInitialize()]
+        [ClassInitialize]
         public static void MyClassInitialize(TestContext testContext)
         {
             Settings.NotesWarnLimit = 1000;

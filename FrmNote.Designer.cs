@@ -100,9 +100,8 @@ namespace NoteFly
 
         /// <summary>
         /// BackgroundWorker SaveWorker
-        /// todo: rename
         /// </summary>
-        private System.ComponentModel.BackgroundWorker SaveWorker;
+        private System.ComponentModel.BackgroundWorker saveWorker;
 
         /// <summary>
         /// ToolStripMenuItem menuSendTo
@@ -188,7 +187,7 @@ namespace NoteFly
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.pnlNote = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
-            this.SaveWorker = new System.ComponentModel.BackgroundWorker();
+            this.saveWorker = new System.ComponentModel.BackgroundWorker();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.pnlHead.SuspendLayout();
             this.menuFrmNoteOptions.SuspendLayout();
@@ -432,9 +431,9 @@ namespace NoteFly
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             this.pbResizeGrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseUp);
             // 
-            // SaveWorker
+            // saveWorker
             // 
-            this.SaveWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
+            this.saveWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
             // 
             // toolTip
             // 

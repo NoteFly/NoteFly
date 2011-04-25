@@ -681,6 +681,7 @@ namespace NoteFly
 
 #if windows
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
+
         /// <summary>
         /// Windows SHFILEOPSTRUCT struct
         /// </summary>
