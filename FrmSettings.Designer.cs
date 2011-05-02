@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux // platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -432,7 +432,9 @@ namespace NoteFly
             this.chxConfirmDeletenote = new System.Windows.Forms.CheckBox();
             this.cbxActionLeftclick = new System.Windows.Forms.ComboBox();
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
+#if windows
             this.chxStartOnLogin = new System.Windows.Forms.CheckBox();
+#endif			
             this.lblTextActionLeftClicktTrayicon = new System.Windows.Forms.Label();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabAppearanceColors = new System.Windows.Forms.TabControl();
@@ -566,8 +568,10 @@ namespace NoteFly
             this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
+#if windows
             this.tabGeneral.Controls.Add(this.chxStartOnLogin);
-            this.tabGeneral.Controls.Add(this.lblTextActionLeftClicktTrayicon);
+#endif
+			this.tabGeneral.Controls.Add(this.lblTextActionLeftClicktTrayicon);
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
@@ -626,6 +630,7 @@ namespace NoteFly
             this.chxConfirmExit.TabIndex = 20;
             this.chxConfirmExit.Text = "Confirm shutdown application.";
             this.chxConfirmExit.UseVisualStyleBackColor = true;
+#if windows			
             // 
             // chxStartOnLogin
             // 
@@ -636,6 +641,7 @@ namespace NoteFly
             this.chxStartOnLogin.TabIndex = 10;
             this.chxStartOnLogin.Text = "Start automatically on logon.";
             this.chxStartOnLogin.UseVisualStyleBackColor = true;
+#endif
             // 
             // lblTextActionLeftClicktTrayicon
             // 

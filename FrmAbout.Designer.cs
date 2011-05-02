@@ -120,9 +120,9 @@ namespace NoteFly
             // 
             this.linklblWebsite.AutoSize = true;
             this.linklblWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linklblWebsite.Location = new System.Drawing.Point(7, 141);
+            this.linklblWebsite.Location = new System.Drawing.Point(1, 141);
             this.linklblWebsite.Name = "linklblWebsite";
-            this.linklblWebsite.Size = new System.Drawing.Size(62, 18);
+            this.linklblWebsite.Size = new System.Drawing.Size(82, 18);
             this.linklblWebsite.TabIndex = 28;
             this.linklblWebsite.TabStop = true;
             this.linklblWebsite.Text = "Website";

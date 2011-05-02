@@ -549,7 +549,7 @@ namespace NoteFly
             this.rtbNewNote.Location = new System.Drawing.Point(2, 41);
             this.rtbNewNote.MaxLength = 999999;
             this.rtbNewNote.Name = "rtbNewNote";
-            this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;			
             this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
             this.rtbNewNote.TabIndex = 1;
             this.rtbNewNote.Text = string.Empty;

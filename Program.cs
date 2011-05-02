@@ -18,7 +18,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#define windows //platform can be: windows, linux, macos
+#define linux // platform can be: windows, linux, macos
 using System;
 
 [assembly: CLSCompliant(true)]

@@ -17,8 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-
-#define windows //platform can be: windows, linux, macos
+#define linux // platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -100,7 +99,7 @@ namespace NoteFly
 #if windows
             string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), DEBUGLOGFILENAME);
 #elif linux
-            string errorlog = "/tmp/"+debuglogfilename;
+            string errorlog = "/tmp/"+DEBUGLOGFILENAME;
 #endif
             try
             {

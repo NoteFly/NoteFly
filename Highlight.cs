@@ -37,12 +37,12 @@ namespace NoteFly
         /// <summary>
         /// html comment end.
         /// </summary>
-        private static string htmlcommentend;
+        private static string htmlcommentend = "-->";
 
         /// <summary>
         /// html comment start.
         /// </summary>
-        private static string htmlcommentstart;
+        private static string htmlcommentstart = "<!--";
 
         /// <summary>
         /// Keywords used for HTML highlighting.
@@ -92,12 +92,12 @@ namespace NoteFly
         /// <summary>
         /// sql comment end.
         /// </summary>
-        private static string sqlcommentend;
+        private static string sqlcommentend = "*/";
 
         /// <summary>
         /// sql comment start.
         /// </summary>
-        private static string sqlcommentstart;
+        private static string sqlcommentstart = "/*";
 
         #endregion Fields 
 

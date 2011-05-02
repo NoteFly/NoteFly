@@ -17,7 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux // platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -517,8 +517,9 @@ namespace NoteFly
 
             return startonlogon;
         }
-
-        /// <summary>
+#endif
+		
+		/// <summary>
         /// Toggle enabling numProcTransparency.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -527,6 +528,6 @@ namespace NoteFly
         {
             this.numProcTransparency.Enabled = this.chxTransparecy.Checked;
         }
-#endif
+
     }
 }

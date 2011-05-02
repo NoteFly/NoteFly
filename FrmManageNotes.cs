@@ -17,7 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux // platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -467,7 +467,7 @@ namespace NoteFly
                 }
             }
 
-            ////this.resetdatagrid();
+            this.resetdatagrid();
             this.DrawNotesGrid();
             GC.Collect();
         }
@@ -490,7 +490,7 @@ namespace NoteFly
             this.resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
-
+			
             DataTable datatable = new DataTable();
             this.dataGridView1.DataSource = datatable;
             datatable.Columns.Add("nr", typeof(string));
@@ -498,11 +498,15 @@ namespace NoteFly
             datatable.Columns["nr"].Unique = true;
             datatable.Columns.Add("title", typeof(string));
             datatable.Columns.Add("visible", typeof(bool));
-            datatable.Columns.Add("skin", typeof(string));
-            datatable.DefaultView.AllowEdit = false;
+            datatable.Columns.Add("skin", typeof(string));			
+            datatable.DefaultView.AllowEdit = true;
             datatable.DefaultView.AllowNew = false;
-            this.dataGridView1.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridView1.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			if (this.dataGridView1.Columns["nr"]!=null) {
+             this.dataGridView1.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			}
+			if (this.dataGridView1.Columns["visible"]!=null) {
+                this.dataGridView1.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			}
             this.dataGridView1.RowPostPaint += new DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             for (int i = 0; i < this.notes.CountNotes; i++)
             {
@@ -668,16 +672,24 @@ namespace NoteFly
         /// </summary>
         private void SetDataGridViewColumsWidth()
         {
-            if (this.dataGridView1.Width <= 0)
+            if ((this.dataGridView1.Width <= 0) || (this.dataGridView1 ==null))
             {
                 return;
             }
-
+			
             int partunit = (this.dataGridView1.Width - COLNOTENRFIXEDWIDTH) / 10;
+			if (this.dataGridView1.Columns["nr"] != null) {
             this.dataGridView1.Columns["nr"].Width = 1 * COLNOTENRFIXEDWIDTH;
+			}
+			if (this.dataGridView1.Columns["title"] != null) {
             this.dataGridView1.Columns["title"].Width = 6 * partunit;
+			}
+			if (this.dataGridView1.Columns["visible"]!=null) {
             this.dataGridView1.Columns["visible"].Width = 1 * partunit;
+			}
+			if (this.dataGridView1.Columns["skin"]!=null) {
             this.dataGridView1.Columns["skin"].Width = 3 * partunit;
+			}
         }
 
 #if windows

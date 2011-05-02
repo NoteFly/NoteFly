@@ -17,7 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows //platform can be: windows, linux, macos
+#define linux // platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -123,9 +123,11 @@ namespace NoteFly
                 {
                     tsi.Checked = false;
                 }
-
+				
+#if windows
                 tsi.BackColor = this.notes.GetPrimaryClr(i);
                 tsi.ForeColor = this.notes.GetTextClr(i);
+#endif
                 tsi.Click += new EventHandler(this.menuNoteSkins_skin_Click);
                 this.menuNoteSkins.DropDownItems.Add(tsi);
             }
@@ -162,7 +164,7 @@ namespace NoteFly
             {
                 if (!Settings.NotesTransparencyEnabled)
                 {
-                    this.Opacity = 100;
+                    this.Opacity = 1.0;
                 }
 
                 this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
@@ -212,8 +214,13 @@ namespace NoteFly
                     this.pnlHead.Height = DEFAULFTMINHEIGHT;
                 }
 
+#if windows
                 this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
                 this.pnlNote.Size = new Size(this.Width, (this.Height - this.pnlHead.Height + 1));
+#elif linux
+				this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
+                this.pnlNote.Size = new Size(this.Width - 6, (this.Height - this.pnlHead.Height - 5));
+#endif
                 this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
                 Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
@@ -670,7 +677,6 @@ namespace NoteFly
         {
             if ((this.Location.X + this.Width > MINVISIBLESIZE) && (this.Location.Y + this.Height > MINVISIBLESIZE))
             {
-                string notefilepath = Path.Combine(Settings.NotesSavepath, this.note.Filename);
                 this.note.X = this.Location.X;
                 this.note.Y = this.Location.Y;
                 string rtf = (string)e.Argument;
