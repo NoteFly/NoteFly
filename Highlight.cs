@@ -17,6 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
+#define windows
 
 namespace NoteFly
 {
@@ -82,12 +83,12 @@ namespace NoteFly
         /// <summary>
         /// The php end document keyword.
         /// </summary>
-        private static string phpendkeyword = "?>";
+        private const string phpendkeyword = "?>";
 
         /// <summary>
         /// The php start document keyword.
         /// </summary>
-        private static string phpstartkeyword = "<?php";
+        private const string phpstartkeyword = "<?php";
 
         /// <summary>
         /// sql comment end.
@@ -136,16 +137,104 @@ namespace NoteFly
                     InitHighlighter();
                 }
 
-                int posstarthtmltag = 0;
+                int lastpos = 0;
+                int posstarthtml = 0;
+                int posendhtml = int.MaxValue;
                 int posstartphp = int.MaxValue;
                 int posendphp = int.MaxValue;
-                int posphpcommentstart = int.MaxValue;
-                bool isphpmultilinecomment = false;
-                int lencommentline = 0;
-                int poslastkeyword = 0;
-                bool tagopen = false;
+                //int posphpcommentstart = int.MaxValue;
+                //bool isphpmultilinecomment = false;
+                //int lencommentline = 0;
+                //int poslastkeyword = 0;
+                //bool tagopen = false;
                 for (int i = 0; i < rtb.TextLength; i++)
                 {
+#if !macos
+                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\n')
+#elif macos
+                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\r')
+#endif
+                    {
+                        string bufcheck = rtb.Text.Substring(lastpos, i - lastpos);
+                        if (bufcheck.Length > 3)
+                        {
+                            if (Settings.HighlightHTML)
+                            {
+                                if (bufcheck.ToUpper().StartsWith("<HTML"))
+                                {
+                                    posstarthtml = lastpos;
+                                }
+                                else if (bufcheck.ToUpper() == "</HTML>")
+                                {
+                                    posendhtml = i;
+                                }
+                                if (i >= posstarthtml && i < posendhtml)
+                                {
+                                    ValidatingHtmlTag(bufcheck, rtb, lastpos, bufcheck.Length);
+                                }
+                            }
+
+                            if (Settings.HighlightPHP)
+                            {
+                                switch (bufcheck)
+                                {
+                                    case phpstartkeyword:
+                                        posstartphp = lastpos;
+                                        break;
+                                    case phpendkeyword:
+                                        posendphp = i;
+                                        break;
+                                }
+
+                                if (i > posendphp && i < posendphp)
+                                {
+                                    int resnode = ValidatingPhp(bufcheck);
+                                    if (resnode == 1)
+                                    {
+                                        ColorText(rtb, lastpos, bufcheck.Length, xmlUtil.ConvToClr(Settings.HighlightPHPColorValidfunctions));
+                                    }
+                                    else if (resnode == 3)
+                                    {
+                                        ColorText(rtb, lastpos, bufcheck.Length, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
+                                    }
+                                    else if (resnode == 2)
+                                    {
+                                        int poslastquote = int.MaxValue;
+                                        bool isendquote = false;
+                                        for (int n = 0; n < bufcheck.Length; n++)
+                                        {
+                                            if (bufcheck[n] == '"')
+                                            {
+                                                if (isendquote)
+                                                {
+                                                    int lenstring = (lastpos + n) - poslastquote + 1;
+                                                    ColorText(rtb, poslastquote, lenstring, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
+                                                    poslastquote = int.MaxValue;
+                                                    isendquote = false;
+                                                }
+                                                else
+                                                {
+                                                    poslastquote = lastpos + n;
+                                                    isendquote = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            /*
+                            if (Settings.HighlightSQL)
+                            {
+                                ValidatingSql(bufcheck);
+                            }
+                             */
+                        }
+
+                        lastpos = i;
+                    }
+
+                    /*
                     switch (rtb.Text[i])
                     {
                         case '<':
@@ -330,6 +419,7 @@ namespace NoteFly
                             poslastkeyword = i + 1;
                             break;
                     }
+                    */
                 }
             }
 
@@ -447,7 +537,7 @@ namespace NoteFly
 
             if (ishtml.Length > 2)
             {
-                // finds <br />
+                // finds e.g. <br />
                 if (ishtml[ishtml.Length - 2] == '/')
                 {
                     endtag = true;

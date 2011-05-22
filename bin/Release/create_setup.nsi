@@ -16,7 +16,7 @@
 
 !define PROJNAME "NoteFly" 
 !define VERSION "2.0.0"       ;version number: major.minor.release
-!define VERSTATUS "rc1"     ;alpha, beta, rc, or nothing for final.
+!define VERSTATUS "rc2"     ;alpha, beta, rc, or nothing for final.
 !define APPFILE "NoteFly.exe"
 !define LANGFILE "langs.xml"
 

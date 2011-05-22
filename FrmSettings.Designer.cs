@@ -11,7 +11,7 @@
 // GNU General Public License for more details.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux // platform can be: windows, linux, macos
+#define windows // platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -432,9 +432,7 @@ namespace NoteFly
             this.chxConfirmDeletenote = new System.Windows.Forms.CheckBox();
             this.cbxActionLeftclick = new System.Windows.Forms.ComboBox();
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
-#if windows
             this.chxStartOnLogin = new System.Windows.Forms.CheckBox();
-#endif			
             this.lblTextActionLeftClicktTrayicon = new System.Windows.Forms.Label();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabAppearanceColors = new System.Windows.Forms.TabControl();
@@ -490,7 +488,6 @@ namespace NoteFly
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
             this.lblTextLogging = new System.Windows.Forms.Label();
@@ -501,6 +498,10 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnCheckUpdates = new System.Windows.Forms.Button();
+            this.lblTextLatestUpdateCheck = new System.Windows.Forms.Label();
+            this.lblLatestUpdateCheck = new System.Windows.Forms.Label();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -568,10 +569,8 @@ namespace NoteFly
             this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
-#if windows
             this.tabGeneral.Controls.Add(this.chxStartOnLogin);
-#endif
-			this.tabGeneral.Controls.Add(this.lblTextActionLeftClicktTrayicon);
+            this.tabGeneral.Controls.Add(this.lblTextActionLeftClicktTrayicon);
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
@@ -630,7 +629,6 @@ namespace NoteFly
             this.chxConfirmExit.TabIndex = 20;
             this.chxConfirmExit.Text = "Confirm shutdown application.";
             this.chxConfirmExit.UseVisualStyleBackColor = true;
-#if windows			
             // 
             // chxStartOnLogin
             // 
@@ -641,7 +639,6 @@ namespace NoteFly
             this.chxStartOnLogin.TabIndex = 10;
             this.chxStartOnLogin.Text = "Start automatically on logon.";
             this.chxStartOnLogin.UseVisualStyleBackColor = true;
-#endif
             // 
             // lblTextActionLeftClicktTrayicon
             // 
@@ -883,7 +880,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = string.Empty;
+            this.lblTextDirection.AccessibleDescription = "";
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.Location = new System.Drawing.Point(50, 183);
@@ -1218,6 +1215,9 @@ namespace NoteFly
             // 
             // tabNetwerk
             // 
+            this.tabNetwerk.Controls.Add(this.lblLatestUpdateCheck);
+            this.tabNetwerk.Controls.Add(this.lblTextLatestUpdateCheck);
+            this.tabNetwerk.Controls.Add(this.btnCheckUpdates);
             this.tabNetwerk.Controls.Add(this.lblTextDayAtStartup);
             this.tabNetwerk.Controls.Add(this.numUpdateCheckDays);
             this.tabNetwerk.Controls.Add(this.lblTextCheckforupdatesevery);
@@ -1238,7 +1238,7 @@ namespace NoteFly
             // lblTextDayAtStartup
             // 
             this.lblTextDayAtStartup.AutoSize = true;
-            this.lblTextDayAtStartup.Location = new System.Drawing.Point(221, 51);
+            this.lblTextDayAtStartup.Location = new System.Drawing.Point(210, 56);
             this.lblTextDayAtStartup.Name = "lblTextDayAtStartup";
             this.lblTextDayAtStartup.Size = new System.Drawing.Size(79, 13);
             this.lblTextDayAtStartup.TabIndex = 29;
@@ -1247,7 +1247,7 @@ namespace NoteFly
             // numUpdateCheckDays
             // 
             this.numUpdateCheckDays.Enabled = false;
-            this.numUpdateCheckDays.Location = new System.Drawing.Point(157, 49);
+            this.numUpdateCheckDays.Location = new System.Drawing.Point(157, 54);
             this.numUpdateCheckDays.Maximum = new decimal(new int[] {
             365,
             0,
@@ -1260,7 +1260,7 @@ namespace NoteFly
             0});
             this.numUpdateCheckDays.Name = "numUpdateCheckDays";
             this.numUpdateCheckDays.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.numUpdateCheckDays.Size = new System.Drawing.Size(58, 20);
+            this.numUpdateCheckDays.Size = new System.Drawing.Size(47, 20);
             this.numUpdateCheckDays.TabIndex = 28;
             this.numUpdateCheckDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numUpdateCheckDays.Value = new decimal(new int[] {
@@ -1281,7 +1281,7 @@ namespace NoteFly
             // chxCheckUpdates
             // 
             this.chxCheckUpdates.AutoSize = true;
-            this.chxCheckUpdates.Location = new System.Drawing.Point(25, 26);
+            this.chxCheckUpdates.Location = new System.Drawing.Point(28, 27);
             this.chxCheckUpdates.Name = "chxCheckUpdates";
             this.chxCheckUpdates.Size = new System.Drawing.Size(113, 17);
             this.chxCheckUpdates.TabIndex = 26;
@@ -1292,7 +1292,7 @@ namespace NoteFly
             // lblTextNetworkMiliseconds
             // 
             this.lblTextNetworkMiliseconds.AutoSize = true;
-            this.lblTextNetworkMiliseconds.Location = new System.Drawing.Point(158, 194);
+            this.lblTextNetworkMiliseconds.Location = new System.Drawing.Point(164, 141);
             this.lblTextNetworkMiliseconds.Name = "lblTextNetworkMiliseconds";
             this.lblTextNetworkMiliseconds.Size = new System.Drawing.Size(20, 13);
             this.lblTextNetworkMiliseconds.TabIndex = 25;
@@ -1301,7 +1301,7 @@ namespace NoteFly
             // chxProxyEnabled
             // 
             this.chxProxyEnabled.AutoSize = true;
-            this.chxProxyEnabled.Location = new System.Drawing.Point(25, 91);
+            this.chxProxyEnabled.Location = new System.Drawing.Point(28, 82);
             this.chxProxyEnabled.Name = "chxProxyEnabled";
             this.chxProxyEnabled.Size = new System.Drawing.Size(111, 17);
             this.chxProxyEnabled.TabIndex = 1;
@@ -1316,7 +1316,7 @@ namespace NoteFly
             0,
             0,
             0});
-            this.numTimeout.Location = new System.Drawing.Point(94, 192);
+            this.numTimeout.Location = new System.Drawing.Point(97, 139);
             this.numTimeout.Maximum = new decimal(new int[] {
             30000,
             0,
@@ -1341,22 +1341,11 @@ namespace NoteFly
             // lblTextNetworkTimeout
             // 
             this.lblTextNetworkTimeout.AutoSize = true;
-            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(22, 194);
+            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(25, 141);
             this.lblTextNetworkTimeout.Name = "lblTextNetworkTimeout";
             this.lblTextNetworkTimeout.Size = new System.Drawing.Size(66, 13);
             this.lblTextNetworkTimeout.TabIndex = 24;
             this.lblTextNetworkTimeout.Text = "timeout time:";
-            // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(25, 114);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
             // 
             // tabAdvance
             // 
@@ -1457,6 +1446,44 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
+            // btnCheckUpdates
+            // 
+            this.btnCheckUpdates.Location = new System.Drawing.Point(28, 190);
+            this.btnCheckUpdates.Name = "btnCheckUpdates";
+            this.btnCheckUpdates.Size = new System.Drawing.Size(156, 23);
+            this.btnCheckUpdates.TabIndex = 30;
+            this.btnCheckUpdates.Text = "Check updates now";
+            this.btnCheckUpdates.UseVisualStyleBackColor = true;
+            this.btnCheckUpdates.Click += new System.EventHandler(this.btnCheckUpdates_Click);
+            // 
+            // lblTextLatestUpdateCheck
+            // 
+            this.lblTextLatestUpdateCheck.AutoSize = true;
+            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(28, 220);
+            this.lblTextLatestUpdateCheck.Name = "lblTextLatestUpdateCheck";
+            this.lblTextLatestUpdateCheck.Size = new System.Drawing.Size(188, 13);
+            this.lblTextLatestUpdateCheck.TabIndex = 31;
+            this.lblTextLatestUpdateCheck.Text = "Lastest update check is performed on:";
+            // 
+            // lblLatestUpdateCheck
+            // 
+            this.lblLatestUpdateCheck.AutoSize = true;
+            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(221, 220);
+            this.lblLatestUpdateCheck.Name = "lblLatestUpdateCheck";
+            this.lblLatestUpdateCheck.Size = new System.Drawing.Size(0, 13);
+            this.lblLatestUpdateCheck.TabIndex = 32;
+            // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(28, 105);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1505,5 +1532,9 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnCheckUpdates;
+        private System.Windows.Forms.Label lblTextLatestUpdateCheck;
+        private System.Windows.Forms.Label lblLatestUpdateCheck;
     }
 }

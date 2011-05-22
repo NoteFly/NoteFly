@@ -18,7 +18,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#define linux // platform can be: windows, linux, macos
+#define windows // platform can be: windows, linux, macos
 using System;
 
 [assembly: CLSCompliant(true)]
@@ -60,9 +60,9 @@ namespace NoteFly
             get
             {
 #if windows
-                return System.Environment.GetEnvironmentVariable("APPDATA") + "\\.NoteFly2\\";
+                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"),".NoteFly2");
 #elif linux
-                return System.Environment.GetEnvironmentVariable("HOME") + "/.NoteFly2/";
+                return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
 #elif macos
                 return "???";
 #else
@@ -112,7 +112,7 @@ namespace NoteFly
         {
             get
             {
-                return "rc1";
+                return "rc2";
             }
         }
 
@@ -251,6 +251,13 @@ namespace NoteFly
                             Settings.ProgramLogInfo = true;
                             break;
 
+                        // Turn all logging features off at startup. 
+                        case "-lognone":
+                            Settings.ProgramLogException = false;
+                            Settings.ProgramLogError = false;
+                            Settings.ProgramLogInfo = false;
+                            break;
+
                         // turn off xp visual style.
                         case "-disablevisualstyles":
                             visualstyle = false; // about ~400ms slower on my system on display time notes.
@@ -268,12 +275,28 @@ namespace NoteFly
                             break;
 #endif
 
-                       // overwrite settings file with default settings.
+                        // overwrite settings file with default settings.
                         case "-resetsettings":
                             xmlUtil.WriteDefaultSettings();
                             break;
                     }
                 }
+
+                // Import a note file.
+                // Copy note file to note save path.
+                // this is used for fuzzing right now
+                if (args[1] == "-importnote")
+                {
+                    if (args.Length == 2) 
+                    {
+                        if (File.Exists(args[2]))
+                        {
+                            string newnotefile = Path.Combine(Settings.NotesSavepath, notes.GetNoteFilename("argimp"));
+                            Directory.Move(args[2], newnotefile);
+                        }
+                    }
+                }
+                
             }
 
 #if windows
@@ -325,7 +348,7 @@ namespace NoteFly
                 DateTime lastupdate = DateTime.Parse(Settings.UpdatecheckLastDate);
                 if (lastupdate.AddDays(Settings.UpdatecheckEverydays) <= DateTime.Now)
                 {
-                    Thread updatethread = new Thread(UpdateCheck);
+                    Thread updatethread = new Thread(UpdateCheckThread);
                     updatethread.Start();
                 }
             }
@@ -344,12 +367,20 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Do update check.
+        /// Waits 500ms before doing a update check.
         /// </summary>
-        public static void UpdateCheck()
+        private static void UpdateCheckThread()
         {
             Thread.Sleep(500);
-            Settings.UpdatecheckLastDate = DateTime.Now.ToString();
+            Settings.UpdatecheckLastDate = UpdateCheck();
+        }
+
+        /// <summary>
+        /// Do update check.
+        /// </summary>
+        /// <returns>Datetime aof latest update check as string</returns>
+        public static string UpdateCheck()
+        {
             xmlUtil.WriteSettings();
             short[] thisversion = GetVersion();
             string latestversionquality = Program.AssemblyVersionQuality;
@@ -387,6 +418,8 @@ namespace NoteFly
                     throw new ApplicationException("Downloadurl is unexcepted unknown.");
                 }
             }
+
+            return DateTime.Now.ToString();
         }
 
         /// <summary>

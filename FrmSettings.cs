@@ -17,7 +17,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define linux // platform can be: windows, linux, macos
+#define windows // platform can be: windows, linux, macos
 
 namespace NoteFly
 {
@@ -488,6 +488,7 @@ namespace NoteFly
             this.iptbProxyAddress.IPAddress = Settings.NetworkProxyAddress;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
             this.numTimeout.Value = Settings.NetworkConnectionTimeout;
+            this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
 
             // tab: Advance
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
@@ -518,8 +519,8 @@ namespace NoteFly
             return startonlogon;
         }
 #endif
-		
-		/// <summary>
+
+        /// <summary>
         /// Toggle enabling numProcTransparency.
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -527,6 +528,21 @@ namespace NoteFly
         private void chxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
             this.numProcTransparency.Enabled = this.chxTransparecy.Checked;
+        }
+
+        /// <summary>
+        /// Requested to manually do an update check.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCheckUpdates_Click(object sender, EventArgs e)
+        {
+            Settings.UpdatecheckLastDate = Program.UpdateCheck();
+            if (!String.IsNullOrEmpty(Settings.UpdatecheckLastDate))
+            {
+                this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
+            }
+            this.btnCheckUpdates.Enabled = false;
         }
 
     }
