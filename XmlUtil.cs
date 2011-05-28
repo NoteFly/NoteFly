@@ -890,13 +890,12 @@ namespace NoteFly
         /// <param name="languagename">the language to lookup.</param>
         /// <param name="langcomments">The characters for commenting a line, commenting start and commenting ending</param>
         /// <returns>An array of keyword used for hightlighting.</returns>
-        public static string[] ParserLanguageLexical(string file, string languagename, out string[] langcomments)
+        public static HighlightLanguage ParserLanguageLexical(string file, string name)
         {
             string[] keywords = null;
-            langcomments = new string[3];
-            langcomments[0] = string.Empty;
-            langcomments[1] = string.Empty;
-            langcomments[2] = string.Empty;
+            string commentline = null;
+            string commentstart = null;
+            string commentend = null;
             try
             {
                 xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, file));
@@ -906,13 +905,13 @@ namespace NoteFly
                 {
                     if (xmlread.Name == "Language" || readsubnodes)
                     {
-                        if (xmlread.GetAttribute("name") == languagename || readsubnodes)
+                        if (xmlread.GetAttribute("name") == name || readsubnodes)
                         {
                             if (!readsubnodes)
                             {
-                                langcomments[0] = xmlread.GetAttribute("commentLine");
-                                langcomments[1] = xmlread.GetAttribute("commentStart");
-                                langcomments[2] = xmlread.GetAttribute("commentEnd");
+                                commentline = xmlread.GetAttribute("commentLine");
+                                commentstart = xmlread.GetAttribute("commentStart");
+                                commentend = xmlread.GetAttribute("commentEnd");
                             }
 
                             readsubnodes = true;
@@ -942,7 +941,8 @@ namespace NoteFly
                 xmlread.Close();
             }
 
-            return keywords;
+            HighlightLanguage language = new HighlightLanguage(name, commentline, commentstart, commentend, keywords);
+            return language;
         }
 
         /// <summary>

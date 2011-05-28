@@ -33,72 +33,16 @@ namespace NoteFly
     /// </summary>
     public class Highlight
     {
-        #region Fields (13) 
+        #region Fields (3) 
 
-        /// <summary>
-        /// html comment end.
-        /// </summary>
-        private static string htmlcommentend = "-->";
+        private static const string LANGFILE = "langs.xml";
 
-        /// <summary>
-        /// html comment start.
-        /// </summary>
-        private static string htmlcommentstart = "<!--";
-
-        /// <summary>
-        /// Keywords used for HTML highlighting.
-        /// </summary>
-        private static string[] keywordshtml;
+        private static List<HighlightLanguage> languages;
 
         /// <summary>
         /// Are keyword initilized
         /// </summary>
         private static bool keywordsinit = false;
-
-        /// <summary>
-        /// Keywords used for PHP highlighting.
-        /// </summary>
-        private static string[] keywordsphp;
-
-        /// <summary>
-        /// Keywords used for SQL highlighting.
-        /// </summary>
-        private static string[] keywordssql;
-
-        /// <summary>
-        /// The php comment end.
-        /// </summary>
-        private static string phpcommentend;
-
-        /// <summary>
-        /// The comment line.
-        /// </summary>
-        private static string phpcommentline;
-
-        /// <summary>
-        /// The php comment start.
-        /// </summary>
-        private static string phpcommentstart;
-
-        /// <summary>
-        /// The php end document keyword.
-        /// </summary>
-        private const string phpendkeyword = "?>";
-
-        /// <summary>
-        /// The php start document keyword.
-        /// </summary>
-        private const string phpstartkeyword = "<?php";
-
-        /// <summary>
-        /// sql comment end.
-        /// </summary>
-        private static string sqlcommentend = "*/";
-
-        /// <summary>
-        /// sql comment start.
-        /// </summary>
-        private static string sqlcommentstart = "/*";
 
         #endregion Fields 
 
@@ -129,6 +73,8 @@ namespace NoteFly
         {
             int cursorpos = rtb.SelectionStart;
             ResetHighlighting(rtb, skinnr, notes);
+
+            // check if highlighting is enabled at all.
             if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
             {
                 if (!keywordsinit)
@@ -138,15 +84,22 @@ namespace NoteFly
                 }
 
                 int lastpos = 0;
+                
                 int posstarthtml = 0;
                 int posendhtml = int.MaxValue;
+
                 int posstartphp = int.MaxValue;
                 int posendphp = int.MaxValue;
+
+                int posstartsql = 0;
+                int posendsql = int.MaxValue;
+
                 //int posphpcommentstart = int.MaxValue;
                 //bool isphpmultilinecomment = false;
                 //int lencommentline = 0;
                 //int poslastkeyword = 0;
                 //bool tagopen = false;
+
                 for (int i = 0; i < rtb.TextLength; i++)
                 {
 #if !macos
@@ -155,275 +108,42 @@ namespace NoteFly
                     if (rtb.Text[i] == ' ' || rtb.Text[i] == '\r')
 #endif
                     {
-                        string bufcheck = rtb.Text.Substring(lastpos, i - lastpos);
-                        if (bufcheck.Length > 3)
+                        int lenbufcheck = i - lastpos;
+                        string bufcheck = rtb.Text.Substring(lastpos, lenbufcheck);
+                        if (lenbufcheck >= 1 && bufcheck.Length>=1)
                         {
-                            if (Settings.HighlightHTML)
+                            // checking order is important
+
+                            if (Settings.HighlightSQL)
                             {
-                                if (bufcheck.ToUpper().StartsWith("<HTML"))
+                                if (i > posstartsql && i < posendsql)
                                 {
-                                    posstarthtml = lastpos;
-                                }
-                                else if (bufcheck.ToUpper() == "</HTML>")
-                                {
-                                    posendhtml = i;
-                                }
-                                if (i >= posstarthtml && i < posendhtml)
-                                {
-                                    ValidatingHtmlTag(bufcheck, rtb, lastpos, bufcheck.Length);
+                                    ValidatingSql(bufcheck);
                                 }
                             }
 
                             if (Settings.HighlightPHP)
                             {
-                                switch (bufcheck)
-                                {
-                                    case phpstartkeyword:
-                                        posstartphp = lastpos;
-                                        break;
-                                    case phpendkeyword:
-                                        posendphp = i;
-                                        break;
-                                }
-
                                 if (i > posendphp && i < posendphp)
                                 {
-                                    int resnode = ValidatingPhp(bufcheck);
-                                    if (resnode == 1)
-                                    {
-                                        ColorText(rtb, lastpos, bufcheck.Length, xmlUtil.ConvToClr(Settings.HighlightPHPColorValidfunctions));
-                                    }
-                                    else if (resnode == 3)
-                                    {
-                                        ColorText(rtb, lastpos, bufcheck.Length, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
-                                    }
-                                    else if (resnode == 2)
-                                    {
-                                        int poslastquote = int.MaxValue;
-                                        bool isendquote = false;
-                                        for (int n = 0; n < bufcheck.Length; n++)
-                                        {
-                                            if (bufcheck[n] == '"')
-                                            {
-                                                if (isendquote)
-                                                {
-                                                    int lenstring = (lastpos + n) - poslastquote + 1;
-                                                    ColorText(rtb, poslastquote, lenstring, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
-                                                    poslastquote = int.MaxValue;
-                                                    isendquote = false;
-                                                }
-                                                else
-                                                {
-                                                    poslastquote = lastpos + n;
-                                                    isendquote = true;
-                                                }
-                                            }
-                                        }
-                                    }
+                                    ValidatingPhp(bufcheck, rtb, lastpos, lenbufcheck);
                                 }
                             }
 
-                            /*
-                            if (Settings.HighlightSQL)
+                            if (Settings.HighlightHTML)
                             {
-                                ValidatingSql(bufcheck);
+                                if (i > posstarthtml && i < posendhtml)
+                                {
+                                    ValidatingHtmlTag(bufcheck, rtb, posstarthtml, lenbufcheck);
+                                }
                             }
-                             */
+
                         }
-
-                        lastpos = i;
                     }
-
-                    /*
-                    switch (rtb.Text[i])
-                    {
-                        case '<':
-                            if (Settings.HighlightPHP)
-                            {
-                                if (i + 5 <= rtb.TextLength)
-                                {
-                                    if (rtb.Text.Substring(i, 5) == phpstartkeyword)
-                                    {
-                                        // start php part
-                                        posstartphp = i;
-                                        ColorText(rtb, i, phpstartkeyword.Length, xmlUtil.ConvToClr(Settings.HighlightPHPColorDocumentstartend));
-                                        poslastkeyword = posstartphp + phpstartkeyword.Length;
-                                    }
-                                }
-                            }
-
-                            if (Settings.HighlightHTML)
-                            {
-                                if ((i < posstartphp || i > posendphp) && !tagopen)
-                                {
-                                    posstarthtmltag = i;
-                                }
-                            }
-
-                            tagopen = true;
-                            break;
-                        case '>':
-                            tagopen = false;
-                            if (Settings.HighlightPHP)
-                            {
-                                if (i > 6)
-                                {
-                                    if (rtb.Text.Substring(i - 1, phpendkeyword.Length) == phpendkeyword)
-                                    {
-                                        // end php part
-                                        posendphp = i + phpendkeyword.Length;
-                                        ColorText(rtb, (posendphp - phpendkeyword.Length - 1), phpendkeyword.Length, xmlUtil.ConvToClr(Settings.HighlightPHPColorDocumentstartend));
-                                    }
-                                }
-                            }
-
-                            if (Settings.HighlightHTML)
-                            {
-                                if ((i < posstartphp || i > posendphp) && i > 0)
-                                {
-                                    int lenhtmltag = i - posstarthtmltag + 1;
-                                    string ishtml = rtb.Text.Substring(posstarthtmltag, lenhtmltag);
-                                    ValidatingHtmlTag(ishtml, rtb, posstarthtmltag, lenhtmltag);
-                                }
-                            }
-
-                            break;
-                        case '/':
-                            if (Settings.HighlightPHP)
-                            {
-                                if (i > posstartphp && i < posendphp)
-                                {
-                                    if (i < rtb.TextLength - 1)
-                                    {
-                                        if (rtb.Text.Substring(i, phpcommentline.Length) == phpcommentline)
-                                        {
-                                            if (posphpcommentstart > i)
-                                            {
-                                                isphpmultilinecomment = false;
-                                                posphpcommentstart = i;
-                                            }
-                                        }
-                                        else if (rtb.Text.Substring(i, phpcommentstart.Length) == phpcommentstart)
-                                        {
-                                            isphpmultilinecomment = true;
-                                            posphpcommentstart = i;
-                                        }
-                                    }
-                                    else if (i > 1)
-                                    {
-                                        if (rtb.Text.Substring(i - phpcommentline.Length, phpcommentline.Length) == phpcommentend)
-                                        {
-                                            if (isphpmultilinecomment)
-                                            {
-                                                int lencomment = i - posphpcommentstart;
-                                                ColorText(rtb, posphpcommentstart, lencomment, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
-                                                posphpcommentstart = int.MaxValue;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            break;
-                        case '\n':
-                            if (Settings.HighlightPHP)
-                            {
-                                if (posphpcommentstart != int.MaxValue)
-                                {
-                                    if (!isphpmultilinecomment)
-                                    {
-                                        lencommentline = i - posphpcommentstart;
-                                        ColorText(rtb, posphpcommentstart, lencommentline, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
-                                        posphpcommentstart = int.MaxValue;
-                                    }
-                                }
-                            }
-
-                            if (Settings.HighlightSQL)
-                            {
-                                int lensqlkeyword = i - poslastkeyword;
-                                if (lensqlkeyword > 0)
-                                {
-                                    string issql = rtb.Text.Substring(poslastkeyword, lensqlkeyword);
-                                    if (ValidatingSql(issql))
-                                    {
-                                        ColorText(rtb, poslastkeyword, lensqlkeyword, Color.Purple);
-                                    }
-                                }
-                            }
-
-                            poslastkeyword = i + 1;
-                            break;
-                        case ' ':
-                            if (Settings.HighlightPHP)
-                            {
-                                if (i > posstartphp && i < posendphp - phpendkeyword.Length)
-                                {
-                                    int lenphpkeyword = i - poslastkeyword;
-                                    if (lenphpkeyword > 0)
-                                    {
-                                        string isphp = rtb.Text.Substring(poslastkeyword, lenphpkeyword);
-                                        int resnode = ValidatingPhp(isphp);
-                                        if (resnode == 1)
-                                        {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.HighlightPHPColorValidfunctions));
-                                        }
-                                        else if (resnode == 3)
-                                        {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
-                                        }
-                                        else if (resnode == 2)
-                                        {
-                                            int poslastquote = int.MaxValue;
-                                            bool isendquote = false;
-                                            for (int n = 0; n < isphp.Length; n++)
-                                            {
-                                                if (isphp[n] == '"')
-                                                {
-                                                    if (isendquote)
-                                                    {
-                                                        int len = (poslastkeyword + n) - poslastquote + 1;
-                                                        ColorText(rtb, poslastquote, len, xmlUtil.ConvToClr(Settings.HighlightPHPColorComment));
-                                                        poslastquote = int.MaxValue;
-                                                        isendquote = false;
-                                                    }
-                                                    else
-                                                    {
-                                                        poslastquote = poslastkeyword + n;
-                                                        isendquote = true;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        else if (resnode == 0)
-                                        {
-                                            ColorText(rtb, poslastkeyword, lenphpkeyword, xmlUtil.ConvToClr(Settings.HighlightPHPColorInvalidfunctions));
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (Settings.HighlightSQL)
-                            {
-                                int lensqlkeyword = i - poslastkeyword;
-                                if (lensqlkeyword > 0)
-                                {
-                                    string issql = rtb.Text.Substring(poslastkeyword, lensqlkeyword);
-                                    if (ValidatingSql(issql))
-                                    {
-                                        ColorText(rtb, poslastkeyword, lensqlkeyword, Color.Purple);
-                                    }
-                                }
-                            }
-
-                            poslastkeyword = i + 1;
-                            break;
-                    }
-                    */
                 }
-            }
 
-            rtb.SelectionStart = cursorpos;
+                rtb.SelectionStart = cursorpos;
+            }
         }
 
         /// <summary>
@@ -431,21 +151,7 @@ namespace NoteFly
         /// </summary>
         public static void DeinitHighlighter()
         {
-            if (keywordshtml != null)
-            {
-                keywordshtml = null;
-            }
-
-            if (keywordsphp != null)
-            {
-                keywordsphp = null;
-            }
-
-            if (keywordssql != null)
-            {
-                keywordssql = null;
-            }
-
+            languages.Clear();
             keywordsinit = false;
             GC.Collect();
         }
@@ -455,31 +161,43 @@ namespace NoteFly
         /// </summary>
         public static void InitHighlighter()
         {
-            string[] langcomments;
+            languages.Clear();
             if (Settings.HighlightHTML)
             {
-                keywordshtml = xmlUtil.ParserLanguageLexical("langs.xml", "html", out langcomments);
-                htmlcommentstart = langcomments[1];
-                htmlcommentend = langcomments[2];
+                languages.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "html"));
             }
 
             if (Settings.HighlightPHP)
             {
-                keywordsphp = xmlUtil.ParserLanguageLexical("langs.xml", "php", out langcomments);
-                phpcommentline = langcomments[0];
-                phpcommentstart = langcomments[1];
-                phpcommentend = langcomments[2];
+                languages.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "php"));
             }
 
             if (Settings.HighlightSQL)
             {
-                keywordssql = xmlUtil.ParserLanguageLexical("langs.xml", "sql", out langcomments);
-                sqlcommentstart = langcomments[1];
-                sqlcommentend = langcomments[2];
+                languages.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "sql"));
             }
 
             keywordsinit = true;
         }
+
+        /// <summary>
+        /// Get the HighlightLanguage specified by name
+        /// </summary>
+        /// <param name="name">The name of the highlightlanguage object</param>
+        /// <returns>HighlightLanguage object</returns>
+        private static HighlightLanguage GetHighlightlanguage(string name)
+        {
+            foreach (HighlightLanguage curlang in languages)
+            {
+                if (curlang.Name == name)
+                {
+                    return curlang;
+                }
+            }
+
+            return null;
+        }
+
 
         /// <summary>
         /// Color some part of the rich edit text.
@@ -488,8 +206,9 @@ namespace NoteFly
         /// <param name="posstart">The start position in the text to start coloring from.</param>
         /// <param name="len">The lenght of text to color.</param>
         /// <param name="color">The color the text should get.</param>
-        private static void ColorText(RichTextBox rtb, int posstart, int len, Color color)
+        private static void ColorText(RichTextBox rtb, int posstart, int len, string hexcolor)
         {
+            Color color = xmlUtil.ConvToClr(hexcolor);
             try
             {
                 rtb.Select(posstart, len);
@@ -516,6 +235,18 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Remove characters not used for checking keyword.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private static string RemoveUnusedchars(string text)
+        {
+            text = text.Trim(new char[] { ' ', '\n', '\r' });
+            text = text.ToLower();
+            return text;
+        }
+
+        /// <summary>
         /// Highlight known tag and tag attributes.
         /// </summary>
         /// <param name="ishtml">Is it html to check.</param>
@@ -524,11 +255,16 @@ namespace NoteFly
         /// <param name="lenhtmltag">The length of the compleet tag.</param>
         private static void ValidatingHtmlTag(string ishtml, RichTextBox rtb, int posstarthtmltag, int lenhtmltag)
         {
+            ishtml = RemoveUnusedchars(ishtml);
+
             bool isquotestring = false;
-            int posstartquotestring = int.MaxValue;
+
             int posendquotestring = 0;
+            int posstartquotestring = int.MaxValue;
+
             bool endtag = false;
             int lenhighlight = 0;
+
             if (ishtml[1] == '/')
             {
                 endtag = true;
@@ -554,7 +290,6 @@ namespace NoteFly
                 }
             }
 
-            ishtml = ishtml.ToLower(); // e.g. "<BR>" becomes "<br>"
             int lastpos = 1;
             for (int pos = 1; pos < ishtml.Length; pos++)
             {
@@ -562,7 +297,7 @@ namespace NoteFly
                 {
                     if (isquotestring)
                     {
-                        ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.HighlightHTMLColorString));
+                        //ColorText(rtb, posstarthtmltag + posstartquotestring, (pos - posstartquotestring + 1), xmlUtil.ConvToClr(Settings.HighlightHTMLColorString));
                         posendquotestring = pos + 1; // +1 for quote itself counts
                     }
                     else
@@ -589,19 +324,19 @@ namespace NoteFly
                         }
 
                         bool attributefound = false;
-                        for (int n = 0; n < keywordshtml.Length; n++)
+                        for (int n = 0; n < GetHighlightlanguage("htm").NumKeywords; n++)
                         {
-                            if (curattributename.Equals(keywordshtml[n], StringComparison.InvariantCultureIgnoreCase))
+                            if (curattributename.Equals(GetHighlightlanguage("htm").GetKeyword(n), StringComparison.InvariantCultureIgnoreCase))
                             {
                                 attributefound = true;
-                                ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.HighlightHTMLColorValid));
+                                ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Settings.HighlightHTMLColorValid);
                                 break;
                             }
                         }
 
                         if (!attributefound)
                         {
-                            ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, xmlUtil.ConvToClr(Settings.HighlightHTMLColorInvalid));
+                            ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Settings.HighlightHTMLColorInvalid);
                         }
 
                         lastpos = pos + 1; // +1 for ' ' or '>'
@@ -614,33 +349,29 @@ namespace NoteFly
         /// Find out if it is a php keyword.
         /// </summary>
         /// <param name="isphp">A part to be check if this a php keyword.</param>
-        /// <returns>true if a keyword matches isphp part.</returns>
-        private static int ValidatingPhp(string isphp)
+        /// <returns></returns>
+        private static void ValidatingPhp(string isphp, RichTextBox rtb, int posstart, int len)
         {
-            isphp = isphp.ToLower();
-            if (keywordsphp == null)
-            {
-                InitHighlighter();
-            }
+            isphp = RemoveUnusedchars(isphp);
 
-            // is var.
             if (isphp.StartsWith("$") && isphp.Length > 1)
             {
                 char c = isphp[1];
                 if (c > 58)
                 {
-                    return 3;
+                    // is valid variable
+                    ColorText(rtb, posstart, len, Settings.HighlightPHPColorValidfunctions);
                 }
             }
 
             // is assign:
             if (isphp == "=")
             {
-                return 4;
+                ColorText(rtb, posstart, len, Settings.HighlightPHPColorValidfunctions);
             }
 
             // is know function:
-            for (int i = 0; i < keywordsphp.Length; i++)
+            for (int i = 0; i < languages.g .Length; i++)
             {
                 if (isphp == keywordsphp[i])
                 {
@@ -666,21 +397,17 @@ namespace NoteFly
         /// </summary>
         /// <param name="issql">The part to be check.</param>
         /// <returns>true if a keyword matches issql part.</returns>
-        private static bool ValidatingSql(string issql)
+        private static void ValidatingSql(string issql, RichTextBox rtb, int posstart, int len)
         {
-            issql = issql.ToLower();
-            if (keywordssql == null)
-            {
-                InitHighlighter();
-            }
+            issql = RemoveUnusedchars(issql);
 
-            for (int i = 0; i < keywordssql.Length; i++)
-            {
-                if (issql == keywordssql[i])
-                {
-                    return true;
-                }
-            }
+            //for (int i = 0; i < keywordssql.Length; i++)
+            //{
+            //    if (issql == keywordssql[i])
+            //    {
+            //        return true;
+            //    }
+            //}
 
             return false;
         }
