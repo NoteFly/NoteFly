@@ -222,7 +222,7 @@ namespace NoteFly
                 this.pnlNote.Size = new Size(this.Width - 6, (this.Height - this.pnlHead.Height - 5));
 #endif
                 this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
-                Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
+                SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
 
@@ -505,19 +505,19 @@ namespace NoteFly
             this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
-            if (!Highlight.KeywordsInitialized)
+            if (!SyntaxHighlight.KeywordsInitialized)
             {
-                Highlight.InitHighlighter();
+                SyntaxHighlight.InitHighlighter();
             }
 
-            Highlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
+            SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             if (!this.saveWorker.IsBusy)
             {
                 this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
 
             this.notes.FrmManageNotesNeedUpdate = true;
-            Highlight.DeinitHighlighter();
+            SyntaxHighlight.DeinitHighlighter();
             TrayIcon.RefreshFrmManageNotes();
             this.notes.FrmManageNotesNeedUpdate = false;
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.SkinNr));

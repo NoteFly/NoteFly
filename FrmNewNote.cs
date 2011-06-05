@@ -198,7 +198,7 @@ namespace NoteFly
                     }
 
                     TrayIcon.Frmneweditnoteopen = false;
-                    Highlight.InitHighlighter();
+                    SyntaxHighlight.InitHighlighter();
                     this.note.Tempcontent = this.rtbNewNote.Rtf;
                     this.note.CreateForm();
                     if (this.note.Tempcontent != null)
@@ -206,7 +206,7 @@ namespace NoteFly
                         this.note.Tempcontent = null;
                     }
 
-                    Highlight.DeinitHighlighter();
+                    SyntaxHighlight.DeinitHighlighter();
                     this.notes.FrmManageNotesNeedUpdate = true;
                     TrayIcon.RefreshFrmManageNotes();
                     this.Close();

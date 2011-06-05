@@ -254,16 +254,16 @@ namespace NoteFly
 #endif
                 xmlUtil.WriteSettings();
                 Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
-                if (!Highlight.KeywordsInitialized)
+                if (!SyntaxHighlight.KeywordsInitialized)
                 {
-                    Highlight.InitHighlighter();
+                    SyntaxHighlight.InitHighlighter();
                 }
 
                 this.notes.UpdateAllNoteForms();
                 Program.RestartTrayicon();
-                if (Highlight.KeywordsInitialized)
+                if (SyntaxHighlight.KeywordsInitialized)
                 {
-                    Highlight.DeinitHighlighter();
+                    SyntaxHighlight.DeinitHighlighter();
                 }
 
                 this.Close();

@@ -12,19 +12,39 @@ namespace NoteFly
         private string name;
 
         /// <summary>
-        /// 
+        /// The characters to make it a line comment.
         /// </summary>
         private string commentline;
 
         /// <summary>
-        /// 
+        /// The characters to start commenting of multiple lines
         /// </summary>
         private string commentstart;
 
         /// <summary>
-        /// 
+        /// The characters to end comment of multiple lines
         /// </summary>
         private string commentend;
+
+        /// <summary>
+        /// The characters that tell where start of the document is.
+        /// </summary>
+        private string docstartstr;
+
+        /// <summary>
+        /// The characters that tell where the documents end.
+        /// </summary>
+        private string docendstr;
+
+        /// <summary>
+        /// The position where the document starts.
+        /// </summary>
+        private int posdocstart;
+
+        /// <summary>
+        /// The position where the documents ends.
+        /// </summary>
+        private int posdocend;
 
         /// <summary>
         /// A string array of keywords used in this language
@@ -100,6 +120,60 @@ namespace NoteFly
             get
             {
                 return this.keywords.Length;
+            }
+        }
+
+        /// <summary>
+        /// Gets the characters that tell where the document starts.
+        /// </summary>
+        public string DocumentStartStr
+        {
+            get
+            {
+                return this.docstartstr;
+            }
+        }
+
+        /// <summary>
+        /// Gets the characters that tell where the document ends.
+        /// </summary>
+        public string DocumentEndStr
+        {
+            get
+            {
+                return this.docendstr;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the position where the document starts
+        /// </summary>
+        public int PosDocumentStart
+        {
+            get
+            {
+                return this.posdocstart;
+            }
+
+            set
+            {
+                this.posdocstart = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the position where the document ends
+        /// </summary>
+        public int PosDocumentEnd
+        {
+            get
+            {
+                return this.posdocend;
+            }
+
+            set
+            {
+                this.posdocend = value;
             }
         }
 

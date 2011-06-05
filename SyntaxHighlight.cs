@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Highlight.cs" company="GNU">
+// <copyright file="SyntaxHighlight.cs" company="GNU">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //
@@ -31,13 +31,17 @@ namespace NoteFly
     /// <summary>
     /// Highlight class, provides highlighting to richtext.
     /// </summary>
-    public class Highlight
+    public class SyntaxHighlight
     {
         #region Fields (3) 
 
         private static const string LANGFILE = "langs.xml";
+        
+        private static HighlightLanguage langphp;
 
-        private static List<HighlightLanguage> languages;
+        private static HighlightLanguage langhtml;
+
+        private static HighlightLanguage langsql;
 
         /// <summary>
         /// Are keyword initilized
@@ -85,20 +89,12 @@ namespace NoteFly
 
                 int lastpos = 0;
                 
-                int posstarthtml = 0;
-                int posendhtml = int.MaxValue;
-
-                int posstartphp = int.MaxValue;
-                int posendphp = int.MaxValue;
-
-                int posstartsql = 0;
-                int posendsql = int.MaxValue;
-
-                //int posphpcommentstart = int.MaxValue;
-                //bool isphpmultilinecomment = false;
-                //int lencommentline = 0;
-                //int poslastkeyword = 0;
-                //bool tagopen = false;
+                //int posstarthtml = 0;
+                //int posendhtml = int.MaxValue;
+                //int posstartphp = int.MaxValue;
+                //int posendphp = int.MaxValue;
+                //int posstartsql = 0;
+                //int posendsql = int.MaxValue;
 
                 for (int i = 0; i < rtb.TextLength; i++)
                 {
@@ -112,19 +108,18 @@ namespace NoteFly
                         string bufcheck = rtb.Text.Substring(lastpos, lenbufcheck);
                         if (lenbufcheck >= 1 && bufcheck.Length>=1)
                         {
-                            // checking order is important
 
                             if (Settings.HighlightSQL)
                             {
-                                if (i > posstartsql && i < posendsql)
+                                if (i > langsql.PosDocumentStart && i < langsql.PosDocumentEnd)
                                 {
-                                    ValidatingSql(bufcheck);
+                                    ValidatingSql(bufcheck, rtb, lastpos, lenbufcheck);
                                 }
                             }
 
                             if (Settings.HighlightPHP)
                             {
-                                if (i > posendphp && i < posendphp)
+                                if (i > langphp.PosDocumentStart && i < langphp.PosDocumentEnd)
                                 {
                                     ValidatingPhp(bufcheck, rtb, lastpos, lenbufcheck);
                                 }
@@ -132,9 +127,9 @@ namespace NoteFly
 
                             if (Settings.HighlightHTML)
                             {
-                                if (i > posstarthtml && i < posendhtml)
+                                if (i > langhtml.PosDocumentStart && i < langhtml.PosDocumentEnd)
                                 {
-                                    ValidatingHtmlTag(bufcheck, rtb, posstarthtml, lenbufcheck);
+                                    ValidatingHtml(bufcheck, rtb, lastpos, lenbufcheck);
                                 }
                             }
 
@@ -151,7 +146,9 @@ namespace NoteFly
         /// </summary>
         public static void DeinitHighlighter()
         {
-            languages.Clear();
+            langhtml = null;
+            langphp = null;
+            langsql = null;
             keywordsinit = false;
             GC.Collect();
         }
@@ -161,43 +158,23 @@ namespace NoteFly
         /// </summary>
         public static void InitHighlighter()
         {
-            languages.Clear();
             if (Settings.HighlightHTML)
             {
-                languages.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "html"));
+                langhtml = xmlUtil.ParserLanguageLexical(LANGFILE, "html");
             }
 
             if (Settings.HighlightPHP)
             {
-                languages.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "php"));
+                langphp = xmlUtil.ParserLanguageLexical(LANGFILE, "php");
             }
 
             if (Settings.HighlightSQL)
             {
-                languages.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "sql"));
+                langsql = xmlUtil.ParserLanguageLexical(LANGFILE, "sql");
             }
 
             keywordsinit = true;
         }
-
-        /// <summary>
-        /// Get the HighlightLanguage specified by name
-        /// </summary>
-        /// <param name="name">The name of the highlightlanguage object</param>
-        /// <returns>HighlightLanguage object</returns>
-        private static HighlightLanguage GetHighlightlanguage(string name)
-        {
-            foreach (HighlightLanguage curlang in languages)
-            {
-                if (curlang.Name == name)
-                {
-                    return curlang;
-                }
-            }
-
-            return null;
-        }
-
 
         /// <summary>
         /// Color some part of the rich edit text.
@@ -253,7 +230,7 @@ namespace NoteFly
         /// <param name="rtb">The richtextbox.</param>
         /// <param name="posstarthtmltag">the start position in the richtextbox.</param>
         /// <param name="lenhtmltag">The length of the compleet tag.</param>
-        private static void ValidatingHtmlTag(string ishtml, RichTextBox rtb, int posstarthtmltag, int lenhtmltag)
+        private static void ValidatingHtml(string ishtml, RichTextBox rtb, int posstarthtmltag, int lenhtmltag)
         {
             ishtml = RemoveUnusedchars(ishtml);
 
@@ -324,9 +301,9 @@ namespace NoteFly
                         }
 
                         bool attributefound = false;
-                        for (int n = 0; n < GetHighlightlanguage("htm").NumKeywords; n++)
+                        for (int n = 0; n < langhtml.NumKeywords; n++)
                         {
-                            if (curattributename.Equals(GetHighlightlanguage("htm").GetKeyword(n), StringComparison.InvariantCultureIgnoreCase))
+                            if (curattributename.Equals( langhtml.GetKeyword(n), StringComparison.InvariantCultureIgnoreCase))
                             {
                                 attributefound = true;
                                 ColorText(rtb, posstarthtmltag + lastpos, lenhighlight, Settings.HighlightHTMLColorValid);
@@ -371,11 +348,12 @@ namespace NoteFly
             }
 
             // is know function:
-            for (int i = 0; i < languages.g .Length; i++)
+            for (int i = 0; i < langphp.NumKeywords; i++)
             {
-                if (isphp == keywordsphp[i])
+                if (isphp == langphp.GetKeyword(i))
                 {
-                    return 1;
+                    //todo
+                    //return 1;
                 }
             }
 
@@ -384,12 +362,12 @@ namespace NoteFly
             {
                 if (isphp[n] == '"')
                 {
-                    return 2;
+                    //todo
+                    //return 2;
                 }
             }
 
-            // not valid:
-            return 0;
+            // not valid php
         }
 
         /// <summary>
@@ -409,7 +387,7 @@ namespace NoteFly
             //    }
             //}
 
-            return false;
+            //return false;
         }
 
         #endregion Methods 

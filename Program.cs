@@ -331,7 +331,7 @@ namespace NoteFly
                 }
             }
 
-            Highlight.InitHighlighter();
+            SyntaxHighlight.InitHighlighter();
             notes = new Notes(resetpositions);
             trayicon = new TrayIcon(notes);
 
@@ -353,7 +353,7 @@ namespace NoteFly
                 }
             }
 
-            Highlight.DeinitHighlighter();
+            SyntaxHighlight.DeinitHighlighter();
             System.Windows.Forms.Application.Run();
         }
 
