@@ -192,7 +192,7 @@ namespace NoteFly
                     this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
                 }
 
-                this.resetdatagrid();
+                this.Resetdatagrid();
                 this.DrawNotesGrid();
                 this.SetDataGridViewColumsWidth();
                 this.btnNoteDelete.Enabled = false;
@@ -202,7 +202,7 @@ namespace NoteFly
                 }
             }
 
-            this.resetdatagrid();
+            this.Resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
         }
 
@@ -300,7 +300,7 @@ namespace NoteFly
                     this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
                 }
 
-                this.resetdatagrid();
+                this.Resetdatagrid();
                 xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
             }
             
@@ -351,7 +351,7 @@ namespace NoteFly
         /// <param name="e">DataGridViewCellMouse event arguments</param>
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            this.resetdatagrid();
+            this.Resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
             this.dataGridView1.Refresh();
         }
@@ -467,7 +467,7 @@ namespace NoteFly
                 }
             }
 
-            this.resetdatagrid();
+            this.Resetdatagrid();
             this.DrawNotesGrid();
             GC.Collect();
         }
@@ -475,7 +475,7 @@ namespace NoteFly
         /// <summary>
         /// Reset the previous drawed row numbers in datagridview1.
         /// </summary>
-        private void resetdatagrid()
+        public void Resetdatagrid()
         {
             this.prevrownr = -1;
             this.secondprevrownr = -2;
@@ -487,10 +487,10 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
-            this.resetdatagrid();
+            this.Resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
-			
+
             DataTable datatable = new DataTable();
             this.dataGridView1.DataSource = datatable;
             datatable.Columns.Add("nr", typeof(string));
@@ -498,15 +498,17 @@ namespace NoteFly
             datatable.Columns["nr"].Unique = true;
             datatable.Columns.Add("title", typeof(string));
             datatable.Columns.Add("visible", typeof(bool));
-            datatable.Columns.Add("skin", typeof(string));			
+            datatable.Columns.Add("skin", typeof(string));
             datatable.DefaultView.AllowEdit = true;
             datatable.DefaultView.AllowNew = false;
-			if (this.dataGridView1.Columns["nr"]!=null) {
+            if (this.dataGridView1.Columns["nr"]!=null) {
              this.dataGridView1.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			}
-			if (this.dataGridView1.Columns["visible"]!=null) {
+            }
+
+            if (this.dataGridView1.Columns["visible"]!=null) {
                 this.dataGridView1.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-			}
+            }
+
             this.dataGridView1.RowPostPaint += new DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             for (int i = 0; i < this.notes.CountNotes; i++)
             {

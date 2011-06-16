@@ -234,6 +234,7 @@ namespace NoteFly
         {
             if (frmmanagenotes != null)
             {
+                frmmanagenotes.Resetdatagrid();
                 frmmanagenotes.Refresh();
             }
         }
