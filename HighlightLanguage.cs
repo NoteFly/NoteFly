@@ -44,7 +44,7 @@ namespace NoteFly
         /// <summary>
         /// The position where the documents ends.
         /// </summary>
-        private int posdocend;
+        private int posdocend = int.MaxValue;
 
         /// <summary>
         /// A string array of keywords used in this language
