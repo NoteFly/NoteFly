@@ -19,10 +19,7 @@
 //-----------------------------------------------------------------------
 namespace NoteFlyTests
 {
-    using System;
     using System.Drawing;
-    using System.IO;
-    using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NoteFly;
     

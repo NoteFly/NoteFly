@@ -24,7 +24,7 @@ namespace NoteFly
     using System;
     using System.ComponentModel;
     using System.Drawing;
-    using System.IO;
+
 #if windows
     using System.Runtime.InteropServices;
 #endif
@@ -771,6 +771,17 @@ namespace NoteFly
                         break;
                 }
             }
+        }
+
+        
+        /// <summary>
+        /// Toggle wrap note content lines.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuWrapLines_Click(object sender, EventArgs e)
+        {
+            this.rtbNote.WordWrap = this.menuWrapLines.Checked;
         }
 
         #endregion Methods

@@ -19,7 +19,6 @@
 //-----------------------------------------------------------------------
 namespace NoteFly
 {
-    using System;
 
     /// <summary>
     /// Settings struct.

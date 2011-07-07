@@ -21,7 +21,6 @@
 
 namespace NoteFly
 {
-    using System.Drawing;
 
     /// <summary>
     /// The Note form class
@@ -177,6 +176,7 @@ namespace NoteFly
             this.menuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.menuLockNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuWrapLines = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
@@ -236,6 +236,7 @@ namespace NoteFly
             this.menuSendTo,
             this.menuOnTop,
             this.menuLockNote,
+            this.menuWrapLines,
             this.toolStripMenuItem1,
             this.menuRollUp,
             this.menuHideNote});
@@ -303,6 +304,16 @@ namespace NoteFly
             this.menuLockNote.Size = new System.Drawing.Size(184, 22);
             this.menuLockNote.Text = "&Lock note";
             this.menuLockNote.Click += new System.EventHandler(this.locknoteToolStripMenuItem_Click);
+            // 
+            // menuWrapLines
+            // 
+            this.menuWrapLines.Checked = true;
+            this.menuWrapLines.CheckOnClick = true;
+            this.menuWrapLines.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuWrapLines.Name = "menuWrapLines";
+            this.menuWrapLines.Size = new System.Drawing.Size(184, 22);
+            this.menuWrapLines.Text = "Wrap lines";
+            this.menuWrapLines.Click += new System.EventHandler(this.menuWrapLines_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -458,7 +469,7 @@ namespace NoteFly
             this.KeyPreview = true;
             this.Location = new System.Drawing.Point(100, 50);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1023, 799);
+            this.MaximumSize = new System.Drawing.Size(1280, 1024);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(80, 60);
             this.Name = "FrmNote";
@@ -481,5 +492,7 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.ToolStripMenuItem menuWrapLines;
     }
 }

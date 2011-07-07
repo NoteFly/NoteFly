@@ -6,8 +6,8 @@
       <xs:sequence>
         <xs:element name="visible" type="xs:boolean" />
         <xs:element name="ontop" type="xs:boolean" />
-        <xs:element name="locked" type="xs:boolean" />        
-        <xs:element name="rollup" type="xs:boolean" />   
+        <xs:element name="locked" type="xs:boolean" />
+        <xs:element name="rollup" type="xs:boolean" />
         <xs:element name="X" type="xs:int" />
         <xs:element name="Y" type="xs:int" />
         <xs:element name="width" type="xs:int" />

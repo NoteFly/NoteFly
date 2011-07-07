@@ -19,7 +19,6 @@
 //-----------------------------------------------------------------------
 namespace NoteFly
 {
-    using System;
     using System.Windows.Forms;
 
     /// <summary>

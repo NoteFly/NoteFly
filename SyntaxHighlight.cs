@@ -24,10 +24,7 @@ namespace NoteFly
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using System.IO;
     using System.Windows.Forms;
-    using System.Xml;
-    using System.Text;
 
     /// <summary>
     /// Highlight class, provides highlighting to richtext.
@@ -44,6 +41,8 @@ namespace NoteFly
 
         private static int htmlnodestartpos = 0;
         private static int htmlnodeendpos = Int32.MaxValue;
+        private static bool outerhtml = true;
+        private static bool htmlstringpart = false;
 
         /// <summary>
         /// Are keyword initilized
@@ -129,7 +128,7 @@ namespace NoteFly
                             }
 
                         }
-                        lastpos = i+1; // without space or linefeed
+                        lastpos = i + 1; // without space or linefeed
                     }
                 }
 
@@ -232,81 +231,81 @@ namespace NoteFly
         /// <param name="lenhtmltag">The length of the compleet tag.</param>
         private static void ValidatingHtmlPart(string ishtml, RichTextBox rtb, int posstartpart)
         {
-            //ishtml = RemoveEnterChars(ishtml);
-
-            // e.g.: <body color="#333333" lang="en"> 
-            // ishtml 1: <body
-            // ishtml 2: color="#333333"
-            // ishtml 3: lang="en">
-            //
-            // e.g.: <p>test</p><br>
-            // ishtml 1: <p>test</p><br>
-            //
-
-            ishtml = ishtml.ToLower();
-
-            StringBuilder sbnode = new StringBuilder();
-            List<String> attributes = new List<string>(); // these attributes are within this part.
-            bool outerhtml = false;
-
-            for (int c = 0; c < ishtml.Length; c++)
+            if (htmlstringpart)
             {
-                if (ishtml[c] == '<')
+                for (int i = 0; i < ishtml.Length; i++)
                 {
-                    if (htmlnodeendpos > htmlnodestartpos)
+                    ColorText(rtb, posstartpart + i, 1, Settings.HighlightHTMLColorString); // '"' itself too.
+                    if (ishtml[i] == '"')
                     {
-                        htmlnodestartpos = posstartpart + c + 1; // without <
-                    }
-                    outerhtml = false;
-                    //else
-                    //{
-                        //ColorText(rtb, htmlnodestartpos, posstartpart + c, Settings.HighlightHTMLColorInvalid); // e.g. <saf<asfd -> red: <saf<
-                    //}
-                }
-                else if (ishtml[c] == '>')
-                {
-                    //if (htmlnodestartpos < htmlnodeendpos)
-                    //{
-                    if (!outerhtml)
-                    {
-                        htmlnodeendpos = posstartpart + c;
-                        attributes.Add(sbnode.ToString());
-                        sbnode = new StringBuilder();
-                        outerhtml = true;
+                        htmlstringpart = false;
+                        break;
                     }
                 }
-                else
-                {
-                    if (ishtml[c] != '/')
-                    {
-                        sbnode.Append(ishtml[c]);
-                    }
+            }
+            else
+            {
+                ishtml = ishtml.ToLower();
+                List<String> attributes = new List<string>(); // these attributes are within this part.
+                int attrstartpos = posstartpart;
+                int attrlen = 0;
+                bool attrstartposset = false;
 
-                    if (c == ishtml.Length - 1)
+                for (int c = 0; c < ishtml.Length; c++)
+                {
+                    if (ishtml[c] == '<')
+                    {
+                        if (htmlnodeendpos > htmlnodestartpos)
+                        {
+                            htmlnodestartpos = posstartpart + c + 1; // without <
+                            if (!attrstartposset)
+                            {
+                                attrstartpos = htmlnodestartpos;
+                                attrstartposset = true;
+                            }
+                        }
+                        outerhtml = false;
+                    }
+                    else if (ishtml[c] == '>')
                     {
                         if (!outerhtml)
                         {
-                            attributes.Add(sbnode.ToString());
+                            htmlnodeendpos = posstartpart + c;
+                            attributes.Add(rtb.Text.Substring(attrstartpos,attrlen));
+                            attrlen = 0;
+                            outerhtml = true;
+                        }
+                    }
+                    else
+                    {
+                        if (!outerhtml)
+                        {
+                            if (!attrstartposset)
+                            {
+                                attrstartpos = posstartpart + c;
+                                attrstartposset = true;
+                            }
+                            attrlen++;
+
+                            if (c == ishtml.Length - 1)
+                            {
+                                attributes.Add( rtb.Text.Substring(attrstartpos,attrlen)); //sbattr.ToString());
+                                attrlen = 0;
+                            }
                         }
                     }
                 }
-            }
 
-            for (int nattr = 0; nattr < attributes.Count; nattr++)
-            {
-                int attributestartpos = posstartpart;
-                if (ishtml[0] == '<')
+                for (int nattr = 0; nattr < attributes.Count; nattr++)
                 {
-                    attributestartpos += 1;
-                }
-                
-                for (int i = 0; i < nattr; i++)
-                {
-                    attributestartpos += attributes[i].Length;
-                }
-                ValidateHTMLAttribute(attributes[nattr], rtb, attributestartpos);
-            }
+                    for (int i = 0; i < nattr; i++)
+                    {
+                        attrstartpos += attributes[i].Length;
+                    }
 
+                    ValidateHTMLAttribute(attributes[nattr], rtb, attrstartpos, attributes[nattr].Length);
+                }
+            }
         }
 
         /// <summary>
@@ -314,23 +313,56 @@ namespace NoteFly
         /// </summary>
         /// <param name="htmltag"></param>
         /// <returns></returns>
-        private static void ValidateHTMLAttribute(string htmlattribute, RichTextBox rtb, int attributestartpos)
+        private static void ValidateHTMLAttribute(string htmlattribute, RichTextBox rtb, int attributestartpos, int attrlen)
         {
-            String[] attr = htmlattribute.Split('=');
+            if (htmlattribute == "/") { return; }
+
+            String[] attrsepnamevaleau = htmlattribute.Split('=');
+            bool knowattr = false;
+
+            string attrname = attrsepnamevaleau[0];
+            if (attrsepnamevaleau[0][0] == '/')
+            {
+                attrname = attrname.Remove(0, 1);
+            }
+
             for (int i = 0; i < langhtml.NumKeywords; i++)
             {
-                if (langhtml.GetKeyword(i) == attr[0])
+                if (langhtml.GetKeyword(i) == attrname)
                 {
-                    // Right
-                    ColorText(rtb, attributestartpos, attr[0].Length, Settings.HighlightHTMLColorValid);
+                    knowattr = true;
+                    break;
                 }
             }
 
-            if (attr.Length > 1)
+            if (!knowattr)
             {
-                if (attr[1].StartsWith("="))
+                // Wrong
+                ColorText(rtb, attributestartpos, attrlen, Settings.HighlightHTMLColorInvalid);
+            }
+
+            for (int i = 0; i < attrsepnamevaleau.Length; i++)
+            {
+                if (i == 1)
                 {
-                    // TODO string
+                    if (attrsepnamevaleau[1].StartsWith("\"") || attrsepnamevaleau[1].StartsWith("'"))
+                    {
+                        // is string
+                        int posstartstring = attributestartpos + attrsepnamevaleau[0].Length + 1; // +1 for '=' 
+                        ColorText(rtb, posstartstring, attrsepnamevaleau[1].Length, Settings.HighlightHTMLColorString);
+                        if (!attrsepnamevaleau[1].EndsWith("\"") && !attrsepnamevaleau[1].EndsWith("'"))
+                        {
+                            htmlstringpart = true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (knowattr)
+                    {
+                        // Right
+                        ColorText(rtb, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorValid);
+                    }
                 }
             }
         }
@@ -365,7 +397,7 @@ namespace NoteFly
             {
                 if (isphp == langphp.GetKeyword(i))
                 {
-                    //todo
+                    ColorText(rtb, posstart, len, Settings.HighlightPHPColorValidfunctions);
                 }
             }
 
@@ -374,11 +406,33 @@ namespace NoteFly
             {
                 if (isphp[n] == '"')
                 {
-                    //todo
+                    // TODO
                 }
             }
 
         }
+
+        //private static bool Checkposition(HighlightLanguage uselang, int posstart, int posend)
+        //{
+        //    bool between = false;
+        //    if (langhtml.Equals(uselang))
+        //    {
+        //        // uselang is html
+        //        if ((langphp.PosDocumentEnd < posstart) || (langphp.PosDocumentStart > posend))
+        //        {
+        //            between = false;
+        //        }
+        //    }
+        //    else if (langphp.Equals(uselang))
+        //    {
+        //        // uselang is php
+        //    }
+        //    else if (langsql.Equals(uselang))
+        //    {
+        //        // uselang is sql
+        //    }
+        //    return between;
+        //}
 
         /// <summary>
         /// Find out if it is a sql keyword.
@@ -388,6 +442,8 @@ namespace NoteFly
         private static void ValidatingSqlPart(string issql, RichTextBox rtb, int posstart, int len)
         {
             issql = RemoveEnterAndTabChars(issql);
+
+            // TODO 
 
             //for (int i = 0; i < keywordssql.Length; i++)
             //{
