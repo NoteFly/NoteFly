@@ -39,8 +39,6 @@ namespace NoteFly
         private static HighlightLanguage langhtml;
         private static HighlightLanguage langsql;
 
-        private static int htmlnodestartpos = 0;
-        private static int htmlnodeendpos = Int32.MaxValue;
         private static bool outerhtml = true;
         private static bool htmlstringpart = false;
 
@@ -77,6 +75,7 @@ namespace NoteFly
         public static void CheckSyntaxFull(RichTextBox rtb, int skinnr, Notes notes)
         {
             int cursorpos = rtb.SelectionStart;
+            int sellen = rtb.SelectionLength;
             ResetHighlighting(rtb, skinnr, notes);
 
             // check if highlighting is enabled at all.
@@ -133,6 +132,7 @@ namespace NoteFly
                 }
 
                 rtb.SelectionStart = cursorpos;
+                rtb.SelectionLength = sellen;
             }
         }
 
@@ -203,11 +203,7 @@ namespace NoteFly
             rtb.SelectAll();
             rtb.SelectionColor = notes.GetTextClr(skinnr);
             rtb.Select(0, 0);
-
             rtb.ForeColor = notes.GetTextClr(skinnr);
-
-            htmlnodestartpos = 0;
-            htmlnodeendpos = Int32.MaxValue;
         }
 
         /// <summary>
@@ -225,44 +221,38 @@ namespace NoteFly
         /// <summary>
         /// Highlight some text part on html split by spaces.
         /// </summary>
-        /// <param name="ishtml">string without spaces.</param>
+        /// <param name="ishtml">string without spaces. length needs to be >0</param>
         /// <param name="rtb">The richtextbox.</param>
         /// <param name="posstarthtmltag">the start position in the richtextbox.</param>
         /// <param name="lenhtmltag">The length of the compleet tag.</param>
         private static void ValidatingHtmlPart(string ishtml, RichTextBox rtb, int posstartpart)
         {
-            if (htmlstringpart)
+            ishtml = ishtml.ToLower();
+            List<String> attributes = new List<string>(); // these attributes are within this part.
+            List<int> attributesstartpos = new List<int>();
+            int attrstartpos = posstartpart;
+            int attrlen = 0;
+            bool attrstartposset = false;
+
+            for (int c = 0; c < ishtml.Length; c++)
             {
-                for (int i = 0; i < ishtml.Length; i++)
+                if (htmlstringpart)
                 {
-                    ColorText(rtb, posstartpart + i, 1, Settings.HighlightHTMLColorString); // '"' itself too.
-                    if (ishtml[i] == '"')
+                    ColorText(rtb, posstartpart + c, 1, Settings.HighlightHTMLColorString); // '"' or '\'' itself too.
+                    if (ishtml[c] == '"' || ishtml[c] == '\'')
                     {
                         htmlstringpart = false;
-                        break;
                     }
                 }
-            }
-            else
-            {
-                ishtml = ishtml.ToLower();
-                List<String> attributes = new List<string>(); // these attributes are within this part.
-                int attrstartpos = posstartpart;
-                int attrlen = 0;
-                bool attrstartposset = false;
-
-                for (int c = 0; c < ishtml.Length; c++)
+                else
                 {
                     if (ishtml[c] == '<')
                     {
-                        if (htmlnodeendpos > htmlnodestartpos)
+                        if (!attrstartposset)
                         {
-                            htmlnodestartpos = posstartpart + c + 1; // without <
-                            if (!attrstartposset)
-                            {
-                                attrstartpos = htmlnodestartpos;
-                                attrstartposset = true;
-                            }
+                            attrstartpos = posstartpart + c + 1; // without <
+                            attributesstartpos.Add(attrstartpos);
+                            attrstartposset = true;
                         }
                         outerhtml = false;
                     }
@@ -270,11 +260,14 @@ namespace NoteFly
                     {
                         if (!outerhtml)
                         {
-                            htmlnodeendpos = posstartpart + c;
-                            attributes.Add(rtb.Text.Substring(attrstartpos,attrlen));
-                            attrlen = 0;
-                            outerhtml = true;
+                            if (attrlen > 0)
+                            {
+                                attributes.Add(rtb.Text.Substring(attrstartpos, attrlen));
+                                attrlen = 0;
+                            }
+                            attrstartposset = false;
                         }
+                        outerhtml = true;
                     }
                     else
                     {
@@ -283,27 +276,31 @@ namespace NoteFly
                             if (!attrstartposset)
                             {
                                 attrstartpos = posstartpart + c;
+                                attributesstartpos.Add(attrstartpos);
                                 attrstartposset = true;
                             }
                             attrlen++;
 
                             if (c == ishtml.Length - 1)
                             {
-                                attributes.Add( rtb.Text.Substring(attrstartpos,attrlen)); //sbattr.ToString());
+                                attributes.Add(rtb.Text.Substring(attrstartpos, attrlen)); //sbattr.ToString());
                                 attrlen = 0;
                             }
                         }
                     }
                 }
+            }
 
-                for (int nattr = 0; nattr < attributes.Count; nattr++)
+            for (int nattr = 0; nattr < attributes.Count; nattr++)
+            {
+                for (int i = 0; i < nattr; i++)
                 {
-                    for (int i = 0; i < nattr; i++)
-                    {
-                        attrstartpos += attributes[i].Length;
-                    }
+                    attrstartpos += attributes[i].Length;
+                }
 
-                    ValidateHTMLAttribute(attributes[nattr], rtb, attrstartpos, attributes[nattr].Length);
+                if (nattr < attributesstartpos.Count)
+                {
+                    ValidateHTMLAttribute(attributes[nattr], rtb, attributesstartpos[nattr], attributes[nattr].Length);
                 }
             }
         }
@@ -315,12 +312,13 @@ namespace NoteFly
         /// <returns></returns>
         private static void ValidateHTMLAttribute(string htmlattribute, RichTextBox rtb, int attributestartpos, int attrlen)
         {
+            //if (htmlattribute.Length == 0) { return; }
             if (htmlattribute == "/") { return; }
-
-            String[] attrsepnamevaleau = htmlattribute.Split('=');
+            char[] chrs = new char[] { '=' };
+            string[] attrsepnamevaleau = htmlattribute.Split(chrs, 2);
             bool knowattr = false;
-
             string attrname = attrsepnamevaleau[0];
+
             if (attrsepnamevaleau[0][0] == '/')
             {
                 attrname = attrname.Remove(0, 1);
@@ -338,30 +336,32 @@ namespace NoteFly
             if (!knowattr)
             {
                 // Wrong
-                ColorText(rtb, attributestartpos, attrlen, Settings.HighlightHTMLColorInvalid);
+                ColorText(rtb, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorInvalid);
             }
 
             for (int i = 0; i < attrsepnamevaleau.Length; i++)
             {
-                if (i == 1)
-                {
-                    if (attrsepnamevaleau[1].StartsWith("\"") || attrsepnamevaleau[1].StartsWith("'"))
-                    {
-                        // is string
-                        int posstartstring = attributestartpos + attrsepnamevaleau[0].Length + 1; // +1 for '=' 
-                        ColorText(rtb, posstartstring, attrsepnamevaleau[1].Length, Settings.HighlightHTMLColorString);
-                        if (!attrsepnamevaleau[1].EndsWith("\"") && !attrsepnamevaleau[1].EndsWith("'"))
-                        {
-                            htmlstringpart = true;
-                        }
-                    }
-                }
-                else
+                if (i == 0)
                 {
                     if (knowattr)
                     {
                         // Right
                         ColorText(rtb, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorValid);
+                    }
+                }
+                else if (i == 1)
+                {
+                    if (attrsepnamevaleau[1].StartsWith("\"") || attrsepnamevaleau[1].StartsWith("'"))
+                    {
+                        // is string
+                        htmlstringpart = true;
+                        int posstartstring = attributestartpos + attrsepnamevaleau[0].Length + 1; // +1 for '=' 
+                        ColorText(rtb, posstartstring, attrsepnamevaleau[1].Length, Settings.HighlightHTMLColorString);
+
+                        if (attrsepnamevaleau[1].EndsWith("\"") || attrsepnamevaleau[1].EndsWith("'"))
+                        {
+                            htmlstringpart = false;
+                        }
                     }
                 }
             }

@@ -510,6 +510,7 @@ namespace NoteFly
                 SyntaxHighlight.InitHighlighter();
             }
 
+            Application.DoEvents();
             SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             if (!this.saveWorker.IsBusy)
             {
