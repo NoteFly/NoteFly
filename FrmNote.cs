@@ -338,7 +338,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note, this.Location);
+            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note, this.Location, this.Size);
             frmnewnote.Show();
             this.note.DestroyForm();
         }

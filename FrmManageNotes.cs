@@ -409,6 +409,7 @@ namespace NoteFly
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
                 this.notes.FrmManageNotesNeedUpdate = true;
+                Application.DoEvents();
             }
         }
 

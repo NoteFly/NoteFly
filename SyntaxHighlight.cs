@@ -92,7 +92,7 @@ namespace NoteFly
                 for (int i = 0; i < rtb.TextLength; i++)
                 {
 #if !macos
-                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\n')
+                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\n' || i == rtb.Text.Length-1)
 #elif macos
                     if (rtb.Text[i] == ' ' || rtb.Text[i] == '\r')
 #endif
@@ -204,6 +204,8 @@ namespace NoteFly
             rtb.SelectionColor = notes.GetTextClr(skinnr);
             rtb.Select(0, 0);
             rtb.ForeColor = notes.GetTextClr(skinnr);
+            outerhtml = true;
+            htmlstringpart = false;
         }
 
         /// <summary>
@@ -276,7 +278,10 @@ namespace NoteFly
                             if (!attrstartposset)
                             {
                                 attrstartpos = posstartpart + c;
-                                attributesstartpos.Add(attrstartpos);
+                                //if (attrlen > 0)
+                                //{
+                                    attributesstartpos.Add(attrstartpos);
+                                //}
                                 attrstartposset = true;
                             }
                             attrlen++;
@@ -300,7 +305,7 @@ namespace NoteFly
 
                 if (nattr < attributesstartpos.Count)
                 {
-                    ValidateHTMLAttribute(attributes[nattr], rtb, attributesstartpos[nattr], attributes[nattr].Length);
+                    ValidateHTMLAttribute(attributes[nattr], rtb, attributesstartpos[nattr]);
                 }
             }
         }
@@ -308,20 +313,32 @@ namespace NoteFly
         /// <summary>
         /// Validate HTML attribute
         /// </summary>
-        /// <param name="htmltag"></param>
+        /// <param name="htmlattribute">Attribute of the HTML node to validate</param>
+        /// <param name="rtb">Richtextbox with note content</param>
+        /// <param name="attributestartpos">Startposition of the attribute within the htmlpart.</param>
         /// <returns></returns>
-        private static void ValidateHTMLAttribute(string htmlattribute, RichTextBox rtb, int attributestartpos, int attrlen)
+        private static void ValidateHTMLAttribute(string htmlattribute, RichTextBox rtb, int attributestartpos)
         {
-            //if (htmlattribute.Length == 0) { return; }
-            if (htmlattribute == "/") { return; }
+            if (htmlattribute == "/" || htmlattribute.Length < 1)
+            {
+                return;
+            }
+
             char[] chrs = new char[] { '=' };
             string[] attrsepnamevaleau = htmlattribute.Split(chrs, 2);
             bool knowattr = false;
             string attrname = attrsepnamevaleau[0];
 
-            if (attrsepnamevaleau[0][0] == '/')
+            if (attrname.Length > 0)
             {
-                attrname = attrname.Remove(0, 1);
+                if (attrname[0] == '/')
+                {
+                    attrname = attrname.Remove(0, 1);
+                }
+            }
+            else
+            {
+                return;
             }
 
             for (int i = 0; i < langhtml.NumKeywords; i++)

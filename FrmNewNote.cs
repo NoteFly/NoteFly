@@ -68,11 +68,13 @@ namespace NoteFly
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
         /// <param name="note">the note to edit.</param>
-        /// <param name="locfrmnewnote">The location of the FrmNewNote</param>
-        public FrmNewNote(Notes notes, Note note, Point locfrmnewnote)
+        /// <param name="locfrmnewnote">The location of the FrmNewNote should get.</param>
+        /// <param name="sizefrmnewnote">The size of the FrnNewNote should get.</param>
+        public FrmNewNote(Notes notes, Note note, Point locfrmnewnote, Size sizefrmnewnote)
         {
             this.ConstructFrmNewNote(notes);
             this.Location = locfrmnewnote;
+            this.Size = sizefrmnewnote;
             this.note = note;
             this.Text = "edit note";
             this.SetColorsForm(this.note.SkinNr);
@@ -107,7 +109,7 @@ namespace NoteFly
             }
 
             this.SetColorsForm(Settings.NotesDefaultSkinnr);
-            this.tbTitle.Text = DateTime.Now.ToString();
+            this.tbTitle.Text = DateTime.Now.ToShortDateString() + " "+DateTime.Now.ToShortTimeString();
         }
 
         #endregion Constructors 
@@ -173,6 +175,8 @@ namespace NoteFly
             else if (string.IsNullOrEmpty(this.rtbNewNote.Text))
             {
                 this.rtbNewNote.Text = "Please enter some content.";
+                this.rtbNewNote.Focus();
+                this.rtbNewNote.SelectAll();
             }
             else
             {
