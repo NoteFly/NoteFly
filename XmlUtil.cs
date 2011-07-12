@@ -320,6 +320,9 @@ namespace NoteFly
                             break;
 
                         // strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
+                        case "HighlightHTMLColorComment":
+                            Settings.HighlightHTMLColorComment = xmlread.ReadElementContentAsString();
+                            break;
                         case "HighlightHTMLColorInvalid":
                             Settings.HighlightHTMLColorInvalid = xmlread.ReadElementContentAsString();
                             break;
@@ -471,6 +474,7 @@ namespace NoteFly
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;
             Settings.HighlightHTML = false;
+            Settings.HighlightHTMLColorComment = "#B200FF";
             Settings.HighlightHTMLColorInvalid = "#FF0000";
             Settings.HighlightHTMLColorValid = "#0026FF";
             Settings.HighlightHTMLColorString = "#808080";
@@ -692,6 +696,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
 
                 // strings
+                xmlwrite.WriteElementString("HighlightHTMLColorComment", Settings.HighlightHTMLColorComment);
                 xmlwrite.WriteElementString("HighlightHTMLColorInvalid", Settings.HighlightHTMLColorInvalid);
                 xmlwrite.WriteElementString("HighlightHTMLColorValid", Settings.HighlightHTMLColorValid);
                 xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.HighlightHTMLColorString);

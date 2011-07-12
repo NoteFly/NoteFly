@@ -138,17 +138,22 @@ namespace NoteFly
         /// <summary>
         /// Do HTML highlighting on notes.
         /// </summary>
-        public static bool HighlightHTML; 
+        public static bool HighlightHTML;
+
+        /// <summary>
+        /// The HTML comment color
+        /// </summary>
+        public static string HighlightHTMLColorComment = "#B200FF";
 
         /// <summary>
         /// The HTML invalid tag color.
         /// </summary>
-        public static string HighlightHTMLColorInvalid; 
+        public static string HighlightHTMLColorInvalid;
 
         /// <summary>
         /// The HTML valid tag color.
         /// </summary>
-        public static string HighlightHTMLColorValid; 
+        public static string HighlightHTMLColorValid;
 
         /// <summary>
         /// The HTML string content color.

@@ -166,6 +166,7 @@ namespace NoteFly
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNewNote));
             this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuSaveNewNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShowtoolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStickyOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.menuImportfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPasteToContent = new System.Windows.Forms.ToolStripMenuItem();
@@ -186,7 +187,7 @@ namespace NoteFly
             this.btnTextBulletlist = new System.Windows.Forms.Button();
             this.rtbNewNote = new System.Windows.Forms.RichTextBox();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
-            this.menuShowtoolbar = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuWordWarp = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
@@ -197,13 +198,14 @@ namespace NoteFly
             this.contextMenuStripTextActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuSaveNewNote,
             this.menuShowtoolbar,
+            this.menuWordWarp,
             this.menuStickyOnTop,
             this.menuImportfile,
             this.menuPasteToContent,
             this.menuCopyContent,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 158);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 202);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -214,6 +216,15 @@ namespace NoteFly
             this.menuSaveNewNote.Size = new System.Drawing.Size(288, 22);
             this.menuSaveNewNote.Text = "&Save note";
             this.menuSaveNewNote.Click += new System.EventHandler(this.btnAddNote_Click);
+            // 
+            // menuShowtoolbar
+            // 
+            this.menuShowtoolbar.Checked = true;
+            this.menuShowtoolbar.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuShowtoolbar.Name = "menuShowtoolbar";
+            this.menuShowtoolbar.Size = new System.Drawing.Size(288, 22);
+            this.menuShowtoolbar.Text = "Show format tools";
+            this.menuShowtoolbar.Click += new System.EventHandler(this.menuShowtoolbar_Click);
             // 
             // menuStickyOnTop
             // 
@@ -549,10 +560,10 @@ namespace NoteFly
             this.rtbNewNote.Location = new System.Drawing.Point(2, 41);
             this.rtbNewNote.MaxLength = 999999;
             this.rtbNewNote.Name = "rtbNewNote";
-            this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;			
+            this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
             this.rtbNewNote.TabIndex = 1;
-            this.rtbNewNote.Text = string.Empty;
+            this.rtbNewNote.Text = "";
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -572,14 +583,15 @@ namespace NoteFly
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
-            // menuShowtoolbar
+            // menuWordWarp
             // 
-            this.menuShowtoolbar.Checked = true;
-            this.menuShowtoolbar.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.menuShowtoolbar.Name = "menuShowtoolbar";
-            this.menuShowtoolbar.Size = new System.Drawing.Size(288, 22);
-            this.menuShowtoolbar.Text = "Show format tools";
-            this.menuShowtoolbar.Click += new System.EventHandler(this.menuShowtoolbar_Click);
+            this.menuWordWarp.Checked = true;
+            this.menuWordWarp.CheckOnClick = true;
+            this.menuWordWarp.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuWordWarp.Name = "menuWordWarp";
+            this.menuWordWarp.Size = new System.Drawing.Size(288, 22);
+            this.menuWordWarp.Text = "Word wrap";
+            this.menuWordWarp.Click += new System.EventHandler(this.menuWordWarp_Click);
             // 
             // FrmNewNote
             // 
@@ -625,5 +637,7 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.ToolStripMenuItem menuWordWarp;
     }
 }

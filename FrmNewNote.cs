@@ -70,11 +70,13 @@ namespace NoteFly
         /// <param name="note">the note to edit.</param>
         /// <param name="locfrmnewnote">The location of the FrmNewNote should get.</param>
         /// <param name="sizefrmnewnote">The size of the FrnNewNote should get.</param>
-        public FrmNewNote(Notes notes, Note note, Point locfrmnewnote, Size sizefrmnewnote)
+        public FrmNewNote(Notes notes, Note note, Point locfrmnewnote, Size sizefrmnewnote, bool wordwrap)
         {
             this.ConstructFrmNewNote(notes);
             this.Location = locfrmnewnote;
             this.Size = sizefrmnewnote;
+            this.rtbNewNote.WordWrap = wordwrap;
+            this.menuWordWarp.Checked = wordwrap;
             this.note = note;
             this.Text = "edit note";
             this.SetColorsForm(this.note.SkinNr);
@@ -912,6 +914,16 @@ namespace NoteFly
             }
 
             this.SetToolbarEnabled(this.menuShowtoolbar.Checked);
+        }
+
+        /// <summary>
+        /// Toggle to wrap lines in the richedit control
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuWordWarp_Click(object sender, EventArgs e)
+        {
+            this.rtbNewNote.WordWrap = this.menuWordWarp.Checked;
         }
 
         #endregion Methods

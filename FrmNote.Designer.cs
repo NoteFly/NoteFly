@@ -176,7 +176,7 @@ namespace NoteFly
             this.menuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.menuLockNote = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuWrapLines = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuWordWrap = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
@@ -236,12 +236,12 @@ namespace NoteFly
             this.menuSendTo,
             this.menuOnTop,
             this.menuLockNote,
-            this.menuWrapLines,
+            this.menuWordWrap,
             this.toolStripMenuItem1,
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 224);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -305,15 +305,15 @@ namespace NoteFly
             this.menuLockNote.Text = "&Lock note";
             this.menuLockNote.Click += new System.EventHandler(this.locknoteToolStripMenuItem_Click);
             // 
-            // menuWrapLines
+            // menuWordWrap
             // 
-            this.menuWrapLines.Checked = true;
-            this.menuWrapLines.CheckOnClick = true;
-            this.menuWrapLines.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.menuWrapLines.Name = "menuWrapLines";
-            this.menuWrapLines.Size = new System.Drawing.Size(184, 22);
-            this.menuWrapLines.Text = "Wrap lines";
-            this.menuWrapLines.Click += new System.EventHandler(this.menuWrapLines_Click);
+            this.menuWordWrap.Checked = true;
+            this.menuWordWrap.CheckOnClick = true;
+            this.menuWordWrap.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuWordWrap.Name = "menuWordWrap";
+            this.menuWordWrap.Size = new System.Drawing.Size(184, 22);
+            this.menuWordWrap.Text = "Word wrap";
+            this.menuWordWrap.Click += new System.EventHandler(this.menuWordWrap_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -493,6 +493,6 @@ namespace NoteFly
 
         #endregion
 
-        private System.Windows.Forms.ToolStripMenuItem menuWrapLines;
+        private System.Windows.Forms.ToolStripMenuItem menuWordWrap;
     }
 }

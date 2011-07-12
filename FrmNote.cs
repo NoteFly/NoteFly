@@ -338,7 +338,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void editTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note, this.Location, this.Size);
+            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note, this.Location, this.Size, this.rtbNote.WordWrap);
             frmnewnote.Show();
             this.note.DestroyForm();
         }
@@ -774,15 +774,14 @@ namespace NoteFly
             }
         }
 
-        
         /// <summary>
-        /// Toggle wrap note content lines.
+        /// Toggle to wrap words in the note content.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuWrapLines_Click(object sender, EventArgs e)
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void menuWordWrap_Click(object sender, EventArgs e)
         {
-            this.rtbNote.WordWrap = this.menuWrapLines.Checked;
+            this.rtbNote.WordWrap = this.menuWordWrap.Checked;
         }
 
         #endregion Methods
