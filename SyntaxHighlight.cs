@@ -91,30 +91,35 @@ namespace NoteFly
 
                 int lastpos = 0;
 
-                for (int i = 0; i < rtb.TextLength; i++)
+                int maxpos = Settings.HighlightMaxchars;
+                if (rtb.TextLength < Settings.HighlightMaxchars)
+                {
+                    maxpos = rtb.TextLength;
+                }
+
+                for (int curpos = 0; curpos < maxpos; curpos++)
                 {
 #if !macos
-                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\n' || i == rtb.Text.Length-1)
+                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || curpos == rtb.Text.Length-1)
 #elif macos
-                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\r')
+                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\r' || curpos == rtb.Text.Length-1)
 #endif
                     {
-                        int lenbufcheck = i - lastpos;
-                        string bufcheck = rtb.Text.Substring(lastpos, lenbufcheck);
-                        if (lenbufcheck >= 1 && bufcheck.Length >= 1)
+                        string bufcheck = rtb.Text.Substring(lastpos, curpos - lastpos);
+                        if (bufcheck.Length > 0)
                         {
 
                             if (Settings.HighlightSQL)
                             {
-                                if (i > langsql.PosDocumentStart && i < langsql.PosDocumentEnd)
+                                if (curpos > langsql.PosDocumentStart && curpos < langsql.PosDocumentEnd)
                                 {
-                                    ValidatingSqlPart(bufcheck, rtb, lastpos, lenbufcheck);
+                                    ValidatingSqlPart(bufcheck, rtb, lastpos);
                                 }
                             }
 
                             if (Settings.HighlightPHP)
                             {
-                                if (i > langphp.PosDocumentStart && i < langphp.PosDocumentEnd)
+                                if (curpos > langphp.PosDocumentStart && curpos < langphp.PosDocumentEnd)
                                 {
                                     ValidatingPhpPart(bufcheck, rtb, lastpos);
                                 }
@@ -122,14 +127,14 @@ namespace NoteFly
 
                             if (Settings.HighlightHTML)
                             {
-                                if (i > langhtml.PosDocumentStart && i < langhtml.PosDocumentEnd)
+                                if (curpos > langhtml.PosDocumentStart && curpos < langhtml.PosDocumentEnd)
                                 {
                                     ValidatingHtmlPart(bufcheck, rtb, lastpos);
                                 }
                             }
 
                         }
-                        lastpos = i + 1; // without space or linefeed
+                        lastpos = curpos + 1; // without space or linefeed
                     }
                 }
 
@@ -211,18 +216,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Remove characters not used for checking keyword.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private static string RemoveEnterAndTabChars(string text)
-        {
-            text = text.Trim(new char[] { '\n', '\r', '\t' });
-            text = text.ToLower();
-            return text;
-        }
-
-        /// <summary>
         /// Highlight some text part on html split by spaces.
         /// </summary>
         /// <param name="ishtml">string without spaces. length needs to be >0</param>
@@ -291,10 +284,7 @@ namespace NoteFly
                                 if (!attrstartposset)
                                 {
                                     attrstartpos = posstartpart + c;
-                                    //if (attrlen > 0)
-                                    //{
                                     attributesstartpos.Add(attrstartpos);
-                                    //}
                                     attrstartposset = true;
                                 }
                                 attrlen++;
@@ -416,24 +406,31 @@ namespace NoteFly
         /// <returns></returns>
         private static void ValidatingPhpPart(string isphp, RichTextBox rtb, int posstart)
         {
-            //isphp = RemoveEnterAndTabChars(isphp);
-
-            if (isphp.StartsWith("$") && isphp.Length > 1)
+            int posvar = -1;
+            for (int curchr = 0; curchr < isphp.Length; curchr++)
             {
-                char c = isphp[1];
-                if (c > 58)
+                if (isphp[curchr] == '$')
                 {
-                    // is valid variable
-                    ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
+                    // is variable
+                    posvar = curchr;
                 }
-            }
-
-            // is assign:
-            for (int i = 0; i < isphp.Length; i++)
-            {
-                if (isphp[i] == '=')
+                else if ((isphp[curchr] < 48 || isphp[curchr] > 57) && (isphp[curchr] < 65 || isphp[curchr] > 122))
                 {
-                    ColorText(rtb, posstart+i, 1, Settings.HighlightPHPColorValidfunctions);
+                    if (isphp[curchr] != 34 && isphp[curchr] != 39) // not quotes
+                    {
+                        if (posvar >= 0)
+                        {
+                            ColorText(rtb, posstart + posvar, curchr - posvar, Settings.HighlightPHPColorDocumentstartend);
+                            posvar = -1;
+                        }
+                    }
+                }
+                else if (curchr == isphp.Length - 1)
+                {
+                    if (posvar >= 0)
+                    {
+                        ColorText(rtb, posstart + posvar, isphp.Length, Settings.HighlightPHPColorDocumentstartend);
+                    }
                 }
             }
 
@@ -484,9 +481,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="issql">The part to be check.</param>
         /// <returns>true if a keyword matches issql part.</returns>
-        private static void ValidatingSqlPart(string issql, RichTextBox rtb, int posstart, int len)
+        private static void ValidatingSqlPart(string issql, RichTextBox rtb, int posstart)
         {
-            issql = RemoveEnterAndTabChars(issql);
+            //issql = RemoveEnterAndTabChars(issql);
 
             // TODO 
 

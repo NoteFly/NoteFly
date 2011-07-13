@@ -338,8 +338,9 @@ namespace NoteFly
                     {
                         this.notes.GetNote(notepos).DestroyForm();
                     }
-                    
+
                     xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+                    this.BringToFront();
                 }
             }
         }
@@ -679,20 +680,27 @@ namespace NoteFly
             {
                 return;
             }
-			
+
             int partunit = (this.dataGridView1.Width - COLNOTENRFIXEDWIDTH) / 10;
-			if (this.dataGridView1.Columns["nr"] != null) {
-            this.dataGridView1.Columns["nr"].Width = 1 * COLNOTENRFIXEDWIDTH;
-			}
-			if (this.dataGridView1.Columns["title"] != null) {
-            this.dataGridView1.Columns["title"].Width = 6 * partunit;
-			}
-			if (this.dataGridView1.Columns["visible"]!=null) {
-            this.dataGridView1.Columns["visible"].Width = 1 * partunit;
-			}
-			if (this.dataGridView1.Columns["skin"]!=null) {
-            this.dataGridView1.Columns["skin"].Width = 3 * partunit;
-			}
+            if (this.dataGridView1.Columns["nr"] != null)
+            {
+                this.dataGridView1.Columns["nr"].Width = 1 * COLNOTENRFIXEDWIDTH;
+            }
+
+            if (this.dataGridView1.Columns["title"] != null)
+            {
+                this.dataGridView1.Columns["title"].Width = 6 * partunit;
+            }
+
+            if (this.dataGridView1.Columns["visible"]!=null)
+            {
+                this.dataGridView1.Columns["visible"].Width = 1 * partunit;
+            }
+
+            if (this.dataGridView1.Columns["skin"]!=null)
+            {
+                this.dataGridView1.Columns["skin"].Width = 3 * partunit;
+            }
         }
 
 #if windows

@@ -49,11 +49,6 @@ namespace NoteFly
         private System.Windows.Forms.Label lblTextLicense;
 
         /// <summary>
-        /// Link to FAQ page, for question about this programme.
-        /// </summary>
-        private System.Windows.Forms.LinkLabel linkLblFAQ;
-
-        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">is disposing</param>
@@ -80,7 +75,6 @@ namespace NoteFly
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
-            this.linkLblFAQ = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // okButton
@@ -120,9 +114,9 @@ namespace NoteFly
             // 
             this.linklblWebsite.AutoSize = true;
             this.linklblWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linklblWebsite.Location = new System.Drawing.Point(1, 141);
+            this.linklblWebsite.Location = new System.Drawing.Point(10, 140);
             this.linklblWebsite.Name = "linklblWebsite";
-            this.linklblWebsite.Size = new System.Drawing.Size(82, 18);
+            this.linklblWebsite.Size = new System.Drawing.Size(62, 18);
             this.linklblWebsite.TabIndex = 28;
             this.linklblWebsite.TabStop = true;
             this.linklblWebsite.Text = "Website";
@@ -139,24 +133,11 @@ namespace NoteFly
             this.lblTextLicense.Text = "This programme is released under the terms of GNU General Public License version3" +
                 "\r\n";
             // 
-            // linkLblFAQ
-            // 
-            this.linkLblFAQ.AutoSize = true;
-            this.linkLblFAQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLblFAQ.Location = new System.Drawing.Point(68, 144);
-            this.linkLblFAQ.Name = "linkLblFAQ";
-            this.linkLblFAQ.Size = new System.Drawing.Size(67, 15);
-            this.linkLblFAQ.TabIndex = 33;
-            this.linkLblFAQ.TabStop = true;
-            this.linkLblFAQ.Text = "questions?";
-            this.linkLblFAQ.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLblFAQ_LinkClicked);
-            // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(235, 171);
-            this.Controls.Add(this.linkLblFAQ);
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);
             this.Controls.Add(this.lblVersion);

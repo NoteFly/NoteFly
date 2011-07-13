@@ -136,6 +136,11 @@ namespace NoteFly
         public static float FontContentSize = 11;
 
         /// <summary>
+        /// The maximum number of characters to apply syntaxcheck on.
+        /// </summary>
+        public static int HighlightMaxchars = 10000;
+
+        /// <summary>
         /// Do HTML highlighting on notes.
         /// </summary>
         public static bool HighlightHTML;

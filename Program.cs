@@ -149,9 +149,10 @@ namespace NoteFly
         /// If set ask the user if the want to load the link.
         /// </summary>
         /// <param name="uri_text">the uniform resource location</param>
-        public static void LoadLink(string uri_text)
+        /// <param name="allowask">Allow to ask user if it wants to visit a url.</param>
+        public static void LoadLink(string uri_text, bool allow_ask)
         {
-            if (Settings.ConfirmLinkclick)
+            if (Settings.ConfirmLinkclick && allow_ask)
             {
                 System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Are you sure you want to visted: " + uri_text, "Are you sure?", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
                 if (result == System.Windows.Forms.DialogResult.Yes)

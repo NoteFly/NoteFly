@@ -27,12 +27,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmAbout : Form
     {
-        #region Fields (2) 
-
-        /// <summary>
-        /// constant project website frequently asked questions page.
-        /// </summary>
-        private const string NOTEFLYFAQURI = "http://www.notefly.org/faq.php";
+        #region Fields (1)
 
         /// <summary>
         /// constant project website uri.
@@ -56,18 +51,7 @@ namespace NoteFly
 
         #endregion Constructors 
 
-        #region Methods (3) 
-
-        /// <summary>
-        /// The FAQ link is clicked in the about dialog.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void linkLblFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Program.LoadLink(NOTEFLYFAQURI);
-            this.Close();
-        }
+        #region Methods (2)
 
         /// <summary>
         /// The Website link is clicked in the about dialog.
@@ -76,7 +60,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Program.LoadLink(NOTEFLYWEBSITEURI);
+            Program.LoadLink(NOTEFLYWEBSITEURI, false);
             this.Close();
         }
 

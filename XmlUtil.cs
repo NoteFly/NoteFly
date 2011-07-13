@@ -318,6 +318,9 @@ namespace NoteFly
                         case "UpdatecheckEverydays":
                             Settings.UpdatecheckEverydays = xmlread.ReadElementContentAsInt();
                             break;
+                        case "HighlightMaxchars":
+                            Settings.HighlightMaxchars = xmlread.ReadElementContentAsInt();
+                            break;
 
                         // strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
                         case "HighlightHTMLColorComment":
@@ -473,6 +476,7 @@ namespace NoteFly
             Settings.FontTitleFamily = "Arial";
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;
+            Settings.HighlightMaxchars = 10000;
             Settings.HighlightHTML = false;
             Settings.HighlightHTMLColorComment = "#B200FF";
             Settings.HighlightHTMLColorInvalid = "#FF0000";
@@ -694,6 +698,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("HighlightMaxchars", Settings.HighlightMaxchars.ToString(numfmtinfo));
 
                 // strings
                 xmlwrite.WriteElementString("HighlightHTMLColorComment", Settings.HighlightHTMLColorComment);

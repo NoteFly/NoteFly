@@ -666,7 +666,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void rtbNote_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            Program.LoadLink(e.LinkText);
+            Program.LoadLink(e.LinkText, true);
         }
 
         /// <summary>
