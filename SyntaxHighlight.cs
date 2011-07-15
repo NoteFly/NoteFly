@@ -31,7 +31,7 @@ namespace NoteFly
     /// </summary>
     public class SyntaxHighlight
     {
-        #region Fields (3)
+        #region Fields (9)
 
         private const string LANGFILE = "langs.xml";
 
@@ -355,13 +355,9 @@ namespace NoteFly
                 return;
             }
 
-            for (int i = 0; i < langhtml.NumKeywords; i++)
+            if (langhtml.FindKeyword(attrname))
             {
-                if (langhtml.GetKeyword(i) == attrname)
-                {
-                    knowattr = true;
-                    break;
-                }
+                knowattr = true;
             }
 
             if (!knowattr)
@@ -435,13 +431,19 @@ namespace NoteFly
             }
 
             // is know function:
-            for (int i = 0; i < langphp.NumKeywords; i++)
+
+            if (langphp.FindKeyword(isphp))
             {
-                if (isphp == langphp.GetKeyword(i))
-                {
-                    ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
-                }
+                ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
             }
+
+            //for (int i = 0; i < langphp.NumKeywords; i++)
+            //{
+            //    if (isphp == langphp.GetKeyword(i))
+            //    {
+            //        ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
+            //    }
+            //}
 
             // has string:
             for (int n = 0; n < isphp.Length; n++)
@@ -483,9 +485,7 @@ namespace NoteFly
         /// <returns>true if a keyword matches issql part.</returns>
         private static void ValidatingSqlPart(string issql, RichTextBox rtb, int posstart)
         {
-            //issql = RemoveEnterAndTabChars(issql);
-
-            // TODO 
+            // TODO check sql
 
             //for (int i = 0; i < keywordssql.Length; i++)
             //{

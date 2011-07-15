@@ -480,6 +480,9 @@ namespace NoteFly
             this.lblTextDefaultEmail = new System.Windows.Forms.Label();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.tabNetwerk = new System.Windows.Forms.TabPage();
+            this.lblLatestUpdateCheck = new System.Windows.Forms.Label();
+            this.lblTextLatestUpdateCheck = new System.Windows.Forms.Label();
+            this.btnCheckUpdates = new System.Windows.Forms.Button();
             this.lblTextDayAtStartup = new System.Windows.Forms.Label();
             this.numUpdateCheckDays = new System.Windows.Forms.NumericUpDown();
             this.lblTextCheckforupdatesevery = new System.Windows.Forms.Label();
@@ -498,9 +501,6 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnCheckUpdates = new System.Windows.Forms.Button();
-            this.lblTextLatestUpdateCheck = new System.Windows.Forms.Label();
-            this.lblLatestUpdateCheck = new System.Windows.Forms.Label();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -527,9 +527,9 @@ namespace NoteFly
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnOK.BackColor = System.Drawing.Color.LightGray;
-            this.btnOK.Location = new System.Drawing.Point(198, 313);
+            this.btnOK.Location = new System.Drawing.Point(190, 313);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(184, 23);
+            this.btnOK.Size = new System.Drawing.Size(180, 23);
             this.btnOK.TabIndex = 2;
             this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = false;
@@ -539,9 +539,9 @@ namespace NoteFly
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
-            this.btnCancel.Location = new System.Drawing.Point(0, 313);
+            this.btnCancel.Location = new System.Drawing.Point(4, 313);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(188, 23);
+            this.btnCancel.Size = new System.Drawing.Size(180, 23);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -560,7 +560,7 @@ namespace NoteFly
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(394, 307);
+            this.tabControlSettings.Size = new System.Drawing.Size(376, 307);
             this.tabControlSettings.TabIndex = 17;
             // 
             // tabGeneral
@@ -574,7 +574,7 @@ namespace NoteFly
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(386, 281);
+            this.tabGeneral.Size = new System.Drawing.Size(368, 281);
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -655,7 +655,7 @@ namespace NoteFly
             this.tabAppearance.Location = new System.Drawing.Point(4, 22);
             this.tabAppearance.Name = "tabAppearance";
             this.tabAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppearance.Size = new System.Drawing.Size(386, 281);
+            this.tabAppearance.Size = new System.Drawing.Size(368, 281);
             this.tabAppearance.TabIndex = 0;
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
@@ -669,7 +669,7 @@ namespace NoteFly
             this.tabAppearanceColors.Location = new System.Drawing.Point(3, 3);
             this.tabAppearanceColors.Name = "tabAppearanceColors";
             this.tabAppearanceColors.SelectedIndex = 0;
-            this.tabAppearanceColors.Size = new System.Drawing.Size(380, 275);
+            this.tabAppearanceColors.Size = new System.Drawing.Size(362, 275);
             this.tabAppearanceColors.TabIndex = 28;
             // 
             // tabPageLooks
@@ -684,7 +684,7 @@ namespace NoteFly
             this.tabPageLooks.Location = new System.Drawing.Point(4, 22);
             this.tabPageLooks.Name = "tabPageLooks";
             this.tabPageLooks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLooks.Size = new System.Drawing.Size(372, 249);
+            this.tabPageLooks.Size = new System.Drawing.Size(354, 249);
             this.tabPageLooks.TabIndex = 0;
             this.tabPageLooks.Text = "Looks";
             this.tabPageLooks.UseVisualStyleBackColor = true;
@@ -800,7 +800,7 @@ namespace NoteFly
             this.tabPageFonts.Location = new System.Drawing.Point(4, 22);
             this.tabPageFonts.Name = "tabPageFonts";
             this.tabPageFonts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFonts.Size = new System.Drawing.Size(372, 249);
+            this.tabPageFonts.Size = new System.Drawing.Size(354, 249);
             this.tabPageFonts.TabIndex = 1;
             this.tabPageFonts.Text = "Fonts";
             this.tabPageFonts.UseVisualStyleBackColor = true;
@@ -976,7 +976,7 @@ namespace NoteFly
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldNewnote);
             this.tabPageTrayicon.Location = new System.Drawing.Point(4, 22);
             this.tabPageTrayicon.Name = "tabPageTrayicon";
-            this.tabPageTrayicon.Size = new System.Drawing.Size(372, 249);
+            this.tabPageTrayicon.Size = new System.Drawing.Size(354, 249);
             this.tabPageTrayicon.TabIndex = 2;
             this.tabPageTrayicon.Text = "Trayicon";
             this.tabPageTrayicon.UseVisualStyleBackColor = true;
@@ -1080,7 +1080,7 @@ namespace NoteFly
             this.tabHighlight.Location = new System.Drawing.Point(4, 22);
             this.tabHighlight.Name = "tabHighlight";
             this.tabHighlight.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHighlight.Size = new System.Drawing.Size(386, 281);
+            this.tabHighlight.Size = new System.Drawing.Size(368, 281);
             this.tabHighlight.TabIndex = 5;
             this.tabHighlight.Text = "Highlight";
             this.tabHighlight.UseVisualStyleBackColor = true;
@@ -1143,7 +1143,7 @@ namespace NoteFly
             this.tabSharing.Location = new System.Drawing.Point(4, 22);
             this.tabSharing.Name = "tabSharing";
             this.tabSharing.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSharing.Size = new System.Drawing.Size(386, 281);
+            this.tabSharing.Size = new System.Drawing.Size(368, 281);
             this.tabSharing.TabIndex = 1;
             this.tabSharing.Text = "Sharing";
             this.tabSharing.UseVisualStyleBackColor = true;
@@ -1155,7 +1155,7 @@ namespace NoteFly
             this.tabControlSocialNetworks.Location = new System.Drawing.Point(3, 3);
             this.tabControlSocialNetworks.Name = "tabControlSocialNetworks";
             this.tabControlSocialNetworks.SelectedIndex = 0;
-            this.tabControlSocialNetworks.Size = new System.Drawing.Size(380, 275);
+            this.tabControlSocialNetworks.Size = new System.Drawing.Size(362, 275);
             this.tabControlSocialNetworks.TabIndex = 14;
             // 
             // tabEmail
@@ -1166,7 +1166,7 @@ namespace NoteFly
             this.tabEmail.Controls.Add(this.tbDefaultEmail);
             this.tabEmail.Location = new System.Drawing.Point(4, 22);
             this.tabEmail.Name = "tabEmail";
-            this.tabEmail.Size = new System.Drawing.Size(372, 249);
+            this.tabEmail.Size = new System.Drawing.Size(354, 249);
             this.tabEmail.TabIndex = 2;
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
@@ -1230,10 +1230,37 @@ namespace NoteFly
             this.tabNetwerk.Location = new System.Drawing.Point(4, 22);
             this.tabNetwerk.Name = "tabNetwerk";
             this.tabNetwerk.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNetwerk.Size = new System.Drawing.Size(386, 281);
+            this.tabNetwerk.Size = new System.Drawing.Size(368, 281);
             this.tabNetwerk.TabIndex = 4;
             this.tabNetwerk.Text = "Network";
             this.tabNetwerk.UseVisualStyleBackColor = true;
+            // 
+            // lblLatestUpdateCheck
+            // 
+            this.lblLatestUpdateCheck.AutoSize = true;
+            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(221, 220);
+            this.lblLatestUpdateCheck.Name = "lblLatestUpdateCheck";
+            this.lblLatestUpdateCheck.Size = new System.Drawing.Size(0, 13);
+            this.lblLatestUpdateCheck.TabIndex = 32;
+            // 
+            // lblTextLatestUpdateCheck
+            // 
+            this.lblTextLatestUpdateCheck.AutoSize = true;
+            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(28, 220);
+            this.lblTextLatestUpdateCheck.Name = "lblTextLatestUpdateCheck";
+            this.lblTextLatestUpdateCheck.Size = new System.Drawing.Size(188, 13);
+            this.lblTextLatestUpdateCheck.TabIndex = 31;
+            this.lblTextLatestUpdateCheck.Text = "Lastest update check is performed on:";
+            // 
+            // btnCheckUpdates
+            // 
+            this.btnCheckUpdates.Location = new System.Drawing.Point(28, 190);
+            this.btnCheckUpdates.Name = "btnCheckUpdates";
+            this.btnCheckUpdates.Size = new System.Drawing.Size(156, 23);
+            this.btnCheckUpdates.TabIndex = 30;
+            this.btnCheckUpdates.Text = "Check updates now";
+            this.btnCheckUpdates.UseVisualStyleBackColor = true;
+            this.btnCheckUpdates.Click += new System.EventHandler(this.btnCheckUpdates_Click);
             // 
             // lblTextDayAtStartup
             // 
@@ -1359,7 +1386,7 @@ namespace NoteFly
             this.tabAdvance.Controls.Add(this.tbNotesSavePath);
             this.tabAdvance.Location = new System.Drawing.Point(4, 22);
             this.tabAdvance.Name = "tabAdvance";
-            this.tabAdvance.Size = new System.Drawing.Size(386, 281);
+            this.tabAdvance.Size = new System.Drawing.Size(368, 281);
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
@@ -1446,33 +1473,6 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
-            // btnCheckUpdates
-            // 
-            this.btnCheckUpdates.Location = new System.Drawing.Point(28, 190);
-            this.btnCheckUpdates.Name = "btnCheckUpdates";
-            this.btnCheckUpdates.Size = new System.Drawing.Size(156, 23);
-            this.btnCheckUpdates.TabIndex = 30;
-            this.btnCheckUpdates.Text = "Check updates now";
-            this.btnCheckUpdates.UseVisualStyleBackColor = true;
-            this.btnCheckUpdates.Click += new System.EventHandler(this.btnCheckUpdates_Click);
-            // 
-            // lblTextLatestUpdateCheck
-            // 
-            this.lblTextLatestUpdateCheck.AutoSize = true;
-            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(28, 220);
-            this.lblTextLatestUpdateCheck.Name = "lblTextLatestUpdateCheck";
-            this.lblTextLatestUpdateCheck.Size = new System.Drawing.Size(188, 13);
-            this.lblTextLatestUpdateCheck.TabIndex = 31;
-            this.lblTextLatestUpdateCheck.Text = "Lastest update check is performed on:";
-            // 
-            // lblLatestUpdateCheck
-            // 
-            this.lblLatestUpdateCheck.AutoSize = true;
-            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(221, 220);
-            this.lblLatestUpdateCheck.Name = "lblLatestUpdateCheck";
-            this.lblLatestUpdateCheck.Size = new System.Drawing.Size(0, 13);
-            this.lblLatestUpdateCheck.TabIndex = 32;
-            // 
             // iptbProxyAddress
             // 
             this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -1489,13 +1489,14 @@ namespace NoteFly
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(394, 341);
+            this.ClientSize = new System.Drawing.Size(376, 341);
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(360, 240);
             this.Name = "FrmSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;

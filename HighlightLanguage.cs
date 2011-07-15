@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 namespace NoteFly
 {
     public class HighlightLanguage
@@ -44,10 +45,10 @@ namespace NoteFly
         private int posdocend = int.MaxValue;
 
         /// <summary>
-        /// A string array of keywords used in this language
+        /// Dictornary with all keywords used in this language
         /// </summary>
-        private string[] keywords;
-
+        private Dictionary<string, int> keywordsdic;
+        
         /// <summary>
         /// Initializes a new instance of the HighlightLanguage class.
         /// </summary>
@@ -62,7 +63,11 @@ namespace NoteFly
             this.commentline = commentline;
             this.commentstart = commentstart;
             this.commentend = commentend;
-            this.keywords = keywords;
+            this.keywordsdic = new Dictionary<string, int>(keywords.Length);
+            for (int i = 0; i < keywords.Length; i++)
+            {
+                keywordsdic.Add(keywords[i], i);
+            }
         }
 
         /// <summary>
@@ -116,7 +121,8 @@ namespace NoteFly
         {
             get
             {
-                return this.keywords.Length;
+                return this.keywordsdic.Count;
+                //return this.keywords.Length;
             }
         }
 
@@ -175,13 +181,13 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get a keyword at a position.
+        /// Lookup if keyword exists. (use fast dicnary lookup)
         /// </summary>
-        /// <param name="n"></param>
+        /// <param name="keyword"></param>
         /// <returns></returns>
-        public string GetKeyword(int n)
+        public bool FindKeyword(string keyword)
         {
-            return this.keywords[n];
+            return this.keywordsdic.ContainsKey(keyword);
         }
     }
 }

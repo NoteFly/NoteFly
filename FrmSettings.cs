@@ -41,6 +41,10 @@ namespace NoteFly
         /// </summary>
         private Notes notes;
 
+        /// <summary>
+        /// In which folder notes are saved.
+        /// </summary>
+        private string oldnotesavepath;
         #endregion Fields
 
         #region Constructors (1)
@@ -52,6 +56,7 @@ namespace NoteFly
         public FrmSettings(Notes notes)
         {
             this.InitializeComponent();
+            this.oldnotesavepath = Settings.NotesSavepath;
             this.notes = notes;
             this.DrawCbxFonts();
             this.SetControlsBySettings();
@@ -154,11 +159,6 @@ namespace NoteFly
             else
             {
                 // everything looks okay 
-                string oldnotesavepath = Settings.NotesSavepath;
-                if (this.tbNotesSavePath.Text != oldnotesavepath)
-                {
-                    this.MoveNotes(oldnotesavepath, this.tbNotesSavePath.Text); // TODO: put on seperate thread
-                }
 
                 // tab: General
                 Settings.ConfirmExit = this.chxConfirmExit.Checked;
@@ -214,7 +214,10 @@ namespace NoteFly
                 Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
 
                 // tab: Advance
-                Settings.NotesSavepath = this.tbNotesSavePath.Text;
+                if (Directory.Exists(this.tbNotesSavePath.Text))
+                {
+                    Settings.NotesSavepath = this.tbNotesSavePath.Text;
+                }
                 Settings.ProgramLogError = this.chxLogErrors.Checked;
                 Settings.ProgramLogInfo = this.chxLogDebug.Checked;
                 Settings.ProgramLogException = this.chxLogExceptions.Checked;
@@ -253,6 +256,27 @@ namespace NoteFly
                 }
 #endif
                 xmlUtil.WriteSettings();
+
+                if (Settings.NotesSavepath != oldnotesavepath)
+                {
+                    for (int i = 0; i < this.notes.CountNotes; i++)
+                    {
+                        this.notes.GetNote(i).DestroyForm();
+                    }
+
+                    while (this.notes.CountNotes > 0)
+                    {
+                        this.notes.RemoveNote(0);
+                    }
+
+                    this.notes.FrmManageNotesNeedUpdate = true;
+
+                    this.MoveNotes(oldnotesavepath, Settings.NotesSavepath); // TODO: put on seperate thread
+                    notes.LoadNotes(true, false);
+
+                    this.notes.FrmManageNotesNeedUpdate = true;
+                }
+
                 Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
                 if (!SyntaxHighlight.KeywordsInitialized)
                 {
@@ -376,7 +400,7 @@ namespace NoteFly
                 return;
             }
 
-            string[] notefilespath = Directory.GetFiles(Settings.NotesSavepath, "*" + Notes.NOTEEXTENSION, SearchOption.TopDirectoryOnly);
+            string[] notefilespath = Directory.GetFiles(oldsavenotespath, "*" + Notes.NOTEEXTENSION, SearchOption.TopDirectoryOnly);
             string[] notefiles = new string[notefilespath.Length];
             for (int i = 0; i < notefilespath.Length; i++)
             {
