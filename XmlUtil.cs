@@ -484,7 +484,7 @@ namespace NoteFly
             Settings.HighlightHTMLColorString = "#808080";
             Settings.HighlightHyperlinks = true;
             Settings.HighlightPHP = false;
-            Settings.HighlightPHPColorComment = "#333333";
+            Settings.HighlightPHPColorComment = "#686868";
             Settings.HighlightPHPColorDocumentstartend = "#129612";
             Settings.HighlightPHPColorValidfunctions = "#41D87B";
             Settings.HighlightPHPColorInvalidfunctions = "#D90000";
@@ -905,6 +905,8 @@ namespace NoteFly
             string commentline = null;
             string commentstart = null;
             string commentend = null;
+            string documentstart = null;
+            string documentend = null;
             try
             {
                 xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, file));
@@ -921,6 +923,8 @@ namespace NoteFly
                                 commentline = xmlread.GetAttribute("commentLine");
                                 commentstart = xmlread.GetAttribute("commentStart");
                                 commentend = xmlread.GetAttribute("commentEnd");
+                                documentstart = xmlread.GetAttribute("documentStart");
+                                documentend = xmlread.GetAttribute("documentEnd");
                             }
 
                             readsubnodes = true;
@@ -950,7 +954,7 @@ namespace NoteFly
                 xmlread.Close();
             }
 
-            HighlightLanguage language = new HighlightLanguage(name, commentline, commentstart, commentend, keywords);
+            HighlightLanguage language = new HighlightLanguage(name, commentline, commentstart, commentend, documentstart, documentend, keywords);
             return language;
         }
 

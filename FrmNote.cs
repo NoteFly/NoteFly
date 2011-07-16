@@ -123,7 +123,7 @@ namespace NoteFly
                 {
                     tsi.Checked = false;
                 }
-				
+
 #if windows
                 tsi.BackColor = this.notes.GetPrimaryClr(i);
                 tsi.ForeColor = this.notes.GetTextClr(i);
@@ -222,6 +222,10 @@ namespace NoteFly
                 this.pnlNote.Size = new Size(this.Width - 6, (this.Height - this.pnlHead.Height - 5));
 #endif
                 this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
+                if (!SyntaxHighlight.KeywordsInitialized)
+                {
+                    SyntaxHighlight.InitHighlighter();
+                }
                 SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
@@ -365,16 +369,16 @@ namespace NoteFly
                 }
                 else
                 {
-                    string msgNoTitleContent = "Note has no title and content.";
-                    Log.Write(LogType.error, msgNoTitleContent);
-                    MessageBox.Show(msgNoTitleContent);
+                    const string MSGNOTITLECONTENT = "Note has no title and content.";
+                    Log.Write(LogType.error, MSGNOTITLECONTENT);
+                    MessageBox.Show(MSGNOTITLECONTENT);
                 }
             }
             catch (AccessViolationException accexc)
             {
-                string msgCantlaunchEmailProtocolhandler = "Access denied. Can't lauch email client by protocol handler";
+                const string MSGCANTLAUNCHEMAILPROTOCOLHANDLER = "Access denied. Can't lauch email client by protocol handler";
                 Log.Write(LogType.exception, accexc.Message);
-                MessageBox.Show(msgCantlaunchEmailProtocolhandler);
+                MessageBox.Show(MSGCANTLAUNCHEMAILPROTOCOLHANDLER);
             }
         }
 
@@ -510,17 +514,15 @@ namespace NoteFly
                 SyntaxHighlight.InitHighlighter();
             }
 
-            Application.DoEvents();
+            this.notes.FrmManageNotesNeedUpdate = true;
+            TrayIcon.RefreshFrmManageNotes();
             SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             if (!this.saveWorker.IsBusy)
             {
                 this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
-
-            this.notes.FrmManageNotesNeedUpdate = true;
             SyntaxHighlight.DeinitHighlighter();
-            TrayIcon.RefreshFrmManageNotes();
-            this.notes.FrmManageNotesNeedUpdate = false;
+            Application.DoEvents();
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.SkinNr));
         }
 

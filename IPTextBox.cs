@@ -117,22 +117,18 @@ namespace NoteFly
             else if (k == 186 && e.Shift)
             {
                 // ':'
-                if (this.addrtype == IPaddrType.ipv4)
-                {
-                    MessageBox.Show("can't mix ipv4 and ipv6 seperators.", "error ip address", MessageBoxButtons.OK, MessageBoxIcon.Error); 
-                }
+                this.addrtype = IPaddrType.ipv6;
 
                 if (this.tbIPaddress.TextLength == 0)
                 {
                     e.SuppressKeyPress = true;
-                    ////MessageBox.Show("IP v6 adress cannot start with ':'");
                 }
-
-                this.addrtype = IPaddrType.ipv6;
             }
             else if (k == 190 && !e.Shift)
             {
                 // '.'
+                this.addrtype = IPaddrType.ipv4;
+
                 if (numpoint >= 3)
                 {
                     e.SuppressKeyPress = true;
@@ -149,13 +145,6 @@ namespace NoteFly
                 {
                     e.SuppressKeyPress = true;
                 }
-
-                if (this.addrtype == IPaddrType.ipv6) 
-                {
-                    MessageBox.Show("can't mix ipv4 and ipv6 seperators. Don't use dots for ip v6 adress."); 
-                }
-
-                this.addrtype = IPaddrType.ipv4;
             }
             else if (k >= 48 && k <= 57)
             {
@@ -176,7 +165,6 @@ namespace NoteFly
             }
             else
             {
-                // MessageBox.Show("key="+k);
                 e.SuppressKeyPress = true;
             }
         }

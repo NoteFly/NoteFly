@@ -378,7 +378,7 @@ namespace NoteFly
                 Note note = xmlUtil.LoadNoteFile(this, notefiles[i]);
                 if (resetpositions)
                 {
-                    note.X = 10;
+                    note.X = 10 + (i * 2);
                     note.Y = 10;
                 }
 

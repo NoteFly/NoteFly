@@ -40,8 +40,10 @@ namespace NoteFly
         private static HighlightLanguage langsql;
 
         private static bool comment = false;
+        private static bool commentline = false;
         private static bool outerhtml = true;
         private static bool htmlstringpart = false;
+        private static bool phpstringpart = false;
         private static char currentstringquote = '"';
 
         /// <summary>
@@ -80,67 +82,75 @@ namespace NoteFly
             int sellen = rtb.SelectionLength;
             ResetHighlighting(rtb, skinnr, notes);
 
+            if (!keywordsinit)
+            {
+                Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
+                InitHighlighter();
+            }
+
             // check if highlighting is enabled at all.
             if (Settings.HighlightHTML || Settings.HighlightPHP || Settings.HighlightSQL)
             {
-                if (!keywordsinit)
-                {
-                    Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
-                    InitHighlighter();
-                }
-
                 int lastpos = 0;
-
                 int maxpos = Settings.HighlightMaxchars;
                 if (rtb.TextLength < Settings.HighlightMaxchars)
                 {
                     maxpos = rtb.TextLength;
                 }
-
                 for (int curpos = 0; curpos < maxpos; curpos++)
                 {
 #if !macos
-                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || curpos == rtb.Text.Length-1)
+                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || curpos == rtb.Text.Length - 1)
 #elif macos
-                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\r' || curpos == rtb.Text.Length-1)
+                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\r' || curpos == rtb.Text.Length-1)
 #endif
                     {
                         string bufcheck = rtb.Text.Substring(lastpos, curpos - lastpos);
                         if (bufcheck.Length > 0)
                         {
-
                             if (Settings.HighlightSQL)
                             {
-                                if (curpos > langsql.PosDocumentStart && curpos < langsql.PosDocumentEnd)
+                                langsql.CheckSetDocumentPos(bufcheck, curpos);
+                                if (curpos >= langsql.PosDocumentStart && curpos <= langsql.PosDocumentEnd)
                                 {
                                     ValidatingSqlPart(bufcheck, rtb, lastpos);
                                 }
                             }
 
-                            if (Settings.HighlightPHP)
-                            {
-                                if (curpos > langphp.PosDocumentStart && curpos < langphp.PosDocumentEnd)
-                                {
-                                    ValidatingPhpPart(bufcheck, rtb, lastpos);
-                                }
-                            }
-
                             if (Settings.HighlightHTML)
                             {
-                                if (curpos > langhtml.PosDocumentStart && curpos < langhtml.PosDocumentEnd)
+                                langhtml.CheckSetDocumentPos(bufcheck, lastpos); // lastpos to include <html> itself
+                                if (curpos >= langhtml.PosDocumentStart && curpos <= langhtml.PosDocumentEnd)
                                 {
                                     ValidatingHtmlPart(bufcheck, rtb, lastpos);
                                 }
                             }
 
+                            if (Settings.HighlightPHP)
+                            {
+                                langphp.CheckSetDocumentPos(bufcheck, curpos);
+                                if (curpos >= langphp.PosDocumentStart && curpos <= langphp.PosDocumentEnd)
+                                {
+                                    ValidatingPhpPart(bufcheck, rtb, lastpos);
+                                }
+                            }
                         }
                         lastpos = curpos + 1; // without space or linefeed
                     }
-                }
 
-                rtb.SelectionStart = cursorpos;
-                rtb.SelectionLength = sellen;
+#if !macos
+                    if (rtb.Text[curpos] == '\n')
+#elif macos
+                    if (rtb.Text[curpos] == '\r')
+#endif
+                    {
+                        commentline = false;
+                    }
+                }
             }
+
+            rtb.SelectionStart = cursorpos;
+            rtb.SelectionLength = sellen;
         }
 
         /// <summary>
@@ -213,6 +223,8 @@ namespace NoteFly
             rtb.ForeColor = notes.GetTextClr(skinnr);
             outerhtml = true;
             htmlstringpart = false;
+            comment = false;
+            commentline = false;
         }
 
         /// <summary>
@@ -235,10 +247,10 @@ namespace NoteFly
             {
                 comment = true;
             }
-            //else if (ishtml.Equals(langhtml.Commentline))
-            //{
-            //    comment = true;
-            //}
+            ////else if (ishtml.Equals(langhtml.Commentline))
+            ////{
+            ////    commentline = true;
+            ////}
 
             if (!comment)
             {
@@ -403,80 +415,95 @@ namespace NoteFly
         private static void ValidatingPhpPart(string isphp, RichTextBox rtb, int posstart)
         {
             int posvar = -1;
-            for (int curchr = 0; curchr < isphp.Length; curchr++)
+            if (isphp.StartsWith(langphp.Commentstart))
             {
-                if (isphp[curchr] == '$')
+                comment = true;
+            }
+
+            if (commentline || comment)
+            {
+                ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorComment);
+            }
+            else
+            {
+                for (int curchr = 0; curchr < isphp.Length; curchr++)
                 {
-                    // is variable
-                    posvar = curchr;
-                }
-                else if ((isphp[curchr] < 48 || isphp[curchr] > 57) && (isphp[curchr] < 65 || isphp[curchr] > 122))
-                {
-                    if (isphp[curchr] != 34 && isphp[curchr] != 39) // not quotes
+                    if (isphp[curchr] == '$')
+                    {
+                        // is variable
+                        posvar = curchr;
+                    }
+                    else if (isphp[curchr] == '/')
+                    {
+                        if (curchr > 0)
+                        {
+                            if (isphp[curchr - 1] == '/')
+                            {
+                                // is commentline
+                                commentline = true;
+                                ColorText(rtb, posstart + curchr - 1, isphp.Length - curchr + 1, Settings.HighlightPHPColorComment);
+                            }
+                        }
+                    }
+                    else if (isphp[curchr] == '"' || isphp[curchr] == '\'')
+                    {
+                        bool escaped = false;
+                        if (curchr > 0)
+                        {
+                            if (isphp[curchr - 1] == '\\')
+                            {
+                                escaped = true;
+                            }
+                        }
+
+                        if (!escaped)
+                        {
+                            phpstringpart = !phpstringpart;
+                            // highlight last quote
+                            if (!phpstringpart)
+                            {
+                                ColorText(rtb, posstart + curchr, 1, Settings.HighlightPHPColorString);
+                            }
+                        }
+                    }
+                    else if ((isphp[curchr] < 48 || isphp[curchr] > 57) && (isphp[curchr] < 65 || isphp[curchr] > 122))
+                    {
+                        if (isphp[curchr] != '\"' && isphp[curchr] != '\"') // not quotes
+                        {
+                            if (posvar >= 0)
+                            {
+                                // is variable
+                                ColorText(rtb, posstart + posvar, curchr - posvar, Settings.HighlightPHPColorDocumentstartend);
+                                posvar = -1;
+                            }
+                        }
+                    }
+                    else if (curchr == isphp.Length - 1)
                     {
                         if (posvar >= 0)
                         {
-                            ColorText(rtb, posstart + posvar, curchr - posvar, Settings.HighlightPHPColorDocumentstartend);
-                            posvar = -1;
+                            // is variable
+                            ColorText(rtb, posstart + posvar, isphp.Length, Settings.HighlightPHPColorDocumentstartend);
                         }
                     }
-                }
-                else if (curchr == isphp.Length - 1)
-                {
-                    if (posvar >= 0)
+
+                    if (phpstringpart)
                     {
-                        ColorText(rtb, posstart + posvar, isphp.Length, Settings.HighlightPHPColorDocumentstartend);
+                        ColorText(rtb, posstart + curchr, 1, Settings.HighlightPHPColorString);
                     }
                 }
-            }
 
-            // is know function:
-
-            if (langphp.FindKeyword(isphp))
-            {
-                ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
-            }
-
-            //for (int i = 0; i < langphp.NumKeywords; i++)
-            //{
-            //    if (isphp == langphp.GetKeyword(i))
-            //    {
-            //        ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
-            //    }
-            //}
-
-            // has string:
-            for (int n = 0; n < isphp.Length; n++)
-            {
-                if (isphp[n] == '"')
+                if (langphp.FindKeyword(isphp))
                 {
-                    // TODO
+                    ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
                 }
             }
 
+            if (isphp.EndsWith(langphp.Commentend))
+            {
+                comment = false;
+            }
         }
-
-        //private static bool Checkposition(HighlightLanguage uselang, int posstart, int posend)
-        //{
-        //    bool between = false;
-        //    if (langhtml.Equals(uselang))
-        //    {
-        //        // uselang is html
-        //        if ((langphp.PosDocumentEnd < posstart) || (langphp.PosDocumentStart > posend))
-        //        {
-        //            between = false;
-        //        }
-        //    }
-        //    else if (langphp.Equals(uselang))
-        //    {
-        //        // uselang is php
-        //    }
-        //    else if (langsql.Equals(uselang))
-        //    {
-        //        // uselang is sql
-        //    }
-        //    return between;
-        //}
 
         /// <summary>
         /// Find out if it is a sql keyword.

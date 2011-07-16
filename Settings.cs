@@ -186,6 +186,11 @@ namespace NoteFly
         public static string HighlightPHPColorDocumentstartend;
 
         /// <summary>
+        /// The HTML string content color.
+        /// </summary>
+        public static string HighlightPHPColorString = "#404040";
+
+        /// <summary>
         /// The PHP valid function color.
         /// </summary>
         public static string HighlightPHPColorValidfunctions;

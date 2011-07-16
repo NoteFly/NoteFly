@@ -327,20 +327,30 @@ namespace NoteFly
 
                 if (e.ColumnIndex == 2)
                 {
-                    int notepos = this.GetNoteposBySelrow(e.RowIndex);
-                    this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
-                    this.dataGridView1.Rows[e.RowIndex].Cells[2].Value = !(bool)this.dataGridView1.Rows[e.RowIndex].Cells[2].Value;
-                    if (this.notes.GetNote(notepos).Visible)
+                    try
                     {
-                        this.notes.GetNote(notepos).CreateForm();
-                    }
-                    else
-                    {
-                        this.notes.GetNote(notepos).DestroyForm();
-                    }
+                        Cursor.Current = Cursors.WaitCursor;
+                        this.TopMost = true;
+                        int notepos = this.GetNoteposBySelrow(e.RowIndex);
+                        this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
+                        this.dataGridView1.Rows[e.RowIndex].Cells[2].Value = !(bool)this.dataGridView1.Rows[e.RowIndex].Cells[2].Value;
+                        if (this.notes.GetNote(notepos).Visible)
+                        {
+                            this.notes.GetNote(notepos).CreateForm();
+                        }
+                        else
+                        {
+                            this.notes.GetNote(notepos).DestroyForm();
+                        }
 
-                    xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
-                    this.BringToFront();
+                        xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+                    }
+                    finally
+                    {
+                        this.TopMost = false;
+                        Cursor.Current = Cursors.Default;
+                    }
+                    
                 }
             }
         }
@@ -603,8 +613,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
+            this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
-            this.notes.FrmManageNotesNeedUpdate = true;
         }
 
         /// <summary>

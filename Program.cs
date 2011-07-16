@@ -283,6 +283,7 @@ namespace NoteFly
                     }
                 }
 
+#if DEBUG
                 // Import a note file.
                 // Copy note file to note save path.
                 // this is used for fuzzing right now
@@ -297,7 +298,7 @@ namespace NoteFly
                         }
                     }
                 }
-                
+#endif
             }
 
 #if windows

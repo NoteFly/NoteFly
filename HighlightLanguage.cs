@@ -37,7 +37,7 @@ namespace NoteFly
         /// <summary>
         /// The position where the document starts.
         /// </summary>
-        private int posdocstart;
+        private int posdocstart = int.MaxValue;
 
         /// <summary>
         /// The position where the documents ends.
@@ -57,16 +57,26 @@ namespace NoteFly
         /// <param name="commentstart"></param>
         /// <param name="commentend"></param>
         /// <param name="keywords">The keywords to highlight on</param>
-        public HighlightLanguage(string name, string commentline, string commentstart, string commentend, string[] keywords)
+        public HighlightLanguage(string name, string commentline, string commentstart, string commentend,
+            string docstartstr, string docendstr, string[] keywords)
         {
             this.name = name;
             this.commentline = commentline;
             this.commentstart = commentstart;
             this.commentend = commentend;
+            this.docstartstr = docstartstr;
+            this.docendstr = docendstr;
             this.keywordsdic = new Dictionary<string, int>(keywords.Length);
             for (int i = 0; i < keywords.Length; i++)
             {
-                keywordsdic.Add(keywords[i], i);
+                try
+                {
+                    keywordsdic.Add(keywords[i], i);
+                }
+                catch (System.ArgumentException)
+                {
+                    throw new System.ApplicationException("Same item in highlight lexicon file not allowed, keyword:" + keywords[i]);
+                }
             }
         }
 
@@ -188,6 +198,24 @@ namespace NoteFly
         public bool FindKeyword(string keyword)
         {
             return this.keywordsdic.ContainsKey(keyword);
+        }
+
+        /// <summary>
+        /// Check if keyword is used to set document end or start and then set length of document.
+        /// </summary>
+        /// <param name="curpos"></param>
+        /// <param name="docstartend"></param>
+        public void CheckSetDocumentPos(string keyword, int curpos)
+        {
+            if (this.DocumentStartStr.StartsWith(keyword))
+            {
+                this.posdocstart = curpos;
+                this.posdocend = int.MaxValue;
+            }
+            else if (this.DocumentEndStr.EndsWith(keyword))
+            {
+                this.posdocend = curpos;
+            }
         }
     }
 }

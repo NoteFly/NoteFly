@@ -269,12 +269,19 @@ namespace NoteFly
                         this.notes.RemoveNote(0);
                     }
 
-                    this.notes.FrmManageNotesNeedUpdate = true;
+                    try
+                    {
+                        this.Cursor = Cursors.WaitCursor;
+                        this.MoveNotes(oldnotesavepath, Settings.NotesSavepath); // TODO: put on seperate thread
+                        notes.LoadNotes(true, false);
+                    }
+                    finally
+                    {
+                        this.Cursor = Cursors.Default;
+                    }
 
-                    this.MoveNotes(oldnotesavepath, Settings.NotesSavepath); // TODO: put on seperate thread
-                    notes.LoadNotes(true, false);
-
                     this.notes.FrmManageNotesNeedUpdate = true;
+                    
                 }
 
                 Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
