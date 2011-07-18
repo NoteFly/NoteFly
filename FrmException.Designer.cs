@@ -73,7 +73,7 @@
             // lblTextExceptionMessage
             // 
             this.lblTextExceptionMessage.AutoSize = true;
-            this.lblTextExceptionMessage.Location = new System.Drawing.Point(8, 9);
+            this.lblTextExceptionMessage.Location = new System.Drawing.Point(2, 9);
             this.lblTextExceptionMessage.Name = "lblTextExceptionMessage";
             this.lblTextExceptionMessage.Size = new System.Drawing.Size(333, 13);
             this.lblTextExceptionMessage.TabIndex = 0;
@@ -81,9 +81,9 @@
             // 
             // btnContinu
             // 
-            this.btnContinu.Location = new System.Drawing.Point(191, 132);
+            this.btnContinu.Location = new System.Drawing.Point(185, 132);
             this.btnContinu.Name = "btnContinu";
-            this.btnContinu.Size = new System.Drawing.Size(185, 23);
+            this.btnContinu.Size = new System.Drawing.Size(191, 23);
             this.btnContinu.TabIndex = 1;
             this.btnContinu.Text = "try to continu";
             this.btnContinu.UseVisualStyleBackColor = true;
@@ -91,7 +91,7 @@
             // 
             // btnShutdown
             // 
-            this.btnShutdown.Location = new System.Drawing.Point(11, 132);
+            this.btnShutdown.Location = new System.Drawing.Point(5, 132);
             this.btnShutdown.Name = "btnShutdown";
             this.btnShutdown.Size = new System.Drawing.Size(174, 23);
             this.btnShutdown.TabIndex = 2;
@@ -101,8 +101,9 @@
             // 
             // lblTextOptions
             // 
+            this.lblTextOptions.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTextOptions.AutoSize = true;
-            this.lblTextOptions.Location = new System.Drawing.Point(12, 114);
+            this.lblTextOptions.Location = new System.Drawing.Point(2, 114);
             this.lblTextOptions.Name = "lblTextOptions";
             this.lblTextOptions.Size = new System.Drawing.Size(44, 13);
             this.lblTextOptions.TabIndex = 4;
@@ -110,16 +111,20 @@
             // 
             // tbExceptionMessage
             // 
-            this.tbExceptionMessage.Location = new System.Drawing.Point(11, 25);
+            this.tbExceptionMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbExceptionMessage.Location = new System.Drawing.Point(5, 25);
             this.tbExceptionMessage.Multiline = true;
             this.tbExceptionMessage.Name = "tbExceptionMessage";
             this.tbExceptionMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbExceptionMessage.Size = new System.Drawing.Size(365, 69);
+            this.tbExceptionMessage.Size = new System.Drawing.Size(371, 69);
             this.tbExceptionMessage.TabIndex = 7;
             // 
             // lblTextStacktrace
             // 
-            this.lblTextStacktrace.Location = new System.Drawing.Point(12, 97);
+            this.lblTextStacktrace.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblTextStacktrace.Location = new System.Drawing.Point(2, 97);
             this.lblTextStacktrace.Name = "lblTextStacktrace";
             this.lblTextStacktrace.Size = new System.Drawing.Size(364, 17);
             this.lblTextStacktrace.TabIndex = 8;
@@ -127,21 +132,22 @@
             // 
             // FrmException
             // 
+            this.AcceptButton = this.btnContinu;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 166);
+            this.CausesValidation = false;
+            this.ClientSize = new System.Drawing.Size(384, 162);
             this.Controls.Add(this.lblTextStacktrace);
             this.Controls.Add(this.tbExceptionMessage);
             this.Controls.Add(this.lblTextOptions);
             this.Controls.Add(this.btnShutdown);
             this.Controls.Add(this.btnContinu);
             this.Controls.Add(this.lblTextExceptionMessage);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmException";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
             this.PerformLayout();

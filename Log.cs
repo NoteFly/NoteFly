@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="Settings.cs" company="GNU">
+// <copyright file="Log.cs" company="GNU">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //
@@ -17,8 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows // platform can be: windows, linux, macos
-
 namespace NoteFly
 {
     using System;

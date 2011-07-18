@@ -43,7 +43,7 @@ namespace NoteFly
             sbexc.AppendLine("Stacktrace:");
             sbexc.AppendLine(excstrace);
             sbexc.AppendLine();
-            sbexc.AppendLine("version: "+Program.AssemblyVersionAsString+" "+Program.AssemblyVersionQuality);
+            sbexc.Append("version: ").Append(Program.AssemblyVersionAsString).Append(" ").AppendFormat(Program.AssemblyVersionQuality);
             this.tbExceptionMessage.Text = sbexc.ToString();
             if (!Settings.ProgramLogException)
             {

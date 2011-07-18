@@ -21,7 +21,6 @@
 
 namespace NoteFly
 {
-
     /// <summary>
     /// The Note form class
     /// </summary>
@@ -50,7 +49,7 @@ namespace NoteFly
         /// <summary>
         /// Button btnCloseNote
         /// </summary>
-        private System.Windows.Forms.Button btnCloseNote;
+        private System.Windows.Forms.Button btnHideNote;
 
         /// <summary>
         /// Panel pnlNote
@@ -139,6 +138,11 @@ namespace NoteFly
         private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
 
         /// <summary>
+        /// ToolStripMenuItem menuWordWrap
+        /// </summary>
+        private System.Windows.Forms.ToolStripMenuItem menuWordWrap;
+
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -183,7 +187,7 @@ namespace NoteFly
             this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
             this.menuRollUp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHideNote = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnCloseNote = new System.Windows.Forms.Button();
+            this.btnHideNote = new System.Windows.Forms.Button();
             this.rtbNote = new System.Windows.Forms.RichTextBox();
             this.pnlNote = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
@@ -217,7 +221,7 @@ namespace NoteFly
             this.pnlHead.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlHead.ContextMenuStrip = this.menuFrmNoteOptions;
-            this.pnlHead.Controls.Add(this.btnCloseNote);
+            this.pnlHead.Controls.Add(this.btnHideNote);
             this.pnlHead.Controls.Add(this.lblTitle);
             this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
@@ -253,7 +257,7 @@ namespace NoteFly
             this.menuEditNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
             this.menuEditNote.Size = new System.Drawing.Size(184, 22);
             this.menuEditNote.Text = "&Edit note";
-            this.menuEditNote.Click += new System.EventHandler(this.editTToolStripMenuItem_Click);
+            this.menuEditNote.Click += new System.EventHandler(this.menuEditNote_Click);
             // 
             // menuNoteSkins
             // 
@@ -277,7 +281,7 @@ namespace NoteFly
             this.menuSendToEmail.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
             this.menuSendToEmail.Size = new System.Drawing.Size(157, 22);
             this.menuSendToEmail.Text = "E-&mail";
-            this.menuSendToEmail.Click += new System.EventHandler(this.emailToolStripMenuItem_Click);
+            this.menuSendToEmail.Click += new System.EventHandler(this.menuSendToEmail_Click);
             // 
             // menuSendToTextfile
             // 
@@ -285,7 +289,7 @@ namespace NoteFly
             this.menuSendToTextfile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.menuSendToTextfile.Size = new System.Drawing.Size(157, 22);
             this.menuSendToTextfile.Text = "Save &file";
-            this.menuSendToTextfile.Click += new System.EventHandler(this.tsmenuSendToTextfile_Click);
+            this.menuSendToTextfile.Click += new System.EventHandler(this.menuSendToFile_Click);
             // 
             // menuOnTop
             // 
@@ -294,7 +298,7 @@ namespace NoteFly
             this.menuOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
             this.menuOnTop.Size = new System.Drawing.Size(184, 22);
             this.menuOnTop.Text = "Sticky on &top";
-            this.menuOnTop.Click += new System.EventHandler(this.OnTopToolStripMenuItem_Click);
+            this.menuOnTop.Click += new System.EventHandler(this.menuOnTop_Click);
             // 
             // menuLockNote
             // 
@@ -303,7 +307,7 @@ namespace NoteFly
             this.menuLockNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.menuLockNote.Size = new System.Drawing.Size(184, 22);
             this.menuLockNote.Text = "&Lock note";
-            this.menuLockNote.Click += new System.EventHandler(this.locknoteToolStripMenuItem_Click);
+            this.menuLockNote.Click += new System.EventHandler(this.menuLockNote_Click);
             // 
             // menuWordWrap
             // 
@@ -340,7 +344,7 @@ namespace NoteFly
                         | System.Windows.Forms.Keys.C)));
             this.menuCopyContent.Size = new System.Drawing.Size(189, 22);
             this.menuCopyContent.Text = "content";
-            this.menuCopyContent.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
+            this.menuCopyContent.Click += new System.EventHandler(this.menuCopyContent_Click);
             // 
             // menuCopyTitle
             // 
@@ -349,7 +353,7 @@ namespace NoteFly
                         | System.Windows.Forms.Keys.C)));
             this.menuCopyTitle.Size = new System.Drawing.Size(189, 22);
             this.menuCopyTitle.Text = "title";
-            this.menuCopyTitle.Click += new System.EventHandler(this.copyTitleToolStripMenuItem_Click);
+            this.menuCopyTitle.Click += new System.EventHandler(this.menuCopyTitle_Click);
             // 
             // menuRollUp
             // 
@@ -365,24 +369,24 @@ namespace NoteFly
             this.menuHideNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
             this.menuHideNote.Size = new System.Drawing.Size(184, 22);
             this.menuHideNote.Text = "&Hide note";
-            this.menuHideNote.Click += new System.EventHandler(this.hideNoteToolStripMenuItem_Click);
+            this.menuHideNote.Click += new System.EventHandler(this.menuHideNote_Click);
             // 
-            // btnCloseNote
+            // btnHideNote
             // 
-            this.btnCloseNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCloseNote.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCloseNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCloseNote.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCloseNote.Location = new System.Drawing.Point(200, 4);
-            this.btnCloseNote.Margin = new System.Windows.Forms.Padding(1);
-            this.btnCloseNote.Name = "btnCloseNote";
-            this.btnCloseNote.Size = new System.Drawing.Size(31, 23);
-            this.btnCloseNote.TabIndex = 1;
-            this.btnCloseNote.TabStop = false;
-            this.btnCloseNote.Text = "X";
-            this.toolTip.SetToolTip(this.btnCloseNote, "Hide this note");
-            this.btnCloseNote.UseVisualStyleBackColor = true;
-            this.btnCloseNote.Click += new System.EventHandler(this.btnCloseNote_Click);
+            this.btnHideNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHideNote.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnHideNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHideNote.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHideNote.Location = new System.Drawing.Point(200, 4);
+            this.btnHideNote.Margin = new System.Windows.Forms.Padding(1);
+            this.btnHideNote.Name = "btnHideNote";
+            this.btnHideNote.Size = new System.Drawing.Size(31, 23);
+            this.btnHideNote.TabIndex = 1;
+            this.btnHideNote.TabStop = false;
+            this.btnHideNote.Text = "X";
+            this.toolTip.SetToolTip(this.btnHideNote, "Hide this note");
+            this.btnHideNote.UseVisualStyleBackColor = true;
+            this.btnHideNote.Click += new System.EventHandler(this.btnHideNote_Click);
             // 
             // rtbNote
             // 
@@ -457,7 +461,7 @@ namespace NoteFly
             // FrmNote
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.CancelButton = this.btnCloseNote;
+            this.CancelButton = this.btnHideNote;
             this.ClientSize = new System.Drawing.Size(240, 240);
             this.ContextMenuStrip = this.menuFrmNoteOptions;
             this.ControlBox = false;
@@ -477,8 +481,8 @@ namespace NoteFly
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TransparencyKey = System.Drawing.SystemColors.Control;
-            this.Deactivate += new System.EventHandler(this.frmNote_Deactivate);
-            this.Activated += new System.EventHandler(this.frmNote_Activated);
+            this.Deactivate += new System.EventHandler(this.FrmNote_Deactivate);
+            this.Activated += new System.EventHandler(this.FrmNote_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmNote_FormClosed);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmNote_FormClosing);
             this.pnlHead.ResumeLayout(false);
@@ -492,7 +496,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStripMenuItem menuWordWrap;
     }
 }

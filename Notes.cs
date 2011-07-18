@@ -17,8 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows // platform can be: windows, linux, macos
-
 namespace NoteFly
 {
     using System;
@@ -27,10 +25,7 @@ namespace NoteFly
     using System.Globalization;
     using System.IO;
     using System.Windows.Forms;
-#if DEBUG
-    using System.Diagnostics;
 
-#endif
     /// <summary>
     /// Notes class, holds all notes
     /// </summary>
@@ -341,7 +336,7 @@ namespace NoteFly
             }
 
 #if DEBUG
-            Stopwatch stopwatch = new Stopwatch();
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
             stopwatch.Start();
 #endif
             string[] notefilespath = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly);

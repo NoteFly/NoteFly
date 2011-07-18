@@ -1,7 +1,29 @@
-﻿
-using System.Collections.Generic;
+﻿//-----------------------------------------------------------------------
+// <copyright file="HighlightLanguage.cs" company="GNU">
+//  NoteFly a note application.
+//  Copyright (C) 2011 Tom
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace NoteFly
 {
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// HighlightLanguage class, a data class that holds lexicon of a language to highlight.
+    /// </summary>
     public class HighlightLanguage
     {
         /// <summary>
@@ -53,12 +75,13 @@ namespace NoteFly
         /// Initializes a new instance of the HighlightLanguage class.
         /// </summary>
         /// <param name="name">The name of the language</param>
-        /// <param name="commentline"></param>
-        /// <param name="commentstart"></param>
-        /// <param name="commentend"></param>
+        /// <param name="commentline">how a comment line is marked in this language</param>
+        /// <param name="commentstart">how comments start is marked in this language</param>
+        /// <param name="commentend">how comments end is marked in this language</param>
+        /// <param name="docstartstr">how the document of this language start</param>
+        /// <param name="docendstr"> how the document of this language end</param>
         /// <param name="keywords">The keywords to highlight on</param>
-        public HighlightLanguage(string name, string commentline, string commentstart, string commentend,
-            string docstartstr, string docendstr, string[] keywords)
+        public HighlightLanguage(string name, string commentline, string commentstart, string commentend, string docstartstr, string docendstr, string[] keywords)
         {
             this.name = name;
             this.commentline = commentline;
@@ -71,7 +94,7 @@ namespace NoteFly
             {
                 try
                 {
-                    keywordsdic.Add(keywords[i], i);
+                    this.keywordsdic.Add(keywords[i], i);
                 }
                 catch (System.ArgumentException)
                 {
@@ -81,7 +104,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The name of the language
+        /// Gets the name of the language
         /// </summary>
         public string Name
         {
@@ -92,7 +115,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the comment line characters
+        /// Gets the comment line characters
         /// </summary>
         public string Commentline
         {
@@ -132,7 +155,6 @@ namespace NoteFly
             get
             {
                 return this.keywordsdic.Count;
-                //return this.keywords.Length;
             }
         }
 
@@ -193,8 +215,8 @@ namespace NoteFly
         /// <summary>
         /// Lookup if keyword exists. (use fast dicnary lookup)
         /// </summary>
-        /// <param name="keyword"></param>
-        /// <returns></returns>
+        /// <param name="keyword">The keyword to lookup</param>
+        /// <returns>True if exist in this highlightlanguage</returns>
         public bool FindKeyword(string keyword)
         {
             return this.keywordsdic.ContainsKey(keyword);
@@ -203,8 +225,8 @@ namespace NoteFly
         /// <summary>
         /// Check if keyword is used to set document end or start and then set length of document.
         /// </summary>
-        /// <param name="curpos"></param>
-        /// <param name="docstartend"></param>
+        /// <param name="keyword">The keyword to check if the is used by this language as document start or end.</param>
+        /// <param name="curpos">the position in the richtextbox of the keyword.</param>
         public void CheckSetDocumentPos(string keyword, int curpos)
         {
             if (this.DocumentStartStr.StartsWith(keyword))
@@ -212,7 +234,7 @@ namespace NoteFly
                 this.posdocstart = curpos;
                 this.posdocend = int.MaxValue;
             }
-            else if (this.DocumentEndStr.EndsWith(keyword))
+            else if (this.DocumentEndStr == keyword)
             {
                 this.posdocend = curpos;
             }

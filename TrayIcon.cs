@@ -17,8 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows // platform can be: windows, linux, macos
-
 namespace NoteFly
 {
     using System;

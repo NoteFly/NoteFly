@@ -402,6 +402,21 @@ namespace NoteFly
         private System.Windows.Forms.Label lblFontsizePoints;
 
         /// <summary>
+        /// Button btnCheckUpdates
+        /// </summary>
+        private System.Windows.Forms.Button btnCheckUpdates;
+
+        /// <summary>
+        /// Label lblTextLatestUpdateCheck
+        /// </summary>
+        private System.Windows.Forms.Label lblTextLatestUpdateCheck;
+
+        /// <summary>
+        /// Label lblLatestUpdateCheck
+        /// </summary>
+        private System.Windows.Forms.Label lblLatestUpdateCheck;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -1088,21 +1103,21 @@ namespace NoteFly
             // chxHighlightSQL
             // 
             this.chxHighlightSQL.AutoSize = true;
-            this.chxHighlightSQL.Location = new System.Drawing.Point(37, 189);
+            this.chxHighlightSQL.Location = new System.Drawing.Point(37, 164);
             this.chxHighlightSQL.Name = "chxHighlightSQL";
-            this.chxHighlightSQL.Size = new System.Drawing.Size(144, 17);
+            this.chxHighlightSQL.Size = new System.Drawing.Size(193, 17);
             this.chxHighlightSQL.TabIndex = 16;
-            this.chxHighlightSQL.Text = "Highlight SQL text. (beta)";
+            this.chxHighlightSQL.Text = "Highlight SQL text between quotes.";
             this.chxHighlightSQL.UseVisualStyleBackColor = true;
             // 
             // chxHighlightPHP
             // 
             this.chxHighlightPHP.AutoSize = true;
-            this.chxHighlightPHP.Location = new System.Drawing.Point(37, 156);
+            this.chxHighlightPHP.Location = new System.Drawing.Point(37, 141);
             this.chxHighlightPHP.Name = "chxHighlightPHP";
-            this.chxHighlightPHP.Size = new System.Drawing.Size(145, 17);
+            this.chxHighlightPHP.Size = new System.Drawing.Size(228, 17);
             this.chxHighlightPHP.TabIndex = 15;
-            this.chxHighlightPHP.Text = "Highlight PHP text. (beta)";
+            this.chxHighlightPHP.Text = "Highlight PHP text between <?php and ?>.";
             this.chxHighlightPHP.UseVisualStyleBackColor = true;
             // 
             // chxHighlightHyperlinks
@@ -1350,7 +1365,7 @@ namespace NoteFly
             0,
             0});
             this.numTimeout.Minimum = new decimal(new int[] {
-            100,
+            300,
             0,
             0,
             0});
@@ -1533,9 +1548,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnCheckUpdates;
-        private System.Windows.Forms.Label lblTextLatestUpdateCheck;
-        private System.Windows.Forms.Label lblLatestUpdateCheck;
     }
 }

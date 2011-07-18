@@ -17,14 +17,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows // platform can be: windows, linux, macos
-
 namespace NoteFly
 {
     using System;
     using System.ComponentModel;
     using System.Drawing;
-
 #if windows
     using System.Runtime.InteropServices;
 #endif
@@ -218,7 +215,7 @@ namespace NoteFly
                 this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
                 this.pnlNote.Size = new Size(this.Width, (this.Height - this.pnlHead.Height + 1));
 #elif linux
-				this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
+                this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
                 this.pnlNote.Size = new Size(this.Width - 6, (this.Height - this.pnlHead.Height - 5));
 #endif
                 this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
@@ -226,6 +223,7 @@ namespace NoteFly
                 {
                     SyntaxHighlight.InitHighlighter();
                 }
+
                 SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
@@ -233,6 +231,11 @@ namespace NoteFly
 #if windows
         [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
         private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+
+        private const int WM_SETREDRAW = 0x0b;
 #endif
 
         /// <summary>
@@ -241,7 +244,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
-        private void btnCloseNote_Click(object sender, EventArgs e)
+        private void btnHideNote_Click(object sender, EventArgs e)
         {
             if (Settings.NotesClosebtnHidenotepermanently)
             {
@@ -282,7 +285,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
-        private void copyTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void menuCopyContent_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(this.rtbNote.Text))
             {
@@ -295,7 +298,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
-        private void copyTitleToolStripMenuItem_Click(object sender, EventArgs e)
+        private void menuCopyTitle_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(this.lblTitle.Text))
             {
@@ -311,7 +314,7 @@ namespace NoteFly
             this.pbShowLock = new PictureBox();
             this.pbShowLock.Name = "pbShowLock";
             this.pbShowLock.Size = new Size(16, 16);
-            this.pbShowLock.Location = new Point((this.btnCloseNote.Location.X - 24), 8);
+            this.pbShowLock.Location = new Point((this.btnHideNote.Location.X - 24), 8);
             this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
             this.pbShowLock.Visible = true;
             this.pbShowLock.MouseDown += new MouseEventHandler(this.pnlHead_MouseDown);
@@ -340,7 +343,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
-        private void editTToolStripMenuItem_Click(object sender, EventArgs e)
+        private void menuEditNote_Click(object sender, EventArgs e)
         {
             FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note, this.Location, this.Size, this.rtbNote.WordWrap);
             frmnewnote.Show();
@@ -352,7 +355,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
-        private void emailToolStripMenuItem_Click(object sender, EventArgs e)
+        private void menuSendToEmail_Click(object sender, EventArgs e)
         {
             string emailnote = System.Web.HttpUtility.UrlEncode(this.rtbNote.Text).Replace("+", " ");
             string emailtitle = System.Web.HttpUtility.UrlEncode(this.lblTitle.Text);
@@ -387,7 +390,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event arguments</param>
-        private void frmNote_Activated(object sender, EventArgs e)
+        private void FrmNote_Activated(object sender, EventArgs e)
         {
             if (Settings.NotesTransparencyEnabled)
             {
@@ -400,7 +403,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
-        private void frmNote_Deactivate(object sender, EventArgs e)
+        private void FrmNote_Deactivate(object sender, EventArgs e)
         {
             if (Settings.NotesTransparencyEnabled)
             {
@@ -438,9 +441,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments</param>
-        private void hideNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void menuHideNote_Click(object sender, EventArgs e)
         {
-            this.btnCloseNote_Click(sender, e);
+            this.btnHideNote_Click(sender, e);
         }
 
         /// <summary>
@@ -448,7 +451,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
-        private void locknoteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void menuLockNote_Click(object sender, EventArgs e)
         {
             this.note.Locked = !this.note.Locked;
 
@@ -506,23 +509,38 @@ namespace NoteFly
             tsi.Checked = true;
             this.note.SkinNr = this.notes.GetSkinNr(tsi.Text);
             this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+            this.SuspendLayout();
             this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
+            this.notes.FrmManageNotesNeedUpdate = true;
+            TrayIcon.RefreshFrmManageNotes();
             if (!SyntaxHighlight.KeywordsInitialized)
             {
                 SyntaxHighlight.InitHighlighter();
             }
-
-            this.notes.FrmManageNotesNeedUpdate = true;
-            TrayIcon.RefreshFrmManageNotes();
+#if DEBUG
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+            stopwatch.Start();
+#endif
+#if windows
+            SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)0, IntPtr.Zero); // about ~900 ms advantage
+#endif
             SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
+            this.ResumeLayout();
+#if windows
+            SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
+            this.Refresh();
+#endif
+#if DEBUG
+            stopwatch.Stop();
+            Log.Write(LogType.info, "Note highlight time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
+#endif
+            SyntaxHighlight.DeinitHighlighter();
             if (!this.saveWorker.IsBusy)
             {
                 this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
-            SyntaxHighlight.DeinitHighlighter();
-            Application.DoEvents();
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.SkinNr));
         }
 
@@ -548,7 +566,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments</param>
-        private void OnTopToolStripMenuItem_Click(object sender, EventArgs e)
+        private void menuOnTop_Click(object sender, EventArgs e)
         {
             this.note.Ontop = !this.note.Ontop;
             this.menuOnTop.Checked = this.note.Ontop;
@@ -740,11 +758,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Save the note to a plain textfile.
+        /// Save the note to a file.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
-        private void tsmenuSendToTextfile_Click(object sender, EventArgs e)
+        private void menuSendToFile_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfdlg = new SaveFileDialog();
             sfdlg.DefaultExt = "txt";
@@ -754,7 +772,7 @@ namespace NoteFly
             sfdlg.OverwritePrompt = true;
             sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
             sfdlg.Title = "Save note to file";
-            sfdlg.Filter = "Textfile (*.txt)|*.txt|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
+            sfdlg.Filter = "Textfile (*.txt)|*.txt|RichTextFormat file (*.rtf)|*.rtf|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
                 string logmsg = "Note saved to ";
@@ -765,10 +783,14 @@ namespace NoteFly
                         Log.Write(LogType.info, logmsg + "textfile.");
                         break;
                     case 2:
+                        new Textfile(TextfileWriteType.exportrtf, sfdlg.FileName, this.note.Title, this.GetContentRTF);
+                        Log.Write(LogType.info, logmsg + "rtf file.");
+                        break;
+                    case 3:
                         new Textfile(TextfileWriteType.exporthtml, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
                         Log.Write(LogType.info, logmsg + "htmlfile.");
                         break;
-                    case 3:
+                    case 4:
                         new Textfile(TextfileWriteType.exportphp, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
                         Log.Write(LogType.info, logmsg + "phpfile.");
                         break;

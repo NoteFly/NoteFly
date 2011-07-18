@@ -38,6 +38,11 @@ namespace NoteFly
         exporttext,
 
         /// <summary>
+        /// Writing to a rtf file.
+        /// </summary>
+        exportrtf,
+
+        /// <summary>
         /// Writing to html file.
         /// </summary>
         exporthtml,
@@ -77,6 +82,11 @@ namespace NoteFly
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
                         writer = new StreamWriter(fs);
                         writer.WriteLine("Title: " + title + Environment.NewLine);
+                        writer.Write(content);
+                        break;
+                    case TextfileWriteType.exportrtf:
+                        fs = new FileStream(filename, FileMode.OpenOrCreate);
+                        writer = new StreamWriter(fs);
                         writer.Write(content);
                         break;
                     case TextfileWriteType.exporthtml:

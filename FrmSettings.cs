@@ -17,8 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows // platform can be: windows, linux, macos
-
 namespace NoteFly
 {
     using System;
@@ -218,6 +216,7 @@ namespace NoteFly
                 {
                     Settings.NotesSavepath = this.tbNotesSavePath.Text;
                 }
+
                 Settings.ProgramLogError = this.chxLogErrors.Checked;
                 Settings.ProgramLogInfo = this.chxLogDebug.Checked;
                 Settings.ProgramLogException = this.chxLogExceptions.Checked;
@@ -257,7 +256,7 @@ namespace NoteFly
 #endif
                 xmlUtil.WriteSettings();
 
-                if (Settings.NotesSavepath != oldnotesavepath)
+                if (Settings.NotesSavepath != this.oldnotesavepath)
                 {
                     for (int i = 0; i < this.notes.CountNotes; i++)
                     {
@@ -272,8 +271,8 @@ namespace NoteFly
                     try
                     {
                         this.Cursor = Cursors.WaitCursor;
-                        this.MoveNotes(oldnotesavepath, Settings.NotesSavepath); // TODO: put on seperate thread
-                        notes.LoadNotes(true, false);
+                        this.MoveNotes(this.oldnotesavepath, Settings.NotesSavepath); // TODO: put on seperate thread
+                        this.notes.LoadNotes(true, false);
                     }
                     finally
                     {
@@ -281,22 +280,18 @@ namespace NoteFly
                     }
 
                     this.notes.FrmManageNotesNeedUpdate = true;
-                    
                 }
 
-                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
-                if (!SyntaxHighlight.KeywordsInitialized)
-                {
-                    SyntaxHighlight.InitHighlighter();
-                }
-
+                SyntaxHighlight.InitHighlighter();
                 this.notes.UpdateAllNoteForms();
                 Program.RestartTrayicon();
                 if (SyntaxHighlight.KeywordsInitialized)
                 {
+                    // clean memory
                     SyntaxHighlight.DeinitHighlighter();
                 }
 
+                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
                 this.Close();
             }
         }
@@ -564,17 +559,16 @@ namespace NoteFly
         /// <summary>
         /// Requested to manually do an update check.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event argument</param>
         private void btnCheckUpdates_Click(object sender, EventArgs e)
         {
             Settings.UpdatecheckLastDate = Program.UpdateCheck();
-            if (!String.IsNullOrEmpty(Settings.UpdatecheckLastDate))
+            if (!string.IsNullOrEmpty(Settings.UpdatecheckLastDate))
             {
                 this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
             }
             this.btnCheckUpdates.Enabled = false;
         }
-
     }
 }

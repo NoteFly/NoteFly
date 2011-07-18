@@ -17,8 +17,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-
-#define windows // platform can be: windows, linux, macos
+// platform can be: windows, linux, macos
+// set under project properties, build, conditional compilation symbols
 using System;
 
 [assembly: CLSCompliant(true)]
@@ -60,7 +60,7 @@ namespace NoteFly
             get
             {
 #if windows
-                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"),".NoteFly2");
+                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly2");
 #elif linux
                 return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
 #elif macos
@@ -112,7 +112,7 @@ namespace NoteFly
         {
             get
             {
-                return "rc2";
+                return string.Empty;
             }
         }
 
@@ -149,7 +149,7 @@ namespace NoteFly
         /// If set ask the user if the want to load the link.
         /// </summary>
         /// <param name="uri_text">the uniform resource location</param>
-        /// <param name="allowask">Allow to ask user if it wants to visit a url.</param>
+        /// <param name="allow_ask">Allow to ask user if it wants to visit a url.</param>
         public static void LoadLink(string uri_text, bool allow_ask)
         {
             if (Settings.ConfirmLinkclick && allow_ask)
@@ -309,10 +309,14 @@ namespace NoteFly
                 System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
                 if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
                 {
-                    System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show("You are now running " + Program.AssemblyTitle + " as elevated Administrator.\r\nWhich is not recommended because of security.\r\n Press OK if your understand the risks and want to hide this message in the future.", "Elevated administrator", System.Windows.Forms.MessageBoxButtons.OKCancel);
+                    System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show("You are now running " + Program.AssemblyTitle + " as elevated Administrator.\r\nWhich is not recommended because of security.\r\nPress OK if your understand the risks and want to hide this message in the future.", "Elevated administrator", System.Windows.Forms.MessageBoxButtons.OKCancel);
                     if (dlganswer == System.Windows.Forms.DialogResult.OK)
                     {
                         Settings.ProgramSuspressWarnAdmin = true;
+                        if (!System.IO.Directory.Exists(Program.AppDataFolder))
+                        {
+                            Directory.CreateDirectory(Program.AppDataFolder);
+                        }
                         xmlUtil.WriteSettings();
                     }
                 }
@@ -369,15 +373,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Waits 500ms before doing a update check.
-        /// </summary>
-        private static void UpdateCheckThread()
-        {
-            Thread.Sleep(500);
-            Settings.UpdatecheckLastDate = UpdateCheck();
-        }
-
-        /// <summary>
         /// Do update check.
         /// </summary>
         /// <returns>Datetime aof latest update check as string</returns>
@@ -422,6 +417,15 @@ namespace NoteFly
             }
 
             return DateTime.Now.ToString();
+        }
+
+        /// <summary>
+        /// Waits 500ms before doing a update check.
+        /// </summary>
+        private static void UpdateCheckThread()
+        {
+            Thread.Sleep(500);
+            Settings.UpdatecheckLastDate = UpdateCheck();
         }
 
         /// <summary>

@@ -17,8 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows // platform can be: windows, linux, macos
-
 namespace NoteFly
 {
     using System;
@@ -104,7 +102,7 @@ namespace NoteFly
                         xmlnodecontent = xmlread.ReadElementContentAsString();
 #if DEBUG
                         stopwatch.Stop();
-                        Log.Write(LogType.info, "Read content time:  " + stopwatch.ElapsedTicks + " ticks"); //blocking display time ~200ms/7
+                        Log.Write(LogType.info, "Read content time:  " + stopwatch.ElapsedTicks + " ticks"); // blocking display time ~200ms/7
 #endif
                         return xmlnodecontent;
                     }
@@ -896,9 +894,8 @@ namespace NoteFly
         /// Return a array of keywords used for the prgramming language we are doing a syntax check on.
         /// </summary>
         /// <param name="file">the file to parser.</param>
-        /// <param name="languagename">the language to lookup.</param>
-        /// <param name="langcomments">The characters for commenting a line, commenting start and commenting ending</param>
-        /// <returns>An array of keyword used for hightlighting.</returns>
+        /// <param name="name">the language to lookup.</param>
+        /// <returns>HighlightLanguage object.</returns>
         public static HighlightLanguage ParserLanguageLexical(string file, string name)
         {
             string[] keywords = null;

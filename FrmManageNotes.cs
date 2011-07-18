@@ -17,8 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows // platform can be: windows, linux, macos
-
 namespace NoteFly
 {
     using System;
@@ -129,6 +127,15 @@ namespace NoteFly
 
         #region Methods (20) 
 
+        /// <summary>
+        /// Reset the previous drawed row numbers in datagridview1.
+        /// </summary>
+        public void Resetdatagrid()
+        {
+            this.prevrownr = -1;
+            this.secondprevrownr = -2;
+        }
+
 #if windows
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern int SHFileOperation(ref SHFILEOPSTRUCT FileOp);
@@ -146,7 +153,7 @@ namespace NoteFly
             savebackupdlg.CheckPathExists = true;
             savebackupdlg.OverwritePrompt = true;
             savebackupdlg.DefaultExt = "nfbak"; // noteflybackup
-            savebackupdlg.Title = "Where to save the backup of all NoteFly notes.";
+            savebackupdlg.Title = "Save a backup file of all NoteFly notes.";
             savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
             savebackupdlg.FileName = DateTime.Today.ToShortDateString() + ".nfbak";
             DialogResult savebackupdlgres = savebackupdlg.ShowDialog();
@@ -255,7 +262,7 @@ namespace NoteFly
 
                     Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
                     xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
-                    this.notes.LoadNotes(false, false);
+                    this.notes.LoadNotes(true, false);
                     this.prevrownr = -1;
                     this.secondprevrownr = -2;
                     this.DrawNotesGrid();
@@ -277,33 +284,42 @@ namespace NoteFly
         private void btnShowSelectedNotes_Click(object sender, EventArgs e)
         {
             DataGridViewSelectedRowCollection selectedrows = this.dataGridView1.SelectedRows;
-            foreach (DataGridViewRow selrow in selectedrows)
+            try
             {
-                int notepos = this.GetNoteposBySelrow(selrow.Index);
-                selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).Visible;
-                this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
-                if (this.notes.GetNote(notepos).Visible)
+                Cursor.Current = Cursors.WaitCursor;
+                foreach (DataGridViewRow selrow in selectedrows)
                 {
-                    string tempcontent = this.notes.GetNote(notepos).GetContent();
-                    if (tempcontent == string.Empty)
+                    int notepos = this.GetNoteposBySelrow(selrow.Index);
+                    selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).Visible;
+                    this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
+                    if (this.notes.GetNote(notepos).Visible)
                     {
-                        Log.Write(LogType.exception, "Note content is empty.");
+                        string tempcontent = this.notes.GetNote(notepos).GetContent();
+                        if (tempcontent == string.Empty)
+                        {
+                            Log.Write(LogType.exception, "Note content is empty.");
+                        }
+
+                        this.notes.GetNote(notepos).Tempcontent = tempcontent;
+                        this.notes.GetNote(notepos).CreateForm();
+                        this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
+                    }
+                    else
+                    {
+                        this.notes.GetNote(notepos).DestroyForm();
+                        this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
                     }
 
-                    this.notes.GetNote(notepos).Tempcontent = tempcontent;
-                    this.notes.GetNote(notepos).CreateForm();
-                    this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
+                    this.Resetdatagrid();
+                    Application.DoEvents();
+                    xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
                 }
-                else
-                {
-                    this.notes.GetNote(notepos).DestroyForm();
-                    this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
-                }
-
-                this.Resetdatagrid();
-                xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
             }
-            
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+
             this.notes.FrmManageNotesNeedUpdate = false;
         }
 
@@ -350,7 +366,6 @@ namespace NoteFly
                         this.TopMost = false;
                         Cursor.Current = Cursors.Default;
                     }
-                    
                 }
             }
         }
@@ -485,15 +500,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Reset the previous drawed row numbers in datagridview1.
-        /// </summary>
-        public void Resetdatagrid()
-        {
-            this.prevrownr = -1;
-            this.secondprevrownr = -2;
-        }
-
-        /// <summary>
         /// Draw a list of all notes.
         /// Sets FrmManageNotesNeedUpdate to true.
         /// </summary>
@@ -513,11 +519,13 @@ namespace NoteFly
             datatable.Columns.Add("skin", typeof(string));
             datatable.DefaultView.AllowEdit = true;
             datatable.DefaultView.AllowNew = false;
-            if (this.dataGridView1.Columns["nr"]!=null) {
-             this.dataGridView1.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (this.dataGridView1.Columns["nr"] != null)
+            {
+                this.dataGridView1.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            if (this.dataGridView1.Columns["visible"]!=null) {
+            if (this.dataGridView1.Columns["visible"] != null)
+            {
                 this.dataGridView1.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
@@ -645,22 +653,24 @@ namespace NoteFly
                 int dpx = e.Location.X - this.oldp.X;
                 int dpy = e.Location.Y - this.oldp.Y;
 #if linux
-                if (dpx > 8)
+                // limit the moving of this note under mono/linux so this note cannot move uncontrolled a lot.
+                const int movelimit = 8;
+                if (dpx > movelimit)
                 {
-                    dpx = 8;
+                    dpx = movelimit;
                 }
-                else if (dpx < -8)
+                else if (dpx < -movelimit)
                 {
-                    dpx = -8;
+                    dpx = -movelimit;
                 }
 
-                if (dpy > 8)
+                if (dpy > movelimit)
                 {
-                    dpy = 8;
+                    dpy = movelimit;
                 }
-                else if (dpy < -8)
+                else if (dpy < -movelimit)
                 {
-                    dpy = -8;
+                    dpy = -movelimit;
                 }
 #endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
@@ -686,7 +696,7 @@ namespace NoteFly
         /// </summary>
         private void SetDataGridViewColumsWidth()
         {
-            if ((this.dataGridView1.Width <= 0) || (this.dataGridView1 ==null))
+            if ((this.dataGridView1.Width <= 0) || (this.dataGridView1 == null))
             {
                 return;
             }
@@ -702,12 +712,12 @@ namespace NoteFly
                 this.dataGridView1.Columns["title"].Width = 6 * partunit;
             }
 
-            if (this.dataGridView1.Columns["visible"]!=null)
+            if (this.dataGridView1.Columns["visible"] != null)
             {
                 this.dataGridView1.Columns["visible"].Width = 1 * partunit;
             }
 
-            if (this.dataGridView1.Columns["skin"]!=null)
+            if (this.dataGridView1.Columns["skin"] != null)
             {
                 this.dataGridView1.Columns["skin"].Width = 3 * partunit;
             }

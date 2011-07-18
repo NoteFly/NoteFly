@@ -111,7 +111,7 @@ namespace NoteFly
             }
 
             this.SetColorsForm(Settings.NotesDefaultSkinnr);
-            this.tbTitle.Text = DateTime.Now.ToShortDateString() + " "+DateTime.Now.ToShortTimeString();
+            this.tbTitle.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
         }
 
         #endregion Constructors 
@@ -919,8 +919,8 @@ namespace NoteFly
         /// <summary>
         /// Toggle to wrap lines in the richedit control
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void menuWordWarp_Click(object sender, EventArgs e)
         {
             this.rtbNewNote.WordWrap = this.menuWordWarp.Checked;
