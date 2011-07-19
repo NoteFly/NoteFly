@@ -3,6 +3,7 @@
   <xs:element name="settings">
     <xs:complexType>
       <xs:sequence>
+        <!-- bool -->
         <xs:element name="ConfirmDeleteNote" type="xs:boolean" />
         <xs:element name="ConfirmExit" type="xs:boolean" />
         <xs:element name="ConfirmLinkclick" type="xs:boolean" />
@@ -11,9 +12,10 @@
         <xs:element name="HighlightHyperlinks" type="xs:boolean" />
         <xs:element name="HighlightPHP" type="xs:boolean" />
         <xs:element name="HighlightSQL" type="xs:boolean" />
-        <xs:element name="NetworkConnectionForceipv6" type="xs:boolean" />
         <xs:element name="NetworkProxyEnabled" type="xs:boolean" />
+        <xs:element name="NotesTooltipEnabled" type="xs:boolean" />
         <xs:element name="NotesClosebtnHidenotepermanently" type="xs:boolean"/>
+        <xs:element name="NotesDeleteRecyclebin" type="xs:boolean" />
         <xs:element name="NotesClosebtnTooltipenabled" type="xs:boolean" />
         <xs:element name="NotesTransparencyEnabled" type="xs:boolean" />
         <xs:element name="ProgramFirstrun" type="xs:boolean" />
@@ -21,34 +23,43 @@
         <xs:element name="ProgramLogException" type="xs:boolean" />
         <xs:element name="ProgramLogInfo" type="xs:boolean" />
         <xs:element name="SocialEmailEnabled" type="xs:boolean" />
-        <xs:element name="SocialFacebookEnabled" type="xs:boolean" />
-        <xs:element name="SocialFacebookSavesession" type="xs:boolean" />
-        <xs:element name="SocialFacebookUseSSL" type="xs:boolean" />
-        <xs:element name="SocialTwitterEnabled" type="xs:boolean" />
-        <xs:element name="SocialTwitterUseSSL" type="xs:boolean" />
         <xs:element name="TrayiconCreatenotebold" type="xs:boolean" />
         <xs:element name="TrayiconExitbold" type="xs:boolean" />
         <xs:element name="TrayiconManagenotesbold" type="xs:boolean" />
         <xs:element name="TrayiconSettingsbold" type="xs:boolean" />
-
+        
+        <!-- ints -->
+        <xs:element name="TrayiconFontsize" type="xs:int" />
         <xs:element name="FontContentSize" type="xs:int" />
         <xs:element name="FontTextdirection" type="xs:int" />
         <xs:element name="FontTitleSize" type="xs:int" />
         <xs:element name="NetworkConnectionTimeout" type="xs:int" />
         <xs:element name="NotesDefaultSkinnr" type="xs:int" />
-        <xs:element name="NotesTransparencyLevel" type="xs:int" />
         <xs:element name="NotesWarnLimit" type="xs:int" />
+        <xs:element name="NotesTransparencyLevel" type="xs:int" />
         <xs:element name="TrayiconLeftclickaction" type="xs:int" />
         <xs:element name="UpdatecheckEverydays" type="xs:int" />
-        
-        <xs:element name="UpdatecheckLastDate" type="xs:string" />
+        <xs:element name="HighlightMaxchars" type="xs:int" />
+
+        <!-- strings -->
+        <xs:element name="HighlightHTMLColorComment" type="xs:string" />
+        <xs:element name="HighlightHTMLColorInvalid" type="xs:string" />
+        <xs:element name="HighlightHTMLColorValid" type="xs:string" />
+        <xs:element name="HighlightHTMLColorString" type="xs:string" />
+        <xs:element name="HighlightPHPColorComment" type="xs:string" />
+        <xs:element name="HighlightPHPColorDocumentstartend" type="xs:string" />
+        <xs:element name="HighlightPHPColorInvalidfunctions" type="xs:string" />
+        <xs:element name="HighlightPHPColorValidfunctions" type="xs:string" />
+        <xs:element name="HighlightSQLColorValidstatement" type="xs:string" />
+        <xs:element name="HighlightSQLColorField" type="xs:string" />
         <xs:element name="FontContentFamily" type="xs:string" />
         <xs:element name="FontTitleFamily" type="xs:string" />
         <xs:element name="NetworkProxyAddress" type="xs:string" />
         <xs:element name="NotesSavepath" type="xs:string" />
         <xs:element name="SocialEmailDefaultadres" type="xs:string" />
-        <xs:element name="SocialTwitterUsername" type="xs:string" />
-        
+        <xs:element name="UpdatecheckLastDate" type="xs:string" />
+        <xs:element name="UpdatecheckURL" type="xs:string" />
+
       </xs:sequence>
     </xs:complexType>
   </xs:element>

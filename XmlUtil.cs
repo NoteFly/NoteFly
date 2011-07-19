@@ -242,6 +242,9 @@ namespace NoteFly
                         case "NotesClosebtnHidenotepermanently":
                             Settings.NotesClosebtnHidenotepermanently = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "NotesDefaultRandomSkin":
+                            Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "NotesDeleteRecyclebin":
                             Settings.NotesDeleteRecyclebin = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -266,9 +269,6 @@ namespace NoteFly
                         case "SocialEmailEnabled":
                             Settings.SocialEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "TrayiconFontsize":
-                            Settings.TrayiconFontsize = xmlread.ReadElementContentAsFloat();
-                            break;
                         case "TrayiconCreatenotebold":
                             Settings.TrayiconCreatenotebold = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -281,11 +281,11 @@ namespace NoteFly
                         case "TrayiconSettingsbold":
                             Settings.TrayiconSettingsbold = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "NotesDefaultRandomSkin":
-                            Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
-                            break;
 
                         // ints and doubles
+                        case "TrayiconFontsize":
+                            Settings.TrayiconFontsize = xmlread.ReadElementContentAsFloat();
+                            break;
                         case "FontContentSize":
                             Settings.FontContentSize = xmlread.ReadElementContentAsInt();
                             break;
@@ -297,9 +297,6 @@ namespace NoteFly
                             break;
                         case "NetworkConnectionTimeout":
                             Settings.NetworkConnectionTimeout = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "DefaultRandomSkin":
-                            Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "NotesDefaultSkinnr":
                             Settings.NotesDefaultSkinnr = xmlread.ReadElementContentAsInt();
