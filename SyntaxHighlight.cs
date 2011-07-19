@@ -70,6 +70,42 @@ namespace NoteFly
         #region Methods (8)
 
         /// <summary>
+        /// Clear the keywords list.
+        /// </summary>
+        public static void DeinitHighlighter()
+        {
+            //langhtml = null;
+            //langphp = null;
+            //langsql = null;
+            keywordsinit = false;
+            GC.Collect();
+        }
+
+        /// <summary>
+        /// Initializes TextHighlighter fill the keywords lists.
+        /// </summary>
+        public static void InitHighlighter()
+        {
+            langs = new List<HighlightLanguage>();
+            if (Settings.HighlightHTML)
+            {
+                langs.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "html"));
+            }
+
+            if (Settings.HighlightPHP)
+            {
+                langs.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "php"));
+            }
+
+            if (Settings.HighlightSQL)
+            {
+                langs.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "sql"));
+            }
+
+            keywordsinit = true;
+        }
+
+        /// <summary>
         /// Check the syntax of alle set languages on the RichTextbox RTF content.
         /// </summary>
         /// <param name="rtb">The richttextbox with RTF note content.</param>
@@ -116,25 +152,22 @@ namespace NoteFly
                         {
                             for (int i = 0; i < langs.Count; i++)
                             {
-                                //if (langs[i] != null)
-                                //{
-                                    langs[i].CheckSetDocumentPos(bufcheck, curpos);
-                                    if (curpos >= langs[i].PosDocumentStart && curpos <= langs[i].PosDocumentEnd)
+                                langs[i].CheckSetDocumentPos(bufcheck, curpos);
+                                if (curpos >= langs[i].PosDocumentStart && curpos <= langs[i].PosDocumentEnd)
+                                {
+                                    switch (langs[i].Name)
                                     {
-                                        switch (langs[i].Name)
-                                        {
-                                            case "html":
-                                                ValidatingHtmlPart(bufcheck, rtb, lastpos, langs[i]);
-                                                break;
-                                            case "php":
-                                                ValidatingPhpPart(bufcheck, rtb, lastpos, langs[i]);
-                                                break;
-                                            case "sql":
-                                                ValidatingSqlPart(bufcheck, rtb, lastpos);
-                                                break;
-                                        }
+                                        case "html":
+                                            ValidatingHtmlPart(bufcheck, rtb, lastpos, langs[i]);
+                                            break;
+                                        case "php":
+                                            ValidatingPhpPart(bufcheck, rtb, lastpos, langs[i]);
+                                            break;
+                                        case "sql":
+                                            ValidatingSqlPart(bufcheck, rtb, lastpos, langs[i]);
+                                            break;
                                     }
-                                //}
+                                }
                             }
                         }
 
@@ -154,42 +187,6 @@ namespace NoteFly
 
             rtb.SelectionStart = cursorpos;
             rtb.SelectionLength = sellen;
-        }
-
-        /// <summary>
-        /// Clear the keywords list.
-        /// </summary>
-        public static void DeinitHighlighter()
-        {
-            //langhtml = null;
-            //langphp = null;
-            //langsql = null;
-            keywordsinit = false;
-            GC.Collect();
-        }
-
-        /// <summary>
-        /// Initializes TextHighlighter fill the keywords lists.
-        /// </summary>
-        public static void InitHighlighter()
-        {
-            langs = new List<HighlightLanguage>();
-            if (Settings.HighlightHTML)
-            {
-                langs.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "html"));
-            }
-
-            if (Settings.HighlightPHP)
-            {
-                langs.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "php"));
-            }
-
-            if (Settings.HighlightSQL)
-            {
-                langs.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "sql"));
-            }
-
-            keywordsinit = true;
         }
 
         /// <summary>
@@ -375,7 +372,7 @@ namespace NoteFly
                 return;
             }
 
-            if (langhtml.FindKeyword(attrname))
+            if (langhtml.FindKeyword(attrname.ToLower()))
             {
                 knowattr = true;
             }
@@ -385,30 +382,32 @@ namespace NoteFly
                 // Wrong
                 ColorText(rtb, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorInvalid);
             }
-
-            for (int i = 0; i < attrsepnamevaleau.Length; i++)
+            else
             {
-                if (i == 0)
+                for (int i = 0; i < attrsepnamevaleau.Length; i++)
                 {
-                    if (knowattr)
+                    if (i == 0)
                     {
-                        // Right
-                        ColorText(rtb, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorValid);
-                    }
-                }
-                else if (i == 1)
-                {
-                    if (attrsepnamevaleau[1].StartsWith("\"") || attrsepnamevaleau[1].StartsWith("'"))
-                    {
-                        // is string
-                        htmlstringpart = true;
-                        int posstartstring = attributestartpos + attrsepnamevaleau[0].Length + 1; // +1 for '=' 
-                        ColorText(rtb, posstartstring, attrsepnamevaleau[1].Length, Settings.HighlightHTMLColorString);
-                        currentstringquote = attrsepnamevaleau[1][0];
-                        int lastcharpos = attrsepnamevaleau[1].Length - 1;
-                        if (attrsepnamevaleau[1][lastcharpos] == currentstringquote)
+                        if (knowattr)
                         {
-                            htmlstringpart = false;
+                            // Right
+                            ColorText(rtb, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorValid);
+                        }
+                    }
+                    else if (i == 1)
+                    {
+                        if (attrsepnamevaleau[1].StartsWith("\"") || attrsepnamevaleau[1].StartsWith("'"))
+                        {
+                            // is string
+                            htmlstringpart = true;
+                            int posstartstring = attributestartpos + attrsepnamevaleau[0].Length + 1; // +1 for '=' 
+                            ColorText(rtb, posstartstring, attrsepnamevaleau[1].Length, Settings.HighlightHTMLColorString);
+                            currentstringquote = attrsepnamevaleau[1][0];
+                            int lastcharpos = attrsepnamevaleau[1].Length - 1;
+                            if (attrsepnamevaleau[1][lastcharpos] == currentstringquote)
+                            {
+                                htmlstringpart = false;
+                            }
                         }
                     }
                 }
@@ -471,6 +470,23 @@ namespace NoteFly
                             if (!phpstringpart)
                             {
                                 ColorText(rtb, posstart + curchr, 1, Settings.HighlightPHPColorString);
+                                foreach (HighlightLanguage lng in langs)
+                                {
+                                    if (lng.Name == "sql")
+                                    {
+                                        lng.PosDocumentEnd = posstart + curchr + 1;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (HighlightLanguage lng in langs)
+                                {
+                                    if (lng.Name == "sql")
+                                    {
+                                        lng.PosDocumentStart = posstart;
+                                    }
+                                }
                             }
                         }
                     }
@@ -500,6 +516,7 @@ namespace NoteFly
                     }
                 }
 
+                // check if keyword is known php function
                 if (langphp.FindKeyword(isphp))
                 {
                     ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
@@ -518,17 +535,46 @@ namespace NoteFly
         /// <param name="issql">The part to be check.</param>
         /// <param name="rtb">The richtextbox</param>
         /// <param name="posstart">Position where the keyword starts in the richtextbox.</param>
-        private static void ValidatingSqlPart(string issql, RichTextBox rtb, int posstart)
+        private static void ValidatingSqlPart(string issql, RichTextBox rtb, int posstart, HighlightLanguage langsql)
         {
-            // TODO check sql
+            string sqlkeyword;
+            if (issql.Length > 0)
+            {
+                // check sql field
+                if (issql[0] == '`')
+                {
+                    for (int i = 1; i < issql.Length; i++)
+                    {
+                        if (issql[i] == '`')
+                        {
+                            ColorText(rtb, posstart, i + 1, Settings.HighlightSQLColorField);
+                        }
+                    }
+                }
 
-            ////for (int i = 0; i < keywordssql.Length; i++)
-            ////{
-            ////    if (issql == keywordssql[i])
-            ////    {
-            ////        return true;
-            ////    }
-            ////}
+                if (issql[0] == '"')
+                {
+                    if (issql.IndexOf('"', 1) > 0)
+                    {
+                        return;
+                    }
+                    sqlkeyword = issql.Substring(1, issql.Length - 1);
+                }
+                else
+                {
+                    sqlkeyword = issql;
+                }
+            }
+            else
+            {
+                return;
+            }
+
+            // check if keyword is known SQL statement
+            if (langsql.FindKeyword(sqlkeyword.ToLower()))
+            {
+                ColorText(rtb, posstart, issql.Length, Settings.HighlightSQLColorValidstatement);
+            }
         }
 
         #endregion Methods

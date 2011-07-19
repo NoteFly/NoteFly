@@ -205,6 +205,16 @@ namespace NoteFly
         public static bool HighlightSQL = false;
 
         /// <summary>
+        /// A valid SQL statement color.
+        /// </summary>
+        public static string HighlightSQLColorValidstatement = "#7FCE35";
+
+        /// <summary>
+        /// A SQL field color.
+        /// </summary>
+        public static string HighlightSQLColorField = "#B16DFF";
+
+        /// <summary>
         /// Confirm the launch of hyperlink.
         /// </summary>
         public static bool ConfirmLinkclick = false;
@@ -264,7 +274,7 @@ namespace NoteFly
         /// <summary>
         /// The location where notefly checks for update.
         /// </summary>
-        public static string UpdatecheckURL = "http://www.notefly.org/latestversion.xml";
+        public static string UpdatecheckURL = "http://update.notefly.org/latestversion.xml";
 
         /// <summary>
         /// Has this programme been runned before.

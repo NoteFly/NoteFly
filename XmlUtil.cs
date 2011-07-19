@@ -345,6 +345,12 @@ namespace NoteFly
                         case "HighlightPHPColorValidfunctions":
                             Settings.HighlightPHPColorValidfunctions = xmlread.ReadElementContentAsString();
                             break;
+                        case "HighlightSQLColorValidstatement":
+                            Settings.HighlightSQLColorValidstatement = xmlread.ReadElementContentAsString();
+                            break;
+                        case "HighlightSQLColorField":
+                            Settings.HighlightSQLColorField = xmlread.ReadElementContentAsString();
+                            break;
                         case "FontContentFamily":
                             Settings.FontContentFamily = xmlread.ReadElementContentAsString();
                             break;
@@ -487,6 +493,8 @@ namespace NoteFly
             Settings.HighlightPHPColorValidfunctions = "#41D87B";
             Settings.HighlightPHPColorInvalidfunctions = "#D90000";
             Settings.HighlightSQL = false;
+            Settings.HighlightSQLColorValidstatement = "#7FCE35";
+            Settings.HighlightSQLColorField = "#B16DFF";
             ////Settings.NetworkConnectionForceipv6 = false;
             Settings.NetworkConnectionTimeout = 8000;
             Settings.NetworkProxyAddress = string.Empty;
@@ -514,7 +522,7 @@ namespace NoteFly
             Settings.TrayiconSettingsbold = false;
             Settings.UpdatecheckEverydays = 14; // 0 is disabled.
             Settings.UpdatecheckLastDate = DateTime.Now.ToString();
-            Settings.UpdatecheckURL = "http://www.notefly.org/latestversion.xml";
+            Settings.UpdatecheckURL = "http://update.notefly.org/latestversion.xml";
             try
             {
                 xmlUtil.WriteSettings();
@@ -707,6 +715,8 @@ namespace NoteFly
                 xmlwrite.WriteElementString("HighlightPHPColorDocumentstartend", Settings.HighlightPHPColorDocumentstartend);
                 xmlwrite.WriteElementString("HighlightPHPColorInvalidfunctions", Settings.HighlightPHPColorInvalidfunctions);
                 xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.HighlightPHPColorValidfunctions);
+                xmlwrite.WriteElementString("HighlightSQLColorValidstatement", Settings.HighlightSQLColorValidstatement);
+                xmlwrite.WriteElementString("HighlightSQLColorField", Settings.HighlightSQLColorField);
                 xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
                 xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
@@ -778,7 +788,7 @@ namespace NoteFly
             version[1] = -1;
             version[2] = -1;
             versionquality = Program.AssemblyVersionQuality;
-            downloadurl = "http://www.notefly.org/downloads.php";
+            downloadurl = "http://www.notefly.org/downloads.php"; // default url if none is provided.
             try
             {
                 System.Net.ServicePointManager.Expect100Continue = false;
