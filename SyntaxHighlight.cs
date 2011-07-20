@@ -558,6 +558,7 @@ namespace NoteFly
                     {
                         return;
                     }
+
                     sqlkeyword = issql.Substring(1, issql.Length - 1);
                 }
                 else

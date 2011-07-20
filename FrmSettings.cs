@@ -523,8 +523,6 @@ namespace NoteFly
             this.chxLogExceptions.Checked = Settings.ProgramLogException;
         }
 
-        #endregion Methods
-
 #if windows
         /// <summary>
         /// Gets if notefly is used to run at logon.
@@ -568,7 +566,10 @@ namespace NoteFly
             {
                 this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
             }
+
             this.btnCheckUpdates.Enabled = false;
         }
+
+        #endregion Methods
     }
 }

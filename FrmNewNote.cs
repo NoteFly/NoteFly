@@ -17,8 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-#define windows // platform can be: windows, linux, macos
-
 namespace NoteFly
 {
     using System;
@@ -70,6 +68,7 @@ namespace NoteFly
         /// <param name="note">the note to edit.</param>
         /// <param name="locfrmnewnote">The location of the FrmNewNote should get.</param>
         /// <param name="sizefrmnewnote">The size of the FrnNewNote should get.</param>
+        /// <param name="wordwrap">Wrap words that exceeded the width of the richedittext control.</param>
         public FrmNewNote(Notes notes, Note note, Point locfrmnewnote, Size sizefrmnewnote, bool wordwrap)
         {
             this.ConstructFrmNewNote(notes);
@@ -503,6 +502,7 @@ namespace NoteFly
                         {
                             uint linenum = 0;
                             string curline = reader.ReadLine(); // no CR+LF characters
+                            const string IMPORTERROR = "import error";
                             if (curline == "#!GFKNT 2.0")
                             {
                                 while (curline != "%:")
@@ -513,7 +513,9 @@ namespace NoteFly
                                     // should normally be except %: around line 42.
                                     if (linenum > 50)
                                     {
-                                        MessageBox.Show("Cannot find KeyNote NF note content.");
+                                        const string CANNOTFINDKEYNOTECONTENT = "Cannot find KeyNote NF note content.";
+                                        MessageBox.Show(CANNOTFINDKEYNOTECONTENT, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        Log.Write(LogType.error, CANNOTFINDKEYNOTECONTENT);
                                     }
                                 }
 
@@ -537,7 +539,9 @@ namespace NoteFly
                             }
                             else
                             {
-                                MessageBox.Show("Not a KeyNote NF note.");
+                                const string NOTKEYNOTEFILE = "Not a KeyNote NF note.";
+                                MessageBox.Show(NOTKEYNOTEFILE, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Log.Write(LogType.error, NOTKEYNOTEFILE);
                             }
                         }
                     }
