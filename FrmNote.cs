@@ -259,7 +259,9 @@ namespace NoteFly
         /// Check if there is internet connection, if not warn user.
         /// Uses windows API, other platforms return always true at the moment.
         /// </summary>
+        /// <remarks>Decreated, used for send to twitter/facebook</remarks>
         /// <returns>true if there is a connection, otherwise return false</returns>
+        /*
         private bool CheckConnection()
         {
 #if windows
@@ -279,6 +281,7 @@ namespace NoteFly
             return true;
 #endif
         }
+        */
 
         /// <summary>
         /// Copy note content to clipboard.

@@ -687,6 +687,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
+        /*
         private void pnlNoteEdit_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -694,6 +695,7 @@ namespace NoteFly
                 this.contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
             }
         }
+        */
 
         /// <summary>
         /// Removes 1 fontsyle from the fontsyles of the checkstyle rtb text.

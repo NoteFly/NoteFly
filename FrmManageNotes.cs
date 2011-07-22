@@ -211,6 +211,7 @@ namespace NoteFly
 
             this.Resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
+            Application.DoEvents();
         }
 
         /// <summary>
@@ -263,8 +264,7 @@ namespace NoteFly
                     Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
                     xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
                     this.notes.LoadNotes(true, false);
-                    this.prevrownr = -1;
-                    this.secondprevrownr = -2;
+                    this.Resetdatagrid();
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
                 }
@@ -470,7 +470,14 @@ namespace NoteFly
                         shf.pFrom = filepath + "\0"; // double null terminated
                         SHFileOperation(ref shf);
 #elif linux
-                        File.Move(filepath, Path.Combine(@"$HOME/.Trash/", filename) );
+                        // trashfolder = ~/.local/share/Trash/files
+                        string trashfolder = System.Environment.GetEnvironmentVariable("HOME") +"/.local/share/Trash/files/";
+                        if (!Directory.Exists(trashfolder))
+                        {
+                            Directory.CreateDirectory(trashfolder);
+                        }
+
+                        File.Move(filepath, Path.Combine(trashfolder, filename));
 #endif
                         Log.Write(LogType.info, "Moved note to Recyclebin: " + filepath);
                     }
@@ -508,7 +515,6 @@ namespace NoteFly
             this.Resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
-
             DataTable datatable = new DataTable();
             this.dataGridView1.DataSource = datatable;
             datatable.Columns.Add("nr", typeof(string));

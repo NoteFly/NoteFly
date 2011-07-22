@@ -242,6 +242,7 @@ namespace NoteFly
         /// </summary>
         public void Dispose()
         {
+            this.icon.Visible = false; // Mono needs Visible set to false otherwise it keeps showing the trayicon.
             this.components.Dispose();
         }
 

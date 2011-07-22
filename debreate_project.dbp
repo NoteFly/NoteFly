@@ -2,7 +2,7 @@
 <<MODE>>0<</MODE>>
 <<CTRL>>
 Package: notefly
-Version: 2.0.0-RC1
+Version: 2.0.0
 Section: Utilities
 Maintainer: d9ping <tomheefteenwebsite@hotmail.com>
 Homepage: http://www.notefly.org
@@ -21,9 +21,8 @@ Description: A small advance note application.
 <</CTRL>>
 <<FILES>>
 1
-/home/tom/notefly/bin/Release/NoteFly.exe -> NoteFly -> /usr/bin
-/home/tom/notefly/bin/Release/langs.xml -> langs.xml -> /usr/bin
-/home/tom/notefly/Resources/icon_big.png -> notefly_icon.png -> /usr/share/icons
+/mnt/data/Public/sourcecode/Projects_Csharp/notefly/bin/Release/langs.xml* -> langs.xml -> /usr/bin
+/mnt/data/Public/sourcecode/Projects_Csharp/notefly/bin/Release/NoteFly.exe* -> NoteFly.exe -> /usr/bin
 <</FILES>>
 <<SCRIPTS>>
 <<PREINST>>

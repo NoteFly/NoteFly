@@ -471,10 +471,18 @@ namespace NoteFly
             Settings.ConfirmDeletenote = true;
             Settings.ConfirmExit = false;
             Settings.ConfirmLinkclick = true;
+#if windows
             Settings.FontContentFamily = "Arial";
+            Settings.FontTitleFamily = "Arial";
+#elif linux
+            Settings.FontContentFamily = "FreeMono";
+            Settings.FontTitleFamily = "FreeMono";
+#else
+            Settings.FontContentFamily = "?";
+            Settings.FontTitleFamily = "?";
+#endif
             Settings.FontContentSize = 11;
             Settings.FontTextdirection = 0;
-            Settings.FontTitleFamily = "Arial";
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;
             Settings.HighlightMaxchars = 10000;

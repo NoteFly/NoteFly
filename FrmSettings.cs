@@ -322,30 +322,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// User changed if the default e-mail should be blank or not.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event arguments</param>
-        private void cbxDefaultEmailToBlank_CheckedChanged(object sender, EventArgs e)
-        {
-            this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
-            if (this.chxSocialEmailDefaultaddressBlank.Checked)
-            {
-                this.tbDefaultEmail.Text = string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Toggle numProcTransparency enabled
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void cbxTransparecy_CheckedChanged(object sender, EventArgs e)
-        {
-            this.numProcTransparency.Enabled = this.chxTransparecy.Checked;
-        }
-
-        /// <summary>
         /// Toggle tbDefaultEmail enabled.
         /// </summary>
         /// <param name="sender">Sender object</param>
