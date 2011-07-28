@@ -516,6 +516,7 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
+            this.cbxShowExpertSettings = new System.Windows.Forms.CheckBox();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -580,6 +581,7 @@ namespace NoteFly
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.cbxShowExpertSettings);
             this.tabGeneral.Controls.Add(this.chxNotesDeleteRecyclebin);
             this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
@@ -895,7 +897,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = string.Empty;
+            this.lblTextDirection.AccessibleDescription = "";
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.Location = new System.Drawing.Point(50, 183);
@@ -1488,6 +1490,19 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
+            // cbxShowExpertSettings
+            // 
+            this.cbxShowExpertSettings.AutoSize = true;
+            this.cbxShowExpertSettings.Checked = true;
+            this.cbxShowExpertSettings.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxShowExpertSettings.Location = new System.Drawing.Point(22, 194);
+            this.cbxShowExpertSettings.Name = "cbxShowExpertSettings";
+            this.cbxShowExpertSettings.Size = new System.Drawing.Size(122, 17);
+            this.cbxShowExpertSettings.TabIndex = 25;
+            this.cbxShowExpertSettings.Text = "show expert settings";
+            this.cbxShowExpertSettings.UseVisualStyleBackColor = true;
+            this.cbxShowExpertSettings.CheckedChanged += new System.EventHandler(this.cbxShowExpertSettings_CheckedChanged);
+            // 
             // iptbProxyAddress
             // 
             this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -1548,5 +1563,7 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.CheckBox cbxShowExpertSettings;
     }
 }

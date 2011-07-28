@@ -32,7 +32,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNote : Form
     {
-        #region Fields (6) 
+        #region Fields (6)
 
         /// <summary>
         /// Constant for minimal visible
@@ -64,9 +64,9 @@ namespace NoteFly
         /// </summary>
         private PictureBox pbShowLock;
 
-        #endregion Fields 
+        #endregion Fields
 
-        #region Constructors (1) 
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
@@ -132,9 +132,9 @@ namespace NoteFly
             this.UpdateForm(true);
         }
 
-        #endregion Constructors 
+        #endregion Constructors
 
-        #region Properties (1) 
+        #region Properties (1)
 
         /// <summary>
         /// Gets the note content as rich text.
@@ -147,9 +147,9 @@ namespace NoteFly
             }
         }
 
-        #endregion Properties 
+        #endregion Properties
 
-        #region Methods (30) 
+        #region Methods (30)
 
         /// <summary>
         /// Set some settings
@@ -253,6 +253,18 @@ namespace NoteFly
             }
 
             this.note.DestroyForm();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuPluginClicked(Object sender, System.EventArgs e)
+        {
+            ToolStripMenuItem menuitem = (ToolStripMenuItem)sender;
+            int p = (int)menuitem.Tag;
+            Program.plugins[p].ShareMenuClicked(this.rtbNote, this.note);
         }
 
         /// <summary>
@@ -490,7 +502,7 @@ namespace NoteFly
             {
                 this.menuCopySelected.Enabled = true;
             }
-            else 
+            else
             {
                 this.menuCopySelected.Enabled = false;
             }
@@ -809,6 +821,42 @@ namespace NoteFly
         private void menuWordWrap_Click(object sender, EventArgs e)
         {
             this.rtbNote.WordWrap = this.menuWordWrap.Checked;
+        }
+
+        /// <summary>
+        /// Create plugin sendto menu's
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuSendTo_DropDownOpening(object sender, EventArgs e)
+        {
+            bool giveup = false;
+            while (this.menuSendTo.DropDownItems.Count > 2 && !giveup)
+            {
+                try
+                {
+                    this.menuSendTo.DropDownItems.RemoveAt(2);
+                }
+                catch (Exception ex)
+                {
+                    giveup = true;
+                    Log.Write(LogType.exception, ex.Message);
+                }
+            }
+
+            if (Program.plugins != null)
+            {
+                for (int i = 0; i < Program.plugins.Length; i++)
+                {
+                    if (!String.IsNullOrEmpty(Program.plugins[i].ShareMenuText))
+                    {
+                        ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.plugins[i].ShareMenuText, null, new EventHandler(MenuPluginClicked));
+                        menuitem.Name = "menuPlugin" + Program.plugins[i].Name;
+                        menuitem.Tag = i;
+                        this.menuSendTo.DropDownItems.Add(menuitem);
+                    }
+                }
+            }
         }
 
         #endregion Methods

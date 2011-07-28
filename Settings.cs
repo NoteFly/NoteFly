@@ -309,6 +309,11 @@ namespace NoteFly
         public static bool ProgramSuspressWarnAdmin = false;
 
         /// <summary>
+        /// Is loading plugins enable
+        /// </summary>
+        public static bool ProgramLoadPlugins = true;
+
+        /// <summary>
         /// Log debug info.
         /// </summary>
         public static bool ProgramLogInfo = false;

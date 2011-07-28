@@ -547,5 +547,16 @@ namespace NoteFly
         }
 
         #endregion Methods
+
+        private void cbxShowExpertSettings_CheckedChanged(object sender, EventArgs e)
+        {
+            this.cbxShowTooltips.Visible = cbxShowExpertSettings.Checked;
+            this.lblTextNetworkTimeout.Visible = cbxShowExpertSettings.Checked;
+            this.numTimeout.Visible = cbxShowExpertSettings.Checked;
+            this.lblTextNetworkMiliseconds.Visible = cbxShowExpertSettings.Checked;
+            this.cbxFontNoteTitleBold.Visible = cbxShowExpertSettings.Checked;
+            this.chxLogErrors.Visible = cbxShowExpertSettings.Checked;
+            this.chxLogExceptions.Visible = cbxShowExpertSettings.Checked;
+        }
     }
 }

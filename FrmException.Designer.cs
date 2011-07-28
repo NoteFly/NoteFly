@@ -81,6 +81,7 @@
             // 
             // btnContinu
             // 
+            this.btnContinu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnContinu.Location = new System.Drawing.Point(185, 132);
             this.btnContinu.Name = "btnContinu";
             this.btnContinu.Size = new System.Drawing.Size(191, 23);
@@ -91,6 +92,7 @@
             // 
             // btnShutdown
             // 
+            this.btnShutdown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnShutdown.Location = new System.Drawing.Point(5, 132);
             this.btnShutdown.Name = "btnShutdown";
             this.btnShutdown.Size = new System.Drawing.Size(174, 23);
@@ -123,7 +125,7 @@
             // 
             // lblTextStacktrace
             // 
-            this.lblTextStacktrace.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblTextStacktrace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTextStacktrace.Location = new System.Drawing.Point(2, 97);
             this.lblTextStacktrace.Name = "lblTextStacktrace";
             this.lblTextStacktrace.Size = new System.Drawing.Size(364, 17);

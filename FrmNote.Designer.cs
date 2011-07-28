@@ -245,7 +245,7 @@ namespace NoteFly
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 224);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -274,6 +274,7 @@ namespace NoteFly
             this.menuSendTo.Name = "menuSendTo";
             this.menuSendTo.Size = new System.Drawing.Size(184, 22);
             this.menuSendTo.Text = "&Share";
+            this.menuSendTo.DropDownOpening += new System.EventHandler(this.menuSendTo_DropDownOpening);
             // 
             // menuSendToEmail
             // 
@@ -496,5 +497,6 @@ namespace NoteFly
         }
 
         #endregion
+
     }
 }

@@ -48,6 +48,11 @@ namespace NoteFly
         /// </summary>
         private static TrayIcon trayicon;
 
+        /// <summary>
+        /// All loaded plugins
+        /// </summary>
+        public static IPlugin[] plugins;
+
         #endregion Fields
 
         #region Properties (5)
@@ -112,7 +117,7 @@ namespace NoteFly
         {
             get
             {
-                return string.Empty;
+                return "alpha";
             }
         }
 
@@ -337,6 +342,11 @@ namespace NoteFly
                 }
             }
 
+            if (Settings.ProgramLoadPlugins)
+            {
+                LoadPlugins();
+            }
+
             SyntaxHighlight.InitHighlighter();
             notes = new Notes(resetpositions);
             trayicon = new TrayIcon(notes);
@@ -486,7 +496,7 @@ namespace NoteFly
             }
 
             return instances;
-        } 
+        }
 
         /// <summary>
         /// Actual loads the url.
@@ -528,6 +538,41 @@ namespace NoteFly
             finally
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            }
+        }
+
+        /// <summary>
+        /// Load plugins
+        /// </summary>
+        public static void LoadPlugins()
+        {
+            string[] pluginfilepaths = Directory.GetFiles(Program.InstallFolder, "*.dll");
+            plugins = new IPlugin[pluginfilepaths.Length];
+            for (int i = 0; i < pluginfilepaths.Length; i++)
+            {
+                System.Reflection.Assembly pluginassembly = null;
+                pluginassembly = System.Reflection.Assembly.LoadFrom(pluginfilepaths[i]);
+                if (pluginassembly != null)
+                {
+                    try
+                    {
+                        foreach (Type curplugintype in pluginassembly.GetTypes())
+                        {
+                            if (curplugintype.IsPublic && !curplugintype.IsAbstract)
+                            {
+                                Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
+                                if (plugintype != null)
+                                {
+                                    plugins[i] = (IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Write(LogType.exception, "Can't load plugin: " + ex.Message);
+                    }
+                }
             }
         }
 

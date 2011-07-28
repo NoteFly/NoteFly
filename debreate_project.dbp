@@ -21,6 +21,7 @@ Description: A small advance note application.
 <</CTRL>>
 <<FILES>>
 1
+/home/tom/notefly/Resources/notefly.png* -> notefly.png -> /usr/share/icons
 /mnt/data/Public/sourcecode/Projects_Csharp/notefly/bin/Release/langs.xml* -> langs.xml -> /usr/bin
 /mnt/data/Public/sourcecode/Projects_Csharp/notefly/bin/Release/NoteFly.exe* -> NoteFly.exe -> /usr/bin
 <</FILES>>
@@ -670,9 +671,9 @@ copy of the Program in return for a fee.
 1
 Name=NoteFly
 Version=1.0
-Exec=mono /usr/bin/NoteFly
+Exec=mono /usr/bin/NoteFly.exe
 Comment=a note taking application
-Icon=/usr/share/icons/notefly_icon.png
+Icon=/usr/share/icons/notefly.png
 Type=Application
 Terminal=false
 StartupNotify=true
