@@ -1,0 +1,122 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteFly", "NoteFly.csproj", "{2E47E4D6-04CC-4578-8380-95AA497D3341}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendToOpera", "extensions\SendToOpera\SendToOpera.csproj", "{C14F5261-6029-4A6A-B9AE-FF065C9BE029}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "extensions\HelloWorld\HelloWorld.csproj", "{75EB6442-258A-46FA-BB61-A4822E8148A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendToTBLightning", "extensions\SendToLightning\SendToTBLightning.csproj", "{C76EBBC0-FAC1-4082-8213-57A927C65725}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Release|x64.ActiveCfg = Release|Any CPU
+		{2E47E4D6-04CC-4578-8380-95AA497D3341}.Release|x86.ActiveCfg = Release|Any CPU
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|x64.ActiveCfg = Debug|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|x86.ActiveCfg = Debug|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Debug|x86.Build.0 = Debug|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|Mixed Platforms.Build.0 = Release|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|x64.ActiveCfg = Release|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|x86.ActiveCfg = Release|x86
+		{C14F5261-6029-4A6A-B9AE-FF065C9BE029}.Release|x86.Build.0 = Release|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|x64.ActiveCfg = Debug|x64
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|x64.Build.0 = Debug|x64
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|x86.ActiveCfg = Debug|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|x86.Build.0 = Debug|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Mixed Platforms.Build.0 = Release|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|x64.ActiveCfg = Release|x64
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|x64.Build.0 = Release|x64
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|x86.ActiveCfg = Release|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|x86.Build.0 = Release|x86
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|x64.ActiveCfg = Release|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		AMDCaProjectFile = M:\Public\sourcecode\Projects_Csharp\notefly\CodeAnalyst\NoteFly.caw
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = NoteFly.vsmdi
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		version = 1.0
+		StartupItem = NoteFly.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = Hierarchical
+		$1.ResourceNamePolicy = MSBuild
+		$0.StandardHeader = $2
+		$2.Text = 
+		$2.inheritsSet = MITX11License
+		$0.TextStylePolicy = $3
+		$3.inheritsSet = VisualStudio
+		$3.inheritsScope = text/plain
+		$3.scope = application/config+xml
+		$0.TextStylePolicy = $4
+		$4.inheritsSet = VisualStudio
+		$4.inheritsScope = text/plain
+		$4.scope = text/x-resource
+		$0.TextStylePolicy = $5
+		$5.inheritsSet = VisualStudio
+		$5.inheritsScope = text/plain
+		$5.scope = application/x-resource
+		$0.TextStylePolicy = $6
+		$6.FileWidth = 120
+		$6.TabWidth = 4
+		$6.inheritsSet = Mono
+		$6.inheritsScope = text/plain
+		$6.scope = text/plain
+		$0.TextStylePolicy = $7
+		$7.inheritsSet = null
+		$7.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $8
+		$8.inheritsSet = Mono
+		$8.inheritsScope = text/x-csharp
+		$8.scope = text/x-csharp
+	EndGlobalSection
+EndGlobal

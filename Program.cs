@@ -547,15 +547,16 @@ namespace NoteFly
         public static void LoadPlugins()
         {
             string[] pluginfilepaths = Directory.GetFiles(Program.InstallFolder, "*.dll");
-            plugins = new IPlugin[pluginfilepaths.Length];
+            System.Collections.Generic.List<IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin>();
             for (int i = 0; i < pluginfilepaths.Length; i++)
             {
-                System.Reflection.Assembly pluginassembly = null;
-                pluginassembly = System.Reflection.Assembly.LoadFrom(pluginfilepaths[i]);
-                if (pluginassembly != null)
+                try
                 {
-                    try
+                    System.Reflection.Assembly pluginassembly = null;
+                    pluginassembly = System.Reflection.Assembly.LoadFrom(pluginfilepaths[i]);
+                    if (pluginassembly != null)
                     {
+
                         foreach (Type curplugintype in pluginassembly.GetTypes())
                         {
                             if (curplugintype.IsPublic && !curplugintype.IsAbstract)
@@ -563,17 +564,20 @@ namespace NoteFly
                                 Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
                                 if (plugintype != null)
                                 {
-                                    plugins[i] = (IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                                    pluginslist.Add( (IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString())) );
                                 }
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Write(LogType.exception, "Can't load plugin: " + ex.Message);
+
                     }
                 }
+                catch (Exception ex)
+                {
+                    Log.Write(LogType.exception, "Can't load plugin: " + ex.Message);
+                }
             }
+
+            plugins = pluginslist.ToArray();
         }
 
 #if windows

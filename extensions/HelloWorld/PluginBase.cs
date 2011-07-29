@@ -20,8 +20,6 @@
 namespace HelloWorld
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Reflection;
 
     public abstract class PluginBase : NoteFly.IPlugin
