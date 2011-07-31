@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="2.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,7 +17,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <AssemblyOriginatorKeyFile>strongkey_NoteFly2.pfx</AssemblyOriginatorKeyFile>
     <TargetZone>Custom</TargetZone>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
     <ExcludedPermissions>
     </ExcludedPermissions>
     <Win32Resource>icons.res</Win32Resource>
@@ -28,6 +28,8 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <TargetFrameworkProfile />
+    <ManifestCertificateThumbprint>24C8A072EE1303117FA2C979E510FC5EB55B4C8E</ManifestCertificateThumbprint>
+    <ManifestKeyFile>NoteFly_TemporaryKey.pfx</ManifestKeyFile>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -86,31 +88,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
     <Compile Include="FrmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,22 +167,18 @@
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="bin\Debug\skins.xsd" />
     <None Include="clean_settings.bat" />
     <None Include="Doxyfile_settings" />
     <None Include="icons.res" />
+    <None Include="NoteFly_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <Compile Include="SyntaxHighlight.cs" />
     <Compile Include="XmlUtil.cs" />
     <None Include="Resources\accept.png" />
     <None Include="Resources\cancel.png" />
-    <None Include="bin\Debug\note.xsd" />
-    <None Include="bin\Debug\settings.xsd" />
     <None Include="build_setup.bat" />
     <None Include="make_archive.bat" />
     <None Include="Resources\hoekje.png" />
-    <None Include="bin\Debug\app.eqconfig" />
-    <None Include="bin\Release\create_setup.nsi" />
     <None Include="Resources\locknote.png" />
     <None Include="strongkey_NoteFly2.pfx" />
     <EmbeddedResource Include="FrmAbout.resx">
@@ -215,9 +188,33 @@
       <DependentUpon>IPTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\trayicon.ico" />
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Release\license.txt" />
     <Content Include="Resources\icon_big.ico" />
     <Content Include="Resources\icon_big.png" />
     <Content Include="Resources\icon_small.ico" />

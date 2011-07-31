@@ -4,6 +4,7 @@
     using System.Text;
     using System.IO;
     using System.Windows.Forms;
+    using System.Drawing;
 
     public class HelloWorld : PluginBase
     {
@@ -36,6 +37,25 @@
         public override void ShareMenuClicked(RichTextBox rtbnote, NoteFly.Note note)
         {
             MessageBox.Show("Hello World!");
+        }
+
+        /// <summary>
+        /// Load tab
+        /// </summary>
+        /// <returns></returns>
+        public override TabPage InitShareSettingsTab()
+        {
+            TabPage newtab = new TabPage(this.SettingsTabTitle);
+            newtab.BackColor = Color.Yellow;
+
+            Label lblhello = new Label();
+            lblhello.Text = "Hello world demo plugin settings page.";
+            lblhello.AutoSize = true;
+            lblhello.Location = new Point(30, 40);
+            lblhello.Visible = true;
+            lblhello.Parent = newtab;
+
+            return newtab;
         }
     }
 }

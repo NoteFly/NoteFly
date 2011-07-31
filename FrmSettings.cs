@@ -404,9 +404,9 @@ namespace NoteFly
                             Log.Write(LogType.error, unauthexc.Message);
                         }
                     }
-                    else 
-                    { 
-                        throw new ApplicationException(NoteFly.Properties.Resources.settings_excsystemfilenotmoved); 
+                    else
+                    {
+                        throw new ApplicationException(NoteFly.Properties.Resources.settings_excsystemfilenotmoved);
                     }
                 }
                 else
@@ -546,17 +546,52 @@ namespace NoteFly
             this.btnCheckUpdates.Enabled = false;
         }
 
-        #endregion Methods
-
+        /// <summary>
+        /// Show and hide expert settings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbxShowExpertSettings_CheckedChanged(object sender, EventArgs e)
         {
+            this.chxConfirmDeletenote.Visible = cbxShowExpertSettings.Checked;
+            this.chxNotesDeleteRecyclebin.Visible = cbxShowExpertSettings.Checked;
             this.cbxShowTooltips.Visible = cbxShowExpertSettings.Checked;
             this.lblTextNetworkTimeout.Visible = cbxShowExpertSettings.Checked;
             this.numTimeout.Visible = cbxShowExpertSettings.Checked;
             this.lblTextNetworkMiliseconds.Visible = cbxShowExpertSettings.Checked;
             this.cbxFontNoteTitleBold.Visible = cbxShowExpertSettings.Checked;
+            this.chxLoadPlugins.Visible = cbxShowExpertSettings.Checked;
             this.chxLogErrors.Visible = cbxShowExpertSettings.Checked;
             this.chxLogExceptions.Visible = cbxShowExpertSettings.Checked;
         }
+
+        /// <summary>
+        /// Load share tab plugins
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tabControlSettings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControlSettings.SelectedTab == this.tabSharing)
+            {
+                while (this.tabControlSharing.TabCount > 1)
+                {
+                    this.tabControlSharing.Controls.RemoveAt(1);
+                }
+
+                for (int i = 0; i < Program.plugins.Length; i++)
+                {
+                    if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
+                    {
+                        if (Program.plugins[i].InitShareSettingsTab()!=null)
+                        {
+                            this.tabControlSharing.Controls.Add(Program.plugins[i].InitShareSettingsTab());
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion Methods
     }
 }

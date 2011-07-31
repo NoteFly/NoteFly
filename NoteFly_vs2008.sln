@@ -5,20 +5,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteFly", "NoteFly.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteFlyTests", "NoteFlyTests\NoteFlyTests.csproj", "{4B37B2B2-F376-429F-90F1-E2B65A8B0693}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A21DFF76-813E-4150-9FAB-06CE53121865}"
-	ProjectSection(SolutionItems) = preProject
-		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-		NoteFly.vsmdi = NoteFly.vsmdi
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendToOpera", "extensions\SendToOpera\SendToOpera.csproj", "{C14F5261-6029-4A6A-B9AE-FF065C9BE029}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "extensions\HelloWorld\HelloWorld.csproj", "{75EB6442-258A-46FA-BB61-A4822E8148A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendToLightning", "extensions\SendToLightning\SendToLightning.csproj", "{C76EBBC0-FAC1-4082-8213-57A927C65725}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = NoteFly.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -64,10 +57,20 @@ Global
 		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|x86.ActiveCfg = Debug|x86
 		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Debug|x86.Build.0 = Debug|x86
 		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Any CPU.ActiveCfg = Release|x86
-		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Mixed Platforms.Build.0 = Release|x86
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|x86.ActiveCfg = Release|x86
 		{75EB6442-258A-46FA-BB61-A4822E8148A1}.Release|x86.Build.0 = Release|x86
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

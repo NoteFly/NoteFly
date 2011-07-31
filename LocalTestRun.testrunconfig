@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <TestRunConfiguration name="Local Test Run" id="32e7d96d-775e-4371-8f4d-0a5cef13bf80" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
   <Description>This is a default test run configuration for a local test run.</Description>
+  <Timeouts runTimeout="1800000" testTimeout="600000" />
   <TestTypeSpecific />
 </TestRunConfiguration>

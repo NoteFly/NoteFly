@@ -21,6 +21,7 @@ namespace HelloWorld
 {
     using System;
     using System.Reflection;
+    using System.Windows.Forms;
 
     public abstract class PluginBase : NoteFly.IPlugin
     {
@@ -89,12 +90,41 @@ namespace HelloWorld
             }
         }
 
-        public abstract string SettingsTabTitle { get; }
+        /// <summary>
+        /// Settings share tab title.
+        /// Tab not created if null.
+        /// </summary>
+        public virtual string SettingsTabTitle
+        {
+            get
+            {
+                return null;
+            }
+        }
 
-        public abstract string ShareMenuText { get; }
+        /// <summary>
+        /// Note share to menu text.
+        /// MenuItem not created if null.
+        /// </summary>
+        public virtual string ShareMenuText
+        {
+            get
+            {
+                return null;
+            }
+        }
 
-		// Methods (1) 
+		// Methods (2) 
 
-        public abstract void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, NoteFly.Note note);
+        public virtual void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, NoteFly.Note note)
+        {
+            // by default  do nothing, override this to do someting.
+        }
+
+        public virtual TabPage InitShareSettingsTab()
+        {
+            // by default return nocontrols, override this to create settings share tab contriols
+            return null;
+        }
     }
 }
