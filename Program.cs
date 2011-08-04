@@ -389,14 +389,14 @@ namespace NoteFly
         public static string UpdateCheck()
         {
             xmlUtil.WriteSettings();
+            string downloadurl;
+            bool updateavailible = false;
             short[] thisversion = GetVersion();
             string latestversionquality = Program.AssemblyVersionQuality;
-            string downloadurl;
             short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality, out downloadurl);
-            bool updateavailible = false;
             for (int i = 0; i < thisversion.Length; i++)
             {
-                if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
+                if (thisversion[i] < latestversion[i])
                 {
                     updateavailible = true;
                     break;

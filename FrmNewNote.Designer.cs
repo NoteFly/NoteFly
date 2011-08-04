@@ -176,6 +176,7 @@ namespace NoteFly
             this.contextMenuStripTextActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuSaveNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuShowtoolbar = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuWordWarp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStickyOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.menuImportfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPasteToContent = new System.Windows.Forms.ToolStripMenuItem();
@@ -196,7 +197,6 @@ namespace NoteFly
             this.btnTextBulletlist = new System.Windows.Forms.Button();
             this.rtbNewNote = new System.Windows.Forms.RichTextBox();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
-            this.menuWordWarp = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
@@ -214,7 +214,7 @@ namespace NoteFly
             this.menuCopyContent,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 202);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 180);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -234,6 +234,16 @@ namespace NoteFly
             this.menuShowtoolbar.Size = new System.Drawing.Size(288, 22);
             this.menuShowtoolbar.Text = "Show format tools";
             this.menuShowtoolbar.Click += new System.EventHandler(this.menuShowtoolbar_Click);
+            // 
+            // menuWordWarp
+            // 
+            this.menuWordWarp.Checked = true;
+            this.menuWordWarp.CheckOnClick = true;
+            this.menuWordWarp.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuWordWarp.Name = "menuWordWarp";
+            this.menuWordWarp.Size = new System.Drawing.Size(288, 22);
+            this.menuWordWarp.Text = "Word wrap";
+            this.menuWordWarp.Click += new System.EventHandler(this.menuWordWarp_Click);
             // 
             // menuStickyOnTop
             // 
@@ -572,7 +582,7 @@ namespace NoteFly
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
             this.rtbNewNote.TabIndex = 1;
-            this.rtbNewNote.Text = string.Empty;
+            this.rtbNewNote.Text = "";
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -591,16 +601,6 @@ namespace NoteFly
             this.pbResizeGrip.TabIndex = 15;
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
-            // 
-            // menuWordWarp
-            // 
-            this.menuWordWarp.Checked = true;
-            this.menuWordWarp.CheckOnClick = true;
-            this.menuWordWarp.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.menuWordWarp.Name = "menuWordWarp";
-            this.menuWordWarp.Size = new System.Drawing.Size(288, 22);
-            this.menuWordWarp.Text = "Word wrap";
-            this.menuWordWarp.Click += new System.EventHandler(this.menuWordWarp_Click);
             // 
             // FrmNewNote
             // 
@@ -642,6 +642,7 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

@@ -343,6 +343,10 @@ namespace NoteFly
             this.frmnote = new FrmNote(this.notes, this);
             this.visible = true;
             this.frmnote.Show();
+            for (int i = 0; i < Program.plugins.Length; i++)
+            {
+                Program.plugins[i].ShowingNote(this);
+            }
         }
 
         /// <summary>
@@ -355,8 +359,13 @@ namespace NoteFly
             {
                 this.frmnote.Close();
             }
-
             this.frmnote = null;
+
+            for (int i = 0; i < Program.plugins.Length; i++)
+            {
+                Program.plugins[i].ShowingNote(this);
+            }
+
             GC.Collect();
         }
 

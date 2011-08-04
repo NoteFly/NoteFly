@@ -202,8 +202,12 @@ namespace NoteFly
                         this.notes.AddNote(this.note);
                     }
 
+                    for (int i = 0; i < Program.plugins.Length; i++)
+                    {
+                        Program.plugins[i].SavingNote(this.note);
+                    }
+
                     TrayIcon.Frmneweditnoteopen = false;
-                    SyntaxHighlight.InitHighlighter();
                     this.note.Tempcontent = this.rtbNewNote.Rtf;
                     this.note.CreateForm();
                     if (this.note.Tempcontent != null)
@@ -790,17 +794,17 @@ namespace NoteFly
             this.rtbNewNote.Font = new Font(Settings.FontContentFamily, this.rtbNewNote.Font.Size);
             switch (Settings.FontTextdirection)
             {
-                case 1:
-                    this.tbTitle.TextAlign = HorizontalAlignment.Left;
-                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Left;
+                case 0:
+                    this.tbTitle.RightToLeft = RightToLeft.No;
+                    this.rtbNewNote.RightToLeft = RightToLeft.No;
                     break;
-                case 2:
-                    this.tbTitle.TextAlign = HorizontalAlignment.Right;
-                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Right;
+                case 1:
+                    this.tbTitle.RightToLeft = RightToLeft.Yes;
+                    this.rtbNewNote.RightToLeft = RightToLeft.Yes;
                     break;
                 default:
-                    this.tbTitle.TextAlign = HorizontalAlignment.Left;
-                    this.rtbNewNote.SelectionAlignment = HorizontalAlignment.Left;
+                    this.tbTitle.RightToLeft = RightToLeft.No;
+                    this.rtbNewNote.RightToLeft = RightToLeft.No;
                     break;
             }
 

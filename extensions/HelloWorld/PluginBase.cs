@@ -114,17 +114,61 @@ namespace HelloWorld
             }
         }
 
-		// Methods (2) 
+        // Methods (6) 
 
+        /// <summary>
+        /// Executed if share menu clicked.
+        /// </summary>
+        /// <param name="rtbnote">The richedit component with the note content in memory.</param>
+        /// <param name="note">note object</param>
         public virtual void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, NoteFly.Note note)
         {
             // by default  do nothing, override this to do someting.
         }
 
+        /// <summary>
+        /// Executed if settings tab loaded.
+        /// </summary>
+        /// <returns>a Tabpage with all components to draw</returns>
         public virtual TabPage InitShareSettingsTab()
         {
             // by default return nocontrols, override this to create settings share tab contriols
             return null;
+        }
+
+        /// <summary>
+        /// Executed if Ok on FrmSettings is pressed.
+        /// </summary>
+        /// <returns>true if allowed to close FrmSettings</returns>
+        public virtual bool SaveSettingsTab()
+        {
+            // by default return true, for everything is okay, allowed to close FrmSettings of NoteFly.
+            return true;
+        }
+
+        /// <summary>
+        /// Executed if a note is saved
+        /// </summary>
+        /// <param name="note">A note object with details</param>
+        public virtual void SavingNote(NoteFly.Note note)
+        {
+            // by default do nothing, override this to do someting.
+        }
+
+        /// <summary>
+        /// Executed if a note is made visible
+        /// </summary>
+        public virtual void ShowingNote(NoteFly.Note note)
+        {
+            // by default do nothing, override this to do someting.
+        }
+
+        /// <summary>
+        /// Executed if a note is being hiden.
+        /// </summary>
+        public virtual void HidingNote(NoteFly.Note note)
+        {
+            // by default do nothing, override this to do someting.
         }
     }
 }

@@ -34,16 +34,38 @@ namespace NoteFly
         string SettingsTabTitle { get; }
 
         /// <summary>
-        /// Event if share menu clicked, if any
+        /// Executed if share menu clicked.
         /// </summary>
-        /// <param name="rtbnote"></param>
-        /// <param name="note"></param>
+        /// <param name="rtbnote">The richedit component with the note content in memory.</param>
+        /// <param name="note">note object</param>
         void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, NoteFly.Note note);
 
         /// <summary>
-        /// Event if settings tab loaded, if any
+        /// Executed if settings tab loaded.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a Tabpage with all components to draw</returns>
         TabPage InitShareSettingsTab();
+
+        /// <summary>
+        /// Executed if Ok on FrmSettings is pressed.
+        /// </summary>
+        /// <returns>true if allowed to close FrmSettings</returns>
+        bool SaveSettingsTab();
+
+        /// <summary>
+        /// Executed if a note is saved
+        /// </summary>
+        /// <param name="note">A note object with details</param>
+        void SavingNote(Note note);
+
+        /// <summary>
+        /// Executed if a note is made visible
+        /// </summary>
+        void ShowingNote(Note note);
+
+        /// <summary>
+        /// Executed if a note is being hiden.
+        /// </summary>
+        void HidingNote(Note note);
     }
 }

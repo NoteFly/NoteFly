@@ -181,10 +181,12 @@ namespace NoteFly
 
                 if (Settings.FontTextdirection == 0)
                 {
+                    this.lblTitle.RightToLeft = RightToLeft.No;
                     this.rtbNote.RightToLeft = RightToLeft.No;
                 }
                 else if (Settings.FontTextdirection == 1)
                 {
+                    this.lblTitle.RightToLeft = RightToLeft.Yes;
                     this.rtbNote.RightToLeft = RightToLeft.Yes;
                 }
 

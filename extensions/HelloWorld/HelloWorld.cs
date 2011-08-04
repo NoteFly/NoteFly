@@ -26,7 +26,7 @@
             }
         }
 
-		// Methods (1) 
+		// Methods (2) 
 
         /// <summary>
         /// Menu clicked
@@ -46,7 +46,7 @@
         public override TabPage InitShareSettingsTab()
         {
             TabPage newtab = new TabPage(this.SettingsTabTitle);
-            newtab.BackColor = Color.Yellow;
+            newtab.BackColor = Color.White;
 
             Label lblhello = new Label();
             lblhello.Text = "Hello world demo plugin settings page.";

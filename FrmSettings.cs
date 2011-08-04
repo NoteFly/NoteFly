@@ -156,8 +156,28 @@ namespace NoteFly
             }
             else
             {
-                // everything looks okay 
+                // check plugin settings
+                for (int i = 0; i < Program.plugins.Length; i++)
+                {
+                    if (!Program.plugins[i].SaveSettingsTab())
+                    {
+                        this.tabControlSettings.SelectedTab = this.tabSharing;
+                        // select the right plugin tab by tab title/text.
+                        if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
+                        {
+                            for (int t = 0; t < tabControlSharing.TabPages.Count; t++)
+                            {
+                                if (tabControlSharing.TabPages[t].Text == Program.plugins[i].SettingsTabTitle)
+                                {
+                                    tabControlSharing.SelectedIndex = t;
+                                }
+                            }
+                        }
+                        return;
+                    }
+                }
 
+                // everything looks okay now
                 // tab: General
                 Settings.ConfirmExit = this.chxConfirmExit.Checked;
                 Settings.ConfirmDeletenote = this.chxConfirmDeletenote.Checked;

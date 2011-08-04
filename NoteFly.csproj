@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>NoteFly.Program</StartupObject>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <AssemblyOriginatorKeyFile>strongkey_NoteFly2.pfx</AssemblyOriginatorKeyFile>
     <TargetZone>Custom</TargetZone>
@@ -75,7 +75,7 @@
     <DefineConstants>windows</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -170,7 +170,6 @@
     <None Include="clean_settings.bat" />
     <None Include="Doxyfile_settings" />
     <None Include="icons.res" />
-    <None Include="NoteFly_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <Compile Include="SyntaxHighlight.cs" />
     <Compile Include="XmlUtil.cs" />
