@@ -311,7 +311,12 @@ namespace NoteFly
         /// <summary>
         /// Is loading plugins enable
         /// </summary>
-        public static bool ProgramLoadPlugins = true;
+        public static bool ProgramPluginsEnabled = true;
+
+        /// <summary>
+        /// The relative path from the install directory to the folder where plugins are stored in.
+        /// </summary>
+        public static string ProgramPluginsFolder = "plugins";
 
         /// <summary>
         /// Log debug info.

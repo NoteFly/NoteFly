@@ -1,14 +1,11 @@
 ﻿namespace HelloWorld
 {
-    using System;
-    using System.Text;
-    using System.IO;
-    using System.Windows.Forms;
     using System.Drawing;
+    using System.Windows.Forms;
 
     public class HelloWorld : PluginBase
     {
-		// Properties (2) 
+        // Properties (2) 
 
         public override string SettingsTabTitle
         {
@@ -26,7 +23,7 @@
             }
         }
 
-		// Methods (2) 
+        // Methods (2) 
 
         /// <summary>
         /// Menu clicked

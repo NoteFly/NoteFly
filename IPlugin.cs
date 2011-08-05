@@ -1,25 +1,26 @@
-﻿using System.Windows.Forms;
-namespace NoteFly
+﻿namespace NoteFly
 {
+    using System.Windows.Forms;
+
     public interface IPlugin
     {
         /// <summary>
-        /// Name of the plugin
+        /// Gets the name of the plugin
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// Description of the plugin
+        /// Gets the description of the plugin
         /// </summary>
         string Description { get; }
 
         /// <summary>
-        /// Author of the plugin
+        /// Gets author of the plugin
         /// </summary>
         string Author { get; }
 
         /// <summary>
-        /// Version of the plugin
+        /// Gets the version of the plugin
         /// </summary>
         string Version { get; }
 

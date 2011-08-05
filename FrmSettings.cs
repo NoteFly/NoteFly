@@ -165,11 +165,11 @@ namespace NoteFly
                         // select the right plugin tab by tab title/text.
                         if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
                         {
-                            for (int t = 0; t < tabControlSharing.TabPages.Count; t++)
+                            for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
                             {
-                                if (tabControlSharing.TabPages[t].Text == Program.plugins[i].SettingsTabTitle)
+                                if (this.tabControlSharing.TabPages[t].Text == Program.plugins[i].SettingsTabTitle)
                                 {
-                                    tabControlSharing.SelectedIndex = t;
+                                    this.tabControlSharing.SelectedIndex = t;
                                 }
                             }
                         }
@@ -569,20 +569,20 @@ namespace NoteFly
         /// <summary>
         /// Show and hide expert settings.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event argument</param>
         private void cbxShowExpertSettings_CheckedChanged(object sender, EventArgs e)
         {
-            this.chxConfirmDeletenote.Visible = cbxShowExpertSettings.Checked;
-            this.chxNotesDeleteRecyclebin.Visible = cbxShowExpertSettings.Checked;
-            this.cbxShowTooltips.Visible = cbxShowExpertSettings.Checked;
-            this.lblTextNetworkTimeout.Visible = cbxShowExpertSettings.Checked;
-            this.numTimeout.Visible = cbxShowExpertSettings.Checked;
-            this.lblTextNetworkMiliseconds.Visible = cbxShowExpertSettings.Checked;
-            this.cbxFontNoteTitleBold.Visible = cbxShowExpertSettings.Checked;
-            this.chxLoadPlugins.Visible = cbxShowExpertSettings.Checked;
-            this.chxLogErrors.Visible = cbxShowExpertSettings.Checked;
-            this.chxLogExceptions.Visible = cbxShowExpertSettings.Checked;
+            this.chxConfirmDeletenote.Visible = this.cbxShowExpertSettings.Checked;
+            this.chxNotesDeleteRecyclebin.Visible = this.cbxShowExpertSettings.Checked;
+            this.cbxShowTooltips.Visible = this.cbxShowExpertSettings.Checked;
+            this.lblTextNetworkTimeout.Visible = this.cbxShowExpertSettings.Checked;
+            this.numTimeout.Visible = this.cbxShowExpertSettings.Checked;
+            this.lblTextNetworkMiliseconds.Visible = this.cbxShowExpertSettings.Checked;
+            this.cbxFontNoteTitleBold.Visible = this.cbxShowExpertSettings.Checked;
+            this.chxLoadPlugins.Visible = this.cbxShowExpertSettings.Checked;
+            this.chxLogErrors.Visible = this.cbxShowExpertSettings.Checked;
+            this.chxLogExceptions.Visible = this.cbxShowExpertSettings.Checked;
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmNewNote : Form
     {
-        #region Fields (4) 
+        #region Fields (4)
 
         /// <summary>
         /// Margin between format buttons and content.
@@ -57,9 +57,9 @@ namespace NoteFly
         /// </summary>
         private Point oldp;
 
-        #endregion Fields 
+        #endregion Fields
 
-        #region Constructors (2) 
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the FrmNewNote class for editing a exist note.
@@ -113,9 +113,9 @@ namespace NoteFly
             this.tbTitle.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
         }
 
-        #endregion Constructors 
+        #endregion Constructors
 
-        #region Methods (30) 
+        #region Methods (30)
 
         /// <summary>
         /// Initialize components FrmNewNote, set font, tooltip and richtextbox settings

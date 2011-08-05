@@ -258,15 +258,23 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Menu plugin clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuPluginClicked(Object sender, System.EventArgs e)
         {
-            ToolStripMenuItem menuitem = (ToolStripMenuItem)sender;
-            int p = (int)menuitem.Tag;
-            Program.plugins[p].ShareMenuClicked(this.rtbNote, this.note);
+            try
+            {
+                ToolStripMenuItem menuitem = (ToolStripMenuItem)sender;
+                int p = (int)menuitem.Tag;
+                Program.plugins[p].ShareMenuClicked(this.rtbNote, this.note);
+            }
+            catch (Exception exc)
+            {
+                Log.Write(LogType.exception, exc.Message);
+            }
+            
         }
 
         /// <summary>

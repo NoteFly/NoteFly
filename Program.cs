@@ -342,7 +342,7 @@ namespace NoteFly
                 }
             }
 
-            if (Settings.ProgramLoadPlugins)
+            if (Settings.ProgramPluginsEnabled)
             {
                 LoadPlugins();
             }
@@ -396,7 +396,8 @@ namespace NoteFly
             short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality, out downloadurl);
             for (int i = 0; i < thisversion.Length; i++)
             {
-                if (thisversion[i] < latestversion[i])
+                // check if latestversion[i] (major,minor,release) is bigger and is positive number
+                if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
                 {
                     updateavailible = true;
                     break;
@@ -542,42 +543,48 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Load plugins
+        /// Load plugin .dll files from pluginfolder
         /// </summary>
         public static void LoadPlugins()
         {
-            string[] pluginfilepaths = Directory.GetFiles(Program.InstallFolder, "*.dll");
-            System.Collections.Generic.List<IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin>();
-            for (int i = 0; i < pluginfilepaths.Length; i++)
+            string pluginfolder = Path.Combine(Program.InstallFolder, Settings.ProgramPluginsFolder);
+            if (Directory.Exists(pluginfolder))
             {
-                try
+                string[] pluginfilepaths = Directory.GetFiles(pluginfolder, "*.dll");
+                System.Collections.Generic.List<IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin>();
+                for (int i = 0; i < pluginfilepaths.Length; i++)
                 {
-                    System.Reflection.Assembly pluginassembly = null;
-                    pluginassembly = System.Reflection.Assembly.LoadFrom(pluginfilepaths[i]);
-                    if (pluginassembly != null)
+                    try
                     {
-
-                        foreach (Type curplugintype in pluginassembly.GetTypes())
+                        System.Reflection.Assembly pluginassembly = null;
+                        pluginassembly = System.Reflection.Assembly.LoadFrom(pluginfilepaths[i]);
+                        if (pluginassembly != null)
                         {
-                            if (curplugintype.IsPublic && !curplugintype.IsAbstract)
+                            foreach (Type curplugintype in pluginassembly.GetTypes())
                             {
-                                Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
-                                if (plugintype != null)
+                                if (curplugintype.IsPublic && !curplugintype.IsAbstract)
                                 {
-                                    pluginslist.Add( (IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString())) );
+                                    Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
+                                    if (plugintype != null)
+                                    {
+                                        pluginslist.Add((IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString())));
+                                    }
                                 }
                             }
                         }
-
+                    }
+                    catch (Exception)
+                    {
+                        Log.Write(LogType.exception, "Can't load plugin: " + pluginfilepaths[i]);
                     }
                 }
-                catch (Exception ex)
-                {
-                    Log.Write(LogType.exception, "Can't load plugin: " + ex.Message);
-                }
-            }
 
-            plugins = pluginslist.ToArray();
+                plugins = pluginslist.ToArray();
+            }
+            else
+            {
+                Log.Write(LogType.info, "Plugin folder does not exist.");
+            }
         }
 
 #if windows
