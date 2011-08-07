@@ -32,7 +32,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-        #region Fields (6) 
+        #region Fields (6)
 
 #if windows
         /// <summary>
@@ -92,9 +92,9 @@ namespace NoteFly
         /// </summary>
         private int secondprevrownr = -2;
 
-        #endregion Fields 
+        #endregion Fields
 
-        #region Constructors (1) 
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the FrmManageNotes class.
@@ -123,9 +123,9 @@ namespace NoteFly
             }
         }
 
-        #endregion Constructors 
+        #endregion Constructors
 
-        #region Methods (20) 
+        #region Methods (20)
 
         /// <summary>
         /// Reset the previous drawed row numbers in datagridview1.
@@ -149,17 +149,17 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnBackAllNotes_Click(object sender, EventArgs e)
         {
-            SaveFileDialog savebackupdlg = new SaveFileDialog();
-            savebackupdlg.CheckPathExists = true;
-            savebackupdlg.OverwritePrompt = true;
-            savebackupdlg.DefaultExt = "nfbak"; // noteflybackup
-            savebackupdlg.Title = "Save a backup file of all NoteFly notes.";
-            savebackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
-            savebackupdlg.FileName = DateTime.Today.ToShortDateString() + ".nfbak";
-            DialogResult savebackupdlgres = savebackupdlg.ShowDialog();
+            DialogResult savebackupdlgres = this.saveExportFileDialog.ShowDialog();
             if (savebackupdlgres == DialogResult.OK)
             {
-                xmlUtil.WriteNotesBackupFile(savebackupdlg.FileName, this.notes);
+                if (saveExportFileDialog.FilterIndex == 1)
+                {
+                    xmlUtil.WriteNotesBackupFile(saveExportFileDialog.FileName, this.notes);
+                }
+                else if (saveExportFileDialog.FilterIndex == 2)
+                {
+                    // TODO: export stickies csv.
+                }
             }
         }
 
@@ -221,17 +221,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnRestoreAllNotes_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openbackupdlg = new OpenFileDialog();
-            openbackupdlg.CheckPathExists = true;
-            openbackupdlg.CheckFileExists = true;
-            openbackupdlg.Multiselect = false;
-            openbackupdlg.DefaultExt = "nfbak"; // noteflybackup
-            openbackupdlg.Filter = "NoteFly notes backup (*.nfbak)|*.nfbak";
-            openbackupdlg.Title = "Restore all notes";
-            DialogResult openbackupdlgres = openbackupdlg.ShowDialog();
+            DialogResult openbackupdlgres = this.openImportFileDialog.ShowDialog();
             if (openbackupdlgres == DialogResult.OK)
             {
-                if (openbackupdlg.FilterIndex == 1)
+                if (openImportFileDialog.FilterIndex == 1)
                 {
                     if (this.notes.CountNotes > 0)
                     {
@@ -261,9 +254,101 @@ namespace NoteFly
                         }
                     }
 
-                    Log.Write(LogType.info, "Imported notes backup file: " + openbackupdlg.FileName);
-                    xmlUtil.LoadNotesBackup(this.notes, openbackupdlg.FileName);
+                    Log.Write(LogType.info, "Imported notes backup file: " + openImportFileDialog.FileName);
+                    xmlUtil.LoadNotesBackup(this.notes, openImportFileDialog.FileName);
                     this.notes.LoadNotes(true, false);
+                    this.Resetdatagrid();
+                    this.DrawNotesGrid();
+                    this.SetDataGridViewColumsWidth();
+                }
+                else if (openImportFileDialog.FilterIndex == 2)
+                {
+                    StreamReader reader = null;
+                    try
+                    {
+                        int linenr = 0;
+                        int postitle = int.MinValue;
+                        //int poscolour = int.MinValue;
+                        int poswidth = int.MinValue;
+                        int poscontent = int.MinValue;
+                        reader = new StreamReader(openImportFileDialog.FileName, true);
+                        while (!reader.EndOfStream)
+                        {
+                            linenr++;
+                            string line = reader.ReadLine();
+                            string[] parts = line.Split(',');
+                            line = null;
+                            if (linenr == 1 && parts.Length == 5)
+                            {
+                                for (int i = 0; i < parts.Length; i++)
+                                {
+                                    switch (parts[i])
+                                    {
+                                        case "\"Title\"":
+                                            postitle = i;
+                                            break;
+                                        case "\"Width\"":
+                                            poswidth = i;
+                                            break;
+                                        case "\"RTF\"":
+                                            poscontent = i;
+                                            break;
+                                    }
+                                }
+                            }
+
+                            if (parts.Length == 5 && linenr > 1)
+                            {
+                                if (postitle >= 0 && poscontent >= 0 && poswidth >= 0)
+                                {
+                                    string title = RemoveQuotes(parts[postitle]);
+                                    int width;
+                                    try
+                                    {
+                                        width = Convert.ToInt32(RemoveQuotes(parts[poswidth]));
+                                    }
+                                    catch (InvalidCastException)
+                                    {
+                                        width = 200;
+                                    }
+                                    if (width <= 0)
+                                    {
+                                        width = 200;
+                                    }
+
+                                    string content = parts[poscontent];
+                                    string filenamenote = notes.GetNoteFilename(title);
+                                    Note newnote = new Note(this.notes, filenamenote);
+                                    newnote.Visible = false;
+                                    newnote.Locked = false;
+                                    newnote.Ontop = false;
+                                    newnote.RolledUp = false;
+                                    newnote.Height = 200;
+                                    newnote.Width = width;
+                                    newnote.X = 10;
+                                    newnote.Y = 10;
+                                    newnote.Title = title;
+                                    newnote.Tempcontent = content;
+                                    string defaultskinname = this.notes.GetSkinName(Settings.NotesDefaultSkinnr);
+                                    xmlUtil.WriteNote(newnote, defaultskinname, content);
+                                    this.notes.AddNote(newnote);
+                                    // TODO: import stickies csv, content/"RTF" not yet displayed.
+                                }
+                                else
+                                {
+                                    const string NOTSTICKIES = "Stickies not stored notes cvs file.";
+                                    Log.Write(LogType.error, NOTSTICKIES);
+                                    MessageBox.Show(NOTSTICKIES);
+                                }
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        reader.Close();
+                    }
+
+                    Log.Write(LogType.info, "Imported stickies csv file: " + openImportFileDialog.FileName);
                     this.Resetdatagrid();
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
@@ -274,6 +359,18 @@ namespace NoteFly
                     this.btnNoteDelete.Enabled = true;
                 }
             }
+        }
+
+        /// <summary>
+        /// Removes the quote from the begining and the end of the orgstring.
+        /// </summary>
+        /// <param name="orgstring">The orginal string with quotes</param>
+        /// <returns>A string without quotes.</returns>
+        private string RemoveQuotes(string orgstring)
+        {
+            orgstring = orgstring.Remove(0, 1);
+            return orgstring.Remove(orgstring.Length - 1, 1);
+            
         }
 
         /// <summary>
@@ -464,9 +561,9 @@ namespace NoteFly
                     if (Settings.NotesDeleteRecyclebin)
                     {
 #if windows
-                        SHFILEOPSTRUCT shf = new SHFILEOPSTRUCT(); 
-                        shf.wFunc = FO_DELETE; 
-                        shf.fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION; 
+                        SHFILEOPSTRUCT shf = new SHFILEOPSTRUCT();
+                        shf.wFunc = FO_DELETE;
+                        shf.fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION;
                         shf.pFrom = filepath + "\0"; // double null terminated
                         SHFileOperation(ref shf);
 #elif linux
@@ -782,6 +879,6 @@ namespace NoteFly
         }
 #endif
 
-        #endregion Methods 
+        #endregion Methods
     }
 }

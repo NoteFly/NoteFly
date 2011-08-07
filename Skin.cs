@@ -44,6 +44,11 @@ namespace NoteFly
         private Color primaryclr;
 
         /// <summary>
+        /// Backgound image of the skin.
+        /// </summary>
+        private Bitmap primarytexture = null;
+
+        /// <summary>
         /// The selection color of the skin.
         /// </summary>
         private Color selectclr;
@@ -106,7 +111,23 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets or sets  the selection color of the skin.
+        /// Gets or sets the background image of the skin.
+        /// </summary>
+        public Bitmap PrimaryTexture
+        {
+            get
+            {
+                return this.primarytexture;
+            }
+
+            set
+            {
+                this.primarytexture = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selection color of the skin.
         /// </summary>
         public Color SelectClr
         {
@@ -122,7 +143,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets or sets  the text color of the skin.
+        /// Gets or sets the text color of the skin.
         /// </summary>
         public Color TextClr
         {

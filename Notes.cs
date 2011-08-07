@@ -258,6 +258,16 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Gets the primary texture for a skin.
+        /// </summary>
+        /// <param name="skinnr">The skin number</param>
+        /// <returns>A bitmap</returns>
+        public System.Drawing.Bitmap GetPrimaryTexture(int skinnr)
+        {
+            return this.skins[skinnr].PrimaryTexture;
+        }
+
+        /// <summary>
         /// Get the name of a skin by the skinnr.
         /// </summary>
         /// <param name="skinnr">The skin number</param>
@@ -419,7 +429,7 @@ namespace NoteFly
         public string StripForbiddenFilenameChars(string orgname)
         {
             System.Text.StringBuilder newfilename = new System.Text.StringBuilder();
-            char[] forbiddenchars = "?<>:*|\\/".ToCharArray();
+            char[] forbiddenchars = "?<>:*|\\/\"".ToCharArray();
             bool isforbiddenchar = false;
             for (int pos = 0; pos < orgname.Length; pos++)
             {
@@ -609,7 +619,7 @@ namespace NoteFly
                     return this.skins[skinnr].TextClr;
             }
 
-            Log.Write(LogType.error, "Can't get color. type:" + type + " skinnr" + skinnr);
+            Log.Write(LogType.error, "Can't get color. type:" + type + " skinnr:" + skinnr);
             return Color.White;
         }
 

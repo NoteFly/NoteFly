@@ -687,21 +687,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Show context menu.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        /*
-        private void pnlNoteEdit_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                this.contextMenuStripTextActions.Show(this.Location.X + e.X, this.Location.X + e.Y);
-            }
-        }
-        */
-
-        /// <summary>
         /// Removes 1 fontsyle from the fontsyles of the checkstyle rtb text.
         /// This methode does not check if selection lenght is okay.
         /// </summary>
@@ -934,6 +919,19 @@ namespace NoteFly
         private void menuWordWarp_Click(object sender, EventArgs e)
         {
             this.rtbNewNote.WordWrap = this.menuWordWarp.Checked;
+        }
+
+        /// <summary>
+        /// Do a quick text highlight.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAddNote_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == ' ')
+            {
+                // todo Do a quick highlight of change. Every space creates a new keyword to highlight.
+            }
         }
 
         #endregion Methods

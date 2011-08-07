@@ -81,7 +81,18 @@ namespace NoteFly
             this.UpdateForm(false);
             this.lblTitle.Text = note.Title;
             this.BackColor = notes.GetPrimaryClr(note.SkinNr);
-            this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            if (notes.GetPrimaryTexture(note.SkinNr) != null)
+            {
+                this.BackgroundImageLayout = ImageLayout.Tile;
+                this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
+            }
+            else
+            {
+                this.BackgroundImage = null;
+            }
+
+            this.pnlHead.BackColor = Color.Transparent;
+            //this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             try
             {
@@ -122,6 +133,7 @@ namespace NoteFly
                 }
 
 #if windows
+                // FIXME: Setting backcolor of a ToolStripMenuItem did not work under Mono.
                 tsi.BackColor = this.notes.GetPrimaryClr(i);
                 tsi.ForeColor = this.notes.GetTextClr(i);
 #endif
@@ -274,7 +286,6 @@ namespace NoteFly
             {
                 Log.Write(LogType.exception, exc.Message);
             }
-            
         }
 
         /// <summary>
@@ -533,10 +544,20 @@ namespace NoteFly
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             tsi.Checked = true;
             this.note.SkinNr = this.notes.GetSkinNr(tsi.Text);
-            this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             this.SuspendLayout();
+            this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+            if (notes.GetPrimaryTexture(note.SkinNr) != null)
+            {
+                this.BackgroundImageLayout = ImageLayout.Tile;
+                this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
+            }
+            else
+            {
+                this.BackgroundImage = null;
+            }
+            //this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+            this.pnlHead.BackColor = Color.Transparent;
             this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
-            this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
             this.notes.FrmManageNotesNeedUpdate = true;
             TrayIcon.RefreshFrmManageNotes();
@@ -742,10 +763,11 @@ namespace NoteFly
         {
             this.menuLockNote.Checked = this.note.Locked;
             const string LOCKNOTEMSG = "&Lock note";
+            const string CLICKTOUNLOCK = " (click again to unlock)";
             if (this.note.Locked)
             {
                 this.CreatePbLock();
-                this.menuLockNote.Text = LOCKNOTEMSG + " (click again to unlock)";
+                this.menuLockNote.Text = LOCKNOTEMSG + CLICKTOUNLOCK;
             }
             else
             {
@@ -768,9 +790,10 @@ namespace NoteFly
         {
             this.menuRollUp.Checked = this.note.RolledUp;
             const string ROLLUPMSG = "&Roll up";
+            const string CLICKTOROLLUP = "(click again to Roll Down)";
             if (this.note.RolledUp)
             {
-                this.menuRollUp.Text = ROLLUPMSG + "(click again to Roll Down)";
+                this.menuRollUp.Text = ROLLUPMSG + CLICKTOROLLUP;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
                 this.Height = this.pnlHead.Height;
             }

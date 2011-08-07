@@ -445,6 +445,15 @@ namespace NoteFly
                         curskin.Name = xmlread.ReadElementContentAsString();
                         break;
                     case "PrimaryClr":
+                        if (xmlread.HasAttributes)
+                        {
+                            string filepathtexture = xmlread.GetAttribute("texture");
+                            if (System.IO.File.Exists(filepathtexture))
+                            {
+                                curskin.PrimaryTexture = new System.Drawing.Bitmap(filepathtexture);
+                            }
+                        }
+
                         curskin.PrimaryClr = ConvToClr(xmlread.ReadElementContentAsString());
                         break;
                     case "SelectClr":

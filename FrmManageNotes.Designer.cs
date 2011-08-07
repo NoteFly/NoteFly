@@ -124,6 +124,8 @@ namespace NoteFly
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.saveExportFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openImportFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -201,7 +203,7 @@ namespace NoteFly
             this.btnRestoreAllNotes.Name = "btnRestoreAllNotes";
             this.btnRestoreAllNotes.Size = new System.Drawing.Size(109, 23);
             this.btnRestoreAllNotes.TabIndex = 15;
-            this.btnRestoreAllNotes.Text = "&restore all from file";
+            this.btnRestoreAllNotes.Text = "&import";
             this.toolTip.SetToolTip(this.btnRestoreAllNotes, "Restore notes from a backup file");
             this.btnRestoreAllNotes.UseCompatibleTextRendering = true;
             this.btnRestoreAllNotes.UseVisualStyleBackColor = false;
@@ -243,7 +245,7 @@ namespace NoteFly
             this.btnBackAllNotes.Name = "btnBackAllNotes";
             this.btnBackAllNotes.Size = new System.Drawing.Size(104, 23);
             this.btnBackAllNotes.TabIndex = 18;
-            this.btnBackAllNotes.Text = "&backup all to file";
+            this.btnBackAllNotes.Text = "&export all";
             this.toolTip.SetToolTip(this.btnBackAllNotes, "Backup all notes to a single backup file");
             this.btnBackAllNotes.UseCompatibleTextRendering = true;
             this.btnBackAllNotes.UseVisualStyleBackColor = false;
@@ -342,6 +344,14 @@ namespace NoteFly
             this.toolTip.InitialDelay = 200;
             this.toolTip.ReshowDelay = 20;
             // 
+            // saveExportFileDialog
+            // 
+            this.saveExportFileDialog.Filter = "notefly backup|*.nfbak|stickies CSV stored notes|*.csv";
+            // 
+            // openImportFileDialog
+            // 
+            this.openImportFileDialog.Filter = "notefly backup|*.nfbak|stickies CSV stored notes|*.csv";
+            // 
             // FrmManageNotes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -373,5 +383,8 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.SaveFileDialog saveExportFileDialog;
+        private System.Windows.Forms.OpenFileDialog openImportFileDialog;
     }
 }
