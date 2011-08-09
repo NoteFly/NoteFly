@@ -722,7 +722,8 @@ namespace NoteFly
                 this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
 
-            this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+            this.pnlHead.BackColor = Color.Transparent;
+            //this.notes.GetPrimaryClr(this.note.SkinNr);
         }
 
         /// <summary>

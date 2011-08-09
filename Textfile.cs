@@ -21,6 +21,7 @@ namespace NoteFly
 {
     using System;
     using System.IO;
+    using System.Text;
 
     /// <summary>
     /// What file type is being written.
@@ -50,7 +51,12 @@ namespace NoteFly
         /// <summary>
         /// Writing to php file.
         /// </summary>
-        exportphp
+        exportphp,
+
+        /// <summary>
+        /// Write to a csv file used by stickies.
+        /// </summary>
+        exportstickiescsv
     }
 
     /// <summary>
@@ -75,23 +81,23 @@ namespace NoteFly
                 {
                     case TextfileWriteType.log:
                         fs = new FileStream(filename, FileMode.Append);
-                        writer = new StreamWriter(fs);
+                        writer = new StreamWriter(fs, Encoding.ASCII);
                         writer.Write(content);
                         break;
                     case TextfileWriteType.exporttext:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
-                        writer = new StreamWriter(fs);
+                        writer = new StreamWriter(fs, Encoding.UTF8);
                         writer.WriteLine("Title: " + title + Environment.NewLine);
                         writer.Write(content);
                         break;
                     case TextfileWriteType.exportrtf:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
-                        writer = new StreamWriter(fs);
+                        writer = new StreamWriter(fs, Encoding.UTF8);
                         writer.Write(content);
                         break;
                     case TextfileWriteType.exporthtml:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
-                        writer = new StreamWriter(fs);
+                        writer = new StreamWriter(fs, Encoding.UTF8);
 
                         // trying to make turn a incompleet html fragement into a valid html5 document.
                         if (!content.Contains("<!DOCTYPE"))
@@ -132,7 +138,12 @@ namespace NoteFly
                         break;
                     case TextfileWriteType.exportphp:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
-                        writer = new StreamWriter(fs);
+                        writer = new StreamWriter(fs, Encoding.ASCII);
+                        writer.Write(content);
+                        break;
+                    case TextfileWriteType.exportstickiescsv:
+                        fs = new FileStream(filename, FileMode.OpenOrCreate);
+                        writer = new StreamWriter(fs, Encoding.UTF8);
                         writer.Write(content);
                         break;
                 }

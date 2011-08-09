@@ -158,7 +158,39 @@ namespace NoteFly
                 }
                 else if (saveExportFileDialog.FilterIndex == 2)
                 {
-                    // TODO: export stickies csv.
+                    FileStream fs = null;
+                    StreamWriter writer = null;
+                    try
+                    {
+                        fs = new FileStream(saveExportFileDialog.FileName, FileMode.Create);
+                        writer = new StreamWriter(fs, System.Text.Encoding.UTF8);
+                        writer.WriteLine("\"Title\",\"Date/Time\",\"Colour\",\"Width\",\"RTF\"");
+                        for (int i = 0; i < this.notes.CountNotes; i++)
+                        {
+                            Note curnote = this.notes.GetNote(i);
+                            string content = curnote.GetContent();
+                            for (int c = content.Length-1; c > 0; c--)
+                            {
+                                if (content[c] == '\n' || content[c] == '\r')
+                                {
+                                    content = content.Remove(c, 1);
+                                }
+                            }
+                            writer.Write("\"");
+                            writer.Write(curnote.Title);
+                            writer.Write("\",\"");
+                            writer.Write("\"1312669528\",\"11862015\",\""); // TODO: replace datetime with file creation datetime.
+                            writer.Write(content.ToString());
+                            writer.WriteLine("\"");
+                        }
+                    }
+                    finally
+                    {
+                        if (writer != null)
+                        {
+                            writer.Close();
+                        }
+                    }
                 }
             }
         }

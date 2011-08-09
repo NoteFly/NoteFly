@@ -139,16 +139,16 @@ namespace NoteFly
         /// </summary>
         public static string FontContentFamily = "Arial";
 #elif linux
-		/// <summary>
+        /// <summary>
         /// The default font family of notes content.
         /// </summary>
         public static string FontContentFamily = "FreeMono";
 #else
-		/// <summary>
+        /// <summary>
         /// The default font family of notes content.
         /// </summary>
         public static string FontContentFamily = "?";
-#endif		
+#endif
         /// <summary>
         /// The default font size of notes content.
         /// </summary>

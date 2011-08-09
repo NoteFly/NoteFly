@@ -3,7 +3,7 @@
     using System.Drawing;
     using System.Windows.Forms;
 
-    public class HelloWorld : PluginBase
+    public sealed class HelloWorld : PluginBase
     {
         // Properties (2) 
 

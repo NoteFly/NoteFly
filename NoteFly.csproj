@@ -70,7 +70,7 @@
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
     <LangVersion>ISO-2</LangVersion>
     <DefineConstants>windows</DefineConstants>
   </PropertyGroup>

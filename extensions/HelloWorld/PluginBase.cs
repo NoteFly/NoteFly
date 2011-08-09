@@ -23,9 +23,10 @@ namespace HelloWorld
     using System.Reflection;
     using System.Windows.Forms;
 
+    [CLSCompliant(true)]
     public abstract class PluginBase : NoteFly.IPlugin
     {
-		// Properties (6) 
+        // Properties (6) 
 
         /// <summary>
         /// The name of this plugin

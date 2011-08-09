@@ -180,19 +180,21 @@ namespace NoteFly
         public static void Main(string[] args)
         {
             /*
-             * a suggestion to "protect" against insecure Dynamic Library Loading vulnerabilities.
+             * a suggestion to "protect" against insecure Dynamic Library Loading vulnerabilities in windows
              * it does not fix it, it makes it harder to exploit if insecure dll loading exist.
-             * NoteFly uses APPDATA and TEMP variables and systemroot is required for LinkLabel control.
-             * This is OS specific
+             * NoteFly uses APPDATA and TEMP variables and systemroot.
+             * Systemroot is required by the LinkLabel control.
+             * Plugins should not use these environment variables
              */
 #if windows
-            SetDllDirectory(string.Empty);                                // removes notefly folder as ddl search path
-            Environment.SetEnvironmentVariable("PATH", string.Empty);     // removes dangourse %PATH% as dll search path
-            Environment.SetEnvironmentVariable("windir", string.Empty);   // removes %windir%
-            Environment.SetEnvironmentVariable("ProgramFiles", string.Empty);
-            Environment.SetEnvironmentVariable("SystemDrive", string.Empty);
-            Environment.SetEnvironmentVariable("CommonProgramFiles", string.Empty);
-            Environment.SetEnvironmentVariable("TMP", string.Empty);      // removes %TMP%, NoteFly uses %TEMP% instead only.
+            SetDllDirectory(string.Empty);                                     // removes notefly current working directory as ddl search path
+            Environment.SetEnvironmentVariable("PATH", string.Empty);          // removes dangourse %PATH% as dll search path
+            Environment.SetEnvironmentVariable("windir", string.Empty);        // removes %windir%
+            Environment.SetEnvironmentVariable("ProgramFiles", string.Empty);  // removes %ProgramFiles%
+            Environment.SetEnvironmentVariable("SystemDrive", string.Empty);   // removes %SystemDrive%
+            Environment.SetEnvironmentVariable("CommonProgramFiles", string.Empty); // removes %CommonProgramFiles%
+            Environment.SetEnvironmentVariable("USERPROFILE", string.Empty);   // removes %USERPROFILE%
+            Environment.SetEnvironmentVariable("TMP", string.Empty);           // removes %TMP%, Do not remove %TEMP% NoteFly needs this for logging if appdata is wrong.
 #endif
 #if DEBUG
             Stopwatch stopwatch = new Stopwatch();

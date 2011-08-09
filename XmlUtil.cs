@@ -29,7 +29,7 @@ namespace NoteFly
     /// <summary>
     /// xmlUtil class, for saving and parsering xml.
     /// </summary>
-    public class xmlUtil
+    public sealed class xmlUtil
     {
         #region Fields (5)
 
@@ -450,7 +450,29 @@ namespace NoteFly
                             string filepathtexture = xmlread.GetAttribute("texture");
                             if (System.IO.File.Exists(filepathtexture))
                             {
-                                curskin.PrimaryTexture = new System.Drawing.Bitmap(filepathtexture);
+                                string extension = filepathtexture.Substring(filepathtexture.LastIndexOf('.'), filepathtexture.Length - filepathtexture.LastIndexOf('.')).ToLower();
+                                string[] supportedimageformats = new string[] { ".png", ".tif",".tiff", ".bmp", ".gif", ".jpg", ".jpeg" };
+                                bool imagesupported = false;
+                                for (int i = 0; i < supportedimageformats.Length; i++)
+                                {
+                                    if (extension == supportedimageformats[i])
+                                    {
+                                        imagesupported = true;
+                                        break;
+                                    }
+                                }
+
+                                if (imagesupported)
+                                {
+                                    curskin.PrimaryTexture = new System.Drawing.Bitmap(filepathtexture);
+                                } else {
+                                    Log.Write(LogType.error, "Not texture image format supported.");
+                                }
+                                
+                            }
+                            else
+                            {
+                                Log.Write(LogType.error, "texture not be found " + filepathtexture + "");
                             }
                         }
 
