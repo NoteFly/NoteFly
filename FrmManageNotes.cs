@@ -176,10 +176,30 @@ namespace NoteFly
                                     content = content.Remove(c, 1);
                                 }
                             }
+
+                            // FIXME not the right color at all.
+                            int primaryclr = this.notes.GetPrimaryClr(curnote.SkinNr).ToArgb();
+                            primaryclr = -primaryclr; 
+
+                            FileInfo notefile = new FileInfo(Path.Combine(Settings.NotesSavepath, curnote.Filename));
+                            TimeSpan ts = (notefile.CreationTime - new DateTime(1970, 1, 1, 0, 0, 0));
+                            string unixtimestr = Convert.ToString(ts.TotalSeconds);
+                            int poscomma = unixtimestr.IndexOf(',');
+                            if (poscomma > 0)
+                            {
+                                unixtimestr = unixtimestr.Substring(0, poscomma);
+                            }
+
+                            
                             writer.Write("\"");
                             writer.Write(curnote.Title);
                             writer.Write("\",\"");
-                            writer.Write("\"1312669528\",\"11862015\",\""); // TODO: replace datetime with file creation datetime.
+                            writer.Write(unixtimestr);
+                            writer.Write("\",\"");
+                            writer.Write(primaryclr.ToString());
+                            writer.Write("\",\"");
+                            writer.Write(curnote.Width);
+                            writer.Write("\",\"");
                             writer.Write(content.ToString());
                             writer.WriteLine("\"");
                         }
