@@ -164,7 +164,7 @@ namespace NoteFly
                     try
                     {
                         fs = new FileStream(saveExportFileDialog.FileName, FileMode.Create);
-                        writer = new StreamWriter(fs, System.Text.Encoding.UTF8);
+                        writer = new StreamWriter(fs, System.Text.Encoding.ASCII);
                         writer.WriteLine("\"Title\",\"Date/Time\",\"Colour\",\"Width\",\"RTF\"");
                         for (int i = 0; i < this.notes.CountNotes; i++)
                         {
@@ -178,10 +178,8 @@ namespace NoteFly
                                 }
                             }
 
-                            // FIXME not the right color at all.
-                            int primaryclr = this.notes.GetPrimaryClr(curnote.SkinNr).ToArgb();
-                            primaryclr = -primaryclr; 
-
+                            Color primaryclr = this.notes.GetPrimaryClr(curnote.SkinNr);
+                            int colornum = System.Drawing.ColorTranslator.ToWin32(primaryclr);
                             FileInfo notefile = new FileInfo(Path.Combine(Settings.NotesSavepath, curnote.Filename));
                             TimeSpan ts = (notefile.CreationTime - new DateTime(1970, 1, 1, 0, 0, 0));
                             string unixtimestr = Convert.ToString(ts.TotalSeconds);
@@ -192,11 +190,11 @@ namespace NoteFly
                             }
 
                             writer.Write("\"");
-                            writer.Write(curnote.Title);
+                            writer.Write(encode_title(curnote.Title));
                             writer.Write("\",\"");
                             writer.Write(unixtimestr);
                             writer.Write("\",\"");
-                            writer.Write(primaryclr.ToString());
+                            writer.Write(colornum);
                             writer.Write("\",\"");
                             writer.Write(curnote.Width);
                             writer.Write("\",\"");
@@ -302,7 +300,14 @@ namespace NoteFly
 
                         while (this.notes.CountNotes > 0)
                         {
-                            this.notes.RemoveNote(0);
+                            try
+                            {
+                                this.notes.RemoveNote(0);
+                            }
+                            catch (Exception)
+                            {
+                                break;
+                            }
                         }
                     }
 
@@ -320,7 +325,7 @@ namespace NoteFly
                     {
                         int linenr = 0;
                         int postitle = int.MinValue;
-                        //int poscolour = int.MinValue;
+                        int poscolour = int.MinValue;
                         int poswidth = int.MinValue;
                         int poscontent = int.MinValue;
                         reader = new StreamReader(openImportFileDialog.FileName, true);
@@ -339,6 +344,9 @@ namespace NoteFly
                                         case "\"Title\"":
                                             postitle = i;
                                             break;
+                                        case "\"Colour\"":
+                                            poscolour = i;
+                                            break;
                                         case "\"Width\"":
                                             poswidth = i;
                                             break;
@@ -351,10 +359,12 @@ namespace NoteFly
 
                             if (parts.Length == 5 && linenr > 1)
                             {
-                                if (postitle >= 0 && poscontent >= 0 && poswidth >= 0)
+                                if (postitle >= 0 && poscolour >= 0 && poswidth >= 0 && poscontent >= 0)
                                 {
                                     string title_enc = RemoveQuotes(parts[postitle]);
                                     string title = decode_title(title_enc);
+                                    
+                                    //int colornumsearch = Convert.ToInt32(RemoveQuotes(parts[poscolour]));
                                     int width;
                                     try
                                     {
@@ -382,10 +392,9 @@ namespace NoteFly
                                     newnote.Y = 10;
                                     newnote.Title = title;
                                     newnote.Tempcontent = content;
-                                    string defaultskinname = this.notes.GetSkinName(Settings.NotesDefaultSkinnr);
-                                    xmlUtil.WriteNote(newnote, defaultskinname, content);
+                                    string skinname = this.notes.GetSkinName(Settings.NotesDefaultSkinnr);
+                                    xmlUtil.WriteNote(newnote, skinname, content); // TODO some strange characters sometimes appear.
                                     this.notes.AddNote(newnote);
-                                    // TODO: import stickies csv, content/"RTF" not yet displayed.
                                 }
                                 else
                                 {
@@ -436,6 +445,31 @@ namespace NoteFly
             }
 
             return title.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        private string encode_title(string title)
+        {
+            StringBuilder title_enc = new StringBuilder();
+            for (int i = 0; i < title.Length; i++)
+            {
+                int c = char.ConvertToUtf32(title, i);
+                string hexchar = c.ToString("X");
+                if (hexchar.Length < 4)
+                {
+                    while (hexchar.Length < 4)
+                    {
+                        hexchar = hexchar.Insert(0, "0");
+                    }
+                }
+                title_enc.Append(hexchar);
+            }
+
+            return title_enc.ToString();
         }
 
         /// <summary>

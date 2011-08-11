@@ -95,6 +95,17 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Gets the number of skins there are.
+        /// </summary>
+        public int CountSkins
+        {
+            get
+            {
+                return this.skins.Count;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whetherr FrmManageNotes datagridview needs to be redrawn.
         /// </summary>
         public bool FrmManageNotesNeedUpdate
