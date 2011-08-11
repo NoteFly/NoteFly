@@ -26,6 +26,7 @@ namespace NoteFly
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
+    using System.Text;
 
     /// <summary>
     /// Manage notes window
@@ -190,7 +191,6 @@ namespace NoteFly
                                 unixtimestr = unixtimestr.Substring(0, poscomma);
                             }
 
-                            
                             writer.Write("\"");
                             writer.Write(curnote.Title);
                             writer.Write("\",\"");
@@ -353,7 +353,8 @@ namespace NoteFly
                             {
                                 if (postitle >= 0 && poscontent >= 0 && poswidth >= 0)
                                 {
-                                    string title = RemoveQuotes(parts[postitle]);
+                                    string title_enc = RemoveQuotes(parts[postitle]);
+                                    string title = decode_title(title_enc);
                                     int width;
                                     try
                                     {
@@ -368,7 +369,7 @@ namespace NoteFly
                                         width = 200;
                                     }
 
-                                    string content = parts[poscontent];
+                                    string content = RemoveQuotes(parts[poscontent]);
                                     string filenamenote = notes.GetNoteFilename(title);
                                     Note newnote = new Note(this.notes, filenamenote);
                                     newnote.Visible = false;
@@ -388,10 +389,16 @@ namespace NoteFly
                                 }
                                 else
                                 {
-                                    const string NOTSTICKIES = "Stickies not stored notes cvs file.";
+                                    const string NOTSTICKIES = "CVS file does not seems to be in the Stickies format.";
                                     Log.Write(LogType.error, NOTSTICKIES);
                                     MessageBox.Show(NOTSTICKIES);
                                 }
+                            }
+                            else if (linenr != 1)
+                            {
+                                const string NOTSTICKIES = "CVS file does not seems to be in the Stickies format, excepting 5 columns.";
+                                Log.Write(LogType.error, NOTSTICKIES);
+                                MessageBox.Show(NOTSTICKIES);
                             }
                         }
                     }
@@ -411,6 +418,24 @@ namespace NoteFly
                     this.btnNoteDelete.Enabled = true;
                 }
             }
+        }
+
+        /// <summary>
+        /// decode stickies title from UTF32 to UTF8
+        /// </summary>
+        /// <param name="title_enc">title encoded as UTF-32</param>
+        /// <returns>title string as UTF-8</returns>
+        private string decode_title(string title_enc)
+        {
+            StringBuilder title = new StringBuilder();
+            for (int i = 0; i < title_enc.Length; i+=4)
+            {
+                string strchar = title_enc.Substring(i, 4);
+                int charcode = int.Parse(strchar, System.Globalization.NumberStyles.HexNumber);
+                title.Append(char.ConvertFromUtf32(charcode));
+            }
+
+            return title.ToString();
         }
 
         /// <summary>
