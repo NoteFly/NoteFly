@@ -73,11 +73,12 @@ namespace NoteFly
         /// </summary>
         /// <param name="notes">notes class</param>
         /// <param name="note">note data class.</param>
-        public FrmNote(Notes notes, Note note)
+        public FrmNote(Notes notes, Note note, bool wordwrap)
         {
             this.InitializeComponent();
             this.notes = notes;
             this.note = note;
+            this.rtbNote.WordWrap = wordwrap;
             this.UpdateForm(false);
             this.lblTitle.Text = note.Title;
             this.BackColor = notes.GetPrimaryClr(note.SkinNr);

@@ -509,7 +509,7 @@ namespace NoteFly
                         }
 
                         this.notes.GetNote(notepos).Tempcontent = tempcontent;
-                        this.notes.GetNote(notepos).CreateForm();
+                        this.notes.GetNote(notepos).CreateForm(true);
                         this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
                     }
                     else
@@ -560,7 +560,7 @@ namespace NoteFly
                         this.dataGridView1.Rows[e.RowIndex].Cells[2].Value = !(bool)this.dataGridView1.Rows[e.RowIndex].Cells[2].Value;
                         if (this.notes.GetNote(notepos).Visible)
                         {
-                            this.notes.GetNote(notepos).CreateForm();
+                            this.notes.GetNote(notepos).CreateForm(true);
                         }
                         else
                         {

@@ -401,7 +401,7 @@ namespace NoteFly
                 this.AddNote(note);
                 if (this.notes[i].Visible)
                 {
-                    this.notes[i].CreateForm();
+                    this.notes[i].CreateForm(true);
                 }
             }
 
@@ -606,7 +606,7 @@ namespace NoteFly
             Note demonote = this.CreateNote("NoteFly2.0.0", 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT);
             xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
             this.AddNote(demonote);
-            demonote.CreateForm();
+            demonote.CreateForm(true);
             demonote.BringNoteToFront();
         }
 

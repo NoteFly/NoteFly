@@ -209,7 +209,7 @@ namespace NoteFly
 
                     TrayIcon.Frmneweditnoteopen = false;
                     this.note.Tempcontent = this.rtbNewNote.Rtf;
-                    this.note.CreateForm();
+                    this.note.CreateForm(this.rtbNewNote.WordWrap);
                     if (this.note.Tempcontent != null)
                     {
                         this.note.Tempcontent = null;
@@ -238,7 +238,7 @@ namespace NoteFly
             TrayIcon.Frmneweditnoteopen = false;
             if (this.note != null)
             {
-                this.note.CreateForm();
+                this.note.CreateForm(this.rtbNewNote.WordWrap);
             }
 
             this.Close();
@@ -481,7 +481,7 @@ namespace NoteFly
             OpenFileDialog openfiledlg = new OpenFileDialog();
             openfiledlg.Title = "open file";
             openfiledlg.Multiselect = false;
-            openfiledlg.Filter = "Plain text file (*.txt)|*.txt|PNotes note(*.pnote)|*.pnote|KeyNote NF note (*.knt)|*.knt";
+            openfiledlg.Filter = "Plain text file (*.txt)|*.txt|PNotes note(*.pnote)|*.pnote|KeyNote NF note (*.knt)|*.knt|TomBoy note(*.note)|*.note";
             openfiledlg.CheckFileExists = true;
             openfiledlg.CheckPathExists = true;
             DialogResult res = openfiledlg.ShowDialog();
@@ -546,6 +546,45 @@ namespace NoteFly
                                 const string NOTKEYNOTEFILE = "Not a KeyNote NF note.";
                                 MessageBox.Show(NOTKEYNOTEFILE, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Log.Write(LogType.error, NOTKEYNOTEFILE);
+                            }
+                        }
+                        else if (openfiledlg.FilterIndex == 4)
+                        {
+                            string filetomboynote = openfiledlg.FileName;
+                            this.tbTitle.Text = xmlUtil.GetContentString(filetomboynote, "title");
+                            // TomBoy uses nodes within the note-content node so we use StreamReader to do node xml parsering.
+                            const string startnotecontent = "<note-content version=\"0.1\">";
+                            const string endnotecontent = "</note-content>";
+                            long posdocument = 0;
+                            long posstartcontent =0;
+                            long posendcontent =0;
+                            while (!reader.EndOfStream)
+                            {
+                                string line = reader.ReadLine();
+                                if (line.Contains(startnotecontent))
+                                {
+                                    posstartcontent = posdocument + line.IndexOf(startnotecontent) + startnotecontent.Length + 3; // +3 for ?
+                                } else if (line.Contains(endnotecontent))
+                                {
+                                    posendcontent = posdocument + line.IndexOf(endnotecontent) + 3; // +3 for ?
+                                }
+
+                                posdocument += line.Length + 1; // +1 for EoL
+                            }
+
+                            reader.BaseStream.Position = posstartcontent;
+                            StringBuilder sbcontent = new StringBuilder();
+                            int lenbuf = Convert.ToInt32(posendcontent - posstartcontent);
+                            char[] buf = new char[lenbuf + 1]; // FIXME no fixed buffers used, memory bloat
+                            reader.BaseStream.Position = posstartcontent;
+                            if (lenbuf < buf.Length)
+                            {
+                                int retval = reader.ReadBlock(buf, 0, lenbuf);
+                                this.rtbNewNote.Clear();
+                                for (int i = 0; i < buf.Length; i++)
+                                {
+                                    this.rtbNewNote.Text += buf[i];
+                                }
                             }
                         }
                     }

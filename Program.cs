@@ -392,7 +392,7 @@ namespace NoteFly
         {
             xmlUtil.WriteSettings();
             string downloadurl;
-            bool updateavailible = false;
+            bool updatehigherversion = false;
             short[] thisversion = GetVersion();
             string latestversionquality = Program.AssemblyVersionQuality;
             short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality, out downloadurl);
@@ -401,12 +401,12 @@ namespace NoteFly
                 // check if latestversion[i] (major,minor,release) is bigger and is positive number
                 if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
                 {
-                    updateavailible = true;
+                    updatehigherversion = true;
                     break;
                 }
             }
 
-            if (updateavailible || Program.AssemblyVersionQuality != latestversionquality)
+            if (updatehigherversion || (!updatehigherversion && Program.AssemblyVersionQuality != latestversionquality))
             {
                 if (!string.IsNullOrEmpty(downloadurl))
                 {

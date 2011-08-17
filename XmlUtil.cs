@@ -451,7 +451,7 @@ namespace NoteFly
                             if (System.IO.File.Exists(filepathtexture))
                             {
                                 string extension = filepathtexture.Substring(filepathtexture.LastIndexOf('.'), filepathtexture.Length - filepathtexture.LastIndexOf('.')).ToLower();
-                                string[] supportedimageformats = new string[] { ".png", ".tif",".tiff", ".bmp", ".gif", ".jpg", ".jpeg" };
+                                string[] supportedimageformats = new string[] { ".png", ".tif", ".tiff", ".bmp", ".gif", ".jpg", ".jpeg" };
                                 bool imagesupported = false;
                                 for (int i = 0; i < supportedimageformats.Length; i++)
                                 {
@@ -465,10 +465,12 @@ namespace NoteFly
                                 if (imagesupported)
                                 {
                                     curskin.PrimaryTexture = new System.Drawing.Bitmap(filepathtexture);
-                                } else {
+                                }
+                                else
+                                {
                                     Log.Write(LogType.error, "Not texture image format supported.");
                                 }
-                                
+
                             }
                             else
                             {
@@ -843,16 +845,28 @@ namespace NoteFly
                     return version;
                 }
 
+                if (Settings.NetworkConnectionForceipv6)
+                {
+                    Settings.UpdatecheckURL = Settings.UpdatecheckURL.Replace("//update.", "//ipv6."); // not replacing "http", "https", "ftp"
+                    Settings.UpdatecheckURL = Settings.UpdatecheckURL.Replace("//www.", "//ipv6.");
+                }
+
+                if (!Uri.IsWellFormedUriString(Settings.UpdatecheckURL, UriKind.Absolute))
+                {
+                    Log.Write(LogType.error, "Invalid update uri.");
+                }
+
                 WebRequest request = WebRequest.Create(Settings.UpdatecheckURL);
                 request.Method = "GET";
                 request.ContentType = "text/xml";
                 request.Timeout = Settings.NetworkConnectionTimeout;
-                request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString); // for stats and future use.
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                 }
 
+                request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString); // for stats and future use.
+                request.Headers["Accept-Encoding"] = "gzip";
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore); // do not cache, prevent incorrect cache result.
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
                 Stream responsestream;

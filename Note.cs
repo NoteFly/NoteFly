@@ -338,9 +338,9 @@ namespace NoteFly
         /// Create a new frmNote with this note.
         /// visible is set to true.
         /// </summary>
-        public void CreateForm()
+        public void CreateForm(bool wordwarp)
         {
-            this.frmnote = new FrmNote(this.notes, this);
+            this.frmnote = new FrmNote(this.notes, this, wordwarp);
             this.visible = true;
             this.frmnote.Show();
             for (int i = 0; i < Program.plugins.Length; i++)
