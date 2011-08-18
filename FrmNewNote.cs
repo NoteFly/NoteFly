@@ -160,6 +160,16 @@ namespace NoteFly
             this.btnTextBulletlist.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
             this.btnFontBigger.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
             this.btnFontSmaller.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+
+            if (this.notes.GetPrimaryTexture(skinnr) != null)
+            {
+                this.BackgroundImage = this.notes.GetPrimaryTexture(skinnr);
+                this.pnlHeadNewNote.BackColor = Color.Transparent;
+                this.lbTextTitle.BackColor = Color.Transparent;
+                this.lbTextTitle.BackColor = Color.Transparent;
+                ////this.btnAddNote.BackColor = Color.Transparent;
+                ////this.btnCancel.BackColor = Color.Transparent;
+            }
         }
 
         /// <summary>
@@ -718,6 +728,10 @@ namespace NoteFly
             if (this.note != null)
             {
                 this.pnlHeadNewNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+                if (this.BackgroundImage != null)
+                {
+                    this.pnlHeadNewNote.BackColor = Color.Transparent;
+                }
             }
             else
             {

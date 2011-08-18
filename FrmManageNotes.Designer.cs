@@ -346,11 +346,11 @@ namespace NoteFly
             // 
             // saveExportFileDialog
             // 
-            this.saveExportFileDialog.Filter = "notefly backup|*.nfbak|stickies CSV stored notes|*.csv";
+            this.saveExportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb";
             // 
             // openImportFileDialog
             // 
-            this.openImportFileDialog.Filter = "notefly backup|*.nfbak|stickies CSV stored notes|*.csv";
+            this.openImportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv";
             // 
             // FrmManageNotes
             // 

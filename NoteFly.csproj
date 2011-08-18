@@ -144,6 +144,9 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Skin.cs" />
     <Compile Include="Textfile.cs" />
+    <Compile Include="TransparentRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmException.resx">

@@ -93,7 +93,7 @@ namespace NoteFly
             }
 
             this.pnlHead.BackColor = Color.Transparent;
-            //this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
+            ////this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             try
             {
@@ -556,7 +556,7 @@ namespace NoteFly
             {
                 this.BackgroundImage = null;
             }
-            //this.pnlHead.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+
             this.pnlHead.BackColor = Color.Transparent;
             this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);

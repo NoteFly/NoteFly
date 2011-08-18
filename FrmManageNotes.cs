@@ -27,6 +27,7 @@ namespace NoteFly
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using System.Text;
+    using System.Globalization;
 
     /// <summary>
     /// Manage notes window
@@ -210,7 +211,89 @@ namespace NoteFly
                         }
                     }
                 }
+                else if (saveExportFileDialog.FilterIndex == 3)
+                {
+                    FileStream fs = null;
+                    StreamWriter writer = null;
+                    try
+                    {
+                        fs = new FileStream(saveExportFileDialog.FileName, FileMode.Create);
+                        writer = new StreamWriter(fs, System.Text.Encoding.ASCII);
+                        char chrstartdoc = (char)2;
+                        char chrstartnotefilename = (char)3;
+                        char chrendnotefilename = (char)4;
+                        const string PNOTESEXTENSION = ".pnote";
+                        char chrenddoc = (char)0;
+                        writer.Write(chrstartdoc);
+                        string[] pnotesfilenames = new string[this.notes.CountNotes];
+                        for (int i = 0; i < this.notes.CountNotes; i++)
+                        {
+                            DateTime dtnotenow = DateTime.Now;
+                            writer.Write("[");
+                            StringBuilder pnotesfilenamenote = new StringBuilder(dtnotenow.Year.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                            pnotesfilenamenote.Append(dtnotenow.Month.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                            pnotesfilenamenote.Append(dtnotenow.Day.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                            pnotesfilenamenote.Append(dtnotenow.Hour.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                            pnotesfilenamenote.Append(dtnotenow.Minute.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                            int ms = dtnotenow.Millisecond + i;
+                            if (ms >= 1000)
+                            {
+                                ms -= 1000;
+                            }
+
+                            pnotesfilenamenote.Append(ms.ToString());
+                            writer.Write(pnotesfilenamenote.ToString());
+                            writer.Write("]\r\n");
+                            // TODO figure out data, writes now title: "test notitie1"
+                            writer.Write("data=540065007300740020006E006F007400690074006900650031000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000DB070800040012000D0011000600C00100000000000000000000F7FC010000005B030000610000009B0400003D0100000000000000000000000000000000000062\r\n");
+                            // TODO figure out rel_position
+                            writer.Write("rel_position=9A9999999979E53F0AD7A3703D0ABF3F40010000DC000000F1\r\n");
+                            writer.Write("add_appearance=00000000000000000000000000\r\n");
+                            string hexyear = fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(2,2) + fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(0,2);
+                            string hexmonth = fillstrleadzeros(dtnotenow.Month.ToString("X"), 2);
+                            string hexday = fillstrleadzeros(dtnotenow.Day.ToString("X"), 2);
+                            string hexhour = fillstrleadzeros(dtnotenow.Hour.ToString("X"), 2);
+                            string hexmin = fillstrleadzeros(dtnotenow.Minute.ToString("X"), 2);
+                            writer.Write("creation=" + hexyear + hexmonth + "000400" + hexday + "00"+hexhour+"00"+hexmin+"00040068018A\r\n");
+
+                            pnotesfilenames[i] = pnotesfilenamenote.ToString();
+                        }
+
+                        for (int i = 0; i < this.notes.CountNotes; i++)
+                        {
+                            writer.Write(chrstartnotefilename);
+                            writer.Write(pnotesfilenames[i] + PNOTESEXTENSION);
+                            writer.Write(chrendnotefilename);
+                            writer.Write(this.notes.GetNote(i).GetContent());
+                            writer.Write(chrenddoc);
+                        }
+                        
+                    }
+                    finally
+                    {
+                        if (writer != null)
+                        {
+                            writer.Close();
+                        }
+                    }
+                }
             }
+        }
+
+        /// <summary>
+        /// Add leadings zero to string till string is a fixed length
+        /// </summary>
+        /// <param name="str">The string to add leading zero's to</param>
+        /// <param name="len">The length</param>
+        /// <returns>A string of with the given length</returns>
+        private string fillstrleadzeros(string str, int len)
+        {
+            while (str.Length < len)
+            {
+                str = "0" + str;
+            }
+
+            return str;
         }
 
         /// <summary>

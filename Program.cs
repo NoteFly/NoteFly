@@ -22,7 +22,6 @@
 using System;
 
 [assembly: CLSCompliant(true)]
-
 namespace NoteFly
 {
     using System.Diagnostics;
@@ -592,6 +591,12 @@ namespace NoteFly
 #if windows
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool SetDllDirectory(string pathName);
+
+        //[System.Runtime.InteropServices.DllImport("user32.dll")]
+        //private static extern int RegisterHotKey(IntPtr hwnd, int id, int fsModifiers, int vk);
+
+        //[System.Runtime.InteropServices.DllImport("user32.dll")]
+        //private static extern int UnregisterHotKey(IntPtr hwnd, int id);
 #endif
 
         #endregion Methods

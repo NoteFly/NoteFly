@@ -25,9 +25,9 @@ namespace NoteFly
     public partial class FrmNote
     {
         /// <summary>
-        /// RichTextBox rtbNote
+        /// TransparentRichTextBox rtbNote
         /// </summary>
-        private System.Windows.Forms.RichTextBox rtbNote;
+        private TransparentRichTextBox rtbNote;
 
         /// <summary>
         /// ToolTip toolTip
@@ -186,7 +186,7 @@ namespace NoteFly
             this.menuRollUp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHideNote = new System.Windows.Forms.ToolStripMenuItem();
             this.btnHideNote = new System.Windows.Forms.Button();
-            this.rtbNote = new System.Windows.Forms.RichTextBox();
+            this.rtbNote = new NoteFly.TransparentRichTextBox();
             this.pnlNote = new System.Windows.Forms.Panel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.saveWorker = new System.ComponentModel.BackgroundWorker();

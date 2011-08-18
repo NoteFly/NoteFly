@@ -345,6 +345,7 @@ namespace NoteFly
             // 
             this.btnCancel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnCancel.BackColor = System.Drawing.Color.Transparent;
             this.btnCancel.BackgroundImage = global::NoteFly.Properties.Resources.cancel;
             this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnCancel.CausesValidation = false;
@@ -359,13 +360,14 @@ namespace NoteFly
             this.btnCancel.TabIndex = 3;
             this.toolTip.SetToolTip(this.btnCancel, "cancel new note (escape)");
             this.btnCancel.UseMnemonic = false;
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnAddNote
             // 
             this.btnAddNote.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnAddNote.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnAddNote.BackColor = System.Drawing.Color.Transparent;
             this.btnAddNote.BackgroundImage = global::NoteFly.Properties.Resources.accept;
             this.btnAddNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnAddNote.CausesValidation = false;
@@ -381,7 +383,7 @@ namespace NoteFly
             this.btnAddNote.TabIndex = 2;
             this.toolTip.SetToolTip(this.btnAddNote, "accept new note (Ctrl+S)");
             this.btnAddNote.UseMnemonic = false;
-            this.btnAddNote.UseVisualStyleBackColor = true;
+            this.btnAddNote.UseVisualStyleBackColor = false;
             this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
             this.btnAddNote.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.btnAddNote_KeyPress);
             // 
@@ -592,6 +594,7 @@ namespace NoteFly
             // pbResizeGrip
             // 
             this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
             this.pbResizeGrip.Location = new System.Drawing.Point(267, 222);
