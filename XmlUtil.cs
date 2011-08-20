@@ -618,7 +618,7 @@ namespace NoteFly
         /// <param name="filenamepath">The filename and path of the notes backup</param>
         /// <param name="notes">Reference to the notes class.</param>
         /// <returns>True if writing backup succeeded otherwise false.</returns>
-        public static bool WriteNotesBackupFile(string filenamepath, Notes notes)
+        public static bool WriteNoteFlyNotesBackupFile(string filenamepath, Notes notes)
         {
             bool succeeded = false;
             try

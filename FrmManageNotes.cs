@@ -154,128 +154,172 @@ namespace NoteFly
             DialogResult savebackupdlgres = this.saveExportFileDialog.ShowDialog();
             if (savebackupdlgres == DialogResult.OK)
             {
-                if (saveExportFileDialog.FilterIndex == 1)
+                switch (saveExportFileDialog.FilterIndex)
                 {
-                    xmlUtil.WriteNotesBackupFile(saveExportFileDialog.FileName, this.notes);
+                    case 1:
+                        xmlUtil.WriteNoteFlyNotesBackupFile(saveExportFileDialog.FileName, this.notes);
+                        break;
+                    case 2:
+                        this.WriteStickiesCSVBackupfile(saveExportFileDialog.FileName);
+                        break;
+                    case 3:
+                        this.WritePNotesBackupfile(saveExportFileDialog.FileName);
+                        break;
                 }
-                else if (saveExportFileDialog.FilterIndex == 2)
+            }
+        }
+
+        /// <summary>
+        /// Write a stickies CSV backup file.
+        /// </summary>
+        /// <param name="filename"></param>
+        private void WriteStickiesCSVBackupfile(string filename)
+        {
+            FileStream fs = null;
+            StreamWriter writer = null;
+            try
+            {
+                fs = new FileStream(filename, FileMode.Create);
+                writer = new StreamWriter(fs, System.Text.Encoding.ASCII);
+                writer.WriteLine("\"Title\",\"Date/Time\",\"Colour\",\"Width\",\"RTF\"");
+                for (int i = 0; i < this.notes.CountNotes; i++)
                 {
-                    FileStream fs = null;
-                    StreamWriter writer = null;
-                    try
+                    Note curnote = this.notes.GetNote(i);
+                    string content = curnote.GetContent();
+                    for (int c = content.Length - 1; c > 0; c--)
                     {
-                        fs = new FileStream(saveExportFileDialog.FileName, FileMode.Create);
-                        writer = new StreamWriter(fs, System.Text.Encoding.ASCII);
-                        writer.WriteLine("\"Title\",\"Date/Time\",\"Colour\",\"Width\",\"RTF\"");
-                        for (int i = 0; i < this.notes.CountNotes; i++)
+                        if (content[c] == '\n' || content[c] == '\r')
                         {
-                            Note curnote = this.notes.GetNote(i);
-                            string content = curnote.GetContent();
-                            for (int c = content.Length-1; c > 0; c--)
-                            {
-                                if (content[c] == '\n' || content[c] == '\r')
-                                {
-                                    content = content.Remove(c, 1);
-                                }
-                            }
-
-                            Color primaryclr = this.notes.GetPrimaryClr(curnote.SkinNr);
-                            int colornum = System.Drawing.ColorTranslator.ToWin32(primaryclr);
-                            FileInfo notefile = new FileInfo(Path.Combine(Settings.NotesSavepath, curnote.Filename));
-                            TimeSpan ts = (notefile.CreationTime - new DateTime(1970, 1, 1, 0, 0, 0));
-                            string unixtimestr = Convert.ToString(ts.TotalSeconds);
-                            int poscomma = unixtimestr.IndexOf(',');
-                            if (poscomma > 0)
-                            {
-                                unixtimestr = unixtimestr.Substring(0, poscomma);
-                            }
-
-                            writer.Write("\"");
-                            writer.Write(encode_title(curnote.Title));
-                            writer.Write("\",\"");
-                            writer.Write(unixtimestr);
-                            writer.Write("\",\"");
-                            writer.Write(colornum);
-                            writer.Write("\",\"");
-                            writer.Write(curnote.Width);
-                            writer.Write("\",\"");
-                            writer.Write(content.ToString());
-                            writer.WriteLine("\"");
+                            content = content.Remove(c, 1);
                         }
                     }
-                    finally
+
+                    Color primaryclr = this.notes.GetPrimaryClr(curnote.SkinNr);
+                    int colornum = System.Drawing.ColorTranslator.ToWin32(primaryclr);
+                    FileInfo notefile = new FileInfo(Path.Combine(Settings.NotesSavepath, curnote.Filename));
+                    TimeSpan ts = (notefile.CreationTime - new DateTime(1970, 1, 1, 0, 0, 0));
+                    string unixtimestr = Convert.ToString(ts.TotalSeconds);
+                    int poscomma = unixtimestr.IndexOf(',');
+                    if (poscomma > 0)
                     {
-                        if (writer != null)
-                        {
-                            writer.Close();
-                        }
+                        unixtimestr = unixtimestr.Substring(0, poscomma);
                     }
+
+                    writer.Write("\"");
+                    writer.Write(encode_title(curnote.Title));
+                    writer.Write("\",\"");
+                    writer.Write(unixtimestr);
+                    writer.Write("\",\"");
+                    writer.Write(colornum);
+                    writer.Write("\",\"");
+                    writer.Write(curnote.Width);
+                    writer.Write("\",\"");
+                    writer.Write(content.ToString());
+                    writer.WriteLine("\"");
                 }
-                else if (saveExportFileDialog.FilterIndex == 3)
+            }
+            finally
+            {
+                if (writer != null)
                 {
-                    FileStream fs = null;
-                    StreamWriter writer = null;
-                    try
+                    writer.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Write a PNotes full backup file. (currently beta)
+        /// </summary>
+        /// <param name="filename"></param>
+        private void WritePNotesBackupfile(string filename)
+        {
+            FileStream fs = null;
+            StreamWriter writer = null;
+            try
+            {
+                fs = new FileStream(saveExportFileDialog.FileName, FileMode.Create);
+                writer = new StreamWriter(fs, System.Text.Encoding.ASCII);
+                char chrstartdoc = (char)2;
+                char chrstartnotefilename = (char)3;
+                char chrendnotefilename = (char)4;
+                const string PNOTESEXTENSION = ".pnote";
+                char chrenddoc = (char)0;
+                string[] pnotesfilenames = new string[this.notes.CountNotes];
+                writer.Write(chrstartdoc);
+                for (int i = 0; i < this.notes.CountNotes; i++)
+                {
+                    DateTime dtnotenow = DateTime.Now;
+                    writer.Write("[");
+                    StringBuilder pnotesfilenamenote = new StringBuilder(dtnotenow.Year.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                    pnotesfilenamenote.Append(dtnotenow.Month.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                    pnotesfilenamenote.Append(dtnotenow.Day.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                    pnotesfilenamenote.Append(dtnotenow.Hour.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                    pnotesfilenamenote.Append(dtnotenow.Minute.ToString(CultureInfo.InvariantCulture.NumberFormat));
+                    int ms = dtnotenow.Millisecond + i;
+                    if (ms >= 1000)
                     {
-                        fs = new FileStream(saveExportFileDialog.FileName, FileMode.Create);
-                        writer = new StreamWriter(fs, System.Text.Encoding.ASCII);
-                        char chrstartdoc = (char)2;
-                        char chrstartnotefilename = (char)3;
-                        char chrendnotefilename = (char)4;
-                        const string PNOTESEXTENSION = ".pnote";
-                        char chrenddoc = (char)0;
-                        writer.Write(chrstartdoc);
-                        string[] pnotesfilenames = new string[this.notes.CountNotes];
-                        for (int i = 0; i < this.notes.CountNotes; i++)
-                        {
-                            DateTime dtnotenow = DateTime.Now;
-                            writer.Write("[");
-                            StringBuilder pnotesfilenamenote = new StringBuilder(dtnotenow.Year.ToString(CultureInfo.InvariantCulture.NumberFormat));
-                            pnotesfilenamenote.Append(dtnotenow.Month.ToString(CultureInfo.InvariantCulture.NumberFormat));
-                            pnotesfilenamenote.Append(dtnotenow.Day.ToString(CultureInfo.InvariantCulture.NumberFormat));
-                            pnotesfilenamenote.Append(dtnotenow.Hour.ToString(CultureInfo.InvariantCulture.NumberFormat));
-                            pnotesfilenamenote.Append(dtnotenow.Minute.ToString(CultureInfo.InvariantCulture.NumberFormat));
-                            int ms = dtnotenow.Millisecond + i;
-                            if (ms >= 1000)
-                            {
-                                ms -= 1000;
-                            }
-
-                            pnotesfilenamenote.Append(ms.ToString());
-                            writer.Write(pnotesfilenamenote.ToString());
-                            writer.Write("]\r\n");
-                            // TODO figure out data, writes now title: "test notitie1"
-                            writer.Write("data=540065007300740020006E006F007400690074006900650031000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000DB070800040012000D0011000600C00100000000000000000000F7FC010000005B030000610000009B0400003D0100000000000000000000000000000000000062\r\n");
-                            // TODO figure out rel_position
-                            writer.Write("rel_position=9A9999999979E53F0AD7A3703D0ABF3F40010000DC000000F1\r\n");
-                            writer.Write("add_appearance=00000000000000000000000000\r\n");
-                            string hexyear = fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(2,2) + fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(0,2);
-                            string hexmonth = fillstrleadzeros(dtnotenow.Month.ToString("X"), 2);
-                            string hexday = fillstrleadzeros(dtnotenow.Day.ToString("X"), 2);
-                            string hexhour = fillstrleadzeros(dtnotenow.Hour.ToString("X"), 2);
-                            string hexmin = fillstrleadzeros(dtnotenow.Minute.ToString("X"), 2);
-                            writer.Write("creation=" + hexyear + hexmonth + "000400" + hexday + "00"+hexhour+"00"+hexmin+"00040068018A\r\n");
-
-                            pnotesfilenames[i] = pnotesfilenamenote.ToString();
-                        }
-
-                        for (int i = 0; i < this.notes.CountNotes; i++)
-                        {
-                            writer.Write(chrstartnotefilename);
-                            writer.Write(pnotesfilenames[i] + PNOTESEXTENSION);
-                            writer.Write(chrendnotefilename);
-                            writer.Write(this.notes.GetNote(i).GetContent());
-                            writer.Write(chrenddoc);
-                        }
-                        
+                        ms -= 1000;
                     }
-                    finally
+
+                    pnotesfilenamenote.Append(ms.ToString());
+                    writer.Write(pnotesfilenamenote.ToString());
+                    writer.Write("]\r\n");
+                    string title;
+                    if (this.notes.GetNote(i).Title.Length > 127)
                     {
-                        if (writer != null)
-                        {
-                            writer.Close();
-                        }
+                        title = this.notes.GetNote(i).Title.Substring(0, 127);
                     }
+                    else
+                    {
+                        title = this.notes.GetNote(i).Title;
+                    }
+
+                    writer.Write("data=");
+                    // writing title, 
+                    // FIXME data= seems to be ingored and datetime is choicen as title, is it done wrong?
+                    for (int c = 0; c < title.Length; c++)
+                    {
+                        int titlechr = title[c];
+                        writer.Write(titlechr.ToString("X") + "00");
+                    }
+
+                    int restchar = 127 - title.Length;
+                    while (restchar > 0)
+                    {
+                        writer.Write("0000");
+                        restchar--;
+                    }
+
+                    // TODO datetime last change and what more?
+                    writer.Write("0000DB0708000500130016000C001B00790100000000000000000000F7FC01000000F6010000060100000A0300001A0200000000000000000000000000000000000013\r\n");
+                    // TODO figure out rel_position
+                    writer.Write("rel_position=9A9999999979E53F0AD7A3703D0ABF3F40010000DC000000F1\r\n");
+                    writer.Write("add_appearance=00000000000000000000000000\r\n");
+                    string hexyear = fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(2, 2) + fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(0, 2);
+                    string hexmonth = fillstrleadzeros(dtnotenow.Month.ToString("X"), 2);
+                    string hexday = fillstrleadzeros(dtnotenow.Day.ToString("X"), 2);
+                    string hexhour = fillstrleadzeros(dtnotenow.Hour.ToString("X"), 2);
+                    string hexmin = fillstrleadzeros(dtnotenow.Minute.ToString("X"), 2);
+                    writer.Write("creation=" + hexyear + hexmonth + "000400" + hexday + "00" + hexhour + "00" + hexmin + "00040068018A\r\n");
+
+                    pnotesfilenames[i] = pnotesfilenamenote.ToString();
+                }
+
+                for (int i = 0; i < this.notes.CountNotes; i++)
+                {
+                    writer.Write(chrstartnotefilename);
+                    writer.Write(pnotesfilenames[i] + PNOTESEXTENSION);
+                    writer.Write(chrendnotefilename);
+                    writer.Write(this.notes.GetNote(i).GetContent());
+                    writer.Write(chrenddoc);
+                }
+
+            }
+            finally
+            {
+                if (writer != null)
+                {
+                    writer.Close();
                 }
             }
         }
@@ -313,7 +357,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {
-            if (this.dataGridView1.SelectedRows.Count == 0)
+            if (this.dataGridView1.SelectedRows.Count <= 0)
             {
                 MessageBox.Show("Nothing selected.");
             }
@@ -394,12 +438,9 @@ namespace NoteFly
                         }
                     }
 
-                    Log.Write(LogType.info, "Imported notes backup file: " + openImportFileDialog.FileName);
                     xmlUtil.LoadNotesBackup(this.notes, openImportFileDialog.FileName);
+                    Log.Write(LogType.info, "Imported notes backup file: " + openImportFileDialog.FileName);
                     this.notes.LoadNotes(true, false);
-                    this.Resetdatagrid();
-                    this.DrawNotesGrid();
-                    this.SetDataGridViewColumsWidth();
                 }
                 else if (openImportFileDialog.FilterIndex == 2)
                 {
@@ -500,10 +541,59 @@ namespace NoteFly
                     }
 
                     Log.Write(LogType.info, "Imported stickies csv file: " + openImportFileDialog.FileName);
-                    this.Resetdatagrid();
-                    this.DrawNotesGrid();
-                    this.SetDataGridViewColumsWidth();
                 }
+                else if (openImportFileDialog.FilterIndex == 3)
+                {
+                    StreamReader reader = null;
+                    try
+                    {
+                        reader = new StreamReader(openImportFileDialog.FileName, true);
+                        char chrstartdoc = (char)2;
+                        char chrstartnotefilename = (char)3;
+                        char chrendnotefilename = (char)4;
+
+                        char[] startchar = new char[1];
+                        reader.Read(startchar, 0, 1);
+                        if (startchar[0] == chrstartdoc)
+                        {
+                            while (!reader.EndOfStream)
+                            {
+                                string line = reader.ReadLine();
+                                if (line.Contains("[") && line.Contains("]"))
+                                {
+                                    int posstartnotefilename = line.IndexOf('[');
+                                    int posendnotefilename = line.IndexOf(']');
+                                    int lenfilename = posendnotefilename - posstartnotefilename;
+                                    if (lenfilename > 0)
+                                    {
+                                        string filename = line.Substring(posstartnotefilename, lenfilename);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Log.Write(LogType.error, "Not reading a pnotes full backup file.");
+                            return;
+                            // not a pnotes backup file.
+                        }
+                        // TODO
+                        
+                    } finally{
+                        if (reader != null)
+                        {
+                        reader.Close();
+                        }
+                    }
+
+                    Log.Write(LogType.info, "Imported PNotes full backup file: " + openImportFileDialog.FileName);
+                    
+                    
+                }
+
+                this.Resetdatagrid();
+                this.DrawNotesGrid();
+                this.SetDataGridViewColumsWidth();
 
                 if (this.notes.CountNotes > 0)
                 {
@@ -520,7 +610,7 @@ namespace NoteFly
         private string decode_title(string title_enc)
         {
             StringBuilder title = new StringBuilder();
-            for (int i = 0; i < title_enc.Length; i+=4)
+            for (int i = 0; i < title_enc.Length; i += 4)
             {
                 string strchar = title_enc.Substring(i, 4);
                 int charcode = int.Parse(strchar, System.Globalization.NumberStyles.HexNumber);
@@ -564,7 +654,7 @@ namespace NoteFly
         {
             orgstring = orgstring.Remove(0, 1);
             return orgstring.Remove(orgstring.Length - 1, 1);
-            
+
         }
 
         /// <summary>

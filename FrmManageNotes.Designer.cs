@@ -107,11 +107,11 @@ namespace NoteFly
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmManageNotes));
             this.btnClose = new System.Windows.Forms.Button();
             this.pnlHead = new System.Windows.Forms.Panel();
@@ -126,10 +126,12 @@ namespace NoteFly
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.saveExportFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openImportFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.tableLayoutPanelButtons = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.pnlContent.SuspendLayout();
+            this.tableLayoutPanelButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
@@ -139,7 +141,7 @@ namespace NoteFly
             this.btnClose.BackColor = System.Drawing.Color.DarkOrange;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(410, 2);
+            this.btnClose.Location = new System.Drawing.Point(394, 2);
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(32, 23);
@@ -161,7 +163,7 @@ namespace NoteFly
             this.pnlHead.Controls.Add(this.btnClose);
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
-            this.pnlHead.Size = new System.Drawing.Size(446, 30);
+            this.pnlHead.Size = new System.Drawing.Size(430, 30);
             this.pnlHead.TabIndex = 8;
             this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
@@ -186,7 +188,7 @@ namespace NoteFly
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(429, 293);
+            this.pbResizeGrip.Location = new System.Drawing.Point(413, 293);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
@@ -197,11 +199,14 @@ namespace NoteFly
             // 
             // btnRestoreAllNotes
             // 
+            this.btnRestoreAllNotes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnRestoreAllNotes.BackColor = System.Drawing.Color.Wheat;
+            this.btnRestoreAllNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnRestoreAllNotes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnRestoreAllNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRestoreAllNotes.Location = new System.Drawing.Point(219, 3);
+            this.btnRestoreAllNotes.Location = new System.Drawing.Point(213, 3);
             this.btnRestoreAllNotes.Name = "btnRestoreAllNotes";
-            this.btnRestoreAllNotes.Size = new System.Drawing.Size(109, 23);
+            this.btnRestoreAllNotes.Size = new System.Drawing.Size(99, 28);
             this.btnRestoreAllNotes.TabIndex = 15;
             this.btnRestoreAllNotes.Text = "&import";
             this.toolTip.SetToolTip(this.btnRestoreAllNotes, "Restore notes from a backup file");
@@ -211,11 +216,14 @@ namespace NoteFly
             // 
             // btnShowSelectedNotes
             // 
+            this.btnShowSelectedNotes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnShowSelectedNotes.BackColor = System.Drawing.Color.Wheat;
+            this.btnShowSelectedNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnShowSelectedNotes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnShowSelectedNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnShowSelectedNotes.Location = new System.Drawing.Point(6, 3);
+            this.btnShowSelectedNotes.Location = new System.Drawing.Point(3, 3);
             this.btnShowSelectedNotes.Name = "btnShowSelectedNotes";
-            this.btnShowSelectedNotes.Size = new System.Drawing.Size(105, 23);
+            this.btnShowSelectedNotes.Size = new System.Drawing.Size(99, 28);
             this.btnShowSelectedNotes.TabIndex = 16;
             this.btnShowSelectedNotes.Text = "&show selected";
             this.toolTip.SetToolTip(this.btnShowSelectedNotes, "Show or hide the selected notes");
@@ -225,11 +233,14 @@ namespace NoteFly
             // 
             // btnNoteDelete
             // 
+            this.btnNoteDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnNoteDelete.BackColor = System.Drawing.Color.Wheat;
+            this.btnNoteDelete.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnNoteDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnNoteDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNoteDelete.Location = new System.Drawing.Point(117, 3);
+            this.btnNoteDelete.Location = new System.Drawing.Point(108, 3);
             this.btnNoteDelete.Name = "btnNoteDelete";
-            this.btnNoteDelete.Size = new System.Drawing.Size(93, 23);
+            this.btnNoteDelete.Size = new System.Drawing.Size(99, 28);
             this.btnNoteDelete.TabIndex = 17;
             this.btnNoteDelete.Text = "&delete selected";
             this.toolTip.SetToolTip(this.btnNoteDelete, "Delete the selected notes");
@@ -239,11 +250,14 @@ namespace NoteFly
             // 
             // btnBackAllNotes
             // 
+            this.btnBackAllNotes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBackAllNotes.BackColor = System.Drawing.Color.Wheat;
+            this.btnBackAllNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnBackAllNotes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnBackAllNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBackAllNotes.Location = new System.Drawing.Point(334, 3);
+            this.btnBackAllNotes.Location = new System.Drawing.Point(318, 3);
             this.btnBackAllNotes.Name = "btnBackAllNotes";
-            this.btnBackAllNotes.Size = new System.Drawing.Size(104, 23);
+            this.btnBackAllNotes.Size = new System.Drawing.Size(99, 28);
             this.btnBackAllNotes.TabIndex = 18;
             this.btnBackAllNotes.Text = "&export all";
             this.toolTip.SetToolTip(this.btnBackAllNotes, "Backup all notes to a single backup file");
@@ -255,12 +269,12 @@ namespace NoteFly
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Blue;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -268,43 +282,43 @@ namespace NoteFly
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeight = 18;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.dataGridView1.GridColor = System.Drawing.Color.Silver;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 32);
+            this.dataGridView1.Location = new System.Drawing.Point(5, 36);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.LightGray;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.Blue;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.RowHeadersVisible = false;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.Blue;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.White;
-            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView1.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             this.dataGridView1.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dataGridView1.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
@@ -313,7 +327,7 @@ namespace NoteFly
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(432, 266);
+            this.dataGridView1.Size = new System.Drawing.Size(415, 261);
             this.dataGridView1.TabIndex = 19;
             this.dataGridView1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dataGridView1_Scroll);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
@@ -326,15 +340,12 @@ namespace NoteFly
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlContent.Controls.Add(this.tableLayoutPanelButtons);
             this.pnlContent.Controls.Add(this.dataGridView1);
             this.pnlContent.Controls.Add(this.pbResizeGrip);
-            this.pnlContent.Controls.Add(this.btnShowSelectedNotes);
-            this.pnlContent.Controls.Add(this.btnNoteDelete);
-            this.pnlContent.Controls.Add(this.btnBackAllNotes);
-            this.pnlContent.Controls.Add(this.btnRestoreAllNotes);
             this.pnlContent.Location = new System.Drawing.Point(0, 29);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(446, 311);
+            this.pnlContent.Size = new System.Drawing.Size(430, 311);
             this.pnlContent.TabIndex = 20;
             // 
             // toolTip
@@ -350,7 +361,28 @@ namespace NoteFly
             // 
             // openImportFileDialog
             // 
-            this.openImportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv";
+            this.openImportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb";
+            // 
+            // tableLayoutPanelButtons
+            // 
+            this.tableLayoutPanelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanelButtons.ColumnCount = 4;
+            this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanelButtons.Controls.Add(this.btnShowSelectedNotes, 0, 0);
+            this.tableLayoutPanelButtons.Controls.Add(this.btnRestoreAllNotes, 2, 0);
+            this.tableLayoutPanelButtons.Controls.Add(this.btnNoteDelete, 1, 0);
+            this.tableLayoutPanelButtons.Controls.Add(this.btnBackAllNotes, 3, 0);
+            this.tableLayoutPanelButtons.Location = new System.Drawing.Point(3, 0);
+            this.tableLayoutPanelButtons.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.tableLayoutPanelButtons.Name = "tableLayoutPanelButtons";
+            this.tableLayoutPanelButtons.RowCount = 1;
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelButtons.Size = new System.Drawing.Size(420, 34);
+            this.tableLayoutPanelButtons.TabIndex = 21;
             // 
             // FrmManageNotes
             // 
@@ -358,7 +390,7 @@ namespace NoteFly
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Orange;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(446, 340);
+            this.ClientSize = new System.Drawing.Size(430, 340);
             this.ControlBox = false;
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlHead);
@@ -378,6 +410,7 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.pnlContent.ResumeLayout(false);
+            this.tableLayoutPanelButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -386,5 +419,6 @@ namespace NoteFly
 
         private System.Windows.Forms.SaveFileDialog saveExportFileDialog;
         private System.Windows.Forms.OpenFileDialog openImportFileDialog;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelButtons;
     }
 }
