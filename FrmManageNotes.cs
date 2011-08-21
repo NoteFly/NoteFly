@@ -228,7 +228,8 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Write a PNotes full backup file. (currently beta)
+        /// Write a PNotes full backup file.
+        /// Currently without working title, position, last change.
         /// </summary>
         /// <param name="filename"></param>
         private void WritePNotesBackupfile(string filename)
@@ -403,192 +404,15 @@ namespace NoteFly
             {
                 if (openImportFileDialog.FilterIndex == 1)
                 {
-                    if (this.notes.CountNotes > 0)
-                    {
-                        DialogResult eraseres = MessageBox.Show("Erase all current notes?", "Are you sure?", MessageBoxButtons.YesNoCancel);
-                        if (eraseres == DialogResult.Yes)
-                        {
-                            Log.Write(LogType.info, "Erased all notes for restoring notes backup.");
-                            for (int i = 0; i < this.notes.CountNotes; i++)
-                            {
-                                File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
-                            }
-                        }
-                        else if (eraseres == DialogResult.Cancel)
-                        {
-                            Log.Write(LogType.info, "Cancelled restore notes backup.");
-                            return;
-                        }
-
-                        for (int i = 0; i < this.notes.CountNotes; i++)
-                        {
-                            this.notes.GetNote(i).DestroyForm();
-                        }
-
-                        while (this.notes.CountNotes > 0)
-                        {
-                            try
-                            {
-                                this.notes.RemoveNote(0);
-                            }
-                            catch (Exception)
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    xmlUtil.LoadNotesBackup(this.notes, openImportFileDialog.FileName);
-                    Log.Write(LogType.info, "Imported notes backup file: " + openImportFileDialog.FileName);
-                    this.notes.LoadNotes(true, false);
+                    this.ReadNoteFlyBackupFile(openImportFileDialog.FileName);
                 }
                 else if (openImportFileDialog.FilterIndex == 2)
                 {
-                    StreamReader reader = null;
-                    try
-                    {
-                        int linenr = 0;
-                        int postitle = int.MinValue;
-                        int poscolour = int.MinValue;
-                        int poswidth = int.MinValue;
-                        int poscontent = int.MinValue;
-                        reader = new StreamReader(openImportFileDialog.FileName, true);
-                        while (!reader.EndOfStream)
-                        {
-                            linenr++;
-                            string line = reader.ReadLine();
-                            string[] parts = line.Split(',');
-                            line = null;
-                            if (linenr == 1 && parts.Length == 5)
-                            {
-                                for (int i = 0; i < parts.Length; i++)
-                                {
-                                    switch (parts[i])
-                                    {
-                                        case "\"Title\"":
-                                            postitle = i;
-                                            break;
-                                        case "\"Colour\"":
-                                            poscolour = i;
-                                            break;
-                                        case "\"Width\"":
-                                            poswidth = i;
-                                            break;
-                                        case "\"RTF\"":
-                                            poscontent = i;
-                                            break;
-                                    }
-                                }
-                            }
-
-                            if (parts.Length == 5 && linenr > 1)
-                            {
-                                if (postitle >= 0 && poscolour >= 0 && poswidth >= 0 && poscontent >= 0)
-                                {
-                                    string title_enc = RemoveQuotes(parts[postitle]);
-                                    string title = decode_title(title_enc);
-                                    
-                                    //int colornumsearch = Convert.ToInt32(RemoveQuotes(parts[poscolour]));
-                                    int width;
-                                    try
-                                    {
-                                        width = Convert.ToInt32(RemoveQuotes(parts[poswidth]));
-                                    }
-                                    catch (InvalidCastException)
-                                    {
-                                        width = 200;
-                                    }
-                                    if (width <= 0)
-                                    {
-                                        width = 200;
-                                    }
-
-                                    string content = RemoveQuotes(parts[poscontent]);
-                                    string filenamenote = notes.GetNoteFilename(title);
-                                    Note newnote = new Note(this.notes, filenamenote);
-                                    newnote.Visible = false;
-                                    newnote.Locked = false;
-                                    newnote.Ontop = false;
-                                    newnote.RolledUp = false;
-                                    newnote.Height = 200;
-                                    newnote.Width = width;
-                                    newnote.X = 10;
-                                    newnote.Y = 10;
-                                    newnote.Title = title;
-                                    newnote.Tempcontent = content;
-                                    string skinname = this.notes.GetSkinName(Settings.NotesDefaultSkinnr);
-                                    xmlUtil.WriteNote(newnote, skinname, content); // TODO some strange characters sometimes appear.
-                                    this.notes.AddNote(newnote);
-                                }
-                                else
-                                {
-                                    const string NOTSTICKIES = "CVS file does not seems to be in the Stickies format.";
-                                    Log.Write(LogType.error, NOTSTICKIES);
-                                    MessageBox.Show(NOTSTICKIES);
-                                }
-                            }
-                            else if (linenr != 1)
-                            {
-                                const string NOTSTICKIES = "CVS file does not seems to be in the Stickies format, excepting 5 columns.";
-                                Log.Write(LogType.error, NOTSTICKIES);
-                                MessageBox.Show(NOTSTICKIES);
-                            }
-                        }
-                    }
-                    finally
-                    {
-                        reader.Close();
-                    }
-
-                    Log.Write(LogType.info, "Imported stickies csv file: " + openImportFileDialog.FileName);
+                    this.ReadStickiesCSVFile(openImportFileDialog.FileName);
                 }
                 else if (openImportFileDialog.FilterIndex == 3)
                 {
-                    StreamReader reader = null;
-                    try
-                    {
-                        reader = new StreamReader(openImportFileDialog.FileName, true);
-                        char chrstartdoc = (char)2;
-                        char chrstartnotefilename = (char)3;
-                        char chrendnotefilename = (char)4;
-
-                        char[] startchar = new char[1];
-                        reader.Read(startchar, 0, 1);
-                        if (startchar[0] == chrstartdoc)
-                        {
-                            while (!reader.EndOfStream)
-                            {
-                                string line = reader.ReadLine();
-                                if (line.Contains("[") && line.Contains("]"))
-                                {
-                                    int posstartnotefilename = line.IndexOf('[');
-                                    int posendnotefilename = line.IndexOf(']');
-                                    int lenfilename = posendnotefilename - posstartnotefilename;
-                                    if (lenfilename > 0)
-                                    {
-                                        string filename = line.Substring(posstartnotefilename, lenfilename);
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Log.Write(LogType.error, "Not reading a pnotes full backup file.");
-                            return;
-                            // not a pnotes backup file.
-                        }
-                        // TODO
-                        
-                    } finally{
-                        if (reader != null)
-                        {
-                        reader.Close();
-                        }
-                    }
-
-                    Log.Write(LogType.info, "Imported PNotes full backup file: " + openImportFileDialog.FileName);
-                    
-                    
+                    this.ReadPNotesBackupFile(openImportFileDialog.FileName);
                 }
 
                 this.Resetdatagrid();
@@ -600,6 +424,278 @@ namespace NoteFly
                     this.btnNoteDelete.Enabled = true;
                 }
             }
+        }
+
+        /// <summary>
+        /// Read a NoteFly backup file.
+        /// </summary>
+        private void ReadNoteFlyBackupFile(string file)
+        {
+            if (this.notes.CountNotes > 0)
+            {
+                DialogResult eraseres = MessageBox.Show("Do you want to delete all current notes?", "Are you sure?", MessageBoxButtons.YesNoCancel);
+                if (eraseres == DialogResult.Yes)
+                {
+                    for (int i = 0; i < this.notes.CountNotes; i++)
+                    {
+                        File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
+                    }
+                    Log.Write(LogType.info, "Deleted all notes for restoring notes backup.");
+                }
+                else if (eraseres == DialogResult.Cancel)
+                {
+                    Log.Write(LogType.info, "Cancelled restore notes backup.");
+                    return;
+                }
+
+                for (int i = 0; i < this.notes.CountNotes; i++)
+                {
+                    this.notes.GetNote(i).DestroyForm();
+                }
+
+                while (this.notes.CountNotes > 0)
+                {
+                    try
+                    {
+                        this.notes.RemoveNote(0);
+                    }
+                    catch (Exception)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            xmlUtil.ReadNoteFlyNotesBackupFile(this.notes, file);
+            this.notes.LoadNotes(true, false);
+        }
+
+        /// <summary>
+        /// Read a Stickies notes CSV file.
+        /// </summary>
+        private void ReadStickiesCSVFile(string file)
+        {
+            StreamReader reader = null;
+            try
+            {
+                int linenr = 0;
+                int postitle = int.MinValue;
+                int poscolour = int.MinValue;
+                int poswidth = int.MinValue;
+                int poscontent = int.MinValue;
+                reader = new StreamReader(file, true);
+                while (!reader.EndOfStream)
+                {
+                    linenr++;
+                    string line = reader.ReadLine();
+                    string[] parts = line.Split(',');
+                    line = null;
+                    if (linenr == 1 && parts.Length == 5)
+                    {
+                        for (int i = 0; i < parts.Length; i++)
+                        {
+                            switch (parts[i])
+                            {
+                                case "\"Title\"":
+                                    postitle = i;
+                                    break;
+                                case "\"Colour\"":
+                                    poscolour = i;
+                                    break;
+                                case "\"Width\"":
+                                    poswidth = i;
+                                    break;
+                                case "\"RTF\"":
+                                    poscontent = i;
+                                    break;
+                            }
+                        }
+                    }
+
+                    if (parts.Length == 5 && linenr > 1)
+                    {
+                        if (postitle >= 0 && poscolour >= 0 && poswidth >= 0 && poscontent >= 0)
+                        {
+                            string title_enc = RemoveQuotes(parts[postitle]);
+                            string title = decode_title(title_enc);
+                            int width;
+                            try
+                            {
+                                width = Convert.ToInt32(RemoveQuotes(parts[poswidth]));
+                            }
+                            catch (InvalidCastException)
+                            {
+                                width = 200;
+                            }
+                            if (width <= 0)
+                            {
+                                width = 200;
+                            }
+
+                            string content = RemoveQuotes(parts[poscontent]);
+                            string filenamenote = notes.GetNoteFilename(title);
+                            Note newnote = new Note(this.notes, filenamenote);
+                            newnote.Visible = false;
+                            newnote.Locked = false;
+                            newnote.Ontop = false;
+                            newnote.RolledUp = false;
+                            newnote.Height = 200;
+                            newnote.Width = width;
+                            newnote.X = 10;
+                            newnote.Y = 10;
+                            newnote.Title = title;
+                            newnote.Tempcontent = content;
+                            string skinname = this.notes.GetSkinName(Settings.NotesDefaultSkinnr);
+                            xmlUtil.WriteNote(newnote, skinname, content);
+                            this.notes.AddNote(newnote);
+                        }
+                        else
+                        {
+                            const string NOTSTICKIES = "CVS file does not seems to be in the Stickies format.";
+                            Log.Write(LogType.error, NOTSTICKIES);
+                            MessageBox.Show(NOTSTICKIES);
+                        }
+                    }
+                    else if (linenr != 1)
+                    {
+                        const string NOTSTICKIES = "CVS file does not seems to be in the Stickies format, excepting 5 columns.";
+                        Log.Write(LogType.error, NOTSTICKIES);
+                        MessageBox.Show(NOTSTICKIES);
+                    }
+                }
+            }
+            finally
+            {
+                reader.Close();
+            }
+
+            Log.Write(LogType.info, "Imported stickies csv file: " + openImportFileDialog.FileName);
+        }
+
+        /// <summary>
+        /// Read a PNotes full backup file.
+        /// </summary>
+        /// <param name="file"></param>
+        private void ReadPNotesBackupFile(string file)
+        {
+            StreamReader reader = null;
+            try
+            {
+                reader = new StreamReader(openImportFileDialog.FileName, true);
+                char chrstartdoc = (char)2;
+                char chrstartnotefilename = (char)3;
+                char chrendnotefilename = (char)4;
+
+                char[] startchar = new char[1];
+                reader.Read(startchar, 0, 1);
+                if (startchar[0] == chrstartdoc)
+                {
+                    bool notecontents = false;
+                    int notenr = 0;
+                    //List<String> notefiles = new List<string>();
+                    List<String> notetitles = new List<string>();
+                    StringBuilder notecontent = new StringBuilder();
+                    while (!reader.EndOfStream)
+                    {
+                        string line = reader.ReadLine();
+                        if (!notecontents)
+                        {
+                            //if (line.Contains("[") && line.Contains("]"))
+                            //{
+                            //    int posstartnotefilename = line.IndexOf('[') + 1;
+                            //    int posendnotefilename = line.IndexOf(']');
+                            //    int lenfilename = posendnotefilename - posstartnotefilename;
+                            //    if (lenfilename > 0)
+                            //    {
+                            //        string filename = line.Substring(posstartnotefilename, lenfilename);
+                            //        notefiles.Add(filename);
+                            //    }
+                            //}
+                            if (line.StartsWith("data="))
+                            {
+                                int posstartdata = line.IndexOf('=') + 1;
+                                string data = line.Substring(posstartdata, line.Length - posstartdata);
+                                StringBuilder title = new StringBuilder();
+                                for (int c = 0; c < 508; c += 4)
+                                {
+                                    int chartitle = int.Parse(data.Substring(c, 2), System.Globalization.NumberStyles.HexNumber);
+                                    if (chartitle > 0)
+                                    {
+                                        title.Append((char)chartitle);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                notetitles.Add(title.ToString());
+                            }
+                            else if (line.StartsWith("rel_position="))
+                            {
+                                // TODO
+                            }
+                            else if (line.StartsWith("creation="))
+                            {
+                                // TODO
+                            }
+                            else if (line.Contains(chrstartnotefilename.ToString()))
+                            {
+                                notecontents = true;
+                                int pos = line.IndexOf(chrendnotefilename);
+                                notecontent.AppendLine(line.Substring(pos, line.Length - pos));
+                            }
+                        }
+                        else
+                        {
+                            if (line.Contains("\0"))
+                            {
+                                Note newnote = new Note(this.notes, this.notes.GetNoteFilename(notetitles[notenr]));
+                                newnote.Title = notetitles[notenr];
+                                newnote.X = 100;
+                                newnote.Y = 100;
+                                newnote.Width = 240;
+                                newnote.Height = 200;
+                                newnote.Ontop = false;
+                                newnote.Visible = false;
+                                newnote.RolledUp = false;
+                                newnote.Tempcontent = notecontent.ToString();
+                                xmlUtil.WriteNote(newnote, notes.GetSkinName(Settings.NotesDefaultSkinnr), notecontent.ToString());
+                                this.notes.AddNote(newnote);
+                                notecontent = null;
+                                notecontent = new StringBuilder();
+                                if (line.Contains(chrendnotefilename.ToString()))
+                                {
+                                    int posendfilename = line.IndexOf(chrendnotefilename) + 1;
+                                    notecontent.AppendLine(line.Substring(posendfilename, line.Length - posendfilename));
+                                }
+                                notenr++;
+                            }
+                            else
+                            {
+                                notecontent.AppendLine(line);
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    const string ERRORREADPNOTESBACKUP = "Error reading PNotes backup file, incorrect format.";
+                    MessageBox.Show(ERRORREADPNOTESBACKUP);
+                    Log.Write(LogType.error, ERRORREADPNOTESBACKUP);
+                    return;
+                }
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+            }
+
+            Log.Write(LogType.info, "Imported PNotes full backup file: " + openImportFileDialog.FileName);
         }
 
         /// <summary>
@@ -654,7 +750,6 @@ namespace NoteFly
         {
             orgstring = orgstring.Remove(0, 1);
             return orgstring.Remove(orgstring.Length - 1, 1);
-
         }
 
         /// <summary>

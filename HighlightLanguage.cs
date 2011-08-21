@@ -229,6 +229,7 @@ namespace NoteFly
         /// <param name="curpos">the position in the richtextbox of the keyword.</param>
         public void CheckSetDocumentPos(string keyword, int curpos)
         {
+            keyword = keyword.ToLowerInvariant();
             if (keyword.StartsWith(this.docstartstr))
             {
                 this.posdocstart = curpos;

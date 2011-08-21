@@ -251,6 +251,9 @@ namespace NoteFly
                         case "NotesTransparencyEnabled":
                             Settings.NotesTransparencyEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "NotesTransparentRTB":
+                            Settings.NotesTransparentRTB = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "ProgramFirstrun":
                             Settings.ProgramFirstrun = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -539,8 +542,8 @@ namespace NoteFly
             Settings.HighlightSQL = false;
             Settings.HighlightSQLColorValidstatement = "#7FCE35";
             Settings.HighlightSQLColorField = "#B16DFF";
-            ////Settings.NetworkConnectionForceipv6 = false;
             Settings.NetworkConnectionTimeout = 8000;
+            Settings.NetworkConnectionForceipv6 = false;
             Settings.NetworkProxyAddress = string.Empty;
             Settings.NetworkProxyEnabled = false;
             Settings.NotesTooltipsEnabled = true;
@@ -549,16 +552,18 @@ namespace NoteFly
             Settings.NotesDefaultSkinnr = 0; // default skin: yellow
             Settings.NotesSavepath = Program.AppDataFolder;
             Settings.NotesTransparencyEnabled = true;
+            Settings.NotesTransparentRTB = true;
             Settings.NotesTransparencyLevel = 0.9;
-            Settings.NotesWarnLimit = 200;
+            Settings.NotesWarnLimit = 250;
             Settings.ProgramFirstrun = true;
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
             Settings.ProgramPluginsEnabled = true;
             Settings.ProgramSuspressWarnAdmin = false;
-            Settings.SocialEmailDefaultadres = string.Empty;
+            Settings.ProgramPluginsFolder = "plugins";
             Settings.SocialEmailEnabled = true;
+            Settings.SocialEmailDefaultadres = string.Empty;
             Settings.TrayiconFontsize = 8.25f;
             Settings.TrayiconLeftclickaction = 1;
             Settings.TrayiconCreatenotebold = true;
@@ -652,14 +657,15 @@ namespace NoteFly
         /// </summary>
         /// <param name="notes">Reference to notes class.</param>
         /// <param name="filepath">The notes backup filename and path.</param>
-        public static void LoadNotesBackup(Notes notes, string filepath)
+        public static void ReadNoteFlyNotesBackupFile(Notes notes, string filepath)
         {
-            xmlread = new XmlTextReader(filepath);
-            xmlread.ProhibitDtd = true;
             int numnotes = 0;
-            bool endnode = false;
+            xmlread = null;
             try
             {
+                xmlread = new XmlTextReader(filepath);
+                xmlread.ProhibitDtd = true;
+                bool endnode = false;
                 while (xmlread.Read())
                 {
                     if (xmlread.Name == "note")
@@ -675,7 +681,10 @@ namespace NoteFly
             }
             finally
             {
-                xmlread.Close();
+                if (xmlread != null)
+                {
+                    xmlread.Close();
+                }
             }
 
             for (int i = 0; i < numnotes; i++)
@@ -689,7 +698,10 @@ namespace NoteFly
                 }
                 finally
                 {
-                    xmlread.Close();
+                    if (xmlread != null)
+                    {
+                        xmlread.Close();
+                    }
                 }
 
                 string skinname = notes.GetSkinName(importnote.SkinNr);
@@ -725,6 +737,7 @@ namespace NoteFly
                 WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
                 WriteXMLBool("NotesDeleteRecyclebin", Settings.NotesDeleteRecyclebin);
                 WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
+                WriteXMLBool("NotesTransparentRTB", Settings.NotesTransparentRTB);
                 WriteXMLBool("NotesDefaultRandomSkin", Settings.NotesDefaultRandomSkin);
                 WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
                 WriteXMLBool("ProgramLogError", Settings.ProgramLogError);

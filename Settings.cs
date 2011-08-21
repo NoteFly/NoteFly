@@ -30,6 +30,11 @@ namespace NoteFly
         public static bool NotesTransparencyEnabled = true;
 
         /// <summary>
+        /// Is RichEditTextbox transparent.
+        /// </summary>
+        public static bool NotesTransparentRTB = true;
+
+        /// <summary>
         /// The level of transparency.
         /// </summary>
         public static double NotesTransparencyLevel = 0.9;
@@ -62,7 +67,7 @@ namespace NoteFly
         /// <summary>
         /// Number of notes a warning shows up that are many notes loading.
         /// </summary>
-        public static int NotesWarnLimit = 200;
+        public static int NotesWarnLimit = 250;
 
         /// <summary>
         /// The folder where to save all notes.
@@ -162,7 +167,7 @@ namespace NoteFly
         /// <summary>
         /// Do HTML highlighting on notes.
         /// </summary>
-        public static bool HighlightHTML;
+        public static bool HighlightHTML = false;
 
         /// <summary>
         /// The HTML comment color
@@ -172,17 +177,17 @@ namespace NoteFly
         /// <summary>
         /// The HTML invalid tag color.
         /// </summary>
-        public static string HighlightHTMLColorInvalid;
+        public static string HighlightHTMLColorInvalid = "#FF0000";
 
         /// <summary>
         /// The HTML valid tag color.
         /// </summary>
-        public static string HighlightHTMLColorValid;
+        public static string HighlightHTMLColorValid = "#0026FF";
 
         /// <summary>
         /// The HTML string content color.
         /// </summary>
-        public static string HighlightHTMLColorString; 
+        public static string HighlightHTMLColorString = "#808080"; 
 
         /// <summary>
         /// Do detect hyperlinks in notes.
@@ -197,12 +202,12 @@ namespace NoteFly
         /// <summary>
         /// The PHP comment color
         /// </summary>
-        public static string HighlightPHPColorComment; 
+        public static string HighlightPHPColorComment = "#686868";
 
         /// <summary>
         /// The PHP document start and end keyword colors.
         /// </summary>
-        public static string HighlightPHPColorDocumentstartend;
+        public static string HighlightPHPColorDocumentstartend = "#129612";
 
         /// <summary>
         /// The HTML string content color.
@@ -212,12 +217,12 @@ namespace NoteFly
         /// <summary>
         /// The PHP valid function color.
         /// </summary>
-        public static string HighlightPHPColorValidfunctions;
+        public static string HighlightPHPColorValidfunctions = "#41D87B";
 
         /// <summary>
         /// The PHP invalid/unknow function color.
         /// </summary>
-        public static string HighlightPHPColorInvalidfunctions;
+        public static string HighlightPHPColorInvalidfunctions = "#D90000";
 
         /// <summary>
         /// Do SQL highlighting
@@ -237,7 +242,7 @@ namespace NoteFly
         /// <summary>
         /// Confirm the launch of hyperlink.
         /// </summary>
-        public static bool ConfirmLinkclick = false;
+        public static bool ConfirmLinkclick = true;
 
         /// <summary>
         /// Confirm the shutdown of this application.
