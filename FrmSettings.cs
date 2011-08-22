@@ -156,24 +156,27 @@ namespace NoteFly
             }
             else
             {
-                // check plugin settings
-                for (int i = 0; i < Program.plugins.Length; i++)
+                if (Program.plugins != null)
                 {
-                    if (!Program.plugins[i].SaveSettingsTab())
+                    // check plugin settings
+                    for (int i = 0; i < Program.plugins.Length; i++)
                     {
-                        this.tabControlSettings.SelectedTab = this.tabSharing;
-                        // select the right plugin tab by tab title/text.
-                        if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
+                        if (!Program.plugins[i].SaveSettingsTab())
                         {
-                            for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
+                            this.tabControlSettings.SelectedTab = this.tabSharing;
+                            // select the right plugin tab by tab title/text.
+                            if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
                             {
-                                if (this.tabControlSharing.TabPages[t].Text == Program.plugins[i].SettingsTabTitle)
+                                for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
                                 {
-                                    this.tabControlSharing.SelectedIndex = t;
+                                    if (this.tabControlSharing.TabPages[t].Text == Program.plugins[i].SettingsTabTitle)
+                                    {
+                                        this.tabControlSharing.SelectedIndex = t;
+                                    }
                                 }
                             }
+                            return;
                         }
-                        return;
                     }
                 }
 
@@ -594,24 +597,53 @@ namespace NoteFly
         {
             if (tabControlSettings.SelectedTab == this.tabSharing)
             {
-                while (this.tabControlSharing.TabCount > 1)
+                if (Program.plugins != null)
                 {
-                    this.tabControlSharing.Controls.RemoveAt(1);
-                }
-
-                for (int i = 0; i < Program.plugins.Length; i++)
-                {
-                    if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
+                    while (this.tabControlSharing.TabCount > 1)
                     {
-                        if (Program.plugins[i].InitShareSettingsTab()!=null)
+                        this.tabControlSharing.Controls.RemoveAt(1);
+                    }
+
+                    for (int i = 0; i < Program.plugins.Length; i++)
+                    {
+                        if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
                         {
-                            this.tabControlSharing.Controls.Add(Program.plugins[i].InitShareSettingsTab());
+                            if (Program.plugins[i].InitShareSettingsTab() != null)
+                            {
+                                this.tabControlSharing.Controls.Add(Program.plugins[i].InitShareSettingsTab());
+                            }
+
                         }
+                    }
+                }
+            }
+            else if (tabControlSettings.SelectedTab == this.tabPlugins)
+            {
+                cbxlbxLoadedPlugins.Items.Clear();
+                lblPluginAuthor.Text = String.Empty;
+                lblPluginVersion.Text = String.Empty;
+                lblPluginDescription.Text = String.Empty;
+                if (Program.plugins != null)
+                {
+                    for (int i = 0; i < Program.plugins.Length; i++)
+                    {
+                        bool isenabled = true;
+                        this.cbxlbxLoadedPlugins.Items.Add(Program.plugins[i].Name, isenabled);
                     }
                 }
             }
         }
 
         #endregion Methods
+
+        private void cbxlbxLoadedPlugins_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxlbxLoadedPlugins.SelectedIndex >= 0)
+            {
+                lblPluginAuthor.Text = "author: "+ Program.plugins[cbxlbxLoadedPlugins.SelectedIndex].Author;
+                lblPluginVersion.Text = "version: " + Program.plugins[cbxlbxLoadedPlugins.SelectedIndex].Version;
+                lblPluginDescription.Text = "description: " + Program.plugins[cbxlbxLoadedPlugins.SelectedIndex].Description;
+            }
+        }
     }
 }

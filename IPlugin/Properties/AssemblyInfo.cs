@@ -1,27 +1,16 @@
-// <copyright file="AssemblyInfo.cs" company="NoteFly">
-// 
-// This program is free software; you can redistribute it and/or modify it
-// Free Software Foundation; either version 2, 
-// or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// </copyright>
-using System.Reflection;
-using System.Resources;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NoteFly")]
-[assembly: AssemblyDescription("an small advance note application")]
+[assembly: AssemblyTitle("IPlugin NoteFly")]
+[assembly: AssemblyDescription("Plugin interface for NoteFly")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NoteFly")]
-[assembly: AssemblyCopyright("Copyright ©  2009-2011")]
+[assembly: AssemblyProduct("IPlugin")]
+[assembly: AssemblyCopyright("Copyright ©  2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d70d7b57-eea9-41ac-9ebc-1d3c690e82e7")]
+[assembly: Guid("ef6cc108-0e93-4263-b9c6-95bcfb328cf6")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -43,6 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.5.0.*")]
-[assembly: AssemblyFileVersion("2.5.0.0")]
-[assembly: NeutralResourcesLanguageAttribute("en")]
+[assembly: AssemblyVersion("0.5.0.0")]
+[assembly: AssemblyFileVersion("0.5.0.0")]

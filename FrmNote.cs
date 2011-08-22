@@ -281,7 +281,7 @@ namespace NoteFly
             {
                 ToolStripMenuItem menuitem = (ToolStripMenuItem)sender;
                 int p = (int)menuitem.Tag;
-                Program.plugins[p].ShareMenuClicked(this.rtbNote, this.note);
+                Program.plugins[p].ShareMenuClicked(this.rtbNote, this.note.Title);
             }
             catch (Exception exc)
             {

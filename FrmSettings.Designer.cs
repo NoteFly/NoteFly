@@ -506,6 +506,7 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.chxLoadPlugins = new System.Windows.Forms.CheckBox();
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
             this.lblTextLogging = new System.Windows.Forms.Label();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
@@ -515,7 +516,11 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
-            this.chxLoadPlugins = new System.Windows.Forms.CheckBox();
+            this.tabPlugins = new System.Windows.Forms.TabPage();
+            this.cbxlbxLoadedPlugins = new System.Windows.Forms.CheckedListBox();
+            this.lblPluginAuthor = new System.Windows.Forms.Label();
+            this.lblPluginDescription = new System.Windows.Forms.Label();
+            this.lblPluginVersion = new System.Windows.Forms.Label();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -536,6 +541,7 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
             this.tabAdvance.SuspendLayout();
+            this.tabPlugins.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
@@ -569,6 +575,7 @@ namespace NoteFly
             this.tabControlSettings.Controls.Add(this.tabHighlight);
             this.tabControlSettings.Controls.Add(this.tabSharing);
             this.tabControlSettings.Controls.Add(this.tabNetwork);
+            this.tabControlSettings.Controls.Add(this.tabPlugins);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
             this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControlSettings.HotTrack = true;
@@ -910,7 +917,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = string.Empty;
+            this.lblTextDirection.AccessibleDescription = "";
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.Location = new System.Drawing.Point(50, 183);
@@ -1422,6 +1429,18 @@ namespace NoteFly
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
             // 
+            // chxLoadPlugins
+            // 
+            this.chxLoadPlugins.AutoSize = true;
+            this.chxLoadPlugins.Checked = true;
+            this.chxLoadPlugins.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxLoadPlugins.Location = new System.Drawing.Point(14, 89);
+            this.chxLoadPlugins.Name = "chxLoadPlugins";
+            this.chxLoadPlugins.Size = new System.Drawing.Size(86, 17);
+            this.chxLoadPlugins.TabIndex = 25;
+            this.chxLoadPlugins.Text = "Load plugins";
+            this.chxLoadPlugins.UseVisualStyleBackColor = true;
+            // 
             // chxLogExceptions
             // 
             this.chxLogExceptions.AutoSize = true;
@@ -1504,17 +1523,50 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
-            // chxLoadPlugins
+            // tabPlugins
             // 
-            this.chxLoadPlugins.AutoSize = true;
-            this.chxLoadPlugins.Checked = true;
-            this.chxLoadPlugins.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxLoadPlugins.Location = new System.Drawing.Point(14, 89);
-            this.chxLoadPlugins.Name = "chxLoadPlugins";
-            this.chxLoadPlugins.Size = new System.Drawing.Size(86, 17);
-            this.chxLoadPlugins.TabIndex = 25;
-            this.chxLoadPlugins.Text = "Load plugins";
-            this.chxLoadPlugins.UseVisualStyleBackColor = true;
+            this.tabPlugins.Controls.Add(this.lblPluginVersion);
+            this.tabPlugins.Controls.Add(this.lblPluginDescription);
+            this.tabPlugins.Controls.Add(this.lblPluginAuthor);
+            this.tabPlugins.Controls.Add(this.cbxlbxLoadedPlugins);
+            this.tabPlugins.Location = new System.Drawing.Point(4, 22);
+            this.tabPlugins.Name = "tabPlugins";
+            this.tabPlugins.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPlugins.Size = new System.Drawing.Size(368, 281);
+            this.tabPlugins.TabIndex = 6;
+            this.tabPlugins.Text = "Plugins";
+            this.tabPlugins.UseVisualStyleBackColor = true;
+            // 
+            // cbxlbxLoadedPlugins
+            // 
+            this.cbxlbxLoadedPlugins.FormattingEnabled = true;
+            this.cbxlbxLoadedPlugins.Location = new System.Drawing.Point(6, 26);
+            this.cbxlbxLoadedPlugins.Name = "cbxlbxLoadedPlugins";
+            this.cbxlbxLoadedPlugins.Size = new System.Drawing.Size(351, 169);
+            this.cbxlbxLoadedPlugins.TabIndex = 0;
+            this.cbxlbxLoadedPlugins.UseCompatibleTextRendering = true;
+            this.cbxlbxLoadedPlugins.SelectedIndexChanged += new System.EventHandler(this.cbxlbxLoadedPlugins_SelectedIndexChanged);
+            // 
+            // lblPluginAuthor
+            // 
+            this.lblPluginAuthor.Location = new System.Drawing.Point(9, 202);
+            this.lblPluginAuthor.Name = "lblPluginAuthor";
+            this.lblPluginAuthor.Size = new System.Drawing.Size(348, 22);
+            this.lblPluginAuthor.TabIndex = 1;
+            // 
+            // lblPluginDescription
+            // 
+            this.lblPluginDescription.Location = new System.Drawing.Point(9, 247);
+            this.lblPluginDescription.Name = "lblPluginDescription";
+            this.lblPluginDescription.Size = new System.Drawing.Size(348, 31);
+            this.lblPluginDescription.TabIndex = 2;
+            // 
+            // lblPluginVersion
+            // 
+            this.lblPluginVersion.Location = new System.Drawing.Point(9, 224);
+            this.lblPluginVersion.Name = "lblPluginVersion";
+            this.lblPluginVersion.Size = new System.Drawing.Size(348, 23);
+            this.lblPluginVersion.TabIndex = 3;
             // 
             // iptbProxyAddress
             // 
@@ -1571,6 +1623,7 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).EndInit();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
+            this.tabPlugins.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1579,5 +1632,10 @@ namespace NoteFly
 
         private System.Windows.Forms.CheckBox cbxShowExpertSettings;
         private System.Windows.Forms.CheckBox chxLoadPlugins;
+        private System.Windows.Forms.TabPage tabPlugins;
+        private System.Windows.Forms.CheckedListBox cbxlbxLoadedPlugins;
+        private System.Windows.Forms.Label lblPluginAuthor;
+        private System.Windows.Forms.Label lblPluginDescription;
+        private System.Windows.Forms.Label lblPluginVersion;
     }
 }

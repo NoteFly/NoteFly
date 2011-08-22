@@ -1,7 +1,11 @@
-﻿namespace NoteFly
+﻿namespace IPlugin
 {
     using System.Windows.Forms;
 
+    /// <summary>
+    /// Plugin interface
+    /// Still DRAFT, subjected to change.
+    /// </summary>
     public interface IPlugin
     {
         /// <summary>
@@ -35,11 +39,20 @@
         string SettingsTabTitle { get; }
 
         /// <summary>
+        /// Register this plugin
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="author"></param>
+        /// <param name="description"></param>
+        /// <param name="version"></param>
+        void Register(string name, string author, string description, string version);
+
+        /// <summary>
         /// Executed if share menu clicked.
         /// </summary>
         /// <param name="rtbnote">The richedit component with the note content in memory.</param>
         /// <param name="note">note object</param>
-        void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, NoteFly.Note note);
+        void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, string title);
 
         /// <summary>
         /// Executed if settings tab loaded.
@@ -57,16 +70,16 @@
         /// Executed if a note is saved
         /// </summary>
         /// <param name="note">A note object with details</param>
-        void SavingNote(Note note);
+        void SavingNote(string content, string title);
 
         /// <summary>
         /// Executed if a note is made visible
         /// </summary>
-        void ShowingNote(Note note);
+        void ShowingNote(string content, string title);
 
         /// <summary>
         /// Executed if a note is being hiden.
         /// </summary>
-        void HidingNote(Note note);
+        void HidingNote(string content, string title);
     }
 }

@@ -125,7 +125,6 @@
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="HighlightLanguage.cs" />
-    <Compile Include="IPlugin.cs" />
     <Compile Include="IPTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -221,6 +220,12 @@
     <Content Include="Resources\icon_big.png" />
     <Content Include="Resources\icon_small.ico" />
     <Content Include="Resources\icon_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="IPlugin\IPlugin.csproj">
+      <Project>{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}</Project>
+      <Name>IPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

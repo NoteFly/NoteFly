@@ -14,11 +14,13 @@
 ;  You should have received a copy of the GNU General Public License
 ;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-!define PROJNAME "NoteFly" 
-!define VERSION "2.0.0"       ;version number: major.minor.release
-!define VERSTATUS ""     ;alpha, beta, rc, or nothing for final.
-!define APPFILE "NoteFly.exe"
-!define LANGFILE "langs.xml"
+!define PROJNAME   "NoteFly"
+!define VERSION    "2.5.0"          ; version number: major.minor.release
+!define VERSTATUS  "alpha"          ; alpha, beta, rc, or nothing for final.
+!define APPFILE    "NoteFly.exe"    ; main executable.
+!define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
+!define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
+!define DEMOPLUGIN "helloworld.dll" ; A demo plugin.
 
 Name "${PROJNAME} ${VERSION} ${VERSTATUS}" ; The name of the installer
 SetCompressor lzma
@@ -127,14 +129,19 @@ done:
 ;--------------------------------
 
 ; Pages
- PageEx license
+PageEx license
    LicenseText "License agreement"
    LicenseData "license.txt"
- PageExEnd
+PageExEnd
+; Add this page on a alpha release as warning
+PageEx license
+   LicenseText "Warning"
+   LicenseData "warning_alpha.txt"
+PageExEnd
 Page components
 Page directory
 Page instfiles
-
+ 
 UninstPage uninstConfirm
 UninstPage instfiles
 
@@ -147,13 +154,11 @@ Section "main executable (required)"
   
   ; Kill running NoteFly if still running, using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in (optimized version, KillProcDLL.dll only)
   KillProcDLL::KillProc "${APPFILE}" 
+  ; Simply wait 300ms for a running NoteFly process to close itself.
   sleep 300
   
   ; Check installation directory 
   !insertmacro BadPathsCheck
-  
-  ; Set output path to the installation directory.
-  SetOutPath $INSTDIR 
 
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\NoteFly "Install_Dir" "$INSTDIR"
@@ -165,11 +170,28 @@ Section "main executable (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
   
+  ; Set output path to the installation directory.
+  SetOutPath $INSTDIR
+  
   ; write the files main executable and uninstaller.
   File "${LANGFILE}"
   File "${APPFILE}"
+  File "${APPIPLUGIN}"
+  
+  ; skin textures
+  File "nyancat.jpg"    ; 4,53 KB
+  File "hellokitty.jpg" ; 6,79 KB
+  File "blackhorse.jpg" ; 8,48 KB
+  File "grass.jpg"      ; 9,17 KB
+  File "colordrops.jpg" ; 10,0 KB
+  
   WriteUninstaller "uninstall.exe"
   
+SectionEnd
+
+Section "demo plugin"
+  SetOutPath "$INSTDIR\plugins"
+  File ".\plugins\${DEMOPLUGIN}"
 SectionEnd
 
 Section "Desktop Shortcut (all users)"
@@ -181,9 +203,9 @@ StrCpy $R0 $0
 StrCpy $R1 $1
 ; Check our version
 ${If} $R0 == '5'
-  CreateShortCut "$DESKTOP\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ;small icon for win. xp.
+  CreateShortCut "$DESKTOP\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ; small icon for win. xp.
 ${Else}
-  CreateShortCut "$DESKTOP\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ;large icon
+  CreateShortCut "$DESKTOP\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ; large icon for win. vista/7
 ${EndIf}
 SectionEnd
 
@@ -203,7 +225,9 @@ SectionEnd
 
 ; Uninstaller
 Section "Uninstall"  
+  ; Kill running NoteFly process if still running
   KillProcDLL::KillProc "${APPFILE}" 
+  ; Simply wait 300ms for a running NoteFly process to close itself.
   sleep 300
 
   ; Check installation directory 
@@ -216,7 +240,16 @@ Section "Uninstall"
   ; Remove files and uninstaller
   Delete "$INSTDIR\${LANGFILE}"
   Delete "$INSTDIR\uninstall.exe"
+  Delete "$INSTDIR\${APPIPLUGIN}"
   Delete "$INSTDIR\${APPFILE}"
+  
+  ; skin textures
+  Delete "$INSTDIR\nyancat.jpg"
+  Delete "$INSTDIR\hellokitty.jpg"
+  Delete "$INSTDIR\blackhorse.jpg"
+  Delete "$INSTDIR\grass.jpg"
+  Delete "$INSTDIR\colordrops.jpg"
+  
   ; Remove directory if empty
   RMDir "$INSTDIR"
 
@@ -225,12 +258,12 @@ Section "Uninstall"
   removeadminappdata:
   ; This is only going to work for the administrator appdata.
   MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes and settings from administrator account stored at $APPDATA\.NoteFly2\ ?" IDNO keepsettingnotes
-  Delete "$APPDATA\.NoteFly2\settings.xml"
-  Delete "$APPDATA\.NoteFly2\skins.xml"
-  Delete "$APPDATA\.NoteFly2\debug.log"
-  Delete "$APPDATA\.NoteFly2\*.nfn"
-  ; Remove directory if empty
-  RMDir "$APPDATA\.NoteFly2"
+    Delete "$APPDATA\.NoteFly2\settings.xml"
+    Delete "$APPDATA\.NoteFly2\skins.xml"
+    Delete "$APPDATA\.NoteFly2\debug.log"
+    Delete "$APPDATA\.NoteFly2\*.nfn"
+    ; Remove directory if empty
+    RMDir "$APPDATA\.NoteFly2"
   postremoveadminappdata:
   keepsettingnotes:
   SetShellVarContext all

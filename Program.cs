@@ -50,7 +50,7 @@ namespace NoteFly
         /// <summary>
         /// All loaded plugins
         /// </summary>
-        public static IPlugin[] plugins;
+        public static IPlugin.IPlugin[] plugins;
 
         #endregion Fields
 
@@ -246,8 +246,11 @@ namespace NoteFly
                         // Turn off all social functions on startup.
                         case "-disablesocial":
                             Settings.SocialEmailEnabled = false;
-                            ////Settings.socialFacebookEnabled = false;
-                            ////Settings.socialTwitterEnabled = false;
+                            break;
+                        
+                        // Turn off loading of plugins
+                        case "-disableplugins":
+                            Settings.ProgramPluginsEnabled = false;
                             break;
 
                         // Turn all logging features on at startup. 
@@ -470,7 +473,7 @@ namespace NoteFly
         {
             if (e == null)
             {
-                e = new Exception("Unknown unhandled Exception was occurred!");
+                e = new Exception("Unknown unhandled Exception occurred.");
             }
 
             if (Settings.ProgramLogException)
@@ -548,11 +551,13 @@ namespace NoteFly
         /// </summary>
         public static void LoadPlugins()
         {
+            //System.Reflection.Assembly plugininterface = System.Reflection.Assembly.LoadFrom(Path.Combine(Program.InstallFolder, "IPlugin.dll"));
+
             string pluginfolder = Path.Combine(Program.InstallFolder, Settings.ProgramPluginsFolder);
             if (Directory.Exists(pluginfolder))
             {
                 string[] pluginfilepaths = Directory.GetFiles(pluginfolder, "*.dll");
-                System.Collections.Generic.List<IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin>();
+                System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
                 for (int i = 0; i < pluginfilepaths.Length; i++)
                 {
                     try
@@ -568,15 +573,50 @@ namespace NoteFly
                                     Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
                                     if (plugintype != null)
                                     {
-                                        pluginslist.Add((IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString())));
+                                        IPlugin.IPlugin iplugin =(IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+
+                                        // Get name plugin
+                                        string pluginname = "untitled";
+                                        object[] atttitle = pluginassembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+                                        if (atttitle.Length > 0)
+                                        {
+                                            AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)atttitle[0];
+                                            if (titleAttribute.Title != string.Empty)
+                                            {
+                                                pluginname = titleAttribute.Title;
+                                            }
+                                        }
+
+                                        // Get author/company
+                                        string pluginauthor = "unknown";
+                                        object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+                                        if (attributes.Length != 0)
+                                        {
+                                            pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
+                                        }
+
+                                        // Get description
+                                        string plugindescription = string.Empty;
+                                        object[] attdesc = pluginassembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                                        if (attdesc.Length != 0)
+                                        {
+                                            plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description;
+                                        }
+
+                                        // Get version
+                                        string pluginversion = pluginassembly.GetName().Version.ToString();
+
+                                        iplugin.Register(pluginname, pluginauthor, plugindescription, pluginversion);
+                                        pluginslist.Add(iplugin);
                                     }
                                 }
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        Log.Write(LogType.exception, "Can't load plugin: " + pluginfilepaths[i]);
+                        const string CANTLOADPLUGIN = "Can't load plugin: ";
+                        Log.Write(LogType.exception, CANTLOADPLUGIN + pluginfilepaths[i] + " " + ex.Message);
                     }
                 }
 
@@ -584,7 +624,8 @@ namespace NoteFly
             }
             else
             {
-                Log.Write(LogType.info, "Plugin folder does not exist.");
+                const string PLUGINFOLDERNOTEXIST = "Plugin folder does not exist.";
+                Log.Write(LogType.info, PLUGINFOLDERNOTEXIST);
             }
         }
 

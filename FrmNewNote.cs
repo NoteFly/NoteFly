@@ -214,7 +214,7 @@ namespace NoteFly
 
                     for (int i = 0; i < Program.plugins.Length; i++)
                     {
-                        Program.plugins[i].SavingNote(this.note);
+                        Program.plugins[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);
                     }
 
                     TrayIcon.Frmneweditnoteopen = false;

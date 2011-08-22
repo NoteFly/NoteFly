@@ -3,7 +3,7 @@
     using System.Drawing;
     using System.Windows.Forms;
 
-    public sealed class HelloWorld : PluginBase
+    public class HelloWorld : IPlugin.PluginBase
     {
         // Properties (2) 
 
@@ -31,7 +31,7 @@
         /// <param name="rtbnote">use the content of rtbnote for the note content, 
         /// this way note content does not have to be read again from disk.</param>
         /// <param name="note">The note settings</param>
-        public override void ShareMenuClicked(RichTextBox rtbnote, NoteFly.Note note)
+        public override void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, string title)
         {
             MessageBox.Show("Hello World!");
         }

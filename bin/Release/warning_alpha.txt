@@ -1,0 +1,5 @@
+This is a alpha quality version.
+This means that this release can contain serious bugs.
+If you have NoteFly previous installed it's highly recommended 
+to make a full backup of your notes before continuing
+ installing this version.

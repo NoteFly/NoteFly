@@ -186,8 +186,8 @@ namespace NoteFly
             this.menuRollUp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHideNote = new System.Windows.Forms.ToolStripMenuItem();
             this.btnHideNote = new System.Windows.Forms.Button();
-            this.rtbNote = new NoteFly.TransparentRichTextBox();
             this.pnlNote = new System.Windows.Forms.Panel();
+            this.rtbNote = new NoteFly.TransparentRichTextBox();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.saveWorker = new System.ComponentModel.BackgroundWorker();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -387,6 +387,21 @@ namespace NoteFly
             this.btnHideNote.UseVisualStyleBackColor = true;
             this.btnHideNote.Click += new System.EventHandler(this.btnHideNote_Click);
             // 
+            // pnlNote
+            // 
+            this.pnlNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlNote.BackColor = System.Drawing.Color.Transparent;
+            this.pnlNote.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlNote.ContextMenuStrip = this.menuFrmNoteOptions;
+            this.pnlNote.Controls.Add(this.rtbNote);
+            this.pnlNote.Controls.Add(this.pbResizeGrip);
+            this.pnlNote.Location = new System.Drawing.Point(0, 31);
+            this.pnlNote.Name = "pnlNote";
+            this.pnlNote.Size = new System.Drawing.Size(240, 209);
+            this.pnlNote.TabIndex = 4;
+            // 
             // rtbNote
             // 
             this.rtbNote.AccessibleDescription = "Note content";
@@ -414,21 +429,6 @@ namespace NoteFly
             this.rtbNote.TabStop = false;
             this.rtbNote.Text = "";
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
-            // 
-            // pnlNote
-            // 
-            this.pnlNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlNote.BackColor = System.Drawing.Color.Transparent;
-            this.pnlNote.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlNote.ContextMenuStrip = this.menuFrmNoteOptions;
-            this.pnlNote.Controls.Add(this.rtbNote);
-            this.pnlNote.Controls.Add(this.pbResizeGrip);
-            this.pnlNote.Location = new System.Drawing.Point(0, 31);
-            this.pnlNote.Name = "pnlNote";
-            this.pnlNote.Size = new System.Drawing.Size(240, 209);
-            this.pnlNote.TabIndex = 4;
             // 
             // pbResizeGrip
             // 

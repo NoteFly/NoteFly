@@ -451,7 +451,7 @@ namespace NoteFly
                         if (xmlread.HasAttributes)
                         {
                             string filepathtexture = xmlread.GetAttribute("texture");
-                            if (System.IO.File.Exists(filepathtexture))
+                            if (System.IO.File.Exists(filepathtexture) || System.IO.File.Exists(Path.Combine(Program.InstallFolder,filepathtexture)) )
                             {
                                 string extension = filepathtexture.Substring(filepathtexture.LastIndexOf('.'), filepathtexture.Length - filepathtexture.LastIndexOf('.')).ToLower();
                                 string[] supportedimageformats = new string[] { ".png", ".tif", ".tiff", ".bmp", ".gif", ".jpg", ".jpeg" };
@@ -467,13 +467,20 @@ namespace NoteFly
 
                                 if (imagesupported)
                                 {
-                                    curskin.PrimaryTexture = new System.Drawing.Bitmap(filepathtexture);
+                                    if (System.IO.File.Exists(filepathtexture))
+                                    {
+                                        curskin.PrimaryTexture = new System.Drawing.Bitmap(filepathtexture);
+                                    }
+                                    else
+                                    {
+                                        curskin.PrimaryTexture = new System.Drawing.Bitmap(Path.Combine(Program.InstallFolder, filepathtexture));
+                                    }
                                 }
                                 else
                                 {
-                                    Log.Write(LogType.error, "Not texture image format supported.");
+                                    const string TEXTUREIMGFORMUNSUPPORTED = "Texture image format not supported.";
+                                    Log.Write(LogType.error, TEXTUREIMGFORMUNSUPPORTED);
                                 }
-
                             }
                             else
                             {
@@ -496,7 +503,8 @@ namespace NoteFly
 
                 if (xmlread.Depth > 3)
                 {
-                    throw new ApplicationException("Skin file corrupted: " + SKINFILE);
+                    const string SKINFILECORRUPT = "Skin file corrupted: ";
+                    throw new ApplicationException(SKINFILECORRUPT + SKINFILE);
                 }
             }
 
@@ -1142,18 +1150,25 @@ namespace NoteFly
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument(true); // standalone xml file
                 xmlwrite.WriteStartElement("skins");
-                const int NUMDEFAULTSKINS = 10;
+                const int NUMDEFAULTSKINS = 15;
                 xmlwrite.WriteAttributeString("count", NUMDEFAULTSKINS.ToString()); // for performance predefine list Capacity, not required.
-                string[] name = new string[NUMDEFAULTSKINS] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark", "softwhite", "contrastblue" };
-                string[] primaryclr = new string[NUMDEFAULTSKINS] { "FFEF14", "FFA700", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A", "002626", "FFF4C6", "3B47EF" };
-                string[] selectclr = new string[NUMDEFAULTSKINS] { "E0D616", "C17D00", "E0E0E0", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624", "333366", "00137F" };
-                string[] highlightclr = new string[NUMDEFAULTSKINS] { "FFED7C", "FFD46D", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "494949", "FFFFFF", "0026FF" };
-                string[] textclr = new string[NUMDEFAULTSKINS] { "000000", "000000", "000000", "000000", "000000", "000000", "000000", "FFFFFF", "3B47EF", "FFDF23" };
+                string[] name = new string[NUMDEFAULTSKINS] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark", "softwhite", "contrastblue", "nyancat", "hellokitty", "grass", "blackhorse", "colordrops" };
+                string[] primaryclr = new string[NUMDEFAULTSKINS] { "FFEF14", "FFA700", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A", "002626", "FFF4C6", "3B47EF", "0019A8", "FF359A", "6FE200", "7E2603", "002626" };
+                string[] selectclr = new string[NUMDEFAULTSKINS] { "E0D616", "C17D00", "E0E0E0", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624", "333366", "00137F", "0019A8", "FF35F0", "008000", "000624", "000624" };
+                string[] highlightclr = new string[NUMDEFAULTSKINS] { "FFED7C", "FFD46D", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "494949", "FFFFFF", "0026FF", "000000", "FFFFFF", "DADBD9", "494949", "494949" };
+                string[] textclr = new string[NUMDEFAULTSKINS] { "000000", "000000", "000000", "000000", "000000", "000000", "000000", "FFFFFF", "3B47EF", "FFDF23", "FFFFFF", "000000", "000000", "FFFFFF", "FFFFFF" };
+                string[] textures = new string[NUMDEFAULTSKINS] { null, null, null, null, null, null, null, null, null, null, "nyancat.jpg", "hellokitty.jpg", "grass.jpg", "blackhorse.jpg", "colordrops.jpg" };
                 for (ushort i = 0; i < NUMDEFAULTSKINS; i++)
                 {
                     xmlwrite.WriteStartElement("skin");
                     xmlwrite.WriteElementString("Name", name[i]);
-                    xmlwrite.WriteElementString("PrimaryClr", "#" + primaryclr[i]);
+                    xmlwrite.WriteStartElement("PrimaryClr");
+                    if (textures[i] != null)
+                    {
+                        xmlwrite.WriteAttributeString("texture", textures[i]);
+                    }
+                    xmlwrite.WriteString("#" + primaryclr[i]);
+                    xmlwrite.WriteEndElement();
                     xmlwrite.WriteElementString("SelectClr", "#" + selectclr[i]);
                     xmlwrite.WriteElementString("HighlightClr", "#" + highlightclr[i]);
                     xmlwrite.WriteElementString("TextClr", "#" + textclr[i]);

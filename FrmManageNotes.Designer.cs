@@ -123,10 +123,10 @@ namespace NoteFly
             this.btnBackAllNotes = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.pnlContent = new System.Windows.Forms.Panel();
+            this.tableLayoutPanelButtons = new System.Windows.Forms.TableLayoutPanel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.saveExportFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openImportFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tableLayoutPanelButtons = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -202,7 +202,7 @@ namespace NoteFly
             this.btnRestoreAllNotes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnRestoreAllNotes.BackColor = System.Drawing.Color.Wheat;
             this.btnRestoreAllNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnRestoreAllNotes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnRestoreAllNotes.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.btnRestoreAllNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRestoreAllNotes.Location = new System.Drawing.Point(213, 3);
             this.btnRestoreAllNotes.Name = "btnRestoreAllNotes";
@@ -219,7 +219,7 @@ namespace NoteFly
             this.btnShowSelectedNotes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnShowSelectedNotes.BackColor = System.Drawing.Color.Wheat;
             this.btnShowSelectedNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnShowSelectedNotes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnShowSelectedNotes.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.btnShowSelectedNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnShowSelectedNotes.Location = new System.Drawing.Point(3, 3);
             this.btnShowSelectedNotes.Name = "btnShowSelectedNotes";
@@ -236,7 +236,7 @@ namespace NoteFly
             this.btnNoteDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnNoteDelete.BackColor = System.Drawing.Color.Wheat;
             this.btnNoteDelete.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnNoteDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnNoteDelete.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.btnNoteDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNoteDelete.Location = new System.Drawing.Point(108, 3);
             this.btnNoteDelete.Name = "btnNoteDelete";
@@ -253,7 +253,7 @@ namespace NoteFly
             this.btnBackAllNotes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnBackAllNotes.BackColor = System.Drawing.Color.Wheat;
             this.btnBackAllNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnBackAllNotes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnBackAllNotes.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.btnBackAllNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackAllNotes.Location = new System.Drawing.Point(318, 3);
             this.btnBackAllNotes.Name = "btnBackAllNotes";
@@ -348,21 +348,6 @@ namespace NoteFly
             this.pnlContent.Size = new System.Drawing.Size(430, 311);
             this.pnlContent.TabIndex = 20;
             // 
-            // toolTip
-            // 
-            this.toolTip.AutomaticDelay = 100;
-            this.toolTip.AutoPopDelay = 1000;
-            this.toolTip.InitialDelay = 200;
-            this.toolTip.ReshowDelay = 20;
-            // 
-            // saveExportFileDialog
-            // 
-            this.saveExportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb";
-            // 
-            // openImportFileDialog
-            // 
-            this.openImportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb";
-            // 
             // tableLayoutPanelButtons
             // 
             this.tableLayoutPanelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -383,6 +368,21 @@ namespace NoteFly
             this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelButtons.Size = new System.Drawing.Size(420, 34);
             this.tableLayoutPanelButtons.TabIndex = 21;
+            // 
+            // toolTip
+            // 
+            this.toolTip.AutomaticDelay = 100;
+            this.toolTip.AutoPopDelay = 1000;
+            this.toolTip.InitialDelay = 200;
+            this.toolTip.ReshowDelay = 20;
+            // 
+            // saveExportFileDialog
+            // 
+            this.saveExportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb";
+            // 
+            // openImportFileDialog
+            // 
+            this.openImportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb";
             // 
             // FrmManageNotes
             // 

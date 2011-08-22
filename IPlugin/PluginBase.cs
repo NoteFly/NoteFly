@@ -17,15 +17,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace HelloWorld
+namespace IPlugin
 {
     using System;
     using System.Reflection;
     using System.Windows.Forms;
 
     [CLSCompliant(true)]
-    public abstract class PluginBase : NoteFly.IPlugin
+    public abstract class PluginBase : IPlugin
     {
+        private string name;
+        private string author;
+        private string description;
+        private string version;
+
         // Properties (6) 
 
         /// <summary>
@@ -35,16 +40,7 @@ namespace HelloWorld
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0)
-                {
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
-                    {
-                        return titleAttribute.Title;
-                    }
-                }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return name;
             }
         }
 
@@ -55,12 +51,7 @@ namespace HelloWorld
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCompanyAttribute)attributes[0]).Company;
+                return this.author;
             }
         }
 
@@ -71,12 +62,7 @@ namespace HelloWorld
         {
             get
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+                return this.description;
             }
         }
 
@@ -87,7 +73,7 @@ namespace HelloWorld
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor;
+                return this.version;
             }
         }
 
@@ -115,14 +101,22 @@ namespace HelloWorld
             }
         }
 
-        // Methods (6) 
+        // Methods (7) 
+
+        public void Register(string name, string author, string description, string version)
+        {
+            this.name = name;
+            this.author = author;
+            this.description = description;
+            this.version = version;
+        }
 
         /// <summary>
         /// Executed if share menu clicked.
         /// </summary>
         /// <param name="rtbnote">The richedit component with the note content in memory.</param>
         /// <param name="note">note object</param>
-        public virtual void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, NoteFly.Note note)
+        public virtual void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, string title)
         {
             // by default  do nothing, override this to do someting.
         }
@@ -151,7 +145,7 @@ namespace HelloWorld
         /// Executed if a note is saved
         /// </summary>
         /// <param name="note">A note object with details</param>
-        public virtual void SavingNote(NoteFly.Note note)
+        public virtual void SavingNote(string content, string title)
         {
             // by default do nothing, override this to do someting.
         }
@@ -159,15 +153,25 @@ namespace HelloWorld
         /// <summary>
         /// Executed if a note is made visible
         /// </summary>
-        public virtual void ShowingNote(NoteFly.Note note)
+        public virtual void ShowingNote(string content, string title)
         {
             // by default do nothing, override this to do someting.
         }
+        
+        /// <summary>
+        /// Executed if a note is made visible
+        /// </summary>
+        /// <returns>Note content</returns>
+        //public virtual void ShowingNote(string content, string title, out string newcontent)
+        //{
+        //    // by default do nothing, override this to do someting.
+        //    newcontent = String.Empty;
+        //}
 
         /// <summary>
         /// Executed if a note is being hiden.
         /// </summary>
-        public virtual void HidingNote(NoteFly.Note note)
+        public virtual void HidingNote(string content, string title)
         {
             // by default do nothing, override this to do someting.
         }

@@ -45,11 +45,6 @@ namespace NoteFly
         private System.Windows.Forms.Button btnShutdown;
 
         /// <summary>
-        /// Label lblTextOptions
-        /// </summary>
-        private System.Windows.Forms.Label lblTextOptions;
-
-        /// <summary>
         /// TextBox tbExceptionMessage
         /// </summary>
         private System.Windows.Forms.TextBox tbExceptionMessage;
@@ -84,7 +79,6 @@ namespace NoteFly
             this.lblTextExceptionMessage = new System.Windows.Forms.Label();
             this.btnContinu = new System.Windows.Forms.Button();
             this.btnShutdown = new System.Windows.Forms.Button();
-            this.lblTextOptions = new System.Windows.Forms.Label();
             this.tbExceptionMessage = new System.Windows.Forms.TextBox();
             this.lblTextStacktrace = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -120,16 +114,6 @@ namespace NoteFly
             this.btnShutdown.UseVisualStyleBackColor = true;
             this.btnShutdown.Click += new System.EventHandler(this.btnShutdown_Click);
             // 
-            // lblTextOptions
-            // 
-            this.lblTextOptions.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lblTextOptions.AutoSize = true;
-            this.lblTextOptions.Location = new System.Drawing.Point(2, 114);
-            this.lblTextOptions.Name = "lblTextOptions";
-            this.lblTextOptions.Size = new System.Drawing.Size(44, 13);
-            this.lblTextOptions.TabIndex = 4;
-            this.lblTextOptions.Text = "options:";
-            // 
             // tbExceptionMessage
             // 
             this.tbExceptionMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -145,11 +129,11 @@ namespace NoteFly
             // lblTextStacktrace
             // 
             this.lblTextStacktrace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblTextStacktrace.Location = new System.Drawing.Point(2, 97);
+            this.lblTextStacktrace.Location = new System.Drawing.Point(5, 97);
             this.lblTextStacktrace.Name = "lblTextStacktrace";
-            this.lblTextStacktrace.Size = new System.Drawing.Size(364, 17);
+            this.lblTextStacktrace.Size = new System.Drawing.Size(361, 32);
             this.lblTextStacktrace.TabIndex = 8;
-            this.lblTextStacktrace.Text = "The exception is written to the logfile for bug reporting.";
+            this.lblTextStacktrace.Text = "The exception is written to the logfile for bug reporting.\r\nOptions:\r\n";
             // 
             // FrmException
             // 
@@ -160,7 +144,6 @@ namespace NoteFly
             this.ClientSize = new System.Drawing.Size(384, 162);
             this.Controls.Add(this.lblTextStacktrace);
             this.Controls.Add(this.tbExceptionMessage);
-            this.Controls.Add(this.lblTextOptions);
             this.Controls.Add(this.btnShutdown);
             this.Controls.Add(this.btnContinu);
             this.Controls.Add(this.lblTextExceptionMessage);

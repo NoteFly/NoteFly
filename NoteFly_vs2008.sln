@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "extensions\He
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendToLightning", "extensions\SendToLightning\SendToLightning.csproj", "{C76EBBC0-FAC1-4082-8213-57A927C65725}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPlugin", "IPlugin\IPlugin.csproj", "{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,16 @@ Global
 		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C76EBBC0-FAC1-4082-8213-57A927C65725}.Release|x86.ActiveCfg = Release|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
