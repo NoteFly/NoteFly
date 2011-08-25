@@ -266,8 +266,8 @@ namespace NoteFly
                         case "ProgramLogInfo":
                             Settings.ProgramLogInfo = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "ProgramPluginsEnabled":
-                            Settings.ProgramPluginsEnabled = xmlread.ReadElementContentAsBoolean();
+                        case "ProgramPluginsAllEnabled":
+                            Settings.ProgramPluginsAllEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ProgramSuspressWarnAdmin":
                             Settings.ProgramSuspressWarnAdmin = xmlread.ReadElementContentAsBoolean();
@@ -359,6 +359,9 @@ namespace NoteFly
                             break;
                         case "ProgramPluginsFolder":
                             Settings.ProgramPluginsFolder = xmlread.ReadElementContentAsString();
+                            break;
+                        case "ProgramPluginsEnabled":
+                            Settings.ProgramPluginsEnabled = xmlread.ReadElementContentAsString();
                             break;
                         case "FontTitleFamily":
                             Settings.FontTitleFamily = xmlread.ReadElementContentAsString();
@@ -567,9 +570,9 @@ namespace NoteFly
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
-            Settings.ProgramPluginsEnabled = true;
+            Settings.ProgramPluginsAllEnabled = true;
             Settings.ProgramSuspressWarnAdmin = false;
-            Settings.ProgramPluginsFolder = "plugins";
+            Settings.ProgramPluginsFolder = Path.Combine(Program.InstallFolder, "plugins");
             Settings.SocialEmailEnabled = true;
             Settings.SocialEmailDefaultadres = string.Empty;
             Settings.TrayiconFontsize = 8.25f;
@@ -751,7 +754,7 @@ namespace NoteFly
                 WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
                 WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
                 WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
-                WriteXMLBool("ProgramPluginsEnabled", Settings.ProgramPluginsEnabled);
+                WriteXMLBool("ProgramPluginsAllEnabled", Settings.ProgramPluginsAllEnabled);
                 WriteXMLBool("ProgramSuspressWarnAdmin", Settings.ProgramSuspressWarnAdmin);
                 WriteXMLBool("SocialEmailEnabled", Settings.SocialEmailEnabled);
                 WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
@@ -788,6 +791,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                 xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
                 xmlwrite.WriteElementString("ProgramPluginsFolder", Settings.ProgramPluginsFolder);
+                xmlwrite.WriteElementString("ProgramPluginsEnabled", Settings.ProgramPluginsEnabled);
                 xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
                 xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.SocialEmailDefaultadres);
                 xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);

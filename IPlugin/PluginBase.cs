@@ -30,6 +30,8 @@ namespace IPlugin
         private string author;
         private string description;
         private string version;
+        private bool enabled = false;
+        private string file;
 
         // Properties (6) 
 
@@ -78,6 +80,29 @@ namespace IPlugin
         }
 
         /// <summary>
+        /// Is the plugin enabled.
+        /// </summary>
+        public bool Enabled
+        {
+            get
+            {
+                return this.enabled;
+            }
+            set
+            {
+                this.enabled = value;
+            }
+        }
+
+        public string Filename
+        {
+            get
+            {
+                return this.file;
+            }
+        }
+
+        /// <summary>
         /// Settings share tab title.
         /// Tab not created if null.
         /// </summary>
@@ -103,12 +128,22 @@ namespace IPlugin
 
         // Methods (7) 
 
-        public void Register(string name, string author, string description, string version)
+        /// <summary>
+        /// Register the plugin
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="author"></param>
+        /// <param name="description"></param>
+        /// <param name="version"></param>
+        /// <param name="enabled"></param>
+        public void Register(string name, string author, string description, string version, bool enabled, string file)
         {
             this.name = name;
             this.author = author;
             this.description = description;
             this.version = version;
+            this.enabled = enabled;
+            this.file = file;
         }
 
         /// <summary>

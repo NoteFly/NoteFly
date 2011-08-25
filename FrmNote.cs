@@ -244,8 +244,8 @@ namespace NoteFly
         }
 
 #if windows
-        [DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+        //[DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
+        //private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
 
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
@@ -281,7 +281,14 @@ namespace NoteFly
             {
                 ToolStripMenuItem menuitem = (ToolStripMenuItem)sender;
                 int p = (int)menuitem.Tag;
-                Program.plugins[p].ShareMenuClicked(this.rtbNote, this.note.Title);
+                if (Program.plugins[p].Enabled)
+                {
+                    Program.plugins[p].ShareMenuClicked(this.rtbNote, this.note.Title);
+                }
+                else
+                {
+                    Log.Write(LogType.exception, "Plugin not enabled.");
+                }
             }
             catch (Exception exc)
             {
@@ -879,16 +886,19 @@ namespace NoteFly
                 }
             }
 
-            if (Program.plugins != null)
+            if (Program.plugins != null && Settings.ProgramPluginsAllEnabled)
             {
                 for (int i = 0; i < Program.plugins.Length; i++)
                 {
                     if (!String.IsNullOrEmpty(Program.plugins[i].ShareMenuText))
                     {
-                        ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.plugins[i].ShareMenuText, null, new EventHandler(MenuPluginClicked));
-                        menuitem.Name = "menuPlugin" + Program.plugins[i].Name;
-                        menuitem.Tag = i;
-                        this.menuSendTo.DropDownItems.Add(menuitem);
+                        if (Program.plugins[i].Enabled)
+                        {
+                            ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.plugins[i].ShareMenuText, null, new EventHandler(MenuPluginClicked));
+                            menuitem.Name = "menuPlugin" + Program.plugins[i].Name;
+                            menuitem.Tag = i;
+                            this.menuSendTo.DropDownItems.Add(menuitem);
+                        }
                     }
                 }
             }

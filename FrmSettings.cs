@@ -156,26 +156,29 @@ namespace NoteFly
             }
             else
             {
-                if (Program.plugins != null)
+                if (Program.plugins != null && Settings.ProgramPluginsAllEnabled)
                 {
                     // check plugin settings
                     for (int i = 0; i < Program.plugins.Length; i++)
                     {
-                        if (!Program.plugins[i].SaveSettingsTab())
+                        if (Program.plugins[i].Enabled)
                         {
-                            this.tabControlSettings.SelectedTab = this.tabSharing;
-                            // select the right plugin tab by tab title/text.
-                            if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
+                            if (!Program.plugins[i].SaveSettingsTab())
                             {
-                                for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
+                                this.tabControlSettings.SelectedTab = this.tabSharing;
+                                // select the right plugin tab by tab title/text.
+                                if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
                                 {
-                                    if (this.tabControlSharing.TabPages[t].Text == Program.plugins[i].SettingsTabTitle)
+                                    for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
                                     {
-                                        this.tabControlSharing.SelectedIndex = t;
+                                        if (this.tabControlSharing.TabPages[t].Text == Program.plugins[i].SettingsTabTitle)
+                                        {
+                                            this.tabControlSharing.SelectedIndex = t;
+                                        }
                                     }
                                 }
+                                return;
                             }
-                            return;
                         }
                     }
                 }
@@ -233,6 +236,10 @@ namespace NoteFly
                 Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
                 Settings.NetworkProxyAddress = this.iptbProxyAddress.IPAddress;
                 Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
+
+                // tab: plugins
+                Settings.ProgramPluginsAllEnabled = this.chxLoadPlugins.Checked;
+                this.SaveEnabledPlugins();
 
                 // tab: Advance
                 if (Directory.Exists(this.tbNotesSavePath.Text))
@@ -331,6 +338,36 @@ namespace NoteFly
             {
                 xmlUtil.WriteDefaultSettings();
                 this.SetControlsBySettings();
+            }
+        }
+
+        /// <summary>
+        /// Save plugins that are enabled.
+        /// </summary>
+        private void SaveEnabledPlugins()
+        {
+            bool first = true;
+            Settings.ProgramPluginsEnabled = string.Empty;
+            for (int i = 0; i < this.chxlbxAvailablePlugins.Items.Count; i++)
+            {
+                if (this.chxlbxAvailablePlugins.GetItemChecked(i))
+                {
+                    if (!first)
+                    {
+                        Settings.ProgramPluginsEnabled += "|";
+                    }
+                    else
+                    {
+                        first = false;
+                    }
+
+                    Settings.ProgramPluginsEnabled += Program.plugins[i].Filename;
+                    Program.plugins[i].Enabled = true;
+                }
+                else
+                {
+                    Program.plugins[i].Enabled = false;
+                }
             }
         }
 
@@ -515,6 +552,9 @@ namespace NoteFly
             this.numTimeout.Value = Settings.NetworkConnectionTimeout;
             this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
 
+            // tab: Plugins
+            this.chxLoadPlugins.Checked = Settings.ProgramPluginsAllEnabled;
+
             // tab: Advance
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
@@ -597,7 +637,7 @@ namespace NoteFly
         {
             if (tabControlSettings.SelectedTab == this.tabSharing)
             {
-                if (Program.plugins != null)
+                if (Program.plugins != null && Settings.ProgramPluginsAllEnabled)
                 {
                     while (this.tabControlSharing.TabCount > 1)
                     {
@@ -610,7 +650,10 @@ namespace NoteFly
                         {
                             if (Program.plugins[i].InitShareSettingsTab() != null)
                             {
-                                this.tabControlSharing.Controls.Add(Program.plugins[i].InitShareSettingsTab());
+                                if (Program.plugins[i].Enabled)
+                                {
+                                    this.tabControlSharing.Controls.Add(Program.plugins[i].InitShareSettingsTab());
+                                }
                             }
 
                         }
@@ -619,31 +662,57 @@ namespace NoteFly
             }
             else if (tabControlSettings.SelectedTab == this.tabPlugins)
             {
-                cbxlbxLoadedPlugins.Items.Clear();
-                lblPluginAuthor.Text = String.Empty;
-                lblPluginVersion.Text = String.Empty;
-                lblPluginDescription.Text = String.Empty;
-                if (Program.plugins != null)
+                this.updatePluginList();
+            }
+        }
+
+        /// <summary>
+        /// Gets a list with availible plugins and add them to chxlbxAvailablePlugins.
+        /// </summary>
+        private void updatePluginList()
+        {
+            chxlbxAvailablePlugins.Items.Clear();
+            lblPluginAuthor.Text = String.Empty;
+            lblPluginVersion.Text = String.Empty;
+            lblPluginDescription.Text = String.Empty;
+            if (Program.plugins != null)
+            {
+                for (int i = 0; i < Program.plugins.Length; i++)
                 {
-                    for (int i = 0; i < Program.plugins.Length; i++)
-                    {
-                        bool isenabled = true;
-                        this.cbxlbxLoadedPlugins.Items.Add(Program.plugins[i].Name, isenabled);
-                    }
+                    this.chxlbxAvailablePlugins.Items.Add(Program.plugins[i].Name, Program.plugins[i].Enabled);
                 }
             }
         }
 
-        #endregion Methods
-
+        /// <summary>
+        /// A item in chxlbxAvailablePlugins get selected, show details about the selected plugin.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbxlbxLoadedPlugins_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbxlbxLoadedPlugins.SelectedIndex >= 0)
+            if (chxlbxAvailablePlugins.SelectedIndex >= 0)
             {
-                lblPluginAuthor.Text = "author: "+ Program.plugins[cbxlbxLoadedPlugins.SelectedIndex].Author;
-                lblPluginVersion.Text = "version: " + Program.plugins[cbxlbxLoadedPlugins.SelectedIndex].Version;
-                lblPluginDescription.Text = "description: " + Program.plugins[cbxlbxLoadedPlugins.SelectedIndex].Description;
+                lblPluginAuthor.Text = "author: "+ Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Author;
+                lblPluginVersion.Text = "version: " + Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Version;
+                lblPluginDescription.Text = "description: " + Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Description;
             }
         }
+
+        /// <summary>
+        /// Are plugins being loaded.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxLoadPlugins_CheckedChanged(object sender, EventArgs e)
+        {
+            this.chxlbxAvailablePlugins.Enabled = this.chxLoadPlugins.Checked;
+            if (chxLoadPlugins.Checked)
+            {
+                Program.LoadPlugins();
+            }
+        }
+
+        #endregion Methods
     }
 }

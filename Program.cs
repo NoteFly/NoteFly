@@ -250,7 +250,7 @@ namespace NoteFly
                         
                         // Turn off loading of plugins
                         case "-disableplugins":
-                            Settings.ProgramPluginsEnabled = false;
+                            Settings.ProgramPluginsAllEnabled = false;
                             break;
 
                         // Turn all logging features on at startup. 
@@ -346,7 +346,7 @@ namespace NoteFly
                 }
             }
 
-            if (Settings.ProgramPluginsEnabled)
+            if (Settings.ProgramPluginsAllEnabled)
             {
                 LoadPlugins();
             }
@@ -435,11 +435,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Waits 500ms before doing a update check.
+        /// Waits 1000ms before doing a update check.
         /// </summary>
         private static void UpdateCheckThread()
         {
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             Settings.UpdatecheckLastDate = UpdateCheck();
         }
 
@@ -551,20 +551,27 @@ namespace NoteFly
         /// </summary>
         public static void LoadPlugins()
         {
-            //System.Reflection.Assembly plugininterface = System.Reflection.Assembly.LoadFrom(Path.Combine(Program.InstallFolder, "IPlugin.dll"));
-
-            string pluginfolder = Path.Combine(Program.InstallFolder, Settings.ProgramPluginsFolder);
-            if (Directory.Exists(pluginfolder))
+            //string pluginfolder = Path.Combine(Program.InstallFolder, Settings.ProgramPluginsFolder);
+            if (Directory.Exists(Settings.ProgramPluginsFolder))
             {
-                string[] pluginfilepaths = Directory.GetFiles(pluginfolder, "*.dll");
-                System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
+                string[] pluginfilepaths = Directory.GetFiles(Settings.ProgramPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
+                string[] pluginfiles = new string[pluginfilepaths.Length];
                 for (int i = 0; i < pluginfilepaths.Length; i++)
+                {
+                    pluginfiles[i] = Path.GetFileName(pluginfilepaths[i]);
+                }
+                pluginfilepaths = null;
+
+                System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
+                string[] enabledplugins = Settings.ProgramPluginsEnabled.Split('|'); // | is illegal as filename, so that why it's choicen.
+                for (int i = 0; i < pluginfiles.Length; i++)
                 {
                     try
                     {
                         System.Reflection.Assembly pluginassembly = null;
-                        pluginassembly = System.Reflection.Assembly.LoadFrom(pluginfilepaths[i]);
-                        if (pluginassembly != null)
+                        pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
+                        bool pluginenabled = IsEnabledPlugin(enabledplugins, pluginfiles[i]);
+                        if (pluginassembly != null )
                         {
                             foreach (Type curplugintype in pluginassembly.GetTypes())
                             {
@@ -583,7 +590,14 @@ namespace NoteFly
                                             AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)atttitle[0];
                                             if (titleAttribute.Title != string.Empty)
                                             {
-                                                pluginname = titleAttribute.Title;
+                                                if (titleAttribute.Title.Length > 150)
+                                                {
+                                                    pluginname = titleAttribute.Title.Substring(0,150);
+                                                }
+                                                else
+                                                {
+                                                    pluginname = titleAttribute.Title;
+                                                }
                                             }
                                         }
 
@@ -592,7 +606,14 @@ namespace NoteFly
                                         object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
                                         if (attributes.Length != 0)
                                         {
-                                            pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
+                                            if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
+                                            {
+                                                pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0,150);
+                                            }
+                                            else
+                                            {
+                                                pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
+                                            }
                                         }
 
                                         // Get description
@@ -600,13 +621,20 @@ namespace NoteFly
                                         object[] attdesc = pluginassembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
                                         if (attdesc.Length != 0)
                                         {
-                                            plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description;
+                                            if (((AssemblyDescriptionAttribute)attdesc[0]).Description.Length > 255)
+                                            {
+                                                plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description.Substring(0, 255);
+                                            }
+                                            else
+                                            {
+                                                plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description;
+                                            }
                                         }
 
                                         // Get version
                                         string pluginversion = pluginassembly.GetName().Version.ToString();
 
-                                        iplugin.Register(pluginname, pluginauthor, plugindescription, pluginversion);
+                                        iplugin.Register(pluginname, pluginauthor, plugindescription, pluginversion, pluginenabled, pluginfiles[i]);
                                         pluginslist.Add(iplugin);
                                     }
                                 }
@@ -616,7 +644,7 @@ namespace NoteFly
                     catch (Exception ex)
                     {
                         const string CANTLOADPLUGIN = "Can't load plugin: ";
-                        Log.Write(LogType.exception, CANTLOADPLUGIN + pluginfilepaths[i] + " " + ex.Message);
+                        Log.Write(LogType.exception, CANTLOADPLUGIN + pluginfiles[i] + " " + ex.Message);
                     }
                 }
 
@@ -627,6 +655,25 @@ namespace NoteFly
                 const string PLUGINFOLDERNOTEXIST = "Plugin folder does not exist.";
                 Log.Write(LogType.info, PLUGINFOLDERNOTEXIST);
             }
+        }
+
+        /// <summary>
+        /// Get if plugin is enabled.
+        /// </summary>
+        /// <param name="enabledplugins"></param>
+        /// <param name="pluginfile"></param>
+        /// <returns></returns>
+        private static bool IsEnabledPlugin(string[] enabledplugins, string pluginfile)
+        {
+            for (int p = 0; p < enabledplugins.Length; p++)
+            {
+                if (enabledplugins[p] == pluginfile)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
 #if windows

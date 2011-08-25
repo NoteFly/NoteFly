@@ -29,6 +29,16 @@
         string Version { get; }
 
         /// <summary>
+        /// Is this plugin enabled
+        /// </summary>
+        bool Enabled { get; set; }
+
+        /// <summary>
+        /// Get the filename of this plugin
+        /// </summary>
+        string Filename { get; }
+
+        /// <summary>
         /// Share menu text, if any
         /// </summary>
         string ShareMenuText { get; }
@@ -45,7 +55,7 @@
         /// <param name="author"></param>
         /// <param name="description"></param>
         /// <param name="version"></param>
-        void Register(string name, string author, string description, string version);
+        void Register(string name, string author, string description, string version, bool enabled, string file);
 
         /// <summary>
         /// Executed if share menu clicked.

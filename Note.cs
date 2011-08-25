@@ -347,7 +347,10 @@ namespace NoteFly
             {
                 for (int i = 0; i < Program.plugins.Length; i++)
                 {
-                    Program.plugins[i].ShowingNote(this.tempcontent, title);
+                    if (Program.plugins[i].Enabled)
+                    {
+                        Program.plugins[i].ShowingNote(this.tempcontent, title);
+                    }
                 }
             }
         }
@@ -368,7 +371,10 @@ namespace NoteFly
             {
                 for (int i = 0; i < Program.plugins.Length; i++)
                 {
-                    Program.plugins[i].ShowingNote(this.tempcontent, this.title);
+                    if (Program.plugins[i].Enabled)
+                    {
+                        Program.plugins[i].HidingNote(this.tempcontent, this.title);
+                    }
                 }
             }
 

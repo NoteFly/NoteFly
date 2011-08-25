@@ -212,9 +212,15 @@ namespace NoteFly
                         this.notes.AddNote(this.note);
                     }
 
-                    for (int i = 0; i < Program.plugins.Length; i++)
+                    if (Program.plugins != null && Settings.ProgramPluginsAllEnabled)
                     {
-                        Program.plugins[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);
+                        for (int i = 0; i < Program.plugins.Length; i++)
+                        {
+                            if (Program.plugins[i].Enabled)
+                            {
+                                Program.plugins[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);
+                            }
+                        }
                     }
 
                     TrayIcon.Frmneweditnoteopen = false;
