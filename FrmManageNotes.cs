@@ -819,30 +819,38 @@ namespace NoteFly
 
                 if (e.ColumnIndex == 2)
                 {
-                    try
-                    {
-                        Cursor.Current = Cursors.WaitCursor;
-                        this.TopMost = true;
-                        int notepos = this.GetNoteposBySelrow(e.RowIndex);
-                        this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
-                        this.dataGridView1.Rows[e.RowIndex].Cells[2].Value = !(bool)this.dataGridView1.Rows[e.RowIndex].Cells[2].Value;
-                        if (this.notes.GetNote(notepos).Visible)
-                        {
-                            this.notes.GetNote(notepos).CreateForm(true);
-                        }
-                        else
-                        {
-                            this.notes.GetNote(notepos).DestroyForm();
-                        }
-
-                        xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
-                    }
-                    finally
-                    {
-                        this.TopMost = false;
-                        Cursor.Current = Cursors.Default;
-                    }
+                    ToggleVisibilityNote(e.RowIndex);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Toggle the visibility of a note.
+        /// </summary>
+        private void ToggleVisibilityNote(int row)
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                this.TopMost = true;
+                int notepos = this.GetNoteposBySelrow(row);
+                this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
+                this.dataGridView1.Rows[row].Cells[2].Value = !(bool)this.dataGridView1.Rows[row].Cells[2].Value;
+                if (this.notes.GetNote(notepos).Visible)
+                {
+                    this.notes.GetNote(notepos).CreateForm(true);
+                }
+                else
+                {
+                    this.notes.GetNote(notepos).DestroyForm();
+                }
+
+                xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+            }
+            finally
+            {
+                this.TopMost = false;
+                Cursor.Current = Cursors.Default;
             }
         }
 
@@ -1255,6 +1263,12 @@ namespace NoteFly
             /// A pointer to the title of a progress dialog box.
             /// </summary>
             public string lpszProgressTitle;
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.ToggleVisibilityNote(e.RowIndex);
+            //dataGridView1_CellClick(sender, e);
         }
 #endif
 

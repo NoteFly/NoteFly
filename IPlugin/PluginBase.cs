@@ -192,16 +192,6 @@ namespace IPlugin
         {
             // by default do nothing, override this to do someting.
         }
-        
-        /// <summary>
-        /// Executed if a note is made visible
-        /// </summary>
-        /// <returns>Note content</returns>
-        //public virtual void ShowingNote(string content, string title, out string newcontent)
-        //{
-        //    // by default do nothing, override this to do someting.
-        //    newcontent = String.Empty;
-        //}
 
         /// <summary>
         /// Executed if a note is being hiden.
