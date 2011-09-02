@@ -592,7 +592,6 @@ namespace NoteFly
                 {
                     bool notecontents = false;
                     int notenr = 0;
-                    //List<String> notefiles = new List<string>();
                     List<String> notetitles = new List<string>();
                     StringBuilder notecontent = new StringBuilder();
                     while (!reader.EndOfStream)
@@ -600,17 +599,6 @@ namespace NoteFly
                         string line = reader.ReadLine();
                         if (!notecontents)
                         {
-                            //if (line.Contains("[") && line.Contains("]"))
-                            //{
-                            //    int posstartnotefilename = line.IndexOf('[') + 1;
-                            //    int posendnotefilename = line.IndexOf(']');
-                            //    int lenfilename = posendnotefilename - posstartnotefilename;
-                            //    if (lenfilename > 0)
-                            //    {
-                            //        string filename = line.Substring(posstartnotefilename, lenfilename);
-                            //        notefiles.Add(filename);
-                            //    }
-                            //}
                             if (line.StartsWith("data="))
                             {
                                 int posstartdata = line.IndexOf('=') + 1;
@@ -669,6 +657,7 @@ namespace NoteFly
                                     int posendfilename = line.IndexOf(chrendnotefilename) + 1;
                                     notecontent.AppendLine(line.Substring(posendfilename, line.Length - posendfilename));
                                 }
+
                                 notenr++;
                             }
                             else
@@ -1265,10 +1254,12 @@ namespace NoteFly
             public string lpszProgressTitle;
         }
 
+        /// <summary>
+        /// Double click a row in dataGridView toggle the visibility of a note.
+        /// </summary>
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.ToggleVisibilityNote(e.RowIndex);
-            //dataGridView1_CellClick(sender, e);
         }
 #endif
 

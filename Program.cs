@@ -395,6 +395,7 @@ namespace NoteFly
             xmlUtil.WriteSettings();
             string downloadurl;
             bool updatehigherversion = false;
+            bool updatesameversion = true;
             short[] thisversion = GetVersion();
             string latestversionquality = Program.AssemblyVersionQuality;
             short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality, out downloadurl);
@@ -406,9 +407,14 @@ namespace NoteFly
                     updatehigherversion = true;
                     break;
                 }
+
+                if (thisversion[i] != latestversion[i])
+                {
+                    updatesameversion = false;
+                }
             }
 
-            if (updatehigherversion || (!updatehigherversion && Program.AssemblyVersionQuality != latestversionquality))
+            if (updatehigherversion || (updatesameversion && Program.AssemblyVersionQuality != latestversionquality))
             {
                 if (!string.IsNullOrEmpty(downloadurl))
                 {
@@ -418,11 +424,12 @@ namespace NoteFly
                     sbmsg.AppendLine(Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
                     sbmsg.Append("New version: ");
                     sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
-                    sbmsg.Append("Do you want to go to the download page now?");
+                    sbmsg.Append("Do you want to download and install the new version now?");
                     System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                     if (updres == System.Windows.Forms.DialogResult.Yes)
                     {
-                        Program.LoadURI(downloadurl);
+                        FrmUpdater frmupdater = new FrmUpdater(downloadurl);
+                        frmupdater.Show();
                     }
                 }
                 else

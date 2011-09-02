@@ -859,7 +859,7 @@ namespace NoteFly
             version[1] = -1;
             version[2] = -1;
             versionquality = Program.AssemblyVersionQuality;
-            downloadurl = "http://www.notefly.org/downloads.php"; // default url if none is provided.
+            downloadurl = "http://www.notefly.org/"; // default url if none is provided.
             try
             {
                 System.Net.ServicePointManager.Expect100Continue = false;
@@ -881,16 +881,17 @@ namespace NoteFly
                     Log.Write(LogType.error, "Invalid update uri.");
                 }
 
-                WebRequest request = WebRequest.Create(Settings.UpdatecheckURL);
+
+                HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(Settings.UpdatecheckURL);
                 request.Method = "GET";
                 request.ContentType = "text/xml";
+                request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
                 request.Timeout = Settings.NetworkConnectionTimeout;
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                 }
 
-                request.Headers.Add("X-NoteFly-Version", Program.AssemblyVersionAsString); // for stats and future use.
                 request.Headers["Accept-Encoding"] = "gzip";
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore); // do not cache, prevent incorrect cache result.
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
