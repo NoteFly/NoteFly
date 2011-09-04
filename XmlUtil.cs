@@ -287,6 +287,9 @@ namespace NoteFly
                         case "TrayiconSettingsbold":
                             Settings.TrayiconSettingsbold = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "UpdatecheckUseGPG":
+                            Settings.UpdatecheckUseGPG = xmlread.ReadElementContentAsBoolean();
+                            break;
 
                         // ints and doubles
                         case "TrayiconFontsize":
@@ -371,6 +374,9 @@ namespace NoteFly
                             break;
                         case "NotesSavepath":
                             Settings.NotesSavepath = xmlread.ReadElementContentAsString();
+                            break;
+                        case "UpdatecheckGPGPath":
+                            Settings.UpdatecheckGPGPath = xmlread.ReadElementContentAsString();
                             break;
                         case "UpdatecheckLastDate":
                             Settings.UpdatecheckLastDate = xmlread.ReadElementContentAsString();
@@ -761,7 +767,8 @@ namespace NoteFly
                 WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
                 WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
                 WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
-
+                WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
+                
                 // integers
                 xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
@@ -786,6 +793,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.HighlightPHPColorValidfunctions);
                 xmlwrite.WriteElementString("HighlightSQLColorValidstatement", Settings.HighlightSQLColorValidstatement);
                 xmlwrite.WriteElementString("HighlightSQLColorField", Settings.HighlightSQLColorField);
+                xmlwrite.WriteElementString("UpdatecheckGPGPath", Settings.UpdatecheckGPGPath);
                 xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
                 xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);

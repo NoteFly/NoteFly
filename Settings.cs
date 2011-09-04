@@ -302,6 +302,16 @@ namespace NoteFly
         public static string UpdatecheckURL = "http://update.notefly.org/latestversion.xml";
 
         /// <summary>
+        /// Use GnuGP to verif the downloaded update.
+        /// </summary>
+        public static bool UpdatecheckUseGPG = false;
+
+        /// <summary>
+        /// The path to the location of where gpg.exe is located required to verif the downloaded update if enabled.
+        /// </summary>
+        public static string UpdatecheckGPGPath = System.Environment.GetEnvironmentVariable("ProgramFiles") + @"\GNU\GnuPG\gpg.exe";
+
+        /// <summary>
         /// Has this programme been runned before.
         /// If not the demo note is created, balloontip is showed
         /// and NoteFly version 1.0 notes are ask to are imported if they exist.
