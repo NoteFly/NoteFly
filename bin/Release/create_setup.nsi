@@ -189,7 +189,7 @@ Section "main executable (required)"
   
 SectionEnd
 
-Section "demo plugin"
+Section "helloworld demo plugin"
   SetOutPath "$INSTDIR\plugins"
   File ".\plugins\${DEMOPLUGIN}"
 SectionEnd
@@ -197,8 +197,8 @@ SectionEnd
 Section "Desktop Shortcut (all users)"
 SetShellVarContext all
 
-; Get the OS version
-nsisos::osversion ; OS plugin from: http://nsis.sourceforge.net/NSIS-OS_plug-in
+; Get the OS version, using OS plugin from: http://nsis.sourceforge.net/NSIS-OS_plug-in
+nsisos::osversion 
 StrCpy $R0 $0
 StrCpy $R1 $1
 ; Check our version

@@ -244,9 +244,6 @@ namespace NoteFly
         }
 
 #if windows
-        //[DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
-        //private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
 
@@ -295,34 +292,6 @@ namespace NoteFly
                 Log.Write(LogType.exception, exc.Message);
             }
         }
-
-        /// <summary>
-        /// Check if there is internet connection, if not warn user.
-        /// Uses windows API, other platforms return always true at the moment.
-        /// </summary>
-        /// <remarks>Decreated, used for send to twitter/facebook</remarks>
-        /// <returns>true if there is a connection, otherwise return false</returns>
-        /*
-        private bool CheckConnection()
-        {
-#if windows
-            int desc;
-            if (InternetGetConnectedState(out desc, 0))
-            {
-                return true;
-            }
-            else
-            {
-                const string MSGNONETWORK = "There is no network connection.";
-                Log.Write(LogType.error, MSGNONETWORK);
-                MessageBox.Show(MSGNONETWORK);
-                return false;
-            }
-#elif !windows
-            return true;
-#endif
-        }
-        */
 
         /// <summary>
         /// Copy note content to clipboard.

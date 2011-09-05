@@ -247,7 +247,7 @@ namespace NoteFly
                         case "-disablesocial":
                             Settings.SocialEmailEnabled = false;
                             break;
-                        
+
                         // Turn off loading of plugins
                         case "-disableplugins":
                             Settings.ProgramPluginsAllEnabled = false;
@@ -398,46 +398,53 @@ namespace NoteFly
             bool updatesameversion = true;
             short[] thisversion = GetVersion();
             string latestversionquality = Program.AssemblyVersionQuality;
-            short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality, out downloadurl);
-            for (int i = 0; i < thisversion.Length; i++)
+            if (IsNetworkConnected())
             {
-                // check if latestversion[i] (major,minor,release) is bigger and is positive number
-                if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
+                short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality, out downloadurl);
+                for (int i = 0; i < thisversion.Length; i++)
                 {
-                    updatehigherversion = true;
-                    break;
-                }
-
-                if (thisversion[i] != latestversion[i])
-                {
-                    updatesameversion = false;
-                }
-            }
-
-            if (updatehigherversion || (updatesameversion && Program.AssemblyVersionQuality != latestversionquality))
-            {
-                if (!string.IsNullOrEmpty(downloadurl))
-                {
-                    StringBuilder sbmsg = new StringBuilder();
-                    sbmsg.AppendLine("There's a new version availible.");
-                    sbmsg.Append("Your version: ");
-                    sbmsg.AppendLine(Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
-                    sbmsg.Append("New version: ");
-                    sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
-                    sbmsg.Append("Do you want to download and install the new version now?");
-                    System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
-                    if (updres == System.Windows.Forms.DialogResult.Yes)
+                    // check if latestversion[i] (major,minor,release) is bigger and is positive number
+                    if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
                     {
-                        FrmUpdater frmupdater = new FrmUpdater(downloadurl);
-                        frmupdater.Show();
+                        updatehigherversion = true;
+                        break;
+                    }
+
+                    if (thisversion[i] != latestversion[i])
+                    {
+                        updatesameversion = false;
                     }
                 }
-                else
+
+                if (updatehigherversion || (updatesameversion && Program.AssemblyVersionQuality != latestversionquality))
                 {
-                    throw new ApplicationException("Downloadurl is unexcepted unknown.");
+                    if (!string.IsNullOrEmpty(downloadurl))
+                    {
+                        StringBuilder sbmsg = new StringBuilder();
+                        sbmsg.AppendLine("There's a new version availible.");
+                        sbmsg.Append("Your version: ");
+                        sbmsg.AppendLine(Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+                        sbmsg.Append("New version: ");
+                        sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
+                        sbmsg.Append("Do you want to download and install the new version now?");
+                        System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
+                        if (updres == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            FrmUpdater frmupdater = new FrmUpdater(downloadurl);
+                            frmupdater.Show();
+                        }
+                    }
+                    else
+                    {
+                        throw new ApplicationException("Downloadurl is unexcepted unknown.");
+                    }
                 }
             }
-
+            else
+            {
+                Log.Write(LogType.info, "Update check aborted, no network connection.");
+            }
+            
             return DateTime.Now.ToString();
         }
 
@@ -578,7 +585,7 @@ namespace NoteFly
                         System.Reflection.Assembly pluginassembly = null;
                         pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
                         bool pluginenabled = IsEnabledPlugin(enabledplugins, pluginfiles[i]);
-                        if (pluginassembly != null )
+                        if (pluginassembly != null)
                         {
                             foreach (Type curplugintype in pluginassembly.GetTypes())
                             {
@@ -587,7 +594,7 @@ namespace NoteFly
                                     Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
                                     if (plugintype != null)
                                     {
-                                        IPlugin.IPlugin iplugin =(IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                                        IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
 
                                         // Get name plugin
                                         string pluginname = "untitled";
@@ -599,7 +606,7 @@ namespace NoteFly
                                             {
                                                 if (titleAttribute.Title.Length > 150)
                                                 {
-                                                    pluginname = titleAttribute.Title.Substring(0,150);
+                                                    pluginname = titleAttribute.Title.Substring(0, 150);
                                                 }
                                                 else
                                                 {
@@ -615,7 +622,7 @@ namespace NoteFly
                                         {
                                             if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
                                             {
-                                                pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0,150);
+                                                pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 150);
                                             }
                                             else
                                             {
@@ -683,7 +690,33 @@ namespace NoteFly
             return false;
         }
 
+        /// <summary>
+        /// Check if there is internet connection, if not warn user.
+        /// Uses windows API, other platforms return always true at the moment.
+        /// </summary>
+        /// <remarks>Decreated, used for send to twitter/facebook</remarks>
+        /// <returns>true if there is a connection, otherwise return false</returns>
+        private static bool IsNetworkConnected()
+        {
 #if windows
+            int desc;
+            if (InternetGetConnectedState(out desc, 0))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+#elif !windows
+            return true;
+#endif
+        }
+
+#if windows
+        [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool SetDllDirectory(string pathName);
 
