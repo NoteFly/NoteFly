@@ -188,6 +188,9 @@
     <EmbeddedResource Include="FrmNewNote.resx">
       <DependentUpon>FrmNewNote.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmNote.resx">
+      <DependentUpon>FrmNote.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmSettings.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </EmbeddedResource>

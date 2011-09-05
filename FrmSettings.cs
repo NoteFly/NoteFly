@@ -148,7 +148,7 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_notallowcheckstate);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.chxSocialEmailDefaultaddressBlank.Checked))
+            else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.chxSocialEmailDefaultaddressSet.Checked))
             {
                 Log.Write(LogType.error, NoteFly.Properties.Resources.settings_emailnotvalid);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_emailnotvalid);
@@ -218,7 +218,7 @@ namespace NoteFly
                 Settings.HighlightPHP = this.chxHighlightPHP.Checked;
                 Settings.HighlightSQL = this.chxHighlightSQL.Checked;
 
-                // tab: Social networks
+                // tab: Sharing
                 Settings.SocialEmailEnabled = this.chxSocialEmailEnabled.Checked;
                 Settings.SocialEmailDefaultadres = this.tbDefaultEmail.Text;
 
@@ -247,6 +247,7 @@ namespace NoteFly
                     Settings.NotesSavepath = this.tbNotesSavePath.Text;
                 }
 
+                Settings.UpdatecheckUseGPG = this.chxCheckUpdatesSignature.Checked;
                 Settings.ProgramLogError = this.chxLogErrors.Checked;
                 Settings.ProgramLogInfo = this.chxLogDebug.Checked;
                 Settings.ProgramLogException = this.chxLogExceptions.Checked;
@@ -388,7 +389,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void chxSocialEmailDefaultaddressBlank_CheckedChanged(object sender, EventArgs e)
         {
-            this.tbDefaultEmail.Enabled = !this.chxSocialEmailDefaultaddressBlank.Checked;
+            this.tbDefaultEmail.Enabled = this.chxSocialEmailDefaultaddressSet.Checked;
         }
 
         /// <summary>
@@ -526,11 +527,11 @@ namespace NoteFly
 
             // tab: social networks
             this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;
-            this.chxSocialEmailDefaultaddressBlank.Checked = false;
+            this.chxSocialEmailDefaultaddressSet.Checked = false;
             this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
             if (string.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
             {
-                this.chxSocialEmailDefaultaddressBlank.Checked = true;
+                this.chxSocialEmailDefaultaddressSet.Checked = true;
             }
 
             // tab: Network
@@ -623,9 +624,9 @@ namespace NoteFly
             this.numTimeout.Visible = this.cbxShowExpertSettings.Checked;
             this.lblTextNetworkMiliseconds.Visible = this.cbxShowExpertSettings.Checked;
             this.cbxFontNoteTitleBold.Visible = this.cbxShowExpertSettings.Checked;
-            this.chxLoadPlugins.Visible = this.cbxShowExpertSettings.Checked;
             this.chxLogErrors.Visible = this.cbxShowExpertSettings.Checked;
             this.chxLogExceptions.Visible = this.cbxShowExpertSettings.Checked;
+            this.chxCheckUpdatesSignature.Visible = this.cbxShowExpertSettings.Checked;
         }
 
         /// <summary>

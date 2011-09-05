@@ -494,120 +494,188 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openfiledlg = new OpenFileDialog();
-            openfiledlg.Title = "open file";
-            openfiledlg.Multiselect = false;
-            openfiledlg.Filter = "Plain text file (*.txt)|*.txt|PNotes note(*.pnote)|*.pnote|KeyNote NF note (*.knt)|*.knt|TomBoy note(*.note)|*.note";
-            openfiledlg.CheckFileExists = true;
-            openfiledlg.CheckPathExists = true;
-            DialogResult res = openfiledlg.ShowDialog();
-            if (res == DialogResult.OK)
+            DialogResult dlgresopennote = openNoteFileDialog.ShowDialog();
+            if (dlgresopennote == DialogResult.OK)
             {
                 StreamReader reader = null;
                 try
                 {
-                    if (File.Exists(openfiledlg.FileName))
+                    if (File.Exists(openNoteFileDialog.FileName))
                     {
-                        reader = new StreamReader(openfiledlg.FileName, true); // detect encoding
-                        if (openfiledlg.FilterIndex == 1)
+                        reader = new StreamReader(openNoteFileDialog.FileName, true); // detect encoding
+                        switch (openNoteFileDialog.FilterIndex)
                         {
-                            this.rtbNewNote.Text = reader.ReadToEnd();
+                            case 1:
+                                this.ReadTextfile(reader);
+                                break;
+                            case 2:
+                                this.ReadRTFfile(reader);
+                                break;
+                            case 3:
+                                this.ReadKeyNotefile(reader);
+                                break;
+                            case 4:
+                                this.ReadTomboyfile(reader, openNoteFileDialog.FileName);
+                                break;
+                            case 5:
+                                this.ReadMicroSENotefile(reader);
+                                break;
                         }
-                        else if (openfiledlg.FilterIndex == 2)
-                        {
-                            this.rtbNewNote.Rtf = reader.ReadToEnd();
-                            this.SetDefaultFontFamilyAndSize();
-                        }
-                        else if (openfiledlg.FilterIndex == 3)
-                        {
-                            uint linenum = 0;
-                            string curline = reader.ReadLine(); // no CR+LF characters
-                            const string IMPORTERROR = "import error";
-                            if (curline == "#!GFKNT 2.0")
-                            {
-                                while (curline != "%:")
-                                {
-                                    curline = reader.ReadLine();
-                                    linenum++;
 
-                                    // should normally be except %: around line 42.
-                                    if (linenum > 50)
-                                    {
-                                        const string CANNOTFINDKEYNOTECONTENT = "Cannot find KeyNote NF note content.";
-                                        MessageBox.Show(CANNOTFINDKEYNOTECONTENT, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        Log.Write(LogType.error, CANNOTFINDKEYNOTECONTENT);
-                                    }
-                                }
-
-                                curline = reader.ReadLine();
-                                StringBuilder sb = new StringBuilder(curline);
-                                while (curline != "%%")
-                                {
-                                    curline = reader.ReadLine();
-                                    sb.Append(curline);
-                                    linenum++;
-
-                                    // limit to 16000 lines
-                                    if (linenum > 16000)
-                                    {
-                                        break;
-                                    }
-                                }
-
-                                this.rtbNewNote.Rtf = sb.ToString();
-                                this.SetDefaultFontFamilyAndSize();
-                            }
-                            else
-                            {
-                                const string NOTKEYNOTEFILE = "Not a KeyNote NF note.";
-                                MessageBox.Show(NOTKEYNOTEFILE, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                Log.Write(LogType.error, NOTKEYNOTEFILE);
-                            }
-                        }
-                        else if (openfiledlg.FilterIndex == 4)
-                        {
-                            string filetomboynote = openfiledlg.FileName;
-                            this.tbTitle.Text = xmlUtil.GetContentString(filetomboynote, "title");
-                            // TomBoy uses nodes within the note-content node so we use StreamReader to do node xml parsering.
-                            const string startnotecontent = "<note-content version=\"0.1\">";
-                            const string endnotecontent = "</note-content>";
-                            long posdocument = 0;
-                            long posstartcontent =0;
-                            long posendcontent =0;
-                            while (!reader.EndOfStream)
-                            {
-                                string line = reader.ReadLine();
-                                if (line.Contains(startnotecontent))
-                                {
-                                    posstartcontent = posdocument + line.IndexOf(startnotecontent) + startnotecontent.Length + 3; // +3 for ?
-                                } else if (line.Contains(endnotecontent))
-                                {
-                                    posendcontent = posdocument + line.IndexOf(endnotecontent) + 3; // +3 for ?
-                                }
-
-                                posdocument += line.Length + 1; // +1 for EoL
-                            }
-
-                            reader.BaseStream.Position = posstartcontent;
-                            StringBuilder sbcontent = new StringBuilder();
-                            int lenbuf = Convert.ToInt32(posendcontent - posstartcontent);
-                            char[] buf = new char[lenbuf + 1]; // FIXME no fixed buffers used, memory bloat
-                            reader.BaseStream.Position = posstartcontent;
-                            if (lenbuf < buf.Length)
-                            {
-                                int retval = reader.ReadBlock(buf, 0, lenbuf);
-                                this.rtbNewNote.Clear();
-                                for (int i = 0; i < buf.Length; i++)
-                                {
-                                    this.rtbNewNote.Text += buf[i];
-                                }
-                            }
-                        }
                     }
                 }
                 finally
                 {
                     reader.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Import a textfile as note content for a new note.
+        /// </summary>
+        /// <param name="reader"></param>
+        private void ReadTextfile(StreamReader reader)
+        {
+            this.rtbNewNote.Text = reader.ReadToEnd();
+        }
+
+        /// <summary>
+        /// Import a rtf file as note content for a new note.
+        /// </summary>
+        /// <param name="reader"></param>
+        private void ReadRTFfile(StreamReader reader)
+        {
+            this.rtbNewNote.Rtf = reader.ReadToEnd();
+            this.SetDefaultFontFamilyAndSize();
+        }
+
+        /// <summary>
+        /// Import a KeyNote note file as note content for a new note.
+        /// </summary>
+        /// <param name="reader"></param>
+        private void ReadKeyNotefile(StreamReader reader)
+        {
+            uint linenum = 0;
+            string curline = reader.ReadLine(); // no CR+LF characters
+            const string IMPORTERROR = "import error";
+            if (curline == "#!GFKNT 2.0")
+            {
+                while (curline != "%:")
+                {
+                    curline = reader.ReadLine();
+                    linenum++;
+
+                    // should normally be except %: around line 42.
+                    if (linenum > 50)
+                    {
+                        const string CANNOTFINDKEYNOTECONTENT = "Cannot find KeyNote NF note content.";
+                        MessageBox.Show(CANNOTFINDKEYNOTECONTENT, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Log.Write(LogType.error, CANNOTFINDKEYNOTECONTENT);
+                    }
+                }
+
+                curline = reader.ReadLine();
+                StringBuilder sb = new StringBuilder(curline);
+                while (curline != "%%")
+                {
+                    curline = reader.ReadLine();
+                    sb.Append(curline);
+                    linenum++;
+
+                    // limit to 16000 lines
+                    if (linenum > 16000)
+                    {
+                        break;
+                    }
+                }
+
+                this.rtbNewNote.Rtf = sb.ToString();
+                this.SetDefaultFontFamilyAndSize();
+            }
+            else
+            {
+                const string NOTKEYNOTEFILE = "Not a KeyNote NF note.";
+                MessageBox.Show(NOTKEYNOTEFILE, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.error, NOTKEYNOTEFILE);
+            }
+        }
+
+        /// <summary>
+        ///  Import a Tomboy note file as note content for a new note.
+        ///  And set the new note title.
+        /// </summary>
+        /// <param name="reader"></param>
+        private void ReadTomboyfile(StreamReader reader, string tomboynotefile)
+        {
+            this.tbTitle.Text = xmlUtil.GetContentString(tomboynotefile, "title");
+            // TomBoy uses nodes within the note-content node so we use StreamReader to do node xml parsering.
+            const string startnotecontent = "<note-content version=\"0.1\">";
+            const string endnotecontent = "</note-content>";
+            long posdocument = 0;
+            long posstartcontent = 0;
+            long posendcontent = 0;
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                if (line.Contains(startnotecontent))
+                {
+                    posstartcontent = posdocument + line.IndexOf(startnotecontent) + startnotecontent.Length + 3; // +3 for ?
+                }
+                else if (line.Contains(endnotecontent))
+                {
+                    posendcontent = posdocument + line.IndexOf(endnotecontent) + 3; // +3 for ?
+                }
+
+                posdocument += line.Length + 1; // +1 for EoL
+            }
+
+            reader.BaseStream.Position = posstartcontent;
+            StringBuilder sbcontent = new StringBuilder();
+            int lenbuf = Convert.ToInt32(posendcontent - posstartcontent);
+            char[] buf = new char[lenbuf + 1]; // FIXME no fixed buffers used, memory bloat
+            reader.BaseStream.Position = posstartcontent;
+            if (lenbuf < buf.Length)
+            {
+                int retval = reader.ReadBlock(buf, 0, lenbuf);
+                this.rtbNewNote.Clear();
+                for (int i = 0; i < buf.Length; i++)
+                {
+                    this.rtbNewNote.Text += buf[i];
+                }
+            } 
+        }
+
+        /// <summary>
+        /// Import a MicroSE note file as note content for a new note.
+        /// </summary>
+        /// <param name="reader"></param>
+        private void ReadMicroSENotefile(StreamReader reader)
+        {
+            bool contentstarted = false;
+            StringBuilder sbcontent = new StringBuilder();
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                if (line.StartsWith("title;"))
+                {
+                    int possep = line.LastIndexOf(';') + 1; // without ';' itself
+                    string title = line.Substring(possep, line.Length - possep);
+                    this.tbTitle.Text = title;
+                }
+
+                if (line.StartsWith(@"{\rtf1") || contentstarted)
+                {                    
+                    sbcontent.AppendLine(line);
+                    if (line.Equals("}"))
+                    {
+                        this.rtbNewNote.Rtf = sbcontent.ToString();
+                        contentstarted = false;
+                    }
+                    else
+                    {
+                        contentstarted = true;
+                    }
                 }
             }
         }

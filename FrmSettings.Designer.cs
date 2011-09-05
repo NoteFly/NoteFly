@@ -192,12 +192,7 @@ namespace NoteFly
         /// <summary>
         /// CheckBox chxSocialEmailDefaultaddressBlank
         /// </summary>
-        private System.Windows.Forms.CheckBox chxSocialEmailDefaultaddressBlank;
-
-        /// <summary>
-        /// Label lblTextDefaultEmail
-        /// </summary>
-        private System.Windows.Forms.Label lblTextDefaultEmail;
+        private System.Windows.Forms.CheckBox chxSocialEmailDefaultaddressSet;
 
         /// <summary>
         /// TextBox tbDefaultEmail
@@ -490,8 +485,7 @@ namespace NoteFly
             this.tabControlSharing = new System.Windows.Forms.TabControl();
             this.tabEmail = new System.Windows.Forms.TabPage();
             this.chxSocialEmailEnabled = new System.Windows.Forms.CheckBox();
-            this.chxSocialEmailDefaultaddressBlank = new System.Windows.Forms.CheckBox();
-            this.lblTextDefaultEmail = new System.Windows.Forms.Label();
+            this.chxSocialEmailDefaultaddressSet = new System.Windows.Forms.CheckBox();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.tabNetwork = new System.Windows.Forms.TabPage();
             this.lblLatestUpdateCheck = new System.Windows.Forms.Label();
@@ -505,7 +499,6 @@ namespace NoteFly
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabPlugins = new System.Windows.Forms.TabPage();
             this.chxLoadPlugins = new System.Windows.Forms.CheckBox();
             this.lblPluginVersion = new System.Windows.Forms.Label();
@@ -522,6 +515,11 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
+            this.chxCheckUpdatesSignature = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabUpdates = new System.Windows.Forms.TabPage();
+            this.tabProxy = new System.Windows.Forms.TabPage();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -542,6 +540,9 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
             this.tabPlugins.SuspendLayout();
             this.tabAdvance.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabUpdates.SuspendLayout();
+            this.tabProxy.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
@@ -572,10 +573,10 @@ namespace NoteFly
             // 
             this.tabControlSettings.Controls.Add(this.tabGeneral);
             this.tabControlSettings.Controls.Add(this.tabAppearance);
+            this.tabControlSettings.Controls.Add(this.tabPlugins);
             this.tabControlSettings.Controls.Add(this.tabHighlight);
             this.tabControlSettings.Controls.Add(this.tabSharing);
             this.tabControlSettings.Controls.Add(this.tabNetwork);
-            this.tabControlSettings.Controls.Add(this.tabPlugins);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
             this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControlSettings.HotTrack = true;
@@ -608,7 +609,7 @@ namespace NoteFly
             this.cbxShowExpertSettings.AutoSize = true;
             this.cbxShowExpertSettings.Checked = true;
             this.cbxShowExpertSettings.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxShowExpertSettings.Location = new System.Drawing.Point(20, 207);
+            this.cbxShowExpertSettings.Location = new System.Drawing.Point(19, 26);
             this.cbxShowExpertSettings.Name = "cbxShowExpertSettings";
             this.cbxShowExpertSettings.Size = new System.Drawing.Size(124, 17);
             this.cbxShowExpertSettings.TabIndex = 25;
@@ -619,7 +620,7 @@ namespace NoteFly
             // chxNotesDeleteRecyclebin
             // 
             this.chxNotesDeleteRecyclebin.AutoSize = true;
-            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(20, 119);
+            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(19, 136);
             this.chxNotesDeleteRecyclebin.Name = "chxNotesDeleteRecyclebin";
             this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(189, 17);
             this.chxNotesDeleteRecyclebin.TabIndex = 24;
@@ -631,7 +632,7 @@ namespace NoteFly
             this.chxConfirmDeletenote.AutoSize = true;
             this.chxConfirmDeletenote.Checked = true;
             this.chxConfirmDeletenote.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmDeletenote.Location = new System.Drawing.Point(20, 96);
+            this.chxConfirmDeletenote.Location = new System.Drawing.Point(19, 113);
             this.chxConfirmDeletenote.Name = "chxConfirmDeletenote";
             this.chxConfirmDeletenote.Size = new System.Drawing.Size(133, 17);
             this.chxConfirmDeletenote.TabIndex = 23;
@@ -652,7 +653,7 @@ namespace NoteFly
             "Do nothing",
             "Bring notes to front",
             "Create a new note"});
-            this.cbxActionLeftclick.Location = new System.Drawing.Point(145, 156);
+            this.cbxActionLeftclick.Location = new System.Drawing.Point(149, 173);
             this.cbxActionLeftclick.Name = "cbxActionLeftclick";
             this.cbxActionLeftclick.Size = new System.Drawing.Size(163, 21);
             this.cbxActionLeftclick.TabIndex = 16;
@@ -660,7 +661,7 @@ namespace NoteFly
             // chxConfirmExit
             // 
             this.chxConfirmExit.AutoSize = true;
-            this.chxConfirmExit.Location = new System.Drawing.Point(20, 55);
+            this.chxConfirmExit.Location = new System.Drawing.Point(19, 72);
             this.chxConfirmExit.Name = "chxConfirmExit";
             this.chxConfirmExit.Size = new System.Drawing.Size(167, 17);
             this.chxConfirmExit.TabIndex = 20;
@@ -670,7 +671,7 @@ namespace NoteFly
             // chxStartOnLogin
             // 
             this.chxStartOnLogin.AutoSize = true;
-            this.chxStartOnLogin.Location = new System.Drawing.Point(20, 32);
+            this.chxStartOnLogin.Location = new System.Drawing.Point(19, 49);
             this.chxStartOnLogin.Name = "chxStartOnLogin";
             this.chxStartOnLogin.Size = new System.Drawing.Size(159, 17);
             this.chxStartOnLogin.TabIndex = 10;
@@ -680,7 +681,7 @@ namespace NoteFly
             // lblTextActionLeftClicktTrayicon
             // 
             this.lblTextActionLeftClicktTrayicon.AutoSize = true;
-            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(17, 159);
+            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(21, 176);
             this.lblTextActionLeftClicktTrayicon.Name = "lblTextActionLeftClicktTrayicon";
             this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(122, 13);
             this.lblTextActionLeftClicktTrayicon.TabIndex = 15;
@@ -731,9 +732,9 @@ namespace NoteFly
             this.chxUseRandomDefaultNote.AutoSize = true;
             this.chxUseRandomDefaultNote.Location = new System.Drawing.Point(18, 120);
             this.chxUseRandomDefaultNote.Name = "chxUseRandomDefaultNote";
-            this.chxUseRandomDefaultNote.Size = new System.Drawing.Size(191, 17);
+            this.chxUseRandomDefaultNote.Size = new System.Drawing.Size(188, 17);
             this.chxUseRandomDefaultNote.TabIndex = 14;
-            this.chxUseRandomDefaultNote.Text = "use random default note skin color.";
+            this.chxUseRandomDefaultNote.Text = "Use a random skin as default skin.";
             this.chxUseRandomDefaultNote.UseVisualStyleBackColor = true;
             this.chxUseRandomDefaultNote.CheckedChanged += new System.EventHandler(this.chxUseRandomDefaultNote_CheckedChanged);
             // 
@@ -1125,7 +1126,7 @@ namespace NoteFly
             // chxHighlightSQL
             // 
             this.chxHighlightSQL.AutoSize = true;
-            this.chxHighlightSQL.Location = new System.Drawing.Point(37, 164);
+            this.chxHighlightSQL.Location = new System.Drawing.Point(23, 159);
             this.chxHighlightSQL.Name = "chxHighlightSQL";
             this.chxHighlightSQL.Size = new System.Drawing.Size(193, 17);
             this.chxHighlightSQL.TabIndex = 16;
@@ -1135,7 +1136,7 @@ namespace NoteFly
             // chxHighlightPHP
             // 
             this.chxHighlightPHP.AutoSize = true;
-            this.chxHighlightPHP.Location = new System.Drawing.Point(37, 141);
+            this.chxHighlightPHP.Location = new System.Drawing.Point(23, 136);
             this.chxHighlightPHP.Name = "chxHighlightPHP";
             this.chxHighlightPHP.Size = new System.Drawing.Size(228, 17);
             this.chxHighlightPHP.TabIndex = 15;
@@ -1145,7 +1146,7 @@ namespace NoteFly
             // chxHighlightHyperlinks
             // 
             this.chxHighlightHyperlinks.AutoSize = true;
-            this.chxHighlightHyperlinks.Location = new System.Drawing.Point(37, 47);
+            this.chxHighlightHyperlinks.Location = new System.Drawing.Point(23, 42);
             this.chxHighlightHyperlinks.Name = "chxHighlightHyperlinks";
             this.chxHighlightHyperlinks.Size = new System.Drawing.Size(151, 17);
             this.chxHighlightHyperlinks.TabIndex = 14;
@@ -1157,17 +1158,17 @@ namespace NoteFly
             this.chxConfirmLink.AutoSize = true;
             this.chxConfirmLink.Checked = true;
             this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmLink.Location = new System.Drawing.Point(37, 70);
+            this.chxConfirmLink.Location = new System.Drawing.Point(23, 65);
             this.chxConfirmLink.Name = "chxConfirmLink";
-            this.chxConfirmLink.Size = new System.Drawing.Size(194, 17);
+            this.chxConfirmLink.Size = new System.Drawing.Size(242, 17);
             this.chxConfirmLink.TabIndex = 18;
-            this.chxConfirmLink.Text = "Ask before launching URL, on click";
+            this.chxConfirmLink.Text = "Ask before launching URL, on click hyperlink.";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
             // chxHighlightHTML
             // 
             this.chxHighlightHTML.AutoSize = true;
-            this.chxHighlightHTML.Location = new System.Drawing.Point(37, 118);
+            this.chxHighlightHTML.Location = new System.Drawing.Point(23, 113);
             this.chxHighlightHTML.Name = "chxHighlightHTML";
             this.chxHighlightHTML.Size = new System.Drawing.Size(123, 17);
             this.chxHighlightHTML.TabIndex = 13;
@@ -1198,8 +1199,7 @@ namespace NoteFly
             // tabEmail
             // 
             this.tabEmail.Controls.Add(this.chxSocialEmailEnabled);
-            this.tabEmail.Controls.Add(this.chxSocialEmailDefaultaddressBlank);
-            this.tabEmail.Controls.Add(this.lblTextDefaultEmail);
+            this.tabEmail.Controls.Add(this.chxSocialEmailDefaultaddressSet);
             this.tabEmail.Controls.Add(this.tbDefaultEmail);
             this.tabEmail.Location = new System.Drawing.Point(4, 22);
             this.tabEmail.Name = "tabEmail";
@@ -1218,52 +1218,33 @@ namespace NoteFly
             this.chxSocialEmailEnabled.Text = "Enable E-mail in share menu";
             this.chxSocialEmailEnabled.UseVisualStyleBackColor = true;
             // 
-            // chxSocialEmailDefaultaddressBlank
+            // chxSocialEmailDefaultaddressSet
             // 
-            this.chxSocialEmailDefaultaddressBlank.AutoSize = true;
-            this.chxSocialEmailDefaultaddressBlank.Checked = true;
-            this.chxSocialEmailDefaultaddressBlank.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxSocialEmailDefaultaddressBlank.Location = new System.Drawing.Point(14, 83);
-            this.chxSocialEmailDefaultaddressBlank.Name = "chxSocialEmailDefaultaddressBlank";
-            this.chxSocialEmailDefaultaddressBlank.Size = new System.Drawing.Size(52, 17);
-            this.chxSocialEmailDefaultaddressBlank.TabIndex = 24;
-            this.chxSocialEmailDefaultaddressBlank.Text = "blank";
-            this.chxSocialEmailDefaultaddressBlank.UseVisualStyleBackColor = true;
-            this.chxSocialEmailDefaultaddressBlank.CheckedChanged += new System.EventHandler(this.chxSocialEmailDefaultaddressBlank_CheckedChanged);
-            // 
-            // lblTextDefaultEmail
-            // 
-            this.lblTextDefaultEmail.AutoSize = true;
-            this.lblTextDefaultEmail.Location = new System.Drawing.Point(11, 60);
-            this.lblTextDefaultEmail.Name = "lblTextDefaultEmail";
-            this.lblTextDefaultEmail.Size = new System.Drawing.Size(162, 13);
-            this.lblTextDefaultEmail.TabIndex = 22;
-            this.lblTextDefaultEmail.Text = "default email address to send to: ";
+            this.chxSocialEmailDefaultaddressSet.AutoSize = true;
+            this.chxSocialEmailDefaultaddressSet.Checked = true;
+            this.chxSocialEmailDefaultaddressSet.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxSocialEmailDefaultaddressSet.Location = new System.Drawing.Point(14, 69);
+            this.chxSocialEmailDefaultaddressSet.Name = "chxSocialEmailDefaultaddressSet";
+            this.chxSocialEmailDefaultaddressSet.Size = new System.Drawing.Size(209, 17);
+            this.chxSocialEmailDefaultaddressSet.TabIndex = 24;
+            this.chxSocialEmailDefaultaddressSet.Text = "Set a default email address to send to: ";
+            this.chxSocialEmailDefaultaddressSet.UseVisualStyleBackColor = true;
+            this.chxSocialEmailDefaultaddressSet.CheckedChanged += new System.EventHandler(this.chxSocialEmailDefaultaddressBlank_CheckedChanged);
             // 
             // tbDefaultEmail
             // 
             this.tbDefaultEmail.AccessibleDescription = "Editbox default email address";
             this.tbDefaultEmail.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.tbDefaultEmail.Enabled = false;
-            this.tbDefaultEmail.Location = new System.Drawing.Point(72, 81);
+            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 92);
             this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(200, 20);
+            this.tbDefaultEmail.Size = new System.Drawing.Size(199, 20);
             this.tbDefaultEmail.TabIndex = 23;
             // 
             // tabNetwork
             // 
-            this.tabNetwork.Controls.Add(this.lblLatestUpdateCheck);
-            this.tabNetwork.Controls.Add(this.lblTextLatestUpdateCheck);
-            this.tabNetwork.Controls.Add(this.btnCheckUpdates);
-            this.tabNetwork.Controls.Add(this.lblTextDayAtStartup);
-            this.tabNetwork.Controls.Add(this.numUpdateCheckDays);
-            this.tabNetwork.Controls.Add(this.lblTextCheckforupdatesevery);
-            this.tabNetwork.Controls.Add(this.chxCheckUpdates);
+            this.tabNetwork.Controls.Add(this.tabControl1);
             this.tabNetwork.Controls.Add(this.lblTextNetworkMiliseconds);
-            this.tabNetwork.Controls.Add(this.chxProxyEnabled);
-            this.tabNetwork.Controls.Add(this.numTimeout);
-            this.tabNetwork.Controls.Add(this.lblTextNetworkTimeout);
-            this.tabNetwork.Controls.Add(this.iptbProxyAddress);
             this.tabNetwork.Location = new System.Drawing.Point(4, 22);
             this.tabNetwork.Name = "tabNetwork";
             this.tabNetwork.Padding = new System.Windows.Forms.Padding(3);
@@ -1274,24 +1255,23 @@ namespace NoteFly
             // 
             // lblLatestUpdateCheck
             // 
-            this.lblLatestUpdateCheck.AutoSize = true;
-            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(221, 220);
+            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(193, 131);
             this.lblLatestUpdateCheck.Name = "lblLatestUpdateCheck";
-            this.lblLatestUpdateCheck.Size = new System.Drawing.Size(0, 13);
+            this.lblLatestUpdateCheck.Size = new System.Drawing.Size(159, 13);
             this.lblLatestUpdateCheck.TabIndex = 32;
             // 
             // lblTextLatestUpdateCheck
             // 
             this.lblTextLatestUpdateCheck.AutoSize = true;
-            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(28, 220);
+            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(13, 131);
             this.lblTextLatestUpdateCheck.Name = "lblTextLatestUpdateCheck";
-            this.lblTextLatestUpdateCheck.Size = new System.Drawing.Size(188, 13);
+            this.lblTextLatestUpdateCheck.Size = new System.Drawing.Size(174, 13);
             this.lblTextLatestUpdateCheck.TabIndex = 31;
-            this.lblTextLatestUpdateCheck.Text = "Lastest update check is performed on:";
+            this.lblTextLatestUpdateCheck.Text = "Last update check is performed on:";
             // 
             // btnCheckUpdates
             // 
-            this.btnCheckUpdates.Location = new System.Drawing.Point(28, 190);
+            this.btnCheckUpdates.Location = new System.Drawing.Point(94, 166);
             this.btnCheckUpdates.Name = "btnCheckUpdates";
             this.btnCheckUpdates.Size = new System.Drawing.Size(156, 23);
             this.btnCheckUpdates.TabIndex = 30;
@@ -1302,7 +1282,7 @@ namespace NoteFly
             // lblTextDayAtStartup
             // 
             this.lblTextDayAtStartup.AutoSize = true;
-            this.lblTextDayAtStartup.Location = new System.Drawing.Point(210, 56);
+            this.lblTextDayAtStartup.Location = new System.Drawing.Point(198, 59);
             this.lblTextDayAtStartup.Name = "lblTextDayAtStartup";
             this.lblTextDayAtStartup.Size = new System.Drawing.Size(79, 13);
             this.lblTextDayAtStartup.TabIndex = 29;
@@ -1311,7 +1291,7 @@ namespace NoteFly
             // numUpdateCheckDays
             // 
             this.numUpdateCheckDays.Enabled = false;
-            this.numUpdateCheckDays.Location = new System.Drawing.Point(157, 54);
+            this.numUpdateCheckDays.Location = new System.Drawing.Point(145, 57);
             this.numUpdateCheckDays.Maximum = new decimal(new int[] {
             365,
             0,
@@ -1336,7 +1316,7 @@ namespace NoteFly
             // lblTextCheckforupdatesevery
             // 
             this.lblTextCheckforupdatesevery.AutoSize = true;
-            this.lblTextCheckforupdatesevery.Location = new System.Drawing.Point(25, 56);
+            this.lblTextCheckforupdatesevery.Location = new System.Drawing.Point(13, 59);
             this.lblTextCheckforupdatesevery.Name = "lblTextCheckforupdatesevery";
             this.lblTextCheckforupdatesevery.Size = new System.Drawing.Size(126, 13);
             this.lblTextCheckforupdatesevery.TabIndex = 27;
@@ -1345,7 +1325,7 @@ namespace NoteFly
             // chxCheckUpdates
             // 
             this.chxCheckUpdates.AutoSize = true;
-            this.chxCheckUpdates.Location = new System.Drawing.Point(28, 27);
+            this.chxCheckUpdates.Location = new System.Drawing.Point(16, 34);
             this.chxCheckUpdates.Name = "chxCheckUpdates";
             this.chxCheckUpdates.Size = new System.Drawing.Size(113, 17);
             this.chxCheckUpdates.TabIndex = 26;
@@ -1365,7 +1345,7 @@ namespace NoteFly
             // chxProxyEnabled
             // 
             this.chxProxyEnabled.AutoSize = true;
-            this.chxProxyEnabled.Location = new System.Drawing.Point(28, 82);
+            this.chxProxyEnabled.Location = new System.Drawing.Point(15, 35);
             this.chxProxyEnabled.Name = "chxProxyEnabled";
             this.chxProxyEnabled.Size = new System.Drawing.Size(111, 17);
             this.chxProxyEnabled.TabIndex = 1;
@@ -1380,7 +1360,7 @@ namespace NoteFly
             0,
             0,
             0});
-            this.numTimeout.Location = new System.Drawing.Point(97, 139);
+            this.numTimeout.Location = new System.Drawing.Point(141, 94);
             this.numTimeout.Maximum = new decimal(new int[] {
             30000,
             0,
@@ -1405,22 +1385,11 @@ namespace NoteFly
             // lblTextNetworkTimeout
             // 
             this.lblTextNetworkTimeout.AutoSize = true;
-            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(25, 141);
+            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(13, 96);
             this.lblTextNetworkTimeout.Name = "lblTextNetworkTimeout";
-            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(66, 13);
+            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(122, 13);
             this.lblTextNetworkTimeout.TabIndex = 24;
-            this.lblTextNetworkTimeout.Text = "timeout time:";
-            // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(28, 105);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
+            this.lblTextNetworkTimeout.Text = "connection timeout time:";
             // 
             // tabPlugins
             // 
@@ -1483,6 +1452,7 @@ namespace NoteFly
             // 
             // tabAdvance
             // 
+            this.tabAdvance.Controls.Add(this.chxCheckUpdatesSignature);
             this.tabAdvance.Controls.Add(this.chxLogExceptions);
             this.tabAdvance.Controls.Add(this.lblTextLogging);
             this.tabAdvance.Controls.Add(this.chxLogDebug);
@@ -1580,6 +1550,68 @@ namespace NoteFly
             this.tbNotesSavePath.TabIndex = 14;
             this.tbNotesSavePath.Text = "?";
             // 
+            // chxCheckUpdatesSignature
+            // 
+            this.chxCheckUpdatesSignature.AutoSize = true;
+            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(14, 89);
+            this.chxCheckUpdatesSignature.Name = "chxCheckUpdatesSignature";
+            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(233, 17);
+            this.chxCheckUpdatesSignature.TabIndex = 25;
+            this.chxCheckUpdatesSignature.Text = "Check the signature of downloaded update.";
+            this.chxCheckUpdatesSignature.UseVisualStyleBackColor = true;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabUpdates);
+            this.tabControl1.Controls.Add(this.tabProxy);
+            this.tabControl1.Location = new System.Drawing.Point(2, 2);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(366, 276);
+            this.tabControl1.TabIndex = 33;
+            // 
+            // tabUpdates
+            // 
+            this.tabUpdates.Controls.Add(this.chxCheckUpdates);
+            this.tabUpdates.Controls.Add(this.numUpdateCheckDays);
+            this.tabUpdates.Controls.Add(this.lblTextCheckforupdatesevery);
+            this.tabUpdates.Controls.Add(this.lblLatestUpdateCheck);
+            this.tabUpdates.Controls.Add(this.lblTextDayAtStartup);
+            this.tabUpdates.Controls.Add(this.lblTextLatestUpdateCheck);
+            this.tabUpdates.Controls.Add(this.btnCheckUpdates);
+            this.tabUpdates.Location = new System.Drawing.Point(4, 22);
+            this.tabUpdates.Name = "tabUpdates";
+            this.tabUpdates.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUpdates.Size = new System.Drawing.Size(358, 250);
+            this.tabUpdates.TabIndex = 0;
+            this.tabUpdates.Text = "Updates";
+            this.tabUpdates.UseVisualStyleBackColor = true;
+            // 
+            // tabProxy
+            // 
+            this.tabProxy.Controls.Add(this.numTimeout);
+            this.tabProxy.Controls.Add(this.chxProxyEnabled);
+            this.tabProxy.Controls.Add(this.lblTextNetworkTimeout);
+            this.tabProxy.Controls.Add(this.iptbProxyAddress);
+            this.tabProxy.Location = new System.Drawing.Point(4, 22);
+            this.tabProxy.Name = "tabProxy";
+            this.tabProxy.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProxy.Size = new System.Drawing.Size(358, 250);
+            this.tabProxy.TabIndex = 1;
+            this.tabProxy.Text = "Proxy";
+            this.tabProxy.UseVisualStyleBackColor = true;
+            // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(15, 58);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1626,6 +1658,11 @@ namespace NoteFly
             this.tabPlugins.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabUpdates.ResumeLayout(false);
+            this.tabUpdates.PerformLayout();
+            this.tabProxy.ResumeLayout(false);
+            this.tabProxy.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1639,5 +1676,9 @@ namespace NoteFly
         private System.Windows.Forms.Label lblPluginAuthor;
         private System.Windows.Forms.Label lblPluginDescription;
         private System.Windows.Forms.Label lblPluginVersion;
+        private System.Windows.Forms.CheckBox chxCheckUpdatesSignature;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabUpdates;
+        private System.Windows.Forms.TabPage tabProxy;
     }
 }

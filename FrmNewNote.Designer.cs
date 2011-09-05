@@ -197,6 +197,7 @@ namespace NoteFly
             this.btnTextBulletlist = new System.Windows.Forms.Button();
             this.rtbNewNote = new System.Windows.Forms.RichTextBox();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
+            this.openNoteFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
@@ -306,8 +307,8 @@ namespace NoteFly
             this.tbTitle.Size = new System.Drawing.Size(176, 23);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
-            this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             this.tbTitle.Enter += new System.EventHandler(this.tbTitle_Enter);
+            this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             // 
             // lbTextTitle
             // 
@@ -320,8 +321,8 @@ namespace NoteFly
             this.lbTextTitle.Text = "Title:";
             this.lbTextTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lbTextTitle.UseCompatibleTextRendering = true;
-            this.lbTextTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.lbTextTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
+            this.lbTextTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.lbTextTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseUp);
             // 
             // pnlHeadNewNote
@@ -337,8 +338,8 @@ namespace NoteFly
             this.pnlHeadNewNote.Name = "pnlHeadNewNote";
             this.pnlHeadNewNote.Size = new System.Drawing.Size(284, 40);
             this.pnlHeadNewNote.TabIndex = 4;
-            this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
+            this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.pnlHeadNewNote.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseUp);
             // 
             // btnCancel
@@ -606,6 +607,12 @@ namespace NoteFly
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             // 
+            // openNoteFileDialog
+            // 
+            this.openNoteFileDialog.Filter = "Plain text file (*.txt)|*.txt|PNotes note(*.pnote)|*.pnote|KeyNote NF note (*.knt" +
+                ")|*.knt|TomBoy note(*.note)|*.note|MicroSE Note(*.not)|*.not";
+            this.openNoteFileDialog.Title = "import single (note)file";
+            // 
             // FrmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
@@ -637,8 +644,8 @@ namespace NoteFly
             this.Name = "FrmNewNote";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TransparencyKey = System.Drawing.Color.LightPink;
-            this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);
+            this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmNewNote_KeyDown);
             this.contextMenuStripTextActions.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);
@@ -650,5 +657,7 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.OpenFileDialog openNoteFileDialog;
     }
 }
