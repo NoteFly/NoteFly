@@ -3,19 +3,13 @@
     using System;
     using System.ComponentModel;
     using System.IO;
-    using System.Windows.Forms;
     using System.Net;
-    using System.Threading;
+    using System.Windows.Forms;
 
     public partial class FrmUpdater : Form
     {
         private string downloadfilepath;
-        private const string GPGSIGNATUREEXTENSION = ".sig";
-        private System.Diagnostics.Process gpgproc;
-        
-        private string gpgoutput;
-        private string gpgerror;
-        private const int gpgtimeout = 5000; // 5 seconds
+        private GPGVerifWrapper gpgverif;
 
         /// <summary>
         /// Creating a new instance of FrmUpdater class.
@@ -24,11 +18,14 @@
         public FrmUpdater(string downloadurl)
         {
             InitializeComponent();
-            int locx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - 180;
+            int locx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2);
             int locy = 10;
             this.Location = new System.Drawing.Point(locx, locy);
-            //this.downloadurl = downloadurl;
             backgroundWorkerDownloader.RunWorkerAsync(downloadurl);
+            if (Settings.UpdatecheckUseGPG)
+            {
+                this.gpgverif = new GPGVerifWrapper();
+            }
         }
 
         /// <summary>
@@ -38,12 +35,11 @@
         /// <param name="e"></param>
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
+            string useragent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
             string downloadurl = (string)e.Argument;
             string downloadfilename = Path.GetFileName(downloadurl);
             this.downloadfilepath = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), downloadfilename);
-            string sigfilename = Path.GetFileName(downloadurl + GPGSIGNATUREEXTENSION);
-            string sigfilepath = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), sigfilename);
-
+            
             if (CheckValidPath(downloadfilepath))
             {
                 // first, we need to get the exact size (in bytes) of the file we are downloading
@@ -52,12 +48,12 @@
                 request.Timeout = Settings.NetworkConnectionTimeout;
                 request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
                 request.Method = "GET";
+                request.AutomaticDecompression = System.Net.DecompressionMethods.GZip;
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                 }
 
-                request.AutomaticDecompression = System.Net.DecompressionMethods.GZip;
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
                 response.Close();
 
@@ -74,7 +70,7 @@
                 // use the webclient object to download the file
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
-                    client.Headers["user-agent"] = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
+                    client.Headers["user-agent"] = useragent;
 
                     if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                     {
@@ -124,11 +120,11 @@
 
                     if (Settings.UpdatecheckUseGPG)
                     {
-                        System.Threading.Thread.Sleep(50);
+                        string sigfilepath = this.gpgverif.GetSignature(this.downloadfilepath);                       
 
                         // first, we need to get the exact size (in bytes) of the file we are downloading
-                        Uri urlsig = new Uri(downloadurl + GPGSIGNATUREEXTENSION);
-                        System.Net.HttpWebRequest requestsig = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(urlsig);
+                        Uri urlsigfileserver = new Uri(gpgverif.GetSignature(downloadurl));
+                        System.Net.HttpWebRequest requestsig = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(urlsigfileserver);
                         requestsig.Timeout = Settings.NetworkConnectionTimeout;
                         requestsig.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
                         requestsig.Method = "GET";
@@ -144,15 +140,15 @@
                         long filesizesig = responsesig.ContentLength;
                         if (filesizesig > 1024)
                         {
-                            Log.Write(LogType.exception, "To signature file too large, more than 1 kb");
+                            Log.Write(LogType.exception, "To signature file too large, more than 1 KB");
                             return;
                         }
 
                         // open new stream for downloading of signature file
                         try
                         {
-                            client.Headers["user-agent"] = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
-                            using (System.IO.Stream streamsigdownload = client.OpenRead(urlsig))
+                            client.Headers["user-agent"] = useragent;
+                            using (System.IO.Stream streamsigdownload = client.OpenRead(urlsigfileserver))
                             {
                                 // using the FileStream object, we can write the downloaded bytes to the file system
                                 using (Stream streamLocal = new FileStream(sigfilepath, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -207,77 +203,19 @@
         {
             if (!e.Cancelled)
             {
-                if (Settings.UpdatecheckUseGPG)
+                if (Settings.UpdatecheckUseGPG && this.gpgverif != null)
                 {
-                    this.lblStatusUpdate.Text = "download compleet, verif download";
+                    this.lblStatusUpdate.Text = "download compleet, verify download";
+                    Log.Write(LogType.info, "verify download.");
+
                     this.lblStatusUpdate.Refresh();
                     if (File.Exists(Settings.UpdatecheckGPGPath))
-                    {
-                        Log.Write(LogType.info, "verif download. This is currently a unstable feature.");
-                        try
-                        {
-                            System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --verify-files " + downloadfilepath + GPGSIGNATUREEXTENSION + "");
-                            procInfo.CreateNoWindow = true;
-                            procInfo.UseShellExecute = false;
-                            procInfo.RedirectStandardInput = true;
-                            procInfo.RedirectStandardOutput = true;
-                            procInfo.RedirectStandardError = true;
-                            this.gpgproc = System.Diagnostics.Process.Start(procInfo);
-                            this.gpgproc.StandardInput.Flush();
-                            this.gpgproc.StandardInput.Close();
-
-                            this.gpgoutput = string.Empty;                           
-                            ThreadStart outputEntry = new ThreadStart(StandardOutputReader);
-                            Thread gpgoutputthread = new Thread(outputEntry);
-                            gpgoutputthread.Start();
-
-                            this.gpgerror = string.Empty;
-                            ThreadStart errorEntry = new ThreadStart(StandardErrorReader);
-                            Thread gpgerrorthread = new Thread(errorEntry);
-                            gpgerrorthread.Start();
-
-                            if (this.gpgproc.WaitForExit(gpgtimeout))
-                            {
-                                // Process exited before timeout...
-                                // Wait for the threads to complete reading output/error (but use a timeout)
-                                if (!gpgoutputthread.Join(gpgtimeout / 2))
-                                {
-                                    gpgoutputthread.Abort();
-                                }
-                                if (!gpgerrorthread.Join(gpgtimeout / 2))
-                                {
-                                    gpgoutputthread.Abort();
-                                }
-                            }
-                            else
-                            {
-                                gpgproc.Kill();
-                                if (gpgoutputthread.IsAlive)
-                                {
-                                    gpgoutputthread.Abort();
-                                }
-                                if (gpgerrorthread.IsAlive)
-                                {
-                                    gpgerrorthread.Abort();
-                                }
-                            }
-
-                            int gpgprocexitcode = gpgproc.ExitCode;
-                            if (gpgprocexitcode == 0)
-                            {
-                                // currently display GPG result via messagebox..
-                                MessageBox.Show(this.gpgoutput + System.Environment.NewLine + this.gpgerror, Program.AssemblyTitle+" signature check result");
-                            }                            
-
-                        }
-                        catch (Exception exc)
-                        {
-                            Log.Write(LogType.exception, "GPG failed: " + exc.Message);
-                        }
+                    {                      
+                        gpgverif.VerifDownload(downloadfilepath);
                     }
                     else
                     {
-                        Log.Write(LogType.exception, "Verif download failed, cannot find gpg.exe: " + Settings.UpdatecheckGPGPath);
+                        Log.Write(LogType.exception, "Verify download failed, cannot find gpg.exe: " + Settings.UpdatecheckGPGPath);
                         return;
                     }
                 }
@@ -304,30 +242,6 @@
             else
             {
                 this.lblStatusUpdate.Text = "aborted.";
-            }
-        }
-
-        /// <summary>
-        /// Reader thread for standard output of gpg.exe
-        /// </summary>
-        public void StandardOutputReader()
-        {
-            string output = this.gpgproc.StandardOutput.ReadToEnd();
-            lock (this)
-            {
-                this.gpgoutput = output;
-            }
-        }
-
-        /// <summary>
-        /// Reader thread for standard error
-        /// </summary>
-        public void StandardErrorReader()
-        {
-            string error = this.gpgproc.StandardError.ReadToEnd();
-            lock (this)
-            {
-                this.gpgerror = error;
             }
         }
 

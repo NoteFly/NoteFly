@@ -309,7 +309,7 @@ namespace NoteFly
         /// <summary>
         /// The path to the location of where gpg.exe is located required to verif the downloaded update if enabled.
         /// </summary>
-        public static string UpdatecheckGPGPath = System.Environment.GetEnvironmentVariable("ProgramFiles") + @"\GNU\GnuPG\gpg.exe";
+        public static string UpdatecheckGPGPath = string.Empty;
 
         /// <summary>
         /// Has this programme been runned before.

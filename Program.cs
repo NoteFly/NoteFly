@@ -359,6 +359,15 @@ namespace NoteFly
             {
                 // disable the firstrun the next time.
                 Settings.ProgramFirstrun = true;
+                Settings.UpdatecheckUseGPG = false;
+                GPGVerifWrapper gpgverif = new GPGVerifWrapper();
+                if (!string.IsNullOrEmpty(gpgverif.GetGPGPath()) && gpgverif != null)
+                {
+                    Settings.UpdatecheckGPGPath = gpgverif.GetGPGPath();
+                    Settings.UpdatecheckUseGPG = true;
+                }
+
+                gpgverif = null;
                 Log.Write(LogType.info, "firstrun occur");
                 xmlUtil.WriteSettings();
             }

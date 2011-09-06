@@ -155,6 +155,7 @@
     <Compile Include="FrmUpdater.Designer.cs">
       <DependentUpon>FrmUpdater.cs</DependentUpon>
     </Compile>
+    <Compile Include="GPGVerifWrapper.cs" />
     <Compile Include="HighlightLanguage.cs" />
     <Compile Include="IPTextBox.cs">
       <SubType>UserControl</SubType>

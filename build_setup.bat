@@ -25,8 +25,14 @@ pause
 echo building setup...
 
 REM change this path to where NSIS is installed.
-"C:\Program Files\NSIS\makensis.exe" .\bin\Release\create_setup.nsi
+"C:\Program Files (x86)\NSIS\makensis.exe" .\bin\Release\create_setup.nsi
+
+echo.
+echo signing setup (press Ctrl+C to skip/abort now)
+REM change this path to where gpg.exe is installed. And the filename of the setup.
+"C:\Program Files (x86)\GNU\GnuPG\gpg.exe" --local-user B43F047E --detach-sign .\bin\Release\NoteFly_v2.5.0alpha.exe
 
 echo done.
+echo.
 
 pause
