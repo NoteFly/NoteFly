@@ -572,7 +572,7 @@ namespace NoteFly
             Settings.NotesTransparentRTB = true;
             Settings.NotesTransparencyLevel = 0.9;
             Settings.NotesWarnLimit = 250;
-            Settings.ProgramFirstrun = true;
+            Settings.ProgramFirstrun = false;
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;

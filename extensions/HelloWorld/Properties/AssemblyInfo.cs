@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Hello World")]
 [assembly: AssemblyDescription("A demo plugin")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("d9ping")]
+[assembly: AssemblyCompany("Tom")]
 [assembly: AssemblyProduct("Hello World")]
 [assembly: AssemblyCopyright("Copyright © NoteFly 2011")]
 [assembly: AssemblyTrademark("")]

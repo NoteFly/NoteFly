@@ -71,14 +71,14 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            DialogResult dlgresult = this.folderBrowserDialogNotessavepath.ShowDialog();
+            DialogResult dlgresult = this.folderBrowseDialogNotessavepath.ShowDialog();
             if (dlgresult == DialogResult.OK)
             {
-                string newpathsavenotes = this.folderBrowserDialogNotessavepath.SelectedPath;
+                string newpathsavenotes = this.folderBrowseDialogNotessavepath.SelectedPath;
 
                 if (Directory.Exists(newpathsavenotes))
                 {
-                    this.tbNotesSavePath.Text = this.folderBrowserDialogNotessavepath.SelectedPath;
+                    this.tbNotesSavePath.Text = this.folderBrowseDialogNotessavepath.SelectedPath;
                 }
                 else
                 {
@@ -138,21 +138,11 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_noknowtextdir);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((this.chxHighlightHTML.CheckState == CheckState.Indeterminate)
-#if windows
- || (this.chxStartOnLogin.CheckState == CheckState.Indeterminate)
-#endif
- || (this.chxConfirmExit.CheckState == CheckState.Indeterminate) || (this.chxLogErrors.CheckState == CheckState.Indeterminate) || (this.chxLogDebug.CheckState == CheckState.Indeterminate))
-            {
-                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_notallowcheckstate);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_notallowcheckstate);
-                this.tabControlSettings.SelectedTab = this.tabAppearance;
-            }
             else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.chxSocialEmailDefaultaddressSet.Checked))
             {
                 Log.Write(LogType.error, NoteFly.Properties.Resources.settings_emailnotvalid);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_emailnotvalid);
-                this.tabControlSettings.SelectedTab = this.tabAdvance;
+                this.tabControlSettings.SelectedTab = this.tabSharing;
             }
             else
             {
@@ -547,6 +537,9 @@ namespace NoteFly
                 this.numUpdateCheckDays.Enabled = false;
             }
 
+            this.chxCheckUpdatesSignature.Checked = Settings.UpdatecheckUseGPG;
+            this.tbGPGPath.Enabled = Settings.UpdatecheckUseGPG;
+            this.tbGPGPath.Text = Settings.UpdatecheckGPGPath;
             this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;
             this.iptbProxyAddress.IPAddress = Settings.NetworkProxyAddress;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
@@ -556,7 +549,7 @@ namespace NoteFly
             // tab: Plugins
             this.chxLoadPlugins.Checked = Settings.ProgramPluginsAllEnabled;
 
-            // tab: Advance
+            // tab: Advance            
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
             this.chxLogErrors.Checked = Settings.ProgramLogError;
@@ -620,13 +613,17 @@ namespace NoteFly
             this.chxConfirmDeletenote.Visible = this.cbxShowExpertSettings.Checked;
             this.chxNotesDeleteRecyclebin.Visible = this.cbxShowExpertSettings.Checked;
             this.cbxShowTooltips.Visible = this.cbxShowExpertSettings.Checked;
+            this.lblTextGPGPath.Visible = this.cbxShowExpertSettings.Checked;
+            this.tbGPGPath.Visible = this.cbxShowExpertSettings.Checked;
+            this.btnGPGPathBrowse.Visible = this.cbxShowExpertSettings.Checked;
+            this.chxCheckUpdatesSignature.Visible = this.cbxShowExpertSettings.Checked;
             this.lblTextNetworkTimeout.Visible = this.cbxShowExpertSettings.Checked;
             this.numTimeout.Visible = this.cbxShowExpertSettings.Checked;
             this.lblTextNetworkMiliseconds.Visible = this.cbxShowExpertSettings.Checked;
             this.cbxFontNoteTitleBold.Visible = this.cbxShowExpertSettings.Checked;
             this.chxLogErrors.Visible = this.cbxShowExpertSettings.Checked;
             this.chxLogExceptions.Visible = this.cbxShowExpertSettings.Checked;
-            this.chxCheckUpdatesSignature.Visible = this.cbxShowExpertSettings.Checked;
+
         }
 
         /// <summary>
@@ -694,7 +691,7 @@ namespace NoteFly
         {
             if (chxlbxAvailablePlugins.SelectedIndex >= 0)
             {
-                lblPluginAuthor.Text = "author: "+ Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Author;
+                lblPluginAuthor.Text = "author: " + Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Author;
                 lblPluginVersion.Text = "version: " + Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Version;
                 lblPluginDescription.Text = "description: " + Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Description;
             }
@@ -711,6 +708,30 @@ namespace NoteFly
             if (chxLoadPlugins.Checked)
             {
                 Program.LoadPlugins();
+            }
+        }
+
+        /// <summary>
+        /// Toggle setting path to GPG.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxCheckUpdatesSignature_CheckedChanged(object sender, EventArgs e)
+        {
+            this.tbGPGPath.Enabled = this.chxCheckUpdatesSignature.Checked;
+        }
+
+        /// <summary>
+        /// Open browse dialog to gpg.exe
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGPGPathBrowse_Click(object sender, EventArgs e)
+        {
+            DialogResult dlggpgresult = this.openFileDialogBrowseGPG.ShowDialog();
+            if (dlggpgresult == DialogResult.OK)
+            {
+                this.tbGPGPath.Text = openFileDialogBrowseGPG.FileName;
             }
         }
 

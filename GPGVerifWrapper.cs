@@ -1,18 +1,38 @@
-﻿namespace NoteFly
+﻿//-----------------------------------------------------------------------
+// <copyright file="TrayIcon.cs" company="GNU">
+//  NoteFly a note application.
+//  Copyright (C) 2011  Tom
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace NoteFly
 {
     using System;
     using System.Collections.Generic;
     using System.Text;
     using System.Threading;
     using System.IO;
+    using System.Diagnostics;
 
     public class GPGVerifWrapper
     {
         private const string GPGSIGNATUREEXTENSION = ".sig";
-        private System.Diagnostics.Process gpgproc;
+        private const int gpgtimeout = 6000; // 6 seconds
+        private Process gpgproc;
         private string gpgoutput;
         private string gpgerror;
-        private const int gpgtimeout = 6000; // 6 seconds
 
         /// <summary>
         /// Verif a file.
@@ -104,13 +124,14 @@
             if (key != null)
             {
                 string gpginstallpath = (string)key.GetValue("Install Directory");
-                if (File.Exists(Path.Combine(gpginstallpath, "gpg.exe")))
+                gpgpath = this.FindGPGexecutables(gpginstallpath);
+            }
+            else
+            {
+                string gpginstallpath = Path.Combine(Path.Combine(this.GetProgramFilesx86(), "GNU"), "GnuPG");
+                if (Directory.Exists(gpginstallpath))
                 {
-                    gpgpath = Path.Combine(gpginstallpath, "gpg.exe");
-                }
-                else if (File.Exists(Path.Combine(gpginstallpath, "gpg2.exe")))
-                {
-                    gpgpath = Path.Combine(gpginstallpath, "gpg2.exe");
+                    gpgpath = this.FindGPGexecutables(gpginstallpath);
                 }
             }
 #elif linux
@@ -119,6 +140,42 @@
 
             return gpgpath;
         }
+
+        /// <summary>
+        /// Find the gpg executable in the installation directory.
+        /// </summary>
+        /// <param name="gpginstallpath">The installation directory</param>
+        /// <returns>The full path to the gpg executable, empty string if gpg executable not found.</returns>
+        private string FindGPGexecutables(string gpginstallpath)
+        {
+            string[] gpgfilenames = new string[] { "gpg.exe", "gpg2.exe" };
+            for (int i = 0; i < gpgfilenames.Length; i++)
+            {
+                if (File.Exists(Path.Combine(gpginstallpath, gpgfilenames[i])))
+                {
+                    return Path.Combine(gpginstallpath, gpgfilenames[i]);
+                }
+            }
+
+            return string.Empty;
+        }
+
+#if windows
+        /// <summary>
+        /// Get the path to program files, for 32bits applications.
+        /// </summary>
+        /// <returns></returns>
+        private string GetProgramFilesx86()
+        {
+            if (8 == IntPtr.Size
+                || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+            {
+                return Environment.GetEnvironmentVariable("ProgramFiles(x86)");
+            }
+
+            return Environment.GetEnvironmentVariable("ProgramFiles");
+        }
+#endif
 
         /// <summary>
         /// Reader thread for standard output of gpg.exe
@@ -145,11 +202,24 @@
         }
 
         /// <summary>
-        /// Get the NoteFly public GPG key from a key server
+        /// Get the NoteFly OpenPGP Public Key from a key server
         /// </summary>
         private void GetNoteFlyPublicKey()
         {
-            //"gpg --recv-keys 2F9532C8"
+            // fingerprint: 9968 3F36 7B60 4F21 ED55 A0CC 7898 7488 B43F 047E
+            const string keyserver = ""; // find a good one
+            System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --recv-keys 2F9532C8 --keyserver "+keyserver); 
+            procInfo.CreateNoWindow = true;
+            procInfo.UseShellExecute = false;
+            procInfo.RedirectStandardInput = true;
+            procInfo.RedirectStandardOutput = true;
+            procInfo.RedirectStandardError = true;
+            this.gpgproc = System.Diagnostics.Process.Start(procInfo);
+            if (this.gpgproc.WaitForExit(gpgtimeout))
+            {
+                gpgproc.Kill();
+            }
         }
+
     }
 }
