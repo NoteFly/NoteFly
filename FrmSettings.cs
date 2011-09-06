@@ -58,6 +58,7 @@ namespace NoteFly
             this.notes = notes;
             this.DrawCbxFonts();
             this.SetControlsBySettings();
+            
         }
 
         #endregion Constructors
@@ -138,11 +139,17 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_noknowtextdir);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (!this.chxSocialEmailDefaultaddressSet.Checked))
+            else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (this.chxSocialEmailDefaultaddressSet.Checked))
             {
                 Log.Write(LogType.error, NoteFly.Properties.Resources.settings_emailnotvalid);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_emailnotvalid);
                 this.tabControlSettings.SelectedTab = this.tabSharing;
+            }
+            else if (!File.Exists(this.tbGPGPath.Text))
+            {
+                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_gpgpathinvalid);
+                MessageBox.Show(NoteFly.Properties.Resources.settings_gpgpathinvalid);
+                this.tabControlSettings.SelectedTab = this.tabNetwork;
             }
             else
             {
@@ -179,6 +186,7 @@ namespace NoteFly
                 Settings.ConfirmDeletenote = this.chxConfirmDeletenote.Checked;
                 Settings.NotesDeleteRecyclebin = this.chxNotesDeleteRecyclebin.Checked;
                 Settings.TrayiconLeftclickaction = this.cbxActionLeftclick.SelectedIndex;
+                Settings.SettingsExpertEnabled = this.chxSettingsExpertEnabled.Checked;
 
                 // tab: Appearance, looks
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
@@ -210,7 +218,11 @@ namespace NoteFly
 
                 // tab: Sharing
                 Settings.SocialEmailEnabled = this.chxSocialEmailEnabled.Checked;
-                Settings.SocialEmailDefaultadres = this.tbDefaultEmail.Text;
+                Settings.SocialEmailDefaultadres = string.Empty;
+                if (this.chxSocialEmailDefaultaddressSet.Checked)
+                {
+                    Settings.SocialEmailDefaultadres = this.tbDefaultEmail.Text;
+                }
 
                 // tab: Network
                 if (this.chxCheckUpdates.Checked)
@@ -222,6 +234,8 @@ namespace NoteFly
                     Settings.UpdatecheckEverydays = 0;
                 }
 
+                Settings.UpdatecheckUseGPG = this.chxCheckUpdatesSignature.Checked;
+                Settings.UpdatecheckGPGPath = this.tbGPGPath.Text;
                 Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
                 Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
                 Settings.NetworkProxyAddress = this.iptbProxyAddress.IPAddress;
@@ -237,10 +251,10 @@ namespace NoteFly
                     Settings.NotesSavepath = this.tbNotesSavePath.Text;
                 }
 
-                Settings.UpdatecheckUseGPG = this.chxCheckUpdatesSignature.Checked;
                 Settings.ProgramLogError = this.chxLogErrors.Checked;
                 Settings.ProgramLogInfo = this.chxLogDebug.Checked;
                 Settings.ProgramLogException = this.chxLogExceptions.Checked;
+                Settings.SettingsLastTab = this.tabControlSettings.SelectedIndex;
 #if windows
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
                 if (key != null)
@@ -485,6 +499,7 @@ namespace NoteFly
             this.chxConfirmDeletenote.Checked = Settings.ConfirmDeletenote;
             this.chxNotesDeleteRecyclebin.Checked = Settings.NotesDeleteRecyclebin;
             this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;
+            this.chxSettingsExpertEnabled.Checked = Settings.SettingsExpertEnabled;
 
             // tab: Appearance
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
@@ -516,10 +531,10 @@ namespace NoteFly
             this.chxHighlightSQL.Checked = Settings.HighlightSQL;
 
             // tab: social networks
-            this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;
-            this.chxSocialEmailDefaultaddressSet.Checked = false;
+            this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;            
             this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
-            if (string.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
+            this.chxSocialEmailDefaultaddressSet.Checked = false;
+            if (!string.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
             {
                 this.chxSocialEmailDefaultaddressSet.Checked = true;
             }
@@ -554,6 +569,9 @@ namespace NoteFly
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
             this.chxLogErrors.Checked = Settings.ProgramLogError;
             this.chxLogExceptions.Checked = Settings.ProgramLogException;
+
+            // set last tab as active
+            this.tabControlSettings.SelectedIndex = Settings.SettingsLastTab;
         }
 
 #if windows
@@ -610,19 +628,19 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void cbxShowExpertSettings_CheckedChanged(object sender, EventArgs e)
         {
-            this.chxConfirmDeletenote.Visible = this.cbxShowExpertSettings.Checked;
-            this.chxNotesDeleteRecyclebin.Visible = this.cbxShowExpertSettings.Checked;
-            this.cbxShowTooltips.Visible = this.cbxShowExpertSettings.Checked;
-            this.lblTextGPGPath.Visible = this.cbxShowExpertSettings.Checked;
-            this.tbGPGPath.Visible = this.cbxShowExpertSettings.Checked;
-            this.btnGPGPathBrowse.Visible = this.cbxShowExpertSettings.Checked;
-            this.chxCheckUpdatesSignature.Visible = this.cbxShowExpertSettings.Checked;
-            this.lblTextNetworkTimeout.Visible = this.cbxShowExpertSettings.Checked;
-            this.numTimeout.Visible = this.cbxShowExpertSettings.Checked;
-            this.lblTextNetworkMiliseconds.Visible = this.cbxShowExpertSettings.Checked;
-            this.cbxFontNoteTitleBold.Visible = this.cbxShowExpertSettings.Checked;
-            this.chxLogErrors.Visible = this.cbxShowExpertSettings.Checked;
-            this.chxLogExceptions.Visible = this.cbxShowExpertSettings.Checked;
+            this.chxConfirmDeletenote.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.chxNotesDeleteRecyclebin.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.cbxShowTooltips.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.lblTextGPGPath.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.tbGPGPath.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.btnGPGPathBrowse.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.chxCheckUpdatesSignature.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.lblTextNetworkTimeout.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.numTimeout.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.lblTextNetworkMiliseconds.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.cbxFontNoteTitleBold.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.chxLogErrors.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.chxLogExceptions.Visible = this.chxSettingsExpertEnabled.Checked;
 
         }
 

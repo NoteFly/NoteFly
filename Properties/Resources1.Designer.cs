@@ -143,6 +143,15 @@ namespace NoteFly.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The path to gpg.exe is not valid..
+        /// </summary>
+        public static string settings_gpgpathinvalid {
+            get {
+                return ResourceManager.GetString("settings_gpgpathinvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings updated.
         /// </summary>
         public static string settings_infoupdated {

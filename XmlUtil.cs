@@ -290,6 +290,9 @@ namespace NoteFly
                         case "UpdatecheckUseGPG":
                             Settings.UpdatecheckUseGPG = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "SettingsExpertEnabled":
+                            Settings.SettingsExpertEnabled = xmlread.ReadElementContentAsBoolean();
+                            break;
 
                         // ints and doubles
                         case "TrayiconFontsize":
@@ -324,6 +327,9 @@ namespace NoteFly
                             break;
                         case "HighlightMaxchars":
                             Settings.HighlightMaxchars = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "SettingsLastTab":
+                            Settings.SettingsLastTab = xmlread.ReadElementContentAsInt();
                             break;
 
                         // strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
@@ -768,6 +774,7 @@ namespace NoteFly
                 WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
                 WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
                 WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
+                WriteXMLBool("SettingsExpertEnabled", Settings.SettingsExpertEnabled);
                 
                 // integers
                 xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
@@ -781,6 +788,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("HighlightMaxchars", Settings.HighlightMaxchars.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("SettingsLastTab", Settings.SettingsLastTab.ToString(numfmtinfo));
 
                 // strings
                 xmlwrite.WriteElementString("HighlightHTMLColorComment", Settings.HighlightHTMLColorComment);

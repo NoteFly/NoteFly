@@ -436,7 +436,7 @@ namespace NoteFly
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
-            this.cbxShowExpertSettings = new System.Windows.Forms.CheckBox();
+            this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.chxNotesDeleteRecyclebin = new System.Windows.Forms.CheckBox();
             this.chxConfirmDeletenote = new System.Windows.Forms.CheckBox();
             this.cbxActionLeftclick = new System.Windows.Forms.ComboBox();
@@ -494,8 +494,12 @@ namespace NoteFly
             this.chxSocialEmailDefaultaddressSet = new System.Windows.Forms.CheckBox();
             this.tbDefaultEmail = new System.Windows.Forms.TextBox();
             this.tabNetwork = new System.Windows.Forms.TabPage();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControlNetwork = new System.Windows.Forms.TabControl();
             this.tabUpdates = new System.Windows.Forms.TabPage();
+            this.btnGPGPathBrowse = new System.Windows.Forms.Button();
+            this.tbGPGPath = new System.Windows.Forms.TextBox();
+            this.lblTextGPGPath = new System.Windows.Forms.Label();
+            this.chxCheckUpdatesSignature = new System.Windows.Forms.CheckBox();
             this.chxCheckUpdates = new System.Windows.Forms.CheckBox();
             this.numUpdateCheckDays = new System.Windows.Forms.NumericUpDown();
             this.lblTextCheckforupdatesevery = new System.Windows.Forms.Label();
@@ -509,7 +513,6 @@ namespace NoteFly
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
-            this.chxCheckUpdatesSignature = new System.Windows.Forms.CheckBox();
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
             this.lblTextLogging = new System.Windows.Forms.Label();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
@@ -519,9 +522,6 @@ namespace NoteFly
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
-            this.lblTextGPGPath = new System.Windows.Forms.Label();
-            this.tbGPGPath = new System.Windows.Forms.TextBox();
-            this.btnGPGPathBrowse = new System.Windows.Forms.Button();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
@@ -541,7 +541,7 @@ namespace NoteFly
             this.tabControlSharing.SuspendLayout();
             this.tabEmail.SuspendLayout();
             this.tabNetwork.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabControlNetwork.SuspendLayout();
             this.tabUpdates.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckDays)).BeginInit();
             this.tabProxy.SuspendLayout();
@@ -599,7 +599,7 @@ namespace NoteFly
             // 
             // tabGeneral
             // 
-            this.tabGeneral.Controls.Add(this.cbxShowExpertSettings);
+            this.tabGeneral.Controls.Add(this.chxSettingsExpertEnabled);
             this.tabGeneral.Controls.Add(this.chxNotesDeleteRecyclebin);
             this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
@@ -614,19 +614,19 @@ namespace NoteFly
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
-            // cbxShowExpertSettings
+            // chxSettingsExpertEnabled
             // 
-            this.cbxShowExpertSettings.AutoSize = true;
-            this.cbxShowExpertSettings.Checked = true;
-            this.cbxShowExpertSettings.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxShowExpertSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbxShowExpertSettings.Location = new System.Drawing.Point(19, 223);
-            this.cbxShowExpertSettings.Name = "cbxShowExpertSettings";
-            this.cbxShowExpertSettings.Size = new System.Drawing.Size(144, 17);
-            this.cbxShowExpertSettings.TabIndex = 25;
-            this.cbxShowExpertSettings.Text = "Show e&xpert settings";
-            this.cbxShowExpertSettings.UseVisualStyleBackColor = true;
-            this.cbxShowExpertSettings.CheckedChanged += new System.EventHandler(this.cbxShowExpertSettings_CheckedChanged);
+            this.chxSettingsExpertEnabled.AutoSize = true;
+            this.chxSettingsExpertEnabled.Checked = true;
+            this.chxSettingsExpertEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxSettingsExpertEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(19, 223);
+            this.chxSettingsExpertEnabled.Name = "chxSettingsExpertEnabled";
+            this.chxSettingsExpertEnabled.Size = new System.Drawing.Size(144, 17);
+            this.chxSettingsExpertEnabled.TabIndex = 25;
+            this.chxSettingsExpertEnabled.Text = "Show e&xpert settings";
+            this.chxSettingsExpertEnabled.UseVisualStyleBackColor = true;
+            this.chxSettingsExpertEnabled.CheckedChanged += new System.EventHandler(this.cbxShowExpertSettings_CheckedChanged);
             // 
             // chxNotesDeleteRecyclebin
             // 
@@ -1313,7 +1313,7 @@ namespace NoteFly
             // 
             // tabNetwork
             // 
-            this.tabNetwork.Controls.Add(this.tabControl1);
+            this.tabNetwork.Controls.Add(this.tabControlNetwork);
             this.tabNetwork.Controls.Add(this.lblTextNetworkMiliseconds);
             this.tabNetwork.Location = new System.Drawing.Point(4, 22);
             this.tabNetwork.Name = "tabNetwork";
@@ -1323,15 +1323,15 @@ namespace NoteFly
             this.tabNetwork.Text = "Network";
             this.tabNetwork.UseVisualStyleBackColor = true;
             // 
-            // tabControl1
+            // tabControlNetwork
             // 
-            this.tabControl1.Controls.Add(this.tabUpdates);
-            this.tabControl1.Controls.Add(this.tabProxy);
-            this.tabControl1.Location = new System.Drawing.Point(2, 2);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(366, 276);
-            this.tabControl1.TabIndex = 33;
+            this.tabControlNetwork.Controls.Add(this.tabUpdates);
+            this.tabControlNetwork.Controls.Add(this.tabProxy);
+            this.tabControlNetwork.Location = new System.Drawing.Point(2, 2);
+            this.tabControlNetwork.Name = "tabControlNetwork";
+            this.tabControlNetwork.SelectedIndex = 0;
+            this.tabControlNetwork.Size = new System.Drawing.Size(366, 276);
+            this.tabControlNetwork.TabIndex = 33;
             // 
             // tabUpdates
             // 
@@ -1353,6 +1353,44 @@ namespace NoteFly
             this.tabUpdates.TabIndex = 0;
             this.tabUpdates.Text = "Updates";
             this.tabUpdates.UseVisualStyleBackColor = true;
+            // 
+            // btnGPGPathBrowse
+            // 
+            this.btnGPGPathBrowse.BackColor = System.Drawing.Color.LightGray;
+            this.btnGPGPathBrowse.Location = new System.Drawing.Point(300, 110);
+            this.btnGPGPathBrowse.Name = "btnGPGPathBrowse";
+            this.btnGPGPathBrowse.Size = new System.Drawing.Size(50, 25);
+            this.btnGPGPathBrowse.TabIndex = 25;
+            this.btnGPGPathBrowse.Text = "browse";
+            this.btnGPGPathBrowse.UseVisualStyleBackColor = false;
+            this.btnGPGPathBrowse.Click += new System.EventHandler(this.btnGPGPathBrowse_Click);
+            // 
+            // tbGPGPath
+            // 
+            this.tbGPGPath.Location = new System.Drawing.Point(106, 113);
+            this.tbGPGPath.Name = "tbGPGPath";
+            this.tbGPGPath.Size = new System.Drawing.Size(190, 20);
+            this.tbGPGPath.TabIndex = 34;
+            // 
+            // lblTextGPGPath
+            // 
+            this.lblTextGPGPath.AutoSize = true;
+            this.lblTextGPGPath.Location = new System.Drawing.Point(8, 116);
+            this.lblTextGPGPath.Name = "lblTextGPGPath";
+            this.lblTextGPGPath.Size = new System.Drawing.Size(92, 13);
+            this.lblTextGPGPath.TabIndex = 33;
+            this.lblTextGPGPath.Text = "Location gpg.exe:";
+            // 
+            // chxCheckUpdatesSignature
+            // 
+            this.chxCheckUpdatesSignature.AutoSize = true;
+            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(11, 83);
+            this.chxCheckUpdatesSignature.Name = "chxCheckUpdatesSignature";
+            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(311, 17);
+            this.chxCheckUpdatesSignature.TabIndex = 25;
+            this.chxCheckUpdatesSignature.Text = "Verify the signature of downloaded updates, requires GnuPG";
+            this.chxCheckUpdatesSignature.UseVisualStyleBackColor = true;
+            this.chxCheckUpdatesSignature.CheckedChanged += new System.EventHandler(this.chxCheckUpdatesSignature_CheckedChanged);
             // 
             // chxCheckUpdates
             // 
@@ -1527,17 +1565,6 @@ namespace NoteFly
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
             // 
-            // chxCheckUpdatesSignature
-            // 
-            this.chxCheckUpdatesSignature.AutoSize = true;
-            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(11, 83);
-            this.chxCheckUpdatesSignature.Name = "chxCheckUpdatesSignature";
-            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(311, 17);
-            this.chxCheckUpdatesSignature.TabIndex = 25;
-            this.chxCheckUpdatesSignature.Text = "Verify the signature of downloaded updates, requires GnuPG";
-            this.chxCheckUpdatesSignature.UseVisualStyleBackColor = true;
-            this.chxCheckUpdatesSignature.CheckedChanged += new System.EventHandler(this.chxCheckUpdatesSignature_CheckedChanged);
-            // 
             // chxLogExceptions
             // 
             this.chxLogExceptions.AutoSize = true;
@@ -1624,33 +1651,6 @@ namespace NoteFly
             this.folderBrowseDialogNotessavepath.Description = "Select a folder to store the all the notes files in";
             this.folderBrowseDialogNotessavepath.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
-            // lblTextGPGPath
-            // 
-            this.lblTextGPGPath.AutoSize = true;
-            this.lblTextGPGPath.Location = new System.Drawing.Point(8, 116);
-            this.lblTextGPGPath.Name = "lblTextGPGPath";
-            this.lblTextGPGPath.Size = new System.Drawing.Size(92, 13);
-            this.lblTextGPGPath.TabIndex = 33;
-            this.lblTextGPGPath.Text = "Location gpg.exe:";
-            // 
-            // tbGPGPath
-            // 
-            this.tbGPGPath.Location = new System.Drawing.Point(106, 113);
-            this.tbGPGPath.Name = "tbGPGPath";
-            this.tbGPGPath.Size = new System.Drawing.Size(190, 20);
-            this.tbGPGPath.TabIndex = 34;
-            // 
-            // btnGPGPathBrowse
-            // 
-            this.btnGPGPathBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnGPGPathBrowse.Location = new System.Drawing.Point(300, 110);
-            this.btnGPGPathBrowse.Name = "btnGPGPathBrowse";
-            this.btnGPGPathBrowse.Size = new System.Drawing.Size(50, 25);
-            this.btnGPGPathBrowse.TabIndex = 25;
-            this.btnGPGPathBrowse.Text = "browse";
-            this.btnGPGPathBrowse.UseVisualStyleBackColor = false;
-            this.btnGPGPathBrowse.Click += new System.EventHandler(this.btnGPGPathBrowse_Click);
-            // 
             // openFileDialogBrowseGPG
             // 
             this.openFileDialogBrowseGPG.AddExtension = false;
@@ -1711,7 +1711,7 @@ namespace NoteFly
             this.tabEmail.PerformLayout();
             this.tabNetwork.ResumeLayout(false);
             this.tabNetwork.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.tabControlNetwork.ResumeLayout(false);
             this.tabUpdates.ResumeLayout(false);
             this.tabUpdates.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckDays)).EndInit();
@@ -1726,7 +1726,7 @@ namespace NoteFly
 
         #endregion
 
-        private System.Windows.Forms.CheckBox cbxShowExpertSettings;
+        private System.Windows.Forms.CheckBox chxSettingsExpertEnabled;
         private System.Windows.Forms.CheckBox chxLoadPlugins;
         private System.Windows.Forms.TabPage tabPlugins;
         private System.Windows.Forms.CheckedListBox chxlbxAvailablePlugins;
@@ -1734,7 +1734,7 @@ namespace NoteFly
         private System.Windows.Forms.Label lblPluginDescription;
         private System.Windows.Forms.Label lblPluginVersion;
         private System.Windows.Forms.CheckBox chxCheckUpdatesSignature;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControlNetwork;
         private System.Windows.Forms.TabPage tabUpdates;
         private System.Windows.Forms.TabPage tabProxy;
         private System.Windows.Forms.Label lblTextGPGPath;

@@ -255,6 +255,16 @@ namespace NoteFly
         public static bool ConfirmDeletenote = true;
 
         /// <summary>
+        /// Show expert settings in FrmSettings.
+        /// </summary>
+        public static bool SettingsExpertEnabled = false;
+
+        /// <summary>
+        /// The last tab selected on FrmSettings before closing it.
+        /// </summary>
+        public static int SettingsLastTab = 0;
+
+        /// <summary>
         /// Is email sharing enabled.
         /// </summary>
         public static bool SocialEmailEnabled = true;
