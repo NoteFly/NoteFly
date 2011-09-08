@@ -322,6 +322,12 @@ namespace NoteFly
         public static string UpdatecheckGPGPath = string.Empty;
 
         /// <summary>
+        /// Silently install updates, don't show setup window.
+        /// Passes /S parameter to NSIS installer.
+        /// </summary>
+        public static bool UpdateSilentInstall = false;
+
+        /// <summary>
         /// Has this programme been runned before.
         /// If not the demo note is created, balloontip is showed
         /// and NoteFly version 1.0 notes are ask to are imported if they exist.

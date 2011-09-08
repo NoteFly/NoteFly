@@ -524,6 +524,7 @@ namespace NoteFly
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
+            this.chxUpdateSilentInstall = new System.Windows.Forms.CheckBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -1335,6 +1336,7 @@ namespace NoteFly
             // 
             // tabUpdates
             // 
+            this.tabUpdates.Controls.Add(this.chxUpdateSilentInstall);
             this.tabUpdates.Controls.Add(this.btnGPGPathBrowse);
             this.tabUpdates.Controls.Add(this.tbGPGPath);
             this.tabUpdates.Controls.Add(this.lblTextGPGPath);
@@ -1384,11 +1386,11 @@ namespace NoteFly
             // chxCheckUpdatesSignature
             // 
             this.chxCheckUpdatesSignature.AutoSize = true;
-            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(11, 83);
+            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(11, 90);
             this.chxCheckUpdatesSignature.Name = "chxCheckUpdatesSignature";
-            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(311, 17);
+            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(314, 17);
             this.chxCheckUpdatesSignature.TabIndex = 25;
-            this.chxCheckUpdatesSignature.Text = "Verify the signature of downloaded updates, requires GnuPG";
+            this.chxCheckUpdatesSignature.Text = "Verify the signature of downloaded updates, requires GnuPG.";
             this.chxCheckUpdatesSignature.UseVisualStyleBackColor = true;
             this.chxCheckUpdatesSignature.CheckedChanged += new System.EventHandler(this.chxCheckUpdatesSignature_CheckedChanged);
             // 
@@ -1669,6 +1671,16 @@ namespace NoteFly
             this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
             this.iptbProxyAddress.TabIndex = 19;
             // 
+            // chxUpdateSilentInstall
+            // 
+            this.chxUpdateSilentInstall.AutoSize = true;
+            this.chxUpdateSilentInstall.Location = new System.Drawing.Point(11, 67);
+            this.chxUpdateSilentInstall.Name = "chxUpdateSilentInstall";
+            this.chxUpdateSilentInstall.Size = new System.Drawing.Size(155, 17);
+            this.chxUpdateSilentInstall.TabIndex = 35;
+            this.chxUpdateSilentInstall.Text = "Install update setup silently.";
+            this.chxUpdateSilentInstall.UseVisualStyleBackColor = true;
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1741,5 +1753,6 @@ namespace NoteFly
         private System.Windows.Forms.TextBox tbGPGPath;
         private System.Windows.Forms.Button btnGPGPathBrowse;
         private System.Windows.Forms.OpenFileDialog openFileDialogBrowseGPG;
+        private System.Windows.Forms.CheckBox chxUpdateSilentInstall;
     }
 }

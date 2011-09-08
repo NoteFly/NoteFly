@@ -234,6 +234,7 @@ namespace NoteFly
                     Settings.UpdatecheckEverydays = 0;
                 }
 
+                Settings.UpdateSilentInstall = this.chxUpdateSilentInstall.Checked;
                 Settings.UpdatecheckUseGPG = this.chxCheckUpdatesSignature.Checked;
                 Settings.UpdatecheckGPGPath = this.tbGPGPath.Text;
                 Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
@@ -552,6 +553,7 @@ namespace NoteFly
                 this.numUpdateCheckDays.Enabled = false;
             }
 
+            this.chxUpdateSilentInstall.Checked = Settings.UpdateSilentInstall;
             this.chxCheckUpdatesSignature.Checked = Settings.UpdatecheckUseGPG;
             this.tbGPGPath.Enabled = Settings.UpdatecheckUseGPG;
             this.tbGPGPath.Text = Settings.UpdatecheckGPGPath;
@@ -631,6 +633,7 @@ namespace NoteFly
             this.chxConfirmDeletenote.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxNotesDeleteRecyclebin.Visible = this.chxSettingsExpertEnabled.Checked;
             this.cbxShowTooltips.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.chxUpdateSilentInstall.Visible = this.chxSettingsExpertEnabled.Checked;
             this.lblTextGPGPath.Visible = this.chxSettingsExpertEnabled.Checked;
             this.tbGPGPath.Visible = this.chxSettingsExpertEnabled.Checked;
             this.btnGPGPathBrowse.Visible = this.chxSettingsExpertEnabled.Checked;

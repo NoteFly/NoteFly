@@ -290,9 +290,13 @@ namespace NoteFly
                         case "UpdatecheckUseGPG":
                             Settings.UpdatecheckUseGPG = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "UpdateSilentInstall":
+                            Settings.UpdateSilentInstall = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "SettingsExpertEnabled":
                             Settings.SettingsExpertEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
+
 
                         // ints and doubles
                         case "TrayiconFontsize":
@@ -592,10 +596,22 @@ namespace NoteFly
             Settings.TrayiconCreatenotebold = true;
             Settings.TrayiconExitbold = false;
             Settings.TrayiconManagenotesbold = false;
-            Settings.TrayiconSettingsbold = false;
+            Settings.TrayiconSettingsbold = false;            
+            Settings.UpdateSilentInstall = false;           
             Settings.UpdatecheckEverydays = 14; // 0 is disabled.
             Settings.UpdatecheckLastDate = DateTime.Now.ToString();
             Settings.UpdatecheckURL = "http://update.notefly.org/latestversion.xml";
+            GPGVerifWrapper gpgverif = new GPGVerifWrapper();
+            if (!string.IsNullOrEmpty(gpgverif.GetGPGPath()) && gpgverif != null)
+            {
+                Settings.UpdatecheckGPGPath = gpgverif.GetGPGPath();
+                Settings.UpdatecheckUseGPG = true;
+            }
+            else
+            {
+                Settings.UpdatecheckUseGPG = false;
+            }
+            
             try
             {
                 xmlUtil.WriteSettings();
@@ -778,6 +794,7 @@ namespace NoteFly
                 WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
                 WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
                 WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
+                WriteXMLBool("UpdateSilentInstall", Settings.UpdateSilentInstall);
                 WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
                 WriteXMLBool("SettingsExpertEnabled", Settings.SettingsExpertEnabled);
                 

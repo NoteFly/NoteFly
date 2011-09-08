@@ -224,7 +224,16 @@
                 this.lblStatusUpdate.Refresh();
                 System.Threading.Thread.Sleep(50);
 
-                System.Diagnostics.ProcessStartInfo procstartinfo = new System.Diagnostics.ProcessStartInfo(downloadfilepath);
+                System.Diagnostics.ProcessStartInfo procstartinfo;
+                if (Settings.UpdateSilentInstall)
+                {
+                    procstartinfo = new System.Diagnostics.ProcessStartInfo(downloadfilepath, "/S");
+                }
+                else
+                {
+                    procstartinfo = new System.Diagnostics.ProcessStartInfo(downloadfilepath);
+                }
+
                 procstartinfo.ErrorDialog = true;
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.AppStarting;
                 try
