@@ -440,7 +440,7 @@ namespace NoteFly
         public string StripForbiddenFilenameChars(string orgname)
         {
             System.Text.StringBuilder newfilename = new System.Text.StringBuilder();
-            char[] forbiddenchars = "?<>:*|\\/\"".ToCharArray();
+            char[] forbiddenchars = Path.GetInvalidFileNameChars(); //"?<>:*|\\/\"".ToCharArray();
             bool isforbiddenchar = false;
             for (int pos = 0; pos < orgname.Length; pos++)
             {

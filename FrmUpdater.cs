@@ -249,10 +249,10 @@
         /// Check if the path does not contain forbidden filename/filepath characters
         /// </summary>
         /// <param name="path"></param>
-        /// <returns></returns>
+        /// <returns>true if the path is valid, false if it contains a illegal path character.</returns>
         private bool CheckValidPath(string path)
         {
-            char[] forbiddencharspath = "?<>*|\"".ToCharArray();
+            char[] forbiddencharspath = Path.GetInvalidPathChars(); //"?<>*|\"".ToCharArray();
             if (downloadfilepath.IndexOfAny(forbiddencharspath) < 0)
             {
                 return true;

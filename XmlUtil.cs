@@ -741,6 +741,11 @@ namespace NoteFly
             NumberFormatInfo numfmtinfo = CultureInfo.InvariantCulture.NumberFormat;
             try
             {
+                if (!Directory.Exists(Program.AppDataFolder))
+                {
+                    Directory.CreateDirectory(Program.AppDataFolder);
+                }
+
                 xmlwrite = new XmlTextWriter(Path.Combine(Program.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument(true); // standalone document
