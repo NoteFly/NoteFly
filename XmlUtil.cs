@@ -589,6 +589,8 @@ namespace NoteFly
             Settings.ProgramPluginsAllEnabled = true;
             Settings.ProgramSuspressWarnAdmin = false;
             Settings.ProgramPluginsFolder = Path.Combine(Program.InstallFolder, "plugins");
+            Settings.SettingsLastTab = 0;
+            Settings.SettingsExpertEnabled = false;
             Settings.SocialEmailEnabled = true;
             Settings.SocialEmailDefaultadres = string.Empty;
             Settings.TrayiconFontsize = 8.25f;

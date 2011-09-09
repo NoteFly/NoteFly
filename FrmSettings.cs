@@ -145,7 +145,7 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_emailnotvalid);
                 this.tabControlSettings.SelectedTab = this.tabSharing;
             }
-            else if (!File.Exists(this.tbGPGPath.Text))
+            else if (!File.Exists(this.tbGPGPath.Text) && this.chxCheckUpdatesSignature.Checked)
             {
                 Log.Write(LogType.info, NoteFly.Properties.Resources.settings_gpgpathinvalid);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_gpgpathinvalid);
@@ -244,7 +244,7 @@ namespace NoteFly
 
                 // tab: plugins
                 Settings.ProgramPluginsAllEnabled = this.chxLoadPlugins.Checked;
-                this.SaveEnabledPlugins();
+                this.pluginGrid.SavePluginSettings();
 
                 // tab: Advance
                 if (Directory.Exists(this.tbNotesSavePath.Text))
@@ -347,35 +347,6 @@ namespace NoteFly
             }
         }
 
-        /// <summary>
-        /// Save plugins that are enabled.
-        /// </summary>
-        private void SaveEnabledPlugins()
-        {
-            bool first = true;
-            Settings.ProgramPluginsEnabled = string.Empty;
-            for (int i = 0; i < this.chxlbxAvailablePlugins.Items.Count; i++)
-            {
-                if (this.chxlbxAvailablePlugins.GetItemChecked(i))
-                {
-                    if (!first)
-                    {
-                        Settings.ProgramPluginsEnabled += "|";
-                    }
-                    else
-                    {
-                        first = false;
-                    }
-
-                    Settings.ProgramPluginsEnabled += Program.plugins[i].Filename;
-                    Program.plugins[i].Enabled = true;
-                }
-                else
-                {
-                    Program.plugins[i].Enabled = false;
-                }
-            }
-        }
 
         /// <summary>
         /// The user de-/selected checking for updates.
@@ -644,7 +615,6 @@ namespace NoteFly
             this.cbxFontNoteTitleBold.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxLogErrors.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxLogExceptions.Visible = this.chxSettingsExpertEnabled.Checked;
-
         }
 
         /// <summary>
@@ -679,43 +649,6 @@ namespace NoteFly
                     }
                 }
             }
-            else if (tabControlSettings.SelectedTab == this.tabPlugins)
-            {
-                this.updatePluginList();
-            }
-        }
-
-        /// <summary>
-        /// Gets a list with availible plugins and add them to chxlbxAvailablePlugins.
-        /// </summary>
-        private void updatePluginList()
-        {
-            chxlbxAvailablePlugins.Items.Clear();
-            lblPluginAuthor.Text = String.Empty;
-            lblPluginVersion.Text = String.Empty;
-            lblPluginDescription.Text = String.Empty;
-            if (Program.plugins != null)
-            {
-                for (int i = 0; i < Program.plugins.Length; i++)
-                {
-                    this.chxlbxAvailablePlugins.Items.Add(Program.plugins[i].Name, Program.plugins[i].Enabled);
-                }
-            }
-        }
-
-        /// <summary>
-        /// A item in chxlbxAvailablePlugins get selected, show details about the selected plugin.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cbxlbxLoadedPlugins_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (chxlbxAvailablePlugins.SelectedIndex >= 0)
-            {
-                lblPluginAuthor.Text = "author: " + Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Author;
-                lblPluginVersion.Text = "version: " + Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Version;
-                lblPluginDescription.Text = "description: " + Program.plugins[chxlbxAvailablePlugins.SelectedIndex].Description;
-            }
         }
 
         /// <summary>
@@ -725,7 +658,8 @@ namespace NoteFly
         /// <param name="e"></param>
         private void chxLoadPlugins_CheckedChanged(object sender, EventArgs e)
         {
-            this.chxlbxAvailablePlugins.Enabled = this.chxLoadPlugins.Checked;
+            //this.chxlbxAvailablePlugins.Enabled = this.chxLoadPlugins.Checked;
+            this.pluginGrid.Enabled = this.chxLoadPlugins.Checked;
             if (chxLoadPlugins.Checked)
             {
                 Program.LoadPlugins();

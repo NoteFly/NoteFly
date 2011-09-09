@@ -477,10 +477,6 @@ namespace NoteFly
             this.chxTrayiconBoldNewnote = new System.Windows.Forms.CheckBox();
             this.tabPlugins = new System.Windows.Forms.TabPage();
             this.chxLoadPlugins = new System.Windows.Forms.CheckBox();
-            this.lblPluginVersion = new System.Windows.Forms.Label();
-            this.lblPluginDescription = new System.Windows.Forms.Label();
-            this.lblPluginAuthor = new System.Windows.Forms.Label();
-            this.chxlbxAvailablePlugins = new System.Windows.Forms.CheckedListBox();
             this.tabHighlight = new System.Windows.Forms.TabPage();
             this.chxHighlightSQL = new System.Windows.Forms.CheckBox();
             this.chxHighlightPHP = new System.Windows.Forms.CheckBox();
@@ -496,6 +492,7 @@ namespace NoteFly
             this.tabNetwork = new System.Windows.Forms.TabPage();
             this.tabControlNetwork = new System.Windows.Forms.TabControl();
             this.tabUpdates = new System.Windows.Forms.TabPage();
+            this.chxUpdateSilentInstall = new System.Windows.Forms.CheckBox();
             this.btnGPGPathBrowse = new System.Windows.Forms.Button();
             this.tbGPGPath = new System.Windows.Forms.TextBox();
             this.lblTextGPGPath = new System.Windows.Forms.Label();
@@ -523,8 +520,8 @@ namespace NoteFly
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
+            this.pluginGrid = new NoteFly.PluginGrid();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
-            this.chxUpdateSilentInstall = new System.Windows.Forms.CheckBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -621,7 +618,7 @@ namespace NoteFly
             this.chxSettingsExpertEnabled.Checked = true;
             this.chxSettingsExpertEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxSettingsExpertEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(19, 223);
+            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(21, 27);
             this.chxSettingsExpertEnabled.Name = "chxSettingsExpertEnabled";
             this.chxSettingsExpertEnabled.Size = new System.Drawing.Size(144, 17);
             this.chxSettingsExpertEnabled.TabIndex = 25;
@@ -632,7 +629,7 @@ namespace NoteFly
             // chxNotesDeleteRecyclebin
             // 
             this.chxNotesDeleteRecyclebin.AutoSize = true;
-            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(19, 111);
+            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(21, 119);
             this.chxNotesDeleteRecyclebin.Name = "chxNotesDeleteRecyclebin";
             this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(189, 17);
             this.chxNotesDeleteRecyclebin.TabIndex = 24;
@@ -644,7 +641,7 @@ namespace NoteFly
             this.chxConfirmDeletenote.AutoSize = true;
             this.chxConfirmDeletenote.Checked = true;
             this.chxConfirmDeletenote.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmDeletenote.Location = new System.Drawing.Point(19, 88);
+            this.chxConfirmDeletenote.Location = new System.Drawing.Point(21, 96);
             this.chxConfirmDeletenote.Name = "chxConfirmDeletenote";
             this.chxConfirmDeletenote.Size = new System.Drawing.Size(133, 17);
             this.chxConfirmDeletenote.TabIndex = 23;
@@ -665,7 +662,7 @@ namespace NoteFly
             "Do nothing",
             "Bring notes to front",
             "Create a new note"});
-            this.cbxActionLeftclick.Location = new System.Drawing.Point(150, 142);
+            this.cbxActionLeftclick.Location = new System.Drawing.Point(152, 160);
             this.cbxActionLeftclick.Name = "cbxActionLeftclick";
             this.cbxActionLeftclick.Size = new System.Drawing.Size(163, 21);
             this.cbxActionLeftclick.TabIndex = 16;
@@ -673,27 +670,27 @@ namespace NoteFly
             // chxConfirmExit
             // 
             this.chxConfirmExit.AutoSize = true;
-            this.chxConfirmExit.Location = new System.Drawing.Point(19, 55);
+            this.chxConfirmExit.Location = new System.Drawing.Point(21, 73);
             this.chxConfirmExit.Name = "chxConfirmExit";
-            this.chxConfirmExit.Size = new System.Drawing.Size(167, 17);
+            this.chxConfirmExit.Size = new System.Drawing.Size(161, 17);
             this.chxConfirmExit.TabIndex = 20;
-            this.chxConfirmExit.Text = "Confirm shutdown application.";
+            this.chxConfirmExit.Text = "Confirm shutdown of NoteFly";
             this.chxConfirmExit.UseVisualStyleBackColor = true;
             // 
             // chxStartOnLogin
             // 
             this.chxStartOnLogin.AutoSize = true;
-            this.chxStartOnLogin.Location = new System.Drawing.Point(19, 32);
+            this.chxStartOnLogin.Location = new System.Drawing.Point(21, 50);
             this.chxStartOnLogin.Name = "chxStartOnLogin";
-            this.chxStartOnLogin.Size = new System.Drawing.Size(159, 17);
+            this.chxStartOnLogin.Size = new System.Drawing.Size(134, 17);
             this.chxStartOnLogin.TabIndex = 10;
-            this.chxStartOnLogin.Text = "Start automatically on logon.";
+            this.chxStartOnLogin.Text = "Start NoteFly on logon.";
             this.chxStartOnLogin.UseVisualStyleBackColor = true;
             // 
             // lblTextActionLeftClicktTrayicon
             // 
             this.lblTextActionLeftClicktTrayicon.AutoSize = true;
-            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(16, 145);
+            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(18, 163);
             this.lblTextActionLeftClicktTrayicon.Name = "lblTextActionLeftClicktTrayicon";
             this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(122, 13);
             this.lblTextActionLeftClicktTrayicon.TabIndex = 15;
@@ -1122,11 +1119,8 @@ namespace NoteFly
             // 
             // tabPlugins
             // 
+            this.tabPlugins.Controls.Add(this.pluginGrid);
             this.tabPlugins.Controls.Add(this.chxLoadPlugins);
-            this.tabPlugins.Controls.Add(this.lblPluginVersion);
-            this.tabPlugins.Controls.Add(this.lblPluginDescription);
-            this.tabPlugins.Controls.Add(this.lblPluginAuthor);
-            this.tabPlugins.Controls.Add(this.chxlbxAvailablePlugins);
             this.tabPlugins.Location = new System.Drawing.Point(4, 22);
             this.tabPlugins.Name = "tabPlugins";
             this.tabPlugins.Padding = new System.Windows.Forms.Padding(3);
@@ -1147,37 +1141,6 @@ namespace NoteFly
             this.chxLoadPlugins.Text = "Load plugins";
             this.chxLoadPlugins.UseVisualStyleBackColor = true;
             this.chxLoadPlugins.CheckedChanged += new System.EventHandler(this.chxLoadPlugins_CheckedChanged);
-            // 
-            // lblPluginVersion
-            // 
-            this.lblPluginVersion.Location = new System.Drawing.Point(9, 224);
-            this.lblPluginVersion.Name = "lblPluginVersion";
-            this.lblPluginVersion.Size = new System.Drawing.Size(348, 23);
-            this.lblPluginVersion.TabIndex = 3;
-            // 
-            // lblPluginDescription
-            // 
-            this.lblPluginDescription.Location = new System.Drawing.Point(9, 247);
-            this.lblPluginDescription.Name = "lblPluginDescription";
-            this.lblPluginDescription.Size = new System.Drawing.Size(348, 31);
-            this.lblPluginDescription.TabIndex = 2;
-            // 
-            // lblPluginAuthor
-            // 
-            this.lblPluginAuthor.Location = new System.Drawing.Point(9, 202);
-            this.lblPluginAuthor.Name = "lblPluginAuthor";
-            this.lblPluginAuthor.Size = new System.Drawing.Size(348, 22);
-            this.lblPluginAuthor.TabIndex = 1;
-            // 
-            // chxlbxAvailablePlugins
-            // 
-            this.chxlbxAvailablePlugins.FormattingEnabled = true;
-            this.chxlbxAvailablePlugins.Location = new System.Drawing.Point(6, 41);
-            this.chxlbxAvailablePlugins.Name = "chxlbxAvailablePlugins";
-            this.chxlbxAvailablePlugins.Size = new System.Drawing.Size(351, 154);
-            this.chxlbxAvailablePlugins.TabIndex = 0;
-            this.chxlbxAvailablePlugins.UseCompatibleTextRendering = true;
-            this.chxlbxAvailablePlugins.SelectedIndexChanged += new System.EventHandler(this.cbxlbxLoadedPlugins_SelectedIndexChanged);
             // 
             // tabHighlight
             // 
@@ -1355,6 +1318,16 @@ namespace NoteFly
             this.tabUpdates.TabIndex = 0;
             this.tabUpdates.Text = "Updates";
             this.tabUpdates.UseVisualStyleBackColor = true;
+            // 
+            // chxUpdateSilentInstall
+            // 
+            this.chxUpdateSilentInstall.AutoSize = true;
+            this.chxUpdateSilentInstall.Location = new System.Drawing.Point(11, 67);
+            this.chxUpdateSilentInstall.Name = "chxUpdateSilentInstall";
+            this.chxUpdateSilentInstall.Size = new System.Drawing.Size(155, 17);
+            this.chxUpdateSilentInstall.TabIndex = 35;
+            this.chxUpdateSilentInstall.Text = "Install update setup silently.";
+            this.chxUpdateSilentInstall.UseVisualStyleBackColor = true;
             // 
             // btnGPGPathBrowse
             // 
@@ -1660,6 +1633,15 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
+            // pluginGrid
+            // 
+            this.pluginGrid.AutoScroll = true;
+            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pluginGrid.Location = new System.Drawing.Point(3, 44);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(363, 234);
+            this.pluginGrid.TabIndex = 26;
+            // 
             // iptbProxyAddress
             // 
             this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -1670,16 +1652,6 @@ namespace NoteFly
             this.iptbProxyAddress.Name = "iptbProxyAddress";
             this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
             this.iptbProxyAddress.TabIndex = 19;
-            // 
-            // chxUpdateSilentInstall
-            // 
-            this.chxUpdateSilentInstall.AutoSize = true;
-            this.chxUpdateSilentInstall.Location = new System.Drawing.Point(11, 67);
-            this.chxUpdateSilentInstall.Name = "chxUpdateSilentInstall";
-            this.chxUpdateSilentInstall.Size = new System.Drawing.Size(155, 17);
-            this.chxUpdateSilentInstall.TabIndex = 35;
-            this.chxUpdateSilentInstall.Text = "Install update setup silently.";
-            this.chxUpdateSilentInstall.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 
@@ -1741,10 +1713,6 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxSettingsExpertEnabled;
         private System.Windows.Forms.CheckBox chxLoadPlugins;
         private System.Windows.Forms.TabPage tabPlugins;
-        private System.Windows.Forms.CheckedListBox chxlbxAvailablePlugins;
-        private System.Windows.Forms.Label lblPluginAuthor;
-        private System.Windows.Forms.Label lblPluginDescription;
-        private System.Windows.Forms.Label lblPluginVersion;
         private System.Windows.Forms.CheckBox chxCheckUpdatesSignature;
         private System.Windows.Forms.TabControl tabControlNetwork;
         private System.Windows.Forms.TabPage tabUpdates;
@@ -1754,5 +1722,6 @@ namespace NoteFly
         private System.Windows.Forms.Button btnGPGPathBrowse;
         private System.Windows.Forms.OpenFileDialog openFileDialogBrowseGPG;
         private System.Windows.Forms.CheckBox chxUpdateSilentInstall;
+        private PluginGrid pluginGrid;
     }
 }

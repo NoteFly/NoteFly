@@ -164,6 +164,12 @@
       <DependentUpon>IPTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Log.cs" />
+    <Compile Include="PluginGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PluginGrid.Designer.cs">
+      <DependentUpon>PluginGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Notes.cs" />
@@ -216,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IPTextBox.resx">
       <DependentUpon>IPTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PluginGrid.resx">
+      <DependentUpon>PluginGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
