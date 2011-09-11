@@ -1,0 +1,27 @@
+                    NoteFly codestyle guidelines
+
+1.  Don't use tabs, use 4 spaces instead.
+2.  The default class layout is: datatypes, constructors, properties
+    public methodes and then private methodes.
+3.  Constants are all uppercase.
+4.  Variables are all lowercase.
+5.  Properties start with a uppercase letter.
+6.  Public methodes start with a uppercase letter.
+7.  Project class names start with a uppercase letter.
+8.  Use a prefix for gui controls:
+    lbl  for a Label
+    tb   for a TextBox
+    chx  for a CheckBox
+    cbx  for a ComboBox
+    rtb  for a RicheditTextBox
+    pnl  for a Panel
+    Frm  for a Form (start with uppercase letter because of point 7)
+    btn  for a Button
+    num  for a NummericUpDown
+    tab  for a TabPage
+9.  Every methode needs documentation.
+10. Use a constant for a error message before logging and showing it in messagebox,
+    these constants can be used to for making translation of NoteFly in the future a easier task.
+11. Gui controls that are static, have a additional prefix: Text.
+    e.g. a label that displays "Select default note skin:" has the control name: lblTextDefaultNoteSkin
+12. All settings of NoteFly are set in Settings.cs.
