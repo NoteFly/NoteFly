@@ -231,13 +231,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\trayicon.ico" />
+    <EmbeddedResource Include="Resources\trayicon_yellow.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\icon_big.ico" />
     <Content Include="Resources\icon_big.png" />
     <Content Include="Resources\icon_small.ico" />
     <Content Include="Resources\icon_small.png" />
+    <Content Include="Resources\trayicon_white.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="IPlugin\IPlugin.csproj">

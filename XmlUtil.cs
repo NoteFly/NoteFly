@@ -275,6 +275,9 @@ namespace NoteFly
                         case "SocialEmailEnabled":
                             Settings.SocialEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "TrayiconAlternateIcon":
+                            Settings.TrayiconAlternateIcon = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "TrayiconCreatenotebold":
                             Settings.TrayiconCreatenotebold = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -593,6 +596,7 @@ namespace NoteFly
             Settings.SettingsExpertEnabled = false;
             Settings.SocialEmailEnabled = true;
             Settings.SocialEmailDefaultadres = string.Empty;
+            Settings.TrayiconAlternateIcon = false;
             Settings.TrayiconFontsize = 8.25f;
             Settings.TrayiconLeftclickaction = 1;
             Settings.TrayiconCreatenotebold = true;
@@ -792,6 +796,7 @@ namespace NoteFly
                 WriteXMLBool("ProgramPluginsAllEnabled", Settings.ProgramPluginsAllEnabled);
                 WriteXMLBool("ProgramSuspressWarnAdmin", Settings.ProgramSuspressWarnAdmin);
                 WriteXMLBool("SocialEmailEnabled", Settings.SocialEmailEnabled);
+                WriteXMLBool("TrayiconAlternateIcon", Settings.TrayiconAlternateIcon);
                 WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
                 WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
                 WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);

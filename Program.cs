@@ -48,7 +48,7 @@ namespace NoteFly
         private static TrayIcon trayicon;
 
         /// <summary>
-        /// All loaded plugins
+        /// All plugins
         /// </summary>
         public static IPlugin.IPlugin[] plugins;
 
@@ -583,14 +583,20 @@ namespace NoteFly
                 {
                     pluginfiles[i] = Path.GetFileName(pluginfilepaths[i]);
                 }
-                pluginfilepaths = null;
 
+                pluginfilepaths = null;
                 System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
-                string[] enabledplugins = Settings.ProgramPluginsEnabled.Split('|'); // | is illegal as filename, so that why it's choicen.
+                string[] enabledplugins = Settings.ProgramPluginsEnabled.Split('|'); // | is illegal as filename.
                 for (int i = 0; i < pluginfiles.Length; i++)
                 {
                     try
                     {
+                        // blacklist sqllite drivers not to load as notefly plugin, so sqllite drivers could be used by plugins.
+                        if (pluginfiles[i] == "System.Data.SQLite.DLL" || pluginfiles[i] == "SQLite3.dll")
+                        {
+                            break;
+                        }
+
                         System.Reflection.Assembly pluginassembly = null;
                         pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
                         bool pluginenabled = IsEnabledPlugin(enabledplugins, pluginfiles[i]);
@@ -723,15 +729,19 @@ namespace NoteFly
         }
 
 #if windows
-        [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")] // C:\windows\wininet.dll
+        // get network status
+        [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
         private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
 
+        // change working directory as dll search path
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool SetDllDirectory(string pathName);
 
+        // global hotkey
         //[System.Runtime.InteropServices.DllImport("user32.dll")]
         //private static extern int RegisterHotKey(IntPtr hwnd, int id, int fsModifiers, int vk);
 
+        // unregister global hotkey, always unregister before shutdown.
         //[System.Runtime.InteropServices.DllImport("user32.dll")]
         //private static extern int UnregisterHotKey(IntPtr hwnd, int id);
 #endif

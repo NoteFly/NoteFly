@@ -276,8 +276,8 @@ namespace NoteFly
                     }
 
                     writer.Write("data=");
-                    // writing title, 
                     // FIXME data= seems to be ingored and datetime is choicen as title, is it done wrong?
+                    // writing title, 
                     for (int c = 0; c < title.Length; c++)
                     {
                         int titlechr = title[c];

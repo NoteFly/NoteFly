@@ -658,11 +658,12 @@ namespace NoteFly
         /// <param name="e"></param>
         private void chxLoadPlugins_CheckedChanged(object sender, EventArgs e)
         {
-            //this.chxlbxAvailablePlugins.Enabled = this.chxLoadPlugins.Checked;
             this.pluginGrid.Enabled = this.chxLoadPlugins.Checked;
             if (chxLoadPlugins.Checked)
             {
                 Program.LoadPlugins();
+                this.pluginGrid.VerticalScroll.Value = 0;
+                this.pluginGrid.DrawAllPluginsDetails();
             }
         }
 

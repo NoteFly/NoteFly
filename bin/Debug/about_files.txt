@@ -1,7 +1,7 @@
 The app.epconfig file is for profiling 
 the programme with EQATEC Profiler.
 
-note.xsd is for validating the notes .xml files.
+note.xsd is for validating the xml notes .nfn files.
 
-settings.xsd is for validating the settings.xml file in
+skins.xsd is for validating the skins.xml file in
 the application data folder of this programme.

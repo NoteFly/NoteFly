@@ -108,6 +108,11 @@ namespace NoteFly
         public static bool TrayiconExitbold = false;
 
         /// <summary>
+        /// Use a white trayicon instead of yellow fits beter with other default windows7 trayicons
+        /// </summary>
+        public static bool TrayiconAlternateIcon = false;
+
+        /// <summary>
         /// The text direction in notes.
         /// 0 is left to right.
         /// 1 is right to left.

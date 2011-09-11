@@ -32,29 +32,35 @@ namespace NoteFly
         /// </summary>
         public PluginGrid()
         {
+            this.DrawAllPluginsDetails();
+        }
+
+        public void DrawAllPluginsDetails()
+        {
             this.SuspendLayout();
+            this.Controls.Clear();
             if (Program.plugins != null)
             {
                 this.btnPluginsStatus = new Button[Program.plugins.Length];
-                this.tlpnlPlugins = new TableLayoutPanel[Program.plugins.Length];                
+                this.tlpnlPlugins = new TableLayoutPanel[Program.plugins.Length];
                 for (int i = 0; i < Program.plugins.Length; i++)
                 {
-                    CreatePluginDetails(i, Program.plugins[i].Name, Program.plugins[i].Version, Program.plugins[i].Author, Program.plugins[i].Description, Program.plugins[i].Enabled);
+                    DrawPluginDetails(i, Program.plugins[i].Name, Program.plugins[i].Version, Program.plugins[i].Author, Program.plugins[i].Description, Program.plugins[i].Enabled);
                 }
             }
-            
+
             this.ResumeLayout();
         }
 
         /// <summary>
-        /// Create plugin details
+        /// Draw details of a plugin.
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="plugintitle"></param>
         /// <param name="pluginversion"></param>
         /// <param name="pluginauthor"></param>
         /// <param name="plugindescription"></param>
-        private void CreatePluginDetails(int pluginpos, string plugintitle, string pluginversion, string pluginauthor, string plugindescription, bool pluginenabled)
+        private void DrawPluginDetails(int pluginpos, string plugintitle, string pluginversion, string pluginauthor, string plugindescription, bool pluginenabled)
         {
             this.tlpnlPlugins[pluginpos] = new System.Windows.Forms.TableLayoutPanel();
             Label lblPluginTitle = new System.Windows.Forms.Label();
@@ -201,20 +207,23 @@ namespace NoteFly
         {
             bool first = true;
             Settings.ProgramPluginsEnabled = string.Empty;
-            for (int i = 0; i < Program.plugins.Length; i++)
+            if (Program.plugins != null)
             {
-                if (Program.plugins[i].Enabled)
+                for (int i = 0; i < Program.plugins.Length; i++)
                 {
-                    if (first)
+                    if (Program.plugins[i].Enabled)
                     {
-                        first = false;
-                    }
-                    else
-                    {
-                        Settings.ProgramPluginsEnabled += "|";                        
-                    }
+                        if (first)
+                        {
+                            first = false;
+                        }
+                        else
+                        {
+                            Settings.ProgramPluginsEnabled += "|";
+                        }
 
-                    Settings.ProgramPluginsEnabled += Program.plugins[i].Filename;
+                        Settings.ProgramPluginsEnabled += Program.plugins[i].Filename;
+                    }
                 }
             }
         }
