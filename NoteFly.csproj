@@ -202,7 +202,6 @@
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="clean_settings.bat" />
-    <None Include="Doxyfile_settings" />
     <None Include="icons.res" />
     <None Include="Properties\app.manifest" />
     <Compile Include="SyntaxHighlight.cs" />

@@ -39,7 +39,7 @@
             string downloadurl = (string)e.Argument;
             string downloadfilename = Path.GetFileName(downloadurl);
             this.downloadfilepath = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), downloadfilename);
-            
+
             if (CheckValidPath(downloadfilepath))
             {
                 // first, we need to get the exact size (in bytes) of the file we are downloading
@@ -83,6 +83,8 @@
                         // using the FileStream object, we can write the downloaded bytes to the file system
                         using (Stream streamLocal = new FileStream(downloadfilepath, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
+                            PreallocateFile(streamLocal, filesize);
+
                             // loop the stream and get the file into the byte buffer
                             int iByteSize = 0;
                             byte[] byteBuffer = new byte[filesize];
@@ -120,7 +122,7 @@
 
                     if (Settings.UpdatecheckUseGPG)
                     {
-                        string sigfilepath = this.gpgverif.GetSignature(this.downloadfilepath);                       
+                        string sigfilepath = this.gpgverif.GetSignature(this.downloadfilepath);
 
                         // first, we need to get the exact size (in bytes) of the file we are downloading
                         Uri urlsigfileserver = new Uri(gpgverif.GetSignature(downloadurl));
@@ -138,9 +140,9 @@
                         responsesig.Close();
                         // gets the size of the signature file, should be 72 bytes
                         long filesizesig = responsesig.ContentLength;
-                        if (filesizesig > 1024)
+                        if (filesizesig > 144)
                         {
-                            Log.Write(LogType.exception, "To signature file too large, more than 1 KB");
+                            Log.Write(LogType.exception, "To signature file too large, more than 144 bytes, excepted 72bytes");
                             return;
                         }
 
@@ -153,6 +155,8 @@
                                 // using the FileStream object, we can write the downloaded bytes to the file system
                                 using (Stream streamLocal = new FileStream(sigfilepath, FileMode.Create, FileAccess.Write, FileShare.None))
                                 {
+                                    PreallocateFile(streamLocal, filesizesig);
+
                                     // loop the stream and get the file into the byte buffer
                                     int iByteSize = 0;
                                     byte[] byteBuffer = new byte[filesizesig];
@@ -210,7 +214,7 @@
 
                     this.lblStatusUpdate.Refresh();
                     if (File.Exists(Settings.UpdatecheckGPGPath))
-                    {                      
+                    {
                         gpgverif.VerifDownload(downloadfilepath);
                     }
                     else
@@ -269,6 +273,24 @@
             else
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Preallocate file
+        /// </summary>
+        /// <param name="filestream"></param>
+        /// <param name="filesize"></param>
+        private void PreallocateFile(Stream filestream, long filesize)
+        {
+            try
+            {
+                filestream.SetLength(filesize);
+            }
+            catch (IOException ioexc)
+            {
+                MessageBox.Show(ioexc.Message);
+                Log.Write(LogType.exception, ioexc.Message);
             }
         }
     }
