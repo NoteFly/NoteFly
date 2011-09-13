@@ -446,7 +446,11 @@ namespace NoteFly
                     case "skins":
                         if (xmlread.HasAttributes)
                         {
-                            skins.Capacity = Convert.ToInt32(xmlread.GetAttribute("count"));
+                            int count = Convert.ToInt32(xmlread.GetAttribute("count"));
+                            if (count >= 0)
+                            {
+                                skins.Capacity = count;
+                            }
                         }
 
                         break;
@@ -473,7 +477,7 @@ namespace NoteFly
                         if (xmlread.HasAttributes)
                         {
                             string filepathtexture = xmlread.GetAttribute("texture");
-                            if (System.IO.File.Exists(filepathtexture) || System.IO.File.Exists(Path.Combine(Program.InstallFolder,filepathtexture)) )
+                            if (System.IO.File.Exists(filepathtexture) || System.IO.File.Exists(Path.Combine(Program.InstallFolder, filepathtexture)))
                             {
                                 string extension = filepathtexture.Substring(filepathtexture.LastIndexOf('.'), filepathtexture.Length - filepathtexture.LastIndexOf('.')).ToLower();
                                 string[] supportedimageformats = new string[] { ".png", ".tif", ".tiff", ".bmp", ".gif", ".jpg", ".jpeg" };
@@ -507,6 +511,24 @@ namespace NoteFly
                             else
                             {
                                 Log.Write(LogType.error, "texture not be found " + filepathtexture + "");
+                            }
+
+                            string texturelayout = xmlread.GetAttribute("texturelayout");
+                            if (!string.IsNullOrEmpty(texturelayout))
+                            {
+                                texturelayout = texturelayout.ToLowerInvariant();
+                                switch (texturelayout)
+                                {
+                                    case "tile":
+                                        curskin.PrimaryTextureLayout = System.Windows.Forms.ImageLayout.Tile;
+                                        break;
+                                    case "stretch":
+                                        curskin.PrimaryTextureLayout = System.Windows.Forms.ImageLayout.Stretch;
+                                        break;
+                                    case "center":
+                                        curskin.PrimaryTextureLayout = System.Windows.Forms.ImageLayout.Center;
+                                        break;
+                                }
                             }
                         }
 
@@ -602,8 +624,8 @@ namespace NoteFly
             Settings.TrayiconCreatenotebold = true;
             Settings.TrayiconExitbold = false;
             Settings.TrayiconManagenotesbold = false;
-            Settings.TrayiconSettingsbold = false;            
-            Settings.UpdateSilentInstall = false;           
+            Settings.TrayiconSettingsbold = false;
+            Settings.UpdateSilentInstall = false;
             Settings.UpdatecheckEverydays = 14; // 0 is disabled.
             Settings.UpdatecheckLastDate = DateTime.Now.ToString();
             Settings.UpdatecheckURL = "http://update.notefly.org/latestversion.xml";
@@ -617,7 +639,7 @@ namespace NoteFly
             {
                 Settings.UpdatecheckUseGPG = false;
             }
-            
+
             try
             {
                 xmlUtil.WriteSettings();
@@ -804,7 +826,7 @@ namespace NoteFly
                 WriteXMLBool("UpdateSilentInstall", Settings.UpdateSilentInstall);
                 WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
                 WriteXMLBool("SettingsExpertEnabled", Settings.SettingsExpertEnabled);
-                
+
                 // integers
                 xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));

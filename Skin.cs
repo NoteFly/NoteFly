@@ -49,6 +49,11 @@ namespace NoteFly
         private Bitmap primarytexture = null;
 
         /// <summary>
+        /// Backgound image layout of the skin
+        /// </summary>
+        private System.Windows.Forms.ImageLayout primarytexturelayout = System.Windows.Forms.ImageLayout.Tile;
+
+        /// <summary>
         /// The selection color of the skin.
         /// </summary>
         private Color selectclr;
@@ -123,6 +128,22 @@ namespace NoteFly
             set
             {
                 this.primarytexture = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the background image layout of the skin.
+        /// </summary>
+        public System.Windows.Forms.ImageLayout PrimaryTextureLayout
+        {
+            get
+            {
+                return this.primarytexturelayout;
+            }
+
+            set
+            {
+                this.primarytexturelayout = value;
             }
         }
 

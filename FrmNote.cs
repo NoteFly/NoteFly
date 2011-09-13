@@ -525,7 +525,7 @@ namespace NoteFly
             this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             if (notes.GetPrimaryTexture(note.SkinNr) != null)
             {
-                this.BackgroundImageLayout = ImageLayout.Tile;
+                this.BackgroundImageLayout =  notes.GetPrimaryTextureLayour(note.SkinNr);
                 this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
             }
             else
