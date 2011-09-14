@@ -13,6 +13,13 @@
 ;
 ;  You should have received a copy of the GNU General Public License
 ;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;
+; Special notice: the used KillProcDLL sourcecode/libery is NOT covered under GPL.
+; KillProcDLL (by DITMan) sourcecode license is as follows:
+;  The original source file for the KILL_PROC_BY_NAME function is provided, the file is: exam28.cpp, and it MUST BE in this zip file.
+;  You can redistribute this archive if you do it without changing anything on it, otherwise you're NOT allowed to do so.
+;  You may use this source code in any of your projects, while you keep all the files intact, otherwise you CAN NOT use this code.
+;
 
 !define PROJNAME   "NoteFly"
 !define VERSION    "2.5.0"          ; version number: major.minor.release
@@ -134,10 +141,10 @@ PageEx license
    LicenseData "license.txt"
 PageExEnd
 ; Add this page on a alpha release as warning
-PageEx license
-   LicenseText "Warning"
-   LicenseData "warning_alpha.txt"
-PageExEnd
+;PageEx license
+;   LicenseText "Warning"
+;   LicenseData "warning_alpha.txt"
+;PageExEnd
 Page components
 Page directory
 Page instfiles
@@ -152,11 +159,10 @@ Section "main executable (required)"
   SectionIn RO
   SetOverwrite on
   
-  ; Kill running NoteFly if still running, using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in  the optimized version
-  KillProcDLL::KillProc "${APPFILE}" 
-  ; Simply wait 300ms for a running NoteFly process to close itself.
-  sleep 300
-  
+  KillProcDLL::KillProc "${APPFILE}"
+  ; Simply wait 400ms for a running NoteFly process to close itself then check again if it's running.
+  sleep 400
+   
   ; Check installation directory 
   !insertmacro BadPathsCheck
 
@@ -165,7 +171,7 @@ Section "main executable (required)"
   ; Write the uninstall keys for Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "DisplayName" "NoteFly"  
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "URLInfoAbout" "http://www.notefly.tk"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "URLInfoAbout" "http://www.notefly.org"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "DisplayVersion" "${VERSION}"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NoteFly" "NoRepair" 1
@@ -224,11 +230,10 @@ SectionEnd
 
 ; Uninstaller
 Section "Uninstall"  
-  ; Kill running NoteFly process if still running
-  KillProcDLL::KillProc "${APPFILE}" 
-  ; Simply wait 300ms for a running NoteFly process to close itself.
-  sleep 300
-
+   KillProcDLL::KillProc "${APPFILE}"
+   ; Simply wait 400ms for a running NoteFly process to close itself.
+   sleep 400
+   
   ; Check installation directory 
   !insertmacro BadPathsCheck
 
@@ -238,16 +243,19 @@ Section "Uninstall"
 
   ; Remove files and uninstaller
   Delete "$INSTDIR\${LANGFILE}"
-  Delete "$INSTDIR\uninstall.exe"
+  Delete "$INSTDIR\plugins\${DEMOPLUGIN}"
   Delete "$INSTDIR\${APPIPLUGIN}"
   Delete "$INSTDIR\${APPFILE}"
-  
+
   ; skin textures
   Delete "$INSTDIR\nyancat.jpg"
   Delete "$INSTDIR\blackhorse.jpg"
   Delete "$INSTDIR\grass.jpg"
   Delete "$INSTDIR\colordrops.jpg"
   
+  ; remove uninstaller
+  Delete "$INSTDIR\uninstall.exe"
+    
   ; Remove directory if empty
   RMDir "$INSTDIR"
 
