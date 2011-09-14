@@ -283,7 +283,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="skinnr">The skin number</param>
         /// <returns></returns>
-        public System.Windows.Forms.ImageLayout GetPrimaryTextureLayour(int skinnr)
+        public System.Windows.Forms.ImageLayout GetPrimaryTextureLayout(int skinnr)
         {
             return this.skins[skinnr].PrimaryTextureLayout;
         }

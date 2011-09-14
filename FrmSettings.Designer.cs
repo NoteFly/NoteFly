@@ -332,7 +332,7 @@ namespace NoteFly
         /// <summary>
         /// CheckBox cbxShowTooltips
         /// </summary>
-        private System.Windows.Forms.CheckBox cbxShowTooltips;
+        private System.Windows.Forms.CheckBox chxShowTooltips;
 
         /// <summary>
         /// Label lblTextLogging
@@ -447,7 +447,7 @@ namespace NoteFly
             this.tabAppearanceColors = new System.Windows.Forms.TabControl();
             this.tabPageLooks = new System.Windows.Forms.TabPage();
             this.chxUseRandomDefaultNote = new System.Windows.Forms.CheckBox();
-            this.cbxShowTooltips = new System.Windows.Forms.CheckBox();
+            this.chxShowTooltips = new System.Windows.Forms.CheckBox();
             this.chxTransparecy = new System.Windows.Forms.CheckBox();
             this.lblDefaultNewNoteColor = new System.Windows.Forms.Label();
             this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
@@ -476,6 +476,7 @@ namespace NoteFly
             this.chxTrayiconBoldManagenotes = new System.Windows.Forms.CheckBox();
             this.chxTrayiconBoldNewnote = new System.Windows.Forms.CheckBox();
             this.tabPlugins = new System.Windows.Forms.TabPage();
+            this.pluginGrid = new NoteFly.PluginGrid();
             this.chxLoadPlugins = new System.Windows.Forms.CheckBox();
             this.tabHighlight = new System.Windows.Forms.TabPage();
             this.chxHighlightSQL = new System.Windows.Forms.CheckBox();
@@ -508,6 +509,7 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
@@ -520,8 +522,7 @@ namespace NoteFly
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
-            this.pluginGrid = new NoteFly.PluginGrid();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
+            this.chxUseAlternativeTrayicon = new System.Windows.Forms.CheckBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -722,7 +723,7 @@ namespace NoteFly
             // tabPageLooks
             // 
             this.tabPageLooks.Controls.Add(this.chxUseRandomDefaultNote);
-            this.tabPageLooks.Controls.Add(this.cbxShowTooltips);
+            this.tabPageLooks.Controls.Add(this.chxShowTooltips);
             this.tabPageLooks.Controls.Add(this.chxTransparecy);
             this.tabPageLooks.Controls.Add(this.lblDefaultNewNoteColor);
             this.tabPageLooks.Controls.Add(this.cbxDefaultColor);
@@ -747,15 +748,15 @@ namespace NoteFly
             this.chxUseRandomDefaultNote.UseVisualStyleBackColor = true;
             this.chxUseRandomDefaultNote.CheckedChanged += new System.EventHandler(this.chxUseRandomDefaultNote_CheckedChanged);
             // 
-            // cbxShowTooltips
+            // chxShowTooltips
             // 
-            this.cbxShowTooltips.AutoSize = true;
-            this.cbxShowTooltips.Location = new System.Drawing.Point(18, 62);
-            this.cbxShowTooltips.Name = "cbxShowTooltips";
-            this.cbxShowTooltips.Size = new System.Drawing.Size(89, 17);
-            this.cbxShowTooltips.TabIndex = 13;
-            this.cbxShowTooltips.Text = "Show tooltips";
-            this.cbxShowTooltips.UseVisualStyleBackColor = true;
+            this.chxShowTooltips.AutoSize = true;
+            this.chxShowTooltips.Location = new System.Drawing.Point(18, 62);
+            this.chxShowTooltips.Name = "chxShowTooltips";
+            this.chxShowTooltips.Size = new System.Drawing.Size(89, 17);
+            this.chxShowTooltips.TabIndex = 13;
+            this.chxShowTooltips.Text = "Show tooltips";
+            this.chxShowTooltips.UseVisualStyleBackColor = true;
             // 
             // chxTransparecy
             // 
@@ -1014,6 +1015,7 @@ namespace NoteFly
             // 
             // tabPageTrayicon
             // 
+            this.tabPageTrayicon.Controls.Add(this.chxUseAlternativeTrayicon);
             this.tabPageTrayicon.Controls.Add(this.lblFontsizePoints);
             this.tabPageTrayicon.Controls.Add(this.lblTextFontsizeMenu);
             this.tabPageTrayicon.Controls.Add(this.numTrayiconFontsize);
@@ -1031,7 +1033,7 @@ namespace NoteFly
             // lblFontsizePoints
             // 
             this.lblFontsizePoints.AutoSize = true;
-            this.lblFontsizePoints.Location = new System.Drawing.Point(166, 31);
+            this.lblFontsizePoints.Location = new System.Drawing.Point(167, 60);
             this.lblFontsizePoints.Name = "lblFontsizePoints";
             this.lblFontsizePoints.Size = new System.Drawing.Size(19, 13);
             this.lblFontsizePoints.TabIndex = 6;
@@ -1040,7 +1042,7 @@ namespace NoteFly
             // lblTextFontsizeMenu
             // 
             this.lblTextFontsizeMenu.AutoSize = true;
-            this.lblTextFontsizeMenu.Location = new System.Drawing.Point(22, 31);
+            this.lblTextFontsizeMenu.Location = new System.Drawing.Point(23, 27);
             this.lblTextFontsizeMenu.Name = "lblTextFontsizeMenu";
             this.lblTextFontsizeMenu.Size = new System.Drawing.Size(78, 13);
             this.lblTextFontsizeMenu.TabIndex = 5;
@@ -1054,7 +1056,7 @@ namespace NoteFly
             0,
             0,
             131072});
-            this.numTrayiconFontsize.Location = new System.Drawing.Point(106, 29);
+            this.numTrayiconFontsize.Location = new System.Drawing.Point(107, 25);
             this.numTrayiconFontsize.Maximum = new decimal(new int[] {
             36,
             0,
@@ -1078,7 +1080,7 @@ namespace NoteFly
             // chxTrayiconBoldExit
             // 
             this.chxTrayiconBoldExit.AutoSize = true;
-            this.chxTrayiconBoldExit.Location = new System.Drawing.Point(25, 180);
+            this.chxTrayiconBoldExit.Location = new System.Drawing.Point(26, 129);
             this.chxTrayiconBoldExit.Name = "chxTrayiconBoldExit";
             this.chxTrayiconBoldExit.Size = new System.Drawing.Size(127, 17);
             this.chxTrayiconBoldExit.TabIndex = 3;
@@ -1088,7 +1090,7 @@ namespace NoteFly
             // chxTrayiconBoldSettings
             // 
             this.chxTrayiconBoldSettings.AutoSize = true;
-            this.chxTrayiconBoldSettings.Location = new System.Drawing.Point(25, 144);
+            this.chxTrayiconBoldSettings.Location = new System.Drawing.Point(25, 106);
             this.chxTrayiconBoldSettings.Name = "chxTrayiconBoldSettings";
             this.chxTrayiconBoldSettings.Size = new System.Drawing.Size(148, 17);
             this.chxTrayiconBoldSettings.TabIndex = 2;
@@ -1098,7 +1100,7 @@ namespace NoteFly
             // chxTrayiconBoldManagenotes
             // 
             this.chxTrayiconBoldManagenotes.AutoSize = true;
-            this.chxTrayiconBoldManagenotes.Location = new System.Drawing.Point(25, 107);
+            this.chxTrayiconBoldManagenotes.Location = new System.Drawing.Point(25, 83);
             this.chxTrayiconBoldManagenotes.Name = "chxTrayiconBoldManagenotes";
             this.chxTrayiconBoldManagenotes.Size = new System.Drawing.Size(178, 17);
             this.chxTrayiconBoldManagenotes.TabIndex = 1;
@@ -1110,7 +1112,7 @@ namespace NoteFly
             this.chxTrayiconBoldNewnote.AutoSize = true;
             this.chxTrayiconBoldNewnote.Checked = true;
             this.chxTrayiconBoldNewnote.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxTrayiconBoldNewnote.Location = new System.Drawing.Point(25, 72);
+            this.chxTrayiconBoldNewnote.Location = new System.Drawing.Point(25, 60);
             this.chxTrayiconBoldNewnote.Name = "chxTrayiconBoldNewnote";
             this.chxTrayiconBoldNewnote.Size = new System.Drawing.Size(197, 17);
             this.chxTrayiconBoldNewnote.TabIndex = 0;
@@ -1128,6 +1130,15 @@ namespace NoteFly
             this.tabPlugins.TabIndex = 6;
             this.tabPlugins.Text = "Plugins";
             this.tabPlugins.UseVisualStyleBackColor = true;
+            // 
+            // pluginGrid
+            // 
+            this.pluginGrid.AutoScroll = true;
+            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pluginGrid.Location = new System.Drawing.Point(3, 44);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(363, 234);
+            this.pluginGrid.TabIndex = 26;
             // 
             // chxLoadPlugins
             // 
@@ -1514,6 +1525,17 @@ namespace NoteFly
             this.lblTextNetworkTimeout.TabIndex = 24;
             this.lblTextNetworkTimeout.Text = "connection timeout time:";
             // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(15, 58);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
             // lblTextNetworkMiliseconds
             // 
             this.lblTextNetworkMiliseconds.AutoSize = true;
@@ -1633,25 +1655,15 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
-            // pluginGrid
+            // chxUseAlternativeTrayicon
             // 
-            this.pluginGrid.AutoScroll = true;
-            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pluginGrid.Location = new System.Drawing.Point(3, 44);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(363, 234);
-            this.pluginGrid.TabIndex = 26;
-            // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(15, 58);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
+            this.chxUseAlternativeTrayicon.AutoSize = true;
+            this.chxUseAlternativeTrayicon.Location = new System.Drawing.Point(26, 164);
+            this.chxUseAlternativeTrayicon.Name = "chxUseAlternativeTrayicon";
+            this.chxUseAlternativeTrayicon.Size = new System.Drawing.Size(168, 17);
+            this.chxUseAlternativeTrayicon.TabIndex = 7;
+            this.chxUseAlternativeTrayicon.Text = "Use alternative white trayicon.";
+            this.chxUseAlternativeTrayicon.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 
@@ -1723,5 +1735,6 @@ namespace NoteFly
         private System.Windows.Forms.OpenFileDialog openFileDialogBrowseGPG;
         private System.Windows.Forms.CheckBox chxUpdateSilentInstall;
         private PluginGrid pluginGrid;
+        private System.Windows.Forms.CheckBox chxUseAlternativeTrayicon;
     }
 }

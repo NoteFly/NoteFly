@@ -340,6 +340,13 @@ namespace NoteFly
         public static bool ProgramFirstrun = false;
 
         /// <summary>
+        /// The version of the programme of the last run.
+        /// If it's different with current version now running,
+        /// it can used for updating skins.xml or langs.xml files.
+        /// </summary>
+        public static string ProgramLastrunVersion = Program.AssemblyVersionAsString;
+
+        /// <summary>
         /// Suspress a warning that the programme is running with dangerous (evelated) administrator.
         /// </summary>
         public static bool ProgramSuspressWarnAdmin = false;

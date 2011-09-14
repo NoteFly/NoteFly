@@ -360,13 +360,16 @@ namespace NoteFly
         {
             if (this.dataGridView1.SelectedRows.Count <= 0)
             {
-                MessageBox.Show("Nothing selected.");
+                const string NOTHINGSELECTED = "Nothing selected.";
+                Log.Write(LogType.info, NOTHINGSELECTED);
+                MessageBox.Show(NOTHINGSELECTED);
             }
             else
             {
                 if (Settings.ConfirmDeletenote)
                 {
-                    DialogResult deleteres = MessageBox.Show("Are you sure you want to delete the selected note(s)?", "delete?", MessageBoxButtons.YesNo);
+                    const string DELETESELECTEDNOTES = "Are you sure you want to delete the selected note(s)?";
+                    DialogResult deleteres = MessageBox.Show(DELETESELECTEDNOTES, "delete?", MessageBoxButtons.YesNo);
                     if (deleteres == DialogResult.Yes)
                     {
                         this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
@@ -433,7 +436,8 @@ namespace NoteFly
         {
             if (this.notes.CountNotes > 0)
             {
-                DialogResult eraseres = MessageBox.Show("Do you want to delete all current notes?", "Are you sure?", MessageBoxButtons.YesNoCancel);
+                const string DELETEALLCURRENTNOTES = "Do you want to delete all current notes?";
+                DialogResult eraseres = MessageBox.Show(DELETEALLCURRENTNOTES, "Are you sure?", MessageBoxButtons.YesNoCancel);
                 if (eraseres == DialogResult.Yes)
                 {
                     for (int i = 0; i < this.notes.CountNotes; i++)

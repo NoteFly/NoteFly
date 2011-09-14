@@ -17,8 +17,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
-// platform can be: windows, linux, macos
-// set under project properties, build, conditional compilation symbols
 using System;
 
 [assembly: CLSCompliant(true)]
@@ -116,7 +114,7 @@ namespace NoteFly
         {
             get
             {
-                return "alpha";
+                return "beta1";
             }
         }
 

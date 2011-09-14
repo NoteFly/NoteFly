@@ -84,7 +84,7 @@ namespace NoteFly
             this.BackColor = notes.GetPrimaryClr(note.SkinNr);
             if (notes.GetPrimaryTexture(note.SkinNr) != null)
             {
-                this.BackgroundImageLayout = ImageLayout.Tile;
+                this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(note.SkinNr); //ImageLayout.Tile;
                 this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
             }
             else
@@ -525,7 +525,7 @@ namespace NoteFly
             this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             if (notes.GetPrimaryTexture(note.SkinNr) != null)
             {
-                this.BackgroundImageLayout =  notes.GetPrimaryTextureLayour(note.SkinNr);
+                this.BackgroundImageLayout =  notes.GetPrimaryTextureLayout(note.SkinNr);
                 this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
             }
             else

@@ -193,7 +193,7 @@ namespace NoteFly
                 Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
                 Settings.NotesDefaultRandomSkin = this.chxUseRandomDefaultNote.Checked;
                 Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
-                Settings.NotesTooltipsEnabled = this.cbxShowTooltips.Checked;
+                Settings.NotesTooltipsEnabled = this.chxShowTooltips.Checked;
 
                 // tab: Appearance, fonts
                 Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();
@@ -209,6 +209,7 @@ namespace NoteFly
                 Settings.TrayiconManagenotesbold = this.chxTrayiconBoldManagenotes.Checked;
                 Settings.TrayiconSettingsbold = this.chxTrayiconBoldSettings.Checked;
                 Settings.TrayiconExitbold = this.chxTrayiconBoldExit.Checked;
+                Settings.TrayiconAlternateIcon = this.chxUseAlternativeTrayicon.Checked;
 
                 // tab: Highlight
                 Settings.HighlightHyperlinks = this.chxHighlightHyperlinks.Checked;
@@ -478,7 +479,7 @@ namespace NoteFly
             this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
             this.chxUseRandomDefaultNote.Checked = Settings.NotesDefaultRandomSkin;
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
-            this.cbxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
+            this.chxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
 
             // tab: Appearance, fonts
             this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.FontTitleSize);
@@ -495,6 +496,7 @@ namespace NoteFly
             this.chxTrayiconBoldManagenotes.Checked = Settings.TrayiconManagenotesbold;
             this.chxTrayiconBoldSettings.Checked = Settings.TrayiconSettingsbold;
             this.chxTrayiconBoldExit.Checked = Settings.TrayiconExitbold;
+            this.chxUseAlternativeTrayicon.Checked = Settings.TrayiconAlternateIcon;
 
             // tab: Highlight
             this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
@@ -603,7 +605,8 @@ namespace NoteFly
         {
             this.chxConfirmDeletenote.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxNotesDeleteRecyclebin.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.cbxShowTooltips.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.chxShowTooltips.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.chxUseAlternativeTrayicon.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxUpdateSilentInstall.Visible = this.chxSettingsExpertEnabled.Checked;
             this.lblTextGPGPath.Visible = this.chxSettingsExpertEnabled.Checked;
             this.tbGPGPath.Visible = this.chxSettingsExpertEnabled.Checked;

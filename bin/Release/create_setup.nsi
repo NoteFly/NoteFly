@@ -16,7 +16,7 @@
 
 !define PROJNAME   "NoteFly"
 !define VERSION    "2.5.0"          ; version number: major.minor.release
-!define VERSTATUS  "alpha"          ; alpha, beta, rc, or nothing for final.
+!define VERSTATUS  "beta1"          ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
 !define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
@@ -152,7 +152,7 @@ Section "main executable (required)"
   SectionIn RO
   SetOverwrite on
   
-  ; Kill running NoteFly if still running, using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in (optimized version, KillProcDLL.dll only)
+  ; Kill running NoteFly if still running, using plugin: http://nsis.sourceforge.net/KillProcDLL_plug-in  the optimized version
   KillProcDLL::KillProc "${APPFILE}" 
   ; Simply wait 300ms for a running NoteFly process to close itself.
   sleep 300
@@ -180,7 +180,6 @@ Section "main executable (required)"
   
   ; skin textures
   File "nyancat.jpg"    ; 4,53 KB
-  File "hellokitty.jpg" ; 6,79 KB
   File "blackhorse.jpg" ; 8,48 KB
   File "grass.jpg"      ; 9,17 KB
   File "colordrops.jpg" ; 10,0 KB
@@ -215,9 +214,9 @@ Section "Start Menu Shortcuts (all users)"
   CreateShortCut "$SMPROGRAMS\${PROJNAME}\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   
 ${If} $R0 == '5'
-  CreateShortCut "$SMPROGRAMS\${PROJNAME}\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ;small icon for win. xp.
+  CreateShortCut "$SMPROGRAMS\${PROJNAME}\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 1 ; small icon for win. xp.
 ${Else}
-  CreateShortCut "$SMPROGRAMS\${PROJNAME}\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ;large icon
+  CreateShortCut "$SMPROGRAMS\${PROJNAME}\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ; large icon
 ${EndIf}
 SectionEnd
 
@@ -245,7 +244,6 @@ Section "Uninstall"
   
   ; skin textures
   Delete "$INSTDIR\nyancat.jpg"
-  Delete "$INSTDIR\hellokitty.jpg"
   Delete "$INSTDIR\blackhorse.jpg"
   Delete "$INSTDIR\grass.jpg"
   Delete "$INSTDIR\colordrops.jpg"

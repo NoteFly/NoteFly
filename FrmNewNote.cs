@@ -143,7 +143,7 @@ namespace NoteFly
             this.tbTitle.ForeColor = this.notes.GetTextClr(skinnr);
             this.rtbNewNote.ForeColor = this.notes.GetTextClr(skinnr);
             this.tbTitle.BackColor = this.notes.GetHighlightClr(skinnr);
-            this.rtbNewNote.BackColor = this.notes.GetPrimaryClr(skinnr);
+            this.rtbNewNote.BackColor = this.notes.GetSelectClr(skinnr); //this.notes.GetPrimaryClr(skinnr);
 
             this.btnTextBold.ForeColor = this.notes.GetTextClr(skinnr);
             this.btnTextItalic.ForeColor = this.notes.GetTextClr(skinnr);
@@ -1028,11 +1028,11 @@ namespace NoteFly
             this.menuShowtoolbar.Checked = !this.menuShowtoolbar.Checked;
             if (this.menuShowtoolbar.Checked)
             {
-                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - this.btnTextBold.Location.Y + MARGIN);
+                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - this.tableLayoutPanelFormatbtn.Location.Y + MARGIN);
             }
             else
             {
-                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - (this.btnTextBold.Location.Y + this.btnTextBold.Height));
+                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - (this.tableLayoutPanelFormatbtn.Location.Y + this.tableLayoutPanelFormatbtn.Height));
             }
 
             this.SetToolbarEnabled(this.menuShowtoolbar.Checked);

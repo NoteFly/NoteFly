@@ -373,6 +373,9 @@ namespace NoteFly
                         case "FontContentFamily":
                             Settings.FontContentFamily = xmlread.ReadElementContentAsString();
                             break;
+                        case "ProgramLastrunVersion":
+                            Settings.ProgramLastrunVersion = xmlread.ReadElementContentAsString();
+                            break;
                         case "ProgramPluginsFolder":
                             Settings.ProgramPluginsFolder = xmlread.ReadElementContentAsString();
                             break;
@@ -447,7 +450,7 @@ namespace NoteFly
                         if (xmlread.HasAttributes)
                         {
                             int count = Convert.ToInt32(xmlread.GetAttribute("count"));
-                            if (count >= 0)
+                            if (count > 0)
                             {
                                 skins.Capacity = count;
                             }
@@ -510,7 +513,8 @@ namespace NoteFly
                             }
                             else
                             {
-                                Log.Write(LogType.error, "texture not be found " + filepathtexture + "");
+                                const string TEXTUREIMAGENOTFOUND = "Texture image not be found, lookt for: ";
+                                Log.Write(LogType.error, TEXTUREIMAGENOTFOUND + filepathtexture);
                             }
 
                             string texturelayout = xmlread.GetAttribute("texturelayout");
@@ -857,6 +861,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                 xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
+                xmlwrite.WriteElementString("ProgramLastrunVersion", Settings.ProgramLastrunVersion );
                 xmlwrite.WriteElementString("ProgramPluginsFolder", Settings.ProgramPluginsFolder);
                 xmlwrite.WriteElementString("ProgramPluginsEnabled", Settings.ProgramPluginsEnabled);
                 xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
@@ -867,7 +872,7 @@ namespace NoteFly
             }
             catch (AccessViolationException)
             {
-                Log.Write(LogType.exception, "Premission problem writing: " + Path.Combine(Program.AppDataFolder, SETTINGSFILE));
+                Log.Write(LogType.exception, "Permission problem writing: " + Path.Combine(Program.AppDataFolder, SETTINGSFILE));
                 return false;
             }
             finally
@@ -1222,15 +1227,15 @@ namespace NoteFly
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument(true); // standalone xml file
                 xmlwrite.WriteStartElement("skins");
-                const int NUMDEFAULTSKINS = 15;
-                xmlwrite.WriteAttributeString("count", NUMDEFAULTSKINS.ToString()); // for performance predefine list Capacity, not required.
-                string[] name = new string[NUMDEFAULTSKINS] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark", "softwhite", "contrastblue", "nyancat", "hellokitty", "grass", "blackhorse", "colordrops" };
-                string[] primaryclr = new string[NUMDEFAULTSKINS] { "FFEF14", "FFA700", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A", "002626", "FFF4C6", "3B47EF", "0019A8", "FF359A", "6FE200", "7E2603", "002626" };
-                string[] selectclr = new string[NUMDEFAULTSKINS] { "E0D616", "C17D00", "E0E0E0", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624", "333366", "00137F", "0019A8", "FF35F0", "008000", "000624", "000624" };
-                string[] highlightclr = new string[NUMDEFAULTSKINS] { "FFED7C", "FFD46D", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "494949", "FFFFFF", "0026FF", "000000", "FFFFFF", "DADBD9", "494949", "494949" };
-                string[] textclr = new string[NUMDEFAULTSKINS] { "000000", "000000", "000000", "000000", "000000", "000000", "000000", "FFFFFF", "3B47EF", "FFDF23", "FFFFFF", "000000", "000000", "FFFFFF", "FFFFFF" };
-                string[] textures = new string[NUMDEFAULTSKINS] { null, null, null, null, null, null, null, null, null, null, "nyancat.jpg", "hellokitty.jpg", "grass.jpg", "blackhorse.jpg", "colordrops.jpg" };
-                for (ushort i = 0; i < NUMDEFAULTSKINS; i++)
+                string[] name = new string[] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark", "softwhite", "contrastblue", "grass", "colordrops", "nyancat"  };
+                string[] primaryclr = new string[] { "FFEF14", "FFA700", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A", "002626", "FFF4C6", "3B47EF", "6FE200", "7D0C9A", "013567" };
+                string[] selectclr = new string[] { "E0D616", "C17D00", "E0E0E0", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624", "333366", "00137F", "008000", "000624", "0019A8" };
+                string[] highlightclr = new string[] { "FFED7C", "FFD46D", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "494949", "FFFFFF", "0026FF", "DADBD9", "494949", "000000" };
+                string[] textclr = new string[] { "000000", "000000", "000000", "000000", "000000", "000000", "000000", "FFFFFF", "3B47EF", "FFDF23", "000000", "FFFFFF", "FFFFFF" };
+                string[] textures = new string[] { null, null, null, null, null, null, null, null, null, null, "grass.jpg", "colordrops.jpg", "nyancat.jpg" };
+                string[] textureslayout = new string[] { null, null, null, null, null, null, null, null, null, null, "tile", "stretch", "center" };
+                xmlwrite.WriteAttributeString("count", name.Length.ToString()); // for performance set list Capacity, not required. 
+                for (ushort i = 0; i < name.Length; i++)
                 {
                     xmlwrite.WriteStartElement("skin");
                     xmlwrite.WriteElementString("Name", name[i]);
@@ -1238,7 +1243,12 @@ namespace NoteFly
                     if (textures[i] != null)
                     {
                         xmlwrite.WriteAttributeString("texture", textures[i]);
+                        if (textureslayout[i] != null)
+                        {
+                            xmlwrite.WriteAttributeString("texturelayout", textureslayout[i]);
+                        }
                     }
+                    
                     xmlwrite.WriteString("#" + primaryclr[i]);
                     xmlwrite.WriteEndElement();
                     xmlwrite.WriteElementString("SelectClr", "#" + selectclr[i]);
