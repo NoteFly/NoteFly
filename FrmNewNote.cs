@@ -163,12 +163,11 @@ namespace NoteFly
 
             if (this.notes.GetPrimaryTexture(skinnr) != null)
             {
+                this.BackgroundImageLayout = this.notes.GetPrimaryTextureLayout(skinnr);
                 this.BackgroundImage = this.notes.GetPrimaryTexture(skinnr);
                 this.pnlHeadNewNote.BackColor = Color.Transparent;
                 this.lbTextTitle.BackColor = Color.Transparent;
                 this.lbTextTitle.BackColor = Color.Transparent;
-                ////this.btnAddNote.BackColor = Color.Transparent;
-                ////this.btnCancel.BackColor = Color.Transparent;
             }
         }
 
@@ -185,7 +184,8 @@ namespace NoteFly
             }
             else if (string.IsNullOrEmpty(this.rtbNewNote.Text))
             {
-                this.rtbNewNote.Text = "Please enter some content.";
+                const string PLEASEENTERCONTENT = "Please enter some content.";
+                this.rtbNewNote.Text = PLEASEENTERCONTENT;
                 this.rtbNewNote.Focus();
                 this.rtbNewNote.SelectAll();
             }
@@ -212,14 +212,11 @@ namespace NoteFly
                         this.notes.AddNote(this.note);
                     }
 
-                    if (Program.plugins != null && Settings.ProgramPluginsAllEnabled)
+                    if (Program.enabledplugins != null && Settings.ProgramPluginsAllEnabled)
                     {
-                        for (int i = 0; i < Program.plugins.Length; i++)
+                        for (int i = 0; i < Program.enabledplugins.Length; i++)
                         {
-                            if (Program.plugins[i].Enabled)
-                            {
-                                Program.plugins[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);
-                            }
+                            Program.enabledplugins[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);                            
                         }
                     }
 

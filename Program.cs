@@ -46,9 +46,9 @@ namespace NoteFly
         private static TrayIcon trayicon;
 
         /// <summary>
-        /// All plugins
+        /// All the enabled plugins
         /// </summary>
-        public static IPlugin.IPlugin[] plugins;
+        public static IPlugin.IPlugin[] enabledplugins;
 
         #endregion Fields
 
@@ -346,7 +346,7 @@ namespace NoteFly
 
             if (Settings.ProgramPluginsAllEnabled)
             {
-                LoadPlugins();
+                Program.enabledplugins = GetPlugins(true);
             }
 
             SyntaxHighlight.InitHighlighter();
@@ -570,9 +570,9 @@ namespace NoteFly
         /// <summary>
         /// Load plugin .dll files from pluginfolder
         /// </summary>
-        public static void LoadPlugins()
+        public static IPlugin.IPlugin[] GetPlugins(bool onlyenabled)
         {
-            //string pluginfolder = Path.Combine(Program.InstallFolder, Settings.ProgramPluginsFolder);
+            System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
             if (Directory.Exists(Settings.ProgramPluginsFolder))
             {
                 string[] pluginfilepaths = Directory.GetFiles(Settings.ProgramPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
@@ -583,7 +583,6 @@ namespace NoteFly
                 }
 
                 pluginfilepaths = null;
-                System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
                 string[] enabledplugins = Settings.ProgramPluginsEnabled.Split('|'); // | is illegal as filename.
                 for (int i = 0; i < pluginfiles.Length; i++)
                 {
@@ -595,74 +594,79 @@ namespace NoteFly
                             break;
                         }
 
-                        System.Reflection.Assembly pluginassembly = null;
-                        pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
+                        // Get if plugin is enabled.
                         bool pluginenabled = IsEnabledPlugin(enabledplugins, pluginfiles[i]);
-                        if (pluginassembly != null)
-                        {
-                            foreach (Type curplugintype in pluginassembly.GetTypes())
-                            {
-                                if (curplugintype.IsPublic && !curplugintype.IsAbstract)
-                                {
-                                    Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
-                                    if (plugintype != null)
-                                    {
-                                        IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
 
-                                        // Get name plugin
-                                        string pluginname = "untitled";
-                                        object[] atttitle = pluginassembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                                        if (atttitle.Length > 0)
+                        if (onlyenabled && pluginenabled || !onlyenabled)
+                        {
+                            System.Reflection.Assembly pluginassembly = null;
+                            pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
+                            if (pluginassembly != null)
+                            {
+                                foreach (Type curplugintype in pluginassembly.GetTypes())
+                                {
+                                    if (curplugintype.IsPublic && !curplugintype.IsAbstract)
+                                    {
+                                        Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
+                                        if (plugintype != null)
                                         {
-                                            AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)atttitle[0];
-                                            if (titleAttribute.Title != string.Empty)
+                                            IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+
+                                            // Get name plugin.
+                                            string pluginname = "untitled";
+                                            object[] atttitle = pluginassembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+                                            if (atttitle.Length > 0)
                                             {
-                                                if (titleAttribute.Title.Length > 150)
+                                                AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)atttitle[0];
+                                                if (titleAttribute.Title != string.Empty)
                                                 {
-                                                    pluginname = titleAttribute.Title.Substring(0, 150);
+                                                    if (titleAttribute.Title.Length > 150)
+                                                    {
+                                                        pluginname = titleAttribute.Title.Substring(0, 150);
+                                                    }
+                                                    else
+                                                    {
+                                                        pluginname = titleAttribute.Title;
+                                                    }
+                                                }
+                                            }
+
+                                            // Get author/company plugin.
+                                            string pluginauthor = "unknown";
+                                            object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+                                            if (attributes.Length != 0)
+                                            {
+                                                if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
+                                                {
+                                                    pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 150);
                                                 }
                                                 else
                                                 {
-                                                    pluginname = titleAttribute.Title;
+                                                    pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
                                                 }
                                             }
+
+                                            // Get description plugin.
+                                            string plugindescription = string.Empty;
+                                            object[] attdesc = pluginassembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+                                            if (attdesc.Length != 0)
+                                            {
+                                                if (((AssemblyDescriptionAttribute)attdesc[0]).Description.Length > 255)
+                                                {
+                                                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description.Substring(0, 255);
+                                                }
+                                                else
+                                                {
+                                                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description;
+                                                }
+                                            }
+
+                                            // Get version as string plugin.
+                                            string pluginversion = pluginassembly.GetName().Version.ToString();
+
+                                            iplugin.Register(pluginname, pluginauthor, plugindescription, pluginversion, pluginenabled, pluginfiles[i]);
+                                            pluginslist.Add(iplugin);
                                         }
-
-                                        // Get author/company
-                                        string pluginauthor = "unknown";
-                                        object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                                        if (attributes.Length != 0)
-                                        {
-                                            if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
-                                            {
-                                                pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 150);
-                                            }
-                                            else
-                                            {
-                                                pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
-                                            }
-                                        }
-
-                                        // Get description
-                                        string plugindescription = string.Empty;
-                                        object[] attdesc = pluginassembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                                        if (attdesc.Length != 0)
-                                        {
-                                            if (((AssemblyDescriptionAttribute)attdesc[0]).Description.Length > 255)
-                                            {
-                                                plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description.Substring(0, 255);
-                                            }
-                                            else
-                                            {
-                                                plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description;
-                                            }
-                                        }
-
-                                        // Get version
-                                        string pluginversion = pluginassembly.GetName().Version.ToString();
-
-                                        iplugin.Register(pluginname, pluginauthor, plugindescription, pluginversion, pluginenabled, pluginfiles[i]);
-                                        pluginslist.Add(iplugin);
                                     }
                                 }
                             }
@@ -673,15 +677,15 @@ namespace NoteFly
                         const string CANTLOADPLUGIN = "Can't load plugin: ";
                         Log.Write(LogType.exception, CANTLOADPLUGIN + pluginfiles[i] + " " + ex.Message);
                     }
-                }
-
-                plugins = pluginslist.ToArray();
+                }                
             }
             else
             {
                 const string PLUGINFOLDERNOTEXIST = "Plugin folder does not exist.";
                 Log.Write(LogType.info, PLUGINFOLDERNOTEXIST);
             }
+
+            return pluginslist.ToArray();
         }
 
         /// <summary>

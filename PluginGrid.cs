@@ -25,7 +25,8 @@ namespace NoteFly
     public partial class PluginGrid : UserControl
     {
         private Button[] btnPluginsStatus;
-        private TableLayoutPanel[] tlpnlPlugins;        
+        private TableLayoutPanel[] tlpnlPlugins;
+        private IPlugin.IPlugin[] allplugins;
 
         /// <summary>
         /// Creating a new instance of PluginGrid.
@@ -39,13 +40,14 @@ namespace NoteFly
         {
             this.SuspendLayout();
             this.Controls.Clear();
-            if (Program.plugins != null)
+            this.allplugins = Program.GetPlugins(false);
+            if (allplugins != null)
             {
-                this.btnPluginsStatus = new Button[Program.plugins.Length];
-                this.tlpnlPlugins = new TableLayoutPanel[Program.plugins.Length];
-                for (int i = 0; i < Program.plugins.Length; i++)
+                this.btnPluginsStatus = new Button[this.allplugins.Length];
+                this.tlpnlPlugins = new TableLayoutPanel[this.allplugins.Length];
+                for (int i = 0; i < this.allplugins.Length; i++)
                 {
-                    DrawPluginDetails(i, Program.plugins[i].Name, Program.plugins[i].Version, Program.plugins[i].Author, Program.plugins[i].Description, Program.plugins[i].Enabled);
+                    DrawPluginDetails(i, this.allplugins[i].Name, this.allplugins[i].Version, this.allplugins[i].Author, this.allplugins[i].Description, this.allplugins[i].Enabled);
                 }
             }
 
@@ -177,7 +179,7 @@ namespace NoteFly
         {
             Button btn = (Button)sender;
             int pluginpos = (int)btn.Tag;
-            Program.plugins[pluginpos].Enabled = !Program.plugins[pluginpos].Enabled;
+            this.allplugins[pluginpos].Enabled = !this.allplugins[pluginpos].Enabled;
             SetPluginStatusDetail(pluginpos);      
         }
 
@@ -187,7 +189,7 @@ namespace NoteFly
         /// <param name="pluginpos"></param>
         private void SetPluginStatusDetail(int pluginpos)
         {
-            if (Program.plugins[pluginpos].Enabled)
+            if (this.allplugins[pluginpos].Enabled)
             {
                 this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.WhiteSmoke;
                 this.btnPluginsStatus[pluginpos].Text = "disable";
@@ -207,11 +209,11 @@ namespace NoteFly
         {
             bool first = true;
             Settings.ProgramPluginsEnabled = string.Empty;
-            if (Program.plugins != null)
+            if (this.allplugins != null)
             {
-                for (int i = 0; i < Program.plugins.Length; i++)
+                for (int i = 0; i < this.allplugins.Length; i++)
                 {
-                    if (Program.plugins[i].Enabled)
+                    if (this.allplugins[i].Enabled)
                     {
                         if (first)
                         {
@@ -222,9 +224,11 @@ namespace NoteFly
                             Settings.ProgramPluginsEnabled += "|";
                         }
 
-                        Settings.ProgramPluginsEnabled += Program.plugins[i].Filename;
+                        Settings.ProgramPluginsEnabled += this.allplugins[i].Filename;
                     }
                 }
+
+                Program.enabledplugins = Program.GetPlugins(true);
             }
         }
     }

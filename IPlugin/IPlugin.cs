@@ -79,17 +79,22 @@
         /// <summary>
         /// Executed if a note is saved
         /// </summary>
-        /// <param name="note">A note object with details</param>
+        /// <param name="content">The note content.</param>
+        /// <param name="title">The note title.</param>
         void SavingNote(string content, string title);
 
         /// <summary>
-        /// Executed if a note is made visible
+        /// Executed if a note is made visible.
         /// </summary>
+        /// <param name="content">The note content.</param>
+        /// <param name="title">The note title.</param>
         void ShowingNote(string content, string title);
 
         /// <summary>
         /// Executed if a note is being hiden.
         /// </summary>
+        /// <param name="content">The note content.</param>
+        /// <param name="title">The note title.</param>
         void HidingNote(string content, string title);
     }
 }

@@ -278,14 +278,7 @@ namespace NoteFly
             {
                 ToolStripMenuItem menuitem = (ToolStripMenuItem)sender;
                 int p = (int)menuitem.Tag;
-                if (Program.plugins[p].Enabled)
-                {
-                    Program.plugins[p].ShareMenuClicked(this.rtbNote, this.note.Title);
-                }
-                else
-                {
-                    Log.Write(LogType.exception, "Plugin not enabled.");
-                }
+                Program.enabledplugins[p].ShareMenuClicked(this.rtbNote, this.note.Title);
             }
             catch (Exception exc)
             {
@@ -525,7 +518,7 @@ namespace NoteFly
             this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             if (notes.GetPrimaryTexture(note.SkinNr) != null)
             {
-                this.BackgroundImageLayout =  notes.GetPrimaryTextureLayout(note.SkinNr);
+                this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(note.SkinNr);
                 this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
             }
             else
@@ -855,19 +848,16 @@ namespace NoteFly
                 }
             }
 
-            if (Program.plugins != null && Settings.ProgramPluginsAllEnabled)
+            if (Program.enabledplugins != null && Settings.ProgramPluginsAllEnabled)
             {
-                for (int i = 0; i < Program.plugins.Length; i++)
+                for (int i = 0; i < Program.enabledplugins.Length; i++)
                 {
-                    if (!String.IsNullOrEmpty(Program.plugins[i].ShareMenuText))
+                    if (!String.IsNullOrEmpty(Program.enabledplugins[i].ShareMenuText))
                     {
-                        if (Program.plugins[i].Enabled)
-                        {
-                            ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.plugins[i].ShareMenuText, null, new EventHandler(MenuPluginClicked));
-                            menuitem.Name = "menuPlugin" + Program.plugins[i].Name;
-                            menuitem.Tag = i;
-                            this.menuSendTo.DropDownItems.Add(menuitem);
-                        }
+                        ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.enabledplugins[i].ShareMenuText, null, new EventHandler(MenuPluginClicked));
+                        menuitem.Name = "menuPlugin" + Program.enabledplugins[i].Name;
+                        menuitem.Tag = i;
+                        this.menuSendTo.DropDownItems.Add(menuitem);
                     }
                 }
             }

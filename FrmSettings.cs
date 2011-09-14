@@ -58,7 +58,7 @@ namespace NoteFly
             this.notes = notes;
             this.DrawCbxFonts();
             this.SetControlsBySettings();
-            
+
         }
 
         #endregion Constructors
@@ -153,29 +153,26 @@ namespace NoteFly
             }
             else
             {
-                if (Program.plugins != null && Settings.ProgramPluginsAllEnabled)
+                if (Program.enabledplugins != null && Settings.ProgramPluginsAllEnabled)
                 {
                     // check plugin settings
-                    for (int i = 0; i < Program.plugins.Length; i++)
+                    for (int i = 0; i < Program.enabledplugins.Length; i++)
                     {
-                        if (Program.plugins[i].Enabled)
+                        if (!Program.enabledplugins[i].SaveSettingsTab())
                         {
-                            if (!Program.plugins[i].SaveSettingsTab())
+                            this.tabControlSettings.SelectedTab = this.tabSharing;
+                            // select the right plugin tab by tab title/text.
+                            if (!String.IsNullOrEmpty(Program.enabledplugins[i].SettingsTabTitle))
                             {
-                                this.tabControlSettings.SelectedTab = this.tabSharing;
-                                // select the right plugin tab by tab title/text.
-                                if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
+                                for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
                                 {
-                                    for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
+                                    if (this.tabControlSharing.TabPages[t].Text == Program.enabledplugins[i].SettingsTabTitle)
                                     {
-                                        if (this.tabControlSharing.TabPages[t].Text == Program.plugins[i].SettingsTabTitle)
-                                        {
-                                            this.tabControlSharing.SelectedIndex = t;
-                                        }
+                                        this.tabControlSharing.SelectedIndex = t;
                                     }
                                 }
-                                return;
                             }
+                            return;
                         }
                     }
                 }
@@ -505,7 +502,7 @@ namespace NoteFly
             this.chxHighlightSQL.Checked = Settings.HighlightSQL;
 
             // tab: social networks
-            this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;            
+            this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;
             this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
             this.chxSocialEmailDefaultaddressSet.Checked = false;
             if (!string.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
@@ -629,25 +626,21 @@ namespace NoteFly
         {
             if (tabControlSettings.SelectedTab == this.tabSharing)
             {
-                if (Program.plugins != null && Settings.ProgramPluginsAllEnabled)
+                if (Program.enabledplugins != null && Settings.ProgramPluginsAllEnabled)
                 {
                     while (this.tabControlSharing.TabCount > 1)
                     {
                         this.tabControlSharing.Controls.RemoveAt(1);
                     }
 
-                    for (int i = 0; i < Program.plugins.Length; i++)
+                    for (int i = 0; i < Program.enabledplugins.Length; i++)
                     {
-                        if (!String.IsNullOrEmpty(Program.plugins[i].SettingsTabTitle))
+                        if (!String.IsNullOrEmpty(Program.enabledplugins[i].SettingsTabTitle))
                         {
-                            if (Program.plugins[i].InitShareSettingsTab() != null)
+                            if (Program.enabledplugins[i].InitShareSettingsTab() != null)
                             {
-                                if (Program.plugins[i].Enabled)
-                                {
-                                    this.tabControlSharing.Controls.Add(Program.plugins[i].InitShareSettingsTab());
-                                }
+                                    this.tabControlSharing.Controls.Add(Program.enabledplugins[i].InitShareSettingsTab());                                
                             }
-
                         }
                     }
                 }
@@ -664,7 +657,6 @@ namespace NoteFly
             this.pluginGrid.Enabled = this.chxLoadPlugins.Checked;
             if (chxLoadPlugins.Checked)
             {
-                Program.LoadPlugins();
                 this.pluginGrid.VerticalScroll.Value = 0;
                 this.pluginGrid.DrawAllPluginsDetails();
             }
