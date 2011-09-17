@@ -193,6 +193,11 @@ namespace NoteFly
         /// <returns>true if file settings exists.</returns>
         public static bool LoadSettings()
         {
+            if (!Directory.Exists(Program.AppDataFolder))
+            {
+                Directory.CreateDirectory(Program.AppDataFolder);
+            }
+
             string settingsfilepath = Path.Combine(Program.AppDataFolder, SETTINGSFILE);
             if (!File.Exists(settingsfilepath))
             {

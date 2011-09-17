@@ -114,7 +114,7 @@ namespace NoteFly
         {
             get
             {
-                return "beta1";
+                return "beta2";
             }
         }
 
@@ -187,7 +187,6 @@ namespace NoteFly
             SetDllDirectory(string.Empty);                                     // removes notefly current working directory as ddl search path
             Environment.SetEnvironmentVariable("PATH", string.Empty);          // removes dangourse %PATH% as dll search path
             Environment.SetEnvironmentVariable("windir", string.Empty);        // removes %windir%
-            Environment.SetEnvironmentVariable("ProgramFiles", string.Empty);  // removes %ProgramFiles%
             Environment.SetEnvironmentVariable("SystemDrive", string.Empty);   // removes %SystemDrive%
             Environment.SetEnvironmentVariable("CommonProgramFiles", string.Empty); // removes %CommonProgramFiles%
             Environment.SetEnvironmentVariable("USERPROFILE", string.Empty);   // removes %USERPROFILE%

@@ -57,6 +57,7 @@ namespace NoteFly
             this.oldnotesavepath = Settings.NotesSavepath;
             this.notes = notes;
             this.DrawCbxFonts();
+            this.SetFormTitle(Settings.SettingsExpertEnabled);
             this.SetControlsBySettings();
 
         }
@@ -98,6 +99,22 @@ namespace NoteFly
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// Set the title of this form.
+        /// </summary>
+        /// <param name="expertsettings"></param>
+        private void SetFormTitle(bool expertsettings)
+        {
+            if (expertsettings)
+            {
+                this.Text = "Expert settings";
+            }
+            else
+            {
+                this.Text = "Settings";
+            }
         }
 
         /// <summary>
@@ -600,6 +617,7 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void cbxShowExpertSettings_CheckedChanged(object sender, EventArgs e)
         {
+            this.SetFormTitle(this.chxSettingsExpertEnabled.Checked);
             this.chxConfirmDeletenote.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxNotesDeleteRecyclebin.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxShowTooltips.Visible = this.chxSettingsExpertEnabled.Checked;
@@ -614,7 +632,7 @@ namespace NoteFly
             this.lblTextNetworkMiliseconds.Visible = this.chxSettingsExpertEnabled.Checked;
             this.cbxFontNoteTitleBold.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxLogErrors.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.chxLogExceptions.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.chxLogExceptions.Visible = this.chxSettingsExpertEnabled.Checked;            
         }
 
         /// <summary>
@@ -639,7 +657,7 @@ namespace NoteFly
                         {
                             if (Program.enabledplugins[i].InitShareSettingsTab() != null)
                             {
-                                    this.tabControlSharing.Controls.Add(Program.enabledplugins[i].InitShareSettingsTab());                                
+                                this.tabControlSharing.Controls.Add(Program.enabledplugins[i].InitShareSettingsTab());
                             }
                         }
                     }

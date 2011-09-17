@@ -114,7 +114,6 @@ namespace NoteFly
 
         /// <summary>
         /// Try to find the path to gpg.exe or gpg on linux
-        /// TODO make it work under windows x64 editions
         /// </summary>
         public string GetGPGPath()
         {
@@ -128,10 +127,13 @@ namespace NoteFly
             }
             else
             {
-                string gpginstallpath = Path.Combine(Path.Combine(this.GetProgramFilesx86(), "GNU"), "GnuPG");
-                if (Directory.Exists(gpginstallpath))
+                if (!String.IsNullOrEmpty(this.GetProgramFilesx86()))
                 {
-                    gpgpath = this.FindGPGexecutables(gpginstallpath);
+                    string gpginstallpath = Path.Combine(Path.Combine(this.GetProgramFilesx86(), "GNU"), "GnuPG");
+                    if (Directory.Exists(gpginstallpath))
+                    {
+                        gpgpath = this.FindGPGexecutables(gpginstallpath);
+                    }
                 }
             }
 #elif linux

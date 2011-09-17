@@ -23,7 +23,7 @@
 
 !define PROJNAME   "NoteFly"
 !define VERSION    "2.5.0"          ; version number: major.minor.release
-!define VERSTATUS  "beta1"          ; alpha, beta, rc, or nothing for final.
+!define VERSTATUS  "beta2"          ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
 !define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
@@ -186,7 +186,6 @@ Section "main executable (required)"
   
   ; skin textures
   File "nyancat.jpg"    ; 4,53 KB
-  File "blackhorse.jpg" ; 8,48 KB
   File "grass.jpg"      ; 9,17 KB
   File "colordrops.jpg" ; 10,0 KB
   
@@ -249,13 +248,15 @@ Section "Uninstall"
 
   ; skin textures
   Delete "$INSTDIR\nyancat.jpg"
-  Delete "$INSTDIR\blackhorse.jpg"
   Delete "$INSTDIR\grass.jpg"
   Delete "$INSTDIR\colordrops.jpg"
+  Delete "$INSTDIR\blackhorse.jpg" ; remove ifexist, in NoteFly 2.5.0 beta1 only.
   
   ; remove uninstaller
   Delete "$INSTDIR\uninstall.exe"
     
+  ; Remove plugin directory if empty
+  RMDir "$INSTDIR\plugins\"
   ; Remove directory if empty
   RMDir "$INSTDIR"
 
@@ -268,6 +269,7 @@ Section "Uninstall"
     Delete "$APPDATA\.NoteFly2\skins.xml"
     Delete "$APPDATA\.NoteFly2\debug.log"
     Delete "$APPDATA\.NoteFly2\*.nfn"
+
     ; Remove directory if empty
     RMDir "$APPDATA\.NoteFly2"
   postremoveadminappdata:
