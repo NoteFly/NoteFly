@@ -385,7 +385,8 @@ namespace NoteFly
             int numloadingnotes = notefiles.Length;
             if (this.CheckLimitNotes(notefiles.Length))
             {
-                DialogResult dlgres = MessageBox.Show("There are many notes loading this can take a while, do you want to load them all?", "contine loading many notes?", MessageBoxButtons.YesNo);
+                const string MANYNOTESLOADALL = "There are many notes loading this can take a while, do you want to load them all?";
+                DialogResult dlgres = MessageBox.Show(MANYNOTESLOADALL, "contine loading many notes?", MessageBoxButtons.YesNo);
                 if (dlgres == DialogResult.No)
                 {
                     numloadingnotes = Settings.NotesWarnLimit;

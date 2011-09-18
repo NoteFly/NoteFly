@@ -585,11 +585,10 @@ namespace NoteFly
             StreamReader reader = null;
             try
             {
-                reader = new StreamReader(openImportFileDialog.FileName, true);
+                reader = new StreamReader(openImportFileDialog.FileName, Encoding.ASCII); // ANSI
                 char chrstartdoc = (char)2;
                 char chrstartnotefilename = (char)3;
                 char chrendnotefilename = (char)4;
-
                 char[] startchar = new char[1];
                 reader.Read(startchar, 0, 1);
                 if (startchar[0] == chrstartdoc)
@@ -607,11 +606,12 @@ namespace NoteFly
                             {
                                 int posstartdata = line.IndexOf('=') + 1;
                                 string data = line.Substring(posstartdata, line.Length - posstartdata);
+                                
                                 StringBuilder title = new StringBuilder();
                                 for (int c = 0; c < 508; c += 4)
                                 {
                                     int chartitle = int.Parse(data.Substring(c, 2), System.Globalization.NumberStyles.HexNumber);
-                                    if (chartitle > 0)
+                                    if (chartitle > 0 && chartitle != chrendnotefilename && chartitle != chrstartnotefilename && chartitle != chrstartdoc)
                                     {
                                         title.Append((char)chartitle);
                                     }
@@ -621,20 +621,27 @@ namespace NoteFly
                                     }
                                 }
 
-                                notetitles.Add(title.ToString());
+                                notetitles.Add(title.ToString());                                
                             }
                             else if (line.StartsWith("rel_position="))
                             {
                                 // TODO
                             }
                             else if (line.StartsWith("creation="))
-                            {
-                                // TODO
+                            {                              
+                                int poseq = line.IndexOf('=') + 1;
+                                string enccreation = line.Substring(poseq, line.Length - poseq);
+                                int yyyy = int.Parse(enccreation.Substring(2, 2) + enccreation.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+                                int MM = int.Parse(enccreation.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+                                int dd = int.Parse(enccreation.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
+                                int hh = int.Parse(enccreation.Substring(16, 2), System.Globalization.NumberStyles.HexNumber);
+                                int mm = int.Parse(enccreation.Substring(20, 2), System.Globalization.NumberStyles.HexNumber);
+                                Log.Write(LogType.info, "Imported PNote creation: " + yyyy + "-" + MM + "-" + dd + " " + hh + ":" + mm);
                             }
                             else if (line.Contains(chrstartnotefilename.ToString()))
                             {
                                 notecontents = true;
-                                int pos = line.IndexOf(chrendnotefilename);
+                                int pos = line.IndexOf(chrendnotefilename) + 1;
                                 notecontent.AppendLine(line.Substring(pos, line.Length - pos));
                             }
                         }

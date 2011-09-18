@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="TrayIcon.cs" company="GNU">
+// <copyright file="Program.cs" company="GNU">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //
