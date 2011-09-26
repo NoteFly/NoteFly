@@ -154,16 +154,16 @@ namespace NoteFly
             DialogResult savebackupdlgres = this.saveExportFileDialog.ShowDialog();
             if (savebackupdlgres == DialogResult.OK)
             {
-                switch (saveExportFileDialog.FilterIndex)
+                switch (this.saveExportFileDialog.FilterIndex)
                 {
                     case 1:
-                        xmlUtil.WriteNoteFlyNotesBackupFile(saveExportFileDialog.FileName, this.notes);
+                        xmlUtil.WriteNoteFlyNotesBackupFile(this.saveExportFileDialog.FileName, this.notes);
                         break;
                     case 2:
-                        this.WriteStickiesCSVBackupfile(saveExportFileDialog.FileName);
+                        this.WriteStickiesCSVBackupfile(this.saveExportFileDialog.FileName);
                         break;
                     case 3:
-                        this.WritePNotesBackupfile(saveExportFileDialog.FileName);
+                        this.WritePNotesBackupfile(this.saveExportFileDialog.FileName);
                         break;
                 }
             }
@@ -172,7 +172,8 @@ namespace NoteFly
         /// <summary>
         /// Write a stickies CSV backup file.
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filename">The full path and filename to write the CSV formatted stickies
+        /// compatible file format.</param>
         private void WriteStickiesCSVBackupfile(string filename)
         {
             FileStream fs = null;

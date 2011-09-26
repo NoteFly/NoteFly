@@ -1,33 +1,34 @@
-﻿namespace IPlugin
+﻿//-----------------------------------------------------------------------
+// <copyright file="IPlugin.cs" company="NoteFly">
+//  NoteFly a note application.
+//  Copyright (C) 2011  Tom
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace IPlugin
 {
     using System.Windows.Forms;
 
     /// <summary>
     /// Plugin interface
-    /// Still DRAFT, subjected to change.
+    /// 
+    /// warning: DRAFT
+    /// Subject to change.
     /// </summary>
     public interface IPlugin
     {
-        /// <summary>
-        /// Gets the name of the plugin
-        /// </summary>
-        string Name { get; }
-
-        /// <summary>
-        /// Gets the description of the plugin
-        /// </summary>
-        string Description { get; }
-
-        /// <summary>
-        /// Gets author of the plugin
-        /// </summary>
-        string Author { get; }
-
-        /// <summary>
-        /// Gets the version of the plugin
-        /// </summary>
-        string Version { get; }
-
         /// <summary>
         /// Is this plugin enabled
         /// </summary>
@@ -49,13 +50,11 @@
         string SettingsTabTitle { get; }
 
         /// <summary>
-        /// Register this plugin
+        /// Register plugin
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="author"></param>
-        /// <param name="description"></param>
-        /// <param name="version"></param>
-        void Register(string name, string author, string description, string version, bool enabled, string file);
+        /// <param name="enabled">Is this plugin enabled.</param>
+        /// <param name="file">The filename of the plugin</param>
+        void Register(bool enabled, string file);
 
         /// <summary>
         /// Executed if share menu clicked.

@@ -170,20 +170,20 @@ namespace NoteFly
             }
             else
             {
-                if (Program.enabledplugins != null && Settings.ProgramPluginsAllEnabled)
+                if (Program.pluginsenabled != null)
                 {
                     // check plugin settings
-                    for (int i = 0; i < Program.enabledplugins.Length; i++)
+                    for (int i = 0; i < Program.pluginsenabled.Length; i++)
                     {
-                        if (!Program.enabledplugins[i].SaveSettingsTab())
+                        if (!Program.pluginsenabled[i].SaveSettingsTab())
                         {
                             this.tabControlSettings.SelectedTab = this.tabSharing;
                             // select the right plugin tab by tab title/text.
-                            if (!String.IsNullOrEmpty(Program.enabledplugins[i].SettingsTabTitle))
+                            if (!String.IsNullOrEmpty(Program.pluginsenabled[i].SettingsTabTitle))
                             {
                                 for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
                                 {
-                                    if (this.tabControlSharing.TabPages[t].Text == Program.enabledplugins[i].SettingsTabTitle)
+                                    if (this.tabControlSharing.TabPages[t].Text == Program.pluginsenabled[i].SettingsTabTitle)
                                     {
                                         this.tabControlSharing.SelectedIndex = t;
                                     }
@@ -644,20 +644,20 @@ namespace NoteFly
         {
             if (tabControlSettings.SelectedTab == this.tabSharing)
             {
-                if (Program.enabledplugins != null && Settings.ProgramPluginsAllEnabled)
+                if (Program.pluginsenabled != null)
                 {
                     while (this.tabControlSharing.TabCount > 1)
                     {
                         this.tabControlSharing.Controls.RemoveAt(1);
                     }
 
-                    for (int i = 0; i < Program.enabledplugins.Length; i++)
+                    for (int i = 0; i < Program.pluginsenabled.Length; i++)
                     {
-                        if (!String.IsNullOrEmpty(Program.enabledplugins[i].SettingsTabTitle))
+                        if (!String.IsNullOrEmpty(Program.pluginsenabled[i].SettingsTabTitle))
                         {
-                            if (Program.enabledplugins[i].InitShareSettingsTab() != null)
+                            if (Program.pluginsenabled[i].InitShareSettingsTab() != null)
                             {
-                                this.tabControlSharing.Controls.Add(Program.enabledplugins[i].InitShareSettingsTab());
+                                this.tabControlSharing.Controls.Add(Program.pluginsenabled[i].InitShareSettingsTab());
                             }
                         }
                     }

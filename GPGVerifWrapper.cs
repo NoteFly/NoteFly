@@ -26,6 +26,9 @@ namespace NoteFly
     using System.IO;
     using System.Diagnostics;
 
+    /// <summary>
+    /// Class to verify files with GnuPG
+    /// </summary>
     public class GPGVerifWrapper
     {
         private const string GPGSIGNATUREEXTENSION = ".sig";
@@ -35,9 +38,9 @@ namespace NoteFly
         private string gpgerror;
 
         /// <summary>
-        /// Verif a file.
+        /// Verify a file.
         /// </summary>
-        /// <param name="downloadfilepath"></param>
+        /// <param name="downloadfilepath">The path to the local file that was downloaded</param>
         public void VerifDownload(string downloadfilepath)
         {
             try
@@ -91,7 +94,7 @@ namespace NoteFly
                 int gpgprocexitcode = gpgproc.ExitCode;
                 if (gpgprocexitcode == 0)
                 {
-                    // currently display GPG result via messagebox..
+                    // Currently display GPG result via messagebox..
                     System.Windows.Forms.MessageBox.Show(this.gpgoutput + System.Environment.NewLine + this.gpgerror, Program.AssemblyTitle + " signature check result");
                 }
 
@@ -105,11 +108,11 @@ namespace NoteFly
         /// <summary>
         /// Get the NoteFly setup signature file location.
         /// </summary>
-        /// <param name="downloadfile"></param>
-        /// <returns></returns>
-        public string GetSignature(string downloadfile)
+        /// <param name="file">The url of the file to verify.</param>
+        /// <returns>The url of the signature file to verify file with.</returns>
+        public string GetSignature(string file)
         {
-            return downloadfile + GPGSIGNATUREEXTENSION;
+            return file + GPGSIGNATUREEXTENSION;
         }
 
         /// <summary>

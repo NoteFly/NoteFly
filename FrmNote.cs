@@ -278,7 +278,7 @@ namespace NoteFly
             {
                 ToolStripMenuItem menuitem = (ToolStripMenuItem)sender;
                 int p = (int)menuitem.Tag;
-                Program.enabledplugins[p].ShareMenuClicked(this.rtbNote, this.note.Title);
+                Program.pluginsenabled[p].ShareMenuClicked(this.rtbNote, this.note.Title);
             }
             catch (Exception exc)
             {
@@ -848,14 +848,14 @@ namespace NoteFly
                 }
             }
 
-            if (Program.enabledplugins != null && Settings.ProgramPluginsAllEnabled)
+            if (Program.pluginsenabled != null)
             {
-                for (int i = 0; i < Program.enabledplugins.Length; i++)
+                for (int i = 0; i < Program.pluginsenabled.Length; i++)
                 {
-                    if (!String.IsNullOrEmpty(Program.enabledplugins[i].ShareMenuText))
+                    if (!String.IsNullOrEmpty(Program.pluginsenabled[i].ShareMenuText))
                     {
-                        ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.enabledplugins[i].ShareMenuText, null, new EventHandler(MenuPluginClicked));
-                        menuitem.Name = "menuPlugin" + Program.enabledplugins[i].Name;
+                        ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.pluginsenabled[i].ShareMenuText, null, new EventHandler(MenuPluginClicked));
+                        menuitem.Name = "menuPlugin" + i;
                         menuitem.Tag = i;
                         this.menuSendTo.DropDownItems.Add(menuitem);
                     }

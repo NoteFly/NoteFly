@@ -212,11 +212,11 @@ namespace NoteFly
                         this.notes.AddNote(this.note);
                     }
 
-                    if (Program.enabledplugins != null && Settings.ProgramPluginsAllEnabled)
+                    if (Program.pluginsenabled != null)
                     {
-                        for (int i = 0; i < Program.enabledplugins.Length; i++)
+                        for (int i = 0; i < Program.pluginsenabled.Length; i++)
                         {
-                            Program.enabledplugins[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);                            
+                            Program.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);                            
                         }
                     }
 

@@ -343,11 +343,11 @@ namespace NoteFly
             this.frmnote = new FrmNote(this.notes, this, wordwarp);
             this.visible = true;
             this.frmnote.Show();
-            if (Program.enabledplugins != null)
+            if (Program.pluginsenabled != null)
             {
-                for (int i = 0; i < Program.enabledplugins.Length; i++)
+                for (int i = 0; i < Program.pluginsenabled.Length; i++)
                 {
-                    Program.enabledplugins[i].ShowingNote(this.tempcontent, title);
+                    Program.pluginsenabled[i].ShowingNote(this.tempcontent, title);
                 }
             }
         }
@@ -364,11 +364,11 @@ namespace NoteFly
             }
 
             this.frmnote = null;
-            if (Program.enabledplugins != null)
+            if (Program.pluginsenabled != null)
             {
-                for (int i = 0; i < Program.enabledplugins.Length; i++)
+                for (int i = 0; i < Program.pluginsenabled.Length; i++)
                 {
-                    Program.enabledplugins[i].HidingNote(this.tempcontent, this.title);                    
+                    Program.pluginsenabled[i].HidingNote(this.tempcontent, this.title);                    
                 }
             }
 

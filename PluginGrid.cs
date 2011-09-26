@@ -21,6 +21,7 @@ namespace NoteFly
 {
     using System;
     using System.Windows.Forms;
+    using System.IO;
 
     public partial class PluginGrid : UserControl
     {
@@ -36,6 +37,9 @@ namespace NoteFly
             this.DrawAllPluginsDetails();
         }
 
+        /// <summary>
+        /// Draw all plugins in the plugingrid.
+        /// </summary>
         public void DrawAllPluginsDetails()
         {
             this.SuspendLayout();
@@ -47,7 +51,7 @@ namespace NoteFly
                 this.tlpnlPlugins = new TableLayoutPanel[this.allplugins.Length];
                 for (int i = 0; i < this.allplugins.Length; i++)
                 {
-                    DrawPluginDetails(i, this.allplugins[i].Name, this.allplugins[i].Version, this.allplugins[i].Author, this.allplugins[i].Description, this.allplugins[i].Enabled);
+                    DrawPluginDetails(i, this.allplugins[i].Enabled, this.allplugins[i].Filename);
                 }
             }
 
@@ -62,8 +66,15 @@ namespace NoteFly
         /// <param name="pluginversion"></param>
         /// <param name="pluginauthor"></param>
         /// <param name="plugindescription"></param>
-        private void DrawPluginDetails(int pluginpos, string plugintitle, string pluginversion, string pluginauthor, string plugindescription, bool pluginenabled)
+        private void DrawPluginDetails(int pluginpos, bool pluginenabled, string filename)
         {
+            
+            System.Reflection.Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, filename));
+            if (pluginassembly == null)
+            {
+                return;
+            }
+
             this.tlpnlPlugins[pluginpos] = new System.Windows.Forms.TableLayoutPanel();
             Label lblPluginTitle = new System.Windows.Forms.Label();
             Label lblTextPluginVersion = new System.Windows.Forms.Label();
@@ -97,9 +108,8 @@ namespace NoteFly
             this.tlpnlPlugins[pluginpos].RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpnlPlugins[pluginpos].Size = new System.Drawing.Size(340, 98);
             this.tlpnlPlugins[pluginpos].TabIndex = 4;
-            // 
+
             // lblPluginTitle
-            // 
             lblPluginTitle.AutoSize = true;
             this.tlpnlPlugins[pluginpos].SetColumnSpan(lblPluginTitle, 2);
             lblPluginTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.00F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -107,41 +117,40 @@ namespace NoteFly
             lblPluginTitle.Name = "lblPluginTitle";
             lblPluginTitle.Size = new System.Drawing.Size(232, 25);
             lblPluginTitle.TabIndex = 1;
-            lblPluginTitle.Text = plugintitle;
-            // 
+            lblPluginTitle.Text = Program.GetPluginName(pluginassembly);
+ 
             // lblTextPluginVersion
-            // 
             lblTextPluginVersion.AutoSize = true;
             lblTextPluginVersion.Location = new System.Drawing.Point(3, 37);
             lblTextPluginVersion.Name = "lblTextPluginVersion";
             lblTextPluginVersion.Size = new System.Drawing.Size(44, 13);
             lblTextPluginVersion.TabIndex = 6;
             lblTextPluginVersion.Text = "version:";
-            // 
+
             // lblPluginVersion
-            // 
             lblPluginVersion.AutoSize = true;
             this.tlpnlPlugins[pluginpos].SetColumnSpan(lblPluginVersion, 2);
             lblPluginVersion.Location = new System.Drawing.Point(102, 37);
-            lblPluginVersion.Name = "lblPluginVersion";           
+            lblPluginVersion.Name = "lblPluginVersion";
             lblPluginVersion.TabIndex = 7;
-            lblPluginVersion.Text = pluginversion;
-            // 
+            lblPluginVersion.Text = Program.GetPluginVersion(pluginassembly);
+            
             // lblTextPluginAuthor
-            // 
             lblTextPluginAuthor.AutoSize = true;
             lblTextPluginAuthor.Location = new System.Drawing.Point(3, 53);
             lblTextPluginAuthor.Name = "lblTextPluginAuthor";
             lblTextPluginAuthor.Size = new System.Drawing.Size(40, 13);
             lblTextPluginAuthor.TabIndex = 8;
             lblTextPluginAuthor.Text = "author:";
+
             // lblPluginAuthor
             lblPluginAuthor.AutoSize = true;
             this.tlpnlPlugins[pluginpos].SetColumnSpan(lblPluginAuthor, 2);
             lblPluginAuthor.Location = new System.Drawing.Point(102, 53);
             lblPluginAuthor.Name = "lblPluginAuthor";
             lblPluginAuthor.TabIndex = 9;
-            lblPluginAuthor.Text = pluginauthor;
+            lblPluginAuthor.Text = Program.GetPluginAuthor(pluginassembly);
+
             // lblTextPluginDescription
             lblTextPluginDescription.AutoSize = true;
             lblTextPluginDescription.Location = new System.Drawing.Point(3, 70);
@@ -156,7 +165,7 @@ namespace NoteFly
             lblPluginDescription.Location = new System.Drawing.Point(102, 70);
             lblPluginDescription.Name = "lblPluginDescription";
             lblPluginDescription.TabIndex = 11;
-            lblPluginDescription.Text = plugindescription;
+            lblPluginDescription.Text = Program.GetPluginDescription(pluginassembly);
 
             this.btnPluginsStatus[pluginpos].Location = new System.Drawing.Point(230, 20);
             this.btnPluginsStatus[pluginpos].Name = "btnTogglePluginStatus" + pluginpos;
@@ -228,7 +237,7 @@ namespace NoteFly
                     }
                 }
 
-                Program.enabledplugins = Program.GetPlugins(true);
+                Program.pluginsenabled = Program.GetPlugins(true);
             }
         }
     }

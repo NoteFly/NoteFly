@@ -26,58 +26,10 @@ namespace IPlugin
     [CLSCompliant(true)]
     public abstract class PluginBase : IPlugin
     {
-        private string name;
-        private string author;
-        private string description;
-        private string version;
         private bool enabled = false;
         private string file;
 
-        // Properties (6) 
-
-        /// <summary>
-        /// The name of this plugin
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
-
-        /// <summary>
-        /// The author of this plugin
-        /// </summary>
-        public string Author
-        {
-            get
-            {
-                return this.author;
-            }
-        }
-
-        /// <summary>
-        /// The description of this plugin
-        /// </summary>
-        public string Description
-        {
-            get
-            {
-                return this.description;
-            }
-        }
-
-        /// <summary>
-        /// The version of this plugin
-        /// </summary>
-        public string Version
-        {
-            get
-            {
-                return this.version;
-            }
-        }
+        // Properties (2) 
 
         /// <summary>
         /// Is the plugin enabled.
@@ -94,6 +46,9 @@ namespace IPlugin
             }
         }
 
+        /// <summary>
+        /// Gets the plugin filename.
+        /// </summary>
         public string Filename
         {
             get
@@ -130,18 +85,12 @@ namespace IPlugin
 
         /// <summary>
         /// Register the plugin
+        /// string name, string author, string description, string version, 
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="author"></param>
-        /// <param name="description"></param>
-        /// <param name="version"></param>
         /// <param name="enabled"></param>
-        public void Register(string name, string author, string description, string version, bool enabled, string file)
+        /// <param name="file"></param>
+        public void Register(bool enabled, string file)
         {
-            this.name = name;
-            this.author = author;
-            this.description = description;
-            this.version = version;
             this.enabled = enabled;
             this.file = file;
         }
