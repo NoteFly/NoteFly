@@ -85,6 +85,21 @@ namespace NoteFly
         private System.Windows.Forms.ToolTip toolTip;
 
         /// <summary>
+        /// SaveFileDialog saveExportFileDialog
+        /// </summary>
+        private System.Windows.Forms.SaveFileDialog saveExportFileDialog;
+
+        /// <summary>
+        /// OpenFileDialog openImportFileDialog
+        /// </summary>
+        private System.Windows.Forms.OpenFileDialog openImportFileDialog;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanelButtons
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelButtons;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -417,9 +432,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.SaveFileDialog saveExportFileDialog;
-        private System.Windows.Forms.OpenFileDialog openImportFileDialog;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelButtons;
     }
 }

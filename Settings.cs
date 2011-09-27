@@ -322,6 +322,12 @@ namespace NoteFly
         public static bool UpdatecheckUseGPG = false;
 
         /// <summary>
+        /// The maximum amount of time in miliseconds GnuPG is given to return the result of validating a file.
+        /// On a slow (embedded)system you may need to increase this.
+        /// </summary>
+        public static int UpdatecheckTimeoutGPG = 6000;
+
+        /// <summary>
         /// The path to the location of where gpg.exe is located required to verif the downloaded update if enabled.
         /// </summary>
         public static string UpdatecheckGPGPath = string.Empty;

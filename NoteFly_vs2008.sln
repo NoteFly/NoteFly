@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendToLightning", "extensio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPlugin", "IPlugin\IPlugin.csproj", "{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsertSmiley", "extensions\InsertSmiley\InsertSmiley.csproj", "{144B401F-3586-46C2-AD47-8E136E967B01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,16 @@ Global
 		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}.Release|x86.ActiveCfg = Release|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{144B401F-3586-46C2-AD47-8E136E967B01}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

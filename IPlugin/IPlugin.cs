@@ -23,9 +23,8 @@ namespace IPlugin
 
     /// <summary>
     /// Plugin interface
-    /// 
-    /// warning: DRAFT
-    /// Subject to change.
+    /// status: DRAFT (Subject to change)
+    /// revision: 2
     /// </summary>
     public interface IPlugin
     {
@@ -68,6 +67,20 @@ namespace IPlugin
         /// </summary>
         /// <returns>a Tabpage with all components to draw</returns>
         TabPage InitShareSettingsTab();
+
+        /// <summary>
+        /// Create a button in the bottom in FrmNewNote.
+        /// </summary>
+        /// <returns></returns>
+        Button[] InitFrmNewNoteFormatTools();
+
+        /// <summary>
+        /// A plugin format button is cliked.
+        /// </summary>
+        /// <param name="rtbnote"></param>
+        /// <param name="sender"></param>
+        /// <returns>new content</returns>
+        string FormatBtnClicked(System.Windows.Forms.RichTextBox rtf, Button sender);
 
         /// <summary>
         /// Executed if Ok on FrmSettings is pressed.

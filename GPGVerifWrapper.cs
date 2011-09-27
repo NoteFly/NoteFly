@@ -31,10 +31,24 @@ namespace NoteFly
     /// </summary>
     public class GPGVerifWrapper
     {
+        /// <summary>
+        /// The GnuPG signature file extension
+        /// </summary>
         private const string GPGSIGNATUREEXTENSION = ".sig";
-        private const int gpgtimeout = 6000; // 6 seconds
+
+        /// <summary>
+        /// GnuPG process
+        /// </summary>
         private Process gpgproc;
+
+        /// <summary>
+        /// output stream
+        /// </summary>
         private string gpgoutput;
+
+        /// <summary>
+        /// error stream
+        /// </summary>
         private string gpgerror;
 
         /// <summary>
@@ -65,15 +79,15 @@ namespace NoteFly
                 Thread gpgerrorthread = new Thread(errorEntry);
                 gpgerrorthread.Start();
 
-                if (this.gpgproc.WaitForExit(gpgtimeout))
+                if (this.gpgproc.WaitForExit(Settings.UpdatecheckTimeoutGPG))
                 {
                     // Process exited before timeout.
                     // Wait for the threads to complete reading output/error (but use a timeout)
-                    if (!gpgoutputthread.Join(gpgtimeout / 2))
+                    if (!gpgoutputthread.Join(Settings.UpdatecheckTimeoutGPG / 2))
                     {
                         gpgoutputthread.Abort();
                     }
-                    if (!gpgerrorthread.Join(gpgtimeout / 2))
+                    if (!gpgerrorthread.Join(Settings.UpdatecheckTimeoutGPG / 2))
                     {
                         gpgoutputthread.Abort();
                     }
@@ -172,8 +186,7 @@ namespace NoteFly
         /// <returns></returns>
         private string GetProgramFilesx86()
         {
-            if (8 == IntPtr.Size
-                || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+            if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
                 return Environment.GetEnvironmentVariable("ProgramFiles(x86)");
             }
@@ -209,7 +222,7 @@ namespace NoteFly
         /// <summary>
         /// Get the NoteFly OpenPGP Public Key from a key server
         /// </summary>
-        private void GetNoteFlyPublicKey()
+        private void GetGPGNoteFlyPublicKey()
         {
             // fingerprint: 9968 3F36 7B60 4F21 ED55 A0CC 7898 7488 B43F 047E
             const string keyserver = ""; // find a good one
@@ -220,11 +233,10 @@ namespace NoteFly
             procInfo.RedirectStandardOutput = true;
             procInfo.RedirectStandardError = true;
             this.gpgproc = System.Diagnostics.Process.Start(procInfo);
-            if (this.gpgproc.WaitForExit(gpgtimeout))
+            if (this.gpgproc.WaitForExit(Settings.UpdatecheckTimeoutGPG))
             {
                 gpgproc.Kill();
             }
         }
-
     }
 }

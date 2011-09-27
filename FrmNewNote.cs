@@ -124,11 +124,40 @@ namespace NoteFly
         private void ConstructFrmNewNote(Notes notes)
         {
             this.InitializeComponent();
+            for (int p = 0; p < Program.pluginsenabled.Length; p++)
+            {
+                if (Program.pluginsenabled[p].InitFrmNewNoteFormatTools() != null)
+                {
+                    foreach (Control btnPluginFormatBtn in Program.pluginsenabled[p].InitFrmNewNoteFormatTools())
+                    {
+                        this.tlpnlFormatbtn.ColumnCount += 1;
+                        this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 32));
+                        btnPluginFormatBtn.Click += new EventHandler(btnPluginFormatBtn_Click);
+                        this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount, 0);
+                        
+                    }
+                }
+            }
+
             this.notes = notes;
             this.SetFontSettings();
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
             this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
             this.tbTitle.Select();
+        }
+
+        /// <summary>
+        /// Plugin format button clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPluginFormatBtn_Click(object sender, EventArgs e)
+        {
+            this.rtbNewNote.EnableAutoDragDrop = true;
+            for (int p = 0; p < Program.pluginsenabled.Length; p++)
+            {
+                this.rtbNewNote.Rtf = Program.pluginsenabled[p].FormatBtnClicked(this.rtbNewNote, (Button)sender);
+            }            
         }
 
         /// <summary>
@@ -143,7 +172,7 @@ namespace NoteFly
             this.tbTitle.ForeColor = this.notes.GetTextClr(skinnr);
             this.rtbNewNote.ForeColor = this.notes.GetTextClr(skinnr);
             this.tbTitle.BackColor = this.notes.GetHighlightClr(skinnr);
-            this.rtbNewNote.BackColor = this.notes.GetSelectClr(skinnr); //this.notes.GetPrimaryClr(skinnr);
+            this.rtbNewNote.BackColor = this.notes.GetSelectClr(skinnr);
 
             this.btnTextBold.ForeColor = this.notes.GetTextClr(skinnr);
             this.btnTextItalic.ForeColor = this.notes.GetTextClr(skinnr);
@@ -216,7 +245,7 @@ namespace NoteFly
                     {
                         for (int i = 0; i < Program.pluginsenabled.Length; i++)
                         {
-                            Program.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);                            
+                            Program.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);
                         }
                     }
 
@@ -236,7 +265,8 @@ namespace NoteFly
                 }
                 else
                 {
-                    throw new ApplicationException("Could not write note");
+                    const string EXCCANTWRITENOTE = "Could not write note";
+                    throw new ApplicationException(EXCCANTWRITENOTE);
                 }
             }
         }
@@ -640,7 +670,7 @@ namespace NoteFly
                 {
                     this.rtbNewNote.Text += buf[i];
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -662,7 +692,7 @@ namespace NoteFly
                 }
 
                 if (line.StartsWith(@"{\rtf1") || contentstarted)
-                {                    
+                {
                     sbcontent.AppendLine(line);
                     if (line.Equals("}"))
                     {
@@ -1025,11 +1055,11 @@ namespace NoteFly
             this.menuShowtoolbar.Checked = !this.menuShowtoolbar.Checked;
             if (this.menuShowtoolbar.Checked)
             {
-                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - this.tableLayoutPanelFormatbtn.Location.Y + MARGIN);
+                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - this.tlpnlFormatbtn.Location.Y + MARGIN);
             }
             else
             {
-                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - (this.tableLayoutPanelFormatbtn.Location.Y + this.tableLayoutPanelFormatbtn.Height));
+                this.rtbNewNote.Height = this.Height - this.rtbNewNote.Location.Y - (this.Height - (this.tlpnlFormatbtn.Location.Y + this.tlpnlFormatbtn.Height));
             }
 
             this.SetToolbarEnabled(this.menuShowtoolbar.Checked);

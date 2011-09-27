@@ -111,8 +111,29 @@ namespace IPlugin
         /// <returns>a Tabpage with all components to draw</returns>
         public virtual TabPage InitShareSettingsTab()
         {
-            // by default return nocontrols, override this to create settings share tab contriols
+            // by default return nocontrols, override this to create settings share tab controls
             return null;
+        }
+
+        /// <summary>
+        /// Executed on opening FrmNewNote.
+        /// Create a button in the bottom in FrmNewNote.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Button[] InitFrmNewNoteFormatTools()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// A format button clicked.
+        /// </summary>
+        /// <param name="rtbnote"></param>
+        /// <param name="sender"></param>
+        /// <returns></returns>
+        public virtual string FormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button sender)
+        {
+            return rtbnote.Rtf;
         }
 
         /// <summary>

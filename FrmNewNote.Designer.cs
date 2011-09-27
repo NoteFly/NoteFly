@@ -157,7 +157,7 @@ namespace NoteFly
         /// <summary>
         /// TableLayoutPanel tableLayoutPanelFormatbtn
         /// </summary>
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelFormatbtn;
+        private System.Windows.Forms.TableLayoutPanel tlpnlFormatbtn;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -198,9 +198,6 @@ namespace NoteFly
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddNote = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.rtbNewNote = new System.Windows.Forms.RichTextBox();
-            this.pbResizeGrip = new System.Windows.Forms.PictureBox();
-            this.openNoteFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.btnFontBigger = new System.Windows.Forms.Button();
             this.btnFontSmaller = new System.Windows.Forms.Button();
             this.btnTextBulletlist = new System.Windows.Forms.Button();
@@ -208,11 +205,14 @@ namespace NoteFly
             this.btnTextUnderline = new System.Windows.Forms.Button();
             this.btnTextItalic = new System.Windows.Forms.Button();
             this.btnTextBold = new System.Windows.Forms.Button();
-            this.tableLayoutPanelFormatbtn = new System.Windows.Forms.TableLayoutPanel();
+            this.rtbNewNote = new System.Windows.Forms.RichTextBox();
+            this.pbResizeGrip = new System.Windows.Forms.PictureBox();
+            this.openNoteFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.tlpnlFormatbtn = new System.Windows.Forms.TableLayoutPanel();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
-            this.tableLayoutPanelFormatbtn.SuspendLayout();
+            this.tlpnlFormatbtn.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStripTextActions
@@ -404,6 +404,182 @@ namespace NoteFly
             // 
             this.toolTip.AutomaticDelay = 100;
             // 
+            // btnFontBigger
+            // 
+            this.btnFontBigger.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnFontBigger.BackColor = System.Drawing.Color.Transparent;
+            this.btnFontBigger.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnFontBigger.CausesValidation = false;
+            this.btnFontBigger.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnFontBigger.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnFontBigger.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnFontBigger.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnFontBigger.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnFontBigger.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFontBigger.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFontBigger.Location = new System.Drawing.Point(163, 3);
+            this.btnFontBigger.Name = "btnFontBigger";
+            this.btnFontBigger.Size = new System.Drawing.Size(26, 24);
+            this.btnFontBigger.TabIndex = 17;
+            this.btnFontBigger.TabStop = false;
+            this.btnFontBigger.Text = "A";
+            this.toolTip.SetToolTip(this.btnFontBigger, "Bigger text (Ctrl+shift+>)");
+            this.btnFontBigger.UseCompatibleTextRendering = true;
+            this.btnFontBigger.UseMnemonic = false;
+            this.btnFontBigger.UseVisualStyleBackColor = false;
+            this.btnFontBigger.Click += new System.EventHandler(this.btnFontBigger_Click);
+            // 
+            // btnFontSmaller
+            // 
+            this.btnFontSmaller.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnFontSmaller.BackColor = System.Drawing.Color.Transparent;
+            this.btnFontSmaller.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnFontSmaller.CausesValidation = false;
+            this.btnFontSmaller.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnFontSmaller.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnFontSmaller.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnFontSmaller.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnFontSmaller.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnFontSmaller.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFontSmaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFontSmaller.Location = new System.Drawing.Point(195, 3);
+            this.btnFontSmaller.Name = "btnFontSmaller";
+            this.btnFontSmaller.Size = new System.Drawing.Size(26, 24);
+            this.btnFontSmaller.TabIndex = 16;
+            this.btnFontSmaller.TabStop = false;
+            this.btnFontSmaller.Text = "A";
+            this.toolTip.SetToolTip(this.btnFontSmaller, "Smaller text (Ctrl+shift+<)");
+            this.btnFontSmaller.UseCompatibleTextRendering = true;
+            this.btnFontSmaller.UseMnemonic = false;
+            this.btnFontSmaller.UseVisualStyleBackColor = false;
+            this.btnFontSmaller.Click += new System.EventHandler(this.btnFontSmaller_Click);
+            // 
+            // btnTextBulletlist
+            // 
+            this.btnTextBulletlist.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextBulletlist.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextBulletlist.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextBulletlist.CausesValidation = false;
+            this.btnTextBulletlist.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnTextBulletlist.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextBulletlist.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextBulletlist.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnTextBulletlist.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextBulletlist.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextBulletlist.Font = new System.Drawing.Font("Microsoft Sans Serif", 3.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextBulletlist.Location = new System.Drawing.Point(131, 3);
+            this.btnTextBulletlist.Name = "btnTextBulletlist";
+            this.btnTextBulletlist.Size = new System.Drawing.Size(26, 24);
+            this.btnTextBulletlist.TabIndex = 18;
+            this.btnTextBulletlist.TabStop = false;
+            this.btnTextBulletlist.Text = "• aaa\r\n• bbb";
+            this.btnTextBulletlist.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.toolTip.SetToolTip(this.btnTextBulletlist, "Bullit list (Ctrl+shift+L)");
+            this.btnTextBulletlist.UseCompatibleTextRendering = true;
+            this.btnTextBulletlist.UseMnemonic = false;
+            this.btnTextBulletlist.UseVisualStyleBackColor = false;
+            this.btnTextBulletlist.Click += new System.EventHandler(this.btnTextBulletlist_Click);
+            // 
+            // btnTextStriketrough
+            // 
+            this.btnTextStriketrough.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextStriketrough.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextStriketrough.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextStriketrough.CausesValidation = false;
+            this.btnTextStriketrough.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnTextStriketrough.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextStriketrough.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextStriketrough.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnTextStriketrough.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextStriketrough.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextStriketrough.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextStriketrough.Location = new System.Drawing.Point(99, 3);
+            this.btnTextStriketrough.Name = "btnTextStriketrough";
+            this.btnTextStriketrough.Size = new System.Drawing.Size(26, 24);
+            this.btnTextStriketrough.TabIndex = 12;
+            this.btnTextStriketrough.TabStop = false;
+            this.btnTextStriketrough.Text = "S";
+            this.toolTip.SetToolTip(this.btnTextStriketrough, "Striketrough text (Ctrl+T)");
+            this.btnTextStriketrough.UseCompatibleTextRendering = true;
+            this.btnTextStriketrough.UseMnemonic = false;
+            this.btnTextStriketrough.UseVisualStyleBackColor = false;
+            this.btnTextStriketrough.Click += new System.EventHandler(this.btnTextStriketrough_Click);
+            // 
+            // btnTextUnderline
+            // 
+            this.btnTextUnderline.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextUnderline.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextUnderline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextUnderline.CausesValidation = false;
+            this.btnTextUnderline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnTextUnderline.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextUnderline.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextUnderline.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnTextUnderline.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextUnderline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextUnderline.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextUnderline.Location = new System.Drawing.Point(67, 3);
+            this.btnTextUnderline.Name = "btnTextUnderline";
+            this.btnTextUnderline.Size = new System.Drawing.Size(26, 24);
+            this.btnTextUnderline.TabIndex = 14;
+            this.btnTextUnderline.TabStop = false;
+            this.btnTextUnderline.Text = "U";
+            this.toolTip.SetToolTip(this.btnTextUnderline, "Underline text (Ctrl+U)");
+            this.btnTextUnderline.UseCompatibleTextRendering = true;
+            this.btnTextUnderline.UseMnemonic = false;
+            this.btnTextUnderline.UseVisualStyleBackColor = false;
+            this.btnTextUnderline.Click += new System.EventHandler(this.btnTextUnderline_Click);
+            // 
+            // btnTextItalic
+            // 
+            this.btnTextItalic.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextItalic.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextItalic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextItalic.CausesValidation = false;
+            this.btnTextItalic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnTextItalic.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextItalic.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextItalic.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnTextItalic.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextItalic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextItalic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextItalic.Location = new System.Drawing.Point(35, 3);
+            this.btnTextItalic.Name = "btnTextItalic";
+            this.btnTextItalic.Size = new System.Drawing.Size(26, 24);
+            this.btnTextItalic.TabIndex = 11;
+            this.btnTextItalic.TabStop = false;
+            this.btnTextItalic.Text = "i";
+            this.toolTip.SetToolTip(this.btnTextItalic, "Italic text (Ctrl+I)");
+            this.btnTextItalic.UseCompatibleTextRendering = true;
+            this.btnTextItalic.UseMnemonic = false;
+            this.btnTextItalic.UseVisualStyleBackColor = false;
+            this.btnTextItalic.Click += new System.EventHandler(this.btnTextItalic_Click);
+            // 
+            // btnTextBold
+            // 
+            this.btnTextBold.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnTextBold.BackColor = System.Drawing.Color.Transparent;
+            this.btnTextBold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTextBold.CausesValidation = false;
+            this.btnTextBold.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnTextBold.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnTextBold.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
+            this.btnTextBold.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
+            this.btnTextBold.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnTextBold.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTextBold.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextBold.Location = new System.Drawing.Point(3, 3);
+            this.btnTextBold.Name = "btnTextBold";
+            this.btnTextBold.Size = new System.Drawing.Size(26, 24);
+            this.btnTextBold.TabIndex = 10;
+            this.btnTextBold.TabStop = false;
+            this.btnTextBold.Text = "B";
+            this.toolTip.SetToolTip(this.btnTextBold, "Bold text (Ctrl+B)");
+            this.btnTextBold.UseCompatibleTextRendering = true;
+            this.btnTextBold.UseMnemonic = false;
+            this.btnTextBold.UseVisualStyleBackColor = false;
+            this.btnTextBold.Click += new System.EventHandler(this.btnTextBold_Click);
+            // 
             // rtbNewNote
             // 
             this.rtbNewNote.AcceptsTab = true;
@@ -449,212 +625,37 @@ namespace NoteFly
                 ")|*.knt|TomBoy note(*.note)|*.note|MicroSE Note(*.not)|*.not";
             this.openNoteFileDialog.Title = "import single (note)file";
             // 
-            // btnFontBigger
+            // tlpnlFormatbtn
             // 
-            this.btnFontBigger.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnFontBigger.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnFontBigger.BackColor = System.Drawing.Color.Transparent;
-            this.btnFontBigger.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnFontBigger.CausesValidation = false;
-            this.btnFontBigger.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnFontBigger.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnFontBigger.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
-            this.btnFontBigger.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnFontBigger.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFontBigger.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFontBigger.Location = new System.Drawing.Point(163, 3);
-            this.btnFontBigger.Name = "btnFontBigger";
-            this.btnFontBigger.Size = new System.Drawing.Size(26, 22);
-            this.btnFontBigger.TabIndex = 17;
-            this.btnFontBigger.TabStop = false;
-            this.btnFontBigger.Text = "A";
-            this.toolTip.SetToolTip(this.btnFontBigger, "Bigger text (Ctrl+shift+>)");
-            this.btnFontBigger.UseCompatibleTextRendering = true;
-            this.btnFontBigger.UseMnemonic = false;
-            this.btnFontBigger.UseVisualStyleBackColor = false;
-            this.btnFontBigger.Click += new System.EventHandler(this.btnFontBigger_Click);
-            // 
-            // btnFontSmaller
-            // 
-            this.btnFontSmaller.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnFontSmaller.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnFontSmaller.BackColor = System.Drawing.Color.Transparent;
-            this.btnFontSmaller.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnFontSmaller.CausesValidation = false;
-            this.btnFontSmaller.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnFontSmaller.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnFontSmaller.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
-            this.btnFontSmaller.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnFontSmaller.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFontSmaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFontSmaller.Location = new System.Drawing.Point(195, 3);
-            this.btnFontSmaller.Name = "btnFontSmaller";
-            this.btnFontSmaller.Size = new System.Drawing.Size(26, 22);
-            this.btnFontSmaller.TabIndex = 16;
-            this.btnFontSmaller.TabStop = false;
-            this.btnFontSmaller.Text = "A";
-            this.toolTip.SetToolTip(this.btnFontSmaller, "Smaller text (Ctrl+shift+<)");
-            this.btnFontSmaller.UseCompatibleTextRendering = true;
-            this.btnFontSmaller.UseMnemonic = false;
-            this.btnFontSmaller.UseVisualStyleBackColor = false;
-            this.btnFontSmaller.Click += new System.EventHandler(this.btnFontSmaller_Click);
-            // 
-            // btnTextBulletlist
-            // 
-            this.btnTextBulletlist.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnTextBulletlist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTextBulletlist.BackColor = System.Drawing.Color.Transparent;
-            this.btnTextBulletlist.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTextBulletlist.CausesValidation = false;
-            this.btnTextBulletlist.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnTextBulletlist.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextBulletlist.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
-            this.btnTextBulletlist.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnTextBulletlist.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextBulletlist.Font = new System.Drawing.Font("Microsoft Sans Serif", 3.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTextBulletlist.Location = new System.Drawing.Point(131, 3);
-            this.btnTextBulletlist.Name = "btnTextBulletlist";
-            this.btnTextBulletlist.Size = new System.Drawing.Size(26, 22);
-            this.btnTextBulletlist.TabIndex = 18;
-            this.btnTextBulletlist.TabStop = false;
-            this.btnTextBulletlist.Text = "• aaa\r\n• bbb";
-            this.btnTextBulletlist.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.toolTip.SetToolTip(this.btnTextBulletlist, "Bullit list (Ctrl+shift+L)");
-            this.btnTextBulletlist.UseCompatibleTextRendering = true;
-            this.btnTextBulletlist.UseMnemonic = false;
-            this.btnTextBulletlist.UseVisualStyleBackColor = false;
-            this.btnTextBulletlist.Click += new System.EventHandler(this.btnTextBulletlist_Click);
-            // 
-            // btnTextStriketrough
-            // 
-            this.btnTextStriketrough.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnTextStriketrough.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTextStriketrough.BackColor = System.Drawing.Color.Transparent;
-            this.btnTextStriketrough.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTextStriketrough.CausesValidation = false;
-            this.btnTextStriketrough.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnTextStriketrough.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextStriketrough.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
-            this.btnTextStriketrough.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnTextStriketrough.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextStriketrough.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTextStriketrough.Location = new System.Drawing.Point(99, 3);
-            this.btnTextStriketrough.Name = "btnTextStriketrough";
-            this.btnTextStriketrough.Size = new System.Drawing.Size(26, 22);
-            this.btnTextStriketrough.TabIndex = 12;
-            this.btnTextStriketrough.TabStop = false;
-            this.btnTextStriketrough.Text = "S";
-            this.toolTip.SetToolTip(this.btnTextStriketrough, "Striketrough text (Ctrl+T)");
-            this.btnTextStriketrough.UseCompatibleTextRendering = true;
-            this.btnTextStriketrough.UseMnemonic = false;
-            this.btnTextStriketrough.UseVisualStyleBackColor = false;
-            this.btnTextStriketrough.Click += new System.EventHandler(this.btnTextStriketrough_Click);
-            // 
-            // btnTextUnderline
-            // 
-            this.btnTextUnderline.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnTextUnderline.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTextUnderline.BackColor = System.Drawing.Color.Transparent;
-            this.btnTextUnderline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTextUnderline.CausesValidation = false;
-            this.btnTextUnderline.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnTextUnderline.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextUnderline.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
-            this.btnTextUnderline.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnTextUnderline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextUnderline.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTextUnderline.Location = new System.Drawing.Point(67, 3);
-            this.btnTextUnderline.Name = "btnTextUnderline";
-            this.btnTextUnderline.Size = new System.Drawing.Size(26, 22);
-            this.btnTextUnderline.TabIndex = 14;
-            this.btnTextUnderline.TabStop = false;
-            this.btnTextUnderline.Text = "U";
-            this.toolTip.SetToolTip(this.btnTextUnderline, "Underline text (Ctrl+U)");
-            this.btnTextUnderline.UseCompatibleTextRendering = true;
-            this.btnTextUnderline.UseMnemonic = false;
-            this.btnTextUnderline.UseVisualStyleBackColor = false;
-            this.btnTextUnderline.Click += new System.EventHandler(this.btnTextUnderline_Click);
-            // 
-            // btnTextItalic
-            // 
-            this.btnTextItalic.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnTextItalic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTextItalic.BackColor = System.Drawing.Color.Transparent;
-            this.btnTextItalic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTextItalic.CausesValidation = false;
-            this.btnTextItalic.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnTextItalic.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextItalic.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
-            this.btnTextItalic.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnTextItalic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextItalic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTextItalic.Location = new System.Drawing.Point(35, 3);
-            this.btnTextItalic.Name = "btnTextItalic";
-            this.btnTextItalic.Size = new System.Drawing.Size(26, 22);
-            this.btnTextItalic.TabIndex = 11;
-            this.btnTextItalic.TabStop = false;
-            this.btnTextItalic.Text = "i";
-            this.toolTip.SetToolTip(this.btnTextItalic, "Italic text (Ctrl+I)");
-            this.btnTextItalic.UseCompatibleTextRendering = true;
-            this.btnTextItalic.UseMnemonic = false;
-            this.btnTextItalic.UseVisualStyleBackColor = false;
-            this.btnTextItalic.Click += new System.EventHandler(this.btnTextItalic_Click);
-            // 
-            // btnTextBold
-            // 
-            this.btnTextBold.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnTextBold.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTextBold.BackColor = System.Drawing.Color.Transparent;
-            this.btnTextBold.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTextBold.CausesValidation = false;
-            this.btnTextBold.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnTextBold.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
-            this.btnTextBold.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
-            this.btnTextBold.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnTextBold.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextBold.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTextBold.Location = new System.Drawing.Point(3, 3);
-            this.btnTextBold.Name = "btnTextBold";
-            this.btnTextBold.Size = new System.Drawing.Size(26, 22);
-            this.btnTextBold.TabIndex = 10;
-            this.btnTextBold.TabStop = false;
-            this.btnTextBold.Text = "B";
-            this.toolTip.SetToolTip(this.btnTextBold, "Bold text (Ctrl+B)");
-            this.btnTextBold.UseCompatibleTextRendering = true;
-            this.btnTextBold.UseMnemonic = false;
-            this.btnTextBold.UseVisualStyleBackColor = false;
-            this.btnTextBold.Click += new System.EventHandler(this.btnTextBold_Click);
-            // 
-            // tableLayoutPanelFormatbtn
-            // 
-            this.tableLayoutPanelFormatbtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.tlpnlFormatbtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanelFormatbtn.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanelFormatbtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tableLayoutPanelFormatbtn.ColumnCount = 8;
-            this.tableLayoutPanelFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanelFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanelFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanelFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanelFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanelFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanelFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanelFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelFormatbtn.Controls.Add(this.btnTextBold, 0, 0);
-            this.tableLayoutPanelFormatbtn.Controls.Add(this.btnTextItalic, 1, 0);
-            this.tableLayoutPanelFormatbtn.Controls.Add(this.btnTextUnderline, 2, 0);
-            this.tableLayoutPanelFormatbtn.Controls.Add(this.btnTextStriketrough, 3, 0);
-            this.tableLayoutPanelFormatbtn.Controls.Add(this.btnTextBulletlist, 4, 0);
-            this.tableLayoutPanelFormatbtn.Controls.Add(this.btnFontSmaller, 6, 0);
-            this.tableLayoutPanelFormatbtn.Controls.Add(this.btnFontBigger, 5, 0);
-            this.tableLayoutPanelFormatbtn.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
-            this.tableLayoutPanelFormatbtn.Location = new System.Drawing.Point(2, 210);
-            this.tableLayoutPanelFormatbtn.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanelFormatbtn.Name = "tableLayoutPanelFormatbtn";
-            this.tableLayoutPanelFormatbtn.RowCount = 1;
-            this.tableLayoutPanelFormatbtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelFormatbtn.Size = new System.Drawing.Size(264, 28);
-            this.tableLayoutPanelFormatbtn.TabIndex = 19;
+            this.tlpnlFormatbtn.AutoSize = true;
+            this.tlpnlFormatbtn.BackColor = System.Drawing.Color.Transparent;
+            this.tlpnlFormatbtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tlpnlFormatbtn.ColumnCount = 8;
+            this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpnlFormatbtn.Controls.Add(this.btnTextBold, 0, 0);
+            this.tlpnlFormatbtn.Controls.Add(this.btnTextItalic, 1, 0);
+            this.tlpnlFormatbtn.Controls.Add(this.btnTextUnderline, 2, 0);
+            this.tlpnlFormatbtn.Controls.Add(this.btnTextStriketrough, 3, 0);
+            this.tlpnlFormatbtn.Controls.Add(this.btnTextBulletlist, 4, 0);
+            this.tlpnlFormatbtn.Controls.Add(this.btnFontSmaller, 6, 0);
+            this.tlpnlFormatbtn.Controls.Add(this.btnFontBigger, 5, 0);
+            this.tlpnlFormatbtn.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
+            this.tlpnlFormatbtn.Location = new System.Drawing.Point(2, 208);
+            this.tlpnlFormatbtn.Margin = new System.Windows.Forms.Padding(0);
+            this.tlpnlFormatbtn.Name = "tlpnlFormatbtn";
+            this.tlpnlFormatbtn.RowCount = 1;
+            this.tlpnlFormatbtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpnlFormatbtn.Size = new System.Drawing.Size(278, 30);
+            this.tlpnlFormatbtn.TabIndex = 19;
             // 
             // FrmNewNote
             // 
@@ -670,7 +671,7 @@ namespace NoteFly
             this.ControlBox = false;
             this.Controls.Add(this.pbResizeGrip);
             this.Controls.Add(this.rtbNewNote);
-            this.Controls.Add(this.tableLayoutPanelFormatbtn);
+            this.Controls.Add(this.tlpnlFormatbtn);
             this.Controls.Add(this.pnlHeadNewNote);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -688,7 +689,7 @@ namespace NoteFly
             this.pnlHeadNewNote.ResumeLayout(false);
             this.pnlHeadNewNote.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
-            this.tableLayoutPanelFormatbtn.ResumeLayout(false);
+            this.tlpnlFormatbtn.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
