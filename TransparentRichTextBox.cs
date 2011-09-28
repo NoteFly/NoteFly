@@ -29,9 +29,6 @@ namespace NoteFly
     internal class TransparentRichTextBox : RichTextBox
     {
 #if windows
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        static extern IntPtr LoadLibrary(string lpFileName);
-
         protected override CreateParams CreateParams
         {
             get
@@ -48,6 +45,9 @@ namespace NoteFly
                 return prams;
             }
         }
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        static extern IntPtr LoadLibrary(string lpFileName);
 #endif
     }
 }

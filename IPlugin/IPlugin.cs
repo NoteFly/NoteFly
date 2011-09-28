@@ -29,22 +29,22 @@ namespace IPlugin
     public interface IPlugin
     {
         /// <summary>
-        /// Is this plugin enabled
+        /// Gets or sets a value indicating whether the plugin is enabled.
         /// </summary>
         bool Enabled { get; set; }
 
         /// <summary>
-        /// Get the filename of this plugin
+        /// Gets the filename of this plugin.
         /// </summary>
         string Filename { get; }
 
         /// <summary>
-        /// Share menu text, if any
+        /// Gets the share menu text, if any.
         /// </summary>
         string ShareMenuText { get; }
 
         /// <summary>
-        /// Share settings tab title, if any
+        /// Gets the share settings tab title, if any
         /// </summary>
         string SettingsTabTitle { get; }
 
@@ -59,7 +59,7 @@ namespace IPlugin
         /// Executed if share menu clicked.
         /// </summary>
         /// <param name="rtbnote">The richedit component with the note content in memory.</param>
-        /// <param name="note">note object</param>
+        /// <param name="title">The note title</param>
         void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, string title);
 
         /// <summary>
@@ -71,16 +71,16 @@ namespace IPlugin
         /// <summary>
         /// Create a button in the bottom in FrmNewNote.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The buttons created in FrmNewNote</returns>
         Button[] InitFrmNewNoteFormatTools();
 
         /// <summary>
         /// A plugin format button is cliked.
         /// </summary>
-        /// <param name="rtbnote"></param>
-        /// <param name="sender"></param>
+        /// <param name="rtbnote">The RichTextbox.</param>
+        /// <param name="btn">The button is clicked.</param>
         /// <returns>new content</returns>
-        string FormatBtnClicked(System.Windows.Forms.RichTextBox rtf, Button sender);
+        string FormatBtnClicked(System.Windows.Forms.RichTextBox rtf, Button btn);
 
         /// <summary>
         /// Executed if Ok on FrmSettings is pressed.

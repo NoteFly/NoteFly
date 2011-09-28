@@ -3,10 +3,16 @@
     using System.Drawing;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// HelloWorld plugin
+    /// </summary>
     public class HelloWorld : IPlugin.PluginBase
     {
         // Properties (2) 
 
+        /// <summary>
+        /// Settings tab title.
+        /// </summary>
         public override string SettingsTabTitle
         {
             get
@@ -15,6 +21,9 @@
             }
         }
 
+        /// <summary>
+        /// Share menu text.
+        /// </summary>
         public override string ShareMenuText
         {
             get
@@ -30,7 +39,7 @@
         /// </summary>
         /// <param name="rtbnote">use the content of rtbnote for the note content, 
         /// this way note content does not have to be read again from disk.</param>
-        /// <param name="note">The note settings</param>
+        /// <param name="title">The title of the note</param>
         public override void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, string title)
         {
             MessageBox.Show("Hello World!");
@@ -39,7 +48,7 @@
         /// <summary>
         /// Load tab
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Tabpage with components</returns>
         public override TabPage InitShareSettingsTab()
         {
             TabPage newtab = new TabPage(this.SettingsTabTitle);

@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="TrayIcon.cs" company="GNU">
+// <copyright file="GPGVerifWrapper.cs" company="GNU">
 //  NoteFly a note application.
 //  Copyright (C) 2011  Tom
 //
@@ -20,11 +20,10 @@
 namespace NoteFly
 {
     using System;
-    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
     using System.Text;
     using System.Threading;
-    using System.IO;
-    using System.Diagnostics;
 
     /// <summary>
     /// Class to verify files with GnuPG
@@ -70,12 +69,12 @@ namespace NoteFly
                 this.gpgproc.StandardInput.Close();
 
                 this.gpgoutput = string.Empty;
-                ThreadStart outputEntry = new ThreadStart(StandardOutputReader);
+                ThreadStart outputEntry = new ThreadStart(this.StandardOutputReader);
                 Thread gpgoutputthread = new Thread(outputEntry);
                 gpgoutputthread.Start();
 
                 this.gpgerror = string.Empty;
-                ThreadStart errorEntry = new ThreadStart(StandardErrorReader);
+                ThreadStart errorEntry = new ThreadStart(this.StandardErrorReader);
                 Thread gpgerrorthread = new Thread(errorEntry);
                 gpgerrorthread.Start();
 
@@ -87,6 +86,7 @@ namespace NoteFly
                     {
                         gpgoutputthread.Abort();
                     }
+
                     if (!gpgerrorthread.Join(Settings.UpdatecheckTimeoutGPG / 2))
                     {
                         gpgoutputthread.Abort();
@@ -94,24 +94,24 @@ namespace NoteFly
                 }
                 else
                 {
-                    gpgproc.Kill();
+                    this.gpgproc.Kill();
                     if (gpgoutputthread.IsAlive)
                     {
                         gpgoutputthread.Abort();
                     }
+
                     if (gpgerrorthread.IsAlive)
                     {
                         gpgerrorthread.Abort();
                     }
                 }
 
-                int gpgprocexitcode = gpgproc.ExitCode;
+                int gpgprocexitcode = this.gpgproc.ExitCode;
                 if (gpgprocexitcode == 0)
                 {
                     // Currently display GPG result via messagebox..
                     System.Windows.Forms.MessageBox.Show(this.gpgoutput + System.Environment.NewLine + this.gpgerror, Program.AssemblyTitle + " signature check result");
                 }
-
             }
             catch (Exception exc)
             {
@@ -132,6 +132,7 @@ namespace NoteFly
         /// <summary>
         /// Try to find the path to gpg.exe or gpg on linux
         /// </summary>
+        /// <returns>The full path to GnuPG process</returns>
         public string GetGPGPath()
         {
             string gpgpath = string.Empty;
@@ -144,7 +145,7 @@ namespace NoteFly
             }
             else
             {
-                if (!String.IsNullOrEmpty(this.GetProgramFilesx86()))
+                if (!string.IsNullOrEmpty(this.GetProgramFilesx86()))
                 {
                     string gpginstallpath = Path.Combine(Path.Combine(this.GetProgramFilesx86(), "GNU"), "GnuPG");
                     if (Directory.Exists(gpginstallpath))
@@ -183,10 +184,10 @@ namespace NoteFly
         /// <summary>
         /// Get the path to program files, for 32bits applications.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>THe path to the Program files folder.</returns>
         private string GetProgramFilesx86()
         {
-            if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+            if (8 == IntPtr.Size || (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
                 return Environment.GetEnvironmentVariable("ProgramFiles(x86)");
             }
@@ -224,9 +225,17 @@ namespace NoteFly
         /// </summary>
         private void GetGPGNoteFlyPublicKey()
         {
-            // fingerprint: 9968 3F36 7B60 4F21 ED55 A0CC 7898 7488 B43F 047E
-            const string keyserver = ""; // find a good one
-            System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --recv-keys 2F9532C8 --keyserver "+keyserver); 
+            // We need to verif, fingerprint: 9968 3F36 7B60 4F21 ED55 A0CC 7898 7488 B43F 047E
+            string gpgspeckeyserver = string.Empty;
+            StringBuilder gpgrecvkeycommand = new StringBuilder(Settings.UpdatecheckGPGPath);
+            gpgrecvkeycommand.Append(" --recv-keys 2F9532C8");
+            if (!string.IsNullOrEmpty(Settings.UpdatecheckGPGKeyserver))
+            {
+                gpgrecvkeycommand.Append(" --keyserver ");
+                gpgrecvkeycommand.Append(Settings.UpdatecheckGPGKeyserver);
+            }
+           
+            System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(gpgrecvkeycommand.ToString()); 
             procInfo.CreateNoWindow = true;
             procInfo.UseShellExecute = false;
             procInfo.RedirectStandardInput = true;
@@ -235,8 +244,8 @@ namespace NoteFly
             this.gpgproc = System.Diagnostics.Process.Start(procInfo);
             if (this.gpgproc.WaitForExit(Settings.UpdatecheckTimeoutGPG))
             {
-                gpgproc.Kill();
+                this.gpgproc.Kill();
             }
-        }
+        }        
     }
 }

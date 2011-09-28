@@ -59,7 +59,6 @@ namespace NoteFly
             this.DrawCbxFonts();
             this.SetFormTitle(Settings.SettingsExpertEnabled);
             this.SetControlsBySettings();
-
         }
 
         #endregion Constructors
@@ -104,7 +103,7 @@ namespace NoteFly
         /// <summary>
         /// Set the title of this form.
         /// </summary>
-        /// <param name="expertsettings"></param>
+        /// <param name="expertsettings">Is showing expert settings enabled.</param>
         private void SetFormTitle(bool expertsettings)
         {
             if (expertsettings)
@@ -178,8 +177,7 @@ namespace NoteFly
                         if (!Program.pluginsenabled[i].SaveSettingsTab())
                         {
                             this.tabControlSettings.SelectedTab = this.tabSharing;
-                            // select the right plugin tab by tab title/text.
-                            if (!String.IsNullOrEmpty(Program.pluginsenabled[i].SettingsTabTitle))
+                            if (!string.IsNullOrEmpty(Program.pluginsenabled[i].SettingsTabTitle))
                             {
                                 for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
                                 {
@@ -189,6 +187,7 @@ namespace NoteFly
                                     }
                                 }
                             }
+
                             return;
                         }
                     }
@@ -361,7 +360,6 @@ namespace NoteFly
                 this.SetControlsBySettings();
             }
         }
-
 
         /// <summary>
         /// The user de-/selected checking for updates.
@@ -638,11 +636,11 @@ namespace NoteFly
         /// <summary>
         /// Load share tab plugins
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The selected tab</param>
+        /// <param name="e">Event arguments</param>
         private void tabControlSettings_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControlSettings.SelectedTab == this.tabSharing)
+            if (this.tabControlSettings.SelectedTab == this.tabSharing)
             {
                 if (Program.pluginsenabled != null)
                 {
@@ -653,7 +651,7 @@ namespace NoteFly
 
                     for (int i = 0; i < Program.pluginsenabled.Length; i++)
                     {
-                        if (!String.IsNullOrEmpty(Program.pluginsenabled[i].SettingsTabTitle))
+                        if (!string.IsNullOrEmpty(Program.pluginsenabled[i].SettingsTabTitle))
                         {
                             if (Program.pluginsenabled[i].InitShareSettingsTab() != null)
                             {
@@ -668,12 +666,12 @@ namespace NoteFly
         /// <summary>
         /// Are plugins being loaded.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void chxLoadPlugins_CheckedChanged(object sender, EventArgs e)
         {
             this.pluginGrid.Enabled = this.chxLoadPlugins.Checked;
-            if (chxLoadPlugins.Checked)
+            if (this.chxLoadPlugins.Checked)
             {
                 this.pluginGrid.VerticalScroll.Value = 0;
                 this.pluginGrid.DrawAllPluginsDetails();
@@ -683,8 +681,8 @@ namespace NoteFly
         /// <summary>
         /// Toggle setting path to GPG.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void chxCheckUpdatesSignature_CheckedChanged(object sender, EventArgs e)
         {
             this.tbGPGPath.Enabled = this.chxCheckUpdatesSignature.Checked;
@@ -693,14 +691,14 @@ namespace NoteFly
         /// <summary>
         /// Open browse dialog to gpg.exe
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnGPGPathBrowse_Click(object sender, EventArgs e)
         {
             DialogResult dlggpgresult = this.openFileDialogBrowseGPG.ShowDialog();
             if (dlggpgresult == DialogResult.OK)
             {
-                this.tbGPGPath.Text = openFileDialogBrowseGPG.FileName;
+                this.tbGPGPath.Text = this.openFileDialogBrowseGPG.FileName;
             }
         }
 

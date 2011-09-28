@@ -20,13 +20,27 @@
 namespace NoteFly
 {
     using System;
-    using System.Windows.Forms;
     using System.IO;
+    using System.Windows.Forms;
 
+    /// <summary>
+    /// PluginGrid component
+    /// </summary>
     public partial class PluginGrid : UserControl
     {
+        /// <summary>
+        /// Array with all enable/disable buttons for every plugin.
+        /// </summary>
         private Button[] btnPluginsStatus;
+
+        /// <summary>
+        /// All the tablelayouts panel for every plugin.
+        /// </summary>
         private TableLayoutPanel[] tlpnlPlugins;
+
+        /// <summary>
+        /// All the plugin
+        /// </summary>
         private IPlugin.IPlugin[] allplugins;
 
         /// <summary>
@@ -45,13 +59,13 @@ namespace NoteFly
             this.SuspendLayout();
             this.Controls.Clear();
             this.allplugins = Program.GetPlugins(false);
-            if (allplugins != null)
+            if (this.allplugins != null)
             {
                 this.btnPluginsStatus = new Button[this.allplugins.Length];
                 this.tlpnlPlugins = new TableLayoutPanel[this.allplugins.Length];
                 for (int i = 0; i < this.allplugins.Length; i++)
                 {
-                    DrawPluginDetails(i, this.allplugins[i].Enabled, this.allplugins[i].Filename);
+                    this.DrawPluginDetails(i, this.allplugins[i].Enabled, this.allplugins[i].Filename);
                 }
             }
 
@@ -59,16 +73,43 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Save the enabled plugin settings.
+        /// </summary>
+        public void SavePluginSettings()
+        {
+            bool first = true;
+            Settings.ProgramPluginsEnabled = string.Empty;
+            if (this.allplugins != null)
+            {
+                for (int i = 0; i < this.allplugins.Length; i++)
+                {
+                    if (this.allplugins[i].Enabled)
+                    {
+                        if (first)
+                        {
+                            first = false;
+                        }
+                        else
+                        {
+                            Settings.ProgramPluginsEnabled += "|";
+                        }
+
+                        Settings.ProgramPluginsEnabled += this.allplugins[i].Filename;
+                    }
+                }
+
+                Program.pluginsenabled = Program.GetPlugins(true);
+            }
+        }
+
+        /// <summary>
         /// Draw details of a plugin.
         /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="plugintitle"></param>
-        /// <param name="pluginversion"></param>
-        /// <param name="pluginauthor"></param>
-        /// <param name="plugindescription"></param>
+        /// <param name="pluginpos">The positio of the plugin in allplugins array</param>
+        /// <param name="pluginenabled">Is the plugin enabled</param>
+        /// <param name="filename">The filename of the plugin assebly</param>
         private void DrawPluginDetails(int pluginpos, bool pluginenabled, string filename)
-        {
-            
+        {            
             System.Reflection.Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, filename));
             if (pluginassembly == null)
             {
@@ -112,7 +153,7 @@ namespace NoteFly
             // lblPluginTitle
             lblPluginTitle.AutoSize = true;
             this.tlpnlPlugins[pluginpos].SetColumnSpan(lblPluginTitle, 2);
-            lblPluginTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.00F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            lblPluginTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.00F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, (byte)0);
             lblPluginTitle.Location = new System.Drawing.Point(3, 0);
             lblPluginTitle.Name = "lblPluginTitle";
             lblPluginTitle.Size = new System.Drawing.Size(232, 25);
@@ -173,7 +214,7 @@ namespace NoteFly
             this.btnPluginsStatus[pluginpos].Size = new System.Drawing.Size(148, 23);
             this.btnPluginsStatus[pluginpos].TabIndex = 0;
             this.btnPluginsStatus[pluginpos].UseVisualStyleBackColor = true;
-            this.btnPluginsStatus[pluginpos].Click += new EventHandler(PluginGrid_Click);
+            this.btnPluginsStatus[pluginpos].Click += new EventHandler(this.PluginGrid_Click);
             Controls.Add(this.tlpnlPlugins[pluginpos]);
             this.tlpnlPlugins[pluginpos].ResumeLayout(false);
             this.tlpnlPlugins[pluginpos].PerformLayout();
@@ -182,62 +223,31 @@ namespace NoteFly
         /// <summary>
         /// Plugin toggle enabled.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event argument</param>
         private void PluginGrid_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
             int pluginpos = (int)btn.Tag;
             this.allplugins[pluginpos].Enabled = !this.allplugins[pluginpos].Enabled;
-            SetPluginStatusDetail(pluginpos);      
+            this.SetPluginStatusDetail(pluginpos);      
         }
 
         /// <summary>
         /// Update the plugin status if it enabled or disabled.
         /// </summary>
-        /// <param name="pluginpos"></param>
+        /// <param name="pluginpos">The position in the array of allplugins</param>
         private void SetPluginStatusDetail(int pluginpos)
         {
             if (this.allplugins[pluginpos].Enabled)
             {
                 this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.WhiteSmoke;
-                this.btnPluginsStatus[pluginpos].Text = "disable";
-                
+                this.btnPluginsStatus[pluginpos].Text = "disable";                
             }
             else
             {
                 this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.LightGray;
                 this.btnPluginsStatus[pluginpos].Text = "enable";
-            }
-        }
-
-        /// <summary>
-        /// Save the enabled plugin settings.
-        /// </summary>
-        public void SavePluginSettings()
-        {
-            bool first = true;
-            Settings.ProgramPluginsEnabled = string.Empty;
-            if (this.allplugins != null)
-            {
-                for (int i = 0; i < this.allplugins.Length; i++)
-                {
-                    if (this.allplugins[i].Enabled)
-                    {
-                        if (first)
-                        {
-                            first = false;
-                        }
-                        else
-                        {
-                            Settings.ProgramPluginsEnabled += "|";
-                        }
-
-                        Settings.ProgramPluginsEnabled += this.allplugins[i].Filename;
-                    }
-                }
-
-                Program.pluginsenabled = Program.GetPlugins(true);
             }
         }
     }

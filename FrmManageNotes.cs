@@ -23,11 +23,11 @@ namespace NoteFly
     using System.Collections.Generic;
     using System.Data;
     using System.Drawing;
+    using System.Globalization;
     using System.IO;
     using System.Runtime.InteropServices;
-    using System.Windows.Forms;
     using System.Text;
-    using System.Globalization;
+    using System.Windows.Forms;
 
     /// <summary>
     /// Manage notes window
@@ -207,7 +207,7 @@ namespace NoteFly
                     }
 
                     writer.Write("\"");
-                    writer.Write(encode_title(curnote.Title));
+                    writer.Write(this.encode_title(curnote.Title));
                     writer.Write("\",\"");
                     writer.Write(unixtimestr);
                     writer.Write("\",\"");
@@ -232,14 +232,14 @@ namespace NoteFly
         /// Write a PNotes full backup file.
         /// Currently without working title, position, last change.
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filename">Filename of the file to write</param>
         private void WritePNotesBackupfile(string filename)
         {
             FileStream fs = null;
             StreamWriter writer = null;
             try
             {
-                fs = new FileStream(saveExportFileDialog.FileName, FileMode.Create);
+                fs = new FileStream(this.saveExportFileDialog.FileName, FileMode.Create);
                 writer = new StreamWriter(fs, System.Text.Encoding.ASCII);
                 char chrstartdoc = (char)2;
                 char chrstartnotefilename = (char)3;
@@ -297,11 +297,11 @@ namespace NoteFly
                     // TODO figure out rel_position
                     writer.Write("rel_position=9A9999999979E53F0AD7A3703D0ABF3F40010000DC000000F1\r\n");
                     writer.Write("add_appearance=00000000000000000000000000\r\n");
-                    string hexyear = fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(2, 2) + fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(0, 2);
-                    string hexmonth = fillstrleadzeros(dtnotenow.Month.ToString("X"), 2);
-                    string hexday = fillstrleadzeros(dtnotenow.Day.ToString("X"), 2);
-                    string hexhour = fillstrleadzeros(dtnotenow.Hour.ToString("X"), 2);
-                    string hexmin = fillstrleadzeros(dtnotenow.Minute.ToString("X"), 2);
+                    string hexyear = this.fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(2, 2) + this.fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(0, 2);
+                    string hexmonth = this.fillstrleadzeros(dtnotenow.Month.ToString("X"), 2);
+                    string hexday = this.fillstrleadzeros(dtnotenow.Day.ToString("X"), 2);
+                    string hexhour = this.fillstrleadzeros(dtnotenow.Hour.ToString("X"), 2);
+                    string hexmin = this.fillstrleadzeros(dtnotenow.Minute.ToString("X"), 2);
                     writer.Write("creation=" + hexyear + hexmonth + "000400" + hexday + "00" + hexhour + "00" + hexmin + "00040068018A\r\n");
 
                     pnotesfilenames[i] = pnotesfilenamenote.ToString();
@@ -315,7 +315,6 @@ namespace NoteFly
                     writer.Write(this.notes.GetNote(i).GetContent());
                     writer.Write(chrenddoc);
                 }
-
             }
             finally
             {
@@ -406,17 +405,17 @@ namespace NoteFly
             DialogResult openbackupdlgres = this.openImportFileDialog.ShowDialog();
             if (openbackupdlgres == DialogResult.OK)
             {
-                if (openImportFileDialog.FilterIndex == 1)
+                if (this.openImportFileDialog.FilterIndex == 1)
                 {
-                    this.ReadNoteFlyBackupFile(openImportFileDialog.FileName);
+                    this.ReadNoteFlyBackupFile(this.openImportFileDialog.FileName);
                 }
-                else if (openImportFileDialog.FilterIndex == 2)
+                else if (this.openImportFileDialog.FilterIndex == 2)
                 {
-                    this.ReadStickiesCSVFile(openImportFileDialog.FileName);
+                    this.ReadStickiesCSVFile(this.openImportFileDialog.FileName);
                 }
-                else if (openImportFileDialog.FilterIndex == 3)
+                else if (this.openImportFileDialog.FilterIndex == 3)
                 {
-                    this.ReadPNotesBackupFile(openImportFileDialog.FileName);
+                    this.ReadPNotesBackupFile(this.openImportFileDialog.FileName);
                 }
 
                 this.Resetdatagrid();
@@ -433,6 +432,7 @@ namespace NoteFly
         /// <summary>
         /// Read a NoteFly backup file.
         /// </summary>
+        /// <param name="file">The full path and filename of the notefly backup file.</param>
         private void ReadNoteFlyBackupFile(string file)
         {
             if (this.notes.CountNotes > 0)
@@ -521,12 +521,12 @@ namespace NoteFly
                     {
                         if (postitle >= 0 && poscolour >= 0 && poswidth >= 0 && poscontent >= 0)
                         {
-                            string title_enc = RemoveQuotes(parts[postitle]);
-                            string title = decode_title(title_enc);
+                            string title_enc = this.RemoveQuotes(parts[postitle]);
+                            string title = this.decode_title(title_enc);
                             int width;
                             try
                             {
-                                width = Convert.ToInt32(RemoveQuotes(parts[poswidth]));
+                                width = Convert.ToInt32(this.RemoveQuotes(parts[poswidth]));
                             }
                             catch (InvalidCastException)
                             {
@@ -537,8 +537,8 @@ namespace NoteFly
                                 width = 200;
                             }
 
-                            string content = RemoveQuotes(parts[poscontent]);
-                            string filenamenote = notes.GetNoteFilename(title);
+                            string content = this.RemoveQuotes(parts[poscontent]);
+                            string filenamenote = this.notes.GetNoteFilename(title);
                             Note newnote = new Note(this.notes, filenamenote);
                             newnote.Visible = false;
                             newnote.Locked = false;
@@ -574,19 +574,19 @@ namespace NoteFly
                 reader.Close();
             }
 
-            Log.Write(LogType.info, "Imported stickies csv file: " + openImportFileDialog.FileName);
+            Log.Write(LogType.info, "Imported stickies csv file: " + this.openImportFileDialog.FileName);
         }
 
         /// <summary>
         /// Read a PNotes full backup file.
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="file">The file</param>
         private void ReadPNotesBackupFile(string file)
         {
             StreamReader reader = null;
             try
             {
-                reader = new StreamReader(openImportFileDialog.FileName, Encoding.ASCII); // ANSI
+                reader = new StreamReader(this.openImportFileDialog.FileName, Encoding.ASCII); // ANSI
                 char chrstartdoc = (char)2;
                 char chrstartnotefilename = (char)3;
                 char chrendnotefilename = (char)4;
@@ -596,7 +596,7 @@ namespace NoteFly
                 {
                     bool notecontents = false;
                     int notenr = 0;
-                    List<String> notetitles = new List<string>();
+                    List<string> notetitles = new List<string>();
                     StringBuilder notecontent = new StringBuilder();
                     while (!reader.EndOfStream)
                     {
@@ -660,7 +660,7 @@ namespace NoteFly
                                 newnote.Visible = false;
                                 newnote.RolledUp = false;
                                 newnote.Tempcontent = notecontent.ToString();
-                                xmlUtil.WriteNote(newnote, notes.GetSkinName(Settings.NotesDefaultSkinnr), notecontent.ToString());
+                                xmlUtil.WriteNote(newnote, this.notes.GetSkinName(Settings.NotesDefaultSkinnr), notecontent.ToString());
                                 this.notes.AddNote(newnote);
                                 notecontent = null;
                                 notecontent = new StringBuilder();
@@ -696,7 +696,7 @@ namespace NoteFly
                 }
             }
 
-            Log.Write(LogType.info, "Imported PNotes full backup file: " + openImportFileDialog.FileName);
+            Log.Write(LogType.info, "Imported PNotes full backup file: " + this.openImportFileDialog.FileName);
         }
 
         /// <summary>
@@ -718,9 +718,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// The create a title encoded.
         /// </summary>
-        /// <param name="title"></param>
+        /// <param name="title">The title of the note encoded</param>
         /// <returns></returns>
         private string encode_title(string title)
         {
@@ -820,7 +820,7 @@ namespace NoteFly
 
                 if (e.ColumnIndex == 2)
                 {
-                    ToggleVisibilityNote(e.RowIndex);
+                    this.ToggleVisibilityNote(e.RowIndex);
                 }
             }
         }
@@ -1214,6 +1214,14 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Double click a row in dataGridView toggle the visibility of a note.
+        /// </summary>
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.ToggleVisibilityNote(e.RowIndex);
+        }
+
 #if windows
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
 
@@ -1266,13 +1274,6 @@ namespace NoteFly
             public string lpszProgressTitle;
         }
 
-        /// <summary>
-        /// Double click a row in dataGridView toggle the visibility of a note.
-        /// </summary>
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            this.ToggleVisibilityNote(e.RowIndex);
-        }
 #endif
 
         #endregion Methods

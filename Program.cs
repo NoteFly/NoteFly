@@ -45,8 +45,6 @@ namespace NoteFly
         /// </summary>
         private static TrayIcon trayicon;
 
-        //private static Plugins plugins;
-
         /// <summary>
         /// All the enabled plugins
         /// </summary>
@@ -457,6 +455,67 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Load plugin .dll files from pluginfolder
+        /// </summary>
+        /// <param name="onlyenabled">True to only get the the plugins that are enable</param>
+        public static IPlugin.IPlugin[] GetPlugins(bool onlyenabled)
+        {
+            System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
+            if (Directory.Exists(Settings.ProgramPluginsFolder))
+            {
+                string[] pluginfiles = GetFilesPluginDir();
+                string[] pluginsenabled = Settings.ProgramPluginsEnabled.Split('|'); // | is illegal as filename.
+                for (int i = 0; i < pluginfiles.Length; i++)
+                {
+                    try
+                    {
+                        // blacklist sqllite drivers not to load as notefly plugin, so sqllite drivers could be used by plugins.
+                        if (pluginfiles[i] == "System.Data.SQLite.DLL" || pluginfiles[i] == "SQLite3.dll")
+                        {
+                            break;
+                        }
+
+                        // Get if plugin is enabled.
+                        bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
+                        if (pluginenabled && onlyenabled || !onlyenabled)
+                        {
+                            System.Reflection.Assembly pluginassembly = null;
+                            pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
+                            if (pluginassembly != null)
+                            {
+                                foreach (Type curplugintype in pluginassembly.GetTypes())
+                                {
+                                    if (curplugintype.IsPublic && !curplugintype.IsAbstract)
+                                    {
+                                        Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
+                                        if (plugintype != null)
+                                        {
+                                            IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                                            iplugin.Register(pluginenabled, pluginfiles[i]);
+                                            pluginslist.Add(iplugin);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        const string CANTLOADPLUGIN = "Can't load plugin: ";
+                        Log.Write(LogType.exception, CANTLOADPLUGIN + pluginfiles[i] + " " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                const string PLUGINFOLDERNOTEXIST = "Plugin folder does not exist.";
+                Log.Write(LogType.info, PLUGINFOLDERNOTEXIST);
+            }
+
+            return pluginslist.ToArray();
+        }
+
+        /// <summary>
         /// Waits 1000ms before doing a update check.
         /// </summary>
         private static void UpdateCheckThread()
@@ -566,67 +625,6 @@ namespace NoteFly
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             }
-        }
-
-        /// <summary>
-        /// Load plugin .dll files from pluginfolder
-        /// </summary>
-        /// <param name="onlyenabled"></param>
-        public static IPlugin.IPlugin[] GetPlugins(bool onlyenabled)
-        {
-            System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
-            if (Directory.Exists(Settings.ProgramPluginsFolder))
-            {
-                string[] pluginfiles = GetFilesPluginDir();
-                string[] pluginsenabled = Settings.ProgramPluginsEnabled.Split('|'); // | is illegal as filename.
-                for (int i = 0; i < pluginfiles.Length; i++)
-                {
-                    try
-                    {
-                        // blacklist sqllite drivers not to load as notefly plugin, so sqllite drivers could be used by plugins.
-                        if (pluginfiles[i] == "System.Data.SQLite.DLL" || pluginfiles[i] == "SQLite3.dll")
-                        {
-                            break;
-                        }
-
-                        // Get if plugin is enabled.
-                        bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
-                        if (pluginenabled && onlyenabled || !onlyenabled)
-                        {
-                            System.Reflection.Assembly pluginassembly = null;
-                            pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
-                            if (pluginassembly != null)
-                            {
-                                foreach (Type curplugintype in pluginassembly.GetTypes())
-                                {
-                                    if (curplugintype.IsPublic && !curplugintype.IsAbstract)
-                                    {
-                                        Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
-                                        if (plugintype != null)
-                                        {
-                                            IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
-                                            iplugin.Register(pluginenabled, pluginfiles[i]);
-                                            pluginslist.Add(iplugin);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        const string CANTLOADPLUGIN = "Can't load plugin: ";
-                        Log.Write(LogType.exception, CANTLOADPLUGIN + pluginfiles[i] + " " + ex.Message);
-                    }
-                }
-            }
-            else
-            {
-                const string PLUGINFOLDERNOTEXIST = "Plugin folder does not exist.";
-                Log.Write(LogType.info, PLUGINFOLDERNOTEXIST);
-            }
-
-            return pluginslist.ToArray();
         }
 
         private static string[] GetFilesPluginDir()

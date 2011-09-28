@@ -305,7 +305,6 @@ namespace NoteFly
                             Settings.SettingsExpertEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
 
-
                         // ints and doubles
                         case "TrayiconFontsize":
                             Settings.TrayiconFontsize = xmlread.ReadElementContentAsFloat();
@@ -866,7 +865,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
                 xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                 xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
-                xmlwrite.WriteElementString("ProgramLastrunVersion", Settings.ProgramLastrunVersion );
+                xmlwrite.WriteElementString("ProgramLastrunVersion", Settings.ProgramLastrunVersion);
                 xmlwrite.WriteElementString("ProgramPluginsFolder", Settings.ProgramPluginsFolder);
                 xmlwrite.WriteElementString("ProgramPluginsEnabled", Settings.ProgramPluginsEnabled);
                 xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
@@ -957,7 +956,6 @@ namespace NoteFly
                 {
                     Log.Write(LogType.error, "Invalid update uri.");
                 }
-
 
                 HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(Settings.UpdatecheckURL);
                 request.Method = "GET";
@@ -1232,7 +1230,7 @@ namespace NoteFly
                 xmlwrite.Formatting = Formatting.Indented;
                 xmlwrite.WriteStartDocument(true); // standalone xml file
                 xmlwrite.WriteStartElement("skins");
-                string[] name = new string[] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark", "softwhite", "contrastblue", "grass", "colordrops", "nyancat"  };
+                string[] name = new string[] { "yellow", "orange", "white", "green", "blue", "purple", "red", "dark", "softwhite", "contrastblue", "grass", "colordrops", "nyancat" };
                 string[] primaryclr = new string[] { "FFEF14", "FFA700", "FFFFFF", "6FE200", "5A86D5", "FF1AFF", "FF1A1A", "002626", "FFF4C6", "3B47EF", "6FE200", "7D0C9A", "013567" };
                 string[] selectclr = new string[] { "E0D616", "C17D00", "E0E0E0", "008000", "1A1AFF", "8B1A8B", "7A1515", "000624", "333366", "00137F", "008000", "000624", "0019A8" };
                 string[] highlightclr = new string[] { "FFED7C", "FFD46D", "E5E5E5", "DADBD9", "C6CBD3", "FFC1FF", "FF6F6F", "494949", "FFFFFF", "0026FF", "DADBD9", "494949", "000000" };

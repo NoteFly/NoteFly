@@ -74,9 +74,6 @@ namespace NoteFly
         /// </summary>
         public static void DeinitHighlighter()
         {
-            //langhtml = null;
-            //langphp = null;
-            //langsql = null;
             keywordsinit = false;
             GC.Collect();
         }

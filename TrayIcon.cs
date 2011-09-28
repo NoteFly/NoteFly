@@ -121,11 +121,15 @@ namespace NoteFly
             this.icon = new NotifyIcon(this.components);
             this.icon.ContextMenuStrip = this.menuTrayIcon;
             Assembly assembly = Assembly.GetExecutingAssembly();
-            if (Settings.TrayiconAlternateIcon) {
+            if (Settings.TrayiconAlternateIcon) 
+            {
                 this.icon.Icon = new Icon(NoteFly.Properties.Resources.trayicon_white, NoteFly.Properties.Resources.trayicon_white.Size);
-            } else {
+            }
+            else
+            {
                 this.icon.Icon = new Icon(NoteFly.Properties.Resources.trayicon_yellow, NoteFly.Properties.Resources.trayicon_white.Size); //assembly.GetManifestResourceStream("NoteFly.Resources.trayicon_yellow.ico"));
             }
+
             this.icon.MouseClick += new MouseEventHandler(this.Icon_Click);
             this.icon.Visible = true;
             this.icon.ContextMenuStrip.Name = "MenuTrayIcon";

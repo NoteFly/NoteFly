@@ -410,6 +410,76 @@ namespace NoteFly
         private System.Windows.Forms.Label lblLatestUpdateCheck;
 
         /// <summary>
+        /// CheckBox chxSettingsExpertEnabled
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxSettingsExpertEnabled;
+
+        /// <summary>
+        /// CheckBox chxLoadPlugins
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxLoadPlugins;
+
+        /// <summary>
+        /// TabPage tabPlugins
+        /// </summary>
+        private System.Windows.Forms.TabPage tabPlugins;
+
+        /// <summary>
+        /// CheckBox chxCheckUpdatesSignature
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxCheckUpdatesSignature;
+
+        /// <summary>
+        /// TabControl tabControlNetwork
+        /// </summary>
+        private System.Windows.Forms.TabControl tabControlNetwork;
+
+        /// <summary>
+        /// TabPage tabUpdates
+        /// </summary>
+        private System.Windows.Forms.TabPage tabUpdates;
+
+        /// <summary>
+        /// TabPage tabProxy
+        /// </summary>
+        private System.Windows.Forms.TabPage tabProxy;
+
+        /// <summary>
+        /// Label lblTextGPGPath
+        /// </summary>
+        private System.Windows.Forms.Label lblTextGPGPath;
+
+        /// <summary>
+        /// TextBox tbGPGPath
+        /// </summary>
+        private System.Windows.Forms.TextBox tbGPGPath;
+
+        /// <summary>
+        /// Button btnGPGPathBrowse
+        /// </summary>
+        private System.Windows.Forms.Button btnGPGPathBrowse;
+
+        /// <summary>
+        /// OpenFileDialog openFileDialogBrowseGPG
+        /// </summary>
+        private System.Windows.Forms.OpenFileDialog openFileDialogBrowseGPG;
+
+        /// <summary>
+        /// CheckBox chxUpdateSilentInstall
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxUpdateSilentInstall;
+
+        /// <summary>
+        /// CheckBox chxUseAlternativeTrayicon
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxUseAlternativeTrayicon;
+
+        /// <summary>
+        /// PluginGrid pluginGrid
+        /// </summary>
+        private PluginGrid pluginGrid;        
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -928,7 +998,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = "";
+            this.lblTextDirection.AccessibleDescription = string.Empty;
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.Location = new System.Drawing.Point(50, 183);
@@ -1721,20 +1791,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.CheckBox chxSettingsExpertEnabled;
-        private System.Windows.Forms.CheckBox chxLoadPlugins;
-        private System.Windows.Forms.TabPage tabPlugins;
-        private System.Windows.Forms.CheckBox chxCheckUpdatesSignature;
-        private System.Windows.Forms.TabControl tabControlNetwork;
-        private System.Windows.Forms.TabPage tabUpdates;
-        private System.Windows.Forms.TabPage tabProxy;
-        private System.Windows.Forms.Label lblTextGPGPath;
-        private System.Windows.Forms.TextBox tbGPGPath;
-        private System.Windows.Forms.Button btnGPGPathBrowse;
-        private System.Windows.Forms.OpenFileDialog openFileDialogBrowseGPG;
-        private System.Windows.Forms.CheckBox chxUpdateSilentInstall;
-        private PluginGrid pluginGrid;
-        private System.Windows.Forms.CheckBox chxUseAlternativeTrayicon;
     }
 }

@@ -23,7 +23,10 @@ namespace IPlugin
     using System.Reflection;
     using System.Windows.Forms;
 
-    [CLSCompliant(true)]
+    /// <summary>
+    /// PluginBase class.
+    /// </summary>
+    [CLSCompliant(true)]    
     public abstract class PluginBase : IPlugin
     {
         private bool enabled = false;
@@ -32,7 +35,7 @@ namespace IPlugin
         // Properties (2) 
 
         /// <summary>
-        /// Is the plugin enabled.
+        /// Gets if the plugin enabled.
         /// </summary>
         public bool Enabled
         {
@@ -40,6 +43,7 @@ namespace IPlugin
             {
                 return this.enabled;
             }
+
             set
             {
                 this.enabled = value;
@@ -58,7 +62,7 @@ namespace IPlugin
         }
 
         /// <summary>
-        /// Settings share tab title.
+        /// Gets the Settings share tab title.
         /// Tab not created if null.
         /// </summary>
         public virtual string SettingsTabTitle
@@ -70,7 +74,7 @@ namespace IPlugin
         }
 
         /// <summary>
-        /// Note share to menu text.
+        /// Gets the Note share to menu text.
         /// MenuItem not created if null.
         /// </summary>
         public virtual string ShareMenuText
@@ -87,8 +91,8 @@ namespace IPlugin
         /// Register the plugin
         /// string name, string author, string description, string version, 
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <param name="file"></param>
+        /// <param name="enabled">Is the plugin enabled.</param>
+        /// <param name="file">The plugin assembly.</param>
         public void Register(bool enabled, string file)
         {
             this.enabled = enabled;
@@ -119,7 +123,7 @@ namespace IPlugin
         /// Executed on opening FrmNewNote.
         /// Create a button in the bottom in FrmNewNote.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Array with buttons, return null by default</returns>
         public virtual Button[] InitFrmNewNoteFormatTools()
         {
             return null;
@@ -128,10 +132,10 @@ namespace IPlugin
         /// <summary>
         /// A format button clicked.
         /// </summary>
-        /// <param name="rtbnote"></param>
-        /// <param name="sender"></param>
-        /// <returns></returns>
-        public virtual string FormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button sender)
+        /// <param name="rtbnote">The richtextbox</param>
+        /// <param name="btn">The button that is clicked</param>
+        /// <returns>The rtf text of the note</returns>
+        public virtual string FormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn)
         {
             return rtbnote.Rtf;
         }
@@ -147,17 +151,20 @@ namespace IPlugin
         }
 
         /// <summary>
-        /// Executed if a note is saved
+        /// Executed if a note is saved.
         /// </summary>
-        /// <param name="note">A note object with details</param>
+        /// <param name="content">A note object with details.</param>
+        /// <param name="title">The note title.</param>
         public virtual void SavingNote(string content, string title)
         {
             // by default do nothing, override this to do someting.
         }
 
         /// <summary>
-        /// Executed if a note is made visible
+        /// Executed if a note is made visible.
         /// </summary>
+        /// <param name="content">The note content.</param>
+        /// <param name="title">The note title.</param>
         public virtual void ShowingNote(string content, string title)
         {
             // by default do nothing, override this to do someting.
@@ -166,6 +173,8 @@ namespace IPlugin
         /// <summary>
         /// Executed if a note is being hiden.
         /// </summary>
+        /// <param name="content">The note content.</param>
+        /// <param name="title">The note title.</param>
         public virtual void HidingNote(string content, string title)
         {
             // by default do nothing, override this to do someting.

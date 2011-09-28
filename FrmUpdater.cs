@@ -6,22 +6,32 @@
     using System.Net;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// FrmUpdater window.
+    /// </summary>
     public partial class FrmUpdater : Form
     {
+        /// <summary>
+        /// The download filepath
+        /// </summary>
         private string downloadfilepath;
+
+        /// <summary>
+        /// The GPGVerifWrapper class
+        /// </summary>
         private GPGVerifWrapper gpgverif;
 
         /// <summary>
         /// Creating a new instance of FrmUpdater class.
         /// </summary>
-        /// <param name="downloadurl"></param>
+        /// <param name="downloadurl">The url of the update to download</param>
         public FrmUpdater(string downloadurl)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             int locx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2);
             int locy = 10;
             this.Location = new System.Drawing.Point(locx, locy);
-            backgroundWorkerDownloader.RunWorkerAsync(downloadurl);
+            this.backgroundWorkerDownloader.RunWorkerAsync(downloadurl);
             if (Settings.UpdatecheckUseGPG)
             {
                 this.gpgverif = new GPGVerifWrapper();
@@ -31,8 +41,8 @@
         /// <summary>
         /// Downloading update
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">DoWorkEventArgs arguments</param>
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             string useragent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
@@ -40,7 +50,7 @@
             string downloadfilename = Path.GetFileName(downloadurl);
             this.downloadfilepath = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), downloadfilename);
 
-            if (CheckValidPath(downloadfilepath))
+            if (this.CheckValidPath())
             {
                 // first, we need to get the exact size (in bytes) of the file we are downloading
                 Uri url = new Uri(downloadurl);
@@ -81,9 +91,9 @@
                     using (System.IO.Stream streamRemote = client.OpenRead(new Uri(downloadurl)))
                     {
                         // using the FileStream object, we can write the downloaded bytes to the file system
-                        using (Stream streamLocal = new FileStream(downloadfilepath, FileMode.Create, FileAccess.Write, FileShare.None))
+                        using (Stream streamLocal = new FileStream(this.downloadfilepath, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
-                            PreallocateFile(streamLocal, filesize);
+                            this.PreallocateFile(streamLocal, filesize);
 
                             // loop the stream and get the file into the byte buffer
                             int iByteSize = 0;
@@ -95,9 +105,9 @@
                                 downloadedsize += iByteSize;
 
                                 // calculate the progress out of a base "100"
-                                double dIndex = (double)(downloadedsize);
+                                double dIndex = (double)downloadedsize;
                                 double dTotal = (double)byteBuffer.Length;
-                                double dProgressPercentage = (dIndex / dTotal);
+                                double dProgressPercentage = dIndex / dTotal;
                                 int iProgressPercentage;
                                 if (Settings.UpdatecheckUseGPG)
                                 {
@@ -109,7 +119,7 @@
                                 }
 
                                 // update the progress bar
-                                backgroundWorkerDownloader.ReportProgress(iProgressPercentage);
+                                this.backgroundWorkerDownloader.ReportProgress(iProgressPercentage);
                             }
 
                             // clean up the file stream
@@ -125,7 +135,7 @@
                         string sigfilepath = this.gpgverif.GetSignature(this.downloadfilepath);
 
                         // first, we need to get the exact size (in bytes) of the file we are downloading
-                        Uri urlsigfileserver = new Uri(gpgverif.GetSignature(downloadurl));
+                        Uri urlsigfileserver = new Uri(this.gpgverif.GetSignature(downloadurl));
                         System.Net.HttpWebRequest requestsig = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(urlsigfileserver);
                         requestsig.Timeout = Settings.NetworkConnectionTimeout;
                         requestsig.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
@@ -155,7 +165,7 @@
                                 // using the FileStream object, we can write the downloaded bytes to the file system
                                 using (Stream streamLocal = new FileStream(sigfilepath, FileMode.Create, FileAccess.Write, FileShare.None))
                                 {
-                                    PreallocateFile(streamLocal, filesizesig);
+                                    this.PreallocateFile(streamLocal, filesizesig);
 
                                     // loop the stream and get the file into the byte buffer
                                     int iByteSize = 0;
@@ -166,6 +176,7 @@
                                         streamLocal.Write(byteBuffer, 0, iByteSize);
                                         downloadedsize += iByteSize;
                                     }
+
                                     streamLocal.Close();
                                 }
                                 streamsigdownload.Close();
@@ -175,7 +186,8 @@
                         {
                             Log.Write(LogType.exception, webexc.Message);
                         }
-                        backgroundWorkerDownloader.ReportProgress(100);
+
+                        this.backgroundWorkerDownloader.ReportProgress(100);
                     }
                 }
             }
@@ -190,8 +202,8 @@
         /// <summary>
         /// update download process.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">ProgressChangedEventArgs arguments</param>
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             this.progressbarDownload.Value = e.ProgressPercentage;
@@ -201,8 +213,8 @@
         /// <summary>
         /// run download if download is compleet.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender objects</param>
+        /// <param name="e">RunWorkerCompletedEventArgs arguments</param>
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (!e.Cancelled)
@@ -215,7 +227,7 @@
                     this.lblStatusUpdate.Refresh();
                     if (File.Exists(Settings.UpdatecheckGPGPath))
                     {
-                        gpgverif.VerifDownload(downloadfilepath);
+                        this.gpgverif.VerifDownload(this.downloadfilepath);
                     }
                     else
                     {
@@ -231,11 +243,11 @@
                 System.Diagnostics.ProcessStartInfo procstartinfo;
                 if (Settings.UpdateSilentInstall)
                 {
-                    procstartinfo = new System.Diagnostics.ProcessStartInfo(downloadfilepath, "/S");
+                    procstartinfo = new System.Diagnostics.ProcessStartInfo(this.downloadfilepath, "/S");
                 }
                 else
                 {
-                    procstartinfo = new System.Diagnostics.ProcessStartInfo(downloadfilepath);
+                    procstartinfo = new System.Diagnostics.ProcessStartInfo(this.downloadfilepath);
                 }
 
                 procstartinfo.ErrorDialog = true;
@@ -261,12 +273,11 @@
         /// <summary>
         /// Check if the path does not contain forbidden filename/filepath characters
         /// </summary>
-        /// <param name="path"></param>
         /// <returns>true if the path is valid, false if it contains a illegal path character.</returns>
-        private bool CheckValidPath(string path)
+        private bool CheckValidPath()
         {
-            char[] forbiddencharspath = Path.GetInvalidPathChars(); //"?<>*|\"".ToCharArray();
-            if (downloadfilepath.IndexOfAny(forbiddencharspath) < 0)
+            char[] forbiddencharspath = Path.GetInvalidPathChars(); // "?<>*|\"".ToCharArray();
+            if (this.downloadfilepath.IndexOfAny(forbiddencharspath) < 0)
             {
                 return true;
             }
@@ -280,12 +291,19 @@
         /// Preallocate file
         /// </summary>
         /// <param name="filestream"></param>
-        /// <param name="filesize"></param>
+        /// <param name="filesize">The filesize of the file to preallocate/param>
         private void PreallocateFile(Stream filestream, long filesize)
         {
             try
             {
-                filestream.SetLength(filesize);
+                if (filesize != 0)
+                {
+                    filestream.SetLength(filesize);
+                }
+                else
+                {
+                    throw new ApplicationException("Empty Preallocate file");
+                }
             }
             catch (IOException ioexc)
             {

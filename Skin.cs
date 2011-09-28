@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FrmNote.cs" company="GNU">
+// <copyright file="Skin.cs" company="GNU">
 //  NoteFly a note application.
 //  Copyright (C) 2011  Tom
 //

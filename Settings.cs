@@ -317,6 +317,11 @@ namespace NoteFly
         public static string UpdatecheckURL = "http://update.notefly.org/latestversion.xml";
 
         /// <summary>
+        /// The keyserver used to get the public key of NoteFly.
+        /// </summary>
+        public static string UpdatecheckGPGKeyserver = "http://www.notefly.org/downloads/";
+
+        /// <summary>
         /// Use GnuGP to verif the downloaded update.
         /// </summary>
         public static bool UpdatecheckUseGPG = false;

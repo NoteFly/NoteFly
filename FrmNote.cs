@@ -84,7 +84,7 @@ namespace NoteFly
             this.BackColor = notes.GetPrimaryClr(note.SkinNr);
             if (notes.GetPrimaryTexture(note.SkinNr) != null)
             {
-                this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(note.SkinNr); //ImageLayout.Tile;
+                this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(note.SkinNr);
                 this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
             }
             else
@@ -270,13 +270,13 @@ namespace NoteFly
         /// <summary>
         /// Menu plugin clicked
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuPluginClicked(Object sender, System.EventArgs e)
+        /// <param name="toolstripmenuitem">The menu item clicked</param>
+        /// <param name="e">Event arguments</param>
+        private void MenuPluginClicked(object toolstripmenuitem, System.EventArgs e)
         {
             try
             {
-                ToolStripMenuItem menuitem = (ToolStripMenuItem)sender;
+                ToolStripMenuItem menuitem = (ToolStripMenuItem)toolstripmenuitem;
                 int p = (int)menuitem.Tag;
                 Program.pluginsenabled[p].ShareMenuClicked(this.rtbNote, this.note.Title);
             }
@@ -516,10 +516,10 @@ namespace NoteFly
             this.note.SkinNr = this.notes.GetSkinNr(tsi.Text);
             this.SuspendLayout();
             this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
-            if (notes.GetPrimaryTexture(note.SkinNr) != null)
+            if (this.notes.GetPrimaryTexture(this.note.SkinNr) != null)
             {
-                this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(note.SkinNr);
-                this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
+                this.BackgroundImageLayout = this.notes.GetPrimaryTextureLayout(this.note.SkinNr);
+                this.BackgroundImage = this.notes.GetPrimaryTexture(this.note.SkinNr);
             }
             else
             {
@@ -693,7 +693,6 @@ namespace NoteFly
             }
 
             this.pnlHead.BackColor = Color.Transparent;
-            //this.notes.GetPrimaryClr(this.note.SkinNr);
         }
 
         /// <summary>
@@ -830,8 +829,8 @@ namespace NoteFly
         /// <summary>
         /// Create plugin sendto menu's
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event argument</param>
         private void menuSendTo_DropDownOpening(object sender, EventArgs e)
         {
             bool giveup = false;
@@ -852,9 +851,9 @@ namespace NoteFly
             {
                 for (int i = 0; i < Program.pluginsenabled.Length; i++)
                 {
-                    if (!String.IsNullOrEmpty(Program.pluginsenabled[i].ShareMenuText))
+                    if (!string.IsNullOrEmpty(Program.pluginsenabled[i].ShareMenuText))
                     {
-                        ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.pluginsenabled[i].ShareMenuText, null, new EventHandler(MenuPluginClicked));
+                        ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.pluginsenabled[i].ShareMenuText, null, new EventHandler(this.MenuPluginClicked));
                         menuitem.Name = "menuPlugin" + i;
                         menuitem.Tag = i;
                         this.menuSendTo.DropDownItems.Add(menuitem);

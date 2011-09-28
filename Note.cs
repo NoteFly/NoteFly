@@ -347,7 +347,7 @@ namespace NoteFly
             {
                 for (int i = 0; i < Program.pluginsenabled.Length; i++)
                 {
-                    Program.pluginsenabled[i].ShowingNote(this.tempcontent, title);
+                    Program.pluginsenabled[i].ShowingNote(this.tempcontent, this.title);
                 }
             }
         }
@@ -390,7 +390,8 @@ namespace NoteFly
                 }
                 else
                 {
-                    throw new ApplicationException("Cannot read note content, note file not found: " + notefilepath);
+                    const string CANNOTREADNOTECONTENT = "Cannot read note content, note file not found: ";
+                    throw new ApplicationException(CANNOTREADNOTECONTENT + notefilepath);
                 }
             }
             else

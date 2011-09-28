@@ -132,9 +132,8 @@ namespace NoteFly
                     {
                         this.tlpnlFormatbtn.ColumnCount += 1;
                         this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 32));
-                        btnPluginFormatBtn.Click += new EventHandler(btnPluginFormatBtn_Click);
-                        this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount, 0);
-                        
+                        btnPluginFormatBtn.Click += new EventHandler(this.btnPluginFormatBtn_Click);
+                        this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount, 0);                        
                     }
                 }
             }
@@ -149,8 +148,8 @@ namespace NoteFly
         /// <summary>
         /// Plugin format button clicked.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The button clicked</param>
+        /// <param name="e">Event arguments</param>
         private void btnPluginFormatBtn_Click(object sender, EventArgs e)
         {
             this.rtbNewNote.EnableAutoDragDrop = true;
@@ -521,16 +520,16 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult dlgresopennote = openNoteFileDialog.ShowDialog();
+            DialogResult dlgresopennote = this.openNoteFileDialog.ShowDialog();
             if (dlgresopennote == DialogResult.OK)
             {
                 StreamReader reader = null;
                 try
                 {
-                    if (File.Exists(openNoteFileDialog.FileName))
+                    if (File.Exists(this.openNoteFileDialog.FileName))
                     {
-                        reader = new StreamReader(openNoteFileDialog.FileName, true); // detect encoding
-                        switch (openNoteFileDialog.FilterIndex)
+                        reader = new StreamReader(this.openNoteFileDialog.FileName, true); // detect encoding
+                        switch (this.openNoteFileDialog.FilterIndex)
                         {
                             case 1:
                                 this.ReadTextfile(reader);
@@ -542,13 +541,12 @@ namespace NoteFly
                                 this.ReadKeyNotefile(reader);
                                 break;
                             case 4:
-                                this.ReadTomboyfile(reader, openNoteFileDialog.FileName);
+                                this.ReadTomboyfile(reader, this.openNoteFileDialog.FileName);
                                 break;
                             case 5:
                                 this.ReadMicroSENotefile(reader);
                                 break;
                         }
-
                     }
                 }
                 finally
@@ -561,7 +559,7 @@ namespace NoteFly
         /// <summary>
         /// Import a textfile as note content for a new note.
         /// </summary>
-        /// <param name="reader"></param>
+        /// <param name="reader">A streamreader to read the note content with</param>
         private void ReadTextfile(StreamReader reader)
         {
             this.rtbNewNote.Text = reader.ReadToEnd();
@@ -570,7 +568,7 @@ namespace NoteFly
         /// <summary>
         /// Import a rtf file as note content for a new note.
         /// </summary>
-        /// <param name="reader"></param>
+        /// <param name="reader">Streamreader to read the note content.</param>
         private void ReadRTFfile(StreamReader reader)
         {
             this.rtbNewNote.Rtf = reader.ReadToEnd();
@@ -580,7 +578,7 @@ namespace NoteFly
         /// <summary>
         /// Import a KeyNote note file as note content for a new note.
         /// </summary>
-        /// <param name="reader"></param>
+        /// <param name="reader">The streamreader to read the KeyNote.</param>
         private void ReadKeyNotefile(StreamReader reader)
         {
             uint linenum = 0;
@@ -632,7 +630,8 @@ namespace NoteFly
         ///  Import a Tomboy note file as note content for a new note.
         ///  And set the new note title.
         /// </summary>
-        /// <param name="reader"></param>
+        /// <param name="reader">The streamreader to read the Tomboy note with.</param>
+        /// <param name="tomboynotefile">The Tomboy note file full filepath and filename.</param>
         private void ReadTomboyfile(StreamReader reader, string tomboynotefile)
         {
             this.tbTitle.Text = xmlUtil.GetContentString(tomboynotefile, "title");
@@ -676,7 +675,7 @@ namespace NoteFly
         /// <summary>
         /// Import a MicroSE note file as note content for a new note.
         /// </summary>
-        /// <param name="reader"></param>
+        /// <param name="reader">The streamreader to read the MicroSE note file with.</param>
         private void ReadMicroSENotefile(StreamReader reader)
         {
             bool contentstarted = false;
@@ -1078,8 +1077,8 @@ namespace NoteFly
         /// <summary>
         /// Do a quick text highlight.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnAddNote_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == ' ')

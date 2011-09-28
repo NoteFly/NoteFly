@@ -1,6 +1,9 @@
 ﻿namespace NoteFly
 {
-    partial class FrmUpdater
+    /// <summary>
+    /// Class to download and launch the update.
+    /// </summary>
+    public partial class FrmUpdater
     {
         /// <summary>
         /// Required designer variable.
@@ -8,15 +11,31 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
+        /// ProgressBar progressbarDownload
+        /// </summary>
+        private System.Windows.Forms.ProgressBar progressbarDownload;
+        
+        /// <summary>
+        /// BackgroundWorker backgroundWorkerDownloader
+        /// </summary>
+        private System.ComponentModel.BackgroundWorker backgroundWorkerDownloader;
+        
+        /// <summary>
+        /// Label lblStatusUpdate
+        /// </summary>
+        private System.Windows.Forms.Label lblStatusUpdate;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -84,10 +103,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ProgressBar progressbarDownload;
-        private System.ComponentModel.BackgroundWorker backgroundWorkerDownloader;
-        private System.Windows.Forms.Label lblStatusUpdate;
     }
 }
-

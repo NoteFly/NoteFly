@@ -1,13 +1,12 @@
 ﻿namespace InsertSmiley
 {
-    using System.Drawing;
-    using System.IO;
-    using System.Text;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// InserSmilet plugin
+    /// </summary>
     public class InsertSmileyplugin : IPlugin.PluginBase
     {
-
         public override string SettingsTabTitle
         {
             get
@@ -16,6 +15,10 @@
             }
         }
 
+        /// <summary>
+        /// Create the buttons for formatting in FrmNewNote.
+        /// </summary>
+        /// <returns>A array with buttons</returns>
         public override Button[] InitFrmNewNoteFormatTools()
         {
             Button[] btns = new Button[3];
@@ -51,14 +54,14 @@
         /// Insert a smiley copy into a note.
         /// (Carefull these smiley images are copies stored in notes, bad for filesize of notes.)
         /// </summary>
-        /// <param name="rtbnote"></param>
-        /// <param name="sender"></param>
-        /// <returns></returns>
-        public override string FormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button sender)
+        /// <param name="rtbnote">The richedittextbox with the note content.</param>
+        /// <param name="btn">The button clicked.</param>
+        /// <returns>The new note content as RTF.</returns>
+        public override string FormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn)
         {
             string rtfimg = string.Empty;
             // wmetafile of smilies created with wordpad and then rtf files opened with notepad. ;)
-            switch (sender.Name)
+            switch (btn.Name)
             {
                 case "smile":
                     rtfimg = @"{\pict\wmetafile8\picw397\pich397\picwgoal225\pichgoal225 
@@ -101,17 +104,6 @@ ff0000ceff0013fdff0000eaff00009dfe0000c9ff0000b4ff0000e5ff00000000000000000000
                     break;
             }
 
-            //string currentrtf = rtbnote.Rtf;            
-            //int rtfpostextselstart = TextPosToRTFPos(rtbnote, rtbnote.SelectionStart);            
-            //if (rtfpostextselstart < 0)
-            //{
-            //    int docend = rtbnote.Rtf.LastIndexOf(@"\par");
-            //    currentrtf = rtbnote.Rtf.Insert(docend, rtfimg);
-            //}
-            //else
-            //{
-            //    currentrtf = rtbnote.Rtf.Insert(rtfpostextselstart, rtfimg);
-            //}
             int docend = rtbnote.Rtf.LastIndexOf(@"\par");
             string currentrtf = rtbnote.Rtf.Insert(docend, rtfimg);
             return currentrtf;
