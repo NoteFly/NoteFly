@@ -55,14 +55,9 @@ namespace NoteFly
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTextActions;
 
         /// <summary>
-        /// ToolStripMenuItem menuPasteToContent
-        /// </summary>
-        private System.Windows.Forms.ToolStripMenuItem menuPasteToContent;
-
-        /// <summary>
         /// ToolStripMenuItem menuCopyContent
         /// </summary>
-        private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
+        private System.Windows.Forms.ToolStripMenuItem menuCopy;
 
         /// <summary>
         /// ToolStripMenuItem menuSaveNewNote
@@ -187,11 +182,13 @@ namespace NoteFly
             this.menuSaveNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuShowtoolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.menuWordWarp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPasteTo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStickyOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.menuImportfile = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPasteToContent = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCancelNewNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.lbTextTitle = new System.Windows.Forms.Label();
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
@@ -209,6 +206,8 @@ namespace NoteFly
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.openNoteFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tlpnlFormatbtn = new System.Windows.Forms.TableLayoutPanel();
+            this.contentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.titleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
@@ -222,12 +221,12 @@ namespace NoteFly
             this.menuShowtoolbar,
             this.menuWordWarp,
             this.menuStickyOnTop,
+            this.menuCopy,
+            this.menuPasteTo,
             this.menuImportfile,
-            this.menuPasteToContent,
-            this.menuCopyContent,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(289, 180);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(181, 202);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -235,7 +234,7 @@ namespace NoteFly
             this.menuSaveNewNote.Image = global::NoteFly.Properties.Resources.accept;
             this.menuSaveNewNote.Name = "menuSaveNewNote";
             this.menuSaveNewNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.menuSaveNewNote.Size = new System.Drawing.Size(288, 22);
+            this.menuSaveNewNote.Size = new System.Drawing.Size(180, 22);
             this.menuSaveNewNote.Text = "&Save note";
             this.menuSaveNewNote.Click += new System.EventHandler(this.btnAddNote_Click);
             // 
@@ -244,7 +243,7 @@ namespace NoteFly
             this.menuShowtoolbar.Checked = true;
             this.menuShowtoolbar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuShowtoolbar.Name = "menuShowtoolbar";
-            this.menuShowtoolbar.Size = new System.Drawing.Size(288, 22);
+            this.menuShowtoolbar.Size = new System.Drawing.Size(180, 22);
             this.menuShowtoolbar.Text = "Show format tools";
             this.menuShowtoolbar.Click += new System.EventHandler(this.menuShowtoolbar_Click);
             // 
@@ -254,53 +253,67 @@ namespace NoteFly
             this.menuWordWarp.CheckOnClick = true;
             this.menuWordWarp.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuWordWarp.Name = "menuWordWarp";
-            this.menuWordWarp.Size = new System.Drawing.Size(288, 22);
+            this.menuWordWarp.Size = new System.Drawing.Size(180, 22);
             this.menuWordWarp.Text = "Word wrap";
             this.menuWordWarp.Click += new System.EventHandler(this.menuWordWarp_Click);
+            // 
+            // menuPasteTo
+            // 
+            this.menuPasteTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contentToolStripMenuItem,
+            this.titleToolStripMenuItem});
+            this.menuPasteTo.Name = "menuPasteTo";
+            this.menuPasteTo.Size = new System.Drawing.Size(180, 22);
+            this.menuPasteTo.Text = "&Paste to";
             // 
             // menuStickyOnTop
             // 
             this.menuStickyOnTop.CheckOnClick = true;
             this.menuStickyOnTop.Name = "menuStickyOnTop";
-            this.menuStickyOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.menuStickyOnTop.Size = new System.Drawing.Size(288, 22);
+            this.menuStickyOnTop.Size = new System.Drawing.Size(180, 22);
             this.menuStickyOnTop.Text = "Sticky on &top";
             this.menuStickyOnTop.Click += new System.EventHandler(this.menuStickyOnTop_Click);
             // 
             // menuImportfile
             // 
             this.menuImportfile.Name = "menuImportfile";
-            this.menuImportfile.Size = new System.Drawing.Size(288, 22);
+            this.menuImportfile.Size = new System.Drawing.Size(180, 22);
             this.menuImportfile.Text = "Import..";
             this.menuImportfile.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
-            // 
-            // menuPasteToContent
-            // 
-            this.menuPasteToContent.Name = "menuPasteToContent";
-            this.menuPasteToContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.P)));
-            this.menuPasteToContent.Size = new System.Drawing.Size(288, 22);
-            this.menuPasteToContent.Text = "&Paste to note content";
-            this.menuPasteToContent.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
-            // 
-            // menuCopyContent
-            // 
-            this.menuCopyContent.Name = "menuCopyContent";
-            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.C)));
-            this.menuCopyContent.Size = new System.Drawing.Size(288, 22);
-            this.menuCopyContent.Text = "&Copy current note content";
-            this.menuCopyContent.DropDownOpening += new System.EventHandler(this.copyTextToolStripMenuItem_DropDownOpening);
-            this.menuCopyContent.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
             // 
             // menuCancelNewNote
             // 
             this.menuCancelNewNote.Image = global::NoteFly.Properties.Resources.cancel;
             this.menuCancelNewNote.Name = "menuCancelNewNote";
             this.menuCancelNewNote.ShortcutKeyDisplayString = "Escape";
-            this.menuCancelNewNote.Size = new System.Drawing.Size(288, 22);
+            this.menuCancelNewNote.Size = new System.Drawing.Size(180, 22);
             this.menuCancelNewNote.Text = "Canc&el note";
             this.menuCancelNewNote.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // menuCopy
+            // 
+            this.menuCopy.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuCopyContent,
+            this.menuCopyTitle});
+            this.menuCopy.Name = "menuCopy";
+            this.menuCopy.Size = new System.Drawing.Size(180, 22);
+            this.menuCopy.Text = "&Copy";
+            this.menuCopy.DropDownOpening += new System.EventHandler(this.copyTextToolStripMenuItem_DropDownOpening);
+            this.menuCopy.Click += new System.EventHandler(this.copyTextToolStripMenuItem_Click);
+            // 
+            // menuCopyContent
+            // 
+            this.menuCopyContent.Name = "menuCopyContent";
+            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
+            this.menuCopyContent.Size = new System.Drawing.Size(189, 22);
+            this.menuCopyContent.Text = "content";
+            // 
+            // menuCopyTitle
+            // 
+            this.menuCopyTitle.Name = "menuCopyTitle";
+            this.menuCopyTitle.Size = new System.Drawing.Size(189, 22);
+            this.menuCopyTitle.Text = "title";
             // 
             // tbTitle
             // 
@@ -598,7 +611,7 @@ namespace NoteFly
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
             this.rtbNewNote.TabIndex = 1;
-            this.rtbNewNote.Text = string.Empty;
+            this.rtbNewNote.Text = "";
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -657,6 +670,20 @@ namespace NoteFly
             this.tlpnlFormatbtn.Size = new System.Drawing.Size(278, 30);
             this.tlpnlFormatbtn.TabIndex = 19;
             // 
+            // contentToolStripMenuItem
+            // 
+            this.contentToolStripMenuItem.Name = "contentToolStripMenuItem";
+            this.contentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.contentToolStripMenuItem.Text = "content";
+            this.contentToolStripMenuItem.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
+            // 
+            // titleToolStripMenuItem
+            // 
+            this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
+            this.titleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.titleToolStripMenuItem.Text = "title";
+            this.titleToolStripMenuItem.Click += new System.EventHandler(this.titleToolStripMenuItem_Click);
+            // 
             // FrmNewNote
             // 
             this.AcceptButton = this.btnAddNote;
@@ -696,5 +723,11 @@ namespace NoteFly
         }
 
         #endregion               
+
+        private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
+        private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
+        private System.Windows.Forms.ToolStripMenuItem menuPasteTo;
+        private System.Windows.Forms.ToolStripMenuItem contentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem;
     }
 }

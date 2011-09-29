@@ -13,26 +13,22 @@
         /// <summary>
         /// Settings tab title.
         /// </summary>
-        public override string SettingsTabTitle
-        {
-            get
-            {
-                return "Hello World plugin";
-            }
-        }
+        //public override string SettingsTabTitle
+        //{
+        //    get
+        //    {
+        //        return "Hello World plugin";
+        //    }
+        //}
 
-        /// <summary>
-        /// Share menu text.
-        /// </summary>
-        public override string ShareMenuText
-        {
-            get
-            {
-                return "Try hello world";
-            }
-        }
+        // Methods (3) 
 
-        // Methods (2) 
+        public override ToolStripMenuItem InitFrmNoteShareMenu()
+        {
+            ToolStripMenuItem toolstripmenu = new ToolStripMenuItem("Try hello world");
+            toolstripmenu.Name = "menuShareHelloWorld";
+            return toolstripmenu;
+        }
 
         /// <summary>
         /// Menu clicked
@@ -51,7 +47,7 @@
         /// <returns>Tabpage with components</returns>
         public override TabPage InitShareSettingsTab()
         {
-            TabPage newtab = new TabPage(this.SettingsTabTitle);
+            TabPage newtab = new TabPage("Hello World plugin");
             newtab.BackColor = Color.White;
 
             Label lblhello = new Label();

@@ -24,7 +24,7 @@ namespace IPlugin
     /// <summary>
     /// Plugin interface
     /// status: DRAFT (Subject to change)
-    /// revision: 2
+    /// revision: 3
     /// </summary>
     public interface IPlugin
     {
@@ -39,21 +39,17 @@ namespace IPlugin
         string Filename { get; }
 
         /// <summary>
-        /// Gets the share menu text, if any.
-        /// </summary>
-        string ShareMenuText { get; }
-
-        /// <summary>
-        /// Gets the share settings tab title, if any
-        /// </summary>
-        string SettingsTabTitle { get; }
-
-        /// <summary>
         /// Register plugin
         /// </summary>
         /// <param name="enabled">Is this plugin enabled.</param>
-        /// <param name="file">The filename of the plugin</param>
+        /// <param name="file">The plugin file.</param>
         void Register(bool enabled, string file);
+
+        /// <summary>
+        /// Adds ToolStripItem to the right click submenu share on FrmNote.
+        /// </summary>
+        /// <returns>a ToolStripMenuItem</returns>
+        ToolStripMenuItem InitFrmNoteShareMenu();
 
         /// <summary>
         /// Executed if share menu clicked.
@@ -72,7 +68,31 @@ namespace IPlugin
         /// Create a button in the bottom in FrmNewNote.
         /// </summary>
         /// <returns>The buttons created in FrmNewNote</returns>
-        Button[] InitFrmNewNoteFormatTools();
+        Button[] InitNoteFormatBtns();
+
+        /// <summary>
+        /// Adds ToolStripItem to the right click menu on FrmNewNote.
+        /// </summary>
+        /// <returns></returns>
+        ToolStripItem InitFrmNewNoteMenu();
+
+        /// <summary>
+        /// Adds ToolStripItem to the right click menu on FrmNote.
+        /// </summary>
+        /// <returns></returns>
+        ToolStripItem InitFrmNoteMenu();
+
+        /// <summary>
+        /// Adds ToolStripItem to the right click menu of the trayicon.
+        /// </summary>
+        /// <returns></returns>
+        ToolStripItem InitTrayIconMenu();
+
+        /// <summary>
+        /// Create button(s) in the top FrmManageNotes window.
+        /// </summary>
+        /// <returns>Array with the button or buttons to create.</returns>
+        Button[] InitFrmManageNotesBtns();
 
         /// <summary>
         /// A plugin format button is cliked.
@@ -80,12 +100,20 @@ namespace IPlugin
         /// <param name="rtbnote">The RichTextbox.</param>
         /// <param name="btn">The button is clicked.</param>
         /// <returns>new content</returns>
-        string FormatBtnClicked(System.Windows.Forms.RichTextBox rtf, Button btn);
+        string NoteFormatBtnClicked(System.Windows.Forms.RichTextBox rtfnote, Button btn);
+
+        /// <summary>
+        /// Menu item in right click menu FrmNewNote is clicked.d
+        /// </summary>
+        /// <param name="rtbnote">The RichTextbox.</param>
+        /// <param name="btn">The button is clicked.</param>
+        /// <returns>new content</returns>
+        string MenuFrmNewNoteClicked(System.Windows.Forms.RichTextBox rtfnote, ToolStripItem menuitem);
 
         /// <summary>
         /// Executed if Ok on FrmSettings is pressed.
         /// </summary>
-        /// <returns>true if allowed to close FrmSettings</returns>
+        /// <returns>True if allowed to close FrmSettings.</returns>
         bool SaveSettingsTab();
 
         /// <summary>

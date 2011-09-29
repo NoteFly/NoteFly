@@ -126,14 +126,14 @@ namespace NoteFly
             this.InitializeComponent();
             for (int p = 0; p < Program.pluginsenabled.Length; p++)
             {
-                if (Program.pluginsenabled[p].InitFrmNewNoteFormatTools() != null)
+                if (Program.pluginsenabled[p].InitNoteFormatBtns() != null)
                 {
-                    foreach (Control btnPluginFormatBtn in Program.pluginsenabled[p].InitFrmNewNoteFormatTools())
+                    foreach (Control btnPluginFormatBtn in Program.pluginsenabled[p].InitNoteFormatBtns())
                     {
                         this.tlpnlFormatbtn.ColumnCount += 1;
                         this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 32));
                         btnPluginFormatBtn.Click += new EventHandler(this.btnPluginFormatBtn_Click);
-                        this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount, 0);                        
+                        this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount - 1, 0);
                     }
                 }
             }
@@ -155,8 +155,8 @@ namespace NoteFly
             this.rtbNewNote.EnableAutoDragDrop = true;
             for (int p = 0; p < Program.pluginsenabled.Length; p++)
             {
-                this.rtbNewNote.Rtf = Program.pluginsenabled[p].FormatBtnClicked(this.rtbNewNote, (Button)sender);
-            }            
+                this.rtbNewNote.Rtf = Program.pluginsenabled[p].NoteFormatBtnClicked(this.rtbNewNote, (Button)sender);
+            }
         }
 
         /// <summary>
@@ -436,19 +436,55 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Avoid that if there is no content the user select to copy the content.
+        /// Check if menuCopyContent and menuCopyTitle should be enabled
+        /// and add plugin contenxt menu's
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void contextMenuStripTextActions_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (this.rtbNewNote.TextLength == 0)
-            {
-                this.menuCopyContent.Enabled = false;
-            }
-            else
+            this.menuCopyContent.Enabled = false;
+            if (this.rtbNewNote.TextLength > 0)
             {
                 this.menuCopyContent.Enabled = true;
+            }
+
+            this.menuCopyTitle.Enabled = false;
+            if (this.tbTitle.TextLength > 0)
+            {
+                this.menuCopyTitle.Enabled = true;
+            }
+
+            while (this.contextMenuStripTextActions.Items.Count > 8)
+            {
+                this.contextMenuStripTextActions.Items.RemoveAt(8);
+            }
+
+            for (int i = 0; i < Program.pluginsenabled.Length; i++)
+            {
+                if (Program.pluginsenabled[i].InitFrmNewNoteMenu() != null)
+                {
+                    ToolStripItem menuplugin = Program.pluginsenabled[i].InitFrmNewNoteMenu();
+                    menuplugin.Click += new EventHandler(menumain_Click);
+                    this.contextMenuStripTextActions.Items.Add(menuplugin);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Plugin menu in main contextmenu clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menumain_Click(object sender, EventArgs e)
+        {
+            if (Program.pluginsenabled != null)
+            {
+                for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                {
+                    ToolStripItem toolstripitemplugin = (ToolStripItem)sender;
+                    this.rtbNewNote.Rtf = Program.pluginsenabled[i].MenuFrmNewNoteClicked(this.rtbNewNote, toolstripitemplugin);
+                }
             }
         }
 
@@ -478,11 +514,11 @@ namespace NoteFly
         {
             if (Clipboard.ContainsText())
             {
-                this.menuPasteToContent.Enabled = true;
+                this.menuPasteTo.Enabled = true;
             }
             else
             {
-                this.menuPasteToContent.Enabled = false;
+                this.menuPasteTo.Enabled = false;
             }
         }
 
@@ -1084,6 +1120,20 @@ namespace NoteFly
             if (e.KeyChar == ' ')
             {
                 // todo Do a quick highlight of change. Every space creates a new keyword to highlight.
+            }
+        }
+
+        private void titleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                this.tbTitle.Text += Clipboard.GetText();
+            }
+            else
+            {
+                const string EMPTYCLIPBOARD = "There is no text on the clipboard.";
+                MessageBox.Show(EMPTYCLIPBOARD);
+                Log.Write(LogType.error, EMPTYCLIPBOARD);
             }
         }
 

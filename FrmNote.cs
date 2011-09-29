@@ -272,7 +272,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="toolstripmenuitem">The menu item clicked</param>
         /// <param name="e">Event arguments</param>
-        private void MenuPluginClicked(object toolstripmenuitem, System.EventArgs e)
+        private void menuSharePluginClicked(object toolstripmenuitem, System.EventArgs e)
         {
             try
             {
@@ -496,6 +496,22 @@ namespace NoteFly
             else
             {
                 this.menuCopySelected.Enabled = false;
+            }
+
+            while (this.menuFrmNoteOptions.Items.Count > 9)
+            {
+                this.menuFrmNoteOptions.Items.RemoveAt(9);
+            }
+
+            if (Program.pluginsenabled != null)
+            {
+                for (int p = 0; p < Program.pluginsenabled.Length; p++)
+                {
+                    if (Program.pluginsenabled[p].InitFrmNoteMenu() != null)
+                    {
+                        this.menuFrmNoteOptions.Items.Add(Program.pluginsenabled[p].InitFrmNoteMenu());
+                    }
+                }
             }
         }
 
@@ -851,11 +867,11 @@ namespace NoteFly
             {
                 for (int i = 0; i < Program.pluginsenabled.Length; i++)
                 {
-                    if (!string.IsNullOrEmpty(Program.pluginsenabled[i].ShareMenuText))
+                    if (Program.pluginsenabled[i].InitFrmNoteShareMenu() != null)
                     {
-                        ToolStripMenuItem menuitem = new ToolStripMenuItem(Program.pluginsenabled[i].ShareMenuText, null, new EventHandler(this.MenuPluginClicked));
-                        menuitem.Name = "menuPlugin" + i;
+                        ToolStripMenuItem menuitem = Program.pluginsenabled[i].InitFrmNoteShareMenu();
                         menuitem.Tag = i;
+                        menuitem.Click += new EventHandler(this.menuSharePluginClicked);
                         this.menuSendTo.DropDownItems.Add(menuitem);
                     }
                 }

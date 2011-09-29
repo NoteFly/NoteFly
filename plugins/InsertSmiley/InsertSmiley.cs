@@ -7,25 +7,25 @@
     /// </summary>
     public class InsertSmileyplugin : IPlugin.PluginBase
     {
-        public override string SettingsTabTitle
-        {
-            get
-            {
-                return "Insert smiley plugin";
-            }
-        }
+        //public override string SettingsTabTitle
+        //{
+        //    get
+        //    {
+        //        return "Insert smiley plugin";
+        //    }
+        //}
 
         /// <summary>
         /// Create the buttons for formatting in FrmNewNote.
         /// </summary>
         /// <returns>A array with buttons</returns>
-        public override Button[] InitFrmNewNoteFormatTools()
+        public override Button[] InitNoteFormatBtns()
         {
             Button[] btns = new Button[3];
 
             Button btnSmile = new Button();
             btnSmile.Name = "smile";
-            btnSmile.Text = ":-)";
+            btnSmile.Image = InsertSmiley.Properties.Resources.smile;
             btnSmile.SetBounds(0, 0, 26, 22);
             btnSmile.FlatStyle = FlatStyle.Flat;
             btnSmile.UseCompatibleTextRendering = true;            
@@ -33,7 +33,7 @@
 
             Button btnSad = new Button();
             btnSad.Name = "sad";
-            btnSad.Text = ":-(";
+            btnSad.Image = InsertSmiley.Properties.Resources.sad;
             btnSad.SetBounds(0, 0, 26, 22);
             btnSad.FlatStyle = FlatStyle.Flat;
             btnSad.UseCompatibleTextRendering = true;  
@@ -41,7 +41,7 @@
 
             Button btnWink = new Button();
             btnWink.Name = "wink";
-            btnWink.Text = ";-)";
+            btnWink.Image = InsertSmiley.Properties.Resources.wink;
             btnWink.SetBounds(0, 0, 26, 22);
             btnWink.FlatStyle = FlatStyle.Flat;
             btnWink.UseCompatibleTextRendering = true;
@@ -57,7 +57,7 @@
         /// <param name="rtbnote">The richedittextbox with the note content.</param>
         /// <param name="btn">The button clicked.</param>
         /// <returns>The new note content as RTF.</returns>
-        public override string FormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn)
+        public override string NoteFormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn)
         {
             string rtfimg = string.Empty;
             // wmetafile of smilies created with wordpad and then rtf files opened with notepad. ;)

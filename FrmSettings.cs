@@ -32,7 +32,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmSettings : Form
     {
-        #region Fields (1)
+        #region Fields (2)
 
         /// <summary>
         /// Reference to notes class.
@@ -43,6 +43,7 @@ namespace NoteFly
         /// In which folder notes are saved.
         /// </summary>
         private string oldnotesavepath;
+
         #endregion Fields
 
         #region Constructors (1)
@@ -59,6 +60,7 @@ namespace NoteFly
             this.DrawCbxFonts();
             this.SetFormTitle(Settings.SettingsExpertEnabled);
             this.SetControlsBySettings();
+            this.tabControlSettings_SelectedIndexChanged(null, null);
         }
 
         #endregion Constructors
@@ -177,17 +179,6 @@ namespace NoteFly
                         if (!Program.pluginsenabled[i].SaveSettingsTab())
                         {
                             this.tabControlSettings.SelectedTab = this.tabSharing;
-                            if (!string.IsNullOrEmpty(Program.pluginsenabled[i].SettingsTabTitle))
-                            {
-                                for (int t = 0; t < this.tabControlSharing.TabPages.Count; t++)
-                                {
-                                    if (this.tabControlSharing.TabPages[t].Text == Program.pluginsenabled[i].SettingsTabTitle)
-                                    {
-                                        this.tabControlSharing.SelectedIndex = t;
-                                    }
-                                }
-                            }
-
                             return;
                         }
                     }
@@ -630,7 +621,7 @@ namespace NoteFly
             this.lblTextNetworkMiliseconds.Visible = this.chxSettingsExpertEnabled.Checked;
             this.cbxFontNoteTitleBold.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxLogErrors.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.chxLogExceptions.Visible = this.chxSettingsExpertEnabled.Checked;            
+            this.chxLogExceptions.Visible = this.chxSettingsExpertEnabled.Checked;
         }
 
         /// <summary>
@@ -651,12 +642,9 @@ namespace NoteFly
 
                     for (int i = 0; i < Program.pluginsenabled.Length; i++)
                     {
-                        if (!string.IsNullOrEmpty(Program.pluginsenabled[i].SettingsTabTitle))
+                        if (Program.pluginsenabled[i].InitShareSettingsTab() != null)
                         {
-                            if (Program.pluginsenabled[i].InitShareSettingsTab() != null)
-                            {
-                                this.tabControlSharing.Controls.Add(Program.pluginsenabled[i].InitShareSettingsTab());
-                            }
+                            this.tabControlSharing.Controls.Add(Program.pluginsenabled[i].InitShareSettingsTab());
                         }
                     }
                 }

@@ -34,7 +34,7 @@ namespace NoteFly
     /// </summary>
     public partial class FrmManageNotes : Form
     {
-        #region Fields (6)
+        #region Fields (8)
 
 #if windows
         /// <summary>
@@ -122,6 +122,20 @@ namespace NoteFly
             else
             {
                 this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
+            }
+
+            for (int p = 0; p < Program.pluginsenabled.Length; p++)
+            {
+                if (Program.pluginsenabled[p].InitFrmManageNotesBtns() != null)
+                {
+                    Button[] buttons = Program.pluginsenabled[p].InitFrmManageNotesBtns();
+                    for (int i = 0; i < buttons.Length; i++)
+                    {
+                        this.tableLayoutPanelButtons.ColumnCount += 1;
+                        this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 80));
+                        this.tableLayoutPanelButtons.Controls.Add(buttons[i], this.tableLayoutPanelButtons.ColumnCount - 1, 0);
+                    }
+                }
             }
         }
 
@@ -405,17 +419,17 @@ namespace NoteFly
             DialogResult openbackupdlgres = this.openImportFileDialog.ShowDialog();
             if (openbackupdlgres == DialogResult.OK)
             {
-                if (this.openImportFileDialog.FilterIndex == 1)
+                switch (this.openImportFileDialog.FilterIndex)
                 {
-                    this.ReadNoteFlyBackupFile(this.openImportFileDialog.FileName);
-                }
-                else if (this.openImportFileDialog.FilterIndex == 2)
-                {
-                    this.ReadStickiesCSVFile(this.openImportFileDialog.FileName);
-                }
-                else if (this.openImportFileDialog.FilterIndex == 3)
-                {
-                    this.ReadPNotesBackupFile(this.openImportFileDialog.FileName);
+                    case 1:
+                        this.ReadNoteFlyBackupFile(this.openImportFileDialog.FileName);
+                        break;
+                    case 2:
+                        this.ReadStickiesCSVFile(this.openImportFileDialog.FileName);
+                        break;
+                    case 3:
+                        this.ReadPNotesBackupFile(this.openImportFileDialog.FileName);
+                        break;
                 }
 
                 this.Resetdatagrid();
@@ -607,7 +621,7 @@ namespace NoteFly
                             {
                                 int posstartdata = line.IndexOf('=') + 1;
                                 string data = line.Substring(posstartdata, line.Length - posstartdata);
-                                
+
                                 StringBuilder title = new StringBuilder();
                                 for (int c = 0; c < 508; c += 4)
                                 {
@@ -622,14 +636,14 @@ namespace NoteFly
                                     }
                                 }
 
-                                notetitles.Add(title.ToString());                                
+                                notetitles.Add(title.ToString());
                             }
                             else if (line.StartsWith("rel_position="))
                             {
                                 // TODO
                             }
                             else if (line.StartsWith("creation="))
-                            {                              
+                            {
                                 int poseq = line.IndexOf('=') + 1;
                                 string enccreation = line.Substring(poseq, line.Length - poseq);
                                 int yyyy = int.Parse(enccreation.Substring(2, 2) + enccreation.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);

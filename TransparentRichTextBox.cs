@@ -35,19 +35,19 @@ namespace NoteFly
             {
                 CreateParams prams = base.CreateParams;
                 if (Settings.NotesTransparentRTB)
-                {
+                {                    
                     if (LoadLibrary("msftedit.dll") != IntPtr.Zero)
                     {
                         prams.ExStyle |= 0x020; // transparent
                         prams.ClassName = "RICHEDIT50W";
-                    }
+                    }                    
                 }
                 return prams;
             }
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        static extern IntPtr LoadLibrary(string lpFileName);
+        private static extern IntPtr LoadLibrary(string lpFileName);
 #endif
     }
 }

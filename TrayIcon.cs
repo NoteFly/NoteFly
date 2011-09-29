@@ -185,6 +185,18 @@ namespace NoteFly
             this.menuSettings.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
 
+            // Create trayicon plugin ToolStripMenuItem items, if any.
+            if (Program.pluginsenabled != null)
+            {
+                for (int p = 0; p < Program.pluginsenabled.Length; p++)
+                {
+                    if (Program.pluginsenabled[p].InitTrayIconMenu() != null)
+                    {
+                        this.menuTrayIcon.Items.Add(Program.pluginsenabled[p].InitTrayIconMenu());
+                    }
+                }
+            }
+
             // MenuAbout
             this.menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuAbout.Name = "MenuAbout";
@@ -368,7 +380,7 @@ namespace NoteFly
         {
             if (Settings.ConfirmExit)
             {
-                // two times exit in contextmenu systray icon will always exit.
+                // Two times exit in contextmenu systray icon will always exit.
                 if (!this.confirmexitshowed)
                 {
                     this.confirmexitshowed = true;

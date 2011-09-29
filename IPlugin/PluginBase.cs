@@ -61,30 +61,6 @@ namespace IPlugin
             }
         }
 
-        /// <summary>
-        /// Gets the Settings share tab title.
-        /// Tab not created if null.
-        /// </summary>
-        public virtual string SettingsTabTitle
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Gets the Note share to menu text.
-        /// MenuItem not created if null.
-        /// </summary>
-        public virtual string ShareMenuText
-        {
-            get
-            {
-                return null;
-            }
-        }
-
         // Methods (7) 
 
         /// <summary>
@@ -92,11 +68,20 @@ namespace IPlugin
         /// string name, string author, string description, string version, 
         /// </summary>
         /// <param name="enabled">Is the plugin enabled.</param>
-        /// <param name="file">The plugin assembly.</param>
+        /// <param name="file">The plugin file.</param>
         public void Register(bool enabled, string file)
         {
             this.enabled = enabled;
             this.file = file;
+        }
+
+        /// <summary>
+        /// Adds ToolStripItem to the right click submenu share on FrmNote.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ToolStripMenuItem InitFrmNoteShareMenu()
+        {
+            return null;
         }
 
         /// <summary>
@@ -124,7 +109,42 @@ namespace IPlugin
         /// Create a button in the bottom in FrmNewNote.
         /// </summary>
         /// <returns>Array with buttons, return null by default</returns>
-        public virtual Button[] InitFrmNewNoteFormatTools()
+        public virtual Button[] InitNoteFormatBtns()
+        {
+            return null;
+        }
+
+        /// Adds ToolStripItem to the right click menu on FrmNewNote.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ToolStripItem InitFrmNewNoteMenu()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Adds contextmenustrip item to the right click menu on FrmNote.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ToolStripItem InitFrmNoteMenu()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Adds contextmenustrip item to the right click menu on the trayicon.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ToolStripItem InitTrayIconMenu()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Create button(s) in the top FrmManageNotes window.
+        /// </summary>
+        /// <returns>Array with the button or buttons to create.</returns>
+        public virtual Button[] InitFrmManageNotesBtns()
         {
             return null;
         }
@@ -134,10 +154,21 @@ namespace IPlugin
         /// </summary>
         /// <param name="rtbnote">The richtextbox</param>
         /// <param name="btn">The button that is clicked</param>
-        /// <returns>The rtf text of the note</returns>
-        public virtual string FormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn)
+        /// <returns>The rtf text of the note, stays the same.</returns>
+        public virtual string NoteFormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn)
         {
             return rtbnote.Rtf;
+        }
+
+        /// <summary>
+        /// Menu item in right click menu FrmNewNote is clicked.d
+        /// </summary>
+        /// <param name="rtbnote">The RichTextbox.</param>
+        /// <param name="btn">The button is clicked.</param>
+        /// <returns>new content</returns>
+        public virtual string MenuFrmNewNoteClicked(System.Windows.Forms.RichTextBox rtfnote, ToolStripItem menuitem)
+        {
+            return rtfnote.Rtf;
         }
 
         /// <summary>

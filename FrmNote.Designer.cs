@@ -416,7 +416,7 @@ namespace NoteFly
             this.rtbNote.DetectUrls = false;
             this.rtbNote.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNote.ForeColor = System.Drawing.Color.Black;
-            this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.rtbNote.Location = new System.Drawing.Point(7, 6);
             this.rtbNote.Margin = new System.Windows.Forms.Padding(10);
             this.rtbNote.MaxLength = 1000000;
@@ -427,7 +427,7 @@ namespace NoteFly
             this.rtbNote.Size = new System.Drawing.Size(224, 191);
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
-            this.rtbNote.Text = string.Empty;
+            this.rtbNote.Text = "";
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             // 
             // pbResizeGrip
