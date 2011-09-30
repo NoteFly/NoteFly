@@ -48,6 +48,10 @@
             string useragent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
             string downloadurl = (string)e.Argument;
             string downloadfilename = Path.GetFileName(downloadurl);
+            if (downloadfilename.Contains("="))
+            {
+                downloadfilename = downloadfilename.Substring(downloadfilename.LastIndexOf('=') + 1);
+            }
             this.downloadfilepath = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), downloadfilename);
 
             if (this.CheckValidPath())
