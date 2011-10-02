@@ -22,7 +22,7 @@
         private GPGVerifWrapper gpgverif;
 
         /// <summary>
-        /// Creating a new instance of FrmUpdater class.
+        /// Initializes a new instance of the FrmUpdater class.
         /// </summary>
         /// <param name="downloadurl">The url of the update to download</param>
         public FrmUpdater(string downloadurl)
@@ -43,15 +43,20 @@
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">DoWorkEventArgs arguments</param>
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private void backgroundWorkerDownloader_DoWork(object sender, DoWorkEventArgs e)
         {
             string useragent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
             string downloadurl = (string)e.Argument;
             string downloadfilename = Path.GetFileName(downloadurl);
             if (downloadfilename.Contains("="))
             {
-                downloadfilename = downloadfilename.Substring(downloadfilename.LastIndexOf('=') + 1);
+                int posparm = downloadfilename.LastIndexOf('=') + 1;
+                if (posparm < downloadfilename.Length)
+                {
+                    downloadfilename = downloadfilename.Substring(posparm, downloadfilename.Length - posparm);
+                }
             }
+
             this.downloadfilepath = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), downloadfilename);
 
             if (this.CheckValidPath())
@@ -183,6 +188,7 @@
 
                                     streamLocal.Close();
                                 }
+
                                 streamsigdownload.Close();
                             }
                         }
@@ -208,7 +214,7 @@
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">ProgressChangedEventArgs arguments</param>
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void backgroundWorkerDownloader_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             this.progressbarDownload.Value = e.ProgressPercentage;
             this.lblStatusUpdate.Text = e.ProgressPercentage + " %";
@@ -219,14 +225,16 @@
         /// </summary>
         /// <param name="sender">Sender objects</param>
         /// <param name="e">RunWorkerCompletedEventArgs arguments</param>
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
+        private void backgroundWorkerDownloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {            
             if (!e.Cancelled)
             {
+                const string DOWNLOADCOMPLEET = "download compleet, ";
                 if (Settings.UpdatecheckUseGPG && this.gpgverif != null)
                 {
-                    this.lblStatusUpdate.Text = "download compleet, verify download";
-                    Log.Write(LogType.info, "verify download.");
+                    const string VERIFDOWNLOAD = "verify download";
+                    this.lblStatusUpdate.Text = DOWNLOADCOMPLEET + VERIFDOWNLOAD;
+                    Log.Write(LogType.info, VERIFDOWNLOAD);
 
                     this.lblStatusUpdate.Refresh();
                     if (File.Exists(Settings.UpdatecheckGPGPath))
@@ -240,7 +248,8 @@
                     }
                 }
 
-                this.lblStatusUpdate.Text = "download compleet, installing.. ";
+                const string INSTALLING = "installing.. ";
+                this.lblStatusUpdate.Text = DOWNLOADCOMPLEET + INSTALLING;
                 this.lblStatusUpdate.Refresh();
                 System.Threading.Thread.Sleep(50);
 
@@ -294,8 +303,8 @@
         /// <summary>
         /// Preallocate file
         /// </summary>
-        /// <param name="filestream"></param>
-        /// <param name="filesize">The filesize of the file to preallocate/param>
+        /// <param name="filestream">A filestream</param>
+        /// <param name="filesize">The filesize of the file to preallocate</param>
         private void PreallocateFile(Stream filestream, long filesize)
         {
             try

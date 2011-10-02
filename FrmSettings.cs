@@ -157,7 +157,7 @@ namespace NoteFly
                 MessageBox.Show(NoteFly.Properties.Resources.settings_noknowtextdir);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && (this.chxSocialEmailDefaultaddressSet.Checked))
+            else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && this.chxSocialEmailDefaultaddressSet.Checked)
             {
                 Log.Write(LogType.error, NoteFly.Properties.Resources.settings_emailnotvalid);
                 MessageBox.Show(NoteFly.Properties.Resources.settings_emailnotvalid);

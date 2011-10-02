@@ -368,7 +368,7 @@ namespace NoteFly
         public static bool ProgramPluginsAllEnabled = true;
 
         /// <summary>
-        /// 
+        /// Comma seperated list of plugin assembly filesnames without path that are enabled.
         /// </summary>
         public static string ProgramPluginsEnabled = string.Empty;
 

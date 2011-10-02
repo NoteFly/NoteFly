@@ -20,6 +20,7 @@
 using System;
 
 [assembly: CLSCompliant(true)]
+
 namespace NoteFly
 {
     using System.Diagnostics;
@@ -36,6 +37,12 @@ namespace NoteFly
         #region Fields (3)
 
         /// <summary>
+        /// All the enabled plugins
+        /// FIXME: Make CLS-compliant
+        /// </summary>
+        public static IPlugin.IPlugin[] pluginsenabled;
+
+        /// <summary>
         /// Reference to notes class.
         /// </summary>
         private static Notes notes;
@@ -44,11 +51,6 @@ namespace NoteFly
         /// Reference to trayicon
         /// </summary>
         private static TrayIcon trayicon;
-
-        /// <summary>
-        /// All the enabled plugins
-        /// </summary>
-        public static IPlugin.IPlugin[] pluginsenabled;
 
         #endregion Fields
 
@@ -128,7 +130,7 @@ namespace NoteFly
             {
                 return Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
             }
-        }
+        }       
 
         #endregion Properties
 
@@ -323,6 +325,7 @@ namespace NoteFly
                         {
                             Directory.CreateDirectory(Program.AppDataFolder);
                         }
+
                         xmlUtil.WriteSettings();
                     }
                 }
@@ -456,6 +459,7 @@ namespace NoteFly
 
         /// <summary>
         /// Load plugin .dll files from pluginfolder
+        /// FIXME: Make CLS-compliant
         /// </summary>
         /// <param name="onlyenabled">True to only get the the plugins that are enable</param>
         public static IPlugin.IPlugin[] GetPlugins(bool onlyenabled)
@@ -477,7 +481,7 @@ namespace NoteFly
 
                         // Get if plugin is enabled.
                         bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
-                        if (pluginenabled && onlyenabled || !onlyenabled)
+                        if ((pluginenabled && onlyenabled) || !onlyenabled)
                         {
                             System.Reflection.Assembly pluginassembly = null;
                             pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
@@ -513,6 +517,99 @@ namespace NoteFly
             }
 
             return pluginslist.ToArray();
+        }
+
+        /// <summary>
+        /// Get the name of the plugin.
+        /// </summary>
+        /// <param name="pluginassembly">The plugin assembly</param>
+        /// <returns>The name of the plugin</returns>
+        public static string GetPluginName(Assembly pluginassembly)
+        {
+            string pluginname = "untitled";
+            object[] atttitle = pluginassembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+            if (atttitle.Length > 0)
+            {
+                AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)atttitle[0];
+                if (titleAttribute.Title != string.Empty)
+                {
+                    if (titleAttribute.Title.Length > 150)
+                    {
+                        pluginname = titleAttribute.Title.Substring(0, 150);
+                    }
+                    else
+                    {
+                        pluginname = titleAttribute.Title;
+                    }
+                }
+            }
+
+            return pluginname;
+        }
+
+        /// <summary>
+        /// Get author or author company of the plugin.
+        /// </summary>
+        /// <param name="pluginassembly">The plugin assembly</param>
+        /// <returns>The author or company of the plugin</returns>
+        public static string GetPluginAuthor(Assembly pluginassembly)
+        {
+            string pluginauthor = "unknown";
+            object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+            if (attributes.Length != 0)
+            {
+                if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
+                {
+                    pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 150);
+                }
+                else
+                {
+                    pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
+                }
+            }
+
+            return pluginauthor;
+        }
+
+        /// <summary>
+        /// Get description of the plugin.
+        /// </summary>
+        /// <param name="pluginassembly">The plugin assembly</param>
+        /// <returns>The description of the plugin</returns>
+        public static string GetPluginDescription(Assembly pluginassembly)
+        {
+            string plugindescription = string.Empty;
+            object[] attdesc = pluginassembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+            if (attdesc.Length != 0)
+            {
+                if (((AssemblyDescriptionAttribute)attdesc[0]).Description.Length > 255)
+                {
+                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description.Substring(0, 255);
+                }
+                else
+                {
+                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description;
+                }
+            }
+
+            return plugindescription;
+        }
+
+        /// <summary>
+        /// Get version of the plugin as string.
+        /// </summary>
+        /// <param name="pluginassembly">The plugin assembly</param>
+        /// <returns>The version of the plugin as string</returns>
+        public static string GetPluginVersion(Assembly pluginassembly)
+        {
+            if (pluginassembly.GetName().Version != null)
+            {
+                return pluginassembly.GetName().Version.ToString();
+            }
+            else
+            {
+                return "unknown";
+            }
         }
 
         /// <summary>
@@ -627,6 +724,10 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Get all dll files in the plugin directory
+        /// </summary>
+        /// <returns>All dll filenames as string array</returns>
         private static string[] GetFilesPluginDir()
         {
             string[] pluginfilepaths = Directory.GetFiles(Settings.ProgramPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
@@ -641,101 +742,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the name of the plugin.
-        /// </summary>
-        /// <param name="pluginassembly"></param>
-        /// <returns></returns>
-        public static string GetPluginName(Assembly pluginassembly)
-        {
-            string pluginname = "untitled";
-            object[] atttitle = pluginassembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-            if (atttitle.Length > 0)
-            {
-                AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)atttitle[0];
-                if (titleAttribute.Title != string.Empty)
-                {
-                    if (titleAttribute.Title.Length > 150)
-                    {
-                        pluginname = titleAttribute.Title.Substring(0, 150);
-                    }
-                    else
-                    {
-                        pluginname = titleAttribute.Title;
-                    }
-                }
-            }
-
-            return pluginname;
-        }
-
-        /// <summary>
-        /// Get author or author company of the plugin.
-        /// </summary>
-        public static string GetPluginAuthor(Assembly pluginassembly)
-        {
-            string pluginauthor = "unknown";
-            object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-            if (attributes.Length != 0)
-            {
-                if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
-                {
-                    pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 150);
-                }
-                else
-                {
-                    pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
-                }
-            }
-
-            return pluginauthor;
-        }
-
-        /// <summary>
-        /// Get description of the plugin.
-        /// </summary>
-        /// <returns></returns>
-        public static string GetPluginDescription(Assembly pluginassembly)
-        {
-            string plugindescription = string.Empty;
-            object[] attdesc = pluginassembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-            if (attdesc.Length != 0)
-            {
-                if (((AssemblyDescriptionAttribute)attdesc[0]).Description.Length > 255)
-                {
-                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description.Substring(0, 255);
-                }
-                else
-                {
-                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description;
-                }
-            }
-
-            return plugindescription;
-        }
-
-        /// <summary>
-        /// Get version of the plugin as string.
-        /// </summary>
-        /// <param name="pluginassembly"></param>
-        /// <returns></returns>
-        public static string GetPluginVersion(Assembly pluginassembly)
-        {
-            if (pluginassembly.GetName().Version != null)
-            {
-                return pluginassembly.GetName().Version.ToString();
-            }
-            else
-            {
-                return "unknown";
-            }
-        }
-
-        /// <summary>
         /// Get if plugin is enabled.
         /// </summary>
-        /// <param name="enabledplugins"></param>
-        /// <param name="pluginfile"></param>
-        /// <returns></returns>
+        /// <param name="pluginsenabled">A comma seperated list of enabled plugin assemblies</param>
+        /// <param name="pluginfile">The filename without path of the plugin to be check if it's enabled.</param>
+        /// <returns>true if pluginfile is enabled.</returns>
         private static bool IsPluginEnabled(string[] pluginsenabled, string pluginfile)
         {
             for (int p = 0; p < pluginsenabled.Length; p++)
@@ -782,12 +793,12 @@ namespace NoteFly
         private static extern bool SetDllDirectory(string pathName);
 
         // global hotkey
-        //[System.Runtime.InteropServices.DllImport("user32.dll")]
-        //private static extern int RegisterHotKey(IntPtr hwnd, int id, int fsModifiers, int vk);
+        ////[System.Runtime.InteropServices.DllImport("user32.dll")]
+        ////private static extern int RegisterHotKey(IntPtr hwnd, int id, int fsModifiers, int vk);
 
         // unregister global hotkey, always unregister before shutdown.
-        //[System.Runtime.InteropServices.DllImport("user32.dll")]
-        //private static extern int UnregisterHotKey(IntPtr hwnd, int id);
+        ////[System.Runtime.InteropServices.DllImport("user32.dll")]
+        ////private static extern int UnregisterHotKey(IntPtr hwnd, int id);
 #endif
 
         #endregion Methods

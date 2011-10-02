@@ -155,6 +155,31 @@ namespace NoteFly
         private System.Windows.Forms.TableLayoutPanel tlpnlFormatbtn;
 
         /// <summary>
+        /// ToolStripMenuItem menuCopyContent
+        /// </summary>
+        private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
+        
+        /// <summary>
+        /// ToolStripMenuItem menuCopyTitle
+        /// </summary>
+        private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
+        
+        /// <summary>
+        /// ToolStripMenuItem menuPasteTo
+        /// </summary>
+        private System.Windows.Forms.ToolStripMenuItem menuPasteTo;
+        
+        /// <summary>
+        /// ToolStripMenuItem contentToolStripMenuItem
+        /// </summary>
+        private System.Windows.Forms.ToolStripMenuItem contentToolStripMenuItem;
+        
+        /// <summary>
+        /// ToolStripMenuItem titleToolStripMenuItem
+        /// </summary>
+        private System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -611,7 +636,7 @@ namespace NoteFly
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
             this.rtbNewNote.TabIndex = 1;
-            this.rtbNewNote.Text = "";
+            this.rtbNewNote.Text = string.Empty;
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
@@ -723,11 +748,5 @@ namespace NoteFly
         }
 
         #endregion               
-
-        private System.Windows.Forms.ToolStripMenuItem menuCopyContent;
-        private System.Windows.Forms.ToolStripMenuItem menuCopyTitle;
-        private System.Windows.Forms.ToolStripMenuItem menuPasteTo;
-        private System.Windows.Forms.ToolStripMenuItem contentToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem;
     }
 }

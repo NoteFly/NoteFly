@@ -8,21 +8,12 @@
     /// </summary>
     public class HelloWorld : IPlugin.PluginBase
     {
-        // Properties (2) 
-
-        /// <summary>
-        /// Settings tab title.
-        /// </summary>
-        //public override string SettingsTabTitle
-        //{
-        //    get
-        //    {
-        //        return "Hello World plugin";
-        //    }
-        //}
-
         // Methods (3) 
 
+        /// <summary>
+        /// Create the ToolStripMenuItem in the share submenu.
+        /// </summary>
+        /// <returns>A ToolStripMenuItem with Try hello world text.</returns>
         public override ToolStripMenuItem InitFrmNoteShareMenu()
         {
             ToolStripMenuItem toolstripmenu = new ToolStripMenuItem("Try hello world");

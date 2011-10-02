@@ -127,7 +127,7 @@ namespace NoteFly
             }
             else
             {
-                this.icon.Icon = new Icon(NoteFly.Properties.Resources.trayicon_yellow, NoteFly.Properties.Resources.trayicon_white.Size); //assembly.GetManifestResourceStream("NoteFly.Resources.trayicon_yellow.ico"));
+                this.icon.Icon = new Icon(NoteFly.Properties.Resources.trayicon_yellow, NoteFly.Properties.Resources.trayicon_white.Size);
             }
 
             this.icon.MouseClick += new MouseEventHandler(this.Icon_Click);

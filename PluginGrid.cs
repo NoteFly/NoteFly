@@ -24,7 +24,7 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// PluginGrid component
+    /// PluginGrid gui object class 
     /// </summary>
     public partial class PluginGrid : UserControl
     {
@@ -44,7 +44,7 @@ namespace NoteFly
         private IPlugin.IPlugin[] allplugins;
 
         /// <summary>
-        /// Creating a new instance of PluginGrid.
+        /// Initializes a new instance of the PluginGrid class.
         /// </summary>
         public PluginGrid()
         {

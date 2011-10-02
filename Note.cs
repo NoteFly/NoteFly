@@ -338,6 +338,7 @@ namespace NoteFly
         /// Create a new frmNote with this note.
         /// visible is set to true.
         /// </summary>
+        /// <param name="wordwarp">Are words wordwarped on the content of the note.</param>
         public void CreateForm(bool wordwarp)
         {
             this.frmnote = new FrmNote(this.notes, this, wordwarp);

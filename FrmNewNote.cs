@@ -465,7 +465,7 @@ namespace NoteFly
                 if (Program.pluginsenabled[i].InitFrmNewNoteMenu() != null)
                 {
                     ToolStripItem menuplugin = Program.pluginsenabled[i].InitFrmNewNoteMenu();
-                    menuplugin.Click += new EventHandler(menumain_Click);
+                    menuplugin.Click += new EventHandler(this.menumain_Click);
                     this.contextMenuStripTextActions.Items.Add(menuplugin);
                 }
             }
@@ -474,8 +474,8 @@ namespace NoteFly
         /// <summary>
         /// Plugin menu in main contextmenu clicked
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void menumain_Click(object sender, EventArgs e)
         {
             if (Program.pluginsenabled != null)
@@ -672,21 +672,21 @@ namespace NoteFly
         {
             this.tbTitle.Text = xmlUtil.GetContentString(tomboynotefile, "title");
             // TomBoy uses nodes within the note-content node so we use StreamReader to do node xml parsering.
-            const string startnotecontent = "<note-content version=\"0.1\">";
-            const string endnotecontent = "</note-content>";
+            const string TOMBOYSTARTNOTECONTENT = "<note-content version=\"0.1\">";
+            const string TOMBOYENDNOTECONTENT = "</note-content>";
             long posdocument = 0;
             long posstartcontent = 0;
             long posendcontent = 0;
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
-                if (line.Contains(startnotecontent))
+                if (line.Contains(TOMBOYSTARTNOTECONTENT))
                 {
-                    posstartcontent = posdocument + line.IndexOf(startnotecontent) + startnotecontent.Length + 3; // +3 for ?
+                    posstartcontent = posdocument + line.IndexOf(TOMBOYSTARTNOTECONTENT) + TOMBOYSTARTNOTECONTENT.Length + 3; // +3 for ?
                 }
-                else if (line.Contains(endnotecontent))
+                else if (line.Contains(TOMBOYENDNOTECONTENT))
                 {
-                    posendcontent = posdocument + line.IndexOf(endnotecontent) + 3; // +3 for ?
+                    posendcontent = posdocument + line.IndexOf(TOMBOYENDNOTECONTENT) + 3; // +3 for ?
                 }
 
                 posdocument += line.Length + 1; // +1 for EoL
@@ -1123,6 +1123,11 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// Paste text to title if clipboard contains any text.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void titleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())

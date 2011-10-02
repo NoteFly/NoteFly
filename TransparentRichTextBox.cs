@@ -29,6 +29,9 @@ namespace NoteFly
     internal class TransparentRichTextBox : RichTextBox
     {
 #if windows
+        /// <summary>
+        /// Override createParams to add support for a transparant background image.
+        /// </summary>
         protected override CreateParams CreateParams
         {
             get
@@ -42,6 +45,7 @@ namespace NoteFly
                         prams.ClassName = "RICHEDIT50W";
                     }                    
                 }
+
                 return prams;
             }
         }

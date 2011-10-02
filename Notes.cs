@@ -282,7 +282,7 @@ namespace NoteFly
         /// Get the primary texture image layout for a skin.
         /// </summary>
         /// <param name="skinnr">The skin number</param>
-        /// <returns></returns>
+        /// <returns>The image layout how the note texture is used.</returns>
         public System.Windows.Forms.ImageLayout GetPrimaryTextureLayout(int skinnr)
         {
             return this.skins[skinnr].PrimaryTextureLayout;
@@ -451,7 +451,7 @@ namespace NoteFly
         public string StripForbiddenFilenameChars(string orgname)
         {
             System.Text.StringBuilder newfilename = new System.Text.StringBuilder();
-            char[] forbiddenchars = Path.GetInvalidFileNameChars(); //"?<>:*|\\/\"".ToCharArray();
+            char[] forbiddenchars = Path.GetInvalidFileNameChars(); // "?<>:*|\\/\"".ToCharArray();
             bool isforbiddenchar = false;
             for (int pos = 0; pos < orgname.Length; pos++)
             {

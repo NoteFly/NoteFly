@@ -573,6 +573,7 @@ namespace NoteFly
             {
                 this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
+
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.SkinNr));
         }
 

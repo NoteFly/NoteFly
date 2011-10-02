@@ -17,8 +17,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
 //-----------------------------------------------------------------------
+using System;
+
+[assembly: CLSCompliant(true)]
+
 namespace IPlugin
-{
+{    
     using System.Windows.Forms;
 
     /// <summary>
@@ -73,19 +77,19 @@ namespace IPlugin
         /// <summary>
         /// Adds ToolStripItem to the right click menu on FrmNewNote.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A ToolStripItem for the contextmenu of FrmNewNote.</returns>
         ToolStripItem InitFrmNewNoteMenu();
 
         /// <summary>
         /// Adds ToolStripItem to the right click menu on FrmNote.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A ToolStripItem to add to the contextmenu of FrmNote.</returns>
         ToolStripItem InitFrmNoteMenu();
 
         /// <summary>
         /// Adds ToolStripItem to the right click menu of the trayicon.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A ToolStripItem to the rightclick menu of the trayicon.</returns>
         ToolStripItem InitTrayIconMenu();
 
         /// <summary>
@@ -100,15 +104,15 @@ namespace IPlugin
         /// <param name="rtbnote">The RichTextbox.</param>
         /// <param name="btn">The button is clicked.</param>
         /// <returns>new content</returns>
-        string NoteFormatBtnClicked(System.Windows.Forms.RichTextBox rtfnote, Button btn);
+        string NoteFormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn);
 
         /// <summary>
         /// Menu item in right click menu FrmNewNote is clicked.d
         /// </summary>
         /// <param name="rtbnote">The RichTextbox.</param>
-        /// <param name="btn">The button is clicked.</param>
+        /// <param name="menuitem">The button is clicked.</param>
         /// <returns>new content</returns>
-        string MenuFrmNewNoteClicked(System.Windows.Forms.RichTextBox rtfnote, ToolStripItem menuitem);
+        string MenuFrmNewNoteClicked(System.Windows.Forms.RichTextBox rtbnote, ToolStripItem menuitem);
 
         /// <summary>
         /// Executed if Ok on FrmSettings is pressed.

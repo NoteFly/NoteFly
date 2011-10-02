@@ -29,13 +29,20 @@ namespace IPlugin
     [CLSCompliant(true)]    
     public abstract class PluginBase : IPlugin
     {
+        /// <summary>
+        /// A value indicating wheter this plugin is enabled.
+        /// </summary>
         private bool enabled = false;
+
+        /// <summary>
+        /// The filename of this plugin.
+        /// </summary>
         private string file;
 
         // Properties (2) 
 
         /// <summary>
-        /// Gets if the plugin enabled.
+        /// Gets or sets a value indicating whether the plugin is enabled.
         /// </summary>
         public bool Enabled
         {
@@ -61,7 +68,7 @@ namespace IPlugin
             }
         }
 
-        // Methods (7) 
+        // Methods (15) 
 
         /// <summary>
         /// Register the plugin
@@ -78,7 +85,7 @@ namespace IPlugin
         /// <summary>
         /// Adds ToolStripItem to the right click submenu share on FrmNote.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The ToolStripMenuItem to add to the Share submenu</returns>
         public virtual ToolStripMenuItem InitFrmNoteShareMenu()
         {
             return null;
@@ -88,7 +95,7 @@ namespace IPlugin
         /// Executed if share menu clicked.
         /// </summary>
         /// <param name="rtbnote">The richedit component with the note content in memory.</param>
-        /// <param name="note">note object</param>
+        /// <param name="title">The title of the note</param>
         public virtual void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, string title)
         {
             // by default  do nothing, override this to do someting.
@@ -114,9 +121,10 @@ namespace IPlugin
             return null;
         }
 
+        /// <summary>
         /// Adds ToolStripItem to the right click menu on FrmNewNote.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A ToolStripItem to be add to the contextmenu on FrmNewNote.</returns>
         public virtual ToolStripItem InitFrmNewNoteMenu()
         {
             return null;
@@ -125,7 +133,7 @@ namespace IPlugin
         /// <summary>
         /// Adds contextmenustrip item to the right click menu on FrmNote.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A ToolStripItem item to add to FrmNote contextmenustrip</returns>
         public virtual ToolStripItem InitFrmNoteMenu()
         {
             return null;
@@ -134,7 +142,7 @@ namespace IPlugin
         /// <summary>
         /// Adds contextmenustrip item to the right click menu on the trayicon.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A ToolStripItem to be add to the trayicon menu.</returns>
         public virtual ToolStripItem InitTrayIconMenu()
         {
             return null;
@@ -164,11 +172,11 @@ namespace IPlugin
         /// Menu item in right click menu FrmNewNote is clicked.d
         /// </summary>
         /// <param name="rtbnote">The RichTextbox.</param>
-        /// <param name="btn">The button is clicked.</param>
+        /// <param name="menuitem">The button is clicked.</param>
         /// <returns>new content</returns>
-        public virtual string MenuFrmNewNoteClicked(System.Windows.Forms.RichTextBox rtfnote, ToolStripItem menuitem)
+        public virtual string MenuFrmNewNoteClicked(System.Windows.Forms.RichTextBox rtbnote, ToolStripItem menuitem)
         {
-            return rtfnote.Rtf;
+            return rtbnote.Rtf;
         }
 
         /// <summary>

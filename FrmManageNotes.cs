@@ -212,7 +212,7 @@ namespace NoteFly
                     Color primaryclr = this.notes.GetPrimaryClr(curnote.SkinNr);
                     int colornum = System.Drawing.ColorTranslator.ToWin32(primaryclr);
                     FileInfo notefile = new FileInfo(Path.Combine(Settings.NotesSavepath, curnote.Filename));
-                    TimeSpan ts = (notefile.CreationTime - new DateTime(1970, 1, 1, 0, 0, 0));
+                    TimeSpan ts = notefile.CreationTime - new DateTime(1970, 1, 1, 0, 0, 0);
                     string unixtimestr = Convert.ToString(ts.TotalSeconds);
                     int poscomma = unixtimestr.IndexOf(',');
                     if (poscomma > 0)
@@ -291,8 +291,7 @@ namespace NoteFly
                     }
 
                     writer.Write("data=");
-                    // FIXME data= seems to be ingored and datetime is choicen as title, is it done wrong?
-                    // writing title, 
+                    // FIXME data= ise ingored and datetime is choicen as title instead.
                     for (int c = 0; c < title.Length; c++)
                     {
                         int titlechr = title[c];
@@ -459,6 +458,7 @@ namespace NoteFly
                     {
                         File.Delete(Path.Combine(Settings.NotesSavepath, this.notes.GetNote(i).Filename));
                     }
+
                     Log.Write(LogType.info, "Deleted all notes for restoring notes backup.");
                 }
                 else if (eraseres == DialogResult.Cancel)
@@ -492,6 +492,7 @@ namespace NoteFly
         /// <summary>
         /// Read a Stickies notes CSV file.
         /// </summary>
+        /// <param name="file">The stickies CSV file</param>
         private void ReadStickiesCSVFile(string file)
         {
             StreamReader reader = null;
@@ -546,6 +547,7 @@ namespace NoteFly
                             {
                                 width = 200;
                             }
+
                             if (width <= 0)
                             {
                                 width = 200;
@@ -646,12 +648,12 @@ namespace NoteFly
                             {
                                 int poseq = line.IndexOf('=') + 1;
                                 string enccreation = line.Substring(poseq, line.Length - poseq);
-                                int yyyy = int.Parse(enccreation.Substring(2, 2) + enccreation.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
-                                int MM = int.Parse(enccreation.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+                                int year = int.Parse(enccreation.Substring(2, 2) + enccreation.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+                                int month = int.Parse(enccreation.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
                                 int dd = int.Parse(enccreation.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
                                 int hh = int.Parse(enccreation.Substring(16, 2), System.Globalization.NumberStyles.HexNumber);
                                 int mm = int.Parse(enccreation.Substring(20, 2), System.Globalization.NumberStyles.HexNumber);
-                                Log.Write(LogType.info, "Imported PNote creation: " + yyyy + "-" + MM + "-" + dd + " " + hh + ":" + mm);
+                                Log.Write(LogType.info, "Imported PNote creation: " + year + "-" + month + "-" + dd + " " + hh + ":" + mm);
                             }
                             else if (line.Contains(chrstartnotefilename.ToString()))
                             {
@@ -691,7 +693,6 @@ namespace NoteFly
                                 notecontent.AppendLine(line);
                             }
                         }
-
                     }
                 }
                 else
@@ -735,7 +736,7 @@ namespace NoteFly
         /// The create a title encoded.
         /// </summary>
         /// <param name="title">The title of the note encoded</param>
-        /// <returns></returns>
+        /// <returns>The title encoded as hexdecimal</returns>
         private string encode_title(string title)
         {
             StringBuilder title_enc = new StringBuilder();
@@ -750,6 +751,7 @@ namespace NoteFly
                         hexchar = hexchar.Insert(0, "0");
                     }
                 }
+
                 title_enc.Append(hexchar);
             }
 
@@ -842,6 +844,7 @@ namespace NoteFly
         /// <summary>
         /// Toggle the visibility of a note.
         /// </summary>
+        /// <param name="row">The row number in dataGridView1 that is double clicked.</param>
         private void ToggleVisibilityNote(int row)
         {
             try
