@@ -671,39 +671,86 @@ namespace NoteFly
         private void ReadTomboyfile(StreamReader reader, string tomboynotefile)
         {
             this.tbTitle.Text = xmlUtil.GetContentString(tomboynotefile, "title");
-            // TomBoy uses nodes within the note-content node so we use StreamReader to do node xml parsering.
-            const string TOMBOYSTARTNOTECONTENT = "<note-content version=\"0.1\">";
-            const string TOMBOYENDNOTECONTENT = "</note-content>";
-            long posdocument = 0;
-            long posstartcontent = 0;
-            long posendcontent = 0;
-            while (!reader.EndOfStream)
-            {
-                string line = reader.ReadLine();
-                if (line.Contains(TOMBOYSTARTNOTECONTENT))
-                {
-                    posstartcontent = posdocument + line.IndexOf(TOMBOYSTARTNOTECONTENT) + TOMBOYSTARTNOTECONTENT.Length + 3; // +3 for ?
-                }
-                else if (line.Contains(TOMBOYENDNOTECONTENT))
-                {
-                    posendcontent = posdocument + line.IndexOf(TOMBOYENDNOTECONTENT) + 3; // +3 for ?
-                }
 
-                posdocument += line.Length + 1; // +1 for EoL
-            }
-
-            reader.BaseStream.Position = posstartcontent;
-            StringBuilder sbcontent = new StringBuilder();
-            int lenbuf = Convert.ToInt32(posendcontent - posstartcontent);
-            char[] buf = new char[lenbuf + 1]; // FIXME no fixed buffers used, memory bloat
-            reader.BaseStream.Position = posstartcontent;
-            if (lenbuf < buf.Length)
+            System.Xml.XmlTextReader xmlreader = new System.Xml.XmlTextReader(reader);
+            xmlreader.ProhibitDtd = true;
+            while (xmlreader.Read())
             {
-                int retval = reader.ReadBlock(buf, 0, lenbuf);
-                this.rtbNewNote.Clear();
-                for (int i = 0; i < buf.Length; i++)
-                {
-                    this.rtbNewNote.Text += buf[i];
+                if (xmlreader.Name == "note-content")
+                {                   
+                    string tomboycontent = xmlreader.ReadInnerXml();                   
+                    bool innode = false;
+                    int startnodepos = 0;
+                    int startcontentnode = int.MaxValue;
+
+                    for (int i = 0; i < tomboycontent.Length; i++)
+                    {
+                        if (tomboycontent[i] == '<')
+                        {
+                            startnodepos = i;
+                            innode = true;
+                        }
+                        else if (tomboycontent[i] == '>')
+                        {
+                            string nodenameatt = tomboycontent.Substring(startnodepos, i - startnodepos);
+                            string nodename = string.Empty;
+                            if (nodenameatt.StartsWith("</"))
+                            {
+                                for (int c = 0; c < nodenameatt.Length; c++)
+                                {
+                                    if (nodenameatt[c] == ' ')
+                                    {
+                                        nodename = nodenameatt.Substring(2, c - 2);
+                                        break;
+                                    }
+                                    else if (c == nodenameatt.Length - 1)
+                                    {
+                                        nodename = nodenameatt.Substring(2, nodenameatt.Length - 2);
+                                        break;
+                                    }
+                                }
+
+                                int len = this.rtbNewNote.TextLength - startcontentnode;
+                                this.rtbNewNote.Select(startcontentnode, len);  
+                                switch (nodename)
+                                {
+                                    case "bold":               
+                                        this.btnTextBold_Click(null, null);                                        
+                                        break;
+                                    case "italic":
+                                        this.btnTextItalic_Click(null, null);
+                                        break;
+                                    case "strikethrough":
+                                        this.btnTextStriketrough_Click(null, null);
+                                        break;
+                                    case "list":
+                                        this.btnTextBulletlist_Click(null, null);
+                                        break;
+                                    case "size:huge":
+                                        this.btnFontBigger_Click(null, null);
+                                        break;
+                                    case "size:small":
+                                        this.btnFontSmaller_Click(null, null);
+                                        break;
+                                }
+
+                                this.rtbNewNote.Refresh();
+                                //this.rtbNewNote.Select(this.rtbNewNote.TextLength, 0);
+                                //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, FontStyle.Regular);
+                            }
+                            else
+                            {
+                                startcontentnode = rtbNewNote.TextLength;
+                            }
+
+                            innode = false;
+                        }
+                        else if (!innode)
+                        {
+                            // FIXME everything switches back to regular all the time.
+                            this.rtbNewNote.Text = this.rtbNewNote.Text + tomboycontent[i];
+                        }
+                    }
                 }
             }
         }

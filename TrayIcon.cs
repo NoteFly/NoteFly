@@ -222,10 +222,10 @@ namespace NoteFly
             this.menuExit.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
 
-            // show balloontip on firstrun about trayicon to access notefly function.
+            // Show balloontip on firstrun about trayicon how to access notefly functions.
             if (!Settings.ProgramFirstrun)
             {
-                this.icon.ShowBalloonTip(5000, "NoteFly", "You can access NoteFly functions via this trayicon.", ToolTipIcon.Info);
+                this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, "You can access " + Program.AssemblyTitle + " functions via this trayicon.", ToolTipIcon.Info);
             }
         }
 
@@ -395,7 +395,7 @@ namespace NoteFly
 
             if (Frmneweditnoteopen)
             {
-                DialogResult resdlg = MessageBox.Show("A note is still open for editing.\r\nAre you sure you want to shutdown?", "confirm exit", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                DialogResult resdlg = MessageBox.Show("A note is still open for editing.\r\nAre you sure you want to shutdown " + Program.AssemblyTitle + "?", "confirm exit", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (resdlg == DialogResult.No)
                 {
                     return;

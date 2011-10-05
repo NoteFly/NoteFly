@@ -642,18 +642,34 @@ namespace NoteFly
                             }
                             else if (line.StartsWith("rel_position="))
                             {
-                                // TODO
+                                int poseq = line.IndexOf('=') + 1;
+                                string positionenc = line.Substring(poseq, line.Length - poseq);
+                                Log.Write(LogType.info, "pnote rel_position=" + positionenc);
+
+                                // TODO figure out how to get the position of the pnote, structor
+                                // pnotes sourcecode
+                                //sz = GetScreenMetrics();
+                                //save current relational position
+                                //nrp.left = (double)rcNote.left / (double)sz.cx;
+                                //nrp.top = (double)rcNote.top / (double)sz.cy;
+                                //nrp.width = rcNote.right - rcNote.left;
+                                //nrp.height = rcNote.bottom - rcNote.top;
+                                //WritePrivateProfileStructW(pNote->pFlags->id, IK_RELPOSITION, &nrp, sizeof(nrp), g_NotePaths.DataFile);
+                                
+                                
                             }
                             else if (line.StartsWith("creation="))
                             {
                                 int poseq = line.IndexOf('=') + 1;
-                                string enccreation = line.Substring(poseq, line.Length - poseq);
-                                int year = int.Parse(enccreation.Substring(2, 2) + enccreation.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
-                                int month = int.Parse(enccreation.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
-                                int dd = int.Parse(enccreation.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
-                                int hh = int.Parse(enccreation.Substring(16, 2), System.Globalization.NumberStyles.HexNumber);
-                                int mm = int.Parse(enccreation.Substring(20, 2), System.Globalization.NumberStyles.HexNumber);
-                                Log.Write(LogType.info, "Imported PNote creation: " + year + "-" + month + "-" + dd + " " + hh + ":" + mm);
+                                string creationenc = line.Substring(poseq, line.Length - poseq);
+                                Log.Write(LogType.info, "pnote creation=" + creationenc);
+
+                                int year = int.Parse(creationenc.Substring(2, 2) + creationenc.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+                                int month = int.Parse(creationenc.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+                                int dd = int.Parse(creationenc.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
+                                int hh = int.Parse(creationenc.Substring(16, 2), System.Globalization.NumberStyles.HexNumber);
+                                int mm = int.Parse(creationenc.Substring(20, 2), System.Globalization.NumberStyles.HexNumber);
+                                Log.Write(LogType.info, "Cannot use pnote creation properie: " + year + "-" + month + "-" + dd + " " + hh + ":" + mm);
                             }
                             else if (line.Contains(chrstartnotefilename.ToString()))
                             {

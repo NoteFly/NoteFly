@@ -462,6 +462,7 @@ namespace NoteFly
         /// FIXME: Make CLS-compliant
         /// </summary>
         /// <param name="onlyenabled">True to only get the the plugins that are enable</param>
+        /// <returns>A array with plugins</returns>
         public static IPlugin.IPlugin[] GetPlugins(bool onlyenabled)
         {
             System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
