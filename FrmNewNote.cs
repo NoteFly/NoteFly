@@ -24,6 +24,7 @@ namespace NoteFly
     using System.IO;
     using System.Text;
     using System.Windows.Forms;
+    using System.Collections.Generic;
 
     /// <summary>
     /// New and edit note window.
@@ -671,7 +672,7 @@ namespace NoteFly
         private void ReadTomboyfile(StreamReader reader, string tomboynotefile)
         {
             this.tbTitle.Text = xmlUtil.GetContentString(tomboynotefile, "title");
-
+            this.rtbNewNote.Clear();
             System.Xml.XmlTextReader xmlreader = new System.Xml.XmlTextReader(reader);
             xmlreader.ProhibitDtd = true;
             while (xmlreader.Read())
@@ -682,6 +683,9 @@ namespace NoteFly
                     bool innode = false;
                     int startnodepos = 0;
                     int startcontentnode = int.MaxValue;
+                    List<int> formatstartpos = new List<int>();
+                    List<string> formattype = new List<string>();
+                    List<int> formatlen = new List<int>();
 
                     for (int i = 0; i < tomboycontent.Length; i++)
                     {
@@ -710,33 +714,9 @@ namespace NoteFly
                                     }
                                 }
 
-                                int len = this.rtbNewNote.TextLength - startcontentnode;
-                                this.rtbNewNote.Select(startcontentnode, len);  
-                                switch (nodename)
-                                {
-                                    case "bold":               
-                                        this.btnTextBold_Click(null, null);                                        
-                                        break;
-                                    case "italic":
-                                        this.btnTextItalic_Click(null, null);
-                                        break;
-                                    case "strikethrough":
-                                        this.btnTextStriketrough_Click(null, null);
-                                        break;
-                                    case "list":
-                                        this.btnTextBulletlist_Click(null, null);
-                                        break;
-                                    case "size:huge":
-                                        this.btnFontBigger_Click(null, null);
-                                        break;
-                                    case "size:small":
-                                        this.btnFontSmaller_Click(null, null);
-                                        break;
-                                }
-
-                                this.rtbNewNote.Refresh();
-                                //this.rtbNewNote.Select(this.rtbNewNote.TextLength, 0);
-                                //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, FontStyle.Regular);
+                                formattype.Add(nodename);
+                                formatstartpos.Add(startcontentnode);
+                                formatlen.Add(this.rtbNewNote.TextLength - startcontentnode);                                
                             }
                             else
                             {
@@ -746,11 +726,45 @@ namespace NoteFly
                             innode = false;
                         }
                         else if (!innode)
-                        {
-                            // FIXME everything switches back to regular all the time.
+                        {                            
                             this.rtbNewNote.Text = this.rtbNewNote.Text + tomboycontent[i];
                         }
                     }
+
+                    for (int i = 0; i < formattype.Count; i++)
+                    {
+                        this.rtbNewNote.Select(formatstartpos[i], formatlen[i]);
+                        switch (formattype[i])
+                        {
+                            case "bold":
+                                this.btnTextBold_Click(null, null);
+                                break;
+                            case "italic":
+                                this.btnTextItalic_Click(null, null);
+                                break;
+                            case "strikethrough":
+                                this.btnTextStriketrough_Click(null, null);
+                                break;
+                            case "list":
+                                this.btnTextBulletlist_Click(null, null);
+                                break;
+                            case "size:huge":
+                                this.btnFontBigger_Click(null, null);
+                                this.btnFontBigger_Click(null, null);
+                                break;
+                            case "size:small":
+                                this.btnFontSmaller_Click(null, null);
+                                this.btnFontSmaller_Click(null, null);
+                                break;
+                            case "link:internal":
+                                // broken link because notefly does not have linking between notes but still make it underlined as reference that is was there.
+                                this.btnTextUnderline_Click(null, null);
+                                break;
+                        }
+                    }
+
+                    this.rtbNewNote.Select(0, 0);
+                   
                 }
             }
         }

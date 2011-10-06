@@ -654,9 +654,7 @@ namespace NoteFly
                                 //nrp.top = (double)rcNote.top / (double)sz.cy;
                                 //nrp.width = rcNote.right - rcNote.left;
                                 //nrp.height = rcNote.bottom - rcNote.top;
-                                //WritePrivateProfileStructW(pNote->pFlags->id, IK_RELPOSITION, &nrp, sizeof(nrp), g_NotePaths.DataFile);
-                                
-                                
+                                //WritePrivateProfileStructW(pNote->pFlags->id, IK_RELPOSITION, &nrp, sizeof(nrp), g_NotePaths.DataFile);                                                                
                             }
                             else if (line.StartsWith("creation="))
                             {
