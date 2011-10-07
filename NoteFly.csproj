@@ -74,6 +74,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <LangVersion>ISO-2</LangVersion>
     <DefineConstants>windows</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>

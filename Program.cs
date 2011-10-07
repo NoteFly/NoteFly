@@ -116,7 +116,7 @@ namespace NoteFly
         {
             get
             {
-                return "beta3";
+                return "rc1";
             }
         }
 

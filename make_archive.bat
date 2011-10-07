@@ -18,7 +18,7 @@ REM  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 set path7z="C:\Program Files\7-Zip\7z.exe"
 set VERSION="2.5.0"
 REM versionstatus: alpha, beta, rc1, rc2 or nothing for final.
-set VERSIONSTATUS="beta2"
+set VERSIONSTATUS="rc1"
 
 echo Making zip archive: src_NoteFly_v%VERSION%%VERSIONSTATUS%.zip
 echo 7-zip(7z.exe) should be installed in: %path7z%

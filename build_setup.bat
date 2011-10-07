@@ -30,7 +30,7 @@ REM change this path to where NSIS is installed.
 echo.
 echo signing setup (press Ctrl+C to skip/abort now)
 REM change this path to where gpg.exe is installed. And the filename of the setup.
-"C:\Program Files (x86)\GNU\GnuPG\gpg2.exe" --local-user B43F047E --detach-sign .\bin\Release\NoteFly_v2.5.0beta2.exe
+"C:\Program Files (x86)\GNU\GnuPG\gpg2.exe" --local-user B43F047E --detach-sign .\bin\Release\NoteFly_v2.5.0rc1.exe
 
 echo done.
 echo.

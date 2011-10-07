@@ -28,6 +28,7 @@ namespace NoteFly
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows.Forms;
+    using System.Xml;
 
     /// <summary>
     /// Manage notes window
@@ -305,7 +306,6 @@ namespace NoteFly
                         restchar--;
                     }
 
-                    // TODO datetime last change and what more?
                     writer.Write("0000DB0708000500130016000C001B00790100000000000000000000F7FC01000000F6010000060100000A0300001A0200000000000000000000000000000000000013\r\n");
                     // TODO figure out rel_position
                     writer.Write("rel_position=9A9999999979E53F0AD7A3703D0ABF3F40010000DC000000F1\r\n");
@@ -428,6 +428,9 @@ namespace NoteFly
                         break;
                     case 3:
                         this.ReadPNotesBackupFile(this.openImportFileDialog.FileName);
+                        break;
+                    case 4:
+                        this.ReadCintaNotesXMLFile(this.openImportFileDialog.FileName);
                         break;
                 }
 
@@ -655,6 +658,26 @@ namespace NoteFly
                                 //nrp.width = rcNote.right - rcNote.left;
                                 //nrp.height = rcNote.bottom - rcNote.top;
                                 //WritePrivateProfileStructW(pNote->pFlags->id, IK_RELPOSITION, &nrp, sizeof(nrp), g_NotePaths.DataFile);                                                                
+
+                                //double d = getDouble(0xAAB1726AAC9CDA3F);
+                                //MessageBox.Show("test: "+d);
+
+                                //double test600 = DoubleFromHexString("AAB1726AAC9CDA3F");
+                                //MessageBox.Show("result = " + test600); // 600? / 0,439238?
+
+                                //double test500 = DoubleFromHexString("64DF04D93741D63F");
+                                //MessageBox.Show("result = " + test500); // 500? / 0,36603?
+
+                                //string hex = "AAB1726AAC9CDA3F";
+                                //byte[] b = new byte[hex.Length / 2];
+                                //for (int i = (hex.Length - 2), j = 0; i >= 0; i -= 2, j++)
+                                //{
+                                //    b[j] = byte.Parse(hex.Substring(i, 2),
+                                //    System.Globalization.NumberStyles.HexNumber);
+                                //}
+                                //double d = BitConverter.ToDouble(b, 0);
+                                //MessageBox.Show("result: "+d);
+                                
                             }
                             else if (line.StartsWith("creation="))
                             {
@@ -726,6 +749,47 @@ namespace NoteFly
             }
 
             Log.Write(LogType.info, "Imported PNotes full backup file: " + this.openImportFileDialog.FileName);
+        }
+
+
+        /// <summary>
+        /// Read CintaNotes xml file exported notes.
+        /// </summary>
+        /// <param name="p"></param>
+        private void ReadCintaNotesXMLFile(string file)
+        {
+            XmlTextReader reader = null;
+            try
+            {
+                reader = new XmlTextReader(file);
+                while (reader.Read())
+                {
+                    if (reader.Name == "note")
+                    {
+                        string title = reader.GetAttribute("title");                        
+                        string content = reader.ReadInnerXml();
+                        int posstartcontent = content.IndexOf("<![CDATA[") + 9;
+                        int posendcontent = content.IndexOf("]]>");
+                        Note newnote = this.notes.CreateNote(title, 1, 10, 10, 240, 240);
+                        string plaincontent = content.Substring(posstartcontent, posendcontent - posstartcontent);
+                        newnote.Tempcontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\f0\\fs20"+plaincontent+"\\par}";
+                        newnote.Visible = false;
+                        xmlUtil.WriteNote(newnote, this.notes.GetSkinName(1), newnote.Tempcontent);
+                        this.notes.AddNote(newnote);
+                    }
+                }
+            }
+            catch (InvalidOperationException invopexc)
+            {
+                Log.Write(LogType.exception, invopexc.Message);
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+            }
         }
 
         /// <summary>
