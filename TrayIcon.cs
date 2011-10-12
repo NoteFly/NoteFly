@@ -133,7 +133,6 @@ namespace NoteFly
             this.icon.MouseClick += new MouseEventHandler(this.Icon_Click);
             this.icon.Visible = true;
             this.icon.ContextMenuStrip.Name = "MenuTrayIcon";
-            this.icon.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripMenuItem[] { this.menuNewNote, this.menuManageNotes, this.menuSettings, this.menuAbout, this.menuExit });
             this.icon.ContextMenuStrip.ShowImageMargin = false;
             this.icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
             FontStyle menufontstyle = FontStyle.Regular;
@@ -150,6 +149,7 @@ namespace NoteFly
 
             this.menuNewNote.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuNewNote.Click += new System.EventHandler(this.MenuNewNote_Click);
+            this.icon.ContextMenuStrip.Items.Add(this.menuNewNote);
 
             // MenuManageNotes
             this.menuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -167,6 +167,7 @@ namespace NoteFly
 
             this.menuManageNotes.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuManageNotes.Click += new System.EventHandler(this.MenuManageNotes_Click);
+            this.icon.ContextMenuStrip.Items.Add(this.menuManageNotes);
 
             // MenuSettings
             this.menuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -184,7 +185,7 @@ namespace NoteFly
 
             this.menuSettings.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
-
+            this.icon.ContextMenuStrip.Items.Add(this.menuSettings);
             // Create trayicon plugin ToolStripMenuItem items, if any.
             if (Program.pluginsenabled != null)
             {
@@ -192,6 +193,9 @@ namespace NoteFly
                 {
                     if (Program.pluginsenabled[p].InitTrayIconMenu() != null)
                     {
+                        ToolStripItem toolstripitem = Program.pluginsenabled[p].InitTrayIconMenu();
+                        toolstripitem.Size = new System.Drawing.Size(144, 22);
+                        toolstripitem.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
                         this.menuTrayIcon.Items.Add(Program.pluginsenabled[p].InitTrayIconMenu());
                     }
                 }
@@ -204,6 +208,7 @@ namespace NoteFly
             this.menuAbout.Text = "About";
             this.menuAbout.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
             this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
+            this.icon.ContextMenuStrip.Items.Add(this.menuAbout);
 
             // MenuExit
             this.menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -221,6 +226,7 @@ namespace NoteFly
 
             this.menuExit.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
+            this.icon.ContextMenuStrip.Items.Add(this.menuExit);
 
             // Show balloontip on firstrun about trayicon how to access notefly functions.
             if (!Settings.ProgramFirstrun)

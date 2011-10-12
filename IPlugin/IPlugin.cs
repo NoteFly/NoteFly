@@ -28,7 +28,7 @@ namespace IPlugin
     /// <summary>
     /// Plugin interface
     /// status: DRAFT (Subject to change)
-    /// revision: 3
+    /// revision: 4
     /// </summary>
     public interface IPlugin
     {
@@ -43,8 +43,14 @@ namespace IPlugin
         string Filename { get; }
 
         /// <summary>
+        /// Set the host
+        /// </summary>
+        IPluginHost Host { get; set; }
+
+        /// <summary>
         /// Register plugin
         /// </summary>
+        /// <param name="host">plugin interface to let the plugin talk to NoteFly</param>
         /// <param name="enabled">Is this plugin enabled.</param>
         /// <param name="file">The plugin file.</param>
         void Register(bool enabled, string file);

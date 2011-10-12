@@ -7,14 +7,6 @@
     /// </summary>
     public class InsertSmileyplugin : IPlugin.PluginBase
     {
-        //public override string SettingsTabTitle
-        //{
-        //    get
-        //    {
-        //        return "Insert smiley plugin";
-        //    }
-        //}
-
         /// <summary>
         /// Create the buttons for formatting in FrmNewNote.
         /// </summary>

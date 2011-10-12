@@ -29,7 +29,7 @@ namespace NoteFly
     /// <summary>
     /// Notes class, holds all notes
     /// </summary>
-    public class Notes
+    public class Notes : IPlugin.IPluginHost
     {
         #region Fields (4)
 
@@ -643,6 +643,21 @@ namespace NoteFly
 
             Log.Write(LogType.error, "Can't get color. type:" + type + " skinnr:" + skinnr);
             return Color.White;
+        }
+
+        public string GetNotesSavepath()
+        {
+            return Settings.NotesSavepath;
+        }
+
+        public void LogPluginInfo(string infomsg)
+        {
+            Log.Write(LogType.info, "plugin, "+infomsg);
+        }
+
+        public void LogPluginError(string errormsg)
+        {
+            Log.Write(LogType.error, "plugin, "+errormsg);
         }
 
         #endregion Methods

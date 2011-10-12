@@ -346,13 +346,14 @@ namespace NoteFly
                 }
             }
 
+            SyntaxHighlight.InitHighlighter();
+            notes = new Notes(resetpositions);
+
             if (Settings.ProgramPluginsAllEnabled)
             {
                 Program.pluginsenabled = GetPlugins(true);
             }
 
-            SyntaxHighlight.InitHighlighter();
-            notes = new Notes(resetpositions);
             trayicon = new TrayIcon(notes);
 
             if (!Settings.ProgramFirstrun)
@@ -496,6 +497,7 @@ namespace NoteFly
                                         if (plugintype != null)
                                         {
                                             IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                                            iplugin.Host = NoteFly.Program.notes; // FIXME this call class only
                                             iplugin.Register(pluginenabled, pluginfiles[i]);
                                             pluginslist.Add(iplugin);
                                         }

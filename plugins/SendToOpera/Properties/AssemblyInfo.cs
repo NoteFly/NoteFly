@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Hello World")]
-[assembly: AssemblyDescription("A demo plugin")]
+[assembly: AssemblyTitle("SendToOpera")]
+[assembly: AssemblyDescription("Send a note to the notes of Opera(tm) webbrowser.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Tom")]
-[assembly: AssemblyProduct("Hello World")]
+[assembly: AssemblyProduct("SendToOpera")]
 [assembly: AssemblyCopyright("Copyright © NoteFly 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -26,7 +26,7 @@ namespace IPlugin
     /// <summary>
     /// PluginBase class.
     /// </summary>
-    [CLSCompliant(true)]    
+    [CLSCompliant(true)]
     public abstract class PluginBase : IPlugin
     {
         /// <summary>
@@ -39,7 +39,12 @@ namespace IPlugin
         /// </summary>
         private string file;
 
-        // Properties (2) 
+        /// <summary>
+        /// Access to NoteFly
+        /// </summary>
+        private IPluginHost host;
+
+        // Properties (3) 
 
         /// <summary>
         /// Gets or sets a value indicating whether the plugin is enabled.
@@ -68,6 +73,18 @@ namespace IPlugin
             }
         }
 
+        public IPluginHost Host
+        {
+            get
+            {
+                return this.host;
+            }
+
+            set
+            {
+                this.host = value;
+            }
+        }
         // Methods (15) 
 
         /// <summary>
