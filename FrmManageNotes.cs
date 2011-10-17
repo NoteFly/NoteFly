@@ -33,7 +33,7 @@ namespace NoteFly
     /// <summary>
     /// Manage notes window
     /// </summary>
-    public partial class FrmManageNotes : Form
+    public sealed partial class FrmManageNotes : Form
     {
         #region Fields (8)
 
@@ -770,7 +770,7 @@ namespace NoteFly
                         string content = reader.ReadInnerXml();
                         int posstartcontent = content.IndexOf("<![CDATA[") + 9;
                         int posendcontent = content.IndexOf("]]>");
-                        Note newnote = this.notes.CreateNote(title, 1, 10, 10, 240, 240);
+                        Note newnote = this.notes.CreateDefaultNote(title, 1, 10, 10, 240, 240);
                         string plaincontent = content.Substring(posstartcontent, posendcontent - posstartcontent);
                         newnote.Tempcontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\f0\\fs20"+plaincontent+"\\par}";
                         newnote.Visible = false;

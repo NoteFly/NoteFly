@@ -29,7 +29,7 @@ namespace NoteFly
     /// <summary>
     /// New and edit note window.
     /// </summary>
-    public partial class FrmNewNote : Form
+    public sealed partial class FrmNewNote : Form
     {
         #region Fields (4)
 
@@ -224,7 +224,7 @@ namespace NoteFly
                 if (this.note == null)
                 {
                     newnote = true;
-                    this.note = this.notes.CreateNote(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
+                    this.note = this.notes.CreateDefaultNote(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
 
                 this.note.Title = this.tbTitle.Text;

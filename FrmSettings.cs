@@ -30,7 +30,7 @@ namespace NoteFly
     /// <summary>
     /// Setting window.
     /// </summary>
-    public partial class FrmSettings : Form
+    public sealed partial class FrmSettings : Form
     {
         #region Fields (2)
 

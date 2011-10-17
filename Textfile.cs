@@ -51,18 +51,13 @@ namespace NoteFly
         /// <summary>
         /// Writing to php file.
         /// </summary>
-        exportphp,
-
-        /// <summary>
-        /// Write to a csv file used by stickies.
-        /// </summary>
-        exportstickiescsv
+        exportphp
     }
 
     /// <summary>
     /// Textfile saving class
     /// </summary>
-    public class Textfile
+    public sealed class Textfile
     {
         /// <summary>
         /// Initializes a new instance of the Textfile class.
@@ -139,11 +134,6 @@ namespace NoteFly
                     case TextfileWriteType.exportphp:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
                         writer = new StreamWriter(fs, Encoding.ASCII);
-                        writer.Write(content);
-                        break;
-                    case TextfileWriteType.exportstickiescsv:
-                        fs = new FileStream(filename, FileMode.OpenOrCreate);
-                        writer = new StreamWriter(fs, Encoding.UTF8);
                         writer.Write(content);
                         break;
                 }

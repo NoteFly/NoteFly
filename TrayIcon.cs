@@ -27,7 +27,7 @@ namespace NoteFly
     /// <summary>
     /// TrayIcon gui object class.
     /// </summary>
-    public class TrayIcon
+    public sealed class TrayIcon
     {
         /// <summary>
         /// Used for warning if new note is still open on shutdown application.

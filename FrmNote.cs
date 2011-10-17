@@ -30,7 +30,7 @@ namespace NoteFly
     /// <summary>
     /// Note window.
     /// </summary>
-    public partial class FrmNote : Form
+    public sealed partial class FrmNote : Form
     {
         #region Fields (6)
 

@@ -27,7 +27,7 @@ namespace NoteFly
     /// <summary>
     /// Highlight class, provides highlighting to richtext.
     /// </summary>
-    public class SyntaxHighlight
+    public sealed class SyntaxHighlight
     {
         #region Fields (9)
 
@@ -269,7 +269,7 @@ namespace NoteFly
             int attrlen = 0;
             bool attrstartposset = false;
 
-            if (ishtml.Equals(langhtml.Commentstart))
+            if (ishtml.StartsWith(langhtml.Commentstart, StringComparison.Ordinal))
             {
                 comment = true;
             }
@@ -360,7 +360,7 @@ namespace NoteFly
                 ColorText(rtb, posstartpart, ishtml.Length, Settings.HighlightHTMLColorComment);
             }
 
-            if (ishtml.Equals(langhtml.Commentend))
+            if (ishtml.EndsWith(langhtml.Commentend, StringComparison.Ordinal))
             {
                 comment = false;
             }

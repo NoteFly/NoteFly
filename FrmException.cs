@@ -26,7 +26,7 @@ namespace NoteFly
     /// <summary>
     /// Exception window
     /// </summary>
-    public partial class FrmException : Form
+    public sealed partial class FrmException : Form
     {
         /// <summary>
         /// Initializes a new instance of the FrmException class.

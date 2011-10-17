@@ -24,7 +24,7 @@ namespace NoteFly
     /// <summary>
     /// HighlightLanguage class, a data class that holds lexicon of a language to highlight.
     /// </summary>
-    public class HighlightLanguage
+    public sealed class HighlightLanguage
     {
         /// <summary>
         /// The name of the language

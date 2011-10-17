@@ -41,12 +41,12 @@ namespace NoteFly
         /// <summary>
         /// Settings file.
         /// </summary>
-        private const string SETTINGSFILE = "settings.xml";
+        public const string SETTINGSFILE = "settings.xml";
 
         /// <summary>
         /// Skin file.
         /// </summary>
-        private const string SKINFILE = "skins.xml";
+        public const string SKINFILE = "skins.xml";
 
         /// <summary>
         /// XmlTextReader object.
@@ -502,11 +502,11 @@ namespace NoteFly
                                 {
                                     if (System.IO.File.Exists(filepathtexture))
                                     {
-                                        curskin.PrimaryTexture = new System.Drawing.Bitmap(filepathtexture);
+                                        curskin.PrimaryTexture = filepathtexture; //new System.Drawing.Bitmap(filepathtexture);
                                     }
                                     else
                                     {
-                                        curskin.PrimaryTexture = new System.Drawing.Bitmap(Path.Combine(Program.InstallFolder, filepathtexture));
+                                        curskin.PrimaryTexture = Path.Combine(Program.InstallFolder, filepathtexture); //new System.Drawing.Bitmap(Path.Combine(Program.InstallFolder, filepathtexture));
                                     }
                                 }
                                 else

@@ -25,7 +25,7 @@ namespace NoteFly
     /// <summary>
     /// Note data class, holds setting note.
     /// </summary>
-    public class Note
+    public sealed class Note
     {
         #region Fields (14)
 

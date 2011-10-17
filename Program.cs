@@ -32,7 +32,7 @@ namespace NoteFly
     /// <summary>
     /// Program class, main entry application.
     /// </summary>
-    public class Program
+    public sealed class Program
     {
         #region Fields (3)
 
@@ -491,7 +491,7 @@ namespace NoteFly
                             {
                                 foreach (Type curplugintype in pluginassembly.GetTypes())
                                 {
-                                    if (curplugintype.IsPublic && !curplugintype.IsAbstract)
+                                    if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
                                     {
                                         Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
                                         if (plugintype != null)

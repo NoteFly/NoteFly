@@ -47,7 +47,7 @@ namespace NoteFly
     /// <summary>
     /// Log class, for logging.
     /// </summary>
-    public class Log
+    public sealed class Log
     {
         /// <summary>
         /// The debug log filename.

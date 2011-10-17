@@ -25,7 +25,7 @@ namespace NoteFly
     /// <summary>
     /// About window.
     /// </summary>
-    public partial class FrmAbout : Form
+    public sealed partial class FrmAbout : Form
     {
         #region Fields (1)
 

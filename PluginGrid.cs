@@ -26,7 +26,7 @@ namespace NoteFly
     /// <summary>
     /// PluginGrid gui object class 
     /// </summary>
-    public partial class PluginGrid : UserControl
+    public sealed partial class PluginGrid : UserControl
     {
         /// <summary>
         /// Array with all enable/disable buttons for every plugin.
@@ -125,13 +125,12 @@ namespace NoteFly
             Label lblTextPluginDescription = new System.Windows.Forms.Label();
             Label lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginsStatus[pluginpos] = new Button();
-            this.tlpnlPlugins[pluginpos].SuspendLayout();
-            this.SetPluginStatusDetail(pluginpos);
+            this.tlpnlPlugins[pluginpos].SuspendLayout();            
 
             this.tlpnlPlugins[pluginpos].ColumnCount = 3;
-            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3333F));
-            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3333F));
-            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3333F));
+            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0000F));
+            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0000F));
+            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0000F));
             this.tlpnlPlugins[pluginpos].Controls.Add(lblPluginTitle, 0, 0);
             this.tlpnlPlugins[pluginpos].Controls.Add(this.btnPluginsStatus[pluginpos], 1, 0);
             this.tlpnlPlugins[pluginpos].Controls.Add(lblTextPluginVersion, 0, 1);
@@ -216,6 +215,8 @@ namespace NoteFly
             this.btnPluginsStatus[pluginpos].UseVisualStyleBackColor = true;
             this.btnPluginsStatus[pluginpos].Click += new EventHandler(this.PluginGrid_Click);
             Controls.Add(this.tlpnlPlugins[pluginpos]);
+
+            this.SetPluginStatusDetail(pluginpos);
             this.tlpnlPlugins[pluginpos].ResumeLayout(false);
             this.tlpnlPlugins[pluginpos].PerformLayout();
         }

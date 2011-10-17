@@ -62,6 +62,17 @@ namespace SendToOpera
         }
 
         /// <summary>
+        /// Create share menu
+        /// </summary>
+        /// <returns></returns>
+        public override ToolStripMenuItem InitFrmNoteShareMenu()
+        {
+            ToolStripMenuItem toolstripmenu = new ToolStripMenuItem("Send to Opera");
+            toolstripmenu.Name = "menuShareSendToOpera";
+            return toolstripmenu;
+        }
+
+        /// <summary>
         /// Get a char array with all hexadecimal characters.
         /// </summary>
         /// <returns>A array of chars with hexidecimal chars</returns>

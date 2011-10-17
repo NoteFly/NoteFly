@@ -28,7 +28,7 @@ namespace NoteFly
     /// <summary>
     /// Class to verify files with GnuPG
     /// </summary>
-    public class GPGVerifWrapper
+    public sealed class GPGVerifWrapper
     {
         /// <summary>
         /// The GnuPG signature file extension

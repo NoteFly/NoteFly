@@ -24,7 +24,7 @@ namespace NoteFly
     /// <summary>
     /// Skin data class.
     /// </summary>
-    public class Skin
+    public sealed class Skin
     {
         #region Fields (5) 
 
@@ -46,7 +46,7 @@ namespace NoteFly
         /// <summary>
         /// Backgound image of the skin.
         /// </summary>
-        private Bitmap primarytexture = null;
+        private string primarytexture = null;
 
         /// <summary>
         /// Backgound image layout of the skin
@@ -118,7 +118,7 @@ namespace NoteFly
         /// <summary>
         /// Gets or sets the background image of the skin.
         /// </summary>
-        public Bitmap PrimaryTexture
+        public string PrimaryTexture
         {
             get
             {
