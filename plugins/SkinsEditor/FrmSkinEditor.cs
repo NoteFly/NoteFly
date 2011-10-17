@@ -29,8 +29,6 @@ namespace SkinsEditor
     public sealed partial class FrmSkinEditor : Form
     {
         private skineditormode skinaction;
-        private enum skineditormode { browseskins, editskin, newskin };
-
         private IPlugin.IPluginHost host;
 
         /// <summary>
@@ -45,10 +43,12 @@ namespace SkinsEditor
             this.lbxSkins.Items.AddRange(this.host.GetSkinsNames());
         }
 
+        private enum skineditormode { browseskins, editskin, newskin };
+
         /// <summary>
         /// Closed the skin editor form.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e"></param>
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -61,10 +61,10 @@ namespace SkinsEditor
         /// <param name="tb"></param>
         private void SetTbHexcolor(TextBox tb)
         {
-            DialogResult dlgres = colordlg.ShowDialog();
+            DialogResult dlgres = this.colordlg.ShowDialog();
             if (dlgres == DialogResult.OK)
             {
-                tb.Text = ClrToHtmlHexClr(colordlg.Color);
+                tb.Text = this.ClrToHtmlHexClr(this.colordlg.Color);
             }
         }
 
@@ -75,72 +75,72 @@ namespace SkinsEditor
         /// <returns></returns>
         private string ClrToHtmlHexClr(Color clr)
         {
-            return String.Format("#{0:X2}{1:X2}{2:X2}", clr.R, clr.G, clr.B);
+            return string.Format("#{0:X2}{1:X2}{2:X2}", clr.R, clr.G, clr.B);
         }
 
         /// <summary>
         /// Select primary color.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e"></param>
         private void btnPickPrimaryColor_Click(object sender, EventArgs e)
         {
-            SetTbHexcolor(this.tbPrimaryColor);
+            this.SetTbHexcolor(this.tbPrimaryColor);
         }
 
         /// <summary>
         /// Select selecting color.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnSelectingColor_Click(object sender, EventArgs e)
         {
-            SetTbHexcolor(this.tbSelectingColor);
+            this.SetTbHexcolor(this.tbSelectingColor);
         }
 
         /// <summary>
         /// Select highlight color.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnHighlightColor_Click(object sender, EventArgs e)
         {
-            SetTbHexcolor(this.tbHighlightingColor);
+            this.SetTbHexcolor(this.tbHighlightingColor);
         }
 
         /// <summary>
         /// Select text color.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnTextColor_Click(object sender, EventArgs e)
         {
-            SetTbHexcolor(this.tbTextColor);
+            this.SetTbHexcolor(this.tbTextColor);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="skinnr"></param>
+        /// <param name="skinnr">The skin position</param>
         private void SetFieldBySelectSkin(int skinnr)
         {
             this.tbSkinName.Text = this.host.GetSkinName(skinnr);
-            this.tbPrimaryColor.Text = ClrToHtmlHexClr(this.host.GetPrimaryClr(skinnr));
-            this.tbSelectingColor.Text = ClrToHtmlHexClr(this.host.GetSelectClr(skinnr));
-            this.tbHighlightingColor.Text = ClrToHtmlHexClr(this.host.GetHighlightClr(skinnr));
-            this.tbTextColor.Text = ClrToHtmlHexClr(this.host.GetTextClr(skinnr));
+            this.tbPrimaryColor.Text = this.ClrToHtmlHexClr(this.host.GetPrimaryClr(skinnr));
+            this.tbSelectingColor.Text = this.ClrToHtmlHexClr(this.host.GetSelectClr(skinnr));
+            this.tbHighlightingColor.Text = this.ClrToHtmlHexClr(this.host.GetHighlightClr(skinnr));
+            this.tbTextColor.Text = this.ClrToHtmlHexClr(this.host.GetTextClr(skinnr));
         }
 
         /// <summary>
         /// Skin in skin list selected.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void lbxSkins_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.lbxSkins.SelectedIndex >= 0)
             {
-                skinaction = skineditormode.browseskins;
+                this.skinaction = skineditormode.browseskins;
                 this.btnEditskin.Text = "&edit skins";
                 this.btnNewSkin.Text = "&new skin";
                 this.btnEditskin.Enabled = true;
@@ -157,7 +157,7 @@ namespace SkinsEditor
         /// <summary>
         /// Set field enabled or disabled them.
         /// </summary>
-        /// <param name="enabled"></param>
+        /// <param name="enabled">Set all fields enabled or disabled</param>
         private void SetFieldsEnabled(bool enabled)
         {
             this.tbSkinName.Enabled = enabled;
@@ -205,12 +205,12 @@ namespace SkinsEditor
         /// <summary>
         /// Requested to edit a skin
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnEditskin_Click(object sender, EventArgs e)
         {
             this.SetFieldsEnabled(true);
-            if (skinaction == skineditormode.editskin)
+            if (this.skinaction == skineditormode.editskin)
             {
                 this.SetFieldsEnabled(false);
                 this.btnEditskin.Text = "&edit skin";
@@ -220,18 +220,18 @@ namespace SkinsEditor
             else
             {
                 this.btnEditskin.Text = "cancel &edit skin";
-                skinaction = skineditormode.editskin;
+                this.skinaction = skineditormode.editskin;
             }
         }
 
         /// <summary>
         /// requested to create new skin.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnNewSkin_Click(object sender, EventArgs e)
         {
-            if (skinaction == skineditormode.newskin)
+            if (this.skinaction == skineditormode.newskin)
             {
                 this.btnEditskin.Enabled = true;
                 this.btnNewSkin.Text = "&new skin";
@@ -256,19 +256,19 @@ namespace SkinsEditor
         /// <summary>
         /// Request to save skin
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnSaveSkin_Click(object sender, EventArgs e)
         {
-            if (skinaction == skineditormode.newskin || skinaction == skineditormode.editskin)
+            if (this.skinaction == skineditormode.newskin || this.skinaction == skineditormode.editskin)
             {
-                if (CheckProperSkinnameTb())
+                if (this.CheckProperSkinnameTb())
                 {
                     this.tbSkinName.BackColor = SystemColors.Window;
-                    if (CheckAllTbColorsAndSetErrors())
+                    if (this.CheckAllTbColorsAndSetErrors())
                     {
 
-                        if (skinaction == skineditormode.newskin)
+                        if (this.skinaction == skineditormode.newskin)
                         {
                             // TODO add new skin.
                             this.lbxSkins.Items.Add(this.tbSkinName.Text);
@@ -302,14 +302,11 @@ namespace SkinsEditor
                 xmlwrite.WriteStartDocument(true);
                 xmlwrite.WriteStartElement("skins");
                 xmlwrite.WriteStartElement("skin");
-
-                // todo begin
-
                 for (int i = 0; i < this.host.CountNotes; i++)
                 {
                     xmlwrite.WriteElementString("Name", this.host.GetSkinName(i));
                     xmlwrite.WriteStartElement("PrimaryClr");                    
-                    if (!String.IsNullOrEmpty(this.host.GetPrimaryTextureFile(i)))
+                    if (!string.IsNullOrEmpty(this.host.GetPrimaryTextureFile(i)))
                     {
                         xmlwrite.WriteAttributeString("texture", this.host.GetPrimaryTextureFile(i));
                         ImageLayout layout = this.host.GetPrimaryTextureLayout(i);
@@ -330,12 +327,13 @@ namespace SkinsEditor
                         }
                     }
 
-                    xmlwrite.WriteString(ClrToHtmlHexClr(this.host.GetPrimaryClr(i)));
+                    xmlwrite.WriteString(this.ClrToHtmlHexClr(this.host.GetPrimaryClr(i)));
                     xmlwrite.WriteEndElement();
-                    xmlwrite.WriteElementString("SelectClr", ClrToHtmlHexClr(this.host.GetSelectClr(i)));
-                    xmlwrite.WriteElementString("HighlightClr", ClrToHtmlHexClr(this.host.GetHighlightClr(i)));
-                    xmlwrite.WriteElementString("TextClr", ClrToHtmlHexClr(this.host.GetTextClr(i)));
+                    xmlwrite.WriteElementString("SelectClr", this.ClrToHtmlHexClr(this.host.GetSelectClr(i)));
+                    xmlwrite.WriteElementString("HighlightClr", this.ClrToHtmlHexClr(this.host.GetHighlightClr(i)));
+                    xmlwrite.WriteElementString("TextClr", this.ClrToHtmlHexClr(this.host.GetTextClr(i)));
                 }
+
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();
                 succeed = true;
@@ -422,7 +420,7 @@ namespace SkinsEditor
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e"></param>
         private void ParserAsPreviewColor(object sender, EventArgs e)
         {

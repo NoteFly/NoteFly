@@ -20,11 +20,11 @@
 namespace NoteFly
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
     using System.Text;
     using System.Windows.Forms;
-    using System.Collections.Generic;
 
     /// <summary>
     /// New and edit note window.
@@ -220,27 +220,18 @@ namespace NoteFly
             }
             else
             {
-                bool newnote = false;
                 if (this.note == null)
                 {
-                    newnote = true;
-                    this.note = this.notes.CreateDefaultNote(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
+                    // new note
+                    this.note = this.notes.CreateNoteDefaultSettings(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
 
                 this.note.Title = this.tbTitle.Text;
                 this.note.Visible = true;
-                if (string.IsNullOrEmpty(this.note.Filename))
-                {
-                    this.note.Filename = this.notes.GetNoteFilename(this.note.Title);
-                }
 
                 if (xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNewNote.Rtf))
                 {
-                    if (newnote)
-                    {
-                        this.notes.AddNote(this.note);
-                    }
-
+                    // write note was succesfull.
                     if (Program.pluginsenabled != null)
                     {
                         for (int i = 0; i < Program.pluginsenabled.Length; i++)
@@ -720,7 +711,7 @@ namespace NoteFly
                             }
                             else
                             {
-                                startcontentnode = rtbNewNote.TextLength;
+                                startcontentnode = this.rtbNewNote.TextLength;
                             }
 
                             innode = false;
@@ -763,8 +754,7 @@ namespace NoteFly
                         }
                     }
 
-                    this.rtbNewNote.Select(0, 0);
-                   
+                    this.rtbNewNote.Select(0, 0);                   
                 }
             }
         }

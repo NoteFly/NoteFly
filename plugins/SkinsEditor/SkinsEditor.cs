@@ -34,7 +34,7 @@ namespace SkinsEditor
         {
             ToolStripItem menutrayicon = new ToolStripMenuItem("Skin editor");
             menutrayicon.Name = "menuSkinEditor";
-            menutrayicon.Click += new EventHandler(menutrayicon_Click);
+            menutrayicon.Click += new EventHandler(this.menutrayicon_Click);
             return menutrayicon;
         }
 

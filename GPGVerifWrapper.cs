@@ -54,8 +54,9 @@ namespace NoteFly
         /// Verify a file.
         /// </summary>
         /// <param name="downloadfilepath">The path to the local file that was downloaded</param>
-        public void VerifDownload(string downloadfilepath)
+        public bool VerifDownload(string downloadfilepath)
         {
+            bool allowlaunch = false;
             try
             {
                 System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --verify-files " + downloadfilepath + GPGSIGNATUREEXTENSION);
@@ -110,13 +111,23 @@ namespace NoteFly
                 if (gpgprocexitcode == 0)
                 {
                     // Currently display GPG result via messagebox..
-                    System.Windows.Forms.MessageBox.Show(this.gpgoutput + System.Environment.NewLine + this.gpgerror, Program.AssemblyTitle + " signature check result");
+                    System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(this.gpgoutput + System.Environment.NewLine + this.gpgerror, Program.AssemblyTitle + " signature check result", System.Windows.Forms.MessageBoxButtons.OKCancel);
+                    if (dlgres == System.Windows.Forms.DialogResult.OK)
+                    {
+                        allowlaunch = true;
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("GnuPG did not return exitcode 0.");
                 }
             }
             catch (Exception exc)
             {
                 Log.Write(LogType.exception, "Verify with GPG failed: " + exc.Message);
             }
+
+            return allowlaunch;
         }
 
         /// <summary>
@@ -225,14 +236,14 @@ namespace NoteFly
         /// </summary>
         private void GetGPGNoteFlyPublicKey()
         {
-            // We need to verif, fingerprint: 9968 3F36 7B60 4F21 ED55 A0CC 7898 7488 B43F 047E
+            // fingerprint should be: 9968 3F36 7B60 4F21 ED55 A0CC 7898 7488 B43F 047E
             string gpgspeckeyserver = string.Empty;
             StringBuilder gpgrecvkeycommand = new StringBuilder(Settings.UpdatecheckGPGPath);
             gpgrecvkeycommand.Append(" --recv-keys 2F9532C8");
-            if (!string.IsNullOrEmpty(Settings.UpdatecheckGPGKeyserver))
+            if (!string.IsNullOrEmpty(Settings.UpdatecheckGPGKeyserver.Trim()))
             {
                 gpgrecvkeycommand.Append(" --keyserver ");
-                gpgrecvkeycommand.Append(Settings.UpdatecheckGPGKeyserver);
+                gpgrecvkeycommand.Append(Settings.UpdatecheckGPGKeyserver.Trim());
             }
            
             System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(gpgrecvkeycommand.ToString()); 

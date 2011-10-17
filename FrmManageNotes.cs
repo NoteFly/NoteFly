@@ -75,6 +75,10 @@ namespace NoteFly
         /// </summary>
         private const int COLNOTENRFIXEDWIDTH = 30;
 
+        private const int DEFAULTIMPORTNOTEWIDTH = 240;
+
+        private const int DEFAULTIMPORTNOTEHEIGHT = 200;
+
         /// <summary>
         /// Rereference to notes
         /// </summary>
@@ -557,21 +561,7 @@ namespace NoteFly
                             }
 
                             string content = this.RemoveQuotes(parts[poscontent]);
-                            string filenamenote = this.notes.GetNoteFilename(title);
-                            Note newnote = new Note(this.notes, filenamenote);
-                            newnote.Visible = false;
-                            newnote.Locked = false;
-                            newnote.Ontop = false;
-                            newnote.RolledUp = false;
-                            newnote.Height = 200;
-                            newnote.Width = width;
-                            newnote.X = 10;
-                            newnote.Y = 10;
-                            newnote.Title = title;
-                            newnote.Tempcontent = content;
-                            string skinname = this.notes.GetSkinName(Settings.NotesDefaultSkinnr);
-                            xmlUtil.WriteNote(newnote, skinname, content);
-                            this.notes.AddNote(newnote);
+                            this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, content);
                         }
                         else
                         {
@@ -648,36 +638,29 @@ namespace NoteFly
                                 int poseq = line.IndexOf('=') + 1;
                                 string positionenc = line.Substring(poseq, line.Length - poseq);
                                 Log.Write(LogType.info, "pnote rel_position=" + positionenc);
-
-                                // TODO figure out how to get the position of the pnote, structor
-                                // pnotes sourcecode
-                                //sz = GetScreenMetrics();
-                                //save current relational position
-                                //nrp.left = (double)rcNote.left / (double)sz.cx;
-                                //nrp.top = (double)rcNote.top / (double)sz.cy;
-                                //nrp.width = rcNote.right - rcNote.left;
-                                //nrp.height = rcNote.bottom - rcNote.top;
-                                //WritePrivateProfileStructW(pNote->pFlags->id, IK_RELPOSITION, &nrp, sizeof(nrp), g_NotePaths.DataFile);                                                                
-
-                                //double d = getDouble(0xAAB1726AAC9CDA3F);
-                                //MessageBox.Show("test: "+d);
-
-                                //double test600 = DoubleFromHexString("AAB1726AAC9CDA3F");
-                                //MessageBox.Show("result = " + test600); // 600? / 0,439238?
-
-                                //double test500 = DoubleFromHexString("64DF04D93741D63F");
-                                //MessageBox.Show("result = " + test500); // 500? / 0,36603?
-
-                                //string hex = "AAB1726AAC9CDA3F";
-                                //byte[] b = new byte[hex.Length / 2];
-                                //for (int i = (hex.Length - 2), j = 0; i >= 0; i -= 2, j++)
-                                //{
-                                //    b[j] = byte.Parse(hex.Substring(i, 2),
-                                //    System.Globalization.NumberStyles.HexNumber);
-                                //}
-                                //double d = BitConverter.ToDouble(b, 0);
-                                //MessageBox.Show("result: "+d);
-                                
+                                // TODO figure out how to get the position of the pnote, pnotes sourcecode:
+                                ////sz = GetScreenMetrics();
+                                ////save current relational position
+                                ////nrp.left = (double)rcNote.left / (double)sz.cx;
+                                ////nrp.top = (double)rcNote.top / (double)sz.cy;
+                                ////nrp.width = rcNote.right - rcNote.left;
+                                ////nrp.height = rcNote.bottom - rcNote.top;
+                                ////WritePrivateProfileStructW(pNote->pFlags->id, IK_RELPOSITION, &nrp, sizeof(nrp), g_NotePaths.DataFile);
+                                ////double d = getDouble(0xAAB1726AAC9CDA3F);
+                                ////MessageBox.Show("test: "+d);
+                                ////double test600 = DoubleFromHexString("AAB1726AAC9CDA3F");
+                                ////MessageBox.Show("result = " + test600); // 600? / 0,439238?
+                                ////double test500 = DoubleFromHexString("64DF04D93741D63F");
+                                ////MessageBox.Show("result = " + test500); // 500? / 0,36603?
+                                ////string hex = "AAB1726AAC9CDA3F";
+                                ////byte[] b = new byte[hex.Length / 2];
+                                ////for (int i = (hex.Length - 2), j = 0; i >= 0; i -= 2, j++)
+                                ////{
+                                ////    b[j] = byte.Parse(hex.Substring(i, 2),
+                                ////    System.Globalization.NumberStyles.HexNumber);
+                                ////}
+                                ////double d = BitConverter.ToDouble(b, 0);
+                                ////MessageBox.Show("result: "+d);    
                             }
                             else if (line.StartsWith("creation="))
                             {
@@ -703,18 +686,8 @@ namespace NoteFly
                         {
                             if (line.Contains("\0"))
                             {
-                                Note newnote = new Note(this.notes, this.notes.GetNoteFilename(notetitles[notenr]));
-                                newnote.Title = notetitles[notenr];
-                                newnote.X = 100;
-                                newnote.Y = 100;
-                                newnote.Width = 240;
-                                newnote.Height = 200;
-                                newnote.Ontop = false;
-                                newnote.Visible = false;
-                                newnote.RolledUp = false;
-                                newnote.Tempcontent = notecontent.ToString();
-                                xmlUtil.WriteNote(newnote, this.notes.GetSkinName(Settings.NotesDefaultSkinnr), notecontent.ToString());
-                                this.notes.AddNote(newnote);
+                                this.notes.AddNoteDefaultSettings(notetitles[notenr], Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent.ToString());
+
                                 notecontent = null;
                                 notecontent = new StringBuilder();
                                 if (line.Contains(chrendnotefilename.ToString()))
@@ -769,13 +742,10 @@ namespace NoteFly
                         string title = reader.GetAttribute("title");                        
                         string content = reader.ReadInnerXml();
                         int posstartcontent = content.IndexOf("<![CDATA[") + 9;
-                        int posendcontent = content.IndexOf("]]>");
-                        Note newnote = this.notes.CreateDefaultNote(title, 1, 10, 10, 240, 240);
+                        int posendcontent = content.IndexOf("]]>");                       
                         string plaincontent = content.Substring(posstartcontent, posendcontent - posstartcontent);
-                        newnote.Tempcontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\f0\\fs20"+plaincontent+"\\par}";
-                        newnote.Visible = false;
-                        xmlUtil.WriteNote(newnote, this.notes.GetSkinName(1), newnote.Tempcontent);
-                        this.notes.AddNote(newnote);
+                        string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\f0\\fs20" + plaincontent + "\\par}";
+                        this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent);
                     }
                 }
             }

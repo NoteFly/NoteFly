@@ -271,13 +271,15 @@ namespace NoteFly
 
         /// <summary>
         /// Is email sharing enabled.
+        /// notice: renamed SocialEmailEnabled to SharingEmailEnabled
         /// </summary>
-        public static bool SocialEmailEnabled = true;
+        public static bool SharingEmailEnabled = true;
 
         /// <summary>
         /// The default email adres to send to.
+        /// notice: renamed SharingEmailDefaultadres to SharingEmailDefaultadres
         /// </summary>
-        public static string SocialEmailDefaultadres = string.Empty;
+        public static string SharingEmailDefaultadres = string.Empty;
 
         /// <summary>
         /// The time a connection is considered not working.
@@ -285,7 +287,8 @@ namespace NoteFly
         public static int NetworkConnectionTimeout = 8000;
 
         /// <summary>
-        /// Force to use of IPv6
+        /// Force to use of IPv6.
+        /// Will use ipv6.notefly.org for update checking.
         /// </summary>
         public static bool NetworkConnectionForceipv6 = false;
 
@@ -317,9 +320,9 @@ namespace NoteFly
         public static string UpdatecheckURL = "http://update.notefly.org/latestversion.xml";
 
         /// <summary>
-        /// The keyserver used to get the public key of NoteFly.
+        /// The keyserver used to get the public key of NoteFly the first time.
         /// </summary>
-        public static string UpdatecheckGPGKeyserver = "http://www.notefly.org/downloads/";
+        public static string UpdatecheckGPGKeyserver = string.Empty;
 
         /// <summary>
         /// Use GnuGP to verif the downloaded update.

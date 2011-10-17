@@ -126,12 +126,23 @@ namespace NoteFly
         #region Methods (21)
 
         /// <summary>
-        /// Add a new note the the notes list.
+        /// Add a new default note to the notes list
         /// </summary>
-        /// <param name="note">The note to be added.</param>
-        public void AddNote(Note note)
+        /// <param name="title">The title the note.</param>
+        /// <param name="skinnr">The skinnr</param>
+        /// <param name="x">The X location of the note.</param>
+        /// <param name="y">The Y location of the note.</param>
+        /// <param name="width">The width of the note.</param>
+        /// <param name="height">The height of the note.</param>
+        public void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content)
         {
-            this.notes.Add(note);
+            Note note = this.CreateNoteDefaultSettings(title, skinnr, x, y, width, height);
+            if (note != null)
+            {
+                this.AddNote(note);
+                xmlUtil.WriteNote(note, this.GetSkinName(skinnr), content);
+                note.CreateForm(false);
+            }
         }
 
         /// <summary>
@@ -165,15 +176,15 @@ namespace NoteFly
         /// <param name="width">Width of the note</param>
         /// <param name="height">Height of the note</param>
         /// <returns>Note object</returns>
-        public Note CreateDefaultNote(string title, int skinnr, int x, int y, int width, int height)
+        public Note CreateNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height)
         {
-            Note newnote = new Note(this, this.GetNoteFilename(title));
+            Note newnote = new Note(this, this.GetNoteFilename(title)); // set filename based on title
+            newnote.Locked = false; // default
+            newnote.RolledUp = false; // default
+            newnote.Ontop = false; // default
+            newnote.Visible = true; // default            
             newnote.Title = title;
-            newnote.SkinNr = skinnr;
-            newnote.Visible = true;
-            newnote.Locked = false;
-            newnote.RolledUp = false;
-            newnote.Ontop = false;
+            newnote.SkinNr = skinnr;  
             newnote.X = x;
             newnote.Y = y;
             newnote.Width = width;
@@ -276,7 +287,7 @@ namespace NoteFly
         public Bitmap GetPrimaryTexture(int skinnr)
         {
             Bitmap bitmaptexture = null;
-            if (!String.IsNullOrEmpty(this.skins[skinnr].PrimaryTexture))
+            if (!string.IsNullOrEmpty(this.skins[skinnr].PrimaryTexture))
             {
                 bitmaptexture = new Bitmap(this.skins[skinnr].PrimaryTexture);
             }
@@ -491,6 +502,61 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Get the primary texture full file path.
+        /// </summary>
+        /// <param name="skinnr">The skin position</param>
+        /// <returns>The full file path the texture file.</returns>
+        public string GetPrimaryTextureFile(int skinnr)
+        {
+            return this.skins[skinnr].PrimaryTexture;
+        }
+
+        /// <summary>
+        /// Gets the notes save directory.
+        /// </summary>
+        /// <returns>The directory where notes are saved.</returns>
+        public string GetNotesSavepath()
+        {
+            return Settings.NotesSavepath;
+        }
+
+        /// <summary>
+        /// Gets the full file path to the settings file.
+        /// </summary>
+        /// <returns>Settings file</returns>
+        public string GetSettingsFile()
+        {
+            return Path.Combine(Program.AppDataFolder, xmlUtil.SETTINGSFILE);
+        }
+
+        /// <summary>
+        /// Gets the skins file path skins file.
+        /// </summary>
+        /// <returns>The skins file full path.</returns>
+        public string GetSkinsFile()
+        {
+            return Path.Combine(Program.AppDataFolder, xmlUtil.SKINFILE);
+        }
+
+        /// <summary>
+        /// Log plugin info.
+        /// </summary>
+        /// <param name="infomsg">Info message</param>
+        public void LogPluginInfo(string infomsg)
+        {
+            Log.Write(LogType.info, "plugin, " + infomsg);
+        }
+
+        /// <summary>
+        /// Log plugin error.
+        /// </summary>
+        /// <param name="errormsg">Error message</param>
+        public void LogPluginError(string errormsg)
+        {
+            Log.Write(LogType.error, "plugin, " + errormsg);
+        }
+
+        /// <summary>
         /// Ask and import notes from NoteFly 1.0.x if application data folder of NoteFly 1.0.x exist.
         /// </summary>
         private void ImportingNotesNoteFly1()
@@ -620,7 +686,7 @@ namespace NoteFly
             int noteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (DEMONOTEWIDTH / 2);
             int noteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (DEMONOTEHEIGHT / 2);
             string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
-            Note demonote = this.CreateDefaultNote(Program.AssemblyTitle + " " + Program.AssemblyVersionAsString, 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT);
+            Note demonote = this.CreateNoteDefaultSettings(Program.AssemblyTitle + " " + Program.AssemblyVersionAsString, 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT);
             xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
             this.AddNote(demonote);
             demonote.CreateForm(true);
@@ -651,36 +717,14 @@ namespace NoteFly
             return Color.White;
         }
 
-        public string GetPrimaryTextureFile(int skinnr)
+        /// <summary>
+        /// Add a new note the the notes list.
+        /// </summary>
+        /// <param name="note">The note to be added.</param>
+        private void AddNote(Note note)
         {
-            return this.skins[skinnr].PrimaryTexture;
+            this.notes.Add(note);
         }
-
-        public string GetNotesSavepath()
-        {
-            return Settings.NotesSavepath;
-        }
-
-        public string GetSettingsFile()
-        {
-            return Path.Combine(Program.AppDataFolder, xmlUtil.SETTINGSFILE);
-        }
-
-        public string GetSkinsFile()
-        {
-            return Path.Combine(Program.AppDataFolder, xmlUtil.SKINFILE);
-        }
-
-        public void LogPluginInfo(string infomsg)
-        {
-            Log.Write(LogType.info, "plugin, "+infomsg);
-        }
-
-        public void LogPluginError(string errormsg)
-        {
-            Log.Write(LogType.error, "plugin, "+errormsg);
-        }
-        
 
         #endregion Methods
     }

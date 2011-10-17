@@ -73,6 +73,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="notes">notes class</param>
         /// <param name="note">note data class.</param>
+        /// <param name="wordwrap">set word warp enabled</param>
         public FrmNote(Notes notes, Note note, bool wordwrap)
         {
             this.InitializeComponent();
@@ -203,7 +204,7 @@ namespace NoteFly
                     this.rtbNote.RightToLeft = RightToLeft.Yes;
                 }
 
-                this.menuSendToEmail.Enabled = Settings.SocialEmailEnabled;
+                this.menuSendToEmail.Enabled = Settings.SharingEmailEnabled;
                 this.toolTip.Active = Settings.NotesTooltipsEnabled;
             }
             else
@@ -370,11 +371,11 @@ namespace NoteFly
             {
                 if (!string.IsNullOrEmpty(emailtitle) && (!string.IsNullOrEmpty(emailnote)))
                 {
-                    System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
+                    System.Diagnostics.Process.Start("mailto:" + Settings.SharingEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
                 }
                 else if (!string.IsNullOrEmpty(emailtitle))
                 {
-                    System.Diagnostics.Process.Start("mailto:" + Settings.SocialEmailDefaultadres + "?subject=" + this.lblTitle.Text);
+                    System.Diagnostics.Process.Start("mailto:" + Settings.SharingEmailDefaultadres + "?subject=" + this.lblTitle.Text);
                 }
                 else
                 {

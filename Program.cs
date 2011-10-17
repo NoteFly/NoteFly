@@ -240,12 +240,7 @@ namespace NoteFly
                             Settings.HighlightHTML = false;
                             Settings.HighlightPHP = false;
                             Settings.HighlightSQL = false;
-                            break;
-
-                        // Turn off all social functions on startup.
-                        case "-disablesocial":
-                            Settings.SocialEmailEnabled = false;
-                            break;
+                            break;      
 
                         // Turn off loading of plugins
                         case "-disableplugins":

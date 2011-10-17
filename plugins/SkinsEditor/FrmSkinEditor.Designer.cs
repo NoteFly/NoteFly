@@ -1,7 +1,34 @@
 ﻿namespace SkinsEditor
 {
-    partial class FrmSkinEditor
+    public partial class FrmSkinEditor
     {
+        private System.Windows.Forms.ListBox lbxSkins;
+        private System.Windows.Forms.Label lbTextSkins;
+        private System.Windows.Forms.Label lbTextSkinname;
+        private System.Windows.Forms.TextBox tbSkinName;
+        private System.Windows.Forms.Label lbTextPrimarycolor;
+        private System.Windows.Forms.TextBox tbPrimaryColor;
+        private System.Windows.Forms.Label lbTextSelectingcolor;
+        private System.Windows.Forms.TextBox tbSelectingColor;
+        private System.Windows.Forms.Label lbTextHighlightcolor;
+        private System.Windows.Forms.TextBox tbHighlightingColor;
+        private System.Windows.Forms.ColorDialog colordlg;
+        private System.Windows.Forms.Button btnPickPrimaryColor;
+        private System.Windows.Forms.Button btnPickSelectingColor;
+        private System.Windows.Forms.Button btnPickHighlightColor;
+        private System.Windows.Forms.Label lbTextTextcolor;
+        private System.Windows.Forms.TextBox tbTextColor;
+        private System.Windows.Forms.Button btnPickTextColor;
+        private System.Windows.Forms.Button btnSaveSkin;
+        private System.Windows.Forms.Button btnNewSkin;
+        private System.Windows.Forms.Button btnEditskin;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Panel pnlClrText;
+        private System.Windows.Forms.Panel pnlClrHighlight;
+        private System.Windows.Forms.Panel pnlClrSelecting;
+        private System.Windows.Forms.Panel pnlClrPrimary;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -15,7 +42,7 @@
         {
             if (disposing && (components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -29,20 +56,20 @@
         private void InitializeComponent()
         {
             this.lbxSkins = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lbTextSkins = new System.Windows.Forms.Label();
+            this.lbTextSkinname = new System.Windows.Forms.Label();
             this.tbSkinName = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lbTextPrimarycolor = new System.Windows.Forms.Label();
             this.tbPrimaryColor = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lbTextSelectingcolor = new System.Windows.Forms.Label();
             this.tbSelectingColor = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lbTextHighlightcolor = new System.Windows.Forms.Label();
             this.tbHighlightingColor = new System.Windows.Forms.TextBox();
             this.colordlg = new System.Windows.Forms.ColorDialog();
             this.btnPickPrimaryColor = new System.Windows.Forms.Button();
             this.btnPickSelectingColor = new System.Windows.Forms.Button();
             this.btnPickHighlightColor = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lbTextTextcolor = new System.Windows.Forms.Label();
             this.tbTextColor = new System.Windows.Forms.TextBox();
             this.btnPickTextColor = new System.Windows.Forms.Button();
             this.btnSaveSkin = new System.Windows.Forms.Button();
@@ -71,24 +98,24 @@
             this.lbxSkins.TabIndex = 1;
             this.lbxSkins.SelectedIndexChanged += new System.EventHandler(this.lbxSkins_SelectedIndexChanged);
             // 
-            // label1
+            // lbTextSkins
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 17);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Skins:";
-            this.label1.UseCompatibleTextRendering = true;
+            this.lbTextSkins.AutoSize = true;
+            this.lbTextSkins.Location = new System.Drawing.Point(3, 5);
+            this.lbTextSkins.Name = "lbTextSkins";
+            this.lbTextSkins.Size = new System.Drawing.Size(35, 17);
+            this.lbTextSkins.TabIndex = 2;
+            this.lbTextSkins.Text = "Skins:";
+            this.lbTextSkins.UseCompatibleTextRendering = true;
             // 
-            // label2
+            // lbTextSkinname
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(34, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Skin name:";
+            this.lbTextSkinname.AutoSize = true;
+            this.lbTextSkinname.Location = new System.Drawing.Point(34, 50);
+            this.lbTextSkinname.Name = "lbTextSkinname";
+            this.lbTextSkinname.Size = new System.Drawing.Size(60, 13);
+            this.lbTextSkinname.TabIndex = 3;
+            this.lbTextSkinname.Text = "Skin name:";
             // 
             // tbSkinName
             // 
@@ -100,14 +127,14 @@
             this.tbSkinName.Size = new System.Drawing.Size(120, 22);
             this.tbSkinName.TabIndex = 4;
             // 
-            // label3
+            // lbTextPrimarycolor
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(34, 87);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Primary color:";
+            this.lbTextPrimarycolor.AutoSize = true;
+            this.lbTextPrimarycolor.Location = new System.Drawing.Point(34, 87);
+            this.lbTextPrimarycolor.Name = "lbTextPrimarycolor";
+            this.lbTextPrimarycolor.Size = new System.Drawing.Size(70, 13);
+            this.lbTextPrimarycolor.TabIndex = 5;
+            this.lbTextPrimarycolor.Text = "Primary color:";
             // 
             // tbPrimaryColor
             // 
@@ -121,14 +148,14 @@
             this.tbPrimaryColor.WordWrap = false;
             this.tbPrimaryColor.TextChanged += new System.EventHandler(this.ParserAsPreviewColor);
             // 
-            // label4
+            // lbTextSelectingcolor
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(34, 115);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Selecting color:";
+            this.lbTextSelectingcolor.AutoSize = true;
+            this.lbTextSelectingcolor.Location = new System.Drawing.Point(34, 115);
+            this.lbTextSelectingcolor.Name = "lbTextSelectingcolor";
+            this.lbTextSelectingcolor.Size = new System.Drawing.Size(80, 13);
+            this.lbTextSelectingcolor.TabIndex = 7;
+            this.lbTextSelectingcolor.Text = "Selecting color:";
             // 
             // tbSelectingColor
             // 
@@ -142,14 +169,14 @@
             this.tbSelectingColor.WordWrap = false;
             this.tbSelectingColor.TextChanged += new System.EventHandler(this.ParserAsPreviewColor);
             // 
-            // label5
+            // lbTextHighlightcolor
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(34, 144);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(91, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Highlighting color:";
+            this.lbTextHighlightcolor.AutoSize = true;
+            this.lbTextHighlightcolor.Location = new System.Drawing.Point(34, 144);
+            this.lbTextHighlightcolor.Name = "lbTextHighlightcolor";
+            this.lbTextHighlightcolor.Size = new System.Drawing.Size(91, 13);
+            this.lbTextHighlightcolor.TabIndex = 9;
+            this.lbTextHighlightcolor.Text = "Highlighting color:";
             // 
             // tbHighlightingColor
             // 
@@ -199,14 +226,14 @@
             this.btnPickHighlightColor.UseVisualStyleBackColor = true;
             this.btnPickHighlightColor.Click += new System.EventHandler(this.btnHighlightColor_Click);
             // 
-            // label6
+            // lbTextTextcolor
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(34, 172);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 13);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "Text color:";
+            this.lbTextTextcolor.AutoSize = true;
+            this.lbTextTextcolor.Location = new System.Drawing.Point(34, 172);
+            this.lbTextTextcolor.Name = "lbTextTextcolor";
+            this.lbTextTextcolor.Size = new System.Drawing.Size(57, 13);
+            this.lbTextTextcolor.TabIndex = 14;
+            this.lbTextTextcolor.Text = "Text color:";
             // 
             // tbTextColor
             // 
@@ -291,7 +318,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.lbxSkins);
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.splitContainer1.Panel1.Controls.Add(this.lbTextSkins);
             // 
             // splitContainer1.Panel2
             // 
@@ -300,19 +327,19 @@
             this.splitContainer1.Panel2.Controls.Add(this.pnlClrSelecting);
             this.splitContainer1.Panel2.Controls.Add(this.pnlClrPrimary);
             this.splitContainer1.Panel2.Controls.Add(this.btnClose);
-            this.splitContainer1.Panel2.Controls.Add(this.label2);
+            this.splitContainer1.Panel2.Controls.Add(this.lbTextSkinname);
             this.splitContainer1.Panel2.Controls.Add(this.btnEditskin);
             this.splitContainer1.Panel2.Controls.Add(this.tbSkinName);
             this.splitContainer1.Panel2.Controls.Add(this.btnNewSkin);
-            this.splitContainer1.Panel2.Controls.Add(this.label3);
+            this.splitContainer1.Panel2.Controls.Add(this.lbTextPrimarycolor);
             this.splitContainer1.Panel2.Controls.Add(this.btnSaveSkin);
             this.splitContainer1.Panel2.Controls.Add(this.tbPrimaryColor);
             this.splitContainer1.Panel2.Controls.Add(this.btnPickTextColor);
-            this.splitContainer1.Panel2.Controls.Add(this.label4);
+            this.splitContainer1.Panel2.Controls.Add(this.lbTextSelectingcolor);
             this.splitContainer1.Panel2.Controls.Add(this.tbTextColor);
             this.splitContainer1.Panel2.Controls.Add(this.tbSelectingColor);
-            this.splitContainer1.Panel2.Controls.Add(this.label6);
-            this.splitContainer1.Panel2.Controls.Add(this.label5);
+            this.splitContainer1.Panel2.Controls.Add(this.lbTextTextcolor);
+            this.splitContainer1.Panel2.Controls.Add(this.lbTextHighlightcolor);
             this.splitContainer1.Panel2.Controls.Add(this.btnPickHighlightColor);
             this.splitContainer1.Panel2.Controls.Add(this.tbHighlightingColor);
             this.splitContainer1.Panel2.Controls.Add(this.btnPickSelectingColor);
@@ -376,32 +403,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox lbxSkins;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbSkinName;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbPrimaryColor;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tbSelectingColor;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbHighlightingColor;
-        private System.Windows.Forms.ColorDialog colordlg;
-        private System.Windows.Forms.Button btnPickPrimaryColor;
-        private System.Windows.Forms.Button btnPickSelectingColor;
-        private System.Windows.Forms.Button btnPickHighlightColor;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox tbTextColor;
-        private System.Windows.Forms.Button btnPickTextColor;
-        private System.Windows.Forms.Button btnSaveSkin;
-        private System.Windows.Forms.Button btnNewSkin;
-        private System.Windows.Forms.Button btnEditskin;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel pnlClrText;
-        private System.Windows.Forms.Panel pnlClrHighlight;
-        private System.Windows.Forms.Panel pnlClrSelecting;
-        private System.Windows.Forms.Panel pnlClrPrimary;
     }
 }

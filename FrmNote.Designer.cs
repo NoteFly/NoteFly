@@ -243,7 +243,7 @@ namespace NoteFly
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 224);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -427,7 +427,7 @@ namespace NoteFly
             this.rtbNote.Size = new System.Drawing.Size(224, 191);
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
-            this.rtbNote.Text = "";
+            this.rtbNote.Text = string.Empty;
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             // 
             // pbResizeGrip

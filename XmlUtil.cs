@@ -34,6 +34,11 @@ namespace NoteFly
         #region Fields (5)
 
         /// <summary>
+        /// Skin file.
+        /// </summary>
+        public const string SKINFILE = "skins.xml";
+
+        /// <summary>
         /// The note version
         /// </summary>
         private const string NOTEVERSION = "2";
@@ -42,11 +47,6 @@ namespace NoteFly
         /// Settings file.
         /// </summary>
         public const string SETTINGSFILE = "settings.xml";
-
-        /// <summary>
-        /// Skin file.
-        /// </summary>
-        public const string SKINFILE = "skins.xml";
 
         /// <summary>
         /// XmlTextReader object.
@@ -208,7 +208,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(settingsfilepath);
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
-                xmlread.ProhibitDtd = true; // gives decreated warning in vs2010.
+                xmlread.ProhibitDtd = true; // TODO gives decreated warning in vs2010.
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)
@@ -277,8 +277,11 @@ namespace NoteFly
                         case "ProgramSuspressWarnAdmin":
                             Settings.ProgramSuspressWarnAdmin = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "SocialEmailEnabled":
-                            Settings.SocialEmailEnabled = xmlread.ReadElementContentAsBoolean();
+                        case "SharingEmailEnabled":
+                            Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "SocialEmailEnabled": // TODO: legacy setting, only read, to be removed in NoteFly 2.5.0>
+                            Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "TrayiconAlternateIcon":
                             Settings.TrayiconAlternateIcon = xmlread.ReadElementContentAsBoolean();
@@ -343,7 +346,7 @@ namespace NoteFly
                             Settings.SettingsLastTab = xmlread.ReadElementContentAsInt();
                             break;
 
-                        // strings (put at bottom in the settings file for more performance because then there are less characters to compare&skip)
+                        // strings
                         case "HighlightHTMLColorComment":
                             Settings.HighlightHTMLColorComment = xmlread.ReadElementContentAsString();
                             break;
@@ -389,6 +392,12 @@ namespace NoteFly
                         case "FontTitleFamily":
                             Settings.FontTitleFamily = xmlread.ReadElementContentAsString();
                             break;
+                        case "SocialEmailDefaultadres": // TODO: legacy setting, only read, to be removed in NoteFly 2.5.0>
+                            Settings.SharingEmailDefaultadres = xmlread.ReadElementContentAsString();
+                            break;
+                        case "SharingEmailDefaultadres":
+                            Settings.SharingEmailDefaultadres = xmlread.ReadElementContentAsString();
+                            break;                                                                        
                         case "NetworkProxyAddress":
                             Settings.NetworkProxyAddress = xmlread.ReadElementContentAsString();
                             break;
@@ -436,7 +445,7 @@ namespace NoteFly
             string skinfilepath = Path.Combine(Program.AppDataFolder, SKINFILE);
             if (!File.Exists(skinfilepath))
             {
-                Log.Write(LogType.info, "writing default skins.xml");
+                Log.Write(LogType.info, "Writing default skins.xml");
                 WriteDefaultSkins(skinfilepath);
             }
 
@@ -624,8 +633,8 @@ namespace NoteFly
             Settings.ProgramPluginsFolder = Path.Combine(Program.InstallFolder, "plugins");
             Settings.SettingsLastTab = 0;
             Settings.SettingsExpertEnabled = false;
-            Settings.SocialEmailEnabled = true;
-            Settings.SocialEmailDefaultadres = string.Empty;
+            Settings.SharingEmailEnabled = true;
+            Settings.SharingEmailDefaultadres = string.Empty;
             Settings.TrayiconAlternateIcon = false;
             Settings.TrayiconFontsize = 8.25f;
             Settings.TrayiconLeftclickaction = 1;
@@ -825,7 +834,7 @@ namespace NoteFly
                 WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
                 WriteXMLBool("ProgramPluginsAllEnabled", Settings.ProgramPluginsAllEnabled);
                 WriteXMLBool("ProgramSuspressWarnAdmin", Settings.ProgramSuspressWarnAdmin);
-                WriteXMLBool("SocialEmailEnabled", Settings.SocialEmailEnabled);
+                WriteXMLBool("SharingEmailEnabled", Settings.SharingEmailEnabled);
                 WriteXMLBool("TrayiconAlternateIcon", Settings.TrayiconAlternateIcon);
                 WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
                 WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
@@ -869,7 +878,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("ProgramPluginsFolder", Settings.ProgramPluginsFolder);
                 xmlwrite.WriteElementString("ProgramPluginsEnabled", Settings.ProgramPluginsEnabled);
                 xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
-                xmlwrite.WriteElementString("SocialEmailDefaultadres", Settings.SocialEmailDefaultadres);
+                xmlwrite.WriteElementString("SharingEmailDefaultadres", Settings.SharingEmailDefaultadres);
                 xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
                 xmlwrite.WriteEndElement();
                 xmlwrite.WriteEndDocument();

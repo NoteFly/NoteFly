@@ -222,11 +222,11 @@ namespace NoteFly
                 Settings.HighlightSQL = this.chxHighlightSQL.Checked;
 
                 // tab: Sharing
-                Settings.SocialEmailEnabled = this.chxSocialEmailEnabled.Checked;
-                Settings.SocialEmailDefaultadres = string.Empty;
+                Settings.SharingEmailEnabled = this.chxSocialEmailEnabled.Checked;
+                Settings.SharingEmailDefaultadres = string.Empty;
                 if (this.chxSocialEmailDefaultaddressSet.Checked)
                 {
-                    Settings.SocialEmailDefaultadres = this.tbDefaultEmail.Text;
+                    Settings.SharingEmailDefaultadres = this.tbDefaultEmail.Text;
                 }
 
                 // tab: Network
@@ -507,11 +507,11 @@ namespace NoteFly
             this.chxHighlightPHP.Checked = Settings.HighlightPHP;
             this.chxHighlightSQL.Checked = Settings.HighlightSQL;
 
-            // tab: social networks
-            this.tbDefaultEmail.Text = Settings.SocialEmailDefaultadres;
-            this.chxSocialEmailEnabled.Checked = Settings.SocialEmailEnabled;
+            // tab: Sharing
+            this.tbDefaultEmail.Text = Settings.SharingEmailDefaultadres;
+            this.chxSocialEmailEnabled.Checked = Settings.SharingEmailEnabled;
             this.chxSocialEmailDefaultaddressSet.Checked = false;
-            if (!string.IsNullOrEmpty(Settings.SocialEmailDefaultadres))
+            if (!string.IsNullOrEmpty(Settings.SharingEmailDefaultadres))
             {
                 this.chxSocialEmailDefaultaddressSet.Checked = true;
             }
