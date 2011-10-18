@@ -141,7 +141,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Try to find the path to gpg.exe or gpg on linux
+        /// Try to find the path to gpg.exe or gpg.
         /// </summary>
         /// <returns>The full path to GnuPG process</returns>
         public string GetGPGPath()
@@ -166,7 +166,7 @@ namespace NoteFly
                 }
             }
 #elif linux
-            gpgpath = "gpg";
+			gpgpath = FindGPGexecutables("usr/bin/");
 #endif
 
             return gpgpath;
@@ -237,7 +237,6 @@ namespace NoteFly
         private void GetGPGNoteFlyPublicKey()
         {
             // fingerprint should be: 9968 3F36 7B60 4F21 ED55 A0CC 7898 7488 B43F 047E
-            string gpgspeckeyserver = string.Empty;
             StringBuilder gpgrecvkeycommand = new StringBuilder(Settings.UpdatecheckGPGPath);
             gpgrecvkeycommand.Append(" --recv-keys 2F9532C8");
             if (!string.IsNullOrEmpty(Settings.UpdatecheckGPGKeyserver.Trim()))

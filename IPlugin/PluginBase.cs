@@ -73,6 +73,20 @@ namespace IPlugin
             }
         }
 
+        /// <summary>
+        /// Gets the plugin filename.
+        /// </summary>
+        public virtual string UpdateURL
+        {
+            get
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Interface to let the plugin talk to NoteFly.
+        /// </summary>
         public IPluginHost Host
         {
             get

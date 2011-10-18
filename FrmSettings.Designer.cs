@@ -506,14 +506,11 @@ namespace NoteFly
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
-            this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.chxNotesDeleteRecyclebin = new System.Windows.Forms.CheckBox();
             this.chxConfirmDeletenote = new System.Windows.Forms.CheckBox();
             this.cbxActionLeftclick = new System.Windows.Forms.ComboBox();
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
-#if windows
             this.chxStartOnLogin = new System.Windows.Forms.CheckBox();
-#endif
             this.lblTextActionLeftClicktTrayicon = new System.Windows.Forms.Label();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabAppearanceColors = new System.Windows.Forms.TabControl();
@@ -540,6 +537,7 @@ namespace NoteFly
             this.lblTextNoteFont = new System.Windows.Forms.Label();
             this.cbxFontNoteContent = new System.Windows.Forms.ComboBox();
             this.tabPageTrayicon = new System.Windows.Forms.TabPage();
+            this.chxUseAlternativeTrayicon = new System.Windows.Forms.CheckBox();
             this.lblFontsizePoints = new System.Windows.Forms.Label();
             this.lblTextFontsizeMenu = new System.Windows.Forms.Label();
             this.numTrayiconFontsize = new System.Windows.Forms.NumericUpDown();
@@ -592,9 +590,9 @@ namespace NoteFly
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tbNotesSavePath = new System.Windows.Forms.TextBox();
+            this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
-            this.chxUseAlternativeTrayicon = new System.Windows.Forms.CheckBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -670,14 +668,11 @@ namespace NoteFly
             // 
             // tabGeneral
             // 
-            this.tabGeneral.Controls.Add(this.chxSettingsExpertEnabled);
             this.tabGeneral.Controls.Add(this.chxNotesDeleteRecyclebin);
             this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
-#if windows
             this.tabGeneral.Controls.Add(this.chxStartOnLogin);
-#endif
             this.tabGeneral.Controls.Add(this.lblTextActionLeftClicktTrayicon);
             this.tabGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabGeneral.Name = "tabGeneral";
@@ -687,24 +682,10 @@ namespace NoteFly
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
-            // chxSettingsExpertEnabled
-            // 
-            this.chxSettingsExpertEnabled.AutoSize = true;
-            this.chxSettingsExpertEnabled.Checked = true;
-            this.chxSettingsExpertEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxSettingsExpertEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(21, 27);
-            this.chxSettingsExpertEnabled.Name = "chxSettingsExpertEnabled";
-            this.chxSettingsExpertEnabled.Size = new System.Drawing.Size(144, 17);
-            this.chxSettingsExpertEnabled.TabIndex = 25;
-            this.chxSettingsExpertEnabled.Text = "Show e&xpert settings";
-            this.chxSettingsExpertEnabled.UseVisualStyleBackColor = true;
-            this.chxSettingsExpertEnabled.CheckedChanged += new System.EventHandler(this.cbxShowExpertSettings_CheckedChanged);
-            // 
             // chxNotesDeleteRecyclebin
             // 
             this.chxNotesDeleteRecyclebin.AutoSize = true;
-            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(21, 119);
+            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(21, 94);
             this.chxNotesDeleteRecyclebin.Name = "chxNotesDeleteRecyclebin";
             this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(189, 17);
             this.chxNotesDeleteRecyclebin.TabIndex = 24;
@@ -716,7 +697,7 @@ namespace NoteFly
             this.chxConfirmDeletenote.AutoSize = true;
             this.chxConfirmDeletenote.Checked = true;
             this.chxConfirmDeletenote.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxConfirmDeletenote.Location = new System.Drawing.Point(21, 96);
+            this.chxConfirmDeletenote.Location = new System.Drawing.Point(21, 71);
             this.chxConfirmDeletenote.Name = "chxConfirmDeletenote";
             this.chxConfirmDeletenote.Size = new System.Drawing.Size(133, 17);
             this.chxConfirmDeletenote.TabIndex = 23;
@@ -737,7 +718,7 @@ namespace NoteFly
             "Do nothing",
             "Bring notes to front",
             "Create a new note"});
-            this.cbxActionLeftclick.Location = new System.Drawing.Point(152, 160);
+            this.cbxActionLeftclick.Location = new System.Drawing.Point(150, 145);
             this.cbxActionLeftclick.Name = "cbxActionLeftclick";
             this.cbxActionLeftclick.Size = new System.Drawing.Size(163, 21);
             this.cbxActionLeftclick.TabIndex = 16;
@@ -745,29 +726,27 @@ namespace NoteFly
             // chxConfirmExit
             // 
             this.chxConfirmExit.AutoSize = true;
-            this.chxConfirmExit.Location = new System.Drawing.Point(21, 73);
+            this.chxConfirmExit.Location = new System.Drawing.Point(21, 48);
             this.chxConfirmExit.Name = "chxConfirmExit";
             this.chxConfirmExit.Size = new System.Drawing.Size(161, 17);
             this.chxConfirmExit.TabIndex = 20;
             this.chxConfirmExit.Text = "Confirm shutdown of NoteFly";
             this.chxConfirmExit.UseVisualStyleBackColor = true;
-#if windows
             // 
             // chxStartOnLogin
             // 
             this.chxStartOnLogin.AutoSize = true;
-            this.chxStartOnLogin.Location = new System.Drawing.Point(21, 50);
+            this.chxStartOnLogin.Location = new System.Drawing.Point(21, 25);
             this.chxStartOnLogin.Name = "chxStartOnLogin";
             this.chxStartOnLogin.Size = new System.Drawing.Size(134, 17);
             this.chxStartOnLogin.TabIndex = 10;
             this.chxStartOnLogin.Text = "Start NoteFly on logon.";
             this.chxStartOnLogin.UseVisualStyleBackColor = true;
-#endif
             // 
             // lblTextActionLeftClicktTrayicon
             // 
             this.lblTextActionLeftClicktTrayicon.AutoSize = true;
-            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(18, 163);
+            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(18, 148);
             this.lblTextActionLeftClicktTrayicon.Name = "lblTextActionLeftClicktTrayicon";
             this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(122, 13);
             this.lblTextActionLeftClicktTrayicon.TabIndex = 15;
@@ -1004,7 +983,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = string.Empty;
+            this.lblTextDirection.AccessibleDescription = "";
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.Location = new System.Drawing.Point(50, 183);
@@ -1105,6 +1084,16 @@ namespace NoteFly
             this.tabPageTrayicon.TabIndex = 2;
             this.tabPageTrayicon.Text = "Trayicon";
             this.tabPageTrayicon.UseVisualStyleBackColor = true;
+            // 
+            // chxUseAlternativeTrayicon
+            // 
+            this.chxUseAlternativeTrayicon.AutoSize = true;
+            this.chxUseAlternativeTrayicon.Location = new System.Drawing.Point(26, 164);
+            this.chxUseAlternativeTrayicon.Name = "chxUseAlternativeTrayicon";
+            this.chxUseAlternativeTrayicon.Size = new System.Drawing.Size(168, 17);
+            this.chxUseAlternativeTrayicon.TabIndex = 7;
+            this.chxUseAlternativeTrayicon.Text = "Use alternative white trayicon.";
+            this.chxUseAlternativeTrayicon.UseVisualStyleBackColor = true;
             // 
             // lblFontsizePoints
             // 
@@ -1719,6 +1708,20 @@ namespace NoteFly
             this.tbNotesSavePath.Size = new System.Drawing.Size(290, 20);
             this.tbNotesSavePath.TabIndex = 14;
             // 
+            // chxSettingsExpertEnabled
+            // 
+            this.chxSettingsExpertEnabled.AutoSize = true;
+            this.chxSettingsExpertEnabled.Checked = true;
+            this.chxSettingsExpertEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxSettingsExpertEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(25, 312);
+            this.chxSettingsExpertEnabled.Name = "chxSettingsExpertEnabled";
+            this.chxSettingsExpertEnabled.Size = new System.Drawing.Size(106, 19);
+            this.chxSettingsExpertEnabled.TabIndex = 25;
+            this.chxSettingsExpertEnabled.Text = "E&xpert settings";
+            this.chxSettingsExpertEnabled.UseVisualStyleBackColor = true;
+            this.chxSettingsExpertEnabled.CheckedChanged += new System.EventHandler(this.cbxShowExpertSettings_CheckedChanged);
+            // 
             // folderBrowseDialogNotessavepath
             // 
             this.folderBrowseDialogNotessavepath.Description = "Select a folder to store the all the notes files in";
@@ -1731,22 +1734,13 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
-            // chxUseAlternativeTrayicon
-            // 
-            this.chxUseAlternativeTrayicon.AutoSize = true;
-            this.chxUseAlternativeTrayicon.Location = new System.Drawing.Point(26, 164);
-            this.chxUseAlternativeTrayicon.Name = "chxUseAlternativeTrayicon";
-            this.chxUseAlternativeTrayicon.Size = new System.Drawing.Size(168, 17);
-            this.chxUseAlternativeTrayicon.TabIndex = 7;
-            this.chxUseAlternativeTrayicon.Text = "Use alternative white trayicon.";
-            this.chxUseAlternativeTrayicon.UseVisualStyleBackColor = true;
-            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(377, 339);
+            this.Controls.Add(this.chxSettingsExpertEnabled);
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -1793,6 +1787,7 @@ namespace NoteFly
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

@@ -384,7 +384,11 @@ namespace NoteFly
                             Settings.ProgramLastrunVersion = xmlread.ReadElementContentAsString();
                             break;
                         case "ProgramPluginsFolder":
-                            Settings.ProgramPluginsFolder = xmlread.ReadElementContentAsString();
+                            string readpluginfolder = xmlread.ReadElementContentAsString();
+                            if (Directory.Exists(readpluginfolder))
+                            {
+                                Settings.ProgramPluginsFolder = Path.GetFullPath(readpluginfolder);
+                            }
                             break;
                         case "ProgramPluginsEnabled":
                             Settings.ProgramPluginsEnabled = xmlread.ReadElementContentAsString();
@@ -397,7 +401,7 @@ namespace NoteFly
                             break;
                         case "SharingEmailDefaultadres":
                             Settings.SharingEmailDefaultadres = xmlread.ReadElementContentAsString();
-                            break;                                                                        
+                            break;
                         case "NetworkProxyAddress":
                             Settings.NetworkProxyAddress = xmlread.ReadElementContentAsString();
                             break;
@@ -1260,7 +1264,7 @@ namespace NoteFly
                             xmlwrite.WriteAttributeString("texturelayout", textureslayout[i]);
                         }
                     }
-                    
+
                     xmlwrite.WriteString("#" + primaryclr[i]);
                     xmlwrite.WriteEndElement();
                     xmlwrite.WriteElementString("SelectClr", "#" + selectclr[i]);

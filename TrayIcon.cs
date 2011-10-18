@@ -120,7 +120,6 @@ namespace NoteFly
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.icon = new NotifyIcon(this.components);
             this.icon.ContextMenuStrip = this.menuTrayIcon;
-            Assembly assembly = Assembly.GetExecutingAssembly();
             if (Settings.TrayiconAlternateIcon) 
             {
                 this.icon.Icon = new Icon(NoteFly.Properties.Resources.trayicon_white, NoteFly.Properties.Resources.trayicon_white.Size);
@@ -231,7 +230,7 @@ namespace NoteFly
             // Show balloontip on firstrun about trayicon how to access notefly functions.
             if (!Settings.ProgramFirstrun)
             {
-                this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, "You can access " + Program.AssemblyTitle + " functions via this trayicon.", ToolTipIcon.Info);
+                this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, "You can access " + Program.AssemblyTitle + " functions with this trayicon.", ToolTipIcon.Info);
             }
         }
 

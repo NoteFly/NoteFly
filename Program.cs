@@ -66,7 +66,14 @@ namespace NoteFly
 #if windows
                 return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly2");
 #elif linux
-                return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
+                if (System.Environment.GetEnvironmentVariable("HOME") != null)
+                {
+                    return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
+                }
+                else
+                {
+                    throw new ApplicationException("Can't find home folder for storing notefly settings.\nRunning on wrong platform?");
+                }
 #elif macos
                 return "???";
 #else
@@ -116,7 +123,7 @@ namespace NoteFly
         {
             get
             {
-                return "rc1";
+                return "rc2";
             }
         }
 
@@ -184,7 +191,7 @@ namespace NoteFly
              * NoteFly uses APPDATA and TEMP variables and systemroot.
              * Systemroot is required by the LinkLabel control.
              * Plugins should not use these environment variables
-             */
+            */
 #if windows
             SetDllDirectory(string.Empty);                                     // removes notefly current working directory as ddl search path
             Environment.SetEnvironmentVariable("PATH", string.Empty);          // removes dangourse %PATH% as dll search path
@@ -194,6 +201,7 @@ namespace NoteFly
             Environment.SetEnvironmentVariable("USERPROFILE", string.Empty);   // removes %USERPROFILE%
             Environment.SetEnvironmentVariable("TMP", string.Empty);           // removes %TMP%, Do not remove %TEMP% NoteFly needs this for logging if appdata is wrong.
 #endif
+
 #if DEBUG
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -329,7 +337,9 @@ namespace NoteFly
 
             if (visualstyle)
             {
+#if windows
                 System.Windows.Forms.Application.EnableVisualStyles();
+#endif
             }
 
             if (Program.CheckInstancesRunning() > 1)
@@ -343,14 +353,12 @@ namespace NoteFly
 
             SyntaxHighlight.InitHighlighter();
             notes = new Notes(resetpositions);
-
             if (Settings.ProgramPluginsAllEnabled)
             {
                 Program.pluginsenabled = GetPlugins(true);
             }
 
             trayicon = new TrayIcon(notes);
-
             if (!Settings.ProgramFirstrun)
             {
                 // disable the firstrun the next time.

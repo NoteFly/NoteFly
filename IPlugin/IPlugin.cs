@@ -28,7 +28,7 @@ namespace IPlugin
     /// <summary>
     /// Plugin interface
     /// status: DRAFT (Subject to change)
-    /// revision: 4
+    /// revision: 5
     /// </summary>
     public interface IPlugin
     {
@@ -41,6 +41,12 @@ namespace IPlugin
         /// Gets the filename of this plugin.
         /// </summary>
         string Filename { get; }
+
+        /// <summary>
+        /// The url where to get a xml file to see 
+        /// if this plugin is the latest version.
+        /// </summary>
+        string UpdateURL { get; }
 
         /// <summary>
         /// Set the host
