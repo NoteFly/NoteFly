@@ -25,7 +25,7 @@ namespace IPlugin
     /// <summary>
     /// Plugin interface to NoteFly
     /// status: DRAFT (Subject to change)
-    /// revision: 5
+    /// revision: 6
     /// </summary>
     public interface IPluginHost
     {
@@ -56,7 +56,7 @@ namespace IPlugin
         /// <param name="width">The width of the note.</param>
         /// <param name="height">The height of the note.</param>
         /// <param name="content">The content of the note.</param>
-        void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content);
+        void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool wordwarp);
 
         /// <summary>
         /// Update all notes forms, in case some notefly 

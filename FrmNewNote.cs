@@ -223,42 +223,42 @@ namespace NoteFly
                 if (this.note == null)
                 {
                     // new note
-                    this.note = this.notes.CreateNoteDefaultSettings(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
+                    this.notes.AddNoteDefaultSettings(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height, this.rtbNewNote.Rtf, this.rtbNewNote.WordWrap);
+                    //this.note = this.notes.CreateNoteDefaultSettings(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height);
                 }
-
-                this.note.Title = this.tbTitle.Text;
-                this.note.Visible = true;
-
-                if (xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNewNote.Rtf))
+                else
                 {
-                    // write note was succesfull.
-                    if (Program.pluginsenabled != null)
+                    // editing note, update note
+                    this.note.Title = this.tbTitle.Text;
+                    if (!xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNewNote.Rtf))
                     {
-                        for (int i = 0; i < Program.pluginsenabled.Length; i++)
-                        {
-                            Program.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);
-                        }
+                        const string EXCCANTWRITENOTE = "Could not write note.";
+                        throw new ApplicationException(EXCCANTWRITENOTE);
                     }
 
-                    TrayIcon.Frmneweditnoteopen = false;
                     this.note.Tempcontent = this.rtbNewNote.Rtf;
-                    this.note.CreateForm(this.rtbNewNote.WordWrap);
+                    this.note.Wordwarp = this.rtbNewNote.WordWrap;
+                    this.note.CreateForm();
                     if (this.note.Tempcontent != null)
                     {
                         this.note.Tempcontent = null;
                     }
+                }
 
-                    SyntaxHighlight.DeinitHighlighter();
-                    this.notes.FrmManageNotesNeedUpdate = true;
-                    TrayIcon.RefreshFrmManageNotes();
-                    this.Close();
-                    GC.Collect();
-                }
-                else
+                if (Program.pluginsenabled != null)
                 {
-                    const string EXCCANTWRITENOTE = "Could not write note";
-                    throw new ApplicationException(EXCCANTWRITENOTE);
+                    for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                    {
+                        Program.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);
+                    }
                 }
+
+                TrayIcon.Frmneweditnoteopen = false;
+                SyntaxHighlight.DeinitHighlighter();
+                this.notes.FrmManageNotesNeedUpdate = true;
+                TrayIcon.RefreshFrmManageNotes();
+                this.Close();
+                GC.Collect();
             }
         }
 
@@ -272,7 +272,7 @@ namespace NoteFly
             TrayIcon.Frmneweditnoteopen = false;
             if (this.note != null)
             {
-                this.note.CreateForm(this.rtbNewNote.WordWrap);
+                this.note.CreateForm();
             }
 
             this.Close();
@@ -669,8 +669,8 @@ namespace NoteFly
             while (xmlreader.Read())
             {
                 if (xmlreader.Name == "note-content")
-                {                   
-                    string tomboycontent = xmlreader.ReadInnerXml();                   
+                {
+                    string tomboycontent = xmlreader.ReadInnerXml();
                     bool innode = false;
                     int startnodepos = 0;
                     int startcontentnode = int.MaxValue;
@@ -707,7 +707,7 @@ namespace NoteFly
 
                                 formattype.Add(nodename);
                                 formatstartpos.Add(startcontentnode);
-                                formatlen.Add(this.rtbNewNote.TextLength - startcontentnode);                                
+                                formatlen.Add(this.rtbNewNote.TextLength - startcontentnode);
                             }
                             else
                             {
@@ -717,7 +717,7 @@ namespace NoteFly
                             innode = false;
                         }
                         else if (!innode)
-                        {                            
+                        {
                             this.rtbNewNote.Text = this.rtbNewNote.Text + tomboycontent[i];
                         }
                     }
@@ -754,7 +754,7 @@ namespace NoteFly
                         }
                     }
 
-                    this.rtbNewNote.Select(0, 0);                   
+                    this.rtbNewNote.Select(0, 0);
                 }
             }
         }

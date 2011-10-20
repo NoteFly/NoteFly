@@ -28,7 +28,7 @@ namespace IPlugin
     /// <summary>
     /// Plugin interface
     /// status: DRAFT (Subject to change)
-    /// revision: 5
+    /// revision: 6
     /// </summary>
     public interface IPlugin
     {

@@ -41,7 +41,7 @@ namespace NoteFly
         /// <summary>
         /// The note version
         /// </summary>
-        private const string NOTEVERSION = "2";
+        private const string NOTEVERSION = "3";
 
         /// <summary>
         /// Settings file.
@@ -1188,6 +1188,9 @@ namespace NoteFly
                         case "rollup":
                             note.RolledUp = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "wordwarp":
+                            note.Wordwarp = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "width":
                             note.Width = xmlread.ReadElementContentAsInt();
                             break;
@@ -1331,6 +1334,7 @@ namespace NoteFly
             WriteXMLBool("ontop", note.Ontop);
             WriteXMLBool("locked", note.Locked);
             WriteXMLBool("rollup", note.RolledUp);
+            WriteXMLBool("wordwarp", note.Wordwarp);
             xmlwrite.WriteStartElement("location");
             xmlwrite.WriteElementString("x", note.X.ToString());
             xmlwrite.WriteElementString("y", note.Y.ToString());

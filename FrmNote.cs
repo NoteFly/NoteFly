@@ -73,13 +73,11 @@ namespace NoteFly
         /// </summary>
         /// <param name="notes">notes class</param>
         /// <param name="note">note data class.</param>
-        /// <param name="wordwrap">set word warp enabled</param>
-        public FrmNote(Notes notes, Note note, bool wordwrap)
+        public FrmNote(Notes notes, Note note)
         {
             this.InitializeComponent();
             this.notes = notes;
             this.note = note;
-            this.rtbNote.WordWrap = wordwrap;
             this.UpdateForm(false);
             this.lblTitle.Text = note.Title;
             this.BackColor = notes.GetPrimaryClr(note.SkinNr);
@@ -94,7 +92,6 @@ namespace NoteFly
             }
 
             this.pnlHead.BackColor = Color.Transparent;
-            ////this.pnlHead.BackColor = notes.GetPrimaryClr(note.SkinNr);
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             try
             {
@@ -114,11 +111,11 @@ namespace NoteFly
                 Log.Write(LogType.exception, "note " + note.Filename + ": " + argexc.Message);
             }
 
-            this.TopMost = note.Ontop;
-            this.menuOnTop.Checked = note.Ontop;
-            this.SetBounds(note.X, note.Y, note.Width, note.Height);
+            this.SetTopmostNote();
+            this.SetBounds(note.X, note.Y, note.Width, note.Height);            
             this.SetLockedNote();
             this.SetRollupNote();
+            this.SetWordwarpNote();
             string[] skinnames = notes.GetSkinsNames();
             for (int i = 0; i < skinnames.Length; i++)
             {
@@ -166,7 +163,8 @@ namespace NoteFly
         #region Methods (30)
 
         /// <summary>
-        /// Set some settings
+        /// Set some application wide note settings on this note (fonts, transparency, detect hyperlinks etc.) and
+        /// do full syntax check on the note content again.
         /// </summary>
         /// <param name="contentset">boolean if the note rtf content already set.</param>
         public void UpdateForm(bool contentset)
@@ -454,23 +452,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Lock the note and show a lock.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void menuLockNote_Click(object sender, EventArgs e)
-        {
-            this.note.Locked = !this.note.Locked;
-
-            this.SetLockedNote();
-
-            if (!this.saveWorker.IsBusy)
-            {
-                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
-            }
-        }
-
-        /// <summary>
         /// Copy the selected text in the rtbNote control
         /// </summary>
         /// <param name="sender">Sender object</param>
@@ -579,6 +560,21 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Lock the note and show a lock.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void menuLockNote_Click(object sender, EventArgs e)
+        {
+            this.note.Locked = !this.note.Locked;
+            this.SetLockedNote();
+            if (!this.saveWorker.IsBusy)
+            {
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+        }
+
+        /// <summary>
         /// Requested to rollup or rolldown the note form.
         /// </summary>
         /// <param name="sender">Sender object</param>
@@ -586,9 +582,7 @@ namespace NoteFly
         private void menuRollUp_Click(object sender, EventArgs e)
         {
             this.note.RolledUp = !this.note.RolledUp;
-
             this.SetRollupNote();
-
             if (!this.saveWorker.IsBusy)
             {
                 this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
@@ -603,9 +597,22 @@ namespace NoteFly
         private void menuOnTop_Click(object sender, EventArgs e)
         {
             this.note.Ontop = !this.note.Ontop;
-            this.menuOnTop.Checked = this.note.Ontop;
+            this.SetTopmostNote();
+            if (!this.saveWorker.IsBusy)
+            {
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
+            }
+        }
 
-            this.TopMost = this.note.Ontop;
+        /// <summary>
+        /// Toggle to wrap words in the note content.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void menuWordWrap_Click(object sender, EventArgs e)
+        {
+            this.note.Wordwarp = !this.note.Wordwarp;
+            this.SetWordwarpNote();
             if (!this.saveWorker.IsBusy)
             {
                 this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
@@ -794,6 +801,24 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Set wordwarp of the note content.
+        /// </summary>
+        private void SetWordwarpNote()
+        {
+            this.menuWordWrap.Checked = this.note.Wordwarp;
+            this.rtbNote.WordWrap = this.note.Wordwarp;
+        }
+
+        /// <summary>
+        /// Set note form topmost 
+        /// </summary>
+        private void SetTopmostNote()
+        {
+            this.menuOnTop.Checked = this.note.Ontop;
+            this.TopMost = this.note.Ontop;
+        }
+
+        /// <summary>
         /// Save the note to a file.
         /// </summary>
         /// <param name="sender">Sender object</param>
@@ -832,16 +857,6 @@ namespace NoteFly
                         break;
                 }
             }
-        }
-
-        /// <summary>
-        /// Toggle to wrap words in the note content.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void menuWordWrap_Click(object sender, EventArgs e)
-        {
-            this.rtbNote.WordWrap = this.menuWordWrap.Checked;
         }
 
         /// <summary>

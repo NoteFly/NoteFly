@@ -561,7 +561,7 @@ namespace NoteFly
                             }
 
                             string content = this.RemoveQuotes(parts[poscontent]);
-                            this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, content);
+                            this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, content, true);
                         }
                         else
                         {
@@ -686,7 +686,7 @@ namespace NoteFly
                         {
                             if (line.Contains("\0"))
                             {
-                                this.notes.AddNoteDefaultSettings(notetitles[notenr], Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent.ToString());
+                                this.notes.AddNoteDefaultSettings(notetitles[notenr], Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent.ToString(), true);
 
                                 notecontent = null;
                                 notecontent = new StringBuilder();
@@ -745,7 +745,7 @@ namespace NoteFly
                         int posendcontent = content.IndexOf("]]>");                       
                         string plaincontent = content.Substring(posstartcontent, posendcontent - posstartcontent);
                         string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\f0\\fs20" + plaincontent + "\\par}";
-                        this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent);
+                        this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent, true);
                     }
                 }
             }
@@ -842,7 +842,7 @@ namespace NoteFly
                         }
 
                         this.notes.GetNote(notepos).Tempcontent = tempcontent;
-                        this.notes.GetNote(notepos).CreateForm(true);
+                        this.notes.GetNote(notepos).CreateForm();
                         this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
                     }
                     else
@@ -904,7 +904,7 @@ namespace NoteFly
                 this.dataGridView1.Rows[row].Cells[2].Value = !(bool)this.dataGridView1.Rows[row].Cells[2].Value;
                 if (this.notes.GetNote(notepos).Visible)
                 {
-                    this.notes.GetNote(notepos).CreateForm(true);
+                    this.notes.GetNote(notepos).CreateForm();
                 }
                 else
                 {

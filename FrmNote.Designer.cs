@@ -210,8 +210,8 @@ namespace NoteFly
             this.lblTitle.Size = new System.Drawing.Size(81, 24);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "?";
-            this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lblTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // pnlHead
@@ -226,8 +226,8 @@ namespace NoteFly
             this.pnlHead.Name = "pnlHead";
             this.pnlHead.Size = new System.Drawing.Size(240, 32);
             this.pnlHead.TabIndex = 1;
-            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // menuFrmNoteOptions
@@ -243,7 +243,7 @@ namespace NoteFly
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 224);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -310,9 +310,7 @@ namespace NoteFly
             // 
             // menuWordWrap
             // 
-            this.menuWordWrap.Checked = true;
             this.menuWordWrap.CheckOnClick = true;
-            this.menuWordWrap.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuWordWrap.Name = "menuWordWrap";
             this.menuWordWrap.Size = new System.Drawing.Size(184, 22);
             this.menuWordWrap.Text = "Word wrap";
@@ -427,7 +425,7 @@ namespace NoteFly
             this.rtbNote.Size = new System.Drawing.Size(224, 191);
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
-            this.rtbNote.Text = string.Empty;
+            this.rtbNote.Text = "";
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             // 
             // pbResizeGrip
@@ -480,10 +478,10 @@ namespace NoteFly
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TransparencyKey = System.Drawing.SystemColors.Control;
-            this.Deactivate += new System.EventHandler(this.FrmNote_Deactivate);
             this.Activated += new System.EventHandler(this.FrmNote_Activated);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmNote_FormClosed);
+            this.Deactivate += new System.EventHandler(this.FrmNote_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmNote_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmNote_FormClosed);
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();
             this.menuFrmNoteOptions.ResumeLayout(false);

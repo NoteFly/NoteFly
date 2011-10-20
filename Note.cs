@@ -65,6 +65,11 @@ namespace NoteFly
         private bool rolledUp;
 
         /// <summary>
+        /// Is the note content word warped.
+        /// </summary>
+        private bool wordwarp;
+
+        /// <summary>
         /// The note skin.
         /// </summary>
         private int skinNr;
@@ -207,6 +212,22 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Is the note content word warped.
+        /// </summary>
+        public bool Wordwarp
+        {
+            get
+            {
+                return this.wordwarp;
+            }
+
+            set
+            {
+                this.wordwarp = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the note skin.
         /// </summary>
         public int SkinNr
@@ -339,9 +360,9 @@ namespace NoteFly
         /// visible is set to true.
         /// </summary>
         /// <param name="wordwarp">Are words wordwarped on the content of the note.</param>
-        public void CreateForm(bool wordwarp)
+        public void CreateForm()
         {
-            this.frmnote = new FrmNote(this.notes, this, wordwarp);
+            this.frmnote = new FrmNote(this.notes, this);
             this.visible = true;
             this.frmnote.Show();
             if (Program.pluginsenabled != null)

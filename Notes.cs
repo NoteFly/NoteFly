@@ -134,14 +134,14 @@ namespace NoteFly
         /// <param name="y">The Y location of the note.</param>
         /// <param name="width">The width of the note.</param>
         /// <param name="height">The height of the note.</param>
-        public void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content)
+        public void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool wordwarp)
         {
-            Note note = this.CreateNoteDefaultSettings(title, skinnr, x, y, width, height);
+            Note note = this.CreateNoteDefaultSettings(title, skinnr, x, y, width, height, wordwarp);
             if (note != null)
             {
                 this.AddNote(note);
                 xmlUtil.WriteNote(note, this.GetSkinName(skinnr), content);
-                note.CreateForm(false);
+                note.CreateForm();
             }
         }
 
@@ -167,7 +167,8 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Create a new note object with some default settings.
+        /// Create a new note object with some default settings 
+        /// The default settings are note that can't be changed while editing a note.
         /// </summary>
         /// <param name="title">The title of the note.</param>
         /// <param name="skinnr">The skinnr</param>
@@ -176,13 +177,14 @@ namespace NoteFly
         /// <param name="width">Width of the note</param>
         /// <param name="height">Height of the note</param>
         /// <returns>Note object</returns>
-        public Note CreateNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height)
+        public Note CreateNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, bool wordwarp)
         {
             Note newnote = new Note(this, this.GetNoteFilename(title)); // set filename based on title
             newnote.Locked = false; // default
             newnote.RolledUp = false; // default
             newnote.Ontop = false; // default
             newnote.Visible = true; // default            
+            newnote.Wordwarp = wordwarp;
             newnote.Title = title;
             newnote.SkinNr = skinnr;  
             newnote.X = x;
@@ -429,7 +431,7 @@ namespace NoteFly
                 this.AddNote(note);
                 if (this.notes[i].Visible)
                 {
-                    this.notes[i].CreateForm(true);
+                    this.notes[i].CreateForm();
                 }
             }
 
@@ -686,10 +688,10 @@ namespace NoteFly
             int noteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (DEMONOTEWIDTH / 2);
             int noteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (DEMONOTEHEIGHT / 2);
             string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
-            Note demonote = this.CreateNoteDefaultSettings(Program.AssemblyTitle + " " + Program.AssemblyVersionAsString, 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT);
+            Note demonote = this.CreateNoteDefaultSettings(Program.AssemblyTitle + " " + Program.AssemblyVersionAsString, 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT, true);
             xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
             this.AddNote(demonote);
-            demonote.CreateForm(true);
+            demonote.CreateForm();
             demonote.BringNoteToFront();
         }
 
