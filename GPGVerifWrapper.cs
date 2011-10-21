@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="GPGVerifWrapper.cs" company="GNU">
+// <copyright file="GPGVerifWrapper.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2011  Tom
 //
@@ -54,6 +54,7 @@ namespace NoteFly
         /// Verify a file.
         /// </summary>
         /// <param name="downloadfilepath">The path to the local file that was downloaded</param>
+        /// <returns>True if user allows install.</returns>
         public bool VerifDownload(string downloadfilepath)
         {
             bool allowlaunch = false;
@@ -110,7 +111,7 @@ namespace NoteFly
                 int gpgprocexitcode = this.gpgproc.ExitCode;
                 if (gpgprocexitcode == 0)
                 {
-                    // Currently display GPG result via messagebox..
+                    // Currently display GPG result via messagebox, and user required to press ok to launch install.
                     System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(this.gpgoutput + System.Environment.NewLine + this.gpgerror, Program.AssemblyTitle + " signature check result", System.Windows.Forms.MessageBoxButtons.OKCancel);
                     if (dlgres == System.Windows.Forms.DialogResult.OK)
                     {

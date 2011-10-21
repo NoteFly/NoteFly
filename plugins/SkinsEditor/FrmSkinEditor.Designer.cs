@@ -1,5 +1,8 @@
 ﻿namespace SkinsEditor
 {
+    /// <summary>
+    /// FrmSkinEditor form
+    /// </summary>
     public partial class FrmSkinEditor
     {
         private System.Windows.Forms.ListBox lbxSkins;

@@ -134,6 +134,8 @@ namespace NoteFly
         /// <param name="y">The Y location of the note.</param>
         /// <param name="width">The width of the note.</param>
         /// <param name="height">The height of the note.</param>
+        /// <param name="content">The note rtf content.</param>
+        /// <param name="wordwarp">Is the note content word warped.</param>
         public void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool wordwarp)
         {
             Note note = this.CreateNoteDefaultSettings(title, skinnr, x, y, width, height, wordwarp);
@@ -176,6 +178,7 @@ namespace NoteFly
         /// <param name="y">Y coordinate</param>
         /// <param name="width">Width of the note</param>
         /// <param name="height">Height of the note</param>
+        /// <param name="wordwarp">Is the note content word warped.</param>
         /// <returns>Note object</returns>
         public Note CreateNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, bool wordwarp)
         {

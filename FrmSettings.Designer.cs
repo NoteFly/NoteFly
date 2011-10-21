@@ -983,7 +983,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = "";
+            this.lblTextDirection.AccessibleDescription = string.Empty;
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.Location = new System.Drawing.Point(50, 183);

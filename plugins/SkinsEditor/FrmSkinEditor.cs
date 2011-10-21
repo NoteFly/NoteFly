@@ -21,11 +21,14 @@ namespace SkinsEditor
 {
     using System;
     using System.Drawing;
+    using System.IO;
     using System.Text;
     using System.Windows.Forms;
     using System.Xml;
-    using System.IO;
 
+    /// <summary>
+    /// Skin editor form
+    /// </summary>
     public sealed partial class FrmSkinEditor : Form
     {
         private skineditormode skinaction;
@@ -34,7 +37,7 @@ namespace SkinsEditor
         /// <summary>
         /// Creating a new instance of the FrmSkinsEditor.
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="host">The interface to talk let this plugin talk to NoteFly.</param>
         public FrmSkinEditor(IPlugin.IPluginHost host)
         {
             InitializeComponent();
@@ -43,13 +46,32 @@ namespace SkinsEditor
             this.lbxSkins.Items.AddRange(this.host.GetSkinsNames());
         }
 
-        private enum skineditormode { browseskins, editskin, newskin };
+        /// <summary>
+        /// The current mode of the skin editor.
+        /// </summary>
+        private enum skineditormode {
+
+            /// <summary>
+            /// Selecting/viewing a skin.
+            /// </summary>
+            browseskins, 
+
+            /// <summary>
+            /// A skin is being edited.
+            /// </summary>
+            editskin,
+
+            /// <summary>
+            /// A new skin is created.
+            /// </summary>
+            newskin 
+        }
 
         /// <summary>
         /// Closed the skin editor form.
         /// </summary>
         /// <param name="sender">Sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -58,7 +80,7 @@ namespace SkinsEditor
         /// <summary>
         /// Set a textbox with the selected color from the colordialog.
         /// </summary>
-        /// <param name="tb"></param>
+        /// <param name="tb">The TextBox</param>
         private void SetTbHexcolor(TextBox tb)
         {
             DialogResult dlgres = this.colordlg.ShowDialog();
@@ -71,8 +93,8 @@ namespace SkinsEditor
         /// <summary>
         /// Convert color object to HTML hex color.
         /// </summary>
-        /// <param name="clr"></param>
-        /// <returns></returns>
+        /// <param name="clr">A color object.</param>
+        /// <returns>A HTML hex color as string.</returns>
         private string ClrToHtmlHexClr(Color clr)
         {
             return string.Format("#{0:X2}{1:X2}{2:X2}", clr.R, clr.G, clr.B);
@@ -82,7 +104,7 @@ namespace SkinsEditor
         /// Select primary color.
         /// </summary>
         /// <param name="sender">Sender object</param>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         private void btnPickPrimaryColor_Click(object sender, EventArgs e)
         {
             this.SetTbHexcolor(this.tbPrimaryColor);
@@ -119,7 +141,7 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Fill in fields by from a skin from selected skin position.
         /// </summary>
         /// <param name="skinnr">The skin position</param>
         private void SetFieldBySelectSkin(int skinnr)
@@ -289,7 +311,7 @@ namespace SkinsEditor
         /// <summary>
         /// Writes the skins file to disk to with all NoteFly skins.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true if writing skins file was succesfull.</returns>
         private bool WriteSkinsFile()
         {
             bool succeed = false;
@@ -352,24 +374,25 @@ namespace SkinsEditor
         /// <summary>
         /// Check all fields for proper html hex color if not highlight the error(s).
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if all textboxs are valid html hex colors</returns>
         private bool CheckAllTbColorsAndSetErrors()
         {
             bool allproper = true;
-            allproper = CheckProperHTMLColorTbSetErrors(this.tbPrimaryColor, allproper);
-            allproper = CheckProperHTMLColorTbSetErrors(this.tbSelectingColor, allproper);
-            allproper = CheckProperHTMLColorTbSetErrors(this.tbHighlightingColor, allproper);
-            allproper = CheckProperHTMLColorTbSetErrors(this.tbTextColor, allproper);
+            allproper = this.CheckProperHTMLColorTbSetErrors(this.tbPrimaryColor, allproper);
+            allproper = this.CheckProperHTMLColorTbSetErrors(this.tbSelectingColor, allproper);
+            allproper = this.CheckProperHTMLColorTbSetErrors(this.tbHighlightingColor, allproper);
+            allproper = this.CheckProperHTMLColorTbSetErrors(this.tbTextColor, allproper);
             return allproper;
         }
 
         /// <summary>
         /// Check if proper skinname in textbox.
+        /// Skin name should be at least 1 character long and not contain forbidden xml characters.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the skin name is valid</returns>
         private bool CheckProperSkinnameTb()
         {
-            if (this.tbSkinName.TextLength < 1)
+            if (this.tbSkinName.TextLength < 1 || this.tbSkinName.Text.Contains("<") || this.tbSkinName.Text.Contains(">") || this.tbSkinName.Text.Contains("/"))
             {
                 return false;
             }
@@ -381,12 +404,12 @@ namespace SkinsEditor
         /// Check if proper html hex color in textbox, 
         /// if not make textbox highlight that their is an error.
         /// </summary>
-        /// <param name="tb"></param>
-        /// <param name="allproper"></param>
-        /// <returns></returns>
+        /// <param name="tb">The TextBox to check.</param>
+        /// <param name="allproper">Are previous textboxes valid.</param>
+        /// <returns>True if textbox is valid HTML hex.</returns>
         private bool CheckProperHTMLColorTbSetErrors(TextBox tb, bool allproper)
         {
-            if (!CheckProperHTMLColorTb(tb))
+            if (!this.CheckProperHTMLColorTb(tb))
             {
                 tb.BackColor = Color.Red;
                 allproper = false;
@@ -400,10 +423,10 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Check if their is a proper HTML hex color in a textbox.
         /// </summary>
-        /// <param name="tb"></param>
-        /// <returns></returns>
+        /// <param name="tb">The textbox to check.</param>
+        /// <returns>True if textbox contains a proper HTML hex color.</returns>
         private bool CheckProperHTMLColorTb(TextBox tb)
         {
             if (tb.TextLength == 7)
@@ -418,14 +441,15 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Parser the textbox HTML hex color content as a color object and set
+        /// panels right as preview of the color.
         /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object, should be a textbox</param>
+        /// <param name="e">Event arguments</param>
         private void ParserAsPreviewColor(object sender, EventArgs e)
         {
             TextBox tbclr = (TextBox)sender;
-            if (CheckProperHTMLColorTb(tbclr))
+            if (this.CheckProperHTMLColorTb(tbclr))
             {
                 int what = Convert.ToInt32(tbclr.Tag);
                 Color clr = System.Drawing.ColorTranslator.FromHtml(tbclr.Text);
@@ -446,6 +470,5 @@ namespace SkinsEditor
                 }
             }
         }
-
     }
 }

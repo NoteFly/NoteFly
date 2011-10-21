@@ -212,7 +212,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Is the note content word warped.
+        /// Gets or set a value indicating whether the note content words are warped.
         /// </summary>
         public bool Wordwarp
         {
@@ -357,9 +357,8 @@ namespace NoteFly
 
         /// <summary>
         /// Create a new frmNote with this note.
-        /// visible is set to true.
+        /// Visible is set to true.
         /// </summary>
-        /// <param name="wordwarp">Are words wordwarped on the content of the note.</param>
         public void CreateForm()
         {
             this.frmnote = new FrmNote(this.notes, this);

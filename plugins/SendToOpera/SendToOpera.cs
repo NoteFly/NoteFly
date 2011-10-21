@@ -64,7 +64,7 @@ namespace SendToOpera
         /// <summary>
         /// Create share menu
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A toolstripmenuitem</returns>
         public override ToolStripMenuItem InitFrmNoteShareMenu()
         {
             ToolStripMenuItem toolstripmenu = new ToolStripMenuItem("Send to Opera");

@@ -75,8 +75,14 @@ namespace NoteFly
         /// </summary>
         private const int COLNOTENRFIXEDWIDTH = 30;
 
+        /// <summary>
+        /// The width of a imported note by default.
+        /// </summary>
         private const int DEFAULTIMPORTNOTEWIDTH = 240;
 
+        /// <summary>
+        /// The height of a imported note by default.
+        /// </summary>
         private const int DEFAULTIMPORTNOTEHEIGHT = 200;
 
         /// <summary>
@@ -724,11 +730,10 @@ namespace NoteFly
             Log.Write(LogType.info, "Imported PNotes full backup file: " + this.openImportFileDialog.FileName);
         }
 
-
         /// <summary>
         /// Read CintaNotes xml file exported notes.
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="file">The CintaNotes exported notes xml full file path.</param>
         private void ReadCintaNotesXMLFile(string file)
         {
             XmlTextReader reader = null;
@@ -1282,6 +1287,8 @@ namespace NoteFly
         /// <summary>
         /// Double click a row in dataGridView toggle the visibility of a note.
         /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">DataGridViewCellEvent Arguments</param>
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.ToggleVisibilityNote(e.RowIndex);

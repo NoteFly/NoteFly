@@ -87,7 +87,7 @@ namespace NoteFly
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Location = new System.Drawing.Point(144, 140);
+            this.okButton.Location = new System.Drawing.Point(135, 139);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(88, 22);
             this.okButton.TabIndex = 25;
@@ -101,9 +101,8 @@ namespace NoteFly
             this.lblProductName.ForeColor = System.Drawing.Color.Black;
             this.lblProductName.Location = new System.Drawing.Point(6, 5);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(194, 42);
+            this.lblProductName.Size = new System.Drawing.Size(0, 42);
             this.lblProductName.TabIndex = 26;
-            this.lblProductName.Text = "lblProduct";
             // 
             // lblVersion
             // 
@@ -112,9 +111,8 @@ namespace NoteFly
             this.lblVersion.ForeColor = System.Drawing.Color.DimGray;
             this.lblVersion.Location = new System.Drawing.Point(12, 47);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(68, 16);
+            this.lblVersion.Size = new System.Drawing.Size(0, 16);
             this.lblVersion.TabIndex = 27;
-            this.lblVersion.Text = "lblVersion";
             // 
             // linklblWebsite
             // 

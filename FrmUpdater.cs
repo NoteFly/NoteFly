@@ -258,11 +258,17 @@ namespace NoteFly
                     this.lblStatusUpdate.Refresh();
                     if (File.Exists(Settings.UpdatecheckGPGPath))
                     {
-                        this.gpgverif.VerifDownload(this.downloadfilepath);
+                        if (!this.gpgverif.VerifDownload(this.downloadfilepath))
+                        {
+                            const string INSTALLABORTED = "Aborted";
+                            this.lblStatusUpdate.Text = INSTALLABORTED;
+                            return;
+                        }
                     }
                     else
                     {
-                        Log.Write(LogType.exception, "Verify download failed, cannot find gpg.exe: " + Settings.UpdatecheckGPGPath);
+                        const string CANNOTFINDGPG = "Verify download failed, cannot find gpg: ";
+                        Log.Write(LogType.exception, CANNOTFINDGPG + Settings.UpdatecheckGPGPath);
                         return;
                     }
                 }

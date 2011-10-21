@@ -85,8 +85,10 @@ namespace NoteFly
                 }
                 else
                 {
-                    Log.Write(LogType.info, NoteFly.Properties.Resources.settings_dirdoesnotexist);
-                    MessageBox.Show(NoteFly.Properties.Resources.settings_dirdoesnotexist, NoteFly.Properties.Resources.settings_dirdoesnotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    const string settings_dirdoesnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
+                    const string settings_dirdoesnotexisttitle = "Directory not found";
+                    Log.Write(LogType.info, settings_dirdoesnotexist);
+                    MessageBox.Show(settings_dirdoesnotexist, settings_dirdoesnotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -108,13 +110,14 @@ namespace NoteFly
         /// <param name="expertsettings">Is showing expert settings enabled.</param>
         private void SetFormTitle(bool expertsettings)
         {
+            const string SETTINGSTITLE = "settings";
             if (expertsettings)
             {
-                this.Text = "Expert settings";
+                this.Text = "Expert " + SETTINGSTITLE;
             }
             else
             {
-                this.Text = "Settings";
+                this.Text = SETTINGSTITLE;
             }
         }
 
@@ -125,48 +128,65 @@ namespace NoteFly
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnOK_Click(object sender, EventArgs e)
-        {
-            // check if the set settings are possible.
+        {            
+            const string settings_invalidfontsize = "Font size invalid. Minimal 4pt maximum 128pt allowed.";
+            const string settings_invalidfontsizetitle = "Error invalid fontsize";
+            const string settings_nofont = "Please select a font.";
+            const string settings_nofonttitle = "Error no font.";
             if (!Directory.Exists(this.tbNotesSavePath.Text))
             {
-                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_invalidfoldersavenote);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_invalidfoldersavenote);
+                const string settings_invalidfoldersavenote = "Invalid folder for saving notes folder.";
+                const string settings_invalidfoldersavenotetitle = "Error invalid notes folder";
+                Log.Write(LogType.info, settings_invalidfoldersavenote);
+                MessageBox.Show(settings_invalidfoldersavenote, settings_invalidfoldersavenotetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabGeneral;
             }
             else if (string.IsNullOrEmpty(this.cbxFontNoteContent.Text) == true)
             {
-                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_nofont);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_nofont);
+                Log.Write(LogType.info, settings_nofont);
+                MessageBox.Show(settings_nofont, settings_nofonttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.tabControlSettings.SelectedTab = this.tabAppearance;
+            }
+            else if (string.IsNullOrEmpty(this.cbxFontNoteTitle.Text) == true)
+            {
+                Log.Write(LogType.info, settings_nofont);
+                MessageBox.Show(settings_nofont, settings_nofonttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((this.numFontSizeContent.Value < 4) || (this.numFontSizeContent.Value > 128))
             {
-                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_invalidfontsize);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_invalidfontsize);
+                Log.Write(LogType.info, settings_invalidfontsize);
+                MessageBox.Show(settings_invalidfontsize, settings_invalidfontsizetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((this.numFontSizeTitle.Value < 4) || (this.numFontSizeTitle.Value > 128))
             {
-                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_invalidfontsize);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_invalidfontsize);
+                Log.Write(LogType.info, settings_invalidfontsize);
+                MessageBox.Show(settings_invalidfontsize, settings_invalidfontsizetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if (this.cbxTextDirection.SelectedIndex > 1)
             {
-                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_noknowtextdir);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_noknowtextdir);
+                const string settings_noknowtextdir = "Settings text direction invalid.";
+                const string settings_noknowtextdirtitle = "Error text direction";
+                Log.Write(LogType.error, settings_noknowtextdir);
+                MessageBox.Show(settings_noknowtextdir, settings_noknowtextdirtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && this.chxSocialEmailDefaultaddressSet.Checked)
             {
-                Log.Write(LogType.error, NoteFly.Properties.Resources.settings_emailnotvalid);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_emailnotvalid);
+                const string settings_emailnotvalid = "Given default emailadres is not valid.";
+                const string settings_emailnotvalidtitle = "Email adres no valid";
+                Log.Write(LogType.error, settings_emailnotvalid);
+                MessageBox.Show(settings_emailnotvalid, settings_emailnotvalidtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabSharing;
             }
             else if (!File.Exists(this.tbGPGPath.Text) && this.chxCheckUpdatesSignature.Checked)
             {
-                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_gpgpathinvalid);
-                MessageBox.Show(NoteFly.Properties.Resources.settings_gpgpathinvalid);
+                const string settings_gpgpathinvalid = "The path to gpg.exe is not valid.";
+                const string settings_gpgpathinvalidtitle = "Error not valid gpg path.";
+                Log.Write(LogType.info, settings_gpgpathinvalid);
+                MessageBox.Show(settings_gpgpathinvalid, settings_gpgpathinvalidtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabNetwork;
             }
             else
@@ -291,8 +311,10 @@ namespace NoteFly
                 }
                 else
                 {
-                    Log.Write(LogType.error, NoteFly.Properties.Resources.settings_regkeynotexist);
-                    MessageBox.Show(NoteFly.Properties.Resources.settings_regkeynotexist);
+                    const string settings_regkeynotexist = "Run key in registery does not exist.";
+                    const string settings_regkeynotexisttitle = "Error run key registery missing";
+                    Log.Write(LogType.error, settings_regkeynotexist);
+                    MessageBox.Show(settings_regkeynotexist, settings_regkeynotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 #endif
                 xmlUtil.WriteSettings();
@@ -332,7 +354,8 @@ namespace NoteFly
                     SyntaxHighlight.DeinitHighlighter();
                 }
 
-                Log.Write(LogType.info, NoteFly.Properties.Resources.settings_infoupdated);
+                const string settings_infoupdated = "Settings updated";
+                Log.Write(LogType.info, settings_infoupdated);
                 this.Close();
             }
         }
@@ -344,7 +367,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
-            DialogResult dlgres = MessageBox.Show(NoteFly.Properties.Resources.settings_sureresetdefault, NoteFly.Properties.Resources.settings_sureresetdefaulttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            const string settings_sureresetdefault = "Are you sure, you want to reset all the settings to default?";
+            const string settings_sureresetdefaulttitle = "Reset settings?";
+            DialogResult dlgres = MessageBox.Show(settings_sureresetdefault, settings_sureresetdefaulttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgres == DialogResult.Yes)
             {
                 xmlUtil.WriteDefaultSettings();
@@ -447,15 +472,18 @@ namespace NoteFly
                     }
                     else
                     {
-                        throw new ApplicationException(NoteFly.Properties.Resources.settings_excsystemfilenotmoved);
+                        const string settings_excsystemfilenotmoved = "File is marked as system file. Did not move.";
+                        throw new ApplicationException(settings_excsystemfilenotmoved);
                     }
                 }
                 else
                 {
                     if (!errorshowed)
                     {
-                        Log.Write(LogType.error, NoteFly.Properties.Resources.settings_filealreadyexist);
-                        MessageBox.Show(NoteFly.Properties.Resources.settings_filealreadyexist);
+                        const string settings_filealreadyexist = "Note file(s) already exist.";
+                        const string settings_filealreadyexisttitle = "Error movind note(s)";
+                        Log.Write(LogType.error, settings_filealreadyexist);
+                        MessageBox.Show(settings_filealreadyexist, settings_filealreadyexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         errorshowed = true;
                     }
                 }

@@ -29,7 +29,7 @@ namespace SkinsEditor
         /// <summary>
         /// Create the ToolStripMenuItem for the skin editor.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A toolstripitem</returns>
         public override ToolStripItem InitTrayIconMenu()
         {
             ToolStripItem menutrayicon = new ToolStripMenuItem("Skin editor");
@@ -39,16 +39,14 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// Open skin editor
+        /// Open skin editor.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void menutrayicon_Click(object sender, EventArgs e)
         {
             FrmSkinEditor skineditor = new FrmSkinEditor(this.Host);
             skineditor.Show();
         }
-
-
     }
 }

@@ -85,7 +85,7 @@ namespace IPlugin
         }
 
         /// <summary>
-        /// Interface to let the plugin talk to NoteFly.
+        /// Gets or sets the interface to let the plugin talk to NoteFly.
         /// </summary>
         public IPluginHost Host
         {
