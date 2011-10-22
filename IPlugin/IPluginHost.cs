@@ -133,6 +133,11 @@ namespace IPlugin
         ImageLayout GetPrimaryTextureLayout(int skinnr);        
 
         /// <summary>
+        /// Remove all skins and load them all again from skins.xml.
+        /// </summary>
+        void ReloadAllSkins();
+
+        /// <summary>
         /// Gets filepath to the settings file of NoteFly.
         /// </summary>
         /// <returns>The settings file path</returns>

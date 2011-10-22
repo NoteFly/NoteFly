@@ -32,7 +32,8 @@ namespace SkinsEditor
         /// <returns>A toolstripitem</returns>
         public override ToolStripItem InitTrayIconMenu()
         {
-            ToolStripItem menutrayicon = new ToolStripMenuItem("Skin editor");
+            ToolStripItem menutrayicon = new ToolStripMenuItem();
+            menutrayicon.Text = "Skin editor";
             menutrayicon.Name = "menuSkinEditor";
             menutrayicon.Click += new EventHandler(this.menutrayicon_Click);
             return menutrayicon;

@@ -39,8 +39,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "PluginGrid";
-            this.Size = new System.Drawing.Size(352, 230);
+            this.Size = new System.Drawing.Size(432, 239);
             this.ResumeLayout(false);
 
         }

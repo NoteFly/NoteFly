@@ -517,6 +517,15 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Reload all skins again.
+        /// </summary>
+        public void ReloadAllSkins()
+        {
+            this.skins.Clear();
+            this.skins = xmlUtil.LoadSkins();
+        }
+
+        /// <summary>
         /// Gets the notes save directory.
         /// </summary>
         /// <returns>The directory where notes are saved.</returns>

@@ -248,7 +248,7 @@ namespace NoteFly
                 {
                     for (int i = 0; i < Program.pluginsenabled.Length; i++)
                     {
-                        Program.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.note.Title);
+                        Program.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.tbTitle.Text);
                     }
                 }
 

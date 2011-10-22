@@ -87,9 +87,10 @@ namespace NoteFly
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Location = new System.Drawing.Point(135, 139);
+            this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.okButton.Location = new System.Drawing.Point(112, 135);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(88, 22);
+            this.okButton.Size = new System.Drawing.Size(111, 26);
             this.okButton.TabIndex = 25;
             this.okButton.Text = "&Close";
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -108,7 +109,7 @@ namespace NoteFly
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.ForeColor = System.Drawing.Color.DimGray;
+            this.lblVersion.ForeColor = System.Drawing.Color.Black;
             this.lblVersion.Location = new System.Drawing.Point(12, 47);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(0, 16);
@@ -129,13 +130,14 @@ namespace NoteFly
             // lblTextLicense
             // 
             this.lblTextLicense.AutoEllipsis = true;
-            this.lblTextLicense.ForeColor = System.Drawing.Color.Gray;
+            this.lblTextLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextLicense.ForeColor = System.Drawing.Color.Black;
             this.lblTextLicense.Location = new System.Drawing.Point(10, 74);
             this.lblTextLicense.Name = "lblTextLicense";
-            this.lblTextLicense.Size = new System.Drawing.Size(222, 41);
+            this.lblTextLicense.Size = new System.Drawing.Size(222, 58);
             this.lblTextLicense.TabIndex = 30;
-            this.lblTextLicense.Text = "This programme is released under the terms of GNU General Public License version3" +
-                "\r\n";
+            this.lblTextLicense.Text = "This programme is released under the terms of Lesser GNU General Public License v" +
+                "ersion3\r\n";
             // 
             // FrmAbout
             // 

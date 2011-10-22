@@ -31,6 +31,7 @@ namespace SkinsEditor
     /// </summary>
     public sealed partial class FrmSkinEditor : Form
     {
+        private int editskinnr = -1;
         private skineditormode skinaction;
         private IPlugin.IPluginHost host;
 
@@ -49,12 +50,13 @@ namespace SkinsEditor
         /// <summary>
         /// The current mode of the skin editor.
         /// </summary>
-        private enum skineditormode {
+        private enum skineditormode
+        {
 
             /// <summary>
             /// Selecting/viewing a skin.
             /// </summary>
-            browseskins, 
+            browseskins,
 
             /// <summary>
             /// A skin is being edited.
@@ -64,7 +66,7 @@ namespace SkinsEditor
             /// <summary>
             /// A new skin is created.
             /// </summary>
-            newskin 
+            newskin
         }
 
         /// <summary>
@@ -151,6 +153,7 @@ namespace SkinsEditor
             this.tbSelectingColor.Text = this.ClrToHtmlHexClr(this.host.GetSelectClr(skinnr));
             this.tbHighlightingColor.Text = this.ClrToHtmlHexClr(this.host.GetHighlightClr(skinnr));
             this.tbTextColor.Text = this.ClrToHtmlHexClr(this.host.GetTextClr(skinnr));
+            this.tbPrimaryTexture.Text = this.host.GetPrimaryTextureFile(skinnr);
         }
 
         /// <summary>
@@ -243,6 +246,7 @@ namespace SkinsEditor
             {
                 this.btnEditskin.Text = "cancel &edit skin";
                 this.skinaction = skineditormode.editskin;
+                this.editskinnr = this.lbxSkins.SelectedIndex;
             }
         }
 
@@ -289,12 +293,24 @@ namespace SkinsEditor
                     this.tbSkinName.BackColor = SystemColors.Window;
                     if (this.CheckAllTbColorsAndSetErrors())
                     {
+                        if (this.WriteSkinsFile(this.tbSkinName.Text, this.tbPrimaryTexture.Text, this.tbPrimaryColor.Text, this.tbSelectingColor.Text, this.tbHighlightingColor.Text, this.tbTextColor.Text))
+                        {
+                            this.host.ReloadAllSkins();
+                        }
+                        else
+                        {
+                            const string COULDNOTWRITESKINS = "Could not write skins file.";
+                            MessageBox.Show(COULDNOTWRITESKINS);
+                        }
 
                         if (this.skinaction == skineditormode.newskin)
                         {
-                            // TODO add new skin.
                             this.lbxSkins.Items.Add(this.tbSkinName.Text);
                             this.btnNewSkin.Text = "&new skin";
+                        }
+                        else if (this.skinaction == skineditormode.editskin)
+                        {
+                            this.btnEditskin.Text = "&edit skin";
                         }
 
                         this.skinaction = skineditormode.browseskins;
@@ -312,63 +328,98 @@ namespace SkinsEditor
         /// Writes the skins file to disk to with all NoteFly skins.
         /// </summary>
         /// <returns>true if writing skins file was succesfull.</returns>
-        private bool WriteSkinsFile()
+        private bool WriteSkinsFile(string skinname, string skinprimarytexture, string skinprimary, string skinselect, string skinhighlight, string skintext)
         {
             bool succeed = false;
             string skinsfilepath = this.host.GetSkinsFile();
-            XmlTextWriter xmlwrite = null;
+            XmlTextWriter xmlwriter = null;
             try
             {
-                xmlwrite = new XmlTextWriter(skinsfilepath, Encoding.UTF8);
-                xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument(true);
-                xmlwrite.WriteStartElement("skins");
-                xmlwrite.WriteStartElement("skin");
-                for (int i = 0; i < this.host.CountNotes; i++)
-                {
-                    xmlwrite.WriteElementString("Name", this.host.GetSkinName(i));
-                    xmlwrite.WriteStartElement("PrimaryClr");                    
-                    if (!string.IsNullOrEmpty(this.host.GetPrimaryTextureFile(i)))
-                    {
-                        xmlwrite.WriteAttributeString("texture", this.host.GetPrimaryTextureFile(i));
-                        ImageLayout layout = this.host.GetPrimaryTextureLayout(i);
-                        switch (layout)
-                        {
-                            case ImageLayout.Tile:
-                                xmlwrite.WriteAttributeString("texturelayout", "tile");
-                                break;
-                            case ImageLayout.Stretch:
-                                xmlwrite.WriteAttributeString("texturelayout", "stretch");
-                                break;
-                            case ImageLayout.Center:
-                                xmlwrite.WriteAttributeString("texturelayout", "center");
-                                break; 
-                            default:
-                                xmlwrite.WriteAttributeString("texturelayout", "tile");
-                                break;
-                        }
-                    }
+                xmlwriter = new XmlTextWriter(skinsfilepath, Encoding.UTF8);
+                xmlwriter.Formatting = Formatting.Indented;
+                xmlwriter.WriteStartDocument(true);
+                xmlwriter.WriteStartElement("skins");
 
-                    xmlwrite.WriteString(this.ClrToHtmlHexClr(this.host.GetPrimaryClr(i)));
-                    xmlwrite.WriteEndElement();
-                    xmlwrite.WriteElementString("SelectClr", this.ClrToHtmlHexClr(this.host.GetSelectClr(i)));
-                    xmlwrite.WriteElementString("HighlightClr", this.ClrToHtmlHexClr(this.host.GetHighlightClr(i)));
-                    xmlwrite.WriteElementString("TextClr", this.ClrToHtmlHexClr(this.host.GetTextClr(i)));
+                for (int i = 0; i < this.host.CountSkins; i++)
+                {
+                    if (skinaction == skineditormode.editskin && this.editskinnr == i)
+                    {
+                        // warn texture null is removed!
+                        this.WriteSkinBody(xmlwriter, skinname, skinprimary, skinprimarytexture, ImageLayout.Tile, skinselect, skinhighlight, skintext);
+                    }
+                    else
+                    {
+                        string name = this.host.GetSkinName(i);
+                        string primaryclr = this.ClrToHtmlHexClr(this.host.GetPrimaryClr(i));
+                        string primarytexture = this.host.GetPrimaryTextureFile(i);
+                        ImageLayout primarytexturelayout = this.host.GetPrimaryTextureLayout(i);
+                        string selectclr = this.ClrToHtmlHexClr(this.host.GetSelectClr(i));
+                        string highlightclr = this.ClrToHtmlHexClr(this.host.GetHighlightClr(i));
+                        string textclr = this.ClrToHtmlHexClr(this.host.GetTextClr(i));
+                        this.WriteSkinBody(xmlwriter, name, primaryclr, primarytexture, primarytexturelayout, selectclr, highlightclr, textclr);
+                    }
                 }
 
-                xmlwrite.WriteEndElement();
-                xmlwrite.WriteEndDocument();
+                if (this.skinaction == skineditormode.newskin)
+                {
+                    // write new skin
+                    this.WriteSkinBody(xmlwriter, skinname, skinprimary, skinprimarytexture, ImageLayout.Tile, skinselect, skinhighlight, skintext);
+                }
+                xmlwriter.WriteEndElement();
+                xmlwriter.WriteEndDocument();
                 succeed = true;
             }
             finally
             {
-                if (xmlwrite != null)
+                if (xmlwriter != null)
                 {
-                    xmlwrite.Close();
+                    xmlwriter.Close();
                 }
             }
 
             return succeed;
+        }
+
+        /// <summary>
+        /// Write skin
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="primaryclr"></param>
+        /// <param name="primarytexture"></param>
+        /// <param name="selectclr"></param>
+        /// <param name="highlightclr"></param>
+        /// <param name="textclr"></param>
+        private void WriteSkinBody(XmlWriter xmlwriter, string name, string primaryclr, string primarytexture, ImageLayout primarytexturelayout, string selectclr, string highlightclr, string textclr)
+        {
+            xmlwriter.WriteStartElement("skin");
+            xmlwriter.WriteElementString("Name", name);
+            xmlwriter.WriteStartElement("PrimaryClr");
+            if (!string.IsNullOrEmpty(primarytexture))
+            {
+                xmlwriter.WriteAttributeString("texture", primarytexture);
+                switch (primarytexturelayout)
+                {
+                    case ImageLayout.Tile:
+                        xmlwriter.WriteAttributeString("texturelayout", "tile");
+                        break;
+                    case ImageLayout.Stretch:
+                        xmlwriter.WriteAttributeString("texturelayout", "stretch");
+                        break;
+                    case ImageLayout.Center:
+                        xmlwriter.WriteAttributeString("texturelayout", "center");
+                        break;
+                    default:
+                        xmlwriter.WriteAttributeString("texturelayout", "tile");
+                        break;
+                }
+            }
+
+            xmlwriter.WriteString(primaryclr);
+            xmlwriter.WriteEndElement();
+            xmlwriter.WriteElementString("SelectClr", selectclr);
+            xmlwriter.WriteElementString("HighlightClr", highlightclr);
+            xmlwriter.WriteElementString("TextClr", textclr);
+            xmlwriter.WriteEndElement();
         }
 
         /// <summary>

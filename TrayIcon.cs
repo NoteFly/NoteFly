@@ -195,7 +195,7 @@ namespace NoteFly
                         ToolStripItem toolstripitem = Program.pluginsenabled[p].InitTrayIconMenu();
                         toolstripitem.Size = new System.Drawing.Size(144, 22);
                         toolstripitem.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
-                        this.menuTrayIcon.Items.Add(Program.pluginsenabled[p].InitTrayIconMenu());
+                        this.icon.ContextMenuStrip.Items.Add(toolstripitem);
                     }
                 }
             }

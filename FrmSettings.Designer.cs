@@ -546,7 +546,6 @@ namespace NoteFly
             this.chxTrayiconBoldManagenotes = new System.Windows.Forms.CheckBox();
             this.chxTrayiconBoldNewnote = new System.Windows.Forms.CheckBox();
             this.tabPlugins = new System.Windows.Forms.TabPage();
-            this.pluginGrid = new NoteFly.PluginGrid();
             this.chxLoadPlugins = new System.Windows.Forms.CheckBox();
             this.tabHighlight = new System.Windows.Forms.TabPage();
             this.chxHighlightSQL = new System.Windows.Forms.CheckBox();
@@ -576,10 +575,10 @@ namespace NoteFly
             this.lblTextLatestUpdateCheck = new System.Windows.Forms.Label();
             this.btnCheckUpdates = new System.Windows.Forms.Button();
             this.tabProxy = new System.Windows.Forms.TabPage();
+            this.lblTextMiliseconds = new System.Windows.Forms.Label();
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
@@ -593,6 +592,8 @@ namespace NoteFly
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
+            this.pluginGrid = new NoteFly.PluginGrid();
+            this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -625,7 +626,8 @@ namespace NoteFly
             this.btnOK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
             this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnOK.Location = new System.Drawing.Point(154, 309);
+            this.btnOK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOK.Location = new System.Drawing.Point(227, 368);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(105, 25);
             this.btnOK.TabIndex = 2;
@@ -640,7 +642,8 @@ namespace NoteFly
             this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnCancel.Location = new System.Drawing.Point(265, 309);
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Location = new System.Drawing.Point(338, 368);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(103, 25);
             this.btnCancel.TabIndex = 3;
@@ -658,11 +661,12 @@ namespace NoteFly
             this.tabControlSettings.Controls.Add(this.tabNetwork);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
             this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControlSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControlSettings.HotTrack = true;
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(377, 307);
+            this.tabControlSettings.Size = new System.Drawing.Size(455, 362);
             this.tabControlSettings.TabIndex = 17;
             this.tabControlSettings.SelectedIndexChanged += new System.EventHandler(this.tabControlSettings_SelectedIndexChanged);
             // 
@@ -674,10 +678,10 @@ namespace NoteFly
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
             this.tabGeneral.Controls.Add(this.chxStartOnLogin);
             this.tabGeneral.Controls.Add(this.lblTextActionLeftClicktTrayicon);
-            this.tabGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tabGeneral.Location = new System.Drawing.Point(4, 25);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(369, 281);
+            this.tabGeneral.Size = new System.Drawing.Size(447, 333);
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -685,9 +689,10 @@ namespace NoteFly
             // chxNotesDeleteRecyclebin
             // 
             this.chxNotesDeleteRecyclebin.AutoSize = true;
+            this.chxNotesDeleteRecyclebin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(21, 94);
             this.chxNotesDeleteRecyclebin.Name = "chxNotesDeleteRecyclebin";
-            this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(189, 17);
+            this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(231, 20);
             this.chxNotesDeleteRecyclebin.TabIndex = 24;
             this.chxNotesDeleteRecyclebin.Text = "Move deleted notes to recycle bin.";
             this.chxNotesDeleteRecyclebin.UseVisualStyleBackColor = true;
@@ -697,9 +702,10 @@ namespace NoteFly
             this.chxConfirmDeletenote.AutoSize = true;
             this.chxConfirmDeletenote.Checked = true;
             this.chxConfirmDeletenote.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmDeletenote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxConfirmDeletenote.Location = new System.Drawing.Point(21, 71);
             this.chxConfirmDeletenote.Name = "chxConfirmDeletenote";
-            this.chxConfirmDeletenote.Size = new System.Drawing.Size(133, 17);
+            this.chxConfirmDeletenote.Size = new System.Drawing.Size(162, 20);
             this.chxConfirmDeletenote.TabIndex = 23;
             this.chxConfirmDeletenote.Text = "Confirm deleting notes.";
             this.chxConfirmDeletenote.UseVisualStyleBackColor = true;
@@ -718,17 +724,18 @@ namespace NoteFly
             "Do nothing",
             "Bring notes to front",
             "Create a new note"});
-            this.cbxActionLeftclick.Location = new System.Drawing.Point(150, 145);
+            this.cbxActionLeftclick.Location = new System.Drawing.Point(172, 147);
             this.cbxActionLeftclick.Name = "cbxActionLeftclick";
-            this.cbxActionLeftclick.Size = new System.Drawing.Size(163, 21);
+            this.cbxActionLeftclick.Size = new System.Drawing.Size(163, 24);
             this.cbxActionLeftclick.TabIndex = 16;
             // 
             // chxConfirmExit
             // 
             this.chxConfirmExit.AutoSize = true;
+            this.chxConfirmExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxConfirmExit.Location = new System.Drawing.Point(21, 48);
             this.chxConfirmExit.Name = "chxConfirmExit";
-            this.chxConfirmExit.Size = new System.Drawing.Size(161, 17);
+            this.chxConfirmExit.Size = new System.Drawing.Size(195, 20);
             this.chxConfirmExit.TabIndex = 20;
             this.chxConfirmExit.Text = "Confirm shutdown of NoteFly";
             this.chxConfirmExit.UseVisualStyleBackColor = true;
@@ -736,9 +743,10 @@ namespace NoteFly
             // chxStartOnLogin
             // 
             this.chxStartOnLogin.AutoSize = true;
+            this.chxStartOnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxStartOnLogin.Location = new System.Drawing.Point(21, 25);
             this.chxStartOnLogin.Name = "chxStartOnLogin";
-            this.chxStartOnLogin.Size = new System.Drawing.Size(134, 17);
+            this.chxStartOnLogin.Size = new System.Drawing.Size(162, 20);
             this.chxStartOnLogin.TabIndex = 10;
             this.chxStartOnLogin.Text = "Start NoteFly on logon.";
             this.chxStartOnLogin.UseVisualStyleBackColor = true;
@@ -746,19 +754,20 @@ namespace NoteFly
             // lblTextActionLeftClicktTrayicon
             // 
             this.lblTextActionLeftClicktTrayicon.AutoSize = true;
+            this.lblTextActionLeftClicktTrayicon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(18, 148);
             this.lblTextActionLeftClicktTrayicon.Name = "lblTextActionLeftClicktTrayicon";
-            this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(122, 13);
+            this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(148, 16);
             this.lblTextActionLeftClicktTrayicon.TabIndex = 15;
             this.lblTextActionLeftClicktTrayicon.Text = "Action left click trayicon:";
             // 
             // tabAppearance
             // 
             this.tabAppearance.Controls.Add(this.tabAppearanceColors);
-            this.tabAppearance.Location = new System.Drawing.Point(4, 22);
+            this.tabAppearance.Location = new System.Drawing.Point(4, 25);
             this.tabAppearance.Name = "tabAppearance";
             this.tabAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppearance.Size = new System.Drawing.Size(369, 281);
+            this.tabAppearance.Size = new System.Drawing.Size(447, 333);
             this.tabAppearance.TabIndex = 0;
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
@@ -772,7 +781,7 @@ namespace NoteFly
             this.tabAppearanceColors.Location = new System.Drawing.Point(3, 3);
             this.tabAppearanceColors.Name = "tabAppearanceColors";
             this.tabAppearanceColors.SelectedIndex = 0;
-            this.tabAppearanceColors.Size = new System.Drawing.Size(363, 275);
+            this.tabAppearanceColors.Size = new System.Drawing.Size(441, 327);
             this.tabAppearanceColors.TabIndex = 28;
             // 
             // tabPageLooks
@@ -784,10 +793,10 @@ namespace NoteFly
             this.tabPageLooks.Controls.Add(this.cbxDefaultColor);
             this.tabPageLooks.Controls.Add(this.numProcTransparency);
             this.tabPageLooks.Controls.Add(this.lblTextTransparentProcVisible);
-            this.tabPageLooks.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLooks.Location = new System.Drawing.Point(4, 25);
             this.tabPageLooks.Name = "tabPageLooks";
             this.tabPageLooks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLooks.Size = new System.Drawing.Size(355, 249);
+            this.tabPageLooks.Size = new System.Drawing.Size(433, 298);
             this.tabPageLooks.TabIndex = 0;
             this.tabPageLooks.Text = "Looks";
             this.tabPageLooks.UseVisualStyleBackColor = true;
@@ -795,9 +804,10 @@ namespace NoteFly
             // chxUseRandomDefaultNote
             // 
             this.chxUseRandomDefaultNote.AutoSize = true;
+            this.chxUseRandomDefaultNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxUseRandomDefaultNote.Location = new System.Drawing.Point(18, 120);
             this.chxUseRandomDefaultNote.Name = "chxUseRandomDefaultNote";
-            this.chxUseRandomDefaultNote.Size = new System.Drawing.Size(188, 17);
+            this.chxUseRandomDefaultNote.Size = new System.Drawing.Size(230, 20);
             this.chxUseRandomDefaultNote.TabIndex = 14;
             this.chxUseRandomDefaultNote.Text = "Use a random skin as default skin.";
             this.chxUseRandomDefaultNote.UseVisualStyleBackColor = true;
@@ -806,9 +816,10 @@ namespace NoteFly
             // chxShowTooltips
             // 
             this.chxShowTooltips.AutoSize = true;
+            this.chxShowTooltips.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxShowTooltips.Location = new System.Drawing.Point(18, 62);
             this.chxShowTooltips.Name = "chxShowTooltips";
-            this.chxShowTooltips.Size = new System.Drawing.Size(89, 17);
+            this.chxShowTooltips.Size = new System.Drawing.Size(106, 20);
             this.chxShowTooltips.TabIndex = 13;
             this.chxShowTooltips.Text = "Show tooltips";
             this.chxShowTooltips.UseVisualStyleBackColor = true;
@@ -821,9 +832,10 @@ namespace NoteFly
             this.chxTransparecy.Checked = true;
             this.chxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chxTransparecy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxTransparecy.Location = new System.Drawing.Point(18, 28);
             this.chxTransparecy.Name = "chxTransparecy";
-            this.chxTransparecy.Size = new System.Drawing.Size(158, 18);
+            this.chxTransparecy.Size = new System.Drawing.Size(193, 21);
             this.chxTransparecy.TabIndex = 8;
             this.chxTransparecy.Text = "Enable transparency notes";
             this.chxTransparecy.UseVisualStyleBackColor = false;
@@ -832,9 +844,10 @@ namespace NoteFly
             // lblDefaultNewNoteColor
             // 
             this.lblDefaultNewNoteColor.AutoSize = true;
+            this.lblDefaultNewNoteColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDefaultNewNoteColor.Location = new System.Drawing.Point(15, 146);
             this.lblDefaultNewNoteColor.Name = "lblDefaultNewNoteColor";
-            this.lblDefaultNewNoteColor.Size = new System.Drawing.Size(118, 13);
+            this.lblDefaultNewNoteColor.Size = new System.Drawing.Size(143, 16);
             this.lblDefaultNewNoteColor.TabIndex = 9;
             this.lblDefaultNewNoteColor.Text = "Default skin new notes:";
             // 
@@ -845,30 +858,32 @@ namespace NoteFly
             this.cbxDefaultColor.BackColor = System.Drawing.Color.LightGray;
             this.cbxDefaultColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxDefaultColor.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxDefaultColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxDefaultColor.FormattingEnabled = true;
-            this.cbxDefaultColor.Location = new System.Drawing.Point(142, 143);
+            this.cbxDefaultColor.Location = new System.Drawing.Point(164, 143);
             this.cbxDefaultColor.MaxDropDownItems = 5;
             this.cbxDefaultColor.Name = "cbxDefaultColor";
-            this.cbxDefaultColor.Size = new System.Drawing.Size(139, 21);
+            this.cbxDefaultColor.Size = new System.Drawing.Size(139, 24);
             this.cbxDefaultColor.TabIndex = 10;
             // 
             // numProcTransparency
             // 
             this.numProcTransparency.BackColor = System.Drawing.Color.LightGray;
             this.numProcTransparency.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numProcTransparency.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numProcTransparency.Increment = new decimal(new int[] {
             5,
             0,
             0,
             0});
-            this.numProcTransparency.Location = new System.Drawing.Point(187, 26);
+            this.numProcTransparency.Location = new System.Drawing.Point(217, 28);
             this.numProcTransparency.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numProcTransparency.Name = "numProcTransparency";
-            this.numProcTransparency.Size = new System.Drawing.Size(46, 20);
+            this.numProcTransparency.Size = new System.Drawing.Size(46, 22);
             this.numProcTransparency.TabIndex = 11;
             this.numProcTransparency.Value = new decimal(new int[] {
             90,
@@ -879,9 +894,10 @@ namespace NoteFly
             // lblTextTransparentProcVisible
             // 
             this.lblTextTransparentProcVisible.AutoSize = true;
-            this.lblTextTransparentProcVisible.Location = new System.Drawing.Point(234, 30);
+            this.lblTextTransparentProcVisible.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextTransparentProcVisible.Location = new System.Drawing.Point(269, 30);
             this.lblTextTransparentProcVisible.Name = "lblTextTransparentProcVisible";
-            this.lblTextTransparentProcVisible.Size = new System.Drawing.Size(47, 13);
+            this.lblTextTransparentProcVisible.Size = new System.Drawing.Size(62, 16);
             this.lblTextTransparentProcVisible.TabIndex = 12;
             this.lblTextTransparentProcVisible.Text = "% visible";
             // 
@@ -900,10 +916,10 @@ namespace NoteFly
             this.tabPageFonts.Controls.Add(this.lblTextFontContentSize);
             this.tabPageFonts.Controls.Add(this.lblTextNoteFont);
             this.tabPageFonts.Controls.Add(this.cbxFontNoteContent);
-            this.tabPageFonts.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFonts.Location = new System.Drawing.Point(4, 25);
             this.tabPageFonts.Name = "tabPageFonts";
             this.tabPageFonts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFonts.Size = new System.Drawing.Size(355, 249);
+            this.tabPageFonts.Size = new System.Drawing.Size(433, 298);
             this.tabPageFonts.TabIndex = 1;
             this.tabPageFonts.Text = "Fonts";
             this.tabPageFonts.UseVisualStyleBackColor = true;
@@ -913,25 +929,26 @@ namespace NoteFly
             this.cbxFontNoteTitleBold.AutoSize = true;
             this.cbxFontNoteTitleBold.Checked = true;
             this.cbxFontNoteTitleBold.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxFontNoteTitleBold.Location = new System.Drawing.Point(215, 50);
+            this.cbxFontNoteTitleBold.Location = new System.Drawing.Point(235, 50);
             this.cbxFontNoteTitleBold.Name = "cbxFontNoteTitleBold";
-            this.cbxFontNoteTitleBold.Size = new System.Drawing.Size(46, 17);
+            this.cbxFontNoteTitleBold.Size = new System.Drawing.Size(54, 20);
             this.cbxFontNoteTitleBold.TabIndex = 40;
             this.cbxFontNoteTitleBold.Text = "bold";
             this.cbxFontNoteTitleBold.UseVisualStyleBackColor = true;
             // 
             // lblTextFontTitlePoints
             // 
+            this.lblTextFontTitlePoints.AccessibleDescription = "points";
             this.lblTextFontTitlePoints.AutoSize = true;
-            this.lblTextFontTitlePoints.Location = new System.Drawing.Point(182, 51);
+            this.lblTextFontTitlePoints.Location = new System.Drawing.Point(202, 51);
             this.lblTextFontTitlePoints.Name = "lblTextFontTitlePoints";
-            this.lblTextFontTitlePoints.Size = new System.Drawing.Size(16, 13);
+            this.lblTextFontTitlePoints.Size = new System.Drawing.Size(22, 16);
             this.lblTextFontTitlePoints.TabIndex = 39;
-            this.lblTextFontTitlePoints.Text = "pt";
+            this.lblTextFontTitlePoints.Text = "pt.";
             // 
             // numFontSizeTitle
             // 
-            this.numFontSizeTitle.Location = new System.Drawing.Point(138, 49);
+            this.numFontSizeTitle.Location = new System.Drawing.Point(158, 49);
             this.numFontSizeTitle.Maximum = new decimal(new int[] {
             96,
             0,
@@ -943,7 +960,7 @@ namespace NoteFly
             0,
             0});
             this.numFontSizeTitle.Name = "numFontSizeTitle";
-            this.numFontSizeTitle.Size = new System.Drawing.Size(38, 20);
+            this.numFontSizeTitle.Size = new System.Drawing.Size(38, 22);
             this.numFontSizeTitle.TabIndex = 38;
             this.numFontSizeTitle.Value = new decimal(new int[] {
             14,
@@ -956,7 +973,7 @@ namespace NoteFly
             this.lblTextFontTitleSize.AutoSize = true;
             this.lblTextFontTitleSize.Location = new System.Drawing.Point(61, 51);
             this.lblTextFontTitleSize.Name = "lblTextFontTitleSize";
-            this.lblTextFontTitleSize.Size = new System.Drawing.Size(71, 13);
+            this.lblTextFontTitleSize.Size = new System.Drawing.Size(87, 16);
             this.lblTextFontTitleSize.TabIndex = 37;
             this.lblTextFontTitleSize.Text = "Font size title:";
             // 
@@ -967,30 +984,30 @@ namespace NoteFly
             this.cbxFontNoteTitle.DropDownHeight = 140;
             this.cbxFontNoteTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxFontNoteTitle.IntegralHeight = false;
-            this.cbxFontNoteTitle.Location = new System.Drawing.Point(138, 22);
+            this.cbxFontNoteTitle.Location = new System.Drawing.Point(157, 22);
             this.cbxFontNoteTitle.Name = "cbxFontNoteTitle";
-            this.cbxFontNoteTitle.Size = new System.Drawing.Size(182, 21);
+            this.cbxFontNoteTitle.Size = new System.Drawing.Size(182, 24);
             this.cbxFontNoteTitle.TabIndex = 36;
             // 
             // lblTextFontTitleFamily
             // 
             this.lblTextFontTitleFamily.AutoSize = true;
-            this.lblTextFontTitleFamily.Location = new System.Drawing.Point(82, 25);
+            this.lblTextFontTitleFamily.Location = new System.Drawing.Point(91, 25);
             this.lblTextFontTitleFamily.Name = "lblTextFontTitleFamily";
-            this.lblTextFontTitleFamily.Size = new System.Drawing.Size(50, 13);
+            this.lblTextFontTitleFamily.Size = new System.Drawing.Size(60, 16);
             this.lblTextFontTitleFamily.TabIndex = 35;
             this.lblTextFontTitleFamily.Text = "Font title:";
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = string.Empty;
+            this.lblTextDirection.AccessibleDescription = "";
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
-            this.lblTextDirection.Location = new System.Drawing.Point(50, 183);
+            this.lblTextDirection.Location = new System.Drawing.Point(21, 183);
             this.lblTextDirection.Name = "lblTextDirection";
-            this.lblTextDirection.Size = new System.Drawing.Size(71, 13);
+            this.lblTextDirection.Size = new System.Drawing.Size(127, 16);
             this.lblTextDirection.TabIndex = 34;
-            this.lblTextDirection.Text = "Text direction";
+            this.lblTextDirection.Text = "Text direction notes:";
             // 
             // cbxTextDirection
             // 
@@ -1002,23 +1019,24 @@ namespace NoteFly
             this.cbxTextDirection.Items.AddRange(new object[] {
             "Left to right",
             "Right to left"});
-            this.cbxTextDirection.Location = new System.Drawing.Point(138, 180);
+            this.cbxTextDirection.Location = new System.Drawing.Point(158, 180);
             this.cbxTextDirection.Name = "cbxTextDirection";
-            this.cbxTextDirection.Size = new System.Drawing.Size(182, 21);
+            this.cbxTextDirection.Size = new System.Drawing.Size(182, 24);
             this.cbxTextDirection.TabIndex = 33;
             // 
             // lblTextFontContentPoints
             // 
+            this.lblTextFontContentPoints.AccessibleDescription = "points";
             this.lblTextFontContentPoints.AutoSize = true;
-            this.lblTextFontContentPoints.Location = new System.Drawing.Point(182, 130);
+            this.lblTextFontContentPoints.Location = new System.Drawing.Point(202, 121);
             this.lblTextFontContentPoints.Name = "lblTextFontContentPoints";
-            this.lblTextFontContentPoints.Size = new System.Drawing.Size(16, 13);
+            this.lblTextFontContentPoints.Size = new System.Drawing.Size(22, 16);
             this.lblTextFontContentPoints.TabIndex = 32;
-            this.lblTextFontContentPoints.Text = "pt";
+            this.lblTextFontContentPoints.Text = "pt.";
             // 
             // numFontSizeContent
             // 
-            this.numFontSizeContent.Location = new System.Drawing.Point(138, 123);
+            this.numFontSizeContent.Location = new System.Drawing.Point(158, 119);
             this.numFontSizeContent.Maximum = new decimal(new int[] {
             96,
             0,
@@ -1030,7 +1048,7 @@ namespace NoteFly
             0,
             0});
             this.numFontSizeContent.Name = "numFontSizeContent";
-            this.numFontSizeContent.Size = new System.Drawing.Size(38, 20);
+            this.numFontSizeContent.Size = new System.Drawing.Size(38, 22);
             this.numFontSizeContent.TabIndex = 31;
             this.numFontSizeContent.Value = new decimal(new int[] {
             10,
@@ -1041,18 +1059,18 @@ namespace NoteFly
             // lblTextFontContentSize
             // 
             this.lblTextFontContentSize.AutoSize = true;
-            this.lblTextFontContentSize.Location = new System.Drawing.Point(9, 125);
+            this.lblTextFontContentSize.Location = new System.Drawing.Point(3, 121);
             this.lblTextFontContentSize.Name = "lblTextFontContentSize";
-            this.lblTextFontContentSize.Size = new System.Drawing.Size(123, 13);
+            this.lblTextFontContentSize.Size = new System.Drawing.Size(148, 16);
             this.lblTextFontContentSize.TabIndex = 30;
             this.lblTextFontContentSize.Text = "default font size content:";
             // 
             // lblTextNoteFont
             // 
             this.lblTextNoteFont.AutoSize = true;
-            this.lblTextNoteFont.Location = new System.Drawing.Point(30, 101);
+            this.lblTextNoteFont.Location = new System.Drawing.Point(30, 96);
             this.lblTextNoteFont.Name = "lblTextNoteFont";
-            this.lblTextNoteFont.Size = new System.Drawing.Size(102, 13);
+            this.lblTextNoteFont.Size = new System.Drawing.Size(121, 16);
             this.lblTextNoteFont.TabIndex = 29;
             this.lblTextNoteFont.Text = "default font content:";
             // 
@@ -1063,9 +1081,9 @@ namespace NoteFly
             this.cbxFontNoteContent.DropDownHeight = 140;
             this.cbxFontNoteContent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxFontNoteContent.IntegralHeight = false;
-            this.cbxFontNoteContent.Location = new System.Drawing.Point(138, 93);
+            this.cbxFontNoteContent.Location = new System.Drawing.Point(157, 93);
             this.cbxFontNoteContent.Name = "cbxFontNoteContent";
-            this.cbxFontNoteContent.Size = new System.Drawing.Size(182, 21);
+            this.cbxFontNoteContent.Size = new System.Drawing.Size(182, 24);
             this.cbxFontNoteContent.TabIndex = 28;
             // 
             // tabPageTrayicon
@@ -1078,9 +1096,9 @@ namespace NoteFly
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldSettings);
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldManagenotes);
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldNewnote);
-            this.tabPageTrayicon.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTrayicon.Location = new System.Drawing.Point(4, 25);
             this.tabPageTrayicon.Name = "tabPageTrayicon";
-            this.tabPageTrayicon.Size = new System.Drawing.Size(355, 249);
+            this.tabPageTrayicon.Size = new System.Drawing.Size(433, 298);
             this.tabPageTrayicon.TabIndex = 2;
             this.tabPageTrayicon.Text = "Trayicon";
             this.tabPageTrayicon.UseVisualStyleBackColor = true;
@@ -1088,19 +1106,19 @@ namespace NoteFly
             // chxUseAlternativeTrayicon
             // 
             this.chxUseAlternativeTrayicon.AutoSize = true;
-            this.chxUseAlternativeTrayicon.Location = new System.Drawing.Point(26, 164);
+            this.chxUseAlternativeTrayicon.Location = new System.Drawing.Point(25, 175);
             this.chxUseAlternativeTrayicon.Name = "chxUseAlternativeTrayicon";
-            this.chxUseAlternativeTrayicon.Size = new System.Drawing.Size(168, 17);
+            this.chxUseAlternativeTrayicon.Size = new System.Drawing.Size(296, 20);
             this.chxUseAlternativeTrayicon.TabIndex = 7;
-            this.chxUseAlternativeTrayicon.Text = "Use alternative white trayicon.";
+            this.chxUseAlternativeTrayicon.Text = "Use alternative windows7 style/white trayicon.";
             this.chxUseAlternativeTrayicon.UseVisualStyleBackColor = true;
             // 
             // lblFontsizePoints
             // 
             this.lblFontsizePoints.AutoSize = true;
-            this.lblFontsizePoints.Location = new System.Drawing.Point(167, 60);
+            this.lblFontsizePoints.Location = new System.Drawing.Point(185, 27);
             this.lblFontsizePoints.Name = "lblFontsizePoints";
-            this.lblFontsizePoints.Size = new System.Drawing.Size(19, 13);
+            this.lblFontsizePoints.Size = new System.Drawing.Size(22, 16);
             this.lblFontsizePoints.TabIndex = 6;
             this.lblFontsizePoints.Text = "pt.";
             // 
@@ -1109,7 +1127,7 @@ namespace NoteFly
             this.lblTextFontsizeMenu.AutoSize = true;
             this.lblTextFontsizeMenu.Location = new System.Drawing.Point(23, 27);
             this.lblTextFontsizeMenu.Name = "lblTextFontsizeMenu";
-            this.lblTextFontsizeMenu.Size = new System.Drawing.Size(78, 13);
+            this.lblTextFontsizeMenu.Size = new System.Drawing.Size(97, 16);
             this.lblTextFontsizeMenu.TabIndex = 5;
             this.lblTextFontsizeMenu.Text = "Fontsize  menu";
             // 
@@ -1121,7 +1139,7 @@ namespace NoteFly
             0,
             0,
             131072});
-            this.numTrayiconFontsize.Location = new System.Drawing.Point(107, 25);
+            this.numTrayiconFontsize.Location = new System.Drawing.Point(125, 25);
             this.numTrayiconFontsize.Maximum = new decimal(new int[] {
             36,
             0,
@@ -1133,7 +1151,7 @@ namespace NoteFly
             0,
             0});
             this.numTrayiconFontsize.Name = "numTrayiconFontsize";
-            this.numTrayiconFontsize.Size = new System.Drawing.Size(54, 20);
+            this.numTrayiconFontsize.Size = new System.Drawing.Size(54, 22);
             this.numTrayiconFontsize.TabIndex = 4;
             this.numTrayiconFontsize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numTrayiconFontsize.Value = new decimal(new int[] {
@@ -1147,7 +1165,7 @@ namespace NoteFly
             this.chxTrayiconBoldExit.AutoSize = true;
             this.chxTrayiconBoldExit.Location = new System.Drawing.Point(26, 129);
             this.chxTrayiconBoldExit.Name = "chxTrayiconBoldExit";
-            this.chxTrayiconBoldExit.Size = new System.Drawing.Size(127, 17);
+            this.chxTrayiconBoldExit.Size = new System.Drawing.Size(153, 20);
             this.chxTrayiconBoldExit.TabIndex = 3;
             this.chxTrayiconBoldExit.Text = "Display \"Exit\" in bold.";
             this.chxTrayiconBoldExit.UseVisualStyleBackColor = true;
@@ -1157,7 +1175,7 @@ namespace NoteFly
             this.chxTrayiconBoldSettings.AutoSize = true;
             this.chxTrayiconBoldSettings.Location = new System.Drawing.Point(25, 106);
             this.chxTrayiconBoldSettings.Name = "chxTrayiconBoldSettings";
-            this.chxTrayiconBoldSettings.Size = new System.Drawing.Size(148, 17);
+            this.chxTrayiconBoldSettings.Size = new System.Drawing.Size(180, 20);
             this.chxTrayiconBoldSettings.TabIndex = 2;
             this.chxTrayiconBoldSettings.Text = "Display \"Settings\" in bold.";
             this.chxTrayiconBoldSettings.UseVisualStyleBackColor = true;
@@ -1167,7 +1185,7 @@ namespace NoteFly
             this.chxTrayiconBoldManagenotes.AutoSize = true;
             this.chxTrayiconBoldManagenotes.Location = new System.Drawing.Point(25, 83);
             this.chxTrayiconBoldManagenotes.Name = "chxTrayiconBoldManagenotes";
-            this.chxTrayiconBoldManagenotes.Size = new System.Drawing.Size(178, 17);
+            this.chxTrayiconBoldManagenotes.Size = new System.Drawing.Size(218, 20);
             this.chxTrayiconBoldManagenotes.TabIndex = 1;
             this.chxTrayiconBoldManagenotes.Text = "Display \"Manage notes\" in bold.";
             this.chxTrayiconBoldManagenotes.UseVisualStyleBackColor = true;
@@ -1179,7 +1197,7 @@ namespace NoteFly
             this.chxTrayiconBoldNewnote.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxTrayiconBoldNewnote.Location = new System.Drawing.Point(25, 60);
             this.chxTrayiconBoldNewnote.Name = "chxTrayiconBoldNewnote";
-            this.chxTrayiconBoldNewnote.Size = new System.Drawing.Size(197, 17);
+            this.chxTrayiconBoldNewnote.Size = new System.Drawing.Size(239, 20);
             this.chxTrayiconBoldNewnote.TabIndex = 0;
             this.chxTrayiconBoldNewnote.Text = "Display \"Create a new note\" in bold.";
             this.chxTrayiconBoldNewnote.UseVisualStyleBackColor = true;
@@ -1188,31 +1206,23 @@ namespace NoteFly
             // 
             this.tabPlugins.Controls.Add(this.pluginGrid);
             this.tabPlugins.Controls.Add(this.chxLoadPlugins);
-            this.tabPlugins.Location = new System.Drawing.Point(4, 22);
+            this.tabPlugins.Location = new System.Drawing.Point(4, 25);
             this.tabPlugins.Name = "tabPlugins";
             this.tabPlugins.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPlugins.Size = new System.Drawing.Size(369, 281);
+            this.tabPlugins.Size = new System.Drawing.Size(447, 333);
             this.tabPlugins.TabIndex = 6;
             this.tabPlugins.Text = "Plugins";
             this.tabPlugins.UseVisualStyleBackColor = true;
             // 
-            // pluginGrid
-            // 
-            this.pluginGrid.AutoScroll = true;
-            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pluginGrid.Location = new System.Drawing.Point(3, 44);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(363, 234);
-            this.pluginGrid.TabIndex = 26;
-            // 
             // chxLoadPlugins
             // 
+            this.chxLoadPlugins.AccessibleDescription = "Load plugins";
             this.chxLoadPlugins.AutoSize = true;
             this.chxLoadPlugins.Checked = true;
             this.chxLoadPlugins.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxLoadPlugins.Location = new System.Drawing.Point(8, 18);
+            this.chxLoadPlugins.Location = new System.Drawing.Point(20, 16);
             this.chxLoadPlugins.Name = "chxLoadPlugins";
-            this.chxLoadPlugins.Size = new System.Drawing.Size(86, 17);
+            this.chxLoadPlugins.Size = new System.Drawing.Size(104, 20);
             this.chxLoadPlugins.TabIndex = 25;
             this.chxLoadPlugins.Text = "Load plugins";
             this.chxLoadPlugins.UseVisualStyleBackColor = true;
@@ -1225,10 +1235,10 @@ namespace NoteFly
             this.tabHighlight.Controls.Add(this.chxHighlightHyperlinks);
             this.tabHighlight.Controls.Add(this.chxConfirmLink);
             this.tabHighlight.Controls.Add(this.chxHighlightHTML);
-            this.tabHighlight.Location = new System.Drawing.Point(4, 22);
+            this.tabHighlight.Location = new System.Drawing.Point(4, 25);
             this.tabHighlight.Name = "tabHighlight";
             this.tabHighlight.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHighlight.Size = new System.Drawing.Size(369, 281);
+            this.tabHighlight.Size = new System.Drawing.Size(447, 333);
             this.tabHighlight.TabIndex = 5;
             this.tabHighlight.Text = "Highlight";
             this.tabHighlight.UseVisualStyleBackColor = true;
@@ -1236,9 +1246,10 @@ namespace NoteFly
             // chxHighlightSQL
             // 
             this.chxHighlightSQL.AutoSize = true;
+            this.chxHighlightSQL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxHighlightSQL.Location = new System.Drawing.Point(23, 159);
             this.chxHighlightSQL.Name = "chxHighlightSQL";
-            this.chxHighlightSQL.Size = new System.Drawing.Size(193, 17);
+            this.chxHighlightSQL.Size = new System.Drawing.Size(232, 20);
             this.chxHighlightSQL.TabIndex = 16;
             this.chxHighlightSQL.Text = "Highlight SQL text between quotes.";
             this.chxHighlightSQL.UseVisualStyleBackColor = true;
@@ -1246,9 +1257,10 @@ namespace NoteFly
             // chxHighlightPHP
             // 
             this.chxHighlightPHP.AutoSize = true;
+            this.chxHighlightPHP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxHighlightPHP.Location = new System.Drawing.Point(23, 136);
             this.chxHighlightPHP.Name = "chxHighlightPHP";
-            this.chxHighlightPHP.Size = new System.Drawing.Size(228, 17);
+            this.chxHighlightPHP.Size = new System.Drawing.Size(273, 20);
             this.chxHighlightPHP.TabIndex = 15;
             this.chxHighlightPHP.Text = "Highlight PHP text between <?php and ?>.";
             this.chxHighlightPHP.UseVisualStyleBackColor = true;
@@ -1256,9 +1268,10 @@ namespace NoteFly
             // chxHighlightHyperlinks
             // 
             this.chxHighlightHyperlinks.AutoSize = true;
+            this.chxHighlightHyperlinks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxHighlightHyperlinks.Location = new System.Drawing.Point(23, 42);
             this.chxHighlightHyperlinks.Name = "chxHighlightHyperlinks";
-            this.chxHighlightHyperlinks.Size = new System.Drawing.Size(151, 17);
+            this.chxHighlightHyperlinks.Size = new System.Drawing.Size(185, 20);
             this.chxHighlightHyperlinks.TabIndex = 14;
             this.chxHighlightHyperlinks.Text = "Make hyperlinks clickable.";
             this.chxHighlightHyperlinks.UseVisualStyleBackColor = true;
@@ -1268,9 +1281,10 @@ namespace NoteFly
             this.chxConfirmLink.AutoSize = true;
             this.chxConfirmLink.Checked = true;
             this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxConfirmLink.Location = new System.Drawing.Point(23, 65);
             this.chxConfirmLink.Name = "chxConfirmLink";
-            this.chxConfirmLink.Size = new System.Drawing.Size(242, 17);
+            this.chxConfirmLink.Size = new System.Drawing.Size(293, 20);
             this.chxConfirmLink.TabIndex = 18;
             this.chxConfirmLink.Text = "Ask before launching URL, on click hyperlink.";
             this.chxConfirmLink.UseVisualStyleBackColor = true;
@@ -1278,9 +1292,10 @@ namespace NoteFly
             // chxHighlightHTML
             // 
             this.chxHighlightHTML.AutoSize = true;
+            this.chxHighlightHTML.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxHighlightHTML.Location = new System.Drawing.Point(23, 113);
             this.chxHighlightHTML.Name = "chxHighlightHTML";
-            this.chxHighlightHTML.Size = new System.Drawing.Size(123, 17);
+            this.chxHighlightHTML.Size = new System.Drawing.Size(145, 20);
             this.chxHighlightHTML.TabIndex = 13;
             this.chxHighlightHTML.Text = "Highlight HTML text.";
             this.chxHighlightHTML.UseVisualStyleBackColor = true;
@@ -1288,10 +1303,10 @@ namespace NoteFly
             // tabSharing
             // 
             this.tabSharing.Controls.Add(this.tabControlSharing);
-            this.tabSharing.Location = new System.Drawing.Point(4, 22);
+            this.tabSharing.Location = new System.Drawing.Point(4, 25);
             this.tabSharing.Name = "tabSharing";
             this.tabSharing.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSharing.Size = new System.Drawing.Size(369, 281);
+            this.tabSharing.Size = new System.Drawing.Size(447, 333);
             this.tabSharing.TabIndex = 1;
             this.tabSharing.Text = "Sharing";
             this.tabSharing.UseVisualStyleBackColor = true;
@@ -1303,7 +1318,7 @@ namespace NoteFly
             this.tabControlSharing.Location = new System.Drawing.Point(3, 3);
             this.tabControlSharing.Name = "tabControlSharing";
             this.tabControlSharing.SelectedIndex = 0;
-            this.tabControlSharing.Size = new System.Drawing.Size(363, 275);
+            this.tabControlSharing.Size = new System.Drawing.Size(441, 327);
             this.tabControlSharing.TabIndex = 14;
             // 
             // tabEmail
@@ -1311,9 +1326,9 @@ namespace NoteFly
             this.tabEmail.Controls.Add(this.chxSocialEmailEnabled);
             this.tabEmail.Controls.Add(this.chxSocialEmailDefaultaddressSet);
             this.tabEmail.Controls.Add(this.tbDefaultEmail);
-            this.tabEmail.Location = new System.Drawing.Point(4, 22);
+            this.tabEmail.Location = new System.Drawing.Point(4, 25);
             this.tabEmail.Name = "tabEmail";
-            this.tabEmail.Size = new System.Drawing.Size(355, 249);
+            this.tabEmail.Size = new System.Drawing.Size(433, 298);
             this.tabEmail.TabIndex = 2;
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
@@ -1321,9 +1336,10 @@ namespace NoteFly
             // chxSocialEmailEnabled
             // 
             this.chxSocialEmailEnabled.AutoSize = true;
+            this.chxSocialEmailEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxSocialEmailEnabled.Location = new System.Drawing.Point(14, 27);
             this.chxSocialEmailEnabled.Name = "chxSocialEmailEnabled";
-            this.chxSocialEmailEnabled.Size = new System.Drawing.Size(159, 17);
+            this.chxSocialEmailEnabled.Size = new System.Drawing.Size(197, 20);
             this.chxSocialEmailEnabled.TabIndex = 25;
             this.chxSocialEmailEnabled.Text = "Enable E-mail in share menu";
             this.chxSocialEmailEnabled.UseVisualStyleBackColor = true;
@@ -1333,9 +1349,10 @@ namespace NoteFly
             this.chxSocialEmailDefaultaddressSet.AutoSize = true;
             this.chxSocialEmailDefaultaddressSet.Checked = true;
             this.chxSocialEmailDefaultaddressSet.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxSocialEmailDefaultaddressSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxSocialEmailDefaultaddressSet.Location = new System.Drawing.Point(14, 69);
             this.chxSocialEmailDefaultaddressSet.Name = "chxSocialEmailDefaultaddressSet";
-            this.chxSocialEmailDefaultaddressSet.Size = new System.Drawing.Size(209, 17);
+            this.chxSocialEmailDefaultaddressSet.Size = new System.Drawing.Size(257, 20);
             this.chxSocialEmailDefaultaddressSet.TabIndex = 24;
             this.chxSocialEmailDefaultaddressSet.Text = "Set a default email address to send to: ";
             this.chxSocialEmailDefaultaddressSet.UseVisualStyleBackColor = true;
@@ -1346,19 +1363,20 @@ namespace NoteFly
             this.tbDefaultEmail.AccessibleDescription = "Editbox default email address";
             this.tbDefaultEmail.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
             this.tbDefaultEmail.Enabled = false;
+            this.tbDefaultEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbDefaultEmail.Location = new System.Drawing.Point(34, 92);
             this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(199, 20);
+            this.tbDefaultEmail.Size = new System.Drawing.Size(199, 22);
             this.tbDefaultEmail.TabIndex = 23;
             // 
             // tabNetwork
             // 
             this.tabNetwork.Controls.Add(this.tabControlNetwork);
             this.tabNetwork.Controls.Add(this.lblTextNetworkMiliseconds);
-            this.tabNetwork.Location = new System.Drawing.Point(4, 22);
+            this.tabNetwork.Location = new System.Drawing.Point(4, 25);
             this.tabNetwork.Name = "tabNetwork";
             this.tabNetwork.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNetwork.Size = new System.Drawing.Size(369, 281);
+            this.tabNetwork.Size = new System.Drawing.Size(447, 333);
             this.tabNetwork.TabIndex = 4;
             this.tabNetwork.Text = "Network";
             this.tabNetwork.UseVisualStyleBackColor = true;
@@ -1367,10 +1385,11 @@ namespace NoteFly
             // 
             this.tabControlNetwork.Controls.Add(this.tabUpdates);
             this.tabControlNetwork.Controls.Add(this.tabProxy);
-            this.tabControlNetwork.Location = new System.Drawing.Point(2, 2);
+            this.tabControlNetwork.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlNetwork.Location = new System.Drawing.Point(3, 3);
             this.tabControlNetwork.Name = "tabControlNetwork";
             this.tabControlNetwork.SelectedIndex = 0;
-            this.tabControlNetwork.Size = new System.Drawing.Size(366, 276);
+            this.tabControlNetwork.Size = new System.Drawing.Size(441, 327);
             this.tabControlNetwork.TabIndex = 33;
             // 
             // tabUpdates
@@ -1387,10 +1406,10 @@ namespace NoteFly
             this.tabUpdates.Controls.Add(this.lblTextDayAtStartup);
             this.tabUpdates.Controls.Add(this.lblTextLatestUpdateCheck);
             this.tabUpdates.Controls.Add(this.btnCheckUpdates);
-            this.tabUpdates.Location = new System.Drawing.Point(4, 22);
+            this.tabUpdates.Location = new System.Drawing.Point(4, 25);
             this.tabUpdates.Name = "tabUpdates";
             this.tabUpdates.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUpdates.Size = new System.Drawing.Size(358, 250);
+            this.tabUpdates.Size = new System.Drawing.Size(433, 298);
             this.tabUpdates.TabIndex = 0;
             this.tabUpdates.Text = "Updates";
             this.tabUpdates.UseVisualStyleBackColor = true;
@@ -1398,9 +1417,10 @@ namespace NoteFly
             // chxUpdateSilentInstall
             // 
             this.chxUpdateSilentInstall.AutoSize = true;
-            this.chxUpdateSilentInstall.Location = new System.Drawing.Point(11, 67);
+            this.chxUpdateSilentInstall.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxUpdateSilentInstall.Location = new System.Drawing.Point(11, 69);
             this.chxUpdateSilentInstall.Name = "chxUpdateSilentInstall";
-            this.chxUpdateSilentInstall.Size = new System.Drawing.Size(155, 17);
+            this.chxUpdateSilentInstall.Size = new System.Drawing.Size(189, 20);
             this.chxUpdateSilentInstall.TabIndex = 35;
             this.chxUpdateSilentInstall.Text = "Install update setup silently.";
             this.chxUpdateSilentInstall.UseVisualStyleBackColor = true;
@@ -1408,9 +1428,9 @@ namespace NoteFly
             // btnGPGPathBrowse
             // 
             this.btnGPGPathBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnGPGPathBrowse.Location = new System.Drawing.Point(300, 110);
+            this.btnGPGPathBrowse.Location = new System.Drawing.Point(351, 134);
             this.btnGPGPathBrowse.Name = "btnGPGPathBrowse";
-            this.btnGPGPathBrowse.Size = new System.Drawing.Size(50, 25);
+            this.btnGPGPathBrowse.Size = new System.Drawing.Size(64, 25);
             this.btnGPGPathBrowse.TabIndex = 25;
             this.btnGPGPathBrowse.Text = "browse";
             this.btnGPGPathBrowse.UseVisualStyleBackColor = false;
@@ -1418,37 +1438,41 @@ namespace NoteFly
             // 
             // tbGPGPath
             // 
-            this.tbGPGPath.Location = new System.Drawing.Point(106, 113);
+            this.tbGPGPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbGPGPath.Location = new System.Drawing.Point(128, 135);
             this.tbGPGPath.Name = "tbGPGPath";
-            this.tbGPGPath.Size = new System.Drawing.Size(190, 20);
+            this.tbGPGPath.Size = new System.Drawing.Size(217, 22);
             this.tbGPGPath.TabIndex = 34;
             // 
             // lblTextGPGPath
             // 
             this.lblTextGPGPath.AutoSize = true;
-            this.lblTextGPGPath.Location = new System.Drawing.Point(8, 116);
+            this.lblTextGPGPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextGPGPath.Location = new System.Drawing.Point(8, 138);
             this.lblTextGPGPath.Name = "lblTextGPGPath";
-            this.lblTextGPGPath.Size = new System.Drawing.Size(92, 13);
+            this.lblTextGPGPath.Size = new System.Drawing.Size(114, 16);
             this.lblTextGPGPath.TabIndex = 33;
             this.lblTextGPGPath.Text = "Location gpg.exe:";
             // 
             // chxCheckUpdatesSignature
             // 
             this.chxCheckUpdatesSignature.AutoSize = true;
-            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(11, 90);
+            this.chxCheckUpdatesSignature.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(11, 109);
             this.chxCheckUpdatesSignature.Name = "chxCheckUpdatesSignature";
-            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(314, 17);
+            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(287, 20);
             this.chxCheckUpdatesSignature.TabIndex = 25;
-            this.chxCheckUpdatesSignature.Text = "Verify the signature of downloaded updates, requires GnuPG.";
+            this.chxCheckUpdatesSignature.Text = "Verify the signature of downloaded updates.";
             this.chxCheckUpdatesSignature.UseVisualStyleBackColor = true;
             this.chxCheckUpdatesSignature.CheckedChanged += new System.EventHandler(this.chxCheckUpdatesSignature_CheckedChanged);
             // 
             // chxCheckUpdates
             // 
             this.chxCheckUpdates.AutoSize = true;
+            this.chxCheckUpdates.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxCheckUpdates.Location = new System.Drawing.Point(11, 18);
             this.chxCheckUpdates.Name = "chxCheckUpdates";
-            this.chxCheckUpdates.Size = new System.Drawing.Size(113, 17);
+            this.chxCheckUpdates.Size = new System.Drawing.Size(135, 20);
             this.chxCheckUpdates.TabIndex = 26;
             this.chxCheckUpdates.Text = "Check for updates";
             this.chxCheckUpdates.UseVisualStyleBackColor = true;
@@ -1457,7 +1481,8 @@ namespace NoteFly
             // numUpdateCheckDays
             // 
             this.numUpdateCheckDays.Enabled = false;
-            this.numUpdateCheckDays.Location = new System.Drawing.Point(140, 41);
+            this.numUpdateCheckDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numUpdateCheckDays.Location = new System.Drawing.Point(188, 41);
             this.numUpdateCheckDays.Maximum = new decimal(new int[] {
             365,
             0,
@@ -1470,7 +1495,7 @@ namespace NoteFly
             0});
             this.numUpdateCheckDays.Name = "numUpdateCheckDays";
             this.numUpdateCheckDays.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.numUpdateCheckDays.Size = new System.Drawing.Size(38, 20);
+            this.numUpdateCheckDays.Size = new System.Drawing.Size(38, 22);
             this.numUpdateCheckDays.TabIndex = 28;
             this.numUpdateCheckDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numUpdateCheckDays.Value = new decimal(new int[] {
@@ -1482,34 +1507,38 @@ namespace NoteFly
             // lblTextCheckforupdatesevery
             // 
             this.lblTextCheckforupdatesevery.AutoSize = true;
-            this.lblTextCheckforupdatesevery.Location = new System.Drawing.Point(8, 43);
+            this.lblTextCheckforupdatesevery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextCheckforupdatesevery.Location = new System.Drawing.Point(27, 43);
             this.lblTextCheckforupdatesevery.Name = "lblTextCheckforupdatesevery";
-            this.lblTextCheckforupdatesevery.Size = new System.Drawing.Size(126, 13);
+            this.lblTextCheckforupdatesevery.Size = new System.Drawing.Size(156, 16);
             this.lblTextCheckforupdatesevery.TabIndex = 27;
             this.lblTextCheckforupdatesevery.Text = "Check for updates every ";
             // 
             // lblLatestUpdateCheck
             // 
-            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(193, 162);
+            this.lblLatestUpdateCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(223, 193);
             this.lblLatestUpdateCheck.Name = "lblLatestUpdateCheck";
-            this.lblLatestUpdateCheck.Size = new System.Drawing.Size(159, 13);
+            this.lblLatestUpdateCheck.Size = new System.Drawing.Size(122, 16);
             this.lblLatestUpdateCheck.TabIndex = 32;
             // 
             // lblTextDayAtStartup
             // 
             this.lblTextDayAtStartup.AutoSize = true;
-            this.lblTextDayAtStartup.Location = new System.Drawing.Point(184, 43);
+            this.lblTextDayAtStartup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextDayAtStartup.Location = new System.Drawing.Point(232, 43);
             this.lblTextDayAtStartup.Name = "lblTextDayAtStartup";
-            this.lblTextDayAtStartup.Size = new System.Drawing.Size(79, 13);
+            this.lblTextDayAtStartup.Size = new System.Drawing.Size(98, 16);
             this.lblTextDayAtStartup.TabIndex = 29;
             this.lblTextDayAtStartup.Text = "days, at startup";
             // 
             // lblTextLatestUpdateCheck
             // 
             this.lblTextLatestUpdateCheck.AutoSize = true;
-            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(8, 162);
+            this.lblTextLatestUpdateCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(10, 193);
             this.lblTextLatestUpdateCheck.Name = "lblTextLatestUpdateCheck";
-            this.lblTextLatestUpdateCheck.Size = new System.Drawing.Size(174, 13);
+            this.lblTextLatestUpdateCheck.Size = new System.Drawing.Size(216, 16);
             this.lblTextLatestUpdateCheck.TabIndex = 31;
             this.lblTextLatestUpdateCheck.Text = "Last update check is performed on:";
             // 
@@ -1519,7 +1548,8 @@ namespace NoteFly
             this.btnCheckUpdates.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCheckUpdates.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
             this.btnCheckUpdates.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnCheckUpdates.Location = new System.Drawing.Point(89, 189);
+            this.btnCheckUpdates.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCheckUpdates.Location = new System.Drawing.Point(118, 224);
             this.btnCheckUpdates.Name = "btnCheckUpdates";
             this.btnCheckUpdates.Size = new System.Drawing.Size(180, 23);
             this.btnCheckUpdates.TabIndex = 30;
@@ -1529,26 +1559,38 @@ namespace NoteFly
             // 
             // tabProxy
             // 
+            this.tabProxy.Controls.Add(this.lblTextMiliseconds);
             this.tabProxy.Controls.Add(this.numTimeout);
             this.tabProxy.Controls.Add(this.chxProxyEnabled);
             this.tabProxy.Controls.Add(this.lblTextNetworkTimeout);
             this.tabProxy.Controls.Add(this.iptbProxyAddress);
-            this.tabProxy.Location = new System.Drawing.Point(4, 22);
+            this.tabProxy.Location = new System.Drawing.Point(4, 25);
             this.tabProxy.Name = "tabProxy";
             this.tabProxy.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProxy.Size = new System.Drawing.Size(358, 250);
+            this.tabProxy.Size = new System.Drawing.Size(433, 298);
             this.tabProxy.TabIndex = 1;
             this.tabProxy.Text = "Proxy";
             this.tabProxy.UseVisualStyleBackColor = true;
             // 
+            // lblTextMiliseconds
+            // 
+            this.lblTextMiliseconds.AccessibleDescription = "Miliseconds";
+            this.lblTextMiliseconds.AutoSize = true;
+            this.lblTextMiliseconds.Location = new System.Drawing.Point(228, 113);
+            this.lblTextMiliseconds.Name = "lblTextMiliseconds";
+            this.lblTextMiliseconds.Size = new System.Drawing.Size(26, 16);
+            this.lblTextMiliseconds.TabIndex = 25;
+            this.lblTextMiliseconds.Text = "ms";
+            // 
             // numTimeout
             // 
+            this.numTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numTimeout.Increment = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.numTimeout.Location = new System.Drawing.Point(141, 94);
+            this.numTimeout.Location = new System.Drawing.Point(163, 111);
             this.numTimeout.Maximum = new decimal(new int[] {
             30000,
             0,
@@ -1561,7 +1603,7 @@ namespace NoteFly
             0});
             this.numTimeout.Name = "numTimeout";
             this.numTimeout.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.numTimeout.Size = new System.Drawing.Size(58, 20);
+            this.numTimeout.Size = new System.Drawing.Size(58, 22);
             this.numTimeout.TabIndex = 23;
             this.numTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numTimeout.Value = new decimal(new int[] {
@@ -1573,9 +1615,10 @@ namespace NoteFly
             // chxProxyEnabled
             // 
             this.chxProxyEnabled.AutoSize = true;
-            this.chxProxyEnabled.Location = new System.Drawing.Point(15, 35);
+            this.chxProxyEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxProxyEnabled.Location = new System.Drawing.Point(16, 31);
             this.chxProxyEnabled.Name = "chxProxyEnabled";
-            this.chxProxyEnabled.Size = new System.Drawing.Size(111, 17);
+            this.chxProxyEnabled.Size = new System.Drawing.Size(136, 20);
             this.chxProxyEnabled.TabIndex = 1;
             this.chxProxyEnabled.Text = "Use socked proxy";
             this.chxProxyEnabled.UseVisualStyleBackColor = true;
@@ -1584,29 +1627,19 @@ namespace NoteFly
             // lblTextNetworkTimeout
             // 
             this.lblTextNetworkTimeout.AutoSize = true;
-            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(13, 96);
+            this.lblTextNetworkTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(15, 113);
             this.lblTextNetworkTimeout.Name = "lblTextNetworkTimeout";
-            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(122, 13);
+            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(150, 16);
             this.lblTextNetworkTimeout.TabIndex = 24;
             this.lblTextNetworkTimeout.Text = "connection timeout time:";
-            // 
-            // iptbProxyAddress
-            // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(15, 58);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
             // 
             // lblTextNetworkMiliseconds
             // 
             this.lblTextNetworkMiliseconds.AutoSize = true;
             this.lblTextNetworkMiliseconds.Location = new System.Drawing.Point(164, 141);
             this.lblTextNetworkMiliseconds.Name = "lblTextNetworkMiliseconds";
-            this.lblTextNetworkMiliseconds.Size = new System.Drawing.Size(20, 13);
+            this.lblTextNetworkMiliseconds.Size = new System.Drawing.Size(26, 16);
             this.lblTextNetworkMiliseconds.TabIndex = 25;
             this.lblTextNetworkMiliseconds.Text = "ms";
             // 
@@ -1620,9 +1653,9 @@ namespace NoteFly
             this.tabAdvance.Controls.Add(this.btnBrowse);
             this.tabAdvance.Controls.Add(this.lblTextNoteLocation);
             this.tabAdvance.Controls.Add(this.tbNotesSavePath);
-            this.tabAdvance.Location = new System.Drawing.Point(4, 22);
+            this.tabAdvance.Location = new System.Drawing.Point(4, 25);
             this.tabAdvance.Name = "tabAdvance";
-            this.tabAdvance.Size = new System.Drawing.Size(369, 281);
+            this.tabAdvance.Size = new System.Drawing.Size(447, 333);
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
@@ -1632,9 +1665,10 @@ namespace NoteFly
             this.chxLogExceptions.AutoSize = true;
             this.chxLogExceptions.Checked = true;
             this.chxLogExceptions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxLogExceptions.Location = new System.Drawing.Point(14, 158);
+            this.chxLogExceptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxLogExceptions.Location = new System.Drawing.Point(14, 161);
             this.chxLogExceptions.Name = "chxLogExceptions";
-            this.chxLogExceptions.Size = new System.Drawing.Size(244, 17);
+            this.chxLogExceptions.Size = new System.Drawing.Size(306, 20);
             this.chxLogExceptions.TabIndex = 24;
             this.chxLogExceptions.Text = "Log exceptions (recommeded: leave enabled).";
             this.chxLogExceptions.UseVisualStyleBackColor = true;
@@ -1642,18 +1676,20 @@ namespace NoteFly
             // lblTextLogging
             // 
             this.lblTextLogging.AutoSize = true;
+            this.lblTextLogging.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTextLogging.Location = new System.Drawing.Point(11, 96);
             this.lblTextLogging.Name = "lblTextLogging";
-            this.lblTextLogging.Size = new System.Drawing.Size(48, 13);
+            this.lblTextLogging.Size = new System.Drawing.Size(60, 16);
             this.lblTextLogging.TabIndex = 23;
             this.lblTextLogging.Text = "Logging:";
             // 
             // chxLogDebug
             // 
             this.chxLogDebug.AutoSize = true;
-            this.chxLogDebug.Location = new System.Drawing.Point(14, 112);
+            this.chxLogDebug.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxLogDebug.Location = new System.Drawing.Point(14, 115);
             this.chxLogDebug.Name = "chxLogDebug";
-            this.chxLogDebug.Size = new System.Drawing.Size(100, 17);
+            this.chxLogDebug.Size = new System.Drawing.Size(119, 20);
             this.chxLogDebug.TabIndex = 22;
             this.chxLogDebug.Text = "Log debug info.";
             this.chxLogDebug.UseVisualStyleBackColor = true;
@@ -1661,9 +1697,10 @@ namespace NoteFly
             // btnResetSettings
             // 
             this.btnResetSettings.BackColor = System.Drawing.Color.LightGray;
-            this.btnResetSettings.Location = new System.Drawing.Point(91, 227);
+            this.btnResetSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResetSettings.Location = new System.Drawing.Point(112, 240);
             this.btnResetSettings.Name = "btnResetSettings";
-            this.btnResetSettings.Size = new System.Drawing.Size(180, 25);
+            this.btnResetSettings.Size = new System.Drawing.Size(195, 25);
             this.btnResetSettings.TabIndex = 21;
             this.btnResetSettings.Text = "&Reset all settings to default";
             this.btnResetSettings.UseVisualStyleBackColor = false;
@@ -1674,9 +1711,10 @@ namespace NoteFly
             this.chxLogErrors.AutoSize = true;
             this.chxLogErrors.Checked = true;
             this.chxLogErrors.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxLogErrors.Location = new System.Drawing.Point(14, 135);
+            this.chxLogErrors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxLogErrors.Location = new System.Drawing.Point(14, 138);
             this.chxLogErrors.Name = "chxLogErrors";
-            this.chxLogErrors.Size = new System.Drawing.Size(76, 17);
+            this.chxLogErrors.Size = new System.Drawing.Size(91, 20);
             this.chxLogErrors.TabIndex = 19;
             this.chxLogErrors.Text = "Log errors.";
             this.chxLogErrors.UseVisualStyleBackColor = true;
@@ -1684,9 +1722,10 @@ namespace NoteFly
             // btnBrowse
             // 
             this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnBrowse.Location = new System.Drawing.Point(310, 50);
+            this.btnBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBrowse.Location = new System.Drawing.Point(369, 50);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(50, 25);
+            this.btnBrowse.Size = new System.Drawing.Size(68, 25);
             this.btnBrowse.TabIndex = 15;
             this.btnBrowse.Text = "browse";
             this.btnBrowse.UseVisualStyleBackColor = false;
@@ -1695,28 +1734,31 @@ namespace NoteFly
             // lblTextNoteLocation
             // 
             this.lblTextNoteLocation.AutoSize = true;
-            this.lblTextNoteLocation.Location = new System.Drawing.Point(15, 36);
+            this.lblTextNoteLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(13, 32);
             this.lblTextNoteLocation.Name = "lblTextNoteLocation";
-            this.lblTextNoteLocation.Size = new System.Drawing.Size(75, 13);
+            this.lblTextNoteLocation.Size = new System.Drawing.Size(92, 16);
             this.lblTextNoteLocation.TabIndex = 16;
             this.lblTextNoteLocation.Text = "Save notes in:";
             // 
             // tbNotesSavePath
             // 
+            this.tbNotesSavePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbNotesSavePath.Location = new System.Drawing.Point(15, 53);
             this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(290, 20);
+            this.tbNotesSavePath.Size = new System.Drawing.Size(348, 22);
             this.tbNotesSavePath.TabIndex = 14;
             // 
             // chxSettingsExpertEnabled
             // 
+            this.chxSettingsExpertEnabled.AccessibleDescription = "Show expert settings";
             this.chxSettingsExpertEnabled.AutoSize = true;
             this.chxSettingsExpertEnabled.Checked = true;
             this.chxSettingsExpertEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxSettingsExpertEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(25, 312);
+            this.chxSettingsExpertEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(24, 371);
             this.chxSettingsExpertEnabled.Name = "chxSettingsExpertEnabled";
-            this.chxSettingsExpertEnabled.Size = new System.Drawing.Size(106, 19);
+            this.chxSettingsExpertEnabled.Size = new System.Drawing.Size(114, 20);
             this.chxSettingsExpertEnabled.TabIndex = 25;
             this.chxSettingsExpertEnabled.Text = "E&xpert settings";
             this.chxSettingsExpertEnabled.UseVisualStyleBackColor = true;
@@ -1734,12 +1776,36 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
+            // pluginGrid
+            // 
+            this.pluginGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pluginGrid.AutoScroll = true;
+            this.pluginGrid.Location = new System.Drawing.Point(3, 42);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(441, 288);
+            this.pluginGrid.TabIndex = 26;
+            // 
+            // iptbProxyAddress
+            // 
+            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iptbProxyAddress.Enabled = false;
+            this.iptbProxyAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.iptbProxyAddress.IPAddress = "0.0.0.0";
+            this.iptbProxyAddress.Location = new System.Drawing.Point(15, 58);
+            this.iptbProxyAddress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iptbProxyAddress.Name = "iptbProxyAddress";
+            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
+            this.iptbProxyAddress.TabIndex = 19;
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(377, 339);
+            this.ClientSize = new System.Drawing.Size(455, 398);
             this.Controls.Add(this.chxSettingsExpertEnabled);
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
@@ -1792,5 +1858,7 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.Label lblTextMiliseconds;
     }
 }

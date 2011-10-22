@@ -690,7 +690,7 @@ namespace NoteFly
             if (this.chxLoadPlugins.Checked)
             {
                 this.pluginGrid.VerticalScroll.Value = 0;
-                this.pluginGrid.DrawAllPluginsDetails();
+                this.pluginGrid.DrawAllPluginsDetails(this.pluginGrid.Width);
             }
         }
 

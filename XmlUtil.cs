@@ -640,7 +640,7 @@ namespace NoteFly
             Settings.SharingEmailEnabled = true;
             Settings.SharingEmailDefaultadres = string.Empty;
             Settings.TrayiconAlternateIcon = false;
-            Settings.TrayiconFontsize = 8.25f;
+            Settings.TrayiconFontsize = 9.00f; // default .net: 8.25f; but made a little bigger for readablity
             Settings.TrayiconLeftclickaction = 1;
             Settings.TrayiconCreatenotebold = true;
             Settings.TrayiconExitbold = false;

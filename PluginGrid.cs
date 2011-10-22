@@ -48,13 +48,14 @@ namespace NoteFly
         /// </summary>
         public PluginGrid()
         {
-            this.DrawAllPluginsDetails();
+            const int DEFAULTWITH = 415;
+            this.DrawAllPluginsDetails(DEFAULTWITH);
         }
 
         /// <summary>
         /// Draw all plugins in the plugingrid.
         /// </summary>
-        public void DrawAllPluginsDetails()
+        public void DrawAllPluginsDetails(int gridwidth)
         {
             this.SuspendLayout();
             this.Controls.Clear();
@@ -65,7 +66,7 @@ namespace NoteFly
                 this.tlpnlPlugins = new TableLayoutPanel[this.allplugins.Length];
                 for (int i = 0; i < this.allplugins.Length; i++)
                 {
-                    this.DrawPluginDetails(i, this.allplugins[i].Enabled, this.allplugins[i].Filename);
+                    this.DrawPluginDetails(i, this.allplugins[i].Enabled, this.allplugins[i].Filename, gridwidth);
                 }
             }
 
@@ -108,7 +109,7 @@ namespace NoteFly
         /// <param name="pluginpos">The positio of the plugin in allplugins array</param>
         /// <param name="pluginenabled">Is the plugin enabled</param>
         /// <param name="filename">The filename of the plugin assebly</param>
-        private void DrawPluginDetails(int pluginpos, bool pluginenabled, string filename)
+        private void DrawPluginDetails(int pluginpos, bool pluginenabled, string filename, int gridwith)
         {            
             System.Reflection.Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, filename));
             if (pluginassembly == null)
@@ -124,9 +125,8 @@ namespace NoteFly
             Label lblPluginAuthor = new System.Windows.Forms.Label();
             Label lblTextPluginDescription = new System.Windows.Forms.Label();
             Label lblPluginDescription = new System.Windows.Forms.Label();
-            this.btnPluginsStatus[pluginpos] = new Button();
+            this.btnPluginsStatus[pluginpos] = new Button();            
             this.tlpnlPlugins[pluginpos].SuspendLayout();            
-
             this.tlpnlPlugins[pluginpos].ColumnCount = 3;
             this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0000F));
             this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0000F));
@@ -143,10 +143,10 @@ namespace NoteFly
             this.tlpnlPlugins[pluginpos].Name = "tlpnlPlugin";
             this.tlpnlPlugins[pluginpos].RowCount = 4;
             this.tlpnlPlugins[pluginpos].RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tlpnlPlugins[pluginpos].RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpnlPlugins[pluginpos].RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpnlPlugins[pluginpos].RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpnlPlugins[pluginpos].Size = new System.Drawing.Size(340, 98);
+            this.tlpnlPlugins[pluginpos].RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+            this.tlpnlPlugins[pluginpos].RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+            this.tlpnlPlugins[pluginpos].RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tlpnlPlugins[pluginpos].Size = new System.Drawing.Size(gridwith, 99);
             this.tlpnlPlugins[pluginpos].TabIndex = 4;
 
             // lblPluginTitle

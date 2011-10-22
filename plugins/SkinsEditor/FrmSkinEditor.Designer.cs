@@ -84,6 +84,9 @@
             this.pnlClrHighlight = new System.Windows.Forms.Panel();
             this.pnlClrSelecting = new System.Windows.Forms.Panel();
             this.pnlClrPrimary = new System.Windows.Forms.Panel();
+            this.lbTextPrimaryTexture = new System.Windows.Forms.Label();
+            this.tbPrimaryTexture = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -97,7 +100,7 @@
             this.lbxSkins.FormattingEnabled = true;
             this.lbxSkins.Location = new System.Drawing.Point(3, 28);
             this.lbxSkins.Name = "lbxSkins";
-            this.lbxSkins.Size = new System.Drawing.Size(118, 212);
+            this.lbxSkins.Size = new System.Drawing.Size(118, 225);
             this.lbxSkins.TabIndex = 1;
             this.lbxSkins.SelectedIndexChanged += new System.EventHandler(this.lbxSkins_SelectedIndexChanged);
             // 
@@ -133,7 +136,7 @@
             // lbTextPrimarycolor
             // 
             this.lbTextPrimarycolor.AutoSize = true;
-            this.lbTextPrimarycolor.Location = new System.Drawing.Point(34, 87);
+            this.lbTextPrimarycolor.Location = new System.Drawing.Point(34, 109);
             this.lbTextPrimarycolor.Name = "lbTextPrimarycolor";
             this.lbTextPrimarycolor.Size = new System.Drawing.Size(70, 13);
             this.lbTextPrimarycolor.TabIndex = 5;
@@ -142,7 +145,7 @@
             // tbPrimaryColor
             // 
             this.tbPrimaryColor.Enabled = false;
-            this.tbPrimaryColor.Location = new System.Drawing.Point(141, 84);
+            this.tbPrimaryColor.Location = new System.Drawing.Point(141, 106);
             this.tbPrimaryColor.MaxLength = 7;
             this.tbPrimaryColor.Name = "tbPrimaryColor";
             this.tbPrimaryColor.Size = new System.Drawing.Size(59, 20);
@@ -154,7 +157,7 @@
             // lbTextSelectingcolor
             // 
             this.lbTextSelectingcolor.AutoSize = true;
-            this.lbTextSelectingcolor.Location = new System.Drawing.Point(34, 115);
+            this.lbTextSelectingcolor.Location = new System.Drawing.Point(34, 137);
             this.lbTextSelectingcolor.Name = "lbTextSelectingcolor";
             this.lbTextSelectingcolor.Size = new System.Drawing.Size(80, 13);
             this.lbTextSelectingcolor.TabIndex = 7;
@@ -163,7 +166,7 @@
             // tbSelectingColor
             // 
             this.tbSelectingColor.Enabled = false;
-            this.tbSelectingColor.Location = new System.Drawing.Point(141, 112);
+            this.tbSelectingColor.Location = new System.Drawing.Point(141, 134);
             this.tbSelectingColor.MaxLength = 7;
             this.tbSelectingColor.Name = "tbSelectingColor";
             this.tbSelectingColor.Size = new System.Drawing.Size(59, 20);
@@ -175,7 +178,7 @@
             // lbTextHighlightcolor
             // 
             this.lbTextHighlightcolor.AutoSize = true;
-            this.lbTextHighlightcolor.Location = new System.Drawing.Point(34, 144);
+            this.lbTextHighlightcolor.Location = new System.Drawing.Point(34, 166);
             this.lbTextHighlightcolor.Name = "lbTextHighlightcolor";
             this.lbTextHighlightcolor.Size = new System.Drawing.Size(91, 13);
             this.lbTextHighlightcolor.TabIndex = 9;
@@ -184,7 +187,7 @@
             // tbHighlightingColor
             // 
             this.tbHighlightingColor.Enabled = false;
-            this.tbHighlightingColor.Location = new System.Drawing.Point(141, 141);
+            this.tbHighlightingColor.Location = new System.Drawing.Point(141, 163);
             this.tbHighlightingColor.MaxLength = 7;
             this.tbHighlightingColor.Name = "tbHighlightingColor";
             this.tbHighlightingColor.Size = new System.Drawing.Size(59, 20);
@@ -196,7 +199,7 @@
             // btnPickPrimaryColor
             // 
             this.btnPickPrimaryColor.Enabled = false;
-            this.btnPickPrimaryColor.Location = new System.Drawing.Point(224, 82);
+            this.btnPickPrimaryColor.Location = new System.Drawing.Point(224, 104);
             this.btnPickPrimaryColor.Name = "btnPickPrimaryColor";
             this.btnPickPrimaryColor.Size = new System.Drawing.Size(35, 23);
             this.btnPickPrimaryColor.TabIndex = 11;
@@ -208,7 +211,7 @@
             // btnPickSelectingColor
             // 
             this.btnPickSelectingColor.Enabled = false;
-            this.btnPickSelectingColor.Location = new System.Drawing.Point(224, 109);
+            this.btnPickSelectingColor.Location = new System.Drawing.Point(224, 131);
             this.btnPickSelectingColor.Name = "btnPickSelectingColor";
             this.btnPickSelectingColor.Size = new System.Drawing.Size(35, 23);
             this.btnPickSelectingColor.TabIndex = 12;
@@ -220,7 +223,7 @@
             // btnPickHighlightColor
             // 
             this.btnPickHighlightColor.Enabled = false;
-            this.btnPickHighlightColor.Location = new System.Drawing.Point(224, 139);
+            this.btnPickHighlightColor.Location = new System.Drawing.Point(224, 161);
             this.btnPickHighlightColor.Name = "btnPickHighlightColor";
             this.btnPickHighlightColor.Size = new System.Drawing.Size(35, 23);
             this.btnPickHighlightColor.TabIndex = 13;
@@ -232,7 +235,7 @@
             // lbTextTextcolor
             // 
             this.lbTextTextcolor.AutoSize = true;
-            this.lbTextTextcolor.Location = new System.Drawing.Point(34, 172);
+            this.lbTextTextcolor.Location = new System.Drawing.Point(34, 194);
             this.lbTextTextcolor.Name = "lbTextTextcolor";
             this.lbTextTextcolor.Size = new System.Drawing.Size(57, 13);
             this.lbTextTextcolor.TabIndex = 14;
@@ -241,7 +244,7 @@
             // tbTextColor
             // 
             this.tbTextColor.Enabled = false;
-            this.tbTextColor.Location = new System.Drawing.Point(141, 169);
+            this.tbTextColor.Location = new System.Drawing.Point(141, 191);
             this.tbTextColor.MaxLength = 7;
             this.tbTextColor.Name = "tbTextColor";
             this.tbTextColor.Size = new System.Drawing.Size(59, 20);
@@ -253,7 +256,7 @@
             // btnPickTextColor
             // 
             this.btnPickTextColor.Enabled = false;
-            this.btnPickTextColor.Location = new System.Drawing.Point(224, 167);
+            this.btnPickTextColor.Location = new System.Drawing.Point(224, 189);
             this.btnPickTextColor.Name = "btnPickTextColor";
             this.btnPickTextColor.Size = new System.Drawing.Size(35, 23);
             this.btnPickTextColor.TabIndex = 16;
@@ -266,7 +269,7 @@
             // 
             this.btnSaveSkin.BackColor = System.Drawing.Color.Silver;
             this.btnSaveSkin.Enabled = false;
-            this.btnSaveSkin.Location = new System.Drawing.Point(39, 210);
+            this.btnSaveSkin.Location = new System.Drawing.Point(28, 228);
             this.btnSaveSkin.Name = "btnSaveSkin";
             this.btnSaveSkin.Size = new System.Drawing.Size(107, 23);
             this.btnSaveSkin.TabIndex = 17;
@@ -303,7 +306,7 @@
             // btnClose
             // 
             this.btnClose.BackColor = System.Drawing.Color.Silver;
-            this.btnClose.Location = new System.Drawing.Point(152, 210);
+            this.btnClose.Location = new System.Drawing.Point(141, 228);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(107, 23);
             this.btnClose.TabIndex = 20;
@@ -325,6 +328,9 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.button1);
+            this.splitContainer1.Panel2.Controls.Add(this.tbPrimaryTexture);
+            this.splitContainer1.Panel2.Controls.Add(this.lbTextPrimaryTexture);
             this.splitContainer1.Panel2.Controls.Add(this.pnlClrText);
             this.splitContainer1.Panel2.Controls.Add(this.pnlClrHighlight);
             this.splitContainer1.Panel2.Controls.Add(this.pnlClrSelecting);
@@ -347,7 +353,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tbHighlightingColor);
             this.splitContainer1.Panel2.Controls.Add(this.btnPickSelectingColor);
             this.splitContainer1.Panel2.Controls.Add(this.btnPickPrimaryColor);
-            this.splitContainer1.Size = new System.Drawing.Size(413, 240);
+            this.splitContainer1.Size = new System.Drawing.Size(414, 254);
             this.splitContainer1.SplitterDistance = 124;
             this.splitContainer1.TabIndex = 21;
             // 
@@ -355,7 +361,7 @@
             // 
             this.pnlClrText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlClrText.ForeColor = System.Drawing.Color.Black;
-            this.pnlClrText.Location = new System.Drawing.Point(202, 169);
+            this.pnlClrText.Location = new System.Drawing.Point(202, 191);
             this.pnlClrText.Name = "pnlClrText";
             this.pnlClrText.Size = new System.Drawing.Size(21, 21);
             this.pnlClrText.TabIndex = 24;
@@ -364,7 +370,7 @@
             // 
             this.pnlClrHighlight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlClrHighlight.ForeColor = System.Drawing.Color.Black;
-            this.pnlClrHighlight.Location = new System.Drawing.Point(202, 141);
+            this.pnlClrHighlight.Location = new System.Drawing.Point(202, 163);
             this.pnlClrHighlight.Name = "pnlClrHighlight";
             this.pnlClrHighlight.Size = new System.Drawing.Size(21, 21);
             this.pnlClrHighlight.TabIndex = 23;
@@ -373,7 +379,7 @@
             // 
             this.pnlClrSelecting.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlClrSelecting.ForeColor = System.Drawing.Color.Black;
-            this.pnlClrSelecting.Location = new System.Drawing.Point(202, 112);
+            this.pnlClrSelecting.Location = new System.Drawing.Point(202, 134);
             this.pnlClrSelecting.Name = "pnlClrSelecting";
             this.pnlClrSelecting.Size = new System.Drawing.Size(21, 21);
             this.pnlClrSelecting.TabIndex = 22;
@@ -382,17 +388,47 @@
             // 
             this.pnlClrPrimary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlClrPrimary.ForeColor = System.Drawing.Color.Black;
-            this.pnlClrPrimary.Location = new System.Drawing.Point(202, 84);
+            this.pnlClrPrimary.Location = new System.Drawing.Point(202, 106);
             this.pnlClrPrimary.Name = "pnlClrPrimary";
             this.pnlClrPrimary.Size = new System.Drawing.Size(21, 21);
             this.pnlClrPrimary.TabIndex = 21;
+            // 
+            // lbTextPrimaryTexture
+            // 
+            this.lbTextPrimaryTexture.AutoSize = true;
+            this.lbTextPrimaryTexture.Location = new System.Drawing.Point(34, 82);
+            this.lbTextPrimaryTexture.Name = "lbTextPrimaryTexture";
+            this.lbTextPrimaryTexture.Size = new System.Drawing.Size(79, 13);
+            this.lbTextPrimaryTexture.TabIndex = 25;
+            this.lbTextPrimaryTexture.Text = "Primary texture:";
+            // 
+            // tbPrimaryTexture
+            // 
+            this.tbPrimaryTexture.Enabled = false;
+            this.tbPrimaryTexture.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrimaryTexture.Location = new System.Drawing.Point(141, 77);
+            this.tbPrimaryTexture.MaxLength = 255;
+            this.tbPrimaryTexture.Name = "tbPrimaryTexture";
+            this.tbPrimaryTexture.Size = new System.Drawing.Size(82, 22);
+            this.tbPrimaryTexture.TabIndex = 26;
+            // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(224, 76);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(35, 23);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "...";
+            this.button1.UseCompatibleTextRendering = true;
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // FrmSkinEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(413, 240);
+            this.ClientSize = new System.Drawing.Size(414, 254);
             this.Controls.Add(this.splitContainer1);
             this.Name = "FrmSkinEditor";
             this.Text = "Skin editor";
@@ -406,5 +442,9 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox tbPrimaryTexture;
+        private System.Windows.Forms.Label lbTextPrimaryTexture;
     }
 }

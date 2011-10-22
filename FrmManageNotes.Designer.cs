@@ -156,7 +156,7 @@ namespace NoteFly
             this.btnClose.BackColor = System.Drawing.Color.DarkOrange;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(394, 2);
+            this.btnClose.Location = new System.Drawing.Point(414, 2);
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(32, 23);
@@ -178,7 +178,7 @@ namespace NoteFly
             this.pnlHead.Controls.Add(this.btnClose);
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
-            this.pnlHead.Size = new System.Drawing.Size(430, 30);
+            this.pnlHead.Size = new System.Drawing.Size(450, 30);
             this.pnlHead.TabIndex = 8;
             this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
@@ -187,10 +187,10 @@ namespace NoteFly
             // lbTextWindowTitle
             // 
             this.lbTextWindowTitle.AutoSize = true;
-            this.lbTextWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTextWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbTextWindowTitle.Location = new System.Drawing.Point(8, 5);
             this.lbTextWindowTitle.Name = "lbTextWindowTitle";
-            this.lbTextWindowTitle.Size = new System.Drawing.Size(102, 18);
+            this.lbTextWindowTitle.Size = new System.Drawing.Size(111, 20);
             this.lbTextWindowTitle.TabIndex = 1;
             this.lbTextWindowTitle.Text = "Manage notes";
             this.lbTextWindowTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
@@ -203,7 +203,7 @@ namespace NoteFly
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(413, 293);
+            this.pbResizeGrip.Location = new System.Drawing.Point(433, 293);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
@@ -219,9 +219,10 @@ namespace NoteFly
             this.btnRestoreAllNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRestoreAllNotes.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.btnRestoreAllNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRestoreAllNotes.Location = new System.Drawing.Point(213, 3);
+            this.btnRestoreAllNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRestoreAllNotes.Location = new System.Drawing.Point(225, 3);
             this.btnRestoreAllNotes.Name = "btnRestoreAllNotes";
-            this.btnRestoreAllNotes.Size = new System.Drawing.Size(99, 28);
+            this.btnRestoreAllNotes.Size = new System.Drawing.Size(105, 28);
             this.btnRestoreAllNotes.TabIndex = 15;
             this.btnRestoreAllNotes.Text = "&import";
             this.toolTip.SetToolTip(this.btnRestoreAllNotes, "Restore notes from a backup file");
@@ -236,9 +237,10 @@ namespace NoteFly
             this.btnShowSelectedNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnShowSelectedNotes.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.btnShowSelectedNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShowSelectedNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShowSelectedNotes.Location = new System.Drawing.Point(3, 3);
             this.btnShowSelectedNotes.Name = "btnShowSelectedNotes";
-            this.btnShowSelectedNotes.Size = new System.Drawing.Size(99, 28);
+            this.btnShowSelectedNotes.Size = new System.Drawing.Size(105, 28);
             this.btnShowSelectedNotes.TabIndex = 16;
             this.btnShowSelectedNotes.Text = "&show selected";
             this.toolTip.SetToolTip(this.btnShowSelectedNotes, "Show or hide the selected notes");
@@ -253,9 +255,10 @@ namespace NoteFly
             this.btnNoteDelete.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnNoteDelete.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.btnNoteDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNoteDelete.Location = new System.Drawing.Point(108, 3);
+            this.btnNoteDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNoteDelete.Location = new System.Drawing.Point(114, 3);
             this.btnNoteDelete.Name = "btnNoteDelete";
-            this.btnNoteDelete.Size = new System.Drawing.Size(99, 28);
+            this.btnNoteDelete.Size = new System.Drawing.Size(105, 28);
             this.btnNoteDelete.TabIndex = 17;
             this.btnNoteDelete.Text = "&delete selected";
             this.toolTip.SetToolTip(this.btnNoteDelete, "Delete the selected notes");
@@ -270,9 +273,10 @@ namespace NoteFly
             this.btnBackAllNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnBackAllNotes.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
             this.btnBackAllNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBackAllNotes.Location = new System.Drawing.Point(318, 3);
+            this.btnBackAllNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBackAllNotes.Location = new System.Drawing.Point(336, 3);
             this.btnBackAllNotes.Name = "btnBackAllNotes";
-            this.btnBackAllNotes.Size = new System.Drawing.Size(99, 28);
+            this.btnBackAllNotes.Size = new System.Drawing.Size(107, 28);
             this.btnBackAllNotes.TabIndex = 18;
             this.btnBackAllNotes.Text = "&export all";
             this.toolTip.SetToolTip(this.btnBackAllNotes, "Backup all notes to a single backup file");
@@ -317,7 +321,7 @@ namespace NoteFly
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.dataGridView1.GridColor = System.Drawing.Color.Silver;
-            this.dataGridView1.Location = new System.Drawing.Point(5, 36);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 36);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -342,7 +346,7 @@ namespace NoteFly
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(415, 261);
+            this.dataGridView1.Size = new System.Drawing.Size(440, 261);
             this.dataGridView1.TabIndex = 19;
             this.dataGridView1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dataGridView1_Scroll);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
@@ -361,7 +365,7 @@ namespace NoteFly
             this.pnlContent.Controls.Add(this.pbResizeGrip);
             this.pnlContent.Location = new System.Drawing.Point(0, 29);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(430, 311);
+            this.pnlContent.Size = new System.Drawing.Size(450, 311);
             this.pnlContent.TabIndex = 20;
             // 
             // tableLayoutPanelButtons
@@ -377,12 +381,13 @@ namespace NoteFly
             this.tableLayoutPanelButtons.Controls.Add(this.btnRestoreAllNotes, 2, 0);
             this.tableLayoutPanelButtons.Controls.Add(this.btnNoteDelete, 1, 0);
             this.tableLayoutPanelButtons.Controls.Add(this.btnBackAllNotes, 3, 0);
-            this.tableLayoutPanelButtons.Location = new System.Drawing.Point(3, 0);
-            this.tableLayoutPanelButtons.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.tableLayoutPanelButtons.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
+            this.tableLayoutPanelButtons.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelButtons.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.tableLayoutPanelButtons.Name = "tableLayoutPanelButtons";
             this.tableLayoutPanelButtons.RowCount = 1;
             this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelButtons.Size = new System.Drawing.Size(420, 34);
+            this.tableLayoutPanelButtons.Size = new System.Drawing.Size(446, 34);
             this.tableLayoutPanelButtons.TabIndex = 21;
             // 
             // toolTip
@@ -407,7 +412,7 @@ namespace NoteFly
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Orange;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(430, 340);
+            this.ClientSize = new System.Drawing.Size(450, 340);
             this.ControlBox = false;
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlHead);
