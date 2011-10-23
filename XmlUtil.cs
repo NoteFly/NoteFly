@@ -454,122 +454,132 @@ namespace NoteFly
             }
 
             List<Skin> skins = new List<Skin>();
-            xmlread = new XmlTextReader(skinfilepath);
-            xmlread.ProhibitDtd = true;
-            Skin curskin = null;
-            int numskins = 0;
-            bool endtag = false;
-            while (xmlread.Read())
+            try
             {
-                switch (xmlread.Name)
+                xmlread = new XmlTextReader(skinfilepath);
+                xmlread.ProhibitDtd = true;
+                Skin curskin = null;
+                int numskins = 0;
+                bool endtag = false;
+                while (xmlread.Read())
                 {
-                    case "skins":
-                        if (xmlread.HasAttributes)
-                        {
-                            int count = Convert.ToInt32(xmlread.GetAttribute("count"));
-                            if (count > 0)
+                    switch (xmlread.Name)
+                    {
+                        case "skins":
+                            if (xmlread.HasAttributes)
                             {
-                                skins.Capacity = count;
-                            }
-                        }
-
-                        break;
-                    case "skin":
-                        if (endtag)
-                        {
-                            if (curskin != null && numskins < 255)
-                            {
-                                skins.Add(curskin);
-                            }
-                        }
-                        else if (!endtag)
-                        {
-                            numskins++;
-                            curskin = new Skin();
-                        }
-
-                        endtag = !endtag;
-                        break;
-                    case "Name":
-                        curskin.Name = xmlread.ReadElementContentAsString();
-                        break;
-                    case "PrimaryClr":
-                        if (xmlread.HasAttributes)
-                        {
-                            string filepathtexture = xmlread.GetAttribute("texture");
-                            if (System.IO.File.Exists(filepathtexture) || System.IO.File.Exists(Path.Combine(Program.InstallFolder, filepathtexture)))
-                            {
-                                string extension = filepathtexture.Substring(filepathtexture.LastIndexOf('.'), filepathtexture.Length - filepathtexture.LastIndexOf('.')).ToLower();
-                                string[] supportedimageformats = new string[] { ".png", ".tif", ".tiff", ".bmp", ".gif", ".jpg", ".jpeg" };
-                                bool imagesupported = false;
-                                for (int i = 0; i < supportedimageformats.Length; i++)
+                                int count = Convert.ToInt32(xmlread.GetAttribute("count"));
+                                if (count > 0)
                                 {
-                                    if (extension == supportedimageformats[i])
-                                    {
-                                        imagesupported = true;
-                                        break;
-                                    }
+                                    skins.Capacity = count;
                                 }
+                            }
 
-                                if (imagesupported)
+                            break;
+                        case "skin":
+                            if (endtag)
+                            {
+                                if (curskin != null && numskins < 255)
                                 {
-                                    if (System.IO.File.Exists(filepathtexture))
+                                    skins.Add(curskin);
+                                }
+                            }
+                            else if (!endtag)
+                            {
+                                numskins++;
+                                curskin = new Skin();
+                            }
+
+                            endtag = !endtag;
+                            break;
+                        case "Name":
+                            curskin.Name = xmlread.ReadElementContentAsString();
+                            break;
+                        case "PrimaryClr":
+                            if (xmlread.HasAttributes)
+                            {
+                                string filepathtexture = xmlread.GetAttribute("texture");
+                                if (System.IO.File.Exists(filepathtexture) || System.IO.File.Exists(Path.Combine(Program.InstallFolder, filepathtexture)))
+                                {
+                                    string extension = filepathtexture.Substring(filepathtexture.LastIndexOf('.'), filepathtexture.Length - filepathtexture.LastIndexOf('.')).ToLower();
+                                    string[] supportedimageformats = new string[] { ".png", ".tif", ".tiff", ".bmp", ".gif", ".jpg", ".jpeg" };
+                                    bool imagesupported = false;
+                                    for (int i = 0; i < supportedimageformats.Length; i++)
                                     {
-                                        curskin.PrimaryTexture = filepathtexture;
+                                        if (extension == supportedimageformats[i])
+                                        {
+                                            imagesupported = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (imagesupported)
+                                    {
+                                        if (System.IO.File.Exists(filepathtexture))
+                                        {
+                                            curskin.PrimaryTexture = filepathtexture;
+                                        }
+                                        else
+                                        {
+                                            curskin.PrimaryTexture = Path.Combine(Program.InstallFolder, filepathtexture);
+                                        }
                                     }
                                     else
                                     {
-                                        curskin.PrimaryTexture = Path.Combine(Program.InstallFolder, filepathtexture);
+                                        const string TEXTUREIMGFORMUNSUPPORTED = "Texture image format not supported.";
+                                        Log.Write(LogType.error, TEXTUREIMGFORMUNSUPPORTED);
                                     }
                                 }
                                 else
                                 {
-                                    const string TEXTUREIMGFORMUNSUPPORTED = "Texture image format not supported.";
-                                    Log.Write(LogType.error, TEXTUREIMGFORMUNSUPPORTED);
+                                    const string TEXTUREIMAGENOTFOUND = "Texture image not be found, lookt for: ";
+                                    Log.Write(LogType.error, TEXTUREIMAGENOTFOUND + filepathtexture);
                                 }
-                            }
-                            else
-                            {
-                                const string TEXTUREIMAGENOTFOUND = "Texture image not be found, lookt for: ";
-                                Log.Write(LogType.error, TEXTUREIMAGENOTFOUND + filepathtexture);
-                            }
 
-                            string texturelayout = xmlread.GetAttribute("texturelayout");
-                            if (!string.IsNullOrEmpty(texturelayout))
-                            {
-                                texturelayout = texturelayout.ToLowerInvariant();
-                                switch (texturelayout)
+                                string texturelayout = xmlread.GetAttribute("texturelayout");
+                                if (!string.IsNullOrEmpty(texturelayout))
                                 {
-                                    case "tile":
-                                        curskin.PrimaryTextureLayout = System.Windows.Forms.ImageLayout.Tile;
-                                        break;
-                                    case "stretch":
-                                        curskin.PrimaryTextureLayout = System.Windows.Forms.ImageLayout.Stretch;
-                                        break;
-                                    case "center":
-                                        curskin.PrimaryTextureLayout = System.Windows.Forms.ImageLayout.Center;
-                                        break;
+                                    texturelayout = texturelayout.ToLowerInvariant();
+                                    switch (texturelayout)
+                                    {
+                                        case "tile":
+                                            curskin.PrimaryTextureLayout = System.Windows.Forms.ImageLayout.Tile;
+                                            break;
+                                        case "stretch":
+                                            curskin.PrimaryTextureLayout = System.Windows.Forms.ImageLayout.Stretch;
+                                            break;
+                                        case "center":
+                                            curskin.PrimaryTextureLayout = System.Windows.Forms.ImageLayout.Center;
+                                            break;
+                                    }
                                 }
                             }
-                        }
 
-                        curskin.PrimaryClr = ConvToClr(xmlread.ReadElementContentAsString());
-                        break;
-                    case "SelectClr":
-                        curskin.SelectClr = ConvToClr(xmlread.ReadElementContentAsString());
-                        break;
-                    case "HighlightClr":
-                        curskin.HighlightClr = ConvToClr(xmlread.ReadElementContentAsString());
-                        break;
-                    case "TextClr":
-                        curskin.TextClr = ConvToClr(xmlread.ReadElementContentAsString());
-                        break;
+                            curskin.PrimaryClr = ConvToClr(xmlread.ReadElementContentAsString());
+                            break;
+                        case "SelectClr":
+                            curskin.SelectClr = ConvToClr(xmlread.ReadElementContentAsString());
+                            break;
+                        case "HighlightClr":
+                            curskin.HighlightClr = ConvToClr(xmlread.ReadElementContentAsString());
+                            break;
+                        case "TextClr":
+                            curskin.TextClr = ConvToClr(xmlread.ReadElementContentAsString());
+                            break;
+                    }
+
+                    if (xmlread.Depth > 3)
+                    {
+                        const string SKINFILECORRUPT = "Skin file corrupted: ";
+                        throw new ApplicationException(SKINFILECORRUPT + SKINFILE);
+                    }
                 }
-
-                if (xmlread.Depth > 3)
+            }
+            finally
+            {
+                if (xmlread != null)
                 {
-                    const string SKINFILECORRUPT = "Skin file corrupted: ";
-                    throw new ApplicationException(SKINFILECORRUPT + SKINFILE);
+                    xmlread.Close();
                 }
             }
 

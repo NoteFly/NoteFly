@@ -80,18 +80,7 @@ namespace NoteFly
             this.note = note;
             this.UpdateForm(false);
             this.lblTitle.Text = note.Title;
-            this.BackColor = notes.GetPrimaryClr(note.SkinNr);
-            if (notes.GetPrimaryTexture(note.SkinNr) != null)
-            {
-                this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(note.SkinNr);
-                this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
-            }
-            else
-            {
-                this.BackgroundImage = null;
-            }
 
-            this.pnlHead.BackColor = Color.Transparent;
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             try
             {
@@ -171,6 +160,18 @@ namespace NoteFly
         {
             if (!contentset)
             {
+                this.BackColor = notes.GetPrimaryClr(note.SkinNr);
+                if (notes.GetPrimaryTexture(note.SkinNr) != null)
+                {
+                    this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(note.SkinNr);
+                    this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
+                }
+                else
+                {
+                    this.BackgroundImage = null;
+                }
+
+                this.pnlHead.BackColor = Color.Transparent;
                 if (!Settings.NotesTransparencyEnabled)
                 {
                     this.Opacity = 1.0;

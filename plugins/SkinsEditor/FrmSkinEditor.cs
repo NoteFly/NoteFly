@@ -296,6 +296,7 @@ namespace SkinsEditor
                         if (this.WriteSkinsFile(this.tbSkinName.Text, this.tbPrimaryTexture.Text, this.tbPrimaryColor.Text, this.tbSelectingColor.Text, this.tbHighlightingColor.Text, this.tbTextColor.Text))
                         {
                             this.host.ReloadAllSkins();
+                            this.host.UpdateAllNoteForms();
                         }
                         else
                         {
