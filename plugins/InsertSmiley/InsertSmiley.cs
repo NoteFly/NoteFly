@@ -52,7 +52,6 @@
         public override string NoteFormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn)
         {
             string rtfimg = string.Empty;
-            // wmetafile of smilies created with wordpad and then rtf files opened with notepad. ;)
             switch (btn.Name)
             {
                 case "smile":

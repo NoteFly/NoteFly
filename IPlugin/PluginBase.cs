@@ -99,6 +99,7 @@ namespace IPlugin
                 this.host = value;
             }
         }
+
         // Methods (15) 
 
         /// <summary>

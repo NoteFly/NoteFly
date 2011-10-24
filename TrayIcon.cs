@@ -185,6 +185,7 @@ namespace NoteFly
             this.menuSettings.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, menufontstyle);
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuSettings);
+
             // Create trayicon plugin ToolStripMenuItem items, if any.
             if (Program.pluginsenabled != null)
             {

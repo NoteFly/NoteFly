@@ -475,6 +475,11 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxUseAlternativeTrayicon;
 
         /// <summary>
+        /// Label lblTextMiliseconds
+        /// </summary>
+        private System.Windows.Forms.Label lblTextMiliseconds;
+
+        /// <summary>
         /// PluginGrid pluginGrid
         /// </summary>
         private PluginGrid pluginGrid;        
@@ -1000,7 +1005,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = "";
+            this.lblTextDirection.AccessibleDescription = string.Empty;
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.Location = new System.Drawing.Point(21, 183);
@@ -1857,8 +1862,6 @@ namespace NoteFly
 
         }
 
-        #endregion
-
-        private System.Windows.Forms.Label lblTextMiliseconds;
+        #endregion        
     }
 }

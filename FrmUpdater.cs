@@ -76,7 +76,35 @@ namespace NoteFly
                 }
             }
 
-            this.downloadfilepath = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), downloadfilename);
+            try
+            {
+                this.downloadfilepath = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), downloadfilename);
+            }
+            catch (NullReferenceException nullexc)
+            {
+                Log.Write(LogType.exception, nullexc.Message);
+#if windows
+                const string UNKNOWFILENAME = "NoteFly_update.exe";
+                const string UNKNOWTEMPFOLDER = "C:\\temp";
+#elif linux
+                const string UNKNOWFILENAME = "NoteFly_update.deb";
+                const string UNKNOWTEMPFOLDER = "/tmp";
+#endif
+                if ((string.IsNullOrEmpty(System.Environment.GetEnvironmentVariable("TEMP"))) && (string.IsNullOrEmpty(downloadfilename)))
+                {
+                    Directory.CreateDirectory(UNKNOWTEMPFOLDER);
+                    this.downloadfilepath = Path.Combine(UNKNOWTEMPFOLDER, UNKNOWFILENAME);
+                }
+                else if (string.IsNullOrEmpty(System.Environment.GetEnvironmentVariable("TEMP")))
+                {
+                    Directory.CreateDirectory(UNKNOWTEMPFOLDER);
+                    this.downloadfilepath = Path.Combine(UNKNOWTEMPFOLDER, downloadfilename);
+                }
+                else if (string.IsNullOrEmpty(downloadfilename))
+                {
+                    this.downloadfilepath = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), UNKNOWFILENAME);
+                }
+            }
 
             if (this.CheckValidPath())
             {
@@ -103,59 +131,63 @@ namespace NoteFly
                     return;
                 }
 
+
                 // keeps track of the total bytes downloaded so we can update the progress bar
                 long downloadedsize = 0;
                 // use the webclient object to download the file
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
-                    client.Headers["user-agent"] = useragent;
-
-                    if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
+                    if (!this.CheckFileExist(this.downloadfilepath, filesize))
                     {
-                        client.Proxy = new WebProxy(Settings.NetworkProxyAddress);
-                    }
+                        client.Headers["user-agent"] = useragent;
 
-                    // open the file at the remote URL for reading
-                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(downloadurl)))
-                    {
-                        // using the FileStream object, we can write the downloaded bytes to the file system
-                        using (Stream streamLocal = new FileStream(this.downloadfilepath, FileMode.Create, FileAccess.Write, FileShare.None))
+                        if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                         {
-                            this.PreallocateFile(streamLocal, filesize);
-
-                            // loop the stream and get the file into the byte buffer
-                            int iByteSize = 0;
-                            byte[] byteBuffer = new byte[filesize];
-                            while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
-                            {
-                                // write the bytes to the file system at the file path specified
-                                streamLocal.Write(byteBuffer, 0, iByteSize);
-                                downloadedsize += iByteSize;
-
-                                // calculate the progress out of a base "100"
-                                double dIndex = (double)downloadedsize;
-                                double dTotal = (double)byteBuffer.Length;
-                                double dProgressPercentage = dIndex / dTotal;
-                                int iProgressPercentage;
-                                if (Settings.UpdatecheckUseGPG)
-                                {
-                                    iProgressPercentage = (int)(dProgressPercentage * 80);
-                                }
-                                else
-                                {
-                                    iProgressPercentage = (int)(dProgressPercentage * 100);
-                                }
-
-                                // update the progress bar
-                                this.backgroundWorkerDownloader.ReportProgress(iProgressPercentage);
-                            }
-
-                            // clean up the file stream
-                            streamLocal.Close();
+                            client.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                         }
 
-                        // close the connection to the remote server
-                        streamRemote.Close();
+                        // open the file at the remote URL for reading
+                        using (System.IO.Stream streamRemote = client.OpenRead(new Uri(downloadurl)))
+                        {
+                            // using the FileStream object, we can write the downloaded bytes to the file system
+                            using (Stream streamLocal = new FileStream(this.downloadfilepath, FileMode.Create, FileAccess.Write, FileShare.None))
+                            {
+                                this.PreallocateFile(streamLocal, filesize);
+
+                                // loop the stream and get the file into the byte buffer
+                                int iByteSize = 0;
+                                byte[] byteBuffer = new byte[filesize];
+                                while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
+                                {
+                                    // write the bytes to the file system at the file path specified
+                                    streamLocal.Write(byteBuffer, 0, iByteSize);
+                                    downloadedsize += iByteSize;
+
+                                    // calculate the progress out of a base "100"
+                                    double dIndex = (double)downloadedsize;
+                                    double dTotal = (double)byteBuffer.Length;
+                                    double dProgressPercentage = dIndex / dTotal;
+                                    int iProgressPercentage;
+                                    if (Settings.UpdatecheckUseGPG)
+                                    {
+                                        iProgressPercentage = (int)(dProgressPercentage * 80);
+                                    }
+                                    else
+                                    {
+                                        iProgressPercentage = (int)(dProgressPercentage * 100);
+                                    }
+
+                                    // update the progress bar
+                                    this.backgroundWorkerDownloader.ReportProgress(iProgressPercentage);
+                                }
+
+                                // clean up the file stream
+                                streamLocal.Close();
+                            }
+
+                            // close the connection to the remote server
+                            streamRemote.Close();
+                        }
                     }
 
                     if (Settings.UpdatecheckUseGPG)
@@ -229,6 +261,27 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Check if update setup already exist
+        /// </summary>
+        /// <param name="file">The full path to the update file</param>
+        /// <param name="filesize">The filesize of the update file</param>
+        /// <returns>True if the file already exist</returns>
+        private bool CheckFileExist(string file, long filesize)
+        {
+            bool fileexist = false;
+            if (File.Exists(file))
+            {
+                FileInfo fi = new FileInfo(file);
+                if (fi.Length == filesize)
+                {
+                    fileexist = true;
+                }
+            }
+
+            return fileexist;
+        }
+
+        /// <summary>
         /// update download process.
         /// </summary>
         /// <param name="sender">Sender object</param>
@@ -245,7 +298,7 @@ namespace NoteFly
         /// <param name="sender">Sender objects</param>
         /// <param name="e">RunWorkerCompletedEventArgs arguments</param>
         private void backgroundWorkerDownloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {            
+        {
             if (!e.Cancelled)
             {
                 const string DOWNLOADCOMPLEET = "download compleet, ";

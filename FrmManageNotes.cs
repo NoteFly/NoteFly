@@ -302,6 +302,7 @@ namespace NoteFly
                     }
 
                     writer.Write("data=");
+
                     // FIXME data= ise ingored and datetime is choicen as title instead.
                     for (int c = 0; c < title.Length; c++)
                     {
@@ -317,6 +318,7 @@ namespace NoteFly
                     }
 
                     writer.Write("0000DB0708000500130016000C001B00790100000000000000000000F7FC01000000F6010000060100000A0300001A0200000000000000000000000000000000000013\r\n");
+
                     // TODO figure out rel_position
                     writer.Write("rel_position=9A9999999979E53F0AD7A3703D0ABF3F40010000DC000000F1\r\n");
                     writer.Write("add_appearance=00000000000000000000000000\r\n");

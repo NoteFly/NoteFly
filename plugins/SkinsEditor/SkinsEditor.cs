@@ -24,8 +24,13 @@ namespace SkinsEditor
     using System.Text;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// Skin Editor plugin
+    /// </summary>
     public class SkinsEditor : IPlugin.PluginBase
     {
+        private FrmSkinEditor skineditor;
+
         /// <summary>
         /// Create the ToolStripMenuItem for the skin editor.
         /// </summary>
@@ -46,8 +51,16 @@ namespace SkinsEditor
         /// <param name="e">Event arguments</param>
         private void menutrayicon_Click(object sender, EventArgs e)
         {
-            FrmSkinEditor skineditor = new FrmSkinEditor(this.Host);
-            skineditor.Show();
+            if (skineditor == null || skineditor.IsDisposed)
+            {
+                this.skineditor = new FrmSkinEditor(this.Host);
+            }
+            else
+            {
+                this.skineditor.BringToFront();
+            }
+
+            this.skineditor.Show();
         }
     }
 }

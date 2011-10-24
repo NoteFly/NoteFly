@@ -160,11 +160,11 @@ namespace NoteFly
         {
             if (!contentset)
             {
-                this.BackColor = notes.GetPrimaryClr(note.SkinNr);
-                if (notes.GetPrimaryTexture(note.SkinNr) != null)
+                this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
+                if (this.notes.GetPrimaryTexture(this.note.SkinNr) != null)
                 {
-                    this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(note.SkinNr);
-                    this.BackgroundImage = notes.GetPrimaryTexture(note.SkinNr);
+                    this.BackgroundImageLayout = this.notes.GetPrimaryTextureLayout(this.note.SkinNr);
+                    this.BackgroundImage = this.notes.GetPrimaryTexture(this.note.SkinNr);
                 }
                 else
                 {

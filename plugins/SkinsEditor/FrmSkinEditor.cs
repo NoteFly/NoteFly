@@ -44,7 +44,7 @@ namespace SkinsEditor
             InitializeComponent();
             this.host = host;
             this.skinaction = skineditormode.browseskins;
-            this.lbxSkins.Items.AddRange(this.host.GetSkinsNames());
+            this.LoadAllSkinNames();
         }
 
         /// <summary>
@@ -67,6 +67,12 @@ namespace SkinsEditor
             /// A new skin is created.
             /// </summary>
             newskin
+        }
+
+        private void LoadAllSkinNames()
+        {
+            this.lbxSkins.Items.Clear();
+            this.lbxSkins.Items.AddRange(this.host.GetSkinsNames());
         }
 
         /// <summary>
@@ -190,7 +196,8 @@ namespace SkinsEditor
             this.tbSelectingColor.Enabled = enabled;
             this.tbHighlightingColor.Enabled = enabled;
             this.tbTextColor.Enabled = enabled;
-
+            this.tbPrimaryTexture.Enabled = enabled;
+            this.btnBrowsePrimaryTexture.Enabled = enabled;
             this.btnPickPrimaryColor.Enabled = enabled;
             this.btnPickSelectingColor.Enabled = enabled;
             this.btnPickHighlightColor.Enabled = enabled;
@@ -316,6 +323,7 @@ namespace SkinsEditor
 
                         this.skinaction = skineditormode.browseskins;
                         this.lbxSkins_SelectedIndexChanged(null, null);
+                        this.LoadAllSkinNames();
                     }
                 }
                 else
@@ -343,7 +351,7 @@ namespace SkinsEditor
 
                 for (int i = 0; i < this.host.CountSkins; i++)
                 {
-                    if (skinaction == skineditormode.editskin && this.editskinnr == i)
+                    if (this.skinaction == skineditormode.editskin && this.editskinnr == i)
                     {
                         // warn texture null is removed!
                         this.WriteSkinBody(xmlwriter, skinname, skinprimary, skinprimarytexture, ImageLayout.Tile, skinselect, skinhighlight, skintext);
@@ -366,6 +374,7 @@ namespace SkinsEditor
                     // write new skin
                     this.WriteSkinBody(xmlwriter, skinname, skinprimary, skinprimarytexture, ImageLayout.Tile, skinselect, skinhighlight, skintext);
                 }
+
                 xmlwriter.WriteEndElement();
                 xmlwriter.WriteEndDocument();
                 succeed = true;
@@ -382,14 +391,16 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// Write skin
+        /// Write a skin xml element
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="primaryclr"></param>
-        /// <param name="primarytexture"></param>
-        /// <param name="selectclr"></param>
-        /// <param name="highlightclr"></param>
-        /// <param name="textclr"></param>
+        /// <param name="xmlwriter">The xmlwriter</param>
+        /// <param name="name">The name of the skin</param>
+        /// <param name="primaryclr">The primary color of the skin.</param>
+        /// <param name="primarytexture">The primary texture of the skin.</param>
+        /// <param name="primarytexturelayout">The layout of the primary texture of the skin.</param>
+        /// <param name="selectclr">The select color of the skin.</param>
+        /// <param name="highlightclr">The highlight color of the skin.</param>
+        /// <param name="textclr">The text color of the skin.</param>
         private void WriteSkinBody(XmlWriter xmlwriter, string name, string primaryclr, string primarytexture, ImageLayout primarytexturelayout, string selectclr, string highlightclr, string textclr)
         {
             xmlwriter.WriteStartElement("skin");
@@ -520,6 +531,29 @@ namespace SkinsEditor
                         this.pnlClrText.BackColor = clr;
                         break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Selecting a primary texture file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBrowsePrimaryTexture_Click(object sender, EventArgs e)
+        {
+            if (this.openFileTextureDialog.ShowDialog() == DialogResult.OK)
+            {
+                FileInfo fitexture = new FileInfo(this.openFileTextureDialog.FileName);
+                const int NUMKBWARN = 100;
+                if (fitexture.Length > (1024 * NUMKBWARN))
+                {
+                    const string ATEXTURELARGER = "A texture larger than ";
+                    const string NOTRECOMMENDEDPERFORMANCE = " KiloBytes is not recommended for performance reasons.";
+                    const string PERFORMANCEWARNING = "Performance warning";
+                    MessageBox.Show(ATEXTURELARGER + NUMKBWARN + NOTRECOMMENDEDPERFORMANCE, PERFORMANCEWARNING);
+                }
+
+                this.tbPrimaryTexture.Text = this.openFileTextureDialog.FileName;
             }
         }
     }

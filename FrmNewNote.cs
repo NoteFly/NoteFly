@@ -125,20 +125,6 @@ namespace NoteFly
         private void ConstructFrmNewNote(Notes notes)
         {
             this.InitializeComponent();
-            for (int p = 0; p < Program.pluginsenabled.Length; p++)
-            {
-                if (Program.pluginsenabled[p].InitNoteFormatBtns() != null)
-                {
-                    foreach (Control btnPluginFormatBtn in Program.pluginsenabled[p].InitNoteFormatBtns())
-                    {
-                        this.tlpnlFormatbtn.ColumnCount += 1;
-                        this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 32));
-                        btnPluginFormatBtn.Click += new EventHandler(this.btnPluginFormatBtn_Click);
-                        this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount - 1, 0);
-                    }
-                }
-            }
-
             this.notes = notes;
             this.SetFontSettings();
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
@@ -197,6 +183,33 @@ namespace NoteFly
                 this.pnlHeadNewNote.BackColor = Color.Transparent;
                 this.lbTextTitle.BackColor = Color.Transparent;
                 this.lbTextTitle.BackColor = Color.Transparent;
+            }
+
+            CreatePluginButtons(skinnr);
+        }
+
+        /// <summary>
+        /// Create plugin buttons
+        /// </summary>
+        /// <param name="skinnr">The skin position</param>
+        private void CreatePluginButtons(int skinnr)
+        {
+            for (int p = 0; p < Program.pluginsenabled.Length; p++)
+            {
+                if (Program.pluginsenabled[p].InitNoteFormatBtns() != null)
+                {
+                    foreach (Button btnPluginFormatBtn in Program.pluginsenabled[p].InitNoteFormatBtns())
+                    {
+                        this.tlpnlFormatbtn.ColumnCount += 1;
+                        this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 32));
+                        btnPluginFormatBtn.Click += new EventHandler(this.btnPluginFormatBtn_Click);
+                        btnPluginFormatBtn.FlatStyle = FlatStyle.Flat;
+                        btnPluginFormatBtn.FlatAppearance.BorderColor = Color.Black;
+                        btnPluginFormatBtn.ForeColor = this.notes.GetTextClr(skinnr);
+                        btnPluginFormatBtn.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+                        this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount - 1, 0);
+                    }
+                }
             }
         }
 
@@ -1169,7 +1182,7 @@ namespace NoteFly
         {
             if (e.KeyChar == ' ')
             {
-                // todo Do a quick highlight of change. Every space creates a new keyword to highlight.
+                // TODO Do a quick highlight of change. Every space creates a new keyword to highlight.
             }
         }
 

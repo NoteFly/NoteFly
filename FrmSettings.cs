@@ -85,10 +85,10 @@ namespace NoteFly
                 }
                 else
                 {
-                    const string settings_dirdoesnotexist = "Directory does not exist.\r\nPlease choice a valid directory.";
-                    const string settings_dirdoesnotexisttitle = "Directory not found";
-                    Log.Write(LogType.info, settings_dirdoesnotexist);
-                    MessageBox.Show(settings_dirdoesnotexist, settings_dirdoesnotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    const string SETTINGS_DIRDOESNOTEXIST = "Directory does not exist.\r\nPlease choice a valid directory.";
+                    const string SETTINGS_DIRDOESNOTEXISTTITLE = "Directory not found";
+                    Log.Write(LogType.info, SETTINGS_DIRDOESNOTEXIST);
+                    MessageBox.Show(SETTINGS_DIRDOESNOTEXIST, SETTINGS_DIRDOESNOTEXISTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -129,64 +129,64 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnOK_Click(object sender, EventArgs e)
         {            
-            const string settings_invalidfontsize = "Font size invalid. Minimal 4pt maximum 128pt allowed.";
-            const string settings_invalidfontsizetitle = "Error invalid fontsize";
-            const string settings_nofont = "Please select a font.";
-            const string settings_nofonttitle = "Error no font.";
+            const string SETTINGS_INVALIDFONTSIZE = "Font size invalid. Minimal 4pt maximum 128pt allowed.";
+            const string SETTINGS_INVALIDFONTSIZETITLE = "Error invalid fontsize";
+            const string SETTINGS_NOFONT = "Please select a font.";
+            const string SETTINGS_NOFONTTITLE = "Error no font.";
             if (!Directory.Exists(this.tbNotesSavePath.Text))
             {
-                const string settings_invalidfoldersavenote = "Invalid folder for saving notes folder.";
-                const string settings_invalidfoldersavenotetitle = "Error invalid notes folder";
-                Log.Write(LogType.info, settings_invalidfoldersavenote);
-                MessageBox.Show(settings_invalidfoldersavenote, settings_invalidfoldersavenotetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                const string SETTINGS_INVALIDFOLDERSAVENOTE = "Invalid folder for saving notes folder.";
+                const string SETTINGS_INVALIDFOLDERSAVENOTETITLE = "Error invalid notes folder";
+                Log.Write(LogType.info, SETTINGS_INVALIDFOLDERSAVENOTE);
+                MessageBox.Show(SETTINGS_INVALIDFOLDERSAVENOTE, SETTINGS_INVALIDFOLDERSAVENOTETITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabGeneral;
             }
             else if (string.IsNullOrEmpty(this.cbxFontNoteContent.Text) == true)
             {
-                Log.Write(LogType.info, settings_nofont);
-                MessageBox.Show(settings_nofont, settings_nofonttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.info, SETTINGS_NOFONT);
+                MessageBox.Show(SETTINGS_NOFONT, SETTINGS_NOFONTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if (string.IsNullOrEmpty(this.cbxFontNoteTitle.Text) == true)
             {
-                Log.Write(LogType.info, settings_nofont);
-                MessageBox.Show(settings_nofont, settings_nofonttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.info, SETTINGS_NOFONT);
+                MessageBox.Show(SETTINGS_NOFONT, SETTINGS_NOFONTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((this.numFontSizeContent.Value < 4) || (this.numFontSizeContent.Value > 128))
             {
-                Log.Write(LogType.info, settings_invalidfontsize);
-                MessageBox.Show(settings_invalidfontsize, settings_invalidfontsizetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.info, SETTINGS_INVALIDFONTSIZE);
+                MessageBox.Show(SETTINGS_INVALIDFONTSIZE, SETTINGS_INVALIDFONTSIZETITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((this.numFontSizeTitle.Value < 4) || (this.numFontSizeTitle.Value > 128))
             {
-                Log.Write(LogType.info, settings_invalidfontsize);
-                MessageBox.Show(settings_invalidfontsize, settings_invalidfontsizetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.info, SETTINGS_INVALIDFONTSIZE);
+                MessageBox.Show(SETTINGS_INVALIDFONTSIZE, SETTINGS_INVALIDFONTSIZETITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if (this.cbxTextDirection.SelectedIndex > 1)
             {
-                const string settings_noknowtextdir = "Settings text direction invalid.";
-                const string settings_noknowtextdirtitle = "Error text direction";
-                Log.Write(LogType.error, settings_noknowtextdir);
-                MessageBox.Show(settings_noknowtextdir, settings_noknowtextdirtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                const string SETTINGS_NOKNOWTEXTDIR = "Settings text direction invalid.";
+                const string SETTINGS_NOKNOWTEXTDIRTITLE = "Error text direction";
+                Log.Write(LogType.error, SETTINGS_NOKNOWTEXTDIR);
+                MessageBox.Show(SETTINGS_NOKNOWTEXTDIR, SETTINGS_NOKNOWTEXTDIRTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && this.chxSocialEmailDefaultaddressSet.Checked)
             {
-                const string settings_emailnotvalid = "Given default emailadres is not valid.";
-                const string settings_emailnotvalidtitle = "Email adres no valid";
-                Log.Write(LogType.error, settings_emailnotvalid);
-                MessageBox.Show(settings_emailnotvalid, settings_emailnotvalidtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                const string SETTINGS_EMAILNOTVALID = "Given default emailadres is not valid.";
+                const string SETTINGS_EMAILNOTVALIDTITLE = "Email adres no valid";
+                Log.Write(LogType.error, SETTINGS_EMAILNOTVALID);
+                MessageBox.Show(SETTINGS_EMAILNOTVALID, SETTINGS_EMAILNOTVALIDTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabSharing;
             }
             else if (!File.Exists(this.tbGPGPath.Text) && this.chxCheckUpdatesSignature.Checked)
             {
-                const string settings_gpgpathinvalid = "The path to gpg.exe is not valid.";
-                const string settings_gpgpathinvalidtitle = "Error not valid gpg path.";
-                Log.Write(LogType.info, settings_gpgpathinvalid);
-                MessageBox.Show(settings_gpgpathinvalid, settings_gpgpathinvalidtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                const string SETTINGS_GPGPATHINVALID = "The path to gpg.exe is not valid.";
+                const string SETTINGS_GPGPATHINVALIDTITLE = "Error not valid gpg path.";
+                Log.Write(LogType.info, SETTINGS_GPGPATHINVALID);
+                MessageBox.Show(SETTINGS_GPGPATHINVALID, SETTINGS_GPGPATHINVALIDTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabNetwork;
             }
             else
@@ -293,7 +293,8 @@ namespace NoteFly
                         }
                         catch (UnauthorizedAccessException unauthexc)
                         {
-                            Log.Write(LogType.exception, "Not enough right to write logon start key to registry." + unauthexc.Message);
+                            const string NOWRITERIGHTSREGISTERY = "Not enough right to write logon start key to registry.";
+                            Log.Write(LogType.exception, NOWRITERIGHTSREGISTERY + unauthexc.Message);
                             MessageBox.Show(unauthexc.Message);
                         }
                         catch (Exception exc)
@@ -311,10 +312,10 @@ namespace NoteFly
                 }
                 else
                 {
-                    const string settings_regkeynotexist = "Run key in registery does not exist.";
-                    const string settings_regkeynotexisttitle = "Error run key registery missing";
-                    Log.Write(LogType.error, settings_regkeynotexist);
-                    MessageBox.Show(settings_regkeynotexist, settings_regkeynotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    const string SETTINGS_REGKEYNOTEXIST = "Run key in registery does not exist.";
+                    const string SETTINGS_REGKEYNOTEXISTTITLE = "Error run key registery missing";
+                    Log.Write(LogType.error, SETTINGS_REGKEYNOTEXIST);
+                    MessageBox.Show(SETTINGS_REGKEYNOTEXIST, SETTINGS_REGKEYNOTEXISTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 #endif
                 xmlUtil.WriteSettings();
@@ -354,8 +355,8 @@ namespace NoteFly
                     SyntaxHighlight.DeinitHighlighter();
                 }
 
-                const string settings_infoupdated = "Settings updated";
-                Log.Write(LogType.info, settings_infoupdated);
+                const string SETTINGS_INFOUPDATED = "Settings updated";
+                Log.Write(LogType.info, SETTINGS_INFOUPDATED);
                 this.Close();
             }
         }
@@ -367,9 +368,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
-            const string settings_sureresetdefault = "Are you sure, you want to reset all the settings to default?";
-            const string settings_sureresetdefaulttitle = "Reset settings?";
-            DialogResult dlgres = MessageBox.Show(settings_sureresetdefault, settings_sureresetdefaulttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            const string SETTINGS_SURERESETDEFAULT = "Are you sure, you want to reset all the settings to default?";
+            const string SETTINGS_SURERESETDEFAULTTITLE = "Reset settings?";
+            DialogResult dlgres = MessageBox.Show(SETTINGS_SURERESETDEFAULT, SETTINGS_SURERESETDEFAULTTITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgres == DialogResult.Yes)
             {
                 xmlUtil.WriteDefaultSettings();
@@ -472,18 +473,18 @@ namespace NoteFly
                     }
                     else
                     {
-                        const string settings_excsystemfilenotmoved = "File is marked as system file. Did not move.";
-                        throw new ApplicationException(settings_excsystemfilenotmoved);
+                        const string SETTINGS_EXCSYSTEMFILENOTMOVED = "File is marked as system file. Did not move.";
+                        throw new ApplicationException(SETTINGS_EXCSYSTEMFILENOTMOVED);
                     }
                 }
                 else
                 {
                     if (!errorshowed)
                     {
-                        const string settings_filealreadyexist = "Note file(s) already exist.";
-                        const string settings_filealreadyexisttitle = "Error movind note(s)";
-                        Log.Write(LogType.error, settings_filealreadyexist);
-                        MessageBox.Show(settings_filealreadyexist, settings_filealreadyexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        const string SETTINGS_FILEALREADYEXIST = "Note file(s) already exist.";
+                        const string SETTINGS_FILEALREADYEXISTTITLE = "Error movind note(s)";
+                        Log.Write(LogType.error, SETTINGS_FILEALREADYEXIST);
+                        MessageBox.Show(SETTINGS_FILEALREADYEXIST, SETTINGS_FILEALREADYEXISTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         errorshowed = true;
                     }
                 }

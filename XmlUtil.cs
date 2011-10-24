@@ -389,6 +389,7 @@ namespace NoteFly
                             {
                                 Settings.ProgramPluginsFolder = Path.GetFullPath(readpluginfolder);
                             }
+
                             break;
                         case "ProgramPluginsEnabled":
                             Settings.ProgramPluginsEnabled = xmlread.ReadElementContentAsString();
