@@ -58,6 +58,26 @@ namespace NoteFly
         public bool VerifDownload(string downloadfilepath)
         {
             bool allowlaunch = false;
+
+            // import NoteFly public key if needed.
+            bool publickeyadded = this.IsGPGNoteFlyPublicKeyAdded();
+            if (!publickeyadded)
+            {
+                Log.Write(LogType.error, "NoteFly OpenPGP public key missing. Trying to import now.");
+                this.GetGPGNoteFlyPublicKey();
+                if (!string.IsNullOrEmpty(this.gpgerror))
+                {
+                    if (this.gpgerror.StartsWith("gpg: no keyserver known"))
+                    {
+                        Log.Write(LogType.error, "Cannot import NoteFly OpenPGP public key no keyserver in UpdatecheckGPGKeyserver in settings.xml specified.");
+                    }
+                }
+                else
+                {
+                    Log.Write(LogType.info, "NoteFly OpenPGP public key imported.");
+                }
+            }         
+
             try
             {
                 System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --verify-files " + downloadfilepath + GPGSIGNATUREEXTENSION);
@@ -67,53 +87,12 @@ namespace NoteFly
                 procInfo.RedirectStandardOutput = true;
                 procInfo.RedirectStandardError = true;
                 this.gpgproc = System.Diagnostics.Process.Start(procInfo);
-                this.gpgproc.StandardInput.Flush();
-                this.gpgproc.StandardInput.Close();
-
-                this.gpgoutput = string.Empty;
-                ThreadStart outputEntry = new ThreadStart(this.StandardOutputReader);
-                Thread gpgoutputthread = new Thread(outputEntry);
-                gpgoutputthread.Start();
-
-                this.gpgerror = string.Empty;
-                ThreadStart errorEntry = new ThreadStart(this.StandardErrorReader);
-                Thread gpgerrorthread = new Thread(errorEntry);
-                gpgerrorthread.Start();
-
-                if (this.gpgproc.WaitForExit(Settings.UpdatecheckTimeoutGPG))
-                {
-                    // Process exited before timeout.
-                    // Wait for the threads to complete reading output/error (but use a timeout)
-                    if (!gpgoutputthread.Join(Settings.UpdatecheckTimeoutGPG / 2))
-                    {
-                        gpgoutputthread.Abort();
-                    }
-
-                    if (!gpgerrorthread.Join(Settings.UpdatecheckTimeoutGPG / 2))
-                    {
-                        gpgoutputthread.Abort();
-                    }
-                }
-                else
-                {
-                    this.gpgproc.Kill();
-                    if (gpgoutputthread.IsAlive)
-                    {
-                        gpgoutputthread.Abort();
-                    }
-
-                    if (gpgerrorthread.IsAlive)
-                    {
-                        gpgerrorthread.Abort();
-                    }
-                }
-
-                int gpgprocexitcode = this.gpgproc.ExitCode;
+                int gpgprocexitcode = this.StartGPGReadingThreads();
                 if (gpgprocexitcode == 0)
                 {
-                    // Currently display GPG result via messagebox, and user required to press ok to launch install.
-                    System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(this.gpgoutput + System.Environment.NewLine + this.gpgerror, Program.AssemblyTitle + " signature check result", System.Windows.Forms.MessageBoxButtons.OKCancel);
-                    if (dlgres == System.Windows.Forms.DialogResult.OK)
+                    // Currently display GPG result via messagebox, and user required to press yes to launch install.
+                    System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(this.gpgoutput + this.gpgerror + System.Environment.NewLine + "Do you want to install the update?", Program.AssemblyTitle + " GPG signature check result", System.Windows.Forms.MessageBoxButtons.YesNo);
+                    if (dlgres == System.Windows.Forms.DialogResult.Yes)
                     {
                         allowlaunch = true;
                     }
@@ -233,30 +212,184 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the NoteFly OpenPGP Public Key from a key server
+        /// Check if the NoteFly public key is added to the GPG keyring.
         /// </summary>
-        private void GetGPGNoteFlyPublicKey()
+        /// <returns>True if notefly public key is added.</returns>
+        private bool IsGPGNoteFlyPublicKeyAdded()
         {
-            // fingerprint should be: 9968 3F36 7B60 4F21 ED55 A0CC 7898 7488 B43F 047E
-            StringBuilder gpgrecvkeycommand = new StringBuilder(Settings.UpdatecheckGPGPath);
-            gpgrecvkeycommand.Append(" --recv-keys 2F9532C8");
-            if (!string.IsNullOrEmpty(Settings.UpdatecheckGPGKeyserver.Trim()))
-            {
-                gpgrecvkeycommand.Append(" --keyserver ");
-                gpgrecvkeycommand.Append(Settings.UpdatecheckGPGKeyserver.Trim());
-            }
-           
-            System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(gpgrecvkeycommand.ToString()); 
+            System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --list-public-keys --with-colons");
             procInfo.CreateNoWindow = true;
             procInfo.UseShellExecute = false;
             procInfo.RedirectStandardInput = true;
             procInfo.RedirectStandardOutput = true;
             procInfo.RedirectStandardError = true;
             this.gpgproc = System.Diagnostics.Process.Start(procInfo);
+            int gpgprocexitcode = this.StartGPGReadingThreads();
+            if (gpgprocexitcode == 0 && string.IsNullOrEmpty(this.gpgerror))
+            {
+                int column = 0;
+                int line = 0;
+                int posstartlinerecord = int.MaxValue;
+                bool ispubrecord = false;
+                int posfingerprinthalfstart = int.MaxValue;
+                ////bool fingerprintmatch = false;
+                ////int posstartpubdesc = int.MaxValue;
+                const string PUBKEYRECORD = "pub";
+                const string FINGERPRINTPUBNOTEFLY= "78987488B43F047E";
+                ////const string PUBKEYNOTEFLYDESCRIPTION = "NoteFly <releases@notefly.org>";
+                // parser the output
+                for (int i = 0; i < gpgoutput.Length; i++)
+                {
+                    if (this.gpgoutput[i] == '\r')
+                    {
+                        // new line
+                        line++;
+                        column = 0;
+                        posstartlinerecord = i + 2; // +2 for \r and \n
+                    }
+
+                    if (this.gpgoutput[i] == ':')
+                    {
+                        // new column
+                        column++;
+                        if (column == 2 && line != 0)
+                        {
+                            int lenrecline = i - posstartlinerecord - 2;
+                            if (lenrecline > 0)
+                            {
+                                string recordline = gpgoutput.Substring(posstartlinerecord, lenrecline);
+                                if (recordline == PUBKEYRECORD) // note: ordinal string compare, not pointer
+                                {
+                                    ispubrecord = true;
+                                }
+                                else
+                                {
+                                    ispubrecord = false;
+                                }
+                            }
+                        }
+
+                        if (ispubrecord)
+                        {
+                            if (column == 4)
+                            {
+                                posfingerprinthalfstart = i + 1; // without colon
+                            }
+                            else if (column == 5)
+                            {
+                                int lenfingerprinthalf = i - posfingerprinthalfstart;
+                                if (lenfingerprinthalf > 0)
+                                {
+                                    string fingerprinthalf = gpgoutput.Substring(posfingerprinthalfstart, lenfingerprinthalf);
+                                    if (fingerprinthalf == FINGERPRINTPUBNOTEFLY)
+                                    {
+                                        ////fingerprintmatch = true;
+                                        return true; // except it's added then, FIXME: collision possible, but small change
+                                    }
+                                    ////else
+                                    ////{
+                                    ////    fingerprintmatch = false;
+                                    ////}
+                                }
+                            }
+
+                            ////else if (column == 9)
+                            ////{
+                            ////    posstartpubdesc = i;
+                            ////}
+                            ////else if (column == 10 && fingerprintmatch)
+                            ////{
+                            ////    string pubkeydesc = gpgoutput.Substring(posstartpubdesc, i - posstartpubdesc -1 );
+                            ////    if (pubkeydesc.Contains("PUBKEYNOTEFLYDESCRIPTION"))
+                            ////    {
+                            ////        return true;
+                            ////    }
+                            ////}
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Get the NoteFly OpenPGP Public Key from a key server
+        /// </summary>
+        private void GetGPGNoteFlyPublicKey()
+        {
+            StringBuilder gpgrecvkeycommandarg = new StringBuilder();
+            gpgrecvkeycommandarg.Append(" --recv-keys 2F9532C8");
+            if (!string.IsNullOrEmpty(Settings.UpdatecheckGPGKeyserver.Trim()))
+            {
+                gpgrecvkeycommandarg.Append(" --keyserver ");
+                gpgrecvkeycommandarg.Append(Settings.UpdatecheckGPGKeyserver.Trim());
+            }
+
+            System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, gpgrecvkeycommandarg.ToString());
+            procInfo.CreateNoWindow = true;
+            procInfo.UseShellExecute = false;
+            procInfo.RedirectStandardInput = true;
+            procInfo.RedirectStandardOutput = true;
+            procInfo.RedirectStandardError = true;
+            this.gpgproc = System.Diagnostics.Process.Start(procInfo);
+
+            this.StartGPGReadingThreads();
+        }
+
+        /// <summary>
+        /// Start reading the output normal and errors from created threads and
+        ///  then copy the output to gpgoutput and gpgerror.
+        /// </summary>
+        /// <returns>GPG process exit code</returns>
+        private int StartGPGReadingThreads()
+        {
+            if (Settings.UpdatecheckTimeoutGPG < 20)
+            {
+                Settings.UpdatecheckTimeoutGPG = 20; // set bare minimum, likely not enough for network with e.g: --recv-keys
+            }
+
+            this.gpgproc.StandardInput.Flush();
+            this.gpgproc.StandardInput.Close();
+            this.gpgoutput = string.Empty;
+            ThreadStart outputEntry = new ThreadStart(this.StandardOutputReader);
+            Thread gpgoutputthread = new Thread(outputEntry);
+            gpgoutputthread.Start();
+
+            this.gpgerror = string.Empty;
+            ThreadStart errorEntry = new ThreadStart(this.StandardErrorReader);
+            Thread gpgerrorthread = new Thread(errorEntry);
+            gpgerrorthread.Start();
+
             if (this.gpgproc.WaitForExit(Settings.UpdatecheckTimeoutGPG))
             {
-                this.gpgproc.Kill();
+                // Process exited before timeout.
+                // Wait for the threads to complete reading output/error (but use a timeout)
+                if (!gpgoutputthread.Join(Settings.UpdatecheckTimeoutGPG / 2))
+                {
+                    gpgoutputthread.Abort();
+                }
+
+                if (!gpgerrorthread.Join(Settings.UpdatecheckTimeoutGPG / 2))
+                {
+                    gpgoutputthread.Abort();
+                }
             }
-        }        
+            else
+            {
+                this.gpgproc.Kill();
+                if (gpgoutputthread.IsAlive)
+                {
+                    gpgoutputthread.Abort();
+                }
+
+                if (gpgerrorthread.IsAlive)
+                {
+                    gpgerrorthread.Abort();
+                }
+            }
+
+            return this.gpgproc.ExitCode;
+        }
     }
 }

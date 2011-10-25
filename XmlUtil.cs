@@ -409,6 +409,9 @@ namespace NoteFly
                         case "NotesSavepath":
                             Settings.NotesSavepath = xmlread.ReadElementContentAsString();
                             break;
+                        case "UpdatecheckGPGKeyserver":
+                            Settings.UpdatecheckGPGKeyserver = xmlread.ReadElementContentAsString();
+                            break;
                         case "UpdatecheckGPGPath":
                             Settings.UpdatecheckGPGPath = xmlread.ReadElementContentAsString();
                             break;
@@ -884,6 +887,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.HighlightPHPColorValidfunctions);
                 xmlwrite.WriteElementString("HighlightSQLColorValidstatement", Settings.HighlightSQLColorValidstatement);
                 xmlwrite.WriteElementString("HighlightSQLColorField", Settings.HighlightSQLColorField);
+                xmlwrite.WriteElementString("UpdatecheckGPGKeyserver", Settings.UpdatecheckGPGKeyserver);
                 xmlwrite.WriteElementString("UpdatecheckGPGPath", Settings.UpdatecheckGPGPath);
                 xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
                 xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());

@@ -123,7 +123,7 @@ namespace NoteFly
         {
             get
             {
-                return "rc2";
+                return string.Empty;
             }
         }
 
@@ -278,6 +278,10 @@ namespace NoteFly
                         // rescue option for notes loading out of screen.
                         case "-resetpositions":
                             resetpositions = true;
+                            break;
+
+                        case "-disablegpg":
+                            Settings.UpdatecheckUseGPG = false;
                             break;
 
 #if windows
