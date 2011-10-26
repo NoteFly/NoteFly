@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FrmException.Designer.cs" company="GNU">
+// <copyright file="FrmException.Designer.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //

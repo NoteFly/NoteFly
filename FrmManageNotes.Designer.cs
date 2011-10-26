@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FrmManageNotes.Designer.cs" company="GNU">
+// <copyright file="FrmManageNotes.Designer.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //

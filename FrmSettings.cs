@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="FrmSettings.cs" company="GNU">
+// <copyright file="FrmSettings.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //

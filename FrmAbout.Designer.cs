@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FrmAbout.Designer.cs" company="GNU">
+// <copyright file="FrmAbout.Designer.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //
@@ -76,11 +76,13 @@ namespace NoteFly
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.okButton = new System.Windows.Forms.Button();
             this.lblProductName = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
+            this.tmpUpdateLblProductEffect = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // okButton
@@ -104,6 +106,7 @@ namespace NoteFly
             this.lblProductName.Name = "lblProductName";
             this.lblProductName.Size = new System.Drawing.Size(0, 42);
             this.lblProductName.TabIndex = 26;
+            this.lblProductName.Click += new System.EventHandler(this.lblProductName_Click);
             // 
             // lblVersion
             // 
@@ -139,6 +142,11 @@ namespace NoteFly
             this.lblTextLicense.Text = "This programme is released under the terms of Lesser GNU General Public License v" +
                 "ersion3\r\n";
             // 
+            // tmpUpdateLblProductEffect
+            // 
+            this.tmpUpdateLblProductEffect.Interval = 30;
+            this.tmpUpdateLblProductEffect.Tick += new System.EventHandler(this.tmpUpdateLblProductEffect_Tick);
+            // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,5 +172,7 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer tmpUpdateLblProductEffect;
     }
 }

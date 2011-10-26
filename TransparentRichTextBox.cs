@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="TransparentRichTextBox.cs" company="GNU">
+// <copyright file="TransparentRichTextBox.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2011  Tom
 //

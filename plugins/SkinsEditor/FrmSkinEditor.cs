@@ -31,8 +31,19 @@ namespace SkinsEditor
     /// </summary>
     public sealed partial class FrmSkinEditor : Form
     {
+        /// <summary>
+        /// The skin position that is currently being edited.
+        /// </summary>
         private int editskinnr = -1;
+
+        /// <summary>
+        /// The action that skin editor is performing
+        /// </summary>
         private skineditormode skinaction;
+
+        /// <summary>
+        /// The interface to let this plugin talk back to NoteFly.
+        /// </summary>
         private IPlugin.IPluginHost host;
 
         /// <summary>
@@ -537,8 +548,8 @@ namespace SkinsEditor
         /// <summary>
         /// Selecting a primary texture file.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnBrowsePrimaryTexture_Click(object sender, EventArgs e)
         {
             if (this.openFileTextureDialog.ShowDialog() == DialogResult.OK)

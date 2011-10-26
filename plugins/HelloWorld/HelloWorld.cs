@@ -8,8 +8,6 @@
     /// </summary>
     public class HelloWorld : IPlugin.PluginBase
     {
-        // Methods (3) 
-
         /// <summary>
         /// Create the ToolStripMenuItem in the share submenu.
         /// </summary>

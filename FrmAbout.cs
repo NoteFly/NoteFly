@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FrmAbout.cs" company="GNU">
+// <copyright file="FrmAbout.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //
@@ -21,6 +21,7 @@ namespace NoteFly
 {
     using System;
     using System.Windows.Forms;
+    using System.Drawing;
 
     /// <summary>
     /// About window.
@@ -71,9 +72,60 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void okButton_Click(object sender, EventArgs e)
         {
+            this.tmpUpdateLblProductEffect.Stop();
             this.Close();
         }
 
-        #endregion Methods 
+        /// <summary>
+        /// Start color effect on lblProductName.
+        /// Bonus / easter egg.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lblProductName_Click(object sender, EventArgs e)
+        {
+            this.tmpUpdateLblProductEffect.Start();
+        }
+
+        /// <summary>
+        /// Update color effect on lblProductName.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tmpUpdateLblProductEffect_Tick(object sender, EventArgs e)
+        {
+            const int maxdark = 250;
+            byte red = this.lblProductName.ForeColor.R;
+            byte blue = this.lblProductName.ForeColor.B;
+            byte green = this.lblProductName.ForeColor.G;            
+            if (red < maxdark && green <= 5)
+            {
+                red += 5;
+                if (blue > 5)
+                {
+                    blue -= 5;
+                }
+            }
+            else if (green < maxdark && blue <= 5)
+            {
+                green += 5;
+                if (red > 5)
+                {
+                    red -= 5;
+                }
+            }
+            else if (blue < maxdark && red <= 5)
+            {
+                blue += 5;
+                if (green > 5)
+                {
+                    green -= 5;
+                }
+            }
+
+            this.lblProductName.ForeColor = Color.FromArgb(red, green, blue);
+        }
+
+        #endregion Methods
     }
 }

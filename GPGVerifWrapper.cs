@@ -235,10 +235,10 @@ namespace NoteFly
                 ////bool fingerprintmatch = false;
                 ////int posstartpubdesc = int.MaxValue;
                 const string PUBKEYRECORD = "pub";
-                const string FINGERPRINTPUBNOTEFLY= "78987488B43F047E";
+                const string FINGERPRINTPUBNOTEFLY = "78987488B43F047E";
                 ////const string PUBKEYNOTEFLYDESCRIPTION = "NoteFly <releases@notefly.org>";
                 // parser the output
-                for (int i = 0; i < gpgoutput.Length; i++)
+                for (int i = 0; i < this.gpgoutput.Length; i++)
                 {
                     if (this.gpgoutput[i] == '\r')
                     {
@@ -257,7 +257,7 @@ namespace NoteFly
                             int lenrecline = i - posstartlinerecord - 2;
                             if (lenrecline > 0)
                             {
-                                string recordline = gpgoutput.Substring(posstartlinerecord, lenrecline);
+                                string recordline = this.gpgoutput.Substring(posstartlinerecord, lenrecline);
                                 if (recordline == PUBKEYRECORD) // note: ordinal string compare, not pointer
                                 {
                                     ispubrecord = true;
@@ -280,7 +280,7 @@ namespace NoteFly
                                 int lenfingerprinthalf = i - posfingerprinthalfstart;
                                 if (lenfingerprinthalf > 0)
                                 {
-                                    string fingerprinthalf = gpgoutput.Substring(posfingerprinthalfstart, lenfingerprinthalf);
+                                    string fingerprinthalf = this.gpgoutput.Substring(posfingerprinthalfstart, lenfingerprinthalf);
                                     if (fingerprinthalf == FINGERPRINTPUBNOTEFLY)
                                     {
                                         ////fingerprintmatch = true;
