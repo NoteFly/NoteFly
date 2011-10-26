@@ -160,8 +160,8 @@ Section "main executable (required)"
   SetOverwrite on
   
   KillProcDLL::KillProc "${APPFILE}"
-  ; Simply wait 400ms for a running NoteFly process to close itself then check again if it's running.
-  sleep 400
+  ; Simply wait 500ms for a running NoteFly process to close itself then check again if it's running.
+  sleep 500
    
   ; Check installation directory 
   !insertmacro BadPathsCheck
@@ -229,9 +229,10 @@ SectionEnd
 
 ; Uninstaller
 Section "Uninstall"  
+
    KillProcDLL::KillProc "${APPFILE}"
-   ; Simply wait 400ms for a running NoteFly process to close itself.
-   sleep 400
+   ; Simply wait 800ms for a running NoteFly process to close itself.
+   sleep 800
    
   ; Check installation directory 
   !insertmacro BadPathsCheck
