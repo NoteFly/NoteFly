@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Notes.cs" company="GNU">
+// <copyright file="Notes.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2011  Tom
 //
@@ -24,8 +24,8 @@ namespace NoteFlyTests
     using NoteFly;
     
     /// <summary>
-    /// This is a test class for NotesTest and is intended
-    /// to contain all NotesTest Unit Tests
+    /// This is a test class for Notes and is intended
+    /// to contain all Notes Unit Tests
     /// </summary>
     [TestClass]
     public class NotesTest
@@ -107,7 +107,7 @@ namespace NoteFlyTests
         public void GetSkinsNamesTest()
         {
             Notes target = new Notes(false);
-            string[] expected = new string[10];
+            string[] expected = new string[13];
             expected[0] = "yellow";
             expected[1] = "orange";
             expected[2] = "white";
@@ -118,6 +118,9 @@ namespace NoteFlyTests
             expected[7] = "dark";
             expected[8] = "softwhite";
             expected[9] = "contrastblue";
+            expected[10] = "grass";
+            expected[11] = "colordrops";
+            expected[12] = "nyancat";
             string[] actual = target.GetSkinsNames();
             if (actual.Length == 0)
             {

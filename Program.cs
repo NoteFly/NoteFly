@@ -482,31 +482,29 @@ namespace NoteFly
                 {
                     try
                     {
-                        // blacklist sqllite drivers not to load as notefly plugin, so sqllite drivers could be used by plugins.
-                        if (pluginfiles[i] == "System.Data.SQLite.DLL" || pluginfiles[i] == "SQLite3.dll")
+                        // blacklist sqllite drivers and ms speech API not to load as notefly plugin, so sqllite drivers and speech API itself is not trying to be used as plugins as they don't have IPlugin interface and throw errors.
+                        if (pluginfiles[i] != "System.Data.SQLite.DLL" || pluginfiles[i] != "SQLite3.dll" || pluginfiles[i] != "Interop.SpeechLib.dll")
                         {
-                            break;
-                        }
-
-                        // Get if plugin is enabled.
-                        bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
-                        if ((pluginenabled && onlyenabled) || !onlyenabled)
-                        {
-                            System.Reflection.Assembly pluginassembly = null;
-                            pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
-                            if (pluginassembly != null)
+                            // Get if plugin is enabled.
+                            bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
+                            if ((pluginenabled && onlyenabled) || !onlyenabled)
                             {
-                                foreach (Type curplugintype in pluginassembly.GetTypes())
+                                System.Reflection.Assembly pluginassembly = null;
+                                pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
+                                if (pluginassembly != null)
                                 {
-                                    if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
+                                    foreach (Type curplugintype in pluginassembly.GetTypes())
                                     {
-                                        Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
-                                        if (plugintype != null)
+                                        if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
                                         {
-                                            IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
-                                            iplugin.Host = NoteFly.Program.notes; // FIXME this call class only
-                                            iplugin.Register(pluginenabled, pluginfiles[i]);
-                                            pluginslist.Add(iplugin);
+                                            Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
+                                            if (plugintype != null)
+                                            {
+                                                IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                                                iplugin.Host = NoteFly.Program.notes;
+                                                iplugin.Register(pluginenabled, pluginfiles[i]);
+                                                pluginslist.Add(iplugin);
+                                            }
                                         }
                                     }
                                 }
