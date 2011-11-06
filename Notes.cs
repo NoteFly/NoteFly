@@ -735,9 +735,17 @@ namespace NoteFly
         /// Add a new note the the notes list.
         /// </summary>
         /// <param name="note">The note to be added.</param>
-        private void AddNote(Note note)
+        private bool AddNote(Note note)
         {
+            bool addsucceeded = false;
+            int prevnumnotes = this.CountNotes;
             this.notes.Add(note);
+            if (prevnumnotes != this.CountNotes)
+            {
+                addsucceeded = true;
+            }
+
+            return addsucceeded;
         }
 
         #endregion Methods

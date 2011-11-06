@@ -105,31 +105,8 @@ namespace NoteFly
             this.SetLockedNote();
             this.SetRollupNote();
             this.SetWordwarpNote();
-            string[] skinnames = notes.GetSkinsNames();
-            for (int i = 0; i < skinnames.Length; i++)
-            {
-                ToolStripMenuItem tsi = new ToolStripMenuItem();
-                tsi.Name = "menuSkin" + skinnames[i];
-                tsi.Text = skinnames[i];
-                if (note.SkinNr == i)
-                {
-                    tsi.Checked = true;
-                }
-                else
-                {
-                    tsi.Checked = false;
-                }
-
-#if windows
-                // FIXME: Setting backcolor of a ToolStripMenuItem did not work under Mono.
-                tsi.BackColor = this.notes.GetPrimaryClr(i);
-                tsi.ForeColor = this.notes.GetTextClr(i);
-#endif
-                tsi.Click += new EventHandler(this.menuNoteSkins_skin_Click);
-                this.menuNoteSkins.DropDownItems.Add(tsi);
-            }
-
             this.UpdateForm(true);
+            this.CreateSkinsMenu(true);
         }
 
         #endregion Constructors
@@ -239,6 +216,7 @@ namespace NoteFly
                     SyntaxHighlight.InitHighlighter();
                 }
 
+                this.CreateSkinsMenu(true);
                 SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
@@ -309,6 +287,42 @@ namespace NoteFly
             if (!string.IsNullOrEmpty(this.lblTitle.Text))
             {
                 Clipboard.SetText(this.lblTitle.Text);
+            }
+        }
+
+        /// <summary>
+        /// Create the skin select menu.
+        /// Recreate dropdownitems if the list of skins has a different numbered.
+        /// </summary>
+        /// <param name="alwaysrecreate">If always recreate is true then all dropboxitems are always removed and added again.</param>
+        private void CreateSkinsMenu(bool alwaysrecreate)
+        {
+            if (this.notes.CountSkins != this.menuNoteSkins.DropDownItems.Count || alwaysrecreate)
+            {
+                this.menuNoteSkins.DropDownItems.Clear();
+                string[] skinnames = notes.GetSkinsNames();
+                for (int i = 0; i < skinnames.Length; i++)
+                {
+                    ToolStripMenuItem tsi = new ToolStripMenuItem();
+                    tsi.Name = "menuSkin" + skinnames[i];
+                    tsi.Text = skinnames[i];
+                    if (note.SkinNr == i)
+                    {
+                        tsi.Checked = true;
+                    }
+                    else
+                    {
+                        tsi.Checked = false;
+                    }
+
+#if windows
+                    // FIXME: Setting backcolor of a ToolStripMenuItem did not work under Mono.
+                    tsi.BackColor = this.notes.GetPrimaryClr(i);
+                    tsi.ForeColor = this.notes.GetTextClr(i);
+#endif
+                    tsi.Click += new EventHandler(this.menuNoteSkins_skin_Click);
+                    this.menuNoteSkins.DropDownItems.Add(tsi);
+                }
             }
         }
 
@@ -894,6 +908,11 @@ namespace NoteFly
                     }
                 }
             }
+        }        
+
+        private void menuNoteSkins_DropDownOpening(object sender, EventArgs e)
+        {
+            this.CreateSkinsMenu(false);
         }
 
         #endregion Methods

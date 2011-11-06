@@ -37,24 +37,6 @@ namespace NoteFly
     {
         #region Fields (8)
 
-#if windows
-        /// <summary>
-        /// Delete the files specified in pFrom.
-        /// </summary>
-        private const int FO_DELETE = 3;
-
-        /// <summary>
-        /// Preserve Undo information, if possible.
-        /// If pFrom does not contain fully qualified path and file names, this flag is ignored.
-        /// </summary>
-        private const int FOF_ALLOWUNDO = 0x40;
-
-        /// <summary>
-        /// Respond with "Yes to All" for any dialog box that is displayed.
-        /// </summary>
-        private const int FOF_NOCONFIRMATION = 0x10;
-#endif
-
         /// <summary>
         /// Constant for btntoggleshownote 
         /// </summary>
@@ -162,11 +144,6 @@ namespace NoteFly
             this.prevrownr = -1;
             this.secondprevrownr = -2;
         }
-
-#if windows
-        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-        private static extern int SHFileOperation(ref SHFILEOPSTRUCT FileOp);
-#endif
 
         /// <summary>
         /// Request to backup all notes to a file.
@@ -841,14 +818,7 @@ namespace NoteFly
                     selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).Visible;
                     this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
                     if (this.notes.GetNote(notepos).Visible)
-                    {
-                        string tempcontent = this.notes.GetNote(notepos).GetContent();
-                        if (tempcontent == string.Empty)
-                        {
-                            Log.Write(LogType.exception, "Note content is empty.");
-                        }
-
-                        this.notes.GetNote(notepos).Tempcontent = tempcontent;
+                    {               
                         this.notes.GetNote(notepos).CreateForm();
                         this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
                     }
@@ -996,6 +966,105 @@ namespace NoteFly
             }
         }
 
+#if windows
+        /// <summary>
+        /// Possible flags for the SHFileOperation method.
+        /// </summary>
+        [Flags]
+        public enum FileOperationFlags : ushort
+        {
+            /// <summary>
+            /// Do not show a dialog during the process
+            /// </summary>
+            FOF_SILENT = 0x0004,
+            /// <summary>
+            /// Do not ask the user to confirm selection
+            /// </summary>
+            FOF_NOCONFIRMATION = 0x0010,
+            /// <summary>
+            /// Delete the file to the recycle bin.  (Required flag to send a file to the bin
+            /// </summary>
+            FOF_ALLOWUNDO = 0x0040,
+            /// <summary>
+            /// Do not show the names of the files or folders that are being recycled.
+            /// </summary>
+            FOF_SIMPLEPROGRESS = 0x0100,
+            /// <summary>
+            /// Surpress errors, if any occur during the process.
+            /// </summary>
+            FOF_NOERRORUI = 0x0400,
+            /// <summary>
+            /// Warn if files are too big to fit in the recycle bin and will need
+            /// to be deleted completely.
+            /// </summary>
+            FOF_WANTNUKEWARNING = 0x4000,
+        }
+
+        /// <summary>
+        /// File Operation Function Type for SHFileOperation
+        /// </summary>
+        public enum FileOperationType : uint
+        {
+            /// <summary>
+            /// Move the objects
+            /// </summary>
+            FO_MOVE = 0x0001,
+            /// <summary>
+            /// Copy the objects
+            /// </summary>
+            FO_COPY = 0x0002,
+            /// <summary>
+            /// Delete (or recycle) the objects
+            /// </summary>
+            FO_DELETE = 0x0003,
+            /// <summary>
+            /// Rename the object(s)
+            /// </summary>
+            FO_RENAME = 0x0004,
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
+        private struct SHFILEOPSTRUCT_x86
+        {
+            public IntPtr hwnd;
+            [MarshalAs(UnmanagedType.U4)]
+            public FileOperationType wFunc;
+            public string pFrom;
+            public string pTo;
+            public FileOperationFlags fFlags;
+            [MarshalAs(UnmanagedType.Bool)]
+            public bool fAnyOperationsAborted;
+            public IntPtr hNameMappings;
+            public string lpszProgressTitle;
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        private struct SHFILEOPSTRUCT_x64
+        {
+            public IntPtr hwnd;
+            [MarshalAs(UnmanagedType.U4)]
+            public FileOperationType wFunc;
+            public string pFrom;
+            public string pTo;
+            public FileOperationFlags fFlags;
+            [MarshalAs(UnmanagedType.Bool)]
+            public bool fAnyOperationsAborted;
+            public IntPtr hNameMappings;
+            public string lpszProgressTitle;
+        }
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto, EntryPoint = "SHFileOperation")]
+        private static extern int SHFileOperation_x86(ref SHFILEOPSTRUCT_x86 FileOp);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto, EntryPoint = "SHFileOperation")]
+        private static extern int SHFileOperation_x64(ref SHFILEOPSTRUCT_x64 FileOp);
+
+        private static bool IsWOW64Process()
+        {
+            return IntPtr.Size == 8;
+        }
+#endif
+
         /// <summary>
         /// Deletes the notes in memory and the files that are selected in a Gridview.
         /// In reverse order, so updating datagridview goes well.
@@ -1020,12 +1089,29 @@ namespace NoteFly
                     string filepath = Path.Combine(Settings.NotesSavepath, filename);
                     if (Settings.NotesDeleteRecyclebin)
                     {
+                        // On older FAT file systems (typically Windows 98 and prior), it is located in Drive:\RECYCLED.
+                        // In the NTFS filesystem (Windows 2000, XP, NT) it is Drive:\RECYCLER. 
+                        // On Windows Vista and Windows 7 it is Drive:\$Recycle.Bin folder.
+                        // The actual location of the Recycle Bin is in another hidden folder, also at the system root, called RECYCLER
 #if windows
-                        SHFILEOPSTRUCT shf = new SHFILEOPSTRUCT();
-                        shf.wFunc = FO_DELETE;
-                        shf.fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION;
-                        shf.pFrom = filepath + "\0"; // double null terminated
-                        SHFileOperation(ref shf);
+                        if (IsWOW64Process())
+                        {
+                            SHFILEOPSTRUCT_x64 fs = new SHFILEOPSTRUCT_x64();
+                            fs.wFunc = FileOperationType.FO_DELETE;
+                            // important to double-terminate the string.
+                            fs.pFrom = filepath + '\0' + '\0';
+                            fs.fFlags = FileOperationFlags.FOF_ALLOWUNDO | FileOperationFlags.FOF_NOCONFIRMATION | FileOperationFlags.FOF_WANTNUKEWARNING;
+                            SHFileOperation_x64(ref fs);
+                        }
+                        else
+                        {
+                            SHFILEOPSTRUCT_x86 fs = new SHFILEOPSTRUCT_x86();
+                            fs.wFunc = FileOperationType.FO_DELETE;
+                            // important to double-terminate the string.
+                            fs.pFrom = filepath + '\0' + '\0';
+                            fs.fFlags = FileOperationFlags.FOF_ALLOWUNDO | FileOperationFlags.FOF_NOCONFIRMATION | FileOperationFlags.FOF_WANTNUKEWARNING;
+                            SHFileOperation_x86(ref fs);
+                        }
 #elif linux
                         // trashfolder = ~/.local/share/Trash/files
                         string trashfolder = System.Environment.GetEnvironmentVariable("HOME") +"/.local/share/Trash/files/";
@@ -1033,10 +1119,22 @@ namespace NoteFly
                         {
                             Directory.CreateDirectory(trashfolder);
                         }
-
+                        
                         File.Move(filepath, Path.Combine(trashfolder, filename));
 #endif
-                        Log.Write(LogType.info, "Moved note to Recyclebin: " + filepath);
+                        if (!File.Exists(filepath))
+                        {
+                            Log.Write(LogType.info, "Moved note to Recyclebin: " + filepath);
+                        }
+                        else
+                        {
+                            Log.Write(LogType.exception, "Could not move note to recyclebin. Try renaming with appending .old to note filename.");
+                            if (!File.Exists(filepath + ".old"))
+                            {
+                                File.Move(filepath, filepath + ".old");                                
+                            }
+                        }
+                        
                     }
                     else
                     {
@@ -1295,60 +1393,6 @@ namespace NoteFly
         {
             this.ToggleVisibilityNote(e.RowIndex);
         }
-
-#if windows
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
-
-        /// <summary>
-        /// Windows SHFILEOPSTRUCT struct
-        /// </summary>
-        public struct SHFILEOPSTRUCT
-        {
-            /// <summary>
-            /// A window handle to the dialog box to display information about the status of the file operation.(MSDN)
-            /// </summary>
-            public IntPtr hwnd;
-            [MarshalAs(UnmanagedType.U4)]
-
-            /// <summary>
-            /// A value that indicates which operation to perform. One of the following values.(MSDN)
-            /// </summary>
-            public int wFunc;
-
-            /// <summary>
-            /// A pointer to one or more source file names. These names should be fully-qualified paths to prevent unexpected results.
-            /// </summary>
-            public string pFrom;
-
-            /// <summary>
-            /// A pointer to the destination file or directory name.
-            /// </summary>
-            public string pTo;
-
-            /// <summary>
-            /// Flags that control the file operation.
-            /// </summary>
-            public short fFlags;
-
-            [MarshalAs(UnmanagedType.Bool)]
-
-            /// <summary>
-            /// When the function returns, this member contains TRUE if any file operations were aborted before they were completed; otherwise, FALSE.
-            /// </summary>
-            public bool fAnyOperationsAborted;
-
-            /// <summary>
-            /// When the function returns, this member contains a handle to a name mapping object that contains the old and new names of the renamed files.
-            /// </summary>
-            public IntPtr hNameMappings;
-
-            /// <summary>
-            /// A pointer to the title of a progress dialog box.
-            /// </summary>
-            public string lpszProgressTitle;
-        }
-
-#endif
 
         #endregion Methods
     }

@@ -171,6 +171,12 @@ namespace NoteFly
         /// <returns>An note object.</returns>
         public static Note LoadNoteFile(Notes notes, string notefilename)
         {
+            if (notefilename.Length > 255)
+            {
+                Log.Write(LogType.exception, "Filename for note file too long.");
+                return null;
+            }
+
             Note note = new Note(notes, notefilename);
             xmlread = new XmlTextReader(Path.Combine(Settings.NotesSavepath, notefilename));
             xmlread.ProhibitDtd = true;
@@ -483,7 +489,8 @@ namespace NoteFly
                         case "skin":
                             if (endtag)
                             {
-                                if (curskin != null && numskins < 255)
+                                const int MAXNUMSKIN = 255;
+                                if (curskin != null && numskins < MAXNUMSKIN)
                                 {
                                     skins.Add(curskin);
                                 }
@@ -497,13 +504,23 @@ namespace NoteFly
                             endtag = !endtag;
                             break;
                         case "Name":
-                            curskin.Name = xmlread.ReadElementContentAsString();
+                            const int MAXLENSKINNAME = 200;
+                            string skinname = xmlread.ReadElementContentAsString();                            
+                            if (skinname.Length < MAXLENSKINNAME)
+                            {
+                                curskin.Name = skinname;
+                            }
+                            else
+                            {
+                                curskin.Name = skinname.Substring(0, MAXLENSKINNAME);
+                            }
                             break;
                         case "PrimaryClr":
                             if (xmlread.HasAttributes)
                             {
                                 string filepathtexture = xmlread.GetAttribute("texture");
-                                if (System.IO.File.Exists(filepathtexture) || System.IO.File.Exists(Path.Combine(Program.InstallFolder, filepathtexture)))
+                                bool texturefpexist = System.IO.File.Exists(filepathtexture);
+                                if (texturefpexist || System.IO.File.Exists(Path.Combine(Program.InstallFolder, filepathtexture)))
                                 {
                                     string extension = filepathtexture.Substring(filepathtexture.LastIndexOf('.'), filepathtexture.Length - filepathtexture.LastIndexOf('.')).ToLower();
                                     string[] supportedimageformats = new string[] { ".png", ".tif", ".tiff", ".bmp", ".gif", ".jpg", ".jpeg" };
@@ -1043,7 +1060,8 @@ namespace NoteFly
                                 break;
                             case "quality":
                                 string getquality = xmlread.ReadElementContentAsString().Trim();
-                                if (getquality.Length < 16)
+                                const int VERQUALITYMAXLEN = 16;
+                                if (getquality.Length <= VERQUALITYMAXLEN)
                                 {
                                     versionquality = getquality;
                                 }
@@ -1051,7 +1069,9 @@ namespace NoteFly
                                 break;
                             case "downloadurl":
                                 string downloadurlraw = xmlread.ReadElementContentAsString().Trim();
-                                if ((downloadurlraw.Length > 10) && (downloadurlraw.Length < 512))
+                                const int DOWNLOADURLMINLEN = 10; // "http://a.b".Length = 10
+                                const int DOWNLOADURLMAXLEN = 512;
+                                if ((downloadurlraw.Length >= DOWNLOADURLMINLEN) && (downloadurlraw.Length <= DOWNLOADURLMAXLEN))
                                 {
                                     downloadurl = downloadurlraw;
                                 }

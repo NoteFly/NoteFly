@@ -93,7 +93,15 @@ namespace NoteFly
                     break;
             }
 
-            line.AppendLine(message);
+            const int MSGMAXLEN = 2048;
+            if (message.Length < MSGMAXLEN)
+            {
+                line.AppendLine(message);
+            }
+            else
+            {
+                line.AppendLine(message.Substring(0, MSGMAXLEN));
+            }
 #if windows
             string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), DEBUGLOGFILENAME);
 #elif linux
@@ -129,8 +137,9 @@ namespace NoteFly
         {
             if (File.Exists(file))
             {
+                const int LOGMAXSIZEKB = 512;
                 FileInfo fileinfo = new FileInfo(file);
-                if (fileinfo.Length > 1024 * 512 && (fileinfo.Attributes != FileAttributes.System))
+                if (fileinfo.Length > 1024 * LOGMAXSIZEKB && (fileinfo.Attributes != FileAttributes.System))
                 {
                     return true;
                 }

@@ -376,6 +376,12 @@ namespace NoteFly
         public static string ProgramPluginsEnabled = string.Empty;
 
         /// <summary>
+        /// Dll files in the plugin directory that are not trying to be loaded as plugin.
+        /// This are dll files are used by some plugin itself and these dll files don't implement the IPlugin interface.
+        /// </summary>
+        public static string ProgramPluginsDllexclude = "SQLite3.dll|System.Data.SQLite.DLL|Interop.SpeechLib.dll";
+
+        /// <summary>
         /// The relative path from the install directory to the folder where plugins are stored in.
         /// </summary>
         public static string ProgramPluginsFolder = System.IO.Path.Combine(Program.InstallFolder, "plugins");

@@ -36,6 +36,8 @@ namespace SkinsEditor
         /// </summary>
         private int editskinnr = -1;
 
+        private int deleteskinnr = -1;
+
         /// <summary>
         /// The action that skin editor is performing
         /// </summary>
@@ -82,8 +84,13 @@ namespace SkinsEditor
 
         private void LoadAllSkinNames()
         {
+            this.btnDeleteSkin.Enabled = false;
             this.lbxSkins.Items.Clear();
             this.lbxSkins.Items.AddRange(this.host.GetSkinsNames());
+            if (this.lbxSkins.Items.Count > 1)
+            {
+                this.btnDeleteSkin.Enabled = true;
+            }
         }
 
         /// <summary>
@@ -171,6 +178,22 @@ namespace SkinsEditor
             this.tbHighlightingColor.Text = this.ClrToHtmlHexClr(this.host.GetHighlightClr(skinnr));
             this.tbTextColor.Text = this.ClrToHtmlHexClr(this.host.GetTextClr(skinnr));
             this.tbPrimaryTexture.Text = this.host.GetPrimaryTextureFile(skinnr);
+            ImageLayout imglayout = this.host.GetPrimaryTextureLayout(skinnr);
+            switch (imglayout)
+            {
+                case ImageLayout.Tile:
+                    this.cbxPrimaryTextureLayout.SelectedIndex = 0;
+                    break;
+                case ImageLayout.Center:
+                    this.cbxPrimaryTextureLayout.SelectedIndex = 1;
+                    break;
+                case ImageLayout.Stretch:
+                    this.cbxPrimaryTextureLayout.SelectedIndex = 2;
+                    break;
+                default:
+                    this.cbxPrimaryTextureLayout.SelectedIndex = 0;
+                    break;
+            }
         }
 
         /// <summary>
@@ -208,6 +231,7 @@ namespace SkinsEditor
             this.tbHighlightingColor.Enabled = enabled;
             this.tbTextColor.Enabled = enabled;
             this.tbPrimaryTexture.Enabled = enabled;
+            this.cbxPrimaryTextureLayout.Enabled = enabled;
             this.btnBrowsePrimaryTexture.Enabled = enabled;
             this.btnPickPrimaryColor.Enabled = enabled;
             this.btnPickSelectingColor.Enabled = enabled;
@@ -227,7 +251,8 @@ namespace SkinsEditor
             this.tbSelectingColor.Clear();
             this.tbHighlightingColor.Clear();
             this.tbTextColor.Clear();
-
+            this.tbPrimaryTexture.Clear();
+            this.cbxPrimaryTextureLayout.SelectedIndex = -1;
             this.pnlClrPrimary.BackColor = Color.White;
             this.pnlClrSelecting.BackColor = Color.White;
             this.pnlClrHighlight.BackColor = Color.White;
@@ -309,18 +334,28 @@ namespace SkinsEditor
                 if (this.CheckProperSkinnameTb())
                 {
                     this.tbSkinName.BackColor = SystemColors.Window;
+                    if (!String.IsNullOrEmpty(this.tbPrimaryTexture.Text))
+                    {                        
+                        if (this.cbxPrimaryTextureLayout.SelectedIndex < 0)
+                        {
+                            this.lblTextPrimartTextureLayout.ForeColor = Color.DarkRed;
+                            this.cbxPrimaryTextureLayout.ForeColor = Color.DarkRed;
+                            return;
+                        }
+                    }
+
+                    this.lblTextPrimartTextureLayout.ForeColor = SystemColors.WindowText;
+                    this.cbxPrimaryTextureLayout.ForeColor = SystemColors.WindowText;
                     if (this.CheckAllTbColorsAndSetErrors())
                     {
-                        if (this.WriteSkinsFile(this.tbSkinName.Text, this.tbPrimaryTexture.Text, this.tbPrimaryColor.Text, this.tbSelectingColor.Text, this.tbHighlightingColor.Text, this.tbTextColor.Text))
-                        {
-                            this.host.ReloadAllSkins();
-                            this.host.UpdateAllNoteForms();
-                        }
-                        else
+                        if (!this.WriteSkinsFile(this.tbSkinName.Text, this.tbPrimaryTexture.Text, this.tbPrimaryColor.Text, this.tbSelectingColor.Text, this.tbHighlightingColor.Text, this.tbTextColor.Text))
                         {
                             const string COULDNOTWRITESKINS = "Could not write skins file.";
                             MessageBox.Show(COULDNOTWRITESKINS);
-                        }
+                        }                        
+
+                        this.host.ReloadAllSkins();
+                        this.host.UpdateAllNoteForms();
 
                         if (this.skinaction == skineditormode.newskin)
                         {
@@ -335,6 +370,7 @@ namespace SkinsEditor
                         this.skinaction = skineditormode.browseskins;
                         this.lbxSkins_SelectedIndexChanged(null, null);
                         this.LoadAllSkinNames();
+                        this.ClearFields();
                     }
                 }
                 else
@@ -364,10 +400,22 @@ namespace SkinsEditor
                 {
                     if (this.skinaction == skineditormode.editskin && this.editskinnr == i)
                     {
-                        // warn texture null is removed!
-                        this.WriteSkinBody(xmlwriter, skinname, skinprimary, skinprimarytexture, ImageLayout.Tile, skinselect, skinhighlight, skintext);
+                        ImageLayout newimglayout = ImageLayout.Tile;
+                        switch (this.cbxPrimaryTextureLayout.SelectedIndex)
+                        {
+                            // 0 is tiled
+                            case 1:
+                                newimglayout = ImageLayout.Center;
+                                break;
+                            case 2:
+                                newimglayout = ImageLayout.Stretch;
+                                break;
+                            // unknown is tiled
+                        }
+
+                        this.WriteSkinBody(xmlwriter, skinname, skinprimary, skinprimarytexture, newimglayout, skinselect, skinhighlight, skintext);
                     }
-                    else
+                    else if (i != this.deleteskinnr)
                     {
                         string name = this.host.GetSkinName(i);
                         string primaryclr = this.ClrToHtmlHexClr(this.host.GetPrimaryClr(i));
@@ -565,6 +613,41 @@ namespace SkinsEditor
                 }
 
                 this.tbPrimaryTexture.Text = this.openFileTextureDialog.FileName;
+            }
+        }
+
+        /// <summary>
+        /// Delete a skin
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDeleteSkin_Click(object sender, EventArgs e)
+        {
+            if (this.lbxSkins.SelectedIndex >= 0)
+            {
+                if (this.lbxSkins.Items.Count > 1)
+                {
+                    this.btnDeleteSkin.Enabled = true;
+                    DialogResult res = MessageBox.Show("Do you want to delete this skin?", "delete skin", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (res == DialogResult.Yes)
+                    {
+                        this.skinaction = skineditormode.browseskins;
+                        this.deleteskinnr = this.lbxSkins.SelectedIndex;                        
+                        this.WriteSkinsFile(null, null, null, null, null, null);
+                        this.lbxSkins.Items.RemoveAt(this.deleteskinnr);
+                        this.deleteskinnr = -1;
+                        this.host.ReloadAllSkins();                        
+                    }
+
+                    if (this.lbxSkins.Items.Count <= 1)
+                    {
+                        this.btnDeleteSkin.Enabled = false;
+                    }
+                }
+                else
+                {
+                    this.btnDeleteSkin.Enabled = false;
+                }
             }
         }
     }

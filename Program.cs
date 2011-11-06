@@ -52,6 +52,8 @@ namespace NoteFly
         /// </summary>
         private static TrayIcon trayicon;
 
+        private static string[] plugindllexcluded;
+
         #endregion Fields
 
         #region Properties (5)
@@ -248,7 +250,7 @@ namespace NoteFly
                             Settings.HighlightHTML = false;
                             Settings.HighlightPHP = false;
                             Settings.HighlightSQL = false;
-                            break;      
+                            break;
 
                         // Turn off loading of plugins
                         case "-disableplugins":
@@ -478,13 +480,12 @@ namespace NoteFly
             {
                 string[] pluginfiles = GetFilesPluginDir();
                 string[] pluginsenabled = Settings.ProgramPluginsEnabled.Split('|'); // | is illegal as filename.
+                plugindllexcluded = Settings.ProgramPluginsDllexclude.Split('|');
                 for (int i = 0; i < pluginfiles.Length; i++)
                 {
-                    try
-                    {
-                        // blacklist sqllite drivers and ms speech API not to load as notefly plugin, so sqllite drivers and speech API itself is not trying to be used as plugins as they don't have IPlugin interface and throw errors.
-                        if (pluginfiles[i] != "System.Data.SQLite.DLL" || pluginfiles[i] != "SQLite3.dll" || pluginfiles[i] != "Interop.SpeechLib.dll")
-                        {
+                    if (!IsPluginFilesExcluded(pluginfiles[i])) { 
+                            try
+                            {
                             // Get if plugin is enabled.
                             bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
                             if ((pluginenabled && onlyenabled) || !onlyenabled)
@@ -510,12 +511,12 @@ namespace NoteFly
                                 }
                             }
                         }
-                    }
-                    catch (Exception ex)
+                        catch (Exception ex)
                     {
                         const string CANTLOADPLUGIN = "Can't load plugin: ";
                         Log.Write(LogType.exception, CANTLOADPLUGIN + pluginfiles[i] + " " + ex.Message);
                     }
+                    }                    
                 }
             }
             else
@@ -550,6 +551,10 @@ namespace NoteFly
                         pluginname = titleAttribute.Title;
                     }
                 }
+                else
+                {
+                    Log.Write(LogType.exception, "Plugin " + pluginassembly.Location + " has no name.");
+                }
             }
 
             return pluginname;
@@ -566,15 +571,23 @@ namespace NoteFly
             object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
             if (attributes.Length != 0)
             {
-                if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
+                if (!String.IsNullOrEmpty(((AssemblyCompanyAttribute)attributes[0]).Company))
                 {
-                    pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 150);
+                    if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
+                    {
+                        pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 150);
+                    }
+                    else
+                    {
+                        pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
+                    }
                 }
                 else
                 {
-                    pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
+                    Log.Write(LogType.exception, "Plugin " + pluginassembly.Location + " has no author.");
                 }
             }
+
 
             return pluginauthor;
         }
@@ -598,7 +611,7 @@ namespace NoteFly
                 {
                     plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description;
                 }
-            }
+            } 
 
             return plugindescription;
         }
@@ -616,16 +629,39 @@ namespace NoteFly
             }
             else
             {
+                Log.Write(LogType.exception, "Plugin " + pluginassembly.Location + " has no version information.");
                 return "unknown";
             }
         }
 
         /// <summary>
-        /// Waits 1000ms before doing a update check.
+        /// Is the dll files excluded as plugin in the plugin directory.
+        /// </summary>
+        /// <param name="dllfilename">The dll filename without path</param>
+        /// <returns>True if it's excluded</returns>
+        private static bool IsPluginFilesExcluded(string dllfilename)
+        {
+            if (plugindllexcluded != null)
+            {
+                for (int i = 0; i < plugindllexcluded.Length; i++)
+                {
+                    if (dllfilename == plugindllexcluded[i])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Waits some time before doing a update check.
         /// </summary>
         private static void UpdateCheckThread()
         {
-            Thread.Sleep(1000);
+            const int UPDATECHECKSTARTUPWAITTIME = 4000;
+            Thread.Sleep(UPDATECHECKSTARTUPWAITTIME);
             Settings.UpdatecheckLastDate = UpdateCheck();
         }
 
