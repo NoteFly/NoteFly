@@ -75,6 +75,7 @@ namespace NoteFly
         /// <param name="note">note data class.</param>
         public FrmNote(Notes notes, Note note)
         {
+            this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             this.notes = notes;
             this.note = note;

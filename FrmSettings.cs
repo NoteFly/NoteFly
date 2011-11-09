@@ -54,6 +54,7 @@ namespace NoteFly
         /// <param name="notes">The notes class.</param>
         public FrmSettings(Notes notes)
         {
+            this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             this.oldnotesavepath = Settings.NotesSavepath;
             this.notes = notes;
@@ -277,6 +278,8 @@ namespace NoteFly
                     Settings.NotesSavepath = this.tbNotesSavePath.Text;
                 }
 
+                Settings.NotesWarnlimitTotal = Convert.ToInt32(this.numWarnLimitTotal.Value);
+                Settings.NotesWarnlimitVisible = Convert.ToInt32(this.numWarnLimitVisible.Value);
                 Settings.ProgramLogError = this.chxLogErrors.Checked;
                 Settings.ProgramLogInfo = this.chxLogDebug.Checked;
                 Settings.ProgramLogException = this.chxLogExceptions.Checked;
@@ -571,8 +574,10 @@ namespace NoteFly
             // tab: Plugins
             this.chxLoadPlugins.Checked = Settings.ProgramPluginsAllEnabled;
 
-            // tab: Advance            
+            // tab: Advance
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
+            this.numWarnLimitTotal.Value = Convert.ToDecimal(Settings.NotesWarnlimitTotal);
+            this.numWarnLimitVisible.Value = Convert.ToDecimal(Settings.NotesWarnlimitVisible);
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
             this.chxLogErrors.Checked = Settings.ProgramLogError;
             this.chxLogExceptions.Checked = Settings.ProgramLogException;
@@ -651,6 +656,10 @@ namespace NoteFly
             this.cbxFontNoteTitleBold.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxLogErrors.Visible = this.chxSettingsExpertEnabled.Checked;
             this.chxLogExceptions.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.lblTextTotalNotesWarnLimit.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.numWarnLimitTotal.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.lblTextVisibleNotesWarnLimit.Visible = this.chxSettingsExpertEnabled.Checked;
+            this.numWarnLimitVisible.Visible = this.chxSettingsExpertEnabled.Checked;
         }
 
         /// <summary>
@@ -691,7 +700,7 @@ namespace NoteFly
             if (this.chxLoadPlugins.Checked)
             {
                 this.pluginGrid.VerticalScroll.Value = 0;
-                this.pluginGrid.DrawAllPluginsDetails(this.pluginGrid.Width);
+                this.pluginGrid.DrawAllPluginsDetails(this.pluginGrid.Width - 25);
             }
         }
 

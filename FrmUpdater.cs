@@ -46,6 +46,7 @@ namespace NoteFly
         /// <param name="downloadurl">The url of the update to download</param>
         public FrmUpdater(string downloadurl)
         {
+            this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             int locx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2);
             int locy = 10;

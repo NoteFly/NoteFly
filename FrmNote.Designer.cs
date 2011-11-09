@@ -243,7 +243,7 @@ namespace NoteFly
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 224);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -465,7 +465,6 @@ namespace NoteFly
             this.ControlBox = false;
             this.Controls.Add(this.pnlNote);
             this.Controls.Add(this.pnlHead);
-            this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.Desktop;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;

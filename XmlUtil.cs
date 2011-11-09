@@ -212,6 +212,7 @@ namespace NoteFly
 
             try
             {
+                const int MAXDEPTHSETTINGSFILE = 4;
                 xmlread = new XmlTextReader(settingsfilepath);
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
                 xmlread.ProhibitDtd = true; // TODO gives decreated warning in vs2010.
@@ -268,6 +269,9 @@ namespace NoteFly
                         case "ProgramFirstrun":
                             Settings.ProgramFirstrun = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "ProgramFormsDoublebuffered":
+                            Settings.ProgramFormsDoublebuffered = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "ProgramLogError":
                             Settings.ProgramLogError = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -286,7 +290,7 @@ namespace NoteFly
                         case "SharingEmailEnabled":
                             Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "SocialEmailEnabled": // TODO: legacy setting, only read, to be removed in NoteFly 2.5.0>
+                        case "SocialEmailEnabled": // TODO: legacy setting, only read it no writing it anymore.
                             Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "TrayiconAlternateIcon":
@@ -333,8 +337,14 @@ namespace NoteFly
                         case "NotesDefaultSkinnr":
                             Settings.NotesDefaultSkinnr = xmlread.ReadElementContentAsInt();
                             break;
-                        case "NotesWarnLimit":
-                            Settings.NotesWarnLimit = xmlread.ReadElementContentAsInt();
+                        case "NotesWarnLimit": // TODO: legacy setting, only read it no writing it anymore.
+                            Settings.NotesWarnlimitTotal = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NotesWarnlimitTotal":
+                            Settings.NotesWarnlimitTotal = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NotesWarnlimitVisible":
+                            Settings.NotesWarnlimitVisible = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesTransparencyLevel":
                             Settings.NotesTransparencyLevel = xmlread.ReadElementContentAsDouble();
@@ -400,6 +410,9 @@ namespace NoteFly
                         case "ProgramPluginsEnabled":
                             Settings.ProgramPluginsEnabled = xmlread.ReadElementContentAsString();
                             break;
+                        case "ProgramPluginsDllexclude":
+                            Settings.ProgramPluginsDllexclude = xmlread.ReadElementContentAsString();
+                            break;
                         case "FontTitleFamily":
                             Settings.FontTitleFamily = xmlread.ReadElementContentAsString();
                             break;
@@ -429,7 +442,7 @@ namespace NoteFly
                             break;
                     }
 
-                    if (xmlread.Depth > 8)
+                    if (xmlread.Depth > MAXDEPTHSETTINGSFILE)
                     {
                         break;
                     }
@@ -658,14 +671,18 @@ namespace NoteFly
             Settings.NotesTransparencyEnabled = true;
             Settings.NotesTransparentRTB = true;
             Settings.NotesTransparencyLevel = 0.9;
-            Settings.NotesWarnLimit = 250;
+            Settings.NotesWarnlimitTotal = 500;
+            Settings.NotesWarnlimitVisible = 50;
             Settings.ProgramFirstrun = false;
+            Settings.ProgramFormsDoublebuffered = false;
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
             Settings.ProgramPluginsAllEnabled = true;
-            Settings.ProgramSuspressWarnAdmin = false;
+            Settings.ProgramPluginsEnabled = Settings.ProgramPluginsEnabled; // leave as is
+            Settings.ProgramPluginsDllexclude = "SQLite3.dll|System.Data.SQLite.DLL|Interop.SpeechLib.dll";
             Settings.ProgramPluginsFolder = Path.Combine(Program.InstallFolder, "plugins");
+            Settings.ProgramSuspressWarnAdmin = false;
             Settings.SettingsLastTab = 0;
             Settings.SettingsExpertEnabled = false;
             Settings.SharingEmailEnabled = true;
@@ -864,6 +881,7 @@ namespace NoteFly
                 WriteXMLBool("NotesTransparentRTB", Settings.NotesTransparentRTB);
                 WriteXMLBool("NotesDefaultRandomSkin", Settings.NotesDefaultRandomSkin);
                 WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
+                WriteXMLBool("ProgramFormsDoublebuffered", Settings.ProgramFormsDoublebuffered);
                 WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
                 WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
                 WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
@@ -886,7 +904,8 @@ namespace NoteFly
                 xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesWarnLimit", Settings.NotesWarnLimit.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesWarnlimitTotal", Settings.NotesWarnlimitTotal.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesWarnlimitVisible", Settings.NotesWarnlimitVisible.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
@@ -913,6 +932,7 @@ namespace NoteFly
                 xmlwrite.WriteElementString("ProgramLastrunVersion", Settings.ProgramLastrunVersion);
                 xmlwrite.WriteElementString("ProgramPluginsFolder", Settings.ProgramPluginsFolder);
                 xmlwrite.WriteElementString("ProgramPluginsEnabled", Settings.ProgramPluginsEnabled);
+                xmlwrite.WriteElementString("ProgramPluginsDllexclude", Settings.ProgramPluginsDllexclude);
                 xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
                 xmlwrite.WriteElementString("SharingEmailDefaultadres", Settings.SharingEmailDefaultadres);
                 xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);

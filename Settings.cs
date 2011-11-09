@@ -65,9 +65,14 @@ namespace NoteFly
         public static bool NotesDeleteRecyclebin = false;
 
         /// <summary>
-        /// Number of notes a warning shows up that are many notes loading.
+        /// Number of total notes a warning shows up that are many notes loading.
         /// </summary>
-        public static int NotesWarnLimit = 250;
+        public static int NotesWarnlimitTotal = 1234;
+
+        /// <summary>
+        /// Number of visible notes a warning shows up that are many notes being displayed and it recommeded to hide some.
+        /// </summary> 
+        public static int NotesWarnlimitVisible = 50;
 
         /// <summary>
         /// The folder where to save all notes.
@@ -347,11 +352,34 @@ namespace NoteFly
         public static bool UpdateSilentInstall = false;
 
         /// <summary>
+        /// Log debug info.
+        /// </summary>
+        public static bool ProgramLogInfo = false;
+
+        /// <summary>
+        /// Log errors user makes
+        /// </summary>
+        public static bool ProgramLogError = true;
+
+        /// <summary>
+        /// Log exceptions/errors this programme has.
+        /// If undefined then always true.
+        /// </summary>
+        public static bool ProgramLogException = true;
+
+        /// <summary>
         /// Has this programme been runned before.
         /// If not the demo note is created, balloontip is showed
         /// and NoteFly version 1.0 notes are ask to are imported if they exist.
         /// </summary>
         public static bool ProgramFirstrun = false;
+
+        /// <summary>
+        /// Are all windows double buffered.
+        /// If on redrawn does not cause blanking windows.
+        /// But currenlt false because it has serious issues under windows8 beta.
+        /// </summary>
+        public static bool ProgramFormsDoublebuffered = false;
 
         /// <summary>
         /// The version of the programme of the last run.
@@ -384,22 +412,6 @@ namespace NoteFly
         /// <summary>
         /// The relative path from the install directory to the folder where plugins are stored in.
         /// </summary>
-        public static string ProgramPluginsFolder = System.IO.Path.Combine(Program.InstallFolder, "plugins");
-
-        /// <summary>
-        /// Log debug info.
-        /// </summary>
-        public static bool ProgramLogInfo = false;
-
-        /// <summary>
-        /// Log errors user makes
-        /// </summary>
-        public static bool ProgramLogError = true;
-
-        /// <summary>
-        /// Log exceptions/errors this programme has.
-        /// If undefined then always true.
-        /// </summary>
-        public static bool ProgramLogException = true;
+        public static string ProgramPluginsFolder = System.IO.Path.Combine(Program.InstallFolder, "plugins");       
     }
 }

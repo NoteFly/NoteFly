@@ -124,6 +124,7 @@ namespace NoteFly
         /// <param name="notes">Reference to notes class.</param>
         private void ConstructFrmNewNote(Notes notes)
         {
+            this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             this.notes = notes;
             this.SetFontSettings();

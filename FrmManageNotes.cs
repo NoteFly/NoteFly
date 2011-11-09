@@ -97,6 +97,7 @@ namespace NoteFly
         /// <param name="notes">The class notes, with access to all the notes.</param>
         public FrmManageNotes(Notes notes)
         {
+            this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             this.notes = notes;
             this.DrawNotesGrid();

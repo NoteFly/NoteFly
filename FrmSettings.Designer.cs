@@ -603,6 +603,10 @@ namespace NoteFly
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
+            this.numWarnLimitTotal = new System.Windows.Forms.NumericUpDown();
+            this.lblTextTotalNotesWarnLimit = new System.Windows.Forms.Label();
+            this.lblTextVisibleNotesWarnLimit = new System.Windows.Forms.Label();
+            this.numWarnLimitVisible = new System.Windows.Forms.NumericUpDown();
             this.pluginGrid = new NoteFly.PluginGrid();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
@@ -628,6 +632,8 @@ namespace NoteFly
             this.tabProxy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
             this.tabAdvance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOK
@@ -1011,7 +1017,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = string.Empty;
+            this.lblTextDirection.AccessibleDescription = "";
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.Location = new System.Drawing.Point(21, 183);
@@ -1656,6 +1662,10 @@ namespace NoteFly
             // 
             // tabAdvance
             // 
+            this.tabAdvance.Controls.Add(this.numWarnLimitVisible);
+            this.tabAdvance.Controls.Add(this.lblTextVisibleNotesWarnLimit);
+            this.tabAdvance.Controls.Add(this.lblTextTotalNotesWarnLimit);
+            this.tabAdvance.Controls.Add(this.numWarnLimitTotal);
             this.tabAdvance.Controls.Add(this.chxLogExceptions);
             this.tabAdvance.Controls.Add(this.lblTextLogging);
             this.tabAdvance.Controls.Add(this.chxLogDebug);
@@ -1677,7 +1687,7 @@ namespace NoteFly
             this.chxLogExceptions.Checked = true;
             this.chxLogExceptions.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxLogExceptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chxLogExceptions.Location = new System.Drawing.Point(14, 161);
+            this.chxLogExceptions.Location = new System.Drawing.Point(15, 210);
             this.chxLogExceptions.Name = "chxLogExceptions";
             this.chxLogExceptions.Size = new System.Drawing.Size(306, 20);
             this.chxLogExceptions.TabIndex = 24;
@@ -1688,7 +1698,7 @@ namespace NoteFly
             // 
             this.lblTextLogging.AutoSize = true;
             this.lblTextLogging.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTextLogging.Location = new System.Drawing.Point(11, 96);
+            this.lblTextLogging.Location = new System.Drawing.Point(12, 145);
             this.lblTextLogging.Name = "lblTextLogging";
             this.lblTextLogging.Size = new System.Drawing.Size(60, 16);
             this.lblTextLogging.TabIndex = 23;
@@ -1698,7 +1708,7 @@ namespace NoteFly
             // 
             this.chxLogDebug.AutoSize = true;
             this.chxLogDebug.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chxLogDebug.Location = new System.Drawing.Point(14, 115);
+            this.chxLogDebug.Location = new System.Drawing.Point(15, 164);
             this.chxLogDebug.Name = "chxLogDebug";
             this.chxLogDebug.Size = new System.Drawing.Size(119, 20);
             this.chxLogDebug.TabIndex = 22;
@@ -1709,7 +1719,7 @@ namespace NoteFly
             // 
             this.btnResetSettings.BackColor = System.Drawing.Color.LightGray;
             this.btnResetSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResetSettings.Location = new System.Drawing.Point(112, 240);
+            this.btnResetSettings.Location = new System.Drawing.Point(126, 272);
             this.btnResetSettings.Name = "btnResetSettings";
             this.btnResetSettings.Size = new System.Drawing.Size(195, 25);
             this.btnResetSettings.TabIndex = 21;
@@ -1723,7 +1733,7 @@ namespace NoteFly
             this.chxLogErrors.Checked = true;
             this.chxLogErrors.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxLogErrors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chxLogErrors.Location = new System.Drawing.Point(14, 138);
+            this.chxLogErrors.Location = new System.Drawing.Point(15, 187);
             this.chxLogErrors.Name = "chxLogErrors";
             this.chxLogErrors.Size = new System.Drawing.Size(91, 20);
             this.chxLogErrors.TabIndex = 19;
@@ -1787,6 +1797,68 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
+            // numWarnLimitTotal
+            // 
+            this.numWarnLimitTotal.Location = new System.Drawing.Point(182, 86);
+            this.numWarnLimitTotal.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numWarnLimitTotal.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numWarnLimitTotal.Name = "numWarnLimitTotal";
+            this.numWarnLimitTotal.Size = new System.Drawing.Size(49, 22);
+            this.numWarnLimitTotal.TabIndex = 25;
+            this.numWarnLimitTotal.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            // 
+            // lblTextTotalNotesWarnLimit
+            // 
+            this.lblTextTotalNotesWarnLimit.AutoSize = true;
+            this.lblTextTotalNotesWarnLimit.Location = new System.Drawing.Point(13, 88);
+            this.lblTextTotalNotesWarnLimit.Name = "lblTextTotalNotesWarnLimit";
+            this.lblTextTotalNotesWarnLimit.Size = new System.Drawing.Size(153, 16);
+            this.lblTextTotalNotesWarnLimit.TabIndex = 26;
+            this.lblTextTotalNotesWarnLimit.Text = "Total notes warning limit:";
+            // 
+            // lblTextVisibleNotesWarnLimit
+            // 
+            this.lblTextVisibleNotesWarnLimit.AutoSize = true;
+            this.lblTextVisibleNotesWarnLimit.Location = new System.Drawing.Point(13, 113);
+            this.lblTextVisibleNotesWarnLimit.Name = "lblTextVisibleNotesWarnLimit";
+            this.lblTextVisibleNotesWarnLimit.Size = new System.Drawing.Size(163, 16);
+            this.lblTextVisibleNotesWarnLimit.TabIndex = 27;
+            this.lblTextVisibleNotesWarnLimit.Text = "Visible notes warning limit:";
+            // 
+            // numWarnLimitVisible
+            // 
+            this.numWarnLimitVisible.Location = new System.Drawing.Point(182, 111);
+            this.numWarnLimitVisible.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.numWarnLimitVisible.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numWarnLimitVisible.Name = "numWarnLimitVisible";
+            this.numWarnLimitVisible.Size = new System.Drawing.Size(49, 22);
+            this.numWarnLimitVisible.TabIndex = 28;
+            this.numWarnLimitVisible.Value = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
+            // 
             // pluginGrid
             // 
             this.pluginGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -1795,7 +1867,7 @@ namespace NoteFly
             this.pluginGrid.AutoScroll = true;
             this.pluginGrid.Location = new System.Drawing.Point(3, 42);
             this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(441, 288);
+            this.pluginGrid.Size = new System.Drawing.Size(440, 288);
             this.pluginGrid.TabIndex = 26;
             // 
             // iptbProxyAddress
@@ -1863,11 +1935,18 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).EndInit();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion        
+
+        private System.Windows.Forms.NumericUpDown numWarnLimitVisible;
+        private System.Windows.Forms.Label lblTextVisibleNotesWarnLimit;
+        private System.Windows.Forms.Label lblTextTotalNotesWarnLimit;
+        private System.Windows.Forms.NumericUpDown numWarnLimitTotal;
     }
 }

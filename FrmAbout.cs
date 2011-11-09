@@ -97,7 +97,7 @@ namespace NoteFly
             const int maxdark = 250;
             byte red = this.lblProductName.ForeColor.R;
             byte blue = this.lblProductName.ForeColor.B;
-            byte green = this.lblProductName.ForeColor.G;            
+            byte green = this.lblProductName.ForeColor.G;
             if (red < maxdark && green <= 5)
             {
                 red += 5;

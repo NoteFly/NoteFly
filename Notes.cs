@@ -404,37 +404,39 @@ namespace NoteFly
             stopwatch.Stop();
             Log.Write(LogType.info, "Notes search time:  " + stopwatch.ElapsedTicks.ToString() + " ticks");
 #endif
-            int numloadingnotes = notefiles.Length;
-            if (this.CheckLimitNotes(notefiles.Length))
-            {
-                const string MANYNOTESLOADALL = "There are many notes loading this can take a while, do you want to load them all?";
-                DialogResult dlgres = MessageBox.Show(MANYNOTESLOADALL, "contine loading many notes?", MessageBoxButtons.YesNo);
-                if (dlgres == DialogResult.No)
-                {
-                    numloadingnotes = Settings.NotesWarnLimit;
-                }
-            }
-            else
-            {
-                this.notes.Capacity = notefiles.Length;
-            }
+            int numloadingnotes = CheckLimitNotesTotal(notefiles.Length);
+            this.notes.Capacity = numloadingnotes;
 #if DEBUG
             stopwatch.Reset();
             stopwatch.Start();
 #endif
+
+            int numvisiblenotes = 0;
+            bool warnlimitvisiblenotesshowed = false;
+            const int MARGINBETWEENNOTES = 4;
             for (int i = 0; i < numloadingnotes; i++)
             {
                 Note note = xmlUtil.LoadNoteFile(this, notefiles[i]);
                 if (resetpositions)
                 {
-                    note.X = 10 + (i * 2);
                     note.Y = 10;
+                    note.X = 10 + (i * MARGINBETWEENNOTES);
+                    if (note.X > System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height)
+                    {
+                        note.X = 10 + (i * MARGINBETWEENNOTES) - System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
+                    }
+
                 }
 
                 this.AddNote(note);
-                if (this.notes[i].Visible)
+                if (note.Visible)
                 {
-                    this.notes[i].CreateForm();
+                    if (!warnlimitvisiblenotesshowed) 
+                    {
+                        warnlimitvisiblenotesshowed = this.CheckLimitNotesVisible(numvisiblenotes);
+                    }
+
+                    note.CreateForm();
                 }
             }
 
@@ -582,7 +584,7 @@ namespace NoteFly
 #endif
             if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE))))
             {
-                DialogResult resdoimport = MessageBox.Show("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.", "Import out NoteFly 1.0.x", MessageBoxButtons.YesNo);
+                DialogResult resdoimport = MessageBox.Show("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.", "Import out NoteFly 1.0.x", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (resdoimport == DialogResult.Yes)
                 {
                     string nf1settingsfile = Path.Combine(nf1appdata, "settings.xml");
@@ -620,35 +622,68 @@ namespace NoteFly
                         nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
                     }
 
-                    try
-                    {
-                        File.Create(Path.Combine(nf1appdata, IMPORTEDFLAGFILE));
-                    }
-                    catch
-                    {
-                        Log.Write(LogType.exception, "Could not set import flag in old notes directory.");
-                    }
-
-                    Log.Write(LogType.info, "Notes from notefly 1.0.x imported.");
+                    CreateNF1NotesImportedFlagfile(nf1appdata);
+                    Log.Write(LogType.info, "Notes from NoteFly 1.0.x imported.");
+                }
+                else if (resdoimport == DialogResult.No)
+                {
+                    CreateNF1NotesImportedFlagfile(nf1appdata);
+                    Log.Write(LogType.info, "Notes from NoteFly 1.0.x have not been imported.");
                 }
             }
         }
 
         /// <summary>
-        /// This method set a limit on how many notes can be loaded before a 
+        /// Create a empty file so this newer NoteFly version knows the application data of NoteFly 1.0.x is imported.
+        /// </summary>
+        /// <param name="nf1path">Path to NoteFly1 application data folder.</param>
+        private void CreateNF1NotesImportedFlagfile(string nf1appdata)
+        {
+            try
+            {
+                File.Create(Path.Combine(nf1appdata, IMPORTEDFLAGFILE));
+            }
+            catch
+            {
+                Log.Write(LogType.exception, "Could not set import flag in old notes directory.");
+            }
+        }
+
+        /// <summary>
+        /// This method set a limit on how many notes total can be loaded.
         /// </summary>
         /// <param name="number">The total number of notes.</param>
-        /// <returns>true when limit is reached, and a warning about too many notes should be showed.</returns>
-        private bool CheckLimitNotes(int number)
+        /// <returns>The number of notes to load.</returns>
+        private int CheckLimitNotesTotal(int totanumbernotes)
         {
-            if (number > Settings.NotesWarnLimit)
+            if (totanumbernotes > Settings.NotesWarnlimitTotal)
             {
+                const string MANYNOTESLOADALL = "There are many notes loading this can take a while, do you want to load them all?";
+                DialogResult dlgres = MessageBox.Show(MANYNOTESLOADALL, "Contine loading many notes?", MessageBoxButtons.YesNo);
+                if (dlgres == DialogResult.No)
+                {
+                    totanumbernotes = Settings.NotesWarnlimitTotal;
+                }
+            }
+
+            return totanumbernotes;
+        }
+
+        /// <summary>
+        /// Check if NotesWarnlimitVisible is reached and display warning then.
+        /// </summary>
+        /// <param name="currentnumber">The number of notes that are currently visible.</param>
+        /// <returns></returns>
+        private bool CheckLimitNotesVisible(int currentnumber)
+        {
+            if (currentnumber > Settings.NotesWarnlimitVisible)
+            {
+                const string MANYNOTESVISIBLE = "There are many notes visible. Hide some notes to make loading faster.";
+                MessageBox.Show(MANYNOTESVISIBLE, "Many notes visible", MessageBoxButtons.YesNo);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
