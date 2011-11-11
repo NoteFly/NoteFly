@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="PluginGrid.cs" company="GNU">
+// <copyright file="PluginGrid.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2011  Tom
 //
@@ -44,6 +44,11 @@ namespace NoteFly
         private IPlugin.IPlugin[] allplugins;
 
         /// <summary>
+        /// Label lblTextNoplugins
+        /// </summary>
+        private Label lblTextNoplugins;
+
+        /// <summary>
         /// Initializes a new instance of the PluginGrid class.
         /// </summary>
         public PluginGrid()
@@ -62,6 +67,21 @@ namespace NoteFly
             this.allplugins = Program.GetPlugins(false);
             if (this.allplugins != null)
             {
+                if (this.allplugins.Length == 0)
+                {
+                    this.lblTextNoplugins = new Label();
+                    this.lblTextNoplugins.Text = "Their are no plugins installed.";
+                    this.lblTextNoplugins.SetBounds(15, 10, 200, 40);
+                    this.lblTextNoplugins.AutoSize = true;
+                    this.lblTextNoplugins.Visible = true;
+                    this.Controls.Add(this.lblTextNoplugins);
+                }
+                else if (this.lblTextNoplugins != null)
+                {
+                    this.lblTextNoplugins.Visible = false;
+                    this.Controls.Remove(this.lblTextNoplugins);
+                }
+
                 this.btnPluginsStatus = new Button[this.allplugins.Length];
                 this.tlpnlPlugins = new TableLayoutPanel[this.allplugins.Length];
                 for (int i = 0; i < this.allplugins.Length; i++)
