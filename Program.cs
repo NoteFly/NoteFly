@@ -146,9 +146,12 @@ namespace NoteFly
         #region Methods (5)
 
         /// <summary>
-        /// Gets the application version number as an array.
+        /// Gets the application version numbers, without the .net 'revision' number, as an array 
+        /// <remarks>The .NET 'build' number is actally called a release number because it needs to be manually increased.
+        /// And the .NET 'revision' number is actaully the build number, because this number is changed every build/compile of the program.
+        /// (I know this is confuzzing blame the .NET creators.)</remarks>
         /// </summary>
-        /// <returns>a string containing the version number of this application in the form of major.minor.build number</returns>
+        /// <returns>a string containing the version number of this application in the form of major.minor.release/'build' number</returns>
         public static short[] GetVersion()
         {
             short[] version = new short[3];

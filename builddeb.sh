@@ -16,17 +16,17 @@ cp ./bin/Release/license.txt ./builddeb/usr/share/doc/notefly/copyright
 # has permission problems if it's build from there. That's why we copy it to /home/$user/ first.
 mkdir ~/notefly-builddeb/
 sudo chmod 755 ~/notefly-builddeb/
-cp -r ./builddeb ~/notefly-builddeb/notefly-2.5.0_all/
+cp -r ./builddeb ~/notefly-builddeb/notefly-2.5.1_all/
 sudo chmod 755 -R ~/notefly-builddeb/
 
 ##sudo chmod 644 ~/notefly-builddeb/usr/bin/langs.xml
-sudo chmod 644 ~/notefly-builddeb/notefly-2.5.0_all/usr/share/doc/notefly/changelog
-sudo chmod 644 ~/notefly-builddeb/notefly-2.5.0_all/usr/share/doc/notefly/copyright
+sudo chmod 644 ~/notefly-builddeb/notefly-2.5.1_all/usr/share/doc/notefly/changelog
+sudo chmod 644 ~/notefly-builddeb/notefly-2.5.1_all/usr/share/doc/notefly/copyright
 
 # fix E: notefly: wrong-file-owner-uid-or-gid
 sudo chown root:root -R ~/notefly-builddeb/
 # building package, root/sudo required for this
-sudo dpkg-deb --build ~/notefly-builddeb/notefly-2.5.0_all/
+sudo dpkg-deb --build ~/notefly-builddeb/notefly-2.5.1_all/
 
 # checking if it's done all right.
-lintian -c ~/notefly-builddeb/notefly-2.5.0_all.deb
+lintian -c ~/notefly-builddeb/notefly-2.5.1_all.deb

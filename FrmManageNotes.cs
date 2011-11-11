@@ -118,16 +118,19 @@ namespace NoteFly
                 this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
             }
 
-            for (int p = 0; p < Program.pluginsenabled.Length; p++)
+            if (Program.pluginsenabled != null)
             {
-                if (Program.pluginsenabled[p].InitFrmManageNotesBtns() != null)
+                for (int p = 0; p < Program.pluginsenabled.Length; p++)
                 {
-                    Button[] buttons = Program.pluginsenabled[p].InitFrmManageNotesBtns();
-                    for (int i = 0; i < buttons.Length; i++)
+                    if (Program.pluginsenabled[p].InitFrmManageNotesBtns() != null)
                     {
-                        this.tableLayoutPanelButtons.ColumnCount += 1;
-                        this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 80));
-                        this.tableLayoutPanelButtons.Controls.Add(buttons[i], this.tableLayoutPanelButtons.ColumnCount - 1, 0);
+                        Button[] buttons = Program.pluginsenabled[p].InitFrmManageNotesBtns();
+                        for (int i = 0; i < buttons.Length; i++)
+                        {
+                            this.tableLayoutPanelButtons.ColumnCount += 1;
+                            this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 80));
+                            this.tableLayoutPanelButtons.Controls.Add(buttons[i], this.tableLayoutPanelButtons.ColumnCount - 1, 0);
+                        }
                     }
                 }
             }
