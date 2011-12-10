@@ -337,6 +337,12 @@ namespace NoteFly
                         case "NotesDefaultSkinnr":
                             Settings.NotesDefaultSkinnr = xmlread.ReadElementContentAsInt();
                             break;
+                        case "NotesDefaultWidth":
+                            Settings.NotesDefaultWidth = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NotesDefaultHeight":
+                            Settings.NotesDefaultHeight = xmlread.ReadElementContentAsInt();
+                            break;
                         case "NotesWarnLimit": // TODO: legacy setting, only read it no writing it anymore.
                             Settings.NotesWarnlimitTotal = xmlread.ReadElementContentAsInt();
                             break;
@@ -904,6 +910,8 @@ namespace NoteFly
                 xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesDefaultWidth", Settings.NotesDefaultWidth.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesDefaultHeight", Settings.NotesDefaultHeight.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesWarnlimitTotal", Settings.NotesWarnlimitTotal.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesWarnlimitVisible", Settings.NotesWarnlimitVisible.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));

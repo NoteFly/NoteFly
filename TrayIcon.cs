@@ -85,6 +85,11 @@ namespace NoteFly
         private ToolStripMenuItem menuSettings;
 
         /// <summary>
+        /// Plugins menu option
+        /// </summary>
+        private ToolStripMenuItem menuPlugins;
+
+        /// <summary>
         /// About menu option
         /// </summary>
         private ToolStripMenuItem menuAbout;
@@ -115,6 +120,7 @@ namespace NoteFly
             this.menuTrayIcon.AllowDrop = false;
             this.menuNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -186,6 +192,15 @@ namespace NoteFly
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuSettings);
 
+            // menuPlugins
+            this.menuPlugins.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuPlugins.Name = "MenuPlugins";
+            this.menuPlugins.Size = new System.Drawing.Size(144, 22);
+            this.menuPlugins.Text = "&Plugins";
+            this.menuPlugins.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
+            this.menuPlugins.Click += new System.EventHandler(this.MenuPlugins_Click);
+            this.icon.ContextMenuStrip.Items.Add(this.menuPlugins);
+
             // Create trayicon plugin ToolStripMenuItem items, if any.
             if (Program.pluginsenabled != null)
             {
@@ -201,6 +216,7 @@ namespace NoteFly
                 }
             }
 
+            
             // MenuAbout
             this.menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuAbout.Name = "MenuAbout";
@@ -373,6 +389,17 @@ namespace NoteFly
         {
             FrmAbout frmabout = new FrmAbout();
             frmabout.ShowDialog();
+        }
+
+        /// <summary>
+        /// Open plugins window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuPlugins_Click(object sender, EventArgs e)
+        {
+            FrmPlugins plugins = new FrmPlugins();
+            plugins.ShowDialog();
         }
 
         /// <summary>

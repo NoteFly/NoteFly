@@ -126,6 +126,7 @@ namespace NoteFly
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
+            this.Size = new Size(Settings.NotesDefaultWidth, Settings.NotesDefaultHeight);            
             this.notes = notes;
             this.SetFontSettings();
             this.toolTip.Active = Settings.NotesTooltipsEnabled;

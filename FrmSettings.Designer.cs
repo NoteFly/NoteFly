@@ -236,36 +236,6 @@ namespace NoteFly
         private System.Windows.Forms.TabControl tabAppearanceColors;
 
         /// <summary>
-        /// TabPage tabPageLooks
-        /// </summary>
-        private System.Windows.Forms.TabPage tabPageLooks;
-
-        /// <summary>
-        /// CheckBox chxTransparecy
-        /// </summary>
-        private System.Windows.Forms.CheckBox chxTransparecy;
-
-        /// <summary>
-        /// Label lblDefaultNewNoteColor
-        /// </summary>
-        private System.Windows.Forms.Label lblDefaultNewNoteColor;
-
-        /// <summary>
-        /// ComboBox cbxDefaultColor
-        /// </summary>
-        private System.Windows.Forms.ComboBox cbxDefaultColor;
-
-        /// <summary>
-        /// NumericUpDown numProcTransparency
-        /// </summary>
-        private System.Windows.Forms.NumericUpDown numProcTransparency;
-
-        /// <summary>
-        /// Label lblTextTransparentProcVisible
-        /// </summary>
-        private System.Windows.Forms.Label lblTextTransparentProcVisible;
-
-        /// <summary>
         /// TabPage tabPageFonts
         /// </summary>
         private System.Windows.Forms.TabPage tabPageFonts;
@@ -336,11 +306,6 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox cbxFontNoteTitleBold;
 
         /// <summary>
-        /// CheckBox cbxShowTooltips
-        /// </summary>
-        private System.Windows.Forms.CheckBox chxShowTooltips;
-
-        /// <summary>
         /// Label lblTextLogging
         /// </summary>
         private System.Windows.Forms.Label lblTextLogging;
@@ -374,11 +339,6 @@ namespace NoteFly
         /// CheckBox chxTrayiconBoldNewnote
         /// </summary>
         private System.Windows.Forms.CheckBox chxTrayiconBoldNewnote;
-
-        /// <summary>
-        /// CheckBox chxUseRandomDefaultNote
-        /// </summary>
-        private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
 
         /// <summary>
         /// CheckBox chxNotesDeleteRecyclebin
@@ -424,11 +384,6 @@ namespace NoteFly
         /// CheckBox chxLoadPlugins
         /// </summary>
         private System.Windows.Forms.CheckBox chxLoadPlugins;
-
-        /// <summary>
-        /// TabPage tabPlugins
-        /// </summary>
-        private System.Windows.Forms.TabPage tabPlugins;
 
         /// <summary>
         /// CheckBox chxCheckUpdatesSignature
@@ -483,12 +438,7 @@ namespace NoteFly
         /// <summary>
         /// Label lblTextMiliseconds
         /// </summary>
-        private System.Windows.Forms.Label lblTextMiliseconds;
-
-        /// <summary>
-        /// PluginGrid pluginGrid
-        /// </summary>
-        private PluginGrid pluginGrid;        
+        private System.Windows.Forms.Label lblTextMiliseconds;        
 
         /// <summary>
         /// Clean up any resources being used.
@@ -525,14 +475,20 @@ namespace NoteFly
             this.lblTextActionLeftClicktTrayicon = new System.Windows.Forms.Label();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabAppearanceColors = new System.Windows.Forms.TabControl();
-            this.tabPageLooks = new System.Windows.Forms.TabPage();
-            this.chxUseRandomDefaultNote = new System.Windows.Forms.CheckBox();
+            this.tabPageNotes = new System.Windows.Forms.TabPage();
             this.chxShowTooltips = new System.Windows.Forms.CheckBox();
             this.chxTransparecy = new System.Windows.Forms.CheckBox();
-            this.lblDefaultNewNoteColor = new System.Windows.Forms.Label();
-            this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
             this.numProcTransparency = new System.Windows.Forms.NumericUpDown();
             this.lblTextTransparentProcVisible = new System.Windows.Forms.Label();
+            this.tabPageNewNote = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numNotesDefaultHeight = new System.Windows.Forms.NumericUpDown();
+            this.numNotesDefaultWidth = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.chxUseRandomDefaultNote = new System.Windows.Forms.CheckBox();
+            this.lblDefaultNewNoteColor = new System.Windows.Forms.Label();
+            this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
             this.tabPageFonts = new System.Windows.Forms.TabPage();
             this.cbxFontNoteTitleBold = new System.Windows.Forms.CheckBox();
             this.lblTextFontTitlePoints = new System.Windows.Forms.Label();
@@ -556,8 +512,6 @@ namespace NoteFly
             this.chxTrayiconBoldSettings = new System.Windows.Forms.CheckBox();
             this.chxTrayiconBoldManagenotes = new System.Windows.Forms.CheckBox();
             this.chxTrayiconBoldNewnote = new System.Windows.Forms.CheckBox();
-            this.tabPlugins = new System.Windows.Forms.TabPage();
-            this.chxLoadPlugins = new System.Windows.Forms.CheckBox();
             this.tabHighlight = new System.Windows.Forms.TabPage();
             this.chxHighlightSQL = new System.Windows.Forms.CheckBox();
             this.chxHighlightPHP = new System.Windows.Forms.CheckBox();
@@ -592,6 +546,11 @@ namespace NoteFly
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.numWarnLimitVisible = new System.Windows.Forms.NumericUpDown();
+            this.chxLoadPlugins = new System.Windows.Forms.CheckBox();
+            this.lblTextVisibleNotesWarnLimit = new System.Windows.Forms.Label();
+            this.lblTextTotalNotesWarnLimit = new System.Windows.Forms.Label();
+            this.numWarnLimitTotal = new System.Windows.Forms.NumericUpDown();
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
             this.lblTextLogging = new System.Windows.Forms.Label();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
@@ -603,24 +562,21 @@ namespace NoteFly
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
-            this.numWarnLimitTotal = new System.Windows.Forms.NumericUpDown();
-            this.lblTextTotalNotesWarnLimit = new System.Windows.Forms.Label();
-            this.lblTextVisibleNotesWarnLimit = new System.Windows.Forms.Label();
-            this.numWarnLimitVisible = new System.Windows.Forms.NumericUpDown();
-            this.pluginGrid = new NoteFly.PluginGrid();
             this.iptbProxyAddress = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
             this.tabAppearanceColors.SuspendLayout();
-            this.tabPageLooks.SuspendLayout();
+            this.tabPageNotes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).BeginInit();
+            this.tabPageNewNote.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numNotesDefaultHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numNotesDefaultWidth)).BeginInit();
             this.tabPageFonts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSizeTitle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSizeContent)).BeginInit();
             this.tabPageTrayicon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTrayiconFontsize)).BeginInit();
-            this.tabPlugins.SuspendLayout();
             this.tabHighlight.SuspendLayout();
             this.tabSharing.SuspendLayout();
             this.tabControlSharing.SuspendLayout();
@@ -632,8 +588,8 @@ namespace NoteFly
             this.tabProxy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
             this.tabAdvance.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOK
@@ -672,7 +628,6 @@ namespace NoteFly
             // 
             this.tabControlSettings.Controls.Add(this.tabGeneral);
             this.tabControlSettings.Controls.Add(this.tabAppearance);
-            this.tabControlSettings.Controls.Add(this.tabPlugins);
             this.tabControlSettings.Controls.Add(this.tabHighlight);
             this.tabControlSettings.Controls.Add(this.tabSharing);
             this.tabControlSettings.Controls.Add(this.tabNetwork);
@@ -791,7 +746,8 @@ namespace NoteFly
             // 
             // tabAppearanceColors
             // 
-            this.tabAppearanceColors.Controls.Add(this.tabPageLooks);
+            this.tabAppearanceColors.Controls.Add(this.tabPageNotes);
+            this.tabAppearanceColors.Controls.Add(this.tabPageNewNote);
             this.tabAppearanceColors.Controls.Add(this.tabPageFonts);
             this.tabAppearanceColors.Controls.Add(this.tabPageTrayicon);
             this.tabAppearanceColors.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -801,40 +757,25 @@ namespace NoteFly
             this.tabAppearanceColors.Size = new System.Drawing.Size(441, 327);
             this.tabAppearanceColors.TabIndex = 28;
             // 
-            // tabPageLooks
+            // tabPageNotes
             // 
-            this.tabPageLooks.Controls.Add(this.chxUseRandomDefaultNote);
-            this.tabPageLooks.Controls.Add(this.chxShowTooltips);
-            this.tabPageLooks.Controls.Add(this.chxTransparecy);
-            this.tabPageLooks.Controls.Add(this.lblDefaultNewNoteColor);
-            this.tabPageLooks.Controls.Add(this.cbxDefaultColor);
-            this.tabPageLooks.Controls.Add(this.numProcTransparency);
-            this.tabPageLooks.Controls.Add(this.lblTextTransparentProcVisible);
-            this.tabPageLooks.Location = new System.Drawing.Point(4, 25);
-            this.tabPageLooks.Name = "tabPageLooks";
-            this.tabPageLooks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLooks.Size = new System.Drawing.Size(433, 298);
-            this.tabPageLooks.TabIndex = 0;
-            this.tabPageLooks.Text = "Looks";
-            this.tabPageLooks.UseVisualStyleBackColor = true;
-            // 
-            // chxUseRandomDefaultNote
-            // 
-            this.chxUseRandomDefaultNote.AutoSize = true;
-            this.chxUseRandomDefaultNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chxUseRandomDefaultNote.Location = new System.Drawing.Point(18, 120);
-            this.chxUseRandomDefaultNote.Name = "chxUseRandomDefaultNote";
-            this.chxUseRandomDefaultNote.Size = new System.Drawing.Size(230, 20);
-            this.chxUseRandomDefaultNote.TabIndex = 14;
-            this.chxUseRandomDefaultNote.Text = "Use a random skin as default skin.";
-            this.chxUseRandomDefaultNote.UseVisualStyleBackColor = true;
-            this.chxUseRandomDefaultNote.CheckedChanged += new System.EventHandler(this.chxUseRandomDefaultNote_CheckedChanged);
+            this.tabPageNotes.Controls.Add(this.chxShowTooltips);
+            this.tabPageNotes.Controls.Add(this.chxTransparecy);
+            this.tabPageNotes.Controls.Add(this.numProcTransparency);
+            this.tabPageNotes.Controls.Add(this.lblTextTransparentProcVisible);
+            this.tabPageNotes.Location = new System.Drawing.Point(4, 25);
+            this.tabPageNotes.Name = "tabPageNotes";
+            this.tabPageNotes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageNotes.Size = new System.Drawing.Size(433, 298);
+            this.tabPageNotes.TabIndex = 0;
+            this.tabPageNotes.Text = "Notes";
+            this.tabPageNotes.UseVisualStyleBackColor = true;
             // 
             // chxShowTooltips
             // 
             this.chxShowTooltips.AutoSize = true;
             this.chxShowTooltips.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chxShowTooltips.Location = new System.Drawing.Point(18, 62);
+            this.chxShowTooltips.Location = new System.Drawing.Point(26, 66);
             this.chxShowTooltips.Name = "chxShowTooltips";
             this.chxShowTooltips.Size = new System.Drawing.Size(106, 20);
             this.chxShowTooltips.TabIndex = 13;
@@ -850,38 +791,13 @@ namespace NoteFly
             this.chxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.chxTransparecy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chxTransparecy.Location = new System.Drawing.Point(18, 28);
+            this.chxTransparecy.Location = new System.Drawing.Point(26, 32);
             this.chxTransparecy.Name = "chxTransparecy";
             this.chxTransparecy.Size = new System.Drawing.Size(193, 21);
             this.chxTransparecy.TabIndex = 8;
             this.chxTransparecy.Text = "Enable transparency notes";
             this.chxTransparecy.UseVisualStyleBackColor = false;
             this.chxTransparecy.CheckedChanged += new System.EventHandler(this.chxTransparecy_CheckedChanged);
-            // 
-            // lblDefaultNewNoteColor
-            // 
-            this.lblDefaultNewNoteColor.AutoSize = true;
-            this.lblDefaultNewNoteColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDefaultNewNoteColor.Location = new System.Drawing.Point(15, 146);
-            this.lblDefaultNewNoteColor.Name = "lblDefaultNewNoteColor";
-            this.lblDefaultNewNoteColor.Size = new System.Drawing.Size(143, 16);
-            this.lblDefaultNewNoteColor.TabIndex = 9;
-            this.lblDefaultNewNoteColor.Text = "Default skin new notes:";
-            // 
-            // cbxDefaultColor
-            // 
-            this.cbxDefaultColor.AccessibleDescription = "Defaul color for new note.";
-            this.cbxDefaultColor.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
-            this.cbxDefaultColor.BackColor = System.Drawing.Color.LightGray;
-            this.cbxDefaultColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxDefaultColor.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxDefaultColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbxDefaultColor.FormattingEnabled = true;
-            this.cbxDefaultColor.Location = new System.Drawing.Point(164, 143);
-            this.cbxDefaultColor.MaxDropDownItems = 5;
-            this.cbxDefaultColor.Name = "cbxDefaultColor";
-            this.cbxDefaultColor.Size = new System.Drawing.Size(139, 24);
-            this.cbxDefaultColor.TabIndex = 10;
             // 
             // numProcTransparency
             // 
@@ -893,7 +809,7 @@ namespace NoteFly
             0,
             0,
             0});
-            this.numProcTransparency.Location = new System.Drawing.Point(217, 28);
+            this.numProcTransparency.Location = new System.Drawing.Point(225, 32);
             this.numProcTransparency.Minimum = new decimal(new int[] {
             1,
             0,
@@ -912,11 +828,149 @@ namespace NoteFly
             // 
             this.lblTextTransparentProcVisible.AutoSize = true;
             this.lblTextTransparentProcVisible.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTextTransparentProcVisible.Location = new System.Drawing.Point(269, 30);
+            this.lblTextTransparentProcVisible.Location = new System.Drawing.Point(277, 34);
             this.lblTextTransparentProcVisible.Name = "lblTextTransparentProcVisible";
             this.lblTextTransparentProcVisible.Size = new System.Drawing.Size(62, 16);
             this.lblTextTransparentProcVisible.TabIndex = 12;
             this.lblTextTransparentProcVisible.Text = "% visible";
+            // 
+            // tabPageNewNote
+            // 
+            this.tabPageNewNote.Controls.Add(this.label3);
+            this.tabPageNewNote.Controls.Add(this.label2);
+            this.tabPageNewNote.Controls.Add(this.numNotesDefaultHeight);
+            this.tabPageNewNote.Controls.Add(this.numNotesDefaultWidth);
+            this.tabPageNewNote.Controls.Add(this.label1);
+            this.tabPageNewNote.Controls.Add(this.chxUseRandomDefaultNote);
+            this.tabPageNewNote.Controls.Add(this.lblDefaultNewNoteColor);
+            this.tabPageNewNote.Controls.Add(this.cbxDefaultColor);
+            this.tabPageNewNote.Location = new System.Drawing.Point(4, 25);
+            this.tabPageNewNote.Name = "tabPageNewNote";
+            this.tabPageNewNote.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageNewNote.Size = new System.Drawing.Size(433, 298);
+            this.tabPageNewNote.TabIndex = 3;
+            this.tabPageNewNote.Text = "New note";
+            this.tabPageNewNote.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(26, 166);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(50, 16);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Height:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 138);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 16);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "Width:";
+            // 
+            // numNotesDefaultHeight
+            // 
+            this.numNotesDefaultHeight.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numNotesDefaultHeight.Location = new System.Drawing.Point(89, 164);
+            this.numNotesDefaultHeight.Maximum = new decimal(new int[] {
+            900,
+            0,
+            0,
+            0});
+            this.numNotesDefaultHeight.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numNotesDefaultHeight.Name = "numNotesDefaultHeight";
+            this.numNotesDefaultHeight.Size = new System.Drawing.Size(55, 22);
+            this.numNotesDefaultHeight.TabIndex = 20;
+            this.numNotesDefaultHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numNotesDefaultHeight.Value = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            // 
+            // numNotesDefaultWidth
+            // 
+            this.numNotesDefaultWidth.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numNotesDefaultWidth.Location = new System.Drawing.Point(89, 136);
+            this.numNotesDefaultWidth.Maximum = new decimal(new int[] {
+            1200,
+            0,
+            0,
+            0});
+            this.numNotesDefaultWidth.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numNotesDefaultWidth.Name = "numNotesDefaultWidth";
+            this.numNotesDefaultWidth.Size = new System.Drawing.Size(55, 22);
+            this.numNotesDefaultWidth.TabIndex = 19;
+            this.numNotesDefaultWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numNotesDefaultWidth.Value = new decimal(new int[] {
+            420,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(22, 117);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(136, 16);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Default size new note:";
+            // 
+            // chxUseRandomDefaultNote
+            // 
+            this.chxUseRandomDefaultNote.AutoSize = true;
+            this.chxUseRandomDefaultNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chxUseRandomDefaultNote.Location = new System.Drawing.Point(22, 30);
+            this.chxUseRandomDefaultNote.Name = "chxUseRandomDefaultNote";
+            this.chxUseRandomDefaultNote.Size = new System.Drawing.Size(230, 20);
+            this.chxUseRandomDefaultNote.TabIndex = 17;
+            this.chxUseRandomDefaultNote.Text = "Use a random skin as default skin.";
+            this.chxUseRandomDefaultNote.UseVisualStyleBackColor = true;
+            this.chxUseRandomDefaultNote.CheckedChanged += new System.EventHandler(this.chxUseRandomDefaultNote_CheckedChanged);
+            // 
+            // lblDefaultNewNoteColor
+            // 
+            this.lblDefaultNewNoteColor.AutoSize = true;
+            this.lblDefaultNewNoteColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDefaultNewNoteColor.Location = new System.Drawing.Point(19, 56);
+            this.lblDefaultNewNoteColor.Name = "lblDefaultNewNoteColor";
+            this.lblDefaultNewNoteColor.Size = new System.Drawing.Size(143, 16);
+            this.lblDefaultNewNoteColor.TabIndex = 15;
+            this.lblDefaultNewNoteColor.Text = "Default skin new notes:";
+            // 
+            // cbxDefaultColor
+            // 
+            this.cbxDefaultColor.AccessibleDescription = "Defaul color for new note.";
+            this.cbxDefaultColor.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
+            this.cbxDefaultColor.BackColor = System.Drawing.Color.LightGray;
+            this.cbxDefaultColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxDefaultColor.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxDefaultColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxDefaultColor.FormattingEnabled = true;
+            this.cbxDefaultColor.Location = new System.Drawing.Point(168, 53);
+            this.cbxDefaultColor.MaxDropDownItems = 5;
+            this.cbxDefaultColor.Name = "cbxDefaultColor";
+            this.cbxDefaultColor.Size = new System.Drawing.Size(139, 24);
+            this.cbxDefaultColor.TabIndex = 16;
             // 
             // tabPageFonts
             // 
@@ -1218,32 +1272,6 @@ namespace NoteFly
             this.chxTrayiconBoldNewnote.TabIndex = 0;
             this.chxTrayiconBoldNewnote.Text = "Display \"Create a new note\" in bold.";
             this.chxTrayiconBoldNewnote.UseVisualStyleBackColor = true;
-            // 
-            // tabPlugins
-            // 
-            this.tabPlugins.Controls.Add(this.pluginGrid);
-            this.tabPlugins.Controls.Add(this.chxLoadPlugins);
-            this.tabPlugins.Location = new System.Drawing.Point(4, 25);
-            this.tabPlugins.Name = "tabPlugins";
-            this.tabPlugins.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPlugins.Size = new System.Drawing.Size(447, 333);
-            this.tabPlugins.TabIndex = 6;
-            this.tabPlugins.Text = "Plugins";
-            this.tabPlugins.UseVisualStyleBackColor = true;
-            // 
-            // chxLoadPlugins
-            // 
-            this.chxLoadPlugins.AccessibleDescription = "Load plugins";
-            this.chxLoadPlugins.AutoSize = true;
-            this.chxLoadPlugins.Checked = true;
-            this.chxLoadPlugins.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxLoadPlugins.Location = new System.Drawing.Point(20, 16);
-            this.chxLoadPlugins.Name = "chxLoadPlugins";
-            this.chxLoadPlugins.Size = new System.Drawing.Size(104, 20);
-            this.chxLoadPlugins.TabIndex = 25;
-            this.chxLoadPlugins.Text = "Load plugins";
-            this.chxLoadPlugins.UseVisualStyleBackColor = true;
-            this.chxLoadPlugins.CheckedChanged += new System.EventHandler(this.chxLoadPlugins_CheckedChanged);
             // 
             // tabHighlight
             // 
@@ -1663,6 +1691,7 @@ namespace NoteFly
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.numWarnLimitVisible);
+            this.tabAdvance.Controls.Add(this.chxLoadPlugins);
             this.tabAdvance.Controls.Add(this.lblTextVisibleNotesWarnLimit);
             this.tabAdvance.Controls.Add(this.lblTextTotalNotesWarnLimit);
             this.tabAdvance.Controls.Add(this.numWarnLimitTotal);
@@ -1680,6 +1709,82 @@ namespace NoteFly
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
+            // 
+            // numWarnLimitVisible
+            // 
+            this.numWarnLimitVisible.Location = new System.Drawing.Point(182, 111);
+            this.numWarnLimitVisible.Maximum = new decimal(new int[] {
+            32767,
+            0,
+            0,
+            0});
+            this.numWarnLimitVisible.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numWarnLimitVisible.Name = "numWarnLimitVisible";
+            this.numWarnLimitVisible.Size = new System.Drawing.Size(49, 22);
+            this.numWarnLimitVisible.TabIndex = 28;
+            this.numWarnLimitVisible.Value = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
+            // 
+            // chxLoadPlugins
+            // 
+            this.chxLoadPlugins.AccessibleDescription = "Load plugins";
+            this.chxLoadPlugins.AutoSize = true;
+            this.chxLoadPlugins.Checked = true;
+            this.chxLoadPlugins.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxLoadPlugins.Location = new System.Drawing.Point(15, 12);
+            this.chxLoadPlugins.Name = "chxLoadPlugins";
+            this.chxLoadPlugins.Size = new System.Drawing.Size(104, 20);
+            this.chxLoadPlugins.TabIndex = 25;
+            this.chxLoadPlugins.Text = "Load plugins";
+            this.chxLoadPlugins.UseVisualStyleBackColor = true;
+            this.chxLoadPlugins.CheckedChanged += new System.EventHandler(this.chxLoadPlugins_CheckedChanged);
+            // 
+            // lblTextVisibleNotesWarnLimit
+            // 
+            this.lblTextVisibleNotesWarnLimit.AutoSize = true;
+            this.lblTextVisibleNotesWarnLimit.Location = new System.Drawing.Point(13, 113);
+            this.lblTextVisibleNotesWarnLimit.Name = "lblTextVisibleNotesWarnLimit";
+            this.lblTextVisibleNotesWarnLimit.Size = new System.Drawing.Size(163, 16);
+            this.lblTextVisibleNotesWarnLimit.TabIndex = 27;
+            this.lblTextVisibleNotesWarnLimit.Text = "Visible notes warning limit:";
+            // 
+            // lblTextTotalNotesWarnLimit
+            // 
+            this.lblTextTotalNotesWarnLimit.AutoSize = true;
+            this.lblTextTotalNotesWarnLimit.Location = new System.Drawing.Point(13, 88);
+            this.lblTextTotalNotesWarnLimit.Name = "lblTextTotalNotesWarnLimit";
+            this.lblTextTotalNotesWarnLimit.Size = new System.Drawing.Size(153, 16);
+            this.lblTextTotalNotesWarnLimit.TabIndex = 26;
+            this.lblTextTotalNotesWarnLimit.Text = "Total notes warning limit:";
+            // 
+            // numWarnLimitTotal
+            // 
+            this.numWarnLimitTotal.Location = new System.Drawing.Point(182, 86);
+            this.numWarnLimitTotal.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numWarnLimitTotal.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numWarnLimitTotal.Name = "numWarnLimitTotal";
+            this.numWarnLimitTotal.Size = new System.Drawing.Size(49, 22);
+            this.numWarnLimitTotal.TabIndex = 25;
+            this.numWarnLimitTotal.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
             // 
             // chxLogExceptions
             // 
@@ -1797,79 +1902,6 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
-            // numWarnLimitTotal
-            // 
-            this.numWarnLimitTotal.Location = new System.Drawing.Point(182, 86);
-            this.numWarnLimitTotal.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numWarnLimitTotal.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numWarnLimitTotal.Name = "numWarnLimitTotal";
-            this.numWarnLimitTotal.Size = new System.Drawing.Size(49, 22);
-            this.numWarnLimitTotal.TabIndex = 25;
-            this.numWarnLimitTotal.Value = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            // 
-            // lblTextTotalNotesWarnLimit
-            // 
-            this.lblTextTotalNotesWarnLimit.AutoSize = true;
-            this.lblTextTotalNotesWarnLimit.Location = new System.Drawing.Point(13, 88);
-            this.lblTextTotalNotesWarnLimit.Name = "lblTextTotalNotesWarnLimit";
-            this.lblTextTotalNotesWarnLimit.Size = new System.Drawing.Size(153, 16);
-            this.lblTextTotalNotesWarnLimit.TabIndex = 26;
-            this.lblTextTotalNotesWarnLimit.Text = "Total notes warning limit:";
-            // 
-            // lblTextVisibleNotesWarnLimit
-            // 
-            this.lblTextVisibleNotesWarnLimit.AutoSize = true;
-            this.lblTextVisibleNotesWarnLimit.Location = new System.Drawing.Point(13, 113);
-            this.lblTextVisibleNotesWarnLimit.Name = "lblTextVisibleNotesWarnLimit";
-            this.lblTextVisibleNotesWarnLimit.Size = new System.Drawing.Size(163, 16);
-            this.lblTextVisibleNotesWarnLimit.TabIndex = 27;
-            this.lblTextVisibleNotesWarnLimit.Text = "Visible notes warning limit:";
-            // 
-            // numWarnLimitVisible
-            // 
-            this.numWarnLimitVisible.Location = new System.Drawing.Point(182, 111);
-            this.numWarnLimitVisible.Maximum = new decimal(new int[] {
-            32767,
-            0,
-            0,
-            0});
-            this.numWarnLimitVisible.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numWarnLimitVisible.Name = "numWarnLimitVisible";
-            this.numWarnLimitVisible.Size = new System.Drawing.Size(49, 22);
-            this.numWarnLimitVisible.TabIndex = 28;
-            this.numWarnLimitVisible.Value = new decimal(new int[] {
-            64,
-            0,
-            0,
-            0});
-            // 
-            // pluginGrid
-            // 
-            this.pluginGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pluginGrid.AutoScroll = true;
-            this.pluginGrid.Location = new System.Drawing.Point(3, 42);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(440, 288);
-            this.pluginGrid.TabIndex = 26;
-            // 
             // iptbProxyAddress
             // 
             this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -1906,9 +1938,13 @@ namespace NoteFly
             this.tabGeneral.PerformLayout();
             this.tabAppearance.ResumeLayout(false);
             this.tabAppearanceColors.ResumeLayout(false);
-            this.tabPageLooks.ResumeLayout(false);
-            this.tabPageLooks.PerformLayout();
+            this.tabPageNotes.ResumeLayout(false);
+            this.tabPageNotes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numProcTransparency)).EndInit();
+            this.tabPageNewNote.ResumeLayout(false);
+            this.tabPageNewNote.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numNotesDefaultHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numNotesDefaultWidth)).EndInit();
             this.tabPageFonts.ResumeLayout(false);
             this.tabPageFonts.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFontSizeTitle)).EndInit();
@@ -1916,8 +1952,6 @@ namespace NoteFly
             this.tabPageTrayicon.ResumeLayout(false);
             this.tabPageTrayicon.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTrayiconFontsize)).EndInit();
-            this.tabPlugins.ResumeLayout(false);
-            this.tabPlugins.PerformLayout();
             this.tabHighlight.ResumeLayout(false);
             this.tabHighlight.PerformLayout();
             this.tabSharing.ResumeLayout(false);
@@ -1935,8 +1969,8 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).EndInit();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1948,5 +1982,19 @@ namespace NoteFly
         private System.Windows.Forms.Label lblTextVisibleNotesWarnLimit;
         private System.Windows.Forms.Label lblTextTotalNotesWarnLimit;
         private System.Windows.Forms.NumericUpDown numWarnLimitTotal;
+        private System.Windows.Forms.TabPage tabPageNotes;
+        private System.Windows.Forms.CheckBox chxShowTooltips;
+        private System.Windows.Forms.CheckBox chxTransparecy;
+        private System.Windows.Forms.NumericUpDown numProcTransparency;
+        private System.Windows.Forms.Label lblTextTransparentProcVisible;
+        private System.Windows.Forms.TabPage tabPageNewNote;
+        private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
+        private System.Windows.Forms.Label lblDefaultNewNoteColor;
+        private System.Windows.Forms.ComboBox cbxDefaultColor;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numNotesDefaultHeight;
+        private System.Windows.Forms.NumericUpDown numNotesDefaultWidth;
     }
 }

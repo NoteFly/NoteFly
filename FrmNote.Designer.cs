@@ -115,10 +115,9 @@ namespace NoteFly
         private System.Windows.Forms.ToolStripMenuItem menuSendToTextfile;
 
         /// <summary>
-        /// ToolStripMenuItem ??? 
-        /// todo: rename
+        /// ToolStripMenuItem menuCopy 
         /// </summary>
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem menuCopy;
 
         /// <summary>
         /// ToolStripMenuItem menuCopySelected
@@ -179,7 +178,7 @@ namespace NoteFly
             this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.menuLockNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuWordWrap = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
@@ -239,11 +238,11 @@ namespace NoteFly
             this.menuOnTop,
             this.menuLockNote,
             this.menuWordWrap,
-            this.toolStripMenuItem1,
+            this.menuCopy,
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 224);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -317,15 +316,15 @@ namespace NoteFly
             this.menuWordWrap.Text = "Word wrap";
             this.menuWordWrap.Click += new System.EventHandler(this.menuWordWrap_Click);
             // 
-            // toolStripMenuItem1
+            // menuCopy
             // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuCopy.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuCopySelected,
             this.menuCopyContent,
             this.menuCopyTitle});
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.toolStripMenuItem1.Text = "&Copy";
+            this.menuCopy.Name = "menuCopy";
+            this.menuCopy.Size = new System.Drawing.Size(184, 22);
+            this.menuCopy.Text = "&Copy";
             // 
             // menuCopySelected
             // 

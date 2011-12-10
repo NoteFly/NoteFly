@@ -213,12 +213,16 @@ namespace NoteFly
                 Settings.TrayiconLeftclickaction = this.cbxActionLeftclick.SelectedIndex;
                 Settings.SettingsExpertEnabled = this.chxSettingsExpertEnabled.Checked;
 
-                // tab: Appearance, looks
+                // tab: Appearance, notes
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
-                Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
+                Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);                
+                Settings.NotesTooltipsEnabled = this.chxShowTooltips.Checked;
+
+                // tab: Appearance, new note
                 Settings.NotesDefaultRandomSkin = this.chxUseRandomDefaultNote.Checked;
                 Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
-                Settings.NotesTooltipsEnabled = this.chxShowTooltips.Checked;
+                Settings.NotesDefaultWidth = Convert.ToInt32(this.numNotesDefaultWidth.Value);
+                Settings.NotesDefaultHeight = Convert.ToInt32(this.numNotesDefaultHeight.Value);
 
                 // tab: Appearance, fonts
                 Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();
@@ -269,8 +273,8 @@ namespace NoteFly
                 Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
 
                 // tab: plugins
-                Settings.ProgramPluginsAllEnabled = this.chxLoadPlugins.Checked;
-                this.pluginGrid.SavePluginSettings();
+                //Settings.ProgramPluginsAllEnabled = this.chxLoadPlugins.Checked;
+                //this.pluginGrid.SavePluginSettings();
 
                 // tab: Advance
                 if (Directory.Exists(this.tbNotesSavePath.Text))
@@ -509,12 +513,16 @@ namespace NoteFly
             this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;
             this.chxSettingsExpertEnabled.Checked = Settings.SettingsExpertEnabled;
 
-            // tab: Appearance
+            // tab: Appearance, notes
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
             this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
+            this.chxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
+
+            // tab: Appearance, new note
             this.chxUseRandomDefaultNote.Checked = Settings.NotesDefaultRandomSkin;
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
-            this.chxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
+            this.numNotesDefaultWidth.Value = Convert.ToDecimal(Settings.NotesDefaultWidth);
+            this.numNotesDefaultHeight.Value = Convert.ToDecimal(Settings.NotesDefaultHeight);
 
             // tab: Appearance, fonts
             this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.FontTitleSize);
@@ -640,26 +648,27 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void cbxShowExpertSettings_CheckedChanged(object sender, EventArgs e)
         {
-            this.SetFormTitle(this.chxSettingsExpertEnabled.Checked);
-            this.chxConfirmDeletenote.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.chxNotesDeleteRecyclebin.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.chxShowTooltips.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.chxUseAlternativeTrayicon.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.chxUpdateSilentInstall.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.lblTextGPGPath.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.tbGPGPath.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.btnGPGPathBrowse.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.chxCheckUpdatesSignature.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.lblTextNetworkTimeout.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.numTimeout.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.lblTextNetworkMiliseconds.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.cbxFontNoteTitleBold.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.chxLogErrors.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.chxLogExceptions.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.lblTextTotalNotesWarnLimit.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.numWarnLimitTotal.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.lblTextVisibleNotesWarnLimit.Visible = this.chxSettingsExpertEnabled.Checked;
-            this.numWarnLimitVisible.Visible = this.chxSettingsExpertEnabled.Checked;
+            bool expertsettings = this.chxSettingsExpertEnabled.Checked;
+            this.SetFormTitle(expertsettings);
+            this.chxConfirmDeletenote.Visible = expertsettings;
+            this.chxNotesDeleteRecyclebin.Visible = expertsettings;
+            this.chxShowTooltips.Visible = expertsettings;
+            this.chxUseAlternativeTrayicon.Visible = expertsettings;
+            this.chxUpdateSilentInstall.Visible = expertsettings;
+            this.lblTextGPGPath.Visible = expertsettings;
+            this.tbGPGPath.Visible = expertsettings;
+            this.btnGPGPathBrowse.Visible = expertsettings;
+            this.chxCheckUpdatesSignature.Visible = expertsettings;
+            this.lblTextNetworkTimeout.Visible = expertsettings;
+            this.numTimeout.Visible = expertsettings;
+            this.lblTextNetworkMiliseconds.Visible = expertsettings;
+            this.cbxFontNoteTitleBold.Visible = expertsettings;
+            this.chxLogErrors.Visible = expertsettings;
+            this.chxLogExceptions.Visible = expertsettings;
+            this.lblTextTotalNotesWarnLimit.Visible = expertsettings;
+            this.numWarnLimitTotal.Visible = expertsettings;
+            this.lblTextVisibleNotesWarnLimit.Visible = expertsettings;
+            this.numWarnLimitVisible.Visible = expertsettings;
         }
 
         /// <summary>
@@ -696,12 +705,12 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void chxLoadPlugins_CheckedChanged(object sender, EventArgs e)
         {
-            this.pluginGrid.Enabled = this.chxLoadPlugins.Checked;
-            if (this.chxLoadPlugins.Checked)
-            {
-                this.pluginGrid.VerticalScroll.Value = 0;
-                this.pluginGrid.DrawAllPluginsDetails(this.pluginGrid.Width - 25);
-            }
+            //this.pluginGrid.Enabled = this.chxLoadPlugins.Checked;
+            //if (this.chxLoadPlugins.Checked)
+            //{
+            //    this.pluginGrid.VerticalScroll.Value = 0;
+            //    this.pluginGrid.DrawAllPluginsDetails(this.pluginGrid.Width - 25);
+            //}
         }
 
         /// <summary>

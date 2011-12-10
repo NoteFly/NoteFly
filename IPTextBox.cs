@@ -160,7 +160,7 @@ namespace NoteFly
             }
             else if (k == 8 || k == 16 || k == 37 || k == 39 || k == 46)
             {
-                // shift, backspace, left. right, delete key
+                // shift, backspace, left, right, delete key
                 e.SuppressKeyPress = false;
             }
             else

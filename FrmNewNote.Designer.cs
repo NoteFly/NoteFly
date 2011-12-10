@@ -368,7 +368,7 @@ namespace NoteFly
             this.tbTitle.Location = new System.Drawing.Point(38, 6);
             this.tbTitle.MaxLength = 255;
             this.tbTitle.Name = "tbTitle";
-            this.tbTitle.Size = new System.Drawing.Size(176, 23);
+            this.tbTitle.Size = new System.Drawing.Size(172, 23);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
             this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
@@ -400,7 +400,7 @@ namespace NoteFly
             this.pnlHeadNewNote.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeadNewNote.Location = new System.Drawing.Point(0, 0);
             this.pnlHeadNewNote.Name = "pnlHeadNewNote";
-            this.pnlHeadNewNote.Size = new System.Drawing.Size(284, 40);
+            this.pnlHeadNewNote.Size = new System.Drawing.Size(280, 40);
             this.pnlHeadNewNote.TabIndex = 4;
             this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
@@ -419,7 +419,7 @@ namespace NoteFly
             this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Location = new System.Drawing.Point(253, 6);
+            this.btnCancel.Location = new System.Drawing.Point(249, 6);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(26, 24);
             this.btnCancel.TabIndex = 3;
@@ -442,7 +442,7 @@ namespace NoteFly
             this.btnAddNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
             this.btnAddNote.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAddNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNote.Location = new System.Drawing.Point(220, 6);
+            this.btnAddNote.Location = new System.Drawing.Point(216, 6);
             this.btnAddNote.Name = "btnAddNote";
             this.btnAddNote.Size = new System.Drawing.Size(27, 24);
             this.btnAddNote.TabIndex = 2;
@@ -648,7 +648,7 @@ namespace NoteFly
             this.rtbNewNote.MaxLength = 999999;
             this.rtbNewNote.Name = "rtbNewNote";
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
+            this.rtbNewNote.Size = new System.Drawing.Size(276, 167);
             this.rtbNewNote.TabIndex = 1;
             this.rtbNewNote.Text = "";
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
@@ -662,7 +662,7 @@ namespace NoteFly
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(267, 222);
+            this.pbResizeGrip.Location = new System.Drawing.Point(263, 223);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
@@ -701,12 +701,12 @@ namespace NoteFly
             this.tlpnlFormatbtn.Controls.Add(this.btnFontSmaller, 6, 0);
             this.tlpnlFormatbtn.Controls.Add(this.btnFontBigger, 5, 0);
             this.tlpnlFormatbtn.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
-            this.tlpnlFormatbtn.Location = new System.Drawing.Point(2, 208);
+            this.tlpnlFormatbtn.Location = new System.Drawing.Point(2, 209);
             this.tlpnlFormatbtn.Margin = new System.Windows.Forms.Padding(0);
             this.tlpnlFormatbtn.Name = "tlpnlFormatbtn";
             this.tlpnlFormatbtn.RowCount = 1;
             this.tlpnlFormatbtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpnlFormatbtn.Size = new System.Drawing.Size(278, 30);
+            this.tlpnlFormatbtn.Size = new System.Drawing.Size(274, 30);
             this.tlpnlFormatbtn.TabIndex = 19;
             // 
             // FrmNewNote
@@ -718,7 +718,7 @@ namespace NoteFly
             this.BackColor = System.Drawing.Color.Gold;
             this.CancelButton = this.btnCancel;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(284, 239);
+            this.ClientSize = new System.Drawing.Size(280, 240);
             this.ContextMenuStrip = this.contextMenuStripTextActions;
             this.ControlBox = false;
             this.Controls.Add(this.pbResizeGrip);

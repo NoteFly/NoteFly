@@ -120,6 +120,12 @@
     <Compile Include="FrmNote.Designer.cs">
       <DependentUpon>FrmNote.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPlugins.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPlugins.Designer.cs">
+      <DependentUpon>FrmPlugins.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     <EmbeddedResource Include="FrmNote.resx">
       <DependentUpon>FrmNote.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmPlugins.resx">
+      <DependentUpon>FrmPlugins.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmSettings.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -187,7 +196,6 @@
     <None Include="Resources\accept.png" />
     <None Include="Resources\cancel.png" />
     <None Include="build_setup.bat" />
-    <None Include="make_archive.bat" />
     <None Include="Resources\hoekje.png" />
     <None Include="Resources\locknote.png" />
     <None Include="strongkey_NoteFly2.pfx" />

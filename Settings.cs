@@ -65,6 +65,16 @@ namespace NoteFly
         public static bool NotesDeleteRecyclebin = false;
 
         /// <summary>
+        /// The default width of a new note.
+        /// </summary>
+        public static int NotesDefaultWidth = 280;
+
+        /// <summary>
+        /// The default height of a new note.
+        /// </summary>
+        public static int NotesDefaultHeight = 240;
+
+        /// <summary>
         /// Number of total notes a warning shows up that are many notes loading.
         /// </summary>
         public static int NotesWarnlimitTotal = 1234;

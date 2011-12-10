@@ -193,10 +193,10 @@ namespace NoteFly
             /*
              * a suggestion to "protect" against insecure Dynamic Library Loading vulnerabilities in windows
              * it does not fix it, it makes it harder to exploit if insecure dll loading exist.
-             * NoteFly uses APPDATA and TEMP variables and systemroot.
+             * NoteFly uses APPDATA, TEMP and systemroot variables.
              * Systemroot is required by the LinkLabel control.
-             * Plugins should not use these environment variables
-            */
+             * Plugin developers should rely on environment variables
+             */
 #if windows
             SetDllDirectory(string.Empty);                                     // removes notefly current working directory as ddl search path
             Environment.SetEnvironmentVariable("PATH", string.Empty);          // removes dangourse %PATH% as dll search path
