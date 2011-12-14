@@ -22,7 +22,7 @@ namespace NoteFly
     /// <summary>
     /// Class to download and launch the update.
     /// </summary>
-    public partial class FrmUpdater
+    public partial class FrmDownloader
     {
         /// <summary>
         /// Required designer variable.
@@ -76,10 +76,9 @@ namespace NoteFly
             this.progressbarDownload.BackColor = System.Drawing.Color.DimGray;
             this.progressbarDownload.ForeColor = System.Drawing.SystemColors.ControlText;
             this.progressbarDownload.Location = new System.Drawing.Point(2, 3);
-            this.progressbarDownload.MarqueeAnimationSpeed = 200;
+            this.progressbarDownload.MarqueeAnimationSpeed = 0;
             this.progressbarDownload.Name = "progressbarDownload";
             this.progressbarDownload.Size = new System.Drawing.Size(350, 22);
-            this.progressbarDownload.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressbarDownload.TabIndex = 1;
             this.progressbarDownload.Value = 2;
             // 
@@ -87,8 +86,8 @@ namespace NoteFly
             // 
             this.backgroundWorkerDownloader.WorkerReportsProgress = true;
             this.backgroundWorkerDownloader.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerDownloader_DoWork);
-            this.backgroundWorkerDownloader.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerDownloader_ProgressChanged);
             this.backgroundWorkerDownloader.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerDownloader_RunWorkerCompleted);
+            this.backgroundWorkerDownloader.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerDownloader_ProgressChanged);
             // 
             // lblStatusUpdate
             // 
@@ -100,7 +99,7 @@ namespace NoteFly
             this.lblStatusUpdate.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lblStatusUpdate.UseCompatibleTextRendering = true;
             // 
-            // FrmUpdater
+            // FrmDownloader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -112,11 +111,9 @@ namespace NoteFly
             this.Location = new System.Drawing.Point(100, 0);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmUpdater";
+            this.Name = "FrmDownloader";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "updating";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
 
         }

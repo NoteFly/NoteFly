@@ -31,15 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlugins));
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
-            this.pluginGrid = new NoteFly.PluginGrid();
             this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.chlbxAvailiblePlugins = new System.Windows.Forms.CheckedListBox();
+            this.lblLicense = new System.Windows.Forms.Label();
             this.lblPluginVersion = new System.Windows.Forms.Label();
             this.lblPluginName = new System.Windows.Forms.Label();
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
+            this.pluginGrid = new NoteFly.PluginGrid();
             this.tabControlPlugins.SuspendLayout();
             this.tabPagePluginsInstalled.SuspendLayout();
             this.tabPagePluginsAvailable.SuspendLayout();
@@ -72,13 +73,6 @@
             this.tabPagePluginsInstalled.Text = "Installed";
             this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
             // 
-            // pluginGrid
-            // 
-            this.pluginGrid.Location = new System.Drawing.Point(0, 18);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(414, 290);
-            this.pluginGrid.TabIndex = 0;
-            // 
             // tabPagePluginsAvailable
             // 
             this.tabPagePluginsAvailable.Controls.Add(this.splitContainerAvailablePlugins);
@@ -102,6 +96,7 @@
             // 
             // splitContainerAvailablePlugins.Panel2
             // 
+            this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.lblLicense);
             this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.lblPluginVersion);
             this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.lblPluginName);
             this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.lblPluginDescription);
@@ -132,11 +127,20 @@
             this.chlbxAvailiblePlugins.TabIndex = 1;
             this.chlbxAvailiblePlugins.SelectedIndexChanged += new System.EventHandler(this.chlbxAvailiblePlugins_SelectedIndexChanged);
             // 
+            // lblLicense
+            // 
+            this.lblLicense.ForeColor = System.Drawing.Color.Black;
+            this.lblLicense.Location = new System.Drawing.Point(9, 64);
+            this.lblLicense.Name = "lblLicense";
+            this.lblLicense.Size = new System.Drawing.Size(164, 22);
+            this.lblLicense.TabIndex = 3;
+            this.lblLicense.Text = "license plugin";
+            // 
             // lblPluginVersion
             // 
             this.lblPluginVersion.AutoSize = true;
             this.lblPluginVersion.ForeColor = System.Drawing.Color.DimGray;
-            this.lblPluginVersion.Location = new System.Drawing.Point(7, 41);
+            this.lblPluginVersion.Location = new System.Drawing.Point(9, 41);
             this.lblPluginVersion.Name = "lblPluginVersion";
             this.lblPluginVersion.Size = new System.Drawing.Size(31, 13);
             this.lblPluginVersion.TabIndex = 2;
@@ -146,7 +150,7 @@
             // 
             this.lblPluginName.AutoSize = true;
             this.lblPluginName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPluginName.Location = new System.Drawing.Point(2, 9);
+            this.lblPluginName.Location = new System.Drawing.Point(7, 12);
             this.lblPluginName.Name = "lblPluginName";
             this.lblPluginName.Size = new System.Drawing.Size(78, 29);
             this.lblPluginName.TabIndex = 1;
@@ -154,20 +158,29 @@
             // 
             // lblPluginDescription
             // 
-            this.lblPluginDescription.Location = new System.Drawing.Point(4, 57);
+            this.lblPluginDescription.Location = new System.Drawing.Point(9, 86);
             this.lblPluginDescription.Name = "lblPluginDescription";
-            this.lblPluginDescription.Size = new System.Drawing.Size(167, 192);
+            this.lblPluginDescription.Size = new System.Drawing.Size(164, 151);
             this.lblPluginDescription.TabIndex = 0;
             this.lblPluginDescription.Text = "plugin description";
             // 
             // btnPluginDownload
             // 
-            this.btnPluginDownload.Location = new System.Drawing.Point(7, 252);
+            this.btnPluginDownload.Location = new System.Drawing.Point(9, 249);
             this.btnPluginDownload.Name = "btnPluginDownload";
             this.btnPluginDownload.Size = new System.Drawing.Size(164, 23);
             this.btnPluginDownload.TabIndex = 0;
             this.btnPluginDownload.Text = "download";
             this.btnPluginDownload.UseVisualStyleBackColor = true;
+            this.btnPluginDownload.Visible = false;
+            this.btnPluginDownload.Click += new System.EventHandler(this.btnPluginDownload_Click);
+            // 
+            // pluginGrid
+            // 
+            this.pluginGrid.Location = new System.Drawing.Point(0, 18);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(414, 290);
+            this.pluginGrid.TabIndex = 0;
             // 
             // FrmPlugins
             // 
@@ -203,5 +216,6 @@
         private System.Windows.Forms.Label lblPluginName;
         private System.Windows.Forms.Label lblPluginVersion;
         private System.Windows.Forms.Label lblTextNoInternetConnection;
+        private System.Windows.Forms.Label lblLicense;
     }
 }

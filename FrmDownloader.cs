@@ -28,7 +28,7 @@ namespace NoteFly
     /// <summary>
     /// FrmUpdater window.
     /// </summary>
-    public sealed partial class FrmUpdater : Form
+    public sealed partial class FrmDownloader : Form
     {
         /// <summary>
         /// The download filepath
@@ -36,30 +36,38 @@ namespace NoteFly
         private string downloadfilepath;
 
         /// <summary>
+        /// Launch downloaded file after download.
+        /// </summary>
+        private bool runandexit = false;
+
+        /// <summary>
         /// The GPGVerifWrapper class
         /// </summary>
         private GPGVerifWrapper gpgverif;
 
         /// <summary>
-        /// Initializes a new instance of the FrmUpdater class.
+        /// Initializes a new instance of the FrmDownloader class.
         /// </summary>
-        /// <param name="downloadurl">The url of the update to download</param>
-        public FrmUpdater(string downloadurl)
+        /// <param name="downloadurl">The url to the file to download.</param>
+        /// <param name="verifsignature">Verif download with GPG</param>
+        /// <param name="runandexit">Launch download and exit this programme</param>
+        /// <param name="title">Title of the window</param>
+        public FrmDownloader(string downloadurl, bool verifsignature, bool runandexit, string title)
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
-            this.InitializeComponent();
-            int locx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2);
-            int locy = 10;
-            this.Location = new System.Drawing.Point(locx, locy);
-            this.backgroundWorkerDownloader.RunWorkerAsync(downloadurl);
-            if (Settings.UpdatecheckUseGPG)
+            this.InitializeComponent();            
+            this.Text = title;            
+            this.runandexit = runandexit;
+            if (verifsignature)
             {
                 this.gpgverif = new GPGVerifWrapper();
             }
+
+            this.backgroundWorkerDownloader.RunWorkerAsync(downloadurl);
         }
 
         /// <summary>
-        /// Downloading update
+        /// Downloading file
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">DoWorkEventArgs arguments</param>
@@ -126,12 +134,12 @@ namespace NoteFly
 
                 // gets the size of the file in bytes
                 long filesize = response.ContentLength;
-                if (filesize > 1073741824)
+                const long MAXUPDATEFILESIZE = 1073741824;
+                if (filesize > MAXUPDATEFILESIZE)
                 {
-                    Log.Write(LogType.exception, "To downloaded file too large, more than 1.0 Gb");
+                    Log.Write(LogType.exception, "To downloaded file too large, more than " + MAXUPDATEFILESIZE+" bytes.");
                     return;
                 }
-
 
                 // keeps track of the total bytes downloaded so we can update the progress bar
                 long downloadedsize = 0;
@@ -191,7 +199,7 @@ namespace NoteFly
                         }
                     }
 
-                    if (Settings.UpdatecheckUseGPG)
+                    if (this.gpgverif != null)
                     {
                         string sigfilepath = this.gpgverif.GetSignature(this.downloadfilepath);
 
@@ -211,9 +219,10 @@ namespace NoteFly
                         responsesig.Close();
                         // gets the size of the signature file, should be 72 bytes
                         long filesizesig = responsesig.ContentLength;
-                        if (filesizesig > 144)
+                        const long MAXSIGFILESIZE = 4096;
+                        if (filesizesig > MAXSIGFILESIZE)
                         {
-                            Log.Write(LogType.exception, "To signature file too large, more than 144 bytes, excepted 72bytes");
+                            Log.Write(LogType.exception, "To signature file too large, more than " + MAXSIGFILESIZE + " bytes, excepted 72bytes");
                             return;
                         }
 
@@ -230,14 +239,16 @@ namespace NoteFly
 
                                     // loop the stream and get the file into the byte buffer
                                     int iByteSize = 0;
-                                    byte[] byteBuffer = new byte[filesizesig];
-                                    while ((iByteSize = streamsigdownload.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
+                                    if (filesizesig > 0)
                                     {
-                                        // write the bytes to the file system at the file path specified
-                                        streamLocal.Write(byteBuffer, 0, iByteSize);
-                                        downloadedsize += iByteSize;
+                                        byte[] byteBuffer = new byte[filesizesig];
+                                        while ((iByteSize = streamsigdownload.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
+                                        {
+                                            // write the bytes to the file system at the file path specified
+                                            streamLocal.Write(byteBuffer, 0, iByteSize);
+                                            downloadedsize += iByteSize;
+                                        }
                                     }
-
                                     streamLocal.Close();
                                 }
 
@@ -247,10 +258,10 @@ namespace NoteFly
                         catch (WebException webexc)
                         {
                             Log.Write(LogType.exception, webexc.Message);
-                        }
-
-                        this.backgroundWorkerDownloader.ReportProgress(100);
+                        }                       
                     }
+
+                    this.backgroundWorkerDownloader.ReportProgress(100);
                 }
             }
             else
@@ -327,34 +338,45 @@ namespace NoteFly
                     }
                 }
 
-                const string INSTALLING = "installing.. ";
-                this.lblStatusUpdate.Text = DOWNLOADCOMPLEET + INSTALLING;
+                this.lblStatusUpdate.Text = DOWNLOADCOMPLEET;
                 this.lblStatusUpdate.Refresh();
-                System.Threading.Thread.Sleep(50);
 
-                System.Diagnostics.ProcessStartInfo procstartinfo;
-                if (Settings.UpdateSilentInstall)
+                if (this.runandexit)
                 {
-                    procstartinfo = new System.Diagnostics.ProcessStartInfo(this.downloadfilepath, "/S");
+                    const string INSTALLING = "installing.. ";
+                    this.lblStatusUpdate.Text = DOWNLOADCOMPLEET + INSTALLING;
+                    this.lblStatusUpdate.Refresh();
+                    System.Threading.Thread.Sleep(100);
+
+                    System.Diagnostics.ProcessStartInfo procstartinfo;
+                    if (Settings.UpdateSilentInstall)
+                    {
+                        procstartinfo = new System.Diagnostics.ProcessStartInfo(this.downloadfilepath, "/S");
+                    }
+                    else
+                    {
+                        procstartinfo = new System.Diagnostics.ProcessStartInfo(this.downloadfilepath);
+                    }
+
+                    procstartinfo.ErrorDialog = true;
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.AppStarting;
+                    try
+                    {
+                        System.Diagnostics.Process.Start(procstartinfo);
+                    }
+                    catch (System.ComponentModel.Win32Exception w32exc)
+                    {
+                        Log.Write(LogType.exception, w32exc.Message);
+                        this.Close();
+                    }
+
+                    Application.Exit();
                 }
                 else
                 {
-                    procstartinfo = new System.Diagnostics.ProcessStartInfo(this.downloadfilepath);
-                }
-
-                procstartinfo.ErrorDialog = true;
-                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.AppStarting;
-                try
-                {
-                    System.Diagnostics.Process.Start(procstartinfo);
-                }
-                catch (System.ComponentModel.Win32Exception w32exc)
-                {
-                    Log.Write(LogType.exception, w32exc.Message);
+                    System.Threading.Thread.Sleep(400);
                     this.Close();
-                }
-
-                Application.Exit();
+                }                
             }
             else
             {
@@ -388,13 +410,15 @@ namespace NoteFly
         {
             try
             {
-                if (filesize != 0)
+                const long MAXFILESIZE = 10737418240; // 10 megabytes
+                if (filesize > 0 && filesize <= MAXFILESIZE)
                 {
                     filestream.SetLength(filesize);
                 }
                 else
                 {
-                    throw new ApplicationException("Empty Preallocate file");
+                    const string PREALLOCATEFILEPROBLEM = "Did not preallocate file, because filesize out of range.";
+                    Log.Write(LogType.exception, PREALLOCATEFILEPROBLEM);
                 }
             }
             catch (IOException ioexc)

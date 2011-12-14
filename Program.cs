@@ -452,7 +452,7 @@ namespace NoteFly
                         System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                         if (updres == System.Windows.Forms.DialogResult.Yes)
                         {
-                            FrmUpdater frmupdater = new FrmUpdater(downloadurl);
+                            FrmDownloader frmupdater = new FrmDownloader(downloadurl, Settings.UpdatecheckUseGPG, true, "Downloading update..");
                             frmupdater.Show();
                         }
                     }

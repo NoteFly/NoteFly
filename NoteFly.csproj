@@ -132,11 +132,11 @@
     <Compile Include="FrmSettings.Designer.cs">
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmUpdater.cs">
+    <Compile Include="FrmDownloader.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmUpdater.Designer.cs">
-      <DependentUpon>FrmUpdater.cs</DependentUpon>
+    <Compile Include="FrmDownloader.Designer.cs">
+      <DependentUpon>FrmDownloader.cs</DependentUpon>
     </Compile>
     <Compile Include="GPGVerifWrapper.cs" />
     <Compile Include="HighlightLanguage.cs" />
@@ -202,8 +202,8 @@
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmUpdater.resx">
-      <DependentUpon>FrmUpdater.cs</DependentUpon>
+    <EmbeddedResource Include="FrmDownloader.resx">
+      <DependentUpon>FrmDownloader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IPTextBox.resx">
       <DependentUpon>IPTextBox.cs</DependentUpon>
