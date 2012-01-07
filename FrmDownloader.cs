@@ -165,34 +165,37 @@ namespace NoteFly
 
                                 // loop the stream and get the file into the byte buffer
                                 int iByteSize = 0;
-                                byte[] byteBuffer = new byte[filesize];
-                                while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
+                                if (filesize > 0)
                                 {
-                                    // write the bytes to the file system at the file path specified
-                                    streamLocal.Write(byteBuffer, 0, iByteSize);
-                                    downloadedsize += iByteSize;
-
-                                    // calculate the progress out of a base "100"
-                                    double dIndex = (double)downloadedsize;
-                                    double dTotal = (double)byteBuffer.Length;
-                                    double dProgressPercentage = dIndex / dTotal;
-                                    int iProgressPercentage;
-                                    if (Settings.UpdatecheckUseGPG)
+                                    byte[] byteBuffer = new byte[filesize];
+                                    while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
                                     {
-                                        iProgressPercentage = (int)(dProgressPercentage * 80);
-                                    }
-                                    else
-                                    {
-                                        iProgressPercentage = (int)(dProgressPercentage * 100);
-                                    }
+                                        // write the bytes to the file system at the file path specified
+                                        streamLocal.Write(byteBuffer, 0, iByteSize);
+                                        downloadedsize += iByteSize;
 
-                                    // update the progress bar
-                                    this.backgroundWorkerDownloader.ReportProgress(iProgressPercentage);
-                                }
+                                        // calculate the progress out of a base "100"
+                                        double dIndex = (double)downloadedsize;
+                                        double dTotal = (double)byteBuffer.Length;
+                                        double dProgressPercentage = dIndex / dTotal;
+                                        int iProgressPercentage;
+                                        if (Settings.UpdatecheckUseGPG)
+                                        {
+                                            iProgressPercentage = (int)(dProgressPercentage * 80);
+                                        }
+                                        else
+                                        {
+                                            iProgressPercentage = (int)(dProgressPercentage * 100);
+                                        }
+
+                                        // update the progress bar
+                                        this.backgroundWorkerDownloader.ReportProgress(iProgressPercentage);
+                                    }
+                                }                                
 
                                 // clean up the file stream
                                 streamLocal.Close();
-                            }
+                            } 
 
                             // close the connection to the remote server
                             streamRemote.Close();

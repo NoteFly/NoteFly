@@ -141,10 +141,7 @@
     <Compile Include="GPGVerifWrapper.cs" />
     <Compile Include="HighlightLanguage.cs" />
     <Compile Include="IPTextBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IPTextBox.Designer.cs">
-      <DependentUpon>IPTextBox.cs</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Log.cs" />
     <Compile Include="PluginGrid.cs">
@@ -204,9 +201,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmDownloader.resx">
       <DependentUpon>FrmDownloader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IPTextBox.resx">
-      <DependentUpon>IPTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PluginGrid.resx">
       <DependentUpon>PluginGrid.cs</DependentUpon>

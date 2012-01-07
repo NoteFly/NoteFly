@@ -269,7 +269,7 @@ namespace NoteFly
                 Settings.UpdatecheckGPGPath = this.tbGPGPath.Text;
                 Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
                 Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
-                Settings.NetworkProxyAddress = this.iptbProxyAddress.IPAddress;
+                Settings.NetworkProxyAddress = this.iptbProxy.getIPAddress();
                 Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
 
                 // tab: plugins
@@ -412,7 +412,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
         {
-            this.iptbProxyAddress.Enabled = this.chxProxyEnabled.Checked;
+            this.iptbProxy.Enabled = this.chxProxyEnabled.Checked;
         }
 
         /// <summary>
@@ -574,7 +574,7 @@ namespace NoteFly
             this.tbGPGPath.Enabled = Settings.UpdatecheckUseGPG;
             this.tbGPGPath.Text = Settings.UpdatecheckGPGPath;
             this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;
-            this.iptbProxyAddress.IPAddress = Settings.NetworkProxyAddress;
+            this.iptbProxy.Text = Settings.NetworkProxyAddress;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
             this.numTimeout.Value = Settings.NetworkConnectionTimeout;
             this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
@@ -696,21 +696,6 @@ namespace NoteFly
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Are plugins being loaded.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void chxLoadPlugins_CheckedChanged(object sender, EventArgs e)
-        {
-            //this.pluginGrid.Enabled = this.chxLoadPlugins.Checked;
-            //if (this.chxLoadPlugins.Checked)
-            //{
-            //    this.pluginGrid.VerticalScroll.Value = 0;
-            //    this.pluginGrid.DrawAllPluginsDetails(this.pluginGrid.Width - 25);
-            //}
         }
 
         /// <summary>

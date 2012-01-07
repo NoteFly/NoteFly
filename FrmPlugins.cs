@@ -120,7 +120,7 @@ namespace NoteFly
             short[] versionparts = new short[3];
             char[] splitchr = new char[1];
             splitchr[0] = '.';
-            if (versionstring != null)
+            if (String.IsNullOrEmpty(versionstring))
             {
                 string[] stringversionparts = versionstring.Split(splitchr, StringSplitOptions.None);
                 try
@@ -214,7 +214,7 @@ namespace NoteFly
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                 }
 
-                request.Headers["Accept-Encoding"] = "gzip";
+                //request.Headers["Accept-Encoding"] = "gzip";
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(cachesettings);
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
             }
@@ -227,7 +227,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// A plugin is selected
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

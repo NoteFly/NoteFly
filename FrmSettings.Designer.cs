@@ -141,11 +141,6 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxHighlightHTML;
 
         /// <summary>
-        /// IPTextBox user component.
-        /// </summary>
-        private IPTextBox iptbProxyAddress;
-
-        /// <summary>
         /// Label lblTextNetworkMiliseconds
         /// </summary>
         private System.Windows.Forms.Label lblTextNetworkMiliseconds;
@@ -562,7 +557,7 @@ namespace NoteFly
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
-            this.iptbProxyAddress = new NoteFly.IPTextBox();
+            this.iptbProxy = new NoteFly.IPTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -1604,11 +1599,11 @@ namespace NoteFly
             // 
             // tabProxy
             // 
+            this.tabProxy.Controls.Add(this.iptbProxy);
             this.tabProxy.Controls.Add(this.lblTextMiliseconds);
             this.tabProxy.Controls.Add(this.numTimeout);
             this.tabProxy.Controls.Add(this.chxProxyEnabled);
             this.tabProxy.Controls.Add(this.lblTextNetworkTimeout);
-            this.tabProxy.Controls.Add(this.iptbProxyAddress);
             this.tabProxy.Location = new System.Drawing.Point(4, 25);
             this.tabProxy.Name = "tabProxy";
             this.tabProxy.Padding = new System.Windows.Forms.Padding(3);
@@ -1744,7 +1739,6 @@ namespace NoteFly
             this.chxLoadPlugins.TabIndex = 25;
             this.chxLoadPlugins.Text = "Load plugins";
             this.chxLoadPlugins.UseVisualStyleBackColor = true;
-            this.chxLoadPlugins.CheckedChanged += new System.EventHandler(this.chxLoadPlugins_CheckedChanged);
             // 
             // lblTextVisibleNotesWarnLimit
             // 
@@ -1902,18 +1896,13 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
-            // iptbProxyAddress
+            // iptbProxy
             // 
-            this.iptbProxyAddress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.iptbProxyAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iptbProxyAddress.Enabled = false;
-            this.iptbProxyAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iptbProxyAddress.IPAddress = "0.0.0.0";
-            this.iptbProxyAddress.Location = new System.Drawing.Point(15, 58);
-            this.iptbProxyAddress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.iptbProxyAddress.Name = "iptbProxyAddress";
-            this.iptbProxyAddress.Size = new System.Drawing.Size(228, 20);
-            this.iptbProxyAddress.TabIndex = 19;
+            this.iptbProxy.Enabled = false;
+            this.iptbProxy.Location = new System.Drawing.Point(16, 57);
+            this.iptbProxy.Name = "iptbProxy";
+            this.iptbProxy.Size = new System.Drawing.Size(238, 22);
+            this.iptbProxy.TabIndex = 26;
             // 
             // FrmSettings
             // 
@@ -1996,5 +1985,6 @@ namespace NoteFly
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numNotesDefaultHeight;
         private System.Windows.Forms.NumericUpDown numNotesDefaultWidth;
+        private IPTextBox iptbProxy;
     }
 }

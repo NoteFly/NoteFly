@@ -1040,7 +1040,7 @@ namespace NoteFly
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                 }
 
-                request.Headers["Accept-Encoding"] = "gzip";
+                //request.Headers["Accept-Encoding"] = "gzip";
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore); // do not cache, prevent incorrect cache result.
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
                 Stream responsestream;
