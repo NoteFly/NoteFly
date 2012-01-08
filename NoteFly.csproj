@@ -189,6 +189,7 @@
     <None Include="icons.res" />
     <None Include="Properties\app.manifest" />
     <Compile Include="SyntaxHighlight.cs" />
+    <Compile Include="HttpUtil.cs" />
     <Compile Include="XmlUtil.cs" />
     <None Include="Resources\accept.png" />
     <None Include="Resources\cancel.png" />

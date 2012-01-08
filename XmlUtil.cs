@@ -164,6 +164,135 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Parser the listing of the plugins
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public static bool ParserListPlugins(Stream responsestream, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins, FrmPlugins frmplugins)
+        {
+            bool succeeded = false;
+            System.Reflection.Assembly ipluginasm = System.Reflection.Assembly.ReflectionOnlyLoadFrom(Path.Combine(Program.InstallFolder, "IPlugin.dll"));
+            if (ipluginasm == null)
+            {
+                System.Windows.Forms.MessageBox.Show("IPlugin not found");
+            }
+            string versionipluginstring = ipluginasm.GetName().Version.Major + "." + ipluginasm.GetName().Version.Minor + "." + ipluginasm.GetName().Version.Build;
+            ipluginasm = null;
+            short[] ipluginversionparts = frmplugins.ParserVersionString(versionipluginstring);
+            XmlTextReader xmlreader = new XmlTextReader(responsestream);
+            xmlreader.ProhibitDtd = true;
+            try
+            {
+                while (xmlreader.Read())
+                {
+                    if (xmlreader.Name == "plugin")
+                    {
+                        string pluginname = null;
+                        string curpluginminversioniplugin = null;
+                        XmlReader xmlplugin = xmlreader.ReadSubtree();
+                        while (xmlplugin.Read())
+                        {
+                            switch (xmlplugin.Name)
+                            {
+                                case "name":
+                                    pluginname = xmlplugin.ReadElementContentAsString();
+                                    break;
+                                case "minversioniplugin":
+                                    curpluginminversioniplugin = xmlplugin.ReadElementContentAsString();
+                                    break;
+                            }
+                        }
+
+                        short[] curpluginminveripluginpart = frmplugins.ParserVersionString(curpluginminversioniplugin);
+                        bool workswithapp = frmplugins.IsHigherOrSameVersion(curpluginminveripluginpart, ipluginversionparts);
+                        if (!String.IsNullOrEmpty(pluginname) && workswithapp)
+                        {
+                            chlbxAvailiblePlugins.Items.Add(pluginname, false);
+                        }
+                    }
+                }
+
+                succeeded = true;
+            }
+            catch (WebException webexc)
+            {
+                succeeded = false;
+                Log.Write(LogType.error, webexc.Message);
+            }
+            finally
+            {
+                if (xmlreader != null)
+                {
+                    xmlreader.Close();
+                }
+            }
+
+            return succeeded;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="responsestream"></param>
+        /// <param name="lblPluginName"></param>
+        /// <param name="lblPluginVersion"></param>
+        /// <param name="lblPluginDescription"></param>
+        /// <returns></returns>
+        public static string[] ParserDetailsPlugin(Stream responsestream, System.Windows.Forms.Button btnDownload)
+        {
+            string[] detailsplugin = new string[4];
+            XmlTextReader xmlreader = null;
+            try
+            {                
+                xmlreader = new XmlTextReader(responsestream);
+                xmlreader.ProhibitDtd = true;
+                while (xmlreader.Read())
+                {
+                    if (xmlreader.Name == "plugin")
+                    {
+                        XmlReader xmlplugin = xmlreader.ReadSubtree();
+                        while (xmlplugin.Read())
+                        {
+                            switch (xmlplugin.Name)
+                            {
+                                case "name":
+                                    detailsplugin[0] = xmlplugin.ReadElementContentAsString();
+                                    break;
+                                case "version":
+                                    detailsplugin[1] = xmlplugin.ReadElementContentAsString();
+                                    break;
+                                case "license":
+                                    detailsplugin[2] = xmlplugin.ReadElementContentAsString();
+                                    break;
+                                case "downloadurl":
+                                    string currentplugindownloadurl = xmlplugin.ReadElementContentAsString();
+                                    if (!String.IsNullOrEmpty(currentplugindownloadurl))
+                                    {
+                                        btnDownload.Visible = true;
+                                    }
+
+                                    break;
+                                case "description":
+                                    detailsplugin[3] = xmlplugin.ReadElementContentAsString();
+                                    break;
+                            }
+
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (xmlreader != null)
+                {
+                    xmlreader.Close();
+                }
+            }
+
+            return detailsplugin;
+        }
+
+        /// <summary>
         /// Load a note file.
         /// </summary>
         /// <param name="notes">reference to notes class.</param>
@@ -524,7 +653,7 @@ namespace NoteFly
                             break;
                         case "Name":
                             const int MAXLENSKINNAME = 200;
-                            string skinname = xmlread.ReadElementContentAsString();                            
+                            string skinname = xmlread.ReadElementContentAsString();
                             if (skinname.Length < MAXLENSKINNAME)
                             {
                                 curskin.Name = skinname;

@@ -30,7 +30,7 @@ namespace NoteFly
         private string currentplugindownloadurl = null;
 
         /// <summary>
-        /// 
+        /// Initialize a new instance of FrmPlugins class.
         /// </summary>
         public FrmPlugins()
         {
@@ -43,71 +43,23 @@ namespace NoteFly
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void tabControlPlugins_SelectedIndexChanged(object sender, EventArgs e)
-        {            
+        {
+            this.timerStartSearch.Stop();
             if (this.tabControlPlugins.SelectedTab == this.tabPagePluginsAvailable)
             {
                 this.lblTextNoInternetConnection.Visible = false;
                 this.chlbxAvailiblePlugins.Items.Clear();
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
-                XmlTextReader xmlreader = null;
-                Stream responsestream;
-                WebRequest request = this.CreateRequest("http://www.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.Default);
-                try
+                HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.Default, false);
+                if (!xmlUtil.ParserListPlugins(httputil.GetResponseStream(), this.chlbxAvailiblePlugins, this))
                 {
-                    using (WebResponse response = request.GetResponse())
-                    {
-                        responsestream = response.GetResponseStream();
-                        xmlreader = new XmlTextReader(responsestream);
-                        xmlreader.ProhibitDtd = true;
-                        System.Reflection.Assembly ipluginasm = System.Reflection.Assembly.ReflectionOnlyLoadFrom(Path.Combine(Program.InstallFolder, "IPlugin.dll"));
-                        string versionipluginstring = ipluginasm.GetName().Version.Major + "." + ipluginasm.GetName().Version.Minor + "." + ipluginasm.GetName().Version.Build;
-                        ipluginasm = null;
-
-                        short[] ipluginversionparts = this.ParserVersionString(versionipluginstring);
-                        while (xmlreader.Read())
-                        {
-                            if (xmlreader.Name == "plugin")
-                            {
-                                string pluginname = null;
-                                string curpluginminversioniplugin = null;
-                                XmlReader xmlplugin = xmlreader.ReadSubtree();
-                                while (xmlplugin.Read())
-                                {
-                                    switch (xmlplugin.Name)
-                                    {
-                                        case "name":
-                                            pluginname = xmlplugin.ReadElementContentAsString();
-                                            break;
-                                        case "minversioniplugin":
-                                            curpluginminversioniplugin = xmlplugin.ReadElementContentAsString();
-                                            break;
-                                    }
-                                }
-
-                                short[] curpluginminveripluginpart = this.ParserVersionString(curpluginminversioniplugin);
-                                bool workswithapp = IsHigherOrSameVersion(curpluginminveripluginpart, ipluginversionparts);
-                                if (!String.IsNullOrEmpty(pluginname) && workswithapp)
-                                {
-                                    this.chlbxAvailiblePlugins.Items.Add(pluginname, false);
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (WebException webexc)
-                {
-                    this.lblTextNoInternetConnection.Text = webexc.Message;
                     this.lblTextNoInternetConnection.Visible = true;
-                    Log.Write(LogType.error, webexc.Message);
+                    this.tbSearchPlugin.Enabled = false;
                 }
-                finally
+                else
                 {
-                    if (xmlreader != null)
-                    {
-                        xmlreader.Close();
-                    }
+                    this.tbSearchPlugin.Enabled = true;
                 }
-
             }
         }
 
@@ -115,12 +67,12 @@ namespace NoteFly
         /// Parser a string as a version number array with major, minor, release numbers
         /// </summary>
         /// <returns></returns>
-        private short[] ParserVersionString(string versionstring)
+        public short[] ParserVersionString(string versionstring)
         {
             short[] versionparts = new short[3];
             char[] splitchr = new char[1];
             splitchr[0] = '.';
-            if (String.IsNullOrEmpty(versionstring))
+            if (!String.IsNullOrEmpty(versionstring))
             {
                 string[] stringversionparts = versionstring.Split(splitchr, StringSplitOptions.None);
                 try
@@ -149,7 +101,7 @@ namespace NoteFly
         /// <param name="version"></param>
         /// <param name="reqversion"></param>
         /// <returns></returns>
-        private bool IsHigherOrSameVersion(short[] version, short[] reqversion)
+        public bool IsHigherOrSameVersion(short[] version, short[] reqversion)
         {
             bool higherorsame = true;
             bool continu = true;
@@ -179,55 +131,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Create webrequest.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="cachesettings"></param>
-        /// <returns></returns>
-        private WebRequest CreateRequest(string url, System.Net.Cache.RequestCacheLevel cachesettings)
-        {
-            HttpWebRequest request = null;
-            System.Net.ServicePointManager.Expect100Continue = false;
-            System.Net.ServicePointManager.DefaultConnectionLimit = 2;
-            if (Settings.NetworkConnectionForceipv6)
-            {
-                // use dns ipv6 AAAA record.
-                url = url.Replace("//update.", "//ipv6."); // not replacing "http", "https", "ftp"
-                url = url.Replace("//www.", "//ipv6.");
-            }
-
-            if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
-            {
-                Log.Write(LogType.error, "Invalid url.");
-                return null;
-            }
-
-            try
-            {
-                request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-                request.Method = "GET";
-                request.ContentType = "text/xml";
-                request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
-                request.Timeout = Settings.NetworkConnectionTimeout;
-                if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
-                {
-                    request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
-                }
-
-                //request.Headers["Accept-Encoding"] = "gzip";
-                request.CachePolicy = new System.Net.Cache.RequestCachePolicy(cachesettings);
-                request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
-            }
-            catch (System.Net.WebException webexc)
-            {
-                Log.Write(LogType.exception, webexc.Message);
-            }
-
-            return request;
-        }
-
-        /// <summary>
-        /// A plugin is selected
+        /// A plugin is selected, get the details from the selected plugin.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -235,62 +139,15 @@ namespace NoteFly
         {
             this.splitContainerAvailablePlugins.Panel2Collapsed = false;
             this.btnPluginDownload.Visible = false;
-            XmlTextReader xmlreader = null;
-            Stream responsestream;
             string pluginname = this.chlbxAvailiblePlugins.SelectedItem.ToString();
             if (!String.IsNullOrEmpty(pluginname))
             {
-                WebRequest request = this.CreateRequest("http://www.notefly.org/REST/plugins/details.php?name=" + pluginname, System.Net.Cache.RequestCacheLevel.Revalidate);
-                try
-                {
-                    using (WebResponse response = request.GetResponse())
-                    {
-                        responsestream = response.GetResponseStream();
-                        xmlreader = new XmlTextReader(responsestream);
-                        xmlreader.ProhibitDtd = true;
-                        while (xmlreader.Read())
-                        {
-                            if (xmlreader.Name == "plugin")
-                            {
-                                XmlReader xmlplugin = xmlreader.ReadSubtree();
-                                while (xmlplugin.Read())
-                                {
-                                    switch (xmlplugin.Name)
-                                    {
-                                        case "name":
-                                            this.lblPluginName.Text = xmlplugin.ReadElementContentAsString();
-                                            break;
-                                        case "version":
-                                            this.lblPluginVersion.Text = "version: " + xmlplugin.ReadElementContentAsString();
-                                            break;
-                                        case "license":
-                                            this.lblLicense.Text = "license: " + xmlplugin.ReadElementContentAsString();
-                                            break;
-                                        case "downloadurl":
-                                            this.currentplugindownloadurl = xmlplugin.ReadElementContentAsString();
-                                            if (!String.IsNullOrEmpty(this.currentplugindownloadurl))
-                                            {
-                                                this.btnPluginDownload.Visible = true;
-                                            }
-
-                                            break;
-                                        case "description":
-                                            this.lblPluginDescription.Text = xmlplugin.ReadElementContentAsString();
-                                            break;
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-                finally
-                {
-                    if (xmlreader != null)
-                    {
-                        xmlreader.Close();
-                    }
-                }
+                HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/details.php?name=" + pluginname, System.Net.Cache.RequestCacheLevel.Revalidate, false);
+                string[] detailsplugin = xmlUtil.ParserDetailsPlugin(httputil.GetResponseStream(), this.btnPluginDownload);
+                this.lblPluginName.Text = detailsplugin[0];
+                this.lblPluginVersion.Text = "version: " + detailsplugin[1];
+                this.lblLicense.Text = "license: " + detailsplugin[2];
+                lblPluginDescription.Text = detailsplugin[3];
             }
         }
 
@@ -306,6 +163,54 @@ namespace NoteFly
                 FrmDownloader downloader = new FrmDownloader(this.currentplugindownloadurl, false, false, "Downloading plugin..");
                 downloader.Show();
             }
+        }
+
+        /// <summary>
+        /// Start searching, after key release for 1000ms
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbSearchPlugin_KeyUp(object sender, KeyEventArgs e)
+        {
+            this.timerStartSearch.Stop();
+            this.timerStartSearch.Start();
+        }
+
+        /// <summary>
+        /// Do a search
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerStartSearch_Tick(object sender, EventArgs e)
+        {
+            this.timerStartSearch.Stop();
+            this.chlbxAvailiblePlugins.Items.Clear();
+            HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/search.php?keyword=" + this.tbSearchPlugin.Text, System.Net.Cache.RequestCacheLevel.Default, false);
+            if (!xmlUtil.ParserListPlugins(httputil.GetResponseStream(), this.chlbxAvailiblePlugins, this))
+            {
+                this.tbSearchPlugin.Enabled = false;
+                this.tbSearchPlugin.Clear();                
+            }           
+        }
+
+        /// <summary>
+        /// New keys entering stop, initialize a search.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbSearchPlugin_Enter(object sender, EventArgs e)
+        {
+            this.timerStartSearch.Stop();
+        }
+
+        /// <summary>
+        /// Don't continu initialize a search when closing this window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FrmPlugins_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.timerStartSearch.Stop();
         }
     }
 }
