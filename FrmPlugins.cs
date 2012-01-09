@@ -47,6 +47,7 @@ namespace NoteFly
             this.timerStartSearch.Stop();
             if (this.tabControlPlugins.SelectedTab == this.tabPagePluginsAvailable)
             {
+                this.tbSearchPlugin.Clear();
                 this.lblTextNoInternetConnection.Visible = false;
                 this.chlbxAvailiblePlugins.Items.Clear();
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
@@ -147,7 +148,8 @@ namespace NoteFly
                 this.lblPluginName.Text = detailsplugin[0];
                 this.lblPluginVersion.Text = "version: " + detailsplugin[1];
                 this.lblLicense.Text = "license: " + detailsplugin[2];
-                lblPluginDescription.Text = detailsplugin[3];
+                this.lblPluginDescription.Text = detailsplugin[3];
+                this.currentplugindownloadurl = detailsplugin[4];
             }
         }
 

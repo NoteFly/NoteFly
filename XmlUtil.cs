@@ -240,7 +240,7 @@ namespace NoteFly
         /// <returns></returns>
         public static string[] ParserDetailsPlugin(Stream responsestream, System.Windows.Forms.Button btnDownload)
         {
-            string[] detailsplugin = new string[4];
+            string[] detailsplugin = new string[5];
             XmlTextReader xmlreader = null;
             try
             {                
@@ -264,16 +264,16 @@ namespace NoteFly
                                 case "license":
                                     detailsplugin[2] = xmlplugin.ReadElementContentAsString();
                                     break;
+                                case "description":
+                                    detailsplugin[3] = xmlplugin.ReadElementContentAsString();
+                                    break;
                                 case "downloadurl":
-                                    string currentplugindownloadurl = xmlplugin.ReadElementContentAsString();
-                                    if (!String.IsNullOrEmpty(currentplugindownloadurl))
+                                    detailsplugin[4] = xmlplugin.ReadElementContentAsString();
+                                    if (!String.IsNullOrEmpty(detailsplugin[4]))
                                     {
                                         btnDownload.Visible = true;
                                     }
 
-                                    break;
-                                case "description":
-                                    detailsplugin[3] = xmlplugin.ReadElementContentAsString();
                                     break;
                             }
 

@@ -161,17 +161,14 @@
             this.lblLicense.Name = "lblLicense";
             this.lblLicense.Size = new System.Drawing.Size(164, 22);
             this.lblLicense.TabIndex = 3;
-            this.lblLicense.Text = "license plugin";
             // 
             // lblPluginVersion
             // 
-            this.lblPluginVersion.AutoSize = true;
             this.lblPluginVersion.ForeColor = System.Drawing.Color.DimGray;
             this.lblPluginVersion.Location = new System.Drawing.Point(9, 41);
             this.lblPluginVersion.Name = "lblPluginVersion";
-            this.lblPluginVersion.Size = new System.Drawing.Size(31, 13);
+            this.lblPluginVersion.Size = new System.Drawing.Size(184, 23);
             this.lblPluginVersion.TabIndex = 2;
-            this.lblPluginVersion.Text = "0.0.0";
             // 
             // lblPluginName
             // 
@@ -179,17 +176,17 @@
             this.lblPluginName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPluginName.Location = new System.Drawing.Point(7, 12);
             this.lblPluginName.Name = "lblPluginName";
-            this.lblPluginName.Size = new System.Drawing.Size(78, 29);
+            this.lblPluginName.Size = new System.Drawing.Size(112, 29);
             this.lblPluginName.TabIndex = 1;
-            this.lblPluginName.Text = "Name";
+            this.lblPluginName.Text = "Loading..";
             // 
             // lblPluginDescription
             // 
             this.lblPluginDescription.Location = new System.Drawing.Point(9, 86);
             this.lblPluginDescription.Name = "lblPluginDescription";
-            this.lblPluginDescription.Size = new System.Drawing.Size(164, 151);
+            this.lblPluginDescription.Size = new System.Drawing.Size(195, 151);
             this.lblPluginDescription.TabIndex = 0;
-            this.lblPluginDescription.Text = "plugin description";
+            this.lblPluginDescription.Text = "Getting plugin details from the internet.";
             // 
             // btnPluginDownload
             // 
@@ -198,6 +195,7 @@
             this.btnPluginDownload.Size = new System.Drawing.Size(201, 23);
             this.btnPluginDownload.TabIndex = 0;
             this.btnPluginDownload.Text = "download";
+            this.btnPluginDownload.UseCompatibleTextRendering = true;
             this.btnPluginDownload.UseVisualStyleBackColor = true;
             this.btnPluginDownload.Visible = false;
             this.btnPluginDownload.Click += new System.EventHandler(this.btnPluginDownload_Click);

@@ -23,6 +23,7 @@ namespace NoteFly
     using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
+    using System.Threading;
 #if windows
     using Microsoft.Win32;
 #endif
@@ -342,8 +343,17 @@ namespace NoteFly
                     try
                     {
                         this.Cursor = Cursors.WaitCursor;
-                        this.MoveNotes(this.oldnotesavepath, Settings.NotesSavepath); // TODO: put on seperate thread
-                        this.notes.LoadNotes(true, false);
+                        
+                        Thread movenotesthread = new Thread(new ParameterizedThreadStart(MoveNotesThread));
+                        string[] args = new string[2];
+                        args[0] = this.oldnotesavepath;
+                        args[1] = Settings.NotesSavepath;
+                        movenotesthread.Start(args);
+
+                        movenotesthread.Join(300); // if finished within 300ms don't display buzy moving notes message.
+                        this.ShowWaitOnThread(movenotesthread, 300, "NoteFly is buzy moving your notes");
+
+                        this.notes.LoadNotes(true, false);                        
                     }
                     finally
                     {
@@ -365,6 +375,46 @@ namespace NoteFly
                 const string SETTINGS_INFOUPDATED = "Settings updated";
                 Log.Write(LogType.info, SETTINGS_INFOUPDATED);
                 this.Close();
+            }
+        }
+
+        /// <summary>
+        /// Show a message form while thread is buzy.
+        /// And auto close while done.
+        /// </summary>
+        /// <param name="worktread">The thread that is doing work while message being showed</param>
+        /// <param name="checktimems">miliseconds to check if workthread is done, is also the minimum show time of the message, if being showed</param>
+        /// <param name="message">The message to show</param>
+        private void ShowWaitOnThread(Thread worktread, int checktimems, string message)
+        {            
+            Form frmmgs = null;
+            bool mgsshowed = false;
+            while (worktread.ThreadState == ThreadState.Running)
+            {
+                if (!mgsshowed)
+                {
+                    mgsshowed = true;
+                    frmmgs = new Form();
+                    frmmgs.StartPosition = FormStartPosition.CenterScreen;
+                    frmmgs.Size = new Size(240, 80);
+                    frmmgs.ShowIcon = false;
+                    frmmgs.ShowInTaskbar = false;
+                    frmmgs.MinimizeBox = false;
+                    frmmgs.MaximizeBox = false;
+                    frmmgs.Text = "Please wait";
+                    Label lblmgs = new Label();
+                    lblmgs.Text = message;
+                    lblmgs.SetBounds(10, 10, 200, 40);
+                    frmmgs.Controls.Add(lblmgs);
+                    frmmgs.Show();                    
+                }
+
+                Thread.Sleep(checktimems);
+            }
+
+            if (frmmgs != null)
+            {
+                frmmgs.Close();
             }
         }
 
@@ -437,6 +487,15 @@ namespace NoteFly
             }
 
             this.cbxDefaultColor.Items.AddRange(this.notes.GetSkinsNames());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void MoveNotesThread(object args)
+        {
+            string[] pathsargs = (string[])args;
+            this.MoveNotes(pathsargs[0], pathsargs[1]);
         }
 
         /// <summary>
