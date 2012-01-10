@@ -24,6 +24,7 @@ namespace NoteFly
     using System.Xml;
     using System.Net;
     using System.IO;
+    using System.Drawing;
 
     public partial class FrmPlugins : Form
     {
@@ -48,6 +49,7 @@ namespace NoteFly
             if (this.tabControlPlugins.SelectedTab == this.tabPagePluginsAvailable)
             {
                 this.tbSearchPlugin.Clear();
+                this.tbSearchPlugin.BackColor = SystemColors.Window;
                 this.lblTextNoInternetConnection.Visible = false;
                 this.chlbxAvailiblePlugins.Items.Clear();
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
@@ -175,24 +177,39 @@ namespace NoteFly
         private void tbSearchPlugin_KeyUp(object sender, KeyEventArgs e)
         {
             this.timerStartSearch.Stop();
+            this.tbSearchPlugin.BackColor = SystemColors.Window;
             this.timerStartSearch.Start();
         }
 
         /// <summary>
-        /// Do a search
+        /// Do a search, after the user stopped typing.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timerStartSearch_Tick(object sender, EventArgs e)
         {
             this.timerStartSearch.Stop();
+            this.DoPluginSearch();
+        }
+
+        /// <summary>
+        /// Do a search for a plugin based on the entered keywords in the tbSearchPlugin textbox.
+        /// </summary>
+        private void DoPluginSearch()
+        {
+            this.tbSearchPlugin.BackColor = Color.LightYellow;
             this.chlbxAvailiblePlugins.Items.Clear();
             HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/search.php?keyword=" + this.tbSearchPlugin.Text, System.Net.Cache.RequestCacheLevel.Default, false);
             if (!xmlUtil.ParserListPlugins(httputil.GetResponseStream(), this.chlbxAvailiblePlugins, this))
             {
                 this.tbSearchPlugin.Enabled = false;
-                this.tbSearchPlugin.Clear();                
-            }           
+                this.tbSearchPlugin.Clear();
+            }
+
+            if (this.tbSearchPlugin.Text == string.Empty)
+            {
+                this.tbSearchPlugin.BackColor = SystemColors.Window;
+            }
         }
 
         /// <summary>
@@ -213,6 +230,21 @@ namespace NoteFly
         private void FrmPlugins_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.timerStartSearch.Stop();
+        }
+
+        /// <summary>
+        /// Check if enter key is pressed down, if it is then start search immediately.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbSearchPlugin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.timerStartSearch.Stop();
+                this.DoPluginSearch();
+                System.Threading.Thread.Sleep(50);
+            }
         }
     }
 }

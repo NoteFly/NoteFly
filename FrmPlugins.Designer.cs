@@ -32,9 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlugins));
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
+            this.pluginGrid = new NoteFly.PluginGrid();
             this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTextSearch = new System.Windows.Forms.Label();
             this.tbSearchPlugin = new System.Windows.Forms.TextBox();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.chlbxAvailiblePlugins = new System.Windows.Forms.CheckedListBox();
@@ -44,7 +45,6 @@
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
             this.timerStartSearch = new System.Windows.Forms.Timer(this.components);
-            this.pluginGrid = new NoteFly.PluginGrid();
             this.tabControlPlugins.SuspendLayout();
             this.tabPagePluginsInstalled.SuspendLayout();
             this.tabPagePluginsAvailable.SuspendLayout();
@@ -77,6 +77,13 @@
             this.tabPagePluginsInstalled.Text = "Installed";
             this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
             // 
+            // pluginGrid
+            // 
+            this.pluginGrid.Location = new System.Drawing.Point(0, 18);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(414, 290);
+            this.pluginGrid.TabIndex = 0;
+            // 
             // tabPagePluginsAvailable
             // 
             this.tabPagePluginsAvailable.Controls.Add(this.splitContainerAvailablePlugins);
@@ -95,8 +102,8 @@
             // 
             // splitContainerAvailablePlugins.Panel1
             // 
-            this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.label1);
             this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.tbSearchPlugin);
+            this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.lblTextSearch);
             this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.lblTextNoInternetConnection);
             this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.chlbxAvailiblePlugins);
             this.splitContainerAvailablePlugins.Panel1MinSize = 0;
@@ -113,14 +120,15 @@
             this.splitContainerAvailablePlugins.SplitterDistance = 191;
             this.splitContainerAvailablePlugins.TabIndex = 0;
             // 
-            // label1
+            // lblTextSearch
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 265);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "search:";
+            this.lblTextSearch.AutoSize = true;
+            this.lblTextSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextSearch.Location = new System.Drawing.Point(-3, 262);
+            this.lblTextSearch.Name = "lblTextSearch";
+            this.lblTextSearch.Size = new System.Drawing.Size(52, 16);
+            this.lblTextSearch.TabIndex = 4;
+            this.lblTextSearch.Text = "search:";
             // 
             // tbSearchPlugin
             // 
@@ -129,6 +137,7 @@
             this.tbSearchPlugin.Name = "tbSearchPlugin";
             this.tbSearchPlugin.Size = new System.Drawing.Size(140, 20);
             this.tbSearchPlugin.TabIndex = 3;
+            this.tbSearchPlugin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearchPlugin_KeyDown);
             this.tbSearchPlugin.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tbSearchPlugin_KeyUp);
             this.tbSearchPlugin.Enter += new System.EventHandler(this.tbSearchPlugin_Enter);
             // 
@@ -205,13 +214,6 @@
             this.timerStartSearch.Interval = 600;
             this.timerStartSearch.Tick += new System.EventHandler(this.timerStartSearch_Tick);
             // 
-            // pluginGrid
-            // 
-            this.pluginGrid.Location = new System.Drawing.Point(0, 18);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(414, 290);
-            this.pluginGrid.TabIndex = 0;
-            // 
             // FrmPlugins
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -251,6 +253,6 @@
         private System.Windows.Forms.Label lblLicense;
         private System.Windows.Forms.TextBox tbSearchPlugin;
         private System.Windows.Forms.Timer timerStartSearch;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTextSearch;
     }
 }
