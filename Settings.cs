@@ -75,14 +75,24 @@ namespace NoteFly
         public static int NotesDefaultHeight = 240;
 
         /// <summary>
+        /// The maximum number of pixels of the title panel height.
+        /// </summary>
+        public static int NotesTitlepanelMaxHeight = 64;
+
+        /// <summary>
+        /// The minimum number of pixels of the title panel height.
+        /// </summary>
+        public static int NotesTitlepanelMinHeight = 32;
+
+        /// <summary>
         /// Number of total notes a warning shows up that are many notes loading.
         /// </summary>
-        public static int NotesWarnlimitTotal = 1234;
+        public static int NotesWarnlimitTotal = 4000;
 
         /// <summary>
         /// Number of visible notes a warning shows up that are many notes being displayed and it recommeded to hide some.
         /// </summary> 
-        public static int NotesWarnlimitVisible = 50;
+        public static int NotesWarnlimitVisible = 40;
 
         /// <summary>
         /// The folder where to save all notes.

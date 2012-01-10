@@ -472,6 +472,12 @@ namespace NoteFly
                         case "NotesDefaultHeight":
                             Settings.NotesDefaultHeight = xmlread.ReadElementContentAsInt();
                             break;
+                        case "NotesTitlepanelMaxHeight":
+                            Settings.NotesTitlepanelMaxHeight = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NotesTitlepanelMinHeight":
+                            Settings.NotesTitlepanelMinHeight = xmlread.ReadElementContentAsInt();
+                            break;
                         case "NotesWarnLimit": // TODO: legacy setting, only read it no writing it anymore.
                             Settings.NotesWarnlimitTotal = xmlread.ReadElementContentAsInt();
                             break;
@@ -802,6 +808,10 @@ namespace NoteFly
             Settings.NotesClosebtnHidenotepermanently = true;
             Settings.NotesDefaultRandomSkin = false;
             Settings.NotesDefaultSkinnr = 0; // default skin: yellow
+            Settings.NotesDefaultHeight = 280;
+            Settings.NotesDefaultWidth = 240;            
+            Settings.NotesTitlepanelMaxHeight = 64;
+            Settings.NotesTitlepanelMinHeight = 32;
             Settings.NotesSavepath = Program.AppDataFolder;
             Settings.NotesTransparencyEnabled = true;
             Settings.NotesTransparentRTB = true;
@@ -809,7 +819,7 @@ namespace NoteFly
             Settings.NotesWarnlimitTotal = 500;
             Settings.NotesWarnlimitVisible = 50;
             Settings.ProgramFirstrun = false;
-            Settings.ProgramFormsDoublebuffered = false;
+            Settings.ProgramFormsDoublebuffered = false; // create blank windows on windows 8.
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
@@ -1041,6 +1051,8 @@ namespace NoteFly
                 xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesDefaultWidth", Settings.NotesDefaultWidth.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesDefaultHeight", Settings.NotesDefaultHeight.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesTitlepanelMaxHeight", Settings.NotesTitlepanelMaxHeight.ToString(numfmtinfo));
+                xmlwrite.WriteElementString("NotesTitlepanelMinHeight", Settings.NotesTitlepanelMinHeight.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesWarnlimitTotal", Settings.NotesWarnlimitTotal.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("NotesWarnlimitVisible", Settings.NotesWarnlimitVisible.ToString(numfmtinfo));
                 xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));

@@ -102,9 +102,9 @@ namespace NoteFly
             this.notes = notes;
             this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
-            if (this.dataGridView1.RowCount > 0)
+            if (this.dataGridViewNotes.RowCount > 0)
             {
-                if ((bool)this.dataGridView1.Rows[0].Cells["visible"].Value == true)
+                if ((bool)this.dataGridViewNotes.Rows[0].Cells["visible"].Value == true)
                 {
                     this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
                 }
@@ -364,7 +364,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnNoteDelete_Click(object sender, EventArgs e)
         {
-            if (this.dataGridView1.SelectedRows.Count <= 0)
+            if (this.dataGridViewNotes.SelectedRows.Count <= 0)
             {
                 const string NOTHINGSELECTED = "Nothing selected.";
                 Log.Write(LogType.info, NOTHINGSELECTED);
@@ -378,12 +378,12 @@ namespace NoteFly
                     DialogResult deleteres = MessageBox.Show(DELETESELECTEDNOTES, "delete?", MessageBoxButtons.YesNo);
                     if (deleteres == DialogResult.Yes)
                     {
-                        this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
+                        this.DeleteNotesSelectedRowsGrid(this.dataGridViewNotes.SelectedRows);
                     }
                 }
                 else
                 {
-                    this.DeleteNotesSelectedRowsGrid(this.dataGridView1.SelectedRows);
+                    this.DeleteNotesSelectedRowsGrid(this.dataGridViewNotes.SelectedRows);
                 }
 
                 this.Resetdatagrid();
@@ -812,7 +812,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnShowSelectedNotes_Click(object sender, EventArgs e)
         {
-            DataGridViewSelectedRowCollection selectedrows = this.dataGridView1.SelectedRows;
+            DataGridViewSelectedRowCollection selectedrows = this.dataGridViewNotes.SelectedRows;
             try
             {
                 Cursor.Current = Cursors.WaitCursor;
@@ -854,7 +854,7 @@ namespace NoteFly
         {
             if (e.RowIndex >= 0)
             {
-                if ((bool)this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value == true)
+                if ((bool)this.dataGridViewNotes.Rows[e.RowIndex].Cells["visible"].Value == true)
                 {
                     this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
                 }
@@ -882,7 +882,7 @@ namespace NoteFly
                 this.TopMost = true;
                 int notepos = this.GetNoteposBySelrow(row);
                 this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
-                this.dataGridView1.Rows[row].Cells[2].Value = !(bool)this.dataGridView1.Rows[row].Cells[2].Value;
+                this.dataGridViewNotes.Rows[row].Cells[2].Value = !(bool)this.dataGridViewNotes.Rows[row].Cells[2].Value;
                 if (this.notes.GetNote(notepos).Visible)
                 {
                     this.notes.GetNote(notepos).CreateForm();
@@ -910,7 +910,7 @@ namespace NoteFly
         {
             this.Resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
-            this.dataGridView1.Refresh();
+            this.dataGridViewNotes.Refresh();
         }
 
         /// <summary>
@@ -923,24 +923,24 @@ namespace NoteFly
             if (this.notes.FrmManageNotesNeedUpdate)
             {
                 // detect and update add/delete notes.
-                if (this.dataGridView1.RowCount != this.notes.CountNotes)
+                if (this.dataGridViewNotes.RowCount != this.notes.CountNotes)
                 {
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
                 }
 
                 int notepos = this.GetNoteposBySelrow(e.RowIndex);
-                this.dataGridView1.Rows[e.RowIndex].Cells["title"].Value = this.notes.GetNote(notepos).Title;
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
-                this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
-                if (this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
+                this.dataGridViewNotes.Rows[e.RowIndex].Cells["title"].Value = this.notes.GetNote(notepos).Title;
+                this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
+                this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
+                if (this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
                 {
-                    this.dataGridView1.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
                 }
 
-                this.dataGridView1.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
+                this.dataGridViewNotes.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
 
-                if (e.RowIndex == this.dataGridView1.RowCount - 1)
+                if (e.RowIndex == this.dataGridViewNotes.RowCount - 1)
                 {
                     this.notes.FrmManageNotesNeedUpdate = false;
                 }
@@ -1175,7 +1175,7 @@ namespace NoteFly
             this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
             DataTable datatable = new DataTable();
-            this.dataGridView1.DataSource = datatable;
+            this.dataGridViewNotes.DataSource = datatable;
             datatable.Columns.Add("nr", typeof(string));
             datatable.Columns["nr"].AutoIncrement = true;
             datatable.Columns["nr"].Unique = true;
@@ -1184,17 +1184,17 @@ namespace NoteFly
             datatable.Columns.Add("skin", typeof(string));
             datatable.DefaultView.AllowEdit = true;
             datatable.DefaultView.AllowNew = false;
-            if (this.dataGridView1.Columns["nr"] != null)
+            if (this.dataGridViewNotes.Columns["nr"] != null)
             {
-                this.dataGridView1.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridViewNotes.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            if (this.dataGridView1.Columns["visible"] != null)
+            if (this.dataGridViewNotes.Columns["visible"] != null)
             {
-                this.dataGridView1.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridViewNotes.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            this.dataGridView1.RowPostPaint += new DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
+            this.dataGridViewNotes.RowPostPaint += new DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             for (int i = 0; i < this.notes.CountNotes; i++)
             {
                 DataRow dr = datatable.NewRow();
@@ -1255,7 +1255,7 @@ namespace NoteFly
         {
             if (rowindex >= 0)
             {
-                return Convert.ToInt32(this.dataGridView1.Rows[rowindex].Cells["nr"].Value) - 1;
+                return Convert.ToInt32(this.dataGridViewNotes.Rows[rowindex].Cells["nr"].Value) - 1;
             }
             else
             {
@@ -1361,30 +1361,30 @@ namespace NoteFly
         /// </summary>
         private void SetDataGridViewColumsWidth()
         {
-            if ((this.dataGridView1.Width <= 0) || (this.dataGridView1 == null))
+            if ((this.dataGridViewNotes.Width <= 0) || (this.dataGridViewNotes == null))
             {
                 return;
             }
 
-            int partunit = (this.dataGridView1.Width - COLNOTENRFIXEDWIDTH) / 10;
-            if (this.dataGridView1.Columns["nr"] != null)
+            int partunit = (this.dataGridViewNotes.Width - COLNOTENRFIXEDWIDTH) / 10;
+            if (this.dataGridViewNotes.Columns["nr"] != null)
             {
-                this.dataGridView1.Columns["nr"].Width = 1 * COLNOTENRFIXEDWIDTH;
+                this.dataGridViewNotes.Columns["nr"].Width = 1 * COLNOTENRFIXEDWIDTH;
             }
 
-            if (this.dataGridView1.Columns["title"] != null)
+            if (this.dataGridViewNotes.Columns["title"] != null)
             {
-                this.dataGridView1.Columns["title"].Width = 6 * partunit;
+                this.dataGridViewNotes.Columns["title"].Width = 6 * partunit;
             }
 
-            if (this.dataGridView1.Columns["visible"] != null)
+            if (this.dataGridViewNotes.Columns["visible"] != null)
             {
-                this.dataGridView1.Columns["visible"].Width = 1 * partunit;
+                this.dataGridViewNotes.Columns["visible"].Width = 1 * partunit;
             }
 
-            if (this.dataGridView1.Columns["skin"] != null)
+            if (this.dataGridViewNotes.Columns["skin"] != null)
             {
-                this.dataGridView1.Columns["skin"].Width = 3 * partunit;
+                this.dataGridViewNotes.Columns["skin"].Width = 3 * partunit;
             }
         }
 
@@ -1399,5 +1399,79 @@ namespace NoteFly
         }
 
         #endregion Methods
+
+        private void dataGridViewNotes_MouseHover(object sender, EventArgs e)
+        {
+        }
+
+        private void dataGridViewNotes_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (Settings.NotesTooltipsEnabled)
+            {                
+                if (e.ColumnIndex == 1)
+                {
+                    string contentpreview = null;
+                    if (e.RowIndex >= 0)
+                    {
+                        int notepos = GetNoteposBySelrow(e.RowIndex);
+                        if (notepos > 0)
+                        {
+                            // todo GetContent() is wrong for this but works for now. Add GetContentPreview() that has limited disk read.
+                            string content = this.notes.GetNote(notepos).GetContent();
+                            const string startcontentplainhint = @"\fs24 ";
+                            int startpos = content.IndexOf(startcontentplainhint);
+
+                            for (int i = content.Length -1; i > startpos; i--)
+                            {
+                                if (content[i] == '\\')
+                                {
+                                    for (int p = 0; p < 20; p++)
+                                    {
+                                        int endpos = i + p;
+                                        if (endpos >= content.Length - 1)
+                                        {
+                                            break;
+                                        }
+
+                                        if (content[endpos] == ' ') // || content[endpos] == '\r' || content[endpos] == '\n'
+                                        {
+                                            content.Remove(i, p);
+                                        }
+                                    }
+                                }
+                            }
+
+                            try
+                            {
+                                int lencontentpreview = content.Length - startpos - startcontentplainhint.Length;
+                                const int MAXLENCONTENTPREVIEW = 100;
+                                if (lencontentpreview > MAXLENCONTENTPREVIEW)
+                                {
+                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, MAXLENCONTENTPREVIEW);
+                                    contentpreview += "..";
+                                }
+                                else
+                                {
+                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, lencontentpreview);
+                                }
+
+                                content = null;                                
+                            }
+                            catch (ArgumentOutOfRangeException argoutrange)
+                            {
+                                MessageBox.Show(argoutrange.Message);
+                            }
+
+                            int tooltiplocx = Cursor.Position.X - this.Location.X;
+                            int tooltiplocy = Cursor.Position.Y - this.Location.Y;
+                            if (!String.IsNullOrEmpty(contentpreview))
+                            {
+                                toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

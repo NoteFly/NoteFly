@@ -186,22 +186,20 @@ namespace NoteFly
             }
             else
             {
-                if (this.lblTitle.Height + this.lblTitle.Location.Y > this.pnlHead.Height)
+                if (this.lblTitle.Height + this.lblTitle.Location.Y >= this.pnlHead.Height)
                 {
-                    const int MAXHEIGHTPNLHEAD = 64;
-                    if (this.lblTitle.Height < MAXHEIGHTPNLHEAD)
+                    if (this.lblTitle.Height < Settings.NotesTitlepanelMaxHeight)
                     {
                         this.pnlHead.Height = this.lblTitle.Height;
                     }
                     else
                     {
-                        this.pnlHead.Height = MAXHEIGHTPNLHEAD;
+                        this.pnlHead.Height = Settings.NotesTitlepanelMaxHeight;
                     }
                 }
                 else
                 {
-                    const int DEFAULFTMINHEIGHT = 32;
-                    this.pnlHead.Height = DEFAULFTMINHEIGHT;
+                    this.pnlHead.Height = Settings.NotesTitlepanelMinHeight;
                 }
 
 #if windows
