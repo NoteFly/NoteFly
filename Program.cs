@@ -43,6 +43,11 @@ namespace NoteFly
         public static IPlugin.IPlugin[] pluginsenabled;
 
         /// <summary>
+        /// Reference to updatethread
+        /// </summary>
+        public static Thread updatethread;
+
+        /// <summary>
         /// Reference to notes class.
         /// </summary>
         private static Notes notes;
@@ -390,7 +395,7 @@ namespace NoteFly
                 DateTime lastupdate = DateTime.Parse(Settings.UpdatecheckLastDate);
                 if (lastupdate.AddDays(Settings.UpdatecheckEverydays) <= DateTime.Now)
                 {
-                    Thread updatethread = new Thread(UpdateCheckThread);
+                    updatethread = new Thread(UpdateCheckThread);
                     updatethread.Start();
                 }
             }
@@ -666,6 +671,7 @@ namespace NoteFly
             const int UPDATECHECKSTARTUPWAITTIME = 4000;
             Thread.Sleep(UPDATECHECKSTARTUPWAITTIME);
             Settings.UpdatecheckLastDate = UpdateCheck();
+            xmlUtil.WriteSettings();
         }
 
         /// <summary>

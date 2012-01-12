@@ -142,16 +142,22 @@ namespace NoteFly
         {
             this.splitContainerAvailablePlugins.Panel2Collapsed = false;
             this.btnPluginDownload.Visible = false;
-            string pluginname = this.chlbxAvailiblePlugins.SelectedItem.ToString();
-            if (!String.IsNullOrEmpty(pluginname))
+            if (this.chlbxAvailiblePlugins.SelectedIndex >= 0)
             {
-                HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/details.php?name=" + pluginname, System.Net.Cache.RequestCacheLevel.Revalidate, false);
-                string[] detailsplugin = xmlUtil.ParserDetailsPlugin(httputil.GetResponseStream(), this.btnPluginDownload);
-                this.lblPluginName.Text = detailsplugin[0];
-                this.lblPluginVersion.Text = "version: " + detailsplugin[1];
-                this.lblLicense.Text = "license: " + detailsplugin[2];
-                this.lblPluginDescription.Text = detailsplugin[3];
-                this.currentplugindownloadurl = detailsplugin[4];
+                string pluginname = this.chlbxAvailiblePlugins.SelectedItem.ToString();
+                if (!String.IsNullOrEmpty(pluginname))
+                {
+                    HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/details.php?name=" + pluginname, System.Net.Cache.RequestCacheLevel.Revalidate, false);
+                    string[] detailsplugin = xmlUtil.ParserDetailsPlugin(httputil.GetResponseStream(), this.btnPluginDownload);
+                    if (detailsplugin != null)
+                    {
+                        this.lblPluginName.Text = detailsplugin[0];
+                        this.lblPluginVersion.Text = "version: " + detailsplugin[1];
+                        this.lblLicense.Text = "license: " + detailsplugin[2];
+                        this.lblPluginDescription.Text = detailsplugin[3];
+                        this.currentplugindownloadurl = detailsplugin[4];
+                    }
+                }
             }
         }
 

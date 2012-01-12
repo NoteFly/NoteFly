@@ -206,9 +206,10 @@ namespace NoteFly
             this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Padding = new System.Windows.Forms.Padding(3, 5, 60, 0);
-            this.lblTitle.Size = new System.Drawing.Size(81, 24);
+            this.lblTitle.Size = new System.Drawing.Size(78, 30);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "?";
+            this.lblTitle.UseCompatibleTextRendering = true;
             this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             this.lblTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);

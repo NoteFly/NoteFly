@@ -126,7 +126,7 @@ namespace NoteFly
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.icon = new NotifyIcon(this.components);
             this.icon.ContextMenuStrip = this.menuTrayIcon;
-            if (Settings.TrayiconAlternateIcon) 
+            if (Settings.TrayiconAlternateIcon)
             {
                 this.icon.Icon = new Icon(NoteFly.Properties.Resources.trayicon_white, NoteFly.Properties.Resources.trayicon_white.Size);
             }
@@ -216,7 +216,7 @@ namespace NoteFly
                 }
             }
 
-            
+
             // MenuAbout
             this.menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuAbout.Name = "MenuAbout";
@@ -435,8 +435,48 @@ namespace NoteFly
                 }
             }
 
+            if (Program.updatethread != null)
+            {
+                try
+                {
+                    Program.updatethread.Abort();
+                }
+                catch (System.Threading.ThreadStateException thexc)
+                {
+                    Log.Write(LogType.exception, thexc.Message);
+                }
+                catch (System.Security.SecurityException secexc)
+                {
+                    Log.Write(LogType.exception, secexc.Message);
+                }
+            }
+
+            this.KillUpdateThread();
             this.components.Dispose();
             Application.Exit();
+        }
+
+        /// <summary>
+        /// Make sure the update thread aborts when  otherwise NoteFly keep running.
+        /// </summary>
+        private void KillUpdateThread()
+        {
+            if (Program.updatethread != null)
+            {
+                try
+                {
+                    Program.updatethread.Interrupt();
+                    Program.updatethread.Abort();
+                }
+                catch (System.Threading.ThreadStateException thexc)
+                {
+                    Log.Write(LogType.exception, thexc.Message);
+                }
+                catch (System.Security.SecurityException secexc)
+                {
+                    Log.Write(LogType.exception, secexc.Message);
+                }
+            }
         }
     }
 }

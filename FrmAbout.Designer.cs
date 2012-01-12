@@ -95,6 +95,7 @@ namespace NoteFly
             this.okButton.Size = new System.Drawing.Size(111, 26);
             this.okButton.TabIndex = 25;
             this.okButton.Text = "&Close";
+            this.okButton.UseCompatibleTextRendering = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // lblProductName
@@ -104,8 +105,9 @@ namespace NoteFly
             this.lblProductName.ForeColor = System.Drawing.Color.Black;
             this.lblProductName.Location = new System.Drawing.Point(6, 5);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(0, 42);
+            this.lblProductName.Size = new System.Drawing.Size(0, 45);
             this.lblProductName.TabIndex = 26;
+            this.lblProductName.UseCompatibleTextRendering = true;
             this.lblProductName.Click += new System.EventHandler(this.lblProductName_Click);
             // 
             // lblVersion
@@ -124,10 +126,11 @@ namespace NoteFly
             this.linklblWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linklblWebsite.Location = new System.Drawing.Point(10, 140);
             this.linklblWebsite.Name = "linklblWebsite";
-            this.linklblWebsite.Size = new System.Drawing.Size(62, 18);
+            this.linklblWebsite.Size = new System.Drawing.Size(61, 22);
             this.linklblWebsite.TabIndex = 28;
             this.linklblWebsite.TabStop = true;
             this.linklblWebsite.Text = "Website";
+            this.linklblWebsite.UseCompatibleTextRendering = true;
             this.linklblWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklblWebsite_LinkClicked);
             // 
             // lblTextLicense
@@ -141,6 +144,7 @@ namespace NoteFly
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of Lesser GNU General Public License v" +
                 "ersion3\r\n";
+            this.lblTextLicense.UseCompatibleTextRendering = true;
             // 
             // tmpUpdateLblProductEffect
             // 

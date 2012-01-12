@@ -273,10 +273,6 @@ namespace NoteFly
                 Settings.NetworkProxyAddress = this.iptbProxy.getIPAddress();
                 Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
 
-                // tab: plugins
-                //Settings.ProgramPluginsAllEnabled = this.chxLoadPlugins.Checked;
-                //this.pluginGrid.SavePluginSettings();
-
                 // tab: Advance
                 if (Directory.Exists(this.tbNotesSavePath.Text))
                 {
@@ -562,6 +558,8 @@ namespace NoteFly
         /// </summary>
         private void SetControlsBySettings()
         {
+            this.chxSettingsExpertEnabled.Checked = Settings.SettingsExpertEnabled;
+
             // tab: General
 #if windows
             this.chxStartOnLogin.Checked = this.GetStartOnLogon();
@@ -569,8 +567,7 @@ namespace NoteFly
             this.chxConfirmExit.Checked = Settings.ConfirmExit;
             this.chxConfirmDeletenote.Checked = Settings.ConfirmDeletenote;
             this.chxNotesDeleteRecyclebin.Checked = Settings.NotesDeleteRecyclebin;
-            this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;
-            this.chxSettingsExpertEnabled.Checked = Settings.SettingsExpertEnabled;
+            this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;            
 
             // tab: Appearance, notes
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
@@ -636,12 +633,10 @@ namespace NoteFly
             this.iptbProxy.Text = Settings.NetworkProxyAddress;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
             this.numTimeout.Value = Settings.NetworkConnectionTimeout;
-            this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
-
-            // tab: Plugins
-            this.chxLoadPlugins.Checked = Settings.ProgramPluginsAllEnabled;
+            this.SetLastUpdatecheckDate(Settings.SettingsExpertEnabled);                        
 
             // tab: Advance
+            this.chxLoadPlugins.Checked = Settings.ProgramPluginsAllEnabled;
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
             this.numWarnLimitTotal.Value = Convert.ToDecimal(Settings.NotesWarnlimitTotal);
             this.numWarnLimitVisible.Value = Convert.ToDecimal(Settings.NotesWarnlimitVisible);
@@ -728,6 +723,31 @@ namespace NoteFly
             this.numWarnLimitTotal.Visible = expertsettings;
             this.lblTextVisibleNotesWarnLimit.Visible = expertsettings;
             this.numWarnLimitVisible.Visible = expertsettings;
+            this.SetLastUpdatecheckDate(expertsettings);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expertsettings"></param>
+        private void SetLastUpdatecheckDate(bool expertsettings)
+        {
+            if (expertsettings)
+            {
+                this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
+            }
+            else
+            {
+                DateTime dt;
+                if (DateTime.TryParse(Settings.UpdatecheckLastDate, out dt))
+                {
+                    this.lblLatestUpdateCheck.Text = dt.ToShortDateString();
+                }
+                else
+                {
+                    this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
+                }                
+            }
         }
 
         /// <summary>

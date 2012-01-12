@@ -87,12 +87,12 @@ namespace NoteFly
         /// <summary>
         /// Number of total notes a warning shows up that are many notes loading.
         /// </summary>
-        public static int NotesWarnlimitTotal = 4000;
+        public static int NotesWarnlimitTotal = 5000;
 
         /// <summary>
         /// Number of visible notes a warning shows up that are many notes being displayed and it recommeded to hide some.
         /// </summary> 
-        public static int NotesWarnlimitVisible = 40;
+        public static int NotesWarnlimitVisible = 50;
 
         /// <summary>
         /// The folder where to save all notes.
@@ -110,7 +110,7 @@ namespace NoteFly
         /// <summary>
         /// The trayicon fontsize.
         /// </summary>
-        public static float TrayiconFontsize = 8.25f;
+        public static float TrayiconFontsize = 10.00f;
 
         /// <summary>
         /// Display "Create new note" in bold.
@@ -309,7 +309,7 @@ namespace NoteFly
         /// <summary>
         /// The time a connection is considered not working.
         /// </summary>
-        public static int NetworkConnectionTimeout = 8000;
+        public static int NetworkConnectionTimeout = 6000;
 
         /// <summary>
         /// Force to use of IPv6.

@@ -64,7 +64,19 @@ namespace NoteFly
                 this.request.Method = "GET";
                 this.request.ContentType = "text/xml";
                 this.request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
-                this.request.Timeout = Settings.NetworkConnectionTimeout;
+                try
+                {
+                    this.request.Timeout = Settings.NetworkConnectionTimeout;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    const string INVALIDTIMEOUTSETTING = "Invalid timeout setting set.";
+                    const string INVALIDTIMEOUTTITLE = "Invalid timeout";
+                    Log.Write(LogType.exception, INVALIDTIMEOUTSETTING);
+                    System.Windows.Forms.MessageBox.Show(INVALIDTIMEOUTSETTING, INVALIDTIMEOUTTITLE, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
@@ -81,7 +93,7 @@ namespace NoteFly
             catch (System.Net.WebException webexc)
             {
                 Log.Write(LogType.exception, webexc.Message);
-            }            
+            }
         }
 
         /// <summary>
