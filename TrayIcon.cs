@@ -408,8 +408,32 @@ namespace NoteFly
                 }
             }
 
+            this.KillUpdateThread();
             this.components.Dispose();
             Application.Exit();
+        }
+
+        /// <summary>
+        /// Make sure the update thread aborts when  otherwise NoteFly keep running.
+        /// </summary>
+        private void KillUpdateThread()
+        {
+            if (Program.updatethread != null)
+            {
+                try
+                {
+                    Program.updatethread.Interrupt();
+                    Program.updatethread.Abort();
+                }
+                catch (System.Threading.ThreadStateException thexc)
+                {
+                    Log.Write(LogType.exception, thexc.Message);
+                }
+                catch (System.Security.SecurityException secexc)
+                {
+                    Log.Write(LogType.exception, secexc.Message);
+                }
+            }
         }
     }
 }
