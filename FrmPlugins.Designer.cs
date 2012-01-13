@@ -28,14 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlugins));
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
             this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
-            this.tbSearchPlugin = new System.Windows.Forms.TextBox();
-            this.lblTextSearch = new System.Windows.Forms.Label();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.chlbxAvailiblePlugins = new System.Windows.Forms.CheckedListBox();
             this.lblLicense = new System.Windows.Forms.Label();
@@ -43,8 +40,8 @@
             this.lblPluginName = new System.Windows.Forms.Label();
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
-            this.timerStartSearch = new System.Windows.Forms.Timer(this.components);
             this.pluginGrid = new NoteFly.PluginGrid();
+            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.tabControlPlugins.SuspendLayout();
             this.tabPagePluginsInstalled.SuspendLayout();
             this.tabPagePluginsAvailable.SuspendLayout();
@@ -95,8 +92,7 @@
             // 
             // splitContainerAvailablePlugins.Panel1
             // 
-            this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.tbSearchPlugin);
-            this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.lblTextSearch);
+            this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.searchtbPlugins);
             this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.lblTextNoInternetConnection);
             this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.chlbxAvailiblePlugins);
             this.splitContainerAvailablePlugins.Panel1MinSize = 0;
@@ -112,27 +108,6 @@
             this.splitContainerAvailablePlugins.Size = new System.Drawing.Size(402, 302);
             this.splitContainerAvailablePlugins.SplitterDistance = 191;
             this.splitContainerAvailablePlugins.TabIndex = 0;
-            // 
-            // tbSearchPlugin
-            // 
-            this.tbSearchPlugin.Enabled = false;
-            this.tbSearchPlugin.Location = new System.Drawing.Point(48, 262);
-            this.tbSearchPlugin.Name = "tbSearchPlugin";
-            this.tbSearchPlugin.Size = new System.Drawing.Size(140, 20);
-            this.tbSearchPlugin.TabIndex = 3;
-            this.tbSearchPlugin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearchPlugin_KeyDown);
-            this.tbSearchPlugin.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tbSearchPlugin_KeyUp);
-            this.tbSearchPlugin.Enter += new System.EventHandler(this.tbSearchPlugin_Enter);
-            // 
-            // lblTextSearch
-            // 
-            this.lblTextSearch.AutoSize = true;
-            this.lblTextSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTextSearch.Location = new System.Drawing.Point(-3, 262);
-            this.lblTextSearch.Name = "lblTextSearch";
-            this.lblTextSearch.Size = new System.Drawing.Size(52, 16);
-            this.lblTextSearch.TabIndex = 4;
-            this.lblTextSearch.Text = "search:";
             // 
             // lblTextNoInternetConnection
             // 
@@ -202,17 +177,20 @@
             this.btnPluginDownload.Visible = false;
             this.btnPluginDownload.Click += new System.EventHandler(this.btnPluginDownload_Click);
             // 
-            // timerStartSearch
-            // 
-            this.timerStartSearch.Interval = 600;
-            this.timerStartSearch.Tick += new System.EventHandler(this.timerStartSearch_Tick);
-            // 
             // pluginGrid
             // 
             this.pluginGrid.Location = new System.Drawing.Point(0, 18);
             this.pluginGrid.Name = "pluginGrid";
             this.pluginGrid.Size = new System.Drawing.Size(414, 290);
             this.pluginGrid.TabIndex = 0;
+            // 
+            // searchtbPlugins
+            // 
+            this.searchtbPlugins.Location = new System.Drawing.Point(0, 260);
+            this.searchtbPlugins.Name = "searchtbPlugins";
+            this.searchtbPlugins.Size = new System.Drawing.Size(188, 28);
+            this.searchtbPlugins.TabIndex = 4;
+            this.searchtbPlugins.DoSearch += new NoteFly.SearchTextBox.DoSearchHandler(this.searchtbPlugins_DoSearch);
             // 
             // FrmPlugins
             // 
@@ -225,12 +203,10 @@
             this.MaximizeBox = false;
             this.Name = "FrmPlugins";
             this.Text = "Plugins";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmPlugins_FormClosing);
             this.tabControlPlugins.ResumeLayout(false);
             this.tabPagePluginsInstalled.ResumeLayout(false);
             this.tabPagePluginsAvailable.ResumeLayout(false);
             this.splitContainerAvailablePlugins.Panel1.ResumeLayout(false);
-            this.splitContainerAvailablePlugins.Panel1.PerformLayout();
             this.splitContainerAvailablePlugins.Panel2.ResumeLayout(false);
             this.splitContainerAvailablePlugins.Panel2.PerformLayout();
             this.splitContainerAvailablePlugins.ResumeLayout(false);
@@ -252,8 +228,6 @@
         private System.Windows.Forms.Label lblPluginVersion;
         private System.Windows.Forms.Label lblTextNoInternetConnection;
         private System.Windows.Forms.Label lblLicense;
-        private System.Windows.Forms.TextBox tbSearchPlugin;
-        private System.Windows.Forms.Timer timerStartSearch;
-        private System.Windows.Forms.Label lblTextSearch;
+        private SearchTextBox searchtbPlugins;
     }
 }

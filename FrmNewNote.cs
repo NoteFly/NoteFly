@@ -111,7 +111,11 @@ namespace NoteFly
             }
 
             this.SetColorsForm(Settings.NotesDefaultSkinnr);
-            this.tbTitle.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
+            if (Settings.NotesDefaultTitleDate)
+            {
+                // The string returned by the ToShortDateString method is culture-sensitive.
+                this.tbTitle.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
+            }
         }
 
         #endregion Constructors

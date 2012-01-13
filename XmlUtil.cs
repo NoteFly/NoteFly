@@ -196,8 +196,13 @@ namespace NoteFly
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static bool ParserListPlugins(Stream responsestream, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins, FrmPlugins frmplugins)
+        public static bool ParserListPlugins(string response, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins, FrmPlugins frmplugins)
         {
+            if (String.IsNullOrEmpty(response))
+            {
+                return false;
+            }
+
             bool succeeded = false;
             System.Reflection.Assembly ipluginasm = System.Reflection.Assembly.ReflectionOnlyLoadFrom(Path.Combine(Program.InstallFolder, "IPlugin.dll"));
             if (ipluginasm == null)
@@ -207,7 +212,7 @@ namespace NoteFly
             string versionipluginstring = ipluginasm.GetName().Version.Major + "." + ipluginasm.GetName().Version.Minor + "." + ipluginasm.GetName().Version.Build;
             ipluginasm = null;
             short[] ipluginversionparts = frmplugins.ParserVersionString(versionipluginstring);
-            XmlTextReader xmlreader = new XmlTextReader(responsestream);
+            XmlTextReader xmlreader = new XmlTextReader(new System.IO.StringReader(response));
             xmlreader.ProhibitDtd = true;
             try
             {
@@ -266,9 +271,9 @@ namespace NoteFly
         /// <param name="lblPluginVersion"></param>
         /// <param name="lblPluginDescription"></param>
         /// <returns></returns>
-        public static string[] ParserDetailsPlugin(Stream responsestream, System.Windows.Forms.Button btnDownload)
+        public static string[] ParserDetailsPlugin(string response, System.Windows.Forms.Button btnDownload)
         {
-            if (responsestream == null)
+            if (String.IsNullOrEmpty(response))
             {
                 return null;
             }
@@ -277,7 +282,7 @@ namespace NoteFly
             XmlTextReader xmlreader = null;
             try
             {
-                xmlreader = new XmlTextReader(responsestream);
+                xmlreader = new XmlTextReader(new System.IO.StringReader(response));
                 xmlreader.ProhibitDtd = true;
                 while (xmlreader.Read())
                 {
@@ -419,6 +424,9 @@ namespace NoteFly
                         case "NotesDefaultRandomSkin":
                             Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "NotesDefaultTitleDate":
+                            Settings.NotesDefaultTitleDate = xmlread.ReadElementContentAsBoolean();
+                            break;                            
                         case "NotesDeleteRecyclebin":
                             Settings.NotesDeleteRecyclebin = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -452,9 +460,12 @@ namespace NoteFly
                         case "SharingEmailEnabled":
                             Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "SocialEmailEnabled": // TODO: legacy setting, only read it no writing it anymore.
-                            Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
+                        case "SettingsExpertEnabled":
+                            Settings.SettingsExpertEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
+                        //case "SocialEmailEnabled": // TODO: legacy setting, only read it no writing it anymore.
+                        //    Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
+                        //    break;
                         case "TrayiconAlternateIcon":
                             Settings.TrayiconAlternateIcon = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -475,9 +486,6 @@ namespace NoteFly
                             break;
                         case "UpdateSilentInstall":
                             Settings.UpdateSilentInstall = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "SettingsExpertEnabled":
-                            Settings.SettingsExpertEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
 
                         // ints and doubles
@@ -843,6 +851,7 @@ namespace NoteFly
             Settings.NotesDefaultSkinnr = 0; // default skin: yellow
             Settings.NotesDefaultHeight = 280;
             Settings.NotesDefaultWidth = 240;
+            Settings.NotesDefaultTitleDate = true;
             Settings.NotesTitlepanelMaxHeight = 64;
             Settings.NotesTitlepanelMinHeight = 32;
             Settings.NotesSavepath = Program.AppDataFolder;
@@ -1060,6 +1069,7 @@ namespace NoteFly
                     WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
                     WriteXMLBool("NotesTransparentRTB", Settings.NotesTransparentRTB);
                     WriteXMLBool("NotesDefaultRandomSkin", Settings.NotesDefaultRandomSkin);
+                    WriteXMLBool("NotesDefaultTitleDate", Settings.NotesDefaultTitleDate);
                     WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
                     WriteXMLBool("ProgramFormsDoublebuffered", Settings.ProgramFormsDoublebuffered);
                     WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
@@ -1068,14 +1078,14 @@ namespace NoteFly
                     WriteXMLBool("ProgramPluginsAllEnabled", Settings.ProgramPluginsAllEnabled);
                     WriteXMLBool("ProgramSuspressWarnAdmin", Settings.ProgramSuspressWarnAdmin);
                     WriteXMLBool("SharingEmailEnabled", Settings.SharingEmailEnabled);
+                    WriteXMLBool("SettingsExpertEnabled", Settings.SettingsExpertEnabled);
                     WriteXMLBool("TrayiconAlternateIcon", Settings.TrayiconAlternateIcon);
                     WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
                     WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
                     WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
                     WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
                     WriteXMLBool("UpdateSilentInstall", Settings.UpdateSilentInstall);
-                    WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
-                    WriteXMLBool("SettingsExpertEnabled", Settings.SettingsExpertEnabled);
+                    WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);                    
 
                     // integers
                     xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));

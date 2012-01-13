@@ -224,6 +224,7 @@ namespace NoteFly
                 Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
                 Settings.NotesDefaultWidth = Convert.ToInt32(this.numNotesDefaultWidth.Value);
                 Settings.NotesDefaultHeight = Convert.ToInt32(this.numNotesDefaultHeight.Value);
+                Settings.NotesDefaultTitleDate = this.chxUseDateAsDefaultTitle.Checked;
 
                 // tab: Appearance, fonts
                 Settings.FontContentFamily = this.cbxFontNoteContent.SelectedItem.ToString();
@@ -579,6 +580,7 @@ namespace NoteFly
             this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
             this.numNotesDefaultWidth.Value = Convert.ToDecimal(Settings.NotesDefaultWidth);
             this.numNotesDefaultHeight.Value = Convert.ToDecimal(Settings.NotesDefaultHeight);
+            this.chxUseDateAsDefaultTitle.Checked = Settings.NotesDefaultTitleDate;
 
             // tab: Appearance, fonts
             this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.FontTitleSize);

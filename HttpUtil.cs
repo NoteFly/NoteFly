@@ -24,6 +24,7 @@ namespace NoteFly
     using System.Text;
     using System.Net;
     using System.IO;
+    using System.Threading;
 
     /// <summary>
     /// 
@@ -31,9 +32,29 @@ namespace NoteFly
     public class HttpUtil
     {
         /// <summary>
-        /// The http request
+        /// thread
         /// </summary>
-        private HttpWebRequest request = null;
+        private Thread httpthread;
+
+        /// <summary>
+        /// The response
+        /// </summary>
+        private string response; // do not make volatile 
+
+        /// <summary>
+        /// immutable
+        /// </summary>
+        private readonly string url;
+
+        /// <summary>
+        /// immutable
+        /// </summary>
+        private readonly System.Net.Cache.RequestCacheLevel cachesettings;
+
+        /// <summary>
+        /// immutable
+        /// </summary>
+        private readonly bool usegzip;
 
         /// <summary>
         /// Create a new HTTP webrequest.
@@ -43,40 +64,103 @@ namespace NoteFly
         /// <param name="usegzip"></param>
         /// <returns></returns>
         public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings, bool usegzip)
-        {            
-            System.Net.ServicePointManager.Expect100Continue = false;
-            System.Net.ServicePointManager.DefaultConnectionLimit = 2;
+        {
             if (Settings.NetworkConnectionForceipv6)
             {
                 // use dns ipv6 AAAA record to force the use of IPv6
-                url = url.Replace("//update.", "//ipv6."); // not replacing "http", "https", "ftp"
-                url = url.Replace("//www.", "//ipv6.");
+                url = url.Replace("://update.", "://ipv6."); // not replacing "http", "https", "ftp"
+                url = url.Replace("://www.", "://ipv6.");
             }
 
-            if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
-                Log.Write(LogType.error, "Invalid url.");                
+                this.url = url;
+                this.cachesettings = cachesettings;
+                this.usegzip = usegzip;
+                this.httpthread = new Thread(HttpThread);
+                this.httpthread.Start();
+            }
+            else
+            {
+                Log.Write(LogType.exception, "Invalid url.");
             }
 
-            try
+        }
+
+        /// <summary>
+        /// Get the response stream
+        /// </summary>
+        /// <returns>Empty string if error getting response</returns>
+        public string GetResponse()
+        {
+            httpthread.Join(Settings.NetworkConnectionTimeout);
+
+            if (!String.IsNullOrEmpty(this.response))
             {
-                this.request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-                this.request.Method = "GET";
-                this.request.ContentType = "text/xml";
-                this.request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
+                return this.response;
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ForceStopHttpThread()
+        {
+            if (this.httpthread != null)
+            {
+                this.httpthread.Abort();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void HttpThread()
+        {
+            HttpWebRequest request = this.CreateHttpWebRequest(this.url, this.cachesettings, this.usegzip);
+            if (request != null)
+            {
+                WebResponse response = null;
                 try
                 {
-                    this.request.Timeout = Settings.NetworkConnectionTimeout;
+                    response = request.GetResponse();
+                    using (Stream responsestream = response.GetResponseStream())
+                    {
+                        using (StreamReader streamreader = new StreamReader(responsestream))
+                        {
+                            this.response = streamreader.ReadToEnd();
+                        }
+                    }
                 }
-                catch (ArgumentOutOfRangeException)
+                finally
                 {
-                    const string INVALIDTIMEOUTSETTING = "Invalid timeout setting set.";
-                    const string INVALIDTIMEOUTTITLE = "Invalid timeout";
-                    Log.Write(LogType.exception, INVALIDTIMEOUTSETTING);
-                    System.Windows.Forms.MessageBox.Show(INVALIDTIMEOUTSETTING, INVALIDTIMEOUTTITLE, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                    return;
+                    if (response != null)
+                    {
+                        response.Close();
+                    }
                 }
+            }
+        }
 
+        /// <summary>
+        /// Create a WebRequest object
+        /// </summary>
+        private HttpWebRequest CreateHttpWebRequest(string url, System.Net.Cache.RequestCacheLevel cachesettings, bool usegzip)
+        {
+            System.Net.ServicePointManager.Expect100Continue = false;
+            System.Net.ServicePointManager.DefaultConnectionLimit = 4;
+            HttpWebRequest request = null;
+            try
+            {
+                request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
+                request.Method = "GET";
+                request.ContentType = "text/xml";
+                request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
+                request.Timeout = Settings.NetworkConnectionTimeout;
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
@@ -94,23 +178,10 @@ namespace NoteFly
             {
                 Log.Write(LogType.exception, webexc.Message);
             }
+
+            return request;
         }
 
-        /// <summary>
-        /// Get the response stream
-        /// </summary>
-        /// <returns></returns>
-        public Stream GetResponseStream()
-        {
-            if (this.request != null)
-            {
-                WebResponse webresponse = this.request.GetResponse();
-                return webresponse.GetResponseStream();
-            }
-            else
-            {
-                return Stream.Null;
-            }
-        }
+
     }
 }

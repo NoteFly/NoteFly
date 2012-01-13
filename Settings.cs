@@ -50,6 +50,11 @@ namespace NoteFly
         public static int NotesDefaultSkinnr = 0;
 
         /// <summary>
+        /// Use current date (in current culture, windows language settings) as default title for a new note.
+        /// </summary>
+        public static bool NotesDefaultTitleDate = true;
+
+        /// <summary>
         /// Are tooltip in programme enabled.
         /// </summary>
         public static bool NotesTooltipsEnabled = true;
