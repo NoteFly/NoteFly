@@ -39,7 +39,7 @@ namespace NoteFly
         /// <summary>
         /// The response
         /// </summary>
-        private string response; // do not make volatile 
+        private string response; 
 
         /// <summary>
         /// immutable
@@ -135,6 +135,10 @@ namespace NoteFly
                             this.response = streamreader.ReadToEnd();
                         }
                     }
+                }
+                catch (WebException webexc)
+                {
+                    Log.Write(LogType.exception, webexc.Message);
                 }
                 finally
                 {

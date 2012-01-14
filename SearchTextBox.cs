@@ -43,6 +43,13 @@ namespace NoteFly
         public SearchTextBox()
         {
             InitializeComponent();
+            this.tableLayoutPnlSearchbox.ColumnCount = 2;
+            if (Settings.NotesTooltipsEnabled)
+            {
+                this.toolTips.Active = true;
+            }
+
+            this.btnKeywordClear.ForeColor = Color.Black;
         }
 
         /// <summary>
@@ -64,11 +71,19 @@ namespace NoteFly
             this.timerStartAutoSearch.Stop();
             this.tbKeywords.BackColor = Color.LightYellow;
 
-            DoSearch(this.tbKeywords.Text);
+            if (DoSearch != null)
+            {
+                DoSearch(this.tbKeywords.Text);
+            }
 
             if (this.tbKeywords.Text == string.Empty)
             {
                 this.tbKeywords.BackColor = SystemColors.Window;
+                this.tableLayoutPnlSearchbox.ColumnCount = 2;
+            }
+            else
+            {
+                this.tableLayoutPnlSearchbox.ColumnCount = 3;
             }
         }
 
@@ -119,10 +134,15 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnKeywordClear_Click(object sender, EventArgs e)
         {
             this.btnKeywordClear.Visible = false;
-            this.Clear();
+            this.Clear();            
         }
     }
 }

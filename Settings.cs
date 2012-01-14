@@ -290,6 +290,21 @@ namespace NoteFly
         public static bool ConfirmDeletenote = true;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static bool ManagenotesTooltip = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int ManagenotesSkinnr = 1;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int ManagenotesFontsize = 9;
+
+        /// <summary>
         /// Show expert settings in FrmSettings.
         /// </summary>
         public static bool SettingsExpertEnabled = false;

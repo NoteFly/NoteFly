@@ -476,6 +476,7 @@ namespace NoteFly
             this.numProcTransparency = new System.Windows.Forms.NumericUpDown();
             this.lblTextTransparentProcVisible = new System.Windows.Forms.Label();
             this.tabPageNewNote = new System.Windows.Forms.TabPage();
+            this.chxUseDateAsDefaultTitle = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.numNotesDefaultHeight = new System.Windows.Forms.NumericUpDown();
@@ -483,7 +484,7 @@ namespace NoteFly
             this.label1 = new System.Windows.Forms.Label();
             this.chxUseRandomDefaultNote = new System.Windows.Forms.CheckBox();
             this.lblDefaultNewNoteColor = new System.Windows.Forms.Label();
-            this.cbxDefaultColor = new System.Windows.Forms.ComboBox();
+            this.cbxDefaultSkin = new System.Windows.Forms.ComboBox();
             this.tabPageFonts = new System.Windows.Forms.TabPage();
             this.cbxFontNoteTitleBold = new System.Windows.Forms.CheckBox();
             this.lblTextFontTitlePoints = new System.Windows.Forms.Label();
@@ -510,7 +511,7 @@ namespace NoteFly
             this.tabAppereanceManagenotes = new System.Windows.Forms.TabPage();
             this.lblTextSkinManagenotes = new System.Windows.Forms.Label();
             this.cbxManageNotesSkin = new System.Windows.Forms.ComboBox();
-            this.cbxDisplayPreviewContent = new System.Windows.Forms.CheckBox();
+            this.cbxManagenotesTooltipContent = new System.Windows.Forms.CheckBox();
             this.tabHighlight = new System.Windows.Forms.TabPage();
             this.chxHighlightSQL = new System.Windows.Forms.CheckBox();
             this.chxHighlightPHP = new System.Windows.Forms.CheckBox();
@@ -562,7 +563,6 @@ namespace NoteFly
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
             this.iptbProxy = new NoteFly.IPTextBox();
-            this.chxUseDateAsDefaultTitle = new System.Windows.Forms.CheckBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -859,7 +859,7 @@ namespace NoteFly
             this.tabPageNewNote.Controls.Add(this.label1);
             this.tabPageNewNote.Controls.Add(this.chxUseRandomDefaultNote);
             this.tabPageNewNote.Controls.Add(this.lblDefaultNewNoteColor);
-            this.tabPageNewNote.Controls.Add(this.cbxDefaultColor);
+            this.tabPageNewNote.Controls.Add(this.cbxDefaultSkin);
             this.tabPageNewNote.Location = new System.Drawing.Point(4, 25);
             this.tabPageNewNote.Name = "tabPageNewNote";
             this.tabPageNewNote.Padding = new System.Windows.Forms.Padding(3);
@@ -867,6 +867,18 @@ namespace NoteFly
             this.tabPageNewNote.TabIndex = 3;
             this.tabPageNewNote.Text = "New note";
             this.tabPageNewNote.UseVisualStyleBackColor = true;
+            // 
+            // chxUseDateAsDefaultTitle
+            // 
+            this.chxUseDateAsDefaultTitle.AutoSize = true;
+            this.chxUseDateAsDefaultTitle.Checked = true;
+            this.chxUseDateAsDefaultTitle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxUseDateAsDefaultTitle.Location = new System.Drawing.Point(23, 104);
+            this.chxUseDateAsDefaultTitle.Name = "chxUseDateAsDefaultTitle";
+            this.chxUseDateAsDefaultTitle.Size = new System.Drawing.Size(297, 20);
+            this.chxUseDateAsDefaultTitle.TabIndex = 23;
+            this.chxUseDateAsDefaultTitle.Text = "Use current date as default title for a new note.";
+            this.chxUseDateAsDefaultTitle.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -978,20 +990,20 @@ namespace NoteFly
             this.lblDefaultNewNoteColor.Text = "Default skin new notes:";
             this.lblDefaultNewNoteColor.UseCompatibleTextRendering = true;
             // 
-            // cbxDefaultColor
+            // cbxDefaultSkin
             // 
-            this.cbxDefaultColor.AccessibleDescription = "Defaul color for new note.";
-            this.cbxDefaultColor.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
-            this.cbxDefaultColor.BackColor = System.Drawing.Color.LightGray;
-            this.cbxDefaultColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxDefaultColor.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cbxDefaultColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbxDefaultColor.FormattingEnabled = true;
-            this.cbxDefaultColor.Location = new System.Drawing.Point(168, 53);
-            this.cbxDefaultColor.MaxDropDownItems = 5;
-            this.cbxDefaultColor.Name = "cbxDefaultColor";
-            this.cbxDefaultColor.Size = new System.Drawing.Size(228, 24);
-            this.cbxDefaultColor.TabIndex = 16;
+            this.cbxDefaultSkin.AccessibleDescription = "Defaul color for new note.";
+            this.cbxDefaultSkin.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
+            this.cbxDefaultSkin.BackColor = System.Drawing.Color.LightGray;
+            this.cbxDefaultSkin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxDefaultSkin.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxDefaultSkin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxDefaultSkin.FormattingEnabled = true;
+            this.cbxDefaultSkin.Location = new System.Drawing.Point(168, 53);
+            this.cbxDefaultSkin.MaxDropDownItems = 5;
+            this.cbxDefaultSkin.Name = "cbxDefaultSkin";
+            this.cbxDefaultSkin.Size = new System.Drawing.Size(228, 24);
+            this.cbxDefaultSkin.TabIndex = 16;
             // 
             // tabPageFonts
             // 
@@ -1313,7 +1325,7 @@ namespace NoteFly
             // 
             this.tabAppereanceManagenotes.Controls.Add(this.lblTextSkinManagenotes);
             this.tabAppereanceManagenotes.Controls.Add(this.cbxManageNotesSkin);
-            this.tabAppereanceManagenotes.Controls.Add(this.cbxDisplayPreviewContent);
+            this.tabAppereanceManagenotes.Controls.Add(this.cbxManagenotesTooltipContent);
             this.tabAppereanceManagenotes.Location = new System.Drawing.Point(4, 25);
             this.tabAppereanceManagenotes.Name = "tabAppereanceManagenotes";
             this.tabAppereanceManagenotes.Padding = new System.Windows.Forms.Padding(3);
@@ -1325,7 +1337,7 @@ namespace NoteFly
             // lblTextSkinManagenotes
             // 
             this.lblTextSkinManagenotes.AutoSize = true;
-            this.lblTextSkinManagenotes.Location = new System.Drawing.Point(10, 42);
+            this.lblTextSkinManagenotes.Location = new System.Drawing.Point(19, 42);
             this.lblTextSkinManagenotes.Name = "lblTextSkinManagenotes";
             this.lblTextSkinManagenotes.Size = new System.Drawing.Size(186, 20);
             this.lblTextSkinManagenotes.TabIndex = 2;
@@ -1336,21 +1348,21 @@ namespace NoteFly
             // 
             this.cbxManageNotesSkin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxManageNotesSkin.FormattingEnabled = true;
-            this.cbxManageNotesSkin.Location = new System.Drawing.Point(203, 39);
+            this.cbxManageNotesSkin.Location = new System.Drawing.Point(211, 39);
             this.cbxManageNotesSkin.Name = "cbxManageNotesSkin";
-            this.cbxManageNotesSkin.Size = new System.Drawing.Size(121, 24);
+            this.cbxManageNotesSkin.Size = new System.Drawing.Size(145, 24);
             this.cbxManageNotesSkin.TabIndex = 1;
             // 
-            // cbxDisplayPreviewContent
+            // cbxManagenotesTooltipContent
             // 
-            this.cbxDisplayPreviewContent.AutoSize = true;
-            this.cbxDisplayPreviewContent.Location = new System.Drawing.Point(13, 85);
-            this.cbxDisplayPreviewContent.Name = "cbxDisplayPreviewContent";
-            this.cbxDisplayPreviewContent.Size = new System.Drawing.Size(305, 21);
-            this.cbxDisplayPreviewContent.TabIndex = 0;
-            this.cbxDisplayPreviewContent.Text = "Show tooltips with previews of the note content.";
-            this.cbxDisplayPreviewContent.UseCompatibleTextRendering = true;
-            this.cbxDisplayPreviewContent.UseVisualStyleBackColor = true;
+            this.cbxManagenotesTooltipContent.AutoSize = true;
+            this.cbxManagenotesTooltipContent.Location = new System.Drawing.Point(19, 82);
+            this.cbxManagenotesTooltipContent.Name = "cbxManagenotesTooltipContent";
+            this.cbxManagenotesTooltipContent.Size = new System.Drawing.Size(303, 21);
+            this.cbxManagenotesTooltipContent.TabIndex = 0;
+            this.cbxManagenotesTooltipContent.Text = "Show a tooltip with preview of the note content.";
+            this.cbxManagenotesTooltipContent.UseCompatibleTextRendering = true;
+            this.cbxManagenotesTooltipContent.UseVisualStyleBackColor = true;
             // 
             // tabHighlight
             // 
@@ -2018,18 +2030,6 @@ namespace NoteFly
             this.iptbProxy.Size = new System.Drawing.Size(238, 22);
             this.iptbProxy.TabIndex = 26;
             // 
-            // chxUseDateAsDefaultTitle
-            // 
-            this.chxUseDateAsDefaultTitle.AutoSize = true;
-            this.chxUseDateAsDefaultTitle.Checked = true;
-            this.chxUseDateAsDefaultTitle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxUseDateAsDefaultTitle.Location = new System.Drawing.Point(23, 104);
-            this.chxUseDateAsDefaultTitle.Name = "chxUseDateAsDefaultTitle";
-            this.chxUseDateAsDefaultTitle.Size = new System.Drawing.Size(297, 20);
-            this.chxUseDateAsDefaultTitle.TabIndex = 23;
-            this.chxUseDateAsDefaultTitle.Text = "Use current date as default title for a new note.";
-            this.chxUseDateAsDefaultTitle.UseVisualStyleBackColor = true;
-            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2107,7 +2107,7 @@ namespace NoteFly
         private System.Windows.Forms.TabPage tabPageNewNote;
         private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
         private System.Windows.Forms.Label lblDefaultNewNoteColor;
-        private System.Windows.Forms.ComboBox cbxDefaultColor;
+        private System.Windows.Forms.ComboBox cbxDefaultSkin;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -2115,7 +2115,7 @@ namespace NoteFly
         private System.Windows.Forms.NumericUpDown numNotesDefaultWidth;
         private IPTextBox iptbProxy;
         private System.Windows.Forms.TabPage tabAppereanceManagenotes;
-        private System.Windows.Forms.CheckBox cbxDisplayPreviewContent;
+        private System.Windows.Forms.CheckBox cbxManagenotesTooltipContent;
         private System.Windows.Forms.ComboBox cbxManageNotesSkin;
         private System.Windows.Forms.Label lblTextSkinManagenotes;
         private System.Windows.Forms.CheckBox chxUseDateAsDefaultTitle;

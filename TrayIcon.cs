@@ -40,6 +40,16 @@ namespace NoteFly
         private static FrmManageNotes frmmanagenotes;
 
         /// <summary>
+        /// Reference to FrmPlugins window.
+        /// </summary>
+        private FrmPlugins frmplugins;
+
+        /// <summary>
+        /// Reference to FrmSettings window.
+        /// </summary>
+        private FrmSettings frmsettings;
+
+        /// <summary>
         /// container that holds some objects.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -98,11 +108,6 @@ namespace NoteFly
         /// Exit menu option
         /// </summary>
         private ToolStripMenuItem menuExit;
-
-        /// <summary>
-        /// Reference to FrmSettings window.
-        /// </summary>
-        private FrmSettings frmsettings;
 
         /// <summary>
         /// Initializes a new instance of the TrayIcon class. 
@@ -398,8 +403,21 @@ namespace NoteFly
         /// <param name="e"></param>
         private void MenuPlugins_Click(object sender, EventArgs e)
         {
-            FrmPlugins plugins = new FrmPlugins();
-            plugins.ShowDialog();
+            if (this.frmplugins == null)
+            {
+                this.frmplugins = new FrmPlugins();
+                this.frmplugins.Show();
+            }
+            else if (this.frmplugins.IsDisposed)
+            {
+                this.frmplugins = new FrmPlugins();
+                this.frmplugins.Show();
+            }
+            else
+            {
+                this.frmplugins.WindowState = FormWindowState.Normal;
+                this.frmplugins.Activate();
+            }
         }
 
         /// <summary>

@@ -221,7 +221,7 @@ namespace NoteFly
 
                 // tab: Appearance, new note
                 Settings.NotesDefaultRandomSkin = this.chxUseRandomDefaultNote.Checked;
-                Settings.NotesDefaultSkinnr = this.cbxDefaultColor.SelectedIndex;
+                Settings.NotesDefaultSkinnr = this.cbxDefaultSkin.SelectedIndex;
                 Settings.NotesDefaultWidth = Convert.ToInt32(this.numNotesDefaultWidth.Value);
                 Settings.NotesDefaultHeight = Convert.ToInt32(this.numNotesDefaultHeight.Value);
                 Settings.NotesDefaultTitleDate = this.chxUseDateAsDefaultTitle.Checked;
@@ -241,6 +241,10 @@ namespace NoteFly
                 Settings.TrayiconSettingsbold = this.chxTrayiconBoldSettings.Checked;
                 Settings.TrayiconExitbold = this.chxTrayiconBoldExit.Checked;
                 Settings.TrayiconAlternateIcon = this.chxUseAlternativeTrayicon.Checked;
+
+                // tab: Appearance, manage notes
+                Settings.ManagenotesSkinnr = this.cbxManageNotesSkin.SelectedIndex;
+                Settings.ManagenotesTooltip = this.cbxManagenotesTooltipContent.Checked;
 
                 // tab: Highlight
                 Settings.HighlightHyperlinks = this.chxHighlightHyperlinks.Checked;
@@ -469,7 +473,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void chxUseRandomDefaultNote_CheckedChanged(object sender, EventArgs e)
         {
-            this.cbxDefaultColor.Enabled = !this.chxUseRandomDefaultNote.Checked;
+            this.cbxDefaultSkin.Enabled = !this.chxUseRandomDefaultNote.Checked;
         }
 
         /// <summary>
@@ -483,7 +487,9 @@ namespace NoteFly
                 this.cbxFontNoteContent.Items.Add(oneFontFamily.Name);
             }
 
-            this.cbxDefaultColor.Items.AddRange(this.notes.GetSkinsNames());
+            this.cbxDefaultSkin.Items.AddRange(this.notes.GetSkinsNames());
+
+            this.cbxManageNotesSkin.Items.AddRange(this.notes.GetSkinsNames());
         }
 
         /// <summary>
@@ -577,7 +583,7 @@ namespace NoteFly
 
             // tab: Appearance, new note
             this.chxUseRandomDefaultNote.Checked = Settings.NotesDefaultRandomSkin;
-            this.cbxDefaultColor.SelectedIndex = Settings.NotesDefaultSkinnr;
+            this.cbxDefaultSkin.SelectedIndex = Settings.NotesDefaultSkinnr;
             this.numNotesDefaultWidth.Value = Convert.ToDecimal(Settings.NotesDefaultWidth);
             this.numNotesDefaultHeight.Value = Convert.ToDecimal(Settings.NotesDefaultHeight);
             this.chxUseDateAsDefaultTitle.Checked = Settings.NotesDefaultTitleDate;
@@ -598,6 +604,10 @@ namespace NoteFly
             this.chxTrayiconBoldSettings.Checked = Settings.TrayiconSettingsbold;
             this.chxTrayiconBoldExit.Checked = Settings.TrayiconExitbold;
             this.chxUseAlternativeTrayicon.Checked = Settings.TrayiconAlternateIcon;
+
+            // tab: Appearance, manage notes
+            this.cbxManageNotesSkin.SelectedIndex = Settings.ManagenotesSkinnr;
+            this.cbxManagenotesTooltipContent.Checked = Settings.ManagenotesTooltip;
 
             // tab: Highlight
             this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;

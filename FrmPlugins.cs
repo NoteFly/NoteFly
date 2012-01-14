@@ -35,6 +35,7 @@ namespace NoteFly
         /// </summary>
         public FrmPlugins()
         {
+            this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             InitializeComponent();
         }
 

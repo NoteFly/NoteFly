@@ -100,6 +100,28 @@ namespace NoteFly
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             this.notes = notes;
+
+            this.BackColor = notes.GetPrimaryClr(Settings.ManagenotesSkinnr);            
+            this.pnlHead.BackColor = notes.GetPrimaryClr(Settings.ManagenotesSkinnr);
+            this.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
+
+            this.btnShowSelectedNotes.FlatAppearance.MouseOverBackColor = notes.GetHighlightClr(Settings.ManagenotesSkinnr);
+            this.btnNoteDelete.FlatAppearance.MouseOverBackColor = notes.GetHighlightClr(Settings.ManagenotesSkinnr);
+            this.btnRestoreAllNotes.FlatAppearance.MouseOverBackColor = notes.GetHighlightClr(Settings.ManagenotesSkinnr);
+            this.btnBackAllNotes.FlatAppearance.MouseOverBackColor = notes.GetHighlightClr(Settings.ManagenotesSkinnr);
+
+            this.btnShowSelectedNotes.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
+            this.btnNoteDelete.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
+            this.btnRestoreAllNotes.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
+            this.btnBackAllNotes.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
+
+            if (notes.GetPrimaryTexture(Settings.ManagenotesSkinnr) != null)
+            {
+                this.BackgroundImage = notes.GetPrimaryTexture(Settings.ManagenotesSkinnr);
+                this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(Settings.ManagenotesSkinnr);
+                this.pnlHead.BackColor = Color.Transparent;
+            }
+
             this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
             if (this.dataGridViewNotes.RowCount > 0)
@@ -1299,7 +1321,7 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.pnlHead.BackColor = Color.OrangeRed;
+                this.pnlHead.BackColor = this.notes.GetSelectClr(Settings.ManagenotesSkinnr);
                 this.oldp = e.Location;
             }
         }
@@ -1313,7 +1335,7 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.pnlHead.BackColor = Color.OrangeRed;
+                //this.pnlHead.BackColor = this.notes.GetSelectClr(Settings.ManagenotesSkinnr);
 
                 int dpx = e.Location.X - this.oldp.X;
                 int dpy = e.Location.Y - this.oldp.Y;
@@ -1340,10 +1362,6 @@ namespace NoteFly
 #endif
                 this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
             }
-            else
-            {
-                this.pnlHead.BackColor = Color.Orange;
-            }
         }
 
         /// <summary>
@@ -1353,7 +1371,11 @@ namespace NoteFly
         /// <param name="e">Mouse event arguments</param>
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
-            this.pnlHead.BackColor = Color.Orange;
+            this.pnlHead.BackColor = this.notes.GetPrimaryClr(Settings.ManagenotesSkinnr);
+            if (this.BackgroundImage != null)
+            {
+                this.pnlHead.BackColor = Color.Transparent;
+            }
         }
 
         /// <summary>
@@ -1398,15 +1420,14 @@ namespace NoteFly
             this.ToggleVisibilityNote(e.RowIndex);
         }
 
-        #endregion Methods
-
-        private void dataGridViewNotes_MouseHover(object sender, EventArgs e)
-        {
-        }
-
+        /// <summary>
+        /// Display a tooltip with the note content for the hovered note in that row.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridViewNotes_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (Settings.NotesTooltipsEnabled)
+            if (Settings.ManagenotesTooltip) 
             {                
                 if (e.ColumnIndex == 1)
                 {
@@ -1473,5 +1494,7 @@ namespace NoteFly
                 }
             }
         }
+
+        #endregion Methods
     }
 }
