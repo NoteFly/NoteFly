@@ -487,6 +487,12 @@ namespace NoteFly
                         case "UpdateSilentInstall":
                             Settings.UpdateSilentInstall = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "ManagenotesTooltip":
+                            Settings.ManagenotesTooltip = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "ManagenotesSearchCasesentive":
+                            Settings.ManagenotesSearchCasesentive = xmlread.ReadElementContentAsBoolean();
+                            break;
 
                         // ints and doubles
                         case "TrayiconFontsize":
@@ -530,6 +536,12 @@ namespace NoteFly
                             break;
                         case "NotesTransparencyLevel":
                             Settings.NotesTransparencyLevel = xmlread.ReadElementContentAsDouble();
+                            break;
+                        case "ManagenotesFontsize":
+                            Settings.ManagenotesFontsize = xmlread.ReadElementContentAsFloat();
+                            break;
+                        case "ManagenotesSkinnr":
+                            Settings.ManagenotesSkinnr = xmlread.ReadElementContentAsInt();
                             break;
                         case "TrayiconLeftclickaction":
                             Settings.TrayiconLeftclickaction = xmlread.ReadElementContentAsInt();
@@ -1085,7 +1097,9 @@ namespace NoteFly
                     WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
                     WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
                     WriteXMLBool("UpdateSilentInstall", Settings.UpdateSilentInstall);
-                    WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);                    
+                    WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
+                    WriteXMLBool("ManagenotesSearchCasesentive", Settings.ManagenotesSearchCasesentive);
+                    WriteXMLBool("ManagenotesTooltip", Settings.ManagenotesTooltip);
 
                     // integers
                     xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
@@ -1105,6 +1119,8 @@ namespace NoteFly
                     xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("HighlightMaxchars", Settings.HighlightMaxchars.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("SettingsLastTab", Settings.SettingsLastTab.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("ManagenotesFontsize", Settings.ManagenotesFontsize.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("ManagenotesSkinnr", Settings.ManagenotesSkinnr.ToString(numfmtinfo));
 
                     // strings
                     xmlwrite.WriteElementString("HighlightHTMLColorComment", Settings.HighlightHTMLColorComment);
@@ -1129,7 +1145,7 @@ namespace NoteFly
                     xmlwrite.WriteElementString("ProgramPluginsDllexclude", Settings.ProgramPluginsDllexclude);
                     xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
                     xmlwrite.WriteElementString("SharingEmailDefaultadres", Settings.SharingEmailDefaultadres);
-                    xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
+                    xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);                    
                     xmlwrite.WriteEndElement();
                     xmlwrite.WriteEndDocument();
                 }

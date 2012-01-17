@@ -44,18 +44,20 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tbKeywords.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbKeywords.Location = new System.Drawing.Point(53, 3);
+            this.tbKeywords.Location = new System.Drawing.Point(47, 3);
             this.tbKeywords.Name = "tbKeywords";
-            this.tbKeywords.Size = new System.Drawing.Size(133, 22);
+            this.tbKeywords.Size = new System.Drawing.Size(139, 22);
             this.tbKeywords.TabIndex = 0;
             this.tbKeywords.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tbKeywords_KeyUp);
             // 
             // lblTextSearch
             // 
-            this.lblTextSearch.Location = new System.Drawing.Point(3, 7);
-            this.lblTextSearch.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
+            this.lblTextSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTextSearch.Location = new System.Drawing.Point(0, 0);
+            this.lblTextSearch.Margin = new System.Windows.Forms.Padding(0);
             this.lblTextSearch.Name = "lblTextSearch";
-            this.lblTextSearch.Size = new System.Drawing.Size(42, 13);
+            this.lblTextSearch.Padding = new System.Windows.Forms.Padding(1, 7, 1, 1);
+            this.lblTextSearch.Size = new System.Drawing.Size(44, 28);
             this.lblTextSearch.TabIndex = 1;
             this.lblTextSearch.Text = "search:";
             // 
@@ -67,7 +69,7 @@
             // tableLayoutPnlSearchbox
             // 
             this.tableLayoutPnlSearchbox.ColumnCount = 3;
-            this.tableLayoutPnlSearchbox.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPnlSearchbox.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPnlSearchbox.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPnlSearchbox.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPnlSearchbox.Controls.Add(this.lblTextSearch, 0, 0);

@@ -245,6 +245,8 @@ namespace NoteFly
                 // tab: Appearance, manage notes
                 Settings.ManagenotesSkinnr = this.cbxManageNotesSkin.SelectedIndex;
                 Settings.ManagenotesTooltip = this.cbxManagenotesTooltipContent.Checked;
+                Settings.ManagenotesFontsize = (float)this.numManagenotesFont.Value;
+                Settings.ManagenotesSearchCasesentive = this.chxCaseSentiveSearch.Checked;
 
                 // tab: Highlight
                 Settings.HighlightHyperlinks = this.chxHighlightHyperlinks.Checked;
@@ -574,31 +576,40 @@ namespace NoteFly
             this.chxConfirmExit.Checked = Settings.ConfirmExit;
             this.chxConfirmDeletenote.Checked = Settings.ConfirmDeletenote;
             this.chxNotesDeleteRecyclebin.Checked = Settings.NotesDeleteRecyclebin;
-            this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;            
+            this.SetComboBoxSelectedIndex(this.cbxActionLeftclick, Settings.TrayiconLeftclickaction);
+            //this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;            
 
             // tab: Appearance, notes
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
-            this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
+            this.SetUpDownSpinnerValue(this.numProcTransparency, (Settings.NotesTransparencyLevel * 100));
+            //this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
             this.chxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
 
             // tab: Appearance, new note
             this.chxUseRandomDefaultNote.Checked = Settings.NotesDefaultRandomSkin;
-            this.cbxDefaultSkin.SelectedIndex = Settings.NotesDefaultSkinnr;
-            this.numNotesDefaultWidth.Value = Convert.ToDecimal(Settings.NotesDefaultWidth);
-            this.numNotesDefaultHeight.Value = Convert.ToDecimal(Settings.NotesDefaultHeight);
+            this.SetComboBoxSelectedIndex(this.cbxDefaultSkin, Settings.NotesDefaultSkinnr);
+            //this.cbxDefaultSkin.SelectedIndex = Settings.NotesDefaultSkinnr;
+            this.SetUpDownSpinnerValue(this.numNotesDefaultWidth, Settings.NotesDefaultWidth);
+            //this.numNotesDefaultWidth.Value = Convert.ToDecimal(Settings.NotesDefaultWidth);
+            this.SetUpDownSpinnerValue(this.numNotesDefaultHeight, Settings.NotesDefaultHeight);            
+            //this.numNotesDefaultHeight.Value = Convert.ToDecimal(Settings.NotesDefaultHeight);
             this.chxUseDateAsDefaultTitle.Checked = Settings.NotesDefaultTitleDate;
 
             // tab: Appearance, fonts
-            this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.FontTitleSize);
+            this.SetUpDownSpinnerValue(this.numFontSizeTitle, Settings.FontTitleSize);
+            //this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.FontTitleSize);            
             this.cbxFontNoteContent.SelectedValue = Settings.FontContentFamily;
-            this.numFontSizeContent.Value = Convert.ToDecimal(Settings.FontContentSize);
-            this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
+            this.SetUpDownSpinnerValue(this.numFontSizeContent, Settings.FontContentSize);
+            //this.numFontSizeContent.Value = Convert.ToDecimal(Settings.FontContentSize);
+            this.SetComboBoxSelectedIndex(this.cbxTextDirection, Settings.FontTextdirection);
+            //this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
             this.cbxFontNoteContent.Text = Settings.FontContentFamily;
             this.cbxFontNoteTitle.Text = Settings.FontTitleFamily;
             this.cbxFontNoteTitleBold.Checked = Settings.FontTitleStylebold;
 
             // tab: Appearance, trayicon
-            this.numTrayiconFontsize.Value = Convert.ToDecimal(Settings.TrayiconFontsize);
+            this.SetUpDownSpinnerValue(this.numTrayiconFontsize, Settings.TrayiconFontsize);
+            //this.numTrayiconFontsize.Value = Convert.ToDecimal(Settings.TrayiconFontsize);
             this.chxTrayiconBoldNewnote.Checked = Settings.TrayiconCreatenotebold;
             this.chxTrayiconBoldManagenotes.Checked = Settings.TrayiconManagenotesbold;
             this.chxTrayiconBoldSettings.Checked = Settings.TrayiconSettingsbold;
@@ -606,8 +617,12 @@ namespace NoteFly
             this.chxUseAlternativeTrayicon.Checked = Settings.TrayiconAlternateIcon;
 
             // tab: Appearance, manage notes
-            this.cbxManageNotesSkin.SelectedIndex = Settings.ManagenotesSkinnr;
+            this.SetComboBoxSelectedIndex(this.cbxManageNotesSkin, Settings.ManagenotesSkinnr);
+            //this.cbxManageNotesSkin.SelectedIndex = Settings.ManagenotesSkinnr;
             this.cbxManagenotesTooltipContent.Checked = Settings.ManagenotesTooltip;
+            this.SetUpDownSpinnerValue(numManagenotesFont, Settings.ManagenotesFontsize);
+            //this.numManagenotesFont.Value = Convert.ToDecimal(Settings.ManagenotesFontsize);
+            this.chxCaseSentiveSearch.Checked = Settings.ManagenotesSearchCasesentive;
 
             // tab: Highlight
             this.chxHighlightHyperlinks.Checked = Settings.HighlightHyperlinks;
@@ -628,7 +643,8 @@ namespace NoteFly
             if (Settings.UpdatecheckEverydays > 0)
             {
                 this.chxCheckUpdates.Checked = true;
-                this.numUpdateCheckDays.Value = Convert.ToDecimal(Settings.UpdatecheckEverydays);
+                this.SetUpDownSpinnerValue(this.numUpdateCheckDays, Settings.UpdatecheckEverydays);
+                //this.numUpdateCheckDays.Value = Convert.ToDecimal(Settings.UpdatecheckEverydays);
                 this.numUpdateCheckDays.Enabled = true;
             }
             else
@@ -644,20 +660,88 @@ namespace NoteFly
             this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;
             this.iptbProxy.Text = Settings.NetworkProxyAddress;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
-            this.numTimeout.Value = Settings.NetworkConnectionTimeout;
+            this.SetUpDownSpinnerValue(this.numTimeout, Settings.NetworkConnectionTimeout);
+            //this.numTimeout.Value = Settings.NetworkConnectionTimeout;
             this.SetLastUpdatecheckDate(Settings.SettingsExpertEnabled);                        
 
             // tab: Advance
             this.chxLoadPlugins.Checked = Settings.ProgramPluginsAllEnabled;
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
-            this.numWarnLimitTotal.Value = Convert.ToDecimal(Settings.NotesWarnlimitTotal);
-            this.numWarnLimitVisible.Value = Convert.ToDecimal(Settings.NotesWarnlimitVisible);
+            this.SetUpDownSpinnerValue(this.numWarnLimitTotal, Settings.NotesWarnlimitTotal);
+            //this.numWarnLimitTotal.Value = Convert.ToDecimal(Settings.NotesWarnlimitTotal);
+            this.SetUpDownSpinnerValue(this.numWarnLimitVisible, Settings.NotesWarnlimitVisible);
+            //this.numWarnLimitVisible.Value = Convert.ToDecimal(Settings.NotesWarnlimitVisible);
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
             this.chxLogErrors.Checked = Settings.ProgramLogError;
             this.chxLogExceptions.Checked = Settings.ProgramLogException;
 
             // set last tab as active
             this.tabControlSettings.SelectedIndex = Settings.SettingsLastTab;
+        }
+
+        /// <summary>
+        /// Set a updownspinner valeau with a double valeau
+        /// </summary>
+        /// <param name="numupdownctrl"></param>
+        /// <param name="valeau"></param>
+        private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, double valeau)
+        {
+            try
+            {
+                decimal valeaudec = Convert.ToDecimal(valeau);
+                this.SetUpDownSpinnerValue(numupdownctrl, valeaudec);
+            }
+            catch (OverflowException overexc)
+            {
+                Log.Write(LogType.error, overexc.Message);
+            }
+        }
+
+        /// <summary>
+        /// Set a updownspinner valeau with a integer valeau
+        /// </summary>
+        /// <param name="numupdownctrl"></param>
+        /// <param name="valeau"></param>
+        private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, int value)
+        {
+            decimal valeaudec = Convert.ToDecimal(value);
+            this.SetUpDownSpinnerValue(numupdownctrl, valeaudec);
+        }
+
+        /// <summary>
+        /// Set a updownspinner valeau with a decimal valeau, directly.
+        /// Checks if it does not exceed the minimum and maximum value.
+        /// </summary>
+        /// <param name="numupdownctrl"></param>
+        /// <param name="valeaudec"></param>
+        private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, decimal valuedec)
+        {
+            if (valuedec < numupdownctrl.Minimum)
+            {
+                numupdownctrl.Value = numupdownctrl.Minimum;
+            }
+            else if (valuedec > numupdownctrl.Maximum)
+            {
+                numupdownctrl.Value = numupdownctrl.Maximum;
+            }
+            else
+            {
+                numupdownctrl.Value = valuedec;
+            }
+        }
+
+        /// <summary>
+        /// Set a combobox selected index.
+        /// Check if selectedindex parameter is not bigger than the availible items in the combobox and not negative.
+        /// </summary>
+        /// <param name="cbxctrl"></param>
+        /// <param name="selectedindex"></param>
+        private void SetComboBoxSelectedIndex(System.Windows.Forms.ComboBox cbxctrl, int selectedindexvalue)
+        {
+            if (selectedindexvalue < cbxctrl.Items.Count && selectedindexvalue >= 0)
+            {
+                cbxctrl.SelectedIndex = selectedindexvalue;
+            }
         }
 
 #if windows

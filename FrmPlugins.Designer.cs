@@ -104,6 +104,7 @@
             this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.lblPluginName);
             this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.lblPluginDescription);
             this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.btnPluginDownload);
+            this.splitContainerAvailablePlugins.Panel2Collapsed = true;
             this.splitContainerAvailablePlugins.Panel2MinSize = 0;
             this.splitContainerAvailablePlugins.Size = new System.Drawing.Size(402, 302);
             this.splitContainerAvailablePlugins.SplitterDistance = 191;
@@ -114,9 +115,11 @@
             this.lblTextNoInternetConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTextNoInternetConnection.Location = new System.Drawing.Point(3, 20);
             this.lblTextNoInternetConnection.Name = "lblTextNoInternetConnection";
-            this.lblTextNoInternetConnection.Size = new System.Drawing.Size(185, 111);
+            this.lblTextNoInternetConnection.Size = new System.Drawing.Size(210, 217);
             this.lblTextNoInternetConnection.TabIndex = 2;
-            this.lblTextNoInternetConnection.Text = "Internet connection required to view available plugin here.";
+            this.lblTextNoInternetConnection.Text = "Internet connection required to view available plugins here. \r\n\r\nCheck if you hav" +
+                "e a internet connection,\r\n if you do have a stable internet connection, try agai" +
+                "n later.";
             this.lblTextNoInternetConnection.Visible = false;
             // 
             // chlbxAvailiblePlugins
@@ -127,7 +130,7 @@
             "loading..."});
             this.chlbxAvailiblePlugins.Location = new System.Drawing.Point(0, 0);
             this.chlbxAvailiblePlugins.Name = "chlbxAvailiblePlugins";
-            this.chlbxAvailiblePlugins.Size = new System.Drawing.Size(191, 259);
+            this.chlbxAvailiblePlugins.Size = new System.Drawing.Size(402, 259);
             this.chlbxAvailiblePlugins.TabIndex = 1;
             this.chlbxAvailiblePlugins.SelectedIndexChanged += new System.EventHandler(this.chlbxAvailiblePlugins_SelectedIndexChanged);
             // 
@@ -186,6 +189,7 @@
             // 
             // searchtbPlugins
             // 
+            this.searchtbPlugins.Enabled = false;
             this.searchtbPlugins.Location = new System.Drawing.Point(0, 260);
             this.searchtbPlugins.Name = "searchtbPlugins";
             this.searchtbPlugins.Size = new System.Drawing.Size(188, 28);

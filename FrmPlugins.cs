@@ -48,12 +48,12 @@ namespace NoteFly
         {
             if (this.tabControlPlugins.SelectedTab == this.tabPagePluginsAvailable)
             {
-                this.searchtbPlugins.Clear();
-                this.lblTextNoInternetConnection.Visible = false;
-                this.chlbxAvailiblePlugins.Items.Clear();
+                //this.searchtbPlugins.Clear();
+                this.lblTextNoInternetConnection.Visible = false;                
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
                 HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.Default, false);
                 string response = httputil.GetResponse();
+                this.chlbxAvailiblePlugins.Items.Clear();
                 if (!xmlUtil.ParserListPlugins(response, this.chlbxAvailiblePlugins, this))
                 {
                     this.lblTextNoInternetConnection.Visible = true;

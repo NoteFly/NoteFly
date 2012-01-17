@@ -100,28 +100,7 @@ namespace NoteFly
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             this.notes = notes;
-
-            this.BackColor = notes.GetPrimaryClr(Settings.ManagenotesSkinnr);            
-            this.pnlHead.BackColor = notes.GetPrimaryClr(Settings.ManagenotesSkinnr);
-            this.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
-
-            this.btnShowSelectedNotes.FlatAppearance.MouseOverBackColor = notes.GetHighlightClr(Settings.ManagenotesSkinnr);
-            this.btnNoteDelete.FlatAppearance.MouseOverBackColor = notes.GetHighlightClr(Settings.ManagenotesSkinnr);
-            this.btnRestoreAllNotes.FlatAppearance.MouseOverBackColor = notes.GetHighlightClr(Settings.ManagenotesSkinnr);
-            this.btnBackAllNotes.FlatAppearance.MouseOverBackColor = notes.GetHighlightClr(Settings.ManagenotesSkinnr);
-
-            this.btnShowSelectedNotes.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
-            this.btnNoteDelete.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
-            this.btnRestoreAllNotes.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
-            this.btnBackAllNotes.ForeColor = notes.GetTextClr(Settings.ManagenotesSkinnr);
-
-            if (notes.GetPrimaryTexture(Settings.ManagenotesSkinnr) != null)
-            {
-                this.BackgroundImage = notes.GetPrimaryTexture(Settings.ManagenotesSkinnr);
-                this.BackgroundImageLayout = notes.GetPrimaryTextureLayout(Settings.ManagenotesSkinnr);
-                this.pnlHead.BackColor = Color.Transparent;
-            }
-
+            this.SetSkin();
             this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
             if (this.dataGridViewNotes.RowCount > 0)
@@ -169,6 +148,33 @@ namespace NoteFly
         {
             this.prevrownr = -1;
             this.secondprevrownr = -2;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SetSkin()
+        {
+            this.BackColor = this.notes.GetPrimaryClr(Settings.ManagenotesSkinnr);
+            this.pnlHead.BackColor = this.notes.GetPrimaryClr(Settings.ManagenotesSkinnr);
+            this.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
+
+            this.btnShowSelectedNotes.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
+            this.btnNoteDelete.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
+            this.btnRestoreAllNotes.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
+            this.btnBackAllNotes.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
+
+            this.btnShowSelectedNotes.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
+            this.btnNoteDelete.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
+            this.btnRestoreAllNotes.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
+            this.btnBackAllNotes.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
+
+            if (this.notes.GetPrimaryTexture(Settings.ManagenotesSkinnr) != null)
+            {
+                this.BackgroundImage = this.notes.GetPrimaryTexture(Settings.ManagenotesSkinnr);
+                this.BackgroundImageLayout = this.notes.GetPrimaryTextureLayout(Settings.ManagenotesSkinnr);
+                this.pnlHead.BackColor = Color.Transparent;
+            }
         }
 
         /// <summary>
@@ -944,9 +950,9 @@ namespace NoteFly
         {
             if (this.notes.FrmManageNotesNeedUpdate)
             {
-                // detect and update add/delete notes.
-                if (this.dataGridViewNotes.RowCount != this.notes.CountNotes)
-                {
+                // detect and update add/delete notes, then redraw all notes
+                if (this.dataGridViewNotes.RowCount != this.notes.CountNotes && !this.searchTextBoxNotes.IsKeywordEntered)
+                { 
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
                 }
@@ -1196,6 +1202,19 @@ namespace NoteFly
             this.Resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
+            DataTable datatable = this.CreateDatatable();
+            for (int i = 0; i < this.notes.CountNotes; i++)
+            {
+                datatable = this.AddDatatableNoteRow(datatable, i);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private DataTable CreateDatatable()
+        {
             DataTable datatable = new DataTable();
             this.dataGridViewNotes.DataSource = datatable;
             datatable.Columns.Add("nr", typeof(string));
@@ -1216,16 +1235,26 @@ namespace NoteFly
                 this.dataGridViewNotes.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
+            this.dataGridViewNotes.Font = new Font(Settings.ManagenotesFontFamily, Settings.ManagenotesFontsize);
             this.dataGridViewNotes.RowPostPaint += new DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
-            for (int i = 0; i < this.notes.CountNotes; i++)
-            {
-                DataRow dr = datatable.NewRow();
-                dr[0] = i + 1; // enduser numbering
-                dr[1] = this.notes.GetNote(i).Title;
-                dr[2] = this.notes.GetNote(i).Visible;
-                dr[3] = this.notes.GetSkinName(this.notes.GetNote(i).SkinNr);
-                datatable.Rows.Add(dr);
-            }
+            return datatable;
+        }
+
+        /// <summary>
+        /// Add a row with note information to a databasetable
+        /// </summary>
+        /// <param name="datatable"></param>
+        /// <param name="notepos"></param>
+        /// <returns>The databasetable with a extra row</returns>
+        private DataTable AddDatatableNoteRow(DataTable datatable, int notepos)
+        {
+            DataRow dr = datatable.NewRow();
+            dr[0] = notepos + 1; // enduser numbering
+            dr[1] = this.notes.GetNote(notepos).Title;
+            dr[2] = this.notes.GetNote(notepos).Visible;
+            dr[3] = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
+            datatable.Rows.Add(dr);
+            return datatable;
         }
 
         /// <summary>
@@ -1281,7 +1310,8 @@ namespace NoteFly
             }
             else
             {
-                throw new ApplicationException("Negative rowindex.");
+                //throw new ApplicationException("Negative rowindex.");
+                return 0;
             }
         }
 
@@ -1493,6 +1523,35 @@ namespace NoteFly
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keywords"></param>
+        private void searchTextBoxNotes_DoSearch(string keywords)
+        {
+            this.Resetdatagrid();
+            DataTable dt = this.CreateDatatable();
+            for (int i = 0; i < this.notes.CountNotes; i++)
+            {
+                string title = this.notes.GetNote(i).Title;
+                if (!Settings.ManagenotesSearchCasesentive)
+                {
+                    title = this.notes.GetNote(i).Title.ToLowerInvariant();
+                    keywords = keywords.ToLowerInvariant();
+                }
+                
+                if (title.Contains(keywords))
+                {
+                    AddDatatableNoteRow(dt, i);
+                }
+            }
+
+            this.notes.FrmManageNotesNeedUpdate = true;
+            this.dataGridViewNotes.DataSource = dt;            
+            this.SetDataGridViewColumsWidth();
+            
         }
 
         #endregion Methods

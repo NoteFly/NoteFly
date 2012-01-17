@@ -52,6 +52,21 @@ namespace NoteFly
             this.btnKeywordClear.ForeColor = Color.Black;
         }
 
+        public bool IsKeywordEntered
+        {
+            get
+            {
+                if (this.tbKeywords.TextLength <= 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -60,7 +75,7 @@ namespace NoteFly
             //this.timerStartAutoSearch.Stop();
             this.tbKeywords.Clear();
             this.tbKeywords.BackColor = SystemColors.Window;
-            this.timerStartAutoSearch.Start();
+            this.StartSearch();
         }
 
         /// <summary>
@@ -69,7 +84,6 @@ namespace NoteFly
         private void StartSearch()
         {
             this.timerStartAutoSearch.Stop();
-            this.tbKeywords.BackColor = Color.LightYellow;
 
             if (DoSearch != null)
             {
@@ -83,6 +97,7 @@ namespace NoteFly
             }
             else
             {
+                this.tbKeywords.BackColor = Color.LightYellow;
                 this.tableLayoutPnlSearchbox.ColumnCount = 3;
             }
         }
@@ -131,6 +146,7 @@ namespace NoteFly
             else
             {
                 this.btnKeywordClear.Visible = false;
+                this.StartSearch();
             }
         }
 

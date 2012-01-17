@@ -68,5 +68,10 @@ namespace NoteFly
         {
             Application.Exit();
         }
+
+        private void linklblCreateBugReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Program.LoadLink("http://www.notefly.org/bugs/bug_report_page.php", false);
+        }
     }
 }

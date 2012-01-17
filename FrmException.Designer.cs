@@ -81,6 +81,7 @@ namespace NoteFly
             this.btnShutdown = new System.Windows.Forms.Button();
             this.tbExceptionMessage = new System.Windows.Forms.TextBox();
             this.lblTextStacktrace = new System.Windows.Forms.Label();
+            this.linklblCreateBugReport = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // lblTextExceptionMessage
@@ -135,6 +136,17 @@ namespace NoteFly
             this.lblTextStacktrace.TabIndex = 8;
             this.lblTextStacktrace.Text = "The exception is written to the logfile for bug reporting.\r\nOptions:\r\n";
             // 
+            // linklblCreateBugReport
+            // 
+            this.linklblCreateBugReport.AutoSize = true;
+            this.linklblCreateBugReport.Location = new System.Drawing.Point(291, 116);
+            this.linklblCreateBugReport.Name = "linklblCreateBugReport";
+            this.linklblCreateBugReport.Size = new System.Drawing.Size(85, 13);
+            this.linklblCreateBugReport.TabIndex = 9;
+            this.linklblCreateBugReport.TabStop = true;
+            this.linklblCreateBugReport.Text = "create bugreport";
+            this.linklblCreateBugReport.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklblCreateBugReport_LinkClicked);
+            // 
             // FrmException
             // 
             this.AcceptButton = this.btnContinu;
@@ -142,6 +154,7 @@ namespace NoteFly
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(384, 162);
+            this.Controls.Add(this.linklblCreateBugReport);
             this.Controls.Add(this.lblTextStacktrace);
             this.Controls.Add(this.tbExceptionMessage);
             this.Controls.Add(this.btnShutdown);
@@ -159,5 +172,7 @@ namespace NoteFly
         }
 
         #endregion
+
+        private System.Windows.Forms.LinkLabel linklblCreateBugReport;
     }
 }

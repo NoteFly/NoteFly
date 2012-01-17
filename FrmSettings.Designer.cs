@@ -509,6 +509,10 @@ namespace NoteFly
             this.chxTrayiconBoldManagenotes = new System.Windows.Forms.CheckBox();
             this.chxTrayiconBoldNewnote = new System.Windows.Forms.CheckBox();
             this.tabAppereanceManagenotes = new System.Windows.Forms.TabPage();
+            this.chxCaseSentiveSearch = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.numManagenotesFont = new System.Windows.Forms.NumericUpDown();
+            this.lbTextManagesnotesFontSize = new System.Windows.Forms.Label();
             this.lblTextSkinManagenotes = new System.Windows.Forms.Label();
             this.cbxManageNotesSkin = new System.Windows.Forms.ComboBox();
             this.cbxManagenotesTooltipContent = new System.Windows.Forms.CheckBox();
@@ -578,6 +582,7 @@ namespace NoteFly
             this.tabPageTrayicon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTrayiconFontsize)).BeginInit();
             this.tabAppereanceManagenotes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numManagenotesFont)).BeginInit();
             this.tabHighlight.SuspendLayout();
             this.tabSharing.SuspendLayout();
             this.tabControlSharing.SuspendLayout();
@@ -1061,7 +1066,7 @@ namespace NoteFly
             0,
             0});
             this.numFontSizeTitle.Minimum = new decimal(new int[] {
-            4,
+            6,
             0,
             0,
             0});
@@ -1323,6 +1328,10 @@ namespace NoteFly
             // 
             // tabAppereanceManagenotes
             // 
+            this.tabAppereanceManagenotes.Controls.Add(this.chxCaseSentiveSearch);
+            this.tabAppereanceManagenotes.Controls.Add(this.label4);
+            this.tabAppereanceManagenotes.Controls.Add(this.numManagenotesFont);
+            this.tabAppereanceManagenotes.Controls.Add(this.lbTextManagesnotesFontSize);
             this.tabAppereanceManagenotes.Controls.Add(this.lblTextSkinManagenotes);
             this.tabAppereanceManagenotes.Controls.Add(this.cbxManageNotesSkin);
             this.tabAppereanceManagenotes.Controls.Add(this.cbxManagenotesTooltipContent);
@@ -1333,6 +1342,59 @@ namespace NoteFly
             this.tabAppereanceManagenotes.TabIndex = 4;
             this.tabAppereanceManagenotes.Text = "Manage notes";
             this.tabAppereanceManagenotes.UseVisualStyleBackColor = true;
+            // 
+            // chxCaseSentiveSearch
+            // 
+            this.chxCaseSentiveSearch.AutoSize = true;
+            this.chxCaseSentiveSearch.Checked = true;
+            this.chxCaseSentiveSearch.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxCaseSentiveSearch.Location = new System.Drawing.Point(19, 159);
+            this.chxCaseSentiveSearch.Name = "chxCaseSentiveSearch";
+            this.chxCaseSentiveSearch.Size = new System.Drawing.Size(178, 20);
+            this.chxCaseSentiveSearch.TabIndex = 6;
+            this.chxCaseSentiveSearch.Text = "Use case sentive search ";
+            this.chxCaseSentiveSearch.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(237, 122);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(22, 16);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "pt.";
+            // 
+            // numManagenotesFont
+            // 
+            this.numManagenotesFont.DecimalPlaces = 2;
+            this.numManagenotesFont.Location = new System.Drawing.Point(170, 120);
+            this.numManagenotesFont.Maximum = new decimal(new int[] {
+            48,
+            0,
+            0,
+            0});
+            this.numManagenotesFont.Minimum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.numManagenotesFont.Name = "numManagenotesFont";
+            this.numManagenotesFont.Size = new System.Drawing.Size(61, 22);
+            this.numManagenotesFont.TabIndex = 4;
+            this.numManagenotesFont.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            131072});
+            // 
+            // lbTextManagesnotesFontSize
+            // 
+            this.lbTextManagesnotesFontSize.AutoSize = true;
+            this.lbTextManagesnotesFontSize.Location = new System.Drawing.Point(16, 122);
+            this.lbTextManagesnotesFontSize.Name = "lbTextManagesnotesFontSize";
+            this.lbTextManagesnotesFontSize.Size = new System.Drawing.Size(145, 16);
+            this.lbTextManagesnotesFontSize.TabIndex = 3;
+            this.lbTextManagesnotesFontSize.Text = "Manage notes font size";
             // 
             // lblTextSkinManagenotes
             // 
@@ -2069,6 +2131,7 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numTrayiconFontsize)).EndInit();
             this.tabAppereanceManagenotes.ResumeLayout(false);
             this.tabAppereanceManagenotes.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numManagenotesFont)).EndInit();
             this.tabHighlight.ResumeLayout(false);
             this.tabHighlight.PerformLayout();
             this.tabSharing.ResumeLayout(false);
@@ -2119,5 +2182,9 @@ namespace NoteFly
         private System.Windows.Forms.ComboBox cbxManageNotesSkin;
         private System.Windows.Forms.Label lblTextSkinManagenotes;
         private System.Windows.Forms.CheckBox chxUseDateAsDefaultTitle;
+        private System.Windows.Forms.NumericUpDown numManagenotesFont;
+        private System.Windows.Forms.Label lbTextManagesnotesFontSize;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox chxCaseSentiveSearch;
     }
 }

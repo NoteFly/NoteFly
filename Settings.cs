@@ -292,17 +292,27 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
+        public static string ManagenotesFontFamily = "Arial";
+
+        /// <summary>
+        /// Display toolstip with note content in FrmManageNotes.
+        /// </summary>
         public static bool ManagenotesTooltip = true;
 
         /// <summary>
-        /// 
+        /// The skin for the manage notes window.
         /// </summary>
         public static int ManagenotesSkinnr = 1;
 
         /// <summary>
-        /// 
+        /// The manage notes font size for each row.
         /// </summary>
-        public static int ManagenotesFontsize = 9;
+        public static float ManagenotesFontsize = 9;
+
+        /// <summary>
+        /// Search is case senstive in manage notes window.
+        /// </summary>
+        public static bool ManagenotesSearchCasesentive = false;
 
         /// <summary>
         /// Show expert settings in FrmSettings.
