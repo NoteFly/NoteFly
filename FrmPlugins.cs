@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmPlugins.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ namespace NoteFly
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             InitializeComponent();
+            this.pluginGrid.Enabled = Settings.ProgramPluginsAllEnabled;
         }
 
         /// <summary>
@@ -152,8 +153,8 @@ namespace NoteFly
                     if (detailsplugin != null)
                     {
                         this.lblPluginName.Text = detailsplugin[0];
-                        this.lblPluginVersion.Text = "version: " + detailsplugin[1];
-                        this.lblLicense.Text = "license: " + detailsplugin[2];
+                        this.lblPluginVersion.Text = Gettext.Strings.T("version: ") + detailsplugin[1];
+                        this.lblLicense.Text = Gettext.Strings.T("license: ") + detailsplugin[2];
                         this.lblPluginDescription.Text = detailsplugin[3];
                         this.currentplugindownloadurl = detailsplugin[4];
                     }
@@ -170,7 +171,8 @@ namespace NoteFly
         {
             if (!String.IsNullOrEmpty(this.currentplugindownloadurl))
             {
-                FrmDownloader downloader = new FrmDownloader(this.currentplugindownloadurl, false, false, "Downloading plugin..");
+                string plugins_downloadingplugin = Gettext.Strings.T("Downloading plugin..");
+                FrmDownloader downloader = new FrmDownloader(this.currentplugindownloadurl, false, false, plugins_downloadingplugin);
                 downloader.Show();
             }
         }

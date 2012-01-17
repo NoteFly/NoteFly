@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="GPGVerifWrapper.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2011  Tom
+//  Copyright (C) 2011-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -91,7 +91,9 @@ namespace NoteFly
                 if (gpgprocexitcode == 0)
                 {
                     // Currently display GPG result via messagebox, and user required to press yes to launch install.
-                    System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(this.gpgoutput + this.gpgerror + System.Environment.NewLine + "Do you want to install the update?", Program.AssemblyTitle + " GPG signature check result", System.Windows.Forms.MessageBoxButtons.YesNo);
+                    string gpgverifwrapper_installupdate = Gettext.Strings.T("Do you want to install the update?");
+                    string gpgverifwrapper_gpgsigresult = Gettext.Strings.T(" GPG signature check result");
+                    System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(this.gpgoutput + this.gpgerror + System.Environment.NewLine + gpgverifwrapper_installupdate, Program.AssemblyTitle + " GPG signature check result", System.Windows.Forms.MessageBoxButtons.YesNo);
                     if (dlgres == System.Windows.Forms.DialogResult.Yes)
                     {
                         allowlaunch = true;

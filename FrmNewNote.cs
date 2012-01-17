@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNewNote.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ namespace NoteFly
             this.rtbNewNote.WordWrap = wordwrap;
             this.menuWordWarp.Checked = wordwrap;
             this.note = note;
-            this.Text = "edit note";
+            this.Text = Gettext.Strings.T("edit note");
             this.SetColorsForm(this.note.SkinNr);
             this.tbTitle.Text = note.Title;
             if (string.IsNullOrEmpty(this.note.Tempcontent))
@@ -104,7 +104,7 @@ namespace NoteFly
             this.ConstructFrmNewNote(notes);
             this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2), (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2));
             this.note = null;
-            this.Text = "new note";
+            this.Text = Gettext.Strings.T("new note");
             if (Settings.NotesDefaultRandomSkin)
             {
                 Settings.NotesDefaultSkinnr = notes.GenerateRandomSkinnr();
@@ -232,8 +232,8 @@ namespace NoteFly
             }
             else if (string.IsNullOrEmpty(this.rtbNewNote.Text))
             {
-                const string PLEASEENTERCONTENT = "Please enter some content.";
-                this.rtbNewNote.Text = PLEASEENTERCONTENT;
+                string newnote_entercontent = Gettext.Strings.T("Please enter some content.");
+                this.rtbNewNote.Text = newnote_entercontent;
                 this.rtbNewNote.Focus();
                 this.rtbNewNote.SelectAll();
             }
@@ -250,8 +250,8 @@ namespace NoteFly
                     this.note.Title = this.tbTitle.Text;
                     if (!xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNewNote.Rtf))
                     {
-                        const string EXCCANTWRITENOTE = "Could not write note.";
-                        throw new ApplicationException(EXCCANTWRITENOTE);
+                        string newnote_exccantwritenote = Gettext.Strings.T("Could not write note.");
+                        throw new ApplicationException(newnote_exccantwritenote);
                     }
 
                     this.note.Tempcontent = this.rtbNewNote.Rtf;
@@ -629,7 +629,7 @@ namespace NoteFly
         {
             uint linenum = 0;
             string curline = reader.ReadLine(); // no CR+LF characters
-            const string IMPORTERROR = "import error";
+            string newnote_importerror = Gettext.Strings.T("import error");
             if (curline == "#!GFKNT 2.0")
             {
                 while (curline != "%:")
@@ -640,9 +640,9 @@ namespace NoteFly
                     // should normally be except %: around line 42.
                     if (linenum > 50)
                     {
-                        const string CANNOTFINDKEYNOTECONTENT = "Cannot find KeyNote NF note content.";
-                        MessageBox.Show(CANNOTFINDKEYNOTECONTENT, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Log.Write(LogType.error, CANNOTFINDKEYNOTECONTENT);
+                        string newnote_cannotfindkeynotecontent = Gettext.Strings.T("Cannot find KeyNote NF note content.");
+                        MessageBox.Show(newnote_cannotfindkeynotecontent, newnote_importerror, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Log.Write(LogType.error, newnote_cannotfindkeynotecontent);
                     }
                 }
 
@@ -666,9 +666,9 @@ namespace NoteFly
             }
             else
             {
-                const string NOTKEYNOTEFILE = "Not a KeyNote NF note.";
-                MessageBox.Show(NOTKEYNOTEFILE, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log.Write(LogType.error, NOTKEYNOTEFILE);
+                string newnote_notkeynotefile = Gettext.Strings.T("Not a KeyNote NF note.");
+                MessageBox.Show(newnote_notkeynotefile, newnote_importerror, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.error, newnote_notkeynotefile);
             }
         }
 
@@ -834,9 +834,9 @@ namespace NoteFly
             }
             else
             {
-                const string EMPTYCLIPBOARD = "There is no text on the clipboard.";
-                MessageBox.Show(EMPTYCLIPBOARD);
-                Log.Write(LogType.error, EMPTYCLIPBOARD);
+                string newnote_emptyclipboard = Gettext.Strings.T("There is no text on the clipboard.");
+                MessageBox.Show(newnote_emptyclipboard);
+                Log.Write(LogType.error, newnote_emptyclipboard);
             }
         }
 
@@ -1205,9 +1205,9 @@ namespace NoteFly
             }
             else
             {
-                const string EMPTYCLIPBOARD = "There is no text on the clipboard.";
-                MessageBox.Show(EMPTYCLIPBOARD);
-                Log.Write(LogType.error, EMPTYCLIPBOARD);
+                string newnote_emptyclipboard = Gettext.Strings.T("There is no text on the clipboard.");
+                MessageBox.Show(newnote_emptyclipboard);
+                Log.Write(LogType.error, newnote_emptyclipboard);
             }
         }
 

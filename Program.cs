@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="Program.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -334,7 +334,9 @@ namespace NoteFly
                 System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
                 if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
                 {
-                    System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show("You are now running " + Program.AssemblyTitle + " as elevated Administrator.\r\nWhich is not recommended because of security.\r\nPress OK if your understand the risks and want to hide this message in the future.", "Elevated administrator", System.Windows.Forms.MessageBoxButtons.OKCancel);
+                    string program_runasadministrator = Gettext.Strings.T("You are now running {0} as elevated Administrator.\r\nWhich is not recommended because of security.\r\nPress OK if your understand the risks and want to hide this message in the future.", Program.AssemblyTitle);
+                    string program_runasadministratortitle = Gettext.Strings.T("Elevated administrator");
+                    System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show(program_runasadministrator, program_runasadministratortitle, System.Windows.Forms.MessageBoxButtons.OKCancel);
                     if (dlganswer == System.Windows.Forms.DialogResult.OK)
                     {
                         Settings.ProgramSuspressWarnAdmin = true;
@@ -358,7 +360,9 @@ namespace NoteFly
 
             if (Program.CheckInstancesRunning() > 1)
             {
-                System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show("The programme is already running.\nLoad an other instance? (not recommeded)", "already running", System.Windows.Forms.MessageBoxButtons.YesNo);
+                string program_alreadyrunning = Gettext.Strings.T("The programme is already running.\nLoad an other instance? (not recommeded)");
+                string program_alreadyrunningtitle = Gettext.Strings.T("already running");
+                System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(program_alreadyrunning, program_alreadyrunningtitle, System.Windows.Forms.MessageBoxButtons.YesNo);
                 if (dlgres == System.Windows.Forms.DialogResult.No)
                 {
                     return;
@@ -448,12 +452,12 @@ namespace NoteFly
                     if (!string.IsNullOrEmpty(downloadurl))
                     {
                         StringBuilder sbmsg = new StringBuilder();
-                        sbmsg.AppendLine("There's a new version availible.");
-                        sbmsg.Append("Your version: ");
+                        sbmsg.AppendLine(Gettext.Strings.T("There's a new version availible."));
+                        sbmsg.Append(Gettext.Strings.T("Your version: "));
                         sbmsg.AppendLine(Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
-                        sbmsg.Append("New version: ");
+                        sbmsg.Append(Gettext.Strings.T("New version: "));
                         sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
-                        sbmsg.Append("Do you want to download and install the new version now?");
+                        sbmsg.Append(Gettext.Strings.T("Do you want to download and install the new version now?"));
                         System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                         if (updres == System.Windows.Forms.DialogResult.Yes)
                         {
@@ -521,16 +525,14 @@ namespace NoteFly
                         }
                         catch (Exception ex)
                     {
-                        const string CANTLOADPLUGIN = "Can't load plugin: ";
-                        Log.Write(LogType.exception, CANTLOADPLUGIN + pluginfiles[i] + " " + ex.Message);
+                        Log.Write(LogType.exception, "Can't load plugin: " + pluginfiles[i] + " " + ex.Message);
                     }
-                    }                    
+                    }
                 }
             }
             else
             {
-                const string PLUGINFOLDERNOTEXIST = "Plugin folder does not exist.";
-                Log.Write(LogType.info, PLUGINFOLDERNOTEXIST);
+                Log.Write(LogType.info, "Plugin folder does not exist.");
             }
 
             return pluginslist.ToArray();

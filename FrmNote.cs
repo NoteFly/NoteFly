@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNote.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -391,16 +391,16 @@ namespace NoteFly
                 }
                 else
                 {
-                    const string MSGNOTITLECONTENT = "Note has no title and content.";
-                    Log.Write(LogType.error, MSGNOTITLECONTENT);
-                    MessageBox.Show(MSGNOTITLECONTENT);
+                    string note_msgnotitlecontent = Gettext.Strings.T("Note has no title and no content.");
+                    Log.Write(LogType.error, note_msgnotitlecontent);
+                    MessageBox.Show(note_msgnotitlecontent);
                 }
             }
-            catch (AccessViolationException accexc)
+            catch (Win32Exception w32exc)
             {
-                const string MSGCANTLAUNCHEMAILPROTOCOLHANDLER = "Access denied. Can't lauch email client by protocol handler";
-                Log.Write(LogType.exception, accexc.Message);
-                MessageBox.Show(MSGCANTLAUNCHEMAILPROTOCOLHANDLER);
+                string note_msgcantlaunchemailprotocolhandler = Gettext.Strings.T("Can't launch email client.");
+                Log.Write(LogType.exception, w32exc.Message);
+                MessageBox.Show(note_msgcantlaunchemailprotocolhandler, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -771,17 +771,17 @@ namespace NoteFly
         private void SetLockedNote()
         {
             this.menuLockNote.Checked = this.note.Locked;
-            const string LOCKNOTEMSG = "&Lock note";
-            const string CLICKTOUNLOCK = " (click again to unlock)";
+            string note_locknotemsg = Gettext.Strings.T("&Lock note");
+            string note_clicktounlock = Gettext.Strings.T(" (click again to unlock)");
             if (this.note.Locked)
             {
                 this.CreatePbLock();
-                this.menuLockNote.Text = LOCKNOTEMSG + CLICKTOUNLOCK;
+                this.menuLockNote.Text = note_locknotemsg + note_clicktounlock;
             }
             else
             {
                 this.DestroyPbLock();
-                this.menuLockNote.Text = LOCKNOTEMSG;
+                this.menuLockNote.Text = note_locknotemsg;
             }
 
             this.pbResizeGrip.Visible = !this.note.Locked;
@@ -798,17 +798,17 @@ namespace NoteFly
         private void SetRollupNote()
         {
             this.menuRollUp.Checked = this.note.RolledUp;
-            const string ROLLUPMSG = "&Roll up";
-            const string CLICKTOROLLUP = "(click again to Roll Down)";
+            string note_rollupmsg = Gettext.Strings.T("&Roll up");
+            string note_clicktorollup = Gettext.Strings.T("(click again to Roll Down)");
             if (this.note.RolledUp)
             {
-                this.menuRollUp.Text = ROLLUPMSG + CLICKTOROLLUP;
+                this.menuRollUp.Text = note_rollupmsg + note_clicktorollup;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
                 this.Height = this.pnlHead.Height;
             }
             else
             {
-                this.menuRollUp.Text = ROLLUPMSG;
+                this.menuRollUp.Text = note_rollupmsg;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
                 this.Height = this.note.Height;
             }
@@ -846,7 +846,7 @@ namespace NoteFly
             sfdlg.CheckPathExists = true;
             sfdlg.OverwritePrompt = true;
             sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
-            sfdlg.Title = "Save note to file";
+            sfdlg.Title = Gettext.Strings.T("Save note to file");
             sfdlg.Filter = "Textfile (*.txt)|*.txt|RichTextFormat file (*.rtf)|*.rtf|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
@@ -909,6 +909,11 @@ namespace NoteFly
             }
         }        
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void menuNoteSkins_DropDownOpening(object sender, EventArgs e)
         {
             this.CreateSkinsMenu(false);

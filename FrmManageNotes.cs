@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmManageNotes.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -394,16 +394,17 @@ namespace NoteFly
         {
             if (this.dataGridViewNotes.SelectedRows.Count <= 0)
             {
-                const string NOTHINGSELECTED = "Nothing selected.";
-                Log.Write(LogType.info, NOTHINGSELECTED);
-                MessageBox.Show(NOTHINGSELECTED);
+                string managenotes_nothingselected = Gettext.Strings.T("Nothing selected.");
+                Log.Write(LogType.info, managenotes_nothingselected);
+                MessageBox.Show(managenotes_nothingselected);
             }
             else
             {
                 if (Settings.ConfirmDeletenote)
                 {
-                    const string DELETESELECTEDNOTES = "Are you sure you want to delete the selected note(s)?";
-                    DialogResult deleteres = MessageBox.Show(DELETESELECTEDNOTES, "delete?", MessageBoxButtons.YesNo);
+                    string managenotes_deleteselectednotes = Gettext.Strings.T("Are you sure you want to delete the selected note(s)?");
+                    string managenotes_deleteselectednotestitle = Gettext.Strings.T("delete?");
+                    DialogResult deleteres = MessageBox.Show(managenotes_deleteselectednotes, managenotes_deleteselectednotestitle, MessageBoxButtons.YesNo);
                     if (deleteres == DialogResult.Yes)
                     {
                         this.DeleteNotesSelectedRowsGrid(this.dataGridViewNotes.SelectedRows);
@@ -474,8 +475,9 @@ namespace NoteFly
         {
             if (this.notes.CountNotes > 0)
             {
-                const string DELETEALLCURRENTNOTES = "Do you want to delete all current notes?";
-                DialogResult eraseres = MessageBox.Show(DELETEALLCURRENTNOTES, "Are you sure?", MessageBoxButtons.YesNoCancel);
+                string managenotes_deleteallcurrentnotes = Gettext.Strings.T("Do you want to delete all current notes?");
+                string managenotes_deleteallcurrentnotestitle = Gettext.Strings.T("Are you sure?");
+                DialogResult eraseres = MessageBox.Show(managenotes_deleteallcurrentnotes, managenotes_deleteallcurrentnotestitle, MessageBoxButtons.YesNoCancel);
                 if (eraseres == DialogResult.Yes)
                 {
                     for (int i = 0; i < this.notes.CountNotes; i++)
@@ -582,16 +584,16 @@ namespace NoteFly
                         }
                         else
                         {
-                            const string NOTSTICKIES = "CVS file does not seems to be in the Stickies format.";
-                            Log.Write(LogType.error, NOTSTICKIES);
-                            MessageBox.Show(NOTSTICKIES);
+                            string managenotes_notstickies = Gettext.Strings.T("CVS file does not seems to be in the Stickies format.");
+                            Log.Write(LogType.error, managenotes_notstickies);
+                            MessageBox.Show(managenotes_notstickies);
                         }
                     }
                     else if (linenr != 1)
                     {
-                        const string NOTSTICKIES = "CVS file does not seems to be in the Stickies format, excepting 5 columns.";
-                        Log.Write(LogType.error, NOTSTICKIES);
-                        MessageBox.Show(NOTSTICKIES);
+                        string managenotes_notstickies = Gettext.Strings.T("CVS file does not seems to be in the Stickies format, excepting 5 columns.");
+                        Log.Write(LogType.error, managenotes_notstickies);
+                        MessageBox.Show(managenotes_notstickies);
                     }
                 }
             }
@@ -724,9 +726,9 @@ namespace NoteFly
                 }
                 else
                 {
-                    const string ERRORREADPNOTESBACKUP = "Error reading PNotes backup file, incorrect format.";
-                    MessageBox.Show(ERRORREADPNOTESBACKUP);
-                    Log.Write(LogType.error, ERRORREADPNOTESBACKUP);
+                    string managenotes_errorreadpnotesbackup = Gettext.Strings.T("Error reading PNotes backup file, incorrect format.");
+                    Log.Write(LogType.error, managenotes_errorreadpnotesbackup);
+                    MessageBox.Show(managenotes_errorreadpnotesbackup);                    
                     return;
                 }
             }
@@ -847,22 +849,25 @@ namespace NoteFly
                 foreach (DataGridViewRow selrow in selectedrows)
                 {
                     int notepos = this.GetNoteposBySelrow(selrow.Index);
-                    selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).Visible;
-                    this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
-                    if (this.notes.GetNote(notepos).Visible)
-                    {               
-                        this.notes.GetNote(notepos).CreateForm();
-                        this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
-                    }
-                    else
+                    if (notepos >= 0)
                     {
-                        this.notes.GetNote(notepos).DestroyForm();
-                        this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
-                    }
+                        selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).Visible;
+                        this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
+                        if (this.notes.GetNote(notepos).Visible)
+                        {
+                            this.notes.GetNote(notepos).CreateForm();
+                            this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
+                        }
+                        else
+                        {
+                            this.notes.GetNote(notepos).DestroyForm();
+                            this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
+                        }
 
-                    this.Resetdatagrid();
-                    Application.DoEvents();
-                    xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+                        this.Resetdatagrid();
+                        Application.DoEvents();
+                        xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+                    }
                 }
             }
             finally
@@ -874,7 +879,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Cell clicked in dataGridView1, set hide/show note button text.
+        /// Cell clicked in dataGridViewNotes, set hide/show note button text.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">DataGridViewCell event arguments</param>
@@ -909,18 +914,25 @@ namespace NoteFly
                 Cursor.Current = Cursors.WaitCursor;
                 this.TopMost = true;
                 int notepos = this.GetNoteposBySelrow(row);
-                this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
-                this.dataGridViewNotes.Rows[row].Cells[2].Value = !(bool)this.dataGridViewNotes.Rows[row].Cells[2].Value;
-                if (this.notes.GetNote(notepos).Visible)
+                if (notepos >= 0)
                 {
-                    this.notes.GetNote(notepos).CreateForm();
-                }
-                else
-                {
-                    this.notes.GetNote(notepos).DestroyForm();
-                }
+                    this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
+                    this.dataGridViewNotes.Rows[row].Cells[2].Value = !(bool)this.dataGridViewNotes.Rows[row].Cells[2].Value;
+                    if (this.notes.GetNote(notepos).Visible)
+                    {
+                        this.notes.GetNote(notepos).CreateForm();
+                    }
+                    else
+                    {
+                        this.notes.GetNote(notepos).DestroyForm();
+                    }
 
-                xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+                    xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+                }
+            }
+            catch (ArgumentOutOfRangeException argoutrangeexc)
+            {
+                Log.Write(LogType.exception, argoutrangeexc.Message);
             }
             finally
             {
@@ -958,28 +970,31 @@ namespace NoteFly
                 }
 
                 int notepos = this.GetNoteposBySelrow(e.RowIndex);
-                this.dataGridViewNotes.Rows[e.RowIndex].Cells["title"].Value = this.notes.GetNote(notepos).Title;
-                this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
-                this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
-                if (this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
+                if (notepos >= 0)
                 {
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
-                }
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["title"].Value = this.notes.GetNote(notepos).Title;
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
+                    if (this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
+                    {
+                        this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
+                    }
 
-                this.dataGridViewNotes.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
 
-                if (e.RowIndex == this.dataGridViewNotes.RowCount - 1)
-                {
-                    this.notes.FrmManageNotesNeedUpdate = false;
-                }
-                else if (this.prevrownr < this.secondprevrownr)
-                {
-                    this.notes.FrmManageNotesNeedUpdate = false;
-                }
-                else
-                {
-                    this.secondprevrownr = this.prevrownr;
-                    this.prevrownr = e.RowIndex;
+                    if (e.RowIndex == this.dataGridViewNotes.RowCount - 1)
+                    {
+                        this.notes.FrmManageNotesNeedUpdate = false;
+                    }
+                    else if (this.prevrownr < this.secondprevrownr)
+                    {
+                        this.notes.FrmManageNotesNeedUpdate = false;
+                    }
+                    else
+                    {
+                        this.secondprevrownr = this.prevrownr;
+                        this.prevrownr = e.RowIndex;
+                    }
                 }
             }
         }
@@ -1107,7 +1122,11 @@ namespace NoteFly
             List<int> deletenotepos = new List<int>();
             for (int i = 0; i < selrows.Count; i++)
             {
-                deletenotepos.Add(this.GetNoteposBySelrow(selrows[i].Index));
+                int notepos = this.GetNoteposBySelrow(selrows[i].Index);
+                if (notepos >= 0)
+                {
+                    deletenotepos.Add(notepos);
+                }
             }
 
             deletenotepos.Sort();
@@ -1182,9 +1201,9 @@ namespace NoteFly
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    string msgaccessdenied = "Access denied. delete note " + filename + " manually with proper premission.";
-                    Log.Write(LogType.error, msgaccessdenied);
-                    MessageBox.Show(msgaccessdenied);
+                    string managenotes_msgaccessdenied = Gettext.Strings.T("Access denied. delete note {0} manually with proper premission.", filename);
+                    Log.Write(LogType.error, managenotes_msgaccessdenied);
+                    MessageBox.Show(managenotes_msgaccessdenied);
                 }
             }
 
@@ -1199,13 +1218,24 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
+            int vertscrolloffset = this.dataGridViewNotes.VerticalScrollingOffset;
             this.Resetdatagrid();
             this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
-            DataTable datatable = this.CreateDatatable();
-            for (int i = 0; i < this.notes.CountNotes; i++)
+            if (!this.searchTextBoxNotes.IsKeywordEntered)
             {
-                datatable = this.AddDatatableNoteRow(datatable, i);
+                DataTable datatable = this.CreateDatatable();
+                for (int i = 0; i < this.notes.CountNotes; i++)
+                {
+                    datatable = this.AddDatatableNoteRow(datatable, i);
+                }
+            }
+
+            // VerticalScrollingOffset is readonly, so we need a bit of 'hacking' to set it.
+            if (vertscrolloffset > 0)
+            {
+                System.Reflection.PropertyInfo verticalOffset = dataGridViewNotes.GetType().GetProperty("VerticalOffset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                verticalOffset.SetValue(this.dataGridViewNotes, vertscrolloffset, null);
             }
         }
 
@@ -1272,7 +1302,8 @@ namespace NoteFly
                 }
                 catch (InvalidCastException)
                 {
-                    throw new ApplicationException("Transparency level not a integer or double.");
+                    string managenotes_invalidtransparencylvl = Gettext.Strings.T("Transparency level not a integer or double.");
+                    throw new ApplicationException(managenotes_invalidtransparencylvl);
                 }
             }
         }
@@ -1292,7 +1323,8 @@ namespace NoteFly
                 }
                 catch (InvalidCastException)
                 {
-                    throw new ApplicationException("Transparency level not a integer or double.");
+                    string managenotes_invalidtransparencylvl = Gettext.Strings.T("Transparency level not a integer or double.");
+                    throw new ApplicationException(managenotes_invalidtransparencylvl);
                 }
             }
         }
@@ -1301,7 +1333,7 @@ namespace NoteFly
         /// Get the note position in the list by looking up the nr colom with at the partialer row.
         /// </summary>
         /// <param name="rowindex">The selected row index in datagridview1.</param>
-        /// <returns>The position of the note in the list.</returns>
+        /// <returns>The position of the note in the list. -1 if error.</returns>
         private int GetNoteposBySelrow(int rowindex)
         {
             if (rowindex >= 0)
@@ -1311,7 +1343,7 @@ namespace NoteFly
             else
             {
                 //throw new ApplicationException("Negative rowindex.");
-                return 0;
+                return -1;
             }
         }
 
@@ -1365,8 +1397,6 @@ namespace NoteFly
         {
             if (e.Button == MouseButtons.Left)
             {
-                //this.pnlHead.BackColor = this.notes.GetSelectClr(Settings.ManagenotesSkinnr);
-
                 int dpx = e.Location.X - this.oldp.X;
                 int dpy = e.Location.Y - this.oldp.Y;
 #if linux
@@ -1458,7 +1488,7 @@ namespace NoteFly
         private void dataGridViewNotes_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (Settings.ManagenotesTooltip) 
-            {                
+            {
                 if (e.ColumnIndex == 1)
                 {
                     string contentpreview = null;
@@ -1472,7 +1502,7 @@ namespace NoteFly
                             const string startcontentplainhint = @"\fs24 ";
                             int startpos = content.IndexOf(startcontentplainhint);
 
-                            for (int i = content.Length -1; i > startpos; i--)
+                            for (int i = content.Length - 1; i > startpos; i--)
                             {
                                 if (content[i] == '\\')
                                 {
@@ -1503,24 +1533,30 @@ namespace NoteFly
                                 }
                                 else
                                 {
-                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, lencontentpreview);
+                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, lencontentpreview); 
                                 }
 
-                                content = null;                                
+                                content = null;
                             }
                             catch (ArgumentOutOfRangeException argoutrange)
                             {
-                                MessageBox.Show(argoutrange.Message);
+                                throw new ApplicationException(argoutrange.Message);
+                                return;
                             }
 
                             int tooltiplocx = Cursor.Position.X - this.Location.X;
                             int tooltiplocy = Cursor.Position.Y - this.Location.Y;
                             if (!String.IsNullOrEmpty(contentpreview))
                             {
-                                toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);
+                                toolTip.InitialDelay = 200;
+                                toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);                                
                             }
                         }
                     }
+                }
+                else
+                {
+                    toolTip.Hide(this);
                 }
             }
         }

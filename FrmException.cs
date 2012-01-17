@@ -1,6 +1,6 @@
 ﻿// <copyright file="FrmException.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,8 @@ namespace NoteFly
         public FrmException(string excmgs, string excstrace)
         {
             this.InitializeComponent();
-            this.Text = "oh no.. " + Program.AssemblyTitle + " crashed.";
+            string exception_formtitle = Gettext.Strings.T("oh no.. {0} crashed.", Program.AssemblyTitle);
+            this.Text = exception_formtitle;
             StringBuilder sbexc = new StringBuilder(excmgs);
             sbexc.AppendLine();
             sbexc.AppendLine();
@@ -69,6 +70,11 @@ namespace NoteFly
             Application.Exit();
         }
 
+        /// <summary>
+        /// Open bug tracker webpage on report bug page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void linklblCreateBugReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Program.LoadLink("http://www.notefly.org/bugs/bug_report_page.php", false);

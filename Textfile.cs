@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Textfile.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ namespace NoteFly
                     case TextfileWriteType.exporttext:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
                         writer = new StreamWriter(fs, Encoding.UTF8);
-                        writer.WriteLine("Title: " + title + Environment.NewLine);
+                        writer.WriteLine(Gettext.Strings.T("Title: ") + title + Environment.NewLine);
                         writer.Write(content);
                         break;
                     case TextfileWriteType.exportrtf:

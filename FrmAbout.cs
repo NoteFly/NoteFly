@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmAbout.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -45,9 +45,9 @@ namespace NoteFly
         public FrmAbout()
         {
             this.InitializeComponent();
-            this.Text = "About " + Program.AssemblyTitle;
+            this.Text = Gettext.Strings.T("About ") + Program.AssemblyTitle;
             this.lblProductName.Text = Program.AssemblyTitle;
-            this.lblVersion.Text = string.Format("Version " + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+            this.lblVersion.Text = string.Format(Gettext.Strings.T("Version ") + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
         }
 
         #endregion Constructors 

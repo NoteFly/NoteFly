@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmUpdater.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2011  Tom
+//  Copyright (C) 2011-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -269,8 +269,7 @@ namespace NoteFly
             }
             else
             {
-                const string INVLAIDFILENAMEORPATH = "Invalid filepath/filename downloaded file";
-                Log.Write(LogType.exception, INVLAIDFILENAMEORPATH);
+                Log.Write(LogType.exception, "Invalid filepath/filename downloaded file");
                 e.Cancel = true;
             }
         }
@@ -314,40 +313,40 @@ namespace NoteFly
         /// <param name="e">RunWorkerCompletedEventArgs arguments</param>
         private void backgroundWorkerDownloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            string downloader_installaborted = Gettext.Strings.T("Aborted");
             if (!e.Cancelled)
             {
-                const string DOWNLOADCOMPLEET = "download compleet, ";
+                string downloader_downloadcompleet = Gettext.Strings.T("download compleet, ");
                 if (Settings.UpdatecheckUseGPG && this.gpgverif != null)
                 {
-                    const string VERIFDOWNLOAD = "verify download";
-                    this.lblStatusUpdate.Text = DOWNLOADCOMPLEET + VERIFDOWNLOAD;
-                    Log.Write(LogType.info, VERIFDOWNLOAD);
+                    string downloader_verifdownload = Gettext.Strings.T("verify download");
+                    this.lblStatusUpdate.Text = downloader_downloadcompleet + downloader_verifdownload;
+                    Log.Write(LogType.info, downloader_verifdownload);
 
                     this.lblStatusUpdate.Refresh();
                     if (File.Exists(Settings.UpdatecheckGPGPath))
                     {
                         if (!this.gpgverif.VerifDownload(this.downloadfilepath))
-                        {
-                            const string INSTALLABORTED = "Aborted";
-                            this.lblStatusUpdate.Text = INSTALLABORTED;
+                        {                            
+                            this.lblStatusUpdate.Text = downloader_installaborted;
                             return;
                         }
                     }
                     else
                     {
-                        const string CANNOTFINDGPG = "Verify download failed, cannot find gpg: ";
-                        Log.Write(LogType.exception, CANNOTFINDGPG + Settings.UpdatecheckGPGPath);
+                        string downloader_cannotfindgpg = Gettext.Strings.T("Verify download failed, cannot find gpg: ");
+                        Log.Write(LogType.exception, downloader_cannotfindgpg + Settings.UpdatecheckGPGPath);
                         return;
                     }
                 }
 
-                this.lblStatusUpdate.Text = DOWNLOADCOMPLEET;
+                this.lblStatusUpdate.Text = downloader_downloadcompleet;
                 this.lblStatusUpdate.Refresh();
 
                 if (this.runandexit)
                 {
-                    const string INSTALLING = "installing.. ";
-                    this.lblStatusUpdate.Text = DOWNLOADCOMPLEET + INSTALLING;
+                    string downloader_installing = Gettext.Strings.T("installing.. ");
+                    this.lblStatusUpdate.Text = downloader_downloadcompleet + downloader_installing;
                     this.lblStatusUpdate.Refresh();
                     System.Threading.Thread.Sleep(100);
 
@@ -383,7 +382,7 @@ namespace NoteFly
             }
             else
             {
-                this.lblStatusUpdate.Text = "aborted.";
+                this.lblStatusUpdate.Text = downloader_installaborted;
             }
         }
 
@@ -420,14 +419,13 @@ namespace NoteFly
                 }
                 else
                 {
-                    const string PREALLOCATEFILEPROBLEM = "Did not preallocate file, because filesize out of range.";
-                    Log.Write(LogType.exception, PREALLOCATEFILEPROBLEM);
+                    Log.Write(LogType.exception, "Did not preallocate file, because filesize out of range.");
                 }
             }
             catch (IOException ioexc)
             {
-                MessageBox.Show(ioexc.Message);
                 Log.Write(LogType.exception, ioexc.Message);
+                MessageBox.Show(ioexc.Message);                
             }
         }
     }

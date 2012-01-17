@@ -400,9 +400,6 @@ namespace NoteFly
             // toolTip
             // 
             this.toolTip.AutomaticDelay = 100;
-            this.toolTip.AutoPopDelay = 1000;
-            this.toolTip.InitialDelay = 200;
-            this.toolTip.ReshowDelay = 20;
             // 
             // saveExportFileDialog
             // 

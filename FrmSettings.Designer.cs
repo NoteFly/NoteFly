@@ -653,6 +653,7 @@ namespace NoteFly
             // tabGeneral
             // 
             this.tabGeneral.Controls.Add(this.chxNotesDeleteRecyclebin);
+            this.tabGeneral.Controls.Add(this.chxLoadPlugins);
             this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
@@ -706,7 +707,7 @@ namespace NoteFly
             "Do nothing",
             "Bring notes to front",
             "Create a new note"});
-            this.cbxActionLeftclick.Location = new System.Drawing.Point(172, 147);
+            this.cbxActionLeftclick.Location = new System.Drawing.Point(165, 167);
             this.cbxActionLeftclick.Name = "cbxActionLeftclick";
             this.cbxActionLeftclick.Size = new System.Drawing.Size(163, 24);
             this.cbxActionLeftclick.TabIndex = 16;
@@ -739,7 +740,7 @@ namespace NoteFly
             // 
             this.lblTextActionLeftClicktTrayicon.AutoSize = true;
             this.lblTextActionLeftClicktTrayicon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(18, 148);
+            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(11, 168);
             this.lblTextActionLeftClicktTrayicon.Name = "lblTextActionLeftClicktTrayicon";
             this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(148, 20);
             this.lblTextActionLeftClicktTrayicon.TabIndex = 15;
@@ -794,9 +795,9 @@ namespace NoteFly
             this.chxShowTooltips.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chxShowTooltips.Location = new System.Drawing.Point(26, 75);
             this.chxShowTooltips.Name = "chxShowTooltips";
-            this.chxShowTooltips.Size = new System.Drawing.Size(103, 21);
+            this.chxShowTooltips.Size = new System.Drawing.Size(129, 21);
             this.chxShowTooltips.TabIndex = 13;
-            this.chxShowTooltips.Text = "Show tooltips";
+            this.chxShowTooltips.Text = "Show tooltip hints";
             this.chxShowTooltips.UseCompatibleTextRendering = true;
             this.chxShowTooltips.UseVisualStyleBackColor = true;
             // 
@@ -1863,7 +1864,6 @@ namespace NoteFly
             // tabAdvance
             // 
             this.tabAdvance.Controls.Add(this.numWarnLimitVisible);
-            this.tabAdvance.Controls.Add(this.chxLoadPlugins);
             this.tabAdvance.Controls.Add(this.lblTextVisibleNotesWarnLimit);
             this.tabAdvance.Controls.Add(this.lblTextTotalNotesWarnLimit);
             this.tabAdvance.Controls.Add(this.numWarnLimitTotal);
@@ -1910,11 +1910,11 @@ namespace NoteFly
             this.chxLoadPlugins.AutoSize = true;
             this.chxLoadPlugins.Checked = true;
             this.chxLoadPlugins.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxLoadPlugins.Location = new System.Drawing.Point(16, 137);
+            this.chxLoadPlugins.Location = new System.Drawing.Point(20, 121);
             this.chxLoadPlugins.Name = "chxLoadPlugins";
-            this.chxLoadPlugins.Size = new System.Drawing.Size(100, 21);
+            this.chxLoadPlugins.Size = new System.Drawing.Size(146, 21);
             this.chxLoadPlugins.TabIndex = 25;
-            this.chxLoadPlugins.Text = "Load plugins";
+            this.chxLoadPlugins.Text = "Allow to load plugins";
             this.chxLoadPlugins.UseCompatibleTextRendering = true;
             this.chxLoadPlugins.UseVisualStyleBackColor = true;
             // 

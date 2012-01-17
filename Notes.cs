@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="Notes.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -374,16 +374,17 @@ namespace NoteFly
         {
             if (!Directory.Exists(Settings.NotesSavepath))
             {
-                const string NOTEFOLDERDOESNOTEXIST = "Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?";
-                DialogResult result = MessageBox.Show(NOTEFOLDERDOESNOTEXIST, "Notes folder doesn't exist", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                string notes_notefolderdoesnotexist = Gettext.Strings.T("Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?");
+                string notes_notefolderdoesnotexisttitle = Gettext.Strings.T("Notes folder doesn't exist");
+                DialogResult result = MessageBox.Show(notes_notefolderdoesnotexist, notes_notefolderdoesnotexisttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
-                    Log.Write(LogType.error, (NOTEFOLDERDOESNOTEXIST + " No"));
+                    Log.Write(LogType.error, (notes_notefolderdoesnotexist + " No"));
                     return;
                 }
                 else
                 {
-                    Log.Write(LogType.error, (NOTEFOLDERDOESNOTEXIST + " Yes"));
+                    Log.Write(LogType.error, (notes_notefolderdoesnotexist + " Yes"));
                     Settings.NotesSavepath = Program.AppDataFolder;
                 }
             }
@@ -584,7 +585,9 @@ namespace NoteFly
 #endif
             if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE))))
             {
-                DialogResult resdoimport = MessageBox.Show("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.", "Import out NoteFly 1.0.x", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                string notes_importtonf2 = Gettext.Strings.T("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.");
+                string notes_importtonf2title = Gettext.Strings.T("Import out NoteFly 1.0.x");
+                DialogResult resdoimport = MessageBox.Show(notes_importtonf2, notes_importtonf2title, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (resdoimport == DialogResult.Yes)
                 {
                     string nf1settingsfile = Path.Combine(nf1appdata, "settings.xml");
@@ -658,8 +661,9 @@ namespace NoteFly
         {
             if (totanumbernotes > Settings.NotesWarnlimitTotal)
             {
-                const string MANYNOTESLOADALL = "There are many notes loading this can take a while, do you want to load them all?";
-                DialogResult dlgres = MessageBox.Show(MANYNOTESLOADALL, "Contine loading many notes?", MessageBoxButtons.YesNo);
+                string notes_manynotesloadall = Gettext.Strings.T("There are many notes loading this can take a while, do you want to load them all?");
+                string notes_manynotesloadalltitle = Gettext.Strings.T("Contine loading many notes?");
+                DialogResult dlgres = MessageBox.Show(notes_manynotesloadall, notes_manynotesloadalltitle, MessageBoxButtons.YesNo);
                 if (dlgres == DialogResult.No)
                 {
                     totanumbernotes = Settings.NotesWarnlimitTotal;
@@ -678,8 +682,9 @@ namespace NoteFly
         {
             if (currentnumber > Settings.NotesWarnlimitVisible)
             {
-                const string MANYNOTESVISIBLE = "There are many notes visible. Hide some notes to make loading faster.";
-                MessageBox.Show(MANYNOTESVISIBLE, "Many notes visible", MessageBoxButtons.YesNo);
+                string notes_manynotesvisible = Gettext.Strings.T("There are many notes visible. Hide some notes to make loading faster.");
+                string notes_manynotesvisibletitle = Gettext.Strings.T("Many notes visible");
+                MessageBox.Show(notes_manynotesvisible, notes_manynotesvisibletitle, MessageBoxButtons.YesNo);
                 return true;
             }
 

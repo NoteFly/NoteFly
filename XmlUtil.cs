@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="XmlUtil.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -207,7 +207,9 @@ namespace NoteFly
             System.Reflection.Assembly ipluginasm = System.Reflection.Assembly.ReflectionOnlyLoadFrom(Path.Combine(Program.InstallFolder, "IPlugin.dll"));
             if (ipluginasm == null)
             {
-                System.Windows.Forms.MessageBox.Show("IPlugin not found");
+                string xmlutil_ipluginnotfound = Gettext.Strings.T("IPlugin not found");
+                Log.Write(LogType.exception, xmlutil_ipluginnotfound);
+                System.Windows.Forms.MessageBox.Show(xmlutil_ipluginnotfound);
             }
             string versionipluginstring = ipluginasm.GetName().Version.Major + "." + ipluginasm.GetName().Version.Minor + "." + ipluginasm.GetName().Version.Build;
             ipluginasm = null;
@@ -525,9 +527,6 @@ namespace NoteFly
                         case "NotesTitlepanelMinHeight":
                             Settings.NotesTitlepanelMinHeight = xmlread.ReadElementContentAsInt();
                             break;
-                        case "NotesWarnLimit": // TODO: legacy setting, only read it no writing it anymore.
-                            Settings.NotesWarnlimitTotal = xmlread.ReadElementContentAsInt();
-                            break;
                         case "NotesWarnlimitTotal":
                             Settings.NotesWarnlimitTotal = xmlread.ReadElementContentAsInt();
                             break;
@@ -609,9 +608,6 @@ namespace NoteFly
                             break;
                         case "FontTitleFamily":
                             Settings.FontTitleFamily = xmlread.ReadElementContentAsString();
-                            break;
-                        case "SocialEmailDefaultadres": // TODO: legacy setting, only read, to be removed in NoteFly 2.5.0>
-                            Settings.SharingEmailDefaultadres = xmlread.ReadElementContentAsString();
                             break;
                         case "SharingEmailDefaultadres":
                             Settings.SharingEmailDefaultadres = xmlread.ReadElementContentAsString();

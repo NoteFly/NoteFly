@@ -87,10 +87,10 @@ namespace NoteFly
                 }
                 else
                 {
-                    const string SETTINGS_DIRDOESNOTEXIST = "Directory does not exist.\r\nPlease choice a valid directory.";
-                    const string SETTINGS_DIRDOESNOTEXISTTITLE = "Directory not found";
-                    Log.Write(LogType.info, SETTINGS_DIRDOESNOTEXIST);
-                    MessageBox.Show(SETTINGS_DIRDOESNOTEXIST, SETTINGS_DIRDOESNOTEXISTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string settings_dirdoesnotexist = Gettext.Strings.T("Directory does not exist.\r\nPlease choice a valid directory.");
+                    string settings_dirdoesnotexisttitle = Gettext.Strings.T("Directory does not exist.\r\nPlease choice a valid directory.");
+                    Log.Write(LogType.info, settings_dirdoesnotexist);
+                    MessageBox.Show(settings_dirdoesnotexist, settings_dirdoesnotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -112,14 +112,13 @@ namespace NoteFly
         /// <param name="expertsettings">Is showing expert settings enabled.</param>
         private void SetFormTitle(bool expertsettings)
         {
-            const string SETTINGSTITLE = "settings";
             if (expertsettings)
             {
-                this.Text = "Expert " + SETTINGSTITLE;
+                this.Text = Gettext.Strings.T("Expert settings");
             }
             else
             {
-                this.Text = SETTINGSTITLE;
+                this.Text = Gettext.Strings.T("Settings");
             }
         }
 
@@ -130,65 +129,65 @@ namespace NoteFly
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnOK_Click(object sender, EventArgs e)
-        {            
-            const string SETTINGS_INVALIDFONTSIZE = "Font size invalid. Minimal 4pt maximum 128pt allowed.";
-            const string SETTINGS_INVALIDFONTSIZETITLE = "Error invalid fontsize";
-            const string SETTINGS_NOFONT = "Please select a font.";
-            const string SETTINGS_NOFONTTITLE = "Error no font.";
+        {
+            string settings_invalidfontsize = Gettext.Strings.T("Font size invalid. Minimal 4pt maximum 128pt allowed.");
+            string settings_invalidfontsizetitle = Gettext.Strings.T("Error invalid fontsize");
+            string settings_nofont = Gettext.Strings.T("Please select a font.");
+            string settings_nofonttitle = Gettext.Strings.T("Error no font.");
             if (!Directory.Exists(this.tbNotesSavePath.Text))
             {
-                const string SETTINGS_INVALIDFOLDERSAVENOTE = "Invalid folder for saving notes folder.";
-                const string SETTINGS_INVALIDFOLDERSAVENOTETITLE = "Error invalid notes folder";
-                Log.Write(LogType.info, SETTINGS_INVALIDFOLDERSAVENOTE);
-                MessageBox.Show(SETTINGS_INVALIDFOLDERSAVENOTE, SETTINGS_INVALIDFOLDERSAVENOTETITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string settings_invalidfoldersavenote = Gettext.Strings.T("Invalid folder for saving notes folder.");
+                string settings_invalidfoldersavenotetitle = Gettext.Strings.T("Error invalid notes folder");
+                Log.Write(LogType.info, settings_invalidfoldersavenote);
+                MessageBox.Show(settings_invalidfoldersavenote, settings_invalidfoldersavenotetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabGeneral;
             }
             else if (string.IsNullOrEmpty(this.cbxFontNoteContent.Text) == true)
             {
-                Log.Write(LogType.info, SETTINGS_NOFONT);
-                MessageBox.Show(SETTINGS_NOFONT, SETTINGS_NOFONTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.info, settings_nofont);
+                MessageBox.Show(settings_nofont, settings_nofonttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if (string.IsNullOrEmpty(this.cbxFontNoteTitle.Text) == true)
             {
-                Log.Write(LogType.info, SETTINGS_NOFONT);
-                MessageBox.Show(SETTINGS_NOFONT, SETTINGS_NOFONTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.info, settings_nofont);
+                MessageBox.Show(settings_nofont, settings_nofonttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((this.numFontSizeContent.Value < 4) || (this.numFontSizeContent.Value > 128))
             {
-                Log.Write(LogType.info, SETTINGS_INVALIDFONTSIZE);
-                MessageBox.Show(SETTINGS_INVALIDFONTSIZE, SETTINGS_INVALIDFONTSIZETITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.info, settings_invalidfontsize);
+                MessageBox.Show(settings_invalidfontsize, settings_invalidfontsizetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((this.numFontSizeTitle.Value < 4) || (this.numFontSizeTitle.Value > 128))
             {
-                Log.Write(LogType.info, SETTINGS_INVALIDFONTSIZE);
-                MessageBox.Show(SETTINGS_INVALIDFONTSIZE, SETTINGS_INVALIDFONTSIZETITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.info, settings_invalidfontsize);
+                MessageBox.Show(settings_invalidfontsize, settings_invalidfontsizetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if (this.cbxTextDirection.SelectedIndex > 1)
             {
-                const string SETTINGS_NOKNOWTEXTDIR = "Settings text direction invalid.";
-                const string SETTINGS_NOKNOWTEXTDIRTITLE = "Error text direction";
-                Log.Write(LogType.error, SETTINGS_NOKNOWTEXTDIR);
-                MessageBox.Show(SETTINGS_NOKNOWTEXTDIR, SETTINGS_NOKNOWTEXTDIRTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string settings_noknowtextdir = Gettext.Strings.T("Settings text direction invalid.");
+                string settings_noknowtextdirtitle = Gettext.Strings.T("Error text direction");
+                Log.Write(LogType.error, settings_noknowtextdir);
+                MessageBox.Show(settings_noknowtextdir, settings_noknowtextdirtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && this.chxSocialEmailDefaultaddressSet.Checked)
             {
-                const string SETTINGS_EMAILNOTVALID = "Given default emailadres is not valid.";
-                const string SETTINGS_EMAILNOTVALIDTITLE = "Email adres no valid";
-                Log.Write(LogType.error, SETTINGS_EMAILNOTVALID);
-                MessageBox.Show(SETTINGS_EMAILNOTVALID, SETTINGS_EMAILNOTVALIDTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string settings_emailnotvalid = Gettext.Strings.T("Given default emailadres is not valid.");
+                string settings_emailnotvalidtitle = Gettext.Strings.T("Email adres no valid");
+                Log.Write(LogType.error, settings_emailnotvalid);
+                MessageBox.Show(settings_emailnotvalid, settings_emailnotvalidtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabSharing;
             }
             else if (!File.Exists(this.tbGPGPath.Text) && this.chxCheckUpdatesSignature.Checked)
             {
-                const string SETTINGS_GPGPATHINVALID = "The path to gpg.exe is not valid.";
-                const string SETTINGS_GPGPATHINVALIDTITLE = "Error not valid gpg path.";
-                Log.Write(LogType.info, SETTINGS_GPGPATHINVALID);
-                MessageBox.Show(SETTINGS_GPGPATHINVALID, SETTINGS_GPGPATHINVALIDTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string settings_gpgpathinvalid = Gettext.Strings.T("The path to gpg.exe is not valid.");
+                string settings_gpgpathinvalidtitle = Gettext.Strings.T("Error not valid gpg path.");
+                Log.Write(LogType.info, settings_gpgpathinvalid);
+                MessageBox.Show(settings_gpgpathinvalid, settings_gpgpathinvalidtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabNetwork;
             }
             else
@@ -213,10 +212,11 @@ namespace NoteFly
                 Settings.NotesDeleteRecyclebin = this.chxNotesDeleteRecyclebin.Checked;
                 Settings.TrayiconLeftclickaction = this.cbxActionLeftclick.SelectedIndex;
                 Settings.SettingsExpertEnabled = this.chxSettingsExpertEnabled.Checked;
+                Settings.ProgramPluginsAllEnabled = this.chxLoadPlugins.Checked;
 
                 // tab: Appearance, notes
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
-                Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);                
+                Settings.NotesTransparencyLevel = Convert.ToDouble(this.numProcTransparency.Value / 100);
                 Settings.NotesTooltipsEnabled = this.chxShowTooltips.Checked;
 
                 // tab: Appearance, new note
@@ -304,8 +304,8 @@ namespace NoteFly
                         }
                         catch (UnauthorizedAccessException unauthexc)
                         {
-                            const string NOWRITERIGHTSREGISTERY = "Not enough right to write logon start key to registry.";
-                            Log.Write(LogType.exception, NOWRITERIGHTSREGISTERY + unauthexc.Message);
+                            string nowriterightsregistery = Gettext.Strings.T("Not enough right to write logon start key to registry.");
+                            Log.Write(LogType.exception, nowriterightsregistery + unauthexc.Message);
                             MessageBox.Show(unauthexc.Message);
                         }
                         catch (Exception exc)
@@ -323,10 +323,10 @@ namespace NoteFly
                 }
                 else
                 {
-                    const string SETTINGS_REGKEYNOTEXIST = "Run key in registery does not exist.";
-                    const string SETTINGS_REGKEYNOTEXISTTITLE = "Error run key registery missing";
-                    Log.Write(LogType.error, SETTINGS_REGKEYNOTEXIST);
-                    MessageBox.Show(SETTINGS_REGKEYNOTEXIST, SETTINGS_REGKEYNOTEXISTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string settings_regkeynotexist = Gettext.Strings.T("Run key in registery does not exist.");
+                    string settings_regkeynotexisttitle = Gettext.Strings.T("Error run key registery missing");
+                    Log.Write(LogType.error, settings_regkeynotexist);
+                    MessageBox.Show(settings_regkeynotexist, settings_regkeynotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 #endif
                 xmlUtil.WriteSettings();
@@ -354,9 +354,9 @@ namespace NoteFly
                         movenotesthread.Start(args);
 
                         movenotesthread.Join(300); // if finished within 300ms don't display buzy moving notes message.
-                        this.ShowWaitOnThread(movenotesthread, 300, "NoteFly is buzy moving your notes");
+                        this.ShowWaitOnThread(movenotesthread, 300, Gettext.Strings.T("NoteFly is buzy moving your notes"));
 
-                        this.notes.LoadNotes(true, false);                        
+                        this.notes.LoadNotes(true, false);
                     }
                     finally
                     {
@@ -375,8 +375,7 @@ namespace NoteFly
                     SyntaxHighlight.DeinitHighlighter();
                 }
 
-                const string SETTINGS_INFOUPDATED = "Settings updated";
-                Log.Write(LogType.info, SETTINGS_INFOUPDATED);
+                Log.Write(LogType.info, "Settings updated");
                 this.Close();
             }
         }
@@ -404,12 +403,12 @@ namespace NoteFly
                     frmmgs.ShowInTaskbar = false;
                     frmmgs.MinimizeBox = false;
                     frmmgs.MaximizeBox = false;
-                    frmmgs.Text = "Please wait";
+                    frmmgs.Text = Gettext.Strings.T("Please wait");
                     Label lblmgs = new Label();
                     lblmgs.Text = message;
                     lblmgs.SetBounds(10, 10, 200, 40);
                     frmmgs.Controls.Add(lblmgs);
-                    frmmgs.Show();                    
+                    frmmgs.Show();
                 }
 
                 Thread.Sleep(checktimems);
@@ -428,9 +427,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
-            const string SETTINGS_SURERESETDEFAULT = "Are you sure, you want to reset all the settings to default?";
-            const string SETTINGS_SURERESETDEFAULTTITLE = "Reset settings?";
-            DialogResult dlgres = MessageBox.Show(SETTINGS_SURERESETDEFAULT, SETTINGS_SURERESETDEFAULTTITLE, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            string settings_sureresetdefault = Gettext.Strings.T("Are you sure, you want to reset all the settings to default?");
+            string settings_sureresetdefaulttitle = Gettext.Strings.T("Reset settings?");
+            DialogResult dlgres = MessageBox.Show(settings_sureresetdefault, settings_sureresetdefaulttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgres == DialogResult.Yes)
             {
                 xmlUtil.WriteDefaultSettings();
@@ -544,18 +543,18 @@ namespace NoteFly
                     }
                     else
                     {
-                        const string SETTINGS_EXCSYSTEMFILENOTMOVED = "File is marked as system file. Did not move.";
-                        throw new ApplicationException(SETTINGS_EXCSYSTEMFILENOTMOVED);
+                        string settings_excsystemfilenotmoved = Gettext.Strings.T("File is marked as system file. Did not move.");
+                        throw new ApplicationException(settings_excsystemfilenotmoved);
                     }
                 }
                 else
                 {
                     if (!errorshowed)
                     {
-                        const string SETTINGS_FILEALREADYEXIST = "Note file(s) already exist.";
-                        const string SETTINGS_FILEALREADYEXISTTITLE = "Error movind note(s)";
-                        Log.Write(LogType.error, SETTINGS_FILEALREADYEXIST);
-                        MessageBox.Show(SETTINGS_FILEALREADYEXIST, SETTINGS_FILEALREADYEXISTTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        string settings_filealreadyexist = Gettext.Strings.T("Note file(s) already exist.");
+                        string settings_filealreadyexisttitle = Gettext.Strings.T("Error movind note(s)");
+                        Log.Write(LogType.error, settings_filealreadyexist);
+                        MessageBox.Show(settings_filealreadyexist, settings_filealreadyexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         errorshowed = true;
                     }
                 }
@@ -577,39 +576,30 @@ namespace NoteFly
             this.chxConfirmDeletenote.Checked = Settings.ConfirmDeletenote;
             this.chxNotesDeleteRecyclebin.Checked = Settings.NotesDeleteRecyclebin;
             this.SetComboBoxSelectedIndex(this.cbxActionLeftclick, Settings.TrayiconLeftclickaction);
-            //this.cbxActionLeftclick.SelectedIndex = Settings.TrayiconLeftclickaction;            
 
             // tab: Appearance, notes
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
             this.SetUpDownSpinnerValue(this.numProcTransparency, (Settings.NotesTransparencyLevel * 100));
-            //this.numProcTransparency.Value = Convert.ToDecimal(Settings.NotesTransparencyLevel * 100);
             this.chxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
 
             // tab: Appearance, new note
             this.chxUseRandomDefaultNote.Checked = Settings.NotesDefaultRandomSkin;
             this.SetComboBoxSelectedIndex(this.cbxDefaultSkin, Settings.NotesDefaultSkinnr);
-            //this.cbxDefaultSkin.SelectedIndex = Settings.NotesDefaultSkinnr;
             this.SetUpDownSpinnerValue(this.numNotesDefaultWidth, Settings.NotesDefaultWidth);
-            //this.numNotesDefaultWidth.Value = Convert.ToDecimal(Settings.NotesDefaultWidth);
             this.SetUpDownSpinnerValue(this.numNotesDefaultHeight, Settings.NotesDefaultHeight);            
-            //this.numNotesDefaultHeight.Value = Convert.ToDecimal(Settings.NotesDefaultHeight);
             this.chxUseDateAsDefaultTitle.Checked = Settings.NotesDefaultTitleDate;
 
             // tab: Appearance, fonts
             this.SetUpDownSpinnerValue(this.numFontSizeTitle, Settings.FontTitleSize);
-            //this.numFontSizeTitle.Value = Convert.ToDecimal(Settings.FontTitleSize);            
             this.cbxFontNoteContent.SelectedValue = Settings.FontContentFamily;
             this.SetUpDownSpinnerValue(this.numFontSizeContent, Settings.FontContentSize);
-            //this.numFontSizeContent.Value = Convert.ToDecimal(Settings.FontContentSize);
             this.SetComboBoxSelectedIndex(this.cbxTextDirection, Settings.FontTextdirection);
-            //this.cbxTextDirection.SelectedIndex = Settings.FontTextdirection;
             this.cbxFontNoteContent.Text = Settings.FontContentFamily;
             this.cbxFontNoteTitle.Text = Settings.FontTitleFamily;
             this.cbxFontNoteTitleBold.Checked = Settings.FontTitleStylebold;
 
             // tab: Appearance, trayicon
             this.SetUpDownSpinnerValue(this.numTrayiconFontsize, Settings.TrayiconFontsize);
-            //this.numTrayiconFontsize.Value = Convert.ToDecimal(Settings.TrayiconFontsize);
             this.chxTrayiconBoldNewnote.Checked = Settings.TrayiconCreatenotebold;
             this.chxTrayiconBoldManagenotes.Checked = Settings.TrayiconManagenotesbold;
             this.chxTrayiconBoldSettings.Checked = Settings.TrayiconSettingsbold;
@@ -618,10 +608,8 @@ namespace NoteFly
 
             // tab: Appearance, manage notes
             this.SetComboBoxSelectedIndex(this.cbxManageNotesSkin, Settings.ManagenotesSkinnr);
-            //this.cbxManageNotesSkin.SelectedIndex = Settings.ManagenotesSkinnr;
             this.cbxManagenotesTooltipContent.Checked = Settings.ManagenotesTooltip;
             this.SetUpDownSpinnerValue(numManagenotesFont, Settings.ManagenotesFontsize);
-            //this.numManagenotesFont.Value = Convert.ToDecimal(Settings.ManagenotesFontsize);
             this.chxCaseSentiveSearch.Checked = Settings.ManagenotesSearchCasesentive;
 
             // tab: Highlight
@@ -644,7 +632,6 @@ namespace NoteFly
             {
                 this.chxCheckUpdates.Checked = true;
                 this.SetUpDownSpinnerValue(this.numUpdateCheckDays, Settings.UpdatecheckEverydays);
-                //this.numUpdateCheckDays.Value = Convert.ToDecimal(Settings.UpdatecheckEverydays);
                 this.numUpdateCheckDays.Enabled = true;
             }
             else
@@ -661,16 +648,13 @@ namespace NoteFly
             this.iptbProxy.Text = Settings.NetworkProxyAddress;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
             this.SetUpDownSpinnerValue(this.numTimeout, Settings.NetworkConnectionTimeout);
-            //this.numTimeout.Value = Settings.NetworkConnectionTimeout;
             this.SetLastUpdatecheckDate(Settings.SettingsExpertEnabled);                        
 
             // tab: Advance
             this.chxLoadPlugins.Checked = Settings.ProgramPluginsAllEnabled;
             this.tbNotesSavePath.Text = Settings.NotesSavepath;
             this.SetUpDownSpinnerValue(this.numWarnLimitTotal, Settings.NotesWarnlimitTotal);
-            //this.numWarnLimitTotal.Value = Convert.ToDecimal(Settings.NotesWarnlimitTotal);
             this.SetUpDownSpinnerValue(this.numWarnLimitVisible, Settings.NotesWarnlimitVisible);
-            //this.numWarnLimitVisible.Value = Convert.ToDecimal(Settings.NotesWarnlimitVisible);
             this.chxLogDebug.Checked = Settings.ProgramLogInfo;
             this.chxLogErrors.Checked = Settings.ProgramLogError;
             this.chxLogExceptions.Checked = Settings.ProgramLogException;
@@ -801,6 +785,7 @@ namespace NoteFly
             bool expertsettings = this.chxSettingsExpertEnabled.Checked;
             this.SetFormTitle(expertsettings);
             this.chxConfirmDeletenote.Visible = expertsettings;
+            this.chxLoadPlugins.Visible = expertsettings;
             this.chxNotesDeleteRecyclebin.Visible = expertsettings;
             this.chxShowTooltips.Visible = expertsettings;
             this.chxUseAlternativeTrayicon.Visible = expertsettings;
@@ -811,6 +796,7 @@ namespace NoteFly
             this.chxCheckUpdatesSignature.Visible = expertsettings;
             this.lblTextNetworkTimeout.Visible = expertsettings;
             this.numTimeout.Visible = expertsettings;
+            this.lblTextMiliseconds.Visible = expertsettings;
             this.lblTextNetworkMiliseconds.Visible = expertsettings;
             this.cbxFontNoteTitleBold.Visible = expertsettings;
             this.chxLogErrors.Visible = expertsettings;
@@ -819,6 +805,7 @@ namespace NoteFly
             this.numWarnLimitTotal.Visible = expertsettings;
             this.lblTextVisibleNotesWarnLimit.Visible = expertsettings;
             this.numWarnLimitVisible.Visible = expertsettings;
+            this.chxCaseSentiveSearch.Visible = expertsettings;
             this.SetLastUpdatecheckDate(expertsettings);
         }
 
