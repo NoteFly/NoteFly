@@ -31,8 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlugins));
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
+            this.pluginGrid = new NoteFly.PluginGrid();
             this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
+            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.chlbxAvailiblePlugins = new System.Windows.Forms.CheckedListBox();
             this.lblLicense = new System.Windows.Forms.Label();
@@ -40,8 +42,6 @@
             this.lblPluginName = new System.Windows.Forms.Label();
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
-            this.pluginGrid = new NoteFly.PluginGrid();
-            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.tabControlPlugins.SuspendLayout();
             this.tabPagePluginsInstalled.SuspendLayout();
             this.tabPagePluginsAvailable.SuspendLayout();
@@ -73,6 +73,13 @@
             this.tabPagePluginsInstalled.TabIndex = 1;
             this.tabPagePluginsInstalled.Text = "Installed";
             this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
+            // 
+            // pluginGrid
+            // 
+            this.pluginGrid.Location = new System.Drawing.Point(0, 18);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(414, 290);
+            this.pluginGrid.TabIndex = 0;
             // 
             // tabPagePluginsAvailable
             // 
@@ -109,6 +116,16 @@
             this.splitContainerAvailablePlugins.Size = new System.Drawing.Size(402, 302);
             this.splitContainerAvailablePlugins.SplitterDistance = 191;
             this.splitContainerAvailablePlugins.TabIndex = 0;
+            // 
+            // searchtbPlugins
+            // 
+            this.searchtbPlugins.Enabled = false;
+            this.searchtbPlugins.Location = new System.Drawing.Point(0, 260);
+            this.searchtbPlugins.Name = "searchtbPlugins";
+            this.searchtbPlugins.Size = new System.Drawing.Size(188, 28);
+            this.searchtbPlugins.TabIndex = 4;
+            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
+            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
             // 
             // lblTextNoInternetConnection
             // 
@@ -179,22 +196,6 @@
             this.btnPluginDownload.UseVisualStyleBackColor = true;
             this.btnPluginDownload.Visible = false;
             this.btnPluginDownload.Click += new System.EventHandler(this.btnPluginDownload_Click);
-            // 
-            // pluginGrid
-            // 
-            this.pluginGrid.Location = new System.Drawing.Point(0, 18);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(414, 290);
-            this.pluginGrid.TabIndex = 0;
-            // 
-            // searchtbPlugins
-            // 
-            this.searchtbPlugins.Enabled = false;
-            this.searchtbPlugins.Location = new System.Drawing.Point(0, 260);
-            this.searchtbPlugins.Name = "searchtbPlugins";
-            this.searchtbPlugins.Size = new System.Drawing.Size(188, 28);
-            this.searchtbPlugins.TabIndex = 4;
-            this.searchtbPlugins.DoSearch += new NoteFly.SearchTextBox.DoSearchHandler(this.searchtbPlugins_DoSearch);
             // 
             // FrmPlugins
             // 

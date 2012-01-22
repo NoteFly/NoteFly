@@ -137,7 +137,7 @@ namespace NoteFly
                 const long MAXUPDATEFILESIZE = 1073741824;
                 if (filesize > MAXUPDATEFILESIZE)
                 {
-                    Log.Write(LogType.exception, "To downloaded file too large, more than " + MAXUPDATEFILESIZE+" bytes.");
+                    Log.Write(LogType.exception, "To downloaded file too large, more than " + MAXUPDATEFILESIZE + " bytes.");
                     return;
                 }
 

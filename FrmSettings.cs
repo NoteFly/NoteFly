@@ -192,12 +192,12 @@ namespace NoteFly
             }
             else
             {
-                if (Program.pluginsenabled != null)
+                if (PluginsManager.pluginsenabled != null)
                 {
                     // check plugin settings
-                    for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                    for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
                     {
-                        if (!Program.pluginsenabled[i].SaveSettingsTab())
+                        if (!PluginsManager.pluginsenabled[i].SaveSettingsTab())
                         {
                             this.tabControlSettings.SelectedTab = this.tabSharing;
                             return;
@@ -250,11 +250,12 @@ namespace NoteFly
 
                 // tab: Highlight
                 Settings.HighlightHyperlinks = this.chxHighlightHyperlinks.Checked;
+                Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
                 Settings.HighlightHTML = this.chxHighlightHTML.Checked;
                 Settings.HighlightPHP = this.chxHighlightPHP.Checked;
                 Settings.HighlightSQL = this.chxHighlightSQL.Checked;
 
-                // tab: Sharing
+                // tab: Sharing                                
                 Settings.SharingEmailEnabled = this.chxSocialEmailEnabled.Checked;
                 Settings.SharingEmailDefaultadres = string.Empty;
                 if (this.chxSocialEmailDefaultaddressSet.Checked)
@@ -278,7 +279,7 @@ namespace NoteFly
                 Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
                 Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
                 Settings.NetworkProxyAddress = this.iptbProxy.getIPAddress();
-                Settings.ConfirmLinkclick = this.chxConfirmLink.Checked;
+                Settings.NetworkConnectionForceipv6 = this.chxForceUseIPv6.Checked;
 
                 // tab: Advance
                 if (Directory.Exists(this.tbNotesSavePath.Text))
@@ -766,7 +767,7 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void btnCheckUpdates_Click(object sender, EventArgs e)
         {
-            Settings.UpdatecheckLastDate = Program.UpdateCheck();
+            Settings.UpdatecheckLastDate = Program.DoUpdateCheck();
             if (!string.IsNullOrEmpty(Settings.UpdatecheckLastDate))
             {
                 this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
@@ -796,6 +797,7 @@ namespace NoteFly
             this.chxCheckUpdatesSignature.Visible = expertsettings;
             this.lblTextNetworkTimeout.Visible = expertsettings;
             this.numTimeout.Visible = expertsettings;
+            this.chxForceUseIPv6.Visible = expertsettings;
             this.lblTextMiliseconds.Visible = expertsettings;
             this.lblTextNetworkMiliseconds.Visible = expertsettings;
             this.cbxFontNoteTitleBold.Visible = expertsettings;
@@ -842,18 +844,18 @@ namespace NoteFly
         {
             if (this.tabControlSettings.SelectedTab == this.tabSharing)
             {
-                if (Program.pluginsenabled != null)
+                if (PluginsManager.pluginsenabled != null)
                 {
                     while (this.tabControlSharing.TabCount > 1)
                     {
                         this.tabControlSharing.Controls.RemoveAt(1);
                     }
 
-                    for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                    for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
                     {
-                        if (Program.pluginsenabled[i].InitShareSettingsTab() != null)
+                        if (PluginsManager.pluginsenabled[i].InitShareSettingsTab() != null)
                         {
-                            this.tabControlSharing.Controls.Add(Program.pluginsenabled[i].InitShareSettingsTab());
+                            this.tabControlSharing.Controls.Add(PluginsManager.pluginsenabled[i].InitShareSettingsTab());
                         }
                     }
                 }

@@ -32,10 +32,15 @@ namespace NoteFly
     /// </summary>
     public partial class SearchTextBox : UserControl
     {
-        public delegate void DoSearchHandler(string keywords);
+        public delegate void SearchStartHandler(string keywords);
 
-        [Description("A auto search occur.")]
-        public event DoSearchHandler DoSearch;
+        public delegate void SearchStopHandler();
+
+        [Description("A search occur.")]
+        public event SearchStartHandler SearchStart;
+
+        [Description("Keywords entered are cleared not searching anymore")]
+        public event SearchStopHandler SearchStop;
 
         /// <summary>
         /// 
@@ -52,6 +57,9 @@ namespace NoteFly
             this.btnKeywordClear.ForeColor = Color.Black;
         }
 
+        /// <summary>
+        /// A valau indicating whether a keyword is entered.
+        /// </summary>
         public bool IsKeywordEntered
         {
             get
@@ -68,37 +76,43 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// The content of this searchbox is cleared and not highlighted.
+        /// Display all items normal again.
         /// </summary>
         public void Clear()
         {
-            //this.timerStartAutoSearch.Stop();
+            this.timerStartAutoSearch.Stop();
             this.tbKeywords.Clear();
-            this.tbKeywords.BackColor = SystemColors.Window;
-            this.StartSearch();
+            this.tbKeywords.BackColor = SystemColors.Window;                        
+            this.tableLayoutPnlSearchbox.ColumnCount = 2;
+            if (this.SearchStop != null)
+            {
+                this.SearchStop();
+            }
         }
 
         /// <summary>
-        /// 
+        /// keyword is entered and wait time for search to start has expire 
+        /// or enter is entered do a search now.
         /// </summary>
-        private void StartSearch()
+        private void DoSearch()
         {
             this.timerStartAutoSearch.Stop();
 
-            if (DoSearch != null)
-            {
-                DoSearch(this.tbKeywords.Text);
-            }
-
-            if (this.tbKeywords.Text == string.Empty)
-            {
-                this.tbKeywords.BackColor = SystemColors.Window;
-                this.tableLayoutPnlSearchbox.ColumnCount = 2;
-            }
-            else
+            if (this.tbKeywords.TextLength > 0)
             {
                 this.tbKeywords.BackColor = Color.LightYellow;
                 this.tableLayoutPnlSearchbox.ColumnCount = 3;
+
+                if (this.SearchStart != null)
+                {
+                    this.SearchStart(this.tbKeywords.Text);
+                }
+            }
+            else
+            {
+                this.tbKeywords.BackColor = SystemColors.Window;
+                this.tableLayoutPnlSearchbox.ColumnCount = 2;
             }
         }
 
@@ -109,7 +123,6 @@ namespace NoteFly
         {            
             this.timerStartAutoSearch.Stop();
             this.tbKeywords.BackColor = SystemColors.Window;
-            this.timerStartAutoSearch.Enabled = true;
             this.timerStartAutoSearch.Start();
         }
 
@@ -120,7 +133,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void timerStartSearch_Tick(object sender, EventArgs e)
         {
-            this.StartSearch();
+            this.DoSearch();
         }
 
         /// <summary>
@@ -132,7 +145,7 @@ namespace NoteFly
         {
             if (e.KeyCode == Keys.Enter)
             {
-                this.StartSearch();
+                this.DoSearch();
             }
             else
             {
@@ -146,7 +159,7 @@ namespace NoteFly
             else
             {
                 this.btnKeywordClear.Visible = false;
-                this.StartSearch();
+                this.SearchStop();
             }
         }
 

@@ -119,13 +119,13 @@ namespace NoteFly
                 this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
             }
 
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.pluginsenabled != null)
             {
-                for (int p = 0; p < Program.pluginsenabled.Length; p++)
+                for (int p = 0; p < PluginsManager.pluginsenabled.Length; p++)
                 {
-                    if (Program.pluginsenabled[p].InitFrmManageNotesBtns() != null)
+                    if (PluginsManager.pluginsenabled[p].InitFrmManageNotesBtns() != null)
                     {
-                        Button[] buttons = Program.pluginsenabled[p].InitFrmManageNotesBtns();
+                        Button[] buttons = PluginsManager.pluginsenabled[p].InitFrmManageNotesBtns();
                         for (int i = 0; i < buttons.Length; i++)
                         {
                             this.tableLayoutPanelButtons.ColumnCount += 1;
@@ -1234,7 +1234,7 @@ namespace NoteFly
             // VerticalScrollingOffset is readonly, so we need a bit of 'hacking' to set it.
             if (vertscrolloffset > 0)
             {
-                System.Reflection.PropertyInfo verticalOffset = dataGridViewNotes.GetType().GetProperty("VerticalOffset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                System.Reflection.PropertyInfo verticalOffset = this.dataGridViewNotes.GetType().GetProperty("VerticalOffset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 verticalOffset.SetValue(this.dataGridViewNotes, vertscrolloffset, null);
             }
         }
@@ -1342,7 +1342,6 @@ namespace NoteFly
             }
             else
             {
-                //throw new ApplicationException("Negative rowindex.");
                 return -1;
             }
         }
@@ -1494,7 +1493,7 @@ namespace NoteFly
                     string contentpreview = null;
                     if (e.RowIndex >= 0)
                     {
-                        int notepos = GetNoteposBySelrow(e.RowIndex);
+                        int notepos = this.GetNoteposBySelrow(e.RowIndex);
                         if (notepos > 0)
                         {
                             // todo GetContent() is wrong for this but works for now. Add GetContentPreview() that has limited disk read.
@@ -1565,7 +1564,7 @@ namespace NoteFly
         /// 
         /// </summary>
         /// <param name="keywords"></param>
-        private void searchTextBoxNotes_DoSearch(string keywords)
+        private void searchTextBoxNotes_SearchStart(string keywords)
         {
             this.Resetdatagrid();
             DataTable dt = this.CreateDatatable();
@@ -1580,14 +1579,23 @@ namespace NoteFly
                 
                 if (title.Contains(keywords))
                 {
-                    AddDatatableNoteRow(dt, i);
+                    this.AddDatatableNoteRow(dt, i);
                 }
             }
 
             this.notes.FrmManageNotesNeedUpdate = true;
-            this.dataGridViewNotes.DataSource = dt;            
+            this.dataGridViewNotes.DataSource = dt;
             this.SetDataGridViewColumsWidth();
             
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        private void searchTextBoxNotes_SearchStop()
+        { 
+            this.DrawNotesGrid(); 
+            this.SetDataGridViewColumsWidth();
         }
 
         #endregion Methods

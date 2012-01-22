@@ -428,7 +428,7 @@ namespace NoteFly
                             break;
                         case "NotesDefaultTitleDate":
                             Settings.NotesDefaultTitleDate = xmlread.ReadElementContentAsBoolean();
-                            break;                            
+                            break;
                         case "NotesDeleteRecyclebin":
                             Settings.NotesDeleteRecyclebin = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -1141,7 +1141,7 @@ namespace NoteFly
                     xmlwrite.WriteElementString("ProgramPluginsDllexclude", Settings.ProgramPluginsDllexclude);
                     xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
                     xmlwrite.WriteElementString("SharingEmailDefaultadres", Settings.SharingEmailDefaultadres);
-                    xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);                    
+                    xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
                     xmlwrite.WriteEndElement();
                     xmlwrite.WriteEndDocument();
                 }
@@ -1200,127 +1200,89 @@ namespace NoteFly
         /// <param name="downloadurl">the download url found</param>
         /// <returns>the newest version as integer array, 
         /// any negative valeau(-1 by default) considered as error.</returns>
-        public static short[] GetLatestVersion(out string versionquality, out string downloadurl)
+        public static short[] ParserLatestVersion(string serverresponse, out string versionquality, out string downloadurl)
         {
             short[] version = new short[3];
             version[0] = -1;
             version[1] = -1;
             version[2] = -1;
             versionquality = Program.AssemblyVersionQuality;
-            downloadurl = "http://www.notefly.org/"; // default url if none is provided.
+            downloadurl = string.Empty;
+            if (string.IsNullOrEmpty(serverresponse))
+            {
+                return version;
+            }
+
             try
             {
-                System.Net.ServicePointManager.Expect100Continue = false;
-                System.Net.ServicePointManager.DefaultConnectionLimit = 1;
-                if (string.IsNullOrEmpty(Settings.UpdatecheckURL))
+                xmlread = new XmlTextReader(new System.IO.StringReader(serverresponse));
+                xmlread.ProhibitDtd = true;
+                while (xmlread.Read())
                 {
-                    Log.Write(LogType.exception, "No UpdatecheckURL found in settings");
-                    return version;
-                }
-
-                if (Settings.NetworkConnectionForceipv6)
-                {
-                    Settings.UpdatecheckURL = Settings.UpdatecheckURL.Replace("//update.", "//ipv6."); // not replacing "http", "https", "ftp"
-                    Settings.UpdatecheckURL = Settings.UpdatecheckURL.Replace("//www.", "//ipv6.");
-                }
-
-                if (!Uri.IsWellFormedUriString(Settings.UpdatecheckURL, UriKind.Absolute))
-                {
-                    Log.Write(LogType.error, "Invalid update uri.");
-                }
-
-                HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(Settings.UpdatecheckURL);
-                request.Method = "GET";
-                request.ContentType = "text/xml";
-                request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
-                request.Timeout = Settings.NetworkConnectionTimeout;
-                if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
-                {
-                    request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
-                }
-
-                //request.Headers["Accept-Encoding"] = "gzip";
-                request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore); // do not cache, prevent incorrect cache result.
-                request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
-                Stream responsestream;
-                using (WebResponse response = request.GetResponse())
-                {
-                    responsestream = response.GetResponseStream();
-                    xmlread = new XmlTextReader(responsestream);
-                    xmlread.ProhibitDtd = true;
-                    while (xmlread.Read())
+                    switch (xmlread.Name)
                     {
-                        switch (xmlread.Name)
-                        {
-                            case "major":
-                                try
-                                {
-                                    version[0] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
-                                }
-                                catch (OverflowException)
-                                {
-                                    version[0] = -1;
-                                }
+                        case "major":
+                            try
+                            {
+                                version[0] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
+                            }
+                            catch (OverflowException)
+                            {
+                                version[0] = -1;
+                            }
 
-                                break;
-                            case "minor":
-                                try
-                                {
-                                    version[1] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
-                                }
-                                catch (OverflowException)
-                                {
-                                    version[1] = -1;
-                                }
+                            break;
+                        case "minor":
+                            try
+                            {
+                                version[1] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
+                            }
+                            catch (OverflowException)
+                            {
+                                version[1] = -1;
+                            }
 
-                                break;
-                            case "release":
-                                try
-                                {
-                                    version[2] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
-                                }
-                                catch (OverflowException)
-                                {
-                                    version[2] = -1;
-                                }
+                            break;
+                        case "release":
+                            try
+                            {
+                                version[2] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
+                            }
+                            catch (OverflowException)
+                            {
+                                version[2] = -1;
+                            }
 
-                                break;
-                            case "quality":
-                                string getquality = xmlread.ReadElementContentAsString().Trim();
-                                const int VERQUALITYMAXLEN = 16;
-                                if (getquality.Length <= VERQUALITYMAXLEN)
-                                {
-                                    versionquality = getquality;
-                                }
+                            break;
+                        case "quality":
+                            string getquality = xmlread.ReadElementContentAsString().Trim();
+                            const int VERQUALITYMAXLEN = 16;
+                            if (getquality.Length <= VERQUALITYMAXLEN)
+                            {
+                                versionquality = getquality;
+                            }
 
-                                break;
-                            case "downloadurl":
-                                string downloadurlraw = xmlread.ReadElementContentAsString().Trim();
-                                const int DOWNLOADURLMINLEN = 10; // "http://a.b".Length = 10
-                                const int DOWNLOADURLMAXLEN = 512;
-                                if ((downloadurlraw.Length >= DOWNLOADURLMINLEN) && (downloadurlraw.Length <= DOWNLOADURLMAXLEN))
-                                {
-                                    downloadurl = downloadurlraw;
-                                }
+                            break;
+                        case "downloadurl":
+                            string downloadurlraw = xmlread.ReadElementContentAsString().Trim();
+                            const int DOWNLOADURLMINLEN = 10; // "http://a.b".Length = 10
+                            const int DOWNLOADURLMAXLEN = 512;
+                            if ((downloadurlraw.Length >= DOWNLOADURLMINLEN) && (downloadurlraw.Length <= DOWNLOADURLMAXLEN))
+                            {
+                                downloadurl = downloadurlraw;
+                            }
 
-                                break;
-                            default:
+                            break;
+                        default:
 
-                                break;
-                        }
-
-                        if (xmlread.Depth > 3)
-                        {
-                            xmlread.Close();
-                        }
+                            break;
                     }
 
-                    responsestream.Close();
+                    if (xmlread.Depth > 3)
+                    {
+                        xmlread.Close();
+                    }
                 }
-            }
-            catch (System.Net.WebException webexc)
-            {
-                Log.Write(LogType.exception, "update check, " + webexc.Message);
             }
             finally
             {

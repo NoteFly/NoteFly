@@ -207,13 +207,13 @@ namespace NoteFly
             this.icon.ContextMenuStrip.Items.Add(this.menuPlugins);
 
             // Create trayicon plugin ToolStripMenuItem items, if any.
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.pluginsenabled != null)
             {
-                for (int p = 0; p < Program.pluginsenabled.Length; p++)
+                for (int p = 0; p < PluginsManager.pluginsenabled.Length; p++)
                 {
-                    if (Program.pluginsenabled[p].InitTrayIconMenu() != null)
+                    if (PluginsManager.pluginsenabled[p].InitTrayIconMenu() != null)
                     {
-                        ToolStripItem toolstripitem = Program.pluginsenabled[p].InitTrayIconMenu();
+                        ToolStripItem toolstripitem = PluginsManager.pluginsenabled[p].InitTrayIconMenu();
                         toolstripitem.Size = new System.Drawing.Size(144, 22);
                         toolstripitem.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
                         this.icon.ContextMenuStrip.Items.Add(toolstripitem);
@@ -457,48 +457,8 @@ namespace NoteFly
                 }
             }
 
-            if (Program.updatethread != null)
-            {
-                try
-                {
-                    Program.updatethread.Abort();
-                }
-                catch (System.Threading.ThreadStateException thexc)
-                {
-                    Log.Write(LogType.exception, thexc.Message);
-                }
-                catch (System.Security.SecurityException secexc)
-                {
-                    Log.Write(LogType.exception, secexc.Message);
-                }
-            }
-
-            this.KillUpdateThread();
             this.components.Dispose();
             Application.Exit();
-        }
-
-        /// <summary>
-        /// Make sure the update thread aborts when  otherwise NoteFly keep running.
-        /// </summary>
-        private void KillUpdateThread()
-        {
-            if (Program.updatethread != null)
-            {
-                try
-                {
-                    Program.updatethread.Interrupt();
-                    Program.updatethread.Abort();
-                }
-                catch (System.Threading.ThreadStateException thexc)
-                {
-                    Log.Write(LogType.exception, thexc.Message);
-                }
-                catch (System.Security.SecurityException secexc)
-                {
-                    Log.Write(LogType.exception, secexc.Message);
-                }
-            }
         }
     }
 }

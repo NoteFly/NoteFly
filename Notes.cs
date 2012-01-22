@@ -405,7 +405,7 @@ namespace NoteFly
             stopwatch.Stop();
             Log.Write(LogType.info, "Notes search time:  " + stopwatch.ElapsedTicks.ToString() + " ticks");
 #endif
-            int numloadingnotes = CheckLimitNotesTotal(notefiles.Length);
+            int numloadingnotes = this.CheckLimitNotesTotal(notefiles.Length);
             this.notes.Capacity = numloadingnotes;
 #if DEBUG
             stopwatch.Reset();
@@ -625,12 +625,12 @@ namespace NoteFly
                         nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
                     }
 
-                    CreateNF1NotesImportedFlagfile(nf1appdata);
+                    this.CreateNF1NotesImportedFlagfile(nf1appdata);
                     Log.Write(LogType.info, "Notes from NoteFly 1.0.x imported.");
                 }
                 else if (resdoimport == DialogResult.No)
                 {
-                    CreateNF1NotesImportedFlagfile(nf1appdata);
+                    this.CreateNF1NotesImportedFlagfile(nf1appdata);
                     Log.Write(LogType.info, "Notes from NoteFly 1.0.x have not been imported.");
                 }
             }

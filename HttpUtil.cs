@@ -27,7 +27,7 @@ namespace NoteFly
     using System.Threading;
 
     /// <summary>
-    /// 
+    /// Http
     /// </summary>
     public class HttpUtil
     {
@@ -57,17 +57,18 @@ namespace NoteFly
         private readonly bool usegzip;
 
         /// <summary>
-        /// Create a new HTTP webrequest.
+        /// Initializes a new instance of the HttpUtil class.
+        /// Create a new Http request.
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="cachesettings"></param>
-        /// <param name="usegzip"></param>
+        /// <param name="url">The url of the request to make</param>
+        /// <param name="cachesettings">The cache settings (important note: this is always NoCacheNoStore under Mono)</param>
+        /// <param name="usegzip">Use gzip compression</param>
         /// <returns></returns>
         public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings, bool usegzip)
         {
             if (Settings.NetworkConnectionForceipv6)
             {
-                // use dns ipv6 AAAA record to force the use of IPv6
+                // use dns ipv6 AAAA record to force the use of IPv6.
                 url = url.Replace("://update.", "://ipv6."); // not replacing "http", "https", "ftp"
                 url = url.Replace("://www.", "://ipv6.");
             }
@@ -77,7 +78,7 @@ namespace NoteFly
                 this.url = url;
                 this.cachesettings = cachesettings;
                 this.usegzip = usegzip;
-                this.httpthread = new Thread(HttpThread);
+                this.httpthread = new Thread(this.StartHttpThread);
                 this.httpthread.Start();
             }
             else
@@ -93,7 +94,7 @@ namespace NoteFly
         /// <returns>Empty string if error getting response</returns>
         public string GetResponse()
         {
-            httpthread.Join(Settings.NetworkConnectionTimeout);
+            this.httpthread.Join(Settings.NetworkConnectionTimeout);
 
             if (!String.IsNullOrEmpty(this.response))
             {
@@ -106,9 +107,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Instantly abort the http thread, if still running.
         /// </summary>
-        public void ForceStopHttpThread()
+        public void StopHttpThread()
         {
             if (this.httpthread != null)
             {
@@ -117,9 +118,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Start http worker thread to make request and wait for response.
         /// </summary>
-        private void HttpThread()
+        private void StartHttpThread()
         {
             HttpWebRequest request = this.CreateHttpWebRequest(this.url, this.cachesettings, this.usegzip);
             if (request != null)
@@ -186,6 +187,34 @@ namespace NoteFly
             return request;
         }
 
+        /// <summary>
+        /// Check if there is internet connection, if not warn user.
+        /// Uses windows API, other platforms return always true at the moment.
+        /// </summary>
+        /// <remarks>Decreated, used for send to twitter/facebook</remarks>
+        /// <returns>true if there is a connection, otherwise return false</returns>
+        private static bool IsNetworkConnected()
+        {
+#if windows
+            int desc;
+            if (InternetGetConnectedState(out desc, 0))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+#elif !windows
+            return true;
+#endif
+        }
+
+#if windows
+        // get network status
+        [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+#endif
 
     }
 }

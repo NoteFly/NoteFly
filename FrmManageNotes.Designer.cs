@@ -139,10 +139,10 @@ namespace NoteFly
             this.dataGridViewNotes = new System.Windows.Forms.DataGridView();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.tableLayoutPanelButtons = new System.Windows.Forms.TableLayoutPanel();
+            this.searchTextBoxNotes = new NoteFly.SearchTextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.saveExportFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openImportFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.searchTextBoxNotes = new NoteFly.SearchTextBox();
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotes)).BeginInit();
@@ -397,6 +397,16 @@ namespace NoteFly
             this.tableLayoutPanelButtons.Size = new System.Drawing.Size(599, 34);
             this.tableLayoutPanelButtons.TabIndex = 21;
             // 
+            // searchTextBoxNotes
+            // 
+            this.searchTextBoxNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.searchTextBoxNotes.Location = new System.Drawing.Point(439, 3);
+            this.searchTextBoxNotes.Name = "searchTextBoxNotes";
+            this.searchTextBoxNotes.Size = new System.Drawing.Size(157, 28);
+            this.searchTextBoxNotes.TabIndex = 22;
+            this.searchTextBoxNotes.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchTextBoxNotes_SearchStart);
+            this.searchTextBoxNotes.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchTextBoxNotes_SearchStop);
+            // 
             // toolTip
             // 
             this.toolTip.AutomaticDelay = 100;
@@ -409,15 +419,6 @@ namespace NoteFly
             // 
             this.openImportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb|" +
                 "CintaNotes xml export|*.xml";
-            // 
-            // searchTextBoxNotes
-            // 
-            this.searchTextBoxNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchTextBoxNotes.Location = new System.Drawing.Point(439, 3);
-            this.searchTextBoxNotes.Name = "searchTextBoxNotes";
-            this.searchTextBoxNotes.Size = new System.Drawing.Size(157, 28);
-            this.searchTextBoxNotes.TabIndex = 22;
-            this.searchTextBoxNotes.DoSearch += new NoteFly.SearchTextBox.DoSearchHandler(this.searchTextBoxNotes_DoSearch);
             // 
             // FrmManageNotes
             // 

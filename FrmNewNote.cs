@@ -146,9 +146,9 @@ namespace NoteFly
         private void btnPluginFormatBtn_Click(object sender, EventArgs e)
         {
             this.rtbNewNote.EnableAutoDragDrop = true;
-            for (int p = 0; p < Program.pluginsenabled.Length; p++)
+            for (int p = 0; p < PluginsManager.pluginsenabled.Length; p++)
             {
-                this.rtbNewNote.Rtf = Program.pluginsenabled[p].NoteFormatBtnClicked(this.rtbNewNote, (Button)sender);
+                this.rtbNewNote.Rtf = PluginsManager.pluginsenabled[p].NoteFormatBtnClicked(this.rtbNewNote, (Button)sender);
             }
         }
 
@@ -191,7 +191,7 @@ namespace NoteFly
                 this.lbTextTitle.BackColor = Color.Transparent;
             }
 
-            CreatePluginButtons(skinnr);
+            this.CreatePluginButtons(skinnr);
         }
 
         /// <summary>
@@ -200,11 +200,11 @@ namespace NoteFly
         /// <param name="skinnr">The skin position</param>
         private void CreatePluginButtons(int skinnr)
         {
-            for (int p = 0; p < Program.pluginsenabled.Length; p++)
+            for (int p = 0; p < PluginsManager.pluginsenabled.Length; p++)
             {
-                if (Program.pluginsenabled[p].InitNoteFormatBtns() != null)
+                if (PluginsManager.pluginsenabled[p].InitNoteFormatBtns() != null)
                 {
-                    foreach (Button btnPluginFormatBtn in Program.pluginsenabled[p].InitNoteFormatBtns())
+                    foreach (Button btnPluginFormatBtn in PluginsManager.pluginsenabled[p].InitNoteFormatBtns())
                     {
                         this.tlpnlFormatbtn.ColumnCount += 1;
                         this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 32));
@@ -263,11 +263,11 @@ namespace NoteFly
                     }
                 }
 
-                if (Program.pluginsenabled != null)
+                if (PluginsManager.pluginsenabled != null)
                 {
-                    for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                    for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
                     {
-                        Program.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.tbTitle.Text);
+                        PluginsManager.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.tbTitle.Text);
                     }
                 }
 
@@ -470,11 +470,11 @@ namespace NoteFly
                 this.contextMenuStripTextActions.Items.RemoveAt(8);
             }
 
-            for (int i = 0; i < Program.pluginsenabled.Length; i++)
+            for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
             {
-                if (Program.pluginsenabled[i].InitFrmNewNoteMenu() != null)
+                if (PluginsManager.pluginsenabled[i].InitFrmNewNoteMenu() != null)
                 {
-                    ToolStripItem menuplugin = Program.pluginsenabled[i].InitFrmNewNoteMenu();
+                    ToolStripItem menuplugin = PluginsManager.pluginsenabled[i].InitFrmNewNoteMenu();
                     menuplugin.Click += new EventHandler(this.menumain_Click);
                     this.contextMenuStripTextActions.Items.Add(menuplugin);
                 }
@@ -488,12 +488,12 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void menumain_Click(object sender, EventArgs e)
         {
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.pluginsenabled != null)
             {
-                for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
                 {
                     ToolStripItem toolstripitemplugin = (ToolStripItem)sender;
-                    this.rtbNewNote.Rtf = Program.pluginsenabled[i].MenuFrmNewNoteClicked(this.rtbNewNote, toolstripitemplugin);
+                    this.rtbNewNote.Rtf = PluginsManager.pluginsenabled[i].MenuFrmNewNoteClicked(this.rtbNewNote, toolstripitemplugin);
                 }
             }
         }

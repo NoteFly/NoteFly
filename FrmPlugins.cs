@@ -49,7 +49,6 @@ namespace NoteFly
         {
             if (this.tabControlPlugins.SelectedTab == this.tabPagePluginsAvailable)
             {
-                //this.searchtbPlugins.Clear();
                 this.lblTextNoInternetConnection.Visible = false;                
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
                 HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.Default, false);
@@ -125,10 +124,6 @@ namespace NoteFly
 
                     break;
                 }
-                //else
-                //{
-                //continu = true;
-                //}
             }
 
             return higherorsame;
@@ -181,7 +176,7 @@ namespace NoteFly
         /// 
         /// </summary>
         /// <param name="keywords"></param>
-        private void searchtbPlugins_DoSearch(string keywords)
+        private void searchtbPlugins_SearchStart(string keywords)
         {
             this.chlbxAvailiblePlugins.Items.Clear();
             HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/search.php?keyword=" + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Default, false);
@@ -189,6 +184,25 @@ namespace NoteFly
             {
                 this.searchtbPlugins.Enabled = false;
             }            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void searchtbPlugins_SearchStop()
+        {
+            HttpUtil httputil = new HttpUtil("http://www.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.Default, false);
+            string response = httputil.GetResponse();
+            this.chlbxAvailiblePlugins.Items.Clear();
+            if (!xmlUtil.ParserListPlugins(response, this.chlbxAvailiblePlugins, this))
+            {
+                this.lblTextNoInternetConnection.Visible = true;
+                this.searchtbPlugins.Enabled = false;
+            }
+            else
+            {
+                this.searchtbPlugins.Enabled = true;
+            }
         }
 
     }

@@ -255,7 +255,7 @@ namespace NoteFly
             {
                 ToolStripMenuItem menuitem = (ToolStripMenuItem)toolstripmenuitem;
                 int p = (int)menuitem.Tag;
-                Program.pluginsenabled[p].ShareMenuClicked(this.rtbNote, this.note.Title);
+                PluginsManager.pluginsenabled[p].ShareMenuClicked(this.rtbNote, this.note.Title);
             }
             catch (Exception exc)
             {
@@ -499,13 +499,13 @@ namespace NoteFly
                 this.menuFrmNoteOptions.Items.RemoveAt(9);
             }
 
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.pluginsenabled != null)
             {
-                for (int p = 0; p < Program.pluginsenabled.Length; p++)
+                for (int p = 0; p < PluginsManager.pluginsenabled.Length; p++)
                 {
-                    if (Program.pluginsenabled[p].InitFrmNoteMenu() != null)
+                    if (PluginsManager.pluginsenabled[p].InitFrmNoteMenu() != null)
                     {
-                        this.menuFrmNoteOptions.Items.Add(Program.pluginsenabled[p].InitFrmNoteMenu());
+                        this.menuFrmNoteOptions.Items.Add(PluginsManager.pluginsenabled[p].InitFrmNoteMenu());
                     }
                 }
             }
@@ -894,13 +894,13 @@ namespace NoteFly
                 }
             }
 
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.pluginsenabled != null)
             {
-                for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
                 {
-                    if (Program.pluginsenabled[i].InitFrmNoteShareMenu() != null)
+                    if (PluginsManager.pluginsenabled[i].InitFrmNoteShareMenu() != null)
                     {
-                        ToolStripMenuItem menuitem = Program.pluginsenabled[i].InitFrmNoteShareMenu();
+                        ToolStripMenuItem menuitem = PluginsManager.pluginsenabled[i].InitFrmNoteShareMenu();
                         menuitem.Tag = i;
                         menuitem.Click += new EventHandler(this.menuSharePluginClicked);
                         this.menuSendTo.DropDownItems.Add(menuitem);
