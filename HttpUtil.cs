@@ -25,21 +25,17 @@ namespace NoteFly
     using System.Net;
     using System.IO;
     using System.Threading;
+    using System.ComponentModel;
 
     /// <summary>
     /// Http
     /// </summary>
     public class HttpUtil
-    {
+    {    
         /// <summary>
         /// thread
         /// </summary>
-        private Thread httpthread;
-
-        /// <summary>
-        /// The response
-        /// </summary>
-        private string response; 
+        public BackgroundWorker httpthread;
 
         /// <summary>
         /// immutable
@@ -52,19 +48,13 @@ namespace NoteFly
         private readonly System.Net.Cache.RequestCacheLevel cachesettings;
 
         /// <summary>
-        /// immutable
-        /// </summary>
-        private readonly bool usegzip;
-
-        /// <summary>
         /// Initializes a new instance of the HttpUtil class.
-        /// Create a new Http request.
         /// </summary>
         /// <param name="url">The url of the request to make</param>
         /// <param name="cachesettings">The cache settings (important note: this is always NoCacheNoStore under Mono)</param>
         /// <param name="usegzip">Use gzip compression</param>
         /// <returns></returns>
-        public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings, bool usegzip)
+        public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings)
         {
             if (Settings.NetworkConnectionForceipv6)
             {
@@ -76,64 +66,54 @@ namespace NoteFly
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
                 this.url = url;
-                this.cachesettings = cachesettings;
-                this.usegzip = usegzip;
-                this.httpthread = new Thread(this.StartHttpThread);
-                this.httpthread.Start();
             }
             else
             {
                 Log.Write(LogType.exception, "Invalid url.");
             }
 
+            this.cachesettings = cachesettings;
+            this.httpthread = new BackgroundWorker();
+            this.httpthread.DoWork += new DoWorkEventHandler(httpthread_DoWork);
         }
 
         /// <summary>
-        /// Get the response stream
+        /// Create a new Http request only if DownloadCompleet event is assigned.
         /// </summary>
-        /// <returns>Empty string if error getting response</returns>
-        public string GetResponse()
-        {
-            this.httpthread.Join(Settings.NetworkConnectionTimeout);
-
-            if (!String.IsNullOrEmpty(this.response))
-            {
-                return this.response;
-            }
-            else
-            {
-                return String.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Instantly abort the http thread, if still running.
-        /// </summary>
-        public void StopHttpThread()
+        /// <param name="handler"></param>
+        /// <returns></returns>
+        public bool Start()
         {
             if (this.httpthread != null)
             {
-                this.httpthread.Abort();
+                this.httpthread.RunWorkerAsync();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
         /// <summary>
-        /// Start http worker thread to make request and wait for response.
+        /// 
         /// </summary>
-        private void StartHttpThread()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void httpthread_DoWork(object sender, DoWorkEventArgs e)
         {
-            HttpWebRequest request = this.CreateHttpWebRequest(this.url, this.cachesettings, this.usegzip);
+            HttpWebRequest request = this.CreateHttpWebRequest(this.url, this.cachesettings);
             if (request != null)
             {
-                WebResponse response = null;
+                WebResponse webresponse = null;
                 try
                 {
-                    response = request.GetResponse();
-                    using (Stream responsestream = response.GetResponseStream())
+                    webresponse = request.GetResponse();
+                    using (Stream responsestream = webresponse.GetResponseStream())
                     {
                         using (StreamReader streamreader = new StreamReader(responsestream))
                         {
-                            this.response = streamreader.ReadToEnd();
+                            e.Result = (string)streamreader.ReadToEnd();
                         }
                     }
                 }
@@ -143,18 +123,29 @@ namespace NoteFly
                 }
                 finally
                 {
-                    if (response != null)
+                    if (webresponse != null)
                     {
-                        response.Close();
+                        webresponse.Close();
                     }
                 }
             }
         }
 
         /// <summary>
+        /// Instantly stop the http worker, if still running.
+        /// </summary>
+        public void Stop()
+        {
+            if (this.httpthread != null)
+            {
+                this.httpthread.CancelAsync();
+            }
+        }
+
+        /// <summary>
         /// Create a WebRequest object
         /// </summary>
-        private HttpWebRequest CreateHttpWebRequest(string url, System.Net.Cache.RequestCacheLevel cachesettings, bool usegzip)
+        private HttpWebRequest CreateHttpWebRequest(string url, System.Net.Cache.RequestCacheLevel cachesettings)
         {
             System.Net.ServicePointManager.Expect100Continue = false;
             System.Net.ServicePointManager.DefaultConnectionLimit = 4;
@@ -171,7 +162,7 @@ namespace NoteFly
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
                 }
 
-                if (usegzip)
+                if (Settings.NetworkUseGzip)
                 {
                     request.Headers["Accept-Encoding"] = "gzip";
                 }

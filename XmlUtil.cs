@@ -196,7 +196,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static bool ParserListPlugins(string response, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins, FrmPlugins frmplugins)
+        public static bool ParserListPlugins(string response, string versionipluginstring, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins, FrmPlugins frmplugins)
         {
             if (String.IsNullOrEmpty(response))
             {
@@ -204,15 +204,6 @@ namespace NoteFly
             }
 
             bool succeeded = false;
-            System.Reflection.Assembly ipluginasm = System.Reflection.Assembly.ReflectionOnlyLoadFrom(Path.Combine(Program.InstallFolder, "IPlugin.dll"));
-            if (ipluginasm == null)
-            {
-                string xmlutil_ipluginnotfound = Gettext.Strings.T("IPlugin not found");
-                Log.Write(LogType.exception, xmlutil_ipluginnotfound);
-                System.Windows.Forms.MessageBox.Show(xmlutil_ipluginnotfound);
-            }
-            string versionipluginstring = ipluginasm.GetName().Version.Major + "." + ipluginasm.GetName().Version.Minor + "." + ipluginasm.GetName().Version.Build;
-            ipluginasm = null;
             short[] ipluginversionparts = frmplugins.ParserVersionString(versionipluginstring);
             XmlTextReader xmlreader = new XmlTextReader(new System.IO.StringReader(response));
             xmlreader.ProhibitDtd = true;

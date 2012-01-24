@@ -87,8 +87,8 @@ namespace NoteFly
                 }
                 else
                 {
-                    string settings_dirdoesnotexist = Gettext.Strings.T("Directory does not exist.\r\nPlease choice a valid directory.");
-                    string settings_dirdoesnotexisttitle = Gettext.Strings.T("Directory does not exist.\r\nPlease choice a valid directory.");
+                    string settings_dirdoesnotexist = Gettext.Strings.T("Directory does not exist.\nPlease choice a valid directory.");
+                    string settings_dirdoesnotexisttitle = Gettext.Strings.T("Directory does not exist.\nPlease choice a valid directory.");
                     Log.Write(LogType.info, settings_dirdoesnotexist);
                     MessageBox.Show(settings_dirdoesnotexist, settings_dirdoesnotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -767,11 +767,12 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void btnCheckUpdates_Click(object sender, EventArgs e)
         {
-            Settings.UpdatecheckLastDate = Program.DoUpdateCheck();
+            Settings.UpdatecheckLastDate = Program.UpdateGetLatestVersion();
+            //xmlUtil.WriteSettings(); // FIXME: not saving settings for UpdatecheckLastDate otherwise all changed in this form settings are saved too.
             if (!string.IsNullOrEmpty(Settings.UpdatecheckLastDate))
             {
                 this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
-            }
+            }            
 
             this.btnCheckUpdates.Enabled = false;
         }

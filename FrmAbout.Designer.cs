@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmAbout.Designer.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -77,6 +77,7 @@ namespace NoteFly
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAbout));
             this.okButton = new System.Windows.Forms.Button();
             this.lblProductName = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
@@ -87,63 +88,51 @@ namespace NoteFly
             // 
             // okButton
             // 
-            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.okButton.AccessibleDescription = null;
+            this.okButton.AccessibleName = null;
+            resources.ApplyResources(this.okButton, "okButton");
+            this.okButton.BackgroundImage = null;
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.okButton.Location = new System.Drawing.Point(112, 135);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(111, 26);
-            this.okButton.TabIndex = 25;
-            this.okButton.Text = "&Close";
             this.okButton.UseCompatibleTextRendering = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // lblProductName
             // 
-            this.lblProductName.AutoSize = true;
-            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductName.AccessibleDescription = null;
+            this.lblProductName.AccessibleName = null;
+            resources.ApplyResources(this.lblProductName, "lblProductName");
             this.lblProductName.ForeColor = System.Drawing.Color.Black;
-            this.lblProductName.Location = new System.Drawing.Point(6, 5);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(0, 45);
-            this.lblProductName.TabIndex = 26;
             this.lblProductName.UseCompatibleTextRendering = true;
             this.lblProductName.Click += new System.EventHandler(this.lblProductName_Click);
             // 
             // lblVersion
             // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.AccessibleDescription = null;
+            this.lblVersion.AccessibleName = null;
+            resources.ApplyResources(this.lblVersion, "lblVersion");
             this.lblVersion.ForeColor = System.Drawing.Color.Black;
-            this.lblVersion.Location = new System.Drawing.Point(12, 47);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(0, 16);
-            this.lblVersion.TabIndex = 27;
             // 
             // linklblWebsite
             // 
-            this.linklblWebsite.AutoSize = true;
-            this.linklblWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linklblWebsite.Location = new System.Drawing.Point(10, 140);
+            this.linklblWebsite.AccessibleDescription = null;
+            this.linklblWebsite.AccessibleName = null;
+            resources.ApplyResources(this.linklblWebsite, "linklblWebsite");
             this.linklblWebsite.Name = "linklblWebsite";
-            this.linklblWebsite.Size = new System.Drawing.Size(61, 22);
-            this.linklblWebsite.TabIndex = 28;
             this.linklblWebsite.TabStop = true;
-            this.linklblWebsite.Text = "Website";
             this.linklblWebsite.UseCompatibleTextRendering = true;
             this.linklblWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklblWebsite_LinkClicked);
             // 
             // lblTextLicense
             // 
+            this.lblTextLicense.AccessibleDescription = null;
+            this.lblTextLicense.AccessibleName = null;
+            resources.ApplyResources(this.lblTextLicense, "lblTextLicense");
             this.lblTextLicense.AutoEllipsis = true;
-            this.lblTextLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTextLicense.ForeColor = System.Drawing.Color.Black;
-            this.lblTextLicense.Location = new System.Drawing.Point(10, 74);
             this.lblTextLicense.Name = "lblTextLicense";
-            this.lblTextLicense.Size = new System.Drawing.Size(222, 58);
-            this.lblTextLicense.TabIndex = 30;
-            this.lblTextLicense.Text = "This programme is released under the terms of Lesser GNU General Public License v" +
-                "ersion3\r\n";
             this.lblTextLicense.UseCompatibleTextRendering = true;
             // 
             // tmpUpdateLblProductEffect
@@ -153,23 +142,24 @@ namespace NoteFly
             // 
             // FrmAbout
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(235, 171);
+            this.BackgroundImage = null;
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblProductName);
             this.Controls.Add(this.okButton);
+            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = null;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmAbout";
-            this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "About";
             this.ResumeLayout(false);
             this.PerformLayout();
 

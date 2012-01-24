@@ -28,26 +28,40 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// 
+    /// A SearchTextBox control
     /// </summary>
     public partial class SearchTextBox : UserControl
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keywords"></param>
         public delegate void SearchStartHandler(string keywords);
-
-        public delegate void SearchStopHandler();
-
-        [Description("A search occur.")]
-        public event SearchStartHandler SearchStart;
-
-        [Description("Keywords entered are cleared not searching anymore")]
-        public event SearchStopHandler SearchStop;
 
         /// <summary>
         /// 
         /// </summary>
+        public delegate void SearchStopHandler();
+
+        /// <summary>
+        /// A search occur event.
+        /// </summary>
+        [Description("A search occur.")]
+        public event SearchStartHandler SearchStart;
+
+        /// <summary>
+        /// Keywords entered are cleared not searching anymore event.
+        /// </summary>
+        [Description("Keywords entered are cleared not searching anymore.")]
+        public event SearchStopHandler SearchStop;
+
+        /// <summary>
+        /// Initializes a new instance of the SearchTextBox class.
+        /// </summary>
         public SearchTextBox()
         {
             InitializeComponent();
+            this.lblTextSearch.Text = Gettext.Strings.T("search:");
             this.tableLayoutPnlSearchbox.ColumnCount = 2;
             if (Settings.NotesTooltipsEnabled)
             {
@@ -83,7 +97,7 @@ namespace NoteFly
         {
             this.timerStartAutoSearch.Stop();
             this.tbKeywords.Clear();
-            this.tbKeywords.BackColor = SystemColors.Window;                        
+            this.tbKeywords.BackColor = SystemColors.Window;
             this.tableLayoutPnlSearchbox.ColumnCount = 2;
             if (this.SearchStop != null)
             {
@@ -171,7 +185,7 @@ namespace NoteFly
         private void btnKeywordClear_Click(object sender, EventArgs e)
         {
             this.btnKeywordClear.Visible = false;
-            this.Clear();            
+            this.Clear();
         }
     }
 }

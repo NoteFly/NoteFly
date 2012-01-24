@@ -374,7 +374,7 @@ namespace NoteFly
         {
             if (!Directory.Exists(Settings.NotesSavepath))
             {
-                string notes_notefolderdoesnotexist = Gettext.Strings.T("Folder with notes does not exist.\r\nDo want to try loading notes from default application data folder?");
+                string notes_notefolderdoesnotexist = Gettext.Strings.T("Folder with notes does not exist.\nDo want to try loading notes from default application data folder?");
                 string notes_notefolderdoesnotexisttitle = Gettext.Strings.T("Notes folder doesn't exist");
                 DialogResult result = MessageBox.Show(notes_notefolderdoesnotexist, notes_notefolderdoesnotexisttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)

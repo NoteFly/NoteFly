@@ -55,8 +55,8 @@ namespace NoteFly
         public FrmDownloader(string downloadurl, bool verifsignature, bool runandexit, string title)
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
-            this.InitializeComponent();            
-            this.Text = title;            
+            this.InitializeComponent();
+            this.Text = title;
             this.runandexit = runandexit;
             if (verifsignature)
             {
@@ -191,7 +191,7 @@ namespace NoteFly
                                         // update the progress bar
                                         this.backgroundWorkerDownloader.ReportProgress(iProgressPercentage);
                                     }
-                                }                                
+                                }
 
                                 // clean up the file stream
                                 streamLocal.Close();
@@ -261,7 +261,7 @@ namespace NoteFly
                         catch (WebException webexc)
                         {
                             Log.Write(LogType.exception, webexc.Message);
-                        }                       
+                        }
                     }
 
                     this.backgroundWorkerDownloader.ReportProgress(100);
@@ -327,7 +327,7 @@ namespace NoteFly
                     if (File.Exists(Settings.UpdatecheckGPGPath))
                     {
                         if (!this.gpgverif.VerifDownload(this.downloadfilepath))
-                        {                            
+                        {
                             this.lblStatusUpdate.Text = downloader_installaborted;
                             return;
                         }
@@ -378,7 +378,7 @@ namespace NoteFly
                 {
                     System.Threading.Thread.Sleep(400);
                     this.Close();
-                }                
+                }
             }
             else
             {
@@ -425,7 +425,7 @@ namespace NoteFly
             catch (IOException ioexc)
             {
                 Log.Write(LogType.exception, ioexc.Message);
-                MessageBox.Show(ioexc.Message);                
+                MessageBox.Show(ioexc.Message);
             }
         }
     }

@@ -31,6 +31,8 @@
     <ManifestCertificateThumbprint>24C8A072EE1303117FA2C979E510FC5EB55B4C8E</ManifestCertificateThumbprint>
     <ManifestKeyFile>NoteFly_TemporaryKey.pfx</ManifestKeyFile>
     <ReleaseVersion>1.0</ReleaseVersion>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -45,8 +47,6 @@
     <ApplicationVersion>2.5.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkSubset>
-    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,7 +67,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -177,6 +177,9 @@
     <EmbeddedResource Include="FrmException.resx">
       <DependentUpon>FrmException.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmManageNotes.en.resx">
+      <DependentUpon>FrmManageNotes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmManageNotes.resx">
       <DependentUpon>FrmManageNotes.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,6 +196,7 @@
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="build_translationfile.bat" />
     <None Include="clean_settings.bat" />
     <None Include="icons.res" />
     <None Include="Properties\app.manifest" />

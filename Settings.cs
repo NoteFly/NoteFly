@@ -358,6 +358,11 @@ namespace NoteFly
         public static string NetworkProxyAddress = string.Empty;
 
         /// <summary>
+        /// Use Gzip for http tranfer
+        /// </summary>
+        public static bool NetworkUseGzip = false;
+
+        /// <summary>
         /// The update check interval in days.
         /// 0 for disabled update checking.
         /// </summary>

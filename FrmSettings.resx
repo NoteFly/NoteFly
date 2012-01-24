@@ -117,16 +117,1935 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="folderBrowseDialogNotessavepath.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>40, 21</value>
-  </metadata>
-  <metadata name="openFileDialogBrowseGPG.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>279, 21</value>
-  </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>46</value>
-  </metadata>
+  <data name="&gt;&gt;lblTextNoteFont.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextTotalNotesWarnLimit.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="&gt;&gt;chxUseAlternativeTrayicon.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblTextFontContentSize.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tabPageNewNote.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 298</value>
+  </data>
+  <data name="lblTextMiliseconds.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="chxLoadPlugins.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="numFontSizeContent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 22</value>
+  </data>
+  <data name="&gt;&gt;tbGPGPath.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="chxTrayiconBoldSettings.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;chxLoadPlugins.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightHTML.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextLatestUpdateCheck.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 193</value>
+  </data>
+  <data name="&gt;&gt;numNotesDefaultWidth.Name" xml:space="preserve">
+    <value>numNotesDefaultWidth</value>
+  </data>
+  <data name="&gt;&gt;numWarnLimitTotal.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="numNotesDefaultHeight.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cbxDefaultSkin.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="&gt;&gt;tabEmail.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabPageTrayicon.Parent" xml:space="preserve">
+    <value>tabctrlAppearance</value>
+  </data>
+  <data name="cbxTextDirection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 24</value>
+  </data>
+  <data name="chxLogExceptions.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblTextActionLeftClicktTrayicon.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitleSize.Name" xml:space="preserve">
+    <value>lblTextFontTitleSize</value>
+  </data>
+  <data name="lblTextActionLeftClicktTrayicon.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbTextManagesnotesFontSize.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;lblDefaultNewNoteColor.Name" xml:space="preserve">
+    <value>lblDefaultNewNoteColor</value>
+  </data>
+  <data name="&gt;&gt;numWarnLimitTotal.Name" xml:space="preserve">
+    <value>numWarnLimitTotal</value>
+  </data>
+  <data name="cbxTextDirection.Items1" xml:space="preserve">
+    <value>Right to left</value>
+  </data>
+  <data name="lblTextSkinManagenotes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 42</value>
+  </data>
+  <data name="&gt;&gt;tabAppereanceManagenotes.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;chxLogDebug.Name" xml:space="preserve">
+    <value>chxLogDebug</value>
+  </data>
+  <data name="&gt;&gt;cbxDefaultSkin.Parent" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="chxNotesDeleteRecyclebin.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;numNotesDefaultHeight.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;numNotesDefaultWidth.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tabAdvance.Text" xml:space="preserve">
+    <value>Advance</value>
+  </data>
+  <data name="chxHighlightHTML.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;chxTransparecy.Parent" xml:space="preserve">
+    <value>tabAppearanceGeneral</value>
+  </data>
+  <data name="chxLogDebug.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;chxLoadPlugins.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextLogging.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 168</value>
+  </data>
+  <data name="cbxTextDirection.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="btnBrowse.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="lblTextFontContentSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 121</value>
+  </data>
+  <data name="chxHighlightHTML.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 113</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmDeletenote.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tabHighlight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="lblTextFontTitleSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;chxTransparecy.Name" xml:space="preserve">
+    <value>chxTransparecy</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldNewnote.Name" xml:space="preserve">
+    <value>chxTrayiconBoldNewnote</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldExit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblDefaultNewNoteColor.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;btnCheckUpdates.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="chxSettingsExpertEnabled.Text" xml:space="preserve">
+    <value>E&amp;xpert settings</value>
+  </data>
+  <data name="&gt;&gt;tabSharing.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tabSharing.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightHyperlinks.Name" xml:space="preserve">
+    <value>chxHighlightHyperlinks</value>
+  </data>
+  <data name="&gt;&gt;chxUpdateSilentInstall.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="lblTextLatestUpdateCheck.Text" xml:space="preserve">
+    <value>Last update check is performed on:</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontContentPoints.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;chxShowTooltips.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cbxFontNoteTitleBold.Location" type="System.Drawing.Point, System.Drawing">
+    <value>235, 50</value>
+  </data>
+  <data name="&gt;&gt;btnOK.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabAdvance.Name" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="lblTextVisibleNotesWarnLimit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;cbxManagenotesTooltipContent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbxTextDirection.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="lblDefaultNewNoteColor.Text" xml:space="preserve">
+    <value>Default skin new notes:</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmDeletenote.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbxManageNotesSkin.Parent" xml:space="preserve">
+    <value>tabAppereanceManagenotes</value>
+  </data>
+  <data name="lblTextVisibleNotesWarnLimit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 20</value>
+  </data>
+  <data name="&gt;&gt;numManagenotesFont.Parent" xml:space="preserve">
+    <value>tabAppereanceManagenotes</value>
+  </data>
+  <data name="&gt;&gt;lblLatestUpdateCheck.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnOK.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="cbxFontNoteTitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>157, 22</value>
+  </data>
+  <data name="&gt;&gt;tabHighlight.Name" xml:space="preserve">
+    <value>tabHighlight</value>
+  </data>
+  <data name="numTimeout.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="tabctrlAppearance.Size" type="System.Drawing.Size, System.Drawing">
+    <value>441, 327</value>
+  </data>
+  <data name="lblTextFontsizeMenu.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightSQL.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldSettings.Parent" xml:space="preserve">
+    <value>tabPageTrayicon</value>
+  </data>
+  <data name="cbxFontNoteTitleBold.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxTrayiconBoldManagenotes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 21</value>
+  </data>
+  <data name="tabHighlight.Text" xml:space="preserve">
+    <value>Highlight</value>
+  </data>
+  <data name="lblTextDirection.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxShowTooltips.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="cbxActionLeftclick.AutoCompleteCustomSource1" xml:space="preserve">
+    <value>Create a new note.</value>
+  </data>
+  <data name="tabPageTrayicon.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tabControlNetwork.Parent" xml:space="preserve">
+    <value>tabNetwork</value>
+  </data>
+  <data name="&gt;&gt;tabPageNewNote.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="numUpdateCheckDays.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="chxUseRandomDefaultNote.Location" type="System.Drawing.Point, System.Drawing">
+    <value>22, 30</value>
+  </data>
+  <data name="chxShowTooltips.Text" xml:space="preserve">
+    <value>Show tooltip hints</value>
+  </data>
+  <data name="&gt;&gt;tabControlNetwork.Name" xml:space="preserve">
+    <value>tabControlNetwork</value>
+  </data>
+  <data name="&gt;&gt;chxUseDateAsDefaultTitle.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblTextNetworkMiliseconds.Size" type="System.Drawing.Size, System.Drawing">
+    <value>26, 16</value>
+  </data>
+  <data name="tbGPGPath.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;btnCheckUpdates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxProxyEnabled.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="chxTrayiconBoldNewnote.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblTextTransparentProcVisible.Name" xml:space="preserve">
+    <value>lblTextTransparentProcVisible</value>
+  </data>
+  <data name="chxTrayiconBoldManagenotes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 83</value>
+  </data>
+  <data name="&gt;&gt;tabAppearanceGeneral.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chxSettingsExpertEnabled.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;btnGPGPathBrowse.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldManagenotes.Name" xml:space="preserve">
+    <value>chxTrayiconBoldManagenotes</value>
+  </data>
+  <data name="btnCheckUpdates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 23</value>
+  </data>
+  <data name="tabEmail.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="lblTextFontsizeMenu.Text" xml:space="preserve">
+    <value>Trayicon menu fontsize:</value>
+  </data>
+  <data name="chxStartOnLogin.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxConfirmExit.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="chxUpdateSilentInstall.Text" xml:space="preserve">
+    <value>Install update setup silently.</value>
+  </data>
+  <data name="lblTextFontContentPoints.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnCheckUpdates.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="numWarnLimitTotal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 22</value>
+  </data>
+  <data name="btnCheckUpdates.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontsizeMenu.Parent" xml:space="preserve">
+    <value>tabPageTrayicon</value>
+  </data>
+  <data name="&gt;&gt;chxSocialEmailDefaultaddressSet.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cbxManageNotesSkin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 24</value>
+  </data>
+  <data name="&gt;&gt;tabControlSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxUseAlternativeTrayicon.Parent" xml:space="preserve">
+    <value>tabPageTrayicon</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="chxUseRandomDefaultNote.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 21</value>
+  </data>
+  <data name="&gt;&gt;numProcTransparency.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPageNewNote.Text" xml:space="preserve">
+    <value>New note</value>
+  </data>
+  <data name="&gt;&gt;chxCaseSentiveSearch.Parent" xml:space="preserve">
+    <value>tabAppereanceManagenotes</value>
+  </data>
+  <data name="&gt;&gt;lblTextVisibleNotesWarnLimit.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="chxLogExceptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>299, 21</value>
+  </data>
+  <data name="chxHighlightSQL.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxUseDateAsDefaultTitle.Text" xml:space="preserve">
+    <value>Use current date as default title for a new note.</value>
+  </data>
+  <data name="&gt;&gt;numUpdateCheckDays.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightHyperlinks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabAdvance.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldNewnote.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lblTextFontTitlePoints.AccessibleDescription" xml:space="preserve">
+    <value>points</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tabNetwork.Size" type="System.Drawing.Size, System.Drawing">
+    <value>447, 333</value>
+  </data>
+  <data name="lbTextManagesnotesFontSize.Text" xml:space="preserve">
+    <value>Manage notes fontsize:</value>
+  </data>
+  <data name="&gt;&gt;chxCaseSentiveSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldManagenotes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextLatestUpdateCheck.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabUpdates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 298</value>
+  </data>
+  <data name="numNotesDefaultHeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;chxUseDateAsDefaultTitle.Name" xml:space="preserve">
+    <value>chxUseDateAsDefaultTitle</value>
+  </data>
+  <data name="btnBrowse.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 46</value>
+  </data>
+  <data name="chxSocialEmailEnabled.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 21</value>
+  </data>
+  <data name="&gt;&gt;iptbProxy.Type" xml:space="preserve">
+    <value>NoteFly.IPTextBox, NoteFly, Version=2.5.1.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnBrowse.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="cbxDefaultSkin.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmExit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="numUpdateCheckDays.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 22</value>
+  </data>
+  <data name="cbxDefaultSkin.MaxDropDownItems" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="tabControlNetwork.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="numTimeout.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="&gt;&gt;lblTextDirection.Name" xml:space="preserve">
+    <value>lblTextDirection</value>
+  </data>
+  <data name="numNotesDefaultWidth.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitlePoints.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="lblTextFontContentPoints.Text" xml:space="preserve">
+    <value>pt.</value>
+  </data>
+  <data name="&gt;&gt;tabSharing.Name" xml:space="preserve">
+    <value>tabSharing</value>
+  </data>
+  <data name="tabAppearanceGeneral.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="chxCheckUpdatesSignature.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tabNetwork.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextDirection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 183</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldSettings.Name" xml:space="preserve">
+    <value>chxTrayiconBoldSettings</value>
+  </data>
+  <data name="&gt;&gt;lblTextDirection.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="&gt;&gt;chxCheckUpdatesSignature.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabSharing.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="&gt;&gt;chxCaseSentiveSearch.Name" xml:space="preserve">
+    <value>chxCaseSentiveSearch</value>
+  </data>
+  <data name="tabPageTrayicon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 298</value>
+  </data>
+  <data name="chxForceUseIPv6.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="tbDefaultEmail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 22</value>
+  </data>
+  <data name="chxLogDebug.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 187</value>
+  </data>
+  <data name="numTrayiconFontsize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>170, 25</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitleFamily.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numFontSizeContent.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="numUpdateCheckDays.Location" type="System.Drawing.Point, System.Drawing">
+    <value>188, 41</value>
+  </data>
+  <data name="cbxManagenotesTooltipContent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>303, 21</value>
+  </data>
+  <data name="&gt;&gt;lblTextVisibleNotesWarnLimit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabAppearanceGeneral.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="chxHighlightSQL.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;chxSocialEmailEnabled.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxUseAlternativeTrayicon.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 175</value>
+  </data>
+  <data name="numTrayiconFontsize.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;lblTextVisibleNotesWarnLimit.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="numNotesDefaultWidth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 22</value>
+  </data>
+  <data name="&gt;&gt;btnResetSettings.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="chxLoadPlugins.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="btnGPGPathBrowse.Location" type="System.Drawing.Point, System.Drawing">
+    <value>351, 134</value>
+  </data>
+  <data name="chxTrayiconBoldExit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 21</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;chxLogErrors.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxUseRandomDefaultNote.Name" xml:space="preserve">
+    <value>chxUseRandomDefaultNote</value>
+  </data>
+  <data name="chxUpdateSilentInstall.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="tabControlSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="chxHighlightSQL.Size" type="System.Drawing.Size, System.Drawing">
+    <value>233, 21</value>
+  </data>
+  <data name="&gt;&gt;lblTextActionLeftClicktTrayicon.Name" xml:space="preserve">
+    <value>lblTextActionLeftClicktTrayicon</value>
+  </data>
+  <data name="&gt;&gt;chxUseRandomDefaultNote.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnGPGPathBrowse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 25</value>
+  </data>
+  <data name="tbDefaultEmail.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;chxSettingsExpertEnabled.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="iptbProxy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>238, 22</value>
+  </data>
+  <data name="cbxFontNoteTitle.AccessibleDescription" xml:space="preserve">
+    <value>Font size notes</value>
+  </data>
+  <data name="&gt;&gt;tabPageTrayicon.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tabAppearanceGeneral.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 298</value>
+  </data>
+  <data name="tabAppearance.Text" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="lblTextActionLeftClicktTrayicon.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 168</value>
+  </data>
+  <data name="chxHighlightPHP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 136</value>
+  </data>
+  <data name="&gt;&gt;tbGPGPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbxTextDirection.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="numTrayiconFontsize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 22</value>
+  </data>
+  <data name="cbxFontNoteTitle.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitlePoints.Name" xml:space="preserve">
+    <value>lblTextFontTitlePoints</value>
+  </data>
+  <data name="numManagenotesFont.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="chxCaseSentiveSearch.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tabProxy.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;btnResetSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabAppearanceGeneral.Parent" xml:space="preserve">
+    <value>tabctrlAppearance</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Default size new note:</value>
+  </data>
+  <data name="chxTrayiconBoldSettings.Text" xml:space="preserve">
+    <value>Display "Settings" in bold.</value>
+  </data>
+  <data name="tabControlSharing.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;chxNotesDeleteRecyclebin.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnResetSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>126, 272</value>
+  </data>
+  <data name="lblTextFontTitlePoints.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="&gt;&gt;tabHighlight.Parent" xml:space="preserve">
+    <value>tabControlSettings</value>
+  </data>
+  <data name="lblTextDirection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 20</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 20</value>
+  </data>
+  <data name="&gt;&gt;cbxDefaultSkin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControlNetwork.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chxCheckUpdates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxCaseSentiveSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;lblTextNetworkTimeout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextTransparentProcVisible.Parent" xml:space="preserve">
+    <value>tabAppearanceGeneral</value>
+  </data>
+  <data name="&gt;&gt;chxCheckUpdates.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="&gt;&gt;chxForceUseIPv6.Name" xml:space="preserve">
+    <value>chxForceUseIPv6</value>
+  </data>
+  <data name="tabNetwork.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="tabGeneral.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="lblTextLogging.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 20</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmLink.Parent" xml:space="preserve">
+    <value>tabHighlight</value>
+  </data>
+  <data name="btnOK.Text" xml:space="preserve">
+    <value>&amp;OK</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lblTextNetworkTimeout.Text" xml:space="preserve">
+    <value>connection timeout time:</value>
+  </data>
+  <data name="chxHighlightHyperlinks.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 42</value>
+  </data>
+  <data name="&gt;&gt;lblFontsizePoints.Name" xml:space="preserve">
+    <value>lblFontsizePoints</value>
+  </data>
+  <data name="&gt;&gt;lblTextNetworkTimeout.Parent" xml:space="preserve">
+    <value>tabProxy</value>
+  </data>
+  <data name="cbxFontNoteTitleBold.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="chxNotesDeleteRecyclebin.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;tbDefaultEmail.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;chxCheckUpdatesSignature.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="lblTextNoteLocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 23</value>
+  </data>
+  <data name="chxHighlightHyperlinks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 21</value>
+  </data>
+  <data name="&gt;&gt;tbNotesSavePath.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="&gt;&gt;tabPageNewNote.Parent" xml:space="preserve">
+    <value>tabctrlAppearance</value>
+  </data>
+  <data name="cbxActionLeftclick.Items" xml:space="preserve">
+    <value>Do nothing</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmExit.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 20</value>
+  </data>
+  <data name="&gt;&gt;tabctrlAppearance.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbGPGPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 22</value>
+  </data>
+  <data name="lblTextTotalNotesWarnLimit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 20</value>
+  </data>
+  <data name="chxUpdateSilentInstall.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 21</value>
+  </data>
+  <data name="&gt;&gt;chxCheckUpdates.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="lblTextTransparentProcVisible.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 34</value>
+  </data>
+  <data name="lblTextFontTitleFamily.Text" xml:space="preserve">
+    <value>Font title:</value>
+  </data>
+  <data name="&gt;&gt;lblTextNetworkMiliseconds.Name" xml:space="preserve">
+    <value>lblTextNetworkMiliseconds</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblFontsizePoints.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblTextNetworkMiliseconds.Location" type="System.Drawing.Point, System.Drawing">
+    <value>164, 141</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitlePoints.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxConfirmDeletenote.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;chxSocialEmailEnabled.Parent" xml:space="preserve">
+    <value>tabEmail</value>
+  </data>
+  <data name="lblFontsizePoints.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="lblTextTransparentProcVisible.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 20</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>262, 84</value>
+  </data>
+  <data name="&gt;&gt;chxSocialEmailEnabled.Name" xml:space="preserve">
+    <value>chxSocialEmailEnabled</value>
+  </data>
+  <data name="&gt;&gt;cbxActionLeftclick.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabHighlight.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;lblLatestUpdateCheck.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="chxHighlightHTML.Text" xml:space="preserve">
+    <value>Highlight HTML text.</value>
+  </data>
+  <data name="&gt;&gt;cbxActionLeftclick.Parent" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="&gt;&gt;btnOK.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chxCheckUpdates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 18</value>
+  </data>
+  <data name="&gt;&gt;lblTextGPGPath.Name" xml:space="preserve">
+    <value>lblTextGPGPath</value>
+  </data>
+  <data name="&gt;&gt;chxStartOnLogin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitleSize.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="numWarnLimitTotal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>182, 81</value>
+  </data>
+  <data name="tabControlSharing.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="&gt;&gt;chxProxyEnabled.Parent" xml:space="preserve">
+    <value>tabProxy</value>
+  </data>
+  <data name="&gt;&gt;lbTextManagesnotesFontSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabctrlAppearance.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="&gt;&gt;chxUseAlternativeTrayicon.Name" xml:space="preserve">
+    <value>chxUseAlternativeTrayicon</value>
+  </data>
+  <data name="&gt;&gt;tabSharing.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextDirection.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontsizeMenu.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblTextFontContentPoints.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="lblFontsizePoints.Text" xml:space="preserve">
+    <value>pt.</value>
+  </data>
+  <data name="chxUseAlternativeTrayicon.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tabPageNewNote.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="chxConfirmDeletenote.Text" xml:space="preserve">
+    <value>Confirm deleting notes.</value>
+  </data>
+  <data name="lblTextTransparentProcVisible.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;lblTextVisibleNotesWarnLimit.Name" xml:space="preserve">
+    <value>lblTextVisibleNotesWarnLimit</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoteFont.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="lblTextFontTitlePoints.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="numFontSizeContent.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="chxConfirmDeletenote.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 21</value>
+  </data>
+  <data name="lblTextGPGPath.Text" xml:space="preserve">
+    <value>Location gpg.exe:</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmLink.Name" xml:space="preserve">
+    <value>chxConfirmLink</value>
+  </data>
+  <data name="chxHighlightPHP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>276, 21</value>
+  </data>
+  <data name="lblTextFontTitlePoints.Text" xml:space="preserve">
+    <value>pt.</value>
+  </data>
+  <data name="chxHighlightPHP.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmDeletenote.Parent" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 165</value>
+  </data>
+  <data name="numFontSizeTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 22</value>
+  </data>
+  <data name="&gt;&gt;chxSettingsExpertEnabled.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="chxLogErrors.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="lblTextLatestUpdateCheck.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;numNotesDefaultHeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoteFont.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="lblTextActionLeftClicktTrayicon.Text" xml:space="preserve">
+    <value>Action left click trayicon:</value>
+  </data>
+  <data name="lblTextDirection.Text" xml:space="preserve">
+    <value>Text direction notes:</value>
+  </data>
+  <data name="&gt;&gt;tabPageNewNote.Name" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="&gt;&gt;tabProxy.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chxLogErrors.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoteLocation.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="lblTextGPGPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 20</value>
+  </data>
+  <data name="&gt;&gt;tabNetwork.Name" xml:space="preserve">
+    <value>tabNetwork</value>
+  </data>
+  <data name="&gt;&gt;tabctrlAppearance.Parent" xml:space="preserve">
+    <value>tabAppearance</value>
+  </data>
+  <data name="chxSocialEmailEnabled.Text" xml:space="preserve">
+    <value>Enable E-mail in share menu</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitleFamily.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="lblTextFontTitlePoints.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 51</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="tabNetwork.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;numProcTransparency.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;numTrayiconFontsize.Parent" xml:space="preserve">
+    <value>tabPageTrayicon</value>
+  </data>
+  <data name="lblTextTotalNotesWarnLimit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 83</value>
+  </data>
+  <data name="chxHighlightHyperlinks.Text" xml:space="preserve">
+    <value>Make hyperlinks clickable.</value>
+  </data>
+  <data name="tabProxy.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteTitle.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="numUpdateCheckDays.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;lblTextNetworkMiliseconds.Parent" xml:space="preserve">
+    <value>tabNetwork</value>
+  </data>
+  <data name="lblTextFontTitlePoints.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lbTextManagesnotesFontSize.Name" xml:space="preserve">
+    <value>lbTextManagesnotesFontSize</value>
+  </data>
+  <data name="&gt;&gt;chxLogDebug.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="chxConfirmDeletenote.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightPHP.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldExit.Parent" xml:space="preserve">
+    <value>tabPageTrayicon</value>
+  </data>
+  <data name="lblTextTransparentProcVisible.Text" xml:space="preserve">
+    <value>% visible</value>
+  </data>
+  <data name="&gt;&gt;lblFontsizePoints.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextMiliseconds.Parent" xml:space="preserve">
+    <value>tabProxy</value>
+  </data>
+  <data name="chxShowTooltips.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tabControlSharing.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numNotesDefaultHeight.Name" xml:space="preserve">
+    <value>numNotesDefaultHeight</value>
+  </data>
+  <data name="numProcTransparency.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 22</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontsizeMenu.Name" xml:space="preserve">
+    <value>lblTextFontsizeMenu</value>
+  </data>
+  <data name="tabUpdates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldExit.Name" xml:space="preserve">
+    <value>chxTrayiconBoldExit</value>
+  </data>
+  <data name="&gt;&gt;numWarnLimitVisible.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cbxDefaultSkin.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="chxTrayiconBoldSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 106</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="&gt;&gt;numTrayiconFontsize.Name" xml:space="preserve">
+    <value>numTrayiconFontsize</value>
+  </data>
+  <data name="numManagenotesFont.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 22</value>
+  </data>
+  <data name="numNotesDefaultHeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 22</value>
+  </data>
+  <data name="&gt;&gt;iptbProxy.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;numUpdateCheckDays.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextNetworkMiliseconds.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tbDefaultEmail.Location" type="System.Drawing.Point, System.Drawing">
+    <value>34, 92</value>
+  </data>
+  <data name="&gt;&gt;numTrayiconFontsize.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tabPageFonts.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblTextMiliseconds.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 20</value>
+  </data>
+  <data name="chxTransparecy.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="chxProxyEnabled.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="btnCancel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;tabAppearance.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblTextTransparentProcVisible.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="numProcTransparency.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmLink.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblTextCheckforupdatesevery.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;lbTextManagesnotesFontSize.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tabAppereanceManagenotes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="tabControlSharing.Size" type="System.Drawing.Size, System.Drawing">
+    <value>441, 327</value>
+  </data>
+  <data name="lblTextNetworkTimeout.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;btnBrowse.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="cbxDefaultSkin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 24</value>
+  </data>
+  <data name="chxHighlightSQL.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;lblTextNetworkMiliseconds.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnBrowse.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="numProcTransparency.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="chxUseDateAsDefaultTitle.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblTextNoteLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 20</value>
+  </data>
+  <data name="chxCheckUpdatesSignature.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 109</value>
+  </data>
+  <data name="&gt;&gt;chxNotesDeleteRecyclebin.Name" xml:space="preserve">
+    <value>chxNotesDeleteRecyclebin</value>
+  </data>
+  <data name="btnBrowse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 25</value>
+  </data>
+  <data name="chxHighlightHTML.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 21</value>
+  </data>
+  <data name="lblTextFontContentSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 20</value>
+  </data>
+  <data name="tabSharing.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;numManagenotesFont.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnGPGPathBrowse.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Width:</value>
+  </data>
+  <data name="&gt;&gt;lblTextSkinManagenotes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnOK.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;tabNetwork.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="numManagenotesFont.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="numProcTransparency.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;chxSocialEmailDefaultaddressSet.Parent" xml:space="preserve">
+    <value>tabEmail</value>
+  </data>
+  <data name="tabAppearance.Size" type="System.Drawing.Size, System.Drawing">
+    <value>447, 333</value>
+  </data>
+  <data name="&gt;&gt;tabAppearanceGeneral.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tbGPGPath.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="chxLogExceptions.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 233</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteTitle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextGPGPath.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="numUpdateCheckDays.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="lblTextMiliseconds.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
+    <value>btnCancel</value>
+  </data>
+  <data name="tbGPGPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>128, 135</value>
+  </data>
+  <data name="chxConfirmLink.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 65</value>
+  </data>
+  <data name="&gt;&gt;tabControlSettings.Name" xml:space="preserve">
+    <value>tabControlSettings</value>
+  </data>
+  <data name="&gt;&gt;tabGeneral.Parent" xml:space="preserve">
+    <value>tabControlSettings</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontContentPoints.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="lblTextLatestUpdateCheck.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="&gt;&gt;openFileDialogBrowseGPG.Type" xml:space="preserve">
+    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>455, 398</value>
+  </data>
+  <data name="chxSocialEmailDefaultaddressSet.Text" xml:space="preserve">
+    <value>Set a default email address to send to: </value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 20</value>
+  </data>
+  <data name="numUpdateCheckDays.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="tabControlSettings.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="lbTextManagesnotesFontSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>52, 82</value>
+  </data>
+  <data name="&gt;&gt;tbGPGPath.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="numUpdateCheckDays.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="chxSettingsExpertEnabled.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 371</value>
+  </data>
+  <data name="chxCaseSentiveSearch.Text" xml:space="preserve">
+    <value>Use case sentive search.</value>
+  </data>
+  <data name="chxCheckUpdates.Text" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="&gt;&gt;cbxDefaultSkin.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteTitleBold.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chxHighlightHTML.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;btnOK.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabUpdates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cbxFontNoteTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 24</value>
+  </data>
+  <data name="tabProxy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 298</value>
+  </data>
+  <data name="lblTextFontTitleSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>61, 51</value>
+  </data>
+  <data name="&gt;&gt;numUpdateCheckDays.Name" xml:space="preserve">
+    <value>numUpdateCheckDays</value>
+  </data>
+  <data name="&gt;&gt;chxLogExceptions.Name" xml:space="preserve">
+    <value>chxLogExceptions</value>
+  </data>
+  <data name="tabControlNetwork.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="lblTextNoteLocation.Text" xml:space="preserve">
+    <value>Save notes in:</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 144</value>
+  </data>
+  <data name="&gt;&gt;chxForceUseIPv6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextLatestUpdateCheck.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldManagenotes.Parent" xml:space="preserve">
+    <value>tabPageTrayicon</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextNetworkTimeout.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="chxHighlightHyperlinks.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="iptbProxy.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldNewnote.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numNotesDefaultWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="numManagenotesFont.Location" type="System.Drawing.Point, System.Drawing">
+    <value>211, 82</value>
+  </data>
+  <data name="&gt;&gt;numUpdateCheckDays.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="&gt;&gt;tabPageNewNote.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="chxLogErrors.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 210</value>
+  </data>
+  <data name="chxTrayiconBoldNewnote.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 25</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 193</value>
+  </data>
+  <data name="tabPageTrayicon.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="&gt;&gt;numFontSizeTitle.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="tabGeneral.Text" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="lblTextDayAtStartup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 20</value>
+  </data>
+  <data name="chxLogExceptions.Text" xml:space="preserve">
+    <value>Log exceptions (recommeded: leave enabled).</value>
+  </data>
+  <data name="&gt;&gt;chxShowTooltips.Name" xml:space="preserve">
+    <value>chxShowTooltips</value>
+  </data>
+  <data name="btnCheckUpdates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>118, 224</value>
+  </data>
+  <data name="chxForceUseIPv6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>295, 20</value>
+  </data>
+  <data name="&gt;&gt;tabUpdates.Parent" xml:space="preserve">
+    <value>tabControlNetwork</value>
+  </data>
+  <data name="numWarnLimitVisible.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="chxHighlightPHP.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="chxCheckUpdatesSignature.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;chxLogErrors.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="chxHighlightSQL.Text" xml:space="preserve">
+    <value>Highlight SQL text between quotes.</value>
+  </data>
+  <data name="chxHighlightSQL.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 159</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontContentSize.Name" xml:space="preserve">
+    <value>lblTextFontContentSize</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldNewnote.Parent" xml:space="preserve">
+    <value>tabPageTrayicon</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteContent.Name" xml:space="preserve">
+    <value>cbxFontNoteContent</value>
+  </data>
+  <data name="numTimeout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 22</value>
+  </data>
+  <data name="tabctrlAppearance.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;numProcTransparency.Name" xml:space="preserve">
+    <value>numProcTransparency</value>
+  </data>
+  <data name="&gt;&gt;lblLatestUpdateCheck.Name" xml:space="preserve">
+    <value>lblLatestUpdateCheck</value>
+  </data>
+  <data name="lblTextCheckforupdatesevery.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="lblTextFontsizeMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>147, 20</value>
+  </data>
+  <data name="numNotesDefaultWidth.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;cbxActionLeftclick.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;iptbProxy.Parent" xml:space="preserve">
+    <value>tabProxy</value>
+  </data>
+  <data name="chxForceUseIPv6.Text" xml:space="preserve">
+    <value>Force the use of IPv6 only. (not recommeded)</value>
+  </data>
+  <data name="lblTextFontTitleSize.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="chxHighlightPHP.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxTrayiconBoldManagenotes.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="chxSocialEmailEnabled.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 27</value>
+  </data>
+  <data name="&gt;&gt;chxSettingsExpertEnabled.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="numWarnLimitTotal.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="lblTextFontTitleFamily.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="numNotesDefaultHeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>86, 191</value>
+  </data>
+  <data name="tabPageTrayicon.Text" xml:space="preserve">
+    <value>Trayicon</value>
+  </data>
+  <data name="chxUpdateSilentInstall.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblTextDirection.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;lblTextDayAtStartup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextActionLeftClicktTrayicon.Parent" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="&gt;&gt;cbxManageNotesSkin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxStartOnLogin.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightHyperlinks.Parent" xml:space="preserve">
+    <value>tabHighlight</value>
+  </data>
+  <data name="&gt;&gt;tabProxy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbTextManagesnotesFontSize.Parent" xml:space="preserve">
+    <value>tabAppereanceManagenotes</value>
+  </data>
+  <data name="lblFontsizePoints.Location" type="System.Drawing.Point, System.Drawing">
+    <value>216, 27</value>
+  </data>
+  <data name="&gt;&gt;chxProxyEnabled.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblTextMiliseconds.Text" xml:space="preserve">
+    <value>ms</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;chxCheckUpdates.Name" xml:space="preserve">
+    <value>chxCheckUpdates</value>
+  </data>
+  <data name="chxSocialEmailEnabled.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="lblTextLogging.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="btnGPGPathBrowse.Text" xml:space="preserve">
+    <value>browse</value>
+  </data>
+  <data name="&gt;&gt;tabctrlAppearance.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chxNotesDeleteRecyclebin.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;chxLogExceptions.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;numFontSizeTitle.Name" xml:space="preserve">
+    <value>numFontSizeTitle</value>
+  </data>
+  <data name="&gt;&gt;tabGeneral.Name" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="&gt;&gt;tabPageFonts.Name" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="chxCaseSentiveSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 20</value>
+  </data>
+  <data name="&gt;&gt;btnGPGPathBrowse.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chxSocialEmailDefaultaddressSet.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 69</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmDeletenote.Name" xml:space="preserve">
+    <value>chxConfirmDeletenote</value>
+  </data>
+  <data name="&gt;&gt;numWarnLimitVisible.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabGeneral.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabGeneral.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="chxLoadPlugins.AccessibleDescription" xml:space="preserve">
+    <value>Allow NoteFly to load plugins</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FrmSettings</value>
+  </data>
+  <data name="chxTrayiconBoldExit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbxFontNoteTitle.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="lblTextTransparentProcVisible.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tabProxy.Name" xml:space="preserve">
+    <value>tabProxy</value>
+  </data>
+  <data name="&gt;&gt;numWarnLimitVisible.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="chxHighlightPHP.Text" xml:space="preserve">
+    <value>Highlight PHP text between &lt;?php and ?&gt;.</value>
+  </data>
+  <data name="&gt;&gt;tabPageTrayicon.Name" xml:space="preserve">
+    <value>tabPageTrayicon</value>
+  </data>
+  <data name="&gt;&gt;tabAppereanceManagenotes.Name" xml:space="preserve">
+    <value>tabAppereanceManagenotes</value>
+  </data>
+  <data name="numTrayiconFontsize.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;numFontSizeContent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxForceUseIPv6.Parent" xml:space="preserve">
+    <value>tabProxy</value>
+  </data>
+  <data name="lblTextCheckforupdatesevery.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxStartOnLogin.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="chxLogDebug.Text" xml:space="preserve">
+    <value>Log debug info.</value>
+  </data>
+  <data name="chxProxyEnabled.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 21</value>
+  </data>
+  <data name="&gt;&gt;tabAppearanceGeneral.Name" xml:space="preserve">
+    <value>tabAppearanceGeneral</value>
+  </data>
+  <data name="&gt;&gt;btnGPGPathBrowse.Name" xml:space="preserve">
+    <value>btnGPGPathBrowse</value>
+  </data>
+  <data name="&gt;&gt;lblTextTotalNotesWarnLimit.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cbxFontNoteContent.IntegralHeight" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;tabAppereanceManagenotes.Parent" xml:space="preserve">
+    <value>tabctrlAppearance</value>
+  </data>
+  <data name="&gt;&gt;lblFontsizePoints.Parent" xml:space="preserve">
+    <value>tabPageTrayicon</value>
+  </data>
+  <data name="chxCheckUpdates.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblTextLogging.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextNoteFont.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;numTimeout.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cbxManagenotesTooltipContent.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;numFontSizeContent.Name" xml:space="preserve">
+    <value>numFontSizeContent</value>
+  </data>
+  <data name="chxTransparecy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 32</value>
+  </data>
+  <data name="lblTextDayAtStartup.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="&gt;&gt;numTimeout.Name" xml:space="preserve">
+    <value>numTimeout</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontContentSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>pt.</value>
+  </data>
+  <data name="&gt;&gt;lblTextNetworkTimeout.Name" xml:space="preserve">
+    <value>lblTextNetworkTimeout</value>
+  </data>
+  <data name="&gt;&gt;lblTextLatestUpdateCheck.Name" xml:space="preserve">
+    <value>lblTextLatestUpdateCheck</value>
+  </data>
+  <data name="chxSocialEmailDefaultaddressSet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 21</value>
+  </data>
+  <data name="&gt;&gt;lblTextCheckforupdatesevery.Name" xml:space="preserve">
+    <value>lblTextCheckforupdatesevery</value>
+  </data>
+  <data name="tabHighlight.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="lblTextNoteLocation.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="chxTrayiconBoldExit.Text" xml:space="preserve">
+    <value>Display "Exit" in bold.</value>
+  </data>
+  <data name="&gt;&gt;lblTextCheckforupdatesevery.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;tbDefaultEmail.Parent" xml:space="preserve">
+    <value>tabEmail</value>
+  </data>
+  <data name="chxConfirmExit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 21</value>
+  </data>
+  <data name="cbxTextDirection.Items" xml:space="preserve">
+    <value>Left to right</value>
+  </data>
+  <data name="cbxActionLeftclick.AutoCompleteCustomSource3" xml:space="preserve">
+    <value>Do nothing.</value>
+  </data>
+  <data name="&gt;&gt;chxSocialEmailEnabled.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lblTextDirection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabProxy.Text" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="chxUseDateAsDefaultTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>297, 20</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightHTML.Parent" xml:space="preserve">
+    <value>tabHighlight</value>
+  </data>
+  <data name="tabAppearance.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabAppearance.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblLatestUpdateCheck.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;cbxManagenotesTooltipContent.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;cbxDefaultSkin.Name" xml:space="preserve">
+    <value>cbxDefaultSkin</value>
+  </data>
+  <data name="&gt;&gt;numManagenotesFont.Name" xml:space="preserve">
+    <value>numManagenotesFont</value>
+  </data>
+  <data name="lblTextNetworkTimeout.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tabAdvance.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="openFileDialogBrowseGPG.Title" xml:space="preserve">
+    <value>Select path to gpg.exe</value>
+  </data>
+  <data name="numTimeout.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;chxStartOnLogin.Name" xml:space="preserve">
+    <value>chxStartOnLogin</value>
+  </data>
+  <data name="lblTextFontsizeMenu.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxLogErrors.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="chxConfirmDeletenote.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblTextActionLeftClicktTrayicon.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;chxCheckUpdatesSignature.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteTitle.Name" xml:space="preserve">
+    <value>cbxFontNoteTitle</value>
+  </data>
+  <data name="tabControlNetwork.Size" type="System.Drawing.Size, System.Drawing">
+    <value>441, 327</value>
+  </data>
+  <data name="chxNotesDeleteRecyclebin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 94</value>
+  </data>
+  <data name="lblTextSkinManagenotes.Text" xml:space="preserve">
+    <value>Skin of Manage notes window:</value>
+  </data>
+  <data name="&gt;&gt;chxUseDateAsDefaultTitle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbxManagenotesTooltipContent.Parent" xml:space="preserve">
+    <value>tabAppereanceManagenotes</value>
+  </data>
+  <data name="btnResetSettings.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontContentSize.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="lblTextDayAtStartup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>232, 43</value>
+  </data>
+  <data name="&gt;&gt;lblTextLatestUpdateCheck.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="&gt;&gt;cbxTextDirection.Name" xml:space="preserve">
+    <value>cbxTextDirection</value>
+  </data>
+  <data name="chxSocialEmailEnabled.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="chxLogDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 21</value>
+  </data>
+  <data name="chxConfirmExit.Text" xml:space="preserve">
+    <value>Confirm shutdown of NoteFly</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightSQL.Parent" xml:space="preserve">
+    <value>tabHighlight</value>
+  </data>
+  <data name="lblTextActionLeftClicktTrayicon.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmExit.Name" xml:space="preserve">
+    <value>chxConfirmExit</value>
+  </data>
+  <data name="&gt;&gt;tabGeneral.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblTextFontTitleSize.Text" xml:space="preserve">
+    <value>Font size title:</value>
+  </data>
+  <data name="&gt;&gt;lblTextSkinManagenotes.Name" xml:space="preserve">
+    <value>lblTextSkinManagenotes</value>
+  </data>
+  <data name="&gt;&gt;lblTextTransparentProcVisible.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPageFonts.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabPageFonts.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="chxCheckUpdatesSignature.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="lblTextGPGPath.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontContentPoints.Name" xml:space="preserve">
+    <value>lblTextFontContentPoints</value>
+  </data>
+  <data name="&gt;&gt;lblLatestUpdateCheck.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="lblTextFontTitleFamily.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 20</value>
+  </data>
+  <data name="&gt;&gt;chxStartOnLogin.Parent" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="lblTextNoteFont.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tabEmail.Parent" xml:space="preserve">
+    <value>tabControlSharing</value>
+  </data>
+  <data name="chxConfirmLink.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="tabAppearanceGeneral.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;numTimeout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxConfirmLink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>292, 21</value>
+  </data>
+  <data name="&gt;&gt;chxUseRandomDefaultNote.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="lblTextCheckforupdatesevery.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 20</value>
+  </data>
+  <data name="lblDefaultNewNoteColor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -146,4 +2065,1135 @@
         rEGAA6xBgAOsQYADrEGAA6xBgAOsQYADrEGAA6xBgAOsQYADrEGAA6xBgAOsQYADrEH//6xB
 </value>
   </data>
+  <data name="chxUseDateAsDefaultTitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 104</value>
+  </data>
+  <data name="&gt;&gt;btnBrowse.Name" xml:space="preserve">
+    <value>btnBrowse</value>
+  </data>
+  <data name="&gt;&gt;lblTextMiliseconds.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmExit.Parent" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="&gt;&gt;openFileDialogBrowseGPG.Name" xml:space="preserve">
+    <value>openFileDialogBrowseGPG</value>
+  </data>
+  <data name="tabPageFonts.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 298</value>
+  </data>
+  <data name="&gt;&gt;btnResetSettings.Name" xml:space="preserve">
+    <value>btnResetSettings</value>
+  </data>
+  <data name="&gt;&gt;lblTextDayAtStartup.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;lblTextActionLeftClicktTrayicon.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numTimeout.Parent" xml:space="preserve">
+    <value>tabProxy</value>
+  </data>
+  <data name="cbxActionLeftclick.AutoCompleteCustomSource2" xml:space="preserve">
+    <value>Show manage notes.</value>
+  </data>
+  <data name="tabUpdates.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightPHP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextMiliseconds.AccessibleDescription" xml:space="preserve">
+    <value>Miliseconds</value>
+  </data>
+  <data name="lblTextNoteLocation.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblTextLogging.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="folderBrowseDialogNotessavepath.Description" xml:space="preserve">
+    <value>Select a folder to store the all the notes files in</value>
+  </data>
+  <data name="lblTextActionLeftClicktTrayicon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 20</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteTitleBold.Name" xml:space="preserve">
+    <value>cbxFontNoteTitleBold</value>
+  </data>
+  <data name="cbxTextDirection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 180</value>
+  </data>
+  <data name="&gt;&gt;tabUpdates.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tbNotesSavePath.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoteLocation.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="numTimeout.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;btnResetSettings.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="tabPageNewNote.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;cbxActionLeftclick.Name" xml:space="preserve">
+    <value>cbxActionLeftclick</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightHyperlinks.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;chxLoadPlugins.Parent" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="&gt;&gt;btnCheckUpdates.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="chxTrayiconBoldExit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 129</value>
+  </data>
+  <data name="chxProxyEnabled.Text" xml:space="preserve">
+    <value>Use socked proxy</value>
+  </data>
+  <data name="cbxActionLeftclick.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 24</value>
+  </data>
+  <data name="lblTextFontContentPoints.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="&gt;&gt;chxConfirmLink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblDefaultNewNoteColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitleSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPageNewNote.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitlePoints.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cbxManageNotesSkin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>211, 39</value>
+  </data>
+  <data name="lblTextNoteFont.Text" xml:space="preserve">
+    <value>default font content:</value>
+  </data>
+  <data name="chxTrayiconBoldNewnote.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 21</value>
+  </data>
+  <data name="numTimeout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>163, 111</value>
+  </data>
+  <data name="&gt;&gt;lblTextNetworkMiliseconds.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxShowTooltips.Parent" xml:space="preserve">
+    <value>tabAppearanceGeneral</value>
+  </data>
+  <data name="&gt;&gt;chxLoadPlugins.Name" xml:space="preserve">
+    <value>chxLoadPlugins</value>
+  </data>
+  <data name="cbxActionLeftclick.AutoCompleteCustomSource" xml:space="preserve">
+    <value>Bring all notes to front.</value>
+  </data>
+  <data name="chxLogExceptions.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="tabAppearanceGeneral.Text" xml:space="preserve">
+    <value>Everywhere</value>
+  </data>
+  <data name="tabUpdates.Text" xml:space="preserve">
+    <value>Updates</value>
+  </data>
+  <data name="&gt;&gt;tabProxy.Parent" xml:space="preserve">
+    <value>tabControlNetwork</value>
+  </data>
+  <data name="chxTransparecy.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxForceUseIPv6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontsizeMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numWarnLimitTotal.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="chxCheckUpdatesSignature.Text" xml:space="preserve">
+    <value>Verify the signature of downloaded updates.</value>
+  </data>
+  <data name="numFontSizeTitle.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="tabControlSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>455, 362</value>
+  </data>
+  <data name="chxSettingsExpertEnabled.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="btnResetSettings.Text" xml:space="preserve">
+    <value>&amp;Reset all settings to default</value>
+  </data>
+  <data name="&gt;&gt;chxUseRandomDefaultNote.Parent" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="tabUpdates.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoteFont.Name" xml:space="preserve">
+    <value>lblTextNoteFont</value>
+  </data>
+  <data name="&gt;&gt;tabControlSharing.Name" xml:space="preserve">
+    <value>tabControlSharing</value>
+  </data>
+  <data name="chxSocialEmailDefaultaddressSet.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tabEmail.Text" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="cbxFontNoteContent.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="lblTextTotalNotesWarnLimit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxTransparecy.Text" xml:space="preserve">
+    <value>Enable transparency</value>
+  </data>
+  <data name="chxUseAlternativeTrayicon.Text" xml:space="preserve">
+    <value>Use alternative windows7 style/white trayicon.</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>&amp;Cancel</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabAppereanceManagenotes.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="numWarnLimitVisible.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 22</value>
+  </data>
+  <data name="lblTextDirection.AccessibleDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chxTransparecy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 21</value>
+  </data>
+  <data name="&gt;&gt;chxUseDateAsDefaultTitle.Parent" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="tabPageFonts.Text" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="&gt;&gt;lblTextDayAtStartup.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitleSize.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblTextLogging.Text" xml:space="preserve">
+    <value>Logging:</value>
+  </data>
+  <data name="lblTextLatestUpdateCheck.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>338, 368</value>
+  </data>
+  <data name="chxStartOnLogin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 25</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteContent.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="tabSharing.Text" xml:space="preserve">
+    <value>Sharing</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>tabAppereanceManagenotes</value>
+  </data>
+  <data name="&gt;&gt;numNotesDefaultWidth.Parent" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="&gt;&gt;tbDefaultEmail.Name" xml:space="preserve">
+    <value>tbDefaultEmail</value>
+  </data>
+  <data name="&gt;&gt;chxTransparecy.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabAppearance.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="&gt;&gt;tabControlSharing.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabAdvance.Size" type="System.Drawing.Size, System.Drawing">
+    <value>447, 333</value>
+  </data>
+  <data name="chxSocialEmailEnabled.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblLatestUpdateCheck.Location" type="System.Drawing.Point, System.Drawing">
+    <value>223, 193</value>
+  </data>
+  <data name="&gt;&gt;lblDefaultNewNoteColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxShowTooltips.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 21</value>
+  </data>
+  <data name="&gt;&gt;chxLogDebug.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextNetworkMiliseconds.Text" xml:space="preserve">
+    <value>ms</value>
+  </data>
+  <data name="chxProxyEnabled.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 31</value>
+  </data>
+  <data name="chxSettingsExpertEnabled.AccessibleDescription" xml:space="preserve">
+    <value>Show expert settings</value>
+  </data>
+  <data name="&gt;&gt;lblDefaultNewNoteColor.Parent" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="tbDefaultEmail.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="lblTextTotalNotesWarnLimit.Text" xml:space="preserve">
+    <value>Total notes warning limit:</value>
+  </data>
+  <data name="&gt;&gt;tbDefaultEmail.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblLatestUpdateCheck.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="btnCheckUpdates.Text" xml:space="preserve">
+    <value>Check updates now</value>
+  </data>
+  <data name="&gt;&gt;chxSocialEmailDefaultaddressSet.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightPHP.Parent" xml:space="preserve">
+    <value>tabHighlight</value>
+  </data>
+  <data name="lblTextLogging.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblTextNetworkTimeout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 113</value>
+  </data>
+  <data name="chxShowTooltips.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 75</value>
+  </data>
+  <data name="&gt;&gt;tabUpdates.Name" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightSQL.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="numFontSizeTitle.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="lblTextFontTitleSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 20</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldSettings.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontContentPoints.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;folderBrowseDialogNotessavepath.Name" xml:space="preserve">
+    <value>folderBrowseDialogNotessavepath</value>
+  </data>
+  <data name="lblTextNoteFont.Location" type="System.Drawing.Point, System.Drawing">
+    <value>30, 96</value>
+  </data>
+  <data name="chxShowTooltips.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="chxLogDebug.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="chxTrayiconBoldManagenotes.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxTrayiconBoldManagenotes.Text" xml:space="preserve">
+    <value>Display "Manage notes" in bold.</value>
+  </data>
+  <data name="cbxTextDirection.AccessibleDescription" xml:space="preserve">
+    <value>Text direction</value>
+  </data>
+  <data name="tbDefaultEmail.AccessibleDescription" xml:space="preserve">
+    <value>Editbox default email address</value>
+  </data>
+  <data name="iptbProxy.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="chxConfirmLink.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbxFontNoteContent.AccessibleDescription" xml:space="preserve">
+    <value>Font size notes</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitleFamily.Name" xml:space="preserve">
+    <value>lblTextFontTitleFamily</value>
+  </data>
+  <data name="chxCheckUpdates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 21</value>
+  </data>
+  <data name="chxNotesDeleteRecyclebin.Text" xml:space="preserve">
+    <value>Move deleted notes to recycle bin.</value>
+  </data>
+  <data name="chxUseAlternativeTrayicon.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="tabPageFonts.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;cbxManageNotesSkin.Name" xml:space="preserve">
+    <value>cbxManageNotesSkin</value>
+  </data>
+  <data name="&gt;&gt;chxShowTooltips.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="numFontSizeContent.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 119</value>
+  </data>
+  <data name="lblTextTotalNotesWarnLimit.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="tabAppearance.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="chxConfirmLink.Text" xml:space="preserve">
+    <value>Ask before launching URL, on click hyperlink.</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>22, 16</value>
+  </data>
+  <data name="chxCheckUpdates.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;lblTextTotalNotesWarnLimit.Name" xml:space="preserve">
+    <value>lblTextTotalNotesWarnLimit</value>
+  </data>
+  <data name="&gt;&gt;tabAppearance.Name" xml:space="preserve">
+    <value>tabAppearance</value>
+  </data>
+  <data name="&gt;&gt;cbxTextDirection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoteLocation.Name" xml:space="preserve">
+    <value>lblTextNoteLocation</value>
+  </data>
+  <data name="lblDefaultNewNoteColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 56</value>
+  </data>
+  <data name="&gt;&gt;lblTextLogging.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="btnOK.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 25</value>
+  </data>
+  <data name="chxUseRandomDefaultNote.Text" xml:space="preserve">
+    <value>Use a random skin as default skin.</value>
+  </data>
+  <data name="&gt;&gt;tabAdvance.Parent" xml:space="preserve">
+    <value>tabControlSettings</value>
+  </data>
+  <data name="&gt;&gt;folderBrowseDialogNotessavepath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FolderBrowserDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxUseAlternativeTrayicon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 21</value>
+  </data>
+  <data name="&gt;&gt;lblTextGPGPath.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;chxTransparecy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbNotesSavePath.Name" xml:space="preserve">
+    <value>tbNotesSavePath</value>
+  </data>
+  <data name="lblTextSkinManagenotes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 20</value>
+  </data>
+  <data name="tbNotesSavePath.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightSQL.Name" xml:space="preserve">
+    <value>chxHighlightSQL</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteTitle.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tabNetwork.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;chxCaseSentiveSearch.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chxUpdateSilentInstall.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblTextFontContentPoints.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 121</value>
+  </data>
+  <data name="tabAppereanceManagenotes.Text" xml:space="preserve">
+    <value>Manage notes</value>
+  </data>
+  <data name="cbxDefaultSkin.AccessibleDescription" xml:space="preserve">
+    <value>Defaul color for new note.</value>
+  </data>
+  <data name="lblTextDayAtStartup.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="chxForceUseIPv6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 139</value>
+  </data>
+  <data name="&gt;&gt;chxUseAlternativeTrayicon.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabPageTrayicon.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="cbxActionLeftclick.Items2" xml:space="preserve">
+    <value>Create a new note</value>
+  </data>
+  <data name="&gt;&gt;tabHighlight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numManagenotesFont.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cbxActionLeftclick.Items1" xml:space="preserve">
+    <value>Bring notes to front</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontContentSize.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteTitleBold.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="chxStartOnLogin.Text" xml:space="preserve">
+    <value>Start NoteFly on logon.</value>
+  </data>
+  <data name="tabControlSettings.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="&gt;&gt;numTrayiconFontsize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxSettingsExpertEnabled.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnBrowse.Text" xml:space="preserve">
+    <value>browse</value>
+  </data>
+  <data name="&gt;&gt;lblTextNetworkTimeout.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tbNotesSavePath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 46</value>
+  </data>
+  <data name="chxCaseSentiveSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 147</value>
+  </data>
+  <data name="&gt;&gt;chxUpdateSilentInstall.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextSkinManagenotes.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblTextCheckforupdatesevery.Parent" xml:space="preserve">
+    <value>tabUpdates</value>
+  </data>
+  <data name="chxLoadPlugins.Text" xml:space="preserve">
+    <value>Allow to load plugins</value>
+  </data>
+  <data name="tabEmail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 298</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightPHP.Name" xml:space="preserve">
+    <value>chxHighlightPHP</value>
+  </data>
+  <data name="&gt;&gt;tabSharing.Parent" xml:space="preserve">
+    <value>tabControlSettings</value>
+  </data>
+  <data name="&gt;&gt;chxProxyEnabled.Name" xml:space="preserve">
+    <value>chxProxyEnabled</value>
+  </data>
+  <data name="lblTextCheckforupdatesevery.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 43</value>
+  </data>
+  <data name="&gt;&gt;chxStartOnLogin.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;chxCheckUpdatesSignature.Name" xml:space="preserve">
+    <value>chxCheckUpdatesSignature</value>
+  </data>
+  <data name="&gt;&gt;numWarnLimitVisible.Name" xml:space="preserve">
+    <value>numWarnLimitVisible</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnOK.Location" type="System.Drawing.Point, System.Drawing">
+    <value>227, 368</value>
+  </data>
+  <data name="&gt;&gt;chxUpdateSilentInstall.Name" xml:space="preserve">
+    <value>chxUpdateSilentInstall</value>
+  </data>
+  <data name="tabAppereanceManagenotes.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="numFontSizeTitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 49</value>
+  </data>
+  <data name="chxCheckUpdates.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="lblTextNetworkTimeout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 20</value>
+  </data>
+  <data name="chxUseRandomDefaultNote.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;tbNotesSavePath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxHighlightHTML.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldManagenotes.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;chxNotesDeleteRecyclebin.Parent" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="&gt;&gt;cbxManagenotesTooltipContent.Name" xml:space="preserve">
+    <value>cbxManagenotesTooltipContent</value>
+  </data>
+  <data name="lblTextGPGPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 138</value>
+  </data>
+  <data name="&gt;&gt;numWarnLimitTotal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabControlSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="chxLoadPlugins.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 21</value>
+  </data>
+  <data name="&gt;&gt;lblTextSkinManagenotes.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tabctrlAppearance.ItemSize" type="System.Drawing.Size, System.Drawing">
+    <value>85, 21</value>
+  </data>
+  <data name="&gt;&gt;lblTextLogging.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="chxLogErrors.Text" xml:space="preserve">
+    <value>Log user errors.</value>
+  </data>
+  <data name="&gt;&gt;cbxManageNotesSkin.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="chxTrayiconBoldExit.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="chxSocialEmailDefaultaddressSet.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;lblTextCheckforupdatesevery.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxHighlightHyperlinks.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;chxLogErrors.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="&gt;&gt;tabPageFonts.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControlNetwork.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblDefaultNewNoteColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="chxSettingsExpertEnabled.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 21</value>
+  </data>
+  <data name="chxLoadPlugins.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 121</value>
+  </data>
+  <data name="chxConfirmExit.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="chxConfirmLink.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="lblTextGPGPath.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;tabNetwork.Parent" xml:space="preserve">
+    <value>tabControlSettings</value>
+  </data>
+  <data name="lblTextVisibleNotesWarnLimit.Text" xml:space="preserve">
+    <value>Visible notes warning limit:</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteTitleBold.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxStartOnLogin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 21</value>
+  </data>
+  <data name="tabctrlAppearance.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="&gt;&gt;numNotesDefaultHeight.Parent" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="&gt;&gt;lblTextGPGPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxTrayiconBoldSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 21</value>
+  </data>
+  <data name="&gt;&gt;lblTextTransparentProcVisible.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;chxLogExceptions.Parent" xml:space="preserve">
+    <value>tabAdvance</value>
+  </data>
+  <data name="&gt;&gt;chxLogDebug.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteContent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbxFontNoteContent.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="&gt;&gt;tabPageFonts.Parent" xml:space="preserve">
+    <value>tabctrlAppearance</value>
+  </data>
+  <data name="cbxDefaultSkin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>168, 53</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="&gt;&gt;chxSocialEmailDefaultaddressSet.Name" xml:space="preserve">
+    <value>chxSocialEmailDefaultaddressSet</value>
+  </data>
+  <data name="tabEmail.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblTextFontContentSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxConfirmExit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxConfirmExit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 48</value>
+  </data>
+  <data name="&gt;&gt;lblTextMiliseconds.Name" xml:space="preserve">
+    <value>lblTextMiliseconds</value>
+  </data>
+  <data name="lblFontsizePoints.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbxFontNoteTitleBold.Text" xml:space="preserve">
+    <value>bold</value>
+  </data>
+  <data name="&gt;&gt;tabAppereanceManagenotes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextFontsizeMenu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 27</value>
+  </data>
+  <data name="lblTextFontContentPoints.AccessibleDescription" xml:space="preserve">
+    <value>points</value>
+  </data>
+  <data name="chxTrayiconBoldNewnote.Text" xml:space="preserve">
+    <value>Display "Create a new note" in bold.</value>
+  </data>
+  <data name="&gt;&gt;lblTextSkinManagenotes.Parent" xml:space="preserve">
+    <value>tabAppereanceManagenotes</value>
+  </data>
+  <data name="lblTextMiliseconds.Location" type="System.Drawing.Point, System.Drawing">
+    <value>228, 113</value>
+  </data>
+  <data name="chxCheckUpdatesSignature.Size" type="System.Drawing.Size, System.Drawing">
+    <value>284, 21</value>
+  </data>
+  <data name="&gt;&gt;lblTextLogging.Name" xml:space="preserve">
+    <value>lblTextLogging</value>
+  </data>
+  <data name="lblTextFontTitleFamily.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="&gt;&gt;tabEmail.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextNetworkMiliseconds.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>360, 240</value>
+  </data>
+  <data name="&gt;&gt;numFontSizeTitle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cbxFontNoteTitleBold.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 21</value>
+  </data>
+  <data name="cbxManagenotesTooltipContent.Text" xml:space="preserve">
+    <value>Show a tooltip with preview of the note content.</value>
+  </data>
+  <data name="&gt;&gt;tabControlSharing.Parent" xml:space="preserve">
+    <value>tabSharing</value>
+  </data>
+  <data name="btnResetSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 25</value>
+  </data>
+  <data name="chxUseRandomDefaultNote.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnOK.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="cbxFontNoteContent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 24</value>
+  </data>
+  <data name="chxProxyEnabled.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxUpdateSilentInstall.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="tbDefaultEmail.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="lblTextFontTitleFamily.Location" type="System.Drawing.Point, System.Drawing">
+    <value>91, 25</value>
+  </data>
+  <data name="&gt;&gt;tabctrlAppearance.Name" xml:space="preserve">
+    <value>tabctrlAppearance</value>
+  </data>
+  <data name="numNotesDefaultWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>86, 163</value>
+  </data>
+  <data name="&gt;&gt;numProcTransparency.Parent" xml:space="preserve">
+    <value>tabAppearanceGeneral</value>
+  </data>
+  <data name="chxUseDateAsDefaultTitle.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="numFontSizeContent.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="lblTextSkinManagenotes.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblTextLatestUpdateCheck.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 20</value>
+  </data>
+  <data name="chxUpdateSilentInstall.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 69</value>
+  </data>
+  <data name="&gt;&gt;chxForceUseIPv6.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lbTextManagesnotesFontSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 16</value>
+  </data>
+  <data name="tabAppereanceManagenotes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 298</value>
+  </data>
+  <data name="lblFontsizePoints.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="tbNotesSavePath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>348, 22</value>
+  </data>
+  <data name="&gt;&gt;chxLogExceptions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabNetwork.Text" xml:space="preserve">
+    <value>Network</value>
+  </data>
+  <data name="tabAdvance.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="&gt;&gt;lblDefaultNewNoteColor.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="chxConfirmDeletenote.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 71</value>
+  </data>
+  <data name="iptbProxy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 57</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoteLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnResetSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="tabGeneral.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabHighlight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>447, 333</value>
+  </data>
+  <data name="&gt;&gt;tabHighlight.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chxTrayiconBoldNewnote.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 60</value>
+  </data>
+  <data name="tabSharing.Size" type="System.Drawing.Size, System.Drawing">
+    <value>447, 333</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="cbxManagenotesTooltipContent.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblTextTotalNotesWarnLimit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightHTML.Name" xml:space="preserve">
+    <value>chxHighlightHTML</value>
+  </data>
+  <data name="tabControlNetwork.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>tabPageNewNote</value>
+  </data>
+  <data name="&gt;&gt;tbNotesSavePath.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;chxProxyEnabled.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chxTransparecy.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="cbxManagenotesTooltipContent.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 120</value>
+  </data>
+  <data name="lblTextFontContentSize.Text" xml:space="preserve">
+    <value>default font size content:</value>
+  </data>
+  <data name="chxLogDebug.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxLogErrors.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 21</value>
+  </data>
+  <data name="numWarnLimitVisible.Location" type="System.Drawing.Point, System.Drawing">
+    <value>182, 104</value>
+  </data>
+  <data name="tabProxy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="cbxActionLeftclick.Location" type="System.Drawing.Point, System.Drawing">
+    <value>165, 167</value>
+  </data>
+  <data name="chxSocialEmailDefaultaddressSet.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chxTransparecy.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;numFontSizeTitle.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chxNotesDeleteRecyclebin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 21</value>
+  </data>
+  <data name="tabGeneral.Size" type="System.Drawing.Size, System.Drawing">
+    <value>447, 333</value>
+  </data>
+  <data name="lblTextVisibleNotesWarnLimit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 106</value>
+  </data>
+  <data name="&gt;&gt;chxNotesDeleteRecyclebin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblTextVisibleNotesWarnLimit.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="lblTextNoteFont.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 20</value>
+  </data>
+  <data name="&gt;&gt;chxTrayiconBoldExit.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="lblTextNoteLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="chxUseRandomDefaultNote.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="chxTrayiconBoldSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;btnOK.Name" xml:space="preserve">
+    <value>btnOK</value>
+  </data>
+  <data name="lblTextDayAtStartup.Text" xml:space="preserve">
+    <value>days, at startup</value>
+  </data>
+  <data name="lblTextGPGPath.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="chxLogExceptions.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;chxHighlightHTML.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="numProcTransparency.Location" type="System.Drawing.Point, System.Drawing">
+    <value>189, 32</value>
+  </data>
+  <data name="lbTextManagesnotesFontSize.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;numFontSizeContent.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="lblLatestUpdateCheck.Size" type="System.Drawing.Size, System.Drawing">
+    <value>192, 16</value>
+  </data>
+  <data name="&gt;&gt;iptbProxy.Name" xml:space="preserve">
+    <value>iptbProxy</value>
+  </data>
+  <data name="&gt;&gt;tabEmail.Name" xml:space="preserve">
+    <value>tabEmail</value>
+  </data>
+  <data name="&gt;&gt;tabControlSettings.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControlSettings.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="cbxManageNotesSkin.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblTextMiliseconds.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCheckUpdates.Name" xml:space="preserve">
+    <value>btnCheckUpdates</value>
+  </data>
+  <data name="&gt;&gt;tbGPGPath.Name" xml:space="preserve">
+    <value>tbGPGPath</value>
+  </data>
+  <data name="cbxActionLeftclick.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="lblTextCheckforupdatesevery.Text" xml:space="preserve">
+    <value>Check for updates every </value>
+  </data>
+  <data name="&gt;&gt;btnGPGPathBrowse.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabControlSharing.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;lblTextDayAtStartup.Name" xml:space="preserve">
+    <value>lblTextDayAtStartup</value>
+  </data>
+  <data name="&gt;&gt;tabAppearance.Parent" xml:space="preserve">
+    <value>tabControlSettings</value>
+  </data>
+  <data name="btnBrowse.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;lblTextFontTitleFamily.Parent" xml:space="preserve">
+    <value>tabPageFonts</value>
+  </data>
+  <data name="lblTextDayAtStartup.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tabAdvance.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxSettingsExpertEnabled.Name" xml:space="preserve">
+    <value>chxSettingsExpertEnabled</value>
+  </data>
+  <data name="cbxFontNoteContent.Location" type="System.Drawing.Point, System.Drawing">
+    <value>157, 93</value>
+  </data>
+  <data name="chxHighlightHyperlinks.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="&gt;&gt;chxLogErrors.Name" xml:space="preserve">
+    <value>chxLogErrors</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Height:</value>
+  </data>
+  <metadata name="folderBrowseDialogNotessavepath.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>40, 21</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>46</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="openFileDialogBrowseGPG.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>279, 21</value>
+  </metadata>
 </root>

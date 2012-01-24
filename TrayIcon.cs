@@ -449,7 +449,7 @@ namespace NoteFly
 
             if (Frmneweditnoteopen)
             {
-                string trayicon_notestillopen = Gettext.Strings.T("A note is still open for editing.\r\nAre you sure you want to shutdown {0}?", Program.AssemblyTitle);
+                string trayicon_notestillopen = Gettext.Strings.T("A note is still open for editing.\nAre you sure you want to shutdown {0}?", Program.AssemblyTitle);
                 DialogResult resdlg = MessageBox.Show(trayicon_notestillopen, trayicon_sureexittitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (resdlg == DialogResult.No)
                 {

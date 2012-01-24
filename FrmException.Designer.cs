@@ -76,6 +76,7 @@ namespace NoteFly
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmException));
             this.lblTextExceptionMessage = new System.Windows.Forms.Label();
             this.btnContinu = new System.Windows.Forms.Button();
             this.btnShutdown = new System.Windows.Forms.Button();
@@ -86,74 +87,46 @@ namespace NoteFly
             // 
             // lblTextExceptionMessage
             // 
-            this.lblTextExceptionMessage.AutoSize = true;
-            this.lblTextExceptionMessage.Location = new System.Drawing.Point(2, 9);
+            resources.ApplyResources(this.lblTextExceptionMessage, "lblTextExceptionMessage");
             this.lblTextExceptionMessage.Name = "lblTextExceptionMessage";
-            this.lblTextExceptionMessage.Size = new System.Drawing.Size(333, 13);
-            this.lblTextExceptionMessage.TabIndex = 0;
-            this.lblTextExceptionMessage.Text = "NoteFly has crashed, an exception with the following message occur:";
             // 
             // btnContinu
             // 
-            this.btnContinu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnContinu.Location = new System.Drawing.Point(185, 132);
+            resources.ApplyResources(this.btnContinu, "btnContinu");
             this.btnContinu.Name = "btnContinu";
-            this.btnContinu.Size = new System.Drawing.Size(191, 23);
-            this.btnContinu.TabIndex = 1;
-            this.btnContinu.Text = "try to continu";
             this.btnContinu.UseVisualStyleBackColor = true;
             this.btnContinu.Click += new System.EventHandler(this.btnContinu_Click);
             // 
             // btnShutdown
             // 
-            this.btnShutdown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnShutdown.Location = new System.Drawing.Point(5, 132);
+            resources.ApplyResources(this.btnShutdown, "btnShutdown");
             this.btnShutdown.Name = "btnShutdown";
-            this.btnShutdown.Size = new System.Drawing.Size(174, 23);
-            this.btnShutdown.TabIndex = 2;
-            this.btnShutdown.Text = "shutdown";
             this.btnShutdown.UseVisualStyleBackColor = true;
             this.btnShutdown.Click += new System.EventHandler(this.btnShutdown_Click);
             // 
             // tbExceptionMessage
             // 
-            this.tbExceptionMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbExceptionMessage.Location = new System.Drawing.Point(5, 25);
-            this.tbExceptionMessage.Multiline = true;
+            resources.ApplyResources(this.tbExceptionMessage, "tbExceptionMessage");
             this.tbExceptionMessage.Name = "tbExceptionMessage";
-            this.tbExceptionMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbExceptionMessage.Size = new System.Drawing.Size(371, 69);
-            this.tbExceptionMessage.TabIndex = 7;
             // 
             // lblTextStacktrace
             // 
-            this.lblTextStacktrace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblTextStacktrace.Location = new System.Drawing.Point(5, 97);
+            resources.ApplyResources(this.lblTextStacktrace, "lblTextStacktrace");
             this.lblTextStacktrace.Name = "lblTextStacktrace";
-            this.lblTextStacktrace.Size = new System.Drawing.Size(361, 32);
-            this.lblTextStacktrace.TabIndex = 8;
-            this.lblTextStacktrace.Text = "The exception is written to the logfile for bug reporting.\r\nOptions:\r\n";
             // 
             // linklblCreateBugReport
             // 
-            this.linklblCreateBugReport.AutoSize = true;
-            this.linklblCreateBugReport.Location = new System.Drawing.Point(291, 116);
+            resources.ApplyResources(this.linklblCreateBugReport, "linklblCreateBugReport");
             this.linklblCreateBugReport.Name = "linklblCreateBugReport";
-            this.linklblCreateBugReport.Size = new System.Drawing.Size(85, 13);
-            this.linklblCreateBugReport.TabIndex = 9;
             this.linklblCreateBugReport.TabStop = true;
-            this.linklblCreateBugReport.Text = "create bugreport";
             this.linklblCreateBugReport.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklblCreateBugReport_LinkClicked);
             // 
             // FrmException
             // 
             this.AcceptButton = this.btnContinu;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(384, 162);
             this.Controls.Add(this.linklblCreateBugReport);
             this.Controls.Add(this.lblTextStacktrace);
             this.Controls.Add(this.tbExceptionMessage);
@@ -165,7 +138,6 @@ namespace NoteFly
             this.Name = "FrmException";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
             this.PerformLayout();
 

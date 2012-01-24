@@ -34,7 +34,7 @@ namespace NoteFly
     /// </summary>
     public sealed class Program
     {
-        #region Fields (3)
+        #region Fields (2)
 
         /// <summary>
         /// Reference to notes class.
@@ -117,7 +117,7 @@ namespace NoteFly
         {
             get
             {
-                return string.Empty;
+                return "alpha";
             }
         }
 
@@ -230,7 +230,7 @@ namespace NoteFly
                 System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
                 if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
                 {
-                    string program_runasadministrator = Gettext.Strings.T("You are now running {0} as elevated Administrator.\r\nWhich is not recommended because of security.\r\nPress OK if your understand the risks and want to hide this message in the future.", Program.AssemblyTitle);
+                    string program_runasadministrator = Gettext.Strings.T("You are now running {0} as elevated Administrator.\nWhich is not recommended for security.\nPress OK if your understand the risks of running as administrator and want to hide this message in the future.", Program.AssemblyTitle);
                     string program_runasadministratortitle = Gettext.Strings.T("Elevated administrator");
                     System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show(program_runasadministrator, program_runasadministratortitle, System.Windows.Forms.MessageBoxButtons.OKCancel);
                     if (dlganswer == System.Windows.Forms.DialogResult.OK)
@@ -291,7 +291,8 @@ namespace NoteFly
                 DateTime lastupdate = DateTime.Parse(Settings.UpdatecheckLastDate);
                 if (lastupdate.AddDays(Settings.UpdatecheckEverydays) <= DateTime.Now)
                 {
-                    DoUpdateCheck();
+                    Settings.UpdatecheckLastDate = UpdateGetLatestVersion();
+                    xmlUtil.WriteSettings();
                 }
             }
 
@@ -397,16 +398,29 @@ namespace NoteFly
         /// Do update check.
         /// </summary>
         /// <returns>Datetime aof latest update check as string</returns>
-        public static string DoUpdateCheck()
+        public static string UpdateGetLatestVersion()
         {
-            short[] thisversion = GetVersion();
+            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+            http_updateversion.httpthread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(UpdateCompareVersion);
+            if (!http_updateversion.Start())
+            {
+                System.Windows.Forms.MessageBox.Show("error...."); // todo
+            }
 
-            HttpUtil httprequest = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore, false);
-            string serverresponse = httprequest.GetResponse();
-            httprequest.StopHttpThread();
+            return DateTime.Now.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="response"></param>
+        private static void UpdateCompareVersion(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            string response = (string)e.Result;
+            short[] thisversion = GetVersion();
             string downloadurl = string.Empty;
             string latestversionquality = Program.AssemblyVersionQuality;
-            short[] latestversion = xmlUtil.ParserLatestVersion(serverresponse, out latestversionquality, out downloadurl);
+            short[] latestversion = xmlUtil.ParserLatestVersion(response, out latestversionquality, out downloadurl);
 
             bool updatehigherversion = false;
             bool updatesameversion = true;
@@ -448,8 +462,6 @@ namespace NoteFly
                     throw new ApplicationException("Downloadurl is unexcepted unknown.");
                 }
             }
-
-            return DateTime.Now.ToString();
         }
 
         /// <summary>

@@ -118,6 +118,332 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pluginGrid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>414, 290</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLicense.Name" xml:space="preserve">
+    <value>lblLicense</value>
+  </data>
+  <data name="&gt;&gt;tabControlPlugins.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblPluginDescription.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnPluginDownload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 23</value>
+  </data>
+  <data name="&gt;&gt;chlbxAvailiblePlugins.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel1</value>
+  </data>
+  <data name="&gt;&gt;searchtbPlugins.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabPagePluginsAvailable.Name" xml:space="preserve">
+    <value>tabPagePluginsAvailable</value>
+  </data>
+  <data name="tabPagePluginsInstalled.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FrmPlugins</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Parent" xml:space="preserve">
+    <value>tabPagePluginsAvailable</value>
+  </data>
+  <data name="&gt;&gt;tabPagePluginsInstalled.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPagePluginsInstalled.Parent" xml:space="preserve">
+    <value>tabControlPlugins</value>
+  </data>
+  <data name="lblPluginVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 23</value>
+  </data>
+  <data name="tabPagePluginsInstalled.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 294</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblTextNoInternetConnection.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tabPagePluginsAvailable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="&gt;&gt;lblPluginName.Name" xml:space="preserve">
+    <value>lblPluginName</value>
+  </data>
+  <data name="btnPluginDownload.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 262</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tabControlPlugins.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;btnPluginDownload.Name" xml:space="preserve">
+    <value>btnPluginDownload</value>
+  </data>
+  <data name="&gt;&gt;lblPluginVersion.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>424, 320</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Panel2.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Name" xml:space="preserve">
+    <value>splitContainerAvailablePlugins</value>
+  </data>
+  <data name="lblPluginName.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;tabControlPlugins.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblTextNoInternetConnection.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblPluginName.Text" xml:space="preserve">
+    <value>Loading..</value>
+  </data>
+  <data name="lblLicense.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 22</value>
+  </data>
+  <data name="&gt;&gt;lblPluginName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPagePluginsAvailable.Parent" xml:space="preserve">
+    <value>tabControlPlugins</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Panel1.Name" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel1</value>
+  </data>
+  <data name="chlbxAvailiblePlugins.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="btnPluginDownload.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tabControlPlugins.Size" type="System.Drawing.Size, System.Drawing">
+    <value>424, 320</value>
+  </data>
+  <data name="&gt;&gt;pluginGrid.Parent" xml:space="preserve">
+    <value>tabPagePluginsInstalled</value>
+  </data>
+  <data name="splitContainerAvailablePlugins.SplitterDistance" type="System.Int32, mscorlib">
+    <value>191</value>
+  </data>
+  <data name="&gt;&gt;lblPluginDescription.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel2</value>
+  </data>
+  <data name="lblTextNoInternetConnection.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 11.25pt</value>
+  </data>
+  <data name="&gt;&gt;chlbxAvailiblePlugins.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckedListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="splitContainerAvailablePlugins.Panel2MinSize" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoInternetConnection.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblPluginVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 41</value>
+  </data>
+  <data name="lblPluginName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 29</value>
+  </data>
+  <data name="&gt;&gt;chlbxAvailiblePlugins.Name" xml:space="preserve">
+    <value>chlbxAvailiblePlugins</value>
+  </data>
+  <data name="lblPluginDescription.Text" xml:space="preserve">
+    <value>Getting plugin details from the internet.</value>
+  </data>
+  <data name="splitContainerAvailablePlugins.Panel1MinSize" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblTextNoInternetConnection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 20</value>
+  </data>
+  <data name="btnPluginDownload.Text" xml:space="preserve">
+    <value>download</value>
+  </data>
+  <data name="&gt;&gt;btnPluginDownload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;searchtbPlugins.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel1</value>
+  </data>
+  <data name="lblPluginName.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 18pt</value>
+  </data>
+  <data name="&gt;&gt;btnPluginDownload.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="searchtbPlugins.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;lblPluginVersion.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblPluginVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblPluginDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabPagePluginsInstalled.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>40, 3, 40, 3</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="&gt;&gt;lblPluginName.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel2</value>
+  </data>
+  <data name="chlbxAvailiblePlugins.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;searchtbPlugins.Type" xml:space="preserve">
+    <value>NoteFly.SearchTextBox, NoteFly, Version=2.5.1.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="lblTextNoInternetConnection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>210, 217</value>
+  </data>
+  <data name="&gt;&gt;lblPluginDescription.Name" xml:space="preserve">
+    <value>lblPluginDescription</value>
+  </data>
+  <data name="chlbxAvailiblePlugins.Items" xml:space="preserve">
+    <value>loading...</value>
+  </data>
+  <data name="btnPluginDownload.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;searchtbPlugins.Name" xml:space="preserve">
+    <value>searchtbPlugins</value>
+  </data>
+  <data name="&gt;&gt;tabControlPlugins.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="tabPagePluginsInstalled.Text" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="lblPluginDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 151</value>
+  </data>
+  <data name="&gt;&gt;tabPagePluginsInstalled.Name" xml:space="preserve">
+    <value>tabPagePluginsInstalled</value>
+  </data>
+  <data name="&gt;&gt;pluginGrid.Type" xml:space="preserve">
+    <value>NoteFly.PluginGrid, NoteFly, Version=2.5.1.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;tabPagePluginsAvailable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPagePluginsAvailable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 294</value>
+  </data>
+  <data name="tabPagePluginsInstalled.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoInternetConnection.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Panel1.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins</value>
+  </data>
+  <data name="&gt;&gt;lblPluginDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="searchtbPlugins.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 260</value>
+  </data>
+  <data name="&gt;&gt;pluginGrid.Name" xml:space="preserve">
+    <value>pluginGrid</value>
+  </data>
+  <data name="pluginGrid.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblPluginVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tabPagePluginsAvailable.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabPagePluginsAvailable.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="searchtbPlugins.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 28</value>
+  </data>
+  <data name="&gt;&gt;lblLicense.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel2</value>
+  </data>
+  <data name="splitContainerAvailablePlugins.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 6</value>
+  </data>
+  <data name="lblLicense.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 64</value>
+  </data>
+  <data name="tabPagePluginsInstalled.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblLicense.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;pluginGrid.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="splitContainerAvailablePlugins.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lblLicense.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="searchtbPlugins.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="lblPluginDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 86</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Panel2.Name" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel2</value>
+  </data>
+  <data name="lblPluginName.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="splitContainerAvailablePlugins.Size" type="System.Drawing.Size, System.Drawing">
+    <value>402, 302</value>
+  </data>
+  <data name="chlbxAvailiblePlugins.Size" type="System.Drawing.Size, System.Drawing">
+    <value>402, 259</value>
+  </data>
+  <data name="&gt;&gt;tabPagePluginsAvailable.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -137,4 +463,61 @@
         rEGAA6xBgAOsQYADrEGAA6xBgAOsQYADrEGAA6xBgAOsQYADrEGAA6xBgAOsQYADrEH//6xB
 </value>
   </data>
+  <data name="&gt;&gt;lblTextNoInternetConnection.Name" xml:space="preserve">
+    <value>lblTextNoInternetConnection</value>
+  </data>
+  <data name="lblLicense.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tabControlPlugins.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;lblTextNoInternetConnection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblPluginName.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lblPluginVersion.Name" xml:space="preserve">
+    <value>lblPluginVersion</value>
+  </data>
+  <data name="lblPluginName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 12</value>
+  </data>
+  <data name="tabControlPlugins.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chlbxAvailiblePlugins.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tabPagePluginsInstalled.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;btnPluginDownload.Parent" xml:space="preserve">
+    <value>splitContainerAvailablePlugins.Panel2</value>
+  </data>
+  <data name="tabPagePluginsAvailable.Text" xml:space="preserve">
+    <value>available</value>
+  </data>
+  <data name="&gt;&gt;tabControlPlugins.Name" xml:space="preserve">
+    <value>tabControlPlugins</value>
+  </data>
+  <data name="pluginGrid.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 18</value>
+  </data>
+  <data name="&gt;&gt;splitContainerAvailablePlugins.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chlbxAvailiblePlugins.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="lblTextNoInternetConnection.Text" xml:space="preserve">
+    <value>Internet connection required to view available plugins here. 
+
+Check if you have a internet connection,
+ if you do have a stable internet connection, try again later.</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

@@ -32,17 +32,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PluginGrid));
             this.SuspendLayout();
             // 
             // PluginGrid
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "PluginGrid";
-            this.Size = new System.Drawing.Size(432, 239);
             this.ResumeLayout(false);
 
         }

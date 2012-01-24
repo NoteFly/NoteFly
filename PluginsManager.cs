@@ -228,6 +228,30 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string GetIPluginVersion()
+        {
+            string versionipluginstring = string.Empty;
+            System.Reflection.Assembly ipluginasm;
+            try
+            {
+                ipluginasm = System.Reflection.Assembly.ReflectionOnlyLoadFrom(Path.Combine(Program.InstallFolder, "IPlugin.dll"));
+                versionipluginstring = ipluginasm.GetName().Version.Major + "." + ipluginasm.GetName().Version.Minor + "." + ipluginasm.GetName().Version.Build;
+            }
+            catch (FileNotFoundException)
+            {
+                Log.Write(LogType.exception, "File iplugin.dll not found.");
+            }
+            catch (FileLoadException)
+            {
+                Log.Write(LogType.exception, "Cannot load iplugin.dll");
+            }
+
+            return versionipluginstring;
+        }
+        /// <summary>
         /// Is the dll files excluded as plugin in the plugin directory.
         /// </summary>
         /// <param name="dllfilename">The dll filename without path</param>

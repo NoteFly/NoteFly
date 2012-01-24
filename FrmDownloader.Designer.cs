@@ -66,6 +66,7 @@ namespace NoteFly
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDownloader));
             this.progressbarDownload = new System.Windows.Forms.ProgressBar();
             this.backgroundWorkerDownloader = new System.ComponentModel.BackgroundWorker();
             this.lblStatusUpdate = new System.Windows.Forms.Label();
@@ -73,13 +74,15 @@ namespace NoteFly
             // 
             // progressbarDownload
             // 
+            this.progressbarDownload.AccessibleDescription = null;
+            this.progressbarDownload.AccessibleName = null;
+            resources.ApplyResources(this.progressbarDownload, "progressbarDownload");
             this.progressbarDownload.BackColor = System.Drawing.Color.DimGray;
+            this.progressbarDownload.BackgroundImage = null;
+            this.progressbarDownload.Font = null;
             this.progressbarDownload.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.progressbarDownload.Location = new System.Drawing.Point(2, 3);
             this.progressbarDownload.MarqueeAnimationSpeed = 0;
             this.progressbarDownload.Name = "progressbarDownload";
-            this.progressbarDownload.Size = new System.Drawing.Size(350, 22);
-            this.progressbarDownload.TabIndex = 1;
             this.progressbarDownload.Value = 2;
             // 
             // backgroundWorkerDownloader
@@ -91,29 +94,31 @@ namespace NoteFly
             // 
             // lblStatusUpdate
             // 
+            this.lblStatusUpdate.AccessibleDescription = null;
+            this.lblStatusUpdate.AccessibleName = null;
+            resources.ApplyResources(this.lblStatusUpdate, "lblStatusUpdate");
             this.lblStatusUpdate.BackColor = System.Drawing.Color.DarkGray;
-            this.lblStatusUpdate.Location = new System.Drawing.Point(142, 28);
+            this.lblStatusUpdate.Font = null;
             this.lblStatusUpdate.Name = "lblStatusUpdate";
-            this.lblStatusUpdate.Size = new System.Drawing.Size(210, 19);
-            this.lblStatusUpdate.TabIndex = 2;
-            this.lblStatusUpdate.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lblStatusUpdate.UseCompatibleTextRendering = true;
             // 
             // FrmDownloader
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(354, 56);
+            this.BackgroundImage = null;
             this.Controls.Add(this.lblStatusUpdate);
             this.Controls.Add(this.progressbarDownload);
+            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Location = new System.Drawing.Point(100, 0);
+            this.Icon = null;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmDownloader";
             this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
 
         }
