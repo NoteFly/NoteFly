@@ -313,13 +313,13 @@ namespace NoteFly
         /// <param name="e">RunWorkerCompletedEventArgs arguments</param>
         private void backgroundWorkerDownloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            string downloader_installaborted = Gettext.Strings.T("Aborted");
+            string downloader_installaborted = Strings.T("Aborted");
             if (!e.Cancelled)
             {
-                string downloader_downloadcompleet = Gettext.Strings.T("download compleet, ");
+                string downloader_downloadcompleet = Strings.T("download compleet, ");
                 if (Settings.UpdatecheckUseGPG && this.gpgverif != null)
                 {
-                    string downloader_verifdownload = Gettext.Strings.T("verify download");
+                    string downloader_verifdownload = Strings.T("verify download");
                     this.lblStatusUpdate.Text = downloader_downloadcompleet + downloader_verifdownload;
                     Log.Write(LogType.info, downloader_verifdownload);
 
@@ -334,7 +334,7 @@ namespace NoteFly
                     }
                     else
                     {
-                        string downloader_cannotfindgpg = Gettext.Strings.T("Verify download failed, cannot find gpg: ");
+                        string downloader_cannotfindgpg = Strings.T("Verify download failed, cannot find gpg: ");
                         Log.Write(LogType.exception, downloader_cannotfindgpg + Settings.UpdatecheckGPGPath);
                         return;
                     }
@@ -345,7 +345,7 @@ namespace NoteFly
 
                 if (this.runandexit)
                 {
-                    string downloader_installing = Gettext.Strings.T("installing.. ");
+                    string downloader_installing = Strings.T("installing.. ");
                     this.lblStatusUpdate.Text = downloader_downloadcompleet + downloader_installing;
                     this.lblStatusUpdate.Refresh();
                     System.Threading.Thread.Sleep(100);

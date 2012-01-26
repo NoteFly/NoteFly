@@ -70,7 +70,7 @@ namespace NoteFly
                 if (this.allplugins.Length == 0)
                 {
                     this.lblTextNoplugins = new Label();
-                    this.lblTextNoplugins.Text = Gettext.Strings.T("Their are no plugins installed.");
+                    this.lblTextNoplugins.Text = Strings.T("Their are no plugins installed.");
                     this.lblTextNoplugins.SetBounds(15, 10, 200, 40);
                     this.lblTextNoplugins.AutoSize = true;
                     this.lblTextNoplugins.Visible = true;
@@ -185,7 +185,7 @@ namespace NoteFly
             lblTextPluginVersion.Name = "lblTextPluginVersion";
             lblTextPluginVersion.Size = new System.Drawing.Size(44, 13);
             lblTextPluginVersion.TabIndex = 6;
-            lblTextPluginVersion.Text = Gettext.Strings.T("version:");
+            lblTextPluginVersion.Text = Strings.T("version:");
 
             // lblPluginVersion
             lblPluginVersion.AutoSize = true;
@@ -201,7 +201,7 @@ namespace NoteFly
             lblTextPluginAuthor.Name = "lblTextPluginAuthor";
             lblTextPluginAuthor.Size = new System.Drawing.Size(40, 13);
             lblTextPluginAuthor.TabIndex = 8;
-            lblTextPluginAuthor.Text = Gettext.Strings.T("author:");
+            lblTextPluginAuthor.Text = Strings.T("author:");
 
             // lblPluginAuthor
             lblPluginAuthor.AutoSize = true;
@@ -217,7 +217,7 @@ namespace NoteFly
             lblTextPluginDescription.Name = "lblTextPluginDescription";
             lblTextPluginDescription.Size = new System.Drawing.Size(61, 13);
             lblTextPluginDescription.TabIndex = 10;
-            lblTextPluginDescription.Text = Gettext.Strings.T("description:");
+            lblTextPluginDescription.Text = Strings.T("description:");
 
             // lblPluginDescription
             lblPluginDescription.AutoSize = true;
@@ -265,12 +265,12 @@ namespace NoteFly
             if (this.allplugins[pluginpos].Enabled)
             {
                 this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.WhiteSmoke;
-                this.btnPluginsStatus[pluginpos].Text = Gettext.Strings.T("disable");                
+                this.btnPluginsStatus[pluginpos].Text = Strings.T("disable");                
             }
             else
             {
                 this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.LightGray;
-                this.btnPluginsStatus[pluginpos].Text = Gettext.Strings.T("enable");
+                this.btnPluginsStatus[pluginpos].Text = Strings.T("enable");
             }
         }
     }

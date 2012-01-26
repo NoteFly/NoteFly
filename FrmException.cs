@@ -34,7 +34,7 @@ namespace NoteFly
         public FrmException(string excmgs, string excstrace)
         {
             this.InitializeComponent();
-            string exception_formtitle = Gettext.Strings.T("oh no.. {0} crashed.", Program.AssemblyTitle);
+            string exception_formtitle = Strings.T("oh no.. {0} crashed.", Program.AssemblyTitle);
             this.Text = exception_formtitle;
             StringBuilder sbexc = new StringBuilder(excmgs);
             sbexc.AppendLine();

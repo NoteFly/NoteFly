@@ -155,6 +155,7 @@ namespace NoteFly
                 request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
                 request.Method = "GET";
                 request.ContentType = "text/xml";
+                request.ProtocolVersion = HttpVersion.Version11; // HTTP 1.1 is required.
                 request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
                 request.Timeout = Settings.NetworkConnectionTimeout;
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
@@ -166,7 +167,7 @@ namespace NoteFly
                 {
                     request.Headers["Accept-Encoding"] = "gzip";
                 }
-
+                
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(cachesettings);
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
             }

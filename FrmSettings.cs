@@ -87,8 +87,8 @@ namespace NoteFly
                 }
                 else
                 {
-                    string settings_dirdoesnotexist = Gettext.Strings.T("Directory does not exist.\nPlease choice a valid directory.");
-                    string settings_dirdoesnotexisttitle = Gettext.Strings.T("Directory does not exist.\nPlease choice a valid directory.");
+                    string settings_dirdoesnotexist = Strings.T("Directory does not exist.\nPlease choice a valid directory.");
+                    string settings_dirdoesnotexisttitle = Strings.T("Directory does not exist.\nPlease choice a valid directory.");
                     Log.Write(LogType.info, settings_dirdoesnotexist);
                     MessageBox.Show(settings_dirdoesnotexist, settings_dirdoesnotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -114,11 +114,11 @@ namespace NoteFly
         {
             if (expertsettings)
             {
-                this.Text = Gettext.Strings.T("Expert settings");
+                this.Text = Strings.T("Expert settings");
             }
             else
             {
-                this.Text = Gettext.Strings.T("Settings");
+                this.Text = Strings.T("Settings");
             }
         }
 
@@ -130,14 +130,14 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnOK_Click(object sender, EventArgs e)
         {
-            string settings_invalidfontsize = Gettext.Strings.T("Font size invalid. Minimal 4pt maximum 128pt allowed.");
-            string settings_invalidfontsizetitle = Gettext.Strings.T("Error invalid fontsize");
-            string settings_nofont = Gettext.Strings.T("Please select a font.");
-            string settings_nofonttitle = Gettext.Strings.T("Error no font.");
+            string settings_invalidfontsize = Strings.T("Font size invalid. Minimal 4pt maximum 128pt allowed.");
+            string settings_invalidfontsizetitle = Strings.T("Error invalid fontsize");
+            string settings_nofont = Strings.T("Please select a font.");
+            string settings_nofonttitle = Strings.T("Error no font.");
             if (!Directory.Exists(this.tbNotesSavePath.Text))
             {
-                string settings_invalidfoldersavenote = Gettext.Strings.T("Invalid folder for saving notes folder.");
-                string settings_invalidfoldersavenotetitle = Gettext.Strings.T("Error invalid notes folder");
+                string settings_invalidfoldersavenote = Strings.T("Invalid folder for saving notes folder.");
+                string settings_invalidfoldersavenotetitle = Strings.T("Error invalid notes folder");
                 Log.Write(LogType.info, settings_invalidfoldersavenote);
                 MessageBox.Show(settings_invalidfoldersavenote, settings_invalidfoldersavenotetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabGeneral;
@@ -168,24 +168,24 @@ namespace NoteFly
             }
             else if (this.cbxTextDirection.SelectedIndex > 1)
             {
-                string settings_noknowtextdir = Gettext.Strings.T("Settings text direction invalid.");
-                string settings_noknowtextdirtitle = Gettext.Strings.T("Error text direction");
+                string settings_noknowtextdir = Strings.T("Settings text direction invalid.");
+                string settings_noknowtextdirtitle = Strings.T("Error text direction");
                 Log.Write(LogType.error, settings_noknowtextdir);
                 MessageBox.Show(settings_noknowtextdir, settings_noknowtextdirtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
             else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && this.chxSocialEmailDefaultaddressSet.Checked)
             {
-                string settings_emailnotvalid = Gettext.Strings.T("Given default emailadres is not valid.");
-                string settings_emailnotvalidtitle = Gettext.Strings.T("Email adres no valid");
+                string settings_emailnotvalid = Strings.T("Given default emailadres is not valid.");
+                string settings_emailnotvalidtitle = Strings.T("Email adres no valid");
                 Log.Write(LogType.error, settings_emailnotvalid);
                 MessageBox.Show(settings_emailnotvalid, settings_emailnotvalidtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabSharing;
             }
             else if (!File.Exists(this.tbGPGPath.Text) && this.chxCheckUpdatesSignature.Checked)
             {
-                string settings_gpgpathinvalid = Gettext.Strings.T("The path to gpg.exe is not valid.");
-                string settings_gpgpathinvalidtitle = Gettext.Strings.T("Error not valid gpg path.");
+                string settings_gpgpathinvalid = Strings.T("The path to gpg.exe is not valid.");
+                string settings_gpgpathinvalidtitle = Strings.T("Error not valid gpg path.");
                 Log.Write(LogType.info, settings_gpgpathinvalid);
                 MessageBox.Show(settings_gpgpathinvalid, settings_gpgpathinvalidtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabNetwork;
@@ -244,7 +244,7 @@ namespace NoteFly
 
                 // tab: Appearance, manage notes
                 Settings.ManagenotesSkinnr = this.cbxManageNotesSkin.SelectedIndex;
-                Settings.ManagenotesTooltip = this.cbxManagenotesTooltipContent.Checked;
+                Settings.ManagenotesTooltip = this.chxManagenotesTooltipContent.Checked;
                 Settings.ManagenotesFontsize = (float)this.numManagenotesFont.Value;
                 Settings.ManagenotesSearchCasesentive = this.chxCaseSentiveSearch.Checked;
 
@@ -305,7 +305,7 @@ namespace NoteFly
                         }
                         catch (UnauthorizedAccessException unauthexc)
                         {
-                            string nowriterightsregistery = Gettext.Strings.T("Not enough right to write logon start key to registry.");
+                            string nowriterightsregistery = Strings.T("Not enough right to write logon start key to registry.");
                             Log.Write(LogType.exception, nowriterightsregistery + unauthexc.Message);
                             MessageBox.Show(unauthexc.Message);
                         }
@@ -324,8 +324,8 @@ namespace NoteFly
                 }
                 else
                 {
-                    string settings_regkeynotexist = Gettext.Strings.T("Run key in registery does not exist.");
-                    string settings_regkeynotexisttitle = Gettext.Strings.T("Error run key registery missing");
+                    string settings_regkeynotexist = Strings.T("Run key in registery does not exist.");
+                    string settings_regkeynotexisttitle = Strings.T("Error run key registery missing");
                     Log.Write(LogType.error, settings_regkeynotexist);
                     MessageBox.Show(settings_regkeynotexist, settings_regkeynotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -355,7 +355,7 @@ namespace NoteFly
                         movenotesthread.Start(args);
 
                         movenotesthread.Join(300); // if finished within 300ms don't display buzy moving notes message.
-                        this.ShowWaitOnThread(movenotesthread, 300, Gettext.Strings.T("NoteFly is buzy moving your notes"));
+                        this.ShowWaitOnThread(movenotesthread, 300, Strings.T("NoteFly is buzy moving your notes"));
 
                         this.notes.LoadNotes(true, false);
                     }
@@ -404,7 +404,7 @@ namespace NoteFly
                     frmmgs.ShowInTaskbar = false;
                     frmmgs.MinimizeBox = false;
                     frmmgs.MaximizeBox = false;
-                    frmmgs.Text = Gettext.Strings.T("Please wait");
+                    frmmgs.Text = Strings.T("Please wait");
                     Label lblmgs = new Label();
                     lblmgs.Text = message;
                     lblmgs.SetBounds(10, 10, 200, 40);
@@ -428,8 +428,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
-            string settings_sureresetdefault = Gettext.Strings.T("Are you sure, you want to reset all the settings to default?");
-            string settings_sureresetdefaulttitle = Gettext.Strings.T("Reset settings?");
+            string settings_sureresetdefault = Strings.T("Are you sure, you want to reset all the settings to default?");
+            string settings_sureresetdefaulttitle = Strings.T("Reset settings?");
             DialogResult dlgres = MessageBox.Show(settings_sureresetdefault, settings_sureresetdefaulttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgres == DialogResult.Yes)
             {
@@ -544,7 +544,7 @@ namespace NoteFly
                     }
                     else
                     {
-                        string settings_excsystemfilenotmoved = Gettext.Strings.T("File is marked as system file. Did not move.");
+                        string settings_excsystemfilenotmoved = Strings.T("File is marked as system file. Did not move.");
                         throw new ApplicationException(settings_excsystemfilenotmoved);
                     }
                 }
@@ -552,8 +552,8 @@ namespace NoteFly
                 {
                     if (!errorshowed)
                     {
-                        string settings_filealreadyexist = Gettext.Strings.T("Note file(s) already exist.");
-                        string settings_filealreadyexisttitle = Gettext.Strings.T("Error movind note(s)");
+                        string settings_filealreadyexist = Strings.T("Note file(s) already exist.");
+                        string settings_filealreadyexisttitle = Strings.T("Error movind note(s)");
                         Log.Write(LogType.error, settings_filealreadyexist);
                         MessageBox.Show(settings_filealreadyexist, settings_filealreadyexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         errorshowed = true;
@@ -609,7 +609,7 @@ namespace NoteFly
 
             // tab: Appearance, manage notes
             this.SetComboBoxSelectedIndex(this.cbxManageNotesSkin, Settings.ManagenotesSkinnr);
-            this.cbxManagenotesTooltipContent.Checked = Settings.ManagenotesTooltip;
+            this.chxManagenotesTooltipContent.Checked = Settings.ManagenotesTooltip;
             this.SetUpDownSpinnerValue(numManagenotesFont, Settings.ManagenotesFontsize);
             this.chxCaseSentiveSearch.Checked = Settings.ManagenotesSearchCasesentive;
 
@@ -767,12 +767,12 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void btnCheckUpdates_Click(object sender, EventArgs e)
         {
-            Settings.UpdatecheckLastDate = Program.UpdateGetLatestVersion();
+            Settings.UpdatecheckLastDate = Program.UpdateGetLatestVersion();            
             //xmlUtil.WriteSettings(); // FIXME: not saving settings for UpdatecheckLastDate otherwise all changed in this form settings are saved too.
             if (!string.IsNullOrEmpty(Settings.UpdatecheckLastDate))
             {
-                this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
-            }            
+                this.SetLastUpdatecheckDate(this.chxSettingsExpertEnabled.Checked);
+            }
 
             this.btnCheckUpdates.Enabled = false;
         }
@@ -789,7 +789,6 @@ namespace NoteFly
             this.chxConfirmDeletenote.Visible = expertsettings;
             this.chxLoadPlugins.Visible = expertsettings;
             this.chxNotesDeleteRecyclebin.Visible = expertsettings;
-            this.chxShowTooltips.Visible = expertsettings;
             this.chxUseAlternativeTrayicon.Visible = expertsettings;
             this.chxUpdateSilentInstall.Visible = expertsettings;
             this.lblTextGPGPath.Visible = expertsettings;
@@ -809,6 +808,7 @@ namespace NoteFly
             this.lblTextVisibleNotesWarnLimit.Visible = expertsettings;
             this.numWarnLimitVisible.Visible = expertsettings;
             this.chxCaseSentiveSearch.Visible = expertsettings;
+            this.chxManagenotesTooltipContent.Visible = expertsettings;
             this.SetLastUpdatecheckDate(expertsettings);
         }
 
@@ -885,6 +885,39 @@ namespace NoteFly
             {
                 this.tbGPGPath.Text = this.openFileDialogBrowseGPG.FileName;
             }
+        }       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxShowTooltips_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (chxShowTooltips.Checked)
+            {
+                this.chxManagenotesTooltipContent.Enabled = true;
+            }
+            else
+            {
+                this.chxManagenotesTooltipContent.Enabled = false;
+            }
+        }
+
+        private void btnTestTranslateDutch_Click(object sender, EventArgs e)
+        {
+            // -- begin test setting language --
+            System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.GetCultureInfo("nl");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+            // -- end test setting language --
+        }
+
+        private void btnTestTranslateEnglish_Click(object sender, EventArgs e)
+        {
+            // -- begin test setting language --
+            System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.GetCultureInfo("en");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+            // -- end test setting language --
         }
 
         #endregion Methods

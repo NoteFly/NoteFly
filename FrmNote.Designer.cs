@@ -167,7 +167,6 @@ namespace NoteFly
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNote));
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlHead = new System.Windows.Forms.Panel();
             this.menuFrmNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -199,9 +198,18 @@ namespace NoteFly
             // 
             // lblTitle
             // 
-            resources.ApplyResources(this.lblTitle, "lblTitle");
+            this.lblTitle.AccessibleDescription = "Note title";
             this.lblTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTitle.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Padding = new System.Windows.Forms.Padding(3, 5, 60, 0);
+            this.lblTitle.Size = new System.Drawing.Size(78, 30);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "?";
             this.lblTitle.UseCompatibleTextRendering = true;
             this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
@@ -214,8 +222,11 @@ namespace NoteFly
             this.pnlHead.ContextMenuStrip = this.menuFrmNoteOptions;
             this.pnlHead.Controls.Add(this.btnHideNote);
             this.pnlHead.Controls.Add(this.lblTitle);
-            resources.ApplyResources(this.pnlHead, "pnlHead");
+            this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
+            this.pnlHead.Size = new System.Drawing.Size(240, 32);
+            this.pnlHead.TabIndex = 1;
             this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
@@ -233,21 +244,26 @@ namespace NoteFly
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            resources.ApplyResources(this.menuFrmNoteOptions, "menuFrmNoteOptions");
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
+            this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
             // menuEditNote
             // 
             this.menuEditNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            resources.ApplyResources(this.menuEditNote, "menuEditNote");
+            this.menuEditNote.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.menuEditNote.Name = "menuEditNote";
+            this.menuEditNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.menuEditNote.Size = new System.Drawing.Size(184, 22);
+            this.menuEditNote.Text = "&Edit note";
             this.menuEditNote.Click += new System.EventHandler(this.menuEditNote_Click);
             // 
             // menuNoteSkins
             // 
             this.menuNoteSkins.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuNoteSkins.Name = "menuNoteSkins";
-            resources.ApplyResources(this.menuNoteSkins, "menuNoteSkins");
+            this.menuNoteSkins.Size = new System.Drawing.Size(184, 22);
+            this.menuNoteSkins.Text = "S&kin";
             this.menuNoteSkins.DropDownOpening += new System.EventHandler(this.menuNoteSkins_DropDownOpening);
             // 
             // menuSendTo
@@ -256,40 +272,50 @@ namespace NoteFly
             this.menuSendToEmail,
             this.menuSendToTextfile});
             this.menuSendTo.Name = "menuSendTo";
-            resources.ApplyResources(this.menuSendTo, "menuSendTo");
+            this.menuSendTo.Size = new System.Drawing.Size(184, 22);
+            this.menuSendTo.Text = "&Share";
             this.menuSendTo.DropDownOpening += new System.EventHandler(this.menuSendTo_DropDownOpening);
             // 
             // menuSendToEmail
             // 
             this.menuSendToEmail.Name = "menuSendToEmail";
-            resources.ApplyResources(this.menuSendToEmail, "menuSendToEmail");
+            this.menuSendToEmail.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.menuSendToEmail.Size = new System.Drawing.Size(157, 22);
+            this.menuSendToEmail.Text = "E-&mail";
             this.menuSendToEmail.Click += new System.EventHandler(this.menuSendToEmail_Click);
             // 
             // menuSendToTextfile
             // 
             this.menuSendToTextfile.Name = "menuSendToTextfile";
-            resources.ApplyResources(this.menuSendToTextfile, "menuSendToTextfile");
+            this.menuSendToTextfile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.menuSendToTextfile.Size = new System.Drawing.Size(157, 22);
+            this.menuSendToTextfile.Text = "Save &file";
             this.menuSendToTextfile.Click += new System.EventHandler(this.menuSendToFile_Click);
             // 
             // menuOnTop
             // 
             this.menuOnTop.CheckOnClick = true;
             this.menuOnTop.Name = "menuOnTop";
-            resources.ApplyResources(this.menuOnTop, "menuOnTop");
+            this.menuOnTop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.menuOnTop.Size = new System.Drawing.Size(184, 22);
+            this.menuOnTop.Text = "Sticky on &top";
             this.menuOnTop.Click += new System.EventHandler(this.menuOnTop_Click);
             // 
             // menuLockNote
             // 
             this.menuLockNote.CheckOnClick = true;
             this.menuLockNote.Name = "menuLockNote";
-            resources.ApplyResources(this.menuLockNote, "menuLockNote");
+            this.menuLockNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.menuLockNote.Size = new System.Drawing.Size(184, 22);
+            this.menuLockNote.Text = "&Lock note";
             this.menuLockNote.Click += new System.EventHandler(this.menuLockNote_Click);
             // 
             // menuWordWrap
             // 
             this.menuWordWrap.CheckOnClick = true;
             this.menuWordWrap.Name = "menuWordWrap";
-            resources.ApplyResources(this.menuWordWrap, "menuWordWrap");
+            this.menuWordWrap.Size = new System.Drawing.Size(184, 22);
+            this.menuWordWrap.Text = "Word wrap";
             this.menuWordWrap.Click += new System.EventHandler(this.menuWordWrap_Click);
             // 
             // menuCopy
@@ -299,79 +325,124 @@ namespace NoteFly
             this.menuCopyContent,
             this.menuCopyTitle});
             this.menuCopy.Name = "menuCopy";
-            resources.ApplyResources(this.menuCopy, "menuCopy");
+            this.menuCopy.Size = new System.Drawing.Size(184, 22);
+            this.menuCopy.Text = "&Copy";
             // 
             // menuCopySelected
             // 
             this.menuCopySelected.Name = "menuCopySelected";
-            resources.ApplyResources(this.menuCopySelected, "menuCopySelected");
+            this.menuCopySelected.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.menuCopySelected.Size = new System.Drawing.Size(189, 22);
+            this.menuCopySelected.Text = "selected text";
             this.menuCopySelected.Click += new System.EventHandler(this.menuCopySelected_Click);
             // 
             // menuCopyContent
             // 
             this.menuCopyContent.Name = "menuCopyContent";
-            resources.ApplyResources(this.menuCopyContent, "menuCopyContent");
+            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
+            this.menuCopyContent.Size = new System.Drawing.Size(189, 22);
+            this.menuCopyContent.Text = "content";
             this.menuCopyContent.Click += new System.EventHandler(this.menuCopyContent_Click);
             // 
             // menuCopyTitle
             // 
             this.menuCopyTitle.Name = "menuCopyTitle";
-            resources.ApplyResources(this.menuCopyTitle, "menuCopyTitle");
+            this.menuCopyTitle.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+                        | System.Windows.Forms.Keys.C)));
+            this.menuCopyTitle.Size = new System.Drawing.Size(189, 22);
+            this.menuCopyTitle.Text = "title";
             this.menuCopyTitle.Click += new System.EventHandler(this.menuCopyTitle_Click);
             // 
             // menuRollUp
             // 
             this.menuRollUp.Name = "menuRollUp";
-            resources.ApplyResources(this.menuRollUp, "menuRollUp");
+            this.menuRollUp.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.menuRollUp.Size = new System.Drawing.Size(184, 22);
+            this.menuRollUp.Text = "&Roll up";
             this.menuRollUp.Click += new System.EventHandler(this.menuRollUp_Click);
             // 
             // menuHideNote
             // 
             this.menuHideNote.Name = "menuHideNote";
-            resources.ApplyResources(this.menuHideNote, "menuHideNote");
+            this.menuHideNote.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.menuHideNote.Size = new System.Drawing.Size(184, 22);
+            this.menuHideNote.Text = "&Hide note";
             this.menuHideNote.Click += new System.EventHandler(this.menuHideNote_Click);
             // 
             // btnHideNote
             // 
-            resources.ApplyResources(this.btnHideNote, "btnHideNote");
+            this.btnHideNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHideNote.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnHideNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHideNote.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            this.btnHideNote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnHideNote.Location = new System.Drawing.Point(198, 4);
+            this.btnHideNote.Margin = new System.Windows.Forms.Padding(1);
             this.btnHideNote.Name = "btnHideNote";
+            this.btnHideNote.Size = new System.Drawing.Size(31, 23);
+            this.btnHideNote.TabIndex = 1;
             this.btnHideNote.TabStop = false;
-            this.toolTip.SetToolTip(this.btnHideNote, resources.GetString("btnHideNote.ToolTip"));
+            this.btnHideNote.Text = "X";
+            this.toolTip.SetToolTip(this.btnHideNote, "Hide this note");
             this.btnHideNote.UseVisualStyleBackColor = true;
             this.btnHideNote.Click += new System.EventHandler(this.btnHideNote_Click);
             // 
             // pnlNote
             // 
-            resources.ApplyResources(this.pnlNote, "pnlNote");
+            this.pnlNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlNote.BackColor = System.Drawing.Color.Transparent;
             this.pnlNote.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlNote.ContextMenuStrip = this.menuFrmNoteOptions;
             this.pnlNote.Controls.Add(this.rtbNote);
             this.pnlNote.Controls.Add(this.pbResizeGrip);
+            this.pnlNote.Location = new System.Drawing.Point(0, 31);
             this.pnlNote.Name = "pnlNote";
+            this.pnlNote.Size = new System.Drawing.Size(240, 209);
+            this.pnlNote.TabIndex = 4;
             // 
             // rtbNote
             // 
-            resources.ApplyResources(this.rtbNote, "rtbNote");
+            this.rtbNote.AccessibleDescription = "Note content";
             this.rtbNote.AccessibleRole = System.Windows.Forms.AccessibleRole.Document;
+            this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNote.CausesValidation = false;
             this.rtbNote.ContextMenuStrip = this.menuFrmNoteOptions;
             this.rtbNote.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbNote.DetectUrls = false;
+            this.rtbNote.Font = new System.Drawing.Font("Verdana", 10F);
             this.rtbNote.ForeColor = System.Drawing.Color.Black;
+            this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.rtbNote.Location = new System.Drawing.Point(7, 6);
+            this.rtbNote.Margin = new System.Windows.Forms.Padding(10);
+            this.rtbNote.MaxLength = 1000000;
             this.rtbNote.Name = "rtbNote";
             this.rtbNote.ReadOnly = true;
+            this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNote.ShortcutsEnabled = false;
+            this.rtbNote.Size = new System.Drawing.Size(218, 185);
+            this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
+            this.rtbNote.Text = "";
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             // 
             // pbResizeGrip
             // 
-            resources.ApplyResources(this.pbResizeGrip, "pbResizeGrip");
+            this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
+            this.pbResizeGrip.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pbResizeGrip.Location = new System.Drawing.Point(220, 189);
+            this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
+            this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
+            this.pbResizeGrip.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbResizeGrip.TabIndex = 4;
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
             this.pbResizeGrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseUp);
@@ -392,7 +463,7 @@ namespace NoteFly
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnHideNote;
-            resources.ApplyResources(this, "$this");
+            this.ClientSize = new System.Drawing.Size(240, 240);
             this.ContextMenuStrip = this.menuFrmNoteOptions;
             this.ControlBox = false;
             this.Controls.Add(this.pnlNote);
@@ -400,11 +471,15 @@ namespace NoteFly
             this.ForeColor = System.Drawing.SystemColors.Desktop;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
+            this.Location = new System.Drawing.Point(100, 50);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1280, 1024);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(80, 60);
             this.Name = "FrmNote";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TransparencyKey = System.Drawing.SystemColors.Control;
             this.Deactivate += new System.EventHandler(this.FrmNote_Deactivate);
             this.Activated += new System.EventHandler(this.FrmNote_Activated);

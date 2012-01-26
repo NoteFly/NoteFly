@@ -69,6 +69,7 @@ using System.ComponentModel;
         {
             string response = (string)e.Result;
             this.chlbxAvailiblePlugins.Items.Clear();
+            this.chlbxAvailiblePlugins.Enabled = true;
             if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.chlbxAvailiblePlugins, this))
             {
                 this.lblTextNoInternetConnection.Visible = true;
@@ -178,8 +179,8 @@ using System.ComponentModel;
             if (detailsplugin != null)
             {
                 this.lblPluginName.Text = detailsplugin[0];
-                this.lblPluginVersion.Text = Gettext.Strings.T("version: ") + detailsplugin[1];
-                this.lblLicense.Text = Gettext.Strings.T("license: ") + detailsplugin[2];
+                this.lblPluginVersion.Text = Strings.T("version: ") + detailsplugin[1];
+                this.lblLicense.Text = Strings.T("license: ") + detailsplugin[2];
                 this.lblPluginDescription.Text = detailsplugin[3];
                 this.currentplugindownloadurl = detailsplugin[4];
             }
@@ -194,7 +195,7 @@ using System.ComponentModel;
         {
             if (!String.IsNullOrEmpty(this.currentplugindownloadurl))
             {
-                string plugins_downloadingplugin = Gettext.Strings.T("Downloading plugin..");
+                string plugins_downloadingplugin = Strings.T("Downloading plugin..");
                 FrmDownloader downloader = new FrmDownloader(this.currentplugindownloadurl, false, false, plugins_downloadingplugin);
                 downloader.Show();
             }

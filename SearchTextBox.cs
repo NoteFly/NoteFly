@@ -61,7 +61,7 @@ namespace NoteFly
         public SearchTextBox()
         {
             InitializeComponent();
-            this.lblTextSearch.Text = Gettext.Strings.T("search:");
+            this.lblTextSearch.Text = Strings.T("search:");
             this.tableLayoutPnlSearchbox.ColumnCount = 2;
             if (Settings.NotesTooltipsEnabled)
             {

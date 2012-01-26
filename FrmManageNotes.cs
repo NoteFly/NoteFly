@@ -394,7 +394,7 @@ namespace NoteFly
         {
             if (this.dataGridViewNotes.SelectedRows.Count <= 0)
             {
-                string managenotes_nothingselected = Gettext.Strings.T("Nothing selected.");
+                string managenotes_nothingselected = Strings.T("Nothing selected.");
                 Log.Write(LogType.info, managenotes_nothingselected);
                 MessageBox.Show(managenotes_nothingselected);
             }
@@ -402,8 +402,8 @@ namespace NoteFly
             {
                 if (Settings.ConfirmDeletenote)
                 {
-                    string managenotes_deleteselectednotes = Gettext.Strings.T("Are you sure you want to delete the selected note(s)?");
-                    string managenotes_deleteselectednotestitle = Gettext.Strings.T("delete?");
+                    string managenotes_deleteselectednotes = Strings.T("Are you sure you want to delete the selected note(s)?");
+                    string managenotes_deleteselectednotestitle = Strings.T("delete?");
                     DialogResult deleteres = MessageBox.Show(managenotes_deleteselectednotes, managenotes_deleteselectednotestitle, MessageBoxButtons.YesNo);
                     if (deleteres == DialogResult.Yes)
                     {
@@ -475,8 +475,8 @@ namespace NoteFly
         {
             if (this.notes.CountNotes > 0)
             {
-                string managenotes_deleteallcurrentnotes = Gettext.Strings.T("Do you want to delete all current notes?");
-                string managenotes_deleteallcurrentnotestitle = Gettext.Strings.T("Are you sure?");
+                string managenotes_deleteallcurrentnotes = Strings.T("Do you want to delete all current notes?");
+                string managenotes_deleteallcurrentnotestitle = Strings.T("Are you sure?");
                 DialogResult eraseres = MessageBox.Show(managenotes_deleteallcurrentnotes, managenotes_deleteallcurrentnotestitle, MessageBoxButtons.YesNoCancel);
                 if (eraseres == DialogResult.Yes)
                 {
@@ -584,14 +584,14 @@ namespace NoteFly
                         }
                         else
                         {
-                            string managenotes_notstickies = Gettext.Strings.T("CVS file does not seems to be in the Stickies format.");
+                            string managenotes_notstickies = Strings.T("CVS file does not seems to be in the Stickies format.");
                             Log.Write(LogType.error, managenotes_notstickies);
                             MessageBox.Show(managenotes_notstickies);
                         }
                     }
                     else if (linenr != 1)
                     {
-                        string managenotes_notstickies = Gettext.Strings.T("CVS file does not seems to be in the Stickies format, excepting 5 columns.");
+                        string managenotes_notstickies = Strings.T("CVS file does not seems to be in the Stickies format, excepting 5 columns.");
                         Log.Write(LogType.error, managenotes_notstickies);
                         MessageBox.Show(managenotes_notstickies);
                     }
@@ -726,7 +726,7 @@ namespace NoteFly
                 }
                 else
                 {
-                    string managenotes_errorreadpnotesbackup = Gettext.Strings.T("Error reading PNotes backup file, incorrect format.");
+                    string managenotes_errorreadpnotesbackup = Strings.T("Error reading PNotes backup file, incorrect format.");
                     Log.Write(LogType.error, managenotes_errorreadpnotesbackup);
                     MessageBox.Show(managenotes_errorreadpnotesbackup);                    
                     return;
@@ -1201,7 +1201,7 @@ namespace NoteFly
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    string managenotes_msgaccessdenied = Gettext.Strings.T("Access denied. delete note {0} manually with proper premission.", filename);
+                    string managenotes_msgaccessdenied = Strings.T("Access denied. delete note {0} manually with proper premission.", filename);
                     Log.Write(LogType.error, managenotes_msgaccessdenied);
                     MessageBox.Show(managenotes_msgaccessdenied);
                 }
@@ -1302,7 +1302,7 @@ namespace NoteFly
                 }
                 catch (InvalidCastException)
                 {
-                    string managenotes_invalidtransparencylvl = Gettext.Strings.T("Transparency level not a integer or double.");
+                    string managenotes_invalidtransparencylvl = Strings.T("Transparency level not a integer or double.");
                     throw new ApplicationException(managenotes_invalidtransparencylvl);
                 }
             }
@@ -1323,7 +1323,7 @@ namespace NoteFly
                 }
                 catch (InvalidCastException)
                 {
-                    string managenotes_invalidtransparencylvl = Gettext.Strings.T("Transparency level not a integer or double.");
+                    string managenotes_invalidtransparencylvl = Strings.T("Transparency level not a integer or double.");
                     throw new ApplicationException(managenotes_invalidtransparencylvl);
                 }
             }
@@ -1486,7 +1486,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void dataGridViewNotes_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (Settings.ManagenotesTooltip) 
+            if (Settings.NotesTooltipsEnabled && Settings.ManagenotesTooltip) 
             {
                 if (e.ColumnIndex == 1)
                 {

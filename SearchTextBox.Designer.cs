@@ -53,6 +53,7 @@
             // lblTextSearch
             // 
             this.lblTextSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTextSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTextSearch.Location = new System.Drawing.Point(0, 0);
             this.lblTextSearch.Margin = new System.Windows.Forms.Padding(0);
             this.lblTextSearch.Name = "lblTextSearch";
@@ -88,9 +89,9 @@
             // 
             this.btnKeywordClear.BackColor = System.Drawing.Color.White;
             this.btnKeywordClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKeywordClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnKeywordClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnKeywordClear.Location = new System.Drawing.Point(189, 3);
-            this.btnKeywordClear.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.btnKeywordClear.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.btnKeywordClear.Name = "btnKeywordClear";
             this.btnKeywordClear.Size = new System.Drawing.Size(23, 22);
             this.btnKeywordClear.TabIndex = 2;

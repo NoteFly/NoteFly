@@ -391,14 +391,14 @@ namespace NoteFly
                 }
                 else
                 {
-                    string note_msgnotitlecontent = Gettext.Strings.T("Note has no title and no content.");
+                    string note_msgnotitlecontent = Strings.T("Note has no title and no content.");
                     Log.Write(LogType.error, note_msgnotitlecontent);
                     MessageBox.Show(note_msgnotitlecontent);
                 }
             }
             catch (Win32Exception w32exc)
             {
-                string note_msgcantlaunchemailprotocolhandler = Gettext.Strings.T("Can't launch email client.");
+                string note_msgcantlaunchemailprotocolhandler = Strings.T("Can't launch email client.");
                 Log.Write(LogType.exception, w32exc.Message);
                 MessageBox.Show(note_msgcantlaunchemailprotocolhandler, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -771,8 +771,8 @@ namespace NoteFly
         private void SetLockedNote()
         {
             this.menuLockNote.Checked = this.note.Locked;
-            string note_locknotemsg = Gettext.Strings.T("&Lock note");
-            string note_clicktounlock = Gettext.Strings.T(" (click again to unlock)");
+            string note_locknotemsg = Strings.T("&Lock note");
+            string note_clicktounlock = Strings.T(" (click again to unlock)");
             if (this.note.Locked)
             {
                 this.CreatePbLock();
@@ -798,8 +798,8 @@ namespace NoteFly
         private void SetRollupNote()
         {
             this.menuRollUp.Checked = this.note.RolledUp;
-            string note_rollupmsg = Gettext.Strings.T("&Roll up");
-            string note_clicktorollup = Gettext.Strings.T("(click again to Roll Down)");
+            string note_rollupmsg = Strings.T("&Roll up");
+            string note_clicktorollup = Strings.T("(click again to Roll Down)");
             if (this.note.RolledUp)
             {
                 this.menuRollUp.Text = note_rollupmsg + note_clicktorollup;
@@ -846,7 +846,7 @@ namespace NoteFly
             sfdlg.CheckPathExists = true;
             sfdlg.OverwritePrompt = true;
             sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
-            sfdlg.Title = Gettext.Strings.T("Save note to file");
+            sfdlg.Title = Strings.T("Save note to file");
             sfdlg.Filter = "Textfile (*.txt)|*.txt|RichTextFormat file (*.rtf)|*.rtf|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {

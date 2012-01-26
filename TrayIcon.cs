@@ -151,7 +151,7 @@ namespace NoteFly
             this.menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuNewNote.Name = "MenuNewNote";
             this.menuNewNote.Size = new System.Drawing.Size(144, 22);
-            this.menuNewNote.Text = Gettext.Strings.T("&Create a new note");
+            this.menuNewNote.Text = Strings.T("&Create a new note");
             if (Settings.TrayiconCreatenotebold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -165,7 +165,7 @@ namespace NoteFly
             this.menuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuManageNotes.Name = "listToolStripMenuItem";
             this.menuManageNotes.Size = new System.Drawing.Size(144, 22);
-            this.menuManageNotes.Text = Gettext.Strings.T("&Manage notes");
+            this.menuManageNotes.Text = Strings.T("&Manage notes");
             if (Settings.TrayiconManagenotesbold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -183,7 +183,7 @@ namespace NoteFly
             this.menuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuSettings.Name = "MenuSettings";
             this.menuSettings.Size = new System.Drawing.Size(144, 22);
-            this.menuSettings.Text = Gettext.Strings.T("&Settings");
+            this.menuSettings.Text = Strings.T("&Settings");
             if (Settings.TrayiconSettingsbold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -201,7 +201,7 @@ namespace NoteFly
             this.menuPlugins.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuPlugins.Name = "MenuPlugins";
             this.menuPlugins.Size = new System.Drawing.Size(144, 22);
-            this.menuPlugins.Text = Gettext.Strings.T("&Plugins");
+            this.menuPlugins.Text = Strings.T("&Plugins");
             this.menuPlugins.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
             this.menuPlugins.Click += new System.EventHandler(this.MenuPlugins_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuPlugins);
@@ -226,7 +226,7 @@ namespace NoteFly
             this.menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuAbout.Name = "MenuAbout";
             this.menuAbout.Size = new System.Drawing.Size(144, 22);
-            this.menuAbout.Text = Gettext.Strings.T("About");
+            this.menuAbout.Text = Strings.T("About");
             this.menuAbout.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
             this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuAbout);
@@ -235,7 +235,7 @@ namespace NoteFly
             this.menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuExit.Name = "MenuExit";
             this.menuExit.Size = new System.Drawing.Size(144, 22);
-            this.menuExit.Text = Gettext.Strings.T("E&xit");
+            this.menuExit.Text = Strings.T("E&xit");
             if (Settings.TrayiconExitbold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -252,7 +252,7 @@ namespace NoteFly
             // Show balloontip on firstrun about trayicon how to access notefly functions.
             if (!Settings.ProgramFirstrun)
             {
-                string trayicon_trayiconaccesshint = Gettext.Strings.T("You can access {0} functions with this trayicon.", Program.AssemblyTitle);
+                string trayicon_trayiconaccesshint = Strings.T("You can access {0} functions with this trayicon.", Program.AssemblyTitle);
                 this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, trayicon_trayiconaccesshint, ToolTipIcon.Info);
             }
         }
@@ -430,14 +430,14 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuExit_Click(object sender, EventArgs e)
         {
-            string trayicon_sureexittitle = Gettext.Strings.T("confirm exit");
+            string trayicon_sureexittitle = Strings.T("confirm exit");
             if (Settings.ConfirmExit)
             {
                 // Two times exit in contextmenu systray icon will always exit.
                 if (!this.confirmexitshowed)
                 {
                     this.confirmexitshowed = true;
-                    string trayicon_sureexit = Gettext.Strings.T("Are sure you want to exit {0}?", Program.AssemblyTitle);
+                    string trayicon_sureexit = Strings.T("Are sure you want to exit {0}?", Program.AssemblyTitle);
                     DialogResult resdlgconfirmexit = MessageBox.Show(trayicon_sureexit, trayicon_sureexittitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (resdlgconfirmexit == DialogResult.No)
                     {
@@ -449,7 +449,7 @@ namespace NoteFly
 
             if (Frmneweditnoteopen)
             {
-                string trayicon_notestillopen = Gettext.Strings.T("A note is still open for editing.\nAre you sure you want to shutdown {0}?", Program.AssemblyTitle);
+                string trayicon_notestillopen = Strings.T("A note is still open for editing.\nAre you sure you want to shutdown {0}?", Program.AssemblyTitle);
                 DialogResult resdlg = MessageBox.Show(trayicon_notestillopen, trayicon_sureexittitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (resdlg == DialogResult.No)
                 {

@@ -187,7 +187,7 @@ namespace NoteFly
              * it does not fix it, it makes it harder to exploit if insecure dll loading exist.
              * NoteFly uses APPDATA, TEMP and systemroot variables.
              * Systemroot is required by the LinkLabel control.
-             * Plugin developers should rely on environment variables
+             * Plugin developers should not rely on environment variables
              */
 #if windows
             SetDllDirectory(string.Empty);                                     // removes notefly current working directory as ddl search path
@@ -203,6 +203,11 @@ namespace NoteFly
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 #endif
+
+            // -- begin test setting language --
+            System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.GetCultureInfo("en");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+            // -- end test setting language --
 
             System.Windows.Forms.Application.ThreadException += new ThreadExceptionEventHandler(UnhanledThreadExceptionHanhler);
             System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
@@ -230,8 +235,8 @@ namespace NoteFly
                 System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
                 if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
                 {
-                    string program_runasadministrator = Gettext.Strings.T("You are now running {0} as elevated Administrator.\nWhich is not recommended for security.\nPress OK if your understand the risks of running as administrator and want to hide this message in the future.", Program.AssemblyTitle);
-                    string program_runasadministratortitle = Gettext.Strings.T("Elevated administrator");
+                    string program_runasadministrator = Strings.T("You are now running {0} as elevated Administrator.\nWhich is not recommended for security.\nPress OK if your understand the risks of running as administrator and want to hide this message in the future.", Program.AssemblyTitle);
+                    string program_runasadministratortitle = Strings.T("Elevated administrator");
                     System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show(program_runasadministrator, program_runasadministratortitle, System.Windows.Forms.MessageBoxButtons.OKCancel);
                     if (dlganswer == System.Windows.Forms.DialogResult.OK)
                     {
@@ -256,11 +261,12 @@ namespace NoteFly
 
             if (Program.CheckInstancesRunning() > 1)
             {
-                string program_alreadyrunning = Gettext.Strings.T("The programme is already running.\nLoad an other instance? (not recommeded)");
-                string program_alreadyrunningtitle = Gettext.Strings.T("already running");
+                string program_alreadyrunning = Strings.T("The programme is already running.\nLoad an other instance? (not recommeded)");
+                string program_alreadyrunningtitle = Strings.T("already running");
                 System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(program_alreadyrunning, program_alreadyrunningtitle, System.Windows.Forms.MessageBoxButtons.YesNo);
                 if (dlgres == System.Windows.Forms.DialogResult.No)
                 {
+                    // shutdown
                     return;
                 }
             }
@@ -444,12 +450,12 @@ namespace NoteFly
                 if (!string.IsNullOrEmpty(downloadurl))
                 {
                     StringBuilder sbmsg = new StringBuilder();
-                    sbmsg.AppendLine(Gettext.Strings.T("There's a new version availible."));
-                    sbmsg.Append(Gettext.Strings.T("Your version: "));
+                    sbmsg.AppendLine(Strings.T("There's a new version availible."));
+                    sbmsg.Append(Strings.T("Your version: "));
                     sbmsg.AppendLine(Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
-                    sbmsg.Append(Gettext.Strings.T("New version: "));
+                    sbmsg.Append(Strings.T("New version: "));
                     sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
-                    sbmsg.Append(Gettext.Strings.T("Do you want to download and install the new version now?"));
+                    sbmsg.Append(Strings.T("Do you want to download and install the new version now?"));
                     System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                     if (updres == System.Windows.Forms.DialogResult.Yes)
                     {

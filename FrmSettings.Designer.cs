@@ -478,11 +478,11 @@ namespace NoteFly
             this.lblTextTransparentProcVisible = new System.Windows.Forms.Label();
             this.tabPageNewNote = new System.Windows.Forms.TabPage();
             this.chxUseDateAsDefaultTitle = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTextHeight = new System.Windows.Forms.Label();
+            this.lblTextWidth = new System.Windows.Forms.Label();
             this.numNotesDefaultHeight = new System.Windows.Forms.NumericUpDown();
             this.numNotesDefaultWidth = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTextDefaultsizenewnote = new System.Windows.Forms.Label();
             this.chxUseRandomDefaultNote = new System.Windows.Forms.CheckBox();
             this.lblDefaultNewNoteColor = new System.Windows.Forms.Label();
             this.cbxDefaultSkin = new System.Windows.Forms.ComboBox();
@@ -511,12 +511,12 @@ namespace NoteFly
             this.chxTrayiconBoldNewnote = new System.Windows.Forms.CheckBox();
             this.tabAppereanceManagenotes = new System.Windows.Forms.TabPage();
             this.chxCaseSentiveSearch = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblTextPoints = new System.Windows.Forms.Label();
             this.numManagenotesFont = new System.Windows.Forms.NumericUpDown();
             this.lbTextManagesnotesFontSize = new System.Windows.Forms.Label();
             this.lblTextSkinManagenotes = new System.Windows.Forms.Label();
             this.cbxManageNotesSkin = new System.Windows.Forms.ComboBox();
-            this.cbxManagenotesTooltipContent = new System.Windows.Forms.CheckBox();
+            this.chxManagenotesTooltipContent = new System.Windows.Forms.CheckBox();
             this.tabHighlight = new System.Windows.Forms.TabPage();
             this.chxHighlightSQL = new System.Windows.Forms.CheckBox();
             this.chxHighlightPHP = new System.Windows.Forms.CheckBox();
@@ -550,7 +550,6 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
-            this.iptbProxy = new NoteFly.IPTextBox();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
             this.numWarnLimitVisible = new System.Windows.Forms.NumericUpDown();
@@ -568,6 +567,9 @@ namespace NoteFly
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
+            this.iptbProxy = new NoteFly.IPTextBox();
+            this.btnTestTranslateEnglish = new System.Windows.Forms.Button();
+            this.btnTestTranslateDutch = new System.Windows.Forms.Button();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -601,57 +603,62 @@ namespace NoteFly
             // 
             // btnOK
             // 
-            this.btnOK.AccessibleDescription = null;
-            this.btnOK.AccessibleName = null;
-            resources.ApplyResources(this.btnOK, "btnOK");
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnOK.BackColor = System.Drawing.Color.LightGray;
-            this.btnOK.BackgroundImage = null;
             this.btnOK.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
             this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnOK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnOK.Location = new System.Drawing.Point(227, 368);
             this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(105, 25);
+            this.btnOK.TabIndex = 2;
+            this.btnOK.Text = "&OK";
             this.btnOK.UseCompatibleTextRendering = true;
             this.btnOK.UseVisualStyleBackColor = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.AccessibleDescription = null;
-            this.btnCancel.AccessibleName = null;
-            resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
-            this.btnCancel.BackgroundImage = null;
             this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCancel.Location = new System.Drawing.Point(338, 368);
             this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(103, 25);
+            this.btnCancel.TabIndex = 3;
+            this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseCompatibleTextRendering = true;
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // tabControlSettings
             // 
-            this.tabControlSettings.AccessibleDescription = null;
-            this.tabControlSettings.AccessibleName = null;
-            resources.ApplyResources(this.tabControlSettings, "tabControlSettings");
-            this.tabControlSettings.BackgroundImage = null;
             this.tabControlSettings.Controls.Add(this.tabGeneral);
             this.tabControlSettings.Controls.Add(this.tabAppearance);
             this.tabControlSettings.Controls.Add(this.tabHighlight);
             this.tabControlSettings.Controls.Add(this.tabSharing);
             this.tabControlSettings.Controls.Add(this.tabNetwork);
             this.tabControlSettings.Controls.Add(this.tabAdvance);
+            this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControlSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.tabControlSettings.HotTrack = true;
+            this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
+            this.tabControlSettings.Size = new System.Drawing.Size(455, 362);
+            this.tabControlSettings.TabIndex = 17;
             this.tabControlSettings.SelectedIndexChanged += new System.EventHandler(this.tabControlSettings_SelectedIndexChanged);
             // 
             // tabGeneral
             // 
-            this.tabGeneral.AccessibleDescription = null;
-            this.tabGeneral.AccessibleName = null;
-            resources.ApplyResources(this.tabGeneral, "tabGeneral");
-            this.tabGeneral.BackgroundImage = null;
+            this.tabGeneral.Controls.Add(this.btnTestTranslateDutch);
+            this.tabGeneral.Controls.Add(this.btnTestTranslateEnglish);
             this.tabGeneral.Controls.Add(this.chxNotesDeleteRecyclebin);
             this.tabGeneral.Controls.Add(this.chxLoadPlugins);
             this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
@@ -659,178 +666,211 @@ namespace NoteFly
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
             this.tabGeneral.Controls.Add(this.chxStartOnLogin);
             this.tabGeneral.Controls.Add(this.lblTextActionLeftClicktTrayicon);
-            this.tabGeneral.Font = null;
+            this.tabGeneral.Location = new System.Drawing.Point(4, 25);
             this.tabGeneral.Name = "tabGeneral";
+            this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGeneral.Size = new System.Drawing.Size(447, 333);
+            this.tabGeneral.TabIndex = 3;
+            this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
             // chxNotesDeleteRecyclebin
             // 
-            this.chxNotesDeleteRecyclebin.AccessibleDescription = null;
-            this.chxNotesDeleteRecyclebin.AccessibleName = null;
-            resources.ApplyResources(this.chxNotesDeleteRecyclebin, "chxNotesDeleteRecyclebin");
-            this.chxNotesDeleteRecyclebin.BackgroundImage = null;
+            this.chxNotesDeleteRecyclebin.AutoSize = true;
+            this.chxNotesDeleteRecyclebin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxNotesDeleteRecyclebin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxNotesDeleteRecyclebin.Location = new System.Drawing.Point(21, 94);
             this.chxNotesDeleteRecyclebin.Name = "chxNotesDeleteRecyclebin";
+            this.chxNotesDeleteRecyclebin.Size = new System.Drawing.Size(226, 21);
+            this.chxNotesDeleteRecyclebin.TabIndex = 24;
+            this.chxNotesDeleteRecyclebin.Text = "Move deleted notes to recycle bin.";
             this.chxNotesDeleteRecyclebin.UseCompatibleTextRendering = true;
             this.chxNotesDeleteRecyclebin.UseVisualStyleBackColor = true;
             // 
             // chxLoadPlugins
             // 
-            resources.ApplyResources(this.chxLoadPlugins, "chxLoadPlugins");
-            this.chxLoadPlugins.AccessibleName = null;
-            this.chxLoadPlugins.BackgroundImage = null;
+            this.chxLoadPlugins.AccessibleDescription = "Allow NoteFly to load plugins";
+            this.chxLoadPlugins.AutoSize = true;
             this.chxLoadPlugins.Checked = true;
             this.chxLoadPlugins.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxLoadPlugins.Font = null;
+            this.chxLoadPlugins.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxLoadPlugins.Location = new System.Drawing.Point(20, 121);
             this.chxLoadPlugins.Name = "chxLoadPlugins";
+            this.chxLoadPlugins.Size = new System.Drawing.Size(146, 21);
+            this.chxLoadPlugins.TabIndex = 25;
+            this.chxLoadPlugins.Text = "Allow to load plugins";
             this.chxLoadPlugins.UseCompatibleTextRendering = true;
             this.chxLoadPlugins.UseVisualStyleBackColor = true;
             // 
             // chxConfirmDeletenote
             // 
-            this.chxConfirmDeletenote.AccessibleDescription = null;
-            this.chxConfirmDeletenote.AccessibleName = null;
-            resources.ApplyResources(this.chxConfirmDeletenote, "chxConfirmDeletenote");
-            this.chxConfirmDeletenote.BackgroundImage = null;
+            this.chxConfirmDeletenote.AutoSize = true;
             this.chxConfirmDeletenote.Checked = true;
             this.chxConfirmDeletenote.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmDeletenote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxConfirmDeletenote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxConfirmDeletenote.Location = new System.Drawing.Point(21, 71);
             this.chxConfirmDeletenote.Name = "chxConfirmDeletenote";
+            this.chxConfirmDeletenote.Size = new System.Drawing.Size(161, 21);
+            this.chxConfirmDeletenote.TabIndex = 23;
+            this.chxConfirmDeletenote.Text = "Confirm deleting notes.";
             this.chxConfirmDeletenote.UseCompatibleTextRendering = true;
             this.chxConfirmDeletenote.UseVisualStyleBackColor = true;
             // 
             // cbxActionLeftclick
             // 
-            this.cbxActionLeftclick.AccessibleDescription = null;
-            this.cbxActionLeftclick.AccessibleName = null;
-            resources.ApplyResources(this.cbxActionLeftclick, "cbxActionLeftclick");
             this.cbxActionLeftclick.AutoCompleteCustomSource.AddRange(new string[] {
-            resources.GetString("cbxActionLeftclick.AutoCompleteCustomSource"),
-            resources.GetString("cbxActionLeftclick.AutoCompleteCustomSource1"),
-            resources.GetString("cbxActionLeftclick.AutoCompleteCustomSource2"),
-            resources.GetString("cbxActionLeftclick.AutoCompleteCustomSource3")});
-            this.cbxActionLeftclick.BackgroundImage = null;
+            "Bring all notes to front.",
+            "Create a new note.",
+            "Show manage notes.",
+            "Do nothing."});
             this.cbxActionLeftclick.CausesValidation = false;
             this.cbxActionLeftclick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxActionLeftclick.Font = null;
             this.cbxActionLeftclick.FormattingEnabled = true;
             this.cbxActionLeftclick.Items.AddRange(new object[] {
-            resources.GetString("cbxActionLeftclick.Items"),
-            resources.GetString("cbxActionLeftclick.Items1"),
-            resources.GetString("cbxActionLeftclick.Items2")});
+            "Do nothing",
+            "Bring notes to front",
+            "Create a new note"});
+            this.cbxActionLeftclick.Location = new System.Drawing.Point(165, 167);
             this.cbxActionLeftclick.Name = "cbxActionLeftclick";
+            this.cbxActionLeftclick.Size = new System.Drawing.Size(163, 24);
+            this.cbxActionLeftclick.TabIndex = 16;
             // 
             // chxConfirmExit
             // 
-            this.chxConfirmExit.AccessibleDescription = null;
-            this.chxConfirmExit.AccessibleName = null;
-            resources.ApplyResources(this.chxConfirmExit, "chxConfirmExit");
-            this.chxConfirmExit.BackgroundImage = null;
+            this.chxConfirmExit.AutoSize = true;
+            this.chxConfirmExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxConfirmExit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxConfirmExit.Location = new System.Drawing.Point(21, 48);
             this.chxConfirmExit.Name = "chxConfirmExit";
+            this.chxConfirmExit.Size = new System.Drawing.Size(196, 21);
+            this.chxConfirmExit.TabIndex = 20;
+            this.chxConfirmExit.Text = "Confirm shutdown of NoteFly";
             this.chxConfirmExit.UseCompatibleTextRendering = true;
             this.chxConfirmExit.UseVisualStyleBackColor = true;
             // 
             // chxStartOnLogin
             // 
-            this.chxStartOnLogin.AccessibleDescription = null;
-            this.chxStartOnLogin.AccessibleName = null;
-            resources.ApplyResources(this.chxStartOnLogin, "chxStartOnLogin");
-            this.chxStartOnLogin.BackgroundImage = null;
+            this.chxStartOnLogin.AutoSize = true;
+            this.chxStartOnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxStartOnLogin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxStartOnLogin.Location = new System.Drawing.Point(21, 25);
             this.chxStartOnLogin.Name = "chxStartOnLogin";
+            this.chxStartOnLogin.Size = new System.Drawing.Size(160, 21);
+            this.chxStartOnLogin.TabIndex = 10;
+            this.chxStartOnLogin.Text = "Start NoteFly on logon.";
             this.chxStartOnLogin.UseCompatibleTextRendering = true;
             this.chxStartOnLogin.UseVisualStyleBackColor = true;
             // 
             // lblTextActionLeftClicktTrayicon
             // 
-            this.lblTextActionLeftClicktTrayicon.AccessibleDescription = null;
-            this.lblTextActionLeftClicktTrayicon.AccessibleName = null;
-            resources.ApplyResources(this.lblTextActionLeftClicktTrayicon, "lblTextActionLeftClicktTrayicon");
+            this.lblTextActionLeftClicktTrayicon.AutoSize = true;
+            this.lblTextActionLeftClicktTrayicon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextActionLeftClicktTrayicon.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(11, 168);
             this.lblTextActionLeftClicktTrayicon.Name = "lblTextActionLeftClicktTrayicon";
+            this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(148, 20);
+            this.lblTextActionLeftClicktTrayicon.TabIndex = 15;
+            this.lblTextActionLeftClicktTrayicon.Text = "Action left click trayicon:";
             this.lblTextActionLeftClicktTrayicon.UseCompatibleTextRendering = true;
             // 
             // tabAppearance
             // 
-            this.tabAppearance.AccessibleDescription = null;
-            this.tabAppearance.AccessibleName = null;
-            resources.ApplyResources(this.tabAppearance, "tabAppearance");
-            this.tabAppearance.BackgroundImage = null;
             this.tabAppearance.Controls.Add(this.tabctrlAppearance);
-            this.tabAppearance.Font = null;
+            this.tabAppearance.Location = new System.Drawing.Point(4, 25);
             this.tabAppearance.Name = "tabAppearance";
+            this.tabAppearance.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAppearance.Size = new System.Drawing.Size(447, 333);
+            this.tabAppearance.TabIndex = 0;
+            this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
             // 
             // tabctrlAppearance
             // 
-            this.tabctrlAppearance.AccessibleDescription = null;
-            this.tabctrlAppearance.AccessibleName = null;
-            resources.ApplyResources(this.tabctrlAppearance, "tabctrlAppearance");
-            this.tabctrlAppearance.BackgroundImage = null;
             this.tabctrlAppearance.Controls.Add(this.tabAppearanceGeneral);
             this.tabctrlAppearance.Controls.Add(this.tabPageNewNote);
             this.tabctrlAppearance.Controls.Add(this.tabPageFonts);
             this.tabctrlAppearance.Controls.Add(this.tabPageTrayicon);
             this.tabctrlAppearance.Controls.Add(this.tabAppereanceManagenotes);
-            this.tabctrlAppearance.Font = null;
+            this.tabctrlAppearance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabctrlAppearance.ItemSize = new System.Drawing.Size(85, 21);
+            this.tabctrlAppearance.Location = new System.Drawing.Point(3, 3);
             this.tabctrlAppearance.MinimumSize = new System.Drawing.Size(80, 21);
             this.tabctrlAppearance.Name = "tabctrlAppearance";
             this.tabctrlAppearance.SelectedIndex = 0;
+            this.tabctrlAppearance.Size = new System.Drawing.Size(441, 327);
             this.tabctrlAppearance.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.tabctrlAppearance.TabIndex = 28;
             // 
             // tabAppearanceGeneral
             // 
-            this.tabAppearanceGeneral.AccessibleDescription = null;
-            this.tabAppearanceGeneral.AccessibleName = null;
-            resources.ApplyResources(this.tabAppearanceGeneral, "tabAppearanceGeneral");
-            this.tabAppearanceGeneral.BackgroundImage = null;
             this.tabAppearanceGeneral.Controls.Add(this.chxShowTooltips);
             this.tabAppearanceGeneral.Controls.Add(this.chxTransparecy);
             this.tabAppearanceGeneral.Controls.Add(this.numProcTransparency);
             this.tabAppearanceGeneral.Controls.Add(this.lblTextTransparentProcVisible);
-            this.tabAppearanceGeneral.Font = null;
+            this.tabAppearanceGeneral.Location = new System.Drawing.Point(4, 25);
             this.tabAppearanceGeneral.Name = "tabAppearanceGeneral";
+            this.tabAppearanceGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAppearanceGeneral.Size = new System.Drawing.Size(433, 298);
+            this.tabAppearanceGeneral.TabIndex = 0;
+            this.tabAppearanceGeneral.Text = "Everywhere";
             this.tabAppearanceGeneral.UseVisualStyleBackColor = true;
             // 
             // chxShowTooltips
             // 
-            this.chxShowTooltips.AccessibleDescription = null;
-            this.chxShowTooltips.AccessibleName = null;
-            resources.ApplyResources(this.chxShowTooltips, "chxShowTooltips");
-            this.chxShowTooltips.BackgroundImage = null;
+            this.chxShowTooltips.AutoSize = true;
+            this.chxShowTooltips.Checked = true;
+            this.chxShowTooltips.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxShowTooltips.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxShowTooltips.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxShowTooltips.Location = new System.Drawing.Point(26, 75);
             this.chxShowTooltips.Name = "chxShowTooltips";
+            this.chxShowTooltips.Size = new System.Drawing.Size(129, 21);
+            this.chxShowTooltips.TabIndex = 13;
+            this.chxShowTooltips.Text = "Show tooltip hints";
             this.chxShowTooltips.UseCompatibleTextRendering = true;
             this.chxShowTooltips.UseVisualStyleBackColor = true;
+            this.chxShowTooltips.CheckStateChanged += new System.EventHandler(this.chxShowTooltips_CheckStateChanged);
             // 
             // chxTransparecy
             // 
-            this.chxTransparecy.AccessibleDescription = null;
-            this.chxTransparecy.AccessibleName = null;
-            resources.ApplyResources(this.chxTransparecy, "chxTransparecy");
+            this.chxTransparecy.AutoSize = true;
             this.chxTransparecy.BackColor = System.Drawing.Color.Transparent;
-            this.chxTransparecy.BackgroundImage = null;
             this.chxTransparecy.CausesValidation = false;
             this.chxTransparecy.Checked = true;
             this.chxTransparecy.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxTransparecy.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chxTransparecy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxTransparecy.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxTransparecy.Location = new System.Drawing.Point(26, 32);
             this.chxTransparecy.Name = "chxTransparecy";
+            this.chxTransparecy.Size = new System.Drawing.Size(157, 21);
+            this.chxTransparecy.TabIndex = 8;
+            this.chxTransparecy.Text = "Enable transparency";
             this.chxTransparecy.UseCompatibleTextRendering = true;
             this.chxTransparecy.UseVisualStyleBackColor = false;
             this.chxTransparecy.CheckedChanged += new System.EventHandler(this.chxTransparecy_CheckedChanged);
             // 
             // numProcTransparency
             // 
-            this.numProcTransparency.AccessibleDescription = null;
-            this.numProcTransparency.AccessibleName = null;
-            resources.ApplyResources(this.numProcTransparency, "numProcTransparency");
             this.numProcTransparency.BackColor = System.Drawing.Color.LightGray;
             this.numProcTransparency.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numProcTransparency.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.numProcTransparency.Increment = new decimal(new int[] {
             5,
             0,
             0,
             0});
+            this.numProcTransparency.Location = new System.Drawing.Point(189, 32);
             this.numProcTransparency.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numProcTransparency.Name = "numProcTransparency";
+            this.numProcTransparency.Size = new System.Drawing.Size(46, 22);
+            this.numProcTransparency.TabIndex = 11;
+            this.numProcTransparency.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numProcTransparency.Value = new decimal(new int[] {
             90,
             0,
@@ -839,72 +879,78 @@ namespace NoteFly
             // 
             // lblTextTransparentProcVisible
             // 
-            this.lblTextTransparentProcVisible.AccessibleDescription = null;
-            this.lblTextTransparentProcVisible.AccessibleName = null;
-            resources.ApplyResources(this.lblTextTransparentProcVisible, "lblTextTransparentProcVisible");
+            this.lblTextTransparentProcVisible.AutoSize = true;
+            this.lblTextTransparentProcVisible.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextTransparentProcVisible.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextTransparentProcVisible.Location = new System.Drawing.Point(241, 34);
             this.lblTextTransparentProcVisible.Name = "lblTextTransparentProcVisible";
+            this.lblTextTransparentProcVisible.Size = new System.Drawing.Size(58, 20);
+            this.lblTextTransparentProcVisible.TabIndex = 12;
+            this.lblTextTransparentProcVisible.Text = "% visible";
             this.lblTextTransparentProcVisible.UseCompatibleTextRendering = true;
             // 
             // tabPageNewNote
             // 
-            this.tabPageNewNote.AccessibleDescription = null;
-            this.tabPageNewNote.AccessibleName = null;
-            resources.ApplyResources(this.tabPageNewNote, "tabPageNewNote");
-            this.tabPageNewNote.BackgroundImage = null;
             this.tabPageNewNote.Controls.Add(this.chxUseDateAsDefaultTitle);
-            this.tabPageNewNote.Controls.Add(this.label3);
-            this.tabPageNewNote.Controls.Add(this.label2);
+            this.tabPageNewNote.Controls.Add(this.lblTextHeight);
+            this.tabPageNewNote.Controls.Add(this.lblTextWidth);
             this.tabPageNewNote.Controls.Add(this.numNotesDefaultHeight);
             this.tabPageNewNote.Controls.Add(this.numNotesDefaultWidth);
-            this.tabPageNewNote.Controls.Add(this.label1);
+            this.tabPageNewNote.Controls.Add(this.lblTextDefaultsizenewnote);
             this.tabPageNewNote.Controls.Add(this.chxUseRandomDefaultNote);
             this.tabPageNewNote.Controls.Add(this.lblDefaultNewNoteColor);
             this.tabPageNewNote.Controls.Add(this.cbxDefaultSkin);
-            this.tabPageNewNote.Font = null;
+            this.tabPageNewNote.Location = new System.Drawing.Point(4, 25);
             this.tabPageNewNote.Name = "tabPageNewNote";
+            this.tabPageNewNote.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageNewNote.Size = new System.Drawing.Size(433, 298);
+            this.tabPageNewNote.TabIndex = 3;
+            this.tabPageNewNote.Text = "New note";
             this.tabPageNewNote.UseVisualStyleBackColor = true;
             // 
             // chxUseDateAsDefaultTitle
             // 
-            this.chxUseDateAsDefaultTitle.AccessibleDescription = null;
-            this.chxUseDateAsDefaultTitle.AccessibleName = null;
-            resources.ApplyResources(this.chxUseDateAsDefaultTitle, "chxUseDateAsDefaultTitle");
-            this.chxUseDateAsDefaultTitle.BackgroundImage = null;
+            this.chxUseDateAsDefaultTitle.AutoSize = true;
             this.chxUseDateAsDefaultTitle.Checked = true;
             this.chxUseDateAsDefaultTitle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxUseDateAsDefaultTitle.Font = null;
+            this.chxUseDateAsDefaultTitle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxUseDateAsDefaultTitle.Location = new System.Drawing.Point(23, 104);
             this.chxUseDateAsDefaultTitle.Name = "chxUseDateAsDefaultTitle";
+            this.chxUseDateAsDefaultTitle.Size = new System.Drawing.Size(297, 20);
+            this.chxUseDateAsDefaultTitle.TabIndex = 23;
+            this.chxUseDateAsDefaultTitle.Text = "Use current date as default title for a new note.";
             this.chxUseDateAsDefaultTitle.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // lblTextHeight
             // 
-            this.label3.AccessibleDescription = null;
-            this.label3.AccessibleName = null;
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Font = null;
-            this.label3.Name = "label3";
-            this.label3.UseCompatibleTextRendering = true;
+            this.lblTextHeight.AutoSize = true;
+            this.lblTextHeight.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextHeight.Location = new System.Drawing.Point(23, 193);
+            this.lblTextHeight.Name = "lblTextHeight";
+            this.lblTextHeight.Size = new System.Drawing.Size(47, 20);
+            this.lblTextHeight.TabIndex = 22;
+            this.lblTextHeight.Text = "Height:";
+            this.lblTextHeight.UseCompatibleTextRendering = true;
             // 
-            // label2
+            // lblTextWidth
             // 
-            this.label2.AccessibleDescription = null;
-            this.label2.AccessibleName = null;
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Font = null;
-            this.label2.Name = "label2";
-            this.label2.UseCompatibleTextRendering = true;
+            this.lblTextWidth.AutoSize = true;
+            this.lblTextWidth.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextWidth.Location = new System.Drawing.Point(23, 165);
+            this.lblTextWidth.Name = "lblTextWidth";
+            this.lblTextWidth.Size = new System.Drawing.Size(43, 20);
+            this.lblTextWidth.TabIndex = 21;
+            this.lblTextWidth.Text = "Width:";
+            this.lblTextWidth.UseCompatibleTextRendering = true;
             // 
             // numNotesDefaultHeight
             // 
-            this.numNotesDefaultHeight.AccessibleDescription = null;
-            this.numNotesDefaultHeight.AccessibleName = null;
-            resources.ApplyResources(this.numNotesDefaultHeight, "numNotesDefaultHeight");
-            this.numNotesDefaultHeight.Font = null;
             this.numNotesDefaultHeight.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
+            this.numNotesDefaultHeight.Location = new System.Drawing.Point(86, 191);
             this.numNotesDefaultHeight.Maximum = new decimal(new int[] {
             900,
             0,
@@ -916,6 +962,9 @@ namespace NoteFly
             0,
             0});
             this.numNotesDefaultHeight.Name = "numNotesDefaultHeight";
+            this.numNotesDefaultHeight.Size = new System.Drawing.Size(55, 22);
+            this.numNotesDefaultHeight.TabIndex = 20;
+            this.numNotesDefaultHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numNotesDefaultHeight.Value = new decimal(new int[] {
             360,
             0,
@@ -924,15 +973,12 @@ namespace NoteFly
             // 
             // numNotesDefaultWidth
             // 
-            this.numNotesDefaultWidth.AccessibleDescription = null;
-            this.numNotesDefaultWidth.AccessibleName = null;
-            resources.ApplyResources(this.numNotesDefaultWidth, "numNotesDefaultWidth");
-            this.numNotesDefaultWidth.Font = null;
             this.numNotesDefaultWidth.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
+            this.numNotesDefaultWidth.Location = new System.Drawing.Point(86, 163);
             this.numNotesDefaultWidth.Maximum = new decimal(new int[] {
             1200,
             0,
@@ -944,57 +990,69 @@ namespace NoteFly
             0,
             0});
             this.numNotesDefaultWidth.Name = "numNotesDefaultWidth";
+            this.numNotesDefaultWidth.Size = new System.Drawing.Size(55, 22);
+            this.numNotesDefaultWidth.TabIndex = 19;
+            this.numNotesDefaultWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numNotesDefaultWidth.Value = new decimal(new int[] {
             420,
             0,
             0,
             0});
             // 
-            // label1
+            // lblTextDefaultsizenewnote
             // 
-            this.label1.AccessibleDescription = null;
-            this.label1.AccessibleName = null;
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Font = null;
-            this.label1.Name = "label1";
-            this.label1.UseCompatibleTextRendering = true;
+            this.lblTextDefaultsizenewnote.AutoSize = true;
+            this.lblTextDefaultsizenewnote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextDefaultsizenewnote.Location = new System.Drawing.Point(19, 144);
+            this.lblTextDefaultsizenewnote.Name = "lblTextDefaultsizenewnote";
+            this.lblTextDefaultsizenewnote.Size = new System.Drawing.Size(136, 20);
+            this.lblTextDefaultsizenewnote.TabIndex = 18;
+            this.lblTextDefaultsizenewnote.Text = "Default size new note:";
+            this.lblTextDefaultsizenewnote.UseCompatibleTextRendering = true;
             // 
             // chxUseRandomDefaultNote
             // 
-            this.chxUseRandomDefaultNote.AccessibleDescription = null;
-            this.chxUseRandomDefaultNote.AccessibleName = null;
-            resources.ApplyResources(this.chxUseRandomDefaultNote, "chxUseRandomDefaultNote");
-            this.chxUseRandomDefaultNote.BackgroundImage = null;
+            this.chxUseRandomDefaultNote.AutoSize = true;
+            this.chxUseRandomDefaultNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxUseRandomDefaultNote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxUseRandomDefaultNote.Location = new System.Drawing.Point(22, 30);
             this.chxUseRandomDefaultNote.Name = "chxUseRandomDefaultNote";
+            this.chxUseRandomDefaultNote.Size = new System.Drawing.Size(228, 21);
+            this.chxUseRandomDefaultNote.TabIndex = 17;
+            this.chxUseRandomDefaultNote.Text = "Use a random skin as default skin.";
             this.chxUseRandomDefaultNote.UseCompatibleTextRendering = true;
             this.chxUseRandomDefaultNote.UseVisualStyleBackColor = true;
             this.chxUseRandomDefaultNote.CheckedChanged += new System.EventHandler(this.chxUseRandomDefaultNote_CheckedChanged);
             // 
             // lblDefaultNewNoteColor
             // 
-            this.lblDefaultNewNoteColor.AccessibleDescription = null;
-            this.lblDefaultNewNoteColor.AccessibleName = null;
-            resources.ApplyResources(this.lblDefaultNewNoteColor, "lblDefaultNewNoteColor");
+            this.lblDefaultNewNoteColor.AutoSize = true;
+            this.lblDefaultNewNoteColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblDefaultNewNoteColor.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblDefaultNewNoteColor.Location = new System.Drawing.Point(19, 56);
             this.lblDefaultNewNoteColor.Name = "lblDefaultNewNoteColor";
+            this.lblDefaultNewNoteColor.Size = new System.Drawing.Size(143, 20);
+            this.lblDefaultNewNoteColor.TabIndex = 15;
+            this.lblDefaultNewNoteColor.Text = "Default skin new notes:";
             this.lblDefaultNewNoteColor.UseCompatibleTextRendering = true;
             // 
             // cbxDefaultSkin
             // 
-            resources.ApplyResources(this.cbxDefaultSkin, "cbxDefaultSkin");
-            this.cbxDefaultSkin.AccessibleName = null;
+            this.cbxDefaultSkin.AccessibleDescription = "Defaul color for new note.";
             this.cbxDefaultSkin.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
             this.cbxDefaultSkin.BackColor = System.Drawing.Color.LightGray;
-            this.cbxDefaultSkin.BackgroundImage = null;
             this.cbxDefaultSkin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxDefaultSkin.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cbxDefaultSkin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.cbxDefaultSkin.FormattingEnabled = true;
+            this.cbxDefaultSkin.Location = new System.Drawing.Point(168, 53);
+            this.cbxDefaultSkin.MaxDropDownItems = 5;
             this.cbxDefaultSkin.Name = "cbxDefaultSkin";
+            this.cbxDefaultSkin.Size = new System.Drawing.Size(228, 24);
+            this.cbxDefaultSkin.TabIndex = 16;
             // 
             // tabPageFonts
             // 
-            this.tabPageFonts.AccessibleDescription = null;
-            this.tabPageFonts.AccessibleName = null;
-            resources.ApplyResources(this.tabPageFonts, "tabPageFonts");
-            this.tabPageFonts.BackgroundImage = null;
             this.tabPageFonts.Controls.Add(this.cbxFontNoteTitleBold);
             this.tabPageFonts.Controls.Add(this.lblTextFontTitlePoints);
             this.tabPageFonts.Controls.Add(this.numFontSizeTitle);
@@ -1008,37 +1066,43 @@ namespace NoteFly
             this.tabPageFonts.Controls.Add(this.lblTextFontContentSize);
             this.tabPageFonts.Controls.Add(this.lblTextNoteFont);
             this.tabPageFonts.Controls.Add(this.cbxFontNoteContent);
-            this.tabPageFonts.Font = null;
+            this.tabPageFonts.Location = new System.Drawing.Point(4, 25);
             this.tabPageFonts.Name = "tabPageFonts";
+            this.tabPageFonts.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFonts.Size = new System.Drawing.Size(433, 298);
+            this.tabPageFonts.TabIndex = 1;
+            this.tabPageFonts.Text = "Notes";
             this.tabPageFonts.UseVisualStyleBackColor = true;
             // 
             // cbxFontNoteTitleBold
             // 
-            this.cbxFontNoteTitleBold.AccessibleDescription = null;
-            this.cbxFontNoteTitleBold.AccessibleName = null;
-            resources.ApplyResources(this.cbxFontNoteTitleBold, "cbxFontNoteTitleBold");
-            this.cbxFontNoteTitleBold.BackgroundImage = null;
+            this.cbxFontNoteTitleBold.AutoSize = true;
             this.cbxFontNoteTitleBold.Checked = true;
             this.cbxFontNoteTitleBold.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxFontNoteTitleBold.Font = null;
+            this.cbxFontNoteTitleBold.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.cbxFontNoteTitleBold.Location = new System.Drawing.Point(235, 50);
             this.cbxFontNoteTitleBold.Name = "cbxFontNoteTitleBold";
+            this.cbxFontNoteTitleBold.Size = new System.Drawing.Size(49, 21);
+            this.cbxFontNoteTitleBold.TabIndex = 40;
+            this.cbxFontNoteTitleBold.Text = "bold";
             this.cbxFontNoteTitleBold.UseCompatibleTextRendering = true;
             this.cbxFontNoteTitleBold.UseVisualStyleBackColor = true;
             // 
             // lblTextFontTitlePoints
             // 
-            resources.ApplyResources(this.lblTextFontTitlePoints, "lblTextFontTitlePoints");
-            this.lblTextFontTitlePoints.AccessibleName = null;
-            this.lblTextFontTitlePoints.Font = null;
+            this.lblTextFontTitlePoints.AccessibleDescription = "points";
+            this.lblTextFontTitlePoints.AutoSize = true;
+            this.lblTextFontTitlePoints.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextFontTitlePoints.Location = new System.Drawing.Point(202, 51);
             this.lblTextFontTitlePoints.Name = "lblTextFontTitlePoints";
+            this.lblTextFontTitlePoints.Size = new System.Drawing.Size(20, 20);
+            this.lblTextFontTitlePoints.TabIndex = 39;
+            this.lblTextFontTitlePoints.Text = "pt.";
             this.lblTextFontTitlePoints.UseCompatibleTextRendering = true;
             // 
             // numFontSizeTitle
             // 
-            this.numFontSizeTitle.AccessibleDescription = null;
-            this.numFontSizeTitle.AccessibleName = null;
-            resources.ApplyResources(this.numFontSizeTitle, "numFontSizeTitle");
-            this.numFontSizeTitle.Font = null;
+            this.numFontSizeTitle.Location = new System.Drawing.Point(158, 49);
             this.numFontSizeTitle.Maximum = new decimal(new int[] {
             96,
             0,
@@ -1050,6 +1114,9 @@ namespace NoteFly
             0,
             0});
             this.numFontSizeTitle.Name = "numFontSizeTitle";
+            this.numFontSizeTitle.Size = new System.Drawing.Size(38, 22);
+            this.numFontSizeTitle.TabIndex = 38;
+            this.numFontSizeTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numFontSizeTitle.Value = new decimal(new int[] {
             14,
             0,
@@ -1058,71 +1125,81 @@ namespace NoteFly
             // 
             // lblTextFontTitleSize
             // 
-            this.lblTextFontTitleSize.AccessibleDescription = null;
-            this.lblTextFontTitleSize.AccessibleName = null;
-            resources.ApplyResources(this.lblTextFontTitleSize, "lblTextFontTitleSize");
-            this.lblTextFontTitleSize.Font = null;
+            this.lblTextFontTitleSize.AutoSize = true;
+            this.lblTextFontTitleSize.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextFontTitleSize.Location = new System.Drawing.Point(61, 51);
             this.lblTextFontTitleSize.Name = "lblTextFontTitleSize";
+            this.lblTextFontTitleSize.Size = new System.Drawing.Size(87, 20);
+            this.lblTextFontTitleSize.TabIndex = 37;
+            this.lblTextFontTitleSize.Text = "Font size title:";
             this.lblTextFontTitleSize.UseCompatibleTextRendering = true;
             // 
             // cbxFontNoteTitle
             // 
-            resources.ApplyResources(this.cbxFontNoteTitle, "cbxFontNoteTitle");
-            this.cbxFontNoteTitle.AccessibleName = null;
+            this.cbxFontNoteTitle.AccessibleDescription = "Font size notes";
             this.cbxFontNoteTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
-            this.cbxFontNoteTitle.BackgroundImage = null;
             this.cbxFontNoteTitle.DropDownHeight = 140;
             this.cbxFontNoteTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxFontNoteTitle.Font = null;
+            this.cbxFontNoteTitle.IntegralHeight = false;
+            this.cbxFontNoteTitle.Location = new System.Drawing.Point(157, 22);
             this.cbxFontNoteTitle.Name = "cbxFontNoteTitle";
+            this.cbxFontNoteTitle.Size = new System.Drawing.Size(182, 24);
+            this.cbxFontNoteTitle.TabIndex = 36;
             // 
             // lblTextFontTitleFamily
             // 
-            this.lblTextFontTitleFamily.AccessibleDescription = null;
-            this.lblTextFontTitleFamily.AccessibleName = null;
-            resources.ApplyResources(this.lblTextFontTitleFamily, "lblTextFontTitleFamily");
-            this.lblTextFontTitleFamily.Font = null;
+            this.lblTextFontTitleFamily.AutoSize = true;
+            this.lblTextFontTitleFamily.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextFontTitleFamily.Location = new System.Drawing.Point(91, 25);
             this.lblTextFontTitleFamily.Name = "lblTextFontTitleFamily";
+            this.lblTextFontTitleFamily.Size = new System.Drawing.Size(60, 20);
+            this.lblTextFontTitleFamily.TabIndex = 35;
+            this.lblTextFontTitleFamily.Text = "Font title:";
             this.lblTextFontTitleFamily.UseCompatibleTextRendering = true;
             // 
             // lblTextDirection
             // 
-            resources.ApplyResources(this.lblTextDirection, "lblTextDirection");
-            this.lblTextDirection.AccessibleName = null;
+            this.lblTextDirection.AccessibleDescription = "";
             this.lblTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.lblTextDirection.Font = null;
+            this.lblTextDirection.AutoSize = true;
+            this.lblTextDirection.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextDirection.Location = new System.Drawing.Point(21, 183);
             this.lblTextDirection.Name = "lblTextDirection";
+            this.lblTextDirection.Size = new System.Drawing.Size(125, 20);
+            this.lblTextDirection.TabIndex = 34;
+            this.lblTextDirection.Text = "Text direction notes:";
             this.lblTextDirection.UseCompatibleTextRendering = true;
             // 
             // cbxTextDirection
             // 
-            resources.ApplyResources(this.cbxTextDirection, "cbxTextDirection");
-            this.cbxTextDirection.AccessibleName = null;
+            this.cbxTextDirection.AccessibleDescription = "Text direction";
             this.cbxTextDirection.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
-            this.cbxTextDirection.BackgroundImage = null;
             this.cbxTextDirection.CausesValidation = false;
             this.cbxTextDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTextDirection.Font = null;
             this.cbxTextDirection.FormattingEnabled = true;
             this.cbxTextDirection.Items.AddRange(new object[] {
-            resources.GetString("cbxTextDirection.Items"),
-            resources.GetString("cbxTextDirection.Items1")});
+            "Left to right",
+            "Right to left"});
+            this.cbxTextDirection.Location = new System.Drawing.Point(158, 180);
             this.cbxTextDirection.Name = "cbxTextDirection";
+            this.cbxTextDirection.Size = new System.Drawing.Size(182, 24);
+            this.cbxTextDirection.TabIndex = 33;
             // 
             // lblTextFontContentPoints
             // 
-            resources.ApplyResources(this.lblTextFontContentPoints, "lblTextFontContentPoints");
-            this.lblTextFontContentPoints.AccessibleName = null;
-            this.lblTextFontContentPoints.Font = null;
+            this.lblTextFontContentPoints.AccessibleDescription = "points";
+            this.lblTextFontContentPoints.AutoSize = true;
+            this.lblTextFontContentPoints.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextFontContentPoints.Location = new System.Drawing.Point(202, 121);
             this.lblTextFontContentPoints.Name = "lblTextFontContentPoints";
+            this.lblTextFontContentPoints.Size = new System.Drawing.Size(20, 20);
+            this.lblTextFontContentPoints.TabIndex = 32;
+            this.lblTextFontContentPoints.Text = "pt.";
             this.lblTextFontContentPoints.UseCompatibleTextRendering = true;
             // 
             // numFontSizeContent
             // 
-            this.numFontSizeContent.AccessibleDescription = null;
-            this.numFontSizeContent.AccessibleName = null;
-            resources.ApplyResources(this.numFontSizeContent, "numFontSizeContent");
-            this.numFontSizeContent.Font = null;
+            this.numFontSizeContent.Location = new System.Drawing.Point(158, 119);
             this.numFontSizeContent.Maximum = new decimal(new int[] {
             96,
             0,
@@ -1134,6 +1211,9 @@ namespace NoteFly
             0,
             0});
             this.numFontSizeContent.Name = "numFontSizeContent";
+            this.numFontSizeContent.Size = new System.Drawing.Size(38, 22);
+            this.numFontSizeContent.TabIndex = 31;
+            this.numFontSizeContent.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numFontSizeContent.Value = new decimal(new int[] {
             10,
             0,
@@ -1142,39 +1222,40 @@ namespace NoteFly
             // 
             // lblTextFontContentSize
             // 
-            this.lblTextFontContentSize.AccessibleDescription = null;
-            this.lblTextFontContentSize.AccessibleName = null;
-            resources.ApplyResources(this.lblTextFontContentSize, "lblTextFontContentSize");
-            this.lblTextFontContentSize.Font = null;
+            this.lblTextFontContentSize.AutoSize = true;
+            this.lblTextFontContentSize.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextFontContentSize.Location = new System.Drawing.Point(3, 121);
             this.lblTextFontContentSize.Name = "lblTextFontContentSize";
+            this.lblTextFontContentSize.Size = new System.Drawing.Size(150, 20);
+            this.lblTextFontContentSize.TabIndex = 30;
+            this.lblTextFontContentSize.Text = "default font size content:";
             this.lblTextFontContentSize.UseCompatibleTextRendering = true;
             // 
             // lblTextNoteFont
             // 
-            this.lblTextNoteFont.AccessibleDescription = null;
-            this.lblTextNoteFont.AccessibleName = null;
-            resources.ApplyResources(this.lblTextNoteFont, "lblTextNoteFont");
-            this.lblTextNoteFont.Font = null;
+            this.lblTextNoteFont.AutoSize = true;
+            this.lblTextNoteFont.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextNoteFont.Location = new System.Drawing.Point(30, 96);
             this.lblTextNoteFont.Name = "lblTextNoteFont";
+            this.lblTextNoteFont.Size = new System.Drawing.Size(122, 20);
+            this.lblTextNoteFont.TabIndex = 29;
+            this.lblTextNoteFont.Text = "default font content:";
             this.lblTextNoteFont.UseCompatibleTextRendering = true;
             // 
             // cbxFontNoteContent
             // 
-            resources.ApplyResources(this.cbxFontNoteContent, "cbxFontNoteContent");
-            this.cbxFontNoteContent.AccessibleName = null;
+            this.cbxFontNoteContent.AccessibleDescription = "Font size notes";
             this.cbxFontNoteContent.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
-            this.cbxFontNoteContent.BackgroundImage = null;
             this.cbxFontNoteContent.DropDownHeight = 140;
             this.cbxFontNoteContent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxFontNoteContent.Font = null;
+            this.cbxFontNoteContent.IntegralHeight = false;
+            this.cbxFontNoteContent.Location = new System.Drawing.Point(157, 93);
             this.cbxFontNoteContent.Name = "cbxFontNoteContent";
+            this.cbxFontNoteContent.Size = new System.Drawing.Size(182, 24);
+            this.cbxFontNoteContent.TabIndex = 28;
             // 
             // tabPageTrayicon
             // 
-            this.tabPageTrayicon.AccessibleDescription = null;
-            this.tabPageTrayicon.AccessibleName = null;
-            resources.ApplyResources(this.tabPageTrayicon, "tabPageTrayicon");
-            this.tabPageTrayicon.BackgroundImage = null;
             this.tabPageTrayicon.Controls.Add(this.chxUseAlternativeTrayicon);
             this.tabPageTrayicon.Controls.Add(this.lblFontsizePoints);
             this.tabPageTrayicon.Controls.Add(this.lblTextFontsizeMenu);
@@ -1183,45 +1264,50 @@ namespace NoteFly
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldSettings);
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldManagenotes);
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldNewnote);
-            this.tabPageTrayicon.Font = null;
+            this.tabPageTrayicon.Location = new System.Drawing.Point(4, 25);
             this.tabPageTrayicon.Name = "tabPageTrayicon";
+            this.tabPageTrayicon.Size = new System.Drawing.Size(433, 298);
+            this.tabPageTrayicon.TabIndex = 2;
+            this.tabPageTrayicon.Text = "Trayicon";
             this.tabPageTrayicon.UseVisualStyleBackColor = true;
             // 
             // chxUseAlternativeTrayicon
             // 
-            this.chxUseAlternativeTrayicon.AccessibleDescription = null;
-            this.chxUseAlternativeTrayicon.AccessibleName = null;
-            resources.ApplyResources(this.chxUseAlternativeTrayicon, "chxUseAlternativeTrayicon");
-            this.chxUseAlternativeTrayicon.BackgroundImage = null;
-            this.chxUseAlternativeTrayicon.Font = null;
+            this.chxUseAlternativeTrayicon.AutoSize = true;
+            this.chxUseAlternativeTrayicon.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxUseAlternativeTrayicon.Location = new System.Drawing.Point(25, 175);
             this.chxUseAlternativeTrayicon.Name = "chxUseAlternativeTrayicon";
+            this.chxUseAlternativeTrayicon.Size = new System.Drawing.Size(296, 21);
+            this.chxUseAlternativeTrayicon.TabIndex = 7;
+            this.chxUseAlternativeTrayicon.Text = "Use alternative windows7 style/white trayicon.";
             this.chxUseAlternativeTrayicon.UseCompatibleTextRendering = true;
             this.chxUseAlternativeTrayicon.UseVisualStyleBackColor = true;
             // 
             // lblFontsizePoints
             // 
-            this.lblFontsizePoints.AccessibleDescription = null;
-            this.lblFontsizePoints.AccessibleName = null;
-            resources.ApplyResources(this.lblFontsizePoints, "lblFontsizePoints");
-            this.lblFontsizePoints.Font = null;
+            this.lblFontsizePoints.AutoSize = true;
+            this.lblFontsizePoints.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblFontsizePoints.Location = new System.Drawing.Point(216, 27);
             this.lblFontsizePoints.Name = "lblFontsizePoints";
+            this.lblFontsizePoints.Size = new System.Drawing.Size(20, 20);
+            this.lblFontsizePoints.TabIndex = 6;
+            this.lblFontsizePoints.Text = "pt.";
             this.lblFontsizePoints.UseCompatibleTextRendering = true;
             // 
             // lblTextFontsizeMenu
             // 
-            this.lblTextFontsizeMenu.AccessibleDescription = null;
-            this.lblTextFontsizeMenu.AccessibleName = null;
-            resources.ApplyResources(this.lblTextFontsizeMenu, "lblTextFontsizeMenu");
-            this.lblTextFontsizeMenu.Font = null;
+            this.lblTextFontsizeMenu.AutoSize = true;
+            this.lblTextFontsizeMenu.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextFontsizeMenu.Location = new System.Drawing.Point(23, 27);
             this.lblTextFontsizeMenu.Name = "lblTextFontsizeMenu";
+            this.lblTextFontsizeMenu.Size = new System.Drawing.Size(147, 20);
+            this.lblTextFontsizeMenu.TabIndex = 5;
+            this.lblTextFontsizeMenu.Text = "Trayicon menu fontsize:";
             this.lblTextFontsizeMenu.UseCompatibleTextRendering = true;
             // 
             // numTrayiconFontsize
             // 
-            this.numTrayiconFontsize.AccessibleDescription = null;
-            this.numTrayiconFontsize.AccessibleName = null;
-            resources.ApplyResources(this.numTrayiconFontsize, "numTrayiconFontsize");
-            this.numTrayiconFontsize.Font = null;
+            this.numTrayiconFontsize.Location = new System.Drawing.Point(170, 25);
             this.numTrayiconFontsize.Maximum = new decimal(new int[] {
             36,
             0,
@@ -1233,6 +1319,9 @@ namespace NoteFly
             0,
             0});
             this.numTrayiconFontsize.Name = "numTrayiconFontsize";
+            this.numTrayiconFontsize.Size = new System.Drawing.Size(40, 22);
+            this.numTrayiconFontsize.TabIndex = 4;
+            this.numTrayiconFontsize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numTrayiconFontsize.Value = new decimal(new int[] {
             1000,
             0,
@@ -1241,93 +1330,97 @@ namespace NoteFly
             // 
             // chxTrayiconBoldExit
             // 
-            this.chxTrayiconBoldExit.AccessibleDescription = null;
-            this.chxTrayiconBoldExit.AccessibleName = null;
-            resources.ApplyResources(this.chxTrayiconBoldExit, "chxTrayiconBoldExit");
-            this.chxTrayiconBoldExit.BackgroundImage = null;
-            this.chxTrayiconBoldExit.Font = null;
+            this.chxTrayiconBoldExit.AutoSize = true;
+            this.chxTrayiconBoldExit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxTrayiconBoldExit.Location = new System.Drawing.Point(26, 129);
             this.chxTrayiconBoldExit.Name = "chxTrayiconBoldExit";
+            this.chxTrayiconBoldExit.Size = new System.Drawing.Size(150, 21);
+            this.chxTrayiconBoldExit.TabIndex = 3;
+            this.chxTrayiconBoldExit.Text = "Display \"Exit\" in bold.";
             this.chxTrayiconBoldExit.UseCompatibleTextRendering = true;
             this.chxTrayiconBoldExit.UseVisualStyleBackColor = true;
             // 
             // chxTrayiconBoldSettings
             // 
-            this.chxTrayiconBoldSettings.AccessibleDescription = null;
-            this.chxTrayiconBoldSettings.AccessibleName = null;
-            resources.ApplyResources(this.chxTrayiconBoldSettings, "chxTrayiconBoldSettings");
-            this.chxTrayiconBoldSettings.BackgroundImage = null;
-            this.chxTrayiconBoldSettings.Font = null;
+            this.chxTrayiconBoldSettings.AutoSize = true;
+            this.chxTrayiconBoldSettings.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxTrayiconBoldSettings.Location = new System.Drawing.Point(25, 106);
             this.chxTrayiconBoldSettings.Name = "chxTrayiconBoldSettings";
+            this.chxTrayiconBoldSettings.Size = new System.Drawing.Size(176, 21);
+            this.chxTrayiconBoldSettings.TabIndex = 2;
+            this.chxTrayiconBoldSettings.Text = "Display \"Settings\" in bold.";
             this.chxTrayiconBoldSettings.UseCompatibleTextRendering = true;
             this.chxTrayiconBoldSettings.UseVisualStyleBackColor = true;
             // 
             // chxTrayiconBoldManagenotes
             // 
-            this.chxTrayiconBoldManagenotes.AccessibleDescription = null;
-            this.chxTrayiconBoldManagenotes.AccessibleName = null;
-            resources.ApplyResources(this.chxTrayiconBoldManagenotes, "chxTrayiconBoldManagenotes");
-            this.chxTrayiconBoldManagenotes.BackgroundImage = null;
-            this.chxTrayiconBoldManagenotes.Font = null;
+            this.chxTrayiconBoldManagenotes.AutoSize = true;
+            this.chxTrayiconBoldManagenotes.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxTrayiconBoldManagenotes.Location = new System.Drawing.Point(25, 83);
             this.chxTrayiconBoldManagenotes.Name = "chxTrayiconBoldManagenotes";
+            this.chxTrayiconBoldManagenotes.Size = new System.Drawing.Size(212, 21);
+            this.chxTrayiconBoldManagenotes.TabIndex = 1;
+            this.chxTrayiconBoldManagenotes.Text = "Display \"Manage notes\" in bold.";
             this.chxTrayiconBoldManagenotes.UseCompatibleTextRendering = true;
             this.chxTrayiconBoldManagenotes.UseVisualStyleBackColor = true;
             // 
             // chxTrayiconBoldNewnote
             // 
-            this.chxTrayiconBoldNewnote.AccessibleDescription = null;
-            this.chxTrayiconBoldNewnote.AccessibleName = null;
-            resources.ApplyResources(this.chxTrayiconBoldNewnote, "chxTrayiconBoldNewnote");
-            this.chxTrayiconBoldNewnote.BackgroundImage = null;
+            this.chxTrayiconBoldNewnote.AutoSize = true;
             this.chxTrayiconBoldNewnote.Checked = true;
             this.chxTrayiconBoldNewnote.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxTrayiconBoldNewnote.Font = null;
+            this.chxTrayiconBoldNewnote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxTrayiconBoldNewnote.Location = new System.Drawing.Point(25, 60);
             this.chxTrayiconBoldNewnote.Name = "chxTrayiconBoldNewnote";
+            this.chxTrayiconBoldNewnote.Size = new System.Drawing.Size(237, 21);
+            this.chxTrayiconBoldNewnote.TabIndex = 0;
+            this.chxTrayiconBoldNewnote.Text = "Display \"Create a new note\" in bold.";
             this.chxTrayiconBoldNewnote.UseCompatibleTextRendering = true;
             this.chxTrayiconBoldNewnote.UseVisualStyleBackColor = true;
             // 
             // tabAppereanceManagenotes
             // 
-            this.tabAppereanceManagenotes.AccessibleDescription = null;
-            this.tabAppereanceManagenotes.AccessibleName = null;
-            resources.ApplyResources(this.tabAppereanceManagenotes, "tabAppereanceManagenotes");
-            this.tabAppereanceManagenotes.BackgroundImage = null;
             this.tabAppereanceManagenotes.Controls.Add(this.chxCaseSentiveSearch);
-            this.tabAppereanceManagenotes.Controls.Add(this.label4);
+            this.tabAppereanceManagenotes.Controls.Add(this.lblTextPoints);
             this.tabAppereanceManagenotes.Controls.Add(this.numManagenotesFont);
             this.tabAppereanceManagenotes.Controls.Add(this.lbTextManagesnotesFontSize);
             this.tabAppereanceManagenotes.Controls.Add(this.lblTextSkinManagenotes);
             this.tabAppereanceManagenotes.Controls.Add(this.cbxManageNotesSkin);
-            this.tabAppereanceManagenotes.Controls.Add(this.cbxManagenotesTooltipContent);
-            this.tabAppereanceManagenotes.Font = null;
+            this.tabAppereanceManagenotes.Controls.Add(this.chxManagenotesTooltipContent);
+            this.tabAppereanceManagenotes.Location = new System.Drawing.Point(4, 25);
             this.tabAppereanceManagenotes.Name = "tabAppereanceManagenotes";
+            this.tabAppereanceManagenotes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAppereanceManagenotes.Size = new System.Drawing.Size(433, 298);
+            this.tabAppereanceManagenotes.TabIndex = 4;
+            this.tabAppereanceManagenotes.Text = "Manage notes";
             this.tabAppereanceManagenotes.UseVisualStyleBackColor = true;
             // 
             // chxCaseSentiveSearch
             // 
-            this.chxCaseSentiveSearch.AccessibleDescription = null;
-            this.chxCaseSentiveSearch.AccessibleName = null;
-            resources.ApplyResources(this.chxCaseSentiveSearch, "chxCaseSentiveSearch");
-            this.chxCaseSentiveSearch.BackgroundImage = null;
+            this.chxCaseSentiveSearch.AutoSize = true;
             this.chxCaseSentiveSearch.Checked = true;
             this.chxCaseSentiveSearch.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxCaseSentiveSearch.Font = null;
+            this.chxCaseSentiveSearch.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxCaseSentiveSearch.Location = new System.Drawing.Point(19, 147);
             this.chxCaseSentiveSearch.Name = "chxCaseSentiveSearch";
+            this.chxCaseSentiveSearch.Size = new System.Drawing.Size(178, 20);
+            this.chxCaseSentiveSearch.TabIndex = 6;
+            this.chxCaseSentiveSearch.Text = "Use case sentive search.";
             this.chxCaseSentiveSearch.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // lblTextPoints
             // 
-            this.label4.AccessibleDescription = null;
-            this.label4.AccessibleName = null;
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Font = null;
-            this.label4.Name = "label4";
+            this.lblTextPoints.AutoSize = true;
+            this.lblTextPoints.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextPoints.Location = new System.Drawing.Point(262, 84);
+            this.lblTextPoints.Name = "lblTextPoints";
+            this.lblTextPoints.Size = new System.Drawing.Size(22, 16);
+            this.lblTextPoints.TabIndex = 5;
+            this.lblTextPoints.Text = "pt.";
             // 
             // numManagenotesFont
             // 
-            this.numManagenotesFont.AccessibleDescription = null;
-            this.numManagenotesFont.AccessibleName = null;
-            resources.ApplyResources(this.numManagenotesFont, "numManagenotesFont");
-            this.numManagenotesFont.Font = null;
+            this.numManagenotesFont.Location = new System.Drawing.Point(211, 82);
             this.numManagenotesFont.Maximum = new decimal(new int[] {
             48,
             0,
@@ -1339,6 +1432,9 @@ namespace NoteFly
             0,
             0});
             this.numManagenotesFont.Name = "numManagenotesFont";
+            this.numManagenotesFont.Size = new System.Drawing.Size(45, 22);
+            this.numManagenotesFont.TabIndex = 4;
+            this.numManagenotesFont.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numManagenotesFont.Value = new decimal(new int[] {
             1000,
             0,
@@ -1347,206 +1443,226 @@ namespace NoteFly
             // 
             // lbTextManagesnotesFontSize
             // 
-            this.lbTextManagesnotesFontSize.AccessibleDescription = null;
-            this.lbTextManagesnotesFontSize.AccessibleName = null;
-            resources.ApplyResources(this.lbTextManagesnotesFontSize, "lbTextManagesnotesFontSize");
-            this.lbTextManagesnotesFontSize.Font = null;
+            this.lbTextManagesnotesFontSize.AutoSize = true;
+            this.lbTextManagesnotesFontSize.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lbTextManagesnotesFontSize.Location = new System.Drawing.Point(52, 82);
             this.lbTextManagesnotesFontSize.Name = "lbTextManagesnotesFontSize";
+            this.lbTextManagesnotesFontSize.Size = new System.Drawing.Size(145, 16);
+            this.lbTextManagesnotesFontSize.TabIndex = 3;
+            this.lbTextManagesnotesFontSize.Text = "Manage notes fontsize:";
             // 
             // lblTextSkinManagenotes
             // 
-            this.lblTextSkinManagenotes.AccessibleDescription = null;
-            this.lblTextSkinManagenotes.AccessibleName = null;
-            resources.ApplyResources(this.lblTextSkinManagenotes, "lblTextSkinManagenotes");
-            this.lblTextSkinManagenotes.Font = null;
+            this.lblTextSkinManagenotes.AutoSize = true;
+            this.lblTextSkinManagenotes.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextSkinManagenotes.Location = new System.Drawing.Point(19, 42);
             this.lblTextSkinManagenotes.Name = "lblTextSkinManagenotes";
+            this.lblTextSkinManagenotes.Size = new System.Drawing.Size(186, 20);
+            this.lblTextSkinManagenotes.TabIndex = 2;
+            this.lblTextSkinManagenotes.Text = "Skin of Manage notes window:";
             this.lblTextSkinManagenotes.UseCompatibleTextRendering = true;
             // 
             // cbxManageNotesSkin
             // 
-            this.cbxManageNotesSkin.AccessibleDescription = null;
-            this.cbxManageNotesSkin.AccessibleName = null;
-            resources.ApplyResources(this.cbxManageNotesSkin, "cbxManageNotesSkin");
-            this.cbxManageNotesSkin.BackgroundImage = null;
             this.cbxManageNotesSkin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxManageNotesSkin.Font = null;
             this.cbxManageNotesSkin.FormattingEnabled = true;
+            this.cbxManageNotesSkin.Location = new System.Drawing.Point(211, 39);
             this.cbxManageNotesSkin.Name = "cbxManageNotesSkin";
+            this.cbxManageNotesSkin.Size = new System.Drawing.Size(202, 24);
+            this.cbxManageNotesSkin.TabIndex = 1;
             // 
-            // cbxManagenotesTooltipContent
+            // chxManagenotesTooltipContent
             // 
-            this.cbxManagenotesTooltipContent.AccessibleDescription = null;
-            this.cbxManagenotesTooltipContent.AccessibleName = null;
-            resources.ApplyResources(this.cbxManagenotesTooltipContent, "cbxManagenotesTooltipContent");
-            this.cbxManagenotesTooltipContent.BackgroundImage = null;
-            this.cbxManagenotesTooltipContent.Font = null;
-            this.cbxManagenotesTooltipContent.Name = "cbxManagenotesTooltipContent";
-            this.cbxManagenotesTooltipContent.UseCompatibleTextRendering = true;
-            this.cbxManagenotesTooltipContent.UseVisualStyleBackColor = true;
+            this.chxManagenotesTooltipContent.AutoSize = true;
+            this.chxManagenotesTooltipContent.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxManagenotesTooltipContent.Location = new System.Drawing.Point(19, 120);
+            this.chxManagenotesTooltipContent.Name = "chxManagenotesTooltipContent";
+            this.chxManagenotesTooltipContent.Size = new System.Drawing.Size(303, 21);
+            this.chxManagenotesTooltipContent.TabIndex = 0;
+            this.chxManagenotesTooltipContent.Text = "Show a tooltip with preview of the note content.";
+            this.chxManagenotesTooltipContent.UseCompatibleTextRendering = true;
+            this.chxManagenotesTooltipContent.UseVisualStyleBackColor = true;
             // 
             // tabHighlight
             // 
-            this.tabHighlight.AccessibleDescription = null;
-            this.tabHighlight.AccessibleName = null;
-            resources.ApplyResources(this.tabHighlight, "tabHighlight");
-            this.tabHighlight.BackgroundImage = null;
             this.tabHighlight.Controls.Add(this.chxHighlightSQL);
             this.tabHighlight.Controls.Add(this.chxHighlightPHP);
             this.tabHighlight.Controls.Add(this.chxHighlightHyperlinks);
             this.tabHighlight.Controls.Add(this.chxConfirmLink);
             this.tabHighlight.Controls.Add(this.chxHighlightHTML);
-            this.tabHighlight.Font = null;
+            this.tabHighlight.Location = new System.Drawing.Point(4, 25);
             this.tabHighlight.Name = "tabHighlight";
+            this.tabHighlight.Padding = new System.Windows.Forms.Padding(3);
+            this.tabHighlight.Size = new System.Drawing.Size(447, 333);
+            this.tabHighlight.TabIndex = 5;
+            this.tabHighlight.Text = "Highlight";
             this.tabHighlight.UseVisualStyleBackColor = true;
             // 
             // chxHighlightSQL
             // 
-            this.chxHighlightSQL.AccessibleDescription = null;
-            this.chxHighlightSQL.AccessibleName = null;
-            resources.ApplyResources(this.chxHighlightSQL, "chxHighlightSQL");
-            this.chxHighlightSQL.BackgroundImage = null;
+            this.chxHighlightSQL.AutoSize = true;
+            this.chxHighlightSQL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxHighlightSQL.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxHighlightSQL.Location = new System.Drawing.Point(23, 159);
             this.chxHighlightSQL.Name = "chxHighlightSQL";
+            this.chxHighlightSQL.Size = new System.Drawing.Size(233, 21);
+            this.chxHighlightSQL.TabIndex = 16;
+            this.chxHighlightSQL.Text = "Highlight SQL text between quotes.";
             this.chxHighlightSQL.UseCompatibleTextRendering = true;
             this.chxHighlightSQL.UseVisualStyleBackColor = true;
             // 
             // chxHighlightPHP
             // 
-            this.chxHighlightPHP.AccessibleDescription = null;
-            this.chxHighlightPHP.AccessibleName = null;
-            resources.ApplyResources(this.chxHighlightPHP, "chxHighlightPHP");
-            this.chxHighlightPHP.BackgroundImage = null;
+            this.chxHighlightPHP.AutoSize = true;
+            this.chxHighlightPHP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxHighlightPHP.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxHighlightPHP.Location = new System.Drawing.Point(23, 136);
             this.chxHighlightPHP.Name = "chxHighlightPHP";
+            this.chxHighlightPHP.Size = new System.Drawing.Size(276, 21);
+            this.chxHighlightPHP.TabIndex = 15;
+            this.chxHighlightPHP.Text = "Highlight PHP text between <?php and ?>.";
             this.chxHighlightPHP.UseCompatibleTextRendering = true;
             this.chxHighlightPHP.UseVisualStyleBackColor = true;
             // 
             // chxHighlightHyperlinks
             // 
-            this.chxHighlightHyperlinks.AccessibleDescription = null;
-            this.chxHighlightHyperlinks.AccessibleName = null;
-            resources.ApplyResources(this.chxHighlightHyperlinks, "chxHighlightHyperlinks");
-            this.chxHighlightHyperlinks.BackgroundImage = null;
+            this.chxHighlightHyperlinks.AutoSize = true;
+            this.chxHighlightHyperlinks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxHighlightHyperlinks.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxHighlightHyperlinks.Location = new System.Drawing.Point(23, 42);
             this.chxHighlightHyperlinks.Name = "chxHighlightHyperlinks";
+            this.chxHighlightHyperlinks.Size = new System.Drawing.Size(179, 21);
+            this.chxHighlightHyperlinks.TabIndex = 14;
+            this.chxHighlightHyperlinks.Text = "Make hyperlinks clickable.";
             this.chxHighlightHyperlinks.UseCompatibleTextRendering = true;
             this.chxHighlightHyperlinks.UseVisualStyleBackColor = true;
             // 
             // chxConfirmLink
             // 
-            this.chxConfirmLink.AccessibleDescription = null;
-            this.chxConfirmLink.AccessibleName = null;
-            resources.ApplyResources(this.chxConfirmLink, "chxConfirmLink");
-            this.chxConfirmLink.BackgroundImage = null;
+            this.chxConfirmLink.AutoSize = true;
             this.chxConfirmLink.Checked = true;
             this.chxConfirmLink.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxConfirmLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxConfirmLink.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxConfirmLink.Location = new System.Drawing.Point(23, 65);
             this.chxConfirmLink.Name = "chxConfirmLink";
+            this.chxConfirmLink.Size = new System.Drawing.Size(292, 21);
+            this.chxConfirmLink.TabIndex = 18;
+            this.chxConfirmLink.Text = "Ask before launching URL, on click hyperlink.";
             this.chxConfirmLink.UseCompatibleTextRendering = true;
             this.chxConfirmLink.UseVisualStyleBackColor = true;
             // 
             // chxHighlightHTML
             // 
-            this.chxHighlightHTML.AccessibleDescription = null;
-            this.chxHighlightHTML.AccessibleName = null;
-            resources.ApplyResources(this.chxHighlightHTML, "chxHighlightHTML");
-            this.chxHighlightHTML.BackgroundImage = null;
+            this.chxHighlightHTML.AutoSize = true;
+            this.chxHighlightHTML.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxHighlightHTML.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxHighlightHTML.Location = new System.Drawing.Point(23, 113);
             this.chxHighlightHTML.Name = "chxHighlightHTML";
+            this.chxHighlightHTML.Size = new System.Drawing.Size(145, 21);
+            this.chxHighlightHTML.TabIndex = 13;
+            this.chxHighlightHTML.Text = "Highlight HTML text.";
             this.chxHighlightHTML.UseCompatibleTextRendering = true;
             this.chxHighlightHTML.UseVisualStyleBackColor = true;
             // 
             // tabSharing
             // 
-            this.tabSharing.AccessibleDescription = null;
-            this.tabSharing.AccessibleName = null;
-            resources.ApplyResources(this.tabSharing, "tabSharing");
-            this.tabSharing.BackgroundImage = null;
             this.tabSharing.Controls.Add(this.tabControlSharing);
-            this.tabSharing.Font = null;
+            this.tabSharing.Location = new System.Drawing.Point(4, 25);
             this.tabSharing.Name = "tabSharing";
+            this.tabSharing.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSharing.Size = new System.Drawing.Size(447, 333);
+            this.tabSharing.TabIndex = 1;
+            this.tabSharing.Text = "Sharing";
             this.tabSharing.UseVisualStyleBackColor = true;
             // 
             // tabControlSharing
             // 
-            this.tabControlSharing.AccessibleDescription = null;
-            this.tabControlSharing.AccessibleName = null;
-            resources.ApplyResources(this.tabControlSharing, "tabControlSharing");
-            this.tabControlSharing.BackgroundImage = null;
             this.tabControlSharing.Controls.Add(this.tabEmail);
-            this.tabControlSharing.Font = null;
+            this.tabControlSharing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlSharing.Location = new System.Drawing.Point(3, 3);
             this.tabControlSharing.Name = "tabControlSharing";
             this.tabControlSharing.SelectedIndex = 0;
+            this.tabControlSharing.Size = new System.Drawing.Size(441, 327);
+            this.tabControlSharing.TabIndex = 14;
             // 
             // tabEmail
             // 
-            this.tabEmail.AccessibleDescription = null;
-            this.tabEmail.AccessibleName = null;
-            resources.ApplyResources(this.tabEmail, "tabEmail");
-            this.tabEmail.BackgroundImage = null;
             this.tabEmail.Controls.Add(this.chxSocialEmailEnabled);
             this.tabEmail.Controls.Add(this.chxSocialEmailDefaultaddressSet);
             this.tabEmail.Controls.Add(this.tbDefaultEmail);
-            this.tabEmail.Font = null;
+            this.tabEmail.Location = new System.Drawing.Point(4, 25);
             this.tabEmail.Name = "tabEmail";
+            this.tabEmail.Size = new System.Drawing.Size(433, 298);
+            this.tabEmail.TabIndex = 2;
+            this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
             // 
             // chxSocialEmailEnabled
             // 
-            this.chxSocialEmailEnabled.AccessibleDescription = null;
-            this.chxSocialEmailEnabled.AccessibleName = null;
-            resources.ApplyResources(this.chxSocialEmailEnabled, "chxSocialEmailEnabled");
-            this.chxSocialEmailEnabled.BackgroundImage = null;
+            this.chxSocialEmailEnabled.AutoSize = true;
+            this.chxSocialEmailEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxSocialEmailEnabled.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxSocialEmailEnabled.Location = new System.Drawing.Point(14, 27);
             this.chxSocialEmailEnabled.Name = "chxSocialEmailEnabled";
+            this.chxSocialEmailEnabled.Size = new System.Drawing.Size(195, 21);
+            this.chxSocialEmailEnabled.TabIndex = 25;
+            this.chxSocialEmailEnabled.Text = "Enable E-mail in share menu";
             this.chxSocialEmailEnabled.UseCompatibleTextRendering = true;
             this.chxSocialEmailEnabled.UseVisualStyleBackColor = true;
             // 
             // chxSocialEmailDefaultaddressSet
             // 
-            this.chxSocialEmailDefaultaddressSet.AccessibleDescription = null;
-            this.chxSocialEmailDefaultaddressSet.AccessibleName = null;
-            resources.ApplyResources(this.chxSocialEmailDefaultaddressSet, "chxSocialEmailDefaultaddressSet");
-            this.chxSocialEmailDefaultaddressSet.BackgroundImage = null;
+            this.chxSocialEmailDefaultaddressSet.AutoSize = true;
             this.chxSocialEmailDefaultaddressSet.Checked = true;
             this.chxSocialEmailDefaultaddressSet.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxSocialEmailDefaultaddressSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxSocialEmailDefaultaddressSet.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxSocialEmailDefaultaddressSet.Location = new System.Drawing.Point(14, 69);
             this.chxSocialEmailDefaultaddressSet.Name = "chxSocialEmailDefaultaddressSet";
+            this.chxSocialEmailDefaultaddressSet.Size = new System.Drawing.Size(255, 21);
+            this.chxSocialEmailDefaultaddressSet.TabIndex = 24;
+            this.chxSocialEmailDefaultaddressSet.Text = "Set a default email address to send to: ";
             this.chxSocialEmailDefaultaddressSet.UseCompatibleTextRendering = true;
             this.chxSocialEmailDefaultaddressSet.UseVisualStyleBackColor = true;
             this.chxSocialEmailDefaultaddressSet.CheckedChanged += new System.EventHandler(this.chxSocialEmailDefaultaddressBlank_CheckedChanged);
             // 
             // tbDefaultEmail
             // 
-            resources.ApplyResources(this.tbDefaultEmail, "tbDefaultEmail");
-            this.tbDefaultEmail.AccessibleName = null;
+            this.tbDefaultEmail.AccessibleDescription = "Editbox default email address";
             this.tbDefaultEmail.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
-            this.tbDefaultEmail.BackgroundImage = null;
+            this.tbDefaultEmail.Enabled = false;
+            this.tbDefaultEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 92);
             this.tbDefaultEmail.Name = "tbDefaultEmail";
+            this.tbDefaultEmail.Size = new System.Drawing.Size(199, 22);
+            this.tbDefaultEmail.TabIndex = 23;
             // 
             // tabNetwork
             // 
-            this.tabNetwork.AccessibleDescription = null;
-            this.tabNetwork.AccessibleName = null;
-            resources.ApplyResources(this.tabNetwork, "tabNetwork");
-            this.tabNetwork.BackgroundImage = null;
             this.tabNetwork.Controls.Add(this.tabControlNetwork);
             this.tabNetwork.Controls.Add(this.lblTextNetworkMiliseconds);
-            this.tabNetwork.Font = null;
+            this.tabNetwork.Location = new System.Drawing.Point(4, 25);
             this.tabNetwork.Name = "tabNetwork";
+            this.tabNetwork.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNetwork.Size = new System.Drawing.Size(447, 333);
+            this.tabNetwork.TabIndex = 4;
+            this.tabNetwork.Text = "Network";
             this.tabNetwork.UseVisualStyleBackColor = true;
             // 
             // tabControlNetwork
             // 
-            this.tabControlNetwork.AccessibleDescription = null;
-            this.tabControlNetwork.AccessibleName = null;
-            resources.ApplyResources(this.tabControlNetwork, "tabControlNetwork");
-            this.tabControlNetwork.BackgroundImage = null;
             this.tabControlNetwork.Controls.Add(this.tabUpdates);
             this.tabControlNetwork.Controls.Add(this.tabProxy);
-            this.tabControlNetwork.Font = null;
+            this.tabControlNetwork.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlNetwork.Location = new System.Drawing.Point(3, 3);
             this.tabControlNetwork.Name = "tabControlNetwork";
             this.tabControlNetwork.SelectedIndex = 0;
+            this.tabControlNetwork.Size = new System.Drawing.Size(441, 327);
+            this.tabControlNetwork.TabIndex = 33;
             // 
             // tabUpdates
             // 
-            this.tabUpdates.AccessibleDescription = null;
-            this.tabUpdates.AccessibleName = null;
-            resources.ApplyResources(this.tabUpdates, "tabUpdates");
-            this.tabUpdates.BackgroundImage = null;
             this.tabUpdates.Controls.Add(this.chxUpdateSilentInstall);
             this.tabUpdates.Controls.Add(this.btnGPGPathBrowse);
             this.tabUpdates.Controls.Add(this.tbGPGPath);
@@ -1559,76 +1675,93 @@ namespace NoteFly
             this.tabUpdates.Controls.Add(this.lblTextDayAtStartup);
             this.tabUpdates.Controls.Add(this.lblTextLatestUpdateCheck);
             this.tabUpdates.Controls.Add(this.btnCheckUpdates);
-            this.tabUpdates.Font = null;
+            this.tabUpdates.Location = new System.Drawing.Point(4, 25);
             this.tabUpdates.Name = "tabUpdates";
+            this.tabUpdates.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUpdates.Size = new System.Drawing.Size(433, 298);
+            this.tabUpdates.TabIndex = 0;
+            this.tabUpdates.Text = "Updates";
             this.tabUpdates.UseVisualStyleBackColor = true;
             // 
             // chxUpdateSilentInstall
             // 
-            this.chxUpdateSilentInstall.AccessibleDescription = null;
-            this.chxUpdateSilentInstall.AccessibleName = null;
-            resources.ApplyResources(this.chxUpdateSilentInstall, "chxUpdateSilentInstall");
-            this.chxUpdateSilentInstall.BackgroundImage = null;
+            this.chxUpdateSilentInstall.AutoSize = true;
+            this.chxUpdateSilentInstall.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxUpdateSilentInstall.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxUpdateSilentInstall.Location = new System.Drawing.Point(11, 69);
             this.chxUpdateSilentInstall.Name = "chxUpdateSilentInstall";
+            this.chxUpdateSilentInstall.Size = new System.Drawing.Size(188, 21);
+            this.chxUpdateSilentInstall.TabIndex = 35;
+            this.chxUpdateSilentInstall.Text = "Install update setup silently.";
             this.chxUpdateSilentInstall.UseCompatibleTextRendering = true;
             this.chxUpdateSilentInstall.UseVisualStyleBackColor = true;
             // 
             // btnGPGPathBrowse
             // 
-            this.btnGPGPathBrowse.AccessibleDescription = null;
-            this.btnGPGPathBrowse.AccessibleName = null;
-            resources.ApplyResources(this.btnGPGPathBrowse, "btnGPGPathBrowse");
             this.btnGPGPathBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnGPGPathBrowse.BackgroundImage = null;
-            this.btnGPGPathBrowse.Font = null;
+            this.btnGPGPathBrowse.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnGPGPathBrowse.Location = new System.Drawing.Point(351, 134);
             this.btnGPGPathBrowse.Name = "btnGPGPathBrowse";
+            this.btnGPGPathBrowse.Size = new System.Drawing.Size(64, 25);
+            this.btnGPGPathBrowse.TabIndex = 25;
+            this.btnGPGPathBrowse.Text = "browse";
             this.btnGPGPathBrowse.UseCompatibleTextRendering = true;
             this.btnGPGPathBrowse.UseVisualStyleBackColor = false;
             this.btnGPGPathBrowse.Click += new System.EventHandler(this.btnGPGPathBrowse_Click);
             // 
             // tbGPGPath
             // 
-            this.tbGPGPath.AccessibleDescription = null;
-            this.tbGPGPath.AccessibleName = null;
-            resources.ApplyResources(this.tbGPGPath, "tbGPGPath");
-            this.tbGPGPath.BackgroundImage = null;
+            this.tbGPGPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.tbGPGPath.Location = new System.Drawing.Point(128, 135);
             this.tbGPGPath.Name = "tbGPGPath";
+            this.tbGPGPath.Size = new System.Drawing.Size(217, 22);
+            this.tbGPGPath.TabIndex = 34;
             // 
             // lblTextGPGPath
             // 
-            this.lblTextGPGPath.AccessibleDescription = null;
-            this.lblTextGPGPath.AccessibleName = null;
-            resources.ApplyResources(this.lblTextGPGPath, "lblTextGPGPath");
+            this.lblTextGPGPath.AutoSize = true;
+            this.lblTextGPGPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextGPGPath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextGPGPath.Location = new System.Drawing.Point(8, 138);
             this.lblTextGPGPath.Name = "lblTextGPGPath";
+            this.lblTextGPGPath.Size = new System.Drawing.Size(110, 20);
+            this.lblTextGPGPath.TabIndex = 33;
+            this.lblTextGPGPath.Text = "Location gpg.exe:";
             this.lblTextGPGPath.UseCompatibleTextRendering = true;
             // 
             // chxCheckUpdatesSignature
             // 
-            this.chxCheckUpdatesSignature.AccessibleDescription = null;
-            this.chxCheckUpdatesSignature.AccessibleName = null;
-            resources.ApplyResources(this.chxCheckUpdatesSignature, "chxCheckUpdatesSignature");
-            this.chxCheckUpdatesSignature.BackgroundImage = null;
+            this.chxCheckUpdatesSignature.AutoSize = true;
+            this.chxCheckUpdatesSignature.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxCheckUpdatesSignature.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxCheckUpdatesSignature.Location = new System.Drawing.Point(11, 109);
             this.chxCheckUpdatesSignature.Name = "chxCheckUpdatesSignature";
+            this.chxCheckUpdatesSignature.Size = new System.Drawing.Size(284, 21);
+            this.chxCheckUpdatesSignature.TabIndex = 25;
+            this.chxCheckUpdatesSignature.Text = "Verify the signature of downloaded updates.";
             this.chxCheckUpdatesSignature.UseCompatibleTextRendering = true;
             this.chxCheckUpdatesSignature.UseVisualStyleBackColor = true;
             this.chxCheckUpdatesSignature.CheckedChanged += new System.EventHandler(this.chxCheckUpdatesSignature_CheckedChanged);
             // 
             // chxCheckUpdates
             // 
-            this.chxCheckUpdates.AccessibleDescription = null;
-            this.chxCheckUpdates.AccessibleName = null;
-            resources.ApplyResources(this.chxCheckUpdates, "chxCheckUpdates");
-            this.chxCheckUpdates.BackgroundImage = null;
+            this.chxCheckUpdates.AutoSize = true;
+            this.chxCheckUpdates.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxCheckUpdates.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxCheckUpdates.Location = new System.Drawing.Point(11, 18);
             this.chxCheckUpdates.Name = "chxCheckUpdates";
+            this.chxCheckUpdates.Size = new System.Drawing.Size(132, 21);
+            this.chxCheckUpdates.TabIndex = 26;
+            this.chxCheckUpdates.Text = "Check for updates";
             this.chxCheckUpdates.UseCompatibleTextRendering = true;
             this.chxCheckUpdates.UseVisualStyleBackColor = true;
             this.chxCheckUpdates.CheckedChanged += new System.EventHandler(this.cbxCheckUpdates_CheckedChanged);
             // 
             // numUpdateCheckDays
             // 
-            this.numUpdateCheckDays.AccessibleDescription = null;
-            this.numUpdateCheckDays.AccessibleName = null;
-            resources.ApplyResources(this.numUpdateCheckDays, "numUpdateCheckDays");
+            this.numUpdateCheckDays.Enabled = false;
+            this.numUpdateCheckDays.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.numUpdateCheckDays.Location = new System.Drawing.Point(188, 41);
             this.numUpdateCheckDays.Maximum = new decimal(new int[] {
             365,
             0,
@@ -1640,6 +1773,10 @@ namespace NoteFly
             0,
             0});
             this.numUpdateCheckDays.Name = "numUpdateCheckDays";
+            this.numUpdateCheckDays.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.numUpdateCheckDays.Size = new System.Drawing.Size(38, 22);
+            this.numUpdateCheckDays.TabIndex = 28;
+            this.numUpdateCheckDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numUpdateCheckDays.Value = new decimal(new int[] {
             14,
             0,
@@ -1648,94 +1785,114 @@ namespace NoteFly
             // 
             // lblTextCheckforupdatesevery
             // 
-            this.lblTextCheckforupdatesevery.AccessibleDescription = null;
-            this.lblTextCheckforupdatesevery.AccessibleName = null;
-            resources.ApplyResources(this.lblTextCheckforupdatesevery, "lblTextCheckforupdatesevery");
+            this.lblTextCheckforupdatesevery.AutoSize = true;
+            this.lblTextCheckforupdatesevery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextCheckforupdatesevery.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextCheckforupdatesevery.Location = new System.Drawing.Point(27, 43);
             this.lblTextCheckforupdatesevery.Name = "lblTextCheckforupdatesevery";
+            this.lblTextCheckforupdatesevery.Size = new System.Drawing.Size(153, 20);
+            this.lblTextCheckforupdatesevery.TabIndex = 27;
+            this.lblTextCheckforupdatesevery.Text = "Check for updates every ";
             this.lblTextCheckforupdatesevery.UseCompatibleTextRendering = true;
             // 
             // lblLatestUpdateCheck
             // 
-            this.lblLatestUpdateCheck.AccessibleDescription = null;
-            this.lblLatestUpdateCheck.AccessibleName = null;
-            resources.ApplyResources(this.lblLatestUpdateCheck, "lblLatestUpdateCheck");
+            this.lblLatestUpdateCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblLatestUpdateCheck.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblLatestUpdateCheck.Location = new System.Drawing.Point(223, 193);
             this.lblLatestUpdateCheck.Name = "lblLatestUpdateCheck";
+            this.lblLatestUpdateCheck.Size = new System.Drawing.Size(192, 16);
+            this.lblLatestUpdateCheck.TabIndex = 32;
             // 
             // lblTextDayAtStartup
             // 
-            this.lblTextDayAtStartup.AccessibleDescription = null;
-            this.lblTextDayAtStartup.AccessibleName = null;
-            resources.ApplyResources(this.lblTextDayAtStartup, "lblTextDayAtStartup");
+            this.lblTextDayAtStartup.AutoSize = true;
+            this.lblTextDayAtStartup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextDayAtStartup.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextDayAtStartup.Location = new System.Drawing.Point(232, 43);
             this.lblTextDayAtStartup.Name = "lblTextDayAtStartup";
+            this.lblTextDayAtStartup.Size = new System.Drawing.Size(96, 20);
+            this.lblTextDayAtStartup.TabIndex = 29;
+            this.lblTextDayAtStartup.Text = "days, at startup";
             this.lblTextDayAtStartup.UseCompatibleTextRendering = true;
             // 
             // lblTextLatestUpdateCheck
             // 
-            this.lblTextLatestUpdateCheck.AccessibleDescription = null;
-            this.lblTextLatestUpdateCheck.AccessibleName = null;
-            resources.ApplyResources(this.lblTextLatestUpdateCheck, "lblTextLatestUpdateCheck");
+            this.lblTextLatestUpdateCheck.AutoSize = true;
+            this.lblTextLatestUpdateCheck.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextLatestUpdateCheck.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextLatestUpdateCheck.Location = new System.Drawing.Point(10, 193);
             this.lblTextLatestUpdateCheck.Name = "lblTextLatestUpdateCheck";
+            this.lblTextLatestUpdateCheck.Size = new System.Drawing.Size(213, 20);
+            this.lblTextLatestUpdateCheck.TabIndex = 31;
+            this.lblTextLatestUpdateCheck.Text = "Last update check is performed on:";
             this.lblTextLatestUpdateCheck.UseCompatibleTextRendering = true;
             // 
             // btnCheckUpdates
             // 
-            this.btnCheckUpdates.AccessibleDescription = null;
-            this.btnCheckUpdates.AccessibleName = null;
-            resources.ApplyResources(this.btnCheckUpdates, "btnCheckUpdates");
             this.btnCheckUpdates.BackColor = System.Drawing.Color.LightGray;
-            this.btnCheckUpdates.BackgroundImage = null;
             this.btnCheckUpdates.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCheckUpdates.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
             this.btnCheckUpdates.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnCheckUpdates.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.btnCheckUpdates.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCheckUpdates.Location = new System.Drawing.Point(118, 224);
             this.btnCheckUpdates.Name = "btnCheckUpdates";
+            this.btnCheckUpdates.Size = new System.Drawing.Size(180, 23);
+            this.btnCheckUpdates.TabIndex = 30;
+            this.btnCheckUpdates.Text = "Check updates now";
             this.btnCheckUpdates.UseCompatibleTextRendering = true;
             this.btnCheckUpdates.UseVisualStyleBackColor = false;
             this.btnCheckUpdates.Click += new System.EventHandler(this.btnCheckUpdates_Click);
             // 
             // tabProxy
             // 
-            this.tabProxy.AccessibleDescription = null;
-            this.tabProxy.AccessibleName = null;
-            resources.ApplyResources(this.tabProxy, "tabProxy");
-            this.tabProxy.BackgroundImage = null;
             this.tabProxy.Controls.Add(this.chxForceUseIPv6);
             this.tabProxy.Controls.Add(this.lblTextMiliseconds);
             this.tabProxy.Controls.Add(this.numTimeout);
             this.tabProxy.Controls.Add(this.chxProxyEnabled);
             this.tabProxy.Controls.Add(this.lblTextNetworkTimeout);
             this.tabProxy.Controls.Add(this.iptbProxy);
-            this.tabProxy.Font = null;
+            this.tabProxy.Location = new System.Drawing.Point(4, 25);
             this.tabProxy.Name = "tabProxy";
+            this.tabProxy.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProxy.Size = new System.Drawing.Size(433, 298);
+            this.tabProxy.TabIndex = 1;
+            this.tabProxy.Text = "Proxy";
             this.tabProxy.UseVisualStyleBackColor = true;
             // 
             // chxForceUseIPv6
             // 
-            this.chxForceUseIPv6.AccessibleDescription = null;
-            this.chxForceUseIPv6.AccessibleName = null;
-            resources.ApplyResources(this.chxForceUseIPv6, "chxForceUseIPv6");
-            this.chxForceUseIPv6.BackgroundImage = null;
-            this.chxForceUseIPv6.Font = null;
+            this.chxForceUseIPv6.AutoSize = true;
+            this.chxForceUseIPv6.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxForceUseIPv6.Location = new System.Drawing.Point(16, 139);
             this.chxForceUseIPv6.Name = "chxForceUseIPv6";
+            this.chxForceUseIPv6.Size = new System.Drawing.Size(295, 20);
+            this.chxForceUseIPv6.TabIndex = 27;
+            this.chxForceUseIPv6.Text = "Force the use of IPv6 only. (not recommeded)";
             this.chxForceUseIPv6.UseVisualStyleBackColor = true;
             // 
             // lblTextMiliseconds
             // 
-            resources.ApplyResources(this.lblTextMiliseconds, "lblTextMiliseconds");
-            this.lblTextMiliseconds.AccessibleName = null;
-            this.lblTextMiliseconds.Font = null;
+            this.lblTextMiliseconds.AccessibleDescription = "Miliseconds";
+            this.lblTextMiliseconds.AutoSize = true;
+            this.lblTextMiliseconds.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextMiliseconds.Location = new System.Drawing.Point(228, 113);
             this.lblTextMiliseconds.Name = "lblTextMiliseconds";
+            this.lblTextMiliseconds.Size = new System.Drawing.Size(23, 20);
+            this.lblTextMiliseconds.TabIndex = 25;
+            this.lblTextMiliseconds.Text = "ms";
             this.lblTextMiliseconds.UseCompatibleTextRendering = true;
             // 
             // numTimeout
             // 
-            this.numTimeout.AccessibleDescription = null;
-            this.numTimeout.AccessibleName = null;
-            resources.ApplyResources(this.numTimeout, "numTimeout");
+            this.numTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.numTimeout.Increment = new decimal(new int[] {
             100,
             0,
             0,
             0});
+            this.numTimeout.Location = new System.Drawing.Point(163, 111);
             this.numTimeout.Maximum = new decimal(new int[] {
             30000,
             0,
@@ -1747,6 +1904,10 @@ namespace NoteFly
             0,
             0});
             this.numTimeout.Name = "numTimeout";
+            this.numTimeout.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.numTimeout.Size = new System.Drawing.Size(58, 22);
+            this.numTimeout.TabIndex = 23;
+            this.numTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numTimeout.Value = new decimal(new int[] {
             10000,
             0,
@@ -1755,46 +1916,42 @@ namespace NoteFly
             // 
             // chxProxyEnabled
             // 
-            this.chxProxyEnabled.AccessibleDescription = null;
-            this.chxProxyEnabled.AccessibleName = null;
-            resources.ApplyResources(this.chxProxyEnabled, "chxProxyEnabled");
-            this.chxProxyEnabled.BackgroundImage = null;
+            this.chxProxyEnabled.AutoSize = true;
+            this.chxProxyEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxProxyEnabled.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxProxyEnabled.Location = new System.Drawing.Point(16, 31);
             this.chxProxyEnabled.Name = "chxProxyEnabled";
+            this.chxProxyEnabled.Size = new System.Drawing.Size(130, 21);
+            this.chxProxyEnabled.TabIndex = 1;
+            this.chxProxyEnabled.Text = "Use socked proxy";
             this.chxProxyEnabled.UseCompatibleTextRendering = true;
             this.chxProxyEnabled.UseVisualStyleBackColor = true;
             this.chxProxyEnabled.CheckedChanged += new System.EventHandler(this.chxUseProxy_CheckedChanged);
             // 
             // lblTextNetworkTimeout
             // 
-            this.lblTextNetworkTimeout.AccessibleDescription = null;
-            this.lblTextNetworkTimeout.AccessibleName = null;
-            resources.ApplyResources(this.lblTextNetworkTimeout, "lblTextNetworkTimeout");
+            this.lblTextNetworkTimeout.AutoSize = true;
+            this.lblTextNetworkTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextNetworkTimeout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(15, 113);
             this.lblTextNetworkTimeout.Name = "lblTextNetworkTimeout";
+            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(150, 20);
+            this.lblTextNetworkTimeout.TabIndex = 24;
+            this.lblTextNetworkTimeout.Text = "connection timeout time:";
             this.lblTextNetworkTimeout.UseCompatibleTextRendering = true;
-            // 
-            // iptbProxy
-            // 
-            this.iptbProxy.AccessibleDescription = null;
-            this.iptbProxy.AccessibleName = null;
-            resources.ApplyResources(this.iptbProxy, "iptbProxy");
-            this.iptbProxy.BackgroundImage = null;
-            this.iptbProxy.Font = null;
-            this.iptbProxy.Name = "iptbProxy";
             // 
             // lblTextNetworkMiliseconds
             // 
-            this.lblTextNetworkMiliseconds.AccessibleDescription = null;
-            this.lblTextNetworkMiliseconds.AccessibleName = null;
-            resources.ApplyResources(this.lblTextNetworkMiliseconds, "lblTextNetworkMiliseconds");
-            this.lblTextNetworkMiliseconds.Font = null;
+            this.lblTextNetworkMiliseconds.AutoSize = true;
+            this.lblTextNetworkMiliseconds.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextNetworkMiliseconds.Location = new System.Drawing.Point(164, 141);
             this.lblTextNetworkMiliseconds.Name = "lblTextNetworkMiliseconds";
+            this.lblTextNetworkMiliseconds.Size = new System.Drawing.Size(26, 16);
+            this.lblTextNetworkMiliseconds.TabIndex = 25;
+            this.lblTextNetworkMiliseconds.Text = "ms";
             // 
             // tabAdvance
             // 
-            this.tabAdvance.AccessibleDescription = null;
-            this.tabAdvance.AccessibleName = null;
-            resources.ApplyResources(this.tabAdvance, "tabAdvance");
-            this.tabAdvance.BackgroundImage = null;
             this.tabAdvance.Controls.Add(this.numWarnLimitVisible);
             this.tabAdvance.Controls.Add(this.lblTextVisibleNotesWarnLimit);
             this.tabAdvance.Controls.Add(this.lblTextTotalNotesWarnLimit);
@@ -1807,16 +1964,16 @@ namespace NoteFly
             this.tabAdvance.Controls.Add(this.btnBrowse);
             this.tabAdvance.Controls.Add(this.lblTextNoteLocation);
             this.tabAdvance.Controls.Add(this.tbNotesSavePath);
-            this.tabAdvance.Font = null;
+            this.tabAdvance.Location = new System.Drawing.Point(4, 25);
             this.tabAdvance.Name = "tabAdvance";
+            this.tabAdvance.Size = new System.Drawing.Size(447, 333);
+            this.tabAdvance.TabIndex = 2;
+            this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
             // 
             // numWarnLimitVisible
             // 
-            this.numWarnLimitVisible.AccessibleDescription = null;
-            this.numWarnLimitVisible.AccessibleName = null;
-            resources.ApplyResources(this.numWarnLimitVisible, "numWarnLimitVisible");
-            this.numWarnLimitVisible.Font = null;
+            this.numWarnLimitVisible.Location = new System.Drawing.Point(182, 104);
             this.numWarnLimitVisible.Maximum = new decimal(new int[] {
             32767,
             0,
@@ -1828,6 +1985,8 @@ namespace NoteFly
             0,
             0});
             this.numWarnLimitVisible.Name = "numWarnLimitVisible";
+            this.numWarnLimitVisible.Size = new System.Drawing.Size(49, 22);
+            this.numWarnLimitVisible.TabIndex = 28;
             this.numWarnLimitVisible.Value = new decimal(new int[] {
             50,
             0,
@@ -1836,28 +1995,29 @@ namespace NoteFly
             // 
             // lblTextVisibleNotesWarnLimit
             // 
-            this.lblTextVisibleNotesWarnLimit.AccessibleDescription = null;
-            this.lblTextVisibleNotesWarnLimit.AccessibleName = null;
-            resources.ApplyResources(this.lblTextVisibleNotesWarnLimit, "lblTextVisibleNotesWarnLimit");
-            this.lblTextVisibleNotesWarnLimit.Font = null;
+            this.lblTextVisibleNotesWarnLimit.AutoSize = true;
+            this.lblTextVisibleNotesWarnLimit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextVisibleNotesWarnLimit.Location = new System.Drawing.Point(13, 106);
             this.lblTextVisibleNotesWarnLimit.Name = "lblTextVisibleNotesWarnLimit";
+            this.lblTextVisibleNotesWarnLimit.Size = new System.Drawing.Size(163, 20);
+            this.lblTextVisibleNotesWarnLimit.TabIndex = 27;
+            this.lblTextVisibleNotesWarnLimit.Text = "Visible notes warning limit:";
             this.lblTextVisibleNotesWarnLimit.UseCompatibleTextRendering = true;
             // 
             // lblTextTotalNotesWarnLimit
             // 
-            this.lblTextTotalNotesWarnLimit.AccessibleDescription = null;
-            this.lblTextTotalNotesWarnLimit.AccessibleName = null;
-            resources.ApplyResources(this.lblTextTotalNotesWarnLimit, "lblTextTotalNotesWarnLimit");
-            this.lblTextTotalNotesWarnLimit.Font = null;
+            this.lblTextTotalNotesWarnLimit.AutoSize = true;
+            this.lblTextTotalNotesWarnLimit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextTotalNotesWarnLimit.Location = new System.Drawing.Point(13, 83);
             this.lblTextTotalNotesWarnLimit.Name = "lblTextTotalNotesWarnLimit";
+            this.lblTextTotalNotesWarnLimit.Size = new System.Drawing.Size(153, 20);
+            this.lblTextTotalNotesWarnLimit.TabIndex = 26;
+            this.lblTextTotalNotesWarnLimit.Text = "Total notes warning limit:";
             this.lblTextTotalNotesWarnLimit.UseCompatibleTextRendering = true;
             // 
             // numWarnLimitTotal
             // 
-            this.numWarnLimitTotal.AccessibleDescription = null;
-            this.numWarnLimitTotal.AccessibleName = null;
-            resources.ApplyResources(this.numWarnLimitTotal, "numWarnLimitTotal");
-            this.numWarnLimitTotal.Font = null;
+            this.numWarnLimitTotal.Location = new System.Drawing.Point(182, 81);
             this.numWarnLimitTotal.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -1869,6 +2029,8 @@ namespace NoteFly
             0,
             0});
             this.numWarnLimitTotal.Name = "numWarnLimitTotal";
+            this.numWarnLimitTotal.Size = new System.Drawing.Size(49, 22);
+            this.numWarnLimitTotal.TabIndex = 25;
             this.numWarnLimitTotal.Value = new decimal(new int[] {
             5000,
             0,
@@ -1877,101 +2039,127 @@ namespace NoteFly
             // 
             // chxLogExceptions
             // 
-            this.chxLogExceptions.AccessibleDescription = null;
-            this.chxLogExceptions.AccessibleName = null;
-            resources.ApplyResources(this.chxLogExceptions, "chxLogExceptions");
-            this.chxLogExceptions.BackgroundImage = null;
+            this.chxLogExceptions.AutoSize = true;
             this.chxLogExceptions.Checked = true;
             this.chxLogExceptions.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxLogExceptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxLogExceptions.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxLogExceptions.Location = new System.Drawing.Point(16, 233);
             this.chxLogExceptions.Name = "chxLogExceptions";
+            this.chxLogExceptions.Size = new System.Drawing.Size(299, 21);
+            this.chxLogExceptions.TabIndex = 24;
+            this.chxLogExceptions.Text = "Log exceptions (recommeded: leave enabled).";
             this.chxLogExceptions.UseCompatibleTextRendering = true;
             this.chxLogExceptions.UseVisualStyleBackColor = true;
             // 
             // lblTextLogging
             // 
-            this.lblTextLogging.AccessibleDescription = null;
-            this.lblTextLogging.AccessibleName = null;
-            resources.ApplyResources(this.lblTextLogging, "lblTextLogging");
+            this.lblTextLogging.AutoSize = true;
+            this.lblTextLogging.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextLogging.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextLogging.Location = new System.Drawing.Point(13, 168);
             this.lblTextLogging.Name = "lblTextLogging";
+            this.lblTextLogging.Size = new System.Drawing.Size(56, 20);
+            this.lblTextLogging.TabIndex = 23;
+            this.lblTextLogging.Text = "Logging:";
             this.lblTextLogging.UseCompatibleTextRendering = true;
             // 
             // chxLogDebug
             // 
-            this.chxLogDebug.AccessibleDescription = null;
-            this.chxLogDebug.AccessibleName = null;
-            resources.ApplyResources(this.chxLogDebug, "chxLogDebug");
-            this.chxLogDebug.BackgroundImage = null;
+            this.chxLogDebug.AutoSize = true;
+            this.chxLogDebug.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxLogDebug.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxLogDebug.Location = new System.Drawing.Point(16, 187);
             this.chxLogDebug.Name = "chxLogDebug";
+            this.chxLogDebug.Size = new System.Drawing.Size(116, 21);
+            this.chxLogDebug.TabIndex = 22;
+            this.chxLogDebug.Text = "Log debug info.";
             this.chxLogDebug.UseCompatibleTextRendering = true;
             this.chxLogDebug.UseVisualStyleBackColor = true;
             // 
             // btnResetSettings
             // 
-            this.btnResetSettings.AccessibleDescription = null;
-            this.btnResetSettings.AccessibleName = null;
-            resources.ApplyResources(this.btnResetSettings, "btnResetSettings");
             this.btnResetSettings.BackColor = System.Drawing.Color.LightGray;
-            this.btnResetSettings.BackgroundImage = null;
+            this.btnResetSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.btnResetSettings.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnResetSettings.Location = new System.Drawing.Point(126, 272);
             this.btnResetSettings.Name = "btnResetSettings";
+            this.btnResetSettings.Size = new System.Drawing.Size(195, 25);
+            this.btnResetSettings.TabIndex = 21;
+            this.btnResetSettings.Text = "&Reset all settings to default";
             this.btnResetSettings.UseCompatibleTextRendering = true;
             this.btnResetSettings.UseVisualStyleBackColor = false;
             this.btnResetSettings.Click += new System.EventHandler(this.btnResetSettings_Click);
             // 
             // chxLogErrors
             // 
-            this.chxLogErrors.AccessibleDescription = null;
-            this.chxLogErrors.AccessibleName = null;
-            resources.ApplyResources(this.chxLogErrors, "chxLogErrors");
-            this.chxLogErrors.BackgroundImage = null;
+            this.chxLogErrors.AutoSize = true;
             this.chxLogErrors.Checked = true;
             this.chxLogErrors.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxLogErrors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxLogErrors.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxLogErrors.Location = new System.Drawing.Point(16, 210);
             this.chxLogErrors.Name = "chxLogErrors";
+            this.chxLogErrors.Size = new System.Drawing.Size(118, 21);
+            this.chxLogErrors.TabIndex = 19;
+            this.chxLogErrors.Text = "Log user errors.";
             this.chxLogErrors.UseCompatibleTextRendering = true;
             this.chxLogErrors.UseVisualStyleBackColor = true;
             // 
             // btnBrowse
             // 
-            this.btnBrowse.AccessibleDescription = null;
-            this.btnBrowse.AccessibleName = null;
-            resources.ApplyResources(this.btnBrowse, "btnBrowse");
             this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnBrowse.BackgroundImage = null;
+            this.btnBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.btnBrowse.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnBrowse.Location = new System.Drawing.Point(369, 46);
             this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(68, 25);
+            this.btnBrowse.TabIndex = 15;
+            this.btnBrowse.Text = "browse";
             this.btnBrowse.UseCompatibleTextRendering = true;
             this.btnBrowse.UseVisualStyleBackColor = false;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // lblTextNoteLocation
             // 
-            this.lblTextNoteLocation.AccessibleDescription = null;
-            this.lblTextNoteLocation.AccessibleName = null;
-            resources.ApplyResources(this.lblTextNoteLocation, "lblTextNoteLocation");
+            this.lblTextNoteLocation.AutoSize = true;
+            this.lblTextNoteLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextNoteLocation.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(13, 23);
             this.lblTextNoteLocation.Name = "lblTextNoteLocation";
+            this.lblTextNoteLocation.Size = new System.Drawing.Size(89, 20);
+            this.lblTextNoteLocation.TabIndex = 16;
+            this.lblTextNoteLocation.Text = "Save notes in:";
             this.lblTextNoteLocation.UseCompatibleTextRendering = true;
             // 
             // tbNotesSavePath
             // 
-            this.tbNotesSavePath.AccessibleDescription = null;
-            this.tbNotesSavePath.AccessibleName = null;
-            resources.ApplyResources(this.tbNotesSavePath, "tbNotesSavePath");
-            this.tbNotesSavePath.BackgroundImage = null;
+            this.tbNotesSavePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.tbNotesSavePath.Location = new System.Drawing.Point(15, 46);
             this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(348, 22);
+            this.tbNotesSavePath.TabIndex = 14;
             // 
             // chxSettingsExpertEnabled
             // 
-            resources.ApplyResources(this.chxSettingsExpertEnabled, "chxSettingsExpertEnabled");
-            this.chxSettingsExpertEnabled.AccessibleName = null;
-            this.chxSettingsExpertEnabled.BackgroundImage = null;
+            this.chxSettingsExpertEnabled.AccessibleDescription = "Show expert settings";
+            this.chxSettingsExpertEnabled.AutoSize = true;
             this.chxSettingsExpertEnabled.Checked = true;
             this.chxSettingsExpertEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxSettingsExpertEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxSettingsExpertEnabled.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(24, 371);
             this.chxSettingsExpertEnabled.Name = "chxSettingsExpertEnabled";
+            this.chxSettingsExpertEnabled.Size = new System.Drawing.Size(112, 21);
+            this.chxSettingsExpertEnabled.TabIndex = 25;
+            this.chxSettingsExpertEnabled.Text = "E&xpert settings";
             this.chxSettingsExpertEnabled.UseCompatibleTextRendering = true;
             this.chxSettingsExpertEnabled.UseVisualStyleBackColor = true;
             this.chxSettingsExpertEnabled.CheckedChanged += new System.EventHandler(this.cbxShowExpertSettings_CheckedChanged);
             // 
             // folderBrowseDialogNotessavepath
             // 
-            resources.ApplyResources(this.folderBrowseDialogNotessavepath, "folderBrowseDialogNotessavepath");
+            this.folderBrowseDialogNotessavepath.Description = "Select a folder to store the all the notes files in";
             this.folderBrowseDialogNotessavepath.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
             // openFileDialogBrowseGPG
@@ -1979,26 +2167,54 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.AddExtension = false;
             this.openFileDialogBrowseGPG.DefaultExt = "exe";
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
-            resources.ApplyResources(this.openFileDialogBrowseGPG, "openFileDialogBrowseGPG");
+            this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
+            // 
+            // iptbProxy
+            // 
+            this.iptbProxy.Enabled = false;
+            this.iptbProxy.Location = new System.Drawing.Point(16, 57);
+            this.iptbProxy.Name = "iptbProxy";
+            this.iptbProxy.Size = new System.Drawing.Size(238, 22);
+            this.iptbProxy.TabIndex = 26;
+            // 
+            // btnTestTranslateEnglish
+            // 
+            this.btnTestTranslateEnglish.Location = new System.Drawing.Point(61, 233);
+            this.btnTestTranslateEnglish.Name = "btnTestTranslateEnglish";
+            this.btnTestTranslateEnglish.Size = new System.Drawing.Size(75, 23);
+            this.btnTestTranslateEnglish.TabIndex = 26;
+            this.btnTestTranslateEnglish.Text = "English";
+            this.btnTestTranslateEnglish.UseVisualStyleBackColor = true;
+            this.btnTestTranslateEnglish.Click += new System.EventHandler(this.btnTestTranslateEnglish_Click);
+            // 
+            // btnTestTranslateDutch
+            // 
+            this.btnTestTranslateDutch.Location = new System.Drawing.Point(142, 233);
+            this.btnTestTranslateDutch.Name = "btnTestTranslateDutch";
+            this.btnTestTranslateDutch.Size = new System.Drawing.Size(75, 23);
+            this.btnTestTranslateDutch.TabIndex = 27;
+            this.btnTestTranslateDutch.Text = "Dutch";
+            this.btnTestTranslateDutch.UseVisualStyleBackColor = true;
+            this.btnTestTranslateDutch.Click += new System.EventHandler(this.btnTestTranslateDutch_Click);
             // 
             // FrmSettings
             // 
-            this.AccessibleDescription = null;
-            this.AccessibleName = null;
-            resources.ApplyResources(this, "$this");
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.BackgroundImage = null;
+            this.ClientSize = new System.Drawing.Size(455, 398);
             this.Controls.Add(this.chxSettingsExpertEnabled);
             this.Controls.Add(this.tabControlSettings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(360, 240);
             this.Name = "FrmSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.Text = "Settings";
             this.tabControlSettings.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
@@ -2060,21 +2276,23 @@ namespace NoteFly
         private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
         private System.Windows.Forms.Label lblDefaultNewNoteColor;
         private System.Windows.Forms.ComboBox cbxDefaultSkin;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTextDefaultsizenewnote;
+        private System.Windows.Forms.Label lblTextHeight;
+        private System.Windows.Forms.Label lblTextWidth;
         private System.Windows.Forms.NumericUpDown numNotesDefaultHeight;
         private System.Windows.Forms.NumericUpDown numNotesDefaultWidth;
         private IPTextBox iptbProxy;
         private System.Windows.Forms.TabPage tabAppereanceManagenotes;
-        private System.Windows.Forms.CheckBox cbxManagenotesTooltipContent;
+        private System.Windows.Forms.CheckBox chxManagenotesTooltipContent;
         private System.Windows.Forms.ComboBox cbxManageNotesSkin;
         private System.Windows.Forms.Label lblTextSkinManagenotes;
         private System.Windows.Forms.CheckBox chxUseDateAsDefaultTitle;
         private System.Windows.Forms.NumericUpDown numManagenotesFont;
         private System.Windows.Forms.Label lbTextManagesnotesFontSize;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblTextPoints;
         private System.Windows.Forms.CheckBox chxCaseSentiveSearch;
         private System.Windows.Forms.CheckBox chxForceUseIPv6;
+        private System.Windows.Forms.Button btnTestTranslateDutch;
+        private System.Windows.Forms.Button btnTestTranslateEnglish;
     }
 }

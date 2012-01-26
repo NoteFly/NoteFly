@@ -374,8 +374,8 @@ namespace NoteFly
         {
             if (!Directory.Exists(Settings.NotesSavepath))
             {
-                string notes_notefolderdoesnotexist = Gettext.Strings.T("Folder with notes does not exist.\nDo want to try loading notes from default application data folder?");
-                string notes_notefolderdoesnotexisttitle = Gettext.Strings.T("Notes folder doesn't exist");
+                string notes_notefolderdoesnotexist = Strings.T("Folder with notes does not exist.\nDo want to try loading notes from default application data folder?");
+                string notes_notefolderdoesnotexisttitle = Strings.T("Notes folder doesn't exist");
                 DialogResult result = MessageBox.Show(notes_notefolderdoesnotexist, notes_notefolderdoesnotexisttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
@@ -585,8 +585,8 @@ namespace NoteFly
 #endif
             if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE))))
             {
-                string notes_importtonf2 = Gettext.Strings.T("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.");
-                string notes_importtonf2title = Gettext.Strings.T("Import out NoteFly 1.0.x");
+                string notes_importtonf2 = Strings.T("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.");
+                string notes_importtonf2title = Strings.T("Import out NoteFly 1.0.x");
                 DialogResult resdoimport = MessageBox.Show(notes_importtonf2, notes_importtonf2title, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (resdoimport == DialogResult.Yes)
                 {
@@ -661,8 +661,8 @@ namespace NoteFly
         {
             if (totanumbernotes > Settings.NotesWarnlimitTotal)
             {
-                string notes_manynotesloadall = Gettext.Strings.T("There are many notes loading this can take a while, do you want to load them all?");
-                string notes_manynotesloadalltitle = Gettext.Strings.T("Contine loading many notes?");
+                string notes_manynotesloadall = Strings.T("There are many notes loading this can take a while, do you want to load them all?");
+                string notes_manynotesloadalltitle = Strings.T("Contine loading many notes?");
                 DialogResult dlgres = MessageBox.Show(notes_manynotesloadall, notes_manynotesloadalltitle, MessageBoxButtons.YesNo);
                 if (dlgres == DialogResult.No)
                 {
@@ -682,8 +682,8 @@ namespace NoteFly
         {
             if (currentnumber > Settings.NotesWarnlimitVisible)
             {
-                string notes_manynotesvisible = Gettext.Strings.T("There are many notes visible. Hide some notes to make loading faster.");
-                string notes_manynotesvisibletitle = Gettext.Strings.T("Many notes visible");
+                string notes_manynotesvisible = Strings.T("There are many notes visible. Hide some notes to make loading faster.");
+                string notes_manynotesvisibletitle = Strings.T("Many notes visible");
                 MessageBox.Show(notes_manynotesvisible, notes_manynotesvisibletitle, MessageBoxButtons.YesNo);
                 return true;
             }

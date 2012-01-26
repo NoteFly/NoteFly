@@ -22,6 +22,7 @@ namespace NoteFly
     using System;
     using System.Windows.Forms;
     using System.Drawing;
+    using System.Collections.Generic;
 
     /// <summary>
     /// About window.
@@ -45,9 +46,9 @@ namespace NoteFly
         public FrmAbout()
         {
             this.InitializeComponent();
-            this.Text = Gettext.Strings.T("About ") + Program.AssemblyTitle;
+            this.Text = Strings.T("About ") + Program.AssemblyTitle;
             this.lblProductName.Text = Program.AssemblyTitle;
-            this.lblVersion.Text = string.Format(Gettext.Strings.T("Version ") + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+            this.lblVersion.Text = string.Format(Strings.T("Version ") + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
         }
 
         #endregion Constructors 
@@ -85,6 +86,7 @@ namespace NoteFly
         private void lblProductName_Click(object sender, EventArgs e)
         {
             this.tmpUpdateLblProductEffect.Start();
+            this.DoubleBuffered = true;
         }
 
         /// <summary>
@@ -124,6 +126,7 @@ namespace NoteFly
             }
 
             this.lblProductName.ForeColor = Color.FromArgb(red, green, blue);
+            //this.BackColor = Color.FromArgb(128, 250 - green, 250 - blue);
         }
 
         #endregion Methods

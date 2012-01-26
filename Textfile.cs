@@ -82,7 +82,7 @@ namespace NoteFly
                     case TextfileWriteType.exporttext:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
                         writer = new StreamWriter(fs, Encoding.UTF8);
-                        writer.WriteLine(Gettext.Strings.T("Title: ") + title + Environment.NewLine);
+                        writer.WriteLine(Strings.T("Title: ") + title + Environment.NewLine);
                         writer.Write(content);
                         break;
                     case TextfileWriteType.exportrtf:

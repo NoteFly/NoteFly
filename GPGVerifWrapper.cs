@@ -91,8 +91,8 @@ namespace NoteFly
                 if (gpgprocexitcode == 0)
                 {
                     // Currently display GPG result via messagebox, and user required to press yes to launch install.
-                    string gpgverifwrapper_installupdate = Gettext.Strings.T("Do you want to install the update?");
-                    string gpgverifwrapper_gpgsigresult = Gettext.Strings.T(" GPG signature check result");
+                    string gpgverifwrapper_installupdate = Strings.T("Do you want to install the update?");
+                    string gpgverifwrapper_gpgsigresult = Strings.T(" GPG signature check result");
                     System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(this.gpgoutput + this.gpgerror + System.Environment.NewLine + gpgverifwrapper_installupdate, Program.AssemblyTitle + " GPG signature check result", System.Windows.Forms.MessageBoxButtons.YesNo);
                     if (dlgres == System.Windows.Forms.DialogResult.Yes)
                     {

@@ -67,7 +67,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -83,6 +83,7 @@
   <ItemGroup>
     <Reference Include="Gettext.Cs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Design" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -168,6 +169,11 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Skin.cs" />
+    <Compile Include="Strings.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.tt</DependentUpon>
+    </Compile>
     <Compile Include="Textfile.cs" />
     <Compile Include="TransparentRichTextBox.cs">
       <SubType>Component</SubType>
@@ -176,9 +182,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmException.resx">
       <DependentUpon>FrmException.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmManageNotes.en.resx">
-      <DependentUpon>FrmManageNotes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmManageNotes.resx">
       <DependentUpon>FrmManageNotes.cs</DependentUpon>
@@ -208,6 +211,10 @@
     <None Include="build_setup.bat" />
     <None Include="Resources\hoekje.png" />
     <None Include="Resources\locknote.png" />
+    <None Include="Strings.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Strings.cs</LastGenOutput>
+    </None>
     <None Include="strongkey_NoteFly2.pfx" />
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>
@@ -265,6 +272,9 @@
       <Project>{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}</Project>
       <Name>IPlugin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

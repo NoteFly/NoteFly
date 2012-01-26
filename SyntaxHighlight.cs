@@ -212,6 +212,81 @@ namespace NoteFly
             rtb.SelectionLength = sellen;
         }
 
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <param name="skinnr"></param>
+        /// <param name="notes"></param>
+        public static void CheckSyntaxQuick(RichTextBox rtb, int skinnr, Notes notes)
+        {
+            int cursorpos = rtb.SelectionStart;
+            //int sellen = rtb.SelectionLength;
+
+            if (!keywordsinit)
+            {
+                Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
+                InitHighlighter();
+            }
+
+            // check if highlighting is enabled at all.
+            if (langs.Count > 0)
+            {
+                int maxpos = Settings.HighlightMaxchars;
+                if (rtb.TextLength < Settings.HighlightMaxchars)
+                {
+                    maxpos = rtb.TextLength;
+                }
+
+                int lastspace = int.MaxValue;
+                for (int i = cursorpos-2; i > 0; i--)
+                {
+                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\n')
+                    {
+                        lastspace = i+1;
+                        break;
+                    }
+                }
+        
+                for (int curpos = lastspace; curpos < maxpos; curpos++)
+                {
+#if !macos
+                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || curpos == rtb.Text.Length - 1)
+#elif macos
+                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\r' || curpos == rtb.Text.Length-1)
+#endif
+                    {
+                        string bufcheck = rtb.Text.Substring(lastspace, curpos - lastspace);
+                        if (bufcheck.Length > 0)
+                        {
+                            for (int i = 0; i < langs.Count; i++)
+                            {
+                                langs[i].CheckSetDocumentPos(bufcheck, curpos);
+                                if (curpos >= langs[i].PosDocumentStart && curpos <= langs[i].PosDocumentEnd)
+                                {
+                                    switch (langs[i].Name)
+                                    {
+                                        case "html":
+                                            ValidatingHtmlPart(bufcheck, rtb, lastspace, langs[i]);
+                                            break;
+                                        case "php":
+                                            ValidatingPhpPart(bufcheck, rtb, lastspace, langs[i]);
+                                            break;
+                                        case "sql":
+                                            ValidatingSqlPart(bufcheck, rtb, lastspace, langs[i]);
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        
+
         /// <summary>
         /// Color some part of the rich edit text.
         /// </summary>
@@ -415,7 +490,7 @@ namespace NoteFly
                     {
                         if (knowattr)
                         {
-                            // Right
+                            // Good
                             ColorText(rtb, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorValid);
                         }
                     }
