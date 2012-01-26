@@ -151,7 +151,7 @@ namespace NoteFly
             this.menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuNewNote.Name = "MenuNewNote";
             this.menuNewNote.Size = new System.Drawing.Size(144, 22);
-            this.menuNewNote.Text = Strings.T("&Create a new note");
+            this.menuNewNote.Text = Strings.T("&New note");
             if (Settings.TrayiconCreatenotebold)
             {
                 menufontstyle = FontStyle.Bold;

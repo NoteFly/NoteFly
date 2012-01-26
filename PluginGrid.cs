@@ -120,6 +120,7 @@ namespace NoteFly
                 }
 
                 PluginsManager.pluginsenabled = PluginsManager.GetPlugins(true);
+                Program.RestartTrayicon();
             }
         }
 

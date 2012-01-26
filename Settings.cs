@@ -437,6 +437,11 @@ namespace NoteFly
         public static bool ProgramFormsDoublebuffered = false;
 
         /// <summary>
+        /// The culture code of this programme.
+        /// </summary>
+        public static string ProgramLanguage = "nl";
+
+        /// <summary>
         /// The version of the programme of the last run.
         /// If it's different with current version now running,
         /// it can used for updating skins.xml or langs.xml files.

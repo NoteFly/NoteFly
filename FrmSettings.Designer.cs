@@ -55,21 +55,6 @@ namespace NoteFly
         private System.Windows.Forms.TabPage tabAdvance;
 
         /// <summary>
-        /// Button btnBrowse
-        /// </summary>
-        private System.Windows.Forms.Button btnBrowse;
-
-        /// <summary>
-        /// Label lblTextNoteLocation
-        /// </summary>
-        private System.Windows.Forms.Label lblTextNoteLocation;
-
-        /// <summary>
-        /// TextBox tbNotesSavePath
-        /// </summary>
-        private System.Windows.Forms.TextBox tbNotesSavePath;
-
-        /// <summary>
         /// FolderBrowserDialog folderBrowserDialogNotessavepath
         /// </summary>
         private System.Windows.Forms.FolderBrowserDialog folderBrowseDialogNotessavepath;
@@ -457,7 +442,6 @@ namespace NoteFly
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
@@ -561,15 +545,15 @@ namespace NoteFly
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
             this.btnResetSettings = new System.Windows.Forms.Button();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.lblTextNoteLocation = new System.Windows.Forms.Label();
-            this.tbNotesSavePath = new System.Windows.Forms.TextBox();
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
+            this.cbxLanguage = new System.Windows.Forms.ComboBox();
+            this.lblTextLanguage = new System.Windows.Forms.Label();
+            this.tbNotesSavePath = new System.Windows.Forms.TextBox();
+            this.lblTextNoteLocation = new System.Windows.Forms.Label();
+            this.btnBrowse = new System.Windows.Forms.Button();
             this.iptbProxy = new NoteFly.IPTextBox();
-            this.btnTestTranslateEnglish = new System.Windows.Forms.Button();
-            this.btnTestTranslateDutch = new System.Windows.Forms.Button();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabAppearance.SuspendLayout();
@@ -657,11 +641,13 @@ namespace NoteFly
             // 
             // tabGeneral
             // 
-            this.tabGeneral.Controls.Add(this.btnTestTranslateDutch);
-            this.tabGeneral.Controls.Add(this.btnTestTranslateEnglish);
+            this.tabGeneral.Controls.Add(this.lblTextLanguage);
+            this.tabGeneral.Controls.Add(this.cbxLanguage);
             this.tabGeneral.Controls.Add(this.chxNotesDeleteRecyclebin);
-            this.tabGeneral.Controls.Add(this.chxLoadPlugins);
             this.tabGeneral.Controls.Add(this.chxConfirmDeletenote);
+            this.tabGeneral.Controls.Add(this.btnBrowse);
+            this.tabGeneral.Controls.Add(this.tbNotesSavePath);
+            this.tabGeneral.Controls.Add(this.lblTextNoteLocation);
             this.tabGeneral.Controls.Add(this.cbxActionLeftclick);
             this.tabGeneral.Controls.Add(this.chxConfirmExit);
             this.tabGeneral.Controls.Add(this.chxStartOnLogin);
@@ -694,7 +680,7 @@ namespace NoteFly
             this.chxLoadPlugins.Checked = true;
             this.chxLoadPlugins.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxLoadPlugins.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxLoadPlugins.Location = new System.Drawing.Point(20, 121);
+            this.chxLoadPlugins.Location = new System.Drawing.Point(16, 38);
             this.chxLoadPlugins.Name = "chxLoadPlugins";
             this.chxLoadPlugins.Size = new System.Drawing.Size(146, 21);
             this.chxLoadPlugins.TabIndex = 25;
@@ -731,7 +717,7 @@ namespace NoteFly
             "Do nothing",
             "Bring notes to front",
             "Create a new note"});
-            this.cbxActionLeftclick.Location = new System.Drawing.Point(165, 167);
+            this.cbxActionLeftclick.Location = new System.Drawing.Point(176, 131);
             this.cbxActionLeftclick.Name = "cbxActionLeftclick";
             this.cbxActionLeftclick.Size = new System.Drawing.Size(163, 24);
             this.cbxActionLeftclick.TabIndex = 16;
@@ -767,7 +753,7 @@ namespace NoteFly
             this.lblTextActionLeftClicktTrayicon.AutoSize = true;
             this.lblTextActionLeftClicktTrayicon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblTextActionLeftClicktTrayicon.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(11, 168);
+            this.lblTextActionLeftClicktTrayicon.Location = new System.Drawing.Point(22, 134);
             this.lblTextActionLeftClicktTrayicon.Name = "lblTextActionLeftClicktTrayicon";
             this.lblTextActionLeftClicktTrayicon.Size = new System.Drawing.Size(148, 20);
             this.lblTextActionLeftClicktTrayicon.TabIndex = 15;
@@ -1401,7 +1387,7 @@ namespace NoteFly
             this.chxCaseSentiveSearch.Checked = true;
             this.chxCaseSentiveSearch.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxCaseSentiveSearch.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxCaseSentiveSearch.Location = new System.Drawing.Point(19, 147);
+            this.chxCaseSentiveSearch.Location = new System.Drawing.Point(19, 153);
             this.chxCaseSentiveSearch.Name = "chxCaseSentiveSearch";
             this.chxCaseSentiveSearch.Size = new System.Drawing.Size(178, 20);
             this.chxCaseSentiveSearch.TabIndex = 6;
@@ -1412,7 +1398,7 @@ namespace NoteFly
             // 
             this.lblTextPoints.AutoSize = true;
             this.lblTextPoints.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextPoints.Location = new System.Drawing.Point(262, 84);
+            this.lblTextPoints.Location = new System.Drawing.Point(237, 33);
             this.lblTextPoints.Name = "lblTextPoints";
             this.lblTextPoints.Size = new System.Drawing.Size(22, 16);
             this.lblTextPoints.TabIndex = 5;
@@ -1420,7 +1406,7 @@ namespace NoteFly
             // 
             // numManagenotesFont
             // 
-            this.numManagenotesFont.Location = new System.Drawing.Point(211, 82);
+            this.numManagenotesFont.Location = new System.Drawing.Point(186, 31);
             this.numManagenotesFont.Maximum = new decimal(new int[] {
             48,
             0,
@@ -1445,7 +1431,7 @@ namespace NoteFly
             // 
             this.lbTextManagesnotesFontSize.AutoSize = true;
             this.lbTextManagesnotesFontSize.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lbTextManagesnotesFontSize.Location = new System.Drawing.Point(52, 82);
+            this.lbTextManagesnotesFontSize.Location = new System.Drawing.Point(16, 31);
             this.lbTextManagesnotesFontSize.Name = "lbTextManagesnotesFontSize";
             this.lbTextManagesnotesFontSize.Size = new System.Drawing.Size(145, 16);
             this.lbTextManagesnotesFontSize.TabIndex = 3;
@@ -1455,18 +1441,18 @@ namespace NoteFly
             // 
             this.lblTextSkinManagenotes.AutoSize = true;
             this.lblTextSkinManagenotes.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextSkinManagenotes.Location = new System.Drawing.Point(19, 42);
+            this.lblTextSkinManagenotes.Location = new System.Drawing.Point(16, 62);
             this.lblTextSkinManagenotes.Name = "lblTextSkinManagenotes";
-            this.lblTextSkinManagenotes.Size = new System.Drawing.Size(186, 20);
+            this.lblTextSkinManagenotes.Size = new System.Drawing.Size(121, 20);
             this.lblTextSkinManagenotes.TabIndex = 2;
-            this.lblTextSkinManagenotes.Text = "Skin of Manage notes window:";
+            this.lblTextSkinManagenotes.Text = "Manage notes skin:";
             this.lblTextSkinManagenotes.UseCompatibleTextRendering = true;
             // 
             // cbxManageNotesSkin
             // 
             this.cbxManageNotesSkin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxManageNotesSkin.FormattingEnabled = true;
-            this.cbxManageNotesSkin.Location = new System.Drawing.Point(211, 39);
+            this.cbxManageNotesSkin.Location = new System.Drawing.Point(186, 59);
             this.cbxManageNotesSkin.Name = "cbxManageNotesSkin";
             this.cbxManageNotesSkin.Size = new System.Drawing.Size(202, 24);
             this.cbxManageNotesSkin.TabIndex = 1;
@@ -1475,7 +1461,7 @@ namespace NoteFly
             // 
             this.chxManagenotesTooltipContent.AutoSize = true;
             this.chxManagenotesTooltipContent.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxManagenotesTooltipContent.Location = new System.Drawing.Point(19, 120);
+            this.chxManagenotesTooltipContent.Location = new System.Drawing.Point(19, 126);
             this.chxManagenotesTooltipContent.Name = "chxManagenotesTooltipContent";
             this.chxManagenotesTooltipContent.Size = new System.Drawing.Size(303, 21);
             this.chxManagenotesTooltipContent.TabIndex = 0;
@@ -1955,15 +1941,13 @@ namespace NoteFly
             this.tabAdvance.Controls.Add(this.numWarnLimitVisible);
             this.tabAdvance.Controls.Add(this.lblTextVisibleNotesWarnLimit);
             this.tabAdvance.Controls.Add(this.lblTextTotalNotesWarnLimit);
+            this.tabAdvance.Controls.Add(this.chxLoadPlugins);
             this.tabAdvance.Controls.Add(this.numWarnLimitTotal);
             this.tabAdvance.Controls.Add(this.chxLogExceptions);
             this.tabAdvance.Controls.Add(this.lblTextLogging);
             this.tabAdvance.Controls.Add(this.chxLogDebug);
             this.tabAdvance.Controls.Add(this.btnResetSettings);
             this.tabAdvance.Controls.Add(this.chxLogErrors);
-            this.tabAdvance.Controls.Add(this.btnBrowse);
-            this.tabAdvance.Controls.Add(this.lblTextNoteLocation);
-            this.tabAdvance.Controls.Add(this.tbNotesSavePath);
             this.tabAdvance.Location = new System.Drawing.Point(4, 25);
             this.tabAdvance.Name = "tabAdvance";
             this.tabAdvance.Size = new System.Drawing.Size(447, 333);
@@ -1973,7 +1957,7 @@ namespace NoteFly
             // 
             // numWarnLimitVisible
             // 
-            this.numWarnLimitVisible.Location = new System.Drawing.Point(182, 104);
+            this.numWarnLimitVisible.Location = new System.Drawing.Point(182, 83);
             this.numWarnLimitVisible.Maximum = new decimal(new int[] {
             32767,
             0,
@@ -1997,7 +1981,7 @@ namespace NoteFly
             // 
             this.lblTextVisibleNotesWarnLimit.AutoSize = true;
             this.lblTextVisibleNotesWarnLimit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextVisibleNotesWarnLimit.Location = new System.Drawing.Point(13, 106);
+            this.lblTextVisibleNotesWarnLimit.Location = new System.Drawing.Point(13, 85);
             this.lblTextVisibleNotesWarnLimit.Name = "lblTextVisibleNotesWarnLimit";
             this.lblTextVisibleNotesWarnLimit.Size = new System.Drawing.Size(163, 20);
             this.lblTextVisibleNotesWarnLimit.TabIndex = 27;
@@ -2008,7 +1992,7 @@ namespace NoteFly
             // 
             this.lblTextTotalNotesWarnLimit.AutoSize = true;
             this.lblTextTotalNotesWarnLimit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextTotalNotesWarnLimit.Location = new System.Drawing.Point(13, 83);
+            this.lblTextTotalNotesWarnLimit.Location = new System.Drawing.Point(13, 62);
             this.lblTextTotalNotesWarnLimit.Name = "lblTextTotalNotesWarnLimit";
             this.lblTextTotalNotesWarnLimit.Size = new System.Drawing.Size(153, 20);
             this.lblTextTotalNotesWarnLimit.TabIndex = 26;
@@ -2017,7 +2001,7 @@ namespace NoteFly
             // 
             // numWarnLimitTotal
             // 
-            this.numWarnLimitTotal.Location = new System.Drawing.Point(182, 81);
+            this.numWarnLimitTotal.Location = new System.Drawing.Point(182, 60);
             this.numWarnLimitTotal.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -2044,7 +2028,7 @@ namespace NoteFly
             this.chxLogExceptions.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxLogExceptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxLogExceptions.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxLogExceptions.Location = new System.Drawing.Point(16, 233);
+            this.chxLogExceptions.Location = new System.Drawing.Point(19, 181);
             this.chxLogExceptions.Name = "chxLogExceptions";
             this.chxLogExceptions.Size = new System.Drawing.Size(299, 21);
             this.chxLogExceptions.TabIndex = 24;
@@ -2057,7 +2041,7 @@ namespace NoteFly
             this.lblTextLogging.AutoSize = true;
             this.lblTextLogging.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblTextLogging.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextLogging.Location = new System.Drawing.Point(13, 168);
+            this.lblTextLogging.Location = new System.Drawing.Point(16, 116);
             this.lblTextLogging.Name = "lblTextLogging";
             this.lblTextLogging.Size = new System.Drawing.Size(56, 20);
             this.lblTextLogging.TabIndex = 23;
@@ -2069,7 +2053,7 @@ namespace NoteFly
             this.chxLogDebug.AutoSize = true;
             this.chxLogDebug.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxLogDebug.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxLogDebug.Location = new System.Drawing.Point(16, 187);
+            this.chxLogDebug.Location = new System.Drawing.Point(19, 135);
             this.chxLogDebug.Name = "chxLogDebug";
             this.chxLogDebug.Size = new System.Drawing.Size(116, 21);
             this.chxLogDebug.TabIndex = 22;
@@ -2098,47 +2082,13 @@ namespace NoteFly
             this.chxLogErrors.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxLogErrors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxLogErrors.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxLogErrors.Location = new System.Drawing.Point(16, 210);
+            this.chxLogErrors.Location = new System.Drawing.Point(19, 158);
             this.chxLogErrors.Name = "chxLogErrors";
             this.chxLogErrors.Size = new System.Drawing.Size(118, 21);
             this.chxLogErrors.TabIndex = 19;
             this.chxLogErrors.Text = "Log user errors.";
             this.chxLogErrors.UseCompatibleTextRendering = true;
             this.chxLogErrors.UseVisualStyleBackColor = true;
-            // 
-            // btnBrowse
-            // 
-            this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
-            this.btnBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.btnBrowse.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowse.Location = new System.Drawing.Point(369, 46);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(68, 25);
-            this.btnBrowse.TabIndex = 15;
-            this.btnBrowse.Text = "browse";
-            this.btnBrowse.UseCompatibleTextRendering = true;
-            this.btnBrowse.UseVisualStyleBackColor = false;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-            // 
-            // lblTextNoteLocation
-            // 
-            this.lblTextNoteLocation.AutoSize = true;
-            this.lblTextNoteLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.lblTextNoteLocation.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextNoteLocation.Location = new System.Drawing.Point(13, 23);
-            this.lblTextNoteLocation.Name = "lblTextNoteLocation";
-            this.lblTextNoteLocation.Size = new System.Drawing.Size(89, 20);
-            this.lblTextNoteLocation.TabIndex = 16;
-            this.lblTextNoteLocation.Text = "Save notes in:";
-            this.lblTextNoteLocation.UseCompatibleTextRendering = true;
-            // 
-            // tbNotesSavePath
-            // 
-            this.tbNotesSavePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.tbNotesSavePath.Location = new System.Drawing.Point(15, 46);
-            this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(348, 22);
-            this.tbNotesSavePath.TabIndex = 14;
             // 
             // chxSettingsExpertEnabled
             // 
@@ -2169,6 +2119,59 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
+            // cbxLanguage
+            // 
+            this.cbxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxLanguage.FormattingEnabled = true;
+            this.cbxLanguage.Location = new System.Drawing.Point(176, 161);
+            this.cbxLanguage.Name = "cbxLanguage";
+            this.cbxLanguage.Size = new System.Drawing.Size(163, 24);
+            this.cbxLanguage.TabIndex = 26;
+            this.cbxLanguage.SelectedIndexChanged += new System.EventHandler(this.cbxLanguage_SelectedIndexChanged);
+            // 
+            // lblTextLanguage
+            // 
+            this.lblTextLanguage.AutoSize = true;
+            this.lblTextLanguage.Location = new System.Drawing.Point(19, 164);
+            this.lblTextLanguage.Name = "lblTextLanguage";
+            this.lblTextLanguage.Size = new System.Drawing.Size(145, 16);
+            this.lblTextLanguage.TabIndex = 27;
+            this.lblTextLanguage.Text = "Language programme:";
+            // 
+            // tbNotesSavePath
+            // 
+            this.tbNotesSavePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 233);
+            this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
+            this.tbNotesSavePath.TabIndex = 14;
+            // 
+            // lblTextNoteLocation
+            // 
+            this.lblTextNoteLocation.AutoSize = true;
+            this.lblTextNoteLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextNoteLocation.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextNoteLocation.Location = new System.Drawing.Point(20, 210);
+            this.lblTextNoteLocation.Name = "lblTextNoteLocation";
+            this.lblTextNoteLocation.Size = new System.Drawing.Size(89, 20);
+            this.lblTextNoteLocation.TabIndex = 16;
+            this.lblTextNoteLocation.Text = "Save notes in:";
+            this.lblTextNoteLocation.UseCompatibleTextRendering = true;
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.BackColor = System.Drawing.Color.LightGray;
+            this.btnBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.btnBrowse.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnBrowse.Location = new System.Drawing.Point(345, 233);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(68, 25);
+            this.btnBrowse.TabIndex = 15;
+            this.btnBrowse.Text = "browse";
+            this.btnBrowse.UseCompatibleTextRendering = true;
+            this.btnBrowse.UseVisualStyleBackColor = false;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            // 
             // iptbProxy
             // 
             this.iptbProxy.Enabled = false;
@@ -2176,26 +2179,6 @@ namespace NoteFly
             this.iptbProxy.Name = "iptbProxy";
             this.iptbProxy.Size = new System.Drawing.Size(238, 22);
             this.iptbProxy.TabIndex = 26;
-            // 
-            // btnTestTranslateEnglish
-            // 
-            this.btnTestTranslateEnglish.Location = new System.Drawing.Point(61, 233);
-            this.btnTestTranslateEnglish.Name = "btnTestTranslateEnglish";
-            this.btnTestTranslateEnglish.Size = new System.Drawing.Size(75, 23);
-            this.btnTestTranslateEnglish.TabIndex = 26;
-            this.btnTestTranslateEnglish.Text = "English";
-            this.btnTestTranslateEnglish.UseVisualStyleBackColor = true;
-            this.btnTestTranslateEnglish.Click += new System.EventHandler(this.btnTestTranslateEnglish_Click);
-            // 
-            // btnTestTranslateDutch
-            // 
-            this.btnTestTranslateDutch.Location = new System.Drawing.Point(142, 233);
-            this.btnTestTranslateDutch.Name = "btnTestTranslateDutch";
-            this.btnTestTranslateDutch.Size = new System.Drawing.Size(75, 23);
-            this.btnTestTranslateDutch.TabIndex = 27;
-            this.btnTestTranslateDutch.Text = "Dutch";
-            this.btnTestTranslateDutch.UseVisualStyleBackColor = true;
-            this.btnTestTranslateDutch.Click += new System.EventHandler(this.btnTestTranslateDutch_Click);
             // 
             // FrmSettings
             // 
@@ -2208,7 +2191,6 @@ namespace NoteFly
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(360, 240);
@@ -2292,7 +2274,10 @@ namespace NoteFly
         private System.Windows.Forms.Label lblTextPoints;
         private System.Windows.Forms.CheckBox chxCaseSentiveSearch;
         private System.Windows.Forms.CheckBox chxForceUseIPv6;
-        private System.Windows.Forms.Button btnTestTranslateDutch;
-        private System.Windows.Forms.Button btnTestTranslateEnglish;
+        private System.Windows.Forms.Label lblTextLanguage;
+        private System.Windows.Forms.ComboBox cbxLanguage;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.TextBox tbNotesSavePath;
+        private System.Windows.Forms.Label lblTextNoteLocation;
     }
 }

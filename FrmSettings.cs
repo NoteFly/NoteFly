@@ -26,6 +26,8 @@ namespace NoteFly
     using System.Threading;
 #if windows
     using Microsoft.Win32;
+    using System.Globalization;
+    using System.Collections.Generic;
 #endif
 
     /// <summary>
@@ -33,7 +35,7 @@ namespace NoteFly
     /// </summary>
     public sealed partial class FrmSettings : Form
     {
-        #region Fields (2)
+        #region Fields (3)
 
         /// <summary>
         /// Reference to notes class.
@@ -44,6 +46,11 @@ namespace NoteFly
         /// In which folder notes are saved.
         /// </summary>
         private string oldnotesavepath;
+
+        /// <summary>
+        /// Array with languagescodes related to every language name in the cbxLanguage control.
+        /// </summary>
+        private string[] languagecodes;
 
         #endregion Fields
 
@@ -63,6 +70,7 @@ namespace NoteFly
             this.SetFormTitle(Settings.SettingsExpertEnabled);
             this.SetControlsBySettings();
             this.tabControlSettings_SelectedIndexChanged(null, null);
+            this.LoadLanguages();    
         }
 
         #endregion Constructors
@@ -904,20 +912,62 @@ namespace NoteFly
             }
         }
 
-        private void btnTestTranslateDutch_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadLanguages()
         {
-            // -- begin test setting language --
-            System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.GetCultureInfo("nl");
-            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-            // -- end test setting language --
+            this.cbxLanguage.Items.Clear();
+            
+            string translatefolderpath = Path.Combine(Program.InstallFolder, Strings.ResourcesDirectory);
+            if (Directory.Exists(translatefolderpath))
+            {
+                DirectoryInfo dir = new DirectoryInfo(translatefolderpath);
+                DirectoryInfo[] culturefolders = dir.GetDirectories("*", SearchOption.TopDirectoryOnly);
+                this.languagecodes = new string[culturefolders.Length];
+                for (int i = 0; i < culturefolders.Length; i++)
+                {
+                    try
+                    {
+                        CultureInfo cultureinfo = CultureInfo.GetCultureInfo(culturefolders[i].Name);
+                        this.cbxLanguage.Items.Add(cultureinfo.EnglishName);
+                        this.languagecodes[i] = culturefolders[i].Name;
+                    }
+                    catch (ArgumentException)
+                    {
+                        Log.Write(LogType.exception, culturefolders[i].Name + " not a culture.");
+                    }
+                    
+                    culturefolders[i] = null;
+                }
+
+                culturefolders = null;
+                GC.Collect();
+            }
+            else
+            {
+                Log.Write(LogType.exception, Strings.ResourcesDirectory+" folder is missing.");
+            }
+
+            this.cbxLanguage.SelectedItem = System.Threading.Thread.CurrentThread.CurrentUICulture.EnglishName;
         }
 
-        private void btnTestTranslateEnglish_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbxLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // -- begin test setting language --
-            System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.GetCultureInfo("en");
-            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-            // -- end test setting language --
+            if (this.cbxLanguage.SelectedIndex >= 0)
+            {
+                string languageisocode = this.languagecodes[this.cbxLanguage.SelectedIndex];
+                Program.SetCulture(languageisocode);
+            }
+            else
+            {
+                Log.Write(LogType.exception, "No language selected.");
+            }
         }
 
         #endregion Methods

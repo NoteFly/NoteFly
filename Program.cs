@@ -204,21 +204,17 @@ namespace NoteFly
             stopwatch.Start();
 #endif
 
-            // -- begin test setting language --
-            System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.GetCultureInfo("en");
-            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-            // -- end test setting language --
-
             System.Windows.Forms.Application.ThreadException += new ThreadExceptionEventHandler(UnhanledThreadExceptionHanhler);
             System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
-
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
             if (!xmlUtil.LoadSettings())
             {
                 xmlUtil.WriteDefaultSettings();
                 xmlUtil.LoadSettings();
             }
+
+            Program.SetCulture(Settings.ProgramLanguage);
 #if DEBUG
             stopwatch.Stop();
             Log.Write(LogType.info, "Settings load time: " + stopwatch.ElapsedMilliseconds + " ms");
@@ -389,6 +385,26 @@ namespace NoteFly
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Set the culture of this programme with a languagecode.
+        /// Use english if languagecode is unknown.
+        /// </summary>
+        /// <param name="culturecode"></param>
+        public static void SetCulture(string languagecode)
+        {
+            System.Globalization.CultureInfo culture;
+            try
+            {
+                culture = System.Globalization.CultureInfo.GetCultureInfo(languagecode);
+            }
+            catch (ArgumentException)
+            {
+                culture = System.Globalization.CultureInfo.GetCultureInfo("en");
+            }
+
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
         }
 
         /// <summary>

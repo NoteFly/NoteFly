@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlugins));
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
+            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.chlbxAvailiblePlugins = new System.Windows.Forms.CheckedListBox();
             this.lblLicense = new System.Windows.Forms.Label();
@@ -39,9 +39,8 @@
             this.btnPluginDownload = new System.Windows.Forms.Button();
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
-            this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.pluginGrid = new NoteFly.PluginGrid();
-            this.searchtbPlugins = new NoteFly.SearchTextBox();
+            this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.splitContainerAvailablePlugins.Panel1.SuspendLayout();
             this.splitContainerAvailablePlugins.Panel2.SuspendLayout();
             this.splitContainerAvailablePlugins.SuspendLayout();
@@ -54,7 +53,7 @@
             // 
             this.splitContainerAvailablePlugins.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerAvailablePlugins.Location = new System.Drawing.Point(4, 4);
-            this.splitContainerAvailablePlugins.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainerAvailablePlugins.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainerAvailablePlugins.Name = "splitContainerAvailablePlugins";
             // 
             // splitContainerAvailablePlugins.Panel1
@@ -77,6 +76,17 @@
             this.splitContainerAvailablePlugins.SplitterWidth = 5;
             this.splitContainerAvailablePlugins.TabIndex = 0;
             // 
+            // searchtbPlugins
+            // 
+            this.searchtbPlugins.Enabled = false;
+            this.searchtbPlugins.Location = new System.Drawing.Point(0, 316);
+            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
+            this.searchtbPlugins.Name = "searchtbPlugins";
+            this.searchtbPlugins.Size = new System.Drawing.Size(217, 34);
+            this.searchtbPlugins.TabIndex = 4;
+            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
+            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
+            // 
             // lblTextNoInternetConnection
             // 
             this.lblTextNoInternetConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
@@ -98,7 +108,7 @@
             this.chlbxAvailiblePlugins.Items.AddRange(new object[] {
             "loading..."});
             this.chlbxAvailiblePlugins.Location = new System.Drawing.Point(0, 0);
-            this.chlbxAvailiblePlugins.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chlbxAvailiblePlugins.Margin = new System.Windows.Forms.Padding(4);
             this.chlbxAvailiblePlugins.Name = "chlbxAvailiblePlugins";
             this.chlbxAvailiblePlugins.Size = new System.Drawing.Size(221, 310);
             this.chlbxAvailiblePlugins.TabIndex = 1;
@@ -145,9 +155,9 @@
             // btnPluginDownload
             // 
             this.btnPluginDownload.Location = new System.Drawing.Point(4, 322);
-            this.btnPluginDownload.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPluginDownload.Margin = new System.Windows.Forms.Padding(4);
             this.btnPluginDownload.Name = "btnPluginDownload";
-            this.btnPluginDownload.Size = new System.Drawing.Size(268, 28);
+            this.btnPluginDownload.Size = new System.Drawing.Size(238, 28);
             this.btnPluginDownload.TabIndex = 0;
             this.btnPluginDownload.Text = "download";
             this.btnPluginDownload.UseCompatibleTextRendering = true;
@@ -162,7 +172,7 @@
             this.tabControlPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlPlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControlPlugins.Location = new System.Drawing.Point(0, 0);
-            this.tabControlPlugins.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControlPlugins.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlPlugins.Name = "tabControlPlugins";
             this.tabControlPlugins.SelectedIndex = 0;
             this.tabControlPlugins.Size = new System.Drawing.Size(488, 394);
@@ -175,26 +185,15 @@
             this.tabPagePluginsInstalled.Location = new System.Drawing.Point(4, 25);
             this.tabPagePluginsInstalled.Margin = new System.Windows.Forms.Padding(53, 4, 53, 4);
             this.tabPagePluginsInstalled.Name = "tabPagePluginsInstalled";
-            this.tabPagePluginsInstalled.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPagePluginsInstalled.Padding = new System.Windows.Forms.Padding(4);
             this.tabPagePluginsInstalled.Size = new System.Drawing.Size(480, 365);
             this.tabPagePluginsInstalled.TabIndex = 1;
             this.tabPagePluginsInstalled.Text = "Installed";
             this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
             // 
-            // tabPagePluginsAvailable
-            // 
-            this.tabPagePluginsAvailable.Controls.Add(this.splitContainerAvailablePlugins);
-            this.tabPagePluginsAvailable.Location = new System.Drawing.Point(4, 25);
-            this.tabPagePluginsAvailable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPagePluginsAvailable.Name = "tabPagePluginsAvailable";
-            this.tabPagePluginsAvailable.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPagePluginsAvailable.Size = new System.Drawing.Size(480, 365);
-            this.tabPagePluginsAvailable.TabIndex = 0;
-            this.tabPagePluginsAvailable.Text = "available";
-            this.tabPagePluginsAvailable.UseVisualStyleBackColor = true;
-            // 
             // pluginGrid
             // 
+            this.pluginGrid.AutoScroll = true;
             this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pluginGrid.Location = new System.Drawing.Point(4, 4);
             this.pluginGrid.Margin = new System.Windows.Forms.Padding(4);
@@ -202,16 +201,17 @@
             this.pluginGrid.Size = new System.Drawing.Size(472, 357);
             this.pluginGrid.TabIndex = 0;
             // 
-            // searchtbPlugins
+            // tabPagePluginsAvailable
             // 
-            this.searchtbPlugins.Enabled = false;
-            this.searchtbPlugins.Location = new System.Drawing.Point(0, 316);
-            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
-            this.searchtbPlugins.Name = "searchtbPlugins";
-            this.searchtbPlugins.Size = new System.Drawing.Size(217, 34);
-            this.searchtbPlugins.TabIndex = 4;
-            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
-            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
+            this.tabPagePluginsAvailable.Controls.Add(this.splitContainerAvailablePlugins);
+            this.tabPagePluginsAvailable.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePluginsAvailable.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPagePluginsAvailable.Name = "tabPagePluginsAvailable";
+            this.tabPagePluginsAvailable.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPagePluginsAvailable.Size = new System.Drawing.Size(480, 365);
+            this.tabPagePluginsAvailable.TabIndex = 0;
+            this.tabPagePluginsAvailable.Text = "available";
+            this.tabPagePluginsAvailable.UseVisualStyleBackColor = true;
             // 
             // FrmPlugins
             // 
@@ -223,8 +223,7 @@
             this.Controls.Add(this.tabControlPlugins);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmPlugins";
