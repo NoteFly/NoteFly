@@ -250,7 +250,7 @@ namespace NoteFly
             this.icon.ContextMenuStrip.Items.Add(this.menuExit);
 
             // Show balloontip on firstrun about trayicon how to access notefly functions.
-            if (!Settings.ProgramFirstrun)
+            if (!Settings.ProgramFirstrunned)
             {
                 string trayicon_trayiconaccesshint = Strings.T("You can access {0} functions with this trayicon.", Program.AssemblyTitle);
                 this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, trayicon_trayiconaccesshint, ToolTipIcon.Info);

@@ -76,10 +76,11 @@ namespace NoteFly
         public FrmNote(Notes notes, Note note)
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
-            this.InitializeComponent();
+            this.InitializeComponent();            
             this.notes = notes;
             this.note = note;
             this.UpdateForm(false);
+            Strings.TranslateForm(this);
             this.lblTitle.Text = note.Title;
 
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);

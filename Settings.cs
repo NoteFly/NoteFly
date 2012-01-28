@@ -339,11 +339,11 @@ namespace NoteFly
         /// <summary>
         /// The time a connection is considered not working.
         /// </summary>
-        public static int NetworkConnectionTimeout = 6000;
+        public static int NetworkConnectionTimeout = 8000;
 
         /// <summary>
         /// Force to use of IPv6.
-        /// Will use ipv6.notefly.org for update checking.
+        /// Will use dns record ipv6.notefly.org for update checking that only has IPv6 AAAA record.
         /// </summary>
         public static bool NetworkConnectionForceipv6 = false;
 
@@ -427,7 +427,7 @@ namespace NoteFly
         /// If not the demo note is created, balloontip is showed
         /// and NoteFly version 1.0 notes are ask to are imported if they exist.
         /// </summary>
-        public static bool ProgramFirstrun = false;
+        public static bool ProgramFirstrunned = false;
 
         /// <summary>
         /// Are all windows double buffered.

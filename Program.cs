@@ -271,10 +271,10 @@ namespace NoteFly
             notes = new Notes(resetpositions);
 
             trayicon = new TrayIcon(notes);
-            if (!Settings.ProgramFirstrun)
+            if (!Settings.ProgramFirstrunned)
             {
                 // disable the firstrun the next time.
-                Settings.ProgramFirstrun = true;
+                Settings.ProgramFirstrunned = true;
                 Settings.UpdatecheckUseGPG = false;
                 GPGVerifWrapper gpgverif = new GPGVerifWrapper();
                 if (!string.IsNullOrEmpty(gpgverif.GetGPGPath()) && gpgverif != null)
@@ -320,7 +320,7 @@ namespace NoteFly
                     {
                         // Forces the programme to setup the first run notefly info again.
                         case "-forcefirstrun":
-                            Settings.ProgramFirstrun = true;
+                            Settings.ProgramFirstrunned = false;
                             break;
 
                         // disabletransparency parameter is for OS that don't support transparency, so they can still show notes.

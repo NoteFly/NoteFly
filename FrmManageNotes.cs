@@ -99,6 +99,7 @@ namespace NoteFly
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
+            Strings.TranslateForm(this);
             this.notes = notes;
             this.SetSkin();
             this.DrawNotesGrid();

@@ -53,7 +53,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;windows</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;windows</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -170,9 +170,9 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Skin.cs" />
     <Compile Include="Strings.cs">
-      <AutoGen>True</AutoGen>
+      <SubType>Code</SubType>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Textfile.cs" />
     <Compile Include="TransparentRichTextBox.cs">
@@ -211,10 +211,6 @@
     <None Include="build_setup.bat" />
     <None Include="Resources\hoekje.png" />
     <None Include="Resources\locknote.png" />
-    <None Include="Strings.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Strings.cs</LastGenOutput>
-    </None>
     <None Include="strongkey_NoteFly2.pfx" />
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>

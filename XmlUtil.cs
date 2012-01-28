@@ -429,8 +429,11 @@ namespace NoteFly
                         case "NotesTransparentRTB":
                             Settings.NotesTransparentRTB = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "ProgramFirstrun":
-                            Settings.ProgramFirstrun = xmlread.ReadElementContentAsBoolean();
+                        case "ProgramFirstrun": // legacy
+                            Settings.ProgramFirstrunned = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "ProgramFirstrunned":
+                            Settings.ProgramFirstrunned = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ProgramFormsDoublebuffered":
                             Settings.ProgramFormsDoublebuffered = xmlread.ReadElementContentAsBoolean();
@@ -840,7 +843,7 @@ namespace NoteFly
             Settings.HighlightSQL = false;
             Settings.HighlightSQLColorValidstatement = "#7FCE35";
             Settings.HighlightSQLColorField = "#B16DFF";
-            Settings.NetworkConnectionTimeout = 6000;
+            Settings.NetworkConnectionTimeout = 8000;
             Settings.NetworkConnectionForceipv6 = false;
             Settings.NetworkProxyAddress = string.Empty;
             Settings.NetworkProxyEnabled = false;
@@ -848,8 +851,8 @@ namespace NoteFly
             Settings.NotesClosebtnHidenotepermanently = true;
             Settings.NotesDefaultRandomSkin = false;
             Settings.NotesDefaultSkinnr = 0; // default skin: yellow
-            Settings.NotesDefaultHeight = 280;
-            Settings.NotesDefaultWidth = 240;
+            Settings.NotesDefaultHeight = 240;
+            Settings.NotesDefaultWidth = 280;
             Settings.NotesDefaultTitleDate = true;
             Settings.NotesTitlepanelMaxHeight = 64;
             Settings.NotesTitlepanelMinHeight = 32;
@@ -859,7 +862,7 @@ namespace NoteFly
             Settings.NotesTransparencyLevel = 0.9;
             Settings.NotesWarnlimitTotal = 5000;
             Settings.NotesWarnlimitVisible = 50;
-            Settings.ProgramFirstrun = false;
+            Settings.ProgramFirstrunned = false;
             Settings.ProgramFormsDoublebuffered = false; // create blank windows on windows 8.
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
@@ -874,7 +877,7 @@ namespace NoteFly
             Settings.SharingEmailEnabled = true;
             Settings.SharingEmailDefaultadres = string.Empty;
             Settings.TrayiconAlternateIcon = false;
-            Settings.TrayiconFontsize = 10.00f; // default .net: 8.25f; but made a little bigger (and more) for readablity
+            Settings.TrayiconFontsize = 10.00f; // default .net: 8.25f; but made a  bigger (and more) for readablity
             Settings.TrayiconLeftclickaction = 1;
             Settings.TrayiconCreatenotebold = true;
             Settings.TrayiconExitbold = false;
@@ -1069,7 +1072,7 @@ namespace NoteFly
                     WriteXMLBool("NotesTransparentRTB", Settings.NotesTransparentRTB);
                     WriteXMLBool("NotesDefaultRandomSkin", Settings.NotesDefaultRandomSkin);
                     WriteXMLBool("NotesDefaultTitleDate", Settings.NotesDefaultTitleDate);
-                    WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
+                    WriteXMLBool("ProgramFirstrunned", Settings.ProgramFirstrunned);
                     WriteXMLBool("ProgramFormsDoublebuffered", Settings.ProgramFormsDoublebuffered);
                     WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
                     WriteXMLBool("ProgramLogException", Settings.ProgramLogException);

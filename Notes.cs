@@ -76,7 +76,7 @@ namespace NoteFly
             this.notes = new List<Note>();
             this.skins = new List<Skin>();
             this.skins = xmlUtil.LoadSkins();
-            this.LoadNotes(Settings.ProgramFirstrun, resetpositions);
+            this.LoadNotes(Settings.ProgramFirstrunned, resetpositions);
         }
 
         #endregion Constructors

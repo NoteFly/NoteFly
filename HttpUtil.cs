@@ -61,6 +61,7 @@ namespace NoteFly
                 // use dns ipv6 AAAA record to force the use of IPv6.
                 url = url.Replace("://update.", "://ipv6."); // not replacing "http", "https", "ftp"
                 url = url.Replace("://www.", "://ipv6.");
+                url = url.Replace("://ipv4.", "://ipv6.");
             }
 
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
@@ -148,8 +149,9 @@ namespace NoteFly
         private HttpWebRequest CreateHttpWebRequest(string url, System.Net.Cache.RequestCacheLevel cachesettings)
         {
             System.Net.ServicePointManager.Expect100Continue = false;
-            System.Net.ServicePointManager.DefaultConnectionLimit = 4;
+            System.Net.ServicePointManager.DefaultConnectionLimit = 8;
             HttpWebRequest request = null;
+            Log.Write(LogType.info, "Making request to '" + url + "'");
             try
             {
                 request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
