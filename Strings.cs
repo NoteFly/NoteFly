@@ -153,105 +153,39 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// test
+        /// Translate all controls and toolstrip contextmenu of the given form.
         /// </summary>
         /// <param name="form"></param>
         public static void TranslateForm(System.Windows.Forms.Form form)
         {
-            /*
-            System.IO.StreamWriter writer = null;
-#if DEBUG
-            string filename = "translate_" + this.Name + ".po";
-            System.IO.FileStream fs = new System.IO.FileStream(System.IO.Path.Combine(Strings.ResourcesDirectory, filename), System.IO.FileMode.Append);
-            writer = new System.IO.StreamWriter(fs, System.Text.Encoding.UTF8);
-            try
+            int controlnestedlevel = 1;
+            TranslateControlCollection(form.Controls, controlnestedlevel); // main level in form
+            if (form.ContextMenuStrip != null)
             {
-#endif
-                Strings.TranslateMenuCollection(form, writer);
-#if DEBUG
-            }
-            finally
-            {
-                writer.Close();
-                fs.Close();
-            }
-#endif
-             */
-
-            StreamWriter writer = null;            
-#if DEBUG
-            string filename = "translate_" + form.Name + ".po";
-            FileStream fs = new FileStream(Path.Combine(Strings.resourcesDir, filename), FileMode.OpenOrCreate);
-            writer = new StreamWriter(fs, Encoding.UTF8);
-
-            try
-            {
-#endif
-                int controlnestedlevel = 1;
-                TranslateControlCollection(form.Controls, controlnestedlevel, writer); // main level in form
-#if DEBUG
-            }
-            finally
-            {
-                writer.Close();
-                fs.Close();
-            }
-#endif
-        }
-
-        /// <summary>
-        /// Translate MenuItemCollection
-        /// </summary>
-        /// <param name="menucollection"></param>
-        /// <param name="writer"></param>
-        public static void TranslateMenuCollection(System.Windows.Forms.ToolStripItemCollection menucollection, StreamWriter writer)
-        {
-                for (int i = 0; i < menucollection.Count; i++)
+                if (form.ContextMenuStrip.Items.Count > 0)
                 {
-                    string text = menucollection[i].Text;
-                    if (!String.IsNullOrEmpty(text))
-                    {
-                        string translation = Strings.T(text);
-                        if (!String.IsNullOrEmpty(translation))
-                        {
-                            menucollection[i].Text = translation;
-                        }
-
-#if DEBUG
-                        if (writer != null)
-                        {
-                            StringBuilder potfilepart = new StringBuilder();
-                            potfilepart.AppendLine();
-                            potfilepart.Append("#");
-                            potfilepart.AppendLine(menucollection[i].Name);
-                            potfilepart.Append("msgid \"");
-                            potfilepart.Append(text);
-                            potfilepart.AppendLine("\"");
-                            potfilepart.AppendLine("msgstr \"\"");
-                            writer.Write(potfilepart.ToString());
-                        }
-#endif
-                    }
-                }            
+                    TranslateToolStripItemCollection(form.ContextMenuStrip.Items);
+                }
+            }
         }
-
+        
         /// <summary>
         /// Recusive method that translate all control in a ControlCollection.
         /// </summary>
-        private static void TranslateControlCollection(System.Windows.Forms.Control.ControlCollection controlscollection, int controlnestedlevel, StreamWriter writer)
+        private static void TranslateControlCollection(System.Windows.Forms.Control.ControlCollection controlscollection, int controlnestedlevel)
         {
+            const int MAXNESTEDCONTROL = 10;
             for (int i = 0; i < controlscollection.Count; i++)
             {
                 if (IsTranslatableControl(controlscollection[i]))
                 {
                     if (controlscollection[i].HasChildren)
                     {
-                        // Just in case: recusive method is going mad, throw exception.
-                        const int MAXNESTEDCONTROL = 10;
+                        // Just in case: recusive method is going mad, throw exception.                        
                         if (controlnestedlevel < MAXNESTEDCONTROL)
                         {
                             controlnestedlevel++;
-                            TranslateControlCollection(controlscollection[i].Controls, controlnestedlevel, writer);
+                            TranslateControlCollection(controlscollection[i].Controls, controlnestedlevel);
                         }
                         else
                         {
@@ -261,6 +195,7 @@ namespace NoteFly
                     else
                     {
                         string text = controlscollection[i].Text;
+                        text = text.Replace("\"", "\\\""); // todo for performance, dont use quotes at all
                         if (!String.IsNullOrEmpty(text))
                         {
                             string translation = Strings.T(text);
@@ -270,21 +205,35 @@ namespace NoteFly
                             }
 
 #if DEBUG
-                            if (writer != null)
-                            {
-                                StringBuilder potfilepart = new StringBuilder();
-                                potfilepart.AppendLine();
-                                potfilepart.Append("#");
-                                potfilepart.AppendLine(controlscollection[i].Name);
-                                potfilepart.Append("msgid \"");
-                                potfilepart.Append(text);
-                                potfilepart.AppendLine("\"");
-                                potfilepart.AppendLine("msgstr \"\"");
-                                writer.Write(potfilepart.ToString());
-                            }
+                            AddToPOT(text, controlscollection[i].Name);
 #endif
                         }
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Translate the toolstripitemcollection.
+        /// </summary>
+        /// <param name="collection"></param>
+        private static void TranslateToolStripItemCollection(System.Windows.Forms.ToolStripItemCollection toolstripitemcollection)
+        {
+            for (int i = 0; i < toolstripitemcollection.Count; i++)
+            {
+                string text = toolstripitemcollection[i].Text;
+                //text = text.Replace("\"", "\\\""); // todo for performance, dont use quotes at all
+                if (!String.IsNullOrEmpty(text))
+                {
+                    string translation = Strings.T(text);
+                    if (!String.IsNullOrEmpty(translation))
+                    {
+                        toolstripitemcollection[i].Text = translation;
+                    }
+
+#if DEBUG
+                    AddToPOT(text, toolstripitemcollection[i].Name);
+#endif
                 }
             }
         }
@@ -319,7 +268,9 @@ namespace NoteFly
                     control.Name != "btnTextStriketrough" &&
                     control.Name != "btnTextBulletlist" &&
                     control.Name != "btnFontBigger" &&
-                    control.Name != "btnFontSmaller"
+                    control.Name != "btnFontSmaller" &&
+                    control.Name != "btnHideNote" &&
+                    control.Name != "lblTitle"
                     )
                 {
                     translatecontrol = true;
@@ -328,7 +279,71 @@ namespace NoteFly
 
             return translatecontrol;
         }
-    }
 
+#if DEBUG
+        private static void AddToPOT(string text, string controlname)
+        {
+            string filepathpot = Path.Combine(Path.Combine(Program.InstallFolder, @".\..\"), "Strings.pot");
+            text = text.Replace("\r\n", "\"\r\nmsgid \""); // multiple lines are split is multiple msgid's.
+            string msgid = new StringBuilder("msgid \"").Append(text).Append("\"").ToString();
+            bool isalreadyadded = false;
+            if (File.Exists(filepathpot))
+            {
+                StreamReader reader = null;
+                try
+                {
+                    reader = new StreamReader(filepathpot, Encoding.UTF8);
+                    string line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        if (line == msgid)
+                        {
+                            isalreadyadded = true;
+                            break;
+                        }
+
+                        line = reader.ReadLine();
+                    }
+                }
+                finally
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                }
+
+
+                if (!isalreadyadded)
+                {
+                    StreamWriter writer = null;
+                    try
+                    {
+                        writer = new StreamWriter(filepathpot, true, Encoding.UTF8);
+                        StringBuilder potfilepart = new StringBuilder();
+                        potfilepart.AppendLine();
+                        potfilepart.Append("# ");
+                        potfilepart.AppendLine(controlname);
+                        potfilepart.AppendLine(msgid);
+                        potfilepart.AppendLine("msgstr \"\"");
+                        writer.Write(potfilepart.ToString());
+                    }
+                    finally
+                    {
+                        if (writer != null)
+                        {
+                            writer.Close();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                throw new ApplicationException("Please run build_translationfile.bat first.");
+            }
+
+        }
+#endif
+    }
 }
 

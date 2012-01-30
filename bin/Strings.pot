@@ -8,162 +8,162 @@ msgstr ""
 "Project-Id-Version: NoteFly-3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-30 16:28+0100\n"
-"PO-Revision-Date: 2012-01-30 17:34+0100\n"
+"PO-Revision-Date: 2012-01-30 16:30+0100\n"
 "Last-Translator: \n"
-"Language-Team:  <root@d9ping.nl>\n"
+"Language-Team: development <root@d9ping.nl>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Language: Dutch\n"
 
 #: FrmAbout.cs:49
 msgid "About "
-msgstr "Over"
+msgstr ""
 
 #: FrmAbout.cs:51
 msgid "Version "
-msgstr "Versie"
+msgstr ""
 
 #: FrmDownloader.cs:316
 msgid "Aborted"
-msgstr "Afbreken"
+msgstr ""
 
 #: FrmDownloader.cs:319
 msgid "download compleet, "
-msgstr "download voltooid,"
+msgstr ""
 
 #: FrmDownloader.cs:322
 msgid "verify download"
-msgstr "controlleer download"
+msgstr ""
 
 #: FrmDownloader.cs:337
 msgid "Verify download failed, cannot find gpg: "
-msgstr "controlleren download mislukt, kan gpg niet vinden:"
+msgstr ""
 
 #: FrmDownloader.cs:348
 msgid "installing.. "
-msgstr "installeren.."
+msgstr ""
 
 #: FrmException.cs:37
 #, csharp-format
 msgid "oh no.. {0} crashed."
-msgstr "oh nee {0} is gecrasht."
+msgstr ""
 
 #: FrmManageNotes.cs:398
 msgid "Nothing selected."
-msgstr "Niks geselecteert."
+msgstr ""
 
 #: FrmManageNotes.cs:406
 msgid "Are you sure you want to delete the selected note(s)?"
-msgstr "Weet je zeker dat je de geselecteren notities wilt verwijderen?"
+msgstr ""
 
 #: FrmManageNotes.cs:407
 msgid "delete?"
-msgstr "verwijder?"
+msgstr ""
 
 #: FrmManageNotes.cs:479
 msgid "Do you want to delete all current notes?"
-msgstr "Wil je alle huidige notities verwijderen?"
+msgstr ""
 
 #: FrmManageNotes.cs:480
 msgid "Are you sure?"
-msgstr "Weet je het zeker?"
+msgstr ""
 
 #: FrmManageNotes.cs:588
 msgid "CVS file does not seems to be in the Stickies format."
-msgstr "CSV bestand lijkt niet in het Stickies formaat te zijn."
+msgstr ""
 
 #: FrmManageNotes.cs:595
 msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
-msgstr "CSV bestand lijkt niet in het Stickies formaat te zijn, verwacht 5 kolomen."
+msgstr ""
 
 #: FrmManageNotes.cs:730
 msgid "Error reading PNotes backup file, incorrect format."
-msgstr "Fout tijdens het lezen van PNotes backup bestand, incorrect formaat."
+msgstr ""
 
 #: FrmManageNotes.cs:1205
 #, csharp-format
 msgid "Access denied. delete note {0} manually with proper premission."
-msgstr "Toegang geweigert. Verwijder nottiie {0} handmatig met juiste permissie."
+msgstr ""
 
 #: FrmManageNotes.cs:1306
 #: FrmManageNotes.cs:1327
 msgid "Transparency level not a integer or double."
-msgstr "Transparatie niveau is geen integer of double."
+msgstr ""
 
 #: FrmNewNote.cs:81
 msgid "edit note"
-msgstr "bewerk notitie"
+msgstr ""
 
 #: FrmNewNote.cs:107
 msgid "new note"
-msgstr "nieuwe notitie"
+msgstr ""
 
 #: FrmNewNote.cs:236
 msgid "Please enter some content."
-msgstr "Voer a.u.b. wat in."
+msgstr ""
 
 #: FrmNewNote.cs:254
 msgid "Could not write note."
-msgstr "Kan notitie niet wegschrijven."
+msgstr ""
 
 #: FrmNewNote.cs:633
 msgid "import error"
-msgstr "importeer fout"
+msgstr ""
 
 #: FrmNewNote.cs:644
 msgid "Cannot find KeyNote NF note content."
-msgstr "Kan KeyNote NF notitie inhoud niet vinden."
+msgstr ""
 
 #: FrmNewNote.cs:670
 msgid "Not a KeyNote NF note."
-msgstr "Niet een KeyNote NF notitie."
+msgstr ""
 
 #: FrmNewNote.cs:838
 #: FrmNewNote.cs:1206
 msgid "There is no text on the clipboard."
-msgstr "Er is geen tekst op het klembord."
+msgstr ""
 
 #: FrmNote.cs:395
 msgid "Note has no title and no content."
-msgstr "Notitie geeft geen titel en inhoud."
+msgstr ""
 
 #: FrmNote.cs:402
 msgid "Can't launch email client."
-msgstr "Kan email client niet starten."
+msgstr ""
 
 #: FrmNote.cs:775
 msgid "&Lock note"
-msgstr "Vergrende&l notitie"
+msgstr ""
 
 #: FrmNote.cs:776
 msgid " (click again to unlock)"
-msgstr "(klik voor ontgrendel)"
+msgstr ""
 
 #: FrmNote.cs:802
 msgid "&Roll up"
-msgstr "&Rol op"
+msgstr ""
 
 #: FrmNote.cs:803
 msgid "(click again to Roll Down)"
-msgstr "(Klik voor rol beneden)"
+msgstr ""
 
 #: FrmNote.cs:850
 msgid "Save note to file"
-msgstr "Sla notitie op naar bestand"
+msgstr ""
 
 #: FrmPlugins.cs:183
 msgid "version: "
-msgstr "versie:"
+msgstr ""
 
 #: FrmPlugins.cs:184
 msgid "license: "
-msgstr "licensie:"
+msgstr ""
 
 #: FrmPlugins.cs:199
 msgid "Downloading plugin.."
-msgstr "Downloaden plugin.."
+msgstr ""
 
 #: FrmSettings.cs:101
 #: FrmSettings.cs:102
@@ -171,178 +171,167 @@ msgid ""
 "Directory does not exist.\n"
 "Please choice a valid directory."
 msgstr ""
-"Map bestaat niet.\n"
-"Kies een geldige map."
 
 #: FrmSettings.cs:128
 msgid "Expert settings"
-msgstr "Expert instellingen"
+msgstr ""
 
 #: FrmSettings.cs:132
 msgid "Settings"
-msgstr "Instellingen"
+msgstr ""
 
 #: FrmSettings.cs:144
 msgid "Font size invalid. Minimal 4pt maximum 128pt allowed."
-msgstr "Lettertype grootte ongeldig. Minimaal 4pt maximaal 128pt. toegestaan."
+msgstr ""
 
 #: FrmSettings.cs:145
 msgid "Error invalid fontsize"
-msgstr "Fout ongeldige lettertype grootte."
+msgstr ""
 
 #: FrmSettings.cs:146
 msgid "Please select a font."
-msgstr "Selecteer a.u.b een lettertype."
+msgstr ""
 
 #: FrmSettings.cs:147
 msgid "Error no font."
-msgstr "Fout geen lettertype."
+msgstr ""
 
 #: FrmSettings.cs:150
 msgid "Invalid folder for saving notes folder."
-msgstr "Ongeldige map voor opslaan notities."
+msgstr ""
 
 #: FrmSettings.cs:151
 msgid "Error invalid notes folder"
-msgstr "Fout ongeldige notities map."
+msgstr ""
 
 #: FrmSettings.cs:182
 msgid "Settings text direction invalid."
-msgstr "Instellingen tekst richting ongeldig."
+msgstr ""
 
 #: FrmSettings.cs:183
 msgid "Error text direction"
-msgstr "Fout tekst richting"
+msgstr ""
 
 #: FrmSettings.cs:190
 msgid "Given default emailadres is not valid."
-msgstr "Het opgegeven standaard email adres is niet geldig."
+msgstr ""
 
 #: FrmSettings.cs:191
 msgid "Email adres no valid"
-msgstr "Email adres ongeldig"
+msgstr ""
 
 #: FrmSettings.cs:198
 msgid "The path to gpg.exe is not valid."
-msgstr "Het pad naar gpg.exe is niet geldig."
+msgstr ""
 
 #: FrmSettings.cs:199
 msgid "Error not valid gpg path."
-msgstr "Fout ongeldig gpg pad."
+msgstr ""
 
 #: FrmSettings.cs:319
-#, fuzzy
 msgid "Not enough right to write logon start key to registry."
-msgstr "Geen rechten om logon start key naar register te schrijven."
+msgstr ""
 
 #: FrmSettings.cs:338
 msgid "Run key in registery does not exist."
-msgstr "Run steutel in register bestaat niet."
+msgstr ""
 
 #: FrmSettings.cs:339
 msgid "Error run key registery missing"
-msgstr "Fout run steutel in register ontbreekt"
+msgstr ""
 
 #: FrmSettings.cs:369
 msgid "NoteFly is buzy moving your notes"
-msgstr "NoteFly is bezig je notitie aan het verplaatsen"
+msgstr ""
 
 #: FrmSettings.cs:418
 msgid "Please wait"
-msgstr "Wacht a.u.b."
+msgstr ""
 
 #: FrmSettings.cs:442
 msgid "Are you sure, you want to reset all the settings to default?"
-msgstr "Weet je zeker dat je alle instellingen naar standaard wilt reseten?"
+msgstr ""
 
 #: FrmSettings.cs:443
 msgid "Reset settings?"
-msgstr "Reset instellingen?"
+msgstr ""
 
 #: FrmSettings.cs:558
 msgid "File is marked as system file. Did not move."
-msgstr "Bestand is systeem bestand. Niet verplaats."
+msgstr ""
 
 #: FrmSettings.cs:566
 msgid "Note file(s) already exist."
-msgstr "Notite bestand(en) bestaan al."
+msgstr ""
 
 #: FrmSettings.cs:567
-#, fuzzy
 msgid "Error movind note(s)"
-msgstr "Fout verplaatsen notitie(s)"
+msgstr ""
 
 #: PluginGrid.cs:73
 msgid "Their are no plugins installed."
-msgstr "Er zijn geen plugins geinstalleert."
+msgstr ""
 
 #: PluginGrid.cs:189
 msgid "version:"
-msgstr "versie:"
+msgstr ""
 
 #: PluginGrid.cs:205
 msgid "author:"
-msgstr "auteur:"
+msgstr ""
 
 #: PluginGrid.cs:221
 msgid "description:"
-msgstr "beschrijving:"
+msgstr ""
 
 #: PluginGrid.cs:269
 msgid "disable"
-msgstr "uitgeschakelen"
+msgstr ""
 
 #: PluginGrid.cs:274
 msgid "enable"
-msgstr "inschakelen"
+msgstr ""
 
 #: SearchTextBox.cs:64
 msgid "search:"
-msgstr "zoek:"
+msgstr ""
 
 #: Notes.cs:377
 msgid ""
 "Folder with notes does not exist.\n"
 "Do want to try loading notes from default application data folder?"
 msgstr ""
-"Map met notitie bestaat niet.\n"
-"Wil je notitie proberen te laden van de standaard application data map?"
 
 #: Notes.cs:378
 msgid "Notes folder doesn't exist"
-msgstr "Notitie map bestaat niet"
+msgstr ""
 
 #: Notes.cs:588
-#, fuzzy
 msgid ""
 "NoteFly 1.0.x detected.\n"
 "Do you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\n"
 "Press cancel to ask this again next time."
 msgstr ""
-"NoteFly 1.0.x instellingen gedetecteert.\n"
-"Wil je de notitie van NoteFly 1.0.x naar NoteFly 2.0.x importeren?\n"
-"Kies annuleren om nogmaals te vragen bij volgende start."
 
 #: Notes.cs:589
 msgid "Import out NoteFly 1.0.x"
-msgstr "Importeer uit NoteFly 1.0.x"
+msgstr ""
 
 #: Notes.cs:664
 msgid "There are many notes loading this can take a while, do you want to load them all?"
-msgstr "Er zijn notitie die geladen moeten worden dit kan even duren, wil je ze allemaal laden?"
+msgstr ""
 
 #: Notes.cs:665
-#, fuzzy
 msgid "Contine loading many notes?"
-msgstr "Doorgaan laden veel notities?"
+msgstr ""
 
 #: Notes.cs:685
 msgid "There are many notes visible. Hide some notes to make loading faster."
-msgstr "Er zijn veel notities zichtbaar. Verberg enkele notite om het opstarten te verkorten."
+msgstr ""
 
 #: Notes.cs:686
 msgid "Many notes visible"
-msgstr "Veel notitie zichtbaar"
+msgstr ""
 
 #: Program.cs:234
 #, csharp-format
@@ -354,73 +343,71 @@ msgstr ""
 
 #: Program.cs:235
 msgid "Elevated administrator"
-msgstr "ingebeperkte administrator"
+msgstr ""
 
 #: Program.cs:260
 msgid ""
 "The programme is already running.\n"
 "Load an other instance? (not recommeded)"
 msgstr ""
-"Het programma draait al.\n"
-"Laad het nog een keer? (niet aanbevolen)"
 
 #: Program.cs:261
 msgid "already running"
-msgstr "draait al"
+msgstr ""
 
 #: Program.cs:469
 msgid "There's a new version availible."
-msgstr "Er is een nieuwe versie beschikbaar."
+msgstr ""
 
 #: Program.cs:470
 msgid "Your version: "
-msgstr "Uw versie:"
+msgstr ""
 
 #: Program.cs:472
 msgid "New version: "
-msgstr "nieuwe versie:"
+msgstr ""
 
 #: Program.cs:474
 msgid "Do you want to download and install the new version now?"
-msgstr "Wil je de nieuwe versie nu downloaden en installeren?"
+msgstr ""
 
 #: TrayIcon.cs:154
 msgid "&New note"
-msgstr "&Nieuwe notitie"
+msgstr ""
 
 #: TrayIcon.cs:168
 msgid "&Manage notes"
-msgstr "Beheer notities"
+msgstr ""
 
 #: TrayIcon.cs:186
 msgid "&Settings"
-msgstr "In&stellingen"
+msgstr ""
 
 #: TrayIcon.cs:204
 msgid "&Plugins"
-msgstr "&Plugins"
+msgstr ""
 
 #: TrayIcon.cs:229
 msgid "About"
-msgstr "Over"
+msgstr ""
 
 #: TrayIcon.cs:238
 msgid "E&xit"
-msgstr "Afsluiten"
+msgstr ""
 
 #: TrayIcon.cs:255
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "You can access {0} functions with this trayicon."
-msgstr "Je kunt de {0} opties via dit trayicon bereiken."
+msgstr ""
 
 #: TrayIcon.cs:433
 msgid "confirm exit"
-msgstr "bevestig afsluiten"
+msgstr ""
 
 #: TrayIcon.cs:440
 #, csharp-format
 msgid "Are sure you want to exit {0}?"
-msgstr "Weet je zeker dat je {0} wilt afsluiten?"
+msgstr ""
 
 #: TrayIcon.cs:452
 #, csharp-format
@@ -428,242 +415,234 @@ msgid ""
 "A note is still open for editing.\n"
 "Are you sure you want to shutdown {0}?"
 msgstr ""
-"Een notitie is nog steeds open voor bewerking.\n"
-"Weet je zeker dat je {0} wilt afsluiten?"
 
 # btnHideNote
-#, fuzzy
 msgid "X"
 msgstr ""
 
 # menuEditNote
 msgid "&Edit note"
-msgstr "&Bewerk notitie"
+msgstr ""
 
 # menuNoteSkins
 msgid "S&kin"
-msgstr "S&kin"
+msgstr ""
 
 # menuSendTo
 msgid "&Share"
-msgstr "&Deel"
+msgstr ""
 
 # menuOnTop
-#, fuzzy
 msgid "Sticky on &top"
-msgstr "Zet bovenop vast"
+msgstr ""
 
 # menuWordWrap
 msgid "Word wrap"
-msgstr "woord afbrekening"
+msgstr ""
 
 # menuCopy
 msgid "&Copy"
-msgstr "&Kopieer"
+msgstr ""
 
 # menuHideNote
 msgid "&Hide note"
-msgstr "&Verberg notitie"
+msgstr ""
 
 # lbTextTitle
 msgid "Title:"
-msgstr "Titel:"
+msgstr ""
 
 # menuSaveNewNote
 msgid "&Save note"
-msgstr "Op&slaan notitie"
+msgstr ""
 
 # menuShowtoolbar
 msgid "Show format tools"
-msgstr "Toon opmaak gereedschap"
+msgstr ""
 
 # menuPasteTo
 msgid "&Paste to"
-msgstr "&Plakken naar"
+msgstr ""
 
 # menuImportfile
 msgid "Import.."
-msgstr "Importeer.."
+msgstr ""
 
 # menuCancelNewNote
 msgid "Canc&el note"
-msgstr "Annu&leer notitie"
+msgstr ""
 
 # btnShowSelectedNotes
 msgid "&show selected"
-msgstr "toon ge&selecteerde"
+msgstr ""
 
 # btnRestoreAllNotes
 msgid "&import"
-msgstr "&importeer"
+msgstr ""
 
 # btnNoteDelete
 msgid "&delete selected"
-msgstr "verwij&der geselecteerde"
+msgstr ""
 
 # btnBackAllNotes
 msgid "&export all"
-msgstr "&exporteer alle"
+msgstr ""
 
 # lbTextWindowTitle
 msgid "Manage notes"
-msgstr "Beheer notities"
+msgstr ""
 
 # chxSettingsExpertEnabled
 msgid "E&xpert settings"
-msgstr "E&xpert instelligen"
+msgstr ""
 
 # lblTextLanguage
 msgid "Language programme:"
-msgstr "Taal programma:"
+msgstr ""
 
 # chxNotesDeleteRecyclebin
 msgid "Move deleted notes to recycle bin."
-msgstr "Verplaats verwijderde notite naar de prullenbak"
+msgstr ""
 
 # chxConfirmDeletenote
-#, fuzzy
 msgid "Confirm deleting notes."
-msgstr "Bevestig verwijderen notities."
+msgstr ""
 
 # chxConfirmExit
 msgid "Confirm shutdown of NoteFly"
-msgstr "Bevestif afsluiten NoteFly"
+msgstr ""
 
 # chxStartOnLogin
 msgid "Start NoteFly on logon."
-msgstr "Start NoteFly bij het aanmelden."
+msgstr ""
 
 # lblTextActionLeftClicktTrayicon
 msgid "Action left click trayicon:"
-msgstr "Actie links klik trayicon:"
+msgstr ""
 
 # chxShowTooltips
 msgid "Show tooltip hints"
-msgstr "Toon tooltips hints"
+msgstr ""
 
 # chxTransparecy
 msgid "Enable transparency"
-msgstr "Gebruik transparatie"
+msgstr ""
 
 # lblTextTransparentProcVisible
 msgid "% visible"
-msgstr "% zichtbaar"
+msgstr ""
 
 # chxUseDateAsDefaultTitle
 msgid "Use current date as default title for a new note."
-msgstr "Gebruik huidige datum als standaard titel voor een nieuwe notitie."
+msgstr ""
 
 # lblTextHeight
 msgid "Height:"
-msgstr "Hoogte:"
+msgstr ""
 
 # lblTextWidth
 msgid "Width:"
-msgstr "Breedte"
+msgstr ""
 
 # lblTextDefaultsizenewnote
 msgid "Default size new note:"
-msgstr "Standaard grootte nieuwe notitie:"
+msgstr ""
 
 # chxUseRandomDefaultNote
 msgid "Use a random skin as default skin."
-msgstr "Gebruik een willekeurige skin als standaard skin."
+msgstr ""
 
 # lblDefaultNewNoteColor
 msgid "Default skin new notes:"
-msgstr "Standaard skin voor nieuwe notities:"
+msgstr ""
 
 # cbxFontNoteTitleBold
 msgid "bold"
-msgstr "vet"
+msgstr ""
 
 # lblTextFontTitlePoints
 msgid "pt."
-msgstr "pt."
+msgstr ""
 
 # lblTextFontTitleSize
 msgid "Font size title:"
-msgstr "Lettertype grootte titel:"
+msgstr ""
 
 # lblTextFontTitleFamily
 msgid "Font title:"
-msgstr "Lettertype titel:"
+msgstr ""
 
 # lblTextDirection
 msgid "Text direction notes:"
-msgstr "Tekst richting notities:"
+msgstr ""
 
 # lblTextFontContentSize
-#, fuzzy
 msgid "default font size content:"
-msgstr "Standaard lettertype grootte notitie inhoud:"
+msgstr ""
 
 # lblTextNoteFont
 msgid "default font content:"
-msgstr "Standaard lettertype notitie inhoud:"
+msgstr ""
 
 # chxUseAlternativeTrayicon
 msgid "Use alternative windows7 style/white trayicon."
-msgstr "GEbruik alternatief windows7 style/wit trayicon."
+msgstr ""
 
 # lblTextFontsizeMenu
 msgid "Trayicon menu fontsize:"
-msgstr "Trayicon menu lettertypegrootte:"
+msgstr ""
 
 # chxTrayiconBoldExit
 msgid "Display \"Exit\" in bold."
-msgstr "Toon \"Afsluiten\" vet."
+msgstr ""
 
 # chxTrayiconBoldSettings
 msgid "Display \"Settings\" in bold."
-msgstr "Toon \"Instellingen\" vet."
+msgstr ""
 
 # chxTrayiconBoldManagenotes
 msgid "Display \"Manage notes\" in bold."
-msgstr "Toon \"Beheer notitie\" vet."
+msgstr ""
 
 # chxTrayiconBoldNewnote
-#, fuzzy
 msgid "Display \"Create a new note\" in bold."
-msgstr "Toon \"Nieuwe notitie\" vet."
+msgstr ""
 
 # chxCaseSentiveSearch
 msgid "Use case sentive search."
-msgstr "Gebruik hoofdletter gevoelig zoeken."
+msgstr ""
 
 # lbTextManagesnotesFontSize
 msgid "Manage notes fontsize:"
-msgstr "Beheer notite lettertype grootte:"
+msgstr ""
 
 # lblTextSkinManagenotes
 msgid "Manage notes skin:"
-msgstr "Beheer notites skin:"
+msgstr ""
 
 # chxManagenotesTooltipContent
 msgid "Show a tooltip with preview of the note content."
-msgstr "Toon tooltip met voorvertoon van notitie inhoud."
+msgstr ""
 
 # chxHighlightSQL
 msgid "Highlight SQL text between quotes."
-msgstr "Highlight SQL tekst tussen aanhaalingstekens."
+msgstr ""
 
 # chxHighlightPHP
 msgid "Highlight PHP text between <?php and ?>."
-msgstr "Highlight PHP tekst tussen <?php en ?>."
+msgstr ""
 
 # chxHighlightHyperlinks
 msgid "Make hyperlinks clickable."
-msgstr "Maak hyperlinks klikbaar."
+msgstr ""
 
 # chxConfirmLink
-#, fuzzy
 msgid "Ask before launching URL, on click hyperlink."
-msgstr "Vraag voor het starten van url"
+msgstr ""
 
 # chxHighlightHTML
 msgid "Highlight HTML text."
-msgstr "Highlight HTML tekst"
+msgstr ""
 
 # chxSocialEmailEnabled
 msgid "Enable E-mail in share menu"
@@ -671,119 +650,117 @@ msgstr ""
 
 # chxSocialEmailDefaultaddressSet
 msgid "Set a default email address to send to: "
-msgstr "Zet standaard email adres "
+msgstr ""
 
 # chxUpdateSilentInstall
 msgid "Install update setup silently."
-msgstr "Instaleer updates setup stil"
+msgstr ""
 
 # btnGPGPathBrowse
 msgid "browse"
-msgstr "blader"
+msgstr ""
 
 # lblTextGPGPath
 msgid "Location gpg.exe:"
-msgstr "Locatie gpg.exe:"
+msgstr ""
 
 # chxCheckUpdatesSignature
 msgid "Verify the signature of downloaded updates."
-msgstr "Controlleer handtekening van gedownloadde updates."
+msgstr ""
 
 # chxCheckUpdates
 msgid "Check for updates"
-msgstr "Controlleer voor updates."
+msgstr ""
 
 # lblTextCheckforupdatesevery
 msgid "Check for updates every "
-msgstr "Controleer voor updates elke"
+msgstr ""
 
 # lblTextDayAtStartup
 msgid "days, at startup"
-msgstr "dag, bij het opstarten"
+msgstr ""
 
 # lblTextLatestUpdateCheck
 msgid "Last update check is performed on:"
-msgstr "Laatste update controller is uitgevoert op:"
+msgstr ""
 
 # btnCheckUpdates
 msgid "Check updates now"
-msgstr "Controlleer voor update nu"
+msgstr ""
 
 # chxForceUseIPv6
 msgid "Force the use of IPv6 only. (not recommeded)"
-msgstr "Forceer het gebruik van alleen IPv6. (niet aanbevolen)"
+msgstr ""
 
 # lblTextMiliseconds
 msgid "ms"
-msgstr "ms"
+msgstr ""
 
 # chxProxyEnabled
 msgid "Use socked proxy"
-msgstr "Gebruik socket proxy."
+msgstr ""
 
 # lblTextNetworkTimeout
 msgid "connection timeout time:"
-msgstr "connectie timeout tijd:"
+msgstr ""
 
 # lblTextNoteLocation
 msgid "Save notes in:"
-msgstr "Sla notitie op in:"
+msgstr ""
 
 # lblTextVisibleNotesWarnLimit
 msgid "Visible notes warning limit:"
-msgstr "Zichtbare notitie waarschuwings limiet"
+msgstr ""
 
 # lblTextTotalNotesWarnLimit
 msgid "Total notes warning limit:"
-msgstr "Totaal aantal notitie waarschuwings limiet:"
+msgstr ""
 
 # chxLoadPlugins
 msgid "Allow to load plugins"
-msgstr "Sta het laden van plugins toe"
+msgstr ""
 
 # chxLogExceptions
-#, fuzzy
 msgid "Log exceptions (recommeded: leave enabled)."
-msgstr "Log exceptions (aanbevolen)"
+msgstr ""
 
 # lblTextLogging
 msgid "Logging:"
-msgstr "loggen:"
+msgstr ""
 
 # chxLogDebug
 msgid "Log debug info."
-msgstr "Log debug informatie."
+msgstr ""
 
 # btnResetSettings
 msgid "&Reset all settings to default"
-msgstr "&Reset alle instellingen naar standaard"
+msgstr ""
 
 # chxLogErrors
 msgid "Log user errors."
-msgstr "Log gebruikers fouten."
+msgstr ""
 
 # btnCancel
 msgid "&Cancel"
-msgstr "Annuleren"
+msgstr ""
 
 # btnOK
 msgid "&OK"
-msgstr "Oke"
+msgstr ""
 
 # lblTextNoInternetConnection
-#, fuzzy
 msgid " if you do have a stable internet connection, try again later."
 msgstr ""
 
 # lblPluginName
 msgid "Loading.."
-msgstr "Laden.."
+msgstr ""
 
 # lblPluginDescription
 msgid "Getting plugin details from the internet."
-msgstr "Verkrijgen van plugins details van het internet."
+msgstr ""
 
 # btnPluginDownload
 msgid "download"
-msgstr "download"
+msgstr ""
 

@@ -1,5 +1,5 @@
 ;  NoteFly a note application.
-;  Copyright (C) 2010-2011  Tom
+;  Copyright (C) 2010-2012  Tom
 ;
 ;  This program is free software: you can redistribute it and/or modify
 ;  it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@
 ;
 
 !define PROJNAME   "NoteFly"
-!define VERSION    "2.5.1"          ; version number: major.minor.release
-!define VERSTATUS  ""               ; alpha, beta, rc, or nothing for final.
+!define VERSION    "3.0.0"          ; version number: major.minor.release
+!define VERSTATUS  "alpha"          ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
 !define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
@@ -188,6 +188,15 @@ Section "main executable (required)"
   File "nyancat.jpg"    ; 4,53 KB
   File "grass.jpg"      ; 9,17 KB
   File "colordrops.jpg" ; 10,0 KB
+
+  ; Gettext library
+  File "Gettext.Cs.dll" ; 15,5 KB
+  
+  ; translations
+  SetOutPath "$INSTDIR\translations\en\"
+  File ".\translations\en\Strings.po"
+  SetOutPath "$INSTDIR\translations\nl\"
+  File ".\translations\nl\Strings.po"
   
   WriteUninstaller "uninstall.exe"
   
@@ -196,6 +205,11 @@ SectionEnd
 Section "helloworld demo plugin"
   SetOutPath "$INSTDIR\plugins"
   File ".\plugins\${DEMOPLUGIN}"
+SectionEnd
+
+Section "Windows firewall rules"
+  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming http (remoteport 80, protocol tcp only) answer for a http requests from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly http" protocol=TCP remoteport=80 localport=1025-65535 action=allow"'
+  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming dns (remoteport 53, protocol udp only) answer for a dns request from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly dns" protocol=UDP remoteport=53 localport=1025-65535 action=allow"'
 SectionEnd
 
 Section "Desktop Shortcut (all users)"
@@ -247,6 +261,10 @@ Section "Uninstall"
   Delete "$INSTDIR\${APPIPLUGIN}"
   Delete "$INSTDIR\${APPFILE}"
 
+  Delete "$INSTDIR\Gettext.Cs.dll"
+  Delete "$INSTDIR\translations\en\Strings.po"
+  Delete "$INSTDIR\translations\nl\Strings.po"
+  
   ; skin textures
   Delete "$INSTDIR\nyancat.jpg"
   Delete "$INSTDIR\grass.jpg"
@@ -255,10 +273,14 @@ Section "Uninstall"
   
   ; remove uninstaller
   Delete "$INSTDIR\uninstall.exe"
-    
-  ; Remove plugin directory if empty
+  
+  ; Remove translations directory, if empty
+  RMDir "$INSTDIR\translations\en\"
+  RMDir "$INSTDIR\translations\nl\"
+  RMDir "$INSTDIR\translations\"
+  ; Remove plugins directory, if empty
   RMDir "$INSTDIR\plugins\"
-  ; Remove directory if empty
+  ; Remove NoteFly install directory, if empty
   RMDir "$INSTDIR"
 
   IfFileExists "$APPDATA\.NoteFly2" removeadminappdata postremoveadminappdata
