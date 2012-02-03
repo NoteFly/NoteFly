@@ -63,18 +63,18 @@ namespace NoteFly
         public FrmSettings(Notes notes)
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
-            this.InitializeComponent();                       
-            Strings.TranslateForm(this);
             this.oldnotesavepath = Settings.NotesSavepath;
+            
+            this.InitializeComponent();
             this.notes = notes;
-            this.DrawCbxFonts();
-            this.SetFormTitle(Settings.SettingsExpertEnabled);
-            this.SetControlsBySettings();
+            Strings.TranslateForm(this);
+            this.SetFormTitle(Settings.SettingsExpertEnabled);         
             this.tabControlSettings_SelectedIndexChanged(null, null);
-            this.LoadLanguages();    
+            this.LoadCbxActionLeftclick();
+            this.LoadCbxFonts();     
+            this.LoadCbxLanguage();
+            this.SetControlsBySettings();
         }
-
-
 
         #endregion Constructors
 
@@ -134,6 +134,17 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Loads cbxActionLeftclick
+        /// </summary>
+        private void LoadCbxActionLeftclick()
+        {
+            this.cbxActionLeftclick.Items.Clear();
+            this.cbxActionLeftclick.Items.Add(Strings.T("Do nothing"));
+            this.cbxActionLeftclick.Items.Add(Strings.T("Bring notes to front"));
+            this.cbxActionLeftclick.Items.Add(Strings.T("New note"));
+        }
+
+        /// <summary>
         /// Check the form input. If everything is okay
         /// call xmlHandler class to save the xml setting file.
         /// </summary>
@@ -185,7 +196,7 @@ namespace NoteFly
                 MessageBox.Show(settings_noknowtextdir, settings_noknowtextdirtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if ((!this.tbDefaultEmail.Text.Contains("@") || !this.tbDefaultEmail.Text.Contains(".")) && this.chxSocialEmailDefaultaddressSet.Checked)
+            else if (!this.tbDefaultEmail.IsValidEmailAddress() && this.chxSocialEmailDefaultaddressSet.Checked)
             {
                 string settings_emailnotvalid = Strings.T("Given default emailadres is not valid.");
                 string settings_emailnotvalidtitle = Strings.T("Email adres no valid");
@@ -316,7 +327,7 @@ namespace NoteFly
                         }
                         catch (UnauthorizedAccessException unauthexc)
                         {
-                            string nowriterightsregistery = Strings.T("Not enough right to write logon start key to registry.");
+                            string nowriterightsregistery = Strings.T("No rights to add key to registry.");
                             Log.Write(LogType.exception, nowriterightsregistery + unauthexc.Message);
                             MessageBox.Show(unauthexc.Message);
                         }
@@ -477,6 +488,7 @@ namespace NoteFly
         private void chxUseProxy_CheckedChanged(object sender, EventArgs e)
         {
             this.iptbProxy.Enabled = this.chxProxyEnabled.Checked;
+            this.numProxyPort.Enabled = this.chxProxyEnabled.Checked;
         }
 
         /// <summary>
@@ -492,7 +504,7 @@ namespace NoteFly
         /// <summary>
         /// Fill combobox list with fonts
         /// </summary>
-        private void DrawCbxFonts()
+        private void LoadCbxFonts()
         {
             foreach (FontFamily oneFontFamily in FontFamily.Families)
             {
@@ -563,8 +575,8 @@ namespace NoteFly
                 {
                     if (!errorshowed)
                     {
-                        string settings_filealreadyexist = Strings.T("Note file(s) already exist.");
-                        string settings_filealreadyexisttitle = Strings.T("Error movind note(s)");
+                        string settings_filealreadyexisttitle = Strings.T("Error moving note(s)");
+                        string settings_filealreadyexist = Strings.T("Note file(s) already exist.");                        
                         Log.Write(LogType.error, settings_filealreadyexist);
                         MessageBox.Show(settings_filealreadyexist, settings_filealreadyexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         errorshowed = true;
@@ -793,7 +805,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">event argument</param>
-        private void cbxShowExpertSettings_CheckedChanged(object sender, EventArgs e)
+        private void chxShowExpertSettings_CheckedChanged(object sender, EventArgs e)
         {
             bool expertsettings = this.chxSettingsExpertEnabled.Checked;
             this.SetFormTitle(expertsettings);
@@ -801,8 +813,9 @@ namespace NoteFly
             this.chxLoadPlugins.Visible = expertsettings;
             this.chxNotesDeleteRecyclebin.Visible = expertsettings;
             this.chxUseAlternativeTrayicon.Visible = expertsettings;
+            this.chxConfirmLink.Visible = expertsettings;
             this.chxUpdateSilentInstall.Visible = expertsettings;
-            this.lblTextGPGPath.Visible = expertsettings;
+            this.lblTextGPGPath.Visible = expertsettings;           
             this.tbGPGPath.Visible = expertsettings;
             this.btnGPGPathBrowse.Visible = expertsettings;
             this.chxCheckUpdatesSignature.Visible = expertsettings;
@@ -821,6 +834,7 @@ namespace NoteFly
             this.chxCaseSentiveSearch.Visible = expertsettings;
             this.chxManagenotesTooltipContent.Visible = expertsettings;
             this.SetLastUpdatecheckDate(expertsettings);
+            this.SetTabPageGPGVisible(expertsettings);
         }
 
         /// <summary>
@@ -846,6 +860,29 @@ namespace NoteFly
                 }                
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expertsettings"></param>
+        private void SetTabPageGPGVisible(bool expertsettings)
+        {
+            if (expertsettings)
+            {
+                if (!this.tabControlNetwork.TabPages.Contains(this.tabPageGPG))
+                {
+                    this.tabControlNetwork.TabPages.Add(this.tabPageGPG);
+                }
+            }
+            else
+            {
+                if (this.tabControlNetwork.TabPages.Contains(this.tabPageGPG))
+                {
+                    this.tabControlNetwork.TabPages.Remove(this.tabPageGPG);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Load share tab plugins
@@ -918,7 +955,7 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        private void LoadLanguages()
+        private void LoadCbxLanguage()
         {
             this.cbxLanguage.Items.Clear();
             
@@ -974,5 +1011,10 @@ namespace NoteFly
         }
 
         #endregion Methods
+
+        private void tbNotesSavePath_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

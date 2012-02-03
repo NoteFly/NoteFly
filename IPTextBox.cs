@@ -54,14 +54,15 @@ namespace NoteFly
         /// </summary>
         /// <param name="e"></param>
         protected override void OnKeyDown(KeyEventArgs e)
-        {  
+        {
             int k = e.KeyValue;
-            
+            // TODO not recommeded key checking.
             // 'a'-'f'
             // ':'
             // '.'
             // '0'-'9'
             // shift, backspace, left, right, delete key
+            // /*
             if ((k >= 65 && k <= 70) || (k == 186 && e.Shift) || (k == 190 && !e.Shift) || (k >= 48 && k <= 57) || (k == 8 || k == 16 || k == 37 || k == 39 || k == 46))
             {
                 e.SuppressKeyPress = false;
@@ -70,8 +71,8 @@ namespace NoteFly
             {
                 e.SuppressKeyPress = true;
             }
-
-            base.OnKeyDown(e); // dont remove
+            // */
+            base.OnKeyDown(e);
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace NoteFly
                 }
             }
 
-            base.OnKeyUp(e); // dont remove
+            base.OnKeyUp(e);
         }
 
         /// <summary>

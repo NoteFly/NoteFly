@@ -5,17 +5,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NoteFly-3.0.0\n"
+"Project-Id-Version: NoteFly 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-30 16:28+0100\n"
-"PO-Revision-Date: 2012-01-30 16:30+0100\n"
+"POT-Creation-Date: 2012-02-03 01:29+0100\n"
+"PO-Revision-Date: 2012-02-03 01:43+0100\n"
 "Last-Translator: \n"
-"Language-Team: development <root@d9ping.nl>\n"
+"Language-Team: English <root_at_d9ping.nl>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: English\n"
-"X-Poedit-SourceCharset: utf-8\n"
 
 #: FrmAbout.cs:49
 msgid "About "
@@ -50,45 +49,58 @@ msgstr ""
 msgid "oh no.. {0} crashed."
 msgstr ""
 
-#: FrmManageNotes.cs:398
+#: FrmManageNotes.cs:97
+#: FrmManageNotes.cs:846
+#: FrmManageNotes.cs:879
+msgid "&hide selected"
+msgstr ""
+
+#: FrmManageNotes.cs:101
+#: FrmManageNotes.cs:106
+#: FrmManageNotes.cs:851
+#: FrmManageNotes.cs:883
+msgid "&show selected"
+msgstr ""
+
+#: FrmManageNotes.cs:384
 msgid "Nothing selected."
 msgstr ""
 
-#: FrmManageNotes.cs:406
+#: FrmManageNotes.cs:392
 msgid "Are you sure you want to delete the selected note(s)?"
 msgstr ""
 
-#: FrmManageNotes.cs:407
+#: FrmManageNotes.cs:393
 msgid "delete?"
 msgstr ""
 
-#: FrmManageNotes.cs:479
+#: FrmManageNotes.cs:465
 msgid "Do you want to delete all current notes?"
 msgstr ""
 
-#: FrmManageNotes.cs:480
+#: FrmManageNotes.cs:466
 msgid "Are you sure?"
 msgstr ""
 
-#: FrmManageNotes.cs:588
+#: FrmManageNotes.cs:574
 msgid "CVS file does not seems to be in the Stickies format."
 msgstr ""
 
-#: FrmManageNotes.cs:595
+#: FrmManageNotes.cs:581
 msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
 msgstr ""
 
-#: FrmManageNotes.cs:730
+#: FrmManageNotes.cs:716
 msgid "Error reading PNotes backup file, incorrect format."
 msgstr ""
 
-#: FrmManageNotes.cs:1205
+#: FrmManageNotes.cs:1191
 #, csharp-format
 msgid "Access denied. delete note {0} manually with proper premission."
 msgstr ""
 
-#: FrmManageNotes.cs:1306
-#: FrmManageNotes.cs:1327
+#: FrmManageNotes.cs:1292
+#: FrmManageNotes.cs:1313
 msgid "Transparency level not a integer or double."
 msgstr ""
 
@@ -180,92 +192,104 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+#: FrmSettings.cs:142
+msgid "Do nothing"
+msgstr ""
+
+#: FrmSettings.cs:143
+msgid "Bring notes to front"
+msgstr ""
+
 #: FrmSettings.cs:144
+msgid "New note"
+msgstr ""
+
+#: FrmSettings.cs:155
 msgid "Font size invalid. Minimal 4pt maximum 128pt allowed."
 msgstr ""
 
-#: FrmSettings.cs:145
+#: FrmSettings.cs:156
 msgid "Error invalid fontsize"
 msgstr ""
 
-#: FrmSettings.cs:146
+#: FrmSettings.cs:157
 msgid "Please select a font."
 msgstr ""
 
-#: FrmSettings.cs:147
+#: FrmSettings.cs:158
 msgid "Error no font."
 msgstr ""
 
-#: FrmSettings.cs:150
+#: FrmSettings.cs:161
 msgid "Invalid folder for saving notes folder."
 msgstr ""
 
-#: FrmSettings.cs:151
+#: FrmSettings.cs:162
 msgid "Error invalid notes folder"
 msgstr ""
 
-#: FrmSettings.cs:182
+#: FrmSettings.cs:193
 msgid "Settings text direction invalid."
 msgstr ""
 
-#: FrmSettings.cs:183
+#: FrmSettings.cs:194
 msgid "Error text direction"
 msgstr ""
 
-#: FrmSettings.cs:190
+#: FrmSettings.cs:201
 msgid "Given default emailadres is not valid."
 msgstr ""
 
-#: FrmSettings.cs:191
+#: FrmSettings.cs:202
 msgid "Email adres no valid"
 msgstr ""
 
-#: FrmSettings.cs:198
+#: FrmSettings.cs:209
 msgid "The path to gpg.exe is not valid."
 msgstr ""
 
-#: FrmSettings.cs:199
+#: FrmSettings.cs:210
 msgid "Error not valid gpg path."
 msgstr ""
 
-#: FrmSettings.cs:319
-msgid "Not enough right to write logon start key to registry."
+#: FrmSettings.cs:330
+msgid "No rights to add key to registry."
 msgstr ""
 
-#: FrmSettings.cs:338
+#: FrmSettings.cs:349
 msgid "Run key in registery does not exist."
 msgstr ""
 
-#: FrmSettings.cs:339
+#: FrmSettings.cs:350
 msgid "Error run key registery missing"
 msgstr ""
 
-#: FrmSettings.cs:369
+#: FrmSettings.cs:380
 msgid "NoteFly is buzy moving your notes"
 msgstr ""
 
-#: FrmSettings.cs:418
+#: FrmSettings.cs:429
 msgid "Please wait"
 msgstr ""
 
-#: FrmSettings.cs:442
+#: FrmSettings.cs:453
 msgid "Are you sure, you want to reset all the settings to default?"
 msgstr ""
 
-#: FrmSettings.cs:443
+#: FrmSettings.cs:454
 msgid "Reset settings?"
 msgstr ""
 
-#: FrmSettings.cs:558
+#: FrmSettings.cs:570
 msgid "File is marked as system file. Did not move."
 msgstr ""
 
-#: FrmSettings.cs:566
-msgid "Note file(s) already exist."
+#: FrmSettings.cs:578
+msgid "Error moving note(s)"
 msgstr ""
 
-#: FrmSettings.cs:567
-msgid "Error movind note(s)"
+#: FrmSettings.cs:579
+msgid "Note file(s) already exist."
 msgstr ""
 
 #: PluginGrid.cs:73
@@ -318,19 +342,19 @@ msgid "Import out NoteFly 1.0.x"
 msgstr ""
 
 #: Notes.cs:664
-msgid "There are many notes loading this can take a while, do you want to load them all?"
+msgid "many notes"
 msgstr ""
 
 #: Notes.cs:665
-msgid "Contine loading many notes?"
+msgid "There are many notes loading this can take a while, do you want to load them all?"
 msgstr ""
 
 #: Notes.cs:685
-msgid "There are many notes visible. Hide some notes to make loading faster."
+msgid "Many notes visible"
 msgstr ""
 
 #: Notes.cs:686
-msgid "Many notes visible"
+msgid "There are many notes visible. Hide some notes to make loading faster."
 msgstr ""
 
 #: Program.cs:234
@@ -360,11 +384,11 @@ msgid "There's a new version availible."
 msgstr ""
 
 #: Program.cs:470
-msgid "Your version: "
+msgid "Your version:"
 msgstr ""
 
 #: Program.cs:472
-msgid "New version: "
+msgid "New version:"
 msgstr ""
 
 #: Program.cs:474
@@ -416,8 +440,20 @@ msgid ""
 "Are you sure you want to shutdown {0}?"
 msgstr ""
 
-# btnHideNote
-msgid "X"
+# btnRestoreAllNotes
+msgid "&import"
+msgstr ""
+
+# btnNoteDelete
+msgid "&delete selected"
+msgstr ""
+
+# btnBackAllNotes
+msgid "&export all"
+msgstr ""
+
+# lbTextWindowTitle
+msgid "Manage notes"
 msgstr ""
 
 # menuEditNote
@@ -448,52 +484,16 @@ msgstr ""
 msgid "&Hide note"
 msgstr ""
 
-# lbTextTitle
-msgid "Title:"
-msgstr ""
-
-# menuSaveNewNote
-msgid "&Save note"
-msgstr ""
-
-# menuShowtoolbar
-msgid "Show format tools"
-msgstr ""
-
-# menuPasteTo
-msgid "&Paste to"
-msgstr ""
-
-# menuImportfile
-msgid "Import.."
-msgstr ""
-
-# menuCancelNewNote
-msgid "Canc&el note"
-msgstr ""
-
-# btnShowSelectedNotes
-msgid "&show selected"
-msgstr ""
-
-# btnRestoreAllNotes
-msgid "&import"
-msgstr ""
-
-# btnNoteDelete
-msgid "&delete selected"
-msgstr ""
-
-# btnBackAllNotes
-msgid "&export all"
-msgstr ""
-
-# lbTextWindowTitle
-msgid "Manage notes"
-msgstr ""
-
 # chxSettingsExpertEnabled
 msgid "E&xpert settings"
+msgstr ""
+
+# tabGeneral
+msgid "General"
+msgstr ""
+
+# lblTextActionLeftClicktTrayicon
+msgid "Action left click trayicon:"
 msgstr ""
 
 # lblTextLanguage
@@ -516,32 +516,32 @@ msgstr ""
 msgid "Start NoteFly on logon."
 msgstr ""
 
-# lblTextActionLeftClicktTrayicon
-msgid "Action left click trayicon:"
+# tabAppearance
+msgid "Appearance"
+msgstr ""
+
+# tabAppearanceGeneral
+msgid "Everywhere"
+msgstr ""
+
+# chxTransparecy
+msgid "Enable transparency:"
 msgstr ""
 
 # chxShowTooltips
 msgid "Show tooltip hints"
 msgstr ""
 
-# chxTransparecy
-msgid "Enable transparency"
-msgstr ""
-
 # lblTextTransparentProcVisible
 msgid "% visible"
 msgstr ""
 
-# chxUseDateAsDefaultTitle
-msgid "Use current date as default title for a new note."
+# lblTextWidth
+msgid "Width:"
 msgstr ""
 
 # lblTextHeight
 msgid "Height:"
-msgstr ""
-
-# lblTextWidth
-msgid "Width:"
 msgstr ""
 
 # lblTextDefaultsizenewnote
@@ -556,40 +556,52 @@ msgstr ""
 msgid "Default skin new notes:"
 msgstr ""
 
+# chxUseDateAsDefaultTitle
+msgid "Use current date as default title for a new note."
+msgstr ""
+
+# tabPageFonts
+msgid "Notes"
+msgstr ""
+
+# lblTextFontContentPoints
+msgid "pt."
+msgstr ""
+
+# lblTextFontContentSize
+msgid "Font size note content:"
+msgstr ""
+
+# lblTextNoteFont
+msgid "Font note content:"
+msgstr ""
+
 # cbxFontNoteTitleBold
 msgid "bold"
 msgstr ""
 
-# lblTextFontTitlePoints
-msgid "pt."
-msgstr ""
-
 # lblTextFontTitleSize
-msgid "Font size title:"
+msgid "Font size note title:"
 msgstr ""
 
 # lblTextFontTitleFamily
-msgid "Font title:"
+msgid "Font note title:"
 msgstr ""
 
 # lblTextDirection
 msgid "Text direction notes:"
 msgstr ""
 
-# lblTextFontContentSize
-msgid "default font size content:"
-msgstr ""
-
-# lblTextNoteFont
-msgid "default font content:"
-msgstr ""
-
-# chxUseAlternativeTrayicon
-msgid "Use alternative windows7 style/white trayicon."
+# tabPageTrayicon
+msgid "Trayicon"
 msgstr ""
 
 # lblTextFontsizeMenu
 msgid "Trayicon menu fontsize:"
+msgstr ""
+
+# chxUseAlternativeTrayicon
+msgid "Use alternative windows7 style/white trayicon."
 msgstr ""
 
 # chxTrayiconBoldExit
@@ -605,11 +617,7 @@ msgid "Display \"Manage notes\" in bold."
 msgstr ""
 
 # chxTrayiconBoldNewnote
-msgid "Display \"Create a new note\" in bold."
-msgstr ""
-
-# chxCaseSentiveSearch
-msgid "Use case sentive search."
+msgid "Display \"New note\" in bold."
 msgstr ""
 
 # lbTextManagesnotesFontSize
@@ -620,8 +628,16 @@ msgstr ""
 msgid "Manage notes skin:"
 msgstr ""
 
+# chxCaseSentiveSearch
+msgid "Use case sentive search."
+msgstr ""
+
 # chxManagenotesTooltipContent
 msgid "Show a tooltip with preview of the note content."
+msgstr ""
+
+# tabHighlight
+msgid "Highlight"
 msgstr ""
 
 # chxHighlightSQL
@@ -637,11 +653,19 @@ msgid "Make hyperlinks clickable."
 msgstr ""
 
 # chxConfirmLink
-msgid "Ask before launching URL, on click hyperlink."
+msgid "Ask to launch url on click on hyperlink (recommended)."
 msgstr ""
 
 # chxHighlightHTML
 msgid "Highlight HTML text."
+msgstr ""
+
+# tabSharing
+msgid "Sharing"
+msgstr ""
+
+# tabEmail
+msgid "Email"
 msgstr ""
 
 # chxSocialEmailEnabled
@@ -652,40 +676,56 @@ msgstr ""
 msgid "Set a default email address to send to: "
 msgstr ""
 
-# chxUpdateSilentInstall
-msgid "Install update setup silently."
+# tabNetwork
+msgid "Network"
 msgstr ""
 
-# btnGPGPathBrowse
-msgid "browse"
+# tabUpdates
+msgid "Updates"
 msgstr ""
 
-# lblTextGPGPath
-msgid "Location gpg.exe:"
+# lblTextDayAtStartup
+msgid "days, at startup."
 msgstr ""
 
-# chxCheckUpdatesSignature
-msgid "Verify the signature of downloaded updates."
+# lblTextCheckforupdatesevery
+msgid "Check for updates every: "
 msgstr ""
 
 # chxCheckUpdates
 msgid "Check for updates"
 msgstr ""
 
-# lblTextCheckforupdatesevery
-msgid "Check for updates every "
-msgstr ""
-
-# lblTextDayAtStartup
-msgid "days, at startup"
-msgstr ""
-
 # lblTextLatestUpdateCheck
 msgid "Last update check is performed on:"
 msgstr ""
 
+# lblLatestUpdateCheck
+msgid "unknown"
+msgstr ""
+
+# chxUpdateSilentInstall
+msgid "Install update setup silently."
+msgstr ""
+
 # btnCheckUpdates
 msgid "Check updates now"
+msgstr ""
+
+# tabProxy
+msgid "Proxy"
+msgstr ""
+
+# label2
+msgid "port:"
+msgstr ""
+
+# label1
+msgid "address:"
+msgstr ""
+
+# lblTextNetworkTimeout
+msgid "connection timeout time:"
 msgstr ""
 
 # chxForceUseIPv6
@@ -700,20 +740,36 @@ msgstr ""
 msgid "Use socked proxy"
 msgstr ""
 
-# lblTextNetworkTimeout
-msgid "connection timeout time:"
+# tabPageGPG
+msgid "GnuPG"
 msgstr ""
 
-# lblTextNoteLocation
-msgid "Save notes in:"
+# btnGPGPathBrowse
+msgid "browse"
+msgstr ""
+
+# lblTextGPGPath
+msgid "Location gpg.exe:"
+msgstr ""
+
+# chxCheckUpdatesSignature
+msgid "Verify the signature of downloaded updates."
+msgstr ""
+
+# tabAdvance
+msgid "Advance"
+msgstr ""
+
+# lblTextTotalNotesWarnLimit
+msgid "Total notes warning limit:"
 msgstr ""
 
 # lblTextVisibleNotesWarnLimit
 msgid "Visible notes warning limit:"
 msgstr ""
 
-# lblTextTotalNotesWarnLimit
-msgid "Total notes warning limit:"
+# lblTextNoteLocation
+msgid "Save notes in:"
 msgstr ""
 
 # chxLoadPlugins
@@ -721,7 +777,7 @@ msgid "Allow to load plugins"
 msgstr ""
 
 # chxLogExceptions
-msgid "Log exceptions (recommeded: leave enabled)."
+msgid "Log exceptions (recommended)."
 msgstr ""
 
 # lblTextLogging
@@ -748,8 +804,16 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
+# tabPagePluginsInstalled
+msgid "Installed"
+msgstr ""
+
+# tabPagePluginsAvailable
+msgid "available"
+msgstr ""
+
 # lblTextNoInternetConnection
-msgid " if you do have a stable internet connection, try again later."
+msgid "Could not load list with plugins. Internet connection failed."
 msgstr ""
 
 # lblPluginName
@@ -762,5 +826,29 @@ msgstr ""
 
 # btnPluginDownload
 msgid "download"
+msgstr ""
+
+# lbTextTitle
+msgid "Title:"
+msgstr ""
+
+# menuSaveNewNote
+msgid "&Save note"
+msgstr ""
+
+# menuShowtoolbar
+msgid "Show format tools"
+msgstr ""
+
+# menuPasteTo
+msgid "&Paste to"
+msgstr ""
+
+# menuImportfile
+msgid "Import.."
+msgstr ""
+
+# menuCancelNewNote
+msgid "Canc&el note"
 msgstr ""
 

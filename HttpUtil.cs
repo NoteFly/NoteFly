@@ -162,7 +162,8 @@ namespace NoteFly
                 request.Timeout = Settings.NetworkConnectionTimeout;
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
-                    request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
+                    int port = 80;
+                    request.Proxy = new WebProxy(Settings.NetworkProxyAddress, port);
                 }
 
                 if (Settings.NetworkUseGzip)

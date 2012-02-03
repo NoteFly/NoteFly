@@ -149,8 +149,8 @@ namespace NoteFly
             this.btnPluginsStatus[pluginpos] = new Button();            
             this.tlpnlPlugins[pluginpos].SuspendLayout();            
             this.tlpnlPlugins[pluginpos].ColumnCount = 3;
-            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.0000F));
-            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0000F));
+            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.0000F));
+            this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.0000F));
             this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0000F));
             this.tlpnlPlugins[pluginpos].Controls.Add(lblPluginTitle, 0, 0);
             this.tlpnlPlugins[pluginpos].Controls.Add(this.btnPluginsStatus[pluginpos], 1, 0);
@@ -216,7 +216,7 @@ namespace NoteFly
             lblTextPluginDescription.AutoSize = true;
             lblTextPluginDescription.Location = new System.Drawing.Point(3, 70);
             lblTextPluginDescription.Name = "lblTextPluginDescription";
-            lblTextPluginDescription.Size = new System.Drawing.Size(61, 13);
+            lblTextPluginDescription.Size = new System.Drawing.Size(68, 13);
             lblTextPluginDescription.TabIndex = 10;
             lblTextPluginDescription.Text = Strings.T("description:");
 

@@ -1,3 +1,4 @@
+//-----------------------------------------------------------------------
 // <copyright file="Strings.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2012  Tom
@@ -15,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
+//-----------------------------------------------------------------------
 namespace NoteFly
 {
     using System;
@@ -63,8 +65,6 @@ namespace NoteFly
             get { return fileFormat; }
             set { fileFormat = value; }
         }
-
-
 
         /// <summary>
         /// Returns the cached ResourceManager instance used by this class.
@@ -181,8 +181,13 @@ namespace NoteFly
                 {
                     if (controlscollection[i].HasChildren)
                     {
-                        // Just in case: recusive method is going mad, throw exception.                        
-                        if (controlnestedlevel < MAXNESTEDCONTROL)
+                        if (controlscollection[i].GetType() == typeof(System.Windows.Forms.TabPage))
+                        {
+                            controlscollection[i].Text = GetTranslationControl(controlscollection[i].Text, controlscollection[i].Name);                            
+                        }
+
+                        // Just in case: recusive method is going mad, throw an exception.                        
+                        if (controlnestedlevel <= MAXNESTEDCONTROL)
                         {
                             controlnestedlevel++;
                             TranslateControlCollection(controlscollection[i].Controls, controlnestedlevel);
@@ -194,20 +199,7 @@ namespace NoteFly
                     }
                     else
                     {
-                        string text = controlscollection[i].Text;
-                        text = text.Replace("\"", "\\\""); // todo for performance, dont use quotes at all
-                        if (!String.IsNullOrEmpty(text))
-                        {
-                            string translation = Strings.T(text);
-                            if (!String.IsNullOrEmpty(translation))
-                            {
-                                controlscollection[i].Text = translation;
-                            }
-
-#if DEBUG
-                            AddToPOT(text, controlscollection[i].Name);
-#endif
-                        }
+                        controlscollection[i].Text = GetTranslationControl(controlscollection[i].Text, controlscollection[i].Name);
                     }
                 }
             }
@@ -221,21 +213,32 @@ namespace NoteFly
         {
             for (int i = 0; i < toolstripitemcollection.Count; i++)
             {
-                string text = toolstripitemcollection[i].Text;
-                //text = text.Replace("\"", "\\\""); // todo for performance, dont use quotes at all
-                if (!String.IsNullOrEmpty(text))
-                {
-                    string translation = Strings.T(text);
-                    if (!String.IsNullOrEmpty(translation))
-                    {
-                        toolstripitemcollection[i].Text = translation;
-                    }
+                toolstripitemcollection[i].Text = GetTranslationControl(toolstripitemcollection[i].Text, toolstripitemcollection[i].Name);
+            }
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="ctrlname"></param>
+        /// <returns></returns>
+        private static string GetTranslationControl(string text, string ctrlname)
+        {            
+            if (!String.IsNullOrEmpty(text))
+            {
+                text = text.Replace("\"", "\\\"");
+                string translation = Strings.T(text);
 #if DEBUG
-                    AddToPOT(text, toolstripitemcollection[i].Name);
+                AddToPOT(text, ctrlname);
 #endif
+                if (!String.IsNullOrEmpty(translation))
+                {
+                    return translation;
                 }
             }
+
+            return text;
         }
 
         /// <summary>
@@ -247,7 +250,7 @@ namespace NoteFly
         {
             bool translatecontrol = false;
             Type controltype = control.GetType();
-            // whitelist type control
+            // blacklist type control
             if (
                 controltype != typeof(System.Windows.Forms.NumericUpDown) &&
                 controltype != typeof(System.Windows.Forms.TextBox) &&

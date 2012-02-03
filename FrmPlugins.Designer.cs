@@ -93,11 +93,9 @@
             this.lblTextNoInternetConnection.Location = new System.Drawing.Point(4, 36);
             this.lblTextNoInternetConnection.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTextNoInternetConnection.Name = "lblTextNoInternetConnection";
-            this.lblTextNoInternetConnection.Size = new System.Drawing.Size(213, 207);
+            this.lblTextNoInternetConnection.Size = new System.Drawing.Size(213, 100);
             this.lblTextNoInternetConnection.TabIndex = 2;
-            this.lblTextNoInternetConnection.Text = "Internet connection required to view available plugins here. \r\n\r\nCheck if you hav" +
-                "e a internet connection,\r\n if you do have a stable internet connection, try agai" +
-                "n later.";
+            this.lblTextNoInternetConnection.Text = "Could not load list with plugins. Internet connection failed.";
             this.lblTextNoInternetConnection.Visible = false;
             // 
             // chlbxAvailiblePlugins

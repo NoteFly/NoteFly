@@ -661,8 +661,8 @@ namespace NoteFly
         {
             if (totanumbernotes > Settings.NotesWarnlimitTotal)
             {
+                string notes_manynotesloadalltitle = Strings.T("many notes");
                 string notes_manynotesloadall = Strings.T("There are many notes loading this can take a while, do you want to load them all?");
-                string notes_manynotesloadalltitle = Strings.T("Contine loading many notes?");
                 DialogResult dlgres = MessageBox.Show(notes_manynotesloadall, notes_manynotesloadalltitle, MessageBoxButtons.YesNo);
                 if (dlgres == DialogResult.No)
                 {
@@ -682,8 +682,8 @@ namespace NoteFly
         {
             if (currentnumber > Settings.NotesWarnlimitVisible)
             {
-                string notes_manynotesvisible = Strings.T("There are many notes visible. Hide some notes to make loading faster.");
                 string notes_manynotesvisibletitle = Strings.T("Many notes visible");
+                string notes_manynotesvisible = Strings.T("There are many notes visible. Hide some notes to make loading faster.");                
                 MessageBox.Show(notes_manynotesvisible, notes_manynotesvisibletitle, MessageBoxButtons.YesNo);
                 return true;
             }

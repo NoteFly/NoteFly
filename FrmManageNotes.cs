@@ -38,21 +38,6 @@ namespace NoteFly
         #region Fields (8)
 
         /// <summary>
-        /// Constant for btntoggleshownote 
-        /// </summary>
-        private const string BTNPRETEXTHIDENOTE = "&hide" + BTNSUFTEXTHIDENOTE;
-
-        /// <summary>
-        /// Constant for btntoggleshownote
-        /// </summary>
-        private const string BTNPRETEXTSHOWNOTE = "&show" + BTNSUFTEXTHIDENOTE;
-
-        /// <summary>
-        /// Constant for constructing BTNPRETEXTHIDENOTE and BTNPRETEXTSHOWNOTE constant 
-        /// </summary>
-        private const string BTNSUFTEXTHIDENOTE = " selected";
-
-        /// <summary>
         /// Constant for the fixed width of the number note colum in datagridview1.
         /// </summary>
         private const int COLNOTENRFIXEDWIDTH = 30;
@@ -104,20 +89,21 @@ namespace NoteFly
             this.SetSkin();
             this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
+
             if (this.dataGridViewNotes.RowCount > 0)
             {
                 if ((bool)this.dataGridViewNotes.Rows[0].Cells["visible"].Value == true)
                 {
-                    this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
+                    this.btnShowSelectedNotes.Text = Strings.T("&hide selected");
                 }
                 else
                 {
-                    this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
+                    this.btnShowSelectedNotes.Text = Strings.T("&show selected");
                 }
             }
             else
             {
-                this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
+                this.btnShowSelectedNotes.Text = Strings.T("&show selected");
             }
 
             if (PluginsManager.pluginsenabled != null)
@@ -857,12 +843,12 @@ namespace NoteFly
                         if (this.notes.GetNote(notepos).Visible)
                         {
                             this.notes.GetNote(notepos).CreateForm();
-                            this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
+                            this.btnShowSelectedNotes.Text = Strings.T("&hide selected");
                         }
                         else
                         {
                             this.notes.GetNote(notepos).DestroyForm();
-                            this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
+                            this.btnShowSelectedNotes.Text = Strings.T("&show selected");
                         }
 
                         this.Resetdatagrid();
@@ -890,11 +876,11 @@ namespace NoteFly
             {
                 if ((bool)this.dataGridViewNotes.Rows[e.RowIndex].Cells["visible"].Value == true)
                 {
-                    this.btnShowSelectedNotes.Text = BTNPRETEXTHIDENOTE;
+                    this.btnShowSelectedNotes.Text = Strings.T("&hide selected");
                 }
                 else
                 {
-                    this.btnShowSelectedNotes.Text = BTNPRETEXTSHOWNOTE;
+                    this.btnShowSelectedNotes.Text = Strings.T("&show selected");
                 }
 
                 if (e.ColumnIndex == 2)
@@ -1370,6 +1356,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void pbResizeGrip_MouseUp(object sender, MouseEventArgs e)
         {
+            this.SetDataGridViewColumsWidth();
             this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
         }

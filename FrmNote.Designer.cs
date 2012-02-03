@@ -437,7 +437,7 @@ namespace NoteFly
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
             this.pbResizeGrip.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pbResizeGrip.Location = new System.Drawing.Point(220, 189);
+            this.pbResizeGrip.Location = new System.Drawing.Point(222, 191);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);

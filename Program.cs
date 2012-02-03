@@ -467,10 +467,10 @@ namespace NoteFly
                 {
                     StringBuilder sbmsg = new StringBuilder();
                     sbmsg.AppendLine(Strings.T("There's a new version availible."));
-                    sbmsg.Append(Strings.T("Your version: "));
-                    sbmsg.AppendLine(Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
-                    sbmsg.Append(Strings.T("New version: "));
-                    sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
+                    sbmsg.Append(Strings.T("Your version:"));
+                    sbmsg.AppendLine(" " + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+                    sbmsg.Append(Strings.T("New version:"));
+                    sbmsg.AppendLine(" " + latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
                     sbmsg.Append(Strings.T("Do you want to download and install the new version now?"));
                     System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                     if (updres == System.Windows.Forms.DialogResult.Yes)
