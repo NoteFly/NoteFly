@@ -212,7 +212,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets or set a value indicating whether the note content words are warped.
+        /// Gets or sets a value indicating whether the note content words are warped.
         /// </summary>
         public bool Wordwarp
         {

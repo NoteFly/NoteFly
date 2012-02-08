@@ -25,6 +25,26 @@ namespace NoteFly
     public struct Settings
     {
         /// <summary>
+        /// 
+        /// </summary>
+        public static bool HotkeysNewNoteAltInsteadShift = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int  HotkeysNewNoteKeycode = 112; // F1
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static bool HotkeysManageNotesAltInsteadShift = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int  HotkeysManageNotesKeycode = 113; // F2
+
+        /// <summary>
         /// Are notes transparent.
         /// </summary>
         public static bool NotesTransparencyEnabled = true;
@@ -439,7 +459,7 @@ namespace NoteFly
         /// <summary>
         /// The culture code of this programme.
         /// </summary>
-        public static string ProgramLanguage = "nl";
+        public static string ProgramLanguage = "en";
 
         /// <summary>
         /// The version of the programme of the last run.

@@ -260,7 +260,7 @@ namespace NoteFly
                             if (lenrecline > 0)
                             {
                                 string recordline = this.gpgoutput.Substring(posstartlinerecord, lenrecline);
-                                if (recordline == PUBKEYRECORD) // note: ordinal string compare, not pointer
+                                if (recordline == PUBKEYRECORD)
                                 {
                                     ispubrecord = true;
                                 }

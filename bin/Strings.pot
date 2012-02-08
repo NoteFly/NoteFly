@@ -852,3 +852,55 @@ msgstr ""
 msgid "Canc&el note"
 msgstr ""
 
+
+# tabPageBasics
+msgid "?Basics?"
+msgstr ""
+
+# tabPageHotkeys
+msgid "Hotkeys"
+msgstr ""
+
+# label3
+msgid "Shortcut manage notes:"
+msgstr ""
+
+# lblTextShortcutNewNote
+msgid "Shortcut new note:"
+msgstr ""
+
+# tabAppearanceOverall
+msgid "Overall"
+msgstr ""
+
+# tabPageFiles
+msgid "Files"
+msgstr ""
+
+# tbShortcutNewNoteKey3
+msgid "F1"
+msgstr ""
+
+# shortcutTextBoxNewNote
+msgid "Control Shift F1"
+msgstr ""
+
+# shortcutTextBoxManageNotes
+msgid "Control Shift F2"
+msgstr ""
+
+# shortcutTextBoxNewNote
+msgid "ControlKey + ShiftKey + F1"
+msgstr ""
+
+# shortcutTextBoxNewNote
+msgid "CTRL + SHIFT + F1"
+msgstr ""
+
+# shortcutTextBoxNewNote
+msgid "Control + Shift + F1"
+msgstr ""
+
+# shortcutTextBoxManageNotes
+msgid "CTRL + SHIFT + F2"
+msgstr ""

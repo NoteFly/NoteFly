@@ -99,7 +99,7 @@ namespace NoteFly
                 const string UNKNOWFILENAME = "NoteFly_update.deb";
                 const string UNKNOWTEMPFOLDER = "/tmp";
 #endif
-                if ((string.IsNullOrEmpty(System.Environment.GetEnvironmentVariable("TEMP"))) && (string.IsNullOrEmpty(downloadfilename)))
+                if (string.IsNullOrEmpty(System.Environment.GetEnvironmentVariable("TEMP")) && (string.IsNullOrEmpty(downloadfilename)))
                 {
                     Directory.CreateDirectory(UNKNOWTEMPFOLDER);
                     this.downloadfilepath = Path.Combine(UNKNOWTEMPFOLDER, UNKNOWFILENAME);

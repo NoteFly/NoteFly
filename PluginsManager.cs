@@ -164,7 +164,7 @@ namespace NoteFly
             object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
             if (attributes.Length != 0)
             {
-                if (!String.IsNullOrEmpty(((AssemblyCompanyAttribute)attributes[0]).Company))
+                if (!string.IsNullOrEmpty(((AssemblyCompanyAttribute)attributes[0]).Company))
                 {
                     if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
                     {

@@ -21,13 +21,12 @@ namespace NoteFly
 {
     using System;
     using System.Drawing;
+    using System.Globalization;
     using System.IO;
     using System.Windows.Forms;
     using System.Threading;
 #if windows
-    using Microsoft.Win32;
-    using System.Globalization;
-    using System.Collections.Generic;
+    using Microsoft.Win32;    
 #endif
 
     /// <summary>
@@ -234,7 +233,13 @@ namespace NoteFly
                 Settings.NotesDeleteRecyclebin = this.chxNotesDeleteRecyclebin.Checked;
                 Settings.TrayiconLeftclickaction = this.cbxActionLeftclick.SelectedIndex;
                 Settings.SettingsExpertEnabled = this.chxSettingsExpertEnabled.Checked;
-                Settings.ProgramPluginsAllEnabled = this.chxLoadPlugins.Checked;
+                Settings.ProgramLanguage = this.GetLanguageCode(this.cbxLanguage.SelectedIndex);
+
+                // tab: Hotkeys
+                Settings.HotkeysNewNoteAltInsteadShift = this.shortcutTextBoxNewNote.UseAltInsteadofShift;
+                Settings.HotkeysNewNoteKeycode = this.shortcutTextBoxNewNote.ShortcutKeycode;
+                Settings.HotkeysManageNotesAltInsteadShift = this.shortcutTextBoxManageNotes.UseAltInsteadofShift;
+                Settings.HotkeysManageNotesKeycode = this.shortcutTextBoxManageNotes.ShortcutKeycode;
 
                 // tab: Appearance, notes
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
@@ -311,6 +316,7 @@ namespace NoteFly
 
                 Settings.NotesWarnlimitTotal = Convert.ToInt32(this.numWarnLimitTotal.Value);
                 Settings.NotesWarnlimitVisible = Convert.ToInt32(this.numWarnLimitVisible.Value);
+                Settings.ProgramPluginsAllEnabled = this.chxLoadPlugins.Checked;
                 Settings.ProgramLogError = this.chxLogErrors.Checked;
                 Settings.ProgramLogInfo = this.chxLogDebug.Checked;
                 Settings.ProgramLogException = this.chxLogExceptions.Checked;
@@ -369,8 +375,8 @@ namespace NoteFly
                     try
                     {
                         this.Cursor = Cursors.WaitCursor;
-                        
-                        Thread movenotesthread = new Thread(new ParameterizedThreadStart(MoveNotesThread));
+
+                        Thread movenotesthread = new Thread(new ParameterizedThreadStart(this.MoveNotesThread));
                         string[] args = new string[2];
                         args[0] = this.oldnotesavepath;
                         args[1] = Settings.NotesSavepath;
@@ -633,7 +639,7 @@ namespace NoteFly
             // tab: Appearance, manage notes
             this.SetComboBoxSelectedIndex(this.cbxManageNotesSkin, Settings.ManagenotesSkinnr);
             this.chxManagenotesTooltipContent.Checked = Settings.ManagenotesTooltip;
-            this.SetUpDownSpinnerValue(numManagenotesFont, Settings.ManagenotesFontsize);
+            this.SetUpDownSpinnerValue(this.numManagenotesFont, Settings.ManagenotesFontsize);
             this.chxCaseSentiveSearch.Checked = Settings.ManagenotesSearchCasesentive;
 
             // tab: Highlight
@@ -942,7 +948,7 @@ namespace NoteFly
         /// <param name="e"></param>
         private void chxShowTooltips_CheckStateChanged(object sender, EventArgs e)
         {
-            if (chxShowTooltips.Checked)
+            if (this.chxShowTooltips.Checked)
             {
                 this.chxManagenotesTooltipContent.Enabled = true;
             }
@@ -986,10 +992,28 @@ namespace NoteFly
             }
             else
             {
-                Log.Write(LogType.exception, Strings.ResourcesDirectory+" folder is missing.");
+                Log.Write(LogType.exception, Strings.ResourcesDirectory + " folder is missing.");
             }
 
             this.cbxLanguage.SelectedItem = System.Threading.Thread.CurrentThread.CurrentUICulture.EnglishName;
+        }
+
+        /// <summary>
+        /// Get the languagecode from the selected index in cbxLanguage.
+        /// </summary>
+        /// <param name="cbxLanguageSelectedIndex"></param>
+        /// <returns>The languagecode return en for english if not found.</returns>
+        private string GetLanguageCode(int cbxLanguageSelectedIndex)
+        {
+            string languageisocode = this.languagecodes[this.cbxLanguage.SelectedIndex];
+            if (!String.IsNullOrEmpty(languageisocode))
+            {
+                return languageisocode;
+            }
+            else
+            {
+                return "en";
+            }
         }
 
         /// <summary>
@@ -1001,8 +1025,7 @@ namespace NoteFly
         {
             if (this.cbxLanguage.SelectedIndex >= 0)
             {
-                string languageisocode = this.languagecodes[this.cbxLanguage.SelectedIndex];
-                Program.SetCulture(languageisocode);
+                Program.SetCulture(GetLanguageCode(this.cbxLanguage.SelectedIndex));
             }
             else
             {
@@ -1011,10 +1034,5 @@ namespace NoteFly
         }
 
         #endregion Methods
-
-        private void tbNotesSavePath_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

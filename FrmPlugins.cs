@@ -20,12 +20,8 @@
 namespace NoteFly
 {
     using System;
+    using System.ComponentModel;
     using System.Windows.Forms;
-    using System.Xml;
-    using System.Net;
-    using System.IO;
-    using System.Drawing;
-using System.ComponentModel;
 
     public partial class FrmPlugins : Form
     {
@@ -54,7 +50,7 @@ using System.ComponentModel;
                 this.lblTextNoInternetConnection.Visible = false;                
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
                 HttpUtil httputil_allplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.Default);
-                httputil_allplugins.httpthread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(httputil_allplugins_DownloadCompleet);
+                httputil_allplugins.httpthread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet);
                 if (!httputil_allplugins.Start())
                 {
                     MessageBox.Show("error."); //todo
@@ -91,7 +87,7 @@ using System.ComponentModel;
             short[] versionparts = new short[3];
             char[] splitchr = new char[1];
             splitchr[0] = '.';
-            if (!String.IsNullOrEmpty(versionstring))
+            if (!string.IsNullOrEmpty(versionstring))
             {
                 string[] stringversionparts = versionstring.Split(splitchr, StringSplitOptions.None);
                 try
@@ -124,7 +120,7 @@ using System.ComponentModel;
         {
             bool higherorsame = true;
             bool continu = true;
-            for (int i = 0; (i < reqversion.Length && continu); i++)
+            for (int i = 0; i < reqversion.Length && continu; i++)
             {
                 if (reqversion[i] != version[i])
                 {
@@ -157,10 +153,10 @@ using System.ComponentModel;
             if (this.chlbxAvailiblePlugins.SelectedIndex >= 0)
             {
                 string pluginname = this.chlbxAvailiblePlugins.SelectedItem.ToString();
-                if (!String.IsNullOrEmpty(pluginname))
+                if (!string.IsNullOrEmpty(pluginname))
                 {
                     HttpUtil httputil_plugindetail = new HttpUtil("http://ipv4.notefly.org/REST/plugins/details.php?name=" + pluginname, System.Net.Cache.RequestCacheLevel.Revalidate);
-                    httputil_plugindetail.httpthread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(httputil_plugindetail_DownloadCompleet);
+                    httputil_plugindetail.httpthread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet);
                     if (!httputil_plugindetail.Start())
                     {
                         MessageBox.Show("error.."); // todo error
@@ -194,7 +190,7 @@ using System.ComponentModel;
         /// <param name="e"></param>
         private void btnPluginDownload_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(this.currentplugindownloadurl))
+            if (!string.IsNullOrEmpty(this.currentplugindownloadurl))
             {
                 string plugins_downloadingplugin = Strings.T("Downloading plugin..");
                 FrmDownloader downloader = new FrmDownloader(this.currentplugindownloadurl, false, false, plugins_downloadingplugin);
@@ -210,7 +206,7 @@ using System.ComponentModel;
         {
             this.chlbxAvailiblePlugins.Items.Clear();
             HttpUtil httputil_searchplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/search.php?keyword=" + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Default);
-            httputil_searchplugins.httpthread.RunWorkerCompleted +=new System.ComponentModel.RunWorkerCompletedEventHandler(httputil_searchplugins_DownloadCompleet);
+            httputil_searchplugins.httpthread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet);
             if (!httputil_searchplugins.Start())
             {
                 MessageBox.Show("error..."); // todo
@@ -236,7 +232,7 @@ using System.ComponentModel;
         private void searchtbPlugins_SearchStop()
         {
             HttpUtil httputil_allplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
-            httputil_allplugins.httpthread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(httputil_allplugins_DownloadCompleet);
+            httputil_allplugins.httpthread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet);
             if (!httputil_allplugins.Start())
             {
                 MessageBox.Show("error"); // todo

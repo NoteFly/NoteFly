@@ -240,11 +240,11 @@ namespace NoteFly
                 }
 
                 int lastspace = int.MaxValue;
-                for (int i = cursorpos-2; i > 0; i--)
+                for (int i = cursorpos - 2; i > 0; i--)
                 {
                     if (rtb.Text[i] == ' ' || rtb.Text[i] == '\n')
                     {
-                        lastspace = i+1;
+                        lastspace = i + 1;
                         break;
                     }
                 }

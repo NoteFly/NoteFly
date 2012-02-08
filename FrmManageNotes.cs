@@ -1501,7 +1501,8 @@ namespace NoteFly
                                             break;
                                         }
 
-                                        if (content[endpos] == ' ') // || content[endpos] == '\r' || content[endpos] == '\n'
+                                        // || content[endpos] == '\r' || content[endpos] == '\n'
+                                        if (content[endpos] == ' ')
                                         {
                                             content.Remove(i, p);
                                         }
@@ -1535,15 +1536,15 @@ namespace NoteFly
                             int tooltiplocy = Cursor.Position.Y - this.Location.Y;
                             if (!String.IsNullOrEmpty(contentpreview))
                             {
-                                toolTip.InitialDelay = 200;
-                                toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);                                
+                                this.toolTip.InitialDelay = 200;
+                                this.toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);                                
                             }
                         }
                     }
                 }
                 else
                 {
-                    toolTip.Hide(this);
+                    this.toolTip.Hide(this);
                 }
             }
         }

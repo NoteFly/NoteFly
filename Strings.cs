@@ -31,7 +31,7 @@ namespace NoteFly
 
     public class Strings
     {
-        private static Object resourceManLock = new Object();
+        private static object resourceManLock = new object();
         private static System.Resources.ResourceManager resourceMan;
         private static System.Globalization.CultureInfo resourceCulture;
 
@@ -40,16 +40,9 @@ namespace NoteFly
         private static string resourcesDir = GetSetting("ResourcesDir", "translations");
         private static string fileFormat = GetSetting("ResourcesFileFormat", "{{culture}}/{{resource}}.po");
 
-        private static string GetSetting(string setting, string defaultValue)
-        {
-            System.Collections.Specialized.NameValueCollection section = (System.Collections.Specialized.NameValueCollection)System.Configuration.ConfigurationManager.GetSection("appSettings");
-            if (section == null) return defaultValue;
-            else return section[setting] ?? defaultValue;
-        }
-
 
         /// <summary>
-        /// Resources directory used to retrieve files from.
+        /// Gets or sets Resources directory used to retrieve files from.
         /// </summary>
         public static string ResourcesDirectory
         {
@@ -58,7 +51,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Format of the file based on culture and resource name.
+        /// Gets or sets Format of the file based on culture and resource name.
         /// </summary>
         public static string FileFormat
         {
@@ -66,8 +59,15 @@ namespace NoteFly
             set { fileFormat = value; }
         }
 
+        private static string GetSetting(string setting, string defaultValue)
+        {
+            System.Collections.Specialized.NameValueCollection section = (System.Collections.Specialized.NameValueCollection)System.Configuration.ConfigurationManager.GetSection("appSettings");
+            if (section == null) return defaultValue;
+            else return section[setting] ?? defaultValue;
+        }
+
         /// <summary>
-        /// Returns the cached ResourceManager instance used by this class.
+        /// Gets the cached ResourceManager instance used by this class.
         /// </summary>
         public static System.Resources.ResourceManager ResourceManager
         {
@@ -114,9 +114,9 @@ namespace NoteFly
         /// </summary>
         public static string T(CultureInfo info, string t)
         {
-            if (String.IsNullOrEmpty(t)) return t;
+            if (string.IsNullOrEmpty(t)) return t;
             string translated = ResourceManager.GetString(t, info ?? resourceCulture);
-            return String.IsNullOrEmpty(translated) ? t : translated;
+            return string.IsNullOrEmpty(translated) ? t : translated;
         }
 
         /// <summary>
@@ -132,8 +132,8 @@ namespace NoteFly
         /// </summary>
         public static string T(CultureInfo info, string t, params object[] parameters)
         {
-            if (String.IsNullOrEmpty(t)) return t;
-            return String.Format(T(info, t), parameters);
+            if (string.IsNullOrEmpty(t)) return t;
+            return string.Format(T(info, t), parameters);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace NoteFly
         /// </summary>
         private static void TranslateControlCollection(System.Windows.Forms.Control.ControlCollection controlscollection, int controlnestedlevel)
         {
-            const int MAXNESTEDCONTROL = 10;
+            const int MAXNESTEDCONTROL = 11;
             for (int i = 0; i < controlscollection.Count; i++)
             {
                 if (IsTranslatableControl(controlscollection[i]))
@@ -224,15 +224,15 @@ namespace NoteFly
         /// <param name="ctrlname"></param>
         /// <returns></returns>
         private static string GetTranslationControl(string text, string ctrlname)
-        {            
-            if (!String.IsNullOrEmpty(text))
+        {
+            if (!string.IsNullOrEmpty(text))
             {
                 text = text.Replace("\"", "\\\"");
                 string translation = Strings.T(text);
 #if DEBUG
                 AddToPOT(text, ctrlname);
 #endif
-                if (!String.IsNullOrEmpty(translation))
+                if (!string.IsNullOrEmpty(translation))
                 {
                     return translation;
                 }
@@ -251,16 +251,14 @@ namespace NoteFly
             bool translatecontrol = false;
             Type controltype = control.GetType();
             // blacklist type control
-            if (
-                controltype != typeof(System.Windows.Forms.NumericUpDown) &&
+            if (controltype != typeof(System.Windows.Forms.NumericUpDown) &&
                 controltype != typeof(System.Windows.Forms.TextBox) &&
                 controltype != typeof(System.Windows.Forms.ComboBox) &&
                 controltype != typeof(System.Windows.Forms.DataGridView) &&
                 controltype != typeof(System.Windows.Forms.PictureBox) &&
                 controltype != typeof(System.Windows.Forms.CheckedListBox) &&
                 controltype != typeof(NoteFly.TransparentRichTextBox) &&
-                controltype != typeof(NoteFly.PluginGrid) 
-                )
+                controltype != typeof(NoteFly.PluginGrid))
             {
                 // blacklist name control
                 if (control.Name != "btnKeywordClear" && 

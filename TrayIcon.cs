@@ -109,6 +109,10 @@ namespace NoteFly
         /// </summary>
         private ToolStripMenuItem menuExit;
 
+        private bool controlpressed = false;
+        private bool shiftpressed = false;
+        private bool altpressed = false;
+
         /// <summary>
         /// Initializes a new instance of the TrayIcon class. 
         /// New trayicon in the systray.
@@ -255,7 +259,107 @@ namespace NoteFly
                 string trayicon_trayiconaccesshint = Strings.T("You can access {0} functions with this trayicon.", Program.AssemblyTitle);
                 this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, trayicon_trayiconaccesshint, ToolTipIcon.Info);
             }
+
+            KeyboardListener.s_KeyEventHandler += new EventHandler(KeyboardListener_s_KeyEventHandler);
         }
+
+        private void KeyboardListener_s_KeyEventHandler(object sender, EventArgs e)
+        {
+            KeyboardListener.UniversalKeyEventArgs eventArgs = (KeyboardListener.UniversalKeyEventArgs)e;
+
+            // is key down
+            if (eventArgs.m_Msg == 256)
+            {
+                if (eventArgs.KeyData == Keys.ControlKey || this.controlpressed)
+                {
+                    this.controlpressed = true;
+
+                    if (eventArgs.KeyData == Keys.Alt || eventArgs.KeyData == Keys.Menu || this.altpressed)
+                    {
+                        this.altpressed = true;
+
+                        // Ctrl + Alt + KEY
+                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && Settings.HotkeysNewNoteAltInsteadShift)  // eventArgs.KeyData == Keys.F1
+                        {
+                            this.MenuNewNote_Click(null, null);
+                            this.ResetAllModifierKeys();
+                        }
+                        // Ctrl + Alt + KEY
+                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && Settings.HotkeysManageNotesAltInsteadShift) // eventArgs.KeyData == Keys.F2
+                        {
+                            this.MenuManageNotes_Click(null, null);
+                            this.ResetAllModifierKeys();
+                        }
+                    }
+                    else if (eventArgs.KeyData == Keys.ShiftKey || this.shiftpressed)
+                    {
+                        this.shiftpressed = true;
+
+                        // Ctrl + Shift + KEY
+                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && !Settings.HotkeysNewNoteAltInsteadShift)
+                        {
+                            this.MenuNewNote_Click(null, null);
+                            this.ResetAllModifierKeys();
+                        }
+                        // Ctrl + Shift + KEY
+                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && !Settings.HotkeysManageNotesAltInsteadShift)
+                        {
+                            this.MenuManageNotes_Click(null, null);
+                            this.ResetAllModifierKeys();
+                        }
+                    }
+                    else if (eventArgs.KeyData != Keys.ControlKey && eventArgs.KeyData != Keys.ShiftKey && eventArgs.KeyData != Keys.Menu && eventArgs.KeyData != Keys.Alt)
+                    {
+                        this.ResetAllModifierKeys();
+                    }
+                }
+                else
+                {
+                    this.ResetAllModifierKeys();
+                }
+            }
+        }
+
+        private void ResetAllModifierKeys()
+        {
+            this.controlpressed = false;
+            this.shiftpressed = false;
+            this.altpressed = false;
+        }
+
+        /*
+        private int KeysGoodInRow(KeyboardListener.UniversalKeyEventArgs eventArgs, Keys checkkey, Keys[] ingorekey, int numcorrect, int needcorrect)
+        {
+            if (eventArgs.KeyData == checkkey || numkeycorrect > needcorrect)
+            {
+                if (numkeycorrect < needcorrect)
+                {
+                    numkeycorrect = needcorrect;
+                }
+
+                return numcorrect;
+            }
+            else
+            {
+                if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode || eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode)
+                {
+                    return numkeycorrect;
+                }
+                else
+                {
+                    for (int i = 0; i < ingorekey.Length; i++)
+                    {
+                        if (eventArgs.KeyData == ingorekey[i])
+                        {
+                            return numcorrect;
+                        }
+                    }
+                }
+
+                return 0;
+            }
+        }
+        */
 
         /// <summary>
         /// Gets or sets a value indicating whether FrmNewNote is being showed.
@@ -336,6 +440,7 @@ namespace NoteFly
             Frmneweditnoteopen = true;
             FrmNewNote newnotefrm = new FrmNewNote(this.notes);
             newnotefrm.Show();
+            newnotefrm.Focus();
         }
 
         /// <summary>

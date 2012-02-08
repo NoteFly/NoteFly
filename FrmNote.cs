@@ -300,13 +300,13 @@ namespace NoteFly
             if (this.notes.CountSkins != this.menuNoteSkins.DropDownItems.Count || alwaysrecreate)
             {
                 this.menuNoteSkins.DropDownItems.Clear();
-                string[] skinnames = notes.GetSkinsNames();
+                string[] skinnames = this.notes.GetSkinsNames();
                 for (int i = 0; i < skinnames.Length; i++)
                 {
                     ToolStripMenuItem tsi = new ToolStripMenuItem();
                     tsi.Name = "menuSkin" + skinnames[i];
                     tsi.Text = skinnames[i];
-                    if (note.SkinNr == i)
+                    if (this.note.SkinNr == i)
                     {
                         tsi.Checked = true;
                     }

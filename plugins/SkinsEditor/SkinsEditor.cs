@@ -51,7 +51,7 @@ namespace SkinsEditor
         /// <param name="e">Event arguments</param>
         private void menutrayicon_Click(object sender, EventArgs e)
         {
-            if (skineditor == null || skineditor.IsDisposed)
+            if (this.skineditor == null || this.skineditor.IsDisposed)
             {
                 this.skineditor = new FrmSkinEditor(this.Host);
             }

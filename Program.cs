@@ -210,6 +210,7 @@ namespace NoteFly
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
             if (!xmlUtil.LoadSettings())
             {
+                // settings.xml does not exist create default settings.xml file
                 xmlUtil.WriteDefaultSettings();
                 xmlUtil.LoadSettings();
             }
@@ -288,6 +289,13 @@ namespace NoteFly
                 xmlUtil.WriteSettings();
             }
 
+            if (!Settings.ProgramLastrunVersion.Equals(Program.AssemblyVersionAsString, StringComparison.Ordinal))
+            {
+                Settings.ProgramLastrunVersion = Program.AssemblyVersionAsString;
+                xmlUtil.WriteSettings();
+                Log.Write(LogType.info, "Updated ProgramLastrunVersion setting.");
+            }
+
             if (Settings.UpdatecheckEverydays > 0)
             {
                 DateTime lastupdate = DateTime.Parse(Settings.UpdatecheckLastDate);
@@ -300,7 +308,7 @@ namespace NoteFly
 
             SyntaxHighlight.DeinitHighlighter();
             System.Windows.Forms.Application.Run();
-        }
+        }       
 
         /// <summary>
         /// Parser the programme arguments
@@ -397,11 +405,12 @@ namespace NoteFly
             System.Globalization.CultureInfo culture;
             try
             {
-                culture = System.Globalization.CultureInfo.GetCultureInfo(languagecode);
+                culture = System.Globalization.CultureInfo.GetCultureInfo(languagecode);                
             }
             catch (ArgumentException)
             {
                 culture = System.Globalization.CultureInfo.GetCultureInfo("en");
+                Log.Write(LogType.error, String.Format("Langecode {0} not recognised.", languagecode));
             }
 
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
@@ -590,18 +599,9 @@ namespace NoteFly
         }
 
 #if windows
-
         // change working directory as dll search path
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool SetDllDirectory(string pathName);
-
-        // global hotkey
-        ////[System.Runtime.InteropServices.DllImport("user32.dll")]
-        ////private static extern int RegisterHotKey(IntPtr hwnd, int id, int fsModifiers, int vk);
-
-        // unregister global hotkey, always unregister before shutdown.
-        ////[System.Runtime.InteropServices.DllImport("user32.dll")]
-        ////private static extern int UnregisterHotKey(IntPtr hwnd, int id);
 #endif
 
         #endregion Methods

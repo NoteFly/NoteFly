@@ -1,8 +1,27 @@
-﻿namespace NoteFly
+﻿//-----------------------------------------------------------------------
+// <copyright file="IOTextBox.cs" company="NoteFly">
+//  NoteFly a note application.
+//  Copyright (C) 2012  Tom
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace NoteFly
 {
+    using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
-    using System.Drawing;
 
     internal partial class IOTextBox : TextBox
     {
@@ -16,7 +35,7 @@
         {
             char[] forbiddenpathchars = Path.GetInvalidPathChars();
             for (int i = 0; i < forbiddenpathchars.Length; i++)
-			{
+            {
                 if (e.KeyValue == System.Convert.ToInt32(forbiddenpathchars[i]))
                 {
                     if (e.KeyData != Keys.Back && e.KeyData != Keys.Delete && e.KeyData != Keys.Shift && e.KeyData != Keys.ShiftKey && e.KeyData != Keys.CapsLock)
@@ -24,7 +43,7 @@
                         e.SuppressKeyPress = true;
                     }
                 }
-			}
+            }
 
             base.OnKeyDown(e);
             
@@ -38,7 +57,7 @@
         /// <param name="e"></param>
         protected override void OnTextChanged(System.EventArgs e)
         {
-            if (setuptext)
+            if (this.setuptext)
             {
                 if (File.Exists(this.Text) || Directory.Exists(this.Text))
                 {
@@ -50,7 +69,7 @@
                 }
             }
 
-            setuptext = true;
+            this.setuptext = true;
             base.OnTextChanged(e);
         }
     }

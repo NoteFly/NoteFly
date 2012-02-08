@@ -40,7 +40,7 @@ namespace NoteFly
         {
             if (this.ipaddr != null)
             {
-                return ipaddr.ToString();
+                return this.ipaddr.ToString();
             }
             else
             {

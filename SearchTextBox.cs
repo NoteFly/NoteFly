@@ -33,17 +33,6 @@ namespace NoteFly
     public partial class SearchTextBox : UserControl
     {
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="keywords"></param>
-        public delegate void SearchStartHandler(string keywords);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public delegate void SearchStopHandler();
-
-        /// <summary>
         /// A search occur event.
         /// </summary>
         [Description("A search occur.")]
@@ -72,7 +61,18 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// A valau indicating whether a keyword is entered.
+        /// 
+        /// </summary>
+        /// <param name="keywords"></param>
+        public delegate void SearchStartHandler(string keywords);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public delegate void SearchStopHandler();
+
+        /// <summary>
+        /// Gets a valeu indicating wherhera keyword is entered.
         /// </summary>
         public bool IsKeywordEntered
         {

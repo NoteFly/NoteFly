@@ -334,8 +334,8 @@ namespace SkinsEditor
                 if (this.CheckProperSkinnameTb())
                 {
                     this.tbSkinName.BackColor = SystemColors.Window;
-                    if (!String.IsNullOrEmpty(this.tbPrimaryTexture.Text))
-                    {                        
+                    if (!string.IsNullOrEmpty(this.tbPrimaryTexture.Text))
+                    {
                         if (this.cbxPrimaryTextureLayout.SelectedIndex < 0)
                         {
                             this.lblTextPrimartTextureLayout.ForeColor = Color.DarkRed;
@@ -352,7 +352,7 @@ namespace SkinsEditor
                         {
                             const string COULDNOTWRITESKINS = "Could not write skins file.";
                             MessageBox.Show(COULDNOTWRITESKINS);
-                        }                        
+                        }
 
                         this.host.ReloadAllSkins();
                         this.host.UpdateAllNoteForms();
@@ -632,11 +632,11 @@ namespace SkinsEditor
                     if (res == DialogResult.Yes)
                     {
                         this.skinaction = skineditormode.browseskins;
-                        this.deleteskinnr = this.lbxSkins.SelectedIndex;                        
+                        this.deleteskinnr = this.lbxSkins.SelectedIndex;
                         this.WriteSkinsFile(null, null, null, null, null, null);
                         this.lbxSkins.Items.RemoveAt(this.deleteskinnr);
                         this.deleteskinnr = -1;
-                        this.host.ReloadAllSkins();                        
+                        this.host.ReloadAllSkins();
                     }
 
                     if (this.lbxSkins.Items.Count <= 1)

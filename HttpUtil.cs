@@ -20,12 +20,9 @@
 namespace NoteFly
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Net;
-    using System.IO;
-    using System.Threading;
     using System.ComponentModel;
+    using System.IO;
+    using System.Net;
 
     /// <summary>
     /// Http
@@ -75,7 +72,7 @@ namespace NoteFly
 
             this.cachesettings = cachesettings;
             this.httpthread = new BackgroundWorker();
-            this.httpthread.DoWork += new DoWorkEventHandler(httpthread_DoWork);
+            this.httpthread.DoWork += new DoWorkEventHandler(this.httpthread_DoWork);
         }
 
         /// <summary>

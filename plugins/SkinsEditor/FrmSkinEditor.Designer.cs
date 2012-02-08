@@ -22,7 +22,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
                 this.components.Dispose();
             }
@@ -444,6 +444,7 @@
             this.Controls.Add(this.tbHighlightingColor);
             this.Controls.Add(this.btnPickSelectingColor);
             this.Controls.Add(this.btnPickPrimaryColor);
+            this.MaximizeBox = false;
             this.Name = "FrmSkinEditor";
             this.Text = "Skin editor";
             this.ResumeLayout(false);

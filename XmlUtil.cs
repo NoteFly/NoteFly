@@ -198,7 +198,7 @@ namespace NoteFly
         /// <returns></returns>
         public static bool ParserListPlugins(string response, string versionipluginstring, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins, FrmPlugins frmplugins)
         {
-            if (String.IsNullOrEmpty(response))
+            if (string.IsNullOrEmpty(response))
             {
                 return false;
             }
@@ -231,7 +231,7 @@ namespace NoteFly
 
                         short[] curpluginminveripluginpart = frmplugins.ParserVersionString(curpluginminversioniplugin);
                         bool workswithapp = frmplugins.IsHigherOrSameVersion(curpluginminveripluginpart, ipluginversionparts);
-                        if (!String.IsNullOrEmpty(pluginname) && workswithapp)
+                        if (!string.IsNullOrEmpty(pluginname) && workswithapp)
                         {
                             chlbxAvailiblePlugins.Items.Add(pluginname, false);
                         }
@@ -266,7 +266,7 @@ namespace NoteFly
         /// <returns></returns>
         public static string[] ParserDetailsPlugin(string response, System.Windows.Forms.Button btnDownload)
         {
-            if (String.IsNullOrEmpty(response))
+            if (string.IsNullOrEmpty(response))
             {
                 return null;
             }
@@ -300,7 +300,7 @@ namespace NoteFly
                                     break;
                                 case "downloadurl":
                                     detailsplugin[4] = xmlplugin.ReadElementContentAsString();
-                                    if (!String.IsNullOrEmpty(detailsplugin[4]))
+                                    if (!string.IsNullOrEmpty(detailsplugin[4]))
                                     {
                                         btnDownload.Visible = true;
                                     }
@@ -356,7 +356,7 @@ namespace NoteFly
         /// Loads the settings file and set the settings in the
         /// static Settings class in memory.
         /// </summary>
-        /// <returns>true if file settings exists.</returns>
+        /// <returns>True if file settings exists.</returns>
         public static bool LoadSettings()
         {
             if (!Directory.Exists(Program.AppDataFolder))
@@ -437,6 +437,9 @@ namespace NoteFly
                             break;
                         case "ProgramFormsDoublebuffered":
                             Settings.ProgramFormsDoublebuffered = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "ProgramLanguage":
+                            Settings.ProgramLanguage = xmlread.ReadElementContentAsString();
                             break;
                         case "ProgramLogError":
                             Settings.ProgramLogError = xmlread.ReadElementContentAsBoolean();
@@ -868,7 +871,7 @@ namespace NoteFly
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
             Settings.ProgramPluginsAllEnabled = true;
-            Settings.ProgramPluginsEnabled = Settings.ProgramPluginsEnabled; // leave as is
+            //Settings.ProgramPluginsEnabled = Settings.ProgramPluginsEnabled; // leave as is
             Settings.ProgramPluginsDllexclude = "SQLite3.dll|System.Data.SQLite.DLL|Interop.SpeechLib.dll";
             Settings.ProgramPluginsFolder = Path.Combine(Program.InstallFolder, "plugins");
             Settings.ProgramSuspressWarnAdmin = false;
@@ -1129,6 +1132,7 @@ namespace NoteFly
                     xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
                     xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                     xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
+                    xmlwrite.WriteElementString("ProgramLanguage", Settings.ProgramLanguage);
                     xmlwrite.WriteElementString("ProgramLastrunVersion", Settings.ProgramLastrunVersion);
                     xmlwrite.WriteElementString("ProgramPluginsFolder", Settings.ProgramPluginsFolder);
                     xmlwrite.WriteElementString("ProgramPluginsEnabled", Settings.ProgramPluginsEnabled);

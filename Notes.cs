@@ -186,7 +186,7 @@ namespace NoteFly
             newnote.Locked = false; // default
             newnote.RolledUp = false; // default
             newnote.Ontop = false; // default
-            newnote.Visible = true; // default            
+            newnote.Visible = true; // default
             newnote.Wordwarp = wordwarp;
             newnote.Title = title;
             newnote.SkinNr = skinnr;  
@@ -297,7 +297,7 @@ namespace NoteFly
                 bitmaptexture = new Bitmap(this.skins[skinnr].PrimaryTexture);
             }
 
-            return bitmaptexture;            
+            return bitmaptexture;
         }
 
         /// <summary>
@@ -307,7 +307,14 @@ namespace NoteFly
         /// <returns>The image layout how the note texture is used.</returns>
         public System.Windows.Forms.ImageLayout GetPrimaryTextureLayout(int skinnr)
         {
-            return this.skins[skinnr].PrimaryTextureLayout;
+            try
+            {
+                return this.skins[skinnr].PrimaryTextureLayout;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return this.skins[0].PrimaryTextureLayout;
+            }
         }
 
         /// <summary>
@@ -317,7 +324,14 @@ namespace NoteFly
         /// <returns>The name of the skin, e.g. Yellow</returns>
         public string GetSkinName(int skinnr)
         {
-            return this.skins[skinnr].Name;
+            try
+            {
+                return this.skins[skinnr].Name;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return this.skins[0].Name;
+            }
         }
 
         /// <summary>
@@ -516,7 +530,14 @@ namespace NoteFly
         /// <returns>The full file path the texture file.</returns>
         public string GetPrimaryTextureFile(int skinnr)
         {
-            return this.skins[skinnr].PrimaryTexture;
+            try
+            {
+                return this.skins[skinnr].PrimaryTexture;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return this.skins[0].PrimaryTexture;
+            }
         }
 
         /// <summary>

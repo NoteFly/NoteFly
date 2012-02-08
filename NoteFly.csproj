@@ -64,6 +64,7 @@
       </CustomCommands>
     </CustomCommands>
     <LangVersion>ISO-2</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -151,6 +152,7 @@
     <Compile Include="IPTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="KbdListener.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="PluginGrid.cs">
       <SubType>UserControl</SubType>
@@ -174,6 +176,9 @@
       <DependentUpon>SearchTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="ShortcutTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Skin.cs" />
     <Compile Include="Strings.cs">
       <SubType>Code</SubType>
