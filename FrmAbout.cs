@@ -45,7 +45,7 @@ namespace NoteFly
         public FrmAbout()
         {
             this.InitializeComponent();
-            this.Text = Strings.T("About ") + Program.AssemblyTitle;
+            this.SetFormTitle();
             this.lblProductName.Text = Program.AssemblyTitle;
             this.lblVersion.Text = string.Format(Strings.T("Version ") + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
         }
@@ -53,6 +53,14 @@ namespace NoteFly
         #endregion Constructors 
 
         #region Methods (2)
+
+        /// <summary>
+        /// Set the title of this form.
+        /// </summary>
+        private void SetFormTitle()
+        {
+            this.Text = Strings.T("About") + " - " + Program.AssemblyTitle;
+        }
 
         /// <summary>
         /// The Website link is clicked in the about dialog.

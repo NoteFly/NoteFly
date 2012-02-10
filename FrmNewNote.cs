@@ -73,12 +73,12 @@ namespace NoteFly
         public FrmNewNote(Notes notes, Note note, Point locfrmnewnote, Size sizefrmnewnote, bool wordwrap)
         {
             this.ConstructFrmNewNote(notes);
+            this.SetFormTitle(true);
             this.Location = locfrmnewnote;
             this.Size = sizefrmnewnote;
             this.rtbNewNote.WordWrap = wordwrap;
             this.menuWordWarp.Checked = wordwrap;
             this.note = note;
-            this.Text = Strings.T("edit note");
             this.SetColorsForm(this.note.SkinNr);
             this.tbTitle.Text = note.Title;
             if (string.IsNullOrEmpty(this.note.Tempcontent))
@@ -102,9 +102,9 @@ namespace NoteFly
         public FrmNewNote(Notes notes)
         {
             this.ConstructFrmNewNote(notes);
+            this.SetFormTitle(false);
             this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2), (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2));
-            this.note = null;
-            this.Text = Strings.T("new note");
+            this.note = null;            
             if (Settings.NotesDefaultRandomSkin)
             {
                 Settings.NotesDefaultSkinnr = notes.GenerateRandomSkinnr();
@@ -122,6 +122,22 @@ namespace NoteFly
 
         #region Methods (30)
 
+        private void SetFormTitle(bool editnote)
+        {
+            StringBuilder sbtitle = new StringBuilder();
+            if (editnote)
+            {
+                sbtitle.Append(Strings.T("edit note"));
+            }
+            else 
+            {
+                sbtitle.Append(Strings.T("new note"));
+            }
+
+            sbtitle.Append(" - ");
+            sbtitle.Append(Program.AssemblyTitle);
+            this.Text = sbtitle.ToString();
+        }
         /// <summary>
         /// Initialize components FrmNewNote, set font, tooltip and richtextbox settings
         /// </summary>

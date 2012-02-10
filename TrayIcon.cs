@@ -109,9 +109,13 @@ namespace NoteFly
         /// </summary>
         private ToolStripMenuItem menuExit;
 
+#if windows
+        private KeyboardListener keylister;
+
         private bool controlpressed = false;
         private bool shiftpressed = false;
         private bool altpressed = false;
+#endif
 
         /// <summary>
         /// Initializes a new instance of the TrayIcon class. 
@@ -259,10 +263,15 @@ namespace NoteFly
                 string trayicon_trayiconaccesshint = Strings.T("You can access {0} functions with this trayicon.", Program.AssemblyTitle);
                 this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, trayicon_trayiconaccesshint, ToolTipIcon.Info);
             }
-
-            KeyboardListener.s_KeyEventHandler += new EventHandler(KeyboardListener_s_KeyEventHandler);
+            
+#if windows
+            this.keylister = new KeyboardListener();
+            this.keylister.s_KeyEventHandler += new EventHandler(KeyboardListener_s_KeyEventHandler);
+#endif
+            //this.components.Add(this.keylister);
         }
 
+#if windows
         private void KeyboardListener_s_KeyEventHandler(object sender, EventArgs e)
         {
             KeyboardListener.UniversalKeyEventArgs eventArgs = (KeyboardListener.UniversalKeyEventArgs)e;
@@ -326,40 +335,7 @@ namespace NoteFly
             this.shiftpressed = false;
             this.altpressed = false;
         }
-
-        /*
-        private int KeysGoodInRow(KeyboardListener.UniversalKeyEventArgs eventArgs, Keys checkkey, Keys[] ingorekey, int numcorrect, int needcorrect)
-        {
-            if (eventArgs.KeyData == checkkey || numkeycorrect > needcorrect)
-            {
-                if (numkeycorrect < needcorrect)
-                {
-                    numkeycorrect = needcorrect;
-                }
-
-                return numcorrect;
-            }
-            else
-            {
-                if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode || eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode)
-                {
-                    return numkeycorrect;
-                }
-                else
-                {
-                    for (int i = 0; i < ingorekey.Length; i++)
-                    {
-                        if (eventArgs.KeyData == ingorekey[i])
-                        {
-                            return numcorrect;
-                        }
-                    }
-                }
-
-                return 0;
-            }
-        }
-        */
+#endif
 
         /// <summary>
         /// Gets or sets a value indicating whether FrmNewNote is being showed.

@@ -27,30 +27,49 @@ namespace NoteFly
     public partial class ShortcutTextBox : TextBox
     {
         private bool altinsteadofshift = false;
-        private int shortcutkey = 112;
+        private Keys key = Keys.F1;
 
-        private bool prevaltinsteadofshift = true;
-        private int prevshortcutkey = 112;
-        private Keys prevshottcutkeycode;
+        private bool prev_altinsteadofshift = false;
+        private Keys prev_key = Keys.F1;
 
+        /// <summary>
+        /// Creating a new instance of ShortcutTextBox class.
+        /// </summary>
         public ShortcutTextBox()
         {
-            this.TextAlign = HorizontalAlignment.Center;
-            this.setcontent(Keys.F1);
+            this.TextAlign = HorizontalAlignment.Center;            
+            //this.setcontent();
         }
 
         [Description("The final key")]
-        public int ShortcutKeycode
+        public int ShortcutKeyposition
         {
             get
             {
-                return this.shortcutkey;
+                int keypos = -1;
+                try
+                {
+                    keypos = (int)this.key;
+                }
+                catch
+                {
+                    Log.Write(LogType.exception, "Error: technically, converting Keys enum to key position failed.");
+                }
+                return keypos;
             }
 
             set
             {
-                this.shortcutkey = value;
-                this.prevshortcutkey = this.shortcutkey;
+                try
+                {
+                    this.key = (Keys)value;                    
+                }
+                catch
+                {
+                    Log.Write(LogType.exception, "Error: technically, converting key position to Keys enum item failed.");
+                }
+
+                this.setcontent(); // todo refresh text
             }
         }
 
@@ -61,6 +80,12 @@ namespace NoteFly
             {
                 return this.altinsteadofshift;
             }
+            set
+            {
+                this.altinsteadofshift = value;
+                this.setcontent(); // todo refresh text
+            }
+
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -68,18 +93,18 @@ namespace NoteFly
             e.SuppressKeyPress = true; // prevent typing
             this.Clear();
             
-            this.shortcutkey = e.KeyValue;
+            this.key = e.KeyCode;
             if (!e.Control && !e.Shift && !e.Alt)
             {
                 this.altinsteadofshift = false; // set to default
 
                 // no modifiers pressed
-                this.setcontent(e.KeyCode);
+                this.setcontent();
             }
             else
             {
                 this.altinsteadofshift = e.Alt;
-                this.setcontent(e.KeyCode);                
+                this.setcontent();                
             }
 
             this.SelectionStart = this.TextLength;
@@ -88,14 +113,14 @@ namespace NoteFly
 
         protected override void OnKeyUp(KeyEventArgs e)
         {            
-            this.shortcutkey = this.prevshortcutkey;
-            this.altinsteadofshift = this.prevaltinsteadofshift;
-            this.setcontent(this.prevshottcutkeycode);
+            this.key = this.prev_key;
+            this.altinsteadofshift = this.prev_altinsteadofshift;
+            this.setcontent();
             base.OnKeyUp(e);
         }
 
 
-        private void setcontent(Keys keycode)
+        private void setcontent()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("CTRL + ");
@@ -109,27 +134,26 @@ namespace NoteFly
                 sb.Append("SHIFT + ");
             }
 
-            if (this.IsModifierKey(keycode))
+            if (this.IsModifierKey(key))
             {
                 this.BackColor = System.Drawing.Color.LightYellow;
                 sb.Append("?");                
             }
             else
             {
+                sb.Append(this.key.ToString());
                 this.BackColor = System.Drawing.Color.White;
-                sb.Append(keycode.ToString());
 
-                this.prevshottcutkeycode = keycode;
-                this.prevshortcutkey = this.shortcutkey;
-                this.prevaltinsteadofshift = this.altinsteadofshift;
+                this.prev_altinsteadofshift = this.altinsteadofshift;
+                this.prev_key = key;                
             }
             
             this.Text = sb.ToString();
         }
 
-        private bool IsModifierKey(Keys keycode)
+        private bool IsModifierKey(Keys key)
         {
-            if (keycode == Keys.ControlKey || keycode == Keys.ShiftKey || keycode == Keys.Alt || keycode == Keys.Menu)
+            if (key == Keys.ControlKey || key == Keys.ShiftKey || key == Keys.Alt || key == Keys.Menu)
             {
                 return true;
             }

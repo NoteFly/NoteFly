@@ -436,7 +436,6 @@ namespace NoteFly
             this.Name = "FrmManageNotes";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Manage notes";
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
             this.Deactivate += new System.EventHandler(this.frmManageNotes_Deactivate);
             this.Activated += new System.EventHandler(this.frmManageNotes_Activated);

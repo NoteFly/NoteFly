@@ -207,12 +207,20 @@ namespace NoteFly
             short[] ipluginversionparts = frmplugins.ParserVersionString(versionipluginstring);
             XmlTextReader xmlreader = new XmlTextReader(new System.IO.StringReader(response));
             xmlreader.ProhibitDtd = true;
+            const int MAXSEARCHRESULTSPLUGINS = 50;
+            int numsearchresultsplugins = 0;
             try
             {
                 while (xmlreader.Read())
                 {
                     if (xmlreader.Name == "plugin")
                     {
+                        numsearchresultsplugins++;
+                        if (numsearchresultsplugins > MAXSEARCHRESULTSPLUGINS)
+                        {
+                            break;
+                        }
+
                         string pluginname = null;
                         string curpluginminversioniplugin = null;
                         XmlReader xmlplugin = xmlreader.ReadSubtree();
@@ -405,6 +413,12 @@ namespace NoteFly
                         case "HighlightSQL":
                             Settings.HighlightSQL = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "HotkeysNewNoteAltInsteadShift":
+                            Settings.HotkeysNewNoteAltInsteadShift = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "HotkeysManageNotesAltInsteadShift":
+                            Settings.HotkeysManageNotesAltInsteadShift = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "NetworkProxyEnabled":
                             Settings.NetworkProxyEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -494,6 +508,12 @@ namespace NoteFly
                             break;
 
                         // ints and doubles
+                        case "HotkeysNewNoteKeycode":
+                            Settings.HotkeysNewNoteKeycode = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "HotkeysManageNotesKeycode":
+                            Settings.HotkeysManageNotesKeycode = xmlread.ReadElementContentAsInt();
+                            break;
                         case "TrayiconFontsize":
                             Settings.TrayiconFontsize = xmlread.ReadElementContentAsFloat();
                             break;
@@ -1067,6 +1087,8 @@ namespace NoteFly
                     WriteXMLBool("HighlightHyperlinks", Settings.HighlightHyperlinks);
                     WriteXMLBool("HighlightPHP", Settings.HighlightPHP);
                     WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
+                    WriteXMLBool("HotkeysNewNoteAltInsteadShift", Settings.HotkeysNewNoteAltInsteadShift);
+                    WriteXMLBool("HotkeysManageNotesAltInsteadShift", Settings.HotkeysManageNotesAltInsteadShift);
                     WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
                     WriteXMLBool("NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
                     WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
@@ -1095,6 +1117,8 @@ namespace NoteFly
                     WriteXMLBool("ManagenotesTooltip", Settings.ManagenotesTooltip);
 
                     // integers
+                    xmlwrite.WriteElementString("HotkeysNewNoteKeycode", Settings.HotkeysNewNoteKeycode.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("HotkeysManageNotesKeycode", Settings.HotkeysManageNotesKeycode.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));

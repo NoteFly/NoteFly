@@ -1,8 +1,15 @@
 /**
- * todo
+ * author: Dominique Bijnens
+ * Licenced: CPOL 
+ * for license text see: http://www.codeproject.com/info/cpol10.aspx
+ * original source: http://www.codeproject.com/Articles/9351/Background-applications-listening-for-keyboard-act
+ *
+ * changed to non static class.
  */
 namespace NoteFly
 {
+#if windows
+
     using System;
     using System.Windows.Forms;
     using System.Runtime.InteropServices;
@@ -38,7 +45,7 @@ namespace NoteFly
 		/// </remarks>
 		/// <param name="key"></param>
 		/// <param name="msg"></param>
-		private static void KeyHandler(ushort key, uint msg)
+        private void KeyHandler(ushort key, uint msg) //static
 		{
 			if(s_KeyEventHandler != null)
 			{
@@ -68,9 +75,21 @@ namespace NoteFly
 		/// </summary>
 		public class UniversalKeyEventArgs : KeyEventArgs
 		{
+            /// <summary>
+            /// 
+            /// </summary>
 			public readonly uint m_Msg;
+
+            /// <summary>
+            /// 
+            /// </summary>
 			public readonly ushort m_Key;
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="aKey"></param>
+            /// <param name="aMsg"></param>
 			public UniversalKeyEventArgs(ushort aKey, uint aMsg) : base((Keys)aKey)
 			{
 				m_Msg = aMsg;
@@ -82,13 +101,16 @@ namespace NoteFly
 		/// For every application thread that is interested in keyboard events
 		/// an EventHandler can be added to this variable
 		/// </summary>
-		public static event EventHandler s_KeyEventHandler;
+        public event EventHandler s_KeyEventHandler; //static
 
 		#endregion
 
 		#region Public methods
 
-		static KeyboardListener()
+        /// <summary>
+        /// 
+        /// </summary>
+        public KeyboardListener() //static
 		{
 			ListeningWindow.KeyDelegate aKeyDelegate = new ListeningWindow.KeyDelegate(KeyHandler);
 			s_Listener = new ListeningWindow(aKeyDelegate);
@@ -103,8 +125,16 @@ namespace NoteFly
 		private class ListeningWindow : NativeWindow
 		{
 			#region Declarations
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="key"></param>
+            /// <param name="msg"></param>
 			public delegate void KeyDelegate( ushort key, uint msg );
 
+            /// <summary>
+            /// 
+            /// </summary>
 			private const int 
 				WS_CLIPCHILDREN		= 0x02000000,
 				WM_INPUT			= 0x00FF,
@@ -112,12 +142,26 @@ namespace NoteFly
 				RID_INPUT			= 0x10000003,
 				RIM_TYPEKEYBOARD	= 1;
 
+            /// <summary>
+            /// 
+            /// </summary>
 			private uint m_PrevMessage = 0;
+
+            /// <summary>
+            /// 
+            /// </summary>
 			private ushort m_PrevControlKey = 0;
+
+            /// <summary>
+            /// 
+            /// </summary>
 			private KeyDelegate m_KeyHandler = null;
 			#endregion
 
 			#region Unsafe types
+            /// <summary>
+            /// 
+            /// </summary>
 			internal unsafe struct RAWINPUTDEV 
 			{
 				public ushort usUsagePage;
@@ -126,6 +170,9 @@ namespace NoteFly
 				public void* hwndTarget;
 			};
 
+            /// <summary>
+            /// 
+            /// </summary>
 			internal unsafe struct RAWINPUTHEADER 
 			{
 				public uint dwType;
@@ -134,6 +181,9 @@ namespace NoteFly
 				public void* wParam;
 			};
 
+            /// <summary>
+            /// 
+            /// </summary>
 			internal unsafe struct RAWINPUTHKEYBOARD 
 			{
 				public RAWINPUTHEADER header;
@@ -147,6 +197,10 @@ namespace NoteFly
 			};
 			#endregion
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="keyHandlerFunction"></param>
 			public ListeningWindow(KeyDelegate keyHandlerFunction)
 			{
 				m_KeyHandler = keyHandlerFunction;
@@ -190,6 +244,10 @@ namespace NoteFly
 	
 
 			#region Private methods
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="m"></param>
 			protected override void WndProc(ref Message m)
 			{
 				switch (m.Msg)
@@ -277,4 +335,5 @@ namespace NoteFly
 		}
 		#endregion
 	}
+#endif
 }

@@ -25,7 +25,7 @@ namespace NoteFly
     using System.Net;
 
     /// <summary>
-    /// Http
+    /// Http utily class
     /// </summary>
     public class HttpUtil
     {    

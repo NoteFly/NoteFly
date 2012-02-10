@@ -34,12 +34,22 @@ namespace NoteFly
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             InitializeComponent();
+            this.SetFormTitle();
             Strings.TranslateForm(this);
             this.pluginGrid.Enabled = Settings.ProgramPluginsAllEnabled;
         }
 
         /// <summary>
-        /// 
+        /// Set the title of this form.
+        /// </summary>
+        private void SetFormTitle()
+        {
+            this.Text = Strings.T("Plugins") + " - " + Program.AssemblyTitle;            
+        }
+
+        /// <summary>
+        /// Check if tabPagePluginsAvailable is selected, 
+        /// if it is then get a list with available all plugins.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -53,15 +63,16 @@ namespace NoteFly
                 httputil_allplugins.httpthread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet);
                 if (!httputil_allplugins.Start())
                 {
-                    MessageBox.Show("error."); //todo
+                    Log.Write(LogType.exception, "error request, by tabControlPlugins_SelectedIndexChanged.");
                 }
             }
         }  
 
         /// <summary>
-        /// 
+        /// Downloading of a list of allplugins is compleet, parser results and display items in chlbxAvailiblePlugins.
         /// </summary>
-        /// <param name="response"></param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void httputil_allplugins_DownloadCompleet(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
@@ -104,8 +115,9 @@ namespace NoteFly
             }
             else
             {
-                Log.Write(LogType.exception, "No versionstring to parser.");
+                Log.Write(LogType.exception, "No version string to parser.");
             }
+
             return versionparts;
         }
 
@@ -159,14 +171,14 @@ namespace NoteFly
                     httputil_plugindetail.httpthread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet);
                     if (!httputil_plugindetail.Start())
                     {
-                        MessageBox.Show("error.."); // todo error
+                        Log.Write(LogType.exception, "error request, by chlbxAvailiblePlugins_SelectedIndexChanged.");
                     }
                 }
             }
         }
 
         /// <summary>
-        /// 
+        /// Downloading of plugin details data is compleet, parser data and display plugin details
         /// </summary>
         /// <param name="response"></param>
         private void httputil_plugindetail_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
@@ -199,7 +211,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// The user request to search, make request for search results.
         /// </summary>
         /// <param name="keywords"></param>
         private void searchtbPlugins_SearchStart(string keywords)
@@ -209,12 +221,12 @@ namespace NoteFly
             httputil_searchplugins.httpthread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet);
             if (!httputil_searchplugins.Start())
             {
-                MessageBox.Show("error..."); // todo
+                Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStart.");
             }
         }
 
         /// <summary>
-        /// 
+        /// Downloading of search results data is compleet, parser searchresult data and list search results
         /// </summary>
         /// <param name="response"></param>
         private void httputil_searchplugins_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
@@ -227,7 +239,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// The user wants to sto searching, get the list of all plugins again.
         /// </summary>
         private void searchtbPlugins_SearchStop()
         {
@@ -235,7 +247,7 @@ namespace NoteFly
             httputil_allplugins.httpthread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet);
             if (!httputil_allplugins.Start())
             {
-                MessageBox.Show("error"); // todo
+                Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStop.");
             }
         }
 

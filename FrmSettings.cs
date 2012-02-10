@@ -25,8 +25,9 @@ namespace NoteFly
     using System.IO;
     using System.Windows.Forms;
     using System.Threading;
+    using System.Text;
 #if windows
-    using Microsoft.Win32;    
+    using Microsoft.Win32;
 #endif
 
     /// <summary>
@@ -122,14 +123,19 @@ namespace NoteFly
         /// <param name="expertsettings">Is showing expert settings enabled.</param>
         private void SetFormTitle(bool expertsettings)
         {
+            StringBuilder sbtitle = new StringBuilder();
             if (expertsettings)
             {
-                this.Text = Strings.T("Expert settings");
+                sbtitle.Append(Strings.T("Expert settings"));
             }
             else
             {
-                this.Text = Strings.T("Settings");
+                sbtitle.Append(Strings.T("Settings"));
             }
+
+            sbtitle.Append(" - ");
+            sbtitle.Append(Program.AssemblyTitle);
+            this.Text = sbtitle.ToString();
         }
 
         /// <summary>
@@ -237,9 +243,9 @@ namespace NoteFly
 
                 // tab: Hotkeys
                 Settings.HotkeysNewNoteAltInsteadShift = this.shortcutTextBoxNewNote.UseAltInsteadofShift;
-                Settings.HotkeysNewNoteKeycode = this.shortcutTextBoxNewNote.ShortcutKeycode;
+                Settings.HotkeysNewNoteKeycode = this.shortcutTextBoxNewNote.ShortcutKeyposition;
                 Settings.HotkeysManageNotesAltInsteadShift = this.shortcutTextBoxManageNotes.UseAltInsteadofShift;
-                Settings.HotkeysManageNotesKeycode = this.shortcutTextBoxManageNotes.ShortcutKeycode;
+                Settings.HotkeysManageNotesKeycode = this.shortcutTextBoxManageNotes.ShortcutKeyposition;
 
                 // tab: Appearance, notes
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
@@ -606,6 +612,13 @@ namespace NoteFly
             this.chxConfirmDeletenote.Checked = Settings.ConfirmDeletenote;
             this.chxNotesDeleteRecyclebin.Checked = Settings.NotesDeleteRecyclebin;
             this.SetComboBoxSelectedIndex(this.cbxActionLeftclick, Settings.TrayiconLeftclickaction);
+
+            // tab: Hotkeys
+            this.shortcutTextBoxNewNote.UseAltInsteadofShift = Settings.HotkeysNewNoteAltInsteadShift;
+            this.shortcutTextBoxNewNote.ShortcutKeyposition = Settings.HotkeysNewNoteKeycode;
+
+            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = Settings.HotkeysManageNotesAltInsteadShift;
+            this.shortcutTextBoxManageNotes.ShortcutKeyposition = Settings.HotkeysManageNotesKeycode;
 
             // tab: Appearance, notes
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;

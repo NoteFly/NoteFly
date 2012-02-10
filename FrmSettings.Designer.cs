@@ -389,6 +389,7 @@ namespace NoteFly
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabControlSettings = new System.Windows.Forms.TabControl();
@@ -404,8 +405,10 @@ namespace NoteFly
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
             this.tabHotkeys = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelShortcuts = new System.Windows.Forms.TableLayoutPanel();
+            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
             this.lblTextShortcutNewNote = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblTextShortcutManageNotes = new System.Windows.Forms.Label();
+            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabctrlAppearance = new System.Windows.Forms.TabControl();
             this.tabAppearanceOverall = new System.Windows.Forms.TabPage();
@@ -469,6 +472,7 @@ namespace NoteFly
             this.tabSharing = new System.Windows.Forms.TabPage();
             this.tabControlSharing = new System.Windows.Forms.TabControl();
             this.tabEmail = new System.Windows.Forms.TabPage();
+            this.tbDefaultEmail = new NoteFly.EmailTextBox();
             this.chxSocialEmailEnabled = new System.Windows.Forms.CheckBox();
             this.chxSocialEmailDefaultaddressSet = new System.Windows.Forms.CheckBox();
             this.tabNetwork = new System.Windows.Forms.TabPage();
@@ -486,20 +490,23 @@ namespace NoteFly
             this.btnCheckUpdates = new System.Windows.Forms.Button();
             this.tabProxy = new System.Windows.Forms.TabPage();
             this.numProxyPort = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTextPort = new System.Windows.Forms.Label();
+            this.lblTextAddress = new System.Windows.Forms.Label();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
             this.chxForceUseIPv6 = new System.Windows.Forms.CheckBox();
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lblTextMiliseconds = new System.Windows.Forms.Label();
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
+            this.iptbProxy = new NoteFly.IPTextBox();
             this.tabPageGPG = new System.Windows.Forms.TabPage();
+            this.tbGPGPath = new NoteFly.IOTextBox();
             this.btnGPGPathBrowse = new System.Windows.Forms.Button();
             this.lblTextGPGPath = new System.Windows.Forms.Label();
             this.chxCheckUpdatesSignature = new System.Windows.Forms.CheckBox();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.tbNotesSavePath = new NoteFly.IOTextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -516,12 +523,6 @@ namespace NoteFly
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
-            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
-            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
-            this.tbDefaultEmail = new NoteFly.EmailTextBox();
-            this.iptbProxy = new NoteFly.IPTextBox();
-            this.tbGPGPath = new NoteFly.IOTextBox();
-            this.tbNotesSavePath = new NoteFly.IOTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -773,10 +774,10 @@ namespace NoteFly
             this.tableLayoutPanelShortcuts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelShortcuts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelShortcuts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelShortcuts.Controls.Add(this.lblTextShortcutNewNote, 0, 0);
-            this.tableLayoutPanelShortcuts.Controls.Add(this.label3, 0, 1);
-            this.tableLayoutPanelShortcuts.Controls.Add(this.shortcutTextBoxNewNote, 1, 0);
             this.tableLayoutPanelShortcuts.Controls.Add(this.shortcutTextBoxManageNotes, 1, 1);
+            this.tableLayoutPanelShortcuts.Controls.Add(this.lblTextShortcutNewNote, 0, 0);
+            this.tableLayoutPanelShortcuts.Controls.Add(this.lblTextShortcutManageNotes, 0, 1);
+            this.tableLayoutPanelShortcuts.Controls.Add(this.shortcutTextBoxNewNote, 1, 0);
             this.tableLayoutPanelShortcuts.Location = new System.Drawing.Point(20, 37);
             this.tableLayoutPanelShortcuts.Name = "tableLayoutPanelShortcuts";
             this.tableLayoutPanelShortcuts.RowCount = 2;
@@ -785,25 +786,49 @@ namespace NoteFly
             this.tableLayoutPanelShortcuts.Size = new System.Drawing.Size(417, 63);
             this.tableLayoutPanelShortcuts.TabIndex = 16;
             // 
+            // shortcutTextBoxManageNotes
+            // 
+            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 34);
+            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
+            this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
+            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(244, 22);
+            this.shortcutTextBoxManageNotes.TabIndex = 12;
+            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
+            // 
             // lblTextShortcutNewNote
             // 
             this.lblTextShortcutNewNote.AutoSize = true;
             this.lblTextShortcutNewNote.Location = new System.Drawing.Point(3, 5);
             this.lblTextShortcutNewNote.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextShortcutNewNote.Name = "lblTextShortcutNewNote";
-            this.lblTextShortcutNewNote.Size = new System.Drawing.Size(115, 16);
+            this.lblTextShortcutNewNote.Size = new System.Drawing.Size(110, 16);
             this.lblTextShortcutNewNote.TabIndex = 9;
-            this.lblTextShortcutNewNote.Text = "Shortcut new note:";
+            this.lblTextShortcutNewNote.Text = "Hotkey new note:";
             // 
-            // label3
+            // lblTextShortcutManageNotes
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 36);
-            this.label3.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(148, 16);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Shortcut manage notes:";
+            this.lblTextShortcutManageNotes.AutoSize = true;
+            this.lblTextShortcutManageNotes.Location = new System.Drawing.Point(3, 36);
+            this.lblTextShortcutManageNotes.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblTextShortcutManageNotes.Name = "lblTextShortcutManageNotes";
+            this.lblTextShortcutManageNotes.Size = new System.Drawing.Size(143, 16);
+            this.lblTextShortcutManageNotes.TabIndex = 10;
+            this.lblTextShortcutManageNotes.Text = "Hotkey manage notes:";
+            // 
+            // shortcutTextBoxNewNote
+            // 
+            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(152, 3);
+            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
+            this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
+            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(244, 22);
+            this.shortcutTextBoxNewNote.TabIndex = 11;
+            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
             // 
             // tabAppearance
             // 
@@ -1754,6 +1779,15 @@ namespace NoteFly
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
             // 
+            // tbDefaultEmail
+            // 
+            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
+            this.tbDefaultEmail.Enabled = false;
+            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
+            this.tbDefaultEmail.Name = "tbDefaultEmail";
+            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
+            this.tbDefaultEmail.TabIndex = 26;
+            // 
             // chxSocialEmailEnabled
             // 
             this.chxSocialEmailEnabled.AutoSize = true;
@@ -1976,8 +2010,8 @@ namespace NoteFly
             // tabProxy
             // 
             this.tabProxy.Controls.Add(this.numProxyPort);
-            this.tabProxy.Controls.Add(this.label2);
-            this.tabProxy.Controls.Add(this.label1);
+            this.tabProxy.Controls.Add(this.lblTextPort);
+            this.tabProxy.Controls.Add(this.lblTextAddress);
             this.tabProxy.Controls.Add(this.tableLayoutPanel9);
             this.tabProxy.Controls.Add(this.chxProxyEnabled);
             this.tabProxy.Controls.Add(this.iptbProxy);
@@ -2012,23 +2046,23 @@ namespace NoteFly
             0,
             0});
             // 
-            // label2
+            // lblTextPort
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(287, 60);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 16);
-            this.label2.TabIndex = 30;
-            this.label2.Text = "port:";
+            this.lblTextPort.AutoSize = true;
+            this.lblTextPort.Location = new System.Drawing.Point(287, 60);
+            this.lblTextPort.Name = "lblTextPort";
+            this.lblTextPort.Size = new System.Drawing.Size(34, 16);
+            this.lblTextPort.TabIndex = 30;
+            this.lblTextPort.Text = "port:";
             // 
-            // label1
+            // lblTextAddress
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 60);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 16);
-            this.label1.TabIndex = 29;
-            this.label1.Text = "address:";
+            this.lblTextAddress.AutoSize = true;
+            this.lblTextAddress.Location = new System.Drawing.Point(16, 60);
+            this.lblTextAddress.Name = "lblTextAddress";
+            this.lblTextAddress.Size = new System.Drawing.Size(61, 16);
+            this.lblTextAddress.TabIndex = 29;
+            this.lblTextAddress.Text = "address:";
             // 
             // tableLayoutPanel9
             // 
@@ -2130,6 +2164,14 @@ namespace NoteFly
             this.chxProxyEnabled.UseVisualStyleBackColor = true;
             this.chxProxyEnabled.CheckedChanged += new System.EventHandler(this.chxUseProxy_CheckedChanged);
             // 
+            // iptbProxy
+            // 
+            this.iptbProxy.Enabled = false;
+            this.iptbProxy.Location = new System.Drawing.Point(83, 57);
+            this.iptbProxy.Name = "iptbProxy";
+            this.iptbProxy.Size = new System.Drawing.Size(195, 22);
+            this.iptbProxy.TabIndex = 26;
+            // 
             // tabPageGPG
             // 
             this.tabPageGPG.Controls.Add(this.tbGPGPath);
@@ -2143,6 +2185,13 @@ namespace NoteFly
             this.tabPageGPG.TabIndex = 2;
             this.tabPageGPG.Text = "GnuPG";
             this.tabPageGPG.UseVisualStyleBackColor = true;
+            // 
+            // tbGPGPath
+            // 
+            this.tbGPGPath.Location = new System.Drawing.Point(123, 60);
+            this.tbGPGPath.Name = "tbGPGPath";
+            this.tbGPGPath.Size = new System.Drawing.Size(221, 22);
+            this.tbGPGPath.TabIndex = 38;
             // 
             // btnGPGPathBrowse
             // 
@@ -2211,6 +2260,13 @@ namespace NoteFly
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
+            // 
+            // tbNotesSavePath
+            // 
+            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
+            this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
+            this.tbNotesSavePath.TabIndex = 39;
             // 
             // btnBrowse
             // 
@@ -2437,59 +2493,6 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
-            // shortcutTextBoxNewNote
-            // 
-            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(157, 3);
-            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
-            this.shortcutTextBoxNewNote.ShortcutKeycode = 112;
-            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(198, 22);
-            this.shortcutTextBoxNewNote.TabIndex = 11;
-            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // shortcutTextBoxManageNotes
-            // 
-            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(157, 34);
-            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
-            this.shortcutTextBoxNewNote.ShortcutKeycode = 113;
-            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(198, 22);
-            this.shortcutTextBoxManageNotes.TabIndex = 12;
-            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F2";
-            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tbDefaultEmail
-            // 
-            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
-            this.tbDefaultEmail.Enabled = false;
-            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
-            this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
-            this.tbDefaultEmail.TabIndex = 26;
-            // 
-            // iptbProxy
-            // 
-            this.iptbProxy.Enabled = false;
-            this.iptbProxy.Location = new System.Drawing.Point(83, 57);
-            this.iptbProxy.Name = "iptbProxy";
-            this.iptbProxy.Size = new System.Drawing.Size(195, 22);
-            this.iptbProxy.TabIndex = 26;
-            // 
-            // tbGPGPath
-            // 
-            this.tbGPGPath.Location = new System.Drawing.Point(123, 60);
-            this.tbGPGPath.Name = "tbGPGPath";
-            this.tbGPGPath.Size = new System.Drawing.Size(221, 22);
-            this.tbGPGPath.TabIndex = 38;
-            // 
-            // tbNotesSavePath
-            // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
-            this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
-            this.tbNotesSavePath.TabIndex = 39;
-            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2501,12 +2504,12 @@ namespace NoteFly
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(360, 240);
             this.Name = "FrmSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.Text = "Settings";
             this.tabControlSettings.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
@@ -2623,16 +2626,16 @@ namespace NoteFly
         private System.Windows.Forms.Label lblTextGPGPath;
         private System.Windows.Forms.CheckBox chxCheckUpdatesSignature;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTextAddress;
         private System.Windows.Forms.NumericUpDown numProxyPort;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTextPort;
         private IOTextBox tbGPGPath;
         private EmailTextBox tbDefaultEmail;
         private IOTextBox tbNotesSavePath;
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Label lblTextNoteLocation;
         private System.Windows.Forms.TabPage tabHotkeys;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblTextShortcutManageNotes;
         private System.Windows.Forms.Label lblTextShortcutNewNote;
         private System.Windows.Forms.CheckBox chxNotesDeleteRecyclebin;
         private System.Windows.Forms.CheckBox chxConfirmDeletenote;
@@ -2644,7 +2647,7 @@ namespace NoteFly
         private System.Windows.Forms.ComboBox cbxActionLeftclick;
         private System.Windows.Forms.CheckBox chxConfirmExit;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelShortcuts;
-        private ShortcutTextBox shortcutTextBoxNewNote;
         private ShortcutTextBox shortcutTextBoxManageNotes;
+        private ShortcutTextBox shortcutTextBoxNewNote;
     }
 }

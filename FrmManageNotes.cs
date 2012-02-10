@@ -84,6 +84,7 @@ namespace NoteFly
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
+            this.SetFormTitle();
             Strings.TranslateForm(this);
             this.notes = notes;
             this.SetSkin();
@@ -163,6 +164,15 @@ namespace NoteFly
                 this.pnlHead.BackColor = Color.Transparent;
             }
         }
+
+        /// <summary>
+        /// Set the title of this form.
+        /// </summary>
+        private void SetFormTitle()
+        {
+            this.Text = Strings.T("Manage notes") + " - " + Program.AssemblyTitle;
+        }
+
 
         /// <summary>
         /// Request to backup all notes to a file.
@@ -1529,7 +1539,6 @@ namespace NoteFly
                             catch (ArgumentOutOfRangeException argoutrange)
                             {
                                 throw new ApplicationException(argoutrange.Message);
-                                return;
                             }
 
                             int tooltiplocx = Cursor.Position.X - this.Location.X;
