@@ -111,7 +111,14 @@ namespace NoteFly
                     {
                         using (StreamReader streamreader = new StreamReader(responsestream))
                         {
-                            e.Result = (string)streamreader.ReadToEnd();
+                            try
+                            {
+                                e.Result = (string)streamreader.ReadToEnd(); // fixme possinle memory issue.
+                            }
+                            catch (OutOfMemoryException memexc)
+                            {
+                                Log.Write(LogType.exception, memexc.Message);
+                            }
                         }
                     }
                 }
@@ -124,7 +131,7 @@ namespace NoteFly
                     if (webresponse != null)
                     {
                         webresponse.Close();
-                    }
+                    }                    
                 }
             }
         }

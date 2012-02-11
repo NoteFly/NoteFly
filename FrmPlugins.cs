@@ -26,6 +26,7 @@ namespace NoteFly
     public partial class FrmPlugins : Form
     {
         private string currentplugindownloadurl = null;
+        private FrmDownloader frmdownloader;
 
         /// <summary>
         /// Initialize a new instance of FrmPlugins class.
@@ -204,10 +205,16 @@ namespace NoteFly
         {
             if (!string.IsNullOrEmpty(this.currentplugindownloadurl))
             {
-                string plugins_downloadingplugin = Strings.T("Downloading plugin..");
-                FrmDownloader downloader = new FrmDownloader(this.currentplugindownloadurl, false, false, plugins_downloadingplugin);
-                downloader.Show();
+                this.frmdownloader = new FrmDownloader(Strings.T("Downloading plugin.."), this.currentplugindownloadurl, Settings.ProgramPluginsFolder);
+                this.frmdownloader.DownloadCompleetSuccesfull += new FrmDownloader.DownloadCompleetHandler(downloader_DownloadCompleet);
+                this.frmdownloader.StartDownload();
+                this.frmdownloader.Show();
             }
+        }
+
+        private void downloader_DownloadCompleet(string storefilepath)
+        {
+            this.pluginGrid.DrawAllPluginsDetails(PluginGrid.DEFAULTWITH);            
         }
 
         /// <summary>

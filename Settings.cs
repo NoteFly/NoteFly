@@ -378,6 +378,11 @@ namespace NoteFly
         public static string NetworkProxyAddress = string.Empty;
 
         /// <summary>
+        /// The port used of the proxy server.
+        /// </summary>
+        public static int NetworkProxyPort = 80;
+
+        /// <summary>
         /// Use Gzip for http tranfer
         /// </summary>
         public static bool NetworkUseGzip = false;

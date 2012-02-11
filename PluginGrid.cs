@@ -28,6 +28,8 @@ namespace NoteFly
     /// </summary>
     public sealed partial class PluginGrid : UserControl
     {
+        public const int DEFAULTWITH = 415;
+
         /// <summary>
         /// Array with all enable/disable buttons for every plugin.
         /// </summary>
@@ -53,8 +55,7 @@ namespace NoteFly
         /// </summary>
         public PluginGrid()
         {
-            const int DEFAULTWITH = 415;
-            this.DrawAllPluginsDetails(DEFAULTWITH);
+            this.DrawAllPluginsDetails(PluginGrid.DEFAULTWITH);
         }
 
         /// <summary>

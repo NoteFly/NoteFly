@@ -336,10 +336,10 @@ namespace NoteFly
 
         /// <summary>
         /// Get the skinnr that belongs by a name.
-        /// If not found return -1.
+        /// If not found return 0 is return so first skin is used.
         /// </summary>
         /// <param name="skinname">The skin name.</param>
-        /// <returns>The skinnr, if not found then -1 is returned.</returns>
+        /// <returns>The skinnr.</returns>
         public int GetSkinNr(string skinname)
         {
             for (int i = 0; i < this.skins.Count; i++)
@@ -350,8 +350,8 @@ namespace NoteFly
                 }
             }
 
-            Log.Write(LogType.error, "SkinNr not found for skinname:" + skinname);
-            return -1;
+            Log.Write(LogType.error, "SkinNr not found for skinname: " + skinname);
+            return 0;
         }
 
         /// <summary>

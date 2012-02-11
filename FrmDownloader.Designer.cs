@@ -35,11 +35,6 @@ namespace NoteFly
         private System.Windows.Forms.ProgressBar progressbarDownload;
         
         /// <summary>
-        /// BackgroundWorker backgroundWorkerDownloader
-        /// </summary>
-        private System.ComponentModel.BackgroundWorker backgroundWorkerDownloader;
-        
-        /// <summary>
         /// Label lblStatusUpdate
         /// </summary>
         private System.Windows.Forms.Label lblStatusUpdate;
@@ -67,7 +62,6 @@ namespace NoteFly
         private void InitializeComponent()
         {
             this.progressbarDownload = new System.Windows.Forms.ProgressBar();
-            this.backgroundWorkerDownloader = new System.ComponentModel.BackgroundWorker();
             this.lblStatusUpdate = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -81,13 +75,6 @@ namespace NoteFly
             this.progressbarDownload.Size = new System.Drawing.Size(350, 22);
             this.progressbarDownload.TabIndex = 1;
             this.progressbarDownload.Value = 2;
-            // 
-            // backgroundWorkerDownloader
-            // 
-            this.backgroundWorkerDownloader.WorkerReportsProgress = true;
-            this.backgroundWorkerDownloader.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerDownloader_DoWork);
-            this.backgroundWorkerDownloader.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerDownloader_RunWorkerCompleted);
-            this.backgroundWorkerDownloader.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerDownloader_ProgressChanged);
             // 
             // lblStatusUpdate
             // 

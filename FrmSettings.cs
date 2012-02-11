@@ -64,14 +64,14 @@ namespace NoteFly
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.oldnotesavepath = Settings.NotesSavepath;
-            
+
             this.InitializeComponent();
             this.notes = notes;
             Strings.TranslateForm(this);
-            this.SetFormTitle(Settings.SettingsExpertEnabled);         
+            this.SetFormTitle(Settings.SettingsExpertEnabled);
             this.tabControlSettings_SelectedIndexChanged(null, null);
             this.LoadCbxActionLeftclick();
-            this.LoadCbxFonts();     
+            this.LoadCbxFonts();
             this.LoadCbxLanguage();
             this.SetControlsBySettings();
         }
@@ -423,7 +423,7 @@ namespace NoteFly
         /// <param name="checktimems">miliseconds to check if workthread is done, is also the minimum show time of the message, if being showed</param>
         /// <param name="message">The message to show</param>
         private void ShowWaitOnThread(Thread worktread, int checktimems, string message)
-        {            
+        {
             Form frmmgs = null;
             bool mgsshowed = false;
             while (worktread.ThreadState == ThreadState.Running)
@@ -588,7 +588,7 @@ namespace NoteFly
                     if (!errorshowed)
                     {
                         string settings_filealreadyexisttitle = Strings.T("Error moving note(s)");
-                        string settings_filealreadyexist = Strings.T("Note file(s) already exist.");                        
+                        string settings_filealreadyexist = Strings.T("Note file(s) already exist.");
                         Log.Write(LogType.error, settings_filealreadyexist);
                         MessageBox.Show(settings_filealreadyexist, settings_filealreadyexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         errorshowed = true;
@@ -629,7 +629,7 @@ namespace NoteFly
             this.chxUseRandomDefaultNote.Checked = Settings.NotesDefaultRandomSkin;
             this.SetComboBoxSelectedIndex(this.cbxDefaultSkin, Settings.NotesDefaultSkinnr);
             this.SetUpDownSpinnerValue(this.numNotesDefaultWidth, Settings.NotesDefaultWidth);
-            this.SetUpDownSpinnerValue(this.numNotesDefaultHeight, Settings.NotesDefaultHeight);            
+            this.SetUpDownSpinnerValue(this.numNotesDefaultHeight, Settings.NotesDefaultHeight);
             this.chxUseDateAsDefaultTitle.Checked = Settings.NotesDefaultTitleDate;
 
             // tab: Appearance, fonts
@@ -691,7 +691,7 @@ namespace NoteFly
             this.iptbProxy.Text = Settings.NetworkProxyAddress;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
             this.SetUpDownSpinnerValue(this.numTimeout, Settings.NetworkConnectionTimeout);
-            this.SetLastUpdatecheckDate(Settings.SettingsExpertEnabled);                        
+            this.SetLastUpdatecheckDate(Settings.SettingsExpertEnabled);
 
             // tab: Advance
             this.chxLoadPlugins.Checked = Settings.ProgramPluginsAllEnabled;
@@ -809,7 +809,7 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void btnCheckUpdates_Click(object sender, EventArgs e)
         {
-            Settings.UpdatecheckLastDate = Program.UpdateGetLatestVersion();            
+            Settings.UpdatecheckLastDate = Program.UpdateGetLatestVersion();
             //xmlUtil.WriteSettings(); // FIXME: not saving settings for UpdatecheckLastDate otherwise all changed in this form settings are saved too.
             if (!string.IsNullOrEmpty(Settings.UpdatecheckLastDate))
             {
@@ -834,7 +834,7 @@ namespace NoteFly
             this.chxUseAlternativeTrayicon.Visible = expertsettings;
             this.chxConfirmLink.Visible = expertsettings;
             this.chxUpdateSilentInstall.Visible = expertsettings;
-            this.lblTextGPGPath.Visible = expertsettings;           
+            this.lblTextGPGPath.Visible = expertsettings;
             this.tbGPGPath.Visible = expertsettings;
             this.btnGPGPathBrowse.Visible = expertsettings;
             this.chxCheckUpdatesSignature.Visible = expertsettings;
@@ -876,7 +876,7 @@ namespace NoteFly
                 else
                 {
                     this.lblLatestUpdateCheck.Text = Settings.UpdatecheckLastDate;
-                }                
+                }
             }
         }
 
@@ -952,7 +952,7 @@ namespace NoteFly
             {
                 this.tbGPGPath.Text = this.openFileDialogBrowseGPG.FileName;
             }
-        }       
+        }
 
         /// <summary>
         /// 
@@ -977,7 +977,7 @@ namespace NoteFly
         private void LoadCbxLanguage()
         {
             this.cbxLanguage.Items.Clear();
-            
+
             string translatefolderpath = Path.Combine(Program.InstallFolder, Strings.ResourcesDirectory);
             if (Directory.Exists(translatefolderpath))
             {
@@ -996,7 +996,7 @@ namespace NoteFly
                     {
                         Log.Write(LogType.exception, culturefolders[i].Name + " not a culture.");
                     }
-                    
+
                     culturefolders[i] = null;
                 }
 
@@ -1018,15 +1018,17 @@ namespace NoteFly
         /// <returns>The languagecode return en for english if not found.</returns>
         private string GetLanguageCode(int cbxLanguageSelectedIndex)
         {
-            string languageisocode = this.languagecodes[this.cbxLanguage.SelectedIndex];
-            if (!String.IsNullOrEmpty(languageisocode))
+            if (cbxLanguageSelectedIndex < this.languagecodes.Length && cbxLanguageSelectedIndex >= 0)
             {
-                return languageisocode;
+                string languageisocode = this.languagecodes[cbxLanguageSelectedIndex];
+                if (!String.IsNullOrEmpty(languageisocode))
+                {
+                    return languageisocode;
+                }
             }
-            else
-            {
-                return "en";
-            }
+
+            Log.Write(LogType.exception, "Selected language in cbxLanguage not found, used default.");
+            return "en";
         }
 
         /// <summary>
