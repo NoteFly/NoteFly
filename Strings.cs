@@ -73,7 +73,6 @@ namespace NoteFly
         {
             get
             {
-
                 if (object.ReferenceEquals(resourceMan, null))
                 {
                     lock (resourceManLock)
@@ -250,17 +249,18 @@ namespace NoteFly
         {
             bool translatecontrol = false;
             Type controltype = control.GetType();
-            // blacklist type control
-            if (controltype != typeof(System.Windows.Forms.NumericUpDown) &&
-                controltype != typeof(System.Windows.Forms.TextBox) &&
-                controltype != typeof(System.Windows.Forms.ComboBox) &&
-                controltype != typeof(System.Windows.Forms.DataGridView) &&
-                controltype != typeof(System.Windows.Forms.PictureBox) &&
-                controltype != typeof(System.Windows.Forms.CheckedListBox) &&
-                controltype != typeof(NoteFly.TransparentRichTextBox) &&
-                controltype != typeof(NoteFly.PluginGrid))
+
+            // whitelist control type
+            if (controltype == typeof(System.Windows.Forms.Label) ||
+                controltype == typeof(System.Windows.Forms.ToolStripMenuItem) ||
+                controltype == typeof(System.Windows.Forms.Button) ||
+                controltype == typeof(System.Windows.Forms.CheckBox) ||
+                controltype == typeof(System.Windows.Forms.TabPage) ||
+                controltype == typeof(System.Windows.Forms.ToolTip) ||
+                controltype == typeof(System.Windows.Forms.LinkLabel) ||
+                controltype == typeof(SearchTextBox) )
             {
-                // blacklist name control
+                // blacklist control name
                 if (control.Name != "btnKeywordClear" && 
                     control.Name != "btnClose" &&
                     control.Name != "btnTextBold" &&

@@ -33,7 +33,7 @@ namespace NoteFly
         /// <summary>
         /// The GnuPG signature file extension
         /// </summary>
-        private const string GPGSIGNATUREEXTENSION = ".sig";
+        public const string GPGSIGNATUREEXTENSION = ".sig";
 
         /// <summary>
         /// GnuPG process
@@ -53,9 +53,10 @@ namespace NoteFly
         /// <summary>
         /// Verify a file.
         /// </summary>
-        /// <param name="downloadfilepath">The path to the local file that was downloaded</param>
-        /// <returns>True if user allows install.</returns>
-        public bool VerifDownload(string downloadfilepath)
+        /// <param name="file">The path to the local file that was downloaded</param>
+        /// <param name="sigfilepath">The path to the signature file.</param>
+        /// <returns>True if user allows install, signature valid.</returns>
+        public bool VerifDownload(string file, string sigfile)
         {
             bool allowlaunch = false;
 
@@ -80,7 +81,7 @@ namespace NoteFly
 
             try
             {
-                System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --verify-files " + downloadfilepath + GPGSIGNATUREEXTENSION);
+                System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --verify-files " + sigfile);
                 procInfo.CreateNoWindow = true;
                 procInfo.UseShellExecute = false;
                 procInfo.RedirectStandardInput = true;
@@ -91,10 +92,12 @@ namespace NoteFly
                 if (gpgprocexitcode == 0)
                 {
                     // Currently display GPG result via messagebox, and user required to press yes to launch install.
-                    string gpgverifwrapper_installupdate = Strings.T("Do you want to install the update?");
-                    string gpgverifwrapper_gpgsigresult = Strings.T(" GPG signature check result");
-                    System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(this.gpgoutput + this.gpgerror + System.Environment.NewLine + gpgverifwrapper_installupdate, Program.AssemblyTitle + " GPG signature check result", System.Windows.Forms.MessageBoxButtons.YesNo);
-                    if (dlgres == System.Windows.Forms.DialogResult.Yes)
+                    StringBuilder sbmsg = new StringBuilder(this.gpgoutput);
+                    sbmsg.AppendLine(this.gpgerror);
+                    sbmsg.AppendLine(Strings.T("Do you want to install the update?"));                    
+                    string msgtitle = Strings.T("GnuPG signature check result");
+                    System.Windows.Forms.DialogResult dlgsigres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), msgtitle, System.Windows.Forms.MessageBoxButtons.YesNo);
+                    if (dlgsigres == System.Windows.Forms.DialogResult.Yes)
                     {
                         allowlaunch = true;
                     }
@@ -110,16 +113,6 @@ namespace NoteFly
             }
 
             return allowlaunch;
-        }
-
-        /// <summary>
-        /// Get the NoteFly setup signature file location.
-        /// </summary>
-        /// <param name="file">The url of the file to verify.</param>
-        /// <returns>The url of the signature file to verify file with.</returns>
-        public string GetSignature(string file)
-        {
-            return file + GPGSIGNATUREEXTENSION;
         }
 
         /// <summary>

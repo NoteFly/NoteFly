@@ -308,7 +308,7 @@ namespace NoteFly
 
             SyntaxHighlight.DeinitHighlighter();
             System.Windows.Forms.Application.Run();
-        }       
+        }
 
         /// <summary>
         /// Parser the programme arguments
@@ -405,7 +405,7 @@ namespace NoteFly
             System.Globalization.CultureInfo culture;
             try
             {
-                culture = System.Globalization.CultureInfo.GetCultureInfo(languagecode);                
+                culture = System.Globalization.CultureInfo.GetCultureInfo(languagecode);
             }
             catch (ArgumentException)
             {
@@ -484,15 +484,94 @@ namespace NoteFly
                     System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                     if (updres == System.Windows.Forms.DialogResult.Yes)
                     {
-                        // todo
-                        //FrmDownloader frmupdater = new FrmDownloader(downloadurl, Settings.UpdatecheckUseGPG, true, "Downloading update..");
-                        //frmupdater.Show();
+                        FrmDownloader frmupdater = new FrmDownloader(String.Format(Strings.T("Downloading {0} update"), Program.AssemblyTitle));
+                        frmupdater.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(frmupdater_DownloadCompleetSuccesfull);
+                        frmupdater.Show();
+                        if (Settings.UpdatecheckUseGPG)
+                        {
+                            string[] downloads = new string[2];
+                            downloads[0] = downloadurl;
+                            downloads[1] = downloadurl + GPGVerifWrapper.GPGSIGNATUREEXTENSION;
+                            frmupdater.BeginDownload(downloads, System.Environment.GetEnvironmentVariable("TEMP"));
+                        }
+                        else
+                        {
+                            frmupdater.BeginDownload(downloadurl, System.Environment.GetEnvironmentVariable("TEMP"));
+                        }
                     }
                 }
                 else
                 {
                     throw new ApplicationException("Downloadurl is unexcepted unknown.");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Download update compleet, run update.
+        /// </summary>
+        /// <param name="storefilepath"></param>
+        private static void frmupdater_DownloadCompleetSuccesfull(string[] newfiles)
+        {
+            if (Settings.UpdatecheckUseGPG)
+            {
+                GPGVerifWrapper gpgverif = new GPGVerifWrapper();
+                if (gpgverif.VerifDownload(newfiles[0], newfiles[1]))
+                {
+                    ExecDownload(newfiles[0]);
+                }
+            }
+            else
+            {
+                ExecDownload(newfiles[0]);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        private static void ExecDownload(string file)
+        {
+            ProcessStartInfo procstartinfo = new System.Diagnostics.ProcessStartInfo(file);
+            procstartinfo.CreateNoWindow = false;
+            procstartinfo.UseShellExecute = true;
+            procstartinfo.ErrorDialog = true;
+            procstartinfo.RedirectStandardInput = false;
+            procstartinfo.RedirectStandardOutput = false;
+            procstartinfo.RedirectStandardError = false;
+            if (Settings.UpdateSilentInstall)
+            {
+                procstartinfo.Arguments = "/S";
+            }
+
+            bool shutdown = true;
+            if (procstartinfo != null)
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(procstartinfo);
+                }
+                catch (InvalidOperationException invopexc)
+                {
+                    shutdown = false;
+                    Log.Write(LogType.exception, invopexc.Message);
+                }
+                catch (System.ComponentModel.Win32Exception win32exc)
+                {
+                    shutdown = false;
+                    Log.Write(LogType.exception, win32exc.Message); // also UAC canceled
+                }
+            }
+            else
+            {
+                shutdown = false;
+            }
+
+            if (shutdown)
+            {
+                trayicon.Dispose();
+                System.Windows.Forms.Application.Exit();
             }
         }
 

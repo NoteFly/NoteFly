@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FrmUpdater.cs" company="NoteFly">
+// <copyright file="FrmDownloader.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2011-2012  Tom
 //
@@ -25,6 +25,8 @@ namespace NoteFly
     using System.Net;
     using System.Windows.Forms;
     using System.Text;
+    using System.Security.Policy;
+    using System.Collections.Generic;
 
     /// <summary>
     /// FrmUpdater window.
@@ -35,59 +37,99 @@ namespace NoteFly
         /// Download is compleet event.
         /// </summary>
         [Description("Download is compleet.")]
-        public event DownloadCompleetHandler DownloadCompleetSuccesfull;
+        public event DownloadCompleetHandler AllDownloadsCompleted;
 
         /// <summary>
-        /// 
+        /// Webclient
         /// </summary>
         private WebClient webclient;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        private int numdownloadscompleet = 0;
+
+        /// <summary>
+        /// downloads
+        /// </summary>
+        private string[] downloads;
 
         /// <summary>
         /// 
         /// </summary>
-        private Uri url;
+        private List<string> files = new List<string>();
 
         /// <summary>
         /// 
         /// </summary>
-        private string storefilepath;
+        private string storefolder;
 
         /// <summary>
         /// Initializes a new instance of the FrmDownloader class.
         /// </summary>
-        /// <param name="downloadurl">The url to the file to download.</param>
-        /// <param name="verifsignature">Verif download with GPG</param>
-        /// <param name="runandexit">Launch download and exit this programme</param>
         /// <param name="title">Title of the window</param>
-        public FrmDownloader(string title, string url, string storefolder)
+        public FrmDownloader(string title)
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             this.SetFormTitle(title);
-
-            if (Settings.NetworkConnectionForceipv6)
+            if (!this.CreateWebclient())
             {
-                // use dns ipv6 AAAA record to force the use of IPv6.
-                url = url.Replace("://update.", "://ipv6."); // not replacing "http", "https", "ftp"
-                url = url.Replace("://www.", "://ipv6.");
-                url = url.Replace("://ipv4.", "://ipv6.");
+                Log.Write(LogType.exception, "Cannot create webclient");
             }
-
-            this.url = new Uri(url);
-            this.storefilepath = GetStoreFilepath(storefolder, url);
-            this.webclient = new WebClient();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public delegate void DownloadCompleetHandler(string storefilepath);
+        public delegate void DownloadCompleetHandler(string[] newfiles);
 
         /// <summary>
         /// 
         /// </summary>
-        public bool StartDownload()
+        /// <param name="urlstr"></param>
+        /// <param name="storefolder"></param>
+        /// <returns></returns>
+        public bool BeginDownload(string download, string storefolder)
         {
+            string[] downloads = new string[1];
+            downloads[0] = download;
+            return this.BeginDownload(downloads, storefolder);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="downloads"></param>
+        /// <param name="storefolder"></param>
+        /// <param name="downloadgpgsig"></param>
+        /// <returns></returns>
+        public bool BeginDownload(string[] downloads, string storefolder)
+        {
+            this.storefolder = storefolder;
+            if (Settings.NetworkConnectionForceipv6)
+            {
+                for (int i = 0; i < downloads.Length; i++)
+                {
+                    // use dns ipv6 AAAA record to force the use of IPv6.
+                    downloads[i] = downloads[i].Replace("://update.", "://ipv6."); // not replacing "http", "https", "ftp"
+                    downloads[i] = downloads[i].Replace("://www.", "://ipv6.");
+                    downloads[i] = downloads[i].Replace("://ipv4.", "://ipv6.");    
+                }                
+            }
+            
+            this.downloads = downloads;
+            this.numdownloadscompleet = 0;
+            Uri firstdownload = new Uri(downloads[0]);            
+            return this.DownloadWebclient(firstdownload);            
+        }
+
+        /// <summary>
+        /// Create a new webclient.
+        /// </summary>
+        private bool CreateWebclient()
+        {
+            this.webclient = new WebClient();
             this.webclient.Encoding = Encoding.UTF8;
             this.webclient.UseDefaultCredentials = false;
             this.webclient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
@@ -107,9 +149,21 @@ namespace NoteFly
 
             this.webclient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadCompleted);
             this.webclient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProcessChanged);
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
+        private bool DownloadWebclient(Uri uri)
+        {
+            string newfile = this.GetStoreFilepath(this.storefolder, uri.AbsolutePath.ToString());
+            this.files.Add(newfile);
             try
             {
-                this.webclient.DownloadFileAsync(this.url, this.storefilepath);
+                this.webclient.DownloadFileAsync(uri, newfile);
             }
             catch (WebException webexc)
             {
@@ -158,14 +212,24 @@ namespace NoteFly
             if (e.Error == null)
             {
                 if (!e.Cancelled)
-                {
-                    this.lblStatusUpdate.Text = Strings.T("Download completed");
-                    if (this.DownloadCompleetSuccesfull != null)
-                    {
-                        this.DownloadCompleetSuccesfull(this.storefilepath);
+                {                    
+                    this.numdownloadscompleet++;
+                    if (this.numdownloadscompleet < this.downloads.Length)
+                    {                                                
+                        Uri download = new Uri(this.downloads[this.numdownloadscompleet]);
+                        this.CreateWebclient();
+                        this.DownloadWebclient(download);
                     }
+                    else
+                    {
+                        this.lblStatusUpdate.Text = Strings.T("Downloads completed");
+                        if (this.AllDownloadsCompleted != null)
+                        {
+                            this.AllDownloadsCompleted(this.files.ToArray());
+                        }
 
-                    this.Close();
+                        this.Close();  
+                    }
                 }
                 else
                 {

@@ -241,11 +241,10 @@ namespace NoteFly
                         bool workswithapp = frmplugins.IsHigherOrSameVersion(curpluginminveripluginpart, ipluginversionparts);
                         if (!string.IsNullOrEmpty(pluginname) && workswithapp)
                         {
-                            chlbxAvailiblePlugins.Items.Add(pluginname, false);
+                            chlbxAvailiblePlugins.Items.Add(pluginname, false);                            
                         }
                     }
                 }
-
                 succeeded = true;
             }
             catch (WebException webexc)

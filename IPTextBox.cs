@@ -56,7 +56,6 @@ namespace NoteFly
         protected override void OnKeyDown(KeyEventArgs e)
         {
             int k = e.KeyValue;
-            // TODO not recommeded key checking.
             // 'a'-'f'
             // ':'
             // '.'

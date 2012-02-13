@@ -1244,22 +1244,22 @@ namespace NoteFly
         {
             DataTable datatable = new DataTable();
             this.dataGridViewNotes.DataSource = datatable;
-            datatable.Columns.Add("nr", typeof(string));
-            datatable.Columns["nr"].AutoIncrement = true;
-            datatable.Columns["nr"].Unique = true;
-            datatable.Columns.Add("title", typeof(string));
-            datatable.Columns.Add("visible", typeof(bool));
-            datatable.Columns.Add("skin", typeof(string));
+            datatable.Columns.Add(Strings.T("nr"), typeof(string)); // col 0
+            datatable.Columns[0].AutoIncrement = true;
+            datatable.Columns[0].Unique = true;
+            datatable.Columns.Add(Strings.T("title"), typeof(string)); // col 1
+            datatable.Columns.Add(Strings.T("visible"), typeof(bool)); // col 2
+            datatable.Columns.Add(Strings.T("skin"), typeof(string)); // col 3
             datatable.DefaultView.AllowEdit = true;
             datatable.DefaultView.AllowNew = false;
-            if (this.dataGridViewNotes.Columns["nr"] != null)
+            if (this.dataGridViewNotes.Columns[0] != null)
             {
-                this.dataGridViewNotes.Columns["nr"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridViewNotes.Columns[0].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            if (this.dataGridViewNotes.Columns["visible"] != null)
+            if (this.dataGridViewNotes.Columns[2] != null)
             {
-                this.dataGridViewNotes.Columns["visible"].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridViewNotes.Columns[2].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
             this.dataGridViewNotes.Font = new Font(Settings.ManagenotesFontFamily, Settings.ManagenotesFontsize);
@@ -1335,7 +1335,7 @@ namespace NoteFly
         {
             if (rowindex >= 0)
             {
-                return Convert.ToInt32(this.dataGridViewNotes.Rows[rowindex].Cells["nr"].Value) - 1;
+                return Convert.ToInt32(this.dataGridViewNotes.Rows[rowindex].Cells[0].Value) - 1; // col: nr
             }
             else
             {
@@ -1446,24 +1446,24 @@ namespace NoteFly
             }
 
             int partunit = (this.dataGridViewNotes.Width - COLNOTENRFIXEDWIDTH) / 10;
-            if (this.dataGridViewNotes.Columns["nr"] != null)
+            if (this.dataGridViewNotes.Columns[0] != null)
             {
-                this.dataGridViewNotes.Columns["nr"].Width = 1 * COLNOTENRFIXEDWIDTH;
+                this.dataGridViewNotes.Columns[0].Width = 1 * COLNOTENRFIXEDWIDTH;
             }
 
-            if (this.dataGridViewNotes.Columns["title"] != null)
+            if (this.dataGridViewNotes.Columns[1] != null)
             {
-                this.dataGridViewNotes.Columns["title"].Width = 6 * partunit;
+                this.dataGridViewNotes.Columns[1].Width = 6 * partunit;
             }
 
-            if (this.dataGridViewNotes.Columns["visible"] != null)
+            if (this.dataGridViewNotes.Columns[2] != null)
             {
-                this.dataGridViewNotes.Columns["visible"].Width = 1 * partunit;
+                this.dataGridViewNotes.Columns[2].Width = 1 * partunit;
             }
 
-            if (this.dataGridViewNotes.Columns["skin"] != null)
+            if (this.dataGridViewNotes.Columns[3] != null)
             {
-                this.dataGridViewNotes.Columns["skin"].Width = 3 * partunit;
+                this.dataGridViewNotes.Columns[3].Width = 3 * partunit;
             }
         }
 

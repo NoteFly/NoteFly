@@ -329,6 +329,9 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void ResetAllModifierKeys()
         {
             this.controlpressed = false;
@@ -371,6 +374,7 @@ namespace NoteFly
         public void Dispose()
         {
             this.icon.Visible = false; // Mono needs Visible set to false otherwise it keeps showing the trayicon.
+            this.keylister = null;
             this.components.Dispose();
         }
 

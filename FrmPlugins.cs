@@ -23,9 +23,19 @@ namespace NoteFly
     using System.ComponentModel;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// FrmPlugins window
+    /// </summary>
     public partial class FrmPlugins : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private string currentplugindownloadurl = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private FrmDownloader frmdownloader;
 
         /// <summary>
@@ -205,14 +215,18 @@ namespace NoteFly
         {
             if (!string.IsNullOrEmpty(this.currentplugindownloadurl))
             {
-                this.frmdownloader = new FrmDownloader(Strings.T("Downloading plugin.."), this.currentplugindownloadurl, Settings.ProgramPluginsFolder);
-                this.frmdownloader.DownloadCompleetSuccesfull += new FrmDownloader.DownloadCompleetHandler(downloader_DownloadCompleet);
-                this.frmdownloader.StartDownload();
+                this.frmdownloader = new FrmDownloader(Strings.T("Downloading plugin.."));
+                this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(downloader_DownloadCompleet);
                 this.frmdownloader.Show();
+                this.frmdownloader.BeginDownload(this.currentplugindownloadurl, Settings.ProgramPluginsFolder);                
             }
         }
 
-        private void downloader_DownloadCompleet(string storefilepath)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="storefilepath"></param>
+        private void downloader_DownloadCompleet(string[] newfiles)
         {
             this.pluginGrid.DrawAllPluginsDetails(PluginGrid.DEFAULTWITH);            
         }
@@ -239,10 +253,13 @@ namespace NoteFly
         private void httputil_searchplugins_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
+            this.chlbxAvailiblePlugins.BeginUpdate();
             if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.chlbxAvailiblePlugins, this))
             {
                 this.searchtbPlugins.Enabled = false;
-            } 
+            }
+
+            this.chlbxAvailiblePlugins.EndUpdate();
         }
 
         /// <summary>

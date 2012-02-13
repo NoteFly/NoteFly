@@ -79,9 +79,9 @@ namespace NoteFly
             // lblStatusUpdate
             // 
             this.lblStatusUpdate.BackColor = System.Drawing.Color.DarkGray;
-            this.lblStatusUpdate.Location = new System.Drawing.Point(142, 28);
+            this.lblStatusUpdate.Location = new System.Drawing.Point(2, 28);
             this.lblStatusUpdate.Name = "lblStatusUpdate";
-            this.lblStatusUpdate.Size = new System.Drawing.Size(210, 19);
+            this.lblStatusUpdate.Size = new System.Drawing.Size(350, 27);
             this.lblStatusUpdate.TabIndex = 2;
             this.lblStatusUpdate.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lblStatusUpdate.UseCompatibleTextRendering = true;
