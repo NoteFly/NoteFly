@@ -109,6 +109,10 @@ namespace NoteFly
         /// </summary>
         private ToolStripMenuItem menuExit;
 
+        private int deltaX = 0;
+
+        private int deltaY = 0;
+
 #if windows
         private KeyboardListener keylister;
 
@@ -398,7 +402,8 @@ namespace NoteFly
                 {
                     if (!this.frmnewnoteshowed)
                     {
-                        FrmNewNote frmnewnote = new FrmNewNote(this.notes);
+                        FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.deltaX, this.deltaY);
+                        this.ChangeDeltaPositionNewNote();
                         frmnewnote.Show();
                         this.frmnewnoteshowed = true;
                     }
@@ -411,14 +416,32 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Change the delta position of FrmNewNote.
+        /// </summary>
+        private void ChangeDeltaPositionNewNote()
+        {
+            if (deltaX < 100 && deltaY < 100)
+            {
+                this.deltaX += 10;
+                this.deltaY += 10;
+            }
+            else
+            {
+                this.deltaX = 0;
+                this.deltaY = 0;
+            }
+        }
+
+        /// <summary>
         /// Open new note window.
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="e">Event argument</param>
         private void MenuNewNote_Click(object sender, EventArgs e)
         {
-            Frmneweditnoteopen = true;
-            FrmNewNote newnotefrm = new FrmNewNote(this.notes);
+            Frmneweditnoteopen = true;            
+            FrmNewNote newnotefrm = new FrmNewNote(this.notes, this.deltaX, this.deltaY);
+            this.ChangeDeltaPositionNewNote();
             newnotefrm.Show();
             newnotefrm.Focus();
         }

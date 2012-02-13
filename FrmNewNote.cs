@@ -99,11 +99,11 @@ namespace NoteFly
         /// Initializes a new instance of the FrmNewNote class for a new note.
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
-        public FrmNewNote(Notes notes)
+        public FrmNewNote(Notes notes, int deltaX, int deltaY)
         {
             this.ConstructFrmNewNote(notes);
             this.SetFormTitle(false);
-            this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2), (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2));
+            this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2) + deltaX, (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2) + deltaY);
             this.note = null;            
             if (Settings.NotesDefaultRandomSkin)
             {

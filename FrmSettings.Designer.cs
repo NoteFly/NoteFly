@@ -578,9 +578,9 @@ namespace NoteFly
             this.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnOK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOK.Location = new System.Drawing.Point(227, 372);
+            this.btnOK.Location = new System.Drawing.Point(205, 372);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(105, 25);
+            this.btnOK.Size = new System.Drawing.Size(127, 25);
             this.btnOK.TabIndex = 2;
             this.btnOK.Text = "&OK";
             this.btnOK.UseCompatibleTextRendering = true;
@@ -598,7 +598,7 @@ namespace NoteFly
             this.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnCancel.Location = new System.Drawing.Point(338, 372);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(103, 25);
+            this.btnCancel.Size = new System.Drawing.Size(134, 25);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseCompatibleTextRendering = true;
@@ -620,7 +620,7 @@ namespace NoteFly
             this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
             this.tabControlSettings.Name = "tabControlSettings";
             this.tabControlSettings.SelectedIndex = 0;
-            this.tabControlSettings.Size = new System.Drawing.Size(476, 362);
+            this.tabControlSettings.Size = new System.Drawing.Size(476, 366);
             this.tabControlSettings.TabIndex = 17;
             this.tabControlSettings.SelectedIndexChanged += new System.EventHandler(this.tabControlSettings_SelectedIndexChanged);
             // 
@@ -634,7 +634,7 @@ namespace NoteFly
             this.tabGeneral.Location = new System.Drawing.Point(4, 25);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(468, 333);
+            this.tabGeneral.Size = new System.Drawing.Size(468, 337);
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
@@ -2472,7 +2472,7 @@ namespace NoteFly
             this.chxSettingsExpertEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxSettingsExpertEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.chxSettingsExpertEnabled.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(24, 371);
+            this.chxSettingsExpertEnabled.Location = new System.Drawing.Point(12, 375);
             this.chxSettingsExpertEnabled.Name = "chxSettingsExpertEnabled";
             this.chxSettingsExpertEnabled.Size = new System.Drawing.Size(112, 21);
             this.chxSettingsExpertEnabled.TabIndex = 25;

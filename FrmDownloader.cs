@@ -102,7 +102,6 @@ namespace NoteFly
         /// </summary>
         /// <param name="downloads"></param>
         /// <param name="storefolder"></param>
-        /// <param name="downloadgpgsig"></param>
         /// <returns></returns>
         public bool BeginDownload(string[] downloads, string storefolder)
         {
@@ -114,19 +113,20 @@ namespace NoteFly
                     // use dns ipv6 AAAA record to force the use of IPv6.
                     downloads[i] = downloads[i].Replace("://update.", "://ipv6."); // not replacing "http", "https", "ftp"
                     downloads[i] = downloads[i].Replace("://www.", "://ipv6.");
-                    downloads[i] = downloads[i].Replace("://ipv4.", "://ipv6.");    
-                }                
+                    downloads[i] = downloads[i].Replace("://ipv4.", "://ipv6.");
+                }
             }
             
             this.downloads = downloads;
             this.numdownloadscompleet = 0;
-            Uri firstdownload = new Uri(downloads[0]);            
-            return this.DownloadWebclient(firstdownload);            
+            Uri firstdownload = new Uri(downloads[0]);
+            return this.DownloadWebclient(firstdownload);
         }
 
         /// <summary>
         /// Create a new webclient.
         /// </summary>
+        /// <returns>True if created succesfully.</returns>
         private bool CreateWebclient()
         {
             this.webclient = new WebClient();
@@ -212,10 +212,10 @@ namespace NoteFly
             if (e.Error == null)
             {
                 if (!e.Cancelled)
-                {                    
+                {
                     this.numdownloadscompleet++;
                     if (this.numdownloadscompleet < this.downloads.Length)
-                    {                                                
+                    {
                         Uri download = new Uri(this.downloads[this.numdownloadscompleet]);
                         this.CreateWebclient();
                         this.DownloadWebclient(download);

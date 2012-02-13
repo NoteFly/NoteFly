@@ -1,11 +1,9 @@
-/**
- * author: Dominique Bijnens
- * Licenced: CPOL 
- * for license text see: http://www.codeproject.com/info/cpol10.aspx
- * original source: http://www.codeproject.com/Articles/9351/Background-applications-listening-for-keyboard-act
- *
- * changed to non static class.
- */
+//-----------------------------------------------------------------------
+// <copyright file="KbdListener.cs" author="Dominique Bijnens">
+// Licenced: CPOL 
+// http://www.codeproject.com/info/cpol10.aspx
+// </copyright>
+//-----------------------------------------------------------------------
 namespace NoteFly
 {
 #if windows

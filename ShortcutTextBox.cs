@@ -83,7 +83,7 @@ namespace NoteFly
             set
             {
                 this.altinsteadofshift = value;
-                this.setcontent(); // todo refresh text
+                this.setcontent();
             }
 
         }
