@@ -54,7 +54,7 @@ namespace NoteFly
         /// Verify a file.
         /// </summary>
         /// <param name="file">The path to the local file that was downloaded</param>
-        /// <param name="sigfilepath">The path to the signature file.</param>
+        /// <param name="sigfile">The path to the signature file.</param>
         /// <returns>True if user allows install, signature valid.</returns>
         public bool VerifDownload(string file, string sigfile)
         {

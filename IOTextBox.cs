@@ -23,8 +23,14 @@ namespace NoteFly
     using System.IO;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// IOTextBox control
+    /// </summary>
     internal partial class IOTextBox : TextBox
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private bool setuptext = false;
 
         /// <summary>
@@ -45,15 +51,13 @@ namespace NoteFly
                 }
             }
 
-            base.OnKeyDown(e);
-            
+            base.OnKeyDown(e);            
         }
 
         /// <summary>
         /// Check file path or path if it exists,
         /// only after IOTextBox is been created.
         /// </summary>
-        /// <param name="sender"></param>
         /// <param name="e"></param>
         protected override void OnTextChanged(System.EventArgs e)
         {

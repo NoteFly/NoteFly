@@ -55,6 +55,11 @@ namespace NoteFly
         private System.Windows.Forms.Label lblTextStacktrace;
 
         /// <summary>
+        /// LinkLabel linklblCreateBugReport
+        /// </summary>
+        private System.Windows.Forms.LinkLabel linklblCreateBugReport;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -169,11 +174,8 @@ namespace NoteFly
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
-
-        private System.Windows.Forms.LinkLabel linklblCreateBugReport;
     }
 }

@@ -311,6 +311,51 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Set the culture of this programme with a languagecode.
+        /// Use english if languagecode is unknown.
+        /// </summary>
+        /// <param name="languagecode">The languagecode</param>
+        public static void SetCulture(string languagecode)
+        {
+            System.Globalization.CultureInfo culture;
+            try
+            {
+                culture = System.Globalization.CultureInfo.GetCultureInfo(languagecode);
+            }
+            catch (ArgumentException)
+            {
+                culture = System.Globalization.CultureInfo.GetCultureInfo("en");
+                Log.Write(LogType.error, string.Format("Langecode {0} not recognised.", languagecode));
+            }
+
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+        }
+
+        /// <summary>
+        /// Dispose the trayicon and create a new one.
+        /// </summary>
+        public static void RestartTrayicon()
+        {
+            trayicon.Dispose();
+            trayicon = new TrayIcon(notes);
+        }
+
+        /// <summary>
+        /// Do update check.
+        /// </summary>
+        /// <returns>Datetime aof latest update check as string</returns>
+        public static string UpdateGetLatestVersion()
+        {
+            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+            if (!http_updateversion.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(UpdateCompareVersion)))
+            {
+                System.Windows.Forms.MessageBox.Show("error...."); // todo
+            }
+
+            return DateTime.Now.ToString();
+        }
+
+        /// <summary>
         /// Parser the programme arguments
         /// </summary>
         /// <param name="args"></param>
@@ -396,55 +441,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Set the culture of this programme with a languagecode.
-        /// Use english if languagecode is unknown.
-        /// </summary>
-        /// <param name="culturecode"></param>
-        public static void SetCulture(string languagecode)
-        {
-            System.Globalization.CultureInfo culture;
-            try
-            {
-                culture = System.Globalization.CultureInfo.GetCultureInfo(languagecode);
-            }
-            catch (ArgumentException)
-            {
-                culture = System.Globalization.CultureInfo.GetCultureInfo("en");
-                Log.Write(LogType.error, String.Format("Langecode {0} not recognised.", languagecode));
-            }
-
-            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-        }
-
-        /// <summary>
-        /// Dispose the trayicon and create a new one.
-        /// </summary>
-        public static void RestartTrayicon()
-        {
-            trayicon.Dispose();
-            trayicon = new TrayIcon(notes);
-        }
-
-        /// <summary>
-        /// Do update check.
-        /// </summary>
-        /// <returns>Datetime aof latest update check as string</returns>
-        public static string UpdateGetLatestVersion()
-        {
-            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
-            http_updateversion.httpthread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(UpdateCompareVersion);
-            if (!http_updateversion.Start())
-            {
-                System.Windows.Forms.MessageBox.Show("error...."); // todo
-            }
-
-            return DateTime.Now.ToString();
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="response"></param>
+        /// <param name="e"></param>
         private static void UpdateCompareVersion(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
@@ -484,7 +484,7 @@ namespace NoteFly
                     System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                     if (updres == System.Windows.Forms.DialogResult.Yes)
                     {
-                        FrmDownloader frmupdater = new FrmDownloader(String.Format(Strings.T("Downloading {0} update"), Program.AssemblyTitle));
+                        FrmDownloader frmupdater = new FrmDownloader(string.Format(Strings.T("Downloading {0} update"), Program.AssemblyTitle));
                         frmupdater.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(frmupdater_DownloadCompleetSuccesfull);
                         frmupdater.Show();
                         if (Settings.UpdatecheckUseGPG)
@@ -510,7 +510,7 @@ namespace NoteFly
         /// <summary>
         /// Download update compleet, run update.
         /// </summary>
-        /// <param name="storefilepath"></param>
+        /// <param name="newfiles"></param>
         private static void frmupdater_DownloadCompleetSuccesfull(string[] newfiles)
         {
             if (Settings.UpdatecheckUseGPG)

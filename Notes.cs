@@ -440,7 +440,6 @@ namespace NoteFly
                     {
                         note.X = 10 + (i * MARGINBETWEENNOTES) - System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
                     }
-
                 }
 
                 this.AddNote(note);
@@ -660,7 +659,7 @@ namespace NoteFly
         /// <summary>
         /// Create a empty file so this newer NoteFly version knows the application data of NoteFly 1.0.x is imported.
         /// </summary>
-        /// <param name="nf1path">Path to NoteFly1 application data folder.</param>
+        /// <param name="nf1appdata">Path to NoteFly1 application data folder.</param>
         private void CreateNF1NotesImportedFlagfile(string nf1appdata)
         {
             try
@@ -676,7 +675,7 @@ namespace NoteFly
         /// <summary>
         /// This method set a limit on how many notes total can be loaded.
         /// </summary>
-        /// <param name="number">The total number of notes.</param>
+        /// <param name="totanumbernotes">The total number of notes.</param>
         /// <returns>The number of notes to load.</returns>
         private int CheckLimitNotesTotal(int totanumbernotes)
         {

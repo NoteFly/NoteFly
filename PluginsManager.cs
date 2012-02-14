@@ -23,6 +23,9 @@ namespace NoteFly
     using System.IO;
     using System.Reflection;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class PluginsManager
     {
         /// <summary>
@@ -180,7 +183,6 @@ namespace NoteFly
                     Log.Write(LogType.exception, "Plugin " + pluginassembly.Location + " has no author.");
                 }
             }
-
 
             return pluginauthor;
         }

@@ -25,7 +25,6 @@ namespace NoteFly
     using System.IO;
     using System.Net;
     using System.Xml;
-    using System.Text;
 
     /// <summary>
     /// xmlUtil class, for saving and parsering xml.
@@ -120,33 +119,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the content
-        /// </summary>
-        /// <returns></returns>
-        public string GetContentStringLimited(string nodename, int limit)
-        {
-            string content = null;
-            try
-            {
-                while (xmlread.Read())
-                {
-                    if (xmlread.Name == nodename)
-                    {
-                        char[] buf = new char[limit + 1];
-                        xmlread.ReadValueChunk(buf, 0, limit);
-                        content = new string(buf);
-                    }
-                }
-            }
-            finally
-            {
-                xmlread.Close();
-            }
-
-            return content;
-        }
-
-        /// <summary>
         /// Get a xml node and return the value as integer.
         /// </summary>
         /// <param name="filename">The filename and path to search in.</param>
@@ -195,6 +167,9 @@ namespace NoteFly
         /// Parser the listing of the plugins
         /// </summary>
         /// <param name="stream"></param>
+        /// <param name="versionipluginstring"></param>
+        /// <param name="chlbxAvailiblePlugins"></param>
+        /// <param name="frmplugins"></param>
         /// <returns></returns>
         public static bool ParserListPlugins(string response, string versionipluginstring, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins, FrmPlugins frmplugins)
         {
@@ -245,6 +220,7 @@ namespace NoteFly
                         }
                     }
                 }
+
                 succeeded = true;
             }
             catch (WebException webexc)
@@ -314,7 +290,6 @@ namespace NoteFly
 
                                     break;
                             }
-
                         }
                     }
                 }
@@ -527,6 +502,9 @@ namespace NoteFly
                             break;
                         case "NetworkConnectionTimeout":
                             Settings.NetworkConnectionTimeout = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NetworkProxyPort":
+                            Settings.NetworkProxyPort = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesDefaultSkinnr":
                             Settings.NotesDefaultSkinnr = xmlread.ReadElementContentAsInt();
@@ -1126,6 +1104,7 @@ namespace NoteFly
                     xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NetworkProxyPort", Settings.NetworkProxyPort.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesDefaultWidth", Settings.NotesDefaultWidth.ToString(numfmtinfo));
@@ -1221,6 +1200,7 @@ namespace NoteFly
         /// Get the new version as a integer array with first major
         /// second valeau the minor version and the third valeau being the release version.
         /// </summary>
+        /// <param name="serverresponse"></param>
         /// <param name="versionquality">The latest version quality, e.g: alpha, beta, rc or nothing for final.</param>
         /// <param name="downloadurl">the download url found</param>
         /// <returns>the newest version as integer array, 
@@ -1596,6 +1576,33 @@ namespace NoteFly
             xmlwrite.WriteElementString("title", note.Title);
             xmlwrite.WriteElementString("content", content);
             xmlwrite.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Get the content
+        /// </summary>
+        /// <returns></returns>
+        public string GetContentStringLimited(string nodename, int limit)
+        {
+            string content = null;
+            try
+            {
+                while (xmlread.Read())
+                {
+                    if (xmlread.Name == nodename)
+                    {
+                        char[] buf = new char[limit + 1];
+                        xmlread.ReadValueChunk(buf, 0, limit);
+                        content = new string(buf);
+                    }
+                }
+            }
+            finally
+            {
+                xmlread.Close();
+            }
+
+            return content;
         }
 
         #endregion Methods

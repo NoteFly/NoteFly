@@ -34,7 +34,7 @@ namespace NoteFly
         private string currentplugindownloadurl = null;
 
         /// <summary>
-        /// 
+        /// Refence to FrmDownload window.
         /// </summary>
         private FrmDownloader frmdownloader;
 
@@ -44,7 +44,7 @@ namespace NoteFly
         public FrmPlugins()
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
-            InitializeComponent();
+            this.InitializeComponent();
             this.SetFormTitle();
             Strings.TranslateForm(this);
             this.pluginGrid.Enabled = Settings.ProgramPluginsAllEnabled;
@@ -71,8 +71,7 @@ namespace NoteFly
                 this.lblTextNoInternetConnection.Visible = false;                
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
                 HttpUtil httputil_allplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.Default);
-                httputil_allplugins.httpthread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet);
-                if (!httputil_allplugins.Start())
+                if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
                 {
                     Log.Write(LogType.exception, "error request, by tabControlPlugins_SelectedIndexChanged.");
                 }
@@ -179,8 +178,7 @@ namespace NoteFly
                 if (!string.IsNullOrEmpty(pluginname))
                 {
                     HttpUtil httputil_plugindetail = new HttpUtil("http://ipv4.notefly.org/REST/plugins/details.php?name=" + pluginname, System.Net.Cache.RequestCacheLevel.Revalidate);
-                    httputil_plugindetail.httpthread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet);
-                    if (!httputil_plugindetail.Start())
+                    if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
                     {
                         Log.Write(LogType.exception, "error request, by chlbxAvailiblePlugins_SelectedIndexChanged.");
                     }
@@ -191,7 +189,8 @@ namespace NoteFly
         /// <summary>
         /// Downloading of plugin details data is compleet, parser data and display plugin details
         /// </summary>
-        /// <param name="response"></param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void httputil_plugindetail_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
@@ -216,7 +215,7 @@ namespace NoteFly
             if (!string.IsNullOrEmpty(this.currentplugindownloadurl))
             {
                 this.frmdownloader = new FrmDownloader(Strings.T("Downloading plugin.."));
-                this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(downloader_DownloadCompleet);
+                this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(this.downloader_DownloadCompleet);
                 this.frmdownloader.Show();
                 this.frmdownloader.BeginDownload(this.currentplugindownloadurl, Settings.ProgramPluginsFolder);                
             }
@@ -225,7 +224,7 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="storefilepath"></param>
+        /// <param name="newfiles"></param>
         private void downloader_DownloadCompleet(string[] newfiles)
         {
             this.pluginGrid.DrawAllPluginsDetails(PluginGrid.DEFAULTWITH);            
@@ -239,8 +238,7 @@ namespace NoteFly
         {
             this.chlbxAvailiblePlugins.Items.Clear();
             HttpUtil httputil_searchplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/search.php?keyword=" + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Default);
-            httputil_searchplugins.httpthread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet);
-            if (!httputil_searchplugins.Start())
+            if (!httputil_searchplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet)))
             {
                 Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStart.");
             }
@@ -249,7 +247,8 @@ namespace NoteFly
         /// <summary>
         /// Downloading of search results data is compleet, parser searchresult data and list search results
         /// </summary>
-        /// <param name="response"></param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void httputil_searchplugins_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
@@ -268,12 +267,10 @@ namespace NoteFly
         private void searchtbPlugins_SearchStop()
         {
             HttpUtil httputil_allplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
-            httputil_allplugins.httpthread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet);
-            if (!httputil_allplugins.Start())
+            if (!httputil_allplugins.Start(new RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
             {
                 Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStop.");
             }
         }
-
     }
 }

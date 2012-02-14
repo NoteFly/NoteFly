@@ -29,17 +29,40 @@ namespace NoteFly
     using System.Text;
     using System.Threading;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Strings
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private static object resourceManLock = new object();
+
+        /// <summary>
+        /// 
+        /// </summary>
         private static System.Resources.ResourceManager resourceMan;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private static System.Globalization.CultureInfo resourceCulture;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public const string ResourceName = "Strings";
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static string resourcesDir = GetSetting("ResourcesDir", "translations");
-        private static string fileFormat = GetSetting("ResourcesFileFormat", "{{culture}}/{{resource}}.po");
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private static string fileFormat = GetSetting("ResourcesFileFormat", "{{culture}}/{{resource}}.po");
 
         /// <summary>
         /// Gets or sets Resources directory used to retrieve files from.
@@ -57,6 +80,16 @@ namespace NoteFly
         {
             get { return fileFormat; }
             set { fileFormat = value; }
+        }
+
+        /// <summary>
+        /// Overrides the current thread's CurrentUICulture property for all
+        /// resource lookups using this strongly typed resource class.
+        /// </summary>
+        public static System.Globalization.CultureInfo Culture
+        {
+            get { return resourceCulture; }
+            set { resourceCulture = value; }
         }
 
         private static string GetSetting(string setting, string defaultValue)
@@ -88,16 +121,6 @@ namespace NoteFly
 
                 return resourceMan;
             }
-        }
-
-        /// <summary>
-        /// Overrides the current thread's CurrentUICulture property for all
-        /// resource lookups using this strongly typed resource class.
-        /// </summary>
-        public static System.Globalization.CultureInfo Culture
-        {
-            get { return resourceCulture; }
-            set { resourceCulture = value; }
         }
 
         /// <summary>
@@ -207,7 +230,7 @@ namespace NoteFly
         /// <summary>
         /// Translate the toolstripitemcollection.
         /// </summary>
-        /// <param name="collection"></param>
+        /// <param name="toolstripitemcollection"></param>
         private static void TranslateToolStripItemCollection(System.Windows.Forms.ToolStripItemCollection toolstripitemcollection)
         {
             for (int i = 0; i < toolstripitemcollection.Count; i++)
@@ -258,7 +281,8 @@ namespace NoteFly
                 controltype == typeof(System.Windows.Forms.TabPage) ||
                 controltype == typeof(System.Windows.Forms.ToolTip) ||
                 controltype == typeof(System.Windows.Forms.LinkLabel) ||
-                controltype == typeof(SearchTextBox) )
+                controltype == typeof(System.Windows.Forms.TabControl) ||
+                controltype == typeof(SearchTextBox))
             {
                 // blacklist control name
                 if (control.Name != "btnKeywordClear" && 
@@ -271,8 +295,7 @@ namespace NoteFly
                     control.Name != "btnFontBigger" &&
                     control.Name != "btnFontSmaller" &&
                     control.Name != "btnHideNote" &&
-                    control.Name != "lblTitle"
-                    )
+                    control.Name != "lblTitle")
                 {
                     translatecontrol = true;
                 }
@@ -314,7 +337,6 @@ namespace NoteFly
                     }
                 }
 
-
                 if (!isalreadyadded)
                 {
                     StreamWriter writer = null;
@@ -347,4 +369,3 @@ namespace NoteFly
 #endif
     }
 }
-

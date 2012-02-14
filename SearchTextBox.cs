@@ -20,11 +20,8 @@
 namespace NoteFly
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
-    using System.Data;
-    using System.Text;
     using System.Windows.Forms;
 
     /// <summary>
@@ -33,23 +30,11 @@ namespace NoteFly
     public partial class SearchTextBox : UserControl
     {
         /// <summary>
-        /// A search occur event.
-        /// </summary>
-        [Description("A search occur.")]
-        public event SearchStartHandler SearchStart;
-
-        /// <summary>
-        /// Keywords entered are cleared not searching anymore event.
-        /// </summary>
-        [Description("Keywords entered are cleared not searching anymore.")]
-        public event SearchStopHandler SearchStop;
-
-        /// <summary>
         /// Initializes a new instance of the SearchTextBox class.
         /// </summary>
         public SearchTextBox()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.lblTextSearch.Text = Strings.T("search:");
             this.tableLayoutPnlSearchbox.ColumnCount = 2;
             if (Settings.NotesTooltipsEnabled)
@@ -70,6 +55,18 @@ namespace NoteFly
         /// 
         /// </summary>
         public delegate void SearchStopHandler();
+
+        /// <summary>
+        /// A search occur event.
+        /// </summary>
+        [Description("A search occur.")]
+        public event SearchStartHandler SearchStart;
+
+        /// <summary>
+        /// Keywords entered are cleared not searching anymore event.
+        /// </summary>
+        [Description("Keywords entered are cleared not searching anymore.")]
+        public event SearchStopHandler SearchStop;
 
         /// <summary>
         /// Gets a valeu indicating wherhera keyword is entered.

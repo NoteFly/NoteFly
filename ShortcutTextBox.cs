@@ -19,17 +19,34 @@
 //-----------------------------------------------------------------------
 namespace NoteFly
 {
+    using System.ComponentModel;
     using System.Text;
     using System.Windows.Forms;
-    using System.ComponentModel;
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Category("Custom")]
     public partial class ShortcutTextBox : TextBox
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private bool altinsteadofshift = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private Keys key = Keys.F1;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private bool prev_altinsteadofshift = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private Keys prev_key = Keys.F1;
 
         /// <summary>
@@ -41,6 +58,9 @@ namespace NoteFly
             //this.setcontent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Description("The final key")]
         public int ShortcutKeyposition
         {
@@ -55,6 +75,7 @@ namespace NoteFly
                 {
                     Log.Write(LogType.exception, "Error: technically, converting Keys enum to key position failed.");
                 }
+
                 return keypos;
             }
 
@@ -69,10 +90,13 @@ namespace NoteFly
                     Log.Write(LogType.exception, "Error: technically, converting key position to Keys enum item failed.");
                 }
 
-                this.setcontent(); // todo refresh text
+                this.setcontent();
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Description("The second key")]
         public bool UseAltInsteadofShift
         {
@@ -80,14 +104,18 @@ namespace NoteFly
             {
                 return this.altinsteadofshift;
             }
+
             set
             {
                 this.altinsteadofshift = value;
                 this.setcontent();
             }
-
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             e.SuppressKeyPress = true; // prevent typing
@@ -111,6 +139,10 @@ namespace NoteFly
             base.OnKeyDown(e);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnKeyUp(KeyEventArgs e)
         {            
             this.key = this.prev_key;
@@ -119,7 +151,9 @@ namespace NoteFly
             base.OnKeyUp(e);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         private void setcontent()
         {
             StringBuilder sb = new StringBuilder();
@@ -134,7 +168,7 @@ namespace NoteFly
                 sb.Append("SHIFT + ");
             }
 
-            if (this.IsModifierKey(key))
+            if (this.IsModifierKey(this.key))
             {
                 this.BackColor = System.Drawing.Color.LightYellow;
                 sb.Append("?");                
@@ -145,12 +179,17 @@ namespace NoteFly
                 this.BackColor = System.Drawing.Color.White;
 
                 this.prev_altinsteadofshift = this.altinsteadofshift;
-                this.prev_key = key;                
+                this.prev_key = this.key;
             }
             
             this.Text = sb.ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         private bool IsModifierKey(Keys key)
         {
             if (key == Keys.ControlKey || key == Keys.ShiftKey || key == Keys.Alt || key == Keys.Menu)

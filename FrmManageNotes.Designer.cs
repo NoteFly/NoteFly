@@ -100,6 +100,11 @@ namespace NoteFly
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelButtons;
 
         /// <summary>
+        /// SearchTextBox searchTextBoxNotes
+        /// </summary>
+        private SearchTextBox searchTextBoxNotes;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -450,7 +455,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private SearchTextBox searchTextBoxNotes;
     }
 }

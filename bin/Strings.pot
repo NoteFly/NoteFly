@@ -3,47 +3,37 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: NoteFly 3.0.0\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-11 01:50+0100\n"
-"PO-Revision-Date: 2012-02-11 14:07+0100\n"
-"Last-Translator: \n"
-"Language-Team: English <root@d9ping.nl>\n"
+"POT-Creation-Date: 2012-02-13 23:57+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-SourceCharset: utf-8\n"
 
 #: FrmAbout.cs:50
 msgid "Version "
 msgstr ""
 
-#: FrmAbout.cs:62
-#: TrayIcon.cs:237
+#: FrmAbout.cs:62 TrayIcon.cs:241
 msgid "About"
 msgstr ""
 
-#: FrmDownloader.cs:316
-msgid "Aborted"
+#: FrmDownloader.cs:225
+msgid "Downloads completed"
 msgstr ""
 
-#: FrmDownloader.cs:319
-msgid "download compleet, "
+#: FrmDownloader.cs:236
+msgid "Download canceled."
 msgstr ""
 
-#: FrmDownloader.cs:322
-msgid "verify download"
-msgstr ""
-
-#: FrmDownloader.cs:337
-msgid "Verify download failed, cannot find gpg: "
-msgstr ""
-
-#: FrmDownloader.cs:348
-msgid "installing.. "
+#: FrmDownloader.cs:242
+msgid "Download error:"
 msgstr ""
 
 #: FrmException.cs:37
@@ -51,15 +41,11 @@ msgstr ""
 msgid "oh no.. {0} crashed."
 msgstr ""
 
-#: FrmManageNotes.cs:98
-#: FrmManageNotes.cs:856
-#: FrmManageNotes.cs:889
+#: FrmManageNotes.cs:98 FrmManageNotes.cs:856 FrmManageNotes.cs:889
 msgid "&hide selected"
 msgstr ""
 
-#: FrmManageNotes.cs:102
-#: FrmManageNotes.cs:107
-#: FrmManageNotes.cs:861
+#: FrmManageNotes.cs:102 FrmManageNotes.cs:107 FrmManageNotes.cs:861
 #: FrmManageNotes.cs:893
 msgid "&show selected"
 msgstr ""
@@ -93,7 +79,8 @@ msgid "CVS file does not seems to be in the Stickies format."
 msgstr ""
 
 #: FrmManageNotes.cs:591
-msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
+msgid ""
+"CVS file does not seems to be in the Stickies format, excepting 5 columns."
 msgstr ""
 
 #: FrmManageNotes.cs:726
@@ -105,8 +92,23 @@ msgstr ""
 msgid "Access denied. delete note {0} manually with proper premission."
 msgstr ""
 
-#: FrmManageNotes.cs:1302
-#: FrmManageNotes.cs:1323
+#: FrmManageNotes.cs:1247
+msgid "nr"
+msgstr ""
+
+#: FrmManageNotes.cs:1250
+msgid "title"
+msgstr ""
+
+#: FrmManageNotes.cs:1251
+msgid "visible"
+msgstr ""
+
+#: FrmManageNotes.cs:1252
+msgid "skin"
+msgstr ""
+
+#: FrmManageNotes.cs:1302 FrmManageNotes.cs:1323
 msgid "Transparency level not a integer or double."
 msgstr ""
 
@@ -138,8 +140,7 @@ msgstr ""
 msgid "Not a KeyNote NF note."
 msgstr ""
 
-#: FrmNewNote.cs:854
-#: FrmNewNote.cs:1222
+#: FrmNewNote.cs:854 FrmNewNote.cs:1222
 msgid "There is no text on the clipboard."
 msgstr ""
 
@@ -171,24 +172,23 @@ msgstr ""
 msgid "Save note to file"
 msgstr ""
 
-#: FrmPlugins.cs:47
+#: FrmPlugins.cs:58
 msgid "Plugins"
 msgstr ""
 
-#: FrmPlugins.cs:191
+#: FrmPlugins.cs:202
 msgid "version: "
 msgstr ""
 
-#: FrmPlugins.cs:192
+#: FrmPlugins.cs:203
 msgid "license: "
 msgstr ""
 
-#: FrmPlugins.cs:207
+#: FrmPlugins.cs:218
 msgid "Downloading plugin.."
 msgstr ""
 
-#: FrmSettings.cs:101
-#: FrmSettings.cs:102
+#: FrmSettings.cs:101 FrmSettings.cs:102
 msgid ""
 "Directory does not exist.\n"
 "Please choice a valid directory."
@@ -302,27 +302,27 @@ msgstr ""
 msgid "Note file(s) already exist."
 msgstr ""
 
-#: PluginGrid.cs:73
+#: PluginGrid.cs:74
 msgid "Their are no plugins installed."
 msgstr ""
 
-#: PluginGrid.cs:189
+#: PluginGrid.cs:190
 msgid "version:"
 msgstr ""
 
-#: PluginGrid.cs:205
+#: PluginGrid.cs:206
 msgid "author:"
 msgstr ""
 
-#: PluginGrid.cs:221
+#: PluginGrid.cs:222
 msgid "description:"
 msgstr ""
 
-#: PluginGrid.cs:269
+#: PluginGrid.cs:270
 msgid "disable"
 msgstr ""
 
-#: PluginGrid.cs:274
+#: PluginGrid.cs:275
 msgid "enable"
 msgstr ""
 
@@ -356,7 +356,9 @@ msgid "many notes"
 msgstr ""
 
 #: Notes.cs:686
-msgid "There are many notes loading this can take a while, do you want to load them all?"
+msgid ""
+"There are many notes loading this can take a while, do you want to load them "
+"all?"
 msgstr ""
 
 #: Notes.cs:706
@@ -372,7 +374,8 @@ msgstr ""
 msgid ""
 "You are now running {0} as elevated Administrator.\n"
 "Which is not recommended for security.\n"
-"Press OK if your understand the risks of running as administrator and want to hide this message in the future."
+"Press OK if your understand the risks of running as administrator and want "
+"to hide this message in the future."
 msgstr ""
 
 #: Program.cs:236
@@ -405,61 +408,110 @@ msgstr ""
 msgid "Do you want to download and install the new version now?"
 msgstr ""
 
-#: TrayIcon.cs:162
+#: Program.cs:487
+#, csharp-format
+msgid "Downloading {0} update"
+msgstr ""
+
+#: TrayIcon.cs:166
 msgid "&New note"
 msgstr ""
 
-#: TrayIcon.cs:176
+#: TrayIcon.cs:180
 msgid "&Manage notes"
 msgstr ""
 
-#: TrayIcon.cs:194
+#: TrayIcon.cs:198
 msgid "&Settings"
 msgstr ""
 
-#: TrayIcon.cs:212
+#: TrayIcon.cs:216
 msgid "&Plugins"
 msgstr ""
 
-#: TrayIcon.cs:246
+#: TrayIcon.cs:250
 msgid "E&xit"
 msgstr ""
 
-#: TrayIcon.cs:263
+#: TrayIcon.cs:267
 #, csharp-format
 msgid "You can access {0} functions with this trayicon."
 msgstr ""
 
-#: TrayIcon.cs:514
+#: TrayIcon.cs:541
 msgid "confirm exit"
 msgstr ""
 
-#: TrayIcon.cs:521
+#: TrayIcon.cs:548
 #, csharp-format
 msgid "Are sure you want to exit {0}?"
 msgstr ""
 
-#: TrayIcon.cs:533
+#: TrayIcon.cs:560
 #, csharp-format
 msgid ""
 "A note is still open for editing.\n"
 "Are you sure you want to shutdown {0}?"
 msgstr ""
 
-# btnRestoreAllNotes
-msgid "&import"
-msgstr ""
-
-# btnNoteDelete
-msgid "&delete selected"
-msgstr ""
-
-# btnBackAllNotes
-msgid "&export all"
-msgstr ""
-
 # chxSettingsExpertEnabled
 msgid "E&xpert settings"
+msgstr ""
+
+# btnCancel
+msgid "&Cancel"
+msgstr ""
+
+# btnOK
+msgid "&OK"
+msgstr ""
+
+# menuSaveNewNote
+msgid "&Save note"
+msgstr ""
+
+# menuShowtoolbar
+msgid "Show format tools"
+msgstr ""
+
+# menuWordWarp
+msgid "Word wrap"
+msgstr ""
+
+# menuStickyOnTop
+msgid "Sticky on &top"
+msgstr ""
+
+# menuCopy
+msgid "&Copy"
+msgstr ""
+
+# menuPasteTo
+msgid "&Paste to"
+msgstr ""
+
+# menuImportfile
+msgid "Import.."
+msgstr ""
+
+# menuCancelNewNote
+msgid "Canc&el note"
+msgstr ""
+
+# menuEditNote
+msgid "&Edit note"
+msgstr ""
+
+# menuNoteSkins
+msgid "S&kin"
+msgstr ""
+
+# menuSendTo
+msgid "&Share"
+msgstr ""
+
+# menuHideNote
+msgid "&Hide note"
 msgstr ""
 
 # tabGeneral
@@ -478,32 +530,12 @@ msgstr ""
 msgid "Start NoteFly on logon."
 msgstr ""
 
-# lblTextActionLeftClicktTrayicon
-msgid "Action left click trayicon:"
-msgstr ""
-
-# lblTextLanguage
-msgid "Language programme:"
-msgstr ""
-
 # chxConfirmExit
 msgid "Confirm shutdown of NoteFly"
 msgstr ""
 
 # tabHotkeys
 msgid "Hotkeys"
-msgstr ""
-
-# shortcutTextBoxManageNotes
-msgid "CTRL + SHIFT + F1"
-msgstr ""
-
-# lblTextShortcutNewNote
-msgid "Hotkey new note:"
-msgstr ""
-
-# lblTextShortcutManageNotes
-msgid "Hotkey manage notes:"
 msgstr ""
 
 # tabAppearance
@@ -514,80 +546,12 @@ msgstr ""
 msgid "Overall"
 msgstr ""
 
-# chxTransparecy
-msgid "Enable transparency:"
-msgstr ""
-
-# chxShowTooltips
-msgid "Show tooltip hints"
-msgstr ""
-
-# lblTextTransparentProcVisible
-msgid "% visible"
-msgstr ""
-
-# lblTextWidth
-msgid "Width:"
-msgstr ""
-
-# lblTextHeight
-msgid "Height:"
-msgstr ""
-
-# lblTextDefaultsizenewnote
-msgid "Default size new note:"
-msgstr ""
-
-# chxUseRandomDefaultNote
-msgid "Use a random skin as default skin."
-msgstr ""
-
-# lblDefaultNewNoteColor
-msgid "Default skin new notes:"
-msgstr ""
-
-# chxUseDateAsDefaultTitle
-msgid "Use current date as default title for a new note."
-msgstr ""
-
 # tabPageFonts
 msgid "Notes"
 msgstr ""
 
-# lblTextFontContentPoints
-msgid "pt."
-msgstr ""
-
-# lblTextFontContentSize
-msgid "Font size note content:"
-msgstr ""
-
-# lblTextNoteFont
-msgid "Font note content:"
-msgstr ""
-
-# cbxFontNoteTitleBold
-msgid "bold"
-msgstr ""
-
-# lblTextFontTitleSize
-msgid "Font size note title:"
-msgstr ""
-
-# lblTextFontTitleFamily
-msgid "Font note title:"
-msgstr ""
-
-# lblTextDirection
-msgid "Text direction notes:"
-msgstr ""
-
 # tabPageTrayicon
 msgid "Trayicon"
-msgstr ""
-
-# lblTextFontsizeMenu
-msgid "Trayicon menu fontsize:"
 msgstr ""
 
 # chxUseAlternativeTrayicon
@@ -608,14 +572,6 @@ msgstr ""
 
 # chxTrayiconBoldNewnote
 msgid "Display \"New note\" in bold."
-msgstr ""
-
-# lbTextManagesnotesFontSize
-msgid "Manage notes fontsize:"
-msgstr ""
-
-# lblTextSkinManagenotes
-msgid "Manage notes skin:"
 msgstr ""
 
 # chxCaseSentiveSearch
@@ -674,26 +630,6 @@ msgstr ""
 msgid "Updates"
 msgstr ""
 
-# lblTextDayAtStartup
-msgid "days, at startup."
-msgstr ""
-
-# lblTextCheckforupdatesevery
-msgid "Check for updates every: "
-msgstr ""
-
-# chxCheckUpdates
-msgid "Check for updates"
-msgstr ""
-
-# lblTextLatestUpdateCheck
-msgid "Last update check is performed on:"
-msgstr ""
-
-# lblLatestUpdateCheck
-msgid "unknown"
-msgstr ""
-
 # chxUpdateSilentInstall
 msgid "Install update setup silently."
 msgstr ""
@@ -712,18 +648,6 @@ msgstr ""
 
 # lblTextAddress
 msgid "address:"
-msgstr ""
-
-# lblTextNetworkTimeout
-msgid "connection timeout time:"
-msgstr ""
-
-# chxForceUseIPv6
-msgid "Force the use of IPv6 only. (not recommeded)"
-msgstr ""
-
-# lblTextMiliseconds
-msgid "ms"
 msgstr ""
 
 # chxProxyEnabled
@@ -746,20 +670,16 @@ msgstr ""
 msgid "Verify the signature of downloaded updates."
 msgstr ""
 
+# lblTextNetworkMiliseconds
+msgid "ms"
+msgstr ""
+
 # tabAdvance
 msgid "Advance"
 msgstr ""
 
 # lblTextNoteLocation
 msgid "Save notes in:"
-msgstr ""
-
-# lblTextTotalNotesWarnLimit
-msgid "Total notes warning limit:"
-msgstr ""
-
-# lblTextVisibleNotesWarnLimit
-msgid "Visible notes warning limit:"
 msgstr ""
 
 # chxLoadPlugins
@@ -785,88 +705,3 @@ msgstr ""
 # chxLogErrors
 msgid "Log user errors."
 msgstr ""
-
-# btnCancel
-msgid "&Cancel"
-msgstr ""
-
-# btnOK
-msgid "&OK"
-msgstr ""
-
-# tabPagePluginsInstalled
-msgid "Installed"
-msgstr ""
-
-# tabPagePluginsAvailable
-msgid "available"
-msgstr ""
-
-# lblTextNoInternetConnection
-msgid "Could not load list with plugins. Internet connection failed."
-msgstr ""
-
-# lblPluginName
-msgid "Loading.."
-msgstr ""
-
-# lblPluginDescription
-msgid "Getting plugin details from the internet."
-msgstr ""
-
-# btnPluginDownload
-msgid "download"
-msgstr ""
-
-# lbTextTitle
-msgid "Title:"
-msgstr ""
-
-# menuSaveNewNote
-msgid "&Save note"
-msgstr ""
-
-# menuShowtoolbar
-msgid "Show format tools"
-msgstr ""
-
-# menuWordWarp
-msgid "Word wrap"
-msgstr ""
-
-# menuStickyOnTop
-msgid "Sticky on &top"
-msgstr ""
-
-# menuCopy
-msgid "&Copy"
-msgstr ""
-
-# menuPasteTo
-msgid "&Paste to"
-msgstr ""
-
-# menuImportfile
-msgid "Import.."
-msgstr ""
-
-# menuCancelNewNote
-msgid "Canc&el note"
-msgstr ""
-
-# menuEditNote
-msgid "&Edit note"
-msgstr ""
-
-# menuNoteSkins
-msgid "S&kin"
-msgstr ""
-
-# menuSendTo
-msgid "&Share"
-msgstr ""
-
-# menuHideNote
-msgid "&Hide note"
-msgstr ""
-

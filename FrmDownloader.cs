@@ -20,13 +20,12 @@
 namespace NoteFly
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
     using System.Net;
-    using System.Windows.Forms;
     using System.Text;
-    using System.Security.Policy;
-    using System.Collections.Generic;
+    using System.Windows.Forms;
 
     /// <summary>
     /// FrmUpdater window.
@@ -34,33 +33,27 @@ namespace NoteFly
     public sealed partial class FrmDownloader : Form
     {
         /// <summary>
-        /// Download is compleet event.
-        /// </summary>
-        [Description("Download is compleet.")]
-        public event DownloadCompleetHandler AllDownloadsCompleted;
-
-        /// <summary>
-        /// Webclient
+        /// Webclient object
         /// </summary>
         private WebClient webclient;
         
         /// <summary>
-        /// 
+        /// number of downloads that FrmDownloader has compleeted.
         /// </summary>
         private int numdownloadscompleet = 0;
 
         /// <summary>
-        /// downloads
+        /// The urls of all downloads to download.
         /// </summary>
         private string[] downloads;
 
         /// <summary>
-        /// 
+        /// List of all downloaded full file locations.
         /// </summary>
         private List<string> files = new List<string>();
 
         /// <summary>
-        /// 
+        /// The folder to save downloads to.
         /// </summary>
         private string storefolder;
 
@@ -80,16 +73,23 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Download is compleet event.
         /// </summary>
+        [Description("Download is compleet.")]
+        public event DownloadCompleetHandler AllDownloadsCompleted;
+
+        /// <summary>
+        /// DownloadCompleet delegate
+        /// </summary>
+        /// <param name="newfiles">String array with all new files locations.</param>
         public delegate void DownloadCompleetHandler(string[] newfiles);
 
         /// <summary>
-        /// 
+        /// Begin downloading a file.
         /// </summary>
-        /// <param name="urlstr"></param>
-        /// <param name="storefolder"></param>
-        /// <returns></returns>
+        /// <param name="download">The url of the file to download.</param>
+        /// <param name="storefolder">The folder to save the file to.</param>
+        /// <returns>True if started succesfully.</returns>
         public bool BeginDownload(string download, string storefolder)
         {
             string[] downloads = new string[1];
@@ -98,11 +98,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Begin downloading files.
         /// </summary>
-        /// <param name="downloads"></param>
-        /// <param name="storefolder"></param>
-        /// <returns></returns>
+        /// <param name="downloads">List of url of files to download.</param>
+        /// <param name="storefolder">The folder to save all the files to.</param>
+        /// <returns>True if downloading succesfully started.</returns>
         public bool BeginDownload(string[] downloads, string storefolder)
         {
             this.storefolder = storefolder;
@@ -135,28 +135,28 @@ namespace NoteFly
             this.webclient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
             if (Settings.NetworkProxyEnabled)
             {
-                if (!String.IsNullOrEmpty(Settings.NetworkProxyAddress) && Settings.NetworkProxyPort > 0 && Settings.NetworkProxyPort <= 65535)
+                if (!string.IsNullOrEmpty(Settings.NetworkProxyAddress) && Settings.NetworkProxyPort > 0 && Settings.NetworkProxyPort <= 65535)
                 {
-                    webclient.Proxy = new WebProxy(Settings.NetworkProxyAddress, Settings.NetworkProxyPort);
+                    this.webclient.Proxy = new WebProxy(Settings.NetworkProxyAddress, Settings.NetworkProxyPort);
                 }
             }
 
             this.webclient.Headers["User-Agent"] = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
             if (Settings.NetworkUseGzip)
             {
-                webclient.Headers["Accept-Encoding"] = "gzip"; // use gzip
+                this.webclient.Headers["Accept-Encoding"] = "gzip"; // use gzip
             }
 
-            this.webclient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadCompleted);
-            this.webclient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProcessChanged);
+            this.webclient.DownloadFileCompleted += new AsyncCompletedEventHandler(this.DownloadCompleted);
+            this.webclient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(this.DownloadProcessChanged);
             return true;
         }
 
         /// <summary>
-        /// 
+        /// Let the webclient start asynchronized downloading of a file.
         /// </summary>
-        /// <param name="uri"></param>
-        /// <returns></returns>
+        /// <param name="uri">The uri of the file to download.</param>
+        /// <returns>True if download started succesfully.</returns>
         private bool DownloadWebclient(Uri uri)
         {
             string newfile = this.GetStoreFilepath(this.storefolder, uri.AbsolutePath.ToString());
@@ -203,10 +203,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Download is compleet.
+        /// Webclient finished downloading a file.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">The async. completed event arguments.</param>
         private void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (e.Error == null)
@@ -247,9 +247,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Figure out the new file location based on the url and the folder where to save the file in.
         /// </summary>
-        /// <param name="downloadurl"></param>
+        /// <param name="storefolder">The folder where to save the file in.</param>
+        /// <param name="url">The url of the file to download.</param>
         private string GetStoreFilepath(string storefolder, string url)
         {
             string filename = Path.GetFileName(url);

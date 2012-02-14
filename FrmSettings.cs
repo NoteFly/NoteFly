@@ -23,9 +23,9 @@ namespace NoteFly
     using System.Drawing;
     using System.Globalization;
     using System.IO;
-    using System.Windows.Forms;
-    using System.Threading;
     using System.Text;
+    using System.Threading;
+    using System.Windows.Forms;
 #if windows
     using Microsoft.Win32;
 #endif
@@ -728,7 +728,7 @@ namespace NoteFly
         /// Set a updownspinner valeau with a integer valeau
         /// </summary>
         /// <param name="numupdownctrl"></param>
-        /// <param name="valeau"></param>
+        /// <param name="value"></param>
         private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, int value)
         {
             decimal valeaudec = Convert.ToDecimal(value);
@@ -740,7 +740,7 @@ namespace NoteFly
         /// Checks if it does not exceed the minimum and maximum value.
         /// </summary>
         /// <param name="numupdownctrl"></param>
-        /// <param name="valeaudec"></param>
+        /// <param name="valuedec"></param>
         private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, decimal valuedec)
         {
             if (valuedec < numupdownctrl.Minimum)
@@ -762,7 +762,7 @@ namespace NoteFly
         /// Check if selectedindex parameter is not bigger than the availible items in the combobox and not negative.
         /// </summary>
         /// <param name="cbxctrl"></param>
-        /// <param name="selectedindex"></param>
+        /// <param name="selectedindexvalue"></param>
         private void SetComboBoxSelectedIndex(System.Windows.Forms.ComboBox cbxctrl, int selectedindexvalue)
         {
             if (selectedindexvalue < cbxctrl.Items.Count && selectedindexvalue >= 0)
@@ -902,7 +902,6 @@ namespace NoteFly
             }
         }
 
-
         /// <summary>
         /// Load share tab plugins
         /// </summary>
@@ -1021,7 +1020,7 @@ namespace NoteFly
             if (cbxLanguageSelectedIndex < this.languagecodes.Length && cbxLanguageSelectedIndex >= 0)
             {
                 string languageisocode = this.languagecodes[cbxLanguageSelectedIndex];
-                if (!String.IsNullOrEmpty(languageisocode))
+                if (!string.IsNullOrEmpty(languageisocode))
                 {
                     return languageisocode;
                 }
@@ -1032,7 +1031,8 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// The selected language in chxLanguage is changed,
+        /// change the language of the programme.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1040,7 +1040,7 @@ namespace NoteFly
         {
             if (this.cbxLanguage.SelectedIndex >= 0)
             {
-                Program.SetCulture(GetLanguageCode(this.cbxLanguage.SelectedIndex));
+                Program.SetCulture(this.GetLanguageCode(this.cbxLanguage.SelectedIndex));
             }
             else
             {

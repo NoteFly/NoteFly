@@ -139,7 +139,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Set the skin for the FrmManageNotes form.
         /// </summary>
         private void SetSkin()
         {
@@ -172,7 +172,6 @@ namespace NoteFly
         {
             this.Text = Strings.T("Manage notes") + " - " + Program.AssemblyTitle;
         }
-
 
         /// <summary>
         /// Request to backup all notes to a file.
@@ -1006,6 +1005,7 @@ namespace NoteFly
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
                 this.notes.FrmManageNotesNeedUpdate = true;
+                this.Resetdatagrid();
                 Application.DoEvents();
             }
         }
@@ -1021,22 +1021,27 @@ namespace NoteFly
             /// Do not show a dialog during the process
             /// </summary>
             FOF_SILENT = 0x0004,
+
             /// <summary>
             /// Do not ask the user to confirm selection
             /// </summary>
             FOF_NOCONFIRMATION = 0x0010,
+
             /// <summary>
             /// Delete the file to the recycle bin.  (Required flag to send a file to the bin
             /// </summary>
             FOF_ALLOWUNDO = 0x0040,
+
             /// <summary>
             /// Do not show the names of the files or folders that are being recycled.
             /// </summary>
             FOF_SIMPLEPROGRESS = 0x0100,
+
             /// <summary>
             /// Surpress errors, if any occur during the process.
             /// </summary>
             FOF_NOERRORUI = 0x0400,
+
             /// <summary>
             /// Warn if files are too big to fit in the recycle bin and will need
             /// to be deleted completely.
@@ -1053,35 +1058,75 @@ namespace NoteFly
             /// Move the objects
             /// </summary>
             FO_MOVE = 0x0001,
+
             /// <summary>
             /// Copy the objects
             /// </summary>
             FO_COPY = 0x0002,
+
             /// <summary>
             /// Delete (or recycle) the objects
             /// </summary>
             FO_DELETE = 0x0003,
+
             /// <summary>
             /// Rename the object(s)
             /// </summary>
             FO_RENAME = 0x0004,
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
         private struct SHFILEOPSTRUCT_x86
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public IntPtr hwnd;
+
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.U4)]
             public FileOperationType wFunc;
+
+            /// <summary>
+            /// 
+            /// </summary>
             public string pFrom;
+
+            /// <summary>
+            /// 
+            /// </summary>
             public string pTo;
+
+            /// <summary>
+            /// 
+            /// </summary>
             public FileOperationFlags fFlags;
+
+            /// <summary>
+            /// 
+            /// </summary>
             [MarshalAs(UnmanagedType.Bool)]
             public bool fAnyOperationsAborted;
+
+            /// <summary>
+            /// 
+            /// </summary>
             public IntPtr hNameMappings;
+
+            /// <summary>
+            /// 
+            /// </summary>
             public string lpszProgressTitle;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         private struct SHFILEOPSTRUCT_x64
         {
@@ -1182,7 +1227,6 @@ namespace NoteFly
                                 File.Move(filepath, filepath + ".old");                                
                             }
                         }
-                        
                     }
                     else
                     {
@@ -1543,7 +1587,7 @@ namespace NoteFly
 
                             int tooltiplocx = Cursor.Position.X - this.Location.X;
                             int tooltiplocy = Cursor.Position.Y - this.Location.Y;
-                            if (!String.IsNullOrEmpty(contentpreview))
+                            if (!string.IsNullOrEmpty(contentpreview))
                             {
                                 this.toolTip.InitialDelay = 200;
                                 this.toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);                                
@@ -1584,9 +1628,8 @@ namespace NoteFly
             this.notes.FrmManageNotesNeedUpdate = true;
             this.dataGridViewNotes.DataSource = dt;
             this.SetDataGridViewColumsWidth();
-            
         }
-        
+
         /// <summary>
         /// 
         /// </summary>

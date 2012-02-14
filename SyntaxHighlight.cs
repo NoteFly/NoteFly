@@ -212,7 +212,6 @@ namespace NoteFly
             rtb.SelectionLength = sellen;
         }
 
-        
         /// <summary>
         /// 
         /// </summary>
@@ -281,12 +280,10 @@ namespace NoteFly
                             }
                         }
                     }
-
                 }
             }
         }
         
-
         /// <summary>
         /// Color some part of the rich edit text.
         /// </summary>

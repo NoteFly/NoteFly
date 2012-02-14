@@ -54,7 +54,7 @@ namespace SkinsEditor
         /// <param name="host">The interface to talk let this plugin talk to NoteFly.</param>
         public FrmSkinEditor(IPlugin.IPluginHost host)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.host = host;
             this.skinaction = skineditormode.browseskins;
             this.LoadAllSkinNames();
@@ -65,7 +65,6 @@ namespace SkinsEditor
         /// </summary>
         private enum skineditormode
         {
-
             /// <summary>
             /// Selecting/viewing a skin.
             /// </summary>
@@ -82,6 +81,9 @@ namespace SkinsEditor
             newskin
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void LoadAllSkinNames()
         {
             this.btnDeleteSkin.Enabled = false;

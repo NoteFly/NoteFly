@@ -365,7 +365,337 @@ namespace NoteFly
         /// <summary>
         /// Label lblTextMiliseconds
         /// </summary>
-        private System.Windows.Forms.Label lblTextMiliseconds;        
+        private System.Windows.Forms.Label lblTextMiliseconds;
+
+        /// <summary>
+        /// NumericUpDown numWarnLimitVisible
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numWarnLimitVisible;
+
+        /// <summary>
+        /// Label lblTextVisibleNotesWarnLimit
+        /// </summary>
+        private System.Windows.Forms.Label lblTextVisibleNotesWarnLimit;
+
+        /// <summary>
+        /// Label lblTextTotalNotesWarnLimit
+        /// </summary>
+        private System.Windows.Forms.Label lblTextTotalNotesWarnLimit;
+
+        /// <summary>
+        /// NumericUpDown numWarnLimitTotal
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numWarnLimitTotal;
+
+        /// <summary>
+        /// TabPage tabAppearanceOverall
+        /// </summary>
+        private System.Windows.Forms.TabPage tabAppearanceOverall;
+
+        /// <summary>
+        /// CheckBox chxShowTooltips
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxShowTooltips;
+
+        /// <summary>
+        /// CheckBox chxTransparecy
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxTransparecy;
+
+        /// <summary>
+        /// NumericUpDown  numProcTransparency
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numProcTransparency;
+
+        /// <summary>
+        /// Label lblTextTransparentProcVisibl
+        /// </summary>
+        private System.Windows.Forms.Label lblTextTransparentProcVisible;
+
+        /// <summary>
+        /// TabPage tabPageNewNote
+        /// </summary>
+        private System.Windows.Forms.TabPage tabPageNewNote;
+
+        /// <summary>
+        /// CheckBox chxUseRandomDefaultNot
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
+
+        /// <summary>
+        /// Label lblDefaultNewNoteColor
+        /// </summary>
+        private System.Windows.Forms.Label lblDefaultNewNoteColor;
+
+        /// <summary>
+        /// ComboBox cbxDefaultSkin
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxDefaultSkin;
+
+        /// <summary>
+        /// Label  lblTextDefaultsizenewnote
+        /// </summary>
+        private System.Windows.Forms.Label lblTextDefaultsizenewnote;
+
+        /// <summary>
+        /// Label lblTextHeight
+        /// </summary>
+        private System.Windows.Forms.Label lblTextHeight;
+
+        /// <summary>
+        /// Label lblTextWidth
+        /// </summary>
+        private System.Windows.Forms.Label lblTextWidth;
+
+        /// <summary>
+        /// NumericUpDown numNotesDefaultHeigh
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numNotesDefaultHeight;
+
+        /// <summary>
+        /// NumericUpDown numNotesDefaultWidth
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numNotesDefaultWidth;
+
+        /// <summary>
+        /// IPTextBox iptbProxy
+        /// </summary>
+        private IPTextBox iptbProxy;
+
+        /// <summary>
+        /// TabPage tabAppereanceManagenotes
+        /// </summary>
+        private System.Windows.Forms.TabPage tabAppereanceManagenotes;
+
+        /// <summary>
+        /// CheckBox chxManagenotesTooltipContent
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxManagenotesTooltipContent;
+
+        /// <summary>
+        /// ComboBox cbxManageNotesSkin
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxManageNotesSkin;
+
+        /// <summary>
+        /// Label lblTextSkinManagenotes
+        /// </summary>
+        private System.Windows.Forms.Label lblTextSkinManagenotes;
+
+        /// <summary>
+        /// CheckBox chxUseDateAsDefaultTitle
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxUseDateAsDefaultTitle;
+
+        /// <summary>
+        /// NumericUpDown numManagenotesFon
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numManagenotesFont;
+
+        /// <summary>
+        /// Label lbTextManagesnotesFontSize
+        /// </summary>
+        private System.Windows.Forms.Label lbTextManagesnotesFontSize;
+
+        /// <summary>
+        /// Label lblTextPoints
+        /// </summary>
+        private System.Windows.Forms.Label lblTextPoints;
+
+        /// <summary>
+        /// CheckBox chxCaseSentiveSearch
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxCaseSentiveSearch;
+
+        /// <summary>
+        /// CheckBox chxForceUseIPv6
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxForceUseIPv6;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanel1
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanel2
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanelNotes
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelNotes;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanel3
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanelNewNot
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelNewNote;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanel4
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanel6
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanel7
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanel8
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+
+        /// <summary>
+        /// TabPage tabPageGPG
+        /// </summary>
+        private System.Windows.Forms.TabPage tabPageGPG;
+
+        /// <summary>
+        /// Button btnGPGPathBrowse
+        /// </summary>
+        private System.Windows.Forms.Button btnGPGPathBrowse;
+
+        /// <summary>
+        /// Label lblTextGPGPath
+        /// </summary>
+        private System.Windows.Forms.Label lblTextGPGPath;
+
+        /// <summary>
+        /// CheckBox chxCheckUpdatesSignature
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxCheckUpdatesSignature;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanel9
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
+
+        /// <summary>
+        /// Label lblTextAddress
+        /// </summary>
+        private System.Windows.Forms.Label lblTextAddress;
+
+        /// <summary>
+        /// NumericUpDown numProxyPort
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numProxyPort;
+
+        /// <summary>
+        /// Label lblTextPort
+        /// </summary>
+        private System.Windows.Forms.Label lblTextPort;
+
+        /// <summary>
+        /// IOTextBox tbGPGPath
+        /// </summary>
+        private IOTextBox tbGPGPath;
+
+        /// <summary>
+        /// EmailTextBox tbDefaultEmail
+        /// </summary>
+        private EmailTextBox tbDefaultEmail;
+
+        /// <summary>
+        /// IOTextBox tbNotesSavePath
+        /// </summary>
+        private IOTextBox tbNotesSavePath;
+
+        /// <summary>
+        /// Button btnBrowse
+        /// </summary>
+        private System.Windows.Forms.Button btnBrowse;
+
+        /// <summary>
+        /// Label lblTextNoteLocation
+        /// </summary>
+        private System.Windows.Forms.Label lblTextNoteLocation;
+
+        /// <summary>
+        /// TabPage tabHotkeys
+        /// </summary>
+        private System.Windows.Forms.TabPage tabHotkeys;
+
+        /// <summary>
+        /// Label lblTextShortcutManageNotes
+        /// </summary>
+        private System.Windows.Forms.Label lblTextShortcutManageNotes;
+
+        /// <summary>
+        /// Label lblTextShortcutNewNote
+        /// </summary>
+        private System.Windows.Forms.Label lblTextShortcutNewNote;
+
+        /// <summary>
+        /// CheckBox chxNotesDeleteRecyclebin
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxNotesDeleteRecyclebin;
+
+        /// <summary>
+        /// CheckBox chxConfirmDeletenote
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxConfirmDeletenote;
+
+        /// <summary>
+        /// CheckBox chxStartOnLogin
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxStartOnLogin;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanel5
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+
+        /// <summary>
+        /// Label lblTextActionLeftClicktTrayicon
+        /// </summary>
+        private System.Windows.Forms.Label lblTextActionLeftClicktTrayicon;
+
+        /// <summary>
+        /// Forms.ComboBox cbxLanguage
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxLanguage;
+
+        /// <summary>
+        /// Label lblTextLanguage
+        /// </summary>
+        private System.Windows.Forms.Label lblTextLanguage;
+
+        /// <summary>
+        /// ComboBox cbxActionLeftclick
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxActionLeftclick;
+
+        /// <summary>
+        /// CheckBox chxConfirmExit
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxConfirmExit;
+
+        /// <summary>
+        /// TableLayoutPanel tableLayoutPanelShortcuts
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelShortcuts;
+
+        /// <summary>
+        /// ShortcutTextBox shortcutTextBoxManageNotes
+        /// </summary>
+        private ShortcutTextBox shortcutTextBoxManageNotes;
+
+        /// <summary>
+        /// ShortcutTextBox shortcutTextBoxNewNote
+        /// </summary>
+        private ShortcutTextBox shortcutTextBoxNewNote;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -763,7 +1093,7 @@ namespace NoteFly
             this.tabHotkeys.Location = new System.Drawing.Point(4, 25);
             this.tabHotkeys.Name = "tabHotkeys";
             this.tabHotkeys.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHotkeys.Size = new System.Drawing.Size(468, 333);
+            this.tabHotkeys.Size = new System.Drawing.Size(468, 337);
             this.tabHotkeys.TabIndex = 6;
             this.tabHotkeys.Text = "Hotkeys";
             this.tabHotkeys.UseVisualStyleBackColor = true;
@@ -836,7 +1166,7 @@ namespace NoteFly
             this.tabAppearance.Location = new System.Drawing.Point(4, 25);
             this.tabAppearance.Name = "tabAppearance";
             this.tabAppearance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppearance.Size = new System.Drawing.Size(468, 333);
+            this.tabAppearance.Size = new System.Drawing.Size(468, 337);
             this.tabAppearance.TabIndex = 0;
             this.tabAppearance.Text = "Appearance";
             this.tabAppearance.UseVisualStyleBackColor = true;
@@ -854,7 +1184,7 @@ namespace NoteFly
             this.tabctrlAppearance.MinimumSize = new System.Drawing.Size(80, 21);
             this.tabctrlAppearance.Name = "tabctrlAppearance";
             this.tabctrlAppearance.SelectedIndex = 0;
-            this.tabctrlAppearance.Size = new System.Drawing.Size(462, 327);
+            this.tabctrlAppearance.Size = new System.Drawing.Size(462, 331);
             this.tabctrlAppearance.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabctrlAppearance.TabIndex = 28;
             // 
@@ -864,7 +1194,7 @@ namespace NoteFly
             this.tabAppearanceOverall.Location = new System.Drawing.Point(4, 25);
             this.tabAppearanceOverall.Name = "tabAppearanceOverall";
             this.tabAppearanceOverall.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppearanceOverall.Size = new System.Drawing.Size(454, 298);
+            this.tabAppearanceOverall.Size = new System.Drawing.Size(454, 302);
             this.tabAppearanceOverall.TabIndex = 0;
             this.tabAppearanceOverall.Text = "Overall";
             this.tabAppearanceOverall.UseVisualStyleBackColor = true;
@@ -969,7 +1299,7 @@ namespace NoteFly
             this.tabPageNewNote.Location = new System.Drawing.Point(4, 25);
             this.tabPageNewNote.Name = "tabPageNewNote";
             this.tabPageNewNote.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageNewNote.Size = new System.Drawing.Size(454, 298);
+            this.tabPageNewNote.Size = new System.Drawing.Size(454, 302);
             this.tabPageNewNote.TabIndex = 3;
             this.tabPageNewNote.Text = "New note";
             this.tabPageNewNote.UseVisualStyleBackColor = true;
@@ -1168,7 +1498,7 @@ namespace NoteFly
             this.tabPageFonts.Location = new System.Drawing.Point(4, 25);
             this.tabPageFonts.Name = "tabPageFonts";
             this.tabPageFonts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFonts.Size = new System.Drawing.Size(454, 298);
+            this.tabPageFonts.Size = new System.Drawing.Size(454, 302);
             this.tabPageFonts.TabIndex = 1;
             this.tabPageFonts.Text = "Notes";
             this.tabPageFonts.UseVisualStyleBackColor = true;
@@ -1411,7 +1741,7 @@ namespace NoteFly
             this.tabPageTrayicon.Controls.Add(this.chxTrayiconBoldNewnote);
             this.tabPageTrayicon.Location = new System.Drawing.Point(4, 25);
             this.tabPageTrayicon.Name = "tabPageTrayicon";
-            this.tabPageTrayicon.Size = new System.Drawing.Size(454, 298);
+            this.tabPageTrayicon.Size = new System.Drawing.Size(454, 302);
             this.tabPageTrayicon.TabIndex = 2;
             this.tabPageTrayicon.Text = "Trayicon";
             this.tabPageTrayicon.UseVisualStyleBackColor = true;
@@ -1549,7 +1879,7 @@ namespace NoteFly
             this.tabAppereanceManagenotes.Location = new System.Drawing.Point(4, 25);
             this.tabAppereanceManagenotes.Name = "tabAppereanceManagenotes";
             this.tabAppereanceManagenotes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAppereanceManagenotes.Size = new System.Drawing.Size(454, 298);
+            this.tabAppereanceManagenotes.Size = new System.Drawing.Size(454, 302);
             this.tabAppereanceManagenotes.TabIndex = 4;
             this.tabAppereanceManagenotes.Text = "Manage notes";
             this.tabAppereanceManagenotes.UseVisualStyleBackColor = true;
@@ -1674,7 +2004,7 @@ namespace NoteFly
             this.tabHighlight.Location = new System.Drawing.Point(4, 25);
             this.tabHighlight.Name = "tabHighlight";
             this.tabHighlight.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHighlight.Size = new System.Drawing.Size(468, 333);
+            this.tabHighlight.Size = new System.Drawing.Size(468, 337);
             this.tabHighlight.TabIndex = 5;
             this.tabHighlight.Text = "Highlight";
             this.tabHighlight.UseVisualStyleBackColor = true;
@@ -1752,7 +2082,7 @@ namespace NoteFly
             this.tabSharing.Location = new System.Drawing.Point(4, 25);
             this.tabSharing.Name = "tabSharing";
             this.tabSharing.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSharing.Size = new System.Drawing.Size(468, 333);
+            this.tabSharing.Size = new System.Drawing.Size(468, 337);
             this.tabSharing.TabIndex = 1;
             this.tabSharing.Text = "Sharing";
             this.tabSharing.UseVisualStyleBackColor = true;
@@ -1764,7 +2094,7 @@ namespace NoteFly
             this.tabControlSharing.Location = new System.Drawing.Point(3, 3);
             this.tabControlSharing.Name = "tabControlSharing";
             this.tabControlSharing.SelectedIndex = 0;
-            this.tabControlSharing.Size = new System.Drawing.Size(462, 327);
+            this.tabControlSharing.Size = new System.Drawing.Size(462, 331);
             this.tabControlSharing.TabIndex = 14;
             // 
             // tabEmail
@@ -1774,7 +2104,7 @@ namespace NoteFly
             this.tabEmail.Controls.Add(this.chxSocialEmailDefaultaddressSet);
             this.tabEmail.Location = new System.Drawing.Point(4, 25);
             this.tabEmail.Name = "tabEmail";
-            this.tabEmail.Size = new System.Drawing.Size(454, 298);
+            this.tabEmail.Size = new System.Drawing.Size(454, 302);
             this.tabEmail.TabIndex = 2;
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
@@ -1822,7 +2152,7 @@ namespace NoteFly
             this.tabNetwork.Location = new System.Drawing.Point(4, 25);
             this.tabNetwork.Name = "tabNetwork";
             this.tabNetwork.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNetwork.Size = new System.Drawing.Size(468, 333);
+            this.tabNetwork.Size = new System.Drawing.Size(468, 337);
             this.tabNetwork.TabIndex = 4;
             this.tabNetwork.Text = "Network";
             this.tabNetwork.UseVisualStyleBackColor = true;
@@ -1836,7 +2166,7 @@ namespace NoteFly
             this.tabControlNetwork.Location = new System.Drawing.Point(3, 3);
             this.tabControlNetwork.Name = "tabControlNetwork";
             this.tabControlNetwork.SelectedIndex = 0;
-            this.tabControlNetwork.Size = new System.Drawing.Size(462, 327);
+            this.tabControlNetwork.Size = new System.Drawing.Size(462, 331);
             this.tabControlNetwork.TabIndex = 33;
             // 
             // tabUpdates
@@ -1848,7 +2178,7 @@ namespace NoteFly
             this.tabUpdates.Location = new System.Drawing.Point(4, 25);
             this.tabUpdates.Name = "tabUpdates";
             this.tabUpdates.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUpdates.Size = new System.Drawing.Size(454, 298);
+            this.tabUpdates.Size = new System.Drawing.Size(454, 302);
             this.tabUpdates.TabIndex = 0;
             this.tabUpdates.Text = "Updates";
             this.tabUpdates.UseVisualStyleBackColor = true;
@@ -2256,7 +2586,7 @@ namespace NoteFly
             this.tabAdvance.Controls.Add(this.chxLogErrors);
             this.tabAdvance.Location = new System.Drawing.Point(4, 25);
             this.tabAdvance.Name = "tabAdvance";
-            this.tabAdvance.Size = new System.Drawing.Size(468, 333);
+            this.tabAdvance.Size = new System.Drawing.Size(468, 337);
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
@@ -2582,72 +2912,5 @@ namespace NoteFly
         }
 
         #endregion        
-
-        private System.Windows.Forms.NumericUpDown numWarnLimitVisible;
-        private System.Windows.Forms.Label lblTextVisibleNotesWarnLimit;
-        private System.Windows.Forms.Label lblTextTotalNotesWarnLimit;
-        private System.Windows.Forms.NumericUpDown numWarnLimitTotal;
-        private System.Windows.Forms.TabPage tabAppearanceOverall;
-        private System.Windows.Forms.CheckBox chxShowTooltips;
-        private System.Windows.Forms.CheckBox chxTransparecy;
-        private System.Windows.Forms.NumericUpDown numProcTransparency;
-        private System.Windows.Forms.Label lblTextTransparentProcVisible;
-        private System.Windows.Forms.TabPage tabPageNewNote;
-        private System.Windows.Forms.CheckBox chxUseRandomDefaultNote;
-        private System.Windows.Forms.Label lblDefaultNewNoteColor;
-        private System.Windows.Forms.ComboBox cbxDefaultSkin;
-        private System.Windows.Forms.Label lblTextDefaultsizenewnote;
-        private System.Windows.Forms.Label lblTextHeight;
-        private System.Windows.Forms.Label lblTextWidth;
-        private System.Windows.Forms.NumericUpDown numNotesDefaultHeight;
-        private System.Windows.Forms.NumericUpDown numNotesDefaultWidth;
-        private IPTextBox iptbProxy;
-        private System.Windows.Forms.TabPage tabAppereanceManagenotes;
-        private System.Windows.Forms.CheckBox chxManagenotesTooltipContent;
-        private System.Windows.Forms.ComboBox cbxManageNotesSkin;
-        private System.Windows.Forms.Label lblTextSkinManagenotes;
-        private System.Windows.Forms.CheckBox chxUseDateAsDefaultTitle;
-        private System.Windows.Forms.NumericUpDown numManagenotesFont;
-        private System.Windows.Forms.Label lbTextManagesnotesFontSize;
-        private System.Windows.Forms.Label lblTextPoints;
-        private System.Windows.Forms.CheckBox chxCaseSentiveSearch;
-        private System.Windows.Forms.CheckBox chxForceUseIPv6;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelNotes;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelNewNote;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-        private System.Windows.Forms.TabPage tabPageGPG;
-        private System.Windows.Forms.Button btnGPGPathBrowse;
-        private System.Windows.Forms.Label lblTextGPGPath;
-        private System.Windows.Forms.CheckBox chxCheckUpdatesSignature;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
-        private System.Windows.Forms.Label lblTextAddress;
-        private System.Windows.Forms.NumericUpDown numProxyPort;
-        private System.Windows.Forms.Label lblTextPort;
-        private IOTextBox tbGPGPath;
-        private EmailTextBox tbDefaultEmail;
-        private IOTextBox tbNotesSavePath;
-        private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.Label lblTextNoteLocation;
-        private System.Windows.Forms.TabPage tabHotkeys;
-        private System.Windows.Forms.Label lblTextShortcutManageNotes;
-        private System.Windows.Forms.Label lblTextShortcutNewNote;
-        private System.Windows.Forms.CheckBox chxNotesDeleteRecyclebin;
-        private System.Windows.Forms.CheckBox chxConfirmDeletenote;
-        private System.Windows.Forms.CheckBox chxStartOnLogin;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.Label lblTextActionLeftClicktTrayicon;
-        private System.Windows.Forms.ComboBox cbxLanguage;
-        private System.Windows.Forms.Label lblTextLanguage;
-        private System.Windows.Forms.ComboBox cbxActionLeftclick;
-        private System.Windows.Forms.CheckBox chxConfirmExit;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelShortcuts;
-        private ShortcutTextBox shortcutTextBoxManageNotes;
-        private ShortcutTextBox shortcutTextBoxNewNote;
     }
 }

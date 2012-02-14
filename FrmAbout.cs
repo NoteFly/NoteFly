@@ -103,11 +103,11 @@ namespace NoteFly
         /// <param name="e"></param>
         private void tmpUpdateLblProductEffect_Tick(object sender, EventArgs e)
         {
-            const int maxdark = 250;
+            const int MAXDARK = 250;
             byte red = this.lblProductName.ForeColor.R;
             byte blue = this.lblProductName.ForeColor.B;
             byte green = this.lblProductName.ForeColor.G;
-            if (red < maxdark && green <= 5)
+            if (red < MAXDARK && green <= 5)
             {
                 red += 5;
                 if (blue > 5)
@@ -115,7 +115,7 @@ namespace NoteFly
                     blue -= 5;
                 }
             }
-            else if (green < maxdark && blue <= 5)
+            else if (green < MAXDARK && blue <= 5)
             {
                 green += 5;
                 if (red > 5)
@@ -123,7 +123,7 @@ namespace NoteFly
                     red -= 5;
                 }
             }
-            else if (blue < maxdark && red <= 5)
+            else if (blue < MAXDARK && red <= 5)
             {
                 blue += 5;
                 if (green > 5)

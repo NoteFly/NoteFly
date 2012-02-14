@@ -29,6 +29,9 @@ namespace SkinsEditor
     /// </summary>
     public class SkinsEditor : IPlugin.PluginBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private FrmSkinEditor skineditor;
 
         /// <summary>

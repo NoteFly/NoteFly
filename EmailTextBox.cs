@@ -22,30 +22,15 @@ namespace NoteFly
     using System.Drawing;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// EmailTextBox control
+    /// </summary>
     internal partial class EmailTextBox : TextBox
     {
-        bool setuptext = false;
-
         /// <summary>
-        /// Validate entered email address after EmailTextBox is created and text is set.
+        /// Has the EmailTextBox been initilized.
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnTextChanged(System.EventArgs e)
-        {
-            if (this.setuptext && this.Enabled)
-            {
-                if (this.IsValidEmailAddress())
-                {
-                    this.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    this.BackColor = Color.LightSalmon;
-                }
-            }
-
-            this.setuptext = true;
-        }
+        private bool setuptext = false;
 
         /// <summary>
         /// Check if the text is a valid e-mail address.
@@ -70,6 +55,27 @@ namespace NoteFly
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Validate entered email address after EmailTextBox is created and text is set.
+        /// </summary>
+        /// <param name="e">Event arguments</param>
+        protected override void OnTextChanged(System.EventArgs e)
+        {
+            if (this.setuptext && this.Enabled)
+            {
+                if (this.IsValidEmailAddress())
+                {
+                    this.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    this.BackColor = Color.LightSalmon;
+                }
+            }
+
+            this.setuptext = true;
         }
     }
 }

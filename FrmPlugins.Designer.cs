@@ -1,11 +1,79 @@
 ﻿namespace NoteFly
 {
+    /// <summary>
+    /// FrmPlugins window
+    /// </summary>
     partial class FrmPlugins
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TabControl tabControlPlugins;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TabPage tabPagePluginsAvailable;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TabPage tabPagePluginsInstalled;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private PluginGrid pluginGrid;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.SplitContainer splitContainerAvailablePlugins;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnPluginDownload;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblPluginDescription;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblPluginName;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblPluginVersion;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextNoInternetConnection;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblLicense;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private SearchTextBox searchtbPlugins;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -17,6 +85,7 @@
             {
                 this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -241,19 +310,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TabControl tabControlPlugins;
-        private System.Windows.Forms.TabPage tabPagePluginsAvailable;
-        private System.Windows.Forms.TabPage tabPagePluginsInstalled;
-        private PluginGrid pluginGrid;
-        private System.Windows.Forms.SplitContainer splitContainerAvailablePlugins;
-        private System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins;
-        private System.Windows.Forms.Button btnPluginDownload;
-        private System.Windows.Forms.Label lblPluginDescription;
-        private System.Windows.Forms.Label lblPluginName;
-        private System.Windows.Forms.Label lblPluginVersion;
-        private System.Windows.Forms.Label lblTextNoInternetConnection;
-        private System.Windows.Forms.Label lblLicense;
-        private SearchTextBox searchtbPlugins;
     }
 }

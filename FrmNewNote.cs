@@ -104,7 +104,7 @@ namespace NoteFly
             this.ConstructFrmNewNote(notes);
             this.SetFormTitle(false);
             this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2) + deltaX, (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2) + deltaY);
-            this.note = null;            
+            this.note = null;
             if (Settings.NotesDefaultRandomSkin)
             {
                 Settings.NotesDefaultSkinnr = notes.GenerateRandomSkinnr();
@@ -122,6 +122,10 @@ namespace NoteFly
 
         #region Methods (30)
 
+        /// <summary>
+        /// Set the form title.
+        /// </summary>
+        /// <param name="editnote"></param>
         private void SetFormTitle(bool editnote)
         {
             StringBuilder sbtitle = new StringBuilder();
@@ -138,6 +142,7 @@ namespace NoteFly
             sbtitle.Append(Program.AssemblyTitle);
             this.Text = sbtitle.ToString();
         }
+
         /// <summary>
         /// Initialize components FrmNewNote, set font, tooltip and richtextbox settings
         /// </summary>
@@ -1194,16 +1199,6 @@ namespace NoteFly
         private void menuWordWarp_Click(object sender, EventArgs e)
         {
             this.rtbNewNote.WordWrap = this.menuWordWarp.Checked;
-        }
-
-        /// <summary>
-        /// Do a quick text highlight.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void btnAddNote_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
         }
 
         /// <summary>

@@ -73,8 +73,8 @@ namespace NoteFly
         /// <summary>
         /// Open bug tracker webpage on report bug page
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">LinkLabelLink Clicked event arguments</param>
         private void linklblCreateBugReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Program.LoadLink("http://www.notefly.org/bugs/bug_report_page.php", false);

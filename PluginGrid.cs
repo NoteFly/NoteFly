@@ -28,6 +28,9 @@ namespace NoteFly
     /// </summary>
     public sealed partial class PluginGrid : UserControl
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public const int DEFAULTWITH = 415;
 
         /// <summary>

@@ -17,6 +17,161 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.OpenFileDialog openFileTextureDialog;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.ListBox lbxSkins;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnBrowsePrimaryTexture;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextSkins;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TextBox tbPrimaryTexture;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextPrimaryTexture;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Panel pnlClrText;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Panel pnlClrHighlight;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Panel pnlClrSelecting;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Panel pnlClrPrimary;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnClose;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextSkinname;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnEditskin;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TextBox tbSkinName;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnNewSkin;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextPrimarycolor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSaveSkin;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TextBox tbPrimaryColor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnPickTextColor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextSelectingcolor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TextBox tbTextColor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TextBox tbSelectingColor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextTextcolor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextHighlightcolor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnPickHighlightColor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TextBox tbHighlightingColor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnPickSelectingColor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnPickPrimaryColor;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnDeleteSkin;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextPrimartTextureLayout;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxPrimaryTextureLayout;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -453,37 +608,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.OpenFileDialog openFileTextureDialog;
-        private System.Windows.Forms.ListBox lbxSkins;
-        private System.Windows.Forms.Button btnBrowsePrimaryTexture;
-        private System.Windows.Forms.Label lblTextSkins;
-        private System.Windows.Forms.TextBox tbPrimaryTexture;
-        private System.Windows.Forms.Label lblTextPrimaryTexture;
-        private System.Windows.Forms.Panel pnlClrText;
-        private System.Windows.Forms.Panel pnlClrHighlight;
-        private System.Windows.Forms.Panel pnlClrSelecting;
-        private System.Windows.Forms.Panel pnlClrPrimary;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Label lblTextSkinname;
-        private System.Windows.Forms.Button btnEditskin;
-        private System.Windows.Forms.TextBox tbSkinName;
-        private System.Windows.Forms.Button btnNewSkin;
-        private System.Windows.Forms.Label lblTextPrimarycolor;
-        private System.Windows.Forms.Button btnSaveSkin;
-        private System.Windows.Forms.TextBox tbPrimaryColor;
-        private System.Windows.Forms.Button btnPickTextColor;
-        private System.Windows.Forms.Label lblTextSelectingcolor;
-        private System.Windows.Forms.TextBox tbTextColor;
-        private System.Windows.Forms.TextBox tbSelectingColor;
-        private System.Windows.Forms.Label lblTextTextcolor;
-        private System.Windows.Forms.Label lblTextHighlightcolor;
-        private System.Windows.Forms.Button btnPickHighlightColor;
-        private System.Windows.Forms.TextBox tbHighlightingColor;
-        private System.Windows.Forms.Button btnPickSelectingColor;
-        private System.Windows.Forms.Button btnPickPrimaryColor;
-        private System.Windows.Forms.Button btnDeleteSkin;
-        private System.Windows.Forms.Label lblTextPrimartTextureLayout;
-        private System.Windows.Forms.ComboBox cbxPrimaryTextureLayout;
     }
 }

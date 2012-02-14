@@ -28,28 +28,27 @@ namespace NoteFly
     /// Http utily class
     /// </summary>
     public class HttpUtil
-    {    
+    {
         /// <summary>
-        /// thread
-        /// </summary>
-        public BackgroundWorker httpthread;
-
-        /// <summary>
-        /// immutable
+        /// url of http request, immutable
         /// </summary>
         private readonly string url;
 
         /// <summary>
-        /// immutable
+        /// cache settings of http request, immutable
         /// </summary>
         private readonly System.Net.Cache.RequestCacheLevel cachesettings;
+
+        /// <summary>
+        /// HTTP backgroundworker thread
+        /// </summary>
+        private BackgroundWorker httpthread;
 
         /// <summary>
         /// Initializes a new instance of the HttpUtil class.
         /// </summary>
         /// <param name="url">The url of the request to make</param>
         /// <param name="cachesettings">The cache settings (important note: this is always NoCacheNoStore under Mono)</param>
-        /// <param name="usegzip">Use gzip compression</param>
         /// <returns></returns>
         public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings)
         {
@@ -78,14 +77,14 @@ namespace NoteFly
         /// <summary>
         /// Create a new Http request only if DownloadCompleet event is assigned.
         /// </summary>
-        /// <param name="handler"></param>
-        /// <returns></returns>
-        public bool Start()
+        /// <returns>True if http background worker succesfully started</returns>
+        public bool Start(RunWorkerCompletedEventHandler workcompleethandler)
         {
             if (this.httpthread != null)
             {
+                this.httpthread.RunWorkerCompleted += workcompleethandler;                
                 this.httpthread.RunWorkerAsync();
-                return true;
+                return true;                               
             }
             else
             {
@@ -94,10 +93,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Http background worker thread reading stream
+        /// and writing to memory in string.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">DoWorkEvent arguments</param>
         private void httpthread_DoWork(object sender, DoWorkEventArgs e)
         {
             HttpWebRequest request = this.CreateHttpWebRequest(this.url, this.cachesettings);
@@ -166,8 +166,7 @@ namespace NoteFly
                 request.Timeout = Settings.NetworkConnectionTimeout;
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
-                    int port = 80;
-                    request.Proxy = new WebProxy(Settings.NetworkProxyAddress, port);
+                    request.Proxy = new WebProxy(Settings.NetworkProxyAddress, Settings.NetworkProxyPort);
                 }
 
                 if (Settings.NetworkUseGzip)
@@ -214,6 +213,5 @@ namespace NoteFly
         [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
         private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
 #endif
-
     }
 }

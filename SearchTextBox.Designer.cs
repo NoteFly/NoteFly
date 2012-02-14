@@ -7,6 +7,36 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TextBox tbKeywords;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextSearch;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Timer timerStartAutoSearch;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPnlSearchbox;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnKeywordClear;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.ToolTip toolTips;
+
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
@@ -17,6 +47,7 @@
             {
                 this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -121,12 +152,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox tbKeywords;
-        private System.Windows.Forms.Label lblTextSearch;
-        private System.Windows.Forms.Timer timerStartAutoSearch;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPnlSearchbox;
-        private System.Windows.Forms.Button btnKeywordClear;
-        private System.Windows.Forms.ToolTip toolTips;
     }
 }

@@ -118,6 +118,5 @@ namespace NoteFly
 
             return numdots;
         }
-        
     }
 }

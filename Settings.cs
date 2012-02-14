@@ -25,24 +25,24 @@ namespace NoteFly
     public struct Settings
     {
         /// <summary>
-        /// 
+        /// Hotkey for new note uses Alt instead of Shift key as second key.
         /// </summary>
         public static bool HotkeysNewNoteAltInsteadShift = false;
 
         /// <summary>
-        /// 
+        /// The third final key that needs to be pressed for as hotkey for a new note.
         /// </summary>
-        public static int  HotkeysNewNoteKeycode = 112; // F1
+        public static int HotkeysNewNoteKeycode = 112;
 
         /// <summary>
-        /// 
+        /// Hotkey for manage notes uses Alt instead of Shift key as second key.
         /// </summary>
         public static bool HotkeysManageNotesAltInsteadShift = true;
 
         /// <summary>
-        /// 
+        /// The third final key that needs to be pressed for as hotkey for a manage notes.
         /// </summary>
-        public static int  HotkeysManageNotesKeycode = 113; // F2
+        public static int HotkeysManageNotesKeycode = 113;
 
         /// <summary>
         /// Are notes transparent.

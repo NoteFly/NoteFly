@@ -109,15 +109,35 @@ namespace NoteFly
         /// </summary>
         private ToolStripMenuItem menuExit;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private int deltaX = 0;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private int deltaY = 0;
 
 #if windows
+        /// <summary>
+        /// 
+        /// </summary>
         private KeyboardListener keylister;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private bool controlpressed = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private bool shiftpressed = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private bool altpressed = false;
 #endif
 
@@ -233,7 +253,6 @@ namespace NoteFly
                 }
             }
 
-
             // MenuAbout
             this.menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuAbout.Name = "MenuAbout";
@@ -270,9 +289,47 @@ namespace NoteFly
             
 #if windows
             this.keylister = new KeyboardListener();
-            this.keylister.s_KeyEventHandler += new EventHandler(KeyboardListener_s_KeyEventHandler);
+            this.keylister.s_KeyEventHandler += new EventHandler(this.KeyboardListener_s_KeyEventHandler);
 #endif
             //this.components.Add(this.keylister);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether FrmNewNote is being showed.
+        /// </summary>
+        public static bool Frmneweditnoteopen
+        {
+            get
+            {
+                return frmneweditnoteopen;
+            }
+
+            set
+            {
+                frmneweditnoteopen = value;
+            }
+        }
+
+        /// <summary>
+        /// Do a refresh on the FrmManageNotes window if it's created.
+        /// </summary>
+        public static void RefreshFrmManageNotes()
+        {
+            if (frmmanagenotes != null)
+            {
+                frmmanagenotes.Resetdatagrid();
+                frmmanagenotes.Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Destroy NotifyIcon with ContextMenuStrip and ToolStripMenuItems etc.
+        /// </summary>
+        public void Dispose()
+        {
+            this.icon.Visible = false; // Mono needs Visible set to false otherwise it keeps showing the trayicon.
+            this.keylister = null;
+            this.components.Dispose();
         }
 
 #if windows
@@ -292,13 +349,13 @@ namespace NoteFly
                         this.altpressed = true;
 
                         // Ctrl + Alt + KEY
-                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && Settings.HotkeysNewNoteAltInsteadShift)  // eventArgs.KeyData == Keys.F1
+                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && Settings.HotkeysNewNoteAltInsteadShift)
                         {
                             this.MenuNewNote_Click(null, null);
                             this.ResetAllModifierKeys();
                         }
                         // Ctrl + Alt + KEY
-                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && Settings.HotkeysManageNotesAltInsteadShift) // eventArgs.KeyData == Keys.F2
+                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && Settings.HotkeysManageNotesAltInsteadShift)
                         {
                             this.MenuManageNotes_Click(null, null);
                             this.ResetAllModifierKeys();
@@ -345,44 +402,6 @@ namespace NoteFly
 #endif
 
         /// <summary>
-        /// Gets or sets a value indicating whether FrmNewNote is being showed.
-        /// </summary>
-        public static bool Frmneweditnoteopen
-        {
-            get
-            {
-                return frmneweditnoteopen;
-            }
-
-            set
-            {
-                frmneweditnoteopen = value;
-            }
-        }
-
-        /// <summary>
-        /// Do a refresh on the FrmManageNotes window if it's created.
-        /// </summary>
-        public static void RefreshFrmManageNotes()
-        {
-            if (frmmanagenotes != null)
-            {
-                frmmanagenotes.Resetdatagrid();
-                frmmanagenotes.Refresh();
-            }
-        }
-
-        /// <summary>
-        /// Destroy NotifyIcon with ContextMenuStrip and ToolStripMenuItems etc.
-        /// </summary>
-        public void Dispose()
-        {
-            this.icon.Visible = false; // Mono needs Visible set to false otherwise it keeps showing the trayicon.
-            this.keylister = null;
-            this.components.Dispose();
-        }
-
-        /// <summary>
         /// There is left clicked on the icon.
         /// If actionleftclick is 0 do nothing.
         /// If actionleftclick is 1 actived all notes.
@@ -420,7 +439,7 @@ namespace NoteFly
         /// </summary>
         private void ChangeDeltaPositionNewNote()
         {
-            if (deltaX < 100 && deltaY < 100)
+            if (this.deltaX < 100 && this.deltaY < 100)
             {
                 this.deltaX += 10;
                 this.deltaY += 10;
