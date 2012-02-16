@@ -214,9 +214,11 @@
     <None Include="build_translationfile.bat" />
     <None Include="clean_settings.bat" />
     <None Include="icons.res" />
+    <None Include="NoteFly_classdiagram.cd" />
     <None Include="Properties\app.manifest" />
     <Compile Include="SyntaxHighlight.cs" />
     <Compile Include="HttpUtil.cs" />
+    <Compile Include="FormManager.cs" />
     <Compile Include="XmlUtil.cs" />
     <None Include="Resources\accept.png" />
     <None Include="Resources\cancel.png" />

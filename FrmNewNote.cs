@@ -293,10 +293,11 @@ namespace NoteFly
                     }
                 }
 
-                TrayIcon.Frmneweditnoteopen = false;
+                Program.Formmanager.Frmneweditnoteopen = false;
                 SyntaxHighlight.DeinitHighlighter();
-                this.notes.FrmManageNotesNeedUpdate = true;
-                TrayIcon.RefreshFrmManageNotes();
+                Program.Formmanager.FrmManageNotesNeedUpdate = true;
+                //this.notes.FrmManageNotesNeedUpdate = true;
+                Program.Formmanager.RefreshFrmManageNotes();
                 this.Close();
                 GC.Collect();
             }
@@ -309,7 +310,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            TrayIcon.Frmneweditnoteopen = false;
+            Program.Formmanager.Frmneweditnoteopen = false;
             if (this.note != null)
             {
                 this.note.CreateForm();

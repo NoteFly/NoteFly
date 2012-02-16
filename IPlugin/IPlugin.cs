@@ -19,6 +19,9 @@ using System;
 
 [assembly: CLSCompliant(true)]
 
+/// <summary>
+/// Provides interfaces for plugins
+/// </summary>
 namespace IPlugin
 {    
     using System.Windows.Forms;

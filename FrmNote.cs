@@ -438,8 +438,8 @@ namespace NoteFly
         /// <param name="e">FormClosedEvent arguments</param>
         private void FrmNote_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.notes.FrmManageNotesNeedUpdate = true;
-            TrayIcon.RefreshFrmManageNotes();
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            Program.Formmanager.RefreshFrmManageNotes();
         }
 
         /// <summary>
@@ -542,8 +542,8 @@ namespace NoteFly
             this.pnlHead.BackColor = Color.Transparent;
             this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
-            this.notes.FrmManageNotesNeedUpdate = true;
-            TrayIcon.RefreshFrmManageNotes();
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            Program.Formmanager.RefreshFrmManageNotes();
             if (!SyntaxHighlight.KeywordsInitialized)
             {
                 SyntaxHighlight.InitHighlighter();

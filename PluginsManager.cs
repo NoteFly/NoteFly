@@ -24,7 +24,7 @@ namespace NoteFly
     using System.Reflection;
 
     /// <summary>
-    /// 
+    /// PluginsManager class, provides plugins functions
     /// </summary>
     public static class PluginsManager
     {
@@ -49,20 +49,6 @@ namespace NoteFly
                 pluginsenabled = GetPlugins(true);
             }
         }
-
-        /*
-        public void TriggerEnabledPlugins(Delegate m)
-        {
-                    if (PluginsManager.pluginsenabled != null)
-            {
-                for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
-                {
-                    
-                    //PluginsManager.pluginsenabled[i].
-                }
-            }
-        }
-         */
 
         /// <summary>
         /// Load plugin .dll files from pluginfolder
@@ -100,7 +86,7 @@ namespace NoteFly
                                             if (plugintype != null)
                                             {
                                                 IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
-                                                iplugin.Host = NoteFly.Program.notes;
+                                                iplugin.Host = NoteFly.Program.Notes;
                                                 iplugin.Register(pluginenabled, pluginfiles[i]);
                                                 pluginslist.Add(iplugin);
                                             }
@@ -131,7 +117,7 @@ namespace NoteFly
         /// <returns>The name of the plugin</returns>
         public static string GetPluginName(Assembly pluginassembly)
         {
-            string pluginname = "untitled";
+            string pluginname = Strings.T("unknown");
             object[] atttitle = pluginassembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
             if (atttitle.Length > 0)
             {
@@ -163,7 +149,7 @@ namespace NoteFly
         /// <returns>The author or company of the plugin</returns>
         public static string GetPluginAuthor(Assembly pluginassembly)
         {
-            string pluginauthor = "unknown";
+            string pluginauthor = Strings.T("unknown");
             object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
             if (attributes.Length != 0)
             {
@@ -225,7 +211,7 @@ namespace NoteFly
             else
             {
                 Log.Write(LogType.exception, "Plugin " + pluginassembly.Location + " has no version information.");
-                return "unknown";
+                return Strings.T("unknown");
             }
         }
 

@@ -398,7 +398,7 @@ namespace NoteFly
                         this.Cursor = Cursors.Default;
                     }
 
-                    this.notes.FrmManageNotesNeedUpdate = true;
+                    Program.Formmanager.FrmManageNotesNeedUpdate = true;
                 }
 
                 SyntaxHighlight.InitHighlighter();

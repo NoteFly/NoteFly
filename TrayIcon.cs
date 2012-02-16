@@ -30,24 +30,9 @@ namespace NoteFly
     public sealed class TrayIcon
     {
         /// <summary>
-        /// Used for warning if new note is still open on shutdown application.
+        /// 
         /// </summary>
-        private static bool frmneweditnoteopen = false;
-
-        /// <summary>
-        /// Reference to FrmManageNotes window.
-        /// </summary>
-        private static FrmManageNotes frmmanagenotes;
-
-        /// <summary>
-        /// Reference to FrmPlugins window.
-        /// </summary>
-        private FrmPlugins frmplugins;
-
-        /// <summary>
-        /// Reference to FrmSettings window.
-        /// </summary>
-        private FrmSettings frmsettings;
+        private FormManager formmanager;
 
         /// <summary>
         /// container that holds some objects.
@@ -58,16 +43,6 @@ namespace NoteFly
         /// indicated wheter confirm exit is showed.
         /// </summary>
         private bool confirmexitshowed = false;
-
-        /// <summary>
-        /// Is the creation of a new note being showed, so double left clicking isnt creating two notes at once.
-        /// </summary>
-        private bool frmnewnoteshowed = false;
-
-        /// <summary>
-        /// Notes class has a list an methodes for accessing notes.
-        /// </summary>
-        private Notes notes;
 
         /// <summary>
         /// The trayicon itself.
@@ -110,45 +85,13 @@ namespace NoteFly
         private ToolStripMenuItem menuExit;
 
         /// <summary>
-        /// 
-        /// </summary>
-        private int deltaX = 0;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private int deltaY = 0;
-
-#if windows
-        /// <summary>
-        /// 
-        /// </summary>
-        private KeyboardListener keylister;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private bool controlpressed = false;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private bool shiftpressed = false;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private bool altpressed = false;
-#endif
-
-        /// <summary>
         /// Initializes a new instance of the TrayIcon class. 
         /// New trayicon in the systray.
         /// </summary>
         /// <param name="notes">reference to notes class.</param>
-        public TrayIcon(Notes notes)
+        public TrayIcon(FormManager formmanager)
         {
-            this.notes = notes;
+            this.formmanager = formmanager;
             this.components = new System.ComponentModel.Container();
 
             // Start building icon and icon contextmenu
@@ -286,40 +229,6 @@ namespace NoteFly
                 string trayicon_trayiconaccesshint = Strings.T("You can access {0} functions with this trayicon.", Program.AssemblyTitle);
                 this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, trayicon_trayiconaccesshint, ToolTipIcon.Info);
             }
-            
-#if windows
-            this.keylister = new KeyboardListener();
-            this.keylister.s_KeyEventHandler += new EventHandler(this.KeyboardListener_s_KeyEventHandler);
-#endif
-            //this.components.Add(this.keylister);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether FrmNewNote is being showed.
-        /// </summary>
-        public static bool Frmneweditnoteopen
-        {
-            get
-            {
-                return frmneweditnoteopen;
-            }
-
-            set
-            {
-                frmneweditnoteopen = value;
-            }
-        }
-
-        /// <summary>
-        /// Do a refresh on the FrmManageNotes window if it's created.
-        /// </summary>
-        public static void RefreshFrmManageNotes()
-        {
-            if (frmmanagenotes != null)
-            {
-                frmmanagenotes.Resetdatagrid();
-                frmmanagenotes.Refresh();
-            }
         }
 
         /// <summary>
@@ -328,78 +237,9 @@ namespace NoteFly
         public void Dispose()
         {
             this.icon.Visible = false; // Mono needs Visible set to false otherwise it keeps showing the trayicon.
-            this.keylister = null;
             this.components.Dispose();
         }
 
-#if windows
-        private void KeyboardListener_s_KeyEventHandler(object sender, EventArgs e)
-        {
-            KeyboardListener.UniversalKeyEventArgs eventArgs = (KeyboardListener.UniversalKeyEventArgs)e;
-
-            // is key down
-            if (eventArgs.m_Msg == 256)
-            {
-                if (eventArgs.KeyData == Keys.ControlKey || this.controlpressed)
-                {
-                    this.controlpressed = true;
-
-                    if (eventArgs.KeyData == Keys.Alt || eventArgs.KeyData == Keys.Menu || this.altpressed)
-                    {
-                        this.altpressed = true;
-
-                        // Ctrl + Alt + KEY
-                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && Settings.HotkeysNewNoteAltInsteadShift)
-                        {
-                            this.MenuNewNote_Click(null, null);
-                            this.ResetAllModifierKeys();
-                        }
-                        // Ctrl + Alt + KEY
-                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && Settings.HotkeysManageNotesAltInsteadShift)
-                        {
-                            this.MenuManageNotes_Click(null, null);
-                            this.ResetAllModifierKeys();
-                        }
-                    }
-                    else if (eventArgs.KeyData == Keys.ShiftKey || this.shiftpressed)
-                    {
-                        this.shiftpressed = true;
-
-                        // Ctrl + Shift + KEY
-                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && !Settings.HotkeysNewNoteAltInsteadShift)
-                        {
-                            this.MenuNewNote_Click(null, null);
-                            this.ResetAllModifierKeys();
-                        }
-                        // Ctrl + Shift + KEY
-                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && !Settings.HotkeysManageNotesAltInsteadShift)
-                        {
-                            this.MenuManageNotes_Click(null, null);
-                            this.ResetAllModifierKeys();
-                        }
-                    }
-                    else if (eventArgs.KeyData != Keys.ControlKey && eventArgs.KeyData != Keys.ShiftKey && eventArgs.KeyData != Keys.Menu && eventArgs.KeyData != Keys.Alt)
-                    {
-                        this.ResetAllModifierKeys();
-                    }
-                }
-                else
-                {
-                    this.ResetAllModifierKeys();
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void ResetAllModifierKeys()
-        {
-            this.controlpressed = false;
-            this.shiftpressed = false;
-            this.altpressed = false;
-        }
-#endif
 
         /// <summary>
         /// There is left clicked on the icon.
@@ -415,39 +255,12 @@ namespace NoteFly
             {
                 if (Settings.TrayiconLeftclickaction == 1)
                 {
-                    this.notes.BringToFrontNotes();
+                    this.formmanager.BringToFrontNotes();
                 }
                 else if (Settings.TrayiconLeftclickaction == 2)
                 {
-                    if (!this.frmnewnoteshowed)
-                    {
-                        FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.deltaX, this.deltaY);
-                        this.ChangeDeltaPositionNewNote();
-                        frmnewnote.Show();
-                        this.frmnewnoteshowed = true;
-                    }
-                    else
-                    {
-                        this.frmnewnoteshowed = false;
-                    }
+                    this.formmanager.OpenNewNote();
                 }
-            }
-        }
-
-        /// <summary>
-        /// Change the delta position of FrmNewNote.
-        /// </summary>
-        private void ChangeDeltaPositionNewNote()
-        {
-            if (this.deltaX < 100 && this.deltaY < 100)
-            {
-                this.deltaX += 10;
-                this.deltaY += 10;
-            }
-            else
-            {
-                this.deltaX = 0;
-                this.deltaY = 0;
             }
         }
 
@@ -458,11 +271,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuNewNote_Click(object sender, EventArgs e)
         {
-            Frmneweditnoteopen = true;            
-            FrmNewNote newnotefrm = new FrmNewNote(this.notes, this.deltaX, this.deltaY);
-            this.ChangeDeltaPositionNewNote();
-            newnotefrm.Show();
-            newnotefrm.Focus();
+            this.formmanager.OpenNewNote();
         }
 
         /// <summary>
@@ -472,21 +281,7 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void MenuManageNotes_Click(object sender, EventArgs e)
         {
-            if (frmmanagenotes == null)
-            {
-                frmmanagenotes = new FrmManageNotes(this.notes);
-                frmmanagenotes.Show();
-            }
-            else if (frmmanagenotes.IsDisposed)
-            {
-                frmmanagenotes = new FrmManageNotes(this.notes);
-                frmmanagenotes.Show();
-            }
-            else
-            {
-                frmmanagenotes.WindowState = FormWindowState.Normal;
-                frmmanagenotes.Activate();
-            }
+            this.formmanager.OpenFrmManageNotes();
         }
 
         /// <summary>
@@ -496,32 +291,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuSettings_Click(object sender, EventArgs e)
         {
-            if (this.frmsettings == null)
-            {
-                this.frmsettings = new FrmSettings(this.notes);
-                this.frmsettings.Show();
-            }
-            else if (this.frmsettings.IsDisposed)
-            {
-                this.frmsettings = new FrmSettings(this.notes);
-                this.frmsettings.Show();
-            }
-            else
-            {
-                this.frmsettings.WindowState = FormWindowState.Normal;
-                this.frmsettings.Activate();
-            }
-        }
-
-        /// <summary>
-        /// Open about window.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">Event argument</param>
-        private void MenuAbout_Click(object sender, EventArgs e)
-        {
-            FrmAbout frmabout = new FrmAbout();
-            frmabout.ShowDialog();
+            this.formmanager.OpenFrmSettings();
         }
 
         /// <summary>
@@ -531,21 +301,17 @@ namespace NoteFly
         /// <param name="e"></param>
         private void MenuPlugins_Click(object sender, EventArgs e)
         {
-            if (this.frmplugins == null)
-            {
-                this.frmplugins = new FrmPlugins();
-                this.frmplugins.Show();
-            }
-            else if (this.frmplugins.IsDisposed)
-            {
-                this.frmplugins = new FrmPlugins();
-                this.frmplugins.Show();
-            }
-            else
-            {
-                this.frmplugins.WindowState = FormWindowState.Normal;
-                this.frmplugins.Activate();
-            }
+            this.formmanager.OpenFrmPlugins();
+        }
+
+        /// <summary>
+        /// Open about window.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">Event argument</param>
+        private void MenuAbout_Click(object sender, EventArgs e)
+        {
+            this.formmanager.OpenFrmAbout();
         }
 
         /// <summary>
@@ -574,7 +340,7 @@ namespace NoteFly
                 }
             }
 
-            if (Frmneweditnoteopen)
+            if (this.formmanager.Frmneweditnoteopen)
             {
                 string trayicon_notestillopen = Strings.T("A note is still open for editing.\nAre you sure you want to shutdown {0}?", Program.AssemblyTitle);
                 DialogResult resdlg = MessageBox.Show(trayicon_notestillopen, trayicon_sureexittitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);

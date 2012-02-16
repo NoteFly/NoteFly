@@ -398,9 +398,24 @@ namespace NoteFly
             {
                 if (Settings.ConfirmDeletenote)
                 {
-                    string managenotes_deleteselectednotes = Strings.T("Are you sure you want to delete the selected note(s)?");
-                    string managenotes_deleteselectednotestitle = Strings.T("delete?");
-                    DialogResult deleteres = MessageBox.Show(managenotes_deleteselectednotes, managenotes_deleteselectednotestitle, MessageBoxButtons.YesNo);
+                    StringBuilder sbdeleteselectednotes = new StringBuilder();
+                    sbdeleteselectednotes.AppendLine(Strings.T("Are you sure you want to delete the selected note(s)?"));
+
+                    const int MAXNUMTITLESHOW = 15;
+                    for (int i = 0; i < this.dataGridViewNotes.SelectedRows.Count && i < MAXNUMTITLESHOW; i++)
+			        {
+                        int rowindex = this.dataGridViewNotes.SelectedRows[i].Index;
+                        string title = this.notes.GetNote(this.GetNoteposBySelrow(rowindex)).Title;
+
+                        sbdeleteselectednotes.Append("- ");
+                        sbdeleteselectednotes.AppendLine(title);
+                        if (i == MAXNUMTITLESHOW - 1)
+                        {
+                            sbdeleteselectednotes.AppendLine(Strings.T("And more notes."));
+                        }
+			        }
+
+                    DialogResult deleteres = MessageBox.Show(sbdeleteselectednotes.ToString(), Strings.T("delete?"), MessageBoxButtons.YesNo);
                     if (deleteres == DialogResult.Yes)
                     {
                         this.DeleteNotesSelectedRowsGrid(this.dataGridViewNotes.SelectedRows);
@@ -422,7 +437,8 @@ namespace NoteFly
             }
 
             this.Resetdatagrid();
-            this.notes.FrmManageNotesNeedUpdate = true;
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            //this.notes.FrmManageNotesNeedUpdate = true;
             Application.DoEvents();
         }
 
@@ -871,7 +887,8 @@ namespace NoteFly
                 Cursor.Current = Cursors.Default;
             }
 
-            this.notes.FrmManageNotesNeedUpdate = false;
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            //this.notes.FrmManageNotesNeedUpdate = false;
         }
 
         /// <summary>
@@ -945,7 +962,8 @@ namespace NoteFly
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             this.Resetdatagrid();
-            this.notes.FrmManageNotesNeedUpdate = true;
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            //this.notes.FrmManageNotesNeedUpdate = true;
             this.dataGridViewNotes.Refresh();
         }
 
@@ -956,7 +974,8 @@ namespace NoteFly
         /// <param name="e">DataGridViewRowPostPaint event arguments</param>
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
-            if (this.notes.FrmManageNotesNeedUpdate)
+            if (Program.Formmanager.FrmManageNotesNeedUpdate)
+            //if (this.notes.FrmManageNotesNeedUpdate)
             {
                 // detect and update add/delete notes, then redraw all notes
                 if (this.dataGridViewNotes.RowCount != this.notes.CountNotes && !this.searchTextBoxNotes.IsKeywordEntered)
@@ -978,14 +997,11 @@ namespace NoteFly
 
                     this.dataGridViewNotes.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
 
-                    if (e.RowIndex == this.dataGridViewNotes.RowCount - 1)
+                    if ((e.RowIndex == this.dataGridViewNotes.RowCount - 1) || (this.prevrownr < this.secondprevrownr))
                     {
-                        this.notes.FrmManageNotesNeedUpdate = false;
-                    }
-                    else if (this.prevrownr < this.secondprevrownr)
-                    {
-                        this.notes.FrmManageNotesNeedUpdate = false;
-                    }
+                        Program.Formmanager.FrmManageNotesNeedUpdate = false;
+                        //this.notes.FrmManageNotesNeedUpdate = false;
+                    }                    
                     else
                     {
                         this.secondprevrownr = this.prevrownr;
@@ -1004,7 +1020,8 @@ namespace NoteFly
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
-                this.notes.FrmManageNotesNeedUpdate = true;
+                Program.Formmanager.FrmManageNotesNeedUpdate = true;
+                //this.notes.FrmManageNotesNeedUpdate = true;
                 this.Resetdatagrid();
                 Application.DoEvents();
             }
@@ -1261,7 +1278,8 @@ namespace NoteFly
         {
             int vertscrolloffset = this.dataGridViewNotes.VerticalScrollingOffset;
             this.Resetdatagrid();
-            this.notes.FrmManageNotesNeedUpdate = true;
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            //this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
             if (!this.searchTextBoxNotes.IsKeywordEntered)
             {
@@ -1625,7 +1643,8 @@ namespace NoteFly
                 }
             }
 
-            this.notes.FrmManageNotesNeedUpdate = true;
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            //this.notes.FrmManageNotesNeedUpdate = true;
             this.dataGridViewNotes.DataSource = dt;
             this.SetDataGridViewColumsWidth();
         }

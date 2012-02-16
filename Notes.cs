@@ -49,11 +49,6 @@ namespace NoteFly
         private const string IMPORTEDFLAGFILE = "impnf20.flg";
 
         /// <summary>
-        /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
-        /// </summary>
-        private bool frmmanagenotesneedupdate = false;
-
-        /// <summary>
         /// The list with all notes.
         /// </summary>
         private List<Note> notes;
@@ -81,7 +76,7 @@ namespace NoteFly
 
         #endregion Constructors
 
-        #region Properties (1)
+        #region Properties (2)
 
         /// <summary>
         /// Gets the number of notes there are.
@@ -102,22 +97,6 @@ namespace NoteFly
             get
             {
                 return this.skins.Count;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whetherr FrmManageNotes datagridview needs to be redrawn.
-        /// </summary>
-        public bool FrmManageNotesNeedUpdate
-        {
-            get
-            {
-                return this.frmmanagenotesneedupdate;
-            }
-
-            set
-            {
-                this.frmmanagenotesneedupdate = value;
             }
         }
 

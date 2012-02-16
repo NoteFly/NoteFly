@@ -25,7 +25,7 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// Highlight class, provides highlighting to richtext.
+    /// Highlight class, provides highlighting of a richedittextbox.
     /// </summary>
     public sealed class SyntaxHighlight
     {

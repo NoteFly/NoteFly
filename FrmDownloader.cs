@@ -28,7 +28,7 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// FrmUpdater window.
+    /// FrmDownloader window, provides multifile download functions.
     /// </summary>
     public sealed partial class FrmDownloader : Form
     {

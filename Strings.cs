@@ -30,9 +30,9 @@ namespace NoteFly
     using System.Threading;
 
     /// <summary>
-    /// 
+    /// Strings class, used to lookup translations with GNU Gettext
     /// </summary>
-    public class Strings
+    public static class Strings
     {
         /// <summary>
         /// 

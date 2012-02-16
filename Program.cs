@@ -21,6 +21,9 @@ using System;
 
 [assembly: CLSCompliant(true)]
 
+/// <summary>
+/// Main assembly
+/// </summary>
 namespace NoteFly
 {
     using System.Diagnostics;
@@ -39,12 +42,17 @@ namespace NoteFly
         /// <summary>
         /// Reference to notes class.
         /// </summary>
-        public static Notes notes;
+        private static Notes notes;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static FormManager formmanager;
 
         /// <summary>
         /// Reference to trayicon
         /// </summary>
-        private static TrayIcon trayicon;
+        private static TrayIcon trayicon;       
 
         #endregion Fields
 
@@ -133,6 +141,28 @@ namespace NoteFly
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Notes Notes
+        {
+            get
+            {
+                return notes;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static FormManager Formmanager
+        {
+            get
+            {
+                return formmanager;
+            }
+        }
+
         #endregion Properties
 
         #region Methods (5)
@@ -204,7 +234,7 @@ namespace NoteFly
             stopwatch.Start();
 #endif
 
-            System.Windows.Forms.Application.ThreadException += new ThreadExceptionEventHandler(UnhanledThreadExceptionHanhler);
+            System.Windows.Forms.Application.ThreadException += new ThreadExceptionEventHandler(UnhanledThreadExceptionHandler);
             System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
@@ -224,6 +254,7 @@ namespace NoteFly
             bool resetpositions;
             ParserArguments(args, out visualstyle, out resetpositions);
 
+            
 #if windows
             if (!Settings.ProgramSuspressWarnAdmin)
             {
@@ -271,7 +302,9 @@ namespace NoteFly
             SyntaxHighlight.InitHighlighter();
             notes = new Notes(resetpositions);
 
-            trayicon = new TrayIcon(notes);
+            formmanager = new FormManager(notes);
+            trayicon = new TrayIcon(formmanager);
+
             if (!Settings.ProgramFirstrunned)
             {
                 // disable the firstrun the next time.
@@ -337,7 +370,7 @@ namespace NoteFly
         public static void RestartTrayicon()
         {
             trayicon.Dispose();
-            trayicon = new TrayIcon(notes);
+            trayicon = new TrayIcon(formmanager);
         }
 
         /// <summary>
@@ -591,7 +624,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="treadargs">ThreadExceptionEvent arguments</param>
-        private static void UnhanledThreadExceptionHanhler(object sender, ThreadExceptionEventArgs treadargs)
+        private static void UnhanledThreadExceptionHandler(object sender, ThreadExceptionEventArgs treadargs)
         {
             Exception e = treadargs.Exception;
             ShowExceptionDlg(e);
