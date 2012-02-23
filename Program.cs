@@ -52,7 +52,7 @@ namespace NoteFly
         /// <summary>
         /// Reference to trayicon
         /// </summary>
-        private static TrayIcon trayicon;       
+        private static TrayIcon trayicon;
 
         #endregion Fields
 
@@ -65,12 +65,13 @@ namespace NoteFly
         {
             get
             {
+                const string appdatafolder = "NoteFly";
 #if windows
-                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly2");
+                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), appdatafolder);
 #elif linux
                 if (System.Environment.GetEnvironmentVariable("HOME") != null)
                 {
-                    return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
+                    return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ("."+appdatafolder));
                 }
                 else
                 {
@@ -78,8 +79,6 @@ namespace NoteFly
                 }
 #elif macos
                 return "???";
-#else
-                return "COMPILE_ERROR_UNKNOWN_PLATFORM";
 #endif
             }
         }

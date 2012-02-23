@@ -422,8 +422,9 @@ namespace NoteFly
             this.btnCancel.Location = new System.Drawing.Point(249, 6);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(26, 24);
-            this.btnCancel.TabIndex = 3;
-            this.toolTip.SetToolTip(this.btnCancel, "cancel new note (escape)");
+            this.btnCancel.TabIndex = 8;
+            this.btnCancel.TabStop = false;
+            this.btnCancel.UseCompatibleTextRendering = true;
             this.btnCancel.UseMnemonic = false;
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -445,8 +446,10 @@ namespace NoteFly
             this.btnAddNote.Location = new System.Drawing.Point(216, 6);
             this.btnAddNote.Name = "btnAddNote";
             this.btnAddNote.Size = new System.Drawing.Size(27, 24);
-            this.btnAddNote.TabIndex = 2;
-            this.toolTip.SetToolTip(this.btnAddNote, "accept new note (Ctrl+S)");
+            this.btnAddNote.TabIndex = 7;
+            this.btnAddNote.TabStop = false;
+            this.toolTip.SetToolTip(this.btnAddNote, "t");
+            this.btnAddNote.UseCompatibleTextRendering = true;
             this.btnAddNote.UseMnemonic = false;
             this.btnAddNote.UseVisualStyleBackColor = false;
             this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
@@ -649,7 +652,7 @@ namespace NoteFly
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNewNote.Size = new System.Drawing.Size(276, 167);
             this.rtbNewNote.TabIndex = 1;
-            this.rtbNewNote.Text = string.Empty;
+            this.rtbNewNote.Text = "";
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);

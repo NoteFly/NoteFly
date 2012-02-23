@@ -74,6 +74,7 @@ namespace NoteFly
         {
             this.ConstructFrmNewNote(notes);
             this.SetFormTitle(true);
+            this.SetTooltipAddCancelBtns(true);
             this.Location = locfrmnewnote;
             this.Size = sizefrmnewnote;
             this.rtbNewNote.WordWrap = wordwrap;
@@ -103,6 +104,7 @@ namespace NoteFly
         {
             this.ConstructFrmNewNote(notes);
             this.SetFormTitle(false);
+            this.SetTooltipAddCancelBtns(false);
             this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2) + deltaX, (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2) + deltaY);
             this.note = null;
             if (Settings.NotesDefaultRandomSkin)
@@ -121,6 +123,24 @@ namespace NoteFly
         #endregion Constructors
 
         #region Methods (30)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="editnote"></param>
+        private void SetTooltipAddCancelBtns(bool editnote)
+        {
+            if (editnote)
+            {
+                this.toolTip.SetToolTip(this.btnAddNote, Strings.T("Save editing note (Ctrl+S)"));
+                this.toolTip.SetToolTip(this.btnCancel, Strings.T("Cancel editing note (escape)"));
+            }
+            else
+            {
+                this.toolTip.SetToolTip(this.btnAddNote, Strings.T("Save new note (Ctrl+S)"));
+                this.toolTip.SetToolTip(this.btnCancel, Strings.T("Cancel new note (escape)"));
+            }
+        }
 
         /// <summary>
         /// Set the form title.
@@ -235,6 +255,7 @@ namespace NoteFly
                         btnPluginFormatBtn.FlatAppearance.BorderColor = Color.Black;
                         btnPluginFormatBtn.ForeColor = this.notes.GetTextClr(skinnr);
                         btnPluginFormatBtn.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+                        btnPluginFormatBtn.TabStop = false;
                         this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount - 1, 0);
                     }
                 }

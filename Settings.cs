@@ -247,7 +247,7 @@ namespace NoteFly
         /// <summary>
         /// Do detect hyperlinks in notes.
         /// </summary>
-        public static bool HighlightHyperlinks = true;
+        public static bool HighlightHyperlinks = false; // FIXME: currenly disable, causing trouble with TransparentRichtTextBox SetColorInRTF
 
         /// <summary>
         /// Do PHP highlighting.

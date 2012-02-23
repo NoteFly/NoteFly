@@ -553,12 +553,12 @@ namespace NoteFly
             stopwatch.Start();
 #endif
 #if windows
-            SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)0, IntPtr.Zero); // about ~900 ms advantage
+            //SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)0, IntPtr.Zero); // about ~900 ms advantage
 #endif
             SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             this.ResumeLayout();
 #if windows
-            SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
+            //SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
             this.Refresh();
 #endif
 #if DEBUG

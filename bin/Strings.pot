@@ -3,24 +3,25 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: NoteFly 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-13 23:57+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2012-02-16 18:21+0100\n"
+"PO-Revision-Date: 2012-02-16 18:23+0100\n"
+"Last-Translator: \n"
+"Language-Team: English <releases@notefly.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
 
 #: FrmAbout.cs:50
 msgid "Version "
 msgstr ""
 
-#: FrmAbout.cs:62 TrayIcon.cs:241
+#: FrmAbout.cs:62
+#: TrayIcon.cs:203
 msgid "About"
 msgstr ""
 
@@ -41,12 +42,16 @@ msgstr ""
 msgid "oh no.. {0} crashed."
 msgstr ""
 
-#: FrmManageNotes.cs:98 FrmManageNotes.cs:856 FrmManageNotes.cs:889
+#: FrmManageNotes.cs:98
+#: FrmManageNotes.cs:871
+#: FrmManageNotes.cs:905
 msgid "&hide selected"
 msgstr ""
 
-#: FrmManageNotes.cs:102 FrmManageNotes.cs:107 FrmManageNotes.cs:861
-#: FrmManageNotes.cs:893
+#: FrmManageNotes.cs:102
+#: FrmManageNotes.cs:107
+#: FrmManageNotes.cs:876
+#: FrmManageNotes.cs:909
 msgid "&show selected"
 msgstr ""
 
@@ -54,7 +59,7 @@ msgstr ""
 msgid "Manage notes"
 msgstr ""
 
-#: FrmManageNotes.cs:394
+#: FrmManageNotes.cs:393
 msgid "Nothing selected."
 msgstr ""
 
@@ -62,85 +67,90 @@ msgstr ""
 msgid "Are you sure you want to delete the selected note(s)?"
 msgstr ""
 
-#: FrmManageNotes.cs:403
+#: FrmManageNotes.cs:414
+msgid "And more notes."
+msgstr ""
+
+#: FrmManageNotes.cs:418
 msgid "delete?"
 msgstr ""
 
-#: FrmManageNotes.cs:475
+#: FrmManageNotes.cs:490
 msgid "Do you want to delete all current notes?"
 msgstr ""
 
-#: FrmManageNotes.cs:476
+#: FrmManageNotes.cs:491
 msgid "Are you sure?"
 msgstr ""
 
-#: FrmManageNotes.cs:584
+#: FrmManageNotes.cs:599
 msgid "CVS file does not seems to be in the Stickies format."
 msgstr ""
 
-#: FrmManageNotes.cs:591
-msgid ""
-"CVS file does not seems to be in the Stickies format, excepting 5 columns."
+#: FrmManageNotes.cs:606
+msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
 msgstr ""
 
-#: FrmManageNotes.cs:726
+#: FrmManageNotes.cs:741
 msgid "Error reading PNotes backup file, incorrect format."
 msgstr ""
 
-#: FrmManageNotes.cs:1201
+#: FrmManageNotes.cs:1262
 #, csharp-format
 msgid "Access denied. delete note {0} manually with proper premission."
 msgstr ""
 
-#: FrmManageNotes.cs:1247
+#: FrmManageNotes.cs:1309
 msgid "nr"
 msgstr ""
 
-#: FrmManageNotes.cs:1250
+#: FrmManageNotes.cs:1312
 msgid "title"
 msgstr ""
 
-#: FrmManageNotes.cs:1251
+#: FrmManageNotes.cs:1313
 msgid "visible"
 msgstr ""
 
-#: FrmManageNotes.cs:1252
+#: FrmManageNotes.cs:1314
 msgid "skin"
 msgstr ""
 
-#: FrmManageNotes.cs:1302 FrmManageNotes.cs:1323
+#: FrmManageNotes.cs:1364
+#: FrmManageNotes.cs:1385
 msgid "Transparency level not a integer or double."
 msgstr ""
 
-#: FrmNewNote.cs:130
+#: FrmNewNote.cs:134
 msgid "edit note"
 msgstr ""
 
-#: FrmNewNote.cs:134
+#: FrmNewNote.cs:138
 msgid "new note"
 msgstr ""
 
-#: FrmNewNote.cs:252
+#: FrmNewNote.cs:257
 msgid "Please enter some content."
 msgstr ""
 
-#: FrmNewNote.cs:270
+#: FrmNewNote.cs:275
 msgid "Could not write note."
 msgstr ""
 
-#: FrmNewNote.cs:649
+#: FrmNewNote.cs:655
 msgid "import error"
 msgstr ""
 
-#: FrmNewNote.cs:660
+#: FrmNewNote.cs:666
 msgid "Cannot find KeyNote NF note content."
 msgstr ""
 
-#: FrmNewNote.cs:686
+#: FrmNewNote.cs:692
 msgid "Not a KeyNote NF note."
 msgstr ""
 
-#: FrmNewNote.cs:854 FrmNewNote.cs:1222
+#: FrmNewNote.cs:860
+#: FrmNewNote.cs:1218
 msgid "There is no text on the clipboard."
 msgstr ""
 
@@ -176,19 +186,20 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: FrmPlugins.cs:202
+#: FrmPlugins.cs:201
 msgid "version: "
 msgstr ""
 
-#: FrmPlugins.cs:203
+#: FrmPlugins.cs:202
 msgid "license: "
 msgstr ""
 
-#: FrmPlugins.cs:218
+#: FrmPlugins.cs:217
 msgid "Downloading plugin.."
 msgstr ""
 
-#: FrmSettings.cs:101 FrmSettings.cs:102
+#: FrmSettings.cs:101
+#: FrmSettings.cs:102
 msgid ""
 "Directory does not exist.\n"
 "Please choice a valid directory."
@@ -302,152 +313,155 @@ msgstr ""
 msgid "Note file(s) already exist."
 msgstr ""
 
-#: PluginGrid.cs:74
+#: PluginGrid.cs:77
 msgid "Their are no plugins installed."
 msgstr ""
 
-#: PluginGrid.cs:190
+#: PluginGrid.cs:193
 msgid "version:"
 msgstr ""
 
-#: PluginGrid.cs:206
+#: PluginGrid.cs:209
 msgid "author:"
 msgstr ""
 
-#: PluginGrid.cs:222
+#: PluginGrid.cs:225
 msgid "description:"
 msgstr ""
 
-#: PluginGrid.cs:270
+#: PluginGrid.cs:273
 msgid "disable"
 msgstr ""
 
-#: PluginGrid.cs:275
+#: PluginGrid.cs:278
 msgid "enable"
 msgstr ""
 
-#: SearchTextBox.cs:53
+#: SearchTextBox.cs:38
 msgid "search:"
 msgstr ""
 
-#: Notes.cs:391
+#: Notes.cs:370
 msgid ""
 "Folder with notes does not exist.\n"
 "Do want to try loading notes from default application data folder?"
 msgstr ""
 
-#: Notes.cs:392
+#: Notes.cs:371
 msgid "Notes folder doesn't exist"
 msgstr ""
 
-#: Notes.cs:609
+#: Notes.cs:587
 msgid ""
 "NoteFly 1.0.x detected.\n"
 "Do you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\n"
 "Press cancel to ask this again next time."
 msgstr ""
 
-#: Notes.cs:610
+#: Notes.cs:588
 msgid "Import out NoteFly 1.0.x"
 msgstr ""
 
-#: Notes.cs:685
+#: Notes.cs:663
 msgid "many notes"
 msgstr ""
 
-#: Notes.cs:686
-msgid ""
-"There are many notes loading this can take a while, do you want to load them "
-"all?"
+#: Notes.cs:664
+msgid "There are many notes loading this can take a while, do you want to load them all?"
 msgstr ""
 
-#: Notes.cs:706
+#: Notes.cs:684
 msgid "Many notes visible"
 msgstr ""
 
-#: Notes.cs:707
+#: Notes.cs:685
 msgid "There are many notes visible. Hide some notes to make loading faster."
 msgstr ""
 
-#: Program.cs:235
+#: PluginsManager.cs:120
+#: PluginsManager.cs:152
+#: PluginsManager.cs:214
+msgid "unknown"
+msgstr ""
+
+#: Program.cs:266
 #, csharp-format
 msgid ""
 "You are now running {0} as elevated Administrator.\n"
 "Which is not recommended for security.\n"
-"Press OK if your understand the risks of running as administrator and want "
-"to hide this message in the future."
+"Press OK if your understand the risks of running as administrator and want to hide this message in the future."
 msgstr ""
 
-#: Program.cs:236
+#: Program.cs:267
 msgid "Elevated administrator"
 msgstr ""
 
-#: Program.cs:261
+#: Program.cs:292
 msgid ""
 "The programme is already running.\n"
 "Load an other instance? (not recommeded)"
 msgstr ""
 
-#: Program.cs:262
+#: Program.cs:293
 msgid "already running"
 msgstr ""
 
-#: Program.cs:478
+#: Program.cs:511
 msgid "There's a new version availible."
 msgstr ""
 
-#: Program.cs:479
+#: Program.cs:512
 msgid "Your version:"
 msgstr ""
 
-#: Program.cs:481
+#: Program.cs:514
 msgid "New version:"
 msgstr ""
 
-#: Program.cs:483
+#: Program.cs:516
 msgid "Do you want to download and install the new version now?"
 msgstr ""
 
-#: Program.cs:487
+#: Program.cs:520
 #, csharp-format
 msgid "Downloading {0} update"
 msgstr ""
 
-#: TrayIcon.cs:166
+#: TrayIcon.cs:129
 msgid "&New note"
 msgstr ""
 
-#: TrayIcon.cs:180
+#: TrayIcon.cs:143
 msgid "&Manage notes"
 msgstr ""
 
-#: TrayIcon.cs:198
+#: TrayIcon.cs:161
 msgid "&Settings"
 msgstr ""
 
-#: TrayIcon.cs:216
+#: TrayIcon.cs:179
 msgid "&Plugins"
 msgstr ""
 
-#: TrayIcon.cs:250
+#: TrayIcon.cs:212
 msgid "E&xit"
 msgstr ""
 
-#: TrayIcon.cs:267
+#: TrayIcon.cs:229
 #, csharp-format
 msgid "You can access {0} functions with this trayicon."
 msgstr ""
 
-#: TrayIcon.cs:541
+#: TrayIcon.cs:326
 msgid "confirm exit"
 msgstr ""
 
-#: TrayIcon.cs:548
+#: TrayIcon.cs:333
 #, csharp-format
 msgid "Are sure you want to exit {0}?"
 msgstr ""
 
-#: TrayIcon.cs:560
+#: TrayIcon.cs:345
 #, csharp-format
 msgid ""
 "A note is still open for editing.\n"
@@ -456,62 +470,6 @@ msgstr ""
 
 # chxSettingsExpertEnabled
 msgid "E&xpert settings"
-msgstr ""
-
-# btnCancel
-msgid "&Cancel"
-msgstr ""
-
-# btnOK
-msgid "&OK"
-msgstr ""
-
-# menuSaveNewNote
-msgid "&Save note"
-msgstr ""
-
-# menuShowtoolbar
-msgid "Show format tools"
-msgstr ""
-
-# menuWordWarp
-msgid "Word wrap"
-msgstr ""
-
-# menuStickyOnTop
-msgid "Sticky on &top"
-msgstr ""
-
-# menuCopy
-msgid "&Copy"
-msgstr ""
-
-# menuPasteTo
-msgid "&Paste to"
-msgstr ""
-
-# menuImportfile
-msgid "Import.."
-msgstr ""
-
-# menuCancelNewNote
-msgid "Canc&el note"
-msgstr ""
-
-# menuEditNote
-msgid "&Edit note"
-msgstr ""
-
-# menuNoteSkins
-msgid "S&kin"
-msgstr ""
-
-# menuSendTo
-msgid "&Share"
-msgstr ""
-
-# menuHideNote
-msgid "&Hide note"
 msgstr ""
 
 # tabGeneral
@@ -705,3 +663,68 @@ msgstr ""
 # chxLogErrors
 msgid "Log user errors."
 msgstr ""
+
+# btnCancel
+msgid "&Cancel"
+msgstr ""
+
+# btnOK
+msgid "&OK"
+msgstr ""
+
+# tabPagePluginsInstalled
+msgid "Installed"
+msgstr ""
+
+# tabPagePluginsAvailable
+msgid "available"
+msgstr ""
+
+# menuEditNote
+msgid "&Edit note"
+msgstr ""
+
+# menuNoteSkins
+msgid "S&kin"
+msgstr ""
+
+# menuSendTo
+msgid "&Share"
+msgstr ""
+
+# menuOnTop
+msgid "Sticky on &top"
+msgstr ""
+
+# menuWordWrap
+msgid "Word wrap"
+msgstr ""
+
+# menuCopy
+msgid "&Copy"
+msgstr ""
+
+# menuHideNote
+msgid "&Hide note"
+msgstr ""
+
+# menuSaveNewNote
+msgid "&Save note"
+msgstr ""
+
+# menuShowtoolbar
+msgid "Show format tools"
+msgstr ""
+
+# menuPasteTo
+msgid "&Paste to"
+msgstr ""
+
+# menuImportfile
+msgid "Import.."
+msgstr ""
+
+# menuCancelNewNote
+msgid "Canc&el note"
+msgstr ""
+

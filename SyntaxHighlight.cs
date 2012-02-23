@@ -134,12 +134,11 @@ namespace NoteFly
         /// <param name="rtb">The richttextbox with RTF note content.</param>
         /// <param name="skinnr">The skin number</param>
         /// <param name="notes">Pointer to notes class.</param>
-        public static void CheckSyntaxFull(RichTextBox rtb, int skinnr, Notes notes)
+        public static void CheckSyntaxFull(TransparentRichTextBox rtb, int skinnr, Notes notes)
         {
             int cursorpos = rtb.SelectionStart;
             int sellen = rtb.SelectionLength;
             ResetHighlighting(rtb, skinnr, notes);
-
             if (!keywordsinit)
             {
                 Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
@@ -197,13 +196,20 @@ namespace NoteFly
                         lastpos = curpos + 1; // without space or linefeed
                     }
 
+                    try
+                    {
 #if !macos
-                    if (rtb.Text[curpos] == '\n')
+                        if (rtb.Text[curpos] == '\n')
 #elif macos
                     if (rtb.Text[curpos] == '\r')
 #endif
+                        {
+                            commentline = false;
+                        }
+                    }
+                    catch (IndexOutOfRangeException indoutrange)
                     {
-                        commentline = false;
+                        return;
                     }
                 }
             }
@@ -212,13 +218,14 @@ namespace NoteFly
             rtb.SelectionLength = sellen;
         }
 
+        /*
         /// <summary>
         /// 
         /// </summary>
         /// <param name="rtb"></param>
         /// <param name="skinnr"></param>
         /// <param name="notes"></param>
-        public static void CheckSyntaxQuick(RichTextBox rtb, int skinnr, Notes notes)
+        public static void CheckSyntaxQuick(TransparentRichTextBox rtb, int skinnr, Notes notes)
         {
             int cursorpos = rtb.SelectionStart;
             //int sellen = rtb.SelectionLength;
@@ -283,7 +290,8 @@ namespace NoteFly
                 }
             }
         }
-        
+        */
+
         /// <summary>
         /// Color some part of the rich edit text.
         /// </summary>
@@ -291,9 +299,11 @@ namespace NoteFly
         /// <param name="posstart">The start position in the text to start coloring from.</param>
         /// <param name="len">The lenght of text to color.</param>
         /// <param name="hexcolor">The color the text should get.</param>
-        private static void ColorText(RichTextBox rtb, int posstart, int len, string hexcolor)
+        private static void ColorText(TransparentRichTextBox rtb, int posstart, int len, string hexcolor)
         {
             Color color = xmlUtil.ConvToClr(hexcolor);
+            rtb.SetColorInRTF(color, posstart, len);
+            /*
             try
             {
                 rtb.Select(posstart, len);
@@ -303,6 +313,7 @@ namespace NoteFly
             {
                 throw new ApplicationException("TextHighlighter out of range: " + arg.Source);
             }
+             */
         }
 
         /// <summary>
@@ -311,7 +322,7 @@ namespace NoteFly
         /// <param name="rtb">The richedit control that hold the note content.</param>
         /// <param name="skinnr">The skin number of the current note.</param>
         /// <param name="notes">Reference to notes class.</param>
-        private static void ResetHighlighting(RichTextBox rtb, int skinnr, Notes notes)
+        private static void ResetHighlighting(TransparentRichTextBox rtb, int skinnr, Notes notes)
         {
             rtb.SelectAll();
             rtb.SelectionColor = notes.GetTextClr(skinnr);
@@ -332,7 +343,7 @@ namespace NoteFly
         /// <param name="rtb">The richtextbox.</param>
         /// <param name="posstartpart">the start position in the richtextbox.</param>
         /// <param name="langhtml">The html language description.</param>
-        private static void ValidatingHtmlPart(string ishtml, RichTextBox rtb, int posstartpart, HighlightLanguage langhtml)
+        private static void ValidatingHtmlPart(string ishtml, TransparentRichTextBox rtb, int posstartpart, HighlightLanguage langhtml)
         {
             ishtml = ishtml.ToLower();
             List<string> attributes = new List<string>(); // these attributes are within this part.
@@ -445,7 +456,7 @@ namespace NoteFly
         /// <param name="rtb">Richtextbox with note content</param>
         /// <param name="attributestartpos">Startposition of the attribute within the htmlpart.</param>
         /// <param name="langhtml">The html language description.</param>
-        private static void ValidateHTMLAttribute(string htmlattribute, RichTextBox rtb, int attributestartpos, HighlightLanguage langhtml)
+        private static void ValidateHTMLAttribute(string htmlattribute, TransparentRichTextBox rtb, int attributestartpos, HighlightLanguage langhtml)
         {
             if (htmlattribute == "/" || htmlattribute.Length < 1)
             {
@@ -518,7 +529,7 @@ namespace NoteFly
         /// <param name="rtb">the richtextbox</param>
         /// <param name="posstart">the position in rtb where this keyword starts</param>
         /// <param name="langphp">The PHP language description.</param>
-        private static void ValidatingPhpPart(string isphp, RichTextBox rtb, int posstart, HighlightLanguage langphp)
+        private static void ValidatingPhpPart(string isphp, TransparentRichTextBox rtb, int posstart, HighlightLanguage langphp)
         {
             int posvar = -1;
             if (isphp.StartsWith(langphp.Commentstart))
@@ -634,7 +645,7 @@ namespace NoteFly
         /// <param name="rtb">The richtextbox</param>
         /// <param name="posstart">Position where the keyword starts in the richtextbox.</param>
         /// <param name="langsql">The sql language description</param>
-        private static void ValidatingSqlPart(string issql, RichTextBox rtb, int posstart, HighlightLanguage langsql)
+        private static void ValidatingSqlPart(string issql, TransparentRichTextBox rtb, int posstart, HighlightLanguage langsql)
         {
             string sqlkeyword;
             if (issql.Length > 0)
