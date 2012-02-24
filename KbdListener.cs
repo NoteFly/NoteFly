@@ -310,8 +310,8 @@ namespace NoteFly
                 {
                     case WM_INPUT:
                     {
-                        try
-                        {
+                        //try
+                        //{
                             unsafe
                             {
                                 uint dwSize, receivedBytes;
@@ -356,9 +356,8 @@ namespace NoteFly
                                     throw new Exception(errMsg);
                                 }
                             }
-                        }
-
-                        catch {throw;}
+                        //}
+                        //catch {throw;}
                     }
 
                     break;

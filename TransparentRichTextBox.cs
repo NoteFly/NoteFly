@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TransparentRichTextBox.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2011  Tom
+//  Copyright (C) 2011-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -24,14 +24,18 @@ namespace NoteFly
     using System.Windows.Forms;
     using System.Drawing;
     using System.Collections.Generic;
+    using System.Text;
 
     /// <summary>
     /// A transparent version of the RichTextBox control.
     /// </summary>
     public class TransparentRichTextBox : RichTextBox //internal partial 
     {
-        private const string COLORTBLTAG = "{\\colortbl ";  
-        private List<Color> colortblitems = new List<Color>();
+        private const string RTF1DOCTAG = @"{\rtf1";
+        private const string VIEWKINDTAG = @"\viewkind";
+        private const string COLORTBLTAG = @"{\colortbl ";
+        private const string COLORITEMTAG = @"\cf";
+        private List<Color> colortblitems = null; // = new List<Color>();
 
 #if windows
         /// <summary>
@@ -63,42 +67,46 @@ namespace NoteFly
         /// 
         /// </summary>
         /// <param name="newclr"></param>
-        public void SetColorInRTF(Color newclr, int textpos, int sellentext)
+        public string SetColorInRTF(string rtf, Color newclr, int textpos, int sellentext)
         {
-            //int sellentext = this.SelectionLength;
-            //int textpos = this.SelectionStart;
-            string rtf = this.Rtf;
             if (string.IsNullOrEmpty(rtf))
             {
-                MessageBox.Show("error: rtf empty.", "error rtf", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.exception, "rtf is empty, textpos=" + textpos + ", sellentext=" + sellentext);
+                return rtf;
             }
 
             int prevnrcoloritem = 1;
-            int posstartbody = rtf.IndexOf(@"\viewkind");
+            int posstartbody = rtf.IndexOf(VIEWKINDTAG);
             if (posstartbody < 0)
-            {
-                const string rtfstart = @"{\rtf1";
-                if (rtf.StartsWith(rtfstart))
+            {                
+                if (rtf.StartsWith(RTF1DOCTAG))
                 {
-                    posstartbody = rtfstart.Length;
+                    posstartbody = RTF1DOCTAG.Length;
                 }
                 else
                 {
-                    MessageBox.Show("error: rtf content body not found.", "error rtf", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Log.Write(LogType.exception, "rtf content body not found.");
+                    //return;
                 }
             }
+            else
+            {
+                posstartbody += VIEWKINDTAG.Length;
+            }
 
-            string newrtf = string.Empty;
+            //StringBuilder newrtf = new StringBuilder(rtf);
+            string newrtf = null;
             int nrtextchar = 0;
             bool rtfformat = true;
             int drtflen = 0;
-            string insertcoloritemrtf = string.Empty; ;
+            string insertcoloritemrtf = null;
             bool overridecoloritem = false;
             int rtflevel = 0;
             for (int i = posstartbody; i < rtf.Length; i++)
             {
                 if (rtf[i] == '{')
                 {
+                    rtfformat = false;
                     if (rtflevel < int.MaxValue)
                     {
                         rtflevel++;
@@ -106,6 +114,7 @@ namespace NoteFly
                 }
                 else if (rtf[i] == '}')
                 {
+                    rtfformat = false;
                     if (rtflevel > int.MinValue)
                     {
                         rtflevel--;
@@ -117,34 +126,45 @@ namespace NoteFly
                     if (rtf[i] == '\\')
                     {
                         rtfformat = true;
-                        if (i + 4 < rtf.Length)
+                        int startnumpos = i + COLORITEMTAG.Length;
+                        if (startnumpos < rtf.Length)
                         {
-                            const string coloritemrtfcode = @"\cf";
-                            if (rtf.Substring(i, 3).Equals(coloritemrtfcode, StringComparison.Ordinal))
-                            {                                
-                                int startnumpos = i + coloritemrtfcode.Length;
+                            if (rtf.Substring(i, COLORITEMTAG.Length).Equals(COLORITEMTAG, StringComparison.Ordinal))
+                            {
+                                
                                 int numlen = this.GetLenDigit(rtf, startnumpos);
 
-                                string snr = rtf.Substring(startnumpos, numlen);
-                                try
+                                if (!overridecoloritem)
                                 {
-                                    prevnrcoloritem = Convert.ToInt32(snr);
+                                    string snr = rtf.Substring(startnumpos, numlen);
+                                    try
+                                    {
+                                        prevnrcoloritem = Convert.ToInt32(snr);
+                                    }
+                                    catch (FormatException formatexc)
+                                    {
+                                        Log.Write(LogType.exception, formatexc.Message);
+                                        //return;
+                                    }
                                 }
-                                catch (FormatException formatexc)
+                                else if (overridecoloritem)
                                 {
-                                    MessageBox.Show(formatexc.Message);
-                                }
-
-                                if (overridecoloritem)
-                                {
-                                    newrtf = newrtf.Remove(i + drtflen + insertcoloritemrtf.Length, coloritemrtfcode.Length + numlen + 1); // +1 for space
-                                    drtflen = drtflen - (coloritemrtfcode.Length + numlen + 1);
-                                    overridecoloritem = false;
+                                    int posstartremove = i + drtflen + insertcoloritemrtf.Length;
+                                    int lencftag = COLORITEMTAG.Length + numlen;
+                                    if (newrtf[posstartremove + lencftag] == ' ')
+                                    {
+                                        newrtf = newrtf.Remove(posstartremove, lencftag + 1); // +1 for space
+                                        drtflen -= (lencftag + 1);
+                                    }
+                                    else
+                                    {
+                                        newrtf = newrtf.Remove(posstartremove, lencftag);
+                                        drtflen -= lencftag;
+                                    }                                    
                                 }
                             }
                         }
                     }
-
 
                     if (!rtfformat)
                     {
@@ -158,35 +178,36 @@ namespace NoteFly
 
                     if (textpos == nrtextchar)
                     {
-                        int prevrtflen = rtf.Length;
-                        int nrcoloritem = this.GetColoritemPosColortblRTF(rtf, newclr);
+                        int nrcoloritem = this.GetColoritemPosColortblRTF(this.Rtf, newclr);
                         if (nrcoloritem < 0)
                         {
                             // create coloritem
-                            newrtf = this.AddColorToColortblRTF(rtf, newclr.R, newclr.G, newclr.B);
+                            newrtf = this.AddColorToColortblRTF(this.Rtf, newclr.R, newclr.G, newclr.B);
+                            //newrtf = new StringBuilder(this.AddColorToColortblRTF(rtf, newclr.R, newclr.G, newclr.B));
                             nrcoloritem = this.GetColoritemPosColortblRTF(newrtf, newclr);
                             if (nrcoloritem < 0)
                             {
                                 // Their is no colortbl.
                                 // TODO create colortbl
-                                return;
+                                //return;
                             }
                         }
                         else
                         {
                             newrtf = rtf;
+                            //newrtf = new StringBuilder(rtf);
                         }
 
-                        drtflen = newrtf.Length - prevrtflen;
+                        drtflen = newrtf.Length - rtf.Length;
 
-                        insertcoloritemrtf = "\\cf" + nrcoloritem + " ";
-                        int poscoloritem = i + drtflen + 1;
+                        insertcoloritemrtf = COLORITEMTAG + nrcoloritem + " ";
+                        int poscoloritem = i + drtflen + 1; // +1 for space
                         newrtf = newrtf.Insert(poscoloritem, insertcoloritemrtf);
                         overridecoloritem = true;
                     }
                     else if (textpos + sellentext == nrtextchar)
                     {
-                        string previnsertcoloritemrtf = "\\cf" + prevnrcoloritem + " ";
+                        string previnsertcoloritemrtf = COLORITEMTAG + prevnrcoloritem + " ";
                         int prevposcoloritem = i + drtflen + 1 + insertcoloritemrtf.Length;
                         newrtf = newrtf.Insert(prevposcoloritem, previnsertcoloritemrtf);
                         overridecoloritem = false;
@@ -195,7 +216,16 @@ namespace NoteFly
                 }
             }
 
-            this.Rtf = newrtf;
+            //int prevtextlen = this.TextLength;           
+            //this.Rtf = newrtf;
+            //if (this.TextLength != prevtextlen)
+            //{
+                // Error text coloring in RTF Text length should not change, roll back change.
+            //    this.Rtf = prevrtf;
+            //    Log.Write(LogType.exception, "error, textpos="+textpos+", sellentext="+sellentext);
+            //}
+
+            return newrtf;
         }
 
         /// <summary>
@@ -206,7 +236,11 @@ namespace NoteFly
         /// <returns>-1 if not found</returns>
         private int GetColoritemPosColortblRTF(string rtf, Color clr)
         {
-            this.ParserColorTbl(rtf);
+            //if (this.colortblitems == null)
+            //{
+                this.ParserColorTbl(rtf);
+            //}
+
             for (int i = 0; i < this.colortblitems.Count; i++)
             {
                 if (this.colortblitems[i].R == clr.R && this.colortblitems[i].G == clr.G && this.colortblitems[i].B == clr.B)
@@ -261,9 +295,10 @@ namespace NoteFly
         /// <param name="rtf"></param>
         private void ParserColorTbl(string rtf)
         {
-            colortblitems.Clear();
+            this.colortblitems = new List<Color>();
+            this.colortblitems.Clear();
             int startcolortbl = FindPosStartColortbl(rtf);
-            int startcoloritem = startcolortbl + COLORTBLTAG.Length + 1;
+            int startcoloritem = startcolortbl + COLORTBLTAG.Length + 1; // +1 for space
             for (int i = startcoloritem; rtf[i] != '}'; i++)
             {
                 if (rtf[i] == ';')
@@ -298,6 +333,12 @@ namespace NoteFly
                 string valeau = "\\red" + red + "\\green" + green + "\\blue" + blue + ";";
                 rtf = rtf.Insert(p, valeau); // FIXME colortbl is sorted, find out how.
             }
+            else
+            {
+                // todo create color table.
+                int posendfonttbl = rtf.IndexOf("}}");
+                rtf = rtf.Insert(posendfonttbl + 2, "\n"+COLORTBLTAG + ";\\red" + red + "\\green" + green + "\\blue" + blue + ";}");
+            }
 
             return rtf;
         }
@@ -308,8 +349,8 @@ namespace NoteFly
         /// <param name="rtf"></param>
         /// <returns></returns>
         private int FindPosStartColortbl(string rtf)
-        {      
-            int startcolortbl = rtf.IndexOf(COLORTBLTAG, 0, StringComparison.Ordinal);
+        {
+            int startcolortbl = rtf.IndexOf(COLORTBLTAG, RTF1DOCTAG.Length, StringComparison.Ordinal);
             return startcolortbl;
         }
 
@@ -322,7 +363,7 @@ namespace NoteFly
         private int GetLenDigit(string text, int startpos)
         {
             int numlen = 0;
-            while (Char.IsDigit(text, (startpos + numlen)) && (startpos + numlen) < text.Length && numlen <= Int32.MaxValue.ToString().Length)
+            while (Char.IsDigit(text, (startpos + numlen)) && (startpos + numlen) < text.Length && numlen < Int32.MaxValue.ToString().Length)
             {
                 numlen++;
             }

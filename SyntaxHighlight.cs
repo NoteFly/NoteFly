@@ -76,6 +76,8 @@ namespace NoteFly
         /// </summary>
         private static bool keywordsinit = false;
 
+        //private static string currentrtf;
+
         #endregion Fields
 
         #region Properties (1)
@@ -136,9 +138,16 @@ namespace NoteFly
         /// <param name="notes">Pointer to notes class.</param>
         public static void CheckSyntaxFull(TransparentRichTextBox rtb, int skinnr, Notes notes)
         {
-            int cursorpos = rtb.SelectionStart;
-            int sellen = rtb.SelectionLength;
-            ResetHighlighting(rtb, skinnr, notes);
+            string rtf = rtb.Rtf;
+            if (string.IsNullOrEmpty(rtf))
+            {
+                Log.Write(LogType.exception, "Empty note rtf");
+                return;
+            }
+            //rtb.SuspendLayout();            
+            //int cursorpos = rtb.SelectionStart;
+            //int sellen = rtb.SelectionLength;
+            rtf = ResetHighlighting(rtb, rtf, skinnr, notes);
             if (!keywordsinit)
             {
                 Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
@@ -180,13 +189,13 @@ namespace NoteFly
                                     switch (langs[i].Name)
                                     {
                                         case "html":
-                                            ValidatingHtmlPart(bufcheck, rtb, lastpos, langs[i]);
+                                            rtf = ValidatingHtmlPart(bufcheck, rtb, rtf, lastpos, langs[i]);
                                             break;
                                         case "php":
-                                            ValidatingPhpPart(bufcheck, rtb, lastpos, langs[i]);
+                                            rtf = ValidatingPhpPart(bufcheck, rtb, rtf, lastpos, langs[i]);
                                             break;
                                         case "sql":
-                                            ValidatingSqlPart(bufcheck, rtb, lastpos, langs[i]);
+                                            rtf = ValidatingSqlPart(bufcheck, rtb, rtf, lastpos, langs[i]);
                                             break;
                                     }
                                 }
@@ -214,8 +223,15 @@ namespace NoteFly
                 }
             }
 
-            rtb.SelectionStart = cursorpos;
-            rtb.SelectionLength = sellen;
+            //rtb.ResumeLayout();
+            if (!string.IsNullOrEmpty(rtf))
+            {
+                rtb.Rtf = rtf;
+                rtb.Refresh();
+            }
+
+            //rtb.SelectionStart = cursorpos;
+            //rtb.SelectionLength = sellen;
         }
 
         /*
@@ -299,10 +315,10 @@ namespace NoteFly
         /// <param name="posstart">The start position in the text to start coloring from.</param>
         /// <param name="len">The lenght of text to color.</param>
         /// <param name="hexcolor">The color the text should get.</param>
-        private static void ColorText(TransparentRichTextBox rtb, int posstart, int len, string hexcolor)
+        private static string ColorText(TransparentRichTextBox rtb, string rtf, int posstart, int len, string hexcolor)
         {
             Color color = xmlUtil.ConvToClr(hexcolor);
-            rtb.SetColorInRTF(color, posstart, len);
+            return rtb.SetColorInRTF(rtf, color, posstart, len);
             /*
             try
             {
@@ -313,7 +329,7 @@ namespace NoteFly
             {
                 throw new ApplicationException("TextHighlighter out of range: " + arg.Source);
             }
-             */
+            */
         }
 
         /// <summary>
@@ -322,18 +338,29 @@ namespace NoteFly
         /// <param name="rtb">The richedit control that hold the note content.</param>
         /// <param name="skinnr">The skin number of the current note.</param>
         /// <param name="notes">Reference to notes class.</param>
-        private static void ResetHighlighting(TransparentRichTextBox rtb, int skinnr, Notes notes)
+        private static string ResetHighlighting(TransparentRichTextBox rtb, string rtf, int skinnr, Notes notes)
         {
-            rtb.SelectAll();
-            rtb.SelectionColor = notes.GetTextClr(skinnr);
-            rtb.Select(0, 0);
-            rtb.ForeColor = notes.GetTextClr(skinnr);
+            //rtb.SelectAll();
+            //rtb.SelectionColor = notes.GetTextClr(skinnr);
+            //rtb.Select(0, 0);
+            //rtb.ForeColor = notes.GetTextClr(skinnr);
+
             comment = false;
             commentline = false;
             outerhtml = true;
             htmlstringpart = false;
             phpstringpart = false;
             currentstringquote = '"';
+
+            return rtb.SetColorInRTF(rtf, notes.GetTextClr(skinnr), 0, rtb.TextLength);            
+            //if (!string.IsNullOrEmpty(newrtf))
+            //{
+            //    return newrtf;
+            //}
+            //else
+            //{
+            //    return rtb.Rtf;
+            //}
         }
 
         /// <summary>
@@ -343,7 +370,7 @@ namespace NoteFly
         /// <param name="rtb">The richtextbox.</param>
         /// <param name="posstartpart">the start position in the richtextbox.</param>
         /// <param name="langhtml">The html language description.</param>
-        private static void ValidatingHtmlPart(string ishtml, TransparentRichTextBox rtb, int posstartpart, HighlightLanguage langhtml)
+        private static string ValidatingHtmlPart(string ishtml, TransparentRichTextBox rtb, string rtf, int posstartpart, HighlightLanguage langhtml)
         {
             ishtml = ishtml.ToLower();
             List<string> attributes = new List<string>(); // these attributes are within this part.
@@ -367,7 +394,7 @@ namespace NoteFly
                 {
                     if (htmlstringpart)
                     {
-                        ColorText(rtb, posstartpart + c, 1, Settings.HighlightHTMLColorString); // '"' or '\'' itself too.
+                        rtf = ColorText(rtb, rtf, posstartpart + c, 1, Settings.HighlightHTMLColorString); // '"' or '\'' itself too.
                         if (ishtml[c] == currentstringquote)
                         {
                             htmlstringpart = false;
@@ -433,20 +460,22 @@ namespace NoteFly
 
                     if (nattr < attributesstartpos.Count)
                     {
-                        ValidateHTMLAttribute(attributes[nattr], rtb, attributesstartpos[nattr], langhtml);
+                        rtf = ValidateHTMLAttribute(attributes[nattr], rtb, rtf, attributesstartpos[nattr], langhtml);
                     }
                 }
             }
             else
             {
                 // is comment
-                ColorText(rtb, posstartpart, ishtml.Length, Settings.HighlightHTMLColorComment);
+                rtf = ColorText(rtb, rtf, posstartpart, ishtml.Length, Settings.HighlightHTMLColorComment);
             }
 
             if (ishtml.EndsWith(langhtml.Commentend, StringComparison.Ordinal))
             {
                 comment = false;
             }
+
+            return rtf;
         }
 
         /// <summary>
@@ -456,11 +485,11 @@ namespace NoteFly
         /// <param name="rtb">Richtextbox with note content</param>
         /// <param name="attributestartpos">Startposition of the attribute within the htmlpart.</param>
         /// <param name="langhtml">The html language description.</param>
-        private static void ValidateHTMLAttribute(string htmlattribute, TransparentRichTextBox rtb, int attributestartpos, HighlightLanguage langhtml)
+        private static string ValidateHTMLAttribute(string htmlattribute, TransparentRichTextBox rtb, string rtf, int attributestartpos, HighlightLanguage langhtml)
         {
             if (htmlattribute == "/" || htmlattribute.Length < 1)
             {
-                return;
+                return rtf;
             }
 
             char[] chrs = new char[] { '=' };
@@ -477,7 +506,7 @@ namespace NoteFly
             }
             else
             {
-                return;
+                return rtf;
             }
 
             if (langhtml.FindKeyword(attrname.ToLower()))
@@ -488,7 +517,7 @@ namespace NoteFly
             if (!knowattr)
             {
                 // Wrong
-                ColorText(rtb, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorInvalid);
+                rtf = ColorText(rtb, rtf, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorInvalid);
             }
             else
             {
@@ -499,7 +528,7 @@ namespace NoteFly
                         if (knowattr)
                         {
                             // Good
-                            ColorText(rtb, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorValid);
+                            rtf = ColorText(rtb, rtf, attributestartpos, attrsepnamevaleau[0].Length, Settings.HighlightHTMLColorValid);
                         }
                     }
                     else if (i == 1)
@@ -509,7 +538,7 @@ namespace NoteFly
                             // is string
                             htmlstringpart = true;
                             int posstartstring = attributestartpos + attrsepnamevaleau[0].Length + 1; // +1 for '=' 
-                            ColorText(rtb, posstartstring, attrsepnamevaleau[1].Length, Settings.HighlightHTMLColorString);
+                            rtf = ColorText(rtb, rtf, posstartstring, attrsepnamevaleau[1].Length, Settings.HighlightHTMLColorString);
                             currentstringquote = attrsepnamevaleau[1][0];
                             int lastcharpos = attrsepnamevaleau[1].Length - 1;
                             if (attrsepnamevaleau[1][lastcharpos] == currentstringquote)
@@ -520,6 +549,8 @@ namespace NoteFly
                     }
                 }
             }
+
+            return rtf;
         }
 
         /// <summary>
@@ -529,7 +560,7 @@ namespace NoteFly
         /// <param name="rtb">the richtextbox</param>
         /// <param name="posstart">the position in rtb where this keyword starts</param>
         /// <param name="langphp">The PHP language description.</param>
-        private static void ValidatingPhpPart(string isphp, TransparentRichTextBox rtb, int posstart, HighlightLanguage langphp)
+        private static string ValidatingPhpPart(string isphp, TransparentRichTextBox rtb, string rtf, int posstart, HighlightLanguage langphp)
         {
             int posvar = -1;
             if (isphp.StartsWith(langphp.Commentstart))
@@ -539,7 +570,7 @@ namespace NoteFly
 
             if (commentline || comment)
             {
-                ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorComment);
+                rtf = ColorText(rtb, rtf, posstart, isphp.Length, Settings.HighlightPHPColorComment);
             }
             else
             {
@@ -558,7 +589,7 @@ namespace NoteFly
                             {
                                 // is commentline
                                 commentline = true;
-                                ColorText(rtb, posstart + curchr - 1, isphp.Length - curchr + 1, Settings.HighlightPHPColorComment);
+                                rtf = ColorText(rtb, rtf, posstart + curchr - 1, isphp.Length - curchr + 1, Settings.HighlightPHPColorComment);
                             }
                         }
                     }
@@ -578,7 +609,7 @@ namespace NoteFly
                             phpstringpart = !phpstringpart;
                             if (!phpstringpart)
                             {
-                                ColorText(rtb, posstart + curchr, 1, Settings.HighlightPHPColorString);
+                                rtf = ColorText(rtb, rtf, posstart + curchr, 1, Settings.HighlightPHPColorString);
                                 foreach (HighlightLanguage lng in langs)
                                 {
                                     if (lng.Name == "sql")
@@ -605,7 +636,7 @@ namespace NoteFly
                         {
                             if (posvar >= 0)
                             {
-                                ColorText(rtb, posstart + posvar, curchr - posvar, Settings.HighlightPHPColorDocumentstartend); // is variable
+                                rtf = ColorText(rtb, rtf, posstart + posvar, curchr - posvar, Settings.HighlightPHPColorDocumentstartend); // is variable
                                 posvar = -1;
                             }
                         }
@@ -615,20 +646,20 @@ namespace NoteFly
                         if (posvar >= 0)
                         {
                             // is variable
-                            ColorText(rtb, posstart + posvar, isphp.Length, Settings.HighlightPHPColorDocumentstartend);
+                            rtf = ColorText(rtb, rtf, posstart + posvar, isphp.Length, Settings.HighlightPHPColorDocumentstartend);
                         }
                     }
 
                     if (phpstringpart)
                     {
-                        ColorText(rtb, posstart + curchr, 1, Settings.HighlightPHPColorString);
+                        rtf = ColorText(rtb, rtf, posstart + curchr, 1, Settings.HighlightPHPColorString);
                     }
                 }
 
                 // check if keyword is known php function
                 if (langphp.FindKeyword(isphp))
                 {
-                    ColorText(rtb, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
+                    rtf = ColorText(rtb, rtf, posstart, isphp.Length, Settings.HighlightPHPColorValidfunctions);
                 }
             }
 
@@ -636,6 +667,8 @@ namespace NoteFly
             {
                 comment = false;
             }
+
+            return rtf;
         }
 
         /// <summary>
@@ -645,7 +678,7 @@ namespace NoteFly
         /// <param name="rtb">The richtextbox</param>
         /// <param name="posstart">Position where the keyword starts in the richtextbox.</param>
         /// <param name="langsql">The sql language description</param>
-        private static void ValidatingSqlPart(string issql, TransparentRichTextBox rtb, int posstart, HighlightLanguage langsql)
+        private static string ValidatingSqlPart(string issql, TransparentRichTextBox rtb, string rtf, int posstart, HighlightLanguage langsql)
         {
             string sqlkeyword;
             if (issql.Length > 0)
@@ -657,7 +690,7 @@ namespace NoteFly
                     {
                         if (issql[i] == '`')
                         {
-                            ColorText(rtb, posstart, i + 1, Settings.HighlightSQLColorField);
+                            rtf = ColorText(rtb, rtf, posstart, i + 1, Settings.HighlightSQLColorField);
                         }
                     }
                 }
@@ -666,7 +699,7 @@ namespace NoteFly
                 {
                     if (issql.IndexOf('"', 1) > 0)
                     {
-                        return;
+                        return rtf;
                     }
 
                     sqlkeyword = issql.Substring(1, issql.Length - 1);
@@ -678,15 +711,17 @@ namespace NoteFly
             }
             else
             {
-                return;
+                return rtf;
             }
 
             // check if keyword is known SQL statement
             if (langsql.FindKeyword(sqlkeyword.ToLower()))
             {
-                ColorText(rtb, posstart, issql.Length, Settings.HighlightSQLColorValidstatement);
+                rtf = ColorText(rtb, rtf, posstart, issql.Length, Settings.HighlightSQLColorValidstatement);
             }
-        }
+
+            return rtf;
+        }        
 
         #endregion Methods
     }

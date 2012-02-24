@@ -614,11 +614,12 @@ namespace NoteFly
                         importnf1note.SkinNr = nf1note_skinnr;
                         importnf1note.Ontop = false;
                         importnf1note.Locked = false;
+                        importnf1note.Wordwarp = true;
                         importnf1note.X = xmlUtil.GetContentInt(nf1notefile, "x");
                         importnf1note.Y = xmlUtil.GetContentInt(nf1notefile, "y");
                         importnf1note.Width = xmlUtil.GetContentInt(nf1notefile, "width");
                         importnf1note.Height = xmlUtil.GetContentInt(nf1notefile, "heigth");
-                        string content = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20" + xmlUtil.GetContentString(nf1notefile, "content") + "\\ulnone\\par\r\n}\r\n";
+                        string content = "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20" + xmlUtil.GetContentString(nf1notefile, "content") + "\\ulnone\\par\r\n}\r\n";
                         xmlUtil.WriteNote(importnf1note, this.GetSkinName(nf1note_skinnr), content);
                         noteid++;
                         nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
@@ -682,7 +683,7 @@ namespace NoteFly
             if (currentnumber > Settings.NotesWarnlimitVisible)
             {
                 string notes_manynotesvisibletitle = Strings.T("Many notes visible");
-                string notes_manynotesvisible = Strings.T("There are many notes visible. Hide some notes to make loading faster.");                
+                string notes_manynotesvisible = Strings.T("There are many notes visible.\nHide some notes to make loading faster.");                
                 MessageBox.Show(notes_manynotesvisible, notes_manynotesvisibletitle, MessageBoxButtons.YesNo);
                 return true;
             }

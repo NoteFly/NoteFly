@@ -66,39 +66,10 @@ namespace NoteFly
                 plugindllexcluded = Settings.ProgramPluginsDllexclude.Split('|');
                 for (int i = 0; i < pluginfiles.Length; i++)
                 {
-                    if (!IsPluginFilesExcluded(pluginfiles[i]))
+                    bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
+                    if (!IsPluginFilesExcluded(pluginfiles[i]) && ((pluginenabled && onlyenabled) || !onlyenabled))
                     {
-                        try
-                        {
-                            // Get if plugin is enabled.
-                            bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
-                            if ((pluginenabled && onlyenabled) || !onlyenabled)
-                            {
-                                System.Reflection.Assembly pluginassembly = null;
-                                pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
-                                if (pluginassembly != null)
-                                {
-                                    foreach (Type curplugintype in pluginassembly.GetTypes())
-                                    {
-                                        if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
-                                        {
-                                            Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
-                                            if (plugintype != null)
-                                            {
-                                                IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
-                                                iplugin.Host = NoteFly.Program.Notes;
-                                                iplugin.Register(pluginenabled, pluginfiles[i]);
-                                                pluginslist.Add(iplugin);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Write(LogType.exception, "Can't load plugin: " + pluginfiles[i] + " " + ex.Message);
-                        }
+                        LoadPlugin(pluginslist, pluginfiles[i], pluginenabled);
                     }
                 }
             }
@@ -260,6 +231,41 @@ namespace NoteFly
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pluginfile"></param>
+        /// <param name="pluginenabled"></param>
+        private static void LoadPlugin(System.Collections.Generic.List<IPlugin.IPlugin> pluginslist, string pluginfile, bool pluginenabled)
+        {
+            try
+            {
+                System.Reflection.Assembly pluginassembly = null;
+                pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfile));
+                if (pluginassembly != null)
+                {
+                    foreach (Type curplugintype in pluginassembly.GetTypes())
+                    {
+                        if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
+                        {
+                            Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
+                            if (plugintype != null)
+                            {
+                                IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                                iplugin.Host = NoteFly.Program.Notes;
+                                iplugin.Register(pluginenabled, pluginfile);
+                                pluginslist.Add(iplugin);
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write(LogType.exception, "Can't load plugin: " + pluginfile + " " + ex.Message);
+            }
+        }
         /// <summary>
         /// Get all dll files in the plugin directory
         /// </summary>
