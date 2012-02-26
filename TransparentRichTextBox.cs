@@ -69,12 +69,6 @@ namespace NoteFly
         /// <param name="newclr"></param>
         public string SetColorInRTF(string rtf, Color newclr, int textpos, int sellentext)
         {
-            if (string.IsNullOrEmpty(rtf))
-            {
-                Log.Write(LogType.exception, "rtf is empty, textpos=" + textpos + ", sellentext=" + sellentext);
-                return rtf;
-            }
-
             int prevnrcoloritem = 1;
             int posstartbody = rtf.IndexOf(VIEWKINDTAG);
             if (posstartbody < 0)
@@ -86,7 +80,7 @@ namespace NoteFly
                 else
                 {
                     Log.Write(LogType.exception, "rtf content body not found.");
-                    //return;
+                    return rtf;
                 }
             }
             else
@@ -95,7 +89,7 @@ namespace NoteFly
             }
 
             //StringBuilder newrtf = new StringBuilder(rtf);
-            string newrtf = null;
+            string newrtf = rtf;
             int nrtextchar = 0;
             bool rtfformat = true;
             int drtflen = 0;
@@ -133,6 +127,10 @@ namespace NoteFly
                             {
                                 
                                 int numlen = this.GetLenDigit(rtf, startnumpos);
+                                if (numlen <= 0 || numlen > Int32.MaxValue.ToString().Length)
+                                {
+                                    return newrtf;
+                                }
 
                                 if (!overridecoloritem)
                                 {
@@ -144,23 +142,29 @@ namespace NoteFly
                                     catch (FormatException formatexc)
                                     {
                                         Log.Write(LogType.exception, formatexc.Message);
-                                        //return;
+                                        return newrtf;
                                     }
                                 }
                                 else if (overridecoloritem)
                                 {
                                     int posstartremove = i + drtflen + insertcoloritemrtf.Length;
-                                    int lencftag = COLORITEMTAG.Length + numlen;
-                                    if (newrtf[posstartremove + lencftag] == ' ')
+                                    int totallencftag = COLORITEMTAG.Length + numlen;
+                                    if (newrtf[posstartremove + totallencftag] == ' ')
                                     {
-                                        newrtf = newrtf.Remove(posstartremove, lencftag + 1); // +1 for space
-                                        drtflen -= (lencftag + 1);
+                                        totallencftag += 1; // +1 for space
                                     }
-                                    else
+
+                                    drtflen -= totallencftag;
+                                    
+                                    try
                                     {
-                                        newrtf = newrtf.Remove(posstartremove, lencftag);
-                                        drtflen -= lencftag;
-                                    }                                    
+                                        newrtf = newrtf.Remove(posstartremove, totallencftag);
+                                    }
+                                    catch (ArgumentOutOfRangeException argoutrangexc)
+                                    {
+                                        Log.Write(LogType.exception, argoutrangexc.Message);
+                                        return newrtf;
+                                    }
                                 }
                             }
                         }
@@ -202,28 +206,37 @@ namespace NoteFly
 
                         insertcoloritemrtf = COLORITEMTAG + nrcoloritem + " ";
                         int poscoloritem = i + drtflen + 1; // +1 for space
-                        newrtf = newrtf.Insert(poscoloritem, insertcoloritemrtf);
+                        try
+                        {
+                            newrtf = newrtf.Insert(poscoloritem, insertcoloritemrtf);
+                        }
+                        catch (ArgumentOutOfRangeException argoutrangeexc)
+                        {
+                            Log.Write(LogType.exception, argoutrangeexc.Message);
+                            return newrtf;
+                        }
+
                         overridecoloritem = true;
                     }
                     else if (textpos + sellentext == nrtextchar)
                     {
                         string previnsertcoloritemrtf = COLORITEMTAG + prevnrcoloritem + " ";
                         int prevposcoloritem = i + drtflen + 1 + insertcoloritemrtf.Length;
-                        newrtf = newrtf.Insert(prevposcoloritem, previnsertcoloritemrtf);
+                        try
+                        {
+                            newrtf = newrtf.Insert(prevposcoloritem, previnsertcoloritemrtf);
+                        }
+                        catch (ArgumentOutOfRangeException argoutrangeexc)
+                        {
+                            Log.Write(LogType.exception, argoutrangeexc.Message);
+                            return newrtf;
+                        }
+
                         overridecoloritem = false;
                         break;
                     }
                 }
             }
-
-            //int prevtextlen = this.TextLength;           
-            //this.Rtf = newrtf;
-            //if (this.TextLength != prevtextlen)
-            //{
-                // Error text coloring in RTF Text length should not change, roll back change.
-            //    this.Rtf = prevrtf;
-            //    Log.Write(LogType.exception, "error, textpos="+textpos+", sellentext="+sellentext);
-            //}
 
             return newrtf;
         }

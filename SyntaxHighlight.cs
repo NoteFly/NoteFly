@@ -139,14 +139,13 @@ namespace NoteFly
         public static void CheckSyntaxFull(TransparentRichTextBox rtb, int skinnr, Notes notes)
         {
             string rtf = rtb.Rtf;
+            rtb.SuspendLayout();
             if (string.IsNullOrEmpty(rtf))
             {
                 Log.Write(LogType.exception, "Empty note rtf");
                 return;
             }
-            //rtb.SuspendLayout();            
-            //int cursorpos = rtb.SelectionStart;
-            //int sellen = rtb.SelectionLength;
+
             rtf = ResetHighlighting(rtb, rtf, skinnr, notes);
             if (!keywordsinit)
             {
@@ -223,15 +222,18 @@ namespace NoteFly
                 }
             }
 
-            //rtb.ResumeLayout();
+            rtb.ResumeLayout();
             if (!string.IsNullOrEmpty(rtf))
             {
+                int prevtextlen = rtb.TextLength;
+                string prevrtf = rtb.Rtf;
                 rtb.Rtf = rtf;
-                rtb.Refresh();
+                if (rtb.TextLength != prevtextlen)
+                {
+                    Log.Write(LogType.exception, "rtf editing failed. rtb.TextLength=" + rtb.TextLength + " prevtextlen=" + prevtextlen);
+                    rtb.Rtf = prevrtf;
+                }
             }
-
-            //rtb.SelectionStart = cursorpos;
-            //rtb.SelectionLength = sellen;
         }
 
         /*
@@ -318,7 +320,15 @@ namespace NoteFly
         private static string ColorText(TransparentRichTextBox rtb, string rtf, int posstart, int len, string hexcolor)
         {
             Color color = xmlUtil.ConvToClr(hexcolor);
-            return rtb.SetColorInRTF(rtf, color, posstart, len);
+            if (!string.IsNullOrEmpty(rtf))
+            {
+                return rtb.SetColorInRTF(rtf, color, posstart, len);
+            }
+            else
+            {
+                Log.Write(LogType.exception, "rtf is empty, rtb.TextLength=" + rtb.TextLength + ", posstart=" + posstart + ", len=" + len);
+                return rtf;
+            }
             /*
             try
             {
@@ -340,11 +350,6 @@ namespace NoteFly
         /// <param name="notes">Reference to notes class.</param>
         private static string ResetHighlighting(TransparentRichTextBox rtb, string rtf, int skinnr, Notes notes)
         {
-            //rtb.SelectAll();
-            //rtb.SelectionColor = notes.GetTextClr(skinnr);
-            //rtb.Select(0, 0);
-            //rtb.ForeColor = notes.GetTextClr(skinnr);
-
             comment = false;
             commentline = false;
             outerhtml = true;
@@ -352,15 +357,16 @@ namespace NoteFly
             phpstringpart = false;
             currentstringquote = '"';
 
-            return rtb.SetColorInRTF(rtf, notes.GetTextClr(skinnr), 0, rtb.TextLength);            
-            //if (!string.IsNullOrEmpty(newrtf))
-            //{
-            //    return newrtf;
-            //}
-            //else
-            //{
-            //    return rtb.Rtf;
-            //}
+            if (!string.IsNullOrEmpty(rtf))
+            {
+                string newrtf = rtb.SetColorInRTF(rtf, notes.GetTextClr(skinnr), 0, rtb.TextLength);
+                return newrtf;
+            }
+            else
+            {
+                Log.Write(LogType.info, "rtf is empty or null. rtb.TextLength=" + rtb.TextLength + " rtf.Length=" + rtf.Length + " rtb.Rtf.Length=" + rtb.Rtf.Length);
+                return null;
+            }
         }
 
         /// <summary>
@@ -721,7 +727,7 @@ namespace NoteFly
             }
 
             return rtf;
-        }        
+        }
 
         #endregion Methods
     }

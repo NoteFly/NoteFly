@@ -544,24 +544,12 @@ msgstr ""
 msgid "Highlight"
 msgstr ""
 
-# chxHighlightSQL
-msgid "Highlight SQL text between quotes."
-msgstr ""
-
-# chxHighlightPHP
-msgid "Highlight PHP text between <?php and ?>."
-msgstr ""
-
 # chxHighlightHyperlinks
 msgid "Make hyperlinks clickable."
 msgstr ""
 
 # chxConfirmLink
 msgid "Ask to launch url on click on hyperlink (recommended)."
-msgstr ""
-
-# chxHighlightHTML
-msgid "Highlight HTML text."
 msgstr ""
 
 # tabSharing
@@ -728,3 +716,15 @@ msgstr ""
 msgid "Canc&el note"
 msgstr ""
 
+
+# chxHighlightSQL
+msgid "Highlight SQL text between quotes. (Beta)"
+msgstr ""
+
+# chxHighlightPHP
+msgid "Highlight PHP text between <?php and ?>. (Beta)"
+msgstr ""
+
+# chxHighlightHTML
+msgid "Highlight HTML text. (Beta)"
+msgstr ""

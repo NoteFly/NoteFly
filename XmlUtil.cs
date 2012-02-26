@@ -44,9 +44,14 @@ namespace NoteFly
         public const string SETTINGSFILE = "settings.xml";
 
         /// <summary>
+        /// 
+        /// </summary>
+        public const string DEFAULTNOTESFOLDERNAME = "notes";
+
+        /// <summary>
         /// The note version
         /// </summary>
-        private const string NOTEVERSION = "3";
+        private const string NOTEVERSION = "3";        
 
         /// <summary>
         /// XmlTextReader object.
@@ -57,7 +62,7 @@ namespace NoteFly
         /// XmlTextWriter object.
         /// </summary>
         private static XmlTextWriter xmlwrite = null;
-
+        
         #endregion Fields
 
         #region Methods (11)
@@ -641,6 +646,21 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDefaultNotesFolder()
+        {
+            string defaultnotesfolder = Path.Combine(Program.AppDataFolder, DEFAULTNOTESFOLDERNAME);
+            if (!Directory.Exists(defaultnotesfolder))
+            {
+                Directory.CreateDirectory(defaultnotesfolder);
+            }
+
+            return defaultnotesfolder;
+        }
+
+        /// <summary>
         /// Gets all skins from skin file.
         /// create Application data folder if does not exist.
         /// Create default SKINFILE if not exist.
@@ -828,7 +848,7 @@ namespace NoteFly
             Settings.FontTextdirection = 0;
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;
-            Settings.HighlightMaxchars = 10000;
+            Settings.HighlightMaxchars = 500000;
             Settings.HighlightHTML = false;
             Settings.HighlightHTMLColorComment = "#B200FF";
             Settings.HighlightHTMLColorInvalid = "#FF0000";
@@ -860,7 +880,7 @@ namespace NoteFly
             Settings.NotesDefaultTitleDate = true;
             Settings.NotesTitlepanelMaxHeight = 64;
             Settings.NotesTitlepanelMinHeight = 32;
-            Settings.NotesSavepath = Program.AppDataFolder;
+            Settings.NotesSavepath = xmlUtil.GetDefaultNotesFolder();
             Settings.NotesTransparencyEnabled = true;
             Settings.NotesTransparentRTB = true;
             Settings.NotesTransparencyLevel = 0.9;
@@ -901,17 +921,10 @@ namespace NoteFly
             {
                 Settings.UpdatecheckUseGPG = false;
             }
-
-            try
-            {
-                xmlUtil.WriteSettings();
-                xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE));
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            
+            xmlUtil.WriteSettings();            
+            xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE));
+            return true;            
         }
 
         /// <summary>

@@ -122,7 +122,7 @@ namespace NoteFly
         /// <summary>
         /// The folder where to save all notes.
         /// </summary>
-        public static string NotesSavepath;
+        public static string NotesSavepath = xmlUtil.GetDefaultNotesFolder();
 
         /// <summary>
         /// The action on left clicking on trayicon.
@@ -217,7 +217,7 @@ namespace NoteFly
         /// <summary>
         /// The maximum number of characters to apply syntaxcheck on.
         /// </summary>
-        public static int HighlightMaxchars = 10000;
+        public static int HighlightMaxchars = 500000;
 
         /// <summary>
         /// Do HTML highlighting on notes.
