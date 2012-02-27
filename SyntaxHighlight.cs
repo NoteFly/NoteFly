@@ -138,8 +138,15 @@ namespace NoteFly
         /// <param name="notes">Pointer to notes class.</param>
         public static void CheckSyntaxFull(TransparentRichTextBox rtb, int skinnr, Notes notes)
         {
+            System.Diagnostics.Stopwatch stopwatch = null;
+            if (Settings.ProgramLogInfo)
+            {
+                stopwatch = new System.Diagnostics.Stopwatch();
+                stopwatch.Start();
+            }
+
             string rtf = rtb.Rtf;
-            rtb.SuspendLayout();
+            //rtb.SuspendLayout();
             if (string.IsNullOrEmpty(rtf))
             {
                 Log.Write(LogType.exception, "Empty note rtf");
@@ -172,33 +179,15 @@ namespace NoteFly
                 for (int curpos = 0; curpos < maxpos; curpos++)
                 {
 #if !macos
-                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || curpos == rtb.Text.Length - 1)
+                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || curpos == rtb.TextLength - 1)
 #elif macos
-                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\r' || curpos == rtb.Text.Length-1)
+                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\r' || curpos == rtb.TextLength - 1)
 #endif
                     {
-                        string bufcheck = rtb.Text.Substring(lastpos, curpos - lastpos);
-                        if (bufcheck.Length > 0)
+                        string part = rtb.Text.Substring(lastpos, curpos - lastpos);
+                        if (part.Length > 0)
                         {
-                            for (int i = 0; i < langs.Count; i++)
-                            {
-                                langs[i].CheckSetDocumentPos(bufcheck, curpos);
-                                if (curpos >= langs[i].PosDocumentStart && curpos <= langs[i].PosDocumentEnd)
-                                {
-                                    switch (langs[i].Name)
-                                    {
-                                        case "html":
-                                            rtf = ValidatingHtmlPart(bufcheck, rtb, rtf, lastpos, langs[i]);
-                                            break;
-                                        case "php":
-                                            rtf = ValidatingPhpPart(bufcheck, rtb, rtf, lastpos, langs[i]);
-                                            break;
-                                        case "sql":
-                                            rtf = ValidatingSqlPart(bufcheck, rtb, rtf, lastpos, langs[i]);
-                                            break;
-                                    }
-                                }
-                            }
+                            rtf = CheckSyntaxPart(rtb, rtf, part, curpos, lastpos);
                         }
 
                         lastpos = curpos + 1; // without space or linefeed
@@ -215,14 +204,14 @@ namespace NoteFly
                             commentline = false;
                         }
                     }
-                    catch (IndexOutOfRangeException indoutrange)
+                    catch (IndexOutOfRangeException)
                     {
                         return;
                     }
                 }
             }
 
-            rtb.ResumeLayout();
+            //rtb.ResumeLayout();
             if (!string.IsNullOrEmpty(rtf))
             {
                 int prevtextlen = rtb.TextLength;
@@ -234,6 +223,47 @@ namespace NoteFly
                     rtb.Rtf = prevrtf;
                 }
             }
+
+            if (Settings.ProgramLogInfo)
+            {
+                stopwatch.Stop();
+                Log.Write(LogType.info, "Note highlight time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
+            }
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <param name="rtf"></param>
+        /// <param name="part"></param>
+        /// <param name="curpos"></param>
+        /// <param name="lastpos"></param>
+        /// <returns></returns>
+        private static string CheckSyntaxPart(TransparentRichTextBox rtb, string rtf, string part, int curpos, int lastpos)
+        {
+            for (int i = 0; i < langs.Count; i++)
+            {
+                langs[i].CheckSetDocumentPos(part, curpos);
+                if (curpos >= langs[i].PosDocumentStart && curpos <= langs[i].PosDocumentEnd)
+                {
+                    switch (langs[i].Name)
+                    {
+                        case "html":
+                            rtf = ValidatingHtmlPart(part, rtb, rtf, lastpos, langs[i]);
+                            break;
+                        case "php":
+                            rtf = ValidatingPhpPart(part, rtb, rtf, lastpos, langs[i]);
+                            break;
+                        case "sql":
+                            rtf = ValidatingSqlPart(part, rtb, rtf, lastpos, langs[i]);
+                            break;
+                    }
+                }
+            }
+
+            return rtf;
         }
 
         /*

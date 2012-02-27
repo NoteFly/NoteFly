@@ -527,7 +527,6 @@ namespace NoteFly
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             tsi.Checked = true;
             this.note.SkinNr = this.notes.GetSkinNr(tsi.Text);
-            this.SuspendLayout();
             this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             if (this.notes.GetPrimaryTexture(this.note.SkinNr) != null)
             {
@@ -548,22 +547,13 @@ namespace NoteFly
             {
                 SyntaxHighlight.InitHighlighter();
             }
-#if DEBUG
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-            stopwatch.Start();
-#endif
 #if windows
-            //SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)0, IntPtr.Zero); // about ~900 ms advantage
+            //SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)0, IntPtr.Zero);
 #endif
             SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
-            this.ResumeLayout();
 #if windows
             //SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
-            this.Refresh();
-#endif
-#if DEBUG
-            stopwatch.Stop();
-            Log.Write(LogType.info, "Note highlight time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
+            //this.Refresh();
 #endif
             SyntaxHighlight.DeinitHighlighter();
             if (!this.saveWorker.IsBusy)
