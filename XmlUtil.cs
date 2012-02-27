@@ -864,9 +864,9 @@ namespace NoteFly
             Settings.HighlightSQLColorValidstatement = "#7FCE35";
             Settings.HighlightSQLColorField = "#B16DFF";
             Settings.HotkeysNewNoteAltInsteadShift = false;
-            //Settings.HotkeysNewNoteKeycode = 
+            Settings.HotkeysNewNoteKeycode = 78; // N
             Settings.HotkeysManageNotesAltInsteadShift = false;
-            //Settings.HotkeysManageNotesKeycode =
+            Settings.HotkeysManageNotesKeycode = 77; // M
             Settings.NetworkConnectionTimeout = 8000;
             Settings.NetworkConnectionForceipv6 = false;
             Settings.NetworkProxyAddress = string.Empty;

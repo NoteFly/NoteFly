@@ -52,6 +52,9 @@ namespace NoteFly
         /// </summary>
         private string[] languagecodes;
 
+        private int hotkeysnewnotekeycode;
+        private int hotkeysmanagenoteskeycode;
+
         #endregion Fields
 
         #region Constructors (1)
@@ -78,7 +81,7 @@ namespace NoteFly
 
         #endregion Constructors
 
-        #region Methods (13)
+        #region Methods (34)
 
         /// <summary>
         /// User want to browse for notes save path.
@@ -1046,6 +1049,31 @@ namespace NoteFly
             {
                 Log.Write(LogType.exception, "No language selected.");
             }
+        }
+
+        /// <summary>
+        /// While changing hotkey ingore hotkeys pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Ingore_hotkeys(object sender, KeyEventArgs e)
+        {
+            this.hotkeysnewnotekeycode = Settings.HotkeysNewNoteKeycode;
+            this.hotkeysmanagenoteskeycode = Settings.HotkeysManageNotesKeycode;
+            // hotkey does not work.
+            Settings.HotkeysNewNoteKeycode = 0;
+            Settings.HotkeysManageNotesKeycode = 0;
+        }
+
+        /// <summary>
+        /// Changing hotkey ended, allow NoteFly hotkeys again.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Allow_hotkeys(object sender, KeyEventArgs e)
+        {
+            Settings.HotkeysNewNoteKeycode = this.hotkeysnewnotekeycode;
+            Settings.HotkeysManageNotesKeycode = this.hotkeysmanagenoteskeycode;
         }
 
         #endregion Methods

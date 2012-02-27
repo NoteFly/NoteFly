@@ -2776,9 +2776,11 @@ namespace NoteFly
             this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
             this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(244, 22);
             this.shortcutTextBoxManageNotes.TabIndex = 12;
-            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + ?";
             this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
+            this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
             // 
             // shortcutTextBoxNewNote
             // 
@@ -2788,9 +2790,11 @@ namespace NoteFly
             this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
             this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(244, 22);
             this.shortcutTextBoxNewNote.TabIndex = 11;
-            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + ?";
             this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
+            this.shortcutTextBoxNewNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
             // 
             // tbDefaultEmail
             // 

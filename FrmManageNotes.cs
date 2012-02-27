@@ -1557,8 +1557,16 @@ namespace NoteFly
                         if (notepos > 0)
                         {
                             // todo GetContent() is wrong for this but works for now. Add GetContentPreview() that has limited disk read.
-                            string content = this.notes.GetNote(notepos).GetContent();
-                            const string startcontentplainhint = @"\fs24 ";
+                            //string content = this.notes.GetNote(notepos).GetContent();
+                            RichTextBox rtb = new RichTextBox();
+                            rtb.Rtf = this.notes.GetNote(notepos).GetContent();
+                            string content = rtb.Text;
+                            rtb.Dispose();
+                            GC.Collect();
+                            int startpos = 0;
+                            string startcontentplainhint = "";
+                            /*
+                            const string startcontentplainhint = @"\viewkind";
                             int startpos = content.IndexOf(startcontentplainhint);
 
                             for (int i = content.Length - 1; i > startpos; i--)
@@ -1581,6 +1589,7 @@ namespace NoteFly
                                     }
                                 }
                             }
+                            */
 
                             try
                             {
@@ -1644,7 +1653,6 @@ namespace NoteFly
             }
 
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
-            //this.notes.FrmManageNotesNeedUpdate = true;
             this.dataGridViewNotes.DataSource = dt;
             this.SetDataGridViewColumsWidth();
         }
@@ -1656,6 +1664,16 @@ namespace NoteFly
         { 
             this.DrawNotesGrid(); 
             this.SetDataGridViewColumsWidth();
+        }        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridViewNotes_MouseLeave(object sender, EventArgs e)
+        {
+            this.toolTip.Hide(this);
         }
 
         #endregion Methods

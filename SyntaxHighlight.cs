@@ -430,9 +430,9 @@ namespace NoteFly
                 {
                     if (htmlstringpart)
                     {
-                        rtf = ColorText(rtb, rtf, posstartpart + c, 1, Settings.HighlightHTMLColorString); // '"' or '\'' itself too.
                         if (ishtml[c] == currentstringquote)
                         {
+                            rtf = ColorText(rtb, rtf, posstartpart, c + 1, Settings.HighlightHTMLColorString); // +1 for '"' or '\'' itself too.
                             htmlstringpart = false;
                         }
                     }
