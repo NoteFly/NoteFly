@@ -23,11 +23,10 @@
 
 !define PROJNAME   "NoteFly"
 !define VERSION    "3.0.0"          ; version number: major.minor.release
-!define VERSTATUS  "alpha"          ; alpha, beta, rc, or nothing for final.
+!define VERSTATUS  "alpha1"          ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
 !define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
-!define DEMOPLUGIN "helloworld.dll" ; A demo plugin.
 
 Name "${PROJNAME} ${VERSION} ${VERSTATUS}" ; The name of the installer
 SetCompressor lzma
@@ -141,10 +140,10 @@ PageEx license
    LicenseData "license.txt"
 PageExEnd
 ; Add this page on a alpha release as warning
-;PageEx license
-;   LicenseText "Warning"
-;   LicenseData "warning_alpha.txt"
-;PageExEnd
+PageEx license
+   LicenseText "Warning"
+   LicenseData "warning_alpha.txt"
+PageExEnd
 Page components
 Page directory
 Page instfiles
@@ -202,14 +201,9 @@ Section "main executable (required)"
   
 SectionEnd
 
-Section "helloworld demo plugin"
-  SetOutPath "$INSTDIR\plugins"
-  File ".\plugins\${DEMOPLUGIN}"
-SectionEnd
-
 Section "Windows firewall rules"
-  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming http (remoteport 80, protocol tcp only) answer for a http requests from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly http" protocol=TCP remoteport=80 localport=1025-65535 action=allow"'
-  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming dns (remoteport 53, protocol udp only) answer for a dns request from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly dns" protocol=UDP remoteport=53 localport=1025-65535 action=allow"'
+  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming http (remoteport 80, protocol tcp only) answer for a http requests from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly http" protocol=TCP remoteport=80 localport=rpc-epmap action=allow"'
+  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming dns (remoteport 53, protocol udp only) answer for a dns request from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly dns" protocol=UDP remoteport=53 localport=rpc-epmap action=allow"'
 SectionEnd
 
 Section "Desktop Shortcut (all users)"
@@ -257,7 +251,6 @@ Section "Uninstall"
 
   ; Remove files and uninstaller
   Delete "$INSTDIR\${LANGFILE}"
-  Delete "$INSTDIR\plugins\${DEMOPLUGIN}"
   Delete "$INSTDIR\${APPIPLUGIN}"
   Delete "$INSTDIR\${APPFILE}"
 
@@ -269,7 +262,6 @@ Section "Uninstall"
   Delete "$INSTDIR\nyancat.jpg"
   Delete "$INSTDIR\grass.jpg"
   Delete "$INSTDIR\colordrops.jpg"
-  Delete "$INSTDIR\blackhorse.jpg" ; remove ifexist, in NoteFly 2.5.0 beta1 only.
   
   ; remove uninstaller
   Delete "$INSTDIR\uninstall.exe"
@@ -287,14 +279,17 @@ Section "Uninstall"
   
   removeadminappdata:
   ; This is only going to work for the administrator appdata.
-  MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes and settings from administrator account stored at $APPDATA\.NoteFly2\ ?" IDNO keepsettingnotes
-    Delete "$APPDATA\.NoteFly2\settings.xml"
-    Delete "$APPDATA\.NoteFly2\skins.xml"
-    Delete "$APPDATA\.NoteFly2\debug.log"
-    Delete "$APPDATA\.NoteFly2\*.nfn"
+  MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes and settings from administrator account stored at $APPDATA\NoteFly\ ?" IDNO keepsettingnotes
+    Delete "$APPDATA\NoteFly\notes\*.nfn"
+    ;Delete "$APPDATA\NoteFly\plugins\*.nfn"
+    Delete "$APPDATA\NoteFly\settings.xml"
+    Delete "$APPDATA\NoteFly\skins.xml"
+    Delete "$APPDATA\NoteFly\debug.log"
+
 
     ; Remove directory if empty
-    RMDir "$APPDATA\.NoteFly2"
+    RMDir "$APPDATA\NoteFly"
+    
   postremoveadminappdata:
   keepsettingnotes:
   SetShellVarContext all

@@ -170,6 +170,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="RTFDirectEdit.cs" />
     <Compile Include="SearchTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>

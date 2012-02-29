@@ -122,7 +122,7 @@ namespace NoteFly
         /// <summary>
         /// The folder where to save all notes.
         /// </summary>
-        public static string NotesSavepath = xmlUtil.GetDefaultNotesFolder();
+        public static string NotesSavepath = Program.GetDefaultNotesFolder();
 
         /// <summary>
         /// The action on left clicking on trayicon.
@@ -497,6 +497,6 @@ namespace NoteFly
         /// <summary>
         /// The relative path from the install directory to the folder where plugins are stored in.
         /// </summary>
-        public static string ProgramPluginsFolder = System.IO.Path.Combine(Program.InstallFolder, "plugins");       
+        public static string ProgramPluginsFolder = Program.GetDefaultPluginFolder();
     }
 }

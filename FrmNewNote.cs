@@ -1249,11 +1249,25 @@ namespace NoteFly
         /// <param name="e"></param>
         private void rtbNewNote_KeyUp(object sender, KeyEventArgs e)
         {
-            //if (e.KeyCode == Keys.Space)
-            //{
-                // TODO Do a quick highlight of change. Every space creates a new keyword to highlight.
-                //SyntaxHighlight.CheckSyntaxQuick(this.rtbNewNote, this.note.SkinNr, this.notes);
-            //}
+            if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter || e.KeyValue == 190)
+            {
+                if (!SyntaxHighlight.KeywordsInitialized)
+                {
+                    SyntaxHighlight.InitHighlighter();
+                }
+
+                int skinnr = Settings.NotesDefaultSkinnr;
+                if (this.note != null)
+                {
+                    skinnr = this.note.SkinNr;
+                }
+
+                //int oldselstart = rtbNewNote.SelectionStart;
+                // TODO Do a quick highlight of change. Every space or enter creates a new keyword to highlight.
+                //SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, skinnr, this.notes);                
+                SyntaxHighlight.CheckSyntaxQuick(this.rtbNewNote, skinnr, this.notes);
+                //this.rtbNewNote.SelectionStart = oldselstart;
+            }
         }
 
         #endregion Methods

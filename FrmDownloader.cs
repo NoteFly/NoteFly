@@ -159,7 +159,7 @@ namespace NoteFly
         /// <returns>True if download started succesfully.</returns>
         private bool DownloadWebclient(Uri uri)
         {
-            string newfile = this.GetStoreFilepath(this.storefolder, uri.AbsolutePath.ToString());
+            string newfile = this.GetStoreFilepath(this.storefolder, uri.ToString());
             this.files.Add(newfile);
             try
             {

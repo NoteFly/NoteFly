@@ -378,7 +378,7 @@ namespace NoteFly
                 else
                 {
                     Log.Write(LogType.error, (notes_notefolderdoesnotexist + " Yes"));
-                    Settings.NotesSavepath = xmlUtil.GetDefaultNotesFolder();
+                    Settings.NotesSavepath = Program.GetDefaultNotesFolder();
                 }
             }
 

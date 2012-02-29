@@ -735,8 +735,10 @@ namespace NoteFly
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
             this.tabHotkeys = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelShortcuts = new System.Windows.Forms.TableLayoutPanel();
+            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
             this.lblTextShortcutNewNote = new System.Windows.Forms.Label();
             this.lblTextShortcutManageNotes = new System.Windows.Forms.Label();
+            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabctrlAppearance = new System.Windows.Forms.TabControl();
             this.tabAppearanceOverall = new System.Windows.Forms.TabPage();
@@ -800,6 +802,7 @@ namespace NoteFly
             this.tabSharing = new System.Windows.Forms.TabPage();
             this.tabControlSharing = new System.Windows.Forms.TabControl();
             this.tabEmail = new System.Windows.Forms.TabPage();
+            this.tbDefaultEmail = new NoteFly.EmailTextBox();
             this.chxSocialEmailEnabled = new System.Windows.Forms.CheckBox();
             this.chxSocialEmailDefaultaddressSet = new System.Windows.Forms.CheckBox();
             this.tabNetwork = new System.Windows.Forms.TabPage();
@@ -825,12 +828,15 @@ namespace NoteFly
             this.numTimeout = new System.Windows.Forms.NumericUpDown();
             this.lblTextMiliseconds = new System.Windows.Forms.Label();
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
+            this.iptbProxy = new NoteFly.IPTextBox();
             this.tabPageGPG = new System.Windows.Forms.TabPage();
+            this.tbGPGPath = new NoteFly.IOTextBox();
             this.btnGPGPathBrowse = new System.Windows.Forms.Button();
             this.lblTextGPGPath = new System.Windows.Forms.Label();
             this.chxCheckUpdatesSignature = new System.Windows.Forms.CheckBox();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.tbNotesSavePath = new NoteFly.IOTextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -847,12 +853,6 @@ namespace NoteFly
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
-            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
-            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
-            this.tbDefaultEmail = new NoteFly.EmailTextBox();
-            this.iptbProxy = new NoteFly.IPTextBox();
-            this.tbGPGPath = new NoteFly.IOTextBox();
-            this.tbNotesSavePath = new NoteFly.IOTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -1048,6 +1048,7 @@ namespace NoteFly
             this.cbxLanguage.Name = "cbxLanguage";
             this.cbxLanguage.Size = new System.Drawing.Size(199, 24);
             this.cbxLanguage.TabIndex = 26;
+            this.cbxLanguage.SelectedIndexChanged += new System.EventHandler(this.cbxLanguage_SelectedIndexChanged);
             // 
             // lblTextLanguage
             // 
@@ -1116,6 +1117,20 @@ namespace NoteFly
             this.tableLayoutPanelShortcuts.Size = new System.Drawing.Size(417, 63);
             this.tableLayoutPanelShortcuts.TabIndex = 16;
             // 
+            // shortcutTextBoxManageNotes
+            // 
+            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 34);
+            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
+            this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
+            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(244, 22);
+            this.shortcutTextBoxManageNotes.TabIndex = 12;
+            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
+            this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
+            // 
             // lblTextShortcutNewNote
             // 
             this.lblTextShortcutNewNote.AutoSize = true;
@@ -1135,6 +1150,20 @@ namespace NoteFly
             this.lblTextShortcutManageNotes.Size = new System.Drawing.Size(143, 16);
             this.lblTextShortcutManageNotes.TabIndex = 10;
             this.lblTextShortcutManageNotes.Text = "Hotkey manage notes:";
+            // 
+            // shortcutTextBoxNewNote
+            // 
+            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(152, 3);
+            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
+            this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
+            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(244, 22);
+            this.shortcutTextBoxNewNote.TabIndex = 11;
+            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
+            this.shortcutTextBoxNewNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
             // 
             // tabAppearance
             // 
@@ -2085,6 +2114,15 @@ namespace NoteFly
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
             // 
+            // tbDefaultEmail
+            // 
+            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
+            this.tbDefaultEmail.Enabled = false;
+            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
+            this.tbDefaultEmail.Name = "tbDefaultEmail";
+            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
+            this.tbDefaultEmail.TabIndex = 26;
+            // 
             // chxSocialEmailEnabled
             // 
             this.chxSocialEmailEnabled.AutoSize = true;
@@ -2461,6 +2499,14 @@ namespace NoteFly
             this.chxProxyEnabled.UseVisualStyleBackColor = true;
             this.chxProxyEnabled.CheckedChanged += new System.EventHandler(this.chxUseProxy_CheckedChanged);
             // 
+            // iptbProxy
+            // 
+            this.iptbProxy.Enabled = false;
+            this.iptbProxy.Location = new System.Drawing.Point(83, 57);
+            this.iptbProxy.Name = "iptbProxy";
+            this.iptbProxy.Size = new System.Drawing.Size(195, 22);
+            this.iptbProxy.TabIndex = 26;
+            // 
             // tabPageGPG
             // 
             this.tabPageGPG.Controls.Add(this.tbGPGPath);
@@ -2474,6 +2520,13 @@ namespace NoteFly
             this.tabPageGPG.TabIndex = 2;
             this.tabPageGPG.Text = "GnuPG";
             this.tabPageGPG.UseVisualStyleBackColor = true;
+            // 
+            // tbGPGPath
+            // 
+            this.tbGPGPath.Location = new System.Drawing.Point(123, 60);
+            this.tbGPGPath.Name = "tbGPGPath";
+            this.tbGPGPath.Size = new System.Drawing.Size(221, 22);
+            this.tbGPGPath.TabIndex = 38;
             // 
             // btnGPGPathBrowse
             // 
@@ -2542,6 +2595,13 @@ namespace NoteFly
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
+            // 
+            // tbNotesSavePath
+            // 
+            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
+            this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
+            this.tbNotesSavePath.TabIndex = 39;
             // 
             // btnBrowse
             // 
@@ -2767,65 +2827,6 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.DefaultExt = "exe";
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
-            // 
-            // shortcutTextBoxManageNotes
-            // 
-            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 34);
-            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
-            this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
-            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(244, 22);
-            this.shortcutTextBoxManageNotes.TabIndex = 12;
-            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + ?";
-            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
-            this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
-            // 
-            // shortcutTextBoxNewNote
-            // 
-            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(152, 3);
-            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
-            this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
-            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(244, 22);
-            this.shortcutTextBoxNewNote.TabIndex = 11;
-            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + ?";
-            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
-            this.shortcutTextBoxNewNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
-            // 
-            // tbDefaultEmail
-            // 
-            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
-            this.tbDefaultEmail.Enabled = false;
-            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
-            this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
-            this.tbDefaultEmail.TabIndex = 26;
-            // 
-            // iptbProxy
-            // 
-            this.iptbProxy.Enabled = false;
-            this.iptbProxy.Location = new System.Drawing.Point(83, 57);
-            this.iptbProxy.Name = "iptbProxy";
-            this.iptbProxy.Size = new System.Drawing.Size(195, 22);
-            this.iptbProxy.TabIndex = 26;
-            // 
-            // tbGPGPath
-            // 
-            this.tbGPGPath.Location = new System.Drawing.Point(123, 60);
-            this.tbGPGPath.Name = "tbGPGPath";
-            this.tbGPGPath.Size = new System.Drawing.Size(221, 22);
-            this.tbGPGPath.TabIndex = 38;
-            // 
-            // tbNotesSavePath
-            // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
-            this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
-            this.tbNotesSavePath.TabIndex = 39;
             // 
             // FrmSettings
             // 

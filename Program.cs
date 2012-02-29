@@ -54,6 +54,16 @@ namespace NoteFly
         /// </summary>
         private static TrayIcon trayicon;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DEFAULTNOTESFOLDERNAME = "notes";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string DEFAULTPLUGINSFOLDERNAME = "plugins";
+
         #endregion Fields
 
         #region Properties (5)
@@ -253,7 +263,7 @@ namespace NoteFly
             bool resetpositions;
             ParserArguments(args, out visualstyle, out resetpositions);
 
-            
+
 #if windows
             if (!Settings.ProgramSuspressWarnAdmin)
             {
@@ -340,6 +350,38 @@ namespace NoteFly
 
             SyntaxHighlight.DeinitHighlighter();
             System.Windows.Forms.Application.Run();
+        }
+
+        /// <summary>
+        /// Get the default notes folder for this programme.
+        /// If the folder does not exists create it.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDefaultNotesFolder()
+        {
+            string notesfolder = Path.Combine(Program.AppDataFolder, DEFAULTNOTESFOLDERNAME);
+            if (!Directory.Exists(notesfolder))
+            {
+                Directory.CreateDirectory(notesfolder);
+            }
+
+            return notesfolder;
+        }
+
+        /// <summary>
+        /// Get the default plugins folder for this programme.
+        /// If the folder does not exists create it.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDefaultPluginFolder()
+        {
+            string pluginsfolder = Path.Combine(Program.AppDataFolder, DEFAULTPLUGINSFOLDERNAME);
+            if (!Directory.Exists(pluginsfolder))
+            {
+                Directory.CreateDirectory(pluginsfolder);
+            }
+
+            return pluginsfolder;
         }
 
         /// <summary>

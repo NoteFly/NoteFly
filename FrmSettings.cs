@@ -847,14 +847,16 @@ namespace NoteFly
             this.lblTextMiliseconds.Visible = expertsettings;
             this.lblTextNetworkMiliseconds.Visible = expertsettings;
             this.cbxFontNoteTitleBold.Visible = expertsettings;
-            this.chxLogErrors.Visible = expertsettings;
-            this.chxLogExceptions.Visible = expertsettings;
             this.lblTextTotalNotesWarnLimit.Visible = expertsettings;
             this.numWarnLimitTotal.Visible = expertsettings;
             this.lblTextVisibleNotesWarnLimit.Visible = expertsettings;
             this.numWarnLimitVisible.Visible = expertsettings;
             this.chxCaseSentiveSearch.Visible = expertsettings;
             this.chxManagenotesTooltipContent.Visible = expertsettings;
+            this.lblTextLogging.Visible = expertsettings;
+            this.chxLogDebug.Visible = expertsettings;
+            this.chxLogErrors.Visible = expertsettings;
+            this.chxLogExceptions.Visible = expertsettings;            
             this.SetLastUpdatecheckDate(expertsettings);
             this.SetTabPageGPGVisible(expertsettings);
         }

@@ -76,7 +76,10 @@ namespace NoteFly
         /// </summary>
         private static bool keywordsinit = false;
 
-        //private static string currentrtf;
+        /// <summary>
+        /// 
+        /// </summary>
+        private static RTFDirectEdit rtfdirectedit;
 
         #endregion Fields
 
@@ -103,6 +106,7 @@ namespace NoteFly
         public static void DeinitHighlighter()
         {
             keywordsinit = false;
+            rtfdirectedit = null;
             GC.Collect();
         }
 
@@ -127,6 +131,7 @@ namespace NoteFly
                 langs.Add(xmlUtil.ParserLanguageLexical(LANGFILE, "sql"));
             }
 
+            rtfdirectedit = new RTFDirectEdit();
             keywordsinit = true;
         }
 
@@ -136,7 +141,7 @@ namespace NoteFly
         /// <param name="rtb">The richttextbox with RTF note content.</param>
         /// <param name="skinnr">The skin number</param>
         /// <param name="notes">Pointer to notes class.</param>
-        public static void CheckSyntaxFull(TransparentRichTextBox rtb, int skinnr, Notes notes)
+        public static void CheckSyntaxFull(RichTextBox rtb, int skinnr, Notes notes)
         {
             System.Diagnostics.Stopwatch stopwatch = null;
             if (Settings.ProgramLogInfo)
@@ -146,7 +151,6 @@ namespace NoteFly
             }
 
             string rtf = rtb.Rtf;
-            //rtb.SuspendLayout();
             if (string.IsNullOrEmpty(rtf))
             {
                 Log.Write(LogType.exception, "Empty note rtf");
@@ -154,6 +158,7 @@ namespace NoteFly
             }
 
             rtf = ResetHighlighting(rtb, rtf, skinnr, notes);
+
             if (!keywordsinit)
             {
                 Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
@@ -178,11 +183,8 @@ namespace NoteFly
 
                 for (int curpos = 0; curpos < maxpos; curpos++)
                 {
-#if !macos
-                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || curpos == rtb.TextLength - 1)
-#elif macos
-                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\r' || curpos == rtb.TextLength - 1)
-#endif
+                    // curpos == rtb.TextLength - 1 for checking last part
+                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || rtb.Text[curpos] == '\r' || curpos == rtb.TextLength - 1)
                     {
                         string part = rtb.Text.Substring(lastpos, curpos - lastpos);
                         if (part.Length > 0)
@@ -241,7 +243,7 @@ namespace NoteFly
         /// <param name="curpos"></param>
         /// <param name="lastpos"></param>
         /// <returns></returns>
-        private static string CheckSyntaxPart(TransparentRichTextBox rtb, string rtf, string part, int curpos, int lastpos)
+        private static string CheckSyntaxPart(RichTextBox rtb, string rtf, string part, int curpos, int lastpos)
         {
             for (int i = 0; i < langs.Count; i++)
             {
@@ -266,79 +268,79 @@ namespace NoteFly
             return rtf;
         }
 
-        /*
+        // /*
         /// <summary>
         /// 
         /// </summary>
         /// <param name="rtb"></param>
         /// <param name="skinnr"></param>
         /// <param name="notes"></param>
-        public static void CheckSyntaxQuick(TransparentRichTextBox rtb, int skinnr, Notes notes)
+        public static void CheckSyntaxQuick(RichTextBox rtb, int skinnr, Notes notes)
         {
-            int cursorpos = rtb.SelectionStart;
-            //int sellen = rtb.SelectionLength;
-
             if (!keywordsinit)
             {
                 Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
                 InitHighlighter();
             }
-
+           
             // check if highlighting is enabled at all.
             if (langs.Count > 0)
             {
+                langs[0].PosDocumentStart = 0; // todo
+                langs[0].PosDocumentEnd = rtb.TextLength; // todo
+                langs[1].PosDocumentStart = 0; // todo
+                langs[1].PosDocumentEnd = rtb.TextLength; // todo
+                langs[2].PosDocumentStart = 0; // todo
+                langs[2].PosDocumentEnd = rtb.TextLength; // todo
+
+                int cursorpos = rtb.SelectionStart;
+                string rtf = rtb.Rtf;
                 int maxpos = Settings.HighlightMaxchars;
                 if (rtb.TextLength < Settings.HighlightMaxchars)
                 {
                     maxpos = rtb.TextLength;
                 }
 
-                int lastspace = int.MaxValue;
-                for (int i = cursorpos - 2; i > 0; i--)
+                int lastpos = 0;
+                for (int i = cursorpos - 2; i > 0; i--) // -2 for line ending length
                 {
-                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\n')
+                    if (rtb.Text[i] == ' ' || rtb.Text[i] == '\n' || rtb.Text[i] == '\r')
                     {
-                        lastspace = i + 1;
+                        lastpos = i + 1; // after ' ', '\n' or '\r'
                         break;
                     }
                 }
-        
-                for (int curpos = lastspace; curpos < maxpos; curpos++)
+
+                int partlen = cursorpos - lastpos;
+                if (partlen > 0 && lastpos + partlen <= rtb.TextLength)
                 {
-#if !macos
-                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || curpos == rtb.Text.Length - 1)
-#elif macos
-                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\r' || curpos == rtb.Text.Length-1)
-#endif
+                    string part = rtb.Text.Substring(lastpos, cursorpos - lastpos);
+                    int s = part.LastIndexOf('<');
+                    if (s > 0)
                     {
-                        string bufcheck = rtb.Text.Substring(lastspace, curpos - lastspace);
-                        if (bufcheck.Length > 0)
-                        {
-                            for (int i = 0; i < langs.Count; i++)
-                            {
-                                langs[i].CheckSetDocumentPos(bufcheck, curpos);
-                                if (curpos >= langs[i].PosDocumentStart && curpos <= langs[i].PosDocumentEnd)
-                                {
-                                    switch (langs[i].Name)
-                                    {
-                                        case "html":
-                                            ValidatingHtmlPart(bufcheck, rtb, lastspace, langs[i]);
-                                            break;
-                                        case "php":
-                                            ValidatingPhpPart(bufcheck, rtb, lastspace, langs[i]);
-                                            break;
-                                        case "sql":
-                                            ValidatingSqlPart(bufcheck, rtb, lastspace, langs[i]);
-                                            break;
-                                    }
-                                }
-                            }
-                        }
+                        lastpos += s;
+                        part = rtb.Text.Substring(lastpos, cursorpos - lastpos);
+                    }
+
+                    rtf = CheckSyntaxPart(rtb, rtf, part, cursorpos, lastpos);                    
+                }
+
+                if (!string.IsNullOrEmpty(rtf))
+                {
+                    int prevtextlen = rtb.TextLength;
+                    string prevrtf = rtb.Rtf;
+                    rtb.Rtf = rtf;
+                    if (rtb.TextLength != prevtextlen)
+                    {
+                        Log.Write(LogType.exception, "rtf editing failed. rtb.TextLength=" + rtb.TextLength + " prevtextlen=" + prevtextlen);
+                        rtb.Rtf = prevrtf;
                     }
                 }
+
+                rtb.SelectionStart = cursorpos;
             }
         }
-        */
+        // */
 
         /// <summary>
         /// Color some part of the rich edit text.
@@ -347,29 +349,18 @@ namespace NoteFly
         /// <param name="posstart">The start position in the text to start coloring from.</param>
         /// <param name="len">The lenght of text to color.</param>
         /// <param name="hexcolor">The color the text should get.</param>
-        private static string ColorText(TransparentRichTextBox rtb, string rtf, int posstart, int len, string hexcolor)
+        private static string ColorText(RichTextBox rtb, string rtf, int posstart, int len, string hexcolor)
         {
             Color color = xmlUtil.ConvToClr(hexcolor);
             if (!string.IsNullOrEmpty(rtf))
             {
-                return rtb.SetColorInRTF(rtf, color, posstart, len);
+                return rtfdirectedit.SetColorInRTF(rtf, color, posstart, len);
             }
             else
             {
                 Log.Write(LogType.exception, "rtf is empty, rtb.TextLength=" + rtb.TextLength + ", posstart=" + posstart + ", len=" + len);
                 return rtf;
             }
-            /*
-            try
-            {
-                rtb.Select(posstart, len);
-                rtb.SelectionColor = color;
-            }
-            catch (ArgumentOutOfRangeException arg)
-            {
-                throw new ApplicationException("TextHighlighter out of range: " + arg.Source);
-            }
-            */
         }
 
         /// <summary>
@@ -378,7 +369,7 @@ namespace NoteFly
         /// <param name="rtb">The richedit control that hold the note content.</param>
         /// <param name="skinnr">The skin number of the current note.</param>
         /// <param name="notes">Reference to notes class.</param>
-        private static string ResetHighlighting(TransparentRichTextBox rtb, string rtf, int skinnr, Notes notes)
+        private static string ResetHighlighting(RichTextBox rtb, string rtf, int skinnr, Notes notes)
         {
             comment = false;
             commentline = false;
@@ -386,17 +377,7 @@ namespace NoteFly
             htmlstringpart = false;
             phpstringpart = false;
             currentstringquote = '"';
-
-            if (!string.IsNullOrEmpty(rtf))
-            {
-                string newrtf = rtb.SetColorInRTF(rtf, notes.GetTextClr(skinnr), 0, rtb.TextLength);
-                return newrtf;
-            }
-            else
-            {
-                Log.Write(LogType.info, "rtf is empty or null. rtb.TextLength=" + rtb.TextLength + " rtf.Length=" + rtf.Length + " rtb.Rtf.Length=" + rtb.Rtf.Length);
-                return null;
-            }
+            return rtfdirectedit.SetColorAllRTF(rtf, notes.GetTextClr(skinnr));
         }
 
         /// <summary>
@@ -406,7 +387,7 @@ namespace NoteFly
         /// <param name="rtb">The richtextbox.</param>
         /// <param name="posstartpart">the start position in the richtextbox.</param>
         /// <param name="langhtml">The html language description.</param>
-        private static string ValidatingHtmlPart(string ishtml, TransparentRichTextBox rtb, string rtf, int posstartpart, HighlightLanguage langhtml)
+        private static string ValidatingHtmlPart(string ishtml, RichTextBox rtb, string rtf, int posstartpart, HighlightLanguage langhtml)
         {
             ishtml = ishtml.ToLower();
             List<string> attributes = new List<string>(); // these attributes are within this part.
@@ -521,7 +502,7 @@ namespace NoteFly
         /// <param name="rtb">Richtextbox with note content</param>
         /// <param name="attributestartpos">Startposition of the attribute within the htmlpart.</param>
         /// <param name="langhtml">The html language description.</param>
-        private static string ValidateHTMLAttribute(string htmlattribute, TransparentRichTextBox rtb, string rtf, int attributestartpos, HighlightLanguage langhtml)
+        private static string ValidateHTMLAttribute(string htmlattribute, RichTextBox rtb, string rtf, int attributestartpos, HighlightLanguage langhtml)
         {
             if (htmlattribute == "/" || htmlattribute.Length < 1)
             {
@@ -596,7 +577,7 @@ namespace NoteFly
         /// <param name="rtb">the richtextbox</param>
         /// <param name="posstart">the position in rtb where this keyword starts</param>
         /// <param name="langphp">The PHP language description.</param>
-        private static string ValidatingPhpPart(string isphp, TransparentRichTextBox rtb, string rtf, int posstart, HighlightLanguage langphp)
+        private static string ValidatingPhpPart(string isphp, RichTextBox rtb, string rtf, int posstart, HighlightLanguage langphp)
         {
             int posvar = -1;
             if (isphp.StartsWith(langphp.Commentstart))
@@ -714,7 +695,7 @@ namespace NoteFly
         /// <param name="rtb">The richtextbox</param>
         /// <param name="posstart">Position where the keyword starts in the richtextbox.</param>
         /// <param name="langsql">The sql language description</param>
-        private static string ValidatingSqlPart(string issql, TransparentRichTextBox rtb, string rtf, int posstart, HighlightLanguage langsql)
+        private static string ValidatingSqlPart(string issql, RichTextBox rtb, string rtf, int posstart, HighlightLanguage langsql)
         {
             string sqlkeyword;
             if (issql.Length > 0)

@@ -1,3 +1,4 @@
+@echo off
 REM  NoteFly a note application.
 REM  Copyright (C) 2010-2012  Tom
 REM
@@ -14,12 +15,10 @@ REM
 REM  You should have received a copy of the GNU General Public License
 REM  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-@echo off
-
 echo strip reloc info.
 
 REM change this path to where Inno StripReloc tool is installed.
-"C:\Program Files\StripReloc_v1.13\StripReloc.exe" .\bin\Release\NoteFly.exe
+REM "C:\Program Files\StripReloc_v1.13\StripReloc.exe" .\bin\Release\NoteFly.exe
 
 pause
 echo building setup...
@@ -30,7 +29,7 @@ REM change this path to where NSIS is installed.
 echo.
 echo signing setup (press Ctrl+C to skip/abort now)
 REM change this path to where gpg.exe is installed. And the filename of the setup.
-"C:\Program Files (x86)\GNU\GnuPG\gpg2.exe" --local-user B43F047E --detach-sign .\bin\Release\NoteFly_v2.5.1.exe
+"C:\Program Files (x86)\GNU\GnuPG\gpg2.exe" --local-user B43F047E --detach-sign .\bin\Release\NoteFly_v3.0.0alpha1.exe
 
 echo done.
 echo.

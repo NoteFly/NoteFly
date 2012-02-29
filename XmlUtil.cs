@@ -44,11 +44,6 @@ namespace NoteFly
         public const string SETTINGSFILE = "settings.xml";
 
         /// <summary>
-        /// 
-        /// </summary>
-        public const string DEFAULTNOTESFOLDERNAME = "notes";
-
-        /// <summary>
         /// The note version
         /// </summary>
         private const string NOTEVERSION = "3";        
@@ -646,21 +641,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static string GetDefaultNotesFolder()
-        {
-            string defaultnotesfolder = Path.Combine(Program.AppDataFolder, DEFAULTNOTESFOLDERNAME);
-            if (!Directory.Exists(defaultnotesfolder))
-            {
-                Directory.CreateDirectory(defaultnotesfolder);
-            }
-
-            return defaultnotesfolder;
-        }
-
-        /// <summary>
         /// Gets all skins from skin file.
         /// create Application data folder if does not exist.
         /// Create default SKINFILE if not exist.
@@ -880,28 +860,28 @@ namespace NoteFly
             Settings.NotesDefaultTitleDate = true;
             Settings.NotesTitlepanelMaxHeight = 64;
             Settings.NotesTitlepanelMinHeight = 32;
-            Settings.NotesSavepath = xmlUtil.GetDefaultNotesFolder();
+            Settings.NotesSavepath = Program.GetDefaultNotesFolder();
             Settings.NotesTransparencyEnabled = true;
             Settings.NotesTransparentRTB = true;
             Settings.NotesTransparencyLevel = 0.9;
             Settings.NotesWarnlimitTotal = 5000;
             Settings.NotesWarnlimitVisible = 50;
             Settings.ProgramFirstrunned = false;
-            Settings.ProgramFormsDoublebuffered = false; // create blank windows on windows 8.
+            Settings.ProgramFormsDoublebuffered = false; // ProgramFormsDoublebuffered=true creates blank windows on windows 8 pre-beta.
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
             Settings.ProgramPluginsAllEnabled = true;
             //Settings.ProgramPluginsEnabled = Settings.ProgramPluginsEnabled; // leave as is
             Settings.ProgramPluginsDllexclude = "SQLite3.dll|System.Data.SQLite.DLL|Interop.SpeechLib.dll";
-            Settings.ProgramPluginsFolder = Path.Combine(Program.InstallFolder, "plugins");
+            Settings.ProgramPluginsFolder = Program.GetDefaultPluginFolder();
             Settings.ProgramSuspressWarnAdmin = false;
             Settings.SettingsLastTab = 0;
             Settings.SettingsExpertEnabled = false;
             Settings.SharingEmailEnabled = true;
             Settings.SharingEmailDefaultadres = string.Empty;
             Settings.TrayiconAlternateIcon = false;
-            Settings.TrayiconFontsize = 10.00f; // default .net: 8.25f; but made a  bigger (and more) for readablity
+            Settings.TrayiconFontsize = 10.00f; // default .net: 8.25f; but made bigger (and more) for a little more readablity
             Settings.TrayiconLeftclickaction = 1;
             Settings.TrayiconCreatenotebold = true;
             Settings.TrayiconExitbold = false;
