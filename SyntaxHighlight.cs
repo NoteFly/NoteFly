@@ -184,7 +184,7 @@ namespace NoteFly
                 for (int curpos = 0; curpos < maxpos; curpos++)
                 {
                     // curpos == rtb.TextLength - 1 for checking last part
-                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || rtb.Text[curpos] == '\r' || curpos == rtb.TextLength - 1)
+                    if (rtb.Text[curpos] == ' ' || rtb.Text[curpos] == '\n' || rtb.Text[curpos] == '\r' || rtb.Text[curpos] == '\t' || curpos == rtb.TextLength - 1)
                     {
                         string part = rtb.Text.Substring(lastpos, curpos - lastpos);
                         if (part.Length > 0)
@@ -195,8 +195,6 @@ namespace NoteFly
                         lastpos = curpos + 1; // without space or linefeed
                     }
 
-                    try
-                    {
 #if !macos
                         if (rtb.Text[curpos] == '\n')
 #elif macos
@@ -204,12 +202,7 @@ namespace NoteFly
 #endif
                         {
                             commentline = false;
-                        }
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        return;
-                    }
+                        }                    
                 }
             }
 
@@ -286,12 +279,22 @@ namespace NoteFly
             // check if highlighting is enabled at all.
             if (langs.Count > 0)
             {
-                langs[0].PosDocumentStart = 0; // todo
-                langs[0].PosDocumentEnd = rtb.TextLength; // todo
-                langs[1].PosDocumentStart = 0; // todo
-                langs[1].PosDocumentEnd = rtb.TextLength; // todo
-                langs[2].PosDocumentStart = 0; // todo
-                langs[2].PosDocumentEnd = rtb.TextLength; // todo
+                for (int i = 0; i < langs.Count; i++)
+                {
+                    // find out start position of language
+                    int langstartpos = rtb.Text.IndexOf(langs[i].DocumentStartStr);
+                    if (langstartpos >= 0)
+                    {
+                        langs[i].PosDocumentStart = langstartpos;
+                    }
+
+                    // find out end position of language, if not default is int.Max
+                    int langendpos = rtb.Text.LastIndexOf(langs[i].DocumentEndStr);
+                    if (langendpos >= 0)
+                    {
+                        langs[i].PosDocumentEnd = langendpos;
+                    }                    
+                }
 
                 int cursorpos = rtb.SelectionStart;
                 string rtf = rtb.Rtf;
@@ -389,7 +392,7 @@ namespace NoteFly
         /// <param name="langhtml">The html language description.</param>
         private static string ValidatingHtmlPart(string ishtml, RichTextBox rtb, string rtf, int posstartpart, HighlightLanguage langhtml)
         {
-            ishtml = ishtml.ToLower();
+            ishtml = ishtml.ToLowerInvariant();
             List<string> attributes = new List<string>(); // these attributes are within this part.
             List<int> attributesstartpos = new List<int>();
             int attrstartpos = posstartpart;

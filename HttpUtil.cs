@@ -23,6 +23,7 @@ namespace NoteFly
     using System.ComponentModel;
     using System.IO;
     using System.Net;
+    using System.Text;
 
     /// <summary>
     /// Http utily class
@@ -71,7 +72,7 @@ namespace NoteFly
 
             this.cachesettings = cachesettings;
             this.httpthread = new BackgroundWorker();
-            this.httpthread.DoWork += new DoWorkEventHandler(this.httpthread_DoWork);
+            this.httpthread.DoWork += new DoWorkEventHandler(this.httpthread_DoWork);            
         }
 
         /// <summary>
@@ -80,15 +81,15 @@ namespace NoteFly
         /// <returns>True if http background worker succesfully started</returns>
         public bool Start(RunWorkerCompletedEventHandler workcompleethandler)
         {
-            if (this.httpthread != null)
+            if (!this.IsNetworkConnected())
             {
-                this.httpthread.RunWorkerCompleted += workcompleethandler;                
-                this.httpthread.RunWorkerAsync();
-                return true;                               
+                return false;
             }
             else
             {
-                return false;
+                this.httpthread.RunWorkerCompleted += workcompleethandler;
+                this.httpthread.RunWorkerAsync();
+                return true;                
             }
         }
 
@@ -101,19 +102,24 @@ namespace NoteFly
         private void httpthread_DoWork(object sender, DoWorkEventArgs e)
         {
             HttpWebRequest request = this.CreateHttpWebRequest(this.url, this.cachesettings);
+
             if (request != null)
             {
                 WebResponse webresponse = null;
                 try
                 {
                     webresponse = request.GetResponse();
+                    //System.Threading.Thread.Sleep(101);
+                    StreamReader streamreader = new StreamReader(webresponse.GetResponseStream(), System.Text.Encoding.UTF8);
+                    string response = streamreader.ReadToEnd();
+                    /*
                     using (Stream responsestream = webresponse.GetResponseStream())
                     {
-                        using (StreamReader streamreader = new StreamReader(responsestream))
+                        using (StreamReader streamreader = new StreamReader(responsestream, System.Text.Encoding.UTF8))
                         {
                             try
                             {
-                                e.Result = (string)streamreader.ReadToEnd(); // fixme possinle memory issue.
+                                response = (string)streamreader.ReadToEnd(); // fixme possible memory issue.
                             }
                             catch (OutOfMemoryException memexc)
                             {
@@ -121,6 +127,9 @@ namespace NoteFly
                             }
                         }
                     }
+                     */
+                    e.Result = response;
+                    streamreader.Close();
                 }
                 catch (WebException webexc)
                 {
@@ -153,29 +162,44 @@ namespace NoteFly
         private HttpWebRequest CreateHttpWebRequest(string url, System.Net.Cache.RequestCacheLevel cachesettings)
         {
             System.Net.ServicePointManager.Expect100Continue = false;
+            System.Net.ServicePointManager.EnableDnsRoundRobin = true;
+            System.Net.ServicePointManager.DnsRefreshTimeout = 3 * 60 * 1000; // 3 minutes
             System.Net.ServicePointManager.DefaultConnectionLimit = 8;
-            HttpWebRequest request = null;
+            HttpWebRequest request = null;            
             Log.Write(LogType.info, "Making request to '" + url + "'");
             try
             {
                 request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
                 request.Method = "GET";
                 request.ContentType = "text/xml";
-                request.ProtocolVersion = HttpVersion.Version11; // HTTP 1.1 is required.
+                request.ProtocolVersion = HttpVersion.Version11; // HTTP 1.1 is required, required sending host header for notefly.org
                 request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
+                request.AllowAutoRedirect = false;
                 request.Timeout = Settings.NetworkConnectionTimeout;
+                request.KeepAlive = true;
+                
+                
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
                     request.Proxy = new WebProxy(Settings.NetworkProxyAddress, Settings.NetworkProxyPort);
                 }
+                else
+                {
+                    // set proxy to nothing, otherwise HttpWebRequest has issues, details: https://holyhoehle.wordpress.com/2010/01/12/webrequest-slow/ 
+                    request.Proxy = GlobalProxySelection.GetEmptyWebProxy();
+                }
 
+                //request.AutomaticDecompression = DecompressionMethods.None;
                 if (Settings.NetworkUseGzip)
                 {
                     request.Headers["Accept-Encoding"] = "gzip";
+                    request.AutomaticDecompression = DecompressionMethods.GZip;
                 }
                 
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(cachesettings);
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
+                request.PreAuthenticate = false;
+                
             }
             catch (System.Net.WebException webexc)
             {
@@ -185,13 +209,19 @@ namespace NoteFly
             return request;
         }
 
+#if windows
+        // get network status
+        [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+#endif
+
         /// <summary>
         /// Check if there is internet connection, if not warn user.
         /// Uses windows API, other platforms return always true at the moment.
         /// </summary>
         /// <remarks>Decreated, used for send to twitter/facebook</remarks>
         /// <returns>true if there is a connection, otherwise return false</returns>
-        private static bool IsNetworkConnected()
+        private bool IsNetworkConnected()
         {
 #if windows
             int desc;
@@ -207,11 +237,5 @@ namespace NoteFly
             return true;
 #endif
         }
-
-#if windows
-        // get network status
-        [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-#endif
     }
 }

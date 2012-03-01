@@ -619,22 +619,23 @@ namespace NoteFly
                     if (File.Exists(this.openNoteFileDialog.FileName))
                     {
                         reader = new StreamReader(this.openNoteFileDialog.FileName, true); // detect encoding
+                        ImportNotes importnote = new ImportNotes(this.notes);                        
                         switch (this.openNoteFileDialog.FilterIndex)
                         {
                             case 1:
-                                this.ReadTextfile(reader);
+                                importnote.ReadTextfile(reader, this.rtbNewNote);
                                 break;
                             case 2:
-                                this.ReadRTFfile(reader);
+                                importnote.ReadRTFfile(reader, this.rtbNewNote);
                                 break;
                             case 3:
-                                this.ReadKeyNotefile(reader);
+                                importnote.ReadKeyNotefile(reader, this.rtbNewNote);
                                 break;
                             case 4:
-                                this.ReadTomboyfile(reader, this.openNoteFileDialog.FileName);
+                                importnote.ReadTomboyfile(reader, this.openNoteFileDialog.FileName, this.tbTitle, this.rtbNewNote);
                                 break;
                             case 5:
-                                this.ReadMicroSENotefile(reader);
+                                importnote.ReadMicroSENotefile(reader, this.tbTitle, this.rtbNewNote);
                                 break;
                         }
                     }
@@ -646,6 +647,7 @@ namespace NoteFly
             }
         }
 
+        /*
         /// <summary>
         /// Import a textfile as note content for a new note.
         /// </summary>
@@ -654,6 +656,7 @@ namespace NoteFly
         {
             this.rtbNewNote.Text = reader.ReadToEnd();
         }
+         
 
         /// <summary>
         /// Import a rtf file as note content for a new note.
@@ -664,6 +667,7 @@ namespace NoteFly
             this.rtbNewNote.Rtf = reader.ReadToEnd();
             this.SetDefaultFontFamilyAndSize();
         }
+        
 
         /// <summary>
         /// Import a KeyNote note file as note content for a new note.
@@ -854,6 +858,7 @@ namespace NoteFly
                 }
             }
         }
+        */
 
         /// <summary>
         /// Set this note ontop, CheckOnClick is set to true.
@@ -1063,16 +1068,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Set font family and size.
-        /// </summary>
-        private void SetDefaultFontFamilyAndSize()
-        {
-            this.rtbNewNote.SelectAll();
-            this.rtbNewNote.Font = new Font(Settings.FontContentFamily, (float)Settings.FontContentSize);
-            this.rtbNewNote.Select(0, 0);
-        }
-
-        /// <summary>
         /// Set the font and textdirection FrmNewNote.
         /// </summary>
         private void SetFontSettings()
@@ -1259,14 +1254,11 @@ namespace NoteFly
                 int skinnr = Settings.NotesDefaultSkinnr;
                 if (this.note != null)
                 {
+                    // edit note
                     skinnr = this.note.SkinNr;
                 }
-
-                //int oldselstart = rtbNewNote.SelectionStart;
-                // TODO Do a quick highlight of change. Every space or enter creates a new keyword to highlight.
-                //SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, skinnr, this.notes);                
+            
                 SyntaxHighlight.CheckSyntaxQuick(this.rtbNewNote, skinnr, this.notes);
-                //this.rtbNewNote.SelectionStart = oldselstart;
             }
         }
 

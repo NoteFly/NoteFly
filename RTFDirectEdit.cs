@@ -14,6 +14,7 @@
         private const string VIEWKINDTAG = @"\viewkind";
         private const string COLORTBLTAG = @"{\colortbl ";
         private const string COLORITEMTAG = @"\cf";
+        private const string RTFTABTAG = @"\tab";
         private List<Color> colortblitems = new List<Color>();
         private bool rtfformat = true;
 
@@ -72,12 +73,22 @@
                     if (rtf[i] == '\\')
                     {
                         this.rtfformat = true;
-                        int startnumpos = i + COLORITEMTAG.Length;
-                        if (startnumpos < rtf.Length)
+                        bool istabtag = false;
+                        if (i + RTFTABTAG.Length < rtf.Length)
+                        {
+                            if (rtf.Substring(i, RTFTABTAG.Length).Equals(RTFTABTAG, StringComparison.Ordinal))
+                            {
+                                // a tab is only 1 character in text.
+                                nrtextchar += 1;
+                                istabtag = true;
+                            }
+                        }
+
+                        if (i + COLORITEMTAG.Length < rtf.Length && !istabtag)
                         {
                             if (rtf.Substring(i, COLORITEMTAG.Length).Equals(COLORITEMTAG, StringComparison.Ordinal))
                             {
-                                int numlen = this.GetLenDigit(rtf, startnumpos);
+                                int numlen = this.GetLenDigit(rtf, i + COLORITEMTAG.Length);
                                 if (numlen <= 0)
                                 {
                                     return newrtf.ToString();
@@ -85,7 +96,7 @@
 
                                 if (!overridecoloritem)
                                 {
-                                    string snr = rtf.Substring(startnumpos, numlen);
+                                    string snr = rtf.Substring(i + COLORITEMTAG.Length, numlen);
                                     prevnrcoloritem = IntParseFast(snr);
                                 }
                                 else if (overridecoloritem)
@@ -125,7 +136,7 @@
                     if (rtf[i] == ' ' || rtf[i] == '\r' || rtf[i] == '\n')
                     {
                         rtfformat = false;
-                    }
+                    }                    
 
                     if (textpos == nrtextchar && !textposdone)
                     {
@@ -147,11 +158,10 @@
 
                         drtflen = newrtf.Length - rtf.Length;
                         insertcoloritemrtf = COLORITEMTAG + nrcoloritem + " ";
-                        int poscoloritem = i + drtflen + 1; // +1 for space
+                        int poscoloritem = i + drtflen + 1; // +1 for space                        
                         try
                         {
                             newrtf.Insert(poscoloritem, insertcoloritemrtf);
-                            //newrtf = newrtf.Insert(poscoloritem, insertcoloritemrtf);
                         }
                         catch (ArgumentOutOfRangeException argoutrangeexc)
                         {
@@ -168,7 +178,6 @@
                         try
                         {
                             newrtf.Insert(prevposcoloritem, previnsertcoloritemrtf);
-                            //newrtf = newrtf.Insert(prevposcoloritem, previnsertcoloritemrtf);
                         }
                         catch (ArgumentOutOfRangeException argoutrangeexc)
                         {
@@ -354,7 +363,6 @@
         /// <param name="rtf"></param>
         private void ParserColorTbl(string rtf, int posstartcolortbl)
         {
-            //this.colortblitems = new List<Color>();
             this.colortblitems.Clear();
             int startcoloritem = posstartcolortbl + COLORTBLTAG.Length + 1; // +1 for space
             for (int i = startcoloritem; rtf[i] != '}'; i++)

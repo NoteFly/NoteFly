@@ -229,7 +229,7 @@ namespace NoteFly
              * Plugin developers should not rely on environment variables
              */
 #if windows
-            SetDllDirectory(string.Empty);                                     // removes notefly current working directory as ddl search path
+            SetDllDirectory(string.Empty); // removes notefly current working directory as ddl search path
             Environment.SetEnvironmentVariable("PATH", string.Empty);          // removes dangourse %PATH% as dll search path
             Environment.SetEnvironmentVariable("windir", string.Empty);        // removes %windir%
             Environment.SetEnvironmentVariable("SystemDrive", string.Empty);   // removes %SystemDrive%
@@ -303,7 +303,7 @@ namespace NoteFly
                 System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(program_alreadyrunning, program_alreadyrunningtitle, System.Windows.Forms.MessageBoxButtons.YesNo);
                 if (dlgres == System.Windows.Forms.DialogResult.No)
                 {
-                    // shutdown
+                    // shutdown by don't continuing this Main method
                     return;
                 }
             }
@@ -423,7 +423,7 @@ namespace NoteFly
             HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
             if (!http_updateversion.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(UpdateCompareVersion)))
             {
-                System.Windows.Forms.MessageBox.Show("error...."); // todo
+                Log.Write(LogType.error, "No network connection");
             }
 
             return DateTime.Now.ToString();
@@ -526,25 +526,8 @@ namespace NoteFly
             string downloadurl = string.Empty;
             string latestversionquality = Program.AssemblyVersionQuality;
             short[] latestversion = xmlUtil.ParserLatestVersion(response, out latestversionquality, out downloadurl);
-
-            bool updatehigherversion = false;
-            bool updatesameversion = true;
-            for (int i = 0; i < thisversion.Length; i++)
-            {
-                // check if latestversion[i] (major,minor,release) is bigger and is positive number
-                if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
-                {
-                    updatehigherversion = true;
-                    break;
-                }
-
-                if (thisversion[i] != latestversion[i])
-                {
-                    updatesameversion = false;
-                }
-            }
-
-            if (updatehigherversion || (updatesameversion && Program.AssemblyVersionQuality != latestversionquality))
+            int compareversionsresult = Program.CompareVersions(thisversion, latestversion);
+            if (compareversionsresult < 0 || (compareversionsresult == 0 && Program.AssemblyVersionQuality != latestversionquality))
             {
                 if (!string.IsNullOrEmpty(downloadurl))
                 {
@@ -750,6 +733,85 @@ namespace NoteFly
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             }
+        }
+
+        /// <summary>
+        /// Find out if the version numbers given as array is higher
+        /// than the required version numbers given as an array.
+        /// </summary>
+        /// <param name="versionA"></param>
+        /// <param name="versionB"></param>
+        /// <returns>
+        /// -3 if versionB is not valid.
+        /// -2 if versionA is not valid.
+        /// -1 if versionA is lower than versionB, 
+        ///  0 if versionA is equal with versionB,
+        ///  1 if versionA is higher than versionB.</returns>
+        public static int CompareVersions(short[] versionA, short[] versionB)
+        {
+            //int result = 0;
+            bool continu = true;
+            for (int i = 0; i < versionA.Length && continu; i++)
+            {
+                if (versionA[i] < 0)
+                {
+                    return -2;
+                }
+                else if (versionB[i] < 0)
+                {
+                    return -3;
+                }
+
+                if (versionA[i] != versionB[i])
+                {
+                    continu = false;
+                    if (versionA[i] > versionB[i])
+                    {
+                        return 1;
+                    }
+                    else if (versionA[i] < versionB[i])
+                    {
+                        return -1;
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Parser a string as a version number array with major, minor, release numbers
+        /// </summary>
+        /// <returns>Array with version numbers shorts.
+        /// First element is major version number,
+        /// second element is minor version number,
+        /// third element is release version number.</returns>
+        public static short[] ParserVersionString(string versionstring)
+        {
+            short[] versionparts = new short[3];
+            char[] splitchr = new char[1];
+            splitchr[0] = '.';
+            if (!string.IsNullOrEmpty(versionstring))
+            {
+                string[] stringversionparts = versionstring.Split(splitchr, StringSplitOptions.None);
+                try
+                {
+                    for (int i = 0; i < versionparts.Length; i++)
+                    {
+                        versionparts[i] = Convert.ToInt16(stringversionparts[i]);
+                    }
+                }
+                catch (InvalidCastException invcastexc)
+                {
+                    Log.Write(LogType.exception, invcastexc.Message);
+                }
+            }
+            else
+            {
+                Log.Write(LogType.exception, "No version string to parser.");
+            }
+
+            return versionparts;
         }
 
 #if windows

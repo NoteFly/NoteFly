@@ -73,7 +73,12 @@ namespace NoteFly
                 HttpUtil httputil_allplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.Default);
                 if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
                 {
-                    Log.Write(LogType.exception, "error request, by tabControlPlugins_SelectedIndexChanged.");
+                    this.lblTextNoInternetConnection.Visible = true;
+                    //Log.Write(LogType.exception, "error request, by tabControlPlugins_SelectedIndexChanged.");
+                }
+                else
+                {
+                    this.lblTextNoInternetConnection.Visible = false;
                 }
             }
         }  
@@ -88,7 +93,7 @@ namespace NoteFly
             string response = (string)e.Result;
             this.chlbxAvailiblePlugins.Items.Clear();
             this.chlbxAvailiblePlugins.Enabled = true;
-            if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.chlbxAvailiblePlugins, this))
+            if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.chlbxAvailiblePlugins))
             {
                 this.lblTextNoInternetConnection.Visible = true;
                 this.searchtbPlugins.Enabled = false;
@@ -97,70 +102,6 @@ namespace NoteFly
             {
                 this.searchtbPlugins.Enabled = true;
             }
-        }
-
-        /// <summary>
-        /// Parser a string as a version number array with major, minor, release numbers
-        /// </summary>
-        /// <returns></returns>
-        public short[] ParserVersionString(string versionstring)
-        {
-            short[] versionparts = new short[3];
-            char[] splitchr = new char[1];
-            splitchr[0] = '.';
-            if (!string.IsNullOrEmpty(versionstring))
-            {
-                string[] stringversionparts = versionstring.Split(splitchr, StringSplitOptions.None);
-                try
-                {
-                    for (int i = 0; i < versionparts.Length; i++)
-                    {
-                        versionparts[i] = Convert.ToInt16(stringversionparts[i]);
-                    }
-                }
-                catch (InvalidCastException invcastexc)
-                {
-                    Log.Write(LogType.exception, invcastexc.Message);
-                }
-            }
-            else
-            {
-                Log.Write(LogType.exception, "No version string to parser.");
-            }
-
-            return versionparts;
-        }
-
-        /// <summary>
-        /// Find out if the version numbers given as array is higher
-        /// than the required version numbers given as array.
-        /// </summary>
-        /// <param name="version"></param>
-        /// <param name="reqversion"></param>
-        /// <returns></returns>
-        public bool IsHigherOrSameVersion(short[] version, short[] reqversion)
-        {
-            bool higherorsame = true;
-            bool continu = true;
-            for (int i = 0; i < reqversion.Length && continu; i++)
-            {
-                if (reqversion[i] != version[i])
-                {
-                    continu = false;
-                    if (version[i] < reqversion[i])
-                    {
-                        higherorsame = true;
-                    }
-                    else if (version[i] > reqversion[i])
-                    {
-                        higherorsame = false;
-                    }
-
-                    break;
-                }
-            }
-
-            return higherorsame;
         }
 
         /// <summary>
@@ -180,7 +121,11 @@ namespace NoteFly
                     HttpUtil httputil_plugindetail = new HttpUtil("http://ipv4.notefly.org/REST/plugins/details.php?name=" + pluginname, System.Net.Cache.RequestCacheLevel.Revalidate);
                     if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
                     {
-                        Log.Write(LogType.exception, "error request, by chlbxAvailiblePlugins_SelectedIndexChanged.");
+                        this.lblTextNoInternetConnection.Visible = true;
+                    }
+                    else
+                    {
+                        this.lblTextNoInternetConnection.Visible = false;
                     }
                 }
             }
@@ -240,7 +185,12 @@ namespace NoteFly
             HttpUtil httputil_searchplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/search.php?keyword=" + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Default);
             if (!httputil_searchplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet)))
             {
-                Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStart.");
+                this.lblTextNoInternetConnection.Visible = true;
+                //Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStart.");
+            }
+            else
+            {
+                this.lblTextNoInternetConnection.Visible = false;
             }
         }
 
@@ -253,7 +203,7 @@ namespace NoteFly
         {
             string response = (string)e.Result;
             this.chlbxAvailiblePlugins.BeginUpdate();
-            if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.chlbxAvailiblePlugins, this))
+            if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.chlbxAvailiblePlugins))
             {
                 this.searchtbPlugins.Enabled = false;
             }
@@ -269,7 +219,12 @@ namespace NoteFly
             HttpUtil httputil_allplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
             if (!httputil_allplugins.Start(new RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
             {
-                Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStop.");
+                this.lblTextNoInternetConnection.Visible = true;
+                //Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStop.");
+            }
+            else
+            {
+                this.lblTextNoInternetConnection.Visible = false;
             }
         }
     }

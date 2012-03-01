@@ -630,12 +630,12 @@ namespace NoteFly
         /// <summary>
         /// Label lblTextShortcutManageNotes
         /// </summary>
-        private System.Windows.Forms.Label lblTextShortcutManageNotes;
+        private System.Windows.Forms.Label lblTextHotkeyManageNotes;
 
         /// <summary>
         /// Label lblTextShortcutNewNote
         /// </summary>
-        private System.Windows.Forms.Label lblTextShortcutNewNote;
+        private System.Windows.Forms.Label lblTextHotkeyNewNote;
 
         /// <summary>
         /// CheckBox chxNotesDeleteRecyclebin
@@ -735,9 +735,11 @@ namespace NoteFly
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
             this.tabHotkeys = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelShortcuts = new System.Windows.Forms.TableLayoutPanel();
+            this.shortcutTextBoxNotesToFront = new NoteFly.ShortcutTextBox();
+            this.lblTextHotkeyNotesToFront = new System.Windows.Forms.Label();
             this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
-            this.lblTextShortcutNewNote = new System.Windows.Forms.Label();
-            this.lblTextShortcutManageNotes = new System.Windows.Forms.Label();
+            this.lblTextHotkeyNewNote = new System.Windows.Forms.Label();
+            this.lblTextHotkeyManageNotes = new System.Windows.Forms.Label();
             this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabctrlAppearance = new System.Windows.Forms.TabControl();
@@ -1105,22 +1107,49 @@ namespace NoteFly
             this.tableLayoutPanelShortcuts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelShortcuts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelShortcuts.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelShortcuts.Controls.Add(this.shortcutTextBoxNotesToFront, 1, 2);
+            this.tableLayoutPanelShortcuts.Controls.Add(this.lblTextHotkeyNotesToFront, 0, 2);
             this.tableLayoutPanelShortcuts.Controls.Add(this.shortcutTextBoxManageNotes, 1, 1);
-            this.tableLayoutPanelShortcuts.Controls.Add(this.lblTextShortcutNewNote, 0, 0);
-            this.tableLayoutPanelShortcuts.Controls.Add(this.lblTextShortcutManageNotes, 0, 1);
+            this.tableLayoutPanelShortcuts.Controls.Add(this.lblTextHotkeyNewNote, 0, 0);
+            this.tableLayoutPanelShortcuts.Controls.Add(this.lblTextHotkeyManageNotes, 0, 1);
             this.tableLayoutPanelShortcuts.Controls.Add(this.shortcutTextBoxNewNote, 1, 0);
             this.tableLayoutPanelShortcuts.Location = new System.Drawing.Point(20, 37);
             this.tableLayoutPanelShortcuts.Name = "tableLayoutPanelShortcuts";
-            this.tableLayoutPanelShortcuts.RowCount = 2;
-            this.tableLayoutPanelShortcuts.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelShortcuts.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelShortcuts.Size = new System.Drawing.Size(417, 63);
+            this.tableLayoutPanelShortcuts.RowCount = 3;
+            this.tableLayoutPanelShortcuts.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.57143F));
+            this.tableLayoutPanelShortcuts.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.42857F));
+            this.tableLayoutPanelShortcuts.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanelShortcuts.Size = new System.Drawing.Size(417, 92);
             this.tableLayoutPanelShortcuts.TabIndex = 16;
+            // 
+            // shortcutTextBoxNotesToFront
+            // 
+            this.shortcutTextBoxNotesToFront.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxNotesToFront.Location = new System.Drawing.Point(152, 59);
+            this.shortcutTextBoxNotesToFront.Name = "shortcutTextBoxNotesToFront";
+            this.shortcutTextBoxNotesToFront.ShortcutKeyposition = 112;
+            this.shortcutTextBoxNotesToFront.Size = new System.Drawing.Size(244, 22);
+            this.shortcutTextBoxNotesToFront.TabIndex = 14;
+            this.shortcutTextBoxNotesToFront.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNotesToFront.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = false;
+            this.shortcutTextBoxNotesToFront.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxNotesToFront.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
+            // 
+            // lblTextHotkeyNotesToFront
+            // 
+            this.lblTextHotkeyNotesToFront.AutoSize = true;
+            this.lblTextHotkeyNotesToFront.Location = new System.Drawing.Point(3, 61);
+            this.lblTextHotkeyNotesToFront.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblTextHotkeyNotesToFront.Name = "lblTextHotkeyNotesToFront";
+            this.lblTextHotkeyNotesToFront.Size = new System.Drawing.Size(132, 16);
+            this.lblTextHotkeyNotesToFront.TabIndex = 13;
+            this.lblTextHotkeyNotesToFront.Text = "Hotkey notes to front:";
             // 
             // shortcutTextBoxManageNotes
             // 
             this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 34);
+            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 33);
             this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
             this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
             this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(244, 22);
@@ -1131,25 +1160,25 @@ namespace NoteFly
             this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
             this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
             // 
-            // lblTextShortcutNewNote
+            // lblTextHotkeyNewNote
             // 
-            this.lblTextShortcutNewNote.AutoSize = true;
-            this.lblTextShortcutNewNote.Location = new System.Drawing.Point(3, 5);
-            this.lblTextShortcutNewNote.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.lblTextShortcutNewNote.Name = "lblTextShortcutNewNote";
-            this.lblTextShortcutNewNote.Size = new System.Drawing.Size(110, 16);
-            this.lblTextShortcutNewNote.TabIndex = 9;
-            this.lblTextShortcutNewNote.Text = "Hotkey new note:";
+            this.lblTextHotkeyNewNote.AutoSize = true;
+            this.lblTextHotkeyNewNote.Location = new System.Drawing.Point(3, 5);
+            this.lblTextHotkeyNewNote.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblTextHotkeyNewNote.Name = "lblTextHotkeyNewNote";
+            this.lblTextHotkeyNewNote.Size = new System.Drawing.Size(110, 16);
+            this.lblTextHotkeyNewNote.TabIndex = 9;
+            this.lblTextHotkeyNewNote.Text = "Hotkey new note:";
             // 
-            // lblTextShortcutManageNotes
+            // lblTextHotkeyManageNotes
             // 
-            this.lblTextShortcutManageNotes.AutoSize = true;
-            this.lblTextShortcutManageNotes.Location = new System.Drawing.Point(3, 36);
-            this.lblTextShortcutManageNotes.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.lblTextShortcutManageNotes.Name = "lblTextShortcutManageNotes";
-            this.lblTextShortcutManageNotes.Size = new System.Drawing.Size(143, 16);
-            this.lblTextShortcutManageNotes.TabIndex = 10;
-            this.lblTextShortcutManageNotes.Text = "Hotkey manage notes:";
+            this.lblTextHotkeyManageNotes.AutoSize = true;
+            this.lblTextHotkeyManageNotes.Location = new System.Drawing.Point(3, 35);
+            this.lblTextHotkeyManageNotes.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblTextHotkeyManageNotes.Name = "lblTextHotkeyManageNotes";
+            this.lblTextHotkeyManageNotes.Size = new System.Drawing.Size(143, 16);
+            this.lblTextHotkeyManageNotes.TabIndex = 10;
+            this.lblTextHotkeyManageNotes.Text = "Hotkey manage notes:";
             // 
             // shortcutTextBoxNewNote
             // 
@@ -2917,5 +2946,8 @@ namespace NoteFly
         }
 
         #endregion        
+
+        private System.Windows.Forms.Label lblTextHotkeyNotesToFront;
+        private ShortcutTextBox shortcutTextBoxNotesToFront;
     }
 }

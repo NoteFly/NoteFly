@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="GPGVerifWrapper.cs" />
     <Compile Include="HighlightLanguage.cs" />
+    <Compile Include="ImportNotes.cs" />
     <Compile Include="IOTextBox.cs">
       <SubType>Component</SubType>
     </Compile>

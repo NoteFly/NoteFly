@@ -190,7 +190,7 @@ namespace NoteFly
         /// 
         /// </summary>
         /// <returns></returns>
-        public static string GetIPluginVersion()
+        public static short[] GetIPluginVersion()
         {
             string versionipluginstring = string.Empty;
             System.Reflection.Assembly ipluginasm;
@@ -208,7 +208,8 @@ namespace NoteFly
                 Log.Write(LogType.exception, "Cannot load iplugin.dll");
             }
 
-            return versionipluginstring;
+            short[] ipluginversion = Program.ParserVersionString(versionipluginstring);
+            return ipluginversion;
         }
         /// <summary>
         /// Is the dll files excluded as plugin in the plugin directory.

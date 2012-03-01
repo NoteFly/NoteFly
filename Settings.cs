@@ -45,6 +45,16 @@ namespace NoteFly
         public static int HotkeysManageNotesKeycode = 113;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static bool HotkeysNotesToFrontAltInsteadShift = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int HotkeysNotesToFrontKeycode = 160;
+
+        /// <summary>
         /// Are notes transparent.
         /// </summary>
         public static bool NotesTransparencyEnabled = true;

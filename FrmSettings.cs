@@ -54,6 +54,7 @@ namespace NoteFly
 
         private int hotkeysnewnotekeycode;
         private int hotkeysmanagenoteskeycode;
+        private int hotkeysnotestofront;
 
         #endregion Fields
 
@@ -249,6 +250,8 @@ namespace NoteFly
                 Settings.HotkeysNewNoteKeycode = this.shortcutTextBoxNewNote.ShortcutKeyposition;
                 Settings.HotkeysManageNotesAltInsteadShift = this.shortcutTextBoxManageNotes.UseAltInsteadofShift;
                 Settings.HotkeysManageNotesKeycode = this.shortcutTextBoxManageNotes.ShortcutKeyposition;
+                Settings.HotkeysNotesToFrontAltInsteadShift = this.shortcutTextBoxNotesToFront.UseAltInsteadofShift;
+                Settings.HotkeysNotesToFrontKeycode = this.shortcutTextBoxNotesToFront.ShortcutKeyposition;
 
                 // tab: Appearance, notes
                 Settings.NotesTransparencyEnabled = this.chxTransparecy.Checked;
@@ -619,9 +622,10 @@ namespace NoteFly
             // tab: Hotkeys
             this.shortcutTextBoxNewNote.UseAltInsteadofShift = Settings.HotkeysNewNoteAltInsteadShift;
             this.shortcutTextBoxNewNote.ShortcutKeyposition = Settings.HotkeysNewNoteKeycode;
-
             this.shortcutTextBoxManageNotes.UseAltInsteadofShift = Settings.HotkeysManageNotesAltInsteadShift;
             this.shortcutTextBoxManageNotes.ShortcutKeyposition = Settings.HotkeysManageNotesKeycode;
+            this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = Settings.HotkeysNotesToFrontAltInsteadShift;
+            this.shortcutTextBoxNotesToFront.ShortcutKeyposition = Settings.HotkeysNotesToFrontKeycode;
 
             // tab: Appearance, notes
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
@@ -1062,9 +1066,11 @@ namespace NoteFly
         {
             this.hotkeysnewnotekeycode = Settings.HotkeysNewNoteKeycode;
             this.hotkeysmanagenoteskeycode = Settings.HotkeysManageNotesKeycode;
+            this.hotkeysnotestofront = Settings.HotkeysNotesToFrontKeycode;
             // hotkey does not work.
             Settings.HotkeysNewNoteKeycode = 0;
             Settings.HotkeysManageNotesKeycode = 0;
+            Settings.HotkeysNotesToFrontKeycode = 0;
         }
 
         /// <summary>
@@ -1076,6 +1082,7 @@ namespace NoteFly
         {
             Settings.HotkeysNewNoteKeycode = this.hotkeysnewnotekeycode;
             Settings.HotkeysManageNotesKeycode = this.hotkeysmanagenoteskeycode;
+            Settings.HotkeysNotesToFrontKeycode = this.hotkeysnotestofront;
         }
 
         #endregion Methods

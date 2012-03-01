@@ -171,7 +171,7 @@ namespace NoteFly
         /// <param name="chlbxAvailiblePlugins"></param>
         /// <param name="frmplugins"></param>
         /// <returns></returns>
-        public static bool ParserListPlugins(string response, string versionipluginstring, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins, FrmPlugins frmplugins)
+        public static bool ParserListPlugins(string response, short[] ipluginversionparts, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins)
         {
             if (string.IsNullOrEmpty(response))
             {
@@ -179,7 +179,6 @@ namespace NoteFly
             }
 
             bool succeeded = false;
-            short[] ipluginversionparts = frmplugins.ParserVersionString(versionipluginstring);
             XmlTextReader xmlreader = new XmlTextReader(new System.IO.StringReader(response));
             xmlreader.ProhibitDtd = true;
             const int MAXSEARCHRESULTSPLUGINS = 50;
@@ -212,9 +211,10 @@ namespace NoteFly
                             }
                         }
 
-                        short[] curpluginminveripluginpart = frmplugins.ParserVersionString(curpluginminversioniplugin);
-                        bool workswithapp = frmplugins.IsHigherOrSameVersion(curpluginminveripluginpart, ipluginversionparts);
-                        if (!string.IsNullOrEmpty(pluginname) && workswithapp)
+                        short[] curpluginminveripluginpart = Program.ParserVersionString(curpluginminversioniplugin);
+                        int compversionsresults = Program.CompareVersions(ipluginversionparts, curpluginminveripluginpart);
+
+                        if (!string.IsNullOrEmpty(pluginname) && compversionsresults >= 0)
                         {
                             chlbxAvailiblePlugins.Items.Add(pluginname, false);                            
                         }
@@ -393,6 +393,9 @@ namespace NoteFly
                         case "HotkeysManageNotesAltInsteadShift":
                             Settings.HotkeysManageNotesAltInsteadShift = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "HotkeysNotesToFrontAltInsteadShift":
+                            Settings.HotkeysNotesToFrontAltInsteadShift = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "NetworkProxyEnabled":
                             Settings.NetworkProxyEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -488,6 +491,9 @@ namespace NoteFly
                         case "HotkeysManageNotesKeycode":
                             Settings.HotkeysManageNotesKeycode = xmlread.ReadElementContentAsInt();
                             break;
+                        case "HotkeysNotesToFrontKeycode":
+                            Settings.HotkeysNotesToFrontKeycode = xmlread.ReadElementContentAsInt();
+                            break;                        
                         case "TrayiconFontsize":
                             Settings.TrayiconFontsize = xmlread.ReadElementContentAsFloat();
                             break;
@@ -1063,6 +1069,7 @@ namespace NoteFly
                     WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
                     WriteXMLBool("HotkeysNewNoteAltInsteadShift", Settings.HotkeysNewNoteAltInsteadShift);
                     WriteXMLBool("HotkeysManageNotesAltInsteadShift", Settings.HotkeysManageNotesAltInsteadShift);
+                    WriteXMLBool("HotkeysNotesToFrontAltInsteadShift", Settings.HotkeysNotesToFrontAltInsteadShift);
                     WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
                     WriteXMLBool("NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
                     WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
@@ -1093,6 +1100,7 @@ namespace NoteFly
                     // integers
                     xmlwrite.WriteElementString("HotkeysNewNoteKeycode", Settings.HotkeysNewNoteKeycode.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("HotkeysManageNotesKeycode", Settings.HotkeysManageNotesKeycode.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("HotkeysNotesToFrontKeycode", Settings.HotkeysNotesToFrontKeycode.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));

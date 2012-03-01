@@ -255,10 +255,15 @@
                             this.OpenNewNote();
                             this.ResetAllModifierKeys();
                         }
-                        // Ctrl + Alt + KEY
                         else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && Settings.HotkeysManageNotesAltInsteadShift)
                         {
                             this.OpenFrmManageNotes();
+                            this.ResetAllModifierKeys();
+                        }
+                        else if (eventArgs.KeyValue == Settings.HotkeysNotesToFrontKeycode && Settings.HotkeysNotesToFrontAltInsteadShift)
+                        {
+                            this.notes.BringToFrontNotes();
+                            this.notes.BringToFrontNotes();
                             this.ResetAllModifierKeys();
                         }
                     }
@@ -272,10 +277,15 @@
                             this.OpenNewNote();
                             this.ResetAllModifierKeys();
                         }
-                        // Ctrl + Shift + KEY
                         else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && !Settings.HotkeysManageNotesAltInsteadShift)
                         {
                             this.OpenFrmManageNotes();
+                            this.ResetAllModifierKeys();
+                        }
+                        else if (eventArgs.KeyValue == Settings.HotkeysNotesToFrontKeycode && !Settings.HotkeysNotesToFrontAltInsteadShift)
+                        {
+                            this.notes.BringToFrontNotes();
+                            this.notes.BringToFrontNotes();
                             this.ResetAllModifierKeys();
                         }
                     }
