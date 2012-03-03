@@ -28,6 +28,10 @@ namespace NoteFly
     /// </summary>
     public partial class FrmPlugins : Form
     {
+        private const string RESTAPIPLUGINSLIST = "http://update.notefly.org/REST/plugins/list.php";
+        private const string RESTAPIPLUGINDETAILS = "http://update.notefly.org/REST/plugins/details.php?name=";
+        private const string RESTAPIPLUGINSSEARCH = "http://update.notefly.org/REST/plugins/search.php?keyword=";
+
         /// <summary>
         /// 
         /// </summary>
@@ -70,7 +74,7 @@ namespace NoteFly
             {
                 this.lblTextNoInternetConnection.Visible = false;                
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
-                HttpUtil httputil_allplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.Default);
+                HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
                 if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
                 {
                     this.lblTextNoInternetConnection.Visible = true;
@@ -91,9 +95,9 @@ namespace NoteFly
         private void httputil_allplugins_DownloadCompleet(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
-            this.chlbxAvailiblePlugins.Items.Clear();
-            this.chlbxAvailiblePlugins.Enabled = true;
-            if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.chlbxAvailiblePlugins))
+            this.lbxAvailablePlugins.Items.Clear();
+            this.lbxAvailablePlugins.Enabled = true;
+            if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.lbxAvailablePlugins))
             {
                 this.lblTextNoInternetConnection.Visible = true;
                 this.searchtbPlugins.Enabled = false;
@@ -109,16 +113,16 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void chlbxAvailiblePlugins_SelectedIndexChanged(object sender, EventArgs e)
+        private void lbxAvailablePlugins_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.splitContainerAvailablePlugins.Panel2Collapsed = false;
             this.btnPluginDownload.Visible = false;
-            if (this.chlbxAvailiblePlugins.SelectedIndex >= 0)
+            if (this.lbxAvailablePlugins.SelectedIndex >= 0)
             {
-                string pluginname = this.chlbxAvailiblePlugins.SelectedItem.ToString();
+                string pluginname = this.lbxAvailablePlugins.SelectedItem.ToString();
                 if (!string.IsNullOrEmpty(pluginname))
                 {
-                    HttpUtil httputil_plugindetail = new HttpUtil("http://ipv4.notefly.org/REST/plugins/details.php?name=" + pluginname, System.Net.Cache.RequestCacheLevel.Revalidate);
+                    HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
                     if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
                     {
                         this.lblTextNoInternetConnection.Visible = true;
@@ -181,12 +185,11 @@ namespace NoteFly
         /// <param name="keywords"></param>
         private void searchtbPlugins_SearchStart(string keywords)
         {
-            this.chlbxAvailiblePlugins.Items.Clear();
-            HttpUtil httputil_searchplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/search.php?keyword=" + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Default);
+            this.lbxAvailablePlugins.Items.Clear();
+            HttpUtil httputil_searchplugins = new HttpUtil(RESTAPIPLUGINSSEARCH + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Default);
             if (!httputil_searchplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet)))
             {
                 this.lblTextNoInternetConnection.Visible = true;
-                //Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStart.");
             }
             else
             {
@@ -202,13 +205,13 @@ namespace NoteFly
         private void httputil_searchplugins_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
-            this.chlbxAvailiblePlugins.BeginUpdate();
-            if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.chlbxAvailiblePlugins))
+            this.lbxAvailablePlugins.BeginUpdate();
+            if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.lbxAvailablePlugins))
             {
                 this.searchtbPlugins.Enabled = false;
             }
 
-            this.chlbxAvailiblePlugins.EndUpdate();
+            this.lbxAvailablePlugins.EndUpdate();
         }
 
         /// <summary>
@@ -216,11 +219,10 @@ namespace NoteFly
         /// </summary>
         private void searchtbPlugins_SearchStop()
         {
-            HttpUtil httputil_allplugins = new HttpUtil("http://ipv4.notefly.org/REST/plugins/list.php", System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+            HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
             if (!httputil_allplugins.Start(new RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
             {
                 this.lblTextNoInternetConnection.Visible = true;
-                //Log.Write(LogType.exception, "error request, by searchtbPlugins_SearchStop.");
             }
             else
             {

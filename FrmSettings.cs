@@ -302,7 +302,7 @@ namespace NoteFly
                     Settings.SharingEmailDefaultadres = this.tbDefaultEmail.Text;
                 }
 
-                // tab: Network
+                // tab: Network, updates
                 if (this.chxCheckUpdates.Checked)
                 {
                     Settings.UpdatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value);
@@ -313,12 +313,16 @@ namespace NoteFly
                 }
 
                 Settings.UpdateSilentInstall = this.chxUpdateSilentInstall.Checked;
-                Settings.UpdatecheckUseGPG = this.chxCheckUpdatesSignature.Checked;
-                Settings.UpdatecheckGPGPath = this.tbGPGPath.Text;
-                Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
+
+                // tab: Network, Proxy                
                 Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
                 Settings.NetworkProxyAddress = this.iptbProxy.getIPAddress();
-                Settings.NetworkConnectionForceipv6 = this.chxForceUseIPv6.Checked;
+                Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
+                Settings.NetworkIPversion = this.cbxNetworkIPversion.SelectedIndex; 
+
+                // tab: Network, GnuPG
+                Settings.UpdatecheckUseGPG = this.chxCheckUpdatesSignature.Checked;
+                Settings.UpdatecheckGPGPath = this.tbGPGPath.Text;
 
                 // tab: Advance
                 if (Directory.Exists(this.tbNotesSavePath.Text))
@@ -667,6 +671,7 @@ namespace NoteFly
             this.chxHighlightHTML.Checked = Settings.HighlightHTML;
             this.chxHighlightPHP.Checked = Settings.HighlightPHP;
             this.chxHighlightSQL.Checked = Settings.HighlightSQL;
+            this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
 
             // tab: Sharing
             this.tbDefaultEmail.Text = Settings.SharingEmailDefaultadres;
@@ -677,7 +682,7 @@ namespace NoteFly
                 this.chxSocialEmailDefaultaddressSet.Checked = true;
             }
 
-            // tab: Network
+            // tab: Network, Updates
             if (Settings.UpdatecheckEverydays > 0)
             {
                 this.chxCheckUpdates.Checked = true;
@@ -691,14 +696,18 @@ namespace NoteFly
             }
 
             this.chxUpdateSilentInstall.Checked = Settings.UpdateSilentInstall;
+            this.SetLastUpdatecheckDate(Settings.SettingsExpertEnabled);
+
+            // tab: Network, Proxy
+            this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;
+            this.iptbProxy.Text = Settings.NetworkProxyAddress;
+            this.SetUpDownSpinnerValue(this.numTimeout, Settings.NetworkConnectionTimeout);
+            this.SetComboBoxSelectedIndex(this.cbxNetworkIPversion, Settings.NetworkIPversion);
+
+            // tab: Network, GnuPG
             this.chxCheckUpdatesSignature.Checked = Settings.UpdatecheckUseGPG;
             this.tbGPGPath.Enabled = Settings.UpdatecheckUseGPG;
             this.tbGPGPath.Text = Settings.UpdatecheckGPGPath;
-            this.chxProxyEnabled.Checked = Settings.NetworkProxyEnabled;
-            this.iptbProxy.Text = Settings.NetworkProxyAddress;
-            this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
-            this.SetUpDownSpinnerValue(this.numTimeout, Settings.NetworkConnectionTimeout);
-            this.SetLastUpdatecheckDate(Settings.SettingsExpertEnabled);
 
             // tab: Advance
             this.chxLoadPlugins.Checked = Settings.ProgramPluginsAllEnabled;
@@ -846,8 +855,7 @@ namespace NoteFly
             this.btnGPGPathBrowse.Visible = expertsettings;
             this.chxCheckUpdatesSignature.Visible = expertsettings;
             this.lblTextNetworkTimeout.Visible = expertsettings;
-            this.numTimeout.Visible = expertsettings;
-            this.chxForceUseIPv6.Visible = expertsettings;
+            this.numTimeout.Visible = expertsettings;            
             this.lblTextMiliseconds.Visible = expertsettings;
             this.lblTextNetworkMiliseconds.Visible = expertsettings;
             this.cbxFontNoteTitleBold.Visible = expertsettings;

@@ -53,14 +53,7 @@ namespace NoteFly
         /// <returns></returns>
         public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings)
         {
-            if (Settings.NetworkConnectionForceipv6)
-            {
-                // use dns ipv6 AAAA record to force the use of IPv6.
-                url = url.Replace("://update.", "://ipv6."); // not replacing "http", "https", "ftp"
-                url = url.Replace("://www.", "://ipv6.");
-                url = url.Replace("://ipv4.", "://ipv6.");
-            }
-
+            url = Program.ChangeUrlIPVersion(url);
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
                 this.url = url;
@@ -109,7 +102,6 @@ namespace NoteFly
                 try
                 {
                     webresponse = request.GetResponse();
-                    //System.Threading.Thread.Sleep(101);
                     StreamReader streamreader = new StreamReader(webresponse.GetResponseStream(), System.Text.Encoding.UTF8);
                     string response = streamreader.ReadToEnd();
                     /*
@@ -127,7 +119,7 @@ namespace NoteFly
                             }
                         }
                     }
-                     */
+                    */
                     e.Result = response;
                     streamreader.Close();
                 }
@@ -186,7 +178,8 @@ namespace NoteFly
                 else
                 {
                     // set proxy to nothing, otherwise HttpWebRequest has issues, details: https://holyhoehle.wordpress.com/2010/01/12/webrequest-slow/ 
-                    request.Proxy = GlobalProxySelection.GetEmptyWebProxy();
+                    request.Proxy = null;
+                    //request.Proxy = GlobalProxySelection.GetEmptyWebProxy();
                 }
 
                 //request.AutomaticDecompression = DecompressionMethods.None;

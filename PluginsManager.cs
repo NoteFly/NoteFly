@@ -22,6 +22,7 @@ namespace NoteFly
     using System;
     using System.IO;
     using System.Reflection;
+    using System.Collections.Generic;
 
     /// <summary>
     /// PluginsManager class, provides plugins functions
@@ -38,17 +39,6 @@ namespace NoteFly
         /// dll files
         /// </summary>
         private static string[] plugindllexcluded;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        static PluginsManager()
-        {
-            if (Settings.ProgramPluginsAllEnabled)
-            {
-                pluginsenabled = GetPlugins(true);
-            }
-        }
 
         /// <summary>
         /// Load plugin .dll files from pluginfolder
@@ -69,7 +59,7 @@ namespace NoteFly
                     bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
                     if (!IsPluginFilesExcluded(pluginfiles[i]) && ((pluginenabled && onlyenabled) || !onlyenabled))
                     {
-                        LoadPlugin(pluginslist, pluginfiles[i], pluginenabled);
+                        pluginslist = LoadPlugin(pluginslist, pluginfiles[i], pluginenabled);
                     }
                 }
             }
@@ -237,7 +227,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="pluginfile"></param>
         /// <param name="pluginenabled"></param>
-        private static void LoadPlugin(System.Collections.Generic.List<IPlugin.IPlugin> pluginslist, string pluginfile, bool pluginenabled)
+        private static List<IPlugin.IPlugin> LoadPlugin(System.Collections.Generic.List<IPlugin.IPlugin> pluginslist, string pluginfile, bool pluginenabled)
         {
             try
             {
@@ -266,6 +256,8 @@ namespace NoteFly
             {
                 Log.Write(LogType.exception, "Can't load plugin: " + pluginfile + " " + ex.Message);
             }
+
+            return pluginslist;
         }
         /// <summary>
         /// Get all dll files in the plugin directory

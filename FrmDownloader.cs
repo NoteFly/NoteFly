@@ -70,6 +70,8 @@ namespace NoteFly
             {
                 Log.Write(LogType.exception, "Cannot create webclient");
             }
+
+            this.Refresh();
         }
 
         /// <summary>
@@ -104,22 +106,12 @@ namespace NoteFly
         /// <param name="storefolder">The folder to save all the files to.</param>
         /// <returns>True if downloading succesfully started.</returns>
         public bool BeginDownload(string[] downloads, string storefolder)
-        {
-            this.storefolder = storefolder;
-            if (Settings.NetworkConnectionForceipv6)
-            {
-                for (int i = 0; i < downloads.Length; i++)
-                {
-                    // use dns ipv6 AAAA record to force the use of IPv6.
-                    downloads[i] = downloads[i].Replace("://update.", "://ipv6."); // not replacing "http", "https", "ftp"
-                    downloads[i] = downloads[i].Replace("://www.", "://ipv6.");
-                    downloads[i] = downloads[i].Replace("://ipv4.", "://ipv6.");
-                }
-            }
-            
+        {            
+            this.storefolder = storefolder;            
             this.downloads = downloads;
             this.numdownloadscompleet = 0;
-            Uri firstdownload = new Uri(downloads[0]);
+            string downloadurl = Program.ChangeUrlIPVersion(downloads[0]);
+            Uri firstdownload = new Uri(downloadurl);
             return this.DownloadWebclient(firstdownload);
         }
 
@@ -133,12 +125,14 @@ namespace NoteFly
             this.webclient.Encoding = Encoding.UTF8;
             this.webclient.UseDefaultCredentials = false;
             this.webclient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
-            if (Settings.NetworkProxyEnabled)
+            if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
             {
-                if (!string.IsNullOrEmpty(Settings.NetworkProxyAddress) && Settings.NetworkProxyPort > 0 && Settings.NetworkProxyPort <= 65535)
-                {
-                    this.webclient.Proxy = new WebProxy(Settings.NetworkProxyAddress, Settings.NetworkProxyPort);
-                }
+                this.webclient.Proxy = new WebProxy(Settings.NetworkProxyAddress, Settings.NetworkProxyPort);
+            }
+            else
+            {
+                // set proxy to nothing, otherwise HttpWebRequest has connection issues, thanks you -> https://holyhoehle.wordpress.com/2010/01/12/webrequest-slow/ 
+                this.webclient.Proxy = null;
             }
 
             this.webclient.Headers["User-Agent"] = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
@@ -216,7 +210,8 @@ namespace NoteFly
                     this.numdownloadscompleet++;
                     if (this.numdownloadscompleet < this.downloads.Length)
                     {
-                        Uri download = new Uri(this.downloads[this.numdownloadscompleet]);
+                        string downloadurl = Program.ChangeUrlIPVersion(this.downloads[this.numdownloadscompleet]);
+                        Uri download = new Uri(downloadurl);
                         this.CreateWebclient();
                         this.DownloadWebclient(download);
                     }

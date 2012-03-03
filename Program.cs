@@ -134,7 +134,7 @@ namespace NoteFly
         {
             get
             {
-                return "alpha1";
+                return "alpha2";
             }
         }
 
@@ -311,6 +311,11 @@ namespace NoteFly
             SyntaxHighlight.InitHighlighter();
             notes = new Notes(resetpositions);
 
+            if (Settings.ProgramPluginsAllEnabled)
+            {
+                PluginsManager.pluginsenabled = PluginsManager.GetPlugins(true);
+            }
+
             formmanager = new FormManager(notes);
             trayicon = new TrayIcon(formmanager);
 
@@ -382,6 +387,34 @@ namespace NoteFly
             }
 
             return pluginsfolder;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string ChangeUrlIPVersion(string url)
+        {
+            switch (Settings.NetworkIPversion)
+            {
+                case 1:
+                    // use dns IPv4 A record to force the use of IPv4.
+                    url = url.Replace("://update.", "://ipv4.");
+                    url = url.Replace("://ipv6.", "://ipv4.");
+                    break;
+                case 2:
+                    // use dns IPv6 AAAA record to force the use of IPv6.
+                    url = url.Replace("://update.", "://ipv6.");
+                    url = url.Replace("://ipv4.", "://ipv6.");
+                    break;
+                default:
+                    url = url.Replace("://ipv4.", "://update.");
+                    url = url.Replace("://ipv6.", "://update.");
+                    break;
+            }
+
+            return url;
         }
 
         /// <summary>

@@ -372,10 +372,12 @@ namespace NoteFly
         public static int NetworkConnectionTimeout = 8000;
 
         /// <summary>
-        /// Force to use of IPv6.
-        /// Will use dns record ipv6.notefly.org for update checking that only has IPv6 AAAA record.
+        /// The prefered IP version used.
+        /// 0 for automatically IPv6 or IPv4.
+        /// 1 for force the use of IPv4
+        /// 2 for force the use of IPv6
         /// </summary>
-        public static bool NetworkConnectionForceipv6 = false;
+        public static int NetworkIPversion = 0;
 
         /// <summary>
         /// Connect via a proxy.

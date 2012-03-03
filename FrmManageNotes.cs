@@ -1203,7 +1203,7 @@ namespace NoteFly
                     if (e.RowIndex >= 0)
                     {
                         int notepos = this.GetNoteposBySelrow(e.RowIndex);
-                        if (notepos > 0)
+                        if (notepos >= 0)
                         {
                             // todo GetContent() is wrong for this but works for now. Add GetContentPreview() that has limited disk read.
                             //string content = this.notes.GetNote(notepos).GetContent();

@@ -31,7 +31,7 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        public const int DEFAULTWITH = 415;
+        public const int DEFAULTWITH = 450; //415;
 
         /// <summary>
         /// Array with all enable/disable buttons for every plugin.

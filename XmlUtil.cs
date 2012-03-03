@@ -171,7 +171,7 @@ namespace NoteFly
         /// <param name="chlbxAvailiblePlugins"></param>
         /// <param name="frmplugins"></param>
         /// <returns></returns>
-        public static bool ParserListPlugins(string response, short[] ipluginversionparts, System.Windows.Forms.CheckedListBox chlbxAvailiblePlugins)
+        public static bool ParserListPlugins(string response, short[] ipluginversionparts, System.Windows.Forms.ListBox lbxAvailablePlugins)
         {
             if (string.IsNullOrEmpty(response))
             {
@@ -216,7 +216,7 @@ namespace NoteFly
 
                         if (!string.IsNullOrEmpty(pluginname) && compversionsresults >= 0)
                         {
-                            chlbxAvailiblePlugins.Items.Add(pluginname, false);                            
+                            lbxAvailablePlugins.Items.Add(pluginname);                            
                         }
                     }
                 }
@@ -453,9 +453,6 @@ namespace NoteFly
                         case "SettingsExpertEnabled":
                             Settings.SettingsExpertEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
-                        //case "SocialEmailEnabled": // TODO: legacy setting, only read it no writing it anymore.
-                        //    Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
-                        //    break;
                         case "TrayiconAlternateIcon":
                             Settings.TrayiconAlternateIcon = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -508,6 +505,9 @@ namespace NoteFly
                             break;
                         case "NetworkConnectionTimeout":
                             Settings.NetworkConnectionTimeout = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NetworkIPversion":
+                            Settings.NetworkIPversion = xmlread.ReadElementContentAsInt();
                             break;
                         case "NetworkProxyPort":
                             Settings.NetworkProxyPort = xmlread.ReadElementContentAsInt();
@@ -854,7 +854,7 @@ namespace NoteFly
             Settings.HotkeysManageNotesAltInsteadShift = false;
             Settings.HotkeysManageNotesKeycode = 77; // M
             Settings.NetworkConnectionTimeout = 8000;
-            Settings.NetworkConnectionForceipv6 = false;
+            Settings.NetworkIPversion = 0;
             Settings.NetworkProxyAddress = string.Empty;
             Settings.NetworkProxyEnabled = false;
             Settings.NotesTooltipsEnabled = true;
@@ -1105,6 +1105,7 @@ namespace NoteFly
                     xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NetworkIPversion", Settings.NetworkIPversion.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NetworkProxyPort", Settings.NetworkProxyPort.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
