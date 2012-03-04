@@ -834,7 +834,7 @@ namespace NoteFly
             Settings.FontTextdirection = 0;
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;
-            Settings.HighlightMaxchars = 500000;
+            Settings.HighlightMaxchars = 30000;
             Settings.HighlightHTML = false;
             Settings.HighlightHTMLColorComment = "#B200FF";
             Settings.HighlightHTMLColorInvalid = "#FF0000";

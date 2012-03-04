@@ -880,6 +880,12 @@ namespace NoteFly
             if (Clipboard.ContainsText())
             {
                 this.rtbNewNote.Text = this.rtbNewNote.Text + Clipboard.GetText();
+                if (SyntaxHighlight.KeywordsInitialized)
+                {
+                    SyntaxHighlight.InitHighlighter();
+                }
+
+                SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, this.GetSkinnr(), this.notes);
             }
             else
             {
@@ -1244,22 +1250,35 @@ namespace NoteFly
         /// <param name="e"></param>
         private void rtbNewNote_KeyUp(object sender, KeyEventArgs e)
         {
+            if (!SyntaxHighlight.KeywordsInitialized)
+            {
+                SyntaxHighlight.InitHighlighter();
+            }
+
             if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter || e.KeyValue == 190)
             {
-                if (!SyntaxHighlight.KeywordsInitialized)
-                {
-                    SyntaxHighlight.InitHighlighter();
-                }
-
-                int skinnr = Settings.NotesDefaultSkinnr;
-                if (this.note != null)
-                {
-                    // edit note
-                    skinnr = this.note.SkinNr;
-                }
-            
-                SyntaxHighlight.CheckSyntaxQuick(this.rtbNewNote, skinnr, this.notes);
+                SyntaxHighlight.CheckSyntaxQuick(this.rtbNewNote, this.GetSkinnr(), this.notes);
             }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, this.GetSkinnr(), this.notes);               
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private int GetSkinnr()
+        {
+            int skinnr = Settings.NotesDefaultSkinnr;
+            if (this.note != null)
+            {
+                // edit note
+                skinnr = this.note.SkinNr;
+            }
+
+            return skinnr;
         }
 
         #endregion Methods

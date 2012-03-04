@@ -17,6 +17,7 @@
         private const string RTFTABTAG = @"\tab";
         private List<Color> colortblitems = new List<Color>();
         private bool rtfformat = true;
+        private char[] hexchars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
         /// <summary>
         /// 
@@ -52,6 +53,8 @@
             int rtflevel = 0;
             this.rtfformat = true;
             bool textposdone = false;
+            bool isspecchar = false;
+            int speccharrtfpos = 0;
             int posstartcolortbl = this.FindPosStartColortbl(newrtf.ToString());
             if (posstartcolortbl < 0)
             {
@@ -78,13 +81,18 @@
                         {
                             if (rtf.Substring(i, RTFTABTAG.Length).Equals(RTFTABTAG, StringComparison.Ordinal))
                             {
-                                // a tab is only 1 character in text.
+                                // tab is only 1 character in text.
                                 nrtextchar += 1;
                                 istabtag = true;
                             }
                         }
 
-                        if (i + COLORITEMTAG.Length < rtf.Length && !istabtag)
+                        if (!isspecchar && !istabtag)
+                        {
+                            isspecchar = this.IsSpecialCharRTF(rtf, i);
+                        }
+
+                        if (i + COLORITEMTAG.Length < rtf.Length && !istabtag && !isspecchar)
                         {
                             if (rtf.Substring(i, COLORITEMTAG.Length).Equals(COLORITEMTAG, StringComparison.Ordinal))
                             {
@@ -133,10 +141,26 @@
                         }
                     }
 
+                    if (isspecchar)
+                    {
+                        if (speccharrtfpos == 0)
+                        {
+                            nrtextchar++;
+                        }
+                        else if (speccharrtfpos >= 3)
+                        {
+                            rtfformat = false;
+                            isspecchar = false;
+                            speccharrtfpos = 0;
+                        }
+
+                        speccharrtfpos++;
+                    }
+
                     if (rtf[i] == ' ' || rtf[i] == '\r' || rtf[i] == '\n')
                     {
                         rtfformat = false;
-                    }                    
+                    }
 
                     if (textpos == nrtextchar && !textposdone)
                     {
@@ -282,6 +306,31 @@
             }
 
             return rtflevel;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtf"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        private bool IsSpecialCharRTF(string rtf, int i)
+        {
+            bool isspecchar = false;
+            const int speccharlen = 4;
+            if (i + speccharlen < rtf.Length)
+            {
+                if (rtf.Substring(i, 2).Equals(@"\'", StringComparison.Ordinal))
+                {
+                    // todo check if two character are HEX characters in a better way
+                    if (rtf.Substring(i + 2, 1).IndexOfAny(this.hexchars) >= 0 && rtf.Substring(i + 3, 1).IndexOfAny(this.hexchars) >= 0)
+                    {
+                        isspecchar = true;
+                    }
+                }
+            }
+
+            return isspecchar;
         }
 
         /// <summary>

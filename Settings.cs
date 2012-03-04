@@ -227,7 +227,7 @@ namespace NoteFly
         /// <summary>
         /// The maximum number of characters to apply syntaxcheck on.
         /// </summary>
-        public static int HighlightMaxchars = 500000;
+        public static int HighlightMaxchars = 30000;
 
         /// <summary>
         /// Do HTML highlighting on notes.
