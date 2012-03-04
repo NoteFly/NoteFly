@@ -23,7 +23,7 @@
 
 !define PROJNAME   "NoteFly"
 !define VERSION    "3.0.0"          ; version number: major.minor.release
-!define VERSTATUS  "alpha1"          ; alpha, beta, rc, or nothing for final.
+!define VERSTATUS  "alpha2"         ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
 !define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
@@ -253,25 +253,22 @@ Section "Uninstall"
   Delete "$INSTDIR\${LANGFILE}"
   Delete "$INSTDIR\${APPIPLUGIN}"
   Delete "$INSTDIR\${APPFILE}"
-
   Delete "$INSTDIR\Gettext.Cs.dll"
-  Delete "$INSTDIR\translations\en\Strings.po"
-  Delete "$INSTDIR\translations\nl\Strings.po"
   
   ; skin textures
   Delete "$INSTDIR\nyancat.jpg"
   Delete "$INSTDIR\grass.jpg"
   Delete "$INSTDIR\colordrops.jpg"
   
+  Delete "$INSTDIR\translations\en\Strings.po"
+  RMDir "$INSTDIR\translations\en\"
+  Delete "$INSTDIR\translations\nl\Strings.po"
+  RMDir "$INSTDIR\translations\nl\"
+  RMDir "$INSTDIR\translations\"
+  
   ; remove uninstaller
   Delete "$INSTDIR\uninstall.exe"
   
-  ; Remove translations directory, if empty
-  RMDir "$INSTDIR\translations\en\"
-  RMDir "$INSTDIR\translations\nl\"
-  RMDir "$INSTDIR\translations\"
-  ; Remove plugins directory, if empty
-  RMDir "$INSTDIR\plugins\"
   ; Remove NoteFly install directory, if empty
   RMDir "$INSTDIR"
 
@@ -279,13 +276,12 @@ Section "Uninstall"
   
   removeadminappdata:
   ; This is only going to work for the administrator appdata.
-  MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes and settings from administrator account stored at $APPDATA\NoteFly\ ?" IDNO keepsettingnotes
+  MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes settings and plugins from administrator account stored at $APPDATA\NoteFly\ ?" IDNO keepsettingnotes
     Delete "$APPDATA\NoteFly\notes\*.nfn"
-    ;Delete "$APPDATA\NoteFly\plugins\*.nfn"
+    ;Delete "$APPDATA\NoteFly\plugins\*.dll"
     Delete "$APPDATA\NoteFly\settings.xml"
     Delete "$APPDATA\NoteFly\skins.xml"
     Delete "$APPDATA\NoteFly\debug.log"
-
 
     ; Remove directory if empty
     RMDir "$APPDATA\NoteFly"

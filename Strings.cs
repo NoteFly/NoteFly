@@ -92,6 +92,12 @@ namespace NoteFly
             set { resourceCulture = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
         private static string GetSetting(string setting, string defaultValue)
         {
             System.Collections.Specialized.NameValueCollection section = (System.Collections.Specialized.NameValueCollection)System.Configuration.ConfigurationManager.GetSection("appSettings");
@@ -305,6 +311,11 @@ namespace NoteFly
         }
 
 #if DEBUG
+        /// <summary>
+        /// Add translation with control comment to pot file / translation template.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="controlname"></param>
         private static void AddToPOT(string text, string controlname)
         {
             string filepathpot = Path.Combine(Path.Combine(Program.InstallFolder, @".\..\"), "Strings.pot");
@@ -364,7 +375,6 @@ namespace NoteFly
             {
                 throw new ApplicationException("Please run build_translationfile.bat first.");
             }
-
         }
 #endif
     }

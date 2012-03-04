@@ -547,14 +547,8 @@ namespace NoteFly
             {
                 SyntaxHighlight.InitHighlighter();
             }
-#if windows
-            //SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)0, IntPtr.Zero);
-#endif
+
             SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
-#if windows
-            //SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
-            //this.Refresh();
-#endif
             SyntaxHighlight.DeinitHighlighter();
             if (!this.saveWorker.IsBusy)
             {

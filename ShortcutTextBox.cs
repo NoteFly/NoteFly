@@ -24,28 +24,28 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// 
+    /// ShortCutTextBox control
     /// </summary>
     [Category("Custom")]
     public partial class ShortcutTextBox : TextBox
     {
         /// <summary>
-        /// 
+        /// Is alt used instead of shift key for shortcut as second key of the shortcut.
         /// </summary>
         private bool altinsteadofshift = false;
 
         /// <summary>
-        /// 
+        /// The last key of the shortcut.
         /// </summary>
         private Keys key = Keys.F1;
 
         /// <summary>
-        /// 
+        /// Is alt key used previously instead of shift key as second key of the shortcut.
         /// </summary>
         private bool prev_altinsteadofshift = false;
 
         /// <summary>
-        /// 
+        /// The previously last key of the shortcut.
         /// </summary>
         private Keys prev_key = Keys.F1;
 
@@ -186,10 +186,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Check if the key is a modifier key.
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <param name="key">The key to check.</param>
+        /// <returns>True if it's a modifier key.</returns>
         private bool IsModifierKey(Keys key)
         {
             if (key == Keys.ControlKey || key == Keys.ShiftKey || key == Keys.Alt || key == Keys.Menu)

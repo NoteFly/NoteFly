@@ -31,7 +31,7 @@ namespace NoteFly
         #region Fields (1)
 
         /// <summary>
-        /// constant project website uri.
+        /// Constant project website uri.
         /// </summary>
         private const string NOTEFLYWEBSITEURI = "http://www.notefly.org/";
 
@@ -65,7 +65,7 @@ namespace NoteFly
         /// <summary>
         /// The Website link is clicked in the about dialog.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -76,7 +76,7 @@ namespace NoteFly
         /// <summary>
         /// An OK button is clicked, close FrmAbout.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void okButton_Click(object sender, EventArgs e)
         {
@@ -88,8 +88,8 @@ namespace NoteFly
         /// Start color effect on lblProductName.
         /// Bonus / easter egg.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void lblProductName_Click(object sender, EventArgs e)
         {
             this.tmpUpdateLblProductEffect.Start();
@@ -99,8 +99,8 @@ namespace NoteFly
         /// <summary>
         /// Update color effect on lblProductName.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void tmpUpdateLblProductEffect_Tick(object sender, EventArgs e)
         {
             const int MAXDARK = 250;
@@ -133,7 +133,7 @@ namespace NoteFly
             }
 
             this.lblProductName.ForeColor = Color.FromArgb(red, green, blue);
-            //this.BackColor = Color.FromArgb(128, 250 - green, 250 - blue);
+            ////this.BackColor = Color.FromArgb(128, 250 - green, 250 - blue);
         }
 
         #endregion Methods

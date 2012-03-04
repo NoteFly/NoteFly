@@ -35,7 +35,7 @@ namespace NoteFly
         /// <summary>
         /// Check if the text is a valid e-mail address.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if this EmailTextBox contains a valid email address.</returns>
         public bool IsValidEmailAddress()
         {
             // contains @ and only one and is not the first character.

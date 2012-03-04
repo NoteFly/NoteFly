@@ -72,7 +72,7 @@ namespace NoteFly
         {
             if (this.tabControlPlugins.SelectedTab == this.tabPagePluginsAvailable)
             {
-                this.lblTextNoInternetConnection.Visible = false;                
+                this.lblTextNoInternetConnection.Visible = false;
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
                 HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
                 if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
@@ -171,7 +171,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Downloading of plugin(s) compleet.
         /// </summary>
         /// <param name="newfiles"></param>
         private void downloader_DownloadCompleet(string[] newfiles)

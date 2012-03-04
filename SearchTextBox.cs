@@ -140,18 +140,18 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void timerStartSearch_Tick(object sender, EventArgs e)
         {
             this.DoSearch();
         }
 
         /// <summary>
-        /// 
+        /// Key is released in this SearchTextBox
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Key event arguments</param>
         private void tbKeywords_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -175,10 +175,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// The button for stop searching is clicked, clear search keyword in textbox.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnKeywordClear_Click(object sender, EventArgs e)
         {
             this.btnKeywordClear.Visible = false;

@@ -393,7 +393,7 @@ namespace NoteFly
 
                     const int MAXNUMTITLESHOW = 15;
                     for (int i = 0; i < this.dataGridViewNotes.SelectedRows.Count && i < MAXNUMTITLESHOW; i++)
-			        {
+                    {
                         int rowindex = this.dataGridViewNotes.SelectedRows[i].Index;
                         string title = this.notes.GetNote(this.GetNoteposBySelrow(rowindex)).Title;
 
@@ -403,7 +403,7 @@ namespace NoteFly
                         {
                             sbdeleteselectednotes.AppendLine(Strings.T("And more notes."));
                         }
-			        }
+                   }
 
                     DialogResult deleteres = MessageBox.Show(sbdeleteselectednotes.ToString(), Strings.T("delete?"), MessageBoxButtons.YesNo);
                     if (deleteres == DialogResult.Yes)
@@ -612,7 +612,6 @@ namespace NoteFly
         {
             this.Resetdatagrid();
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
-            //this.notes.FrmManageNotesNeedUpdate = true;
             this.dataGridViewNotes.Refresh();
         }
 
@@ -623,10 +622,9 @@ namespace NoteFly
         /// <param name="e">DataGridViewRowPostPaint event arguments</param>
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
+            // detect and update add/delete notes, then redraw all notes
             if (Program.Formmanager.FrmManageNotesNeedUpdate)
-            //if (this.notes.FrmManageNotesNeedUpdate)
             {
-                // detect and update add/delete notes, then redraw all notes
                 if (this.dataGridViewNotes.RowCount != this.notes.CountNotes && !this.searchTextBoxNotes.IsKeywordEntered)
                 { 
                     this.DrawNotesGrid();
@@ -649,8 +647,7 @@ namespace NoteFly
                     if ((e.RowIndex == this.dataGridViewNotes.RowCount - 1) || (this.prevrownr < this.secondprevrownr))
                     {
                         Program.Formmanager.FrmManageNotesNeedUpdate = false;
-                        //this.notes.FrmManageNotesNeedUpdate = false;
-                    }                    
+                    }
                     else
                     {
                         this.secondprevrownr = this.prevrownr;
@@ -670,155 +667,10 @@ namespace NoteFly
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
                 Program.Formmanager.FrmManageNotesNeedUpdate = true;
-                //this.notes.FrmManageNotesNeedUpdate = true;
                 this.Resetdatagrid();
                 Application.DoEvents();
             }
         }
-
-#if windows
-        /// <summary>
-        /// Possible flags for the SHFileOperation method.
-        /// </summary>
-        [Flags]
-        public enum FileOperationFlags : ushort
-        {
-            /// <summary>
-            /// Do not show a dialog during the process
-            /// </summary>
-            FOF_SILENT = 0x0004,
-
-            /// <summary>
-            /// Do not ask the user to confirm selection
-            /// </summary>
-            FOF_NOCONFIRMATION = 0x0010,
-
-            /// <summary>
-            /// Delete the file to the recycle bin.  (Required flag to send a file to the bin
-            /// </summary>
-            FOF_ALLOWUNDO = 0x0040,
-
-            /// <summary>
-            /// Do not show the names of the files or folders that are being recycled.
-            /// </summary>
-            FOF_SIMPLEPROGRESS = 0x0100,
-
-            /// <summary>
-            /// Surpress errors, if any occur during the process.
-            /// </summary>
-            FOF_NOERRORUI = 0x0400,
-
-            /// <summary>
-            /// Warn if files are too big to fit in the recycle bin and will need
-            /// to be deleted completely.
-            /// </summary>
-            FOF_WANTNUKEWARNING = 0x4000,
-        }
-
-        /// <summary>
-        /// File Operation Function Type for SHFileOperation
-        /// </summary>
-        public enum FileOperationType : uint
-        {
-            /// <summary>
-            /// Move the objects
-            /// </summary>
-            FO_MOVE = 0x0001,
-
-            /// <summary>
-            /// Copy the objects
-            /// </summary>
-            FO_COPY = 0x0002,
-
-            /// <summary>
-            /// Delete (or recycle) the objects
-            /// </summary>
-            FO_DELETE = 0x0003,
-
-            /// <summary>
-            /// Rename the object(s)
-            /// </summary>
-            FO_RENAME = 0x0004,
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
-        private struct SHFILEOPSTRUCT_x86
-        {
-            /// <summary>
-            /// 
-            /// </summary>
-            public IntPtr hwnd;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            [MarshalAs(UnmanagedType.U4)]
-            public FileOperationType wFunc;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public string pFrom;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public string pTo;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public FileOperationFlags fFlags;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            [MarshalAs(UnmanagedType.Bool)]
-            public bool fAnyOperationsAborted;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public IntPtr hNameMappings;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public string lpszProgressTitle;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private struct SHFILEOPSTRUCT_x64
-        {
-            public IntPtr hwnd;
-            [MarshalAs(UnmanagedType.U4)]
-            public FileOperationType wFunc;
-            public string pFrom;
-            public string pTo;
-            public FileOperationFlags fFlags;
-            [MarshalAs(UnmanagedType.Bool)]
-            public bool fAnyOperationsAborted;
-            public IntPtr hNameMappings;
-            public string lpszProgressTitle;
-        }
-
-        [DllImport("shell32.dll", CharSet = CharSet.Auto, EntryPoint = "SHFileOperation")]
-        private static extern int SHFileOperation_x86(ref SHFILEOPSTRUCT_x86 FileOp);
-
-        [DllImport("shell32.dll", CharSet = CharSet.Auto, EntryPoint = "SHFileOperation")]
-        private static extern int SHFileOperation_x64(ref SHFILEOPSTRUCT_x64 FileOp);
-
-        private static bool IsWOW64Process()
-        {
-            return IntPtr.Size == 8;
-        }
-#endif
 
         /// <summary>
         /// Deletes the notes in memory and the files that are selected in a Gridview.
@@ -857,7 +709,7 @@ namespace NoteFly
                         {
                             SHFILEOPSTRUCT_x64 fs = new SHFILEOPSTRUCT_x64();
                             fs.wFunc = FileOperationType.FO_DELETE;
-                            // important to double-terminate the string.
+                            // Important to double-terminate the string.
                             fs.pFrom = filepath + '\0' + '\0';
                             fs.fFlags = FileOperationFlags.FOF_ALLOWUNDO | FileOperationFlags.FOF_NOCONFIRMATION | FileOperationFlags.FOF_WANTNUKEWARNING;
                             SHFileOperation_x64(ref fs);
@@ -928,7 +780,6 @@ namespace NoteFly
             int vertscrolloffset = this.dataGridViewNotes.VerticalScrollingOffset;
             this.Resetdatagrid();
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
-            //this.notes.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
             if (!this.searchTextBoxNotes.IsKeywordEntered)
             {
@@ -948,9 +799,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Create a new datatable object with translated columns for notes overview.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A new datatable object.</returns>
         private DataTable CreateDatatable()
         {
             DataTable datatable = new DataTable();
@@ -981,13 +832,13 @@ namespace NoteFly
         /// <summary>
         /// Add a row with note information to a databasetable
         /// </summary>
-        /// <param name="datatable"></param>
-        /// <param name="notepos"></param>
+        /// <param name="datatable">The database to add a row to.</param>
+        /// <param name="notepos">The position of the note in the notes list in Notes class.</param>
         /// <returns>The databasetable with a extra row</returns>
         private DataTable AddDatatableNoteRow(DataTable datatable, int notepos)
         {
             DataRow dr = datatable.NewRow();
-            dr[0] = notepos + 1; // enduser numbering
+            dr[0] = notepos + 1; // enduser numbering, start at 1 instead of 0.
             dr[1] = this.notes.GetNote(notepos).Title;
             dr[2] = this.notes.GetNote(notepos).Visible;
             dr[3] = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
@@ -1017,7 +868,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// form not active, make tranparent if set.
+        /// Form not active, make tranparent if set.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
@@ -1191,8 +1042,8 @@ namespace NoteFly
         /// <summary>
         /// Display a tooltip with the note content for the hovered note in that row.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">DataGridViewCell event arguments</param>
         private void dataGridViewNotes_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (Settings.NotesTooltipsEnabled && Settings.ManagenotesTooltip) 
@@ -1213,7 +1064,7 @@ namespace NoteFly
                             rtb.Dispose();
                             GC.Collect();
                             int startpos = 0;
-                            string startcontentplainhint = "";
+                            string startcontentplainhint = string.Empty;
                             /*
                             const string startcontentplainhint = @"\viewkind";
                             int startpos = content.IndexOf(startcontentplainhint);
@@ -1279,9 +1130,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Start searching on a keyword.
         /// </summary>
-        /// <param name="keywords"></param>
+        /// <param name="keywords">The keyword to search on.</param>
         private void searchTextBoxNotes_SearchStart(string keywords)
         {
             this.Resetdatagrid();
@@ -1307,24 +1158,204 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Searching in notes stopped, show all notes again.
         /// </summary>
         private void searchTextBoxNotes_SearchStop()
         { 
             this.DrawNotesGrid(); 
             this.SetDataGridViewColumsWidth();
-        }        
+        }
 
         /// <summary>
-        /// 
+        /// The mouse leaves the datagridviewnotes control,
+        /// hide the tooltip with note content preview.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void dataGridViewNotes_MouseLeave(object sender, EventArgs e)
         {
             this.toolTip.Hide(this);
         }
 
         #endregion Methods
+
+#if windows
+        /// <summary>
+        /// Possible flags for the SHFileOperation method.
+        /// </summary>
+        [Flags]
+        public enum FileOperationFlags : ushort
+        {
+            /// <summary>
+            /// Do not show a dialog during the process
+            /// </summary>
+            FOF_SILENT = 0x0004,
+
+            /// <summary>
+            /// Do not ask the user to confirm selection
+            /// </summary>
+            FOF_NOCONFIRMATION = 0x0010,
+
+            /// <summary>
+            /// Delete the file to the recycle bin.  (Required flag to send a file to the bin
+            /// </summary>
+            FOF_ALLOWUNDO = 0x0040,
+
+            /// <summary>
+            /// Do not show the names of the files or folders that are being recycled.
+            /// </summary>
+            FOF_SIMPLEPROGRESS = 0x0100,
+
+            /// <summary>
+            /// Surpress errors, if any occur during the process.
+            /// </summary>
+            FOF_NOERRORUI = 0x0400,
+
+            /// <summary>
+            /// Warn if files are too big to fit in the recycle bin and will need
+            /// to be deleted completely.
+            /// </summary>
+            FOF_WANTNUKEWARNING = 0x4000,
+        }
+
+        /// <summary>
+        /// File Operation Function Type for SHFileOperation
+        /// </summary>
+        public enum FileOperationType : uint
+        {
+            /// <summary>
+            /// Move the objects
+            /// </summary>
+            FO_MOVE = 0x0001,
+
+            /// <summary>
+            /// Copy the objects
+            /// </summary>
+            FO_COPY = 0x0002,
+
+            /// <summary>
+            /// Delete (or recycle) the objects
+            /// </summary>
+            FO_DELETE = 0x0003,
+
+            /// <summary>
+            /// Rename the object(s)
+            /// </summary>
+            FO_RENAME = 0x0004,
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
+        private struct SHFILEOPSTRUCT_x86
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            public IntPtr hwnd;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            [MarshalAs(UnmanagedType.U4)]
+            public FileOperationType wFunc;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string pFrom;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string pTo;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public FileOperationFlags fFlags;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            [MarshalAs(UnmanagedType.Bool)]
+            public bool fAnyOperationsAborted;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public IntPtr hNameMappings;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string lpszProgressTitle;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        private struct SHFILEOPSTRUCT_x64
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            public IntPtr hwnd;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            [MarshalAs(UnmanagedType.U4)]
+            public FileOperationType wFunc;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string pFrom;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string pTo;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public FileOperationFlags fFlags;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            [MarshalAs(UnmanagedType.Bool)]
+            public bool fAnyOperationsAborted;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public IntPtr hNameMappings;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string lpszProgressTitle;
+        }
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto, EntryPoint = "SHFileOperation")]
+        private static extern int SHFileOperation_x86(ref SHFILEOPSTRUCT_x86 FileOp);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto, EntryPoint = "SHFileOperation")]
+        private static extern int SHFileOperation_x64(ref SHFILEOPSTRUCT_x64 FileOp);
+
+        /// <summary>
+        /// Check whether this is a 64bit operating system
+        /// </summary>
+        /// <returns>true if this is a 64bit operating system</returns>
+        private static bool IsWOW64Process()
+        {
+            return IntPtr.Size == 8;
+        }
+#endif
     }
 }

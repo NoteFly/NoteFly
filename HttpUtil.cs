@@ -82,7 +82,18 @@ namespace NoteFly
             {
                 this.httpthread.RunWorkerCompleted += workcompleethandler;
                 this.httpthread.RunWorkerAsync();
-                return true;                
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Instantly stop the http worker, if still running.
+        /// </summary>
+        public void Stop()
+        {
+            if (this.httpthread != null)
+            {
+                this.httpthread.CancelAsync();
             }
         }
 
@@ -132,19 +143,8 @@ namespace NoteFly
                     if (webresponse != null)
                     {
                         webresponse.Close();
-                    }                    
+                    }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Instantly stop the http worker, if still running.
-        /// </summary>
-        public void Stop()
-        {
-            if (this.httpthread != null)
-            {
-                this.httpthread.CancelAsync();
             }
         }
 
@@ -157,7 +157,7 @@ namespace NoteFly
             System.Net.ServicePointManager.EnableDnsRoundRobin = true;
             System.Net.ServicePointManager.DnsRefreshTimeout = 3 * 60 * 1000; // 3 minutes
             System.Net.ServicePointManager.DefaultConnectionLimit = 8;
-            HttpWebRequest request = null;            
+            HttpWebRequest request = null;
             Log.Write(LogType.info, "Making request to '" + url + "'");
             try
             {
@@ -169,7 +169,6 @@ namespace NoteFly
                 request.AllowAutoRedirect = false;
                 request.Timeout = Settings.NetworkConnectionTimeout;
                 request.KeepAlive = true;
-                
                 
                 if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
                 {
@@ -192,7 +191,6 @@ namespace NoteFly
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(cachesettings);
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
                 request.PreAuthenticate = false;
-                
             }
             catch (System.Net.WebException webexc)
             {

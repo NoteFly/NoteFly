@@ -30,7 +30,7 @@ namespace NoteFly
     public sealed class TrayIcon
     {
         /// <summary>
-        /// 
+        /// Reference to the FormManager class.
         /// </summary>
         private FormManager formmanager;
 
@@ -239,7 +239,6 @@ namespace NoteFly
             this.icon.Visible = false; // Mono needs Visible set to false otherwise it keeps showing the trayicon.
             this.components.Dispose();
         }
-
 
         /// <summary>
         /// There is left clicked on the icon.

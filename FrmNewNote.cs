@@ -1244,10 +1244,10 @@ namespace NoteFly
         }        
 
         /// <summary>
-        /// 
+        /// Key is released in rtbNewNote
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Key event arguments</param>
         private void rtbNewNote_KeyUp(object sender, KeyEventArgs e)
         {
             if (!SyntaxHighlight.KeywordsInitialized)
@@ -1266,7 +1266,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Get the skin number of this new- or editing note.
         /// </summary>
         /// <returns></returns>
         private int GetSkinnr()

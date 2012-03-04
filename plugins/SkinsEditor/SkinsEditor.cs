@@ -30,7 +30,7 @@ namespace SkinsEditor
     public class SkinsEditor : IPlugin.PluginBase
     {
         /// <summary>
-        /// 
+        /// Reference to the skineditor form.
         /// </summary>
         private FrmSkinEditor skineditor;
 

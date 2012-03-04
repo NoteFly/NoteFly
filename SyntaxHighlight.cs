@@ -77,7 +77,7 @@ namespace NoteFly
         private static bool keywordsinit = false;
 
         /// <summary>
-        /// 
+        /// Reference to RTFDirectEdit class for directly editing RTF used for coloring in the RichTextBox.
         /// </summary>
         private static RTFDirectEdit rtfdirectedit;
 
@@ -157,13 +157,13 @@ namespace NoteFly
                 return;
             }
 
-            rtf = ResetHighlighting(rtb, rtf, skinnr, notes);
-
             if (!keywordsinit)
             {
                 Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
                 InitHighlighter();
             }
+
+            rtf = ResetHighlighting(rtb, rtf, skinnr, notes);
 
             // check if highlighting is enabled at all.
             if (langs.Count > 0)
@@ -202,7 +202,7 @@ namespace NoteFly
 #endif
                         {
                             commentline = false;
-                        }                    
+                        }
                 }
             }
 
@@ -224,18 +224,17 @@ namespace NoteFly
                 stopwatch.Stop();
                 Log.Write(LogType.info, "Note highlight time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
             }
-
         }
 
         /// <summary>
-        /// 
+        /// Check the syntax of a part of the text with the enabled languages.
         /// </summary>
-        /// <param name="rtb"></param>
-        /// <param name="rtf"></param>
-        /// <param name="part"></param>
-        /// <param name="curpos"></param>
-        /// <param name="lastpos"></param>
-        /// <returns></returns>
+        /// <param name="rtb">The RichTextBox control</param>
+        /// <param name="rtf">The RTF text</param>
+        /// <param name="part">The part of text to check</param>
+        /// <param name="curpos">The current position in the text</param>
+        /// <param name="lastpos">The position of where the part started in the text of the RichTextBox</param>
+        /// <returns>The new RTF text syntax highlighted</returns>
         private static string CheckSyntaxPart(RichTextBox rtb, string rtf, string part, int curpos, int lastpos)
         {
             for (int i = 0; i < langs.Count; i++)
@@ -261,9 +260,8 @@ namespace NoteFly
             return rtf;
         }
 
-        // /*
         /// <summary>
-        /// 
+        /// Do a quick syntax check of the last added part of text.
         /// </summary>
         /// <param name="rtb"></param>
         /// <param name="skinnr"></param>
@@ -275,7 +273,7 @@ namespace NoteFly
                 Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
                 InitHighlighter();
             }
-           
+
             // check if highlighting is enabled at all.
             if (langs.Count > 0)
             {
@@ -343,12 +341,12 @@ namespace NoteFly
                 rtb.SelectionStart = cursorpos;
             }
         }
-        // */
 
         /// <summary>
         /// Color some part of the rich edit text.
         /// </summary>
         /// <param name="rtb">The richtextbox contain the rtf text to apply coloring on.</param>
+        /// <param name="rtf">The RTF text</param>
         /// <param name="posstart">The start position in the text to start coloring from.</param>
         /// <param name="len">The lenght of text to color.</param>
         /// <param name="hexcolor">The color the text should get.</param>
@@ -370,6 +368,7 @@ namespace NoteFly
         /// Make the whole text the default font color.
         /// </summary>
         /// <param name="rtb">The richedit control that hold the note content.</param>
+        /// <param name="rtf">the RTF text</param>
         /// <param name="skinnr">The skin number of the current note.</param>
         /// <param name="notes">Reference to notes class.</param>
         private static string ResetHighlighting(RichTextBox rtb, string rtf, int skinnr, Notes notes)
@@ -418,6 +417,10 @@ namespace NoteFly
                         {
                             rtf = ColorText(rtb, rtf, posstartpart, c + 1, Settings.HighlightHTMLColorString); // +1 for '"' or '\'' itself too.
                             htmlstringpart = false;
+                        }
+                        else if (c == ishtml.Length - 1)
+                        {
+                            rtf = ColorText(rtb, rtf, posstartpart, c + 1, Settings.HighlightHTMLColorString); // +1 for space/enter
                         }
                     }
                     else

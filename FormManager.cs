@@ -1,9 +1,31 @@
-﻿namespace NoteFly
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormManager.cs" company="NoteFly">
+//  NoteFly a note application.
+//  Copyright (C) 2012  Tom
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace NoteFly
 {
     using System;
     using System.Text;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// FormManager class
+    /// </summary>
     public sealed class FormManager
     {
         /// <summary>
@@ -32,19 +54,19 @@
         private FrmAbout frmabout;
 
         /// <summary>
-        /// 
+        /// The newnote window delta X position
         /// </summary>
         private int newnotedeltaX = 0;
 
         /// <summary>
-        /// 
+        /// The newnote window delta Y position
         /// </summary>
         private int newnotedeltaY = 0;
 
         /// <summary>
         /// Is the creation of a new note being showed, so double left clicking isnt creating two notes at once.
         /// </summary>
-        //private bool frmnewnoteshowed = false;
+        ////private bool frmnewnoteshowed = false;
 
         /// <summary>
         /// Used for warning if new note is still open on shutdown application.
@@ -52,34 +74,34 @@
         private bool frmneweditnoteopen = false;
 
         /// <summary>
-        /// boolean indication whether FrmManageNotes datagridview needs to be redrawn.
+        /// A boolean indication whether FrmManageNotes datagridview needs to be redrawn.
         /// </summary>
         private bool frmmanagenotesneedupdate = false;
 
 #if windows
         /// <summary>
-        /// 
+        /// Reference to KeyboardListener class.
         /// </summary>
         private KeyboardListener keylister;
 
         /// <summary>
-        /// 
+        /// Is control being pressd.
         /// </summary>
         private bool controlpressed = false;
 
         /// <summary>
-        /// 
+        /// Is shift being pressd.
         /// </summary>
         private bool shiftpressed = false;
 
         /// <summary>
-        /// 
+        /// Is alt being pressd.
         /// </summary>
         private bool altpressed = false;
 #endif
 
         /// <summary>
-        /// 
+        /// Create a new instance of FormManager class.
         /// </summary>
         /// <param name="notes"></param>
         public FormManager(Notes notes)
@@ -92,6 +114,9 @@
 #endif
         }
 
+        /// <summary>
+        /// Gets whether a FrmNewNote window is open.
+        /// </summary>
         public bool Frmneweditnoteopen
         {
             get
@@ -212,18 +237,21 @@
             }
         }
 
+        /// <summary>
+        /// Bring all notes windows to front.
+        /// </summary>
         public void BringToFrontNotes()
         {
             this.notes.BringToFrontNotes();
         }
 
         /// <summary>
-        /// 
+        /// Check whether a form can be created.
         /// </summary>
-        /// <param name="form"></param>
+        /// <param name="form">True if form may be created.</param>
         private bool AllowCreateForm(Form form)
         {
-            if ((form == null) || (form.IsDisposed))
+            if (form == null || form.IsDisposed)
             {
                 return true;
             }
@@ -234,6 +262,11 @@
         }
 
 #if windows
+        /// <summary>
+        /// Handle keys that are pressed to check for system wide shortcut being pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void KeyboardListener_s_KeyEventHandler(object sender, EventArgs e)
         {
             KeyboardListener.UniversalKeyEventArgs eventArgs = (KeyboardListener.UniversalKeyEventArgs)e;
@@ -302,7 +335,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Reset all pressed modifier keys.
         /// </summary>
         private void ResetAllModifierKeys()
         {

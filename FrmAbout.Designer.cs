@@ -35,17 +35,17 @@ namespace NoteFly
         private System.Windows.Forms.Button okButton;
 
         /// <summary>
-        /// name product label
+        /// Name product label
         /// </summary>
         private System.Windows.Forms.Label lblProductName;
 
         /// <summary>
-        /// version label
+        /// Version label
         /// </summary>
         private System.Windows.Forms.Label lblVersion;
 
         /// <summary>
-        /// link to official website
+        /// Link to official website
         /// </summary>
         private System.Windows.Forms.LinkLabel linklblWebsite;
 

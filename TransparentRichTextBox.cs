@@ -31,8 +31,6 @@ namespace NoteFly
     /// </summary>
     public class TransparentRichTextBox : RichTextBox
     {
-
-
 #if windows
         /// <summary>
         /// Override createParams to add support for a transparant background image.
@@ -58,7 +56,5 @@ namespace NoteFly
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr LoadLibrary(string lpFileName);
 #endif
-
-
     }
 }

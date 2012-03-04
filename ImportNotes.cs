@@ -110,7 +110,6 @@
             }
         }
 
-
         /// <summary>
         ///  Import a Tomboy note file as note content for a new note.
         ///  And set the new note title.
@@ -161,10 +160,6 @@
                                         break;
                                     }
                                 }
-
-                                //formattype.Add(nodename);
-                                //formatstartpos.Add(startcontentnode);
-                                //formatlen.Add(rtbNewNote.TextLength - startcontentnode);
                             }
                             else
                             {
@@ -297,7 +292,7 @@
                 }
             }
 
-            xmlUtil.ReadNoteFlyNotesBackupFile(notes, file);
+            xmlUtil.ReadNoteFlyNotesBackupFile(this.notes, file);
             this.notes.LoadNotes(true, false);
         }
 
@@ -565,7 +560,6 @@
                 }
             }
         }
-
 
         /// <summary>
         /// decode stickies title from UTF32 to UTF8

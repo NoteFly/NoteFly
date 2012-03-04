@@ -43,13 +43,13 @@ namespace NoteFly
         /// </remarks>
         /// <param name="key"></param>
         /// <param name="msg"></param>
-        private void KeyHandler(ushort key, uint msg) //static
+        private void KeyHandler(ushort key, uint msg)
         {
             if (this.s_KeyEventHandler != null)
             {
                 Delegate[] delegates = this.s_KeyEventHandler.GetInvocationList();
 
-                foreach(Delegate del in delegates)
+                foreach (Delegate del in delegates)
                 {
                     EventHandler sink = (EventHandler)del;
 
@@ -102,7 +102,7 @@ namespace NoteFly
         /// For every application thread that is interested in keyboard events
         /// an EventHandler can be added to this variable
         /// </summary>
-        public event EventHandler s_KeyEventHandler; //static
+        public event EventHandler s_KeyEventHandler;
 
         #endregion
 
@@ -111,7 +111,7 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        public KeyboardListener() //static
+        public KeyboardListener()
         {
             ListeningWindow.KeyDelegate aKeyDelegate = new ListeningWindow.KeyDelegate(this.KeyHandler);
             s_Listener = new ListeningWindow(aKeyDelegate);
@@ -184,7 +184,8 @@ namespace NoteFly
                 /// 
                 /// </summary>
                 public void* hwndTarget;
-            };
+
+            }
 
             /// <summary>
             /// 
@@ -210,7 +211,8 @@ namespace NoteFly
                 /// 
                 /// </summary>
                 public void* wParam;
-            };
+
+            }
 
             /// <summary>
             /// 
@@ -251,7 +253,8 @@ namespace NoteFly
                 /// 
                 /// </summary>
                 public uint ExtraInformation;
-            };
+
+            }
             #endregion
 
             /// <summary>
@@ -294,8 +297,7 @@ namespace NoteFly
                             throw new Win32Exception(err, "ListeningWindow::RegisterRawInputDevices");
                         }
                     }
-
-                    catch {throw;}
+                    catch { throw; }
                 }
             }
     
@@ -310,8 +312,6 @@ namespace NoteFly
                 {
                     case WM_INPUT:
                     {
-                        //try
-                        //{
                             unsafe
                             {
                                 uint dwSize, receivedBytes;
@@ -356,8 +356,6 @@ namespace NoteFly
                                     throw new Exception(errMsg);
                                 }
                             }
-                        //}
-                        //catch {throw;}
                     }
 
                     break;

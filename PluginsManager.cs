@@ -201,6 +201,7 @@ namespace NoteFly
             short[] ipluginversion = Program.ParserVersionString(versionipluginstring);
             return ipluginversion;
         }
+
         /// <summary>
         /// Is the dll files excluded as plugin in the plugin directory.
         /// </summary>
@@ -223,10 +224,12 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Load a plugin.
         /// </summary>
-        /// <param name="pluginfile"></param>
-        /// <param name="pluginenabled"></param>
+        /// <param name="pluginslist">The current list with loaded plugins</param>
+        /// <param name="pluginfile">The plugin filename to load</param>
+        /// <param name="pluginenabled">Is plugin enabled</param>
+        /// <returns>New list with loaded plugins</returns>
         private static List<IPlugin.IPlugin> LoadPlugin(System.Collections.Generic.List<IPlugin.IPlugin> pluginslist, string pluginfile, bool pluginenabled)
         {
             try
@@ -245,8 +248,7 @@ namespace NoteFly
                                 IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
                                 iplugin.Host = NoteFly.Program.Notes;
                                 iplugin.Register(pluginenabled, pluginfile);
-                                pluginslist.Add(iplugin);
-                                
+                                pluginslist.Add(iplugin);                                
                             }
                         }
                     }
@@ -259,6 +261,7 @@ namespace NoteFly
 
             return pluginslist;
         }
+
         /// <summary>
         /// Get all dll files in the plugin directory
         /// </summary>

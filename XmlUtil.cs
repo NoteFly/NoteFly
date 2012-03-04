@@ -166,10 +166,9 @@ namespace NoteFly
         /// <summary>
         /// Parser the listing of the plugins
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="versionipluginstring"></param>
-        /// <param name="chlbxAvailiblePlugins"></param>
-        /// <param name="frmplugins"></param>
+        /// <param name="response">The server response.</param>
+        /// <param name="ipluginversionparts">The Iplugin version as array with major, minor, release numbers</param>
+        /// <param name="lbxAvailablePlugins">ListBox with availible plugins</param>
         /// <returns></returns>
         public static bool ParserListPlugins(string response, short[] ipluginversionparts, System.Windows.Forms.ListBox lbxAvailablePlugins)
         {
@@ -240,12 +239,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Parser the details of the plugin detail response
         /// </summary>
-        /// <param name="responsestream"></param>
-        /// <param name="lblPluginName"></param>
-        /// <param name="lblPluginVersion"></param>
-        /// <param name="lblPluginDescription"></param>
+        /// <param name="response"></param>
+        /// <param name="btnDownload"></param>
         /// <returns></returns>
         public static string[] ParserDetailsPlugin(string response, System.Windows.Forms.Button btnDownload)
         {
@@ -717,6 +714,7 @@ namespace NoteFly
                             {
                                 curskin.Name = skinname.Substring(0, MAXLENSKINNAME);
                             }
+
                             break;
                         case "PrimaryClr":
                             if (xmlread.HasAttributes)
@@ -908,9 +906,9 @@ namespace NoteFly
                 Settings.UpdatecheckUseGPG = false;
             }
             
-            xmlUtil.WriteSettings();            
+            xmlUtil.WriteSettings();
             xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE));
-            return true;            
+            return true;
         }
 
         /// <summary>

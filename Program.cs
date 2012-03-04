@@ -55,12 +55,12 @@ namespace NoteFly
         private static TrayIcon trayicon;
 
         /// <summary>
-        /// 
+        /// The default folder name in which notes are stored in application data folder.
         /// </summary>
         private const string DEFAULTNOTESFOLDERNAME = "notes";
 
         /// <summary>
-        /// 
+        /// The default folder name in which plugins are stored in application data folder.
         /// </summary>
         private const string DEFAULTPLUGINSFOLDERNAME = "plugins";
 
@@ -151,7 +151,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Reference to Notes class
         /// </summary>
         public static Notes Notes
         {
@@ -162,7 +162,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Reference to FormManger class
         /// </summary>
         public static FormManager Formmanager
         {
@@ -222,20 +222,28 @@ namespace NoteFly
         public static void Main(string[] args)
         {
             /*
-             * a suggestion to "protect" against insecure Dynamic Library Loading vulnerabilities in windows
-             * it does not fix it, it makes it harder to exploit if insecure dll loading exist.
-             * NoteFly uses APPDATA, TEMP and systemroot variables.
-             * Systemroot is required by the LinkLabel control.
-             * Plugin developers should not rely on environment variables
+             * a suggestion to "protect" against insecure Dynamic Library Loading vulnerability in windows
+             * it does not fix it, it makes it harder to exploit insecure dll loading.
+             * NoteFly uses APPDATA, TEMP and SystemRoot variables.
+             * A subfolder in %APPDATA% is where NoteFly stores it program settings, skins settings, log etc.
+             * %TEMP% is needs for logging if appdatafolder is not found.
+             * %SystemRoot% is required by the LinkLabel control to work properly.
+             * Plugin developers should not rely on environment variables. 
              */
 #if windows
-            SetDllDirectory(string.Empty); // removes notefly current working directory as ddl search path
-            Environment.SetEnvironmentVariable("PATH", string.Empty);          // removes dangourse %PATH% as dll search path
-            Environment.SetEnvironmentVariable("windir", string.Empty);        // removes %windir%
-            Environment.SetEnvironmentVariable("SystemDrive", string.Empty);   // removes %SystemDrive%
-            Environment.SetEnvironmentVariable("CommonProgramFiles", string.Empty); // removes %CommonProgramFiles%
-            Environment.SetEnvironmentVariable("USERPROFILE", string.Empty);   // removes %USERPROFILE%
-            Environment.SetEnvironmentVariable("TMP", string.Empty);           // removes %TMP%, Do not remove %TEMP% NoteFly needs this for logging if appdata is wrong.
+            System.Collections.IDictionary environmentVariables = Environment.GetEnvironmentVariables();
+            foreach (System.Collections.DictionaryEntry de in environmentVariables)
+            {
+                string currentvariable = de.Key.ToString();
+                if (!currentvariable.Equals("APPDATA", StringComparison.OrdinalIgnoreCase) &&
+                    !currentvariable.Equals("SystemRoot", StringComparison.OrdinalIgnoreCase) &&
+                    !currentvariable.Equals("TEMP", StringComparison.OrdinalIgnoreCase))
+                {
+                    Environment.SetEnvironmentVariable(de.Key.ToString(), null);
+                }
+            }
+
+            SetDllDirectory(string.Empty); // removes current working directory as dll search path, but requires kernel32.dll by itself to be looked up.
 #endif
 
 #if DEBUG
@@ -262,8 +270,6 @@ namespace NoteFly
             bool visualstyle;
             bool resetpositions;
             ParserArguments(args, out visualstyle, out resetpositions);
-
-
 #if windows
             if (!Settings.ProgramSuspressWarnAdmin)
             {
@@ -774,8 +780,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="versionA"></param>
         /// <param name="versionB"></param>
-        /// <returns>
-        /// -3 if versionB is not valid.
+        /// <returns> -3 if versionB is not valid.
         /// -2 if versionA is not valid.
         /// -1 if versionA is lower than versionB, 
         ///  0 if versionA is equal with versionB,

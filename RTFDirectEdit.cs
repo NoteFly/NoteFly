@@ -46,7 +46,7 @@
 
             const int EXTRACAP = 40; // tune me
             StringBuilder newrtf = new StringBuilder(rtf, rtf.Length + EXTRACAP);
-            int nrtextchar = 0;            
+            int nrtextchar = 0;
             int drtflen = 0;
             string insertcoloritemrtf = null;
             bool overridecoloritem = false;
@@ -105,7 +105,7 @@
                                 if (!overridecoloritem)
                                 {
                                     string snr = rtf.Substring(i + COLORITEMTAG.Length, numlen);
-                                    prevnrcoloritem = IntParseFast(snr);
+                                    prevnrcoloritem = this.IntParseFast(snr);
                                 }
                                 else if (overridecoloritem)
                                 {
@@ -132,7 +132,7 @@
                         }
                     }
 
-                    if (!rtfformat)
+                    if (!this.rtfformat)
                     {
                         textposdone = false;
                         if (nrtextchar < int.MaxValue)
@@ -149,7 +149,7 @@
                         }
                         else if (speccharrtfpos >= 3)
                         {
-                            rtfformat = false;
+                            this.rtfformat = false;
                             isspecchar = false;
                             speccharrtfpos = 0;
                         }
@@ -159,7 +159,7 @@
 
                     if (rtf[i] == ' ' || rtf[i] == '\r' || rtf[i] == '\n')
                     {
-                        rtfformat = false;
+                        this.rtfformat = false;
                     }
 
                     if (textpos == nrtextchar && !textposdone)
@@ -215,7 +215,7 @@
                 }
                 else
                 {
-                    rtfformat = false;
+                    this.rtfformat = false;
                 }
             }
 
@@ -230,7 +230,7 @@
         /// <returns></returns>
         public string SetColorAllRTF(string rtf, Color newclr)
         {
-            return SetColorInRTF(rtf, newclr, 0, rtf.Length);
+            return this.SetColorInRTF(rtf, newclr, 0, rtf.Length);
         }
 
         /// <summary>
@@ -250,10 +250,10 @@
         /// Check if rtf contains a new level or depth document level has been gone up.
         /// Escape \ characters are not a new rtf level.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="i"></param>
-        /// <param name="rtflevel"></param>
-        /// <returns></returns>
+        /// <param name="rtf">The RTF text</param>
+        /// <param name="i">THe position in RTF</param>
+        /// <param name="rtflevel">Current RTF depth level.</param>
+        /// <returns>New RTF depth level.</returns>
         private int CheckRTFLevel(string rtf, int i, int rtflevel)
         {
             if (rtf[i] == '{')
@@ -302,17 +302,17 @@
                     {
                         rtflevel--;
                     }
-                }               
+                }
             }
 
             return rtflevel;
         }
 
         /// <summary>
-        /// 
+        /// Is the RTF part at a position a RTF special chracter escaping.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="i"></param>
+        /// <param name="rtf">The RTF check</param>
+        /// <param name="i">The RTF position in where the special character starts</param>
         /// <returns></returns>
         private bool IsSpecialCharRTF(string rtf, int i)
         {
@@ -427,16 +427,16 @@
         }
 
         /// <summary>
-        /// 
+        /// Add a color to the RTF colortbl.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="red"></param>
-        /// <param name="green"></param>
-        /// <param name="blue"></param>
-        /// <returns></returns>
-        private StringBuilder AddColorItem(StringBuilder newrtf, int posstartcolortbl, Color newclr) // int red, int green, int blue
+        /// <param name="rtf">The RTF</param>
+        /// <param name="posstartcolortbl">The position of start of colortbl in RTF.</param>
+        /// <param name="red">Red valeau (0-255)</param>
+        /// <param name="green">Green valeau (0-255)</param>
+        /// <param name="blue">Blue valeau (0-255)</param>
+        /// <returns>The new RTF with the color add to the colortbl.</returns>
+        private StringBuilder AddColorItem(StringBuilder newrtf, int posstartcolortbl, Color newclr)
         {
-
             string valeau = "\\red" + newclr.R + "\\green" + newclr.G + "\\blue" + newclr.B + ";";
             //string valeau = "\\red" + red + "\\green" + green + "\\blue" + blue + ";";
             int p = posstartcolortbl;
@@ -447,8 +447,6 @@
 
             newrtf.Insert(p, valeau);
             this.colortblitems.Add(newclr);
-            // parser colortbl again.
-            //this.ParserColorTbl(newrtf.ToString(), posstartcolortbl);
             return newrtf;
         }
 
@@ -463,17 +461,17 @@
         }
 
         /// <summary>
-        /// 
+        /// Get the length of the digits in a string at a position
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="startpos"></param>
-        /// <returns></returns>
+        /// <param name="text">Text with digits at startpos</param>
+        /// <param name="startpos">The position where the digit are</param>
+        /// <returns>The length of the digits</returns>
         private int GetLenDigit(string text, int startpos)
         {
             int numlen = 0;
             int pos = startpos + numlen;
             int maxlen = Int32.MaxValue.ToString().Length;
-            while (Char.IsDigit(text, pos) && (pos < text.Length && numlen < maxlen))
+            while (char.IsDigit(text, pos) && (pos < text.Length && numlen < maxlen))
             {
                 numlen++;
                 pos = startpos + numlen;
