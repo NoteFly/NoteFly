@@ -22,9 +22,6 @@ namespace NoteFly
     using System;
     using System.ComponentModel;
     using System.Drawing;
-#if windows
-    using System.Runtime.InteropServices;
-#endif
     using System.Windows.Forms;
 
     /// <summary>
@@ -108,7 +105,6 @@ namespace NoteFly
             this.SetRollupNote();
             this.SetWordwarpNote();
             this.UpdateForm(true);
-            this.CreateSkinsMenu(true);
         }
 
         #endregion Constructors
@@ -220,13 +216,6 @@ namespace NoteFly
                 SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
-
-#if windows
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
-
-        private const int WM_SETREDRAW = 0x0b;
-#endif
 
         /// <summary>
         /// The user pressed the cross on the note,
