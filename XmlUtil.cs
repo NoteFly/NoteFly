@@ -242,10 +242,11 @@ namespace NoteFly
         /// Parser the details of the plugin detail response
         /// </summary>
         /// <param name="response"></param>
-        /// <param name="btnDownload"></param>
+        /// <param name="pluginsnamesinstalled"></param>
         /// <returns></returns>
-        public static string[] ParserDetailsPlugin(string response, System.Windows.Forms.Button btnDownload)
+        public static string[] ParserDetailsPlugin(string response, string[] installedpluginnames, out bool alreadyinstalled)
         {
+            alreadyinstalled = false;
             if (string.IsNullOrEmpty(response))
             {
                 return null;
@@ -268,6 +269,13 @@ namespace NoteFly
                             {
                                 case "name":
                                     detailsplugin[0] = xmlplugin.ReadElementContentAsString();
+                                    for (int i = 0; i < installedpluginnames.Length; i++)
+                                    {
+                                        if (detailsplugin[0].Equals(installedpluginnames[i], StringComparison.Ordinal))
+                                        {
+                                            alreadyinstalled = true;
+                                        }
+                                    }                                    
                                     break;
                                 case "version":
                                     detailsplugin[1] = xmlplugin.ReadElementContentAsString();
@@ -280,11 +288,6 @@ namespace NoteFly
                                     break;
                                 case "downloadurl":
                                     detailsplugin[4] = xmlplugin.ReadElementContentAsString();
-                                    if (!string.IsNullOrEmpty(detailsplugin[4]))
-                                    {
-                                        btnDownload.Visible = true;
-                                    }
-
                                     break;
                             }
                         }

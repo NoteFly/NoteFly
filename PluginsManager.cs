@@ -85,9 +85,9 @@ namespace NoteFly
                 AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)atttitle[0];
                 if (titleAttribute.Title != string.Empty)
                 {
-                    if (titleAttribute.Title.Length > 150)
+                    if (titleAttribute.Title.Length > 200)
                     {
-                        pluginname = titleAttribute.Title.Substring(0, 150);
+                        pluginname = titleAttribute.Title.Substring(0, 200);
                     }
                     else
                     {
@@ -116,9 +116,9 @@ namespace NoteFly
             {
                 if (!string.IsNullOrEmpty(((AssemblyCompanyAttribute)attributes[0]).Company))
                 {
-                    if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
+                    if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 200)
                     {
-                        pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 150);
+                        pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 200);
                     }
                     else
                     {
@@ -135,7 +135,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get description of the plugin.
+        /// Get file (short)description of the plugin.
         /// </summary>
         /// <param name="pluginassembly">The plugin assembly</param>
         /// <returns>The description of the plugin</returns>
@@ -145,9 +145,9 @@ namespace NoteFly
             object[] attdesc = pluginassembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
             if (attdesc.Length != 0)
             {
-                if (((AssemblyDescriptionAttribute)attdesc[0]).Description.Length > 255)
+                if (((AssemblyDescriptionAttribute)attdesc[0]).Description.Length > 1000)
                 {
-                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description.Substring(0, 255);
+                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description.Substring(0, 1000);
                 }
                 else
                 {
@@ -296,6 +296,24 @@ namespace NoteFly
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Get the names of all plugins installed.
+        /// </summary>
+        /// <returns></returns>
+        public static string[] GetAllPluginsNames()
+        {
+            string[] pluginfiles = GetFilesPluginDir();
+            string[] pluginsnames = new string[pluginfiles.Length];
+            for (int i = 0; i < pluginfiles.Length; i++)
+            {
+                Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
+                string name = GetPluginName(pluginassembly);
+                pluginsnames[i] = name;
+            }
+
+            return pluginsnames;
         }
     }
 }

@@ -23,6 +23,7 @@ namespace NoteFly
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
+    using System.IO.Compression;
     using System.Net;
     using System.Text;
     using System.Windows.Forms;
@@ -36,7 +37,7 @@ namespace NoteFly
         /// Webclient object
         /// </summary>
         private WebClient webclient;
-        
+
         /// <summary>
         /// number of downloads that FrmDownloader has compleeted.
         /// </summary>
@@ -56,6 +57,18 @@ namespace NoteFly
         /// The folder to save downloads to.
         /// </summary>
         private string storefolder;
+
+        /// <summary>
+        /// GZip extension
+        /// </summary>
+        private const string GZIPEXTENSION = ".gz";
+
+        /// <summary>
+        /// Zip extension
+        /// </summary>
+        private const string ZIPEXTENSION = ".zip";
+
+        private string[] unzipextensions = new string[] { ".dll" };
 
         /// <summary>
         /// Initializes a new instance of the FrmDownloader class.
@@ -106,8 +119,8 @@ namespace NoteFly
         /// <param name="storefolder">The folder to save all the files to.</param>
         /// <returns>True if downloading succesfully started.</returns>
         public bool BeginDownload(string[] downloads, string storefolder)
-        {            
-            this.storefolder = storefolder;            
+        {
+            this.storefolder = storefolder;
             this.downloads = downloads;
             this.numdownloadscompleet = 0;
             string downloadurl = Program.ChangeUrlIPVersion(downloads[0]);
@@ -207,6 +220,8 @@ namespace NoteFly
             {
                 if (!e.Cancelled)
                 {
+                    this.DecompressFileIfNeeded(this.files[this.numdownloadscompleet]);
+
                     this.numdownloadscompleet++;
                     if (this.numdownloadscompleet < this.downloads.Length)
                     {
@@ -223,7 +238,7 @@ namespace NoteFly
                             this.AllDownloadsCompleted(this.files.ToArray());
                         }
 
-                        this.Close();  
+                        this.Close();
                     }
                 }
                 else
@@ -238,6 +253,47 @@ namespace NoteFly
                 sberror.Append(" ");
                 sberror.Append(e.Error.Message);
                 this.lblStatusUpdate.Text = sberror.ToString();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void DecompressFileIfNeeded(string file)
+        {
+            if (file.EndsWith(ZIPEXTENSION, StringComparison.OrdinalIgnoreCase))
+            {               
+                if (this.DecompressZipFile(file, this.unzipextensions))
+                {
+                    Log.Write(LogType.info, "Decompressed zip archive: " + file);
+                    if (File.GetAttributes(file) != FileAttributes.System)
+                    {
+                        File.Delete(file);
+                        Log.Write(LogType.info, "Delete zip archive: " + file);
+                    }
+                }
+                else
+                {
+                    Log.Write(LogType.exception, "Decompressing zip file " + file + " failed.");
+                }
+            }
+            else if (file.EndsWith(GZIPEXTENSION, StringComparison.OrdinalIgnoreCase))
+            {
+                string currentfilename = Path.GetFileName(file);
+                string newfilename = currentfilename.Substring(0, currentfilename.Length - GZIPEXTENSION.Length);
+                if (this.DecompressGZipFile(file, Path.Combine(this.storefolder, newfilename)))
+                {
+                    Log.Write(LogType.info, "Decompressed GZip file: " + file);
+                    if (File.GetAttributes(file) != FileAttributes.System)
+                    {
+                        File.Delete(file);
+                        Log.Write(LogType.info, "Delete GZip file: " + file);
+                    }
+                }
+                else
+                {
+                    Log.Write(LogType.exception, "Decompressing GZip file " + file + " failed.");
+                }
             }
         }
 
@@ -275,6 +331,66 @@ namespace NoteFly
             }
 
             return Path.Combine(storefolder, filename);
+        }
+
+        /// <summary>
+        /// Decompress zip archive file.
+        /// </summary>
+        /// <param name="zipfilename"></param>
+        /// <param name="extensions">The extension of file in the zipfile that are unzipped</param>
+        private bool DecompressZipFile(string zipfile, string[] extensions)
+        {
+            bool succeeded = false;
+            if (Directory.Exists(this.storefolder) && File.Exists(zipfile))
+            {
+                ZipStorer zip = ZipStorer.Open(zipfile, FileAccess.Read);
+                List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
+                foreach (ZipStorer.ZipFileEntry entry in dir)
+                {
+                    for (int i = 0; i < extensions.Length; i++)
+                    {
+                        if (entry.FilenameInZip.EndsWith(extensions[i]))
+                        {
+                            zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip));
+                        }
+                    }
+
+                }
+
+                succeeded = true;
+                zip.Close();
+            }
+
+            return succeeded;
+        }
+
+        /// <summary>
+        /// Decompress GZip single file.
+        /// </summary>
+        private bool DecompressGZipFile(string compressedfile, string decompressedfile)
+        {
+            bool succeeded = false;
+            if (File.Exists(compressedfile))
+            {
+                using (FileStream inputfilestream = File.Open(compressedfile, FileMode.Open), outputfilestream = File.Create(decompressedfile))
+                {
+                    byte[] outputbuffer;
+                    using (GZipStream alg = new GZipStream(inputfilestream, CompressionMode.Decompress))
+                    {
+                        outputbuffer = new byte[inputfilestream.Length];
+                        int counter;
+                        while ((counter = alg.Read(outputbuffer, 0, outputbuffer.Length)) != 0)
+                        {
+                            outputfilestream.Write(outputbuffer, 0, counter);
+                        }
+                    }
+
+                    outputbuffer = null;
+                    succeeded = true;
+                }
+            }
+
+            return succeeded;
         }
     }
 }

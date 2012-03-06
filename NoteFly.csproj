@@ -222,6 +222,7 @@
     <Compile Include="HttpUtil.cs" />
     <Compile Include="FormManager.cs" />
     <Compile Include="XmlUtil.cs" />
+    <Compile Include="ZipStorer.cs" />
     <None Include="Resources\accept.png" />
     <None Include="Resources\cancel.png" />
     <None Include="build_setup.bat" />

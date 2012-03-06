@@ -143,7 +143,8 @@ namespace NoteFly
         private void httputil_plugindetail_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
-            string[] detailsplugin = xmlUtil.ParserDetailsPlugin(response, this.btnPluginDownload);
+            bool alreadyinstalled = false;
+            string[] detailsplugin = xmlUtil.ParserDetailsPlugin(response, PluginsManager.GetAllPluginsNames(), out alreadyinstalled);
             if (detailsplugin != null)
             {
                 this.lblPluginName.Text = detailsplugin[0];
@@ -151,6 +152,11 @@ namespace NoteFly
                 this.lblLicense.Text = Strings.T("license: ") + detailsplugin[2];
                 this.lblPluginDescription.Text = detailsplugin[3];
                 this.currentplugindownloadurl = detailsplugin[4];
+                this.btnPluginDownload.Enabled = !alreadyinstalled;
+                if (!string.IsNullOrEmpty(detailsplugin[4]) && Uri.IsWellFormedUriString(detailsplugin[4], UriKind.Absolute))
+                {
+                    this.btnPluginDownload.Visible = true;
+                }
             }
         }
 
