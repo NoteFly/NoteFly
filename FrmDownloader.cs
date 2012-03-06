@@ -262,14 +262,25 @@ namespace NoteFly
         private void DecompressFileIfNeeded(string file)
         {
             if (file.EndsWith(ZIPEXTENSION, StringComparison.OrdinalIgnoreCase))
-            {               
+            {
                 if (this.DecompressZipFile(file, this.unzipextensions))
                 {
                     Log.Write(LogType.info, "Decompressed zip archive: " + file);
                     if (File.GetAttributes(file) != FileAttributes.System)
                     {
-                        File.Delete(file);
-                        Log.Write(LogType.info, "Delete zip archive: " + file);
+                        try
+                        {
+                            File.Delete(file);
+                            Log.Write(LogType.info, "Delete zip archive: " + file);
+                        }
+                        catch (ArgumentException argexc)
+                        {
+                            Log.Write(LogType.exception, argexc.Message);
+                        }
+                        catch (IOException ioexc)
+                        {
+                            Log.Write(LogType.exception, ioexc.Message);
+                        }
                     }
                 }
                 else
@@ -286,8 +297,19 @@ namespace NoteFly
                     Log.Write(LogType.info, "Decompressed GZip file: " + file);
                     if (File.GetAttributes(file) != FileAttributes.System)
                     {
-                        File.Delete(file);
-                        Log.Write(LogType.info, "Delete GZip file: " + file);
+                        try
+                        {
+                            File.Delete(file);
+                            Log.Write(LogType.info, "Delete GZip file: " + file);
+                        }
+                        catch (ArgumentException argexc)
+                        {
+                            Log.Write(LogType.exception, argexc.Message);
+                        }
+                        catch (IOException ioexc)
+                        {
+                            Log.Write(LogType.exception, ioexc.Message);
+                        }
                     }
                 }
                 else

@@ -100,32 +100,11 @@ namespace NoteFly
         /// <summary>
         /// Save the enabled plugin settings.
         /// </summary>
-        public void SavePluginSettings()
+        public void SavePluginGridSettings()
         {
-            bool first = true;
-            Settings.ProgramPluginsEnabled = string.Empty;
-            if (this.allplugins != null)
-            {
-                for (int i = 0; i < this.allplugins.Length; i++)
-                {
-                    if (this.allplugins[i].Enabled)
-                    {
-                        if (first)
-                        {
-                            first = false;
-                        }
-                        else
-                        {
-                            Settings.ProgramPluginsEnabled += "|";
-                        }
-
-                        Settings.ProgramPluginsEnabled += this.allplugins[i].Filename;
-                    }
-                }
-
-                PluginsManager.pluginsenabled = PluginsManager.GetPlugins(true);
-                Program.RestartTrayicon();
-            }
+            PluginsManager.SetSettingsPluginsEnabled(this.allplugins);
+            PluginsManager.pluginsenabled = PluginsManager.GetPlugins(true);
+            Program.RestartTrayicon();
         }
 
         /// <summary>
@@ -257,7 +236,7 @@ namespace NoteFly
             int pluginpos = (int)btn.Tag;
             this.allplugins[pluginpos].Enabled = !this.allplugins[pluginpos].Enabled;
             this.SetPluginStatusDetail(pluginpos);
-            this.SavePluginSettings();
+            this.SavePluginGridSettings();
             xmlUtil.WriteSettings();
         }
 

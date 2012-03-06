@@ -159,6 +159,28 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pluginname"></param>
+        /// <returns></returns>
+        public static short[] GetPluginVersionByName(string pluginname)
+        {
+            short[] pluginversion = new short[3];
+            IPlugin.IPlugin[] plugins = GetPlugins(false);
+            for (int i = 0; i < plugins.Length; i++)
+            {
+                Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, plugins[i].Filename));
+                if (GetPluginName(pluginassembly).Equals(pluginname, StringComparison.Ordinal))
+                {
+                    string pluginversionstring = GetPluginVersion(pluginassembly);
+                    pluginversion = Program.ParserVersionString(pluginversionstring);
+                }
+            }
+
+            return pluginversion;
+        }
+
+        /// <summary>
         /// Get version of the plugin as string.
         /// </summary>
         /// <param name="pluginassembly">The plugin assembly</param>
@@ -191,7 +213,7 @@ namespace NoteFly
             }
             catch (FileNotFoundException)
             {
-                Log.Write(LogType.exception, "File iplugin.dll not found.");
+                Log.Write(LogType.exception, "File IPlugin.dll not found.");
             }
             catch (FileLoadException)
             {
@@ -296,6 +318,34 @@ namespace NoteFly
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Save the enabled plugin settings.
+        /// </summary>
+        public static void SetSettingsPluginsEnabled(IPlugin.IPlugin[] pluginsenabled)
+        {
+            Settings.ProgramPluginsEnabled = string.Empty;
+            if (pluginsenabled != null)
+            {
+                bool first = true;
+                for (int i = 0; i < pluginsenabled.Length; i++)
+                {
+                    if (pluginsenabled[i].Enabled)
+                    {
+                        if (first)
+                        {
+                            first = false;
+                        }
+                        else
+                        {
+                            Settings.ProgramPluginsEnabled += "|";
+                        }
+
+                        Settings.ProgramPluginsEnabled += pluginsenabled[i].Filename;
+                    }
+                }
+            }
         }
 
         /// <summary>

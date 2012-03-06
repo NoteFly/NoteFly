@@ -244,9 +244,10 @@ namespace NoteFly
         /// <param name="response"></param>
         /// <param name="pluginsnamesinstalled"></param>
         /// <returns></returns>
-        public static string[] ParserDetailsPlugin(string response, string[] installedpluginnames, out bool alreadyinstalled)
+        public static string[] ParserDetailsPlugin(string response, string[] installedpluginnames, out bool alreadyinstalled, out bool updateavailable)
         {
             alreadyinstalled = false;
+            updateavailable = false;
             if (string.IsNullOrEmpty(response))
             {
                 return null;
@@ -269,16 +270,20 @@ namespace NoteFly
                             {
                                 case "name":
                                     detailsplugin[0] = xmlplugin.ReadElementContentAsString();
-                                    for (int i = 0; i < installedpluginnames.Length; i++)
+                                    if (!String.IsNullOrEmpty(detailsplugin[0]))
                                     {
-                                        if (detailsplugin[0].Equals(installedpluginnames[i], StringComparison.Ordinal))
+                                        for (int i = 0; i < installedpluginnames.Length; i++)
                                         {
-                                            alreadyinstalled = true;
+                                            if (detailsplugin[0].Equals(installedpluginnames[i], StringComparison.Ordinal))
+                                            {
+                                                alreadyinstalled = true;
+                                            }
                                         }
-                                    }                                    
+                                    }
+
                                     break;
                                 case "version":
-                                    detailsplugin[1] = xmlplugin.ReadElementContentAsString();
+                                    detailsplugin[1] = xmlplugin.ReadElementContentAsString();                                    
                                     break;
                                 case "license":
                                     detailsplugin[2] = xmlplugin.ReadElementContentAsString();
@@ -290,7 +295,7 @@ namespace NoteFly
                                     detailsplugin[4] = xmlplugin.ReadElementContentAsString();
                                     break;
                             }
-                        }
+                        }                        
                     }
                 }
             }
@@ -299,6 +304,16 @@ namespace NoteFly
                 if (xmlreader != null)
                 {
                     xmlreader.Close();
+                }
+            }
+
+            if (!String.IsNullOrEmpty(detailsplugin[0]) && !String.IsNullOrEmpty(detailsplugin[1]))
+            {
+                short[] installedpluginversion = PluginsManager.GetPluginVersionByName(detailsplugin[0]);
+                short[] availablepluginversion = Program.ParserVersionString(detailsplugin[1]);
+                if (Program.CompareVersions(availablepluginversion, installedpluginversion) > 0)
+                {
+                    updateavailable = true;
                 }
             }
 

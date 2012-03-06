@@ -74,7 +74,7 @@ namespace NoteFly
             {
                 this.lblTextNoInternetConnection.Visible = false;
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
-                HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+                HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate);
                 if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
                 {
                     this.lblTextNoInternetConnection.Visible = true;
@@ -122,7 +122,8 @@ namespace NoteFly
                 string pluginname = this.lbxAvailablePlugins.SelectedItem.ToString();
                 if (!string.IsNullOrEmpty(pluginname))
                 {
-                    HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+                    HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.Revalidate);
+                    this.ClearPluginDetails();
                     if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
                     {
                         this.lblTextNoInternetConnection.Visible = true;
@@ -136,6 +137,17 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Hide all plugins details
+        /// </summary>
+        private void ClearPluginDetails()
+        {
+            this.lblPluginName.ResetText();
+            this.lblLicense.ResetText();
+            this.lblPluginVersion.ResetText();
+            this.lblPluginDescription.ResetText();
+        }
+
+        /// <summary>
         /// Downloading of plugin details data is compleet, parser data and display plugin details
         /// </summary>
         /// <param name="sender"></param>
@@ -144,19 +156,39 @@ namespace NoteFly
         {
             string response = (string)e.Result;
             bool alreadyinstalled = false;
-            string[] detailsplugin = xmlUtil.ParserDetailsPlugin(response, PluginsManager.GetAllPluginsNames(), out alreadyinstalled);
+            bool updateavailable = false;
+            string[] detailsplugin = xmlUtil.ParserDetailsPlugin(response, PluginsManager.GetAllPluginsNames(), out alreadyinstalled, out updateavailable);
             if (detailsplugin != null)
             {
+                if (alreadyinstalled)
+                {
+                    this.btnPluginDownload.Enabled = false;
+                    if (updateavailable)
+                    {
+                        this.btnPluginDownload.Text = Strings.T("update");
+                        this.btnPluginDownload.Enabled = true;
+                    }
+                    else
+                    {
+                        this.btnPluginDownload.Text = Strings.T("already installed");
+                    }
+                }
+                else
+                {
+                    this.btnPluginDownload.Enabled = true;
+                    this.btnPluginDownload.Text = Strings.T("download");
+                }
+
+                if (!string.IsNullOrEmpty(detailsplugin[4]) && Uri.IsWellFormedUriString(detailsplugin[4], UriKind.Absolute))
+                {
+                    this.btnPluginDownload.Visible = true;
+                }
+
                 this.lblPluginName.Text = detailsplugin[0];
                 this.lblPluginVersion.Text = Strings.T("version: ") + detailsplugin[1];
                 this.lblLicense.Text = Strings.T("license: ") + detailsplugin[2];
                 this.lblPluginDescription.Text = detailsplugin[3];
                 this.currentplugindownloadurl = detailsplugin[4];
-                this.btnPluginDownload.Enabled = !alreadyinstalled;
-                if (!string.IsNullOrEmpty(detailsplugin[4]) && Uri.IsWellFormedUriString(detailsplugin[4], UriKind.Absolute))
-                {
-                    this.btnPluginDownload.Visible = true;
-                }
             }
         }
 
@@ -172,6 +204,7 @@ namespace NoteFly
                 this.frmdownloader = new FrmDownloader(Strings.T("Downloading plugin.."));
                 this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(this.downloader_DownloadCompleet);
                 this.frmdownloader.Show();
+                //PluginsManager.pluginsenabled = PluginsManager.GetPlugins(true);
                 this.frmdownloader.BeginDownload(this.currentplugindownloadurl, Settings.ProgramPluginsFolder);                
             }
         }
@@ -192,7 +225,9 @@ namespace NoteFly
         private void searchtbPlugins_SearchStart(string keywords)
         {
             this.lbxAvailablePlugins.Items.Clear();
-            HttpUtil httputil_searchplugins = new HttpUtil(RESTAPIPLUGINSSEARCH + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Default);
+            HttpUtil httputil_searchplugins = new HttpUtil(RESTAPIPLUGINSSEARCH + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Revalidate);
+            this.ClearPluginDetails();
+            this.splitContainerAvailablePlugins.Panel2Collapsed = true;
             if (!httputil_searchplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet)))
             {
                 this.lblTextNoInternetConnection.Visible = true;
@@ -225,7 +260,7 @@ namespace NoteFly
         /// </summary>
         private void searchtbPlugins_SearchStop()
         {
-            HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+            HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate);
             if (!httputil_allplugins.Start(new RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
             {
                 this.lblTextNoInternetConnection.Visible = true;

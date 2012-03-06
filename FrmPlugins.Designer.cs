@@ -271,7 +271,6 @@
             this.btnPluginDownload.Name = "btnPluginDownload";
             this.btnPluginDownload.Size = new System.Drawing.Size(238, 28);
             this.btnPluginDownload.TabIndex = 0;
-            this.btnPluginDownload.Text = "download";
             this.btnPluginDownload.UseCompatibleTextRendering = true;
             this.btnPluginDownload.UseVisualStyleBackColor = true;
             this.btnPluginDownload.Visible = false;
