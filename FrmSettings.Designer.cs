@@ -720,9 +720,12 @@ namespace NoteFly
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
             this.tabHotkeys = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelShortcuts = new System.Windows.Forms.TableLayoutPanel();
+            this.shortcutTextBoxNotesToFront = new NoteFly.ShortcutTextBox();
             this.lblTextHotkeyNotesToFront = new System.Windows.Forms.Label();
+            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
             this.lblTextHotkeyNewNote = new System.Windows.Forms.Label();
             this.lblTextHotkeyManageNotes = new System.Windows.Forms.Label();
+            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabctrlAppearance = new System.Windows.Forms.TabControl();
             this.tabAppearanceOverall = new System.Windows.Forms.TabPage();
@@ -786,6 +789,7 @@ namespace NoteFly
             this.tabSharing = new System.Windows.Forms.TabPage();
             this.tabControlSharing = new System.Windows.Forms.TabControl();
             this.tabEmail = new System.Windows.Forms.TabPage();
+            this.tbDefaultEmail = new NoteFly.EmailTextBox();
             this.chxSocialEmailEnabled = new System.Windows.Forms.CheckBox();
             this.chxSocialEmailDefaultaddressSet = new System.Windows.Forms.CheckBox();
             this.tabNetwork = new System.Windows.Forms.TabPage();
@@ -802,18 +806,26 @@ namespace NoteFly
             this.chxUpdateSilentInstall = new System.Windows.Forms.CheckBox();
             this.btnCheckUpdates = new System.Windows.Forms.Button();
             this.tabProxy = new System.Windows.Forms.TabPage();
-            this.numProxyPort = new System.Windows.Forms.NumericUpDown();
-            this.lblTextPort = new System.Windows.Forms.Label();
-            this.lblTextAddress = new System.Windows.Forms.Label();
-            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblTextMiliseconds = new System.Windows.Forms.Label();
+            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
+            this.numProxyPort = new System.Windows.Forms.NumericUpDown();
+            this.lblTextAddress = new System.Windows.Forms.Label();
+            this.iptbProxy = new NoteFly.IPTextBox();
+            this.lblTextPort = new System.Windows.Forms.Label();
+            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
+            this.numTimeout = new System.Windows.Forms.NumericUpDown();
+            this.lblTextMiliseconds = new System.Windows.Forms.Label();
+            this.lblTextPreferedIPversion = new System.Windows.Forms.Label();
+            this.cbxNetworkIPversion = new System.Windows.Forms.ComboBox();
             this.tabPageGPG = new System.Windows.Forms.TabPage();
+            this.tbGPGPath = new NoteFly.IOTextBox();
             this.btnGPGPathBrowse = new System.Windows.Forms.Button();
             this.lblTextGPGPath = new System.Windows.Forms.Label();
             this.chxCheckUpdatesSignature = new System.Windows.Forms.CheckBox();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.tbNotesSavePath = new NoteFly.IOTextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -830,18 +842,6 @@ namespace NoteFly
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
-            this.numTimeout = new System.Windows.Forms.NumericUpDown();
-            this.cbxNetworkIPversion = new System.Windows.Forms.ComboBox();
-            this.lblTextPreferedIPversion = new System.Windows.Forms.Label();
-            this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
-            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
-            this.shortcutTextBoxNotesToFront = new NoteFly.ShortcutTextBox();
-            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
-            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
-            this.tbDefaultEmail = new NoteFly.EmailTextBox();
-            this.iptbProxy = new NoteFly.IPTextBox();
-            this.tbGPGPath = new NoteFly.IOTextBox();
-            this.tbNotesSavePath = new NoteFly.IOTextBox();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -878,15 +878,15 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numUpdateCheckDays)).BeginInit();
             this.tableLayoutPanel7.SuspendLayout();
             this.tabProxy.SuspendLayout();
+            this.tableLayoutPanel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numProxyPort)).BeginInit();
             this.tableLayoutPanel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
             this.tabPageGPG.SuspendLayout();
             this.tabAdvance.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
-            this.tableLayoutPanel10.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
@@ -911,6 +911,7 @@ namespace NoteFly
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancel.BackColor = System.Drawing.Color.LightGray;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -1110,6 +1111,20 @@ namespace NoteFly
             this.tableLayoutPanelShortcuts.Size = new System.Drawing.Size(417, 92);
             this.tableLayoutPanelShortcuts.TabIndex = 16;
             // 
+            // shortcutTextBoxNotesToFront
+            // 
+            this.shortcutTextBoxNotesToFront.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxNotesToFront.Location = new System.Drawing.Point(152, 59);
+            this.shortcutTextBoxNotesToFront.Name = "shortcutTextBoxNotesToFront";
+            this.shortcutTextBoxNotesToFront.ShortcutKeyposition = 112;
+            this.shortcutTextBoxNotesToFront.Size = new System.Drawing.Size(244, 22);
+            this.shortcutTextBoxNotesToFront.TabIndex = 14;
+            this.shortcutTextBoxNotesToFront.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNotesToFront.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = false;
+            this.shortcutTextBoxNotesToFront.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxNotesToFront.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
+            // 
             // lblTextHotkeyNotesToFront
             // 
             this.lblTextHotkeyNotesToFront.AutoSize = true;
@@ -1119,6 +1134,20 @@ namespace NoteFly
             this.lblTextHotkeyNotesToFront.Size = new System.Drawing.Size(132, 16);
             this.lblTextHotkeyNotesToFront.TabIndex = 13;
             this.lblTextHotkeyNotesToFront.Text = "Hotkey notes to front:";
+            // 
+            // shortcutTextBoxManageNotes
+            // 
+            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 33);
+            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
+            this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
+            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(244, 22);
+            this.shortcutTextBoxManageNotes.TabIndex = 12;
+            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
+            this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
             // 
             // lblTextHotkeyNewNote
             // 
@@ -1139,6 +1168,20 @@ namespace NoteFly
             this.lblTextHotkeyManageNotes.Size = new System.Drawing.Size(143, 16);
             this.lblTextHotkeyManageNotes.TabIndex = 10;
             this.lblTextHotkeyManageNotes.Text = "Hotkey manage notes:";
+            // 
+            // shortcutTextBoxNewNote
+            // 
+            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(152, 3);
+            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
+            this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
+            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(244, 22);
+            this.shortcutTextBoxNewNote.TabIndex = 11;
+            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
+            this.shortcutTextBoxNewNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
             // 
             // tabAppearance
             // 
@@ -2089,6 +2132,15 @@ namespace NoteFly
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
             // 
+            // tbDefaultEmail
+            // 
+            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
+            this.tbDefaultEmail.Enabled = false;
+            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
+            this.tbDefaultEmail.Name = "tbDefaultEmail";
+            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
+            this.tbDefaultEmail.TabIndex = 26;
+            // 
             // chxSocialEmailEnabled
             // 
             this.chxSocialEmailEnabled.AutoSize = true;
@@ -2320,10 +2372,46 @@ namespace NoteFly
             this.tabProxy.Text = "Proxy";
             this.tabProxy.UseVisualStyleBackColor = true;
             // 
+            // tableLayoutPanel10
+            // 
+            this.tableLayoutPanel10.ColumnCount = 4;
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.52174F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.47826F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel10.Controls.Add(this.chxProxyEnabled, 0, 0);
+            this.tableLayoutPanel10.Controls.Add(this.numProxyPort, 3, 1);
+            this.tableLayoutPanel10.Controls.Add(this.lblTextAddress, 0, 1);
+            this.tableLayoutPanel10.Controls.Add(this.iptbProxy, 1, 1);
+            this.tableLayoutPanel10.Controls.Add(this.lblTextPort, 2, 1);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(12, 32);
+            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
+            this.tableLayoutPanel10.RowCount = 2;
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(424, 61);
+            this.tableLayoutPanel10.TabIndex = 32;
+            // 
+            // chxProxyEnabled
+            // 
+            this.chxProxyEnabled.AutoSize = true;
+            this.tableLayoutPanel10.SetColumnSpan(this.chxProxyEnabled, 4);
+            this.chxProxyEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxProxyEnabled.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxProxyEnabled.Location = new System.Drawing.Point(3, 3);
+            this.chxProxyEnabled.Name = "chxProxyEnabled";
+            this.chxProxyEnabled.Size = new System.Drawing.Size(130, 21);
+            this.chxProxyEnabled.TabIndex = 1;
+            this.chxProxyEnabled.Text = "Use socked proxy";
+            this.chxProxyEnabled.UseCompatibleTextRendering = true;
+            this.chxProxyEnabled.UseVisualStyleBackColor = true;
+            this.chxProxyEnabled.CheckedChanged += new System.EventHandler(this.chxUseProxy_CheckedChanged);
+            // 
             // numProxyPort
             // 
             this.numProxyPort.Enabled = false;
-            this.numProxyPort.Location = new System.Drawing.Point(327, 33);
+            this.numProxyPort.Location = new System.Drawing.Point(326, 33);
             this.numProxyPort.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2343,16 +2431,6 @@ namespace NoteFly
             0,
             0});
             // 
-            // lblTextPort
-            // 
-            this.lblTextPort.AutoSize = true;
-            this.lblTextPort.Location = new System.Drawing.Point(285, 35);
-            this.lblTextPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.lblTextPort.Name = "lblTextPort";
-            this.lblTextPort.Size = new System.Drawing.Size(34, 16);
-            this.lblTextPort.TabIndex = 30;
-            this.lblTextPort.Text = "port:";
-            // 
             // lblTextAddress
             // 
             this.lblTextAddress.AutoSize = true;
@@ -2362,6 +2440,24 @@ namespace NoteFly
             this.lblTextAddress.Size = new System.Drawing.Size(61, 16);
             this.lblTextAddress.TabIndex = 29;
             this.lblTextAddress.Text = "address:";
+            // 
+            // iptbProxy
+            // 
+            this.iptbProxy.Enabled = false;
+            this.iptbProxy.Location = new System.Drawing.Point(91, 33);
+            this.iptbProxy.Name = "iptbProxy";
+            this.iptbProxy.Size = new System.Drawing.Size(187, 22);
+            this.iptbProxy.TabIndex = 26;
+            // 
+            // lblTextPort
+            // 
+            this.lblTextPort.AutoSize = true;
+            this.lblTextPort.Location = new System.Drawing.Point(284, 35);
+            this.lblTextPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblTextPort.Name = "lblTextPort";
+            this.lblTextPort.Size = new System.Drawing.Size(34, 16);
+            this.lblTextPort.TabIndex = 30;
+            this.lblTextPort.Text = "port:";
             // 
             // tableLayoutPanel9
             // 
@@ -2386,6 +2482,49 @@ namespace NoteFly
             this.tableLayoutPanel9.Size = new System.Drawing.Size(424, 62);
             this.tableLayoutPanel9.TabIndex = 28;
             // 
+            // lblTextNetworkTimeout
+            // 
+            this.lblTextNetworkTimeout.AutoSize = true;
+            this.lblTextNetworkTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.lblTextNetworkTimeout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(3, 5);
+            this.lblTextNetworkTimeout.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblTextNetworkTimeout.Name = "lblTextNetworkTimeout";
+            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(150, 20);
+            this.lblTextNetworkTimeout.TabIndex = 24;
+            this.lblTextNetworkTimeout.Text = "connection timeout time:";
+            this.lblTextNetworkTimeout.UseCompatibleTextRendering = true;
+            // 
+            // numTimeout
+            // 
+            this.numTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.numTimeout.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numTimeout.Location = new System.Drawing.Point(159, 3);
+            this.numTimeout.Maximum = new decimal(new int[] {
+            30000,
+            0,
+            0,
+            0});
+            this.numTimeout.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numTimeout.Name = "numTimeout";
+            this.numTimeout.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.numTimeout.Size = new System.Drawing.Size(58, 22);
+            this.numTimeout.TabIndex = 23;
+            this.numTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numTimeout.Value = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            // 
             // lblTextMiliseconds
             // 
             this.lblTextMiliseconds.AccessibleDescription = "Miliseconds";
@@ -2399,20 +2538,29 @@ namespace NoteFly
             this.lblTextMiliseconds.Text = "ms";
             this.lblTextMiliseconds.UseCompatibleTextRendering = true;
             // 
-            // chxProxyEnabled
+            // lblTextPreferedIPversion
             // 
-            this.chxProxyEnabled.AutoSize = true;
-            this.tableLayoutPanel10.SetColumnSpan(this.chxProxyEnabled, 4);
-            this.chxProxyEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.chxProxyEnabled.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxProxyEnabled.Location = new System.Drawing.Point(3, 3);
-            this.chxProxyEnabled.Name = "chxProxyEnabled";
-            this.chxProxyEnabled.Size = new System.Drawing.Size(130, 21);
-            this.chxProxyEnabled.TabIndex = 1;
-            this.chxProxyEnabled.Text = "Use socked proxy";
-            this.chxProxyEnabled.UseCompatibleTextRendering = true;
-            this.chxProxyEnabled.UseVisualStyleBackColor = true;
-            this.chxProxyEnabled.CheckedChanged += new System.EventHandler(this.chxUseProxy_CheckedChanged);
+            this.lblTextPreferedIPversion.AutoSize = true;
+            this.lblTextPreferedIPversion.Location = new System.Drawing.Point(3, 35);
+            this.lblTextPreferedIPversion.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblTextPreferedIPversion.Name = "lblTextPreferedIPversion";
+            this.lblTextPreferedIPversion.Size = new System.Drawing.Size(98, 16);
+            this.lblTextPreferedIPversion.TabIndex = 26;
+            this.lblTextPreferedIPversion.Text = "Use IP version:";
+            // 
+            // cbxNetworkIPversion
+            // 
+            this.tableLayoutPanel9.SetColumnSpan(this.cbxNetworkIPversion, 2);
+            this.cbxNetworkIPversion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxNetworkIPversion.FormattingEnabled = true;
+            this.cbxNetworkIPversion.Items.AddRange(new object[] {
+            "IPv4 or IPv6",
+            "Force IPv4",
+            "Force IPv6"});
+            this.cbxNetworkIPversion.Location = new System.Drawing.Point(159, 33);
+            this.cbxNetworkIPversion.Name = "cbxNetworkIPversion";
+            this.cbxNetworkIPversion.Size = new System.Drawing.Size(130, 24);
+            this.cbxNetworkIPversion.TabIndex = 32;
             // 
             // tabPageGPG
             // 
@@ -2427,6 +2575,13 @@ namespace NoteFly
             this.tabPageGPG.TabIndex = 2;
             this.tabPageGPG.Text = "GnuPG";
             this.tabPageGPG.UseVisualStyleBackColor = true;
+            // 
+            // tbGPGPath
+            // 
+            this.tbGPGPath.Location = new System.Drawing.Point(123, 60);
+            this.tbGPGPath.Name = "tbGPGPath";
+            this.tbGPGPath.Size = new System.Drawing.Size(221, 22);
+            this.tbGPGPath.TabIndex = 38;
             // 
             // btnGPGPathBrowse
             // 
@@ -2495,6 +2650,13 @@ namespace NoteFly
             this.tabAdvance.TabIndex = 2;
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
+            // 
+            // tbNotesSavePath
+            // 
+            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
+            this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
+            this.tbNotesSavePath.TabIndex = 39;
             // 
             // btnBrowse
             // 
@@ -2721,172 +2883,12 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
             // 
-            // numTimeout
-            // 
-            this.numTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.numTimeout.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numTimeout.Location = new System.Drawing.Point(159, 3);
-            this.numTimeout.Maximum = new decimal(new int[] {
-            30000,
-            0,
-            0,
-            0});
-            this.numTimeout.Minimum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numTimeout.Name = "numTimeout";
-            this.numTimeout.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.numTimeout.Size = new System.Drawing.Size(58, 22);
-            this.numTimeout.TabIndex = 23;
-            this.numTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numTimeout.Value = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            // 
-            // cbxNetworkIPversion
-            // 
-            this.tableLayoutPanel9.SetColumnSpan(this.cbxNetworkIPversion, 2);
-            this.cbxNetworkIPversion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxNetworkIPversion.FormattingEnabled = true;
-            this.cbxNetworkIPversion.Items.AddRange(new object[] {
-            "IPv4 or IPv6",
-            "Force IPv4",
-            "Force IPv6"});
-            this.cbxNetworkIPversion.Location = new System.Drawing.Point(159, 33);
-            this.cbxNetworkIPversion.Name = "cbxNetworkIPversion";
-            this.cbxNetworkIPversion.Size = new System.Drawing.Size(130, 24);
-            this.cbxNetworkIPversion.TabIndex = 32;
-            // 
-            // lblTextPreferedIPversion
-            // 
-            this.lblTextPreferedIPversion.AutoSize = true;
-            this.lblTextPreferedIPversion.Location = new System.Drawing.Point(3, 35);
-            this.lblTextPreferedIPversion.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.lblTextPreferedIPversion.Name = "lblTextPreferedIPversion";
-            this.lblTextPreferedIPversion.Size = new System.Drawing.Size(98, 16);
-            this.lblTextPreferedIPversion.TabIndex = 26;
-            this.lblTextPreferedIPversion.Text = "Use IP version:";
-            // 
-            // lblTextNetworkTimeout
-            // 
-            this.lblTextNetworkTimeout.AutoSize = true;
-            this.lblTextNetworkTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.lblTextNetworkTimeout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTextNetworkTimeout.Location = new System.Drawing.Point(3, 5);
-            this.lblTextNetworkTimeout.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.lblTextNetworkTimeout.Name = "lblTextNetworkTimeout";
-            this.lblTextNetworkTimeout.Size = new System.Drawing.Size(150, 20);
-            this.lblTextNetworkTimeout.TabIndex = 24;
-            this.lblTextNetworkTimeout.Text = "connection timeout time:";
-            this.lblTextNetworkTimeout.UseCompatibleTextRendering = true;
-            // 
-            // tableLayoutPanel10
-            // 
-            this.tableLayoutPanel10.ColumnCount = 4;
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.52174F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.47826F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
-            this.tableLayoutPanel10.Controls.Add(this.chxProxyEnabled, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.numProxyPort, 3, 1);
-            this.tableLayoutPanel10.Controls.Add(this.lblTextAddress, 0, 1);
-            this.tableLayoutPanel10.Controls.Add(this.iptbProxy, 1, 1);
-            this.tableLayoutPanel10.Controls.Add(this.lblTextPort, 2, 1);
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(12, 32);
-            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
-            this.tableLayoutPanel10.RowCount = 2;
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(424, 61);
-            this.tableLayoutPanel10.TabIndex = 32;
-            // 
-            // shortcutTextBoxNotesToFront
-            // 
-            this.shortcutTextBoxNotesToFront.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxNotesToFront.Location = new System.Drawing.Point(152, 59);
-            this.shortcutTextBoxNotesToFront.Name = "shortcutTextBoxNotesToFront";
-            this.shortcutTextBoxNotesToFront.ShortcutKeyposition = 112;
-            this.shortcutTextBoxNotesToFront.Size = new System.Drawing.Size(244, 22);
-            this.shortcutTextBoxNotesToFront.TabIndex = 14;
-            this.shortcutTextBoxNotesToFront.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxNotesToFront.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = false;
-            this.shortcutTextBoxNotesToFront.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxNotesToFront.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
-            // 
-            // shortcutTextBoxManageNotes
-            // 
-            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 33);
-            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
-            this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
-            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(244, 22);
-            this.shortcutTextBoxManageNotes.TabIndex = 12;
-            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
-            this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
-            // 
-            // shortcutTextBoxNewNote
-            // 
-            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(152, 3);
-            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
-            this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
-            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(244, 22);
-            this.shortcutTextBoxNewNote.TabIndex = 11;
-            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
-            this.shortcutTextBoxNewNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
-            // 
-            // tbDefaultEmail
-            // 
-            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
-            this.tbDefaultEmail.Enabled = false;
-            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
-            this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
-            this.tbDefaultEmail.TabIndex = 26;
-            // 
-            // iptbProxy
-            // 
-            this.iptbProxy.Enabled = false;
-            this.iptbProxy.Location = new System.Drawing.Point(92, 33);
-            this.iptbProxy.Name = "iptbProxy";
-            this.iptbProxy.Size = new System.Drawing.Size(187, 22);
-            this.iptbProxy.TabIndex = 26;
-            // 
-            // tbGPGPath
-            // 
-            this.tbGPGPath.Location = new System.Drawing.Point(123, 60);
-            this.tbGPGPath.Name = "tbGPGPath";
-            this.tbGPGPath.Size = new System.Drawing.Size(221, 22);
-            this.tbGPGPath.TabIndex = 38;
-            // 
-            // tbNotesSavePath
-            // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
-            this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
-            this.tbNotesSavePath.TabIndex = 39;
-            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(476, 402);
             this.Controls.Add(this.chxSettingsExpertEnabled);
             this.Controls.Add(this.tabControlSettings);
@@ -2952,9 +2954,12 @@ namespace NoteFly
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
             this.tabProxy.ResumeLayout(false);
+            this.tableLayoutPanel10.ResumeLayout(false);
+            this.tableLayoutPanel10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numProxyPort)).EndInit();
             this.tableLayoutPanel9.ResumeLayout(false);
             this.tableLayoutPanel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).EndInit();
             this.tabPageGPG.ResumeLayout(false);
             this.tabPageGPG.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
@@ -2963,9 +2968,6 @@ namespace NoteFly
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).EndInit();
-            this.tableLayoutPanel10.ResumeLayout(false);
-            this.tableLayoutPanel10.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

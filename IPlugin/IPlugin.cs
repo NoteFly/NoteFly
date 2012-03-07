@@ -29,37 +29,26 @@ namespace IPlugin
     /// <summary>
     /// Plugin interface
     /// status: DRAFT (Subject to change)
-    /// revision: 6
+    /// revision: 7
     /// </summary>
     public interface IPlugin
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether the plugin is enabled.
-        /// </summary>
-        bool Enabled { get; set; }
-
         /// <summary>
         /// Gets the filename of this plugin.
         /// </summary>
         string Filename { get; }
 
         /// <summary>
-        /// Gets the url where to get a xml file to see 
-        /// if this plugin is the latest version.
-        /// </summary>
-        string UpdateURL { get; }
-
-        /// <summary>
         /// Gets or sets the interface to let a plugin talk to NoteFly.
         /// </summary>
-        IPluginHost Host { get; set; }
+        IPluginHost Host { get; }
 
         /// <summary>
         /// Register plugin
         /// </summary>
         /// <param name="enabled">Is this plugin enabled.</param>
         /// <param name="file">The plugin file.</param>
-        void Register(bool enabled, string file);
+        void Register(string file, IPluginHost host);
 
         /// <summary>
         /// Adds ToolStripItem to the right click submenu share on FrmNote.

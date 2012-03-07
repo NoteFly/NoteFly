@@ -223,12 +223,12 @@ namespace NoteFly
             }
             else
             {
-                if (PluginsManager.pluginsenabled != null)
+                if (PluginsManager.EnabledPlugins != null)
                 {
                     // check plugin settings
-                    for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
+                    for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                     {
-                        if (!PluginsManager.pluginsenabled[i].SaveSettingsTab())
+                        if (!PluginsManager.EnabledPlugins[i].SaveSettingsTab())
                         {
                             this.tabControlSettings.SelectedTab = this.tabSharing;
                             return;
@@ -928,18 +928,18 @@ namespace NoteFly
         {
             if (this.tabControlSettings.SelectedTab == this.tabSharing)
             {
-                if (PluginsManager.pluginsenabled != null)
+                if (PluginsManager.EnabledPlugins != null)
                 {
                     while (this.tabControlSharing.TabCount > 1)
                     {
                         this.tabControlSharing.Controls.RemoveAt(1);
                     }
 
-                    for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
+                    for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                     {
-                        if (PluginsManager.pluginsenabled[i].InitShareSettingsTab() != null)
+                        if (PluginsManager.EnabledPlugins[i].InitShareSettingsTab() != null)
                         {
-                            this.tabControlSharing.Controls.Add(PluginsManager.pluginsenabled[i].InitShareSettingsTab());
+                            this.tabControlSharing.Controls.Add(PluginsManager.EnabledPlugins[i].InitShareSettingsTab());
                         }
                     }
                 }

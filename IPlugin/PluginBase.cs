@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="PluginBase.cs" company="NoteFly">
-// Copyright 2011 Tom
+// Copyright 2011-2012 Tom
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,11 +28,6 @@ namespace IPlugin
     public abstract class PluginBase : IPlugin
     {
         /// <summary>
-        /// A value indicating wheter this plugin is enabled.
-        /// </summary>
-        private bool enabled = false;
-
-        /// <summary>
         /// The filename of this plugin.
         /// </summary>
         private string file;
@@ -41,22 +36,6 @@ namespace IPlugin
         /// Access to NoteFly
         /// </summary>
         private IPluginHost host;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the plugin is enabled.
-        /// </summary>
-        public bool Enabled
-        {
-            get
-            {
-                return this.enabled;
-            }
-
-            set
-            {
-                this.enabled = value;
-            }
-        }
 
         /// <summary>
         /// Gets the plugin filename.
@@ -70,17 +49,6 @@ namespace IPlugin
         }
 
         /// <summary>
-        /// Gets the plugin filename.
-        /// </summary>
-        public virtual string UpdateURL
-        {
-            get
-            {
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the interface to let the plugin talk to NoteFly.
         /// </summary>
         public IPluginHost Host
@@ -89,23 +57,18 @@ namespace IPlugin
             {
                 return this.host;
             }
-
-            set
-            {
-                this.host = value;
-            }
         }
 
         /// <summary>
         /// Register the plugin
         /// string name, string author, string description, string version, 
         /// </summary>
-        /// <param name="enabled">Is the plugin enabled.</param>
         /// <param name="file">The plugin file.</param>
-        public void Register(bool enabled, string file)
+        /// <param name="name">Is the plugin name.</param>
+        public void Register(string file, IPluginHost host)
         {
-            this.enabled = enabled;
             this.file = file;
+            this.host = host;
         }
 
         /// <summary>

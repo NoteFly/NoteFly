@@ -49,6 +49,7 @@ namespace NoteFly
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
+            this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
             this.SetFormTitle();
             Strings.TranslateForm(this);
             this.pluginGrid.Enabled = Settings.ProgramPluginsAllEnabled;
@@ -157,7 +158,7 @@ namespace NoteFly
             string response = (string)e.Result;
             bool alreadyinstalled = false;
             bool updateavailable = false;
-            string[] detailsplugin = xmlUtil.ParserDetailsPlugin(response, PluginsManager.GetAllPluginsNames(), out alreadyinstalled, out updateavailable);
+            string[] detailsplugin = xmlUtil.ParserDetailsPlugin(response, PluginsManager.GetInstalledPlugins(), out alreadyinstalled, out updateavailable);
             if (detailsplugin != null)
             {
                 if (alreadyinstalled)
@@ -215,7 +216,7 @@ namespace NoteFly
         /// <param name="newfiles"></param>
         private void downloader_DownloadCompleet(string[] newfiles)
         {
-            this.pluginGrid.DrawAllPluginsDetails(PluginGrid.DEFAULTWITH);            
+            this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);            
         }
 
         /// <summary>

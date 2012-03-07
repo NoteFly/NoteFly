@@ -33,18 +33,28 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PluginGrid));
+            this.lblTextNopluginsinstalled = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // lblTextNopluginsinstalled
+            // 
+            resources.ApplyResources(this.lblTextNopluginsinstalled, "lblTextNopluginsinstalled");
+            this.lblTextNopluginsinstalled.Name = "lblTextNopluginsinstalled";
             // 
             // PluginGrid
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblTextNopluginsinstalled);
             this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "PluginGrid";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Label lblTextNopluginsinstalled;
     }
 }

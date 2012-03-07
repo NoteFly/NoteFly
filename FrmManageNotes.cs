@@ -97,13 +97,13 @@ namespace NoteFly
                 this.btnShowSelectedNotes.Text = Strings.T("&show selected");
             }
 
-            if (PluginsManager.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int p = 0; p < PluginsManager.pluginsenabled.Length; p++)
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
                 {
-                    if (PluginsManager.pluginsenabled[p].InitFrmManageNotesBtns() != null)
+                    if (PluginsManager.EnabledPlugins[p].InitFrmManageNotesBtns() != null)
                     {
-                        Button[] buttons = PluginsManager.pluginsenabled[p].InitFrmManageNotesBtns();
+                        Button[] buttons = PluginsManager.EnabledPlugins[p].InitFrmManageNotesBtns();
                         for (int i = 0; i < buttons.Length; i++)
                         {
                             this.tableLayoutPanelButtons.ColumnCount += 1;

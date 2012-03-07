@@ -182,13 +182,13 @@ namespace NoteFly
             this.icon.ContextMenuStrip.Items.Add(this.menuPlugins);
 
             // Create trayicon plugin ToolStripMenuItem items, if any.
-            if (PluginsManager.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int p = 0; p < PluginsManager.pluginsenabled.Length; p++)
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
                 {
-                    if (PluginsManager.pluginsenabled[p].InitTrayIconMenu() != null)
+                    if (PluginsManager.EnabledPlugins[p].InitTrayIconMenu() != null)
                     {
-                        ToolStripItem toolstripitem = PluginsManager.pluginsenabled[p].InitTrayIconMenu();
+                        ToolStripItem toolstripitem = PluginsManager.EnabledPlugins[p].InitTrayIconMenu();
                         toolstripitem.Size = new System.Drawing.Size(144, 22);
                         toolstripitem.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
                         this.icon.ContextMenuStrip.Items.Add(toolstripitem);

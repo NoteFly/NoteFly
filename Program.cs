@@ -317,10 +317,10 @@ namespace NoteFly
             SyntaxHighlight.InitHighlighter();
             notes = new Notes(resetpositions);
 
-            if (Settings.ProgramPluginsAllEnabled)
-            {
-                PluginsManager.pluginsenabled = PluginsManager.GetPlugins(true);
-            }
+            //if (Settings.ProgramPluginsAllEnabled)
+            //{
+                PluginsManager.LoadPlugins();
+            //}
 
             formmanager = new FormManager(notes);
             trayicon = new TrayIcon(formmanager);

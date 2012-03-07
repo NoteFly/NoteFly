@@ -23,6 +23,7 @@ namespace NoteFly
     using System.IO;
     using System.Reflection;
     using System.Collections.Generic;
+    using System.Text;
 
     /// <summary>
     /// PluginsManager class, provides plugins functions
@@ -30,46 +31,190 @@ namespace NoteFly
     public static class PluginsManager
     {
         /// <summary>
+        /// 
+        /// </summary>
+        private static List<string> installedplugins;
+
+        /// <summary>
         /// All the enabled plugins
-        /// FIXME: Make CLS-compliant
         /// </summary>
-        public static IPlugin.IPlugin[] pluginsenabled;
+        private static List<IPlugin.IPlugin> enabledplugins;
 
         /// <summary>
-        /// dll files
+        /// An array of dll files that are not allow to be loaded as notefly plugin in the notefly plugin folder.
         /// </summary>
-        private static string[] plugindllexcluded;
+        private static string[] excludedplugindlls;
+
 
         /// <summary>
-        /// Load plugin .dll files from pluginfolder
-        /// FIXME: Make CLS-compliant
+        /// Gets
         /// </summary>
-        /// <param name="onlyenabled">True to only get the the plugins that are enable</param>
-        /// <returns>A array with plugins</returns>
-        public static IPlugin.IPlugin[] GetPlugins(bool onlyenabled)
+        public static string[] InstalledPlugins
         {
-            System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
+            get
+            {
+                return installedplugins.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Gets the list with all enabled plugins
+        /// </summary>
+        public static List<IPlugin.IPlugin> EnabledPlugins
+        {
+            get
+            {
+                return enabledplugins;
+            }
+        }
+
+        /// <summary>
+        /// Load all enabled plugins
+        /// </summary>
+        public static void LoadPlugins()
+        {
+            installedplugins = new List<string>();
+            enabledplugins = new List<IPlugin.IPlugin>();
             if (Directory.Exists(Settings.ProgramPluginsFolder))
             {
-                string[] pluginfiles = GetFilesPluginDir();
-                string[] pluginsenabled = Settings.ProgramPluginsEnabled.Split('|'); // | is illegal as filename.
-                plugindllexcluded = Settings.ProgramPluginsDllexclude.Split('|');
-                for (int i = 0; i < pluginfiles.Length; i++)
-                {
-                    bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
-                    if (!IsPluginFilesExcluded(pluginfiles[i]) && ((pluginenabled && onlyenabled) || !onlyenabled))
+                string[] enabledpluginsfilenames = Settings.ProgramPluginsEnabled.Split('|');
+                string[] dllfiles = GetDllFilesPluginFolder();
+                excludedplugindlls = Settings.ProgramPluginsDllexclude.Split('|');
+
+                for (int i = 0; i < dllfiles.Length; i++)
+                {                    
+                    if (!IsPluginFileExcluded(dllfiles[i]))
                     {
-                        pluginslist = LoadPlugin(pluginslist, pluginfiles[i], pluginenabled);
+                        installedplugins.Add(dllfiles[i]);
+                        foreach (string enabledpluginfilename in enabledpluginsfilenames)
+                        {
+                            if (enabledpluginfilename.Equals(dllfiles[i], StringComparison.Ordinal))
+                            {
+                                EnablePlugin(dllfiles[i]);
+                            }
+                        }                          
                     }
                 }
             }
             else
             {
-                Log.Write(LogType.info, "Plugin folder does not exist.");
+                Log.Write(LogType.info, "Plugin folder does not exist, recreate it.");
+                Directory.CreateDirectory(Settings.ProgramPluginsFolder);
+            }
+        }
+
+        /// <summary>
+        /// Load a plugin.
+        /// </summary>
+        /// <param name="dllfile">The current list with loaded plugins</param>
+        public static void EnablePlugin(string dllfilename)
+        {
+            try
+            {
+                System.Reflection.Assembly pluginassembly = null;
+                pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, dllfilename));
+                if (pluginassembly != null)
+                {
+                    foreach (Type curplugintype in pluginassembly.GetTypes())
+                    {
+                        if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
+                        {
+                            Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
+                            if (plugintype != null)
+                            {
+                                IPlugin.IPlugin plugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                                plugin.Register(dllfilename, NoteFly.Program.Notes);
+                                enabledplugins.Add(plugin);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write(LogType.exception, "Can't load file: " + dllfilename + " " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pluginname"></param>
+        /// <returns></returns>
+        public static bool DisablePlugin(string dllfilename)
+        {
+            for (int i = 0; i < enabledplugins.Count; i++)
+            {
+                if (enabledplugins[i].Filename.Equals(dllfilename, StringComparison.Ordinal))
+                {
+                    enabledplugins.RemoveAt(i);
+                    return true;
+                }
             }
 
-            return pluginslist.ToArray();
+            return false;
         }
+
+        /// <summary>
+        /// Get all the dll filenames(without full path) in the plugin directory.
+        /// </summary>
+        /// <returns>All dll filenames as string array</returns>
+        private static string[] GetDllFilesPluginFolder()
+        {
+            string[] pluginfiles = Directory.GetFiles(Settings.ProgramPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
+            string[] pluginfilenames = new string[pluginfiles.Length];
+            for (int i = 0; i < pluginfiles.Length; i++)
+            {
+                pluginfilenames[i] = Path.GetFileName(pluginfiles[i]);
+            }
+
+            pluginfiles = null;
+            return pluginfilenames;
+        }
+
+        /// <summary>
+        /// Is the dll files excluded as plugin in the plugin directory.
+        /// </summary>
+        /// <param name="dllfilename">The dll filename without path</param>
+        /// <returns>True if it's excluded</returns>
+        private static bool IsPluginFileExcluded(string dllfilename)
+        {
+            if (excludedplugindlls != null)
+            {
+                for (int i = 0; i < excludedplugindlls.Length; i++)
+                {
+                    if (dllfilename.Equals(excludedplugindlls[i], StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Get the names of all plugins installed.
+        /// </summary>
+        /// <returns></returns>
+        public static string[] GetInstalledPlugins()
+        {
+            List<string> pluginsnames = new List<string>();
+            for (int i = 0; i < installedplugins.Count; i++)
+            {
+                Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, installedplugins[i]));
+                string pluginname = GetPluginName(pluginassembly);
+                if (!String.IsNullOrEmpty(pluginname))
+                {
+                    pluginsnames.Add(pluginname);
+                }                
+            }
+
+            return pluginsnames.ToArray();
+        }
+
+
+        #region Getting plugin details
 
         /// <summary>
         /// Get the name of the plugin.
@@ -159,28 +304,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pluginname"></param>
-        /// <returns></returns>
-        public static short[] GetPluginVersionByName(string pluginname)
-        {
-            short[] pluginversion = new short[3];
-            IPlugin.IPlugin[] plugins = GetPlugins(false);
-            for (int i = 0; i < plugins.Length; i++)
-            {
-                Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, plugins[i].Filename));
-                if (GetPluginName(pluginassembly).Equals(pluginname, StringComparison.Ordinal))
-                {
-                    string pluginversionstring = GetPluginVersion(pluginassembly);
-                    pluginversion = Program.ParserVersionString(pluginversionstring);
-                }
-            }
-
-            return pluginversion;
-        }
-
-        /// <summary>
         /// Get version of the plugin as string.
         /// </summary>
         /// <param name="pluginassembly">The plugin assembly</param>
@@ -196,6 +319,47 @@ namespace NoteFly
                 Log.Write(LogType.exception, "Plugin " + pluginassembly.Location + " has no version information.");
                 return Strings.T("unknown");
             }
+        }
+
+        #endregion Getting plugin details
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dllfilename"></param>
+        /// <returns></returns>
+        public static bool IsPluginEnabled(string dllfilename)
+        {
+            for (int i = 0; i < enabledplugins.Count; i++)
+            {
+                if (enabledplugins[i].Filename.Equals(dllfilename, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pluginname"></param>
+        /// <returns></returns>
+        public static short[] GetPluginVersionByName(string pluginname)
+        {
+            short[] pluginversion = new short[3];
+            for (int i = 0; i < installedplugins.Count; i++)
+            {
+                Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, installedplugins[i]));
+                if (GetPluginName(pluginassembly).Equals(pluginname, StringComparison.Ordinal))
+                {
+                    string pluginversionstring = GetPluginVersion(pluginassembly);
+                    pluginversion = Program.ParserVersionString(pluginversionstring);
+                }
+            }
+
+            return pluginversion;
         }
 
         /// <summary>
@@ -225,145 +389,31 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Is the dll files excluded as plugin in the plugin directory.
-        /// </summary>
-        /// <param name="dllfilename">The dll filename without path</param>
-        /// <returns>True if it's excluded</returns>
-        private static bool IsPluginFilesExcluded(string dllfilename)
-        {
-            if (plugindllexcluded != null)
-            {
-                for (int i = 0; i < plugindllexcluded.Length; i++)
-                {
-                    if (dllfilename == plugindllexcluded[i])
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Load a plugin.
-        /// </summary>
-        /// <param name="pluginslist">The current list with loaded plugins</param>
-        /// <param name="pluginfile">The plugin filename to load</param>
-        /// <param name="pluginenabled">Is plugin enabled</param>
-        /// <returns>New list with loaded plugins</returns>
-        private static List<IPlugin.IPlugin> LoadPlugin(System.Collections.Generic.List<IPlugin.IPlugin> pluginslist, string pluginfile, bool pluginenabled)
-        {
-            try
-            {
-                System.Reflection.Assembly pluginassembly = null;
-                pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfile));
-                if (pluginassembly != null)
-                {
-                    foreach (Type curplugintype in pluginassembly.GetTypes())
-                    {
-                        if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
-                        {
-                            Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
-                            if (plugintype != null)
-                            {
-                                IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
-                                iplugin.Host = NoteFly.Program.Notes;
-                                iplugin.Register(pluginenabled, pluginfile);
-                                pluginslist.Add(iplugin);                                
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Write(LogType.exception, "Can't load plugin: " + pluginfile + " " + ex.Message);
-            }
-
-            return pluginslist;
-        }
-
-        /// <summary>
-        /// Get all dll files in the plugin directory
-        /// </summary>
-        /// <returns>All dll filenames as string array</returns>
-        private static string[] GetFilesPluginDir()
-        {
-            string[] pluginfilepaths = Directory.GetFiles(Settings.ProgramPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
-            string[] pluginfiles = new string[pluginfilepaths.Length];
-            for (int i = 0; i < pluginfilepaths.Length; i++)
-            {
-                pluginfiles[i] = Path.GetFileName(pluginfilepaths[i]);
-            }
-
-            pluginfilepaths = null;
-            return pluginfiles;
-        }
-
-        /// <summary>
-        /// Get if plugin is enabled.
-        /// </summary>
-        /// <param name="pluginsenabled">A comma seperated list of enabled plugin assemblies</param>
-        /// <param name="pluginfile">The filename without path of the plugin to be check if it's enabled.</param>
-        /// <returns>true if pluginfile is enabled.</returns>
-        private static bool IsPluginEnabled(string[] pluginsenabled, string pluginfile)
-        {
-            for (int p = 0; p < pluginsenabled.Length; p++)
-            {
-                if (pluginsenabled[p] == pluginfile)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Save the enabled plugin settings.
         /// </summary>
-        public static void SetSettingsPluginsEnabled(IPlugin.IPlugin[] pluginsenabled)
+        public static void SaveEnabledPlugins()
         {
-            Settings.ProgramPluginsEnabled = string.Empty;
-            if (pluginsenabled != null)
+            StringBuilder sbenabledplugin = new StringBuilder();
+            if (enabledplugins != null)
             {
                 bool first = true;
-                for (int i = 0; i < pluginsenabled.Length; i++)
+                for (int i = 0; i < enabledplugins.Count; i++)
                 {
-                    if (pluginsenabled[i].Enabled)
+                    if (first)
                     {
-                        if (first)
-                        {
-                            first = false;
-                        }
-                        else
-                        {
-                            Settings.ProgramPluginsEnabled += "|";
-                        }
-
-                        Settings.ProgramPluginsEnabled += pluginsenabled[i].Filename;
+                        first = false;
                     }
+                    else
+                    {
+                        sbenabledplugin.Append("|");                        
+                    }
+
+                    sbenabledplugin.Append(enabledplugins[i].Filename);
                 }
             }
-        }
 
-        /// <summary>
-        /// Get the names of all plugins installed.
-        /// </summary>
-        /// <returns></returns>
-        public static string[] GetAllPluginsNames()
-        {
-            string[] pluginfiles = GetFilesPluginDir();
-            string[] pluginsnames = new string[pluginfiles.Length];
-            for (int i = 0; i < pluginfiles.Length; i++)
-            {
-                Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
-                string name = GetPluginName(pluginassembly);
-                pluginsnames[i] = name;
-            }
-
-            return pluginsnames;
+            Settings.ProgramPluginsEnabled = sbenabledplugin.ToString();
+            xmlUtil.WriteSettings();
         }
     }
 }

@@ -164,6 +164,7 @@ namespace NoteFly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.okButton;
             this.ClientSize = new System.Drawing.Size(235, 171);
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);

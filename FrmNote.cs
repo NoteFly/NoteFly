@@ -245,7 +245,10 @@ namespace NoteFly
             {
                 ToolStripMenuItem menuitem = (ToolStripMenuItem)toolstripmenuitem;
                 int p = (int)menuitem.Tag;
-                PluginsManager.pluginsenabled[p].ShareMenuClicked(this.rtbNote, this.note.Title);
+                if (PluginsManager.EnabledPlugins != null)
+                {
+                    PluginsManager.EnabledPlugins[p].ShareMenuClicked(this.rtbNote, this.note.Title);
+                }
             }
             catch (Exception exc)
             {
@@ -489,13 +492,13 @@ namespace NoteFly
                 this.menuFrmNoteOptions.Items.RemoveAt(9);
             }
 
-            if (PluginsManager.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int p = 0; p < PluginsManager.pluginsenabled.Length; p++)
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
                 {
-                    if (PluginsManager.pluginsenabled[p].InitFrmNoteMenu() != null)
+                    if (PluginsManager.EnabledPlugins[p].InitFrmNoteMenu() != null)
                     {
-                        this.menuFrmNoteOptions.Items.Add(PluginsManager.pluginsenabled[p].InitFrmNoteMenu());
+                        this.menuFrmNoteOptions.Items.Add(PluginsManager.EnabledPlugins[p].InitFrmNoteMenu());
                     }
                 }
             }
@@ -868,13 +871,13 @@ namespace NoteFly
                 }
             }
 
-            if (PluginsManager.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int i = 0; i < PluginsManager.pluginsenabled.Length; i++)
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                 {
-                    if (PluginsManager.pluginsenabled[i].InitFrmNoteShareMenu() != null)
+                    if (PluginsManager.EnabledPlugins[i].InitFrmNoteShareMenu() != null)
                     {
-                        ToolStripMenuItem menuitem = PluginsManager.pluginsenabled[i].InitFrmNoteShareMenu();
+                        ToolStripMenuItem menuitem = PluginsManager.EnabledPlugins[i].InitFrmNoteShareMenu();
                         menuitem.Tag = i;
                         menuitem.Click += new EventHandler(this.menuSharePluginClicked);
                         this.menuSendTo.DropDownItems.Add(menuitem);
