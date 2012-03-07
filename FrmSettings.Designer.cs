@@ -2107,7 +2107,7 @@ namespace NoteFly
             this.tabSharing.Padding = new System.Windows.Forms.Padding(3);
             this.tabSharing.Size = new System.Drawing.Size(468, 337);
             this.tabSharing.TabIndex = 1;
-            this.tabSharing.Text = "Sharing";
+            this.tabSharing.Text = "Actions";
             this.tabSharing.UseVisualStyleBackColor = true;
             // 
             // tabControlSharing
@@ -2148,9 +2148,9 @@ namespace NoteFly
             this.chxSocialEmailEnabled.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chxSocialEmailEnabled.Location = new System.Drawing.Point(14, 27);
             this.chxSocialEmailEnabled.Name = "chxSocialEmailEnabled";
-            this.chxSocialEmailEnabled.Size = new System.Drawing.Size(195, 21);
+            this.chxSocialEmailEnabled.Size = new System.Drawing.Size(198, 21);
             this.chxSocialEmailEnabled.TabIndex = 25;
-            this.chxSocialEmailEnabled.Text = "Enable E-mail in share menu";
+            this.chxSocialEmailEnabled.Text = "Enable E-mail in action menu";
             this.chxSocialEmailEnabled.UseCompatibleTextRendering = true;
             this.chxSocialEmailEnabled.UseVisualStyleBackColor = true;
             // 
@@ -2378,7 +2378,7 @@ namespace NoteFly
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.52174F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.47826F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
             this.tableLayoutPanel10.Controls.Add(this.chxProxyEnabled, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.numProxyPort, 3, 1);
             this.tableLayoutPanel10.Controls.Add(this.lblTextAddress, 0, 1);
@@ -2411,7 +2411,7 @@ namespace NoteFly
             // numProxyPort
             // 
             this.numProxyPort.Enabled = false;
-            this.numProxyPort.Location = new System.Drawing.Point(326, 33);
+            this.numProxyPort.Location = new System.Drawing.Point(325, 33);
             this.numProxyPort.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2446,13 +2446,13 @@ namespace NoteFly
             this.iptbProxy.Enabled = false;
             this.iptbProxy.Location = new System.Drawing.Point(91, 33);
             this.iptbProxy.Name = "iptbProxy";
-            this.iptbProxy.Size = new System.Drawing.Size(187, 22);
+            this.iptbProxy.Size = new System.Drawing.Size(186, 22);
             this.iptbProxy.TabIndex = 26;
             // 
             // lblTextPort
             // 
             this.lblTextPort.AutoSize = true;
-            this.lblTextPort.Location = new System.Drawing.Point(284, 35);
+            this.lblTextPort.Location = new System.Drawing.Point(283, 35);
             this.lblTextPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextPort.Name = "lblTextPort";
             this.lblTextPort.Size = new System.Drawing.Size(34, 16);

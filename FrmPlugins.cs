@@ -205,7 +205,6 @@ namespace NoteFly
                 this.frmdownloader = new FrmDownloader(Strings.T("Downloading plugin.."));
                 this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(this.downloader_DownloadCompleet);
                 this.frmdownloader.Show();
-                //PluginsManager.pluginsenabled = PluginsManager.GetPlugins(true);
                 this.frmdownloader.BeginDownload(this.currentplugindownloadurl, Settings.ProgramPluginsFolder);                
             }
         }
@@ -215,7 +214,8 @@ namespace NoteFly
         /// </summary>
         /// <param name="newfiles"></param>
         private void downloader_DownloadCompleet(string[] newfiles)
-        {
+        {            
+            PluginsManager.LoadPlugins();
             this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);            
         }
 

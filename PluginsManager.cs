@@ -33,12 +33,12 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        private static List<string> installedplugins;
+        private static List<string> installedplugins = new List<string>();
 
         /// <summary>
         /// All the enabled plugins
         /// </summary>
-        private static List<IPlugin.IPlugin> enabledplugins;
+        private static List<IPlugin.IPlugin> enabledplugins = new List<IPlugin.IPlugin>();
 
         /// <summary>
         /// An array of dll files that are not allow to be loaded as notefly plugin in the notefly plugin folder.
@@ -73,8 +73,8 @@ namespace NoteFly
         /// </summary>
         public static void LoadPlugins()
         {
-            installedplugins = new List<string>();
-            enabledplugins = new List<IPlugin.IPlugin>();
+            installedplugins.Clear();
+            enabledplugins.Clear();
             if (Directory.Exists(Settings.ProgramPluginsFolder))
             {
                 string[] enabledpluginsfilenames = Settings.ProgramPluginsEnabled.Split('|');
@@ -137,10 +137,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Disable a plugin
         /// </summary>
         /// <param name="pluginname"></param>
-        /// <returns></returns>
+        /// <returns>return true if dll filename was found and plugin is disabled.</returns>
         public static bool DisablePlugin(string dllfilename)
         {
             for (int i = 0; i < enabledplugins.Count; i++)

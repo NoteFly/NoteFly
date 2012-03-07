@@ -3,36 +3,38 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: NoteFly-3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-04 23:01+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2012-03-07 20:13+0100\n"
+"PO-Revision-Date: 2012-03-07 20:16+0100\n"
+"Last-Translator: \n"
+"Language-Team: English <root@d9ping.nl>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: FrmAbout.cs:50
 msgid "Version "
 msgstr ""
 
-#: FrmAbout.cs:62 TrayIcon.cs:203
+#: FrmAbout.cs:62
+#: TrayIcon.cs:203
 msgid "About"
 msgstr ""
 
-#: FrmDownloader.cs:220
+#: FrmDownloader.cs:235
 msgid "Downloads completed"
 msgstr ""
 
-#: FrmDownloader.cs:231
+#: FrmDownloader.cs:246
 msgid "Download canceled."
 msgstr ""
 
-#: FrmDownloader.cs:237
+#: FrmDownloader.cs:252
 msgid "Download error:"
 msgstr ""
 
@@ -41,11 +43,15 @@ msgstr ""
 msgid "oh no.. {0} crashed."
 msgstr ""
 
-#: FrmManageNotes.cs:88 FrmManageNotes.cs:520 FrmManageNotes.cs:554
+#: FrmManageNotes.cs:88
+#: FrmManageNotes.cs:520
+#: FrmManageNotes.cs:554
 msgid "&hide selected"
 msgstr ""
 
-#: FrmManageNotes.cs:92 FrmManageNotes.cs:97 FrmManageNotes.cs:525
+#: FrmManageNotes.cs:92
+#: FrmManageNotes.cs:97
+#: FrmManageNotes.cs:525
 #: FrmManageNotes.cs:558
 msgid "&show selected"
 msgstr ""
@@ -91,7 +97,8 @@ msgstr ""
 msgid "skin"
 msgstr ""
 
-#: FrmManageNotes.cs:864 FrmManageNotes.cs:885
+#: FrmManageNotes.cs:864
+#: FrmManageNotes.cs:885
 msgid "Transparency level not a integer or double."
 msgstr ""
 
@@ -119,63 +126,77 @@ msgstr ""
 msgid "new note"
 msgstr ""
 
-#: FrmNewNote.cs:278
+#: FrmNewNote.cs:281
 msgid "Please enter some content."
 msgstr ""
 
-#: FrmNewNote.cs:296
+#: FrmNewNote.cs:299
 msgid "Could not write note."
 msgstr ""
 
-#: FrmNewNote.cs:892 FrmNewNote.cs:1240
+#: FrmNewNote.cs:897
+#: FrmNewNote.cs:1245
 msgid "There is no text on the clipboard."
 msgstr ""
 
-#: FrmNote.cs:395
+#: FrmNote.cs:387
 msgid "Note has no title and no content."
 msgstr ""
 
-#: FrmNote.cs:402
+#: FrmNote.cs:394
 msgid "Can't launch email client."
 msgstr ""
 
-#: FrmNote.cs:759
+#: FrmNote.cs:751
 msgid "&Lock note"
 msgstr ""
 
-#: FrmNote.cs:760
+#: FrmNote.cs:752
 msgid " (click again to unlock)"
 msgstr ""
 
-#: FrmNote.cs:786
+#: FrmNote.cs:778
 msgid "&Roll up"
 msgstr ""
 
-#: FrmNote.cs:787
+#: FrmNote.cs:779
 msgid "(click again to Roll Down)"
 msgstr ""
 
-#: FrmNote.cs:834
+#: FrmNote.cs:826
 msgid "Save note to file"
 msgstr ""
 
-#: FrmPlugins.cs:62
+#: FrmPlugins.cs:63
 msgid "Plugins"
 msgstr ""
 
-#: FrmPlugins.cs:150
+#: FrmPlugins.cs:169
+msgid "update"
+msgstr ""
+
+#: FrmPlugins.cs:174
+msgid "already installed"
+msgstr ""
+
+#: FrmPlugins.cs:180
+msgid "download"
+msgstr ""
+
+#: FrmPlugins.cs:189
 msgid "version: "
 msgstr ""
 
-#: FrmPlugins.cs:151
+#: FrmPlugins.cs:190
 msgid "license: "
 msgstr ""
 
-#: FrmPlugins.cs:166
+#: FrmPlugins.cs:205
 msgid "Downloading plugin.."
 msgstr ""
 
-#: FrmSettings.cs:105 FrmSettings.cs:106
+#: FrmSettings.cs:105
+#: FrmSettings.cs:106
 msgid ""
 "Directory does not exist.\n"
 "Please choice a valid directory."
@@ -322,8 +343,7 @@ msgid "CVS file does not seems to be in the Stickies format."
 msgstr ""
 
 #: ImportNotes.cs:375
-msgid ""
-"CVS file does not seems to be in the Stickies format, excepting 5 columns."
+msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
 msgstr ""
 
 #: ImportNotes.cs:510
@@ -356,9 +376,7 @@ msgid "many notes"
 msgstr ""
 
 #: Notes.cs:665
-msgid ""
-"There are many notes loading this can take a while, do you want to load them "
-"all?"
+msgid "There are many notes loading this can take a while, do you want to load them all?"
 msgstr ""
 
 #: Notes.cs:685
@@ -371,31 +389,29 @@ msgid ""
 "Hide some notes to make loading faster."
 msgstr ""
 
-#: PluginGrid.cs:77
-msgid "Their are no plugins installed."
-msgstr ""
-
-#: PluginGrid.cs:193
+#: PluginGrid.cs:156
 msgid "version:"
 msgstr ""
 
-#: PluginGrid.cs:209
+#: PluginGrid.cs:172
 msgid "author:"
 msgstr ""
 
-#: PluginGrid.cs:225
+#: PluginGrid.cs:188
 msgid "description:"
 msgstr ""
 
-#: PluginGrid.cs:273
+#: PluginGrid.cs:250
 msgid "disable"
 msgstr ""
 
-#: PluginGrid.cs:278
+#: PluginGrid.cs:255
 msgid "enable"
 msgstr ""
 
-#: PluginsManager.cs:81 PluginsManager.cs:113 PluginsManager.cs:175
+#: PluginsManager.cs:226
+#: PluginsManager.cs:258
+#: PluginsManager.cs:320
 msgid "unknown"
 msgstr ""
 
@@ -404,8 +420,7 @@ msgstr ""
 msgid ""
 "You are now running {0} as elevated Administrator.\n"
 "Which is not recommended for security.\n"
-"Press OK if your understand the risks of running as administrator and want "
-"to hide this message in the future."
+"Press OK if your understand the risks of running as administrator and want to hide this message in the future."
 msgstr ""
 
 #: Program.cs:282
@@ -492,32 +507,36 @@ msgid ""
 "Are you sure you want to shutdown {0}?"
 msgstr ""
 
-# menuEditNote
-msgid "&Edit note"
+# menuSaveNewNote
+msgid "&Save note"
 msgstr ""
 
-# menuNoteSkins
-msgid "S&kin"
+# menuShowtoolbar
+msgid "Show format tools"
 msgstr ""
 
-# menuSendTo
-msgid "&Share"
-msgstr ""
-
-# menuOnTop
-msgid "Sticky on &top"
-msgstr ""
-
-# menuWordWrap
+# menuWordWarp
 msgid "Word wrap"
+msgstr ""
+
+# menuStickyOnTop
+msgid "Sticky on &top"
 msgstr ""
 
 # menuCopy
 msgid "&Copy"
 msgstr ""
 
-# menuHideNote
-msgid "&Hide note"
+# menuPasteTo
+msgid "&Paste to"
+msgstr ""
+
+# menuImportfile
+msgid "Import.."
+msgstr ""
+
+# menuCancelNewNote
+msgid "Canc&el note"
 msgstr ""
 
 # chxSettingsExpertEnabled
@@ -712,30 +731,31 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-# menuSaveNewNote
-msgid "&Save note"
-msgstr ""
-
-# menuShowtoolbar
-msgid "Show format tools"
-msgstr ""
-
-# menuPasteTo
-msgid "&Paste to"
-msgstr ""
-
-# menuImportfile
-msgid "Import.."
-msgstr ""
-
-# menuCancelNewNote
-msgid "Canc&el note"
-msgstr ""
-
 # tabPagePluginsInstalled
 msgid "Installed"
 msgstr ""
 
 # tabPagePluginsAvailable
 msgid "available"
+msgstr ""
+
+# menuEditNote
+msgid "&Edit note"
+msgstr ""
+
+# menuNoteSkins
+msgid "S&kin"
+msgstr ""
+
+# menuSendTo
+msgid "&Share"
+msgstr ""
+
+# menuHideNote
+msgid "&Hide note"
+msgstr ""
+
+
+# menuSendTo
+msgid "&Actions"
 msgstr ""

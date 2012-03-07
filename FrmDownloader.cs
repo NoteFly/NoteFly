@@ -365,22 +365,38 @@ namespace NoteFly
             bool succeeded = false;
             if (Directory.Exists(this.storefolder) && File.Exists(zipfile))
             {
-                ZipStorer zip = ZipStorer.Open(zipfile, FileAccess.Read);
-                List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
-                foreach (ZipStorer.ZipFileEntry entry in dir)
+                ZipStorer zip = null;
+                try
                 {
-                    for (int i = 0; i < extensions.Length; i++)
+                    zip = ZipStorer.Open(zipfile, FileAccess.Read);
+                    List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
+                    foreach (ZipStorer.ZipFileEntry entry in dir)
                     {
-                        if (entry.FilenameInZip.EndsWith(extensions[i]))
+                        for (int i = 0; i < extensions.Length; i++)
                         {
-                            zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip));
+                            if (entry.FilenameInZip.EndsWith(extensions[i]))
+                            {
+                                // disable plugin for as we are updating.
+                                PluginsManager.DisablePlugin(entry.FilenameInZip);
+                                // extract file
+                                zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip));                                                                
+                            }
                         }
                     }
 
+                    succeeded = true;
                 }
-
-                succeeded = true;
-                zip.Close();
+                catch (Exception)
+                {
+                    succeeded = false;
+                }
+                finally
+                {
+                    if (zip != null)
+                    {
+                        zip.Close();
+                    }
+                }                                
             }
 
             return succeeded;

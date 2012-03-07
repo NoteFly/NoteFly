@@ -134,7 +134,7 @@ namespace NoteFly
         {
             get
             {
-                return "alpha2";
+                return "beta1";
             }
         }
 
@@ -317,10 +317,10 @@ namespace NoteFly
             SyntaxHighlight.InitHighlighter();
             notes = new Notes(resetpositions);
 
-            //if (Settings.ProgramPluginsAllEnabled)
-            //{
+            if (Settings.ProgramPluginsAllEnabled)
+            {
                 PluginsManager.LoadPlugins();
-            //}
+            }
 
             formmanager = new FormManager(notes);
             trayicon = new TrayIcon(formmanager);

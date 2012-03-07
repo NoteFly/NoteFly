@@ -73,9 +73,8 @@ namespace NoteFly
                 }
 
                 this.btnPluginsStatus = new Button[PluginsManager.InstalledPlugins.Length];
-                this.tlpnlPlugins = new TableLayoutPanel[PluginsManager.InstalledPlugins.Length];
-                //int width = this.ClientRectangle.Width - 30;
-                width -= 120;
+                this.tlpnlPlugins = new TableLayoutPanel[PluginsManager.InstalledPlugins.Length];                
+                width -= 150;
                 if (width < MINWITH)
                 {
                     width = MINWITH;
@@ -112,8 +111,10 @@ namespace NoteFly
             Label lblPluginAuthor = new System.Windows.Forms.Label();
             Label lblTextPluginDescription = new System.Windows.Forms.Label();
             Label lblPluginDescription = new System.Windows.Forms.Label();
-            this.btnPluginsStatus[pluginpos] = new Button();            
-            this.tlpnlPlugins[pluginpos].SuspendLayout();            
+            this.btnPluginsStatus[pluginpos] = new Button();
+            this.tlpnlPlugins[pluginpos].SuspendLayout();
+            this.tlpnlPlugins[pluginpos].Padding = new Padding(0);
+            this.tlpnlPlugins[pluginpos].Margin = new Padding(0);
             this.tlpnlPlugins[pluginpos].ColumnCount = 3;
             this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.0000F));
             this.tlpnlPlugins[pluginpos].ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.0000F));
@@ -233,7 +234,7 @@ namespace NoteFly
                 this.SetPluginStatus(pos, dllfilename);
             }
 
-            PluginsManager.SaveEnabledPlugins();            
+            PluginsManager.SaveEnabledPlugins();
             Program.RestartTrayicon();
         }
 
