@@ -46,7 +46,7 @@ namespace NoteFly
         /// <summary>
         /// Empty file that hints notefly2 that notefly1 notes folder has been imported.
         /// </summary>
-        private const string IMPORTEDFLAGFILE = "impnf20.flg";
+        private const string IMPORTEDFLAGFILE = "impnf30.flg";
 
         /// <summary>
         /// The list with all notes.
@@ -439,7 +439,8 @@ namespace NoteFly
 #endif
             if (!hasbeenfirstrun)
             {
-                this.ImportingNotesNoteFly1();
+                this.ImportingNotesNoteFly2();
+                this.ImportingNotesNoteFly1();                
                 this.CreateFirstrunNote();
             }
         }
@@ -575,81 +576,108 @@ namespace NoteFly
         /// <summary>
         /// Ask and import notes from NoteFly 1.0.x if application data folder of NoteFly 1.0.x exist.
         /// </summary>
-        private void ImportingNotesNoteFly1()
+        private bool ImportingNotesNoteFly1()
         {
+            bool imported = false;
 #if windows
             string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly");
 #elif linux
             string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly");
 #endif
             if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE))))
-            {
-                string notes_importtonf2 = Strings.T("NoteFly 1.0.x detected.\nDo you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\nPress cancel to ask this again next time.");
-                string notes_importtonf2title = Strings.T("Import out NoteFly 1.0.x");
-                DialogResult resdoimport = MessageBox.Show(notes_importtonf2, notes_importtonf2title, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            {                
+                DialogResult resdoimport = MessageBox.Show(Strings.T("Do you want to import the notes from NoteFly 1.0.x?\nPress cancel to ask this again next time."),
+                    Strings.T("Import from NoteFly 1.0.x"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (resdoimport == DialogResult.Yes)
                 {
                     string nf1settingsfile = Path.Combine(nf1appdata, "settings.xml");
                     string nf1notesavepath = xmlUtil.GetContentString(nf1settingsfile, "notesavepath");
                     int noteid = 1;
+                    ImportNotes importnotes = new ImportNotes(this);
                     string nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
                     while (File.Exists(nf1notefile))
-                    {
-                        string nf1note_title = xmlUtil.GetContentString(nf1notefile, "title");
-                        int nf1note_skinnr = xmlUtil.GetContentInt(nf1notefile, "color");
-                        if (nf1note_skinnr >= this.skins.Count)
-                        {
-                            nf1note_skinnr = 0;
-                        }
-
-                        bool nf1note_visible = false;
-                        if (xmlUtil.GetContentInt(nf1notefile, "visible") == 1)
-                        {
-                            nf1note_visible = true;
-                        }
-
-                        Note importnf1note = new Note(this, this.GetNoteFilename(nf1note_title));
-                        importnf1note.Visible = nf1note_visible;
-                        importnf1note.Title = nf1note_title;
-                        importnf1note.SkinNr = nf1note_skinnr;
-                        importnf1note.Ontop = false;
-                        importnf1note.Locked = false;
-                        importnf1note.Wordwarp = true;
-                        importnf1note.X = xmlUtil.GetContentInt(nf1notefile, "x");
-                        importnf1note.Y = xmlUtil.GetContentInt(nf1notefile, "y");
-                        importnf1note.Width = xmlUtil.GetContentInt(nf1notefile, "width");
-                        importnf1note.Height = xmlUtil.GetContentInt(nf1notefile, "heigth");
-                        string content = "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20" + xmlUtil.GetContentString(nf1notefile, "content") + "\\ulnone\\par\r\n}\r\n";
-                        xmlUtil.WriteNote(importnf1note, this.GetSkinName(nf1note_skinnr), content);
-                        noteid++;
+                    {                        
                         nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
+                        importnotes.ReadNoteFly1Note(nf1notefile);
+                        noteid++;
                     }
 
-                    this.CreateNF1NotesImportedFlagfile(nf1appdata);
+                    this.CreateNotesImportedFlagfile(nf1appdata);
+                    imported = true;
                     Log.Write(LogType.info, "Notes from NoteFly 1.0.x imported.");
                 }
                 else if (resdoimport == DialogResult.No)
                 {
-                    this.CreateNF1NotesImportedFlagfile(nf1appdata);
-                    Log.Write(LogType.info, "Notes from NoteFly 1.0.x have not been imported.");
+                    this.CreateNotesImportedFlagfile(nf1appdata);
+                    Log.Write(LogType.info, "Notes from NoteFly 1.0.x will not be imported.");
                 }
             }
+
+            return imported;
         }
 
         /// <summary>
         /// Create a empty file so this newer NoteFly version knows the application data of NoteFly 1.0.x is imported.
         /// </summary>
         /// <param name="nf1appdata">Path to NoteFly1 application data folder.</param>
-        private void CreateNF1NotesImportedFlagfile(string nf1appdata)
+        private void CreateNotesImportedFlagfile(string folder)
         {
             try
             {
-                File.Create(Path.Combine(nf1appdata, IMPORTEDFLAGFILE));
+                File.Create(Path.Combine(folder, IMPORTEDFLAGFILE));
             }
             catch
             {
                 Log.Write(LogType.exception, "Could not set import flag in old notes directory.");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool ImportingNotesNoteFly2()
+        {
+            bool imported = false;
+#if windows
+            string nf2appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly2");
+#elif linux
+            string nf2appdata = Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
+#endif
+            if (Directory.Exists(nf2appdata) && (!File.Exists(Path.Combine(nf2appdata, IMPORTEDFLAGFILE))))
+            {
+                DialogResult resdlg = MessageBox.Show(Strings.T("Do you want to import the notes from NoteFly 2.5.x?\nPress cancel to ask this again next time."),
+                    Strings.T("Import from NoteFly 2.5.x"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (resdlg == DialogResult.Yes)
+                {
+                    string nf2settingsfile = Path.Combine(nf2appdata, "settings.xml");
+                    string nf2notessavepath = xmlUtil.GetContentString(nf2settingsfile, "NotesSavepath");
+                    if (Directory.Exists(nf2notessavepath))
+                    {
+                        const string NF2_NOTEEXTENSION = ".nfn";
+                        string[] notefilespath = Directory.GetFiles(nf2notessavepath, "*" + NF2_NOTEEXTENSION, SearchOption.TopDirectoryOnly);
+                        // import notes by simple copy them over since note file format is not changed in notefly 3.0.x
+                        for (int i = 0; i < notefilespath.Length; i++)
+                        {
+                            string filename = Path.GetFileName(notefilespath[i]);
+                            string notefilepath = Path.Combine(Settings.NotesSavepath, filename);
+                            if (!File.Exists(notefilepath) && !String.IsNullOrEmpty(filename))
+                            {
+                                File.Copy(notefilespath[i], notefilepath);                                
+                            }
+                        }
+
+                        Log.Write(LogType.info, "Done importing notes from NoteFly 2.5.x");
+                        this.LoadNotes(true, false);
+                        this.CreateNotesImportedFlagfile(nf2appdata);
+                    }                    
+                }
+                else if (resdlg == DialogResult.No)
+                {
+                    this.CreateNotesImportedFlagfile(nf2appdata);
+                }
+            }
+
+            return imported;
         }
 
         /// <summary>
@@ -730,21 +758,26 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Create a demo note with instruction 
+        /// Create a demo note with instruction .
+        /// Don't create demo note again if a file with same filename already exist.
         /// (Should be the first time that NoteFly is runned displayed only.)
         /// </summary>
         private void CreateFirstrunNote()
         {
-            const int DEMONOTEWIDTH = 260;
-            const int DEMONOTEHEIGHT = 220;
-            int noteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (DEMONOTEWIDTH / 2);
-            int noteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (DEMONOTEHEIGHT / 2);
-            string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
-            Note demonote = this.CreateNoteDefaultSettings(Program.AssemblyTitle + " " + Program.AssemblyVersionAsString, 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT, true);
-            xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
-            this.AddNote(demonote);
-            demonote.CreateForm();
-            demonote.BringNoteToFront();
+            string title = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
+            if (!File.Exists(Path.Combine(Settings.NotesSavepath, this.GetNoteFilename(title))))
+            {
+                const int DEMONOTEWIDTH = 260;
+                const int DEMONOTEHEIGHT = 220;
+                int noteposx = (Screen.PrimaryScreen.WorkingArea.Width / 2) - (DEMONOTEWIDTH / 2);
+                int noteposy = (Screen.PrimaryScreen.WorkingArea.Height / 2) - (DEMONOTEHEIGHT / 2);
+                string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20 This is a demo note.\\par\r\nPressing the [X] on a note\\par\r\n will \\b hide \\b0 that note.\\par\r\nTo actually \\i delete \\i0 it, use \\par\r\nthe \\i manage notes \\i0 windows\\par\r\n from the \\i trayicon\\i0 .\\ul\\par\r\n\\par\r\nThanks for using NoteFly!\\ulnone\\par\r\n}\r\n";
+                Note demonote = this.CreateNoteDefaultSettings(title, 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT, true);
+                xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
+                this.AddNote(demonote);
+                demonote.CreateForm();
+                demonote.BringNoteToFront();
+            }
         }
 
         /// <summary>

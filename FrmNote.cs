@@ -858,11 +858,11 @@ namespace NoteFly
         private void menuSendTo_DropDownOpening(object sender, EventArgs e)
         {
             bool giveup = false;
-            while (this.menuSendTo.DropDownItems.Count > 2 && !giveup)
+            while (this.menuActions.DropDownItems.Count > 2 && !giveup)
             {
                 try
                 {
-                    this.menuSendTo.DropDownItems.RemoveAt(2);
+                    this.menuActions.DropDownItems.RemoveAt(2);
                 }
                 catch (Exception ex)
                 {
@@ -880,7 +880,7 @@ namespace NoteFly
                         ToolStripMenuItem menuitem = PluginsManager.EnabledPlugins[i].InitFrmNoteShareMenu();
                         menuitem.Tag = i;
                         menuitem.Click += new EventHandler(this.menuSharePluginClicked);
-                        this.menuSendTo.DropDownItems.Add(menuitem);
+                        this.menuActions.DropDownItems.Add(menuitem);
                     }
                 }
             }

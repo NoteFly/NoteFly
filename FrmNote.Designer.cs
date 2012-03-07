@@ -102,7 +102,7 @@ namespace NoteFly
         /// <summary>
         /// ToolStripMenuItem menuSendTo
         /// </summary>
-        private System.Windows.Forms.ToolStripMenuItem menuSendTo;
+        private System.Windows.Forms.ToolStripMenuItem menuActions;
 
         /// <summary>
         /// ToolStripMenuItem menuSendToEmail
@@ -172,7 +172,7 @@ namespace NoteFly
             this.menuFrmNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuEditNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNoteSkins = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSendTo = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuActions = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
@@ -236,7 +236,7 @@ namespace NoteFly
             this.menuFrmNoteOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuEditNote,
             this.menuNoteSkins,
-            this.menuSendTo,
+            this.menuActions,
             this.menuOnTop,
             this.menuLockNote,
             this.menuWordWrap,
@@ -266,15 +266,15 @@ namespace NoteFly
             this.menuNoteSkins.Text = "S&kin";
             this.menuNoteSkins.DropDownOpening += new System.EventHandler(this.menuNoteSkins_DropDownOpening);
             // 
-            // menuSendTo
+            // menuActions
             // 
-            this.menuSendTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuActions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuSendToEmail,
             this.menuSendToTextfile});
-            this.menuSendTo.Name = "menuSendTo";
-            this.menuSendTo.Size = new System.Drawing.Size(184, 22);
-            this.menuSendTo.Text = "&Actions";
-            this.menuSendTo.DropDownOpening += new System.EventHandler(this.menuSendTo_DropDownOpening);
+            this.menuActions.Name = "menuActions";
+            this.menuActions.Size = new System.Drawing.Size(184, 22);
+            this.menuActions.Text = "&Actions";
+            this.menuActions.DropDownOpening += new System.EventHandler(this.menuSendTo_DropDownOpening);
             // 
             // menuSendToEmail
             // 

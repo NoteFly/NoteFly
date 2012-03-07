@@ -1,26 +1,86 @@
-# Translation of NoteFly in Dutch
-# This file is distributed under the same license as the NoteFly package.
+# Translation of 3.0.x in Dutch
+# This file is distributed under the same license as the 3.0.x package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-02-02 14:42+0100\n"
+"PO-Revision-Date: 2012-03-07 19:20:22+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/0.1\n"
-"Project-Id-Version: NoteFly\n"
-"POT-Creation-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Project-Id-Version: 3.0.x\n"
+
+msgid "Move deleted notes to recycle bin."
+msgstr "Verplaats verwijderde notite naar de prullenbak"
+
+msgid "Confirm deleting notes."
+msgstr "Bevestig verwijderen notities."
+
+msgid "Start NoteFly on logon."
+msgstr "Start NoteFly bij het aanmelden."
+
+msgid "Confirm shutdown of NoteFly"
+msgstr "Bevestif afsluiten NoteFly"
+
+msgid "Hotkeys"
+msgstr ""
+
+msgid "Appearance"
+msgstr ""
+
+msgid "Overall"
+msgstr ""
+
+msgid "Notes"
+msgstr ""
+
+msgid "Trayicon"
+msgstr ""
+
+msgid "Use alternative windows7 style/white trayicon."
+msgstr "GEbruik alternatief windows7 style/wit trayicon."
+
+msgid "Display \"Exit\" in bold."
+msgstr "Toon \"Afsluiten\" vet."
+
+msgid "Display \"Settings\" in bold."
+msgstr "Toon \"Instellingen\" vet."
+
+msgid "Display \"Manage notes\" in bold."
+msgstr "Toon \"Beheer notitie\" vet."
+
+msgid "Display \"New note\" in bold."
+msgstr "Toon \"Nieuwe notitie\" vet."
+
+msgid "Use case sentive search."
+msgstr "Gebruik hoofdletter gevoelig zoeken."
+
+msgid "Show a tooltip with preview of the note content."
+msgstr "Toon tooltip met voorvertoon van notitie inhoud."
+
+msgid "Highlight"
+msgstr ""
+
+msgid "Highlight SQL text between quotes. (Beta)"
+msgstr ""
+
+msgid "Highlight PHP text between <?php and ?>. (Beta)"
+msgstr ""
 
 msgid "Make hyperlinks clickable."
 msgstr "Maak hyperlinks klikbaar."
 
-msgid "Ask before launching URL, on click hyperlink."
-msgstr "Vraag voor het start starten van URL als op geklikt,"
+msgid "Ask to launch url on click on hyperlink (recommended)."
+msgstr ""
 
-msgid "Highlight HTML text."
-msgstr "Highlight HTML tekst"
+msgid "Highlight HTML text. (Beta)"
+msgstr ""
+
+msgid "Sharing"
+msgstr ""
+
+msgid "Email"
+msgstr ""
 
 msgid "Enable E-mail in share menu"
 msgstr "Toon E-mail in deel menu."
@@ -28,8 +88,23 @@ msgstr "Toon E-mail in deel menu."
 msgid "Set a default email address to send to: "
 msgstr "Zet standaard email adres op:"
 
+msgid "Network"
+msgstr ""
+
+msgid "Updates"
+msgstr ""
+
 msgid "Install update setup silently."
 msgstr "Installeer updates setup stil."
+
+msgid "Check updates now"
+msgstr "Controlleer voor update nu"
+
+msgid "Proxy"
+msgstr ""
+
+msgid "GnuPG"
+msgstr ""
 
 msgid "browse"
 msgstr "blader"
@@ -40,47 +115,20 @@ msgstr "Locatie gpg.exe:"
 msgid "Verify the signature of downloaded updates."
 msgstr "Controlleer handtekening van gedownloadde updates."
 
-msgid "Check for updates"
-msgstr "Controlleer voor updates."
-
-msgid "Check for updates every "
-msgstr "Controleer voor updates elke"
-
-msgid "days, at startup"
-msgstr "dag, bij het opstarten"
-
-msgid "Last update check is performed on:"
-msgstr "Laatste update controller is uitgevoert op:"
-
-msgid "Check updates now"
-msgstr "Controlleer voor update nu"
-
-msgid "Force the use of IPv6 only. (not recommeded)"
-msgstr "Forceer het gebruik van alleen IPv6. (niet aanbevolen)"
-
 msgid "ms"
 msgstr "ms"
 
-msgid "Use socked proxy"
-msgstr "Gebruik socket proxy."
-
-msgid "connection timeout time:"
-msgstr "connectie timeout tijd:"
+msgid "Advance"
+msgstr ""
 
 msgid "Save notes in:"
 msgstr "Sla notitie op in:"
 
-msgid "Visible notes warning limit:"
-msgstr "Zichtbare notitie waarschuwings limiet"
-
-msgid "Total notes warning limit:"
-msgstr "Totaal aantal notitie waarschuwings limiet:"
-
 msgid "Allow to load plugins"
 msgstr "Sta het laden van plugins toe"
 
-msgid "Log exceptions (recommeded)."
-msgstr "Log exceptions (aanbevolen)"
+msgid "Log exceptions (recommended)."
+msgstr ""
 
 msgid "Logging:"
 msgstr "loggen:"
@@ -100,116 +148,194 @@ msgstr "Annuleren"
 msgid "&OK"
 msgstr "Oke"
 
-msgid "Could not load list with plugins. Internet connection failed."
+msgid "Installed"
 msgstr ""
-"wrong english explanation \n"
-"\"Internet connection failed.\" should be \"connection failed.\""
 
-msgid "Loading.."
-msgstr "Laden.."
+msgid "available"
+msgstr ""
 
-msgid "Getting plugin details from the internet."
-msgstr "Verkrijgen van plugins details van het internet."
+msgid "&Edit note"
+msgstr "&Bewerk notitie"
 
-msgid "download"
-msgstr "download"
+msgid "S&kin"
+msgstr "S&kin"
 
-#: FrmManageNotes.cs:588
-msgid "CVS file does not seems to be in the Stickies format."
-msgstr "CSV bestand lijkt niet in het Stickies formaat te zijn."
+msgid "&Share"
+msgstr "&Deel"
 
-#: FrmManageNotes.cs:595
-msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
-msgstr "CSV bestand lijkt niet in het Stickies formaat te zijn, verwacht 5 kolomen."
+msgid "&Hide note"
+msgstr "&Verberg notitie"
 
-#: FrmManageNotes.cs:730
-msgid "Error reading PNotes backup file, incorrect format."
-msgstr "Fout tijdens het lezen van PNotes backup bestand, incorrect formaat."
+#: FrmAbout.cs:50
+msgid "Version "
+msgstr "Versie"
 
-#: FrmManageNotes.cs:1205
+#: FrmAbout.cs:62 TrayIcon.cs:203
+msgid "About"
+msgstr "Over"
+
+#: FrmDownloader.cs:235
+msgid "Downloads completed"
+msgstr ""
+
+#: FrmDownloader.cs:246
+msgid "Download canceled."
+msgstr ""
+
+#: FrmDownloader.cs:252
+msgid "Download error:"
+msgstr ""
+
+#: FrmException.cs:37
+msgid "oh no.. {0} crashed."
+msgstr "oh nee {0} is gecrasht."
+
+#: FrmManageNotes.cs:88 FrmManageNotes.cs:520 FrmManageNotes.cs:554
+msgid "&hide selected"
+msgstr ""
+
+#: FrmManageNotes.cs:92 FrmManageNotes.cs:97 FrmManageNotes.cs:525
+#: FrmManageNotes.cs:558
+msgid "&show selected"
+msgstr "toon ge&selecteerde"
+
+#: FrmManageNotes.cs:163
+msgid "Manage notes"
+msgstr "Beheer notities"
+
+#: FrmManageNotes.cs:383
+msgid "Nothing selected."
+msgstr "Niks geselecteert."
+
+#: FrmManageNotes.cs:392
+msgid "Are you sure you want to delete the selected note(s)?"
+msgstr "Weet je zeker dat je de geselecteren notities wilt verwijderen?"
+
+#: FrmManageNotes.cs:404
+msgid "And more notes."
+msgstr ""
+
+#: FrmManageNotes.cs:408
+msgid "delete?"
+msgstr "verwijder?"
+
+#: FrmManageNotes.cs:763
 msgid "Access denied. delete note {0} manually with proper premission."
 msgstr "Toegang geweigert. Verwijder nottiie {0} handmatig met juiste permissie."
 
-#: FrmManageNotes.cs:1306
-#: FrmManageNotes.cs:1327
+#: FrmManageNotes.cs:809
+msgid "nr"
+msgstr ""
+
+#: FrmManageNotes.cs:812
+msgid "title"
+msgstr ""
+
+#: FrmManageNotes.cs:813
+msgid "visible"
+msgstr ""
+
+#: FrmManageNotes.cs:814
+msgid "skin"
+msgstr ""
+
+#: FrmManageNotes.cs:864 FrmManageNotes.cs:885
 msgid "Transparency level not a integer or double."
 msgstr "Transparatie niveau is geen integer of double."
 
-#: FrmNewNote.cs:81
+#: FrmNewNote.cs:135
+msgid "Save editing note (Ctrl+S)"
+msgstr ""
+
+#: FrmNewNote.cs:136
+msgid "Cancel editing note (escape)"
+msgstr ""
+
+#: FrmNewNote.cs:140
+msgid "Save new note (Ctrl+S)"
+msgstr ""
+
+#: FrmNewNote.cs:141
+msgid "Cancel new note (escape)"
+msgstr ""
+
+#: FrmNewNote.cs:154
 msgid "edit note"
 msgstr "bewerk notitie"
 
-#: FrmNewNote.cs:107
+#: FrmNewNote.cs:158
 msgid "new note"
 msgstr "nieuwe notitie"
 
-#: FrmNewNote.cs:236
+#: FrmNewNote.cs:281
 msgid "Please enter some content."
 msgstr "Voer a.u.b. wat in."
 
-#: FrmNewNote.cs:254
+#: FrmNewNote.cs:299
 msgid "Could not write note."
 msgstr "Kan notitie niet wegschrijven."
 
-#: FrmNewNote.cs:633
-msgid "import error"
-msgstr "importeer fout"
-
-#: FrmNewNote.cs:644
-msgid "Cannot find KeyNote NF note content."
-msgstr "Kan KeyNote NF notitie inhoud niet vinden."
-
-#: FrmNewNote.cs:670
-msgid "Not a KeyNote NF note."
-msgstr "Niet een KeyNote NF notitie."
-
-#: FrmNewNote.cs:838
-#: FrmNewNote.cs:1206
+#: FrmNewNote.cs:897 FrmNewNote.cs:1245
 msgid "There is no text on the clipboard."
 msgstr "Er is geen tekst op het klembord."
 
-#: FrmNote.cs:395
+#: FrmNote.cs:387
 msgid "Note has no title and no content."
 msgstr "Notitie geeft geen titel en inhoud."
 
-#: FrmNote.cs:402
+#: FrmNote.cs:394
 msgid "Can't launch email client."
 msgstr "Kan email client niet starten."
 
-#: FrmNote.cs:775
+#: FrmNote.cs:751
 msgid "&Lock note"
 msgstr "Vergrende&l notitie"
 
-#: FrmNote.cs:776
+#: FrmNote.cs:752
 msgid " (click again to unlock)"
 msgstr "(klik voor ontgrendel)"
 
-#: FrmNote.cs:802
+#: FrmNote.cs:778
 msgid "&Roll up"
 msgstr "&Rol op"
 
-#: FrmNote.cs:803
+#: FrmNote.cs:779
 msgid "(click again to Roll Down)"
 msgstr "(Klik voor rol beneden)"
 
-#: FrmNote.cs:850
+#: FrmNote.cs:826
 msgid "Save note to file"
 msgstr "Sla notitie op naar bestand"
 
-#: FrmPlugins.cs:183
+#: FrmPlugins.cs:63
+msgid "Plugins"
+msgstr ""
+
+#: FrmPlugins.cs:169
+msgid "update"
+msgstr ""
+
+#: FrmPlugins.cs:174
+msgid "already installed"
+msgstr ""
+
+#: FrmPlugins.cs:180
+msgid "download"
+msgstr "download"
+
+#: FrmPlugins.cs:189
 msgid "version: "
 msgstr "versie:"
 
-#: FrmPlugins.cs:184
+#: FrmPlugins.cs:190
 msgid "license: "
 msgstr "licensie:"
 
-#: FrmPlugins.cs:199
+#: FrmPlugins.cs:205
 msgid "Downloading plugin.."
 msgstr "Downloaden plugin.."
 
-#: FrmSettings.cs:101
-#: FrmSettings.cs:102
+#: FrmSettings.cs:105 FrmSettings.cs:106
 msgid ""
 "Directory does not exist.\n"
 "Please choice a valid directory."
@@ -217,155 +343,165 @@ msgstr ""
 "Map bestaat niet.\n"
 "Kies een geldige map."
 
-#: FrmSettings.cs:128
+#: FrmSettings.cs:133
 msgid "Expert settings"
 msgstr "Expert instellingen"
 
-#: FrmSettings.cs:132
+#: FrmSettings.cs:137
 msgid "Settings"
 msgstr "Instellingen"
 
-#: FrmSettings.cs:142
+#: FrmSettings.cs:151
 msgid "Do nothing"
 msgstr "Doe niks"
 
-#: FrmSettings.cs:143
+#: FrmSettings.cs:152
 msgid "Bring notes to front"
 msgstr "Breng notitie naar voorgrond"
 
-#: FrmSettings.cs:144
+#: FrmSettings.cs:153
 msgid "New note"
 msgstr "Nieuwe notitie"
 
-#: FrmSettings.cs:155
+#: FrmSettings.cs:164
 msgid "Font size invalid. Minimal 4pt maximum 128pt allowed."
 msgstr "Lettertype grootte ongeldig. Minimaal 4pt maximaal 128pt. toegestaan."
 
-#: FrmSettings.cs:156
+#: FrmSettings.cs:165
 msgid "Error invalid fontsize"
 msgstr "Fout ongeldige lettertype grootte."
 
-#: FrmSettings.cs:157
+#: FrmSettings.cs:166
 msgid "Please select a font."
 msgstr "Selecteer a.u.b een lettertype."
 
-#: FrmSettings.cs:158
+#: FrmSettings.cs:167
 msgid "Error no font."
 msgstr "Fout geen lettertype."
 
-#: FrmSettings.cs:161
+#: FrmSettings.cs:170
 msgid "Invalid folder for saving notes folder."
 msgstr "Ongeldige map voor opslaan notities."
 
-#: FrmSettings.cs:162
+#: FrmSettings.cs:171
 msgid "Error invalid notes folder"
 msgstr "Fout ongeldige notities map."
 
-#: FrmSettings.cs:193
+#: FrmSettings.cs:202
 msgid "Settings text direction invalid."
 msgstr "Instellingen tekst richting ongeldig."
 
-#: FrmSettings.cs:194
+#: FrmSettings.cs:203
 msgid "Error text direction"
 msgstr "Fout tekst richting"
 
-#: FrmSettings.cs:201
+#: FrmSettings.cs:210
 msgid "Given default emailadres is not valid."
 msgstr "Het opgegeven standaard email adres is niet geldig."
 
-#: FrmSettings.cs:202
+#: FrmSettings.cs:211
 msgid "Email adres no valid"
 msgstr "Email adres ongeldig"
 
-#: FrmSettings.cs:209
+#: FrmSettings.cs:218
 msgid "The path to gpg.exe is not valid."
 msgstr "Het pad naar gpg.exe is niet geldig."
 
-#: FrmSettings.cs:210
+#: FrmSettings.cs:219
 msgid "Error not valid gpg path."
 msgstr "Fout ongeldig gpg pad."
 
-#: FrmSettings.cs:330
+#: FrmSettings.cs:352
 msgid "No rights to add key to registry."
 msgstr "Geen rechten om sleutel in register toe te voegen."
 
-#: FrmSettings.cs:349
+#: FrmSettings.cs:371
 msgid "Run key in registery does not exist."
 msgstr "Run steutel in register bestaat niet."
 
-#: FrmSettings.cs:350
+#: FrmSettings.cs:372
 msgid "Error run key registery missing"
 msgstr "Fout run steutel in register ontbreekt"
 
-#: FrmSettings.cs:380
+#: FrmSettings.cs:402
 msgid "NoteFly is buzy moving your notes"
 msgstr "NoteFly is bezig je notitie aan het verplaatsen"
 
-#: FrmSettings.cs:429
+#: FrmSettings.cs:451
 msgid "Please wait"
 msgstr "Wacht a.u.b."
 
-#: FrmSettings.cs:453
+#: FrmSettings.cs:475
 msgid "Are you sure, you want to reset all the settings to default?"
 msgstr "Weet je zeker dat je alle instellingen naar standaard wilt reseten?"
 
-#: FrmSettings.cs:454
+#: FrmSettings.cs:476
 msgid "Reset settings?"
 msgstr "Reset instellingen?"
 
-#: FrmSettings.cs:569
+#: FrmSettings.cs:592
 msgid "File is marked as system file. Did not move."
 msgstr "Bestand is systeem bestand. Niet verplaats."
 
-#: FrmSettings.cs:577
+#: FrmSettings.cs:600
 msgid "Error moving note(s)"
 msgstr "Fout verplaatsen notitie(s)"
 
-#: FrmSettings.cs:578
+#: FrmSettings.cs:601
 msgid "Note file(s) already exist."
 msgstr "Notite bestand(en) bestaan al."
 
-#: PluginGrid.cs:73
-msgid "Their are no plugins installed."
-msgstr "Er zijn geen plugins geinstalleert."
+#: GPGVerifWrapper.cs:97
+msgid "Do you want to install the update?"
+msgstr ""
 
-#: PluginGrid.cs:189
-msgid "version:"
-msgstr "versie:"
+#: GPGVerifWrapper.cs:98
+msgid "GnuPG signature check result"
+msgstr ""
 
-#: PluginGrid.cs:205
-msgid "author:"
-msgstr "auteur:"
+#: ImportNotes.cs:70
+msgid "import error"
+msgstr "importeer fout"
 
-#: PluginGrid.cs:221
-msgid "description:"
-msgstr "beschrijving:"
+#: ImportNotes.cs:81
+msgid "Cannot find KeyNote NF note content."
+msgstr "Kan KeyNote NF notitie inhoud niet vinden."
 
-#: PluginGrid.cs:269
-msgid "disable"
-msgstr "uitgeschakelen"
+#: ImportNotes.cs:107
+msgid "Not a KeyNote NF note."
+msgstr "Niet een KeyNote NF notitie."
 
-#: PluginGrid.cs:274
-msgid "enable"
-msgstr "inschakelen"
+#: ImportNotes.cs:259
+msgid "Do you want to delete all current notes?"
+msgstr "Wil je alle huidige notities verwijderen?"
 
-#: SearchTextBox.cs:64
-msgid "search:"
-msgstr "zoek:"
+#: ImportNotes.cs:260
+msgid "Are you sure?"
+msgstr "Weet je het zeker?"
 
-#: Notes.cs:377
+#: ImportNotes.cs:368
+msgid "CVS file does not seems to be in the Stickies format."
+msgstr "CSV bestand lijkt niet in het Stickies formaat te zijn."
+
+#: ImportNotes.cs:375
+msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
+msgstr "CSV bestand lijkt niet in het Stickies formaat te zijn, verwacht 5 kolomen."
+
+#: ImportNotes.cs:510
+msgid "Error reading PNotes backup file, incorrect format."
+msgstr "Fout tijdens het lezen van PNotes backup bestand, incorrect formaat."
+
+#: Notes.cs:370
 msgid ""
 "Folder with notes does not exist.\n"
-"Do want to try loading notes from default application data folder?"
+"Do want to load notes from the default notes folder?"
 msgstr ""
-"Map met notitie bestaat niet.\n"
-"Wil je notitie proberen te laden van de standaard application data map?"
 
-#: Notes.cs:378
+#: Notes.cs:371
 msgid "Notes folder doesn't exist"
 msgstr "Notitie map bestaat niet"
 
-#: Notes.cs:588
+#: Notes.cs:587
 msgid ""
 "NoteFly 1.0.x detected.\n"
 "Do you want to import the notes from NoteFly 1.0.x to NoteFly 2.0.x?\n"
@@ -375,7 +511,7 @@ msgstr ""
 "Wil je notities van NoteFly 1.0.x naar NoteFly 2.0.x importeren?\n"
 "Druk op annuleren om dit nogmaal te vragen volgende keer."
 
-#: Notes.cs:589
+#: Notes.cs:588
 msgid "Import out NoteFly 1.0.x"
 msgstr "Importeer uit NoteFly 1.0.x"
 
@@ -392,21 +528,47 @@ msgid "Many notes visible"
 msgstr "Veel notitie zichtbaar"
 
 #: Notes.cs:686
-msgid "There are many notes visible. Hide some notes to make loading faster."
-msgstr "Er zijn veel notities zichtbaar. Verberg enkele notite om het opstarten te verkorten."
+msgid ""
+"There are many notes visible.\n"
+"Hide some notes to make loading faster."
+msgstr ""
 
-#: Program.cs:234
+#: PluginGrid.cs:156
+msgid "version:"
+msgstr "versie:"
+
+#: PluginGrid.cs:172
+msgid "author:"
+msgstr "auteur:"
+
+#: PluginGrid.cs:188
+msgid "description:"
+msgstr "beschrijving:"
+
+#: PluginGrid.cs:250
+msgid "disable"
+msgstr "uitgeschakelen"
+
+#: PluginGrid.cs:255
+msgid "enable"
+msgstr "inschakelen"
+
+#: PluginsManager.cs:226 PluginsManager.cs:258 PluginsManager.cs:320
+msgid "unknown"
+msgstr ""
+
+#: Program.cs:281
 msgid ""
 "You are now running {0} as elevated Administrator.\n"
 "Which is not recommended for security.\n"
 "Press OK if your understand the risks of running as administrator and want to hide this message in the future."
 msgstr ""
 
-#: Program.cs:235
+#: Program.cs:282
 msgid "Elevated administrator"
 msgstr "ingebeperkte administrator"
 
-#: Program.cs:260
+#: Program.cs:307
 msgid ""
 "The programme is already running.\n"
 "Load an other instance? (not recommeded)"
@@ -414,72 +576,77 @@ msgstr ""
 "Het programma draait al.\n"
 "Laad het nog een keer? (niet aanbevolen)"
 
-#: Program.cs:261
+#: Program.cs:308
 msgid "already running"
 msgstr "draait al"
 
-#: Program.cs:469
+#: Program.cs:574
 msgid "There's a new version availible."
 msgstr "Er is een nieuwe versie beschikbaar."
 
-#: Program.cs:470
-msgid "Your version: "
-msgstr "Uw versie:"
+#: Program.cs:575
+msgid "Your version:"
+msgstr ""
 
-#: Program.cs:472
-msgid "New version: "
-msgstr "nieuwe versie:"
+#: Program.cs:577
+msgid "New version:"
+msgstr ""
 
-#: Program.cs:474
+#: Program.cs:579
 msgid "Do you want to download and install the new version now?"
 msgstr "Wil je de nieuwe versie nu downloaden en installeren?"
 
-#: TrayIcon.cs:154
+#: Program.cs:583
+msgid "Downloading {0} update"
+msgstr ""
+
+#: SearchTextBox.cs:38
+msgid "search:"
+msgstr "zoek:"
+
+#: Textfile.cs:85
+msgid "Title: "
+msgstr ""
+
+#: TrayIcon.cs:129
 msgid "&New note"
 msgstr "&Nieuwe notitie"
 
-#: TrayIcon.cs:168
+#: TrayIcon.cs:143
 msgid "&Manage notes"
 msgstr "Beheer notities"
 
-#: TrayIcon.cs:186
+#: TrayIcon.cs:161
 msgid "&Settings"
 msgstr "In&stellingen"
 
-#: TrayIcon.cs:204
+#: TrayIcon.cs:179
 msgid "&Plugins"
 msgstr "&Plugins"
 
-#: TrayIcon.cs:229
-msgid "About"
-msgstr "Over"
-
-#: TrayIcon.cs:238
+#: TrayIcon.cs:212
 msgid "E&xit"
 msgstr "Afsluiten"
 
-#: TrayIcon.cs:255
+#: TrayIcon.cs:229
 msgid "You can access {0} functions with this trayicon."
 msgstr ""
 
-#: TrayIcon.cs:433
+#: TrayIcon.cs:325
 msgid "confirm exit"
 msgstr "bevestig afsluiten"
 
-#: TrayIcon.cs:440
+#: TrayIcon.cs:332
 msgid "Are sure you want to exit {0}?"
 msgstr "Weet je zeker dat je {0} wilt afsluiten?"
 
-#: TrayIcon.cs:452
+#: TrayIcon.cs:344
 msgid ""
 "A note is still open for editing.\n"
 "Are you sure you want to shutdown {0}?"
 msgstr ""
 "Een notitie is nog steeds open voor bewerking.\n"
 "Weet je zeker dat je {0} wilt afsluiten?"
-
-msgid "Title:"
-msgstr "Titel:"
 
 msgid "&Save note"
 msgstr "Op&slaan notitie"
@@ -505,187 +672,8 @@ msgstr "Importeer.."
 msgid "Canc&el note"
 msgstr "Annu&leer notitie"
 
-msgid "&show selected"
-msgstr "toon ge&selecteerde"
-
-msgid "&import"
-msgstr "&importeer"
-
-msgid "&delete selected"
-msgstr "verwij&der geselecteerde"
-
-msgid "&export all"
-msgstr "&exporteer alle"
-
-msgid "Manage notes"
-msgstr "Beheer notities"
-
-msgid "&Edit note"
-msgstr "&Bewerk notitie"
-
-msgid "S&kin"
-msgstr "S&kin"
-
-msgid "&Share"
-msgstr "&Deel"
-
-msgid "&Hide note"
-msgstr "&Verberg notitie"
-
 msgid "E&xpert settings"
 msgstr "E&xpert instelligen"
 
-msgid "Language programme:"
-msgstr "Taal programma:"
-
-msgid "Move deleted notes to recycle bin."
-msgstr "Verplaats verwijderde notite naar de prullenbak"
-
-msgid "Confirm deleting notes."
-msgstr "Bevestig verwijderen notities."
-
-msgid "Confirm shutdown of NoteFly"
-msgstr "Bevestif afsluiten NoteFly"
-
-msgid "Start NoteFly on logon."
-msgstr "Start NoteFly bij het aanmelden."
-
-msgid "Action left click trayicon:"
-msgstr "Actie links klik trayicon:"
-
-msgid "Show tooltip hints"
-msgstr "Toon tooltips hints"
-
-msgid "Enable transparency"
-msgstr "Gebruik transparatie"
-
-msgid "% visible"
-msgstr "% zichtbaar"
-
-msgid "Use current date as default title for a new note."
-msgstr "Gebruik huidige datum als standaard titel voor een nieuwe notitie."
-
-msgid "Height:"
-msgstr "Hoogte:"
-
-msgid "Width:"
-msgstr "Breedte"
-
-msgid "Default size new note:"
-msgstr "Standaard grootte nieuwe notitie:"
-
-msgid "Use a random skin as default skin."
-msgstr "Gebruik een willekeurige skin als standaard skin."
-
-msgid "Default skin new notes:"
-msgstr "Standaard skin voor nieuwe notities:"
-
-msgid "bold"
-msgstr "vet"
-
-msgid "pt."
-msgstr "pt."
-
-msgid "Font size title:"
-msgstr "Lettertype grootte titel:"
-
-msgid "Font title:"
-msgstr "Lettertype titel:"
-
-msgid "Text direction notes:"
-msgstr "Tekst richting notities:"
-
-msgid "Font note size content:"
+msgid "General"
 msgstr ""
-
-msgid "Font note content:"
-msgstr ""
-
-msgid "Use alternative windows7 style/white trayicon."
-msgstr "GEbruik alternatief windows7 style/wit trayicon."
-
-msgid "Trayicon menu fontsize:"
-msgstr "Trayicon menu lettertypegrootte:"
-
-msgid "Display \"Exit\" in bold."
-msgstr "Toon \"Afsluiten\" vet."
-
-msgid "Display \"Settings\" in bold."
-msgstr "Toon \"Instellingen\" vet."
-
-msgid "Display \"Manage notes\" in bold."
-msgstr "Toon \"Beheer notitie\" vet."
-
-msgid "Display \"New note\" in bold."
-msgstr "Toon \"Nieuwe notitie\" vet."
-
-msgid "Use case sentive search."
-msgstr "Gebruik hoofdletter gevoelig zoeken."
-
-msgid "Manage notes fontsize:"
-msgstr "Beheer notite lettertype grootte:"
-
-msgid "Manage notes skin:"
-msgstr "Beheer notites skin:"
-
-msgid "Show a tooltip with preview of the note content."
-msgstr "Toon tooltip met voorvertoon van notitie inhoud."
-
-msgid "Highlight SQL text between quotes."
-msgstr "Highlight SQL tekst tussen aanhaalingstekens."
-
-msgid "Highlight PHP text between <?php and ?>."
-msgstr "Highlight PHP tekst tussen <?php en ?>."
-
-#: FrmAbout.cs:49
-msgid "About "
-msgstr "Over"
-
-#: FrmAbout.cs:51
-msgid "Version "
-msgstr "Versie"
-
-#: FrmDownloader.cs:316
-msgid "Aborted"
-msgstr "Afbreken"
-
-#: FrmDownloader.cs:319
-msgid "download compleet, "
-msgstr "download voltooid,"
-
-#: FrmDownloader.cs:322
-msgid "verify download"
-msgstr "controlleer download"
-
-#: FrmDownloader.cs:337
-msgid "Verify download failed, cannot find gpg: "
-msgstr "controlleren download mislukt, kan gpg niet vinden:"
-
-#: FrmDownloader.cs:348
-msgid "installing.. "
-msgstr "installeren.."
-
-#: FrmException.cs:37
-msgid "oh no.. {0} crashed."
-msgstr "oh nee {0} is gecrasht."
-
-#: FrmManageNotes.cs:398
-msgid "Nothing selected."
-msgstr "Niks geselecteert."
-
-#: FrmManageNotes.cs:406
-msgid "Are you sure you want to delete the selected note(s)?"
-msgstr "Weet je zeker dat je de geselecteren notities wilt verwijderen?"
-
-#: FrmManageNotes.cs:407
-msgid "delete?"
-msgstr "verwijder?"
-
-#: FrmManageNotes.cs:479
-msgid "Do you want to delete all current notes?"
-msgstr "Wil je alle huidige notities verwijderen?"
-
-#: FrmManageNotes.cs:480
-msgid "Are you sure?"
-msgstr "Weet je het zeker?"
-

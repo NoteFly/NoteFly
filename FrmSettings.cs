@@ -205,7 +205,7 @@ namespace NoteFly
                 MessageBox.Show(settings_noknowtextdir, settings_noknowtextdirtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.tabControlSettings.SelectedTab = this.tabAppearance;
             }
-            else if (!this.tbDefaultEmail.IsValidEmailAddress() && this.chxSocialEmailDefaultaddressSet.Checked)
+            else if (!this.tbDefaultEmail.IsValidEmailAddress() && this.chxActionsEmailDefaultaddressSet.Checked)
             {
                 string settings_emailnotvalid = Strings.T("Given default emailadres is not valid.");
                 string settings_emailnotvalidtitle = Strings.T("Email adres no valid");
@@ -295,9 +295,9 @@ namespace NoteFly
                 Settings.HighlightSQL = this.chxHighlightSQL.Checked;
 
                 // tab: Sharing                                
-                Settings.SharingEmailEnabled = this.chxSocialEmailEnabled.Checked;
+                Settings.SharingEmailEnabled = this.chxActionsEmailEnabled.Checked;
                 Settings.SharingEmailDefaultadres = string.Empty;
-                if (this.chxSocialEmailDefaultaddressSet.Checked)
+                if (this.chxActionsEmailDefaultaddressSet.Checked)
                 {
                     Settings.SharingEmailDefaultadres = this.tbDefaultEmail.Text;
                 }
@@ -499,7 +499,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void chxSocialEmailDefaultaddressBlank_CheckedChanged(object sender, EventArgs e)
         {
-            this.tbDefaultEmail.Enabled = this.chxSocialEmailDefaultaddressSet.Checked;
+            this.tbDefaultEmail.Enabled = this.chxActionsEmailDefaultaddressSet.Checked;
         }
 
         /// <summary>
@@ -675,11 +675,11 @@ namespace NoteFly
 
             // tab: Sharing
             this.tbDefaultEmail.Text = Settings.SharingEmailDefaultadres;
-            this.chxSocialEmailEnabled.Checked = Settings.SharingEmailEnabled;
-            this.chxSocialEmailDefaultaddressSet.Checked = false;
+            this.chxActionsEmailEnabled.Checked = Settings.SharingEmailEnabled;
+            this.chxActionsEmailDefaultaddressSet.Checked = false;
             if (!string.IsNullOrEmpty(Settings.SharingEmailDefaultadres))
             {
-                this.chxSocialEmailDefaultaddressSet.Checked = true;
+                this.chxActionsEmailDefaultaddressSet.Checked = true;
             }
 
             // tab: Network, Updates

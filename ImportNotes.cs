@@ -562,6 +562,41 @@
         }
 
         /// <summary>
+        /// Read a note file from NoteFly 1.0.x and save as a current NoteFly note.
+        /// </summary>
+        /// <param name="nf1notefile"></param>
+        public void ReadNoteFly1Note(string nf1notefile)
+        {
+            string nf1note_title = xmlUtil.GetContentString(nf1notefile, "title");
+            int nf1note_skinnr = xmlUtil.GetContentInt(nf1notefile, "color");
+            if (nf1note_skinnr >= this.notes.CountSkins)
+            {
+                nf1note_skinnr = 0;
+            }
+
+            bool nf1note_visible = false;
+            if (xmlUtil.GetContentInt(nf1notefile, "visible") == 1)
+            {
+                nf1note_visible = true;
+            }
+
+            Note importnf1note = new Note(this.notes, this.notes.GetNoteFilename(nf1note_title));
+            importnf1note.Visible = nf1note_visible;
+            importnf1note.Title = nf1note_title;
+            importnf1note.SkinNr = nf1note_skinnr;
+            importnf1note.Ontop = false;
+            importnf1note.Locked = false;
+            importnf1note.Wordwarp = true;
+            importnf1note.X = xmlUtil.GetContentInt(nf1notefile, "x");
+            importnf1note.Y = xmlUtil.GetContentInt(nf1notefile, "y");
+            importnf1note.Width = xmlUtil.GetContentInt(nf1notefile, "width");
+            importnf1note.Height = xmlUtil.GetContentInt(nf1notefile, "heigth");
+            string content = xmlUtil.GetContentString(nf1notefile, "content");
+            string newcontentrtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20" + content + "\\ulnone\\par\r\n}\r\n";
+            xmlUtil.WriteNote(importnf1note, this.notes.GetSkinName(nf1note_skinnr), newcontentrtf);
+        }
+
+        /// <summary>
         /// decode stickies title from UTF32 to UTF8
         /// </summary>
         /// <param name="title_enc">title encoded as UTF-32</param>

@@ -145,12 +145,12 @@ namespace NoteFly
         /// <summary>
         /// CheckBox chxSocialEmailDefaultaddressBlank
         /// </summary>
-        private System.Windows.Forms.CheckBox chxSocialEmailDefaultaddressSet;
+        private System.Windows.Forms.CheckBox chxActionsEmailDefaultaddressSet;
 
         /// <summary>
         /// CheckBox chxSocialEmailEnabled
         /// </summary>
-        private System.Windows.Forms.CheckBox chxSocialEmailEnabled;
+        private System.Windows.Forms.CheckBox chxActionsEmailEnabled;
 
         /// <summary>
         /// CheckBox chxCheckUpdates
@@ -790,8 +790,8 @@ namespace NoteFly
             this.tabControlSharing = new System.Windows.Forms.TabControl();
             this.tabEmail = new System.Windows.Forms.TabPage();
             this.tbDefaultEmail = new NoteFly.EmailTextBox();
-            this.chxSocialEmailEnabled = new System.Windows.Forms.CheckBox();
-            this.chxSocialEmailDefaultaddressSet = new System.Windows.Forms.CheckBox();
+            this.chxActionsEmailEnabled = new System.Windows.Forms.CheckBox();
+            this.chxActionsEmailDefaultaddressSet = new System.Windows.Forms.CheckBox();
             this.tabNetwork = new System.Windows.Forms.TabPage();
             this.tabControlNetwork = new System.Windows.Forms.TabControl();
             this.tabUpdates = new System.Windows.Forms.TabPage();
@@ -2123,8 +2123,8 @@ namespace NoteFly
             // tabEmail
             // 
             this.tabEmail.Controls.Add(this.tbDefaultEmail);
-            this.tabEmail.Controls.Add(this.chxSocialEmailEnabled);
-            this.tabEmail.Controls.Add(this.chxSocialEmailDefaultaddressSet);
+            this.tabEmail.Controls.Add(this.chxActionsEmailEnabled);
+            this.tabEmail.Controls.Add(this.chxActionsEmailDefaultaddressSet);
             this.tabEmail.Location = new System.Drawing.Point(4, 25);
             this.tabEmail.Name = "tabEmail";
             this.tabEmail.Size = new System.Drawing.Size(454, 302);
@@ -2141,32 +2141,32 @@ namespace NoteFly
             this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
             this.tbDefaultEmail.TabIndex = 26;
             // 
-            // chxSocialEmailEnabled
+            // chxActionsEmailEnabled
             // 
-            this.chxSocialEmailEnabled.AutoSize = true;
-            this.chxSocialEmailEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.chxSocialEmailEnabled.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxSocialEmailEnabled.Location = new System.Drawing.Point(14, 27);
-            this.chxSocialEmailEnabled.Name = "chxSocialEmailEnabled";
-            this.chxSocialEmailEnabled.Size = new System.Drawing.Size(198, 21);
-            this.chxSocialEmailEnabled.TabIndex = 25;
-            this.chxSocialEmailEnabled.Text = "Enable E-mail in action menu";
-            this.chxSocialEmailEnabled.UseCompatibleTextRendering = true;
-            this.chxSocialEmailEnabled.UseVisualStyleBackColor = true;
+            this.chxActionsEmailEnabled.AutoSize = true;
+            this.chxActionsEmailEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxActionsEmailEnabled.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxActionsEmailEnabled.Location = new System.Drawing.Point(14, 27);
+            this.chxActionsEmailEnabled.Name = "chxActionsEmailEnabled";
+            this.chxActionsEmailEnabled.Size = new System.Drawing.Size(198, 21);
+            this.chxActionsEmailEnabled.TabIndex = 25;
+            this.chxActionsEmailEnabled.Text = "Enable E-mail in action menu";
+            this.chxActionsEmailEnabled.UseCompatibleTextRendering = true;
+            this.chxActionsEmailEnabled.UseVisualStyleBackColor = true;
             // 
-            // chxSocialEmailDefaultaddressSet
+            // chxActionsEmailDefaultaddressSet
             // 
-            this.chxSocialEmailDefaultaddressSet.AutoSize = true;
-            this.chxSocialEmailDefaultaddressSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.chxSocialEmailDefaultaddressSet.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.chxSocialEmailDefaultaddressSet.Location = new System.Drawing.Point(14, 69);
-            this.chxSocialEmailDefaultaddressSet.Name = "chxSocialEmailDefaultaddressSet";
-            this.chxSocialEmailDefaultaddressSet.Size = new System.Drawing.Size(255, 21);
-            this.chxSocialEmailDefaultaddressSet.TabIndex = 24;
-            this.chxSocialEmailDefaultaddressSet.Text = "Set a default email address to send to: ";
-            this.chxSocialEmailDefaultaddressSet.UseCompatibleTextRendering = true;
-            this.chxSocialEmailDefaultaddressSet.UseVisualStyleBackColor = true;
-            this.chxSocialEmailDefaultaddressSet.CheckedChanged += new System.EventHandler(this.chxSocialEmailDefaultaddressBlank_CheckedChanged);
+            this.chxActionsEmailDefaultaddressSet.AutoSize = true;
+            this.chxActionsEmailDefaultaddressSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.chxActionsEmailDefaultaddressSet.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.chxActionsEmailDefaultaddressSet.Location = new System.Drawing.Point(14, 69);
+            this.chxActionsEmailDefaultaddressSet.Name = "chxActionsEmailDefaultaddressSet";
+            this.chxActionsEmailDefaultaddressSet.Size = new System.Drawing.Size(255, 21);
+            this.chxActionsEmailDefaultaddressSet.TabIndex = 24;
+            this.chxActionsEmailDefaultaddressSet.Text = "Set a default email address to send to: ";
+            this.chxActionsEmailDefaultaddressSet.UseCompatibleTextRendering = true;
+            this.chxActionsEmailDefaultaddressSet.UseVisualStyleBackColor = true;
+            this.chxActionsEmailDefaultaddressSet.CheckedChanged += new System.EventHandler(this.chxSocialEmailDefaultaddressBlank_CheckedChanged);
             // 
             // tabNetwork
             // 
@@ -2378,7 +2378,7 @@ namespace NoteFly
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.52174F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.47826F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
             this.tableLayoutPanel10.Controls.Add(this.chxProxyEnabled, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.numProxyPort, 3, 1);
             this.tableLayoutPanel10.Controls.Add(this.lblTextAddress, 0, 1);
@@ -2411,7 +2411,7 @@ namespace NoteFly
             // numProxyPort
             // 
             this.numProxyPort.Enabled = false;
-            this.numProxyPort.Location = new System.Drawing.Point(325, 33);
+            this.numProxyPort.Location = new System.Drawing.Point(324, 33);
             this.numProxyPort.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2446,13 +2446,13 @@ namespace NoteFly
             this.iptbProxy.Enabled = false;
             this.iptbProxy.Location = new System.Drawing.Point(91, 33);
             this.iptbProxy.Name = "iptbProxy";
-            this.iptbProxy.Size = new System.Drawing.Size(186, 22);
+            this.iptbProxy.Size = new System.Drawing.Size(185, 22);
             this.iptbProxy.TabIndex = 26;
             // 
             // lblTextPort
             // 
             this.lblTextPort.AutoSize = true;
-            this.lblTextPort.Location = new System.Drawing.Point(283, 35);
+            this.lblTextPort.Location = new System.Drawing.Point(282, 35);
             this.lblTextPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextPort.Name = "lblTextPort";
             this.lblTextPort.Size = new System.Drawing.Size(34, 16);
