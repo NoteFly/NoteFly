@@ -228,6 +228,7 @@ namespace NoteFly
              * A subfolder in %APPDATA% is where NoteFly stores it program settings, skins settings, log etc.
              * %TEMP% is needs for logging if appdatafolder is not found.
              * %SystemRoot% is required by the LinkLabel control to work properly.
+             * %SystemDrive% is required by NET framework.
              * Plugin developers should not rely on environment variables. 
              */
 #if windows
@@ -237,6 +238,7 @@ namespace NoteFly
                 string currentvariable = de.Key.ToString();
                 if (!currentvariable.Equals("APPDATA", StringComparison.OrdinalIgnoreCase) &&
                     !currentvariable.Equals("SystemRoot", StringComparison.OrdinalIgnoreCase) &&
+                    !currentvariable.Equals("SystemDrive", StringComparison.OrdinalIgnoreCase) &&
                     !currentvariable.Equals("TEMP", StringComparison.OrdinalIgnoreCase))
                 {
                     Environment.SetEnvironmentVariable(de.Key.ToString(), null);

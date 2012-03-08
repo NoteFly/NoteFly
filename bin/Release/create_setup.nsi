@@ -23,7 +23,7 @@
 
 !define PROJNAME   "NoteFly"
 !define VERSION    "3.0.0"          ; version number: major.minor.release
-!define VERSTATUS  "alpha2"         ; alpha, beta, rc, or nothing for final.
+!define VERSTATUS  "beta1"          ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
 !define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
@@ -140,10 +140,10 @@ PageEx license
    LicenseData "license.txt"
 PageExEnd
 ; Add this page on a alpha release as warning
-PageEx license
-   LicenseText "Warning"
-   LicenseData "warning_alpha.txt"
-PageExEnd
+;PageEx license
+;   LicenseText "Warning"
+;   LicenseData "warning_alpha.txt"
+;PageExEnd
 Page components
 Page directory
 Page instfiles

@@ -865,10 +865,12 @@ namespace NoteFly
             Settings.HighlightSQL = false;
             Settings.HighlightSQLColorValidstatement = "#7FCE35";
             Settings.HighlightSQLColorField = "#B16DFF";
-            Settings.HotkeysNewNoteAltInsteadShift = false;
+            Settings.HotkeysNewNoteAltInsteadShift = true;
             Settings.HotkeysNewNoteKeycode = 78; // N
-            Settings.HotkeysManageNotesAltInsteadShift = false;
+            Settings.HotkeysManageNotesAltInsteadShift = true;
             Settings.HotkeysManageNotesKeycode = 77; // M
+            Settings.HotkeysNotesToFrontAltInsteadShift = true;
+            Settings.HotkeysNotesToFrontKeycode = 70; // F
             Settings.NetworkConnectionTimeout = 8000;
             Settings.NetworkIPversion = 0;
             Settings.NetworkProxyAddress = string.Empty;
@@ -1205,11 +1207,11 @@ namespace NoteFly
             ////{
             ////    if (colorstring.Length < 100)
             ////    {
-            ////        throw new CustomException("Cannot parser: " + colorstring);
+            ////        throw new ApplicationException("Cannot parser: " + colorstring);
             ////    }
             ////    else
             ////    {
-            ////        throw new CustomException("Cannot parser: " + colorstring.Substring(0, 100)+" ..");
+            ////        throw new ApplicationException("Cannot parser: " + colorstring.Substring(0, 100)+" ..");
             ////    }
             ////}
         }

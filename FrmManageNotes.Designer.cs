@@ -410,6 +410,7 @@ namespace NoteFly
             this.searchTextBoxNotes.Name = "searchTextBoxNotes";
             this.searchTextBoxNotes.Size = new System.Drawing.Size(157, 28);
             this.searchTextBoxNotes.TabIndex = 22;
+            this.toolTip.SetToolTip(this.searchTextBoxNotes, "Search on title");
             this.searchTextBoxNotes.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchTextBoxNotes_SearchStart);
             this.searchTextBoxNotes.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchTextBoxNotes_SearchStop);
             // 

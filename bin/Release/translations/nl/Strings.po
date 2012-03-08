@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the 3.0.x package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-03-07 19:20:22+0000\n"
+"PO-Revision-Date: 2012-03-08 13:44:33+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,22 +23,22 @@ msgid "Confirm shutdown of NoteFly"
 msgstr "Bevestif afsluiten NoteFly"
 
 msgid "Hotkeys"
-msgstr ""
+msgstr "Sneltoetsen"
 
 msgid "Appearance"
-msgstr ""
+msgstr "Uiterlijk"
 
 msgid "Overall"
-msgstr ""
+msgstr "Algemeen"
 
 msgid "Notes"
-msgstr ""
+msgstr "Notities"
 
 msgid "Trayicon"
-msgstr ""
+msgstr "Taakbalkicoontje"
 
 msgid "Use alternative windows7 style/white trayicon."
-msgstr "GEbruik alternatief windows7 style/wit trayicon."
+msgstr "Gebruik alternatief windows7 style/wit taakbalkicoontje."
 
 msgid "Display \"Exit\" in bold."
 msgstr "Toon \"Afsluiten\" vet."
@@ -59,7 +59,7 @@ msgid "Show a tooltip with preview of the note content."
 msgstr "Toon tooltip met voorvertoon van notitie inhoud."
 
 msgid "Highlight"
-msgstr ""
+msgstr "Highlight"
 
 msgid "Highlight SQL text between quotes. (Beta)"
 msgstr ""
@@ -71,16 +71,13 @@ msgid "Make hyperlinks clickable."
 msgstr "Maak hyperlinks klikbaar."
 
 msgid "Ask to launch url on click on hyperlink (recommended)."
-msgstr ""
+msgstr "Vraag voor het opstarten van een url bij klik van een hyperlink (aanbevolen)."
 
 msgid "Highlight HTML text. (Beta)"
-msgstr ""
-
-msgid "Sharing"
-msgstr ""
+msgstr "Highlight HTML tekst. (Beta)"
 
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 msgid "Enable E-mail in share menu"
 msgstr "Toon E-mail in deel menu."
@@ -89,10 +86,10 @@ msgid "Set a default email address to send to: "
 msgstr "Zet standaard email adres op:"
 
 msgid "Network"
-msgstr ""
+msgstr "Netwerk"
 
 msgid "Updates"
-msgstr ""
+msgstr "Updates"
 
 msgid "Install update setup silently."
 msgstr "Installeer updates setup stil."
@@ -101,10 +98,10 @@ msgid "Check updates now"
 msgstr "Controlleer voor update nu"
 
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 msgid "GnuPG"
-msgstr ""
+msgstr "GnuPG"
 
 msgid "browse"
 msgstr "blader"
@@ -119,7 +116,7 @@ msgid "ms"
 msgstr "ms"
 
 msgid "Advance"
-msgstr ""
+msgstr "Geavanceerd"
 
 msgid "Save notes in:"
 msgstr "Sla notitie op in:"
@@ -128,7 +125,7 @@ msgid "Allow to load plugins"
 msgstr "Sta het laden van plugins toe"
 
 msgid "Log exceptions (recommended)."
-msgstr ""
+msgstr "Log programma fouten (aanbovelen)."
 
 msgid "Logging:"
 msgstr "loggen:"
@@ -149,10 +146,10 @@ msgid "&OK"
 msgstr "Oke"
 
 msgid "Installed"
-msgstr ""
+msgstr "Geinstalleerd"
 
 msgid "available"
-msgstr ""
+msgstr "beschikbaar"
 
 msgid "&Edit note"
 msgstr "&Bewerk notitie"
@@ -176,15 +173,15 @@ msgstr "Over"
 
 #: FrmDownloader.cs:235
 msgid "Downloads completed"
-msgstr ""
+msgstr "Downloads voltooid"
 
 #: FrmDownloader.cs:246
 msgid "Download canceled."
-msgstr ""
+msgstr "Download afgebroken."
 
 #: FrmDownloader.cs:252
 msgid "Download error:"
-msgstr ""
+msgstr "Download fout:"
 
 #: FrmException.cs:37
 msgid "oh no.. {0} crashed."
@@ -192,7 +189,7 @@ msgstr "oh nee {0} is gecrasht."
 
 #: FrmManageNotes.cs:88 FrmManageNotes.cs:520 FrmManageNotes.cs:554
 msgid "&hide selected"
-msgstr ""
+msgstr "Ver&berg geselecteerde"
 
 #: FrmManageNotes.cs:92 FrmManageNotes.cs:97 FrmManageNotes.cs:525
 #: FrmManageNotes.cs:558
@@ -213,7 +210,7 @@ msgstr "Weet je zeker dat je de geselecteren notities wilt verwijderen?"
 
 #: FrmManageNotes.cs:404
 msgid "And more notes."
-msgstr ""
+msgstr "En meer notities."
 
 #: FrmManageNotes.cs:408
 msgid "delete?"
@@ -225,19 +222,19 @@ msgstr "Toegang geweigert. Verwijder nottiie {0} handmatig met juiste permissie.
 
 #: FrmManageNotes.cs:809
 msgid "nr"
-msgstr ""
+msgstr "nr"
 
 #: FrmManageNotes.cs:812
 msgid "title"
-msgstr ""
+msgstr "titel"
 
 #: FrmManageNotes.cs:813
 msgid "visible"
-msgstr ""
+msgstr "zichtbaar"
 
 #: FrmManageNotes.cs:814
 msgid "skin"
-msgstr ""
+msgstr "skin"
 
 #: FrmManageNotes.cs:864 FrmManageNotes.cs:885
 msgid "Transparency level not a integer or double."
@@ -245,19 +242,19 @@ msgstr "Transparatie niveau is geen integer of double."
 
 #: FrmNewNote.cs:135
 msgid "Save editing note (Ctrl+S)"
-msgstr ""
+msgstr "Opslaan bewerkte notitie (Ctrl+S)"
 
 #: FrmNewNote.cs:136
 msgid "Cancel editing note (escape)"
-msgstr ""
+msgstr "Annuleer bewerkte notitie (escape) "
 
 #: FrmNewNote.cs:140
 msgid "Save new note (Ctrl+S)"
-msgstr ""
+msgstr "Nieuwe notitie opslaan (Ctrl+S)"
 
 #: FrmNewNote.cs:141
 msgid "Cancel new note (escape)"
-msgstr ""
+msgstr "Annulleer nieuwe notities (escape)"
 
 #: FrmNewNote.cs:154
 msgid "edit note"
@@ -309,15 +306,15 @@ msgstr "Sla notitie op naar bestand"
 
 #: FrmPlugins.cs:63
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: FrmPlugins.cs:169
 msgid "update"
-msgstr ""
+msgstr "update"
 
 #: FrmPlugins.cs:174
 msgid "already installed"
-msgstr ""
+msgstr "Al geïnstalleerd"
 
 #: FrmPlugins.cs:180
 msgid "download"
@@ -453,11 +450,11 @@ msgstr "Notite bestand(en) bestaan al."
 
 #: GPGVerifWrapper.cs:97
 msgid "Do you want to install the update?"
-msgstr ""
+msgstr "Wil je de update installeren?"
 
 #: GPGVerifWrapper.cs:98
 msgid "GnuPG signature check result"
-msgstr ""
+msgstr "GnuPG ondertekening resultaat"
 
 #: ImportNotes.cs:70
 msgid "import error"
@@ -496,6 +493,8 @@ msgid ""
 "Folder with notes does not exist.\n"
 "Do want to load notes from the default notes folder?"
 msgstr ""
+"De map met notities bestaat niet.\n"
+"Wil je notities laden van de standaard notities map?"
 
 #: Notes.cs:371
 msgid "Notes folder doesn't exist"
@@ -555,7 +554,7 @@ msgstr "inschakelen"
 
 #: PluginsManager.cs:226 PluginsManager.cs:258 PluginsManager.cs:320
 msgid "unknown"
-msgstr ""
+msgstr "onbekend"
 
 #: Program.cs:281
 msgid ""
@@ -586,11 +585,11 @@ msgstr "Er is een nieuwe versie beschikbaar."
 
 #: Program.cs:575
 msgid "Your version:"
-msgstr ""
+msgstr "Jouw versie:"
 
 #: Program.cs:577
 msgid "New version:"
-msgstr ""
+msgstr "Nieuwe versie:"
 
 #: Program.cs:579
 msgid "Do you want to download and install the new version now?"
@@ -598,7 +597,7 @@ msgstr "Wil je de nieuwe versie nu downloaden en installeren?"
 
 #: Program.cs:583
 msgid "Downloading {0} update"
-msgstr ""
+msgstr "Downloaden {0} update"
 
 #: SearchTextBox.cs:38
 msgid "search:"
@@ -606,7 +605,7 @@ msgstr "zoek:"
 
 #: Textfile.cs:85
 msgid "Title: "
-msgstr ""
+msgstr "Titel: "
 
 #: TrayIcon.cs:129
 msgid "&New note"
@@ -676,4 +675,7 @@ msgid "E&xpert settings"
 msgstr "E&xpert instelligen"
 
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
+
+msgid "Sharing"
+msgstr "Delen"

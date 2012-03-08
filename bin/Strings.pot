@@ -759,3 +759,15 @@ msgstr ""
 # menuSendTo
 msgid "&Actions"
 msgstr ""
+
+# tabSharing
+msgid "Actions"
+msgstr ""
+
+# chxActionsEmailEnabled
+msgid "Enable E-mail in action menu"
+msgstr ""
+
+# btnOpenSettingsFolder
+msgid "open settings folder"
+msgstr ""
