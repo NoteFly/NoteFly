@@ -1,5 +1,5 @@
 REM  NoteFly a note application.
-REM  Copyright (C) 2010-2011  Tom
+REM  Copyright (C) 2010-2012  Tom
 REM
 REM  This program is free software: you can redistribute it and/or modify
 REM  it under the terms of the GNU General Public License as published by

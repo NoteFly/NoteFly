@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Note.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -212,7 +212,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets or set a value indicating whether the note content words are warped.
+        /// Gets or sets a value indicating whether the note content words are warped.
         /// </summary>
         public bool Wordwarp
         {
@@ -364,11 +364,11 @@ namespace NoteFly
             this.frmnote = new FrmNote(this.notes, this);
             this.visible = true;
             this.frmnote.Show();
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                 {
-                    Program.pluginsenabled[i].ShowingNote(this.tempcontent, this.title);
+                    PluginsManager.EnabledPlugins[i].ShowingNote(this.tempcontent, this.title);
                 }
             }
         }
@@ -385,11 +385,11 @@ namespace NoteFly
             }
 
             this.frmnote = null;
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                 {
-                    Program.pluginsenabled[i].HidingNote(this.tempcontent, this.title);                    
+                    PluginsManager.EnabledPlugins[i].HidingNote(this.tempcontent, this.title);                    
                 }
             }
 

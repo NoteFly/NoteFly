@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmAbout.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
 namespace NoteFly
 {
     using System;
-    using System.Windows.Forms;
     using System.Drawing;
+    using System.Windows.Forms;
 
     /// <summary>
     /// About window.
@@ -31,7 +31,7 @@ namespace NoteFly
         #region Fields (1)
 
         /// <summary>
-        /// constant project website uri.
+        /// Constant project website uri.
         /// </summary>
         private const string NOTEFLYWEBSITEURI = "http://www.notefly.org/";
 
@@ -45,9 +45,9 @@ namespace NoteFly
         public FrmAbout()
         {
             this.InitializeComponent();
-            this.Text = "About " + Program.AssemblyTitle;
+            this.SetFormTitle();
             this.lblProductName.Text = Program.AssemblyTitle;
-            this.lblVersion.Text = string.Format("Version " + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+            this.lblVersion.Text = string.Format(Strings.T("Version ") + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
         }
 
         #endregion Constructors 
@@ -55,9 +55,17 @@ namespace NoteFly
         #region Methods (2)
 
         /// <summary>
+        /// Set the title of this form.
+        /// </summary>
+        private void SetFormTitle()
+        {
+            this.Text = Strings.T("About") + " - " + Program.AssemblyTitle;
+        }
+
+        /// <summary>
         /// The Website link is clicked in the about dialog.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void linklblWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -68,7 +76,7 @@ namespace NoteFly
         /// <summary>
         /// An OK button is clicked, close FrmAbout.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void okButton_Click(object sender, EventArgs e)
         {
@@ -80,25 +88,26 @@ namespace NoteFly
         /// Start color effect on lblProductName.
         /// Bonus / easter egg.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void lblProductName_Click(object sender, EventArgs e)
         {
             this.tmpUpdateLblProductEffect.Start();
+            this.DoubleBuffered = true;
         }
 
         /// <summary>
         /// Update color effect on lblProductName.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void tmpUpdateLblProductEffect_Tick(object sender, EventArgs e)
         {
-            const int maxdark = 250;
+            const int MAXDARK = 250;
             byte red = this.lblProductName.ForeColor.R;
             byte blue = this.lblProductName.ForeColor.B;
             byte green = this.lblProductName.ForeColor.G;
-            if (red < maxdark && green <= 5)
+            if (red < MAXDARK && green <= 5)
             {
                 red += 5;
                 if (blue > 5)
@@ -106,7 +115,7 @@ namespace NoteFly
                     blue -= 5;
                 }
             }
-            else if (green < maxdark && blue <= 5)
+            else if (green < MAXDARK && blue <= 5)
             {
                 green += 5;
                 if (red > 5)
@@ -114,7 +123,7 @@ namespace NoteFly
                     red -= 5;
                 }
             }
-            else if (blue < maxdark && red <= 5)
+            else if (blue < MAXDARK && red <= 5)
             {
                 blue += 5;
                 if (green > 5)
@@ -124,6 +133,7 @@ namespace NoteFly
             }
 
             this.lblProductName.ForeColor = Color.FromArgb(red, green, blue);
+            ////this.BackColor = Color.FromArgb(128, 250 - green, 250 - blue);
         }
 
         #endregion Methods

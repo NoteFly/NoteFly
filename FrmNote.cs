@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNote.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -22,9 +22,6 @@ namespace NoteFly
     using System;
     using System.ComponentModel;
     using System.Drawing;
-#if windows
-    using System.Runtime.InteropServices;
-#endif
     using System.Windows.Forms;
 
     /// <summary>
@@ -76,10 +73,11 @@ namespace NoteFly
         public FrmNote(Notes notes, Note note)
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
-            this.InitializeComponent();
+            this.InitializeComponent();            
             this.notes = notes;
             this.note = note;
             this.UpdateForm(false);
+            Strings.TranslateForm(this);
             this.lblTitle.Text = note.Title;
 
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
@@ -107,7 +105,6 @@ namespace NoteFly
             this.SetRollupNote();
             this.SetWordwarpNote();
             this.UpdateForm(true);
-            this.CreateSkinsMenu(true);
         }
 
         #endregion Constructors
@@ -186,22 +183,20 @@ namespace NoteFly
             }
             else
             {
-                if (this.lblTitle.Height + this.lblTitle.Location.Y > this.pnlHead.Height)
+                if (this.lblTitle.Height + this.lblTitle.Location.Y >= this.pnlHead.Height)
                 {
-                    const int MAXHEIGHTPNLHEAD = 64;
-                    if (this.lblTitle.Height < MAXHEIGHTPNLHEAD)
+                    if (this.lblTitle.Height < Settings.NotesTitlepanelMaxHeight)
                     {
                         this.pnlHead.Height = this.lblTitle.Height;
                     }
                     else
                     {
-                        this.pnlHead.Height = MAXHEIGHTPNLHEAD;
+                        this.pnlHead.Height = Settings.NotesTitlepanelMaxHeight;
                     }
                 }
                 else
                 {
-                    const int DEFAULFTMINHEIGHT = 32;
-                    this.pnlHead.Height = DEFAULFTMINHEIGHT;
+                    this.pnlHead.Height = Settings.NotesTitlepanelMinHeight;
                 }
 
 #if windows
@@ -221,13 +216,6 @@ namespace NoteFly
                 SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
             }
         }
-
-#if windows
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
-
-        private const int WM_SETREDRAW = 0x0b;
-#endif
 
         /// <summary>
         /// The user pressed the cross on the note,
@@ -257,7 +245,10 @@ namespace NoteFly
             {
                 ToolStripMenuItem menuitem = (ToolStripMenuItem)toolstripmenuitem;
                 int p = (int)menuitem.Tag;
-                Program.pluginsenabled[p].ShareMenuClicked(this.rtbNote, this.note.Title);
+                if (PluginsManager.EnabledPlugins != null)
+                {
+                    PluginsManager.EnabledPlugins[p].ShareMenuClicked(this.rtbNote, this.note.Title);
+                }
             }
             catch (Exception exc)
             {
@@ -301,13 +292,13 @@ namespace NoteFly
             if (this.notes.CountSkins != this.menuNoteSkins.DropDownItems.Count || alwaysrecreate)
             {
                 this.menuNoteSkins.DropDownItems.Clear();
-                string[] skinnames = notes.GetSkinsNames();
+                string[] skinnames = this.notes.GetSkinsNames();
                 for (int i = 0; i < skinnames.Length; i++)
                 {
                     ToolStripMenuItem tsi = new ToolStripMenuItem();
                     tsi.Name = "menuSkin" + skinnames[i];
                     tsi.Text = skinnames[i];
-                    if (note.SkinNr == i)
+                    if (this.note.SkinNr == i)
                     {
                         tsi.Checked = true;
                     }
@@ -393,16 +384,16 @@ namespace NoteFly
                 }
                 else
                 {
-                    const string MSGNOTITLECONTENT = "Note has no title and content.";
-                    Log.Write(LogType.error, MSGNOTITLECONTENT);
-                    MessageBox.Show(MSGNOTITLECONTENT);
+                    string note_msgnotitlecontent = Strings.T("Note has no title and no content.");
+                    Log.Write(LogType.error, note_msgnotitlecontent);
+                    MessageBox.Show(note_msgnotitlecontent);
                 }
             }
-            catch (AccessViolationException accexc)
+            catch (Win32Exception w32exc)
             {
-                const string MSGCANTLAUNCHEMAILPROTOCOLHANDLER = "Access denied. Can't lauch email client by protocol handler";
-                Log.Write(LogType.exception, accexc.Message);
-                MessageBox.Show(MSGCANTLAUNCHEMAILPROTOCOLHANDLER);
+                string note_msgcantlaunchemailprotocolhandler = Strings.T("Can't launch email client.");
+                Log.Write(LogType.exception, w32exc.Message);
+                MessageBox.Show(note_msgcantlaunchemailprotocolhandler, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -439,8 +430,8 @@ namespace NoteFly
         /// <param name="e">FormClosedEvent arguments</param>
         private void FrmNote_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.notes.FrmManageNotesNeedUpdate = true;
-            TrayIcon.RefreshFrmManageNotes();
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            Program.Formmanager.RefreshFrmManageNotes();
         }
 
         /// <summary>
@@ -501,13 +492,13 @@ namespace NoteFly
                 this.menuFrmNoteOptions.Items.RemoveAt(9);
             }
 
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int p = 0; p < Program.pluginsenabled.Length; p++)
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
                 {
-                    if (Program.pluginsenabled[p].InitFrmNoteMenu() != null)
+                    if (PluginsManager.EnabledPlugins[p].InitFrmNoteMenu() != null)
                     {
-                        this.menuFrmNoteOptions.Items.Add(Program.pluginsenabled[p].InitFrmNoteMenu());
+                        this.menuFrmNoteOptions.Items.Add(PluginsManager.EnabledPlugins[p].InitFrmNoteMenu());
                     }
                 }
             }
@@ -528,7 +519,6 @@ namespace NoteFly
             ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
             tsi.Checked = true;
             this.note.SkinNr = this.notes.GetSkinNr(tsi.Text);
-            this.SuspendLayout();
             this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             if (this.notes.GetPrimaryTexture(this.note.SkinNr) != null)
             {
@@ -543,29 +533,14 @@ namespace NoteFly
             this.pnlHead.BackColor = Color.Transparent;
             this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
             this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
-            this.notes.FrmManageNotesNeedUpdate = true;
-            TrayIcon.RefreshFrmManageNotes();
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            Program.Formmanager.RefreshFrmManageNotes();
             if (!SyntaxHighlight.KeywordsInitialized)
             {
                 SyntaxHighlight.InitHighlighter();
             }
-#if DEBUG
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-            stopwatch.Start();
-#endif
-#if windows
-            SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)0, IntPtr.Zero); // about ~900 ms advantage
-#endif
+
             SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
-            this.ResumeLayout();
-#if windows
-            SendMessage(this.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
-            this.Refresh();
-#endif
-#if DEBUG
-            stopwatch.Stop();
-            Log.Write(LogType.info, "Note highlight time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
-#endif
             SyntaxHighlight.DeinitHighlighter();
             if (!this.saveWorker.IsBusy)
             {
@@ -773,17 +748,17 @@ namespace NoteFly
         private void SetLockedNote()
         {
             this.menuLockNote.Checked = this.note.Locked;
-            const string LOCKNOTEMSG = "&Lock note";
-            const string CLICKTOUNLOCK = " (click again to unlock)";
+            string note_locknotemsg = Strings.T("&Lock note");
+            string note_clicktounlock = Strings.T(" (click again to unlock)");
             if (this.note.Locked)
             {
                 this.CreatePbLock();
-                this.menuLockNote.Text = LOCKNOTEMSG + CLICKTOUNLOCK;
+                this.menuLockNote.Text = note_locknotemsg + note_clicktounlock;
             }
             else
             {
                 this.DestroyPbLock();
-                this.menuLockNote.Text = LOCKNOTEMSG;
+                this.menuLockNote.Text = note_locknotemsg;
             }
 
             this.pbResizeGrip.Visible = !this.note.Locked;
@@ -800,17 +775,17 @@ namespace NoteFly
         private void SetRollupNote()
         {
             this.menuRollUp.Checked = this.note.RolledUp;
-            const string ROLLUPMSG = "&Roll up";
-            const string CLICKTOROLLUP = "(click again to Roll Down)";
+            string note_rollupmsg = Strings.T("&Roll up");
+            string note_clicktorollup = Strings.T("(click again to Roll Down)");
             if (this.note.RolledUp)
             {
-                this.menuRollUp.Text = ROLLUPMSG + CLICKTOROLLUP;
+                this.menuRollUp.Text = note_rollupmsg + note_clicktorollup;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height);
                 this.Height = this.pnlHead.Height;
             }
             else
             {
-                this.menuRollUp.Text = ROLLUPMSG;
+                this.menuRollUp.Text = note_rollupmsg;
                 this.MinimumSize = new Size(this.MinimumSize.Width, this.pnlHead.Height + this.pbResizeGrip.Height);
                 this.Height = this.note.Height;
             }
@@ -848,7 +823,7 @@ namespace NoteFly
             sfdlg.CheckPathExists = true;
             sfdlg.OverwritePrompt = true;
             sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
-            sfdlg.Title = "Save note to file";
+            sfdlg.Title = Strings.T("Save note to file");
             sfdlg.Filter = "Textfile (*.txt)|*.txt|RichTextFormat file (*.rtf)|*.rtf|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
@@ -883,11 +858,11 @@ namespace NoteFly
         private void menuSendTo_DropDownOpening(object sender, EventArgs e)
         {
             bool giveup = false;
-            while (this.menuSendTo.DropDownItems.Count > 2 && !giveup)
+            while (this.menuActions.DropDownItems.Count > 2 && !giveup)
             {
                 try
                 {
-                    this.menuSendTo.DropDownItems.RemoveAt(2);
+                    this.menuActions.DropDownItems.RemoveAt(2);
                 }
                 catch (Exception ex)
                 {
@@ -896,21 +871,26 @@ namespace NoteFly
                 }
             }
 
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                 {
-                    if (Program.pluginsenabled[i].InitFrmNoteShareMenu() != null)
+                    if (PluginsManager.EnabledPlugins[i].InitFrmNoteShareMenu() != null)
                     {
-                        ToolStripMenuItem menuitem = Program.pluginsenabled[i].InitFrmNoteShareMenu();
+                        ToolStripMenuItem menuitem = PluginsManager.EnabledPlugins[i].InitFrmNoteShareMenu();
                         menuitem.Tag = i;
                         menuitem.Click += new EventHandler(this.menuSharePluginClicked);
-                        this.menuSendTo.DropDownItems.Add(menuitem);
+                        this.menuActions.DropDownItems.Add(menuitem);
                     }
                 }
             }
         }        
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void menuNoteSkins_DropDownOpening(object sender, EventArgs e)
         {
             this.CreateSkinsMenu(false);

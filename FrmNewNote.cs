@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="FrmNewNote.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -73,12 +73,13 @@ namespace NoteFly
         public FrmNewNote(Notes notes, Note note, Point locfrmnewnote, Size sizefrmnewnote, bool wordwrap)
         {
             this.ConstructFrmNewNote(notes);
+            this.SetFormTitle(true);
+            this.SetTooltipAddCancelBtns(true);
             this.Location = locfrmnewnote;
             this.Size = sizefrmnewnote;
             this.rtbNewNote.WordWrap = wordwrap;
             this.menuWordWarp.Checked = wordwrap;
             this.note = note;
-            this.Text = "edit note";
             this.SetColorsForm(this.note.SkinNr);
             this.tbTitle.Text = note.Title;
             if (string.IsNullOrEmpty(this.note.Tempcontent))
@@ -99,24 +100,68 @@ namespace NoteFly
         /// Initializes a new instance of the FrmNewNote class for a new note.
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
-        public FrmNewNote(Notes notes)
+        public FrmNewNote(Notes notes, int deltaX, int deltaY)
         {
             this.ConstructFrmNewNote(notes);
-            this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2), (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2));
+            this.SetFormTitle(false);
+            this.SetTooltipAddCancelBtns(false);
+            this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2) + deltaX, (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2) + deltaY);
             this.note = null;
-            this.Text = "new note";
             if (Settings.NotesDefaultRandomSkin)
             {
                 Settings.NotesDefaultSkinnr = notes.GenerateRandomSkinnr();
             }
 
             this.SetColorsForm(Settings.NotesDefaultSkinnr);
-            this.tbTitle.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
+            if (Settings.NotesDefaultTitleDate)
+            {
+                // The string returned by the ToShortDateString method is culture-sensitive.
+                this.tbTitle.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
+            }
         }
 
         #endregion Constructors
 
         #region Methods (30)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="editnote"></param>
+        private void SetTooltipAddCancelBtns(bool editnote)
+        {
+            if (editnote)
+            {
+                this.toolTip.SetToolTip(this.btnAddNote, Strings.T("Save editing note (Ctrl+S)"));
+                this.toolTip.SetToolTip(this.btnCancel, Strings.T("Cancel editing note (escape)"));
+            }
+            else
+            {
+                this.toolTip.SetToolTip(this.btnAddNote, Strings.T("Save new note (Ctrl+S)"));
+                this.toolTip.SetToolTip(this.btnCancel, Strings.T("Cancel new note (escape)"));
+            }
+        }
+
+        /// <summary>
+        /// Set the form title.
+        /// </summary>
+        /// <param name="editnote"></param>
+        private void SetFormTitle(bool editnote)
+        {
+            StringBuilder sbtitle = new StringBuilder();
+            if (editnote)
+            {
+                sbtitle.Append(Strings.T("edit note"));
+            }
+            else 
+            {
+                sbtitle.Append(Strings.T("new note"));
+            }
+
+            sbtitle.Append(" - ");
+            sbtitle.Append(Program.AssemblyTitle);
+            this.Text = sbtitle.ToString();
+        }
 
         /// <summary>
         /// Initialize components FrmNewNote, set font, tooltip and richtextbox settings
@@ -126,6 +171,8 @@ namespace NoteFly
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
+            Strings.TranslateForm(this);
+            this.Size = new Size(Settings.NotesDefaultWidth, Settings.NotesDefaultHeight);            
             this.notes = notes;
             this.SetFontSettings();
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
@@ -141,9 +188,9 @@ namespace NoteFly
         private void btnPluginFormatBtn_Click(object sender, EventArgs e)
         {
             this.rtbNewNote.EnableAutoDragDrop = true;
-            for (int p = 0; p < Program.pluginsenabled.Length; p++)
+            for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
             {
-                this.rtbNewNote.Rtf = Program.pluginsenabled[p].NoteFormatBtnClicked(this.rtbNewNote, (Button)sender);
+                this.rtbNewNote.Rtf = PluginsManager.EnabledPlugins[p].NoteFormatBtnClicked(this.rtbNewNote, (Button)sender);
             }
         }
 
@@ -186,7 +233,7 @@ namespace NoteFly
                 this.lbTextTitle.BackColor = Color.Transparent;
             }
 
-            CreatePluginButtons(skinnr);
+            this.CreatePluginButtons(skinnr);
         }
 
         /// <summary>
@@ -195,20 +242,24 @@ namespace NoteFly
         /// <param name="skinnr">The skin position</param>
         private void CreatePluginButtons(int skinnr)
         {
-            for (int p = 0; p < Program.pluginsenabled.Length; p++)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                if (Program.pluginsenabled[p].InitNoteFormatBtns() != null)
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
                 {
-                    foreach (Button btnPluginFormatBtn in Program.pluginsenabled[p].InitNoteFormatBtns())
+                    if (PluginsManager.EnabledPlugins[p].InitNoteFormatBtns() != null)
                     {
-                        this.tlpnlFormatbtn.ColumnCount += 1;
-                        this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 32));
-                        btnPluginFormatBtn.Click += new EventHandler(this.btnPluginFormatBtn_Click);
-                        btnPluginFormatBtn.FlatStyle = FlatStyle.Flat;
-                        btnPluginFormatBtn.FlatAppearance.BorderColor = Color.Black;
-                        btnPluginFormatBtn.ForeColor = this.notes.GetTextClr(skinnr);
-                        btnPluginFormatBtn.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
-                        this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount - 1, 0);
+                        foreach (Button btnPluginFormatBtn in PluginsManager.EnabledPlugins[p].InitNoteFormatBtns())
+                        {
+                            this.tlpnlFormatbtn.ColumnCount += 1;
+                            this.tlpnlFormatbtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize, 32));
+                            btnPluginFormatBtn.Click += new EventHandler(this.btnPluginFormatBtn_Click);
+                            btnPluginFormatBtn.FlatStyle = FlatStyle.Flat;
+                            btnPluginFormatBtn.FlatAppearance.BorderColor = Color.Black;
+                            btnPluginFormatBtn.ForeColor = this.notes.GetTextClr(skinnr);
+                            btnPluginFormatBtn.FlatAppearance.MouseOverBackColor = this.notes.GetSelectClr(skinnr);
+                            btnPluginFormatBtn.TabStop = false;
+                            this.tlpnlFormatbtn.Controls.Add(btnPluginFormatBtn, this.tlpnlFormatbtn.ColumnCount - 1, 0);
+                        }
                     }
                 }
             }
@@ -227,8 +278,8 @@ namespace NoteFly
             }
             else if (string.IsNullOrEmpty(this.rtbNewNote.Text))
             {
-                const string PLEASEENTERCONTENT = "Please enter some content.";
-                this.rtbNewNote.Text = PLEASEENTERCONTENT;
+                string newnote_entercontent = Strings.T("Please enter some content.");
+                this.rtbNewNote.Text = newnote_entercontent;
                 this.rtbNewNote.Focus();
                 this.rtbNewNote.SelectAll();
             }
@@ -245,8 +296,8 @@ namespace NoteFly
                     this.note.Title = this.tbTitle.Text;
                     if (!xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNewNote.Rtf))
                     {
-                        const string EXCCANTWRITENOTE = "Could not write note.";
-                        throw new ApplicationException(EXCCANTWRITENOTE);
+                        string newnote_exccantwritenote = Strings.T("Could not write note.");
+                        throw new ApplicationException(newnote_exccantwritenote);
                     }
 
                     this.note.Tempcontent = this.rtbNewNote.Rtf;
@@ -258,18 +309,18 @@ namespace NoteFly
                     }
                 }
 
-                if (Program.pluginsenabled != null)
+                if (PluginsManager.EnabledPlugins != null)
                 {
-                    for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                    for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                     {
-                        Program.pluginsenabled[i].SavingNote(this.rtbNewNote.Rtf, this.tbTitle.Text);
+                        PluginsManager.EnabledPlugins[i].SavingNote(this.rtbNewNote.Rtf, this.tbTitle.Text);
                     }
                 }
 
-                TrayIcon.Frmneweditnoteopen = false;
+                Program.Formmanager.Frmneweditnoteopen = false;
                 SyntaxHighlight.DeinitHighlighter();
-                this.notes.FrmManageNotesNeedUpdate = true;
-                TrayIcon.RefreshFrmManageNotes();
+                Program.Formmanager.FrmManageNotesNeedUpdate = true;
+                Program.Formmanager.RefreshFrmManageNotes();
                 this.Close();
                 GC.Collect();
             }
@@ -282,7 +333,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            TrayIcon.Frmneweditnoteopen = false;
+            Program.Formmanager.Frmneweditnoteopen = false;
             if (this.note != null)
             {
                 this.note.CreateForm();
@@ -465,13 +516,16 @@ namespace NoteFly
                 this.contextMenuStripTextActions.Items.RemoveAt(8);
             }
 
-            for (int i = 0; i < Program.pluginsenabled.Length; i++)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                if (Program.pluginsenabled[i].InitFrmNewNoteMenu() != null)
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                 {
-                    ToolStripItem menuplugin = Program.pluginsenabled[i].InitFrmNewNoteMenu();
-                    menuplugin.Click += new EventHandler(this.menumain_Click);
-                    this.contextMenuStripTextActions.Items.Add(menuplugin);
+                    if (PluginsManager.EnabledPlugins[i].InitFrmNewNoteMenu() != null)
+                    {
+                        ToolStripItem menuplugin = PluginsManager.EnabledPlugins[i].InitFrmNewNoteMenu();
+                        menuplugin.Click += new EventHandler(this.menumain_Click);
+                        this.contextMenuStripTextActions.Items.Add(menuplugin);
+                    }
                 }
             }
         }
@@ -483,12 +537,12 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void menumain_Click(object sender, EventArgs e)
         {
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int i = 0; i < Program.pluginsenabled.Length; i++)
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                 {
                     ToolStripItem toolstripitemplugin = (ToolStripItem)sender;
-                    this.rtbNewNote.Rtf = Program.pluginsenabled[i].MenuFrmNewNoteClicked(this.rtbNewNote, toolstripitemplugin);
+                    this.rtbNewNote.Rtf = PluginsManager.EnabledPlugins[i].MenuFrmNewNoteClicked(this.rtbNewNote, toolstripitemplugin);
                 }
             }
         }
@@ -570,22 +624,23 @@ namespace NoteFly
                     if (File.Exists(this.openNoteFileDialog.FileName))
                     {
                         reader = new StreamReader(this.openNoteFileDialog.FileName, true); // detect encoding
+                        ImportNotes importnote = new ImportNotes(this.notes);                        
                         switch (this.openNoteFileDialog.FilterIndex)
                         {
                             case 1:
-                                this.ReadTextfile(reader);
+                                importnote.ReadTextfile(reader, this.rtbNewNote);
                                 break;
                             case 2:
-                                this.ReadRTFfile(reader);
+                                importnote.ReadRTFfile(reader, this.rtbNewNote);
                                 break;
                             case 3:
-                                this.ReadKeyNotefile(reader);
+                                importnote.ReadKeyNotefile(reader, this.rtbNewNote);
                                 break;
                             case 4:
-                                this.ReadTomboyfile(reader, this.openNoteFileDialog.FileName);
+                                importnote.ReadTomboyfile(reader, this.openNoteFileDialog.FileName, this.tbTitle, this.rtbNewNote);
                                 break;
                             case 5:
-                                this.ReadMicroSENotefile(reader);
+                                importnote.ReadMicroSENotefile(reader, this.tbTitle, this.rtbNewNote);
                                 break;
                         }
                     }
@@ -597,6 +652,7 @@ namespace NoteFly
             }
         }
 
+        /*
         /// <summary>
         /// Import a textfile as note content for a new note.
         /// </summary>
@@ -605,6 +661,7 @@ namespace NoteFly
         {
             this.rtbNewNote.Text = reader.ReadToEnd();
         }
+         
 
         /// <summary>
         /// Import a rtf file as note content for a new note.
@@ -615,6 +672,7 @@ namespace NoteFly
             this.rtbNewNote.Rtf = reader.ReadToEnd();
             this.SetDefaultFontFamilyAndSize();
         }
+        
 
         /// <summary>
         /// Import a KeyNote note file as note content for a new note.
@@ -624,7 +682,7 @@ namespace NoteFly
         {
             uint linenum = 0;
             string curline = reader.ReadLine(); // no CR+LF characters
-            const string IMPORTERROR = "import error";
+            string newnote_importerror = Strings.T("import error");
             if (curline == "#!GFKNT 2.0")
             {
                 while (curline != "%:")
@@ -635,9 +693,9 @@ namespace NoteFly
                     // should normally be except %: around line 42.
                     if (linenum > 50)
                     {
-                        const string CANNOTFINDKEYNOTECONTENT = "Cannot find KeyNote NF note content.";
-                        MessageBox.Show(CANNOTFINDKEYNOTECONTENT, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Log.Write(LogType.error, CANNOTFINDKEYNOTECONTENT);
+                        string newnote_cannotfindkeynotecontent = Strings.T("Cannot find KeyNote NF note content.");
+                        MessageBox.Show(newnote_cannotfindkeynotecontent, newnote_importerror, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Log.Write(LogType.error, newnote_cannotfindkeynotecontent);
                     }
                 }
 
@@ -661,9 +719,9 @@ namespace NoteFly
             }
             else
             {
-                const string NOTKEYNOTEFILE = "Not a KeyNote NF note.";
-                MessageBox.Show(NOTKEYNOTEFILE, IMPORTERROR, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log.Write(LogType.error, NOTKEYNOTEFILE);
+                string newnote_notkeynotefile = Strings.T("Not a KeyNote NF note.");
+                MessageBox.Show(newnote_notkeynotefile, newnote_importerror, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Write(LogType.error, newnote_notkeynotefile);
             }
         }
 
@@ -805,6 +863,7 @@ namespace NoteFly
                 }
             }
         }
+        */
 
         /// <summary>
         /// Set this note ontop, CheckOnClick is set to true.
@@ -826,12 +885,18 @@ namespace NoteFly
             if (Clipboard.ContainsText())
             {
                 this.rtbNewNote.Text = this.rtbNewNote.Text + Clipboard.GetText();
+                if (SyntaxHighlight.KeywordsInitialized)
+                {
+                    SyntaxHighlight.InitHighlighter();
+                }
+
+                SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, this.GetSkinnr(), this.notes);
             }
             else
             {
-                const string EMPTYCLIPBOARD = "There is no text on the clipboard.";
-                MessageBox.Show(EMPTYCLIPBOARD);
-                Log.Write(LogType.error, EMPTYCLIPBOARD);
+                string newnote_emptyclipboard = Strings.T("There is no text on the clipboard.");
+                MessageBox.Show(newnote_emptyclipboard);
+                Log.Write(LogType.error, newnote_emptyclipboard);
             }
         }
 
@@ -1014,16 +1079,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Set font family and size.
-        /// </summary>
-        private void SetDefaultFontFamilyAndSize()
-        {
-            this.rtbNewNote.SelectAll();
-            this.rtbNewNote.Font = new Font(Settings.FontContentFamily, (float)Settings.FontContentSize);
-            this.rtbNewNote.Select(0, 0);
-        }
-
-        /// <summary>
         /// Set the font and textdirection FrmNewNote.
         /// </summary>
         private void SetFontSettings()
@@ -1175,19 +1230,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Do a quick text highlight.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void btnAddNote_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == ' ')
-            {
-                // TODO Do a quick highlight of change. Every space creates a new keyword to highlight.
-            }
-        }
-
-        /// <summary>
         /// Paste text to title if clipboard contains any text.
         /// </summary>
         /// <param name="sender">Sender object</param>
@@ -1200,10 +1242,48 @@ namespace NoteFly
             }
             else
             {
-                const string EMPTYCLIPBOARD = "There is no text on the clipboard.";
-                MessageBox.Show(EMPTYCLIPBOARD);
-                Log.Write(LogType.error, EMPTYCLIPBOARD);
+                string newnote_emptyclipboard = Strings.T("There is no text on the clipboard.");
+                MessageBox.Show(newnote_emptyclipboard);
+                Log.Write(LogType.error, newnote_emptyclipboard);
             }
+        }        
+
+        /// <summary>
+        /// Key is released in rtbNewNote
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Key event arguments</param>
+        private void rtbNewNote_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (!SyntaxHighlight.KeywordsInitialized)
+            {
+                SyntaxHighlight.InitHighlighter();
+            }
+
+            if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter || e.KeyValue == 190)
+            {
+                SyntaxHighlight.CheckSyntaxQuick(this.rtbNewNote, this.GetSkinnr(), this.notes);
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, this.GetSkinnr(), this.notes);               
+            }
+        }
+
+        /// <summary>
+        /// Get the skin number of this new- or editing note.
+        /// </summary>
+        /// <returns></returns>
+        private int GetSkinnr()
+        {
+            int skinnr = Settings.NotesDefaultSkinnr;
+            if (this.note != null)
+            {
+                // edit note
+                skinnr = this.note.SkinNr;
+            }
+
+            return skinnr;
         }
 
         #endregion Methods

@@ -53,11 +53,11 @@ namespace SendToOpera
         {
             if (this.WriteNote(rtbnote.Text))
             {
-                MessageBox.Show("Note added to Opera®");
+                MessageBox.Show("Note added to Opera® webbrowser.");
             }
             else
             {
-                MessageBox.Show("Could not add note to Opera®.");
+                MessageBox.Show("Failed to add note to Opera® webbrowser.");
             }
         }
 

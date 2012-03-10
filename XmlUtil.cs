@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="XmlUtil.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ namespace NoteFly
         /// <summary>
         /// The note version
         /// </summary>
-        private const string NOTEVERSION = "3";
+        private const string NOTEVERSION = "3";        
 
         /// <summary>
         /// XmlTextReader object.
@@ -57,7 +57,7 @@ namespace NoteFly
         /// XmlTextWriter object.
         /// </summary>
         private static XmlTextWriter xmlwrite = null;
-
+        
         #endregion Fields
 
         #region Methods (11)
@@ -164,6 +164,163 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Parser the listing of the plugins
+        /// </summary>
+        /// <param name="response">The server response.</param>
+        /// <param name="ipluginversionparts">The Iplugin version as array with major, minor, release numbers</param>
+        /// <param name="lbxAvailablePlugins">ListBox with availible plugins</param>
+        /// <returns></returns>
+        public static bool ParserListPlugins(string response, short[] ipluginversionparts, System.Windows.Forms.ListBox lbxAvailablePlugins)
+        {
+            if (string.IsNullOrEmpty(response))
+            {
+                return false;
+            }
+
+            bool succeeded = false;
+            XmlTextReader xmlreader = new XmlTextReader(new System.IO.StringReader(response));
+            xmlreader.ProhibitDtd = true;
+            const int MAXSEARCHRESULTSPLUGINS = 50;
+            int numsearchresultsplugins = 0;
+            try
+            {
+                while (xmlreader.Read())
+                {
+                    if (xmlreader.Name == "plugin")
+                    {
+                        numsearchresultsplugins++;
+                        if (numsearchresultsplugins > MAXSEARCHRESULTSPLUGINS)
+                        {
+                            break;
+                        }
+
+                        string pluginname = null;
+                        string curpluginminversioniplugin = null;
+                        XmlReader xmlplugin = xmlreader.ReadSubtree();
+                        while (xmlplugin.Read())
+                        {
+                            switch (xmlplugin.Name)
+                            {
+                                case "name":
+                                    pluginname = xmlplugin.ReadElementContentAsString();
+                                    break;
+                                case "minversioniplugin":
+                                    curpluginminversioniplugin = xmlplugin.ReadElementContentAsString();
+                                    break;
+                            }
+                        }
+
+                        short[] curpluginminveripluginpart = Program.ParserVersionString(curpluginminversioniplugin);
+                        int compversionsresults = Program.CompareVersions(ipluginversionparts, curpluginminveripluginpart);
+
+                        if (!string.IsNullOrEmpty(pluginname) && compversionsresults >= 0)
+                        {
+                            lbxAvailablePlugins.Items.Add(pluginname);                            
+                        }
+                    }
+                }
+
+                succeeded = true;
+            }
+            catch (WebException webexc)
+            {
+                succeeded = false;
+                Log.Write(LogType.error, webexc.Message);
+            }
+            finally
+            {
+                if (xmlreader != null)
+                {
+                    xmlreader.Close();
+                }
+            }
+
+            return succeeded;
+        }
+
+        /// <summary>
+        /// Parser the details of the plugin detail response
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="pluginsnamesinstalled"></param>
+        /// <returns></returns>
+        public static string[] ParserDetailsPlugin(string response, string[] installedpluginnames, out bool alreadyinstalled, out bool updateavailable)
+        {
+            alreadyinstalled = false;
+            updateavailable = false;
+            if (string.IsNullOrEmpty(response))
+            {
+                return null;
+            }
+
+            string[] detailsplugin = new string[5];
+            XmlTextReader xmlreader = null;
+            try
+            {
+                xmlreader = new XmlTextReader(new System.IO.StringReader(response));
+                xmlreader.ProhibitDtd = true;
+                while (xmlreader.Read())
+                {
+                    if (xmlreader.Name == "plugin")
+                    {
+                        XmlReader xmlplugin = xmlreader.ReadSubtree();
+                        while (xmlplugin.Read())
+                        {
+                            switch (xmlplugin.Name)
+                            {
+                                case "name":
+                                    detailsplugin[0] = xmlplugin.ReadElementContentAsString();
+                                    if (!String.IsNullOrEmpty(detailsplugin[0]))
+                                    {
+                                        for (int i = 0; i < installedpluginnames.Length; i++)
+                                        {
+                                            if (detailsplugin[0].Equals(installedpluginnames[i], StringComparison.Ordinal))
+                                            {
+                                                alreadyinstalled = true;
+                                            }
+                                        }
+                                    }
+
+                                    break;
+                                case "version":
+                                    detailsplugin[1] = xmlplugin.ReadElementContentAsString();                                    
+                                    break;
+                                case "license":
+                                    detailsplugin[2] = xmlplugin.ReadElementContentAsString();
+                                    break;
+                                case "description":
+                                    detailsplugin[3] = xmlplugin.ReadElementContentAsString();
+                                    break;
+                                case "downloadurl":
+                                    detailsplugin[4] = xmlplugin.ReadElementContentAsString();
+                                    break;
+                            }
+                        }                        
+                    }
+                }
+            }
+            finally
+            {
+                if (xmlreader != null)
+                {
+                    xmlreader.Close();
+                }
+            }
+
+            if (!String.IsNullOrEmpty(detailsplugin[0]) && !String.IsNullOrEmpty(detailsplugin[1]))
+            {
+                short[] installedpluginversion = PluginsManager.GetPluginVersionByName(detailsplugin[0]);
+                short[] availablepluginversion = Program.ParserVersionString(detailsplugin[1]);
+                if (Program.CompareVersions(availablepluginversion, installedpluginversion) > 0)
+                {
+                    updateavailable = true;
+                }
+            }
+
+            return detailsplugin;
+        }
+
+        /// <summary>
         /// Load a note file.
         /// </summary>
         /// <param name="notes">reference to notes class.</param>
@@ -196,7 +353,7 @@ namespace NoteFly
         /// Loads the settings file and set the settings in the
         /// static Settings class in memory.
         /// </summary>
-        /// <returns>true if file settings exists.</returns>
+        /// <returns>True if file settings exists.</returns>
         public static bool LoadSettings()
         {
             if (!Directory.Exists(Program.AppDataFolder))
@@ -245,6 +402,15 @@ namespace NoteFly
                         case "HighlightSQL":
                             Settings.HighlightSQL = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "HotkeysNewNoteAltInsteadShift":
+                            Settings.HotkeysNewNoteAltInsteadShift = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "HotkeysManageNotesAltInsteadShift":
+                            Settings.HotkeysManageNotesAltInsteadShift = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "HotkeysNotesToFrontAltInsteadShift":
+                            Settings.HotkeysNotesToFrontAltInsteadShift = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "NetworkProxyEnabled":
                             Settings.NetworkProxyEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -257,6 +423,9 @@ namespace NoteFly
                         case "NotesDefaultRandomSkin":
                             Settings.NotesDefaultRandomSkin = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "NotesDefaultTitleDate":
+                            Settings.NotesDefaultTitleDate = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "NotesDeleteRecyclebin":
                             Settings.NotesDeleteRecyclebin = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -266,11 +435,17 @@ namespace NoteFly
                         case "NotesTransparentRTB":
                             Settings.NotesTransparentRTB = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "ProgramFirstrun":
-                            Settings.ProgramFirstrun = xmlread.ReadElementContentAsBoolean();
+                        case "ProgramFirstrun": // legacy
+                            Settings.ProgramFirstrunned = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "ProgramFirstrunned":
+                            Settings.ProgramFirstrunned = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "ProgramFormsDoublebuffered":
                             Settings.ProgramFormsDoublebuffered = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "ProgramLanguage":
+                            Settings.ProgramLanguage = xmlread.ReadElementContentAsString();
                             break;
                         case "ProgramLogError":
                             Settings.ProgramLogError = xmlread.ReadElementContentAsBoolean();
@@ -290,8 +465,8 @@ namespace NoteFly
                         case "SharingEmailEnabled":
                             Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "SocialEmailEnabled": // TODO: legacy setting, only read it no writing it anymore.
-                            Settings.SharingEmailEnabled = xmlread.ReadElementContentAsBoolean();
+                        case "SettingsExpertEnabled":
+                            Settings.SettingsExpertEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "TrayiconAlternateIcon":
                             Settings.TrayiconAlternateIcon = xmlread.ReadElementContentAsBoolean();
@@ -314,11 +489,23 @@ namespace NoteFly
                         case "UpdateSilentInstall":
                             Settings.UpdateSilentInstall = xmlread.ReadElementContentAsBoolean();
                             break;
-                        case "SettingsExpertEnabled":
-                            Settings.SettingsExpertEnabled = xmlread.ReadElementContentAsBoolean();
+                        case "ManagenotesTooltip":
+                            Settings.ManagenotesTooltip = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "ManagenotesSearchCasesentive":
+                            Settings.ManagenotesSearchCasesentive = xmlread.ReadElementContentAsBoolean();
                             break;
 
                         // ints and doubles
+                        case "HotkeysNewNoteKeycode":
+                            Settings.HotkeysNewNoteKeycode = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "HotkeysManageNotesKeycode":
+                            Settings.HotkeysManageNotesKeycode = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "HotkeysNotesToFrontKeycode":
+                            Settings.HotkeysNotesToFrontKeycode = xmlread.ReadElementContentAsInt();
+                            break;                        
                         case "TrayiconFontsize":
                             Settings.TrayiconFontsize = xmlread.ReadElementContentAsFloat();
                             break;
@@ -334,11 +521,26 @@ namespace NoteFly
                         case "NetworkConnectionTimeout":
                             Settings.NetworkConnectionTimeout = xmlread.ReadElementContentAsInt();
                             break;
+                        case "NetworkIPversion":
+                            Settings.NetworkIPversion = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NetworkProxyPort":
+                            Settings.NetworkProxyPort = xmlread.ReadElementContentAsInt();
+                            break;
                         case "NotesDefaultSkinnr":
                             Settings.NotesDefaultSkinnr = xmlread.ReadElementContentAsInt();
                             break;
-                        case "NotesWarnLimit": // TODO: legacy setting, only read it no writing it anymore.
-                            Settings.NotesWarnlimitTotal = xmlread.ReadElementContentAsInt();
+                        case "NotesDefaultWidth":
+                            Settings.NotesDefaultWidth = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NotesDefaultHeight":
+                            Settings.NotesDefaultHeight = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NotesTitlepanelMaxHeight":
+                            Settings.NotesTitlepanelMaxHeight = xmlread.ReadElementContentAsInt();
+                            break;
+                        case "NotesTitlepanelMinHeight":
+                            Settings.NotesTitlepanelMinHeight = xmlread.ReadElementContentAsInt();
                             break;
                         case "NotesWarnlimitTotal":
                             Settings.NotesWarnlimitTotal = xmlread.ReadElementContentAsInt();
@@ -348,6 +550,12 @@ namespace NoteFly
                             break;
                         case "NotesTransparencyLevel":
                             Settings.NotesTransparencyLevel = xmlread.ReadElementContentAsDouble();
+                            break;
+                        case "ManagenotesFontsize":
+                            Settings.ManagenotesFontsize = xmlread.ReadElementContentAsFloat();
+                            break;
+                        case "ManagenotesSkinnr":
+                            Settings.ManagenotesSkinnr = xmlread.ReadElementContentAsInt();
                             break;
                         case "TrayiconLeftclickaction":
                             Settings.TrayiconLeftclickaction = xmlread.ReadElementContentAsInt();
@@ -415,9 +623,6 @@ namespace NoteFly
                             break;
                         case "FontTitleFamily":
                             Settings.FontTitleFamily = xmlread.ReadElementContentAsString();
-                            break;
-                        case "SocialEmailDefaultadres": // TODO: legacy setting, only read, to be removed in NoteFly 2.5.0>
-                            Settings.SharingEmailDefaultadres = xmlread.ReadElementContentAsString();
                             break;
                         case "SharingEmailDefaultadres":
                             Settings.SharingEmailDefaultadres = xmlread.ReadElementContentAsString();
@@ -518,7 +723,7 @@ namespace NoteFly
                             break;
                         case "Name":
                             const int MAXLENSKINNAME = 200;
-                            string skinname = xmlread.ReadElementContentAsString();                            
+                            string skinname = xmlread.ReadElementContentAsString();
                             if (skinname.Length < MAXLENSKINNAME)
                             {
                                 curskin.Name = skinname;
@@ -527,6 +732,7 @@ namespace NoteFly
                             {
                                 curskin.Name = skinname.Substring(0, MAXLENSKINNAME);
                             }
+
                             break;
                         case "PrimaryClr":
                             if (xmlread.HasAttributes)
@@ -644,7 +850,7 @@ namespace NoteFly
             Settings.FontTextdirection = 0;
             Settings.FontTitleSize = 14;
             Settings.FontTitleStylebold = true;
-            Settings.HighlightMaxchars = 10000;
+            Settings.HighlightMaxchars = 30000;
             Settings.HighlightHTML = false;
             Settings.HighlightHTMLColorComment = "#B200FF";
             Settings.HighlightHTMLColorInvalid = "#FF0000";
@@ -659,36 +865,47 @@ namespace NoteFly
             Settings.HighlightSQL = false;
             Settings.HighlightSQLColorValidstatement = "#7FCE35";
             Settings.HighlightSQLColorField = "#B16DFF";
+            Settings.HotkeysNewNoteAltInsteadShift = true;
+            Settings.HotkeysNewNoteKeycode = 78; // N
+            Settings.HotkeysManageNotesAltInsteadShift = true;
+            Settings.HotkeysManageNotesKeycode = 77; // M
+            Settings.HotkeysNotesToFrontAltInsteadShift = true;
+            Settings.HotkeysNotesToFrontKeycode = 70; // F
             Settings.NetworkConnectionTimeout = 8000;
-            Settings.NetworkConnectionForceipv6 = false;
+            Settings.NetworkIPversion = 0;
             Settings.NetworkProxyAddress = string.Empty;
             Settings.NetworkProxyEnabled = false;
             Settings.NotesTooltipsEnabled = true;
             Settings.NotesClosebtnHidenotepermanently = true;
             Settings.NotesDefaultRandomSkin = false;
             Settings.NotesDefaultSkinnr = 0; // default skin: yellow
-            Settings.NotesSavepath = Program.AppDataFolder;
+            Settings.NotesDefaultHeight = 240;
+            Settings.NotesDefaultWidth = 280;
+            Settings.NotesDefaultTitleDate = true;
+            Settings.NotesTitlepanelMaxHeight = 64;
+            Settings.NotesTitlepanelMinHeight = 32;
+            Settings.NotesSavepath = Program.GetDefaultNotesFolder();
             Settings.NotesTransparencyEnabled = true;
             Settings.NotesTransparentRTB = true;
             Settings.NotesTransparencyLevel = 0.9;
-            Settings.NotesWarnlimitTotal = 500;
+            Settings.NotesWarnlimitTotal = 5000;
             Settings.NotesWarnlimitVisible = 50;
-            Settings.ProgramFirstrun = false;
-            Settings.ProgramFormsDoublebuffered = false;
+            Settings.ProgramFirstrunned = false;
+            Settings.ProgramFormsDoublebuffered = false; // ProgramFormsDoublebuffered=true creates blank windows on windows 8 pre-beta.
             Settings.ProgramLogError = true;
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
             Settings.ProgramPluginsAllEnabled = true;
-            Settings.ProgramPluginsEnabled = Settings.ProgramPluginsEnabled; // leave as is
+            //Settings.ProgramPluginsEnabled = Settings.ProgramPluginsEnabled; // leave as is
             Settings.ProgramPluginsDllexclude = "SQLite3.dll|System.Data.SQLite.DLL|Interop.SpeechLib.dll";
-            Settings.ProgramPluginsFolder = Path.Combine(Program.InstallFolder, "plugins");
+            Settings.ProgramPluginsFolder = Program.GetDefaultPluginFolder();
             Settings.ProgramSuspressWarnAdmin = false;
             Settings.SettingsLastTab = 0;
             Settings.SettingsExpertEnabled = false;
             Settings.SharingEmailEnabled = true;
             Settings.SharingEmailDefaultadres = string.Empty;
             Settings.TrayiconAlternateIcon = false;
-            Settings.TrayiconFontsize = 9.00f; // default .net: 8.25f; but made a little bigger for readablity
+            Settings.TrayiconFontsize = 10.00f; // default .net: 8.25f; but made bigger (and more) for a little more readablity
             Settings.TrayiconLeftclickaction = 1;
             Settings.TrayiconCreatenotebold = true;
             Settings.TrayiconExitbold = false;
@@ -708,17 +925,10 @@ namespace NoteFly
             {
                 Settings.UpdatecheckUseGPG = false;
             }
-
-            try
-            {
-                xmlUtil.WriteSettings();
-                xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE));
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            
+            xmlUtil.WriteSettings();
+            xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE));
+            return true;
         }
 
         /// <summary>
@@ -851,105 +1061,126 @@ namespace NoteFly
         /// <returns>true if succeed.</returns>
         public static bool WriteSettings()
         {
-            NumberFormatInfo numfmtinfo = CultureInfo.InvariantCulture.NumberFormat;
-            try
+            lock (typeof(xmlUtil))
             {
-                if (!Directory.Exists(Program.AppDataFolder))
+                NumberFormatInfo numfmtinfo = CultureInfo.InvariantCulture.NumberFormat;
+                try
                 {
-                    Directory.CreateDirectory(Program.AppDataFolder);
+                    if (!Directory.Exists(Program.AppDataFolder))
+                    {
+                        Directory.CreateDirectory(Program.AppDataFolder);
+                    }
+
+                    xmlwrite = new XmlTextWriter(Path.Combine(Program.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
+                    xmlwrite.Formatting = Formatting.Indented;
+                    xmlwrite.WriteStartDocument(true); // standalone document
+                    xmlwrite.WriteStartElement("settings");
+
+                    // booleans
+                    WriteXMLBool("ConfirmDeletenote", Settings.ConfirmDeletenote);
+                    WriteXMLBool("ConfirmExit", Settings.ConfirmExit);
+                    WriteXMLBool("ConfirmLinkclick", Settings.ConfirmLinkclick);
+                    WriteXMLBool("FontTitleStylebold", Settings.FontTitleStylebold);
+                    WriteXMLBool("HighlightHTML", Settings.HighlightHTML);
+                    WriteXMLBool("HighlightHyperlinks", Settings.HighlightHyperlinks);
+                    WriteXMLBool("HighlightPHP", Settings.HighlightPHP);
+                    WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
+                    WriteXMLBool("HotkeysNewNoteAltInsteadShift", Settings.HotkeysNewNoteAltInsteadShift);
+                    WriteXMLBool("HotkeysManageNotesAltInsteadShift", Settings.HotkeysManageNotesAltInsteadShift);
+                    WriteXMLBool("HotkeysNotesToFrontAltInsteadShift", Settings.HotkeysNotesToFrontAltInsteadShift);
+                    WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
+                    WriteXMLBool("NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
+                    WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
+                    WriteXMLBool("NotesDeleteRecyclebin", Settings.NotesDeleteRecyclebin);
+                    WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
+                    WriteXMLBool("NotesTransparentRTB", Settings.NotesTransparentRTB);
+                    WriteXMLBool("NotesDefaultRandomSkin", Settings.NotesDefaultRandomSkin);
+                    WriteXMLBool("NotesDefaultTitleDate", Settings.NotesDefaultTitleDate);
+                    WriteXMLBool("ProgramFirstrunned", Settings.ProgramFirstrunned);
+                    WriteXMLBool("ProgramFormsDoublebuffered", Settings.ProgramFormsDoublebuffered);
+                    WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
+                    WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
+                    WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
+                    WriteXMLBool("ProgramPluginsAllEnabled", Settings.ProgramPluginsAllEnabled);
+                    WriteXMLBool("ProgramSuspressWarnAdmin", Settings.ProgramSuspressWarnAdmin);
+                    WriteXMLBool("SharingEmailEnabled", Settings.SharingEmailEnabled);
+                    WriteXMLBool("SettingsExpertEnabled", Settings.SettingsExpertEnabled);
+                    WriteXMLBool("TrayiconAlternateIcon", Settings.TrayiconAlternateIcon);
+                    WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
+                    WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
+                    WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
+                    WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
+                    WriteXMLBool("UpdateSilentInstall", Settings.UpdateSilentInstall);
+                    WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
+                    WriteXMLBool("ManagenotesSearchCasesentive", Settings.ManagenotesSearchCasesentive);
+                    WriteXMLBool("ManagenotesTooltip", Settings.ManagenotesTooltip);
+
+                    // integers
+                    xmlwrite.WriteElementString("HotkeysNewNoteKeycode", Settings.HotkeysNewNoteKeycode.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("HotkeysManageNotesKeycode", Settings.HotkeysManageNotesKeycode.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("HotkeysNotesToFrontKeycode", Settings.HotkeysNotesToFrontKeycode.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NetworkIPversion", Settings.NetworkIPversion.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NetworkProxyPort", Settings.NetworkProxyPort.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NotesDefaultWidth", Settings.NotesDefaultWidth.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NotesDefaultHeight", Settings.NotesDefaultHeight.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NotesTitlepanelMaxHeight", Settings.NotesTitlepanelMaxHeight.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NotesTitlepanelMinHeight", Settings.NotesTitlepanelMinHeight.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NotesWarnlimitTotal", Settings.NotesWarnlimitTotal.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NotesWarnlimitVisible", Settings.NotesWarnlimitVisible.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("HighlightMaxchars", Settings.HighlightMaxchars.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("SettingsLastTab", Settings.SettingsLastTab.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("ManagenotesFontsize", Settings.ManagenotesFontsize.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("ManagenotesSkinnr", Settings.ManagenotesSkinnr.ToString(numfmtinfo));
+
+                    // strings
+                    xmlwrite.WriteElementString("HighlightHTMLColorComment", Settings.HighlightHTMLColorComment);
+                    xmlwrite.WriteElementString("HighlightHTMLColorInvalid", Settings.HighlightHTMLColorInvalid);
+                    xmlwrite.WriteElementString("HighlightHTMLColorValid", Settings.HighlightHTMLColorValid);
+                    xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.HighlightHTMLColorString);
+                    xmlwrite.WriteElementString("HighlightPHPColorComment", Settings.HighlightPHPColorComment);
+                    xmlwrite.WriteElementString("HighlightPHPColorDocumentstartend", Settings.HighlightPHPColorDocumentstartend);
+                    xmlwrite.WriteElementString("HighlightPHPColorInvalidfunctions", Settings.HighlightPHPColorInvalidfunctions);
+                    xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.HighlightPHPColorValidfunctions);
+                    xmlwrite.WriteElementString("HighlightSQLColorValidstatement", Settings.HighlightSQLColorValidstatement);
+                    xmlwrite.WriteElementString("HighlightSQLColorField", Settings.HighlightSQLColorField);
+                    xmlwrite.WriteElementString("UpdatecheckGPGKeyserver", Settings.UpdatecheckGPGKeyserver);
+                    xmlwrite.WriteElementString("UpdatecheckGPGPath", Settings.UpdatecheckGPGPath);
+                    xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
+                    xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
+                    xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
+                    xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
+                    xmlwrite.WriteElementString("ProgramLanguage", Settings.ProgramLanguage);
+                    xmlwrite.WriteElementString("ProgramLastrunVersion", Settings.ProgramLastrunVersion);
+                    xmlwrite.WriteElementString("ProgramPluginsFolder", Settings.ProgramPluginsFolder);
+                    xmlwrite.WriteElementString("ProgramPluginsEnabled", Settings.ProgramPluginsEnabled);
+                    xmlwrite.WriteElementString("ProgramPluginsDllexclude", Settings.ProgramPluginsDllexclude);
+                    xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
+                    xmlwrite.WriteElementString("SharingEmailDefaultadres", Settings.SharingEmailDefaultadres);
+                    xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
+                    xmlwrite.WriteEndElement();
+                    xmlwrite.WriteEndDocument();
+                }
+                catch (AccessViolationException)
+                {
+                    Log.Write(LogType.exception, "Permission problem writing: " + Path.Combine(Program.AppDataFolder, SETTINGSFILE));
+                    return false;
+                }
+                finally
+                {
+                    xmlwrite.Close();
                 }
 
-                xmlwrite = new XmlTextWriter(Path.Combine(Program.AppDataFolder, SETTINGSFILE), System.Text.Encoding.UTF8);
-                xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument(true); // standalone document
-                xmlwrite.WriteStartElement("settings");
-
-                // booleans
-                WriteXMLBool("ConfirmDeletenote", Settings.ConfirmDeletenote);
-                WriteXMLBool("ConfirmExit", Settings.ConfirmExit);
-                WriteXMLBool("ConfirmLinkclick", Settings.ConfirmLinkclick);
-                WriteXMLBool("FontTitleStylebold", Settings.FontTitleStylebold);
-                WriteXMLBool("HighlightHTML", Settings.HighlightHTML);
-                WriteXMLBool("HighlightHyperlinks", Settings.HighlightHyperlinks);
-                WriteXMLBool("HighlightPHP", Settings.HighlightPHP);
-                WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
-                WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
-                WriteXMLBool("NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
-                WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
-                WriteXMLBool("NotesDeleteRecyclebin", Settings.NotesDeleteRecyclebin);
-                WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
-                WriteXMLBool("NotesTransparentRTB", Settings.NotesTransparentRTB);
-                WriteXMLBool("NotesDefaultRandomSkin", Settings.NotesDefaultRandomSkin);
-                WriteXMLBool("ProgramFirstrun", Settings.ProgramFirstrun);
-                WriteXMLBool("ProgramFormsDoublebuffered", Settings.ProgramFormsDoublebuffered);
-                WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
-                WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
-                WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
-                WriteXMLBool("ProgramPluginsAllEnabled", Settings.ProgramPluginsAllEnabled);
-                WriteXMLBool("ProgramSuspressWarnAdmin", Settings.ProgramSuspressWarnAdmin);
-                WriteXMLBool("SharingEmailEnabled", Settings.SharingEmailEnabled);
-                WriteXMLBool("TrayiconAlternateIcon", Settings.TrayiconAlternateIcon);
-                WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
-                WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
-                WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
-                WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
-                WriteXMLBool("UpdateSilentInstall", Settings.UpdateSilentInstall);
-                WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
-                WriteXMLBool("SettingsExpertEnabled", Settings.SettingsExpertEnabled);
-
-                // integers
-                xmlwrite.WriteElementString("FontTextdirection", Settings.FontTextdirection.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("FontContentSize", Settings.FontContentSize.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("FontTitleSize", Settings.FontTitleSize.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NetworkConnectionTimeout", Settings.NetworkConnectionTimeout.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesDefaultSkinnr", Settings.NotesDefaultSkinnr.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesTransparencyLevel", Settings.NotesTransparencyLevel.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesWarnlimitTotal", Settings.NotesWarnlimitTotal.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("NotesWarnlimitVisible", Settings.NotesWarnlimitVisible.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("HighlightMaxchars", Settings.HighlightMaxchars.ToString(numfmtinfo));
-                xmlwrite.WriteElementString("SettingsLastTab", Settings.SettingsLastTab.ToString(numfmtinfo));
-
-                // strings
-                xmlwrite.WriteElementString("HighlightHTMLColorComment", Settings.HighlightHTMLColorComment);
-                xmlwrite.WriteElementString("HighlightHTMLColorInvalid", Settings.HighlightHTMLColorInvalid);
-                xmlwrite.WriteElementString("HighlightHTMLColorValid", Settings.HighlightHTMLColorValid);
-                xmlwrite.WriteElementString("HighlightHTMLColorString", Settings.HighlightHTMLColorString);
-                xmlwrite.WriteElementString("HighlightPHPColorComment", Settings.HighlightPHPColorComment);
-                xmlwrite.WriteElementString("HighlightPHPColorDocumentstartend", Settings.HighlightPHPColorDocumentstartend);
-                xmlwrite.WriteElementString("HighlightPHPColorInvalidfunctions", Settings.HighlightPHPColorInvalidfunctions);
-                xmlwrite.WriteElementString("HighlightPHPColorValidfunctions", Settings.HighlightPHPColorValidfunctions);
-                xmlwrite.WriteElementString("HighlightSQLColorValidstatement", Settings.HighlightSQLColorValidstatement);
-                xmlwrite.WriteElementString("HighlightSQLColorField", Settings.HighlightSQLColorField);
-                xmlwrite.WriteElementString("UpdatecheckGPGKeyserver", Settings.UpdatecheckGPGKeyserver);
-                xmlwrite.WriteElementString("UpdatecheckGPGPath", Settings.UpdatecheckGPGPath);
-                xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
-                xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
-                xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
-                xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
-                xmlwrite.WriteElementString("ProgramLastrunVersion", Settings.ProgramLastrunVersion);
-                xmlwrite.WriteElementString("ProgramPluginsFolder", Settings.ProgramPluginsFolder);
-                xmlwrite.WriteElementString("ProgramPluginsEnabled", Settings.ProgramPluginsEnabled);
-                xmlwrite.WriteElementString("ProgramPluginsDllexclude", Settings.ProgramPluginsDllexclude);
-                xmlwrite.WriteElementString("NetworkProxyAddress", Settings.NetworkProxyAddress);
-                xmlwrite.WriteElementString("SharingEmailDefaultadres", Settings.SharingEmailDefaultadres);
-                xmlwrite.WriteElementString("NotesSavepath", Settings.NotesSavepath);
-                xmlwrite.WriteEndElement();
-                xmlwrite.WriteEndDocument();
+                return true;
             }
-            catch (AccessViolationException)
-            {
-                Log.Write(LogType.exception, "Permission problem writing: " + Path.Combine(Program.AppDataFolder, SETTINGSFILE));
-                return false;
-            }
-            finally
-            {
-                xmlwrite.Close();
-            }
-
-            return true;
         }
 
         /// <summary>
@@ -976,11 +1207,11 @@ namespace NoteFly
             ////{
             ////    if (colorstring.Length < 100)
             ////    {
-            ////        throw new CustomException("Cannot parser: " + colorstring);
+            ////        throw new ApplicationException("Cannot parser: " + colorstring);
             ////    }
             ////    else
             ////    {
-            ////        throw new CustomException("Cannot parser: " + colorstring.Substring(0, 100)+" ..");
+            ////        throw new ApplicationException("Cannot parser: " + colorstring.Substring(0, 100)+" ..");
             ////    }
             ////}
         }
@@ -989,131 +1220,94 @@ namespace NoteFly
         /// Get the new version as a integer array with first major
         /// second valeau the minor version and the third valeau being the release version.
         /// </summary>
+        /// <param name="serverresponse"></param>
         /// <param name="versionquality">The latest version quality, e.g: alpha, beta, rc or nothing for final.</param>
         /// <param name="downloadurl">the download url found</param>
         /// <returns>the newest version as integer array, 
         /// any negative valeau(-1 by default) considered as error.</returns>
-        public static short[] GetLatestVersion(out string versionquality, out string downloadurl)
+        public static short[] ParserLatestVersion(string serverresponse, out string versionquality, out string downloadurl)
         {
             short[] version = new short[3];
             version[0] = -1;
             version[1] = -1;
             version[2] = -1;
             versionquality = Program.AssemblyVersionQuality;
-            downloadurl = "http://www.notefly.org/"; // default url if none is provided.
+            downloadurl = string.Empty;
+            if (string.IsNullOrEmpty(serverresponse))
+            {
+                return version;
+            }
+
             try
             {
-                System.Net.ServicePointManager.Expect100Continue = false;
-                System.Net.ServicePointManager.DefaultConnectionLimit = 1;
-                if (string.IsNullOrEmpty(Settings.UpdatecheckURL))
+                xmlread = new XmlTextReader(new System.IO.StringReader(serverresponse));
+                xmlread.ProhibitDtd = true;
+                while (xmlread.Read())
                 {
-                    Log.Write(LogType.exception, "No UpdatecheckURL found in settings");
-                    return version;
-                }
-
-                if (Settings.NetworkConnectionForceipv6)
-                {
-                    Settings.UpdatecheckURL = Settings.UpdatecheckURL.Replace("//update.", "//ipv6."); // not replacing "http", "https", "ftp"
-                    Settings.UpdatecheckURL = Settings.UpdatecheckURL.Replace("//www.", "//ipv6.");
-                }
-
-                if (!Uri.IsWellFormedUriString(Settings.UpdatecheckURL, UriKind.Absolute))
-                {
-                    Log.Write(LogType.error, "Invalid update uri.");
-                }
-
-                HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(Settings.UpdatecheckURL);
-                request.Method = "GET";
-                request.ContentType = "text/xml";
-                request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
-                request.Timeout = Settings.NetworkConnectionTimeout;
-                if (Settings.NetworkProxyEnabled && !string.IsNullOrEmpty(Settings.NetworkProxyAddress))
-                {
-                    request.Proxy = new WebProxy(Settings.NetworkProxyAddress);
-                }
-
-                request.Headers["Accept-Encoding"] = "gzip";
-                request.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore); // do not cache, prevent incorrect cache result.
-                request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
-                Stream responsestream;
-                using (WebResponse response = request.GetResponse())
-                {
-                    responsestream = response.GetResponseStream();
-                    xmlread = new XmlTextReader(responsestream);
-                    xmlread.ProhibitDtd = true;
-                    while (xmlread.Read())
+                    switch (xmlread.Name)
                     {
-                        switch (xmlread.Name)
-                        {
-                            case "major":
-                                try
-                                {
-                                    version[0] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
-                                }
-                                catch (OverflowException)
-                                {
-                                    version[0] = -1;
-                                }
+                        case "major":
+                            try
+                            {
+                                version[0] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
+                            }
+                            catch (OverflowException)
+                            {
+                                version[0] = -1;
+                            }
 
-                                break;
-                            case "minor":
-                                try
-                                {
-                                    version[1] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
-                                }
-                                catch (OverflowException)
-                                {
-                                    version[1] = -1;
-                                }
+                            break;
+                        case "minor":
+                            try
+                            {
+                                version[1] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
+                            }
+                            catch (OverflowException)
+                            {
+                                version[1] = -1;
+                            }
 
-                                break;
-                            case "release":
-                                try
-                                {
-                                    version[2] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
-                                }
-                                catch (OverflowException)
-                                {
-                                    version[2] = -1;
-                                }
+                            break;
+                        case "release":
+                            try
+                            {
+                                version[2] = Convert.ToInt16(xmlread.ReadElementContentAsInt());
+                            }
+                            catch (OverflowException)
+                            {
+                                version[2] = -1;
+                            }
 
-                                break;
-                            case "quality":
-                                string getquality = xmlread.ReadElementContentAsString().Trim();
-                                const int VERQUALITYMAXLEN = 16;
-                                if (getquality.Length <= VERQUALITYMAXLEN)
-                                {
-                                    versionquality = getquality;
-                                }
+                            break;
+                        case "quality":
+                            string getquality = xmlread.ReadElementContentAsString().Trim();
+                            const int VERQUALITYMAXLEN = 16;
+                            if (getquality.Length <= VERQUALITYMAXLEN)
+                            {
+                                versionquality = getquality;
+                            }
 
-                                break;
-                            case "downloadurl":
-                                string downloadurlraw = xmlread.ReadElementContentAsString().Trim();
-                                const int DOWNLOADURLMINLEN = 10; // "http://a.b".Length = 10
-                                const int DOWNLOADURLMAXLEN = 512;
-                                if ((downloadurlraw.Length >= DOWNLOADURLMINLEN) && (downloadurlraw.Length <= DOWNLOADURLMAXLEN))
-                                {
-                                    downloadurl = downloadurlraw;
-                                }
+                            break;
+                        case "downloadurl":
+                            string downloadurlraw = xmlread.ReadElementContentAsString().Trim();
+                            const int DOWNLOADURLMINLEN = 10; // "http://a.b".Length = 10
+                            const int DOWNLOADURLMAXLEN = 512;
+                            if ((downloadurlraw.Length >= DOWNLOADURLMINLEN) && (downloadurlraw.Length <= DOWNLOADURLMAXLEN))
+                            {
+                                downloadurl = downloadurlraw;
+                            }
 
-                                break;
-                            default:
+                            break;
+                        default:
 
-                                break;
-                        }
-
-                        if (xmlread.Depth > 3)
-                        {
-                            xmlread.Close();
-                        }
+                            break;
                     }
 
-                    responsestream.Close();
+                    if (xmlread.Depth > 3)
+                    {
+                        xmlread.Close();
+                    }
                 }
-            }
-            catch (System.Net.WebException webexc)
-            {
-                Log.Write(LogType.exception, "update check, " + webexc.Message);
             }
             finally
             {
@@ -1402,6 +1596,33 @@ namespace NoteFly
             xmlwrite.WriteElementString("title", note.Title);
             xmlwrite.WriteElementString("content", content);
             xmlwrite.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Get the content
+        /// </summary>
+        /// <returns></returns>
+        public string GetContentStringLimited(string nodename, int limit)
+        {
+            string content = null;
+            try
+            {
+                while (xmlread.Read())
+                {
+                    if (xmlread.Name == nodename)
+                    {
+                        char[] buf = new char[limit + 1];
+                        xmlread.ReadValueChunk(buf, 0, limit);
+                        content = new string(buf);
+                    }
+                }
+            }
+            finally
+            {
+                xmlread.Close();
+            }
+
+            return content;
         }
 
         #endregion Methods

@@ -1,7 +1,7 @@
-//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="IPTextBox.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -22,153 +22,101 @@ namespace NoteFly
     using System.Windows.Forms;
 
     /// <summary>
-    /// IPTextBox gui object class.
+    /// IP address textbox.
+    /// With background color ip address validation hint.
     /// </summary>
-    public partial class IPTextBox : UserControl
+    internal partial class IPTextBox : TextBox    
     {
-        #region Fields (1)
+        /// <summary>
+        /// IPAddress object.
+        /// </summary>
+        private System.Net.IPAddress ipaddr;
 
         /// <summary>
-        /// An enumration of the possible IP address types.
+        /// Get the IP address
         /// </summary>
-        private IPaddrType addrtype;
-
-        #endregion Fields 
-
-        #region Constructors (1)
-
-        /// <summary>
-        /// Initializes a new instance of the IPTextBox class.
-        /// </summary>
-        public IPTextBox()
+        /// <returns></returns>
+        public string getIPAddress()
         {
-            this.InitializeComponent();
-        }
-
-        #endregion Constructors 
-
-        #region Enums (1)
-
-        /// <summary>
-        /// The types of address
-        /// </summary>
-        public enum IPaddrType
-        {
-            /// <summary>
-            /// Presenting a ip version4 address.
-            /// </summary>
-            ipv4,
-
-            /// <summary>
-            /// Presenting a ip version6 address.
-            /// </summary>
-            ipv6
-        }
-
-        #endregion Enums 
-
-        #region Properties (1) 
-
-        /// <summary>
-        /// Gets or sets the ip address
-        /// </summary>
-        /// <returns>the ip address as string.</returns>
-        public string IPAddress
-        {
-            get
+            if (this.ipaddr != null)
             {
-                return this.tbIPaddress.Text;
+                return this.ipaddr.ToString();
             }
-
-            set
+            else
             {
-                this.tbIPaddress.Text = value;
+                return string.Empty;
             }
         }
 
-        #endregion Properties 
-
-        #region Methods (1)
-
         /// <summary>
-        /// Filter out illgale characters.
+        /// Character entered.
+        /// Allow only IPv4 and IPv6 characters to be added.
         /// </summary>
-        /// <param name="sender">Sender object.</param>
-        /// <param name="e">Event arguments</param>
-        private void tbIPaddress_KeyDown(object sender, KeyEventArgs e)
+        /// <param name="e"></param>
+        protected override void OnKeyDown(KeyEventArgs e)
         {
             int k = e.KeyValue;
-            int numpoint = 0;
-            int lastpoint = -10;
-            for (int i = 0; i < this.tbIPaddress.Text.Length; i++)
+            // 'a'-'f'
+            // ':'
+            // '.'
+            // '0'-'9'
+            // shift, backspace, left, right, delete key
+            // /*
+            if ((k >= 65 && k <= 70) || (k == 186 && e.Shift) || (k == 190 && !e.Shift) || (k >= 48 && k <= 57) || (k == 8 || k == 16 || k == 37 || k == 39 || k == 46))
             {
-                if (this.tbIPaddress.Text[i] == '.')
-                {
-                    lastpoint = i;
-                    numpoint++;
-                }
-            }
-
-            if (k >= 65 && k <= 70)
-            {
-                // 'a'-'f'
-                this.addrtype = IPaddrType.ipv6;
-            }
-            else if (k == 186 && e.Shift)
-            {
-                // ':'
-                this.addrtype = IPaddrType.ipv6;
-
-                if (this.tbIPaddress.TextLength == 0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-            }
-            else if (k == 190 && !e.Shift)
-            {
-                // '.'
-                this.addrtype = IPaddrType.ipv4;
-
-                if (numpoint >= 3)
-                {
-                    e.SuppressKeyPress = true;
-                }
-                else if (lastpoint == this.tbIPaddress.Text.Length - 1)
-                {
-                    e.SuppressKeyPress = true;
-                }
-                else if ((lastpoint < this.tbIPaddress.Text.Length - 4) && (lastpoint != -10))
-                {
-                    e.SuppressKeyPress = true;
-                }
-                else if ((this.tbIPaddress.Text.Length == 0) && (k == 190))
-                {
-                    e.SuppressKeyPress = true;
-                }
-            }
-            else if (k >= 48 && k <= 57)
-            {
-                // '0'-'9'
-                if ((lastpoint < this.tbIPaddress.Text.Length - 3) && (lastpoint != -10) && (this.addrtype == IPaddrType.ipv4))
-                {
-                    e.SuppressKeyPress = true;
-                }
-                else
-                {
-                    e.SuppressKeyPress = false;
-                }
-            }
-            else if (k == 8 || k == 16 || k == 37 || k == 39 || k == 46)
-            {
-                // shift, backspace, left. right, delete key
                 e.SuppressKeyPress = false;
             }
             else
             {
                 e.SuppressKeyPress = true;
             }
+            // */
+            base.OnKeyDown(e);
         }
 
-        #endregion Methods
+        /// <summary>
+        /// Validate ip address on key up.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            bool validipaddr = System.Net.IPAddress.TryParse(this.Text, out this.ipaddr);
+
+            if (validipaddr && (this.getnumofdots() == 3 || this.Text.Contains(":")))
+            {
+                this.BackColor = System.Drawing.Color.LightGreen;                
+            }
+            else
+            {
+                if (this.TextLength > 0)
+                {
+                    this.BackColor = System.Drawing.Color.Salmon;
+                }
+                else
+                {
+                    this.BackColor = System.Drawing.SystemColors.Window;
+                }
+            }
+
+            base.OnKeyUp(e);
+        }
+
+        /// <summary>
+        /// Get the number of dots in the Text content.
+        /// </summary>
+        /// <returns></returns>
+        private int getnumofdots()
+        {
+            int numdots = 0;
+            for (int i = 0; i < this.Text.Length; i++)
+            {
+                if (this.Text[i] == '.')
+                {
+                    numdots++;
+                }
+            }
+
+            return numdots;
+        }
     }
 }

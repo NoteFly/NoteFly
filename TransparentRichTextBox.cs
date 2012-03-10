@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TransparentRichTextBox.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2011  Tom
+//  Copyright (C) 2011-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,13 +20,16 @@
 namespace NoteFly
 {
     using System;
+    using System.Collections.Generic;
+    using System.Drawing;
     using System.Runtime.InteropServices;
+    using System.Text;
     using System.Windows.Forms;
 
     /// <summary>
     /// A transparent version of the RichTextBox control.
     /// </summary>
-    internal class TransparentRichTextBox : RichTextBox
+    public class TransparentRichTextBox : RichTextBox
     {
 #if windows
         /// <summary>
@@ -38,12 +41,12 @@ namespace NoteFly
             {
                 CreateParams prams = base.CreateParams;
                 if (Settings.NotesTransparentRTB)
-                {                    
+                {
                     if (LoadLibrary("msftedit.dll") != IntPtr.Zero)
                     {
                         prams.ExStyle |= 0x020; // transparent
                         prams.ClassName = "RICHEDIT50W";
-                    }                    
+                    }
                 }
 
                 return prams;

@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="TrayIcon.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -30,14 +30,9 @@ namespace NoteFly
     public sealed class TrayIcon
     {
         /// <summary>
-        /// Used for warning if new note is still open on shutdown application.
+        /// Reference to the FormManager class.
         /// </summary>
-        private static bool frmneweditnoteopen = false;
-
-        /// <summary>
-        /// Reference to FrmManageNotes window.
-        /// </summary>
-        private static FrmManageNotes frmmanagenotes;
+        private FormManager formmanager;
 
         /// <summary>
         /// container that holds some objects.
@@ -48,16 +43,6 @@ namespace NoteFly
         /// indicated wheter confirm exit is showed.
         /// </summary>
         private bool confirmexitshowed = false;
-
-        /// <summary>
-        /// Is the creation of a new note being showed, so double left clicking isnt creating two notes at once.
-        /// </summary>
-        private bool frmnewnoteshowed = false;
-
-        /// <summary>
-        /// Notes class has a list an methodes for accessing notes.
-        /// </summary>
-        private Notes notes;
 
         /// <summary>
         /// The trayicon itself.
@@ -85,6 +70,11 @@ namespace NoteFly
         private ToolStripMenuItem menuSettings;
 
         /// <summary>
+        /// Plugins menu option
+        /// </summary>
+        private ToolStripMenuItem menuPlugins;
+
+        /// <summary>
         /// About menu option
         /// </summary>
         private ToolStripMenuItem menuAbout;
@@ -95,18 +85,13 @@ namespace NoteFly
         private ToolStripMenuItem menuExit;
 
         /// <summary>
-        /// Reference to FrmSettings window.
-        /// </summary>
-        private FrmSettings frmsettings;
-
-        /// <summary>
         /// Initializes a new instance of the TrayIcon class. 
         /// New trayicon in the systray.
         /// </summary>
         /// <param name="notes">reference to notes class.</param>
-        public TrayIcon(Notes notes)
+        public TrayIcon(FormManager formmanager)
         {
-            this.notes = notes;
+            this.formmanager = formmanager;
             this.components = new System.ComponentModel.Container();
 
             // Start building icon and icon contextmenu
@@ -115,12 +100,13 @@ namespace NoteFly
             this.menuTrayIcon.AllowDrop = false;
             this.menuNewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.icon = new NotifyIcon(this.components);
             this.icon.ContextMenuStrip = this.menuTrayIcon;
-            if (Settings.TrayiconAlternateIcon) 
+            if (Settings.TrayiconAlternateIcon)
             {
                 this.icon.Icon = new Icon(NoteFly.Properties.Resources.trayicon_white, NoteFly.Properties.Resources.trayicon_white.Size);
             }
@@ -140,7 +126,7 @@ namespace NoteFly
             this.menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuNewNote.Name = "MenuNewNote";
             this.menuNewNote.Size = new System.Drawing.Size(144, 22);
-            this.menuNewNote.Text = "&Create a new note";
+            this.menuNewNote.Text = Strings.T("&New note");
             if (Settings.TrayiconCreatenotebold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -154,7 +140,7 @@ namespace NoteFly
             this.menuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuManageNotes.Name = "listToolStripMenuItem";
             this.menuManageNotes.Size = new System.Drawing.Size(144, 22);
-            this.menuManageNotes.Text = "&Manage notes";
+            this.menuManageNotes.Text = Strings.T("&Manage notes");
             if (Settings.TrayiconManagenotesbold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -172,7 +158,7 @@ namespace NoteFly
             this.menuSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuSettings.Name = "MenuSettings";
             this.menuSettings.Size = new System.Drawing.Size(144, 22);
-            this.menuSettings.Text = "&Settings";
+            this.menuSettings.Text = Strings.T("&Settings");
             if (Settings.TrayiconSettingsbold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -186,14 +172,23 @@ namespace NoteFly
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuSettings);
 
+            // menuPlugins
+            this.menuPlugins.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuPlugins.Name = "MenuPlugins";
+            this.menuPlugins.Size = new System.Drawing.Size(144, 22);
+            this.menuPlugins.Text = Strings.T("&Plugins");
+            this.menuPlugins.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
+            this.menuPlugins.Click += new System.EventHandler(this.MenuPlugins_Click);
+            this.icon.ContextMenuStrip.Items.Add(this.menuPlugins);
+
             // Create trayicon plugin ToolStripMenuItem items, if any.
-            if (Program.pluginsenabled != null)
+            if (PluginsManager.EnabledPlugins != null)
             {
-                for (int p = 0; p < Program.pluginsenabled.Length; p++)
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
                 {
-                    if (Program.pluginsenabled[p].InitTrayIconMenu() != null)
+                    if (PluginsManager.EnabledPlugins[p].InitTrayIconMenu() != null)
                     {
-                        ToolStripItem toolstripitem = Program.pluginsenabled[p].InitTrayIconMenu();
+                        ToolStripItem toolstripitem = PluginsManager.EnabledPlugins[p].InitTrayIconMenu();
                         toolstripitem.Size = new System.Drawing.Size(144, 22);
                         toolstripitem.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
                         this.icon.ContextMenuStrip.Items.Add(toolstripitem);
@@ -205,7 +200,7 @@ namespace NoteFly
             this.menuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuAbout.Name = "MenuAbout";
             this.menuAbout.Size = new System.Drawing.Size(144, 22);
-            this.menuAbout.Text = "About";
+            this.menuAbout.Text = Strings.T("About");
             this.menuAbout.Font = new Font("Microsoft Sans Serif", Settings.TrayiconFontsize, FontStyle.Regular);
             this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuAbout);
@@ -214,7 +209,7 @@ namespace NoteFly
             this.menuExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuExit.Name = "MenuExit";
             this.menuExit.Size = new System.Drawing.Size(144, 22);
-            this.menuExit.Text = "E&xit";
+            this.menuExit.Text = Strings.T("E&xit");
             if (Settings.TrayiconExitbold)
             {
                 menufontstyle = FontStyle.Bold;
@@ -229,37 +224,10 @@ namespace NoteFly
             this.icon.ContextMenuStrip.Items.Add(this.menuExit);
 
             // Show balloontip on firstrun about trayicon how to access notefly functions.
-            if (!Settings.ProgramFirstrun)
+            if (!Settings.ProgramFirstrunned)
             {
-                this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, "You can access " + Program.AssemblyTitle + " functions with this trayicon.", ToolTipIcon.Info);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether FrmNewNote is being showed.
-        /// </summary>
-        public static bool Frmneweditnoteopen
-        {
-            get
-            {
-                return frmneweditnoteopen;
-            }
-
-            set
-            {
-                frmneweditnoteopen = value;
-            }
-        }
-
-        /// <summary>
-        /// Do a refresh on the FrmManageNotes window if it's created.
-        /// </summary>
-        public static void RefreshFrmManageNotes()
-        {
-            if (frmmanagenotes != null)
-            {
-                frmmanagenotes.Resetdatagrid();
-                frmmanagenotes.Refresh();
+                string trayicon_trayiconaccesshint = Strings.T("You can access {0} functions with this trayicon.", Program.AssemblyTitle);
+                this.icon.ShowBalloonTip(6000, Program.AssemblyTitle, trayicon_trayiconaccesshint, ToolTipIcon.Info);
             }
         }
 
@@ -286,20 +254,11 @@ namespace NoteFly
             {
                 if (Settings.TrayiconLeftclickaction == 1)
                 {
-                    this.notes.BringToFrontNotes();
+                    this.formmanager.BringToFrontNotes();
                 }
                 else if (Settings.TrayiconLeftclickaction == 2)
                 {
-                    if (!this.frmnewnoteshowed)
-                    {
-                        FrmNewNote frmnewnote = new FrmNewNote(this.notes);
-                        frmnewnote.Show();
-                        this.frmnewnoteshowed = true;
-                    }
-                    else
-                    {
-                        this.frmnewnoteshowed = false;
-                    }
+                    this.formmanager.OpenNewNote();
                 }
             }
         }
@@ -311,9 +270,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuNewNote_Click(object sender, EventArgs e)
         {
-            Frmneweditnoteopen = true;
-            FrmNewNote newnotefrm = new FrmNewNote(this.notes);
-            newnotefrm.Show();
+            this.formmanager.OpenNewNote();
         }
 
         /// <summary>
@@ -323,21 +280,7 @@ namespace NoteFly
         /// <param name="e">event argument</param>
         private void MenuManageNotes_Click(object sender, EventArgs e)
         {
-            if (frmmanagenotes == null)
-            {
-                frmmanagenotes = new FrmManageNotes(this.notes);
-                frmmanagenotes.Show();
-            }
-            else if (frmmanagenotes.IsDisposed)
-            {
-                frmmanagenotes = new FrmManageNotes(this.notes);
-                frmmanagenotes.Show();
-            }
-            else
-            {
-                frmmanagenotes.WindowState = FormWindowState.Normal;
-                frmmanagenotes.Activate();
-            }
+            this.formmanager.OpenFrmManageNotes();
         }
 
         /// <summary>
@@ -347,21 +290,17 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuSettings_Click(object sender, EventArgs e)
         {
-            if (this.frmsettings == null)
-            {
-                this.frmsettings = new FrmSettings(this.notes);
-                this.frmsettings.Show();
-            }
-            else if (this.frmsettings.IsDisposed)
-            {
-                this.frmsettings = new FrmSettings(this.notes);
-                this.frmsettings.Show();
-            }
-            else
-            {
-                this.frmsettings.WindowState = FormWindowState.Normal;
-                this.frmsettings.Activate();
-            }
+            this.formmanager.OpenFrmSettings();
+        }
+
+        /// <summary>
+        /// Open plugins window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuPlugins_Click(object sender, EventArgs e)
+        {
+            this.formmanager.OpenFrmPlugins();
         }
 
         /// <summary>
@@ -371,8 +310,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuAbout_Click(object sender, EventArgs e)
         {
-            FrmAbout frmabout = new FrmAbout();
-            frmabout.ShowDialog();
+            this.formmanager.OpenFrmAbout();
         }
 
         /// <summary>
@@ -384,13 +322,15 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuExit_Click(object sender, EventArgs e)
         {
+            string trayicon_sureexittitle = Strings.T("confirm exit");
             if (Settings.ConfirmExit)
             {
                 // Two times exit in contextmenu systray icon will always exit.
                 if (!this.confirmexitshowed)
                 {
                     this.confirmexitshowed = true;
-                    DialogResult resdlgconfirmexit = MessageBox.Show("Are sure you want to exit " + Program.AssemblyTitle + "?", "confirm exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    string trayicon_sureexit = Strings.T("Are sure you want to exit {0}?", Program.AssemblyTitle);
+                    DialogResult resdlgconfirmexit = MessageBox.Show(trayicon_sureexit, trayicon_sureexittitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (resdlgconfirmexit == DialogResult.No)
                     {
                         this.confirmexitshowed = false;
@@ -399,41 +339,19 @@ namespace NoteFly
                 }
             }
 
-            if (Frmneweditnoteopen)
+            if (this.formmanager.Frmneweditnoteopen)
             {
-                DialogResult resdlg = MessageBox.Show("A note is still open for editing.\r\nAre you sure you want to shutdown " + Program.AssemblyTitle + "?", "confirm exit", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                string trayicon_notestillopen = Strings.T("A note is still open for editing.\nAre you sure you want to shutdown {0}?", Program.AssemblyTitle);
+                DialogResult resdlg = MessageBox.Show(trayicon_notestillopen, trayicon_sureexittitle, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (resdlg == DialogResult.No)
                 {
                     return;
                 }
             }
 
-            this.KillUpdateThread();
             this.components.Dispose();
             Application.Exit();
         }
 
-        /// <summary>
-        /// Make sure the update thread aborts when  otherwise NoteFly keep running.
-        /// </summary>
-        private void KillUpdateThread()
-        {
-            if (Program.updatethread != null)
-            {
-                try
-                {
-                    Program.updatethread.Interrupt();
-                    Program.updatethread.Abort();
-                }
-                catch (System.Threading.ThreadStateException thexc)
-                {
-                    Log.Write(LogType.exception, thexc.Message);
-                }
-                catch (System.Security.SecurityException secexc)
-                {
-                    Log.Write(LogType.exception, secexc.Message);
-                }
-            }
-        }
     }
 }

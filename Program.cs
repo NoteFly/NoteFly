@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="Program.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,9 @@ using System;
 
 [assembly: CLSCompliant(true)]
 
+/// <summary>
+/// Main assembly
+/// </summary>
 namespace NoteFly
 {
     using System.Diagnostics;
@@ -34,18 +37,7 @@ namespace NoteFly
     /// </summary>
     public sealed class Program
     {
-        #region Fields (3)
-
-        /// <summary>
-        /// All the enabled plugins
-        /// FIXME: Make CLS-compliant
-        /// </summary>
-        public static IPlugin.IPlugin[] pluginsenabled;
-
-        /// <summary>
-        /// Reference to updatethread
-        /// </summary>
-        public static Thread updatethread;
+        #region Fields (2)
 
         /// <summary>
         /// Reference to notes class.
@@ -53,11 +45,24 @@ namespace NoteFly
         private static Notes notes;
 
         /// <summary>
+        /// 
+        /// </summary>
+        private static FormManager formmanager;
+
+        /// <summary>
         /// Reference to trayicon
         /// </summary>
         private static TrayIcon trayicon;
 
-        private static string[] plugindllexcluded;
+        /// <summary>
+        /// The default folder name in which notes are stored in application data folder.
+        /// </summary>
+        private const string DEFAULTNOTESFOLDERNAME = "notes";
+
+        /// <summary>
+        /// The default folder name in which plugins are stored in application data folder.
+        /// </summary>
+        private const string DEFAULTPLUGINSFOLDERNAME = "plugins";
 
         #endregion Fields
 
@@ -70,12 +75,13 @@ namespace NoteFly
         {
             get
             {
+                const string appdatafolder = "NoteFly";
 #if windows
-                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly2");
+                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), appdatafolder);
 #elif linux
                 if (System.Environment.GetEnvironmentVariable("HOME") != null)
                 {
-                    return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
+                    return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ("."+appdatafolder));
                 }
                 else
                 {
@@ -83,8 +89,6 @@ namespace NoteFly
                 }
 #elif macos
                 return "???";
-#else
-                return "COMPILE_ERROR_UNKNOWN_PLATFORM";
 #endif
             }
         }
@@ -130,7 +134,7 @@ namespace NoteFly
         {
             get
             {
-                return string.Empty;
+                return "beta1";
             }
         }
 
@@ -144,7 +148,29 @@ namespace NoteFly
             {
                 return Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
             }
-        }       
+        }
+
+        /// <summary>
+        /// Reference to Notes class
+        /// </summary>
+        public static Notes Notes
+        {
+            get
+            {
+                return notes;
+            }
+        }
+
+        /// <summary>
+        /// Reference to FormManger class
+        /// </summary>
+        public static FormManager Formmanager
+        {
+            get
+            {
+                return formmanager;
+            }
+        }
 
         #endregion Properties
 
@@ -196,20 +222,30 @@ namespace NoteFly
         public static void Main(string[] args)
         {
             /*
-             * a suggestion to "protect" against insecure Dynamic Library Loading vulnerabilities in windows
-             * it does not fix it, it makes it harder to exploit if insecure dll loading exist.
-             * NoteFly uses APPDATA and TEMP variables and systemroot.
-             * Systemroot is required by the LinkLabel control.
-             * Plugins should not use these environment variables
-            */
+             * a suggestion to "protect" against insecure Dynamic Library Loading vulnerability in windows
+             * it does not fix it, it makes it harder to exploit insecure dll loading.
+             * NoteFly uses APPDATA, TEMP and SystemRoot variables.
+             * A subfolder in %APPDATA% is where NoteFly stores it program settings, skins settings, log etc.
+             * %TEMP% is needs for logging if appdatafolder is not found.
+             * %SystemRoot% is required by the LinkLabel control to work properly.
+             * %SystemDrive% is required by NET framework.
+             * Plugin developers should not rely on environment variables. 
+             */
 #if windows
-            SetDllDirectory(string.Empty);                                     // removes notefly current working directory as ddl search path
-            Environment.SetEnvironmentVariable("PATH", string.Empty);          // removes dangourse %PATH% as dll search path
-            Environment.SetEnvironmentVariable("windir", string.Empty);        // removes %windir%
-            Environment.SetEnvironmentVariable("SystemDrive", string.Empty);   // removes %SystemDrive%
-            Environment.SetEnvironmentVariable("CommonProgramFiles", string.Empty); // removes %CommonProgramFiles%
-            Environment.SetEnvironmentVariable("USERPROFILE", string.Empty);   // removes %USERPROFILE%
-            Environment.SetEnvironmentVariable("TMP", string.Empty);           // removes %TMP%, Do not remove %TEMP% NoteFly needs this for logging if appdata is wrong.
+            System.Collections.IDictionary environmentVariables = Environment.GetEnvironmentVariables();
+            foreach (System.Collections.DictionaryEntry de in environmentVariables)
+            {
+                string currentvariable = de.Key.ToString();
+                if (!currentvariable.Equals("APPDATA", StringComparison.OrdinalIgnoreCase) &&
+                    !currentvariable.Equals("SystemRoot", StringComparison.OrdinalIgnoreCase) &&
+                    !currentvariable.Equals("SystemDrive", StringComparison.OrdinalIgnoreCase) &&
+                    !currentvariable.Equals("TEMP", StringComparison.OrdinalIgnoreCase))
+                {
+                    Environment.SetEnvironmentVariable(de.Key.ToString(), null);
+                }
+            }
+
+            SetDllDirectory(string.Empty); // removes current working directory as dll search path, but requires kernel32.dll by itself to be looked up.
 #endif
 
 #if DEBUG
@@ -217,22 +253,231 @@ namespace NoteFly
             stopwatch.Start();
 #endif
 
-            System.Windows.Forms.Application.ThreadException += new ThreadExceptionEventHandler(UnhanledThreadExceptionHanhler);
+            System.Windows.Forms.Application.ThreadException += new ThreadExceptionEventHandler(UnhanledThreadExceptionHandler);
             System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
-
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
             if (!xmlUtil.LoadSettings())
             {
+                // settings.xml does not exist create default settings.xml file
                 xmlUtil.WriteDefaultSettings();
                 xmlUtil.LoadSettings();
             }
+
+            Program.SetCulture(Settings.ProgramLanguage);
 #if DEBUG
             stopwatch.Stop();
             Log.Write(LogType.info, "Settings load time: " + stopwatch.ElapsedMilliseconds + " ms");
 #endif
-            bool visualstyle = true;
-            bool resetpositions = false;
+            bool visualstyle;
+            bool resetpositions;
+            ParserArguments(args, out visualstyle, out resetpositions);
+#if windows
+            if (!Settings.ProgramSuspressWarnAdmin)
+            {
+                // Security measure, show warning if runned with dangerous administrator rights.
+                System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
+                if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
+                {
+                    string program_runasadministrator = Strings.T("You are now running {0} as elevated Administrator.\nWhich is not recommended for security.\nPress OK if your understand the risks of running as administrator and want to hide this message in the future.", Program.AssemblyTitle);
+                    string program_runasadministratortitle = Strings.T("Elevated administrator");
+                    System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show(program_runasadministrator, program_runasadministratortitle, System.Windows.Forms.MessageBoxButtons.OKCancel);
+                    if (dlganswer == System.Windows.Forms.DialogResult.OK)
+                    {
+                        Settings.ProgramSuspressWarnAdmin = true;
+                        if (!System.IO.Directory.Exists(Program.AppDataFolder))
+                        {
+                            Directory.CreateDirectory(Program.AppDataFolder);
+                        }
+
+                        xmlUtil.WriteSettings();
+                    }
+                }
+            }
+#endif
+
+            if (visualstyle)
+            {
+#if windows
+                System.Windows.Forms.Application.EnableVisualStyles();
+#endif
+            }
+
+            if (Program.CheckInstancesRunning() > 1)
+            {
+                string program_alreadyrunning = Strings.T("The programme is already running.\nLoad an other instance? (not recommeded)");
+                string program_alreadyrunningtitle = Strings.T("already running");
+                System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(program_alreadyrunning, program_alreadyrunningtitle, System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (dlgres == System.Windows.Forms.DialogResult.No)
+                {
+                    // shutdown by don't continuing this Main method
+                    return;
+                }
+            }
+
+            SyntaxHighlight.InitHighlighter();
+            notes = new Notes(resetpositions);
+
+            if (Settings.ProgramPluginsAllEnabled)
+            {
+                PluginsManager.LoadPlugins();
+            }
+
+            formmanager = new FormManager(notes);
+            trayicon = new TrayIcon(formmanager);
+
+            if (!Settings.ProgramFirstrunned)
+            {
+                // disable the firstrun the next time.
+                Settings.ProgramFirstrunned = true;
+                Settings.UpdatecheckUseGPG = false;
+                GPGVerifWrapper gpgverif = new GPGVerifWrapper();
+                if (!string.IsNullOrEmpty(gpgverif.GetGPGPath()) && gpgverif != null)
+                {
+                    Settings.UpdatecheckGPGPath = gpgverif.GetGPGPath();
+                    Settings.UpdatecheckUseGPG = true;
+                }
+
+                gpgverif = null;
+                Log.Write(LogType.info, "firstrun occur");
+                xmlUtil.WriteSettings();
+            }
+
+            if (!Settings.ProgramLastrunVersion.Equals(Program.AssemblyVersionAsString, StringComparison.Ordinal))
+            {
+                Settings.ProgramLastrunVersion = Program.AssemblyVersionAsString;
+                xmlUtil.WriteSettings();
+                Log.Write(LogType.info, "Updated ProgramLastrunVersion setting.");
+            }
+
+            if (Settings.UpdatecheckEverydays > 0)
+            {
+                DateTime lastupdate = DateTime.Parse(Settings.UpdatecheckLastDate);
+                if (lastupdate.AddDays(Settings.UpdatecheckEverydays) <= DateTime.Now)
+                {
+                    Settings.UpdatecheckLastDate = UpdateGetLatestVersion();
+                    xmlUtil.WriteSettings();
+                }
+            }
+
+            SyntaxHighlight.DeinitHighlighter();
+            System.Windows.Forms.Application.Run();
+        }
+
+        /// <summary>
+        /// Get the default notes folder for this programme.
+        /// If the folder does not exists create it.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDefaultNotesFolder()
+        {
+            string notesfolder = Path.Combine(Program.AppDataFolder, DEFAULTNOTESFOLDERNAME);
+            if (!Directory.Exists(notesfolder))
+            {
+                Directory.CreateDirectory(notesfolder);
+            }
+
+            return notesfolder;
+        }
+
+        /// <summary>
+        /// Get the default plugins folder for this programme.
+        /// If the folder does not exists create it.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDefaultPluginFolder()
+        {
+            string pluginsfolder = Path.Combine(Program.AppDataFolder, DEFAULTPLUGINSFOLDERNAME);
+            if (!Directory.Exists(pluginsfolder))
+            {
+                Directory.CreateDirectory(pluginsfolder);
+            }
+
+            return pluginsfolder;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string ChangeUrlIPVersion(string url)
+        {
+            switch (Settings.NetworkIPversion)
+            {
+                case 1:
+                    // use dns IPv4 A record to force the use of IPv4.
+                    url = url.Replace("://update.", "://ipv4.");
+                    url = url.Replace("://ipv6.", "://ipv4.");
+                    break;
+                case 2:
+                    // use dns IPv6 AAAA record to force the use of IPv6.
+                    url = url.Replace("://update.", "://ipv6.");
+                    url = url.Replace("://ipv4.", "://ipv6.");
+                    break;
+                default:
+                    url = url.Replace("://ipv4.", "://update.");
+                    url = url.Replace("://ipv6.", "://update.");
+                    break;
+            }
+
+            return url;
+        }
+
+        /// <summary>
+        /// Set the culture of this programme with a languagecode.
+        /// Use english if languagecode is unknown.
+        /// </summary>
+        /// <param name="languagecode">The languagecode</param>
+        public static void SetCulture(string languagecode)
+        {
+            System.Globalization.CultureInfo culture;
+            try
+            {
+                culture = System.Globalization.CultureInfo.GetCultureInfo(languagecode);
+            }
+            catch (ArgumentException)
+            {
+                culture = System.Globalization.CultureInfo.GetCultureInfo("en");
+                Log.Write(LogType.error, string.Format("Langecode {0} not recognised.", languagecode));
+            }
+
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+        }
+
+        /// <summary>
+        /// Dispose the trayicon and create a new one.
+        /// </summary>
+        public static void RestartTrayicon()
+        {
+            trayicon.Dispose();
+            trayicon = new TrayIcon(formmanager);
+        }
+
+        /// <summary>
+        /// Do update check.
+        /// </summary>
+        /// <returns>Datetime aof latest update check as string</returns>
+        public static string UpdateGetLatestVersion()
+        {
+            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+            if (!http_updateversion.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(UpdateCompareVersion)))
+            {
+                Log.Write(LogType.error, "No network connection");
+            }
+
+            return DateTime.Now.ToString();
+        }
+
+        /// <summary>
+        /// Parser the programme arguments
+        /// </summary>
+        /// <param name="args"></param>
+        private static void ParserArguments(string[] args, out bool visualstyle, out bool resetpositions)
+        {
+            visualstyle = true;
+            resetpositions = false;
 
             // override settings with supported parameters
             if (System.Environment.GetCommandLineArgs().Length > 1)
@@ -243,7 +488,7 @@ namespace NoteFly
                     {
                         // Forces the programme to setup the first run notefly info again.
                         case "-forcefirstrun":
-                            Settings.ProgramFirstrun = true;
+                            Settings.ProgramFirstrunned = false;
                             break;
 
                         // disabletransparency parameter is for OS that don't support transparency, so they can still show notes.
@@ -307,370 +552,125 @@ namespace NoteFly
                             break;
                     }
                 }
-
-#if DEBUG
-                // Import a note file.
-                // Copy note file to note save path.
-                // this is used for fuzzing right now
-                if (args[1] == "-importnote")
-                {
-                    if (args.Length == 2) 
-                    {
-                        if (File.Exists(args[2]))
-                        {
-                            string newnotefile = Path.Combine(Settings.NotesSavepath, notes.GetNoteFilename("argimp"));
-                            Directory.Move(args[2], newnotefile);
-                        }
-                    }
-                }
-#endif
             }
-
-#if windows
-            if (!Settings.ProgramSuspressWarnAdmin)
-            {
-                // Security measure, show warning if runned with dangerous administrator rights.
-                System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
-                System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
-                if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
-                {
-                    System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show("You are now running " + Program.AssemblyTitle + " as elevated Administrator.\r\nWhich is not recommended because of security.\r\nPress OK if your understand the risks and want to hide this message in the future.", "Elevated administrator", System.Windows.Forms.MessageBoxButtons.OKCancel);
-                    if (dlganswer == System.Windows.Forms.DialogResult.OK)
-                    {
-                        Settings.ProgramSuspressWarnAdmin = true;
-                        if (!System.IO.Directory.Exists(Program.AppDataFolder))
-                        {
-                            Directory.CreateDirectory(Program.AppDataFolder);
-                        }
-
-                        xmlUtil.WriteSettings();
-                    }
-                }
-            }
-#endif
-
-            if (visualstyle)
-            {
-#if windows
-                System.Windows.Forms.Application.EnableVisualStyles();
-#endif
-            }
-
-            if (Program.CheckInstancesRunning() > 1)
-            {
-                System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show("The programme is already running.\nLoad an other instance? (not recommeded)", "already running", System.Windows.Forms.MessageBoxButtons.YesNo);
-                if (dlgres == System.Windows.Forms.DialogResult.No)
-                {
-                    return;
-                }
-            }
-
-            SyntaxHighlight.InitHighlighter();
-            notes = new Notes(resetpositions);
-            if (Settings.ProgramPluginsAllEnabled)
-            {
-                Program.pluginsenabled = GetPlugins(true);
-            }
-
-            trayicon = new TrayIcon(notes);
-            if (!Settings.ProgramFirstrun)
-            {
-                // disable the firstrun the next time.
-                Settings.ProgramFirstrun = true;
-                Settings.UpdatecheckUseGPG = false;
-                GPGVerifWrapper gpgverif = new GPGVerifWrapper();
-                if (!string.IsNullOrEmpty(gpgverif.GetGPGPath()) && gpgverif != null)
-                {
-                    Settings.UpdatecheckGPGPath = gpgverif.GetGPGPath();
-                    Settings.UpdatecheckUseGPG = true;
-                }
-
-                gpgverif = null;
-                Log.Write(LogType.info, "firstrun occur");
-                xmlUtil.WriteSettings();
-            }
-
-            if (Settings.UpdatecheckEverydays > 0)
-            {
-                DateTime lastupdate = DateTime.Parse(Settings.UpdatecheckLastDate);
-                if (lastupdate.AddDays(Settings.UpdatecheckEverydays) <= DateTime.Now)
-                {
-                    updatethread = new Thread(UpdateCheckThread);
-                    updatethread.Start();
-                }
-            }
-
-            SyntaxHighlight.DeinitHighlighter();
-            System.Windows.Forms.Application.Run();
         }
 
         /// <summary>
-        /// Dispose the trayicon and create a new one.
+        /// 
         /// </summary>
-        public static void RestartTrayicon()
+        /// <param name="response"></param>
+        /// <param name="e"></param>
+        private static void UpdateCompareVersion(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            trayicon.Dispose();
-            trayicon = new TrayIcon(notes);
-        }
-
-        /// <summary>
-        /// Do update check.
-        /// </summary>
-        /// <returns>Datetime aof latest update check as string</returns>
-        public static string UpdateCheck()
-        {
-            xmlUtil.WriteSettings();
-            string downloadurl;
-            bool updatehigherversion = false;
-            bool updatesameversion = true;
+            string response = (string)e.Result;
             short[] thisversion = GetVersion();
+            string downloadurl = string.Empty;
             string latestversionquality = Program.AssemblyVersionQuality;
-            if (IsNetworkConnected())
+            short[] latestversion = xmlUtil.ParserLatestVersion(response, out latestversionquality, out downloadurl);
+            int compareversionsresult = Program.CompareVersions(thisversion, latestversion);
+            if (compareversionsresult < 0 || (compareversionsresult == 0 && Program.AssemblyVersionQuality != latestversionquality))
             {
-                short[] latestversion = xmlUtil.GetLatestVersion(out latestversionquality, out downloadurl);
-                for (int i = 0; i < thisversion.Length; i++)
+                if (!string.IsNullOrEmpty(downloadurl))
                 {
-                    // check if latestversion[i] (major,minor,release) is bigger and is positive number
-                    if (thisversion[i] < latestversion[i] && latestversion[i] >= 0)
+                    StringBuilder sbmsg = new StringBuilder();
+                    sbmsg.AppendLine(Strings.T("There's a new version availible."));
+                    sbmsg.Append(Strings.T("Your version:"));
+                    sbmsg.AppendLine(" " + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+                    sbmsg.Append(Strings.T("New version:"));
+                    sbmsg.AppendLine(" " + latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
+                    sbmsg.Append(Strings.T("Do you want to download and install the new version now?"));
+                    System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
+                    if (updres == System.Windows.Forms.DialogResult.Yes)
                     {
-                        updatehigherversion = true;
-                        break;
-                    }
-
-                    if (thisversion[i] != latestversion[i])
-                    {
-                        updatesameversion = false;
-                    }
-                }
-
-                if (updatehigherversion || (updatesameversion && Program.AssemblyVersionQuality != latestversionquality))
-                {
-                    if (!string.IsNullOrEmpty(downloadurl))
-                    {
-                        StringBuilder sbmsg = new StringBuilder();
-                        sbmsg.AppendLine("There's a new version availible.");
-                        sbmsg.Append("Your version: ");
-                        sbmsg.AppendLine(Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
-                        sbmsg.Append("New version: ");
-                        sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
-                        sbmsg.Append("Do you want to download and install the new version now?");
-                        System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
-                        if (updres == System.Windows.Forms.DialogResult.Yes)
+                        FrmDownloader frmupdater = new FrmDownloader(string.Format(Strings.T("Downloading {0} update"), Program.AssemblyTitle));
+                        frmupdater.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(frmupdater_DownloadCompleetSuccesfull);
+                        frmupdater.Show();
+                        if (Settings.UpdatecheckUseGPG)
                         {
-                            FrmUpdater frmupdater = new FrmUpdater(downloadurl);
-                            frmupdater.Show();
+                            string[] downloads = new string[2];
+                            downloads[0] = downloadurl;
+                            downloads[1] = downloadurl + GPGVerifWrapper.GPGSIGNATUREEXTENSION;
+                            frmupdater.BeginDownload(downloads, System.Environment.GetEnvironmentVariable("TEMP"));
+                        }
+                        else
+                        {
+                            frmupdater.BeginDownload(downloadurl, System.Environment.GetEnvironmentVariable("TEMP"));
                         }
                     }
-                    else
-                    {
-                        throw new ApplicationException("Downloadurl is unexcepted unknown.");
-                    }
+                }
+                else
+                {
+                    throw new ApplicationException("Downloadurl is unexcepted unknown.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Download update compleet, run update.
+        /// </summary>
+        /// <param name="newfiles"></param>
+        private static void frmupdater_DownloadCompleetSuccesfull(string[] newfiles)
+        {
+            if (Settings.UpdatecheckUseGPG)
+            {
+                GPGVerifWrapper gpgverif = new GPGVerifWrapper();
+                if (gpgverif.VerifDownload(newfiles[0], newfiles[1]))
+                {
+                    ExecDownload(newfiles[0]);
                 }
             }
             else
             {
-                Log.Write(LogType.info, "Update check aborted, no network connection.");
+                ExecDownload(newfiles[0]);
             }
-
-            return DateTime.Now.ToString();
         }
 
         /// <summary>
-        /// Load plugin .dll files from pluginfolder
-        /// FIXME: Make CLS-compliant
+        /// 
         /// </summary>
-        /// <param name="onlyenabled">True to only get the the plugins that are enable</param>
-        /// <returns>A array with plugins</returns>
-        public static IPlugin.IPlugin[] GetPlugins(bool onlyenabled)
+        /// <param name="file"></param>
+        private static void ExecDownload(string file)
         {
-            System.Collections.Generic.List<IPlugin.IPlugin> pluginslist = new System.Collections.Generic.List<IPlugin.IPlugin>();
-            if (Directory.Exists(Settings.ProgramPluginsFolder))
+            ProcessStartInfo procstartinfo = new System.Diagnostics.ProcessStartInfo(file);
+            procstartinfo.CreateNoWindow = false;
+            procstartinfo.UseShellExecute = true;
+            procstartinfo.ErrorDialog = true;
+            procstartinfo.RedirectStandardInput = false;
+            procstartinfo.RedirectStandardOutput = false;
+            procstartinfo.RedirectStandardError = false;
+            if (Settings.UpdateSilentInstall)
             {
-                string[] pluginfiles = GetFilesPluginDir();
-                string[] pluginsenabled = Settings.ProgramPluginsEnabled.Split('|'); // | is illegal as filename.
-                plugindllexcluded = Settings.ProgramPluginsDllexclude.Split('|');
-                for (int i = 0; i < pluginfiles.Length; i++)
+                procstartinfo.Arguments = "/S";
+            }
+
+            bool shutdown = true;
+            if (procstartinfo != null)
+            {
+                try
                 {
-                    if (!IsPluginFilesExcluded(pluginfiles[i])) { 
-                            try
-                            {
-                            // Get if plugin is enabled.
-                            bool pluginenabled = IsPluginEnabled(pluginsenabled, pluginfiles[i]);
-                            if ((pluginenabled && onlyenabled) || !onlyenabled)
-                            {
-                                System.Reflection.Assembly pluginassembly = null;
-                                pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, pluginfiles[i]));
-                                if (pluginassembly != null)
-                                {
-                                    foreach (Type curplugintype in pluginassembly.GetTypes())
-                                    {
-                                        if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
-                                        {
-                                            Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
-                                            if (plugintype != null)
-                                            {
-                                                IPlugin.IPlugin iplugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
-                                                iplugin.Host = NoteFly.Program.notes;
-                                                iplugin.Register(pluginenabled, pluginfiles[i]);
-                                                pluginslist.Add(iplugin);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                    {
-                        const string CANTLOADPLUGIN = "Can't load plugin: ";
-                        Log.Write(LogType.exception, CANTLOADPLUGIN + pluginfiles[i] + " " + ex.Message);
-                    }
-                    }                    
+                    System.Diagnostics.Process.Start(procstartinfo);
+                }
+                catch (InvalidOperationException invopexc)
+                {
+                    shutdown = false;
+                    Log.Write(LogType.exception, invopexc.Message);
+                }
+                catch (System.ComponentModel.Win32Exception win32exc)
+                {
+                    shutdown = false;
+                    Log.Write(LogType.exception, win32exc.Message); // also UAC canceled
                 }
             }
             else
             {
-                const string PLUGINFOLDERNOTEXIST = "Plugin folder does not exist.";
-                Log.Write(LogType.info, PLUGINFOLDERNOTEXIST);
+                shutdown = false;
             }
 
-            return pluginslist.ToArray();
-        }
-
-        /// <summary>
-        /// Get the name of the plugin.
-        /// </summary>
-        /// <param name="pluginassembly">The plugin assembly</param>
-        /// <returns>The name of the plugin</returns>
-        public static string GetPluginName(Assembly pluginassembly)
-        {
-            string pluginname = "untitled";
-            object[] atttitle = pluginassembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-            if (atttitle.Length > 0)
+            if (shutdown)
             {
-                AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)atttitle[0];
-                if (titleAttribute.Title != string.Empty)
-                {
-                    if (titleAttribute.Title.Length > 150)
-                    {
-                        pluginname = titleAttribute.Title.Substring(0, 150);
-                    }
-                    else
-                    {
-                        pluginname = titleAttribute.Title;
-                    }
-                }
-                else
-                {
-                    Log.Write(LogType.exception, "Plugin " + pluginassembly.Location + " has no name.");
-                }
+                trayicon.Dispose();
+                System.Windows.Forms.Application.Exit();
             }
-
-            return pluginname;
-        }
-
-        /// <summary>
-        /// Get author or author company of the plugin.
-        /// </summary>
-        /// <param name="pluginassembly">The plugin assembly</param>
-        /// <returns>The author or company of the plugin</returns>
-        public static string GetPluginAuthor(Assembly pluginassembly)
-        {
-            string pluginauthor = "unknown";
-            object[] attributes = pluginassembly.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-            if (attributes.Length != 0)
-            {
-                if (!String.IsNullOrEmpty(((AssemblyCompanyAttribute)attributes[0]).Company))
-                {
-                    if (((AssemblyCompanyAttribute)attributes[0]).Company.Length > 150)
-                    {
-                        pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company.Substring(0, 150);
-                    }
-                    else
-                    {
-                        pluginauthor = ((AssemblyCompanyAttribute)attributes[0]).Company;
-                    }
-                }
-                else
-                {
-                    Log.Write(LogType.exception, "Plugin " + pluginassembly.Location + " has no author.");
-                }
-            }
-
-
-            return pluginauthor;
-        }
-
-        /// <summary>
-        /// Get description of the plugin.
-        /// </summary>
-        /// <param name="pluginassembly">The plugin assembly</param>
-        /// <returns>The description of the plugin</returns>
-        public static string GetPluginDescription(Assembly pluginassembly)
-        {
-            string plugindescription = string.Empty;
-            object[] attdesc = pluginassembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-            if (attdesc.Length != 0)
-            {
-                if (((AssemblyDescriptionAttribute)attdesc[0]).Description.Length > 255)
-                {
-                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description.Substring(0, 255);
-                }
-                else
-                {
-                    plugindescription = ((AssemblyDescriptionAttribute)attdesc[0]).Description;
-                }
-            } 
-
-            return plugindescription;
-        }
-
-        /// <summary>
-        /// Get version of the plugin as string.
-        /// </summary>
-        /// <param name="pluginassembly">The plugin assembly</param>
-        /// <returns>The version of the plugin as string</returns>
-        public static string GetPluginVersion(Assembly pluginassembly)
-        {
-            if (pluginassembly.GetName().Version != null)
-            {
-                return pluginassembly.GetName().Version.ToString();
-            }
-            else
-            {
-                Log.Write(LogType.exception, "Plugin " + pluginassembly.Location + " has no version information.");
-                return "unknown";
-            }
-        }
-
-        /// <summary>
-        /// Is the dll files excluded as plugin in the plugin directory.
-        /// </summary>
-        /// <param name="dllfilename">The dll filename without path</param>
-        /// <returns>True if it's excluded</returns>
-        private static bool IsPluginFilesExcluded(string dllfilename)
-        {
-            if (plugindllexcluded != null)
-            {
-                for (int i = 0; i < plugindllexcluded.Length; i++)
-                {
-                    if (dllfilename == plugindllexcluded[i])
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Waits some time before doing a update check.
-        /// </summary>
-        private static void UpdateCheckThread()
-        {
-            const int UPDATECHECKSTARTUPWAITTIME = 4000;
-            Thread.Sleep(UPDATECHECKSTARTUPWAITTIME);
-            Settings.UpdatecheckLastDate = UpdateCheck();
         }
 
         /// <summary>
@@ -689,7 +689,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="treadargs">ThreadExceptionEvent arguments</param>
-        private static void UnhanledThreadExceptionHanhler(object sender, ThreadExceptionEventArgs treadargs)
+        private static void UnhanledThreadExceptionHandler(object sender, ThreadExceptionEventArgs treadargs)
         {
             Exception e = treadargs.Exception;
             ShowExceptionDlg(e);
@@ -777,80 +777,87 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get all dll files in the plugin directory
+        /// Find out if the version numbers given as array is higher
+        /// than the required version numbers given as an array.
         /// </summary>
-        /// <returns>All dll filenames as string array</returns>
-        private static string[] GetFilesPluginDir()
+        /// <param name="versionA"></param>
+        /// <param name="versionB"></param>
+        /// <returns> -3 if versionB is not valid.
+        /// -2 if versionA is not valid.
+        /// -1 if versionA is lower than versionB, 
+        ///  0 if versionA is equal with versionB,
+        ///  1 if versionA is higher than versionB.</returns>
+        public static int CompareVersions(short[] versionA, short[] versionB)
         {
-            string[] pluginfilepaths = Directory.GetFiles(Settings.ProgramPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
-            string[] pluginfiles = new string[pluginfilepaths.Length];
-            for (int i = 0; i < pluginfilepaths.Length; i++)
+            //int result = 0;
+            bool continu = true;
+            for (int i = 0; i < versionA.Length && continu; i++)
             {
-                pluginfiles[i] = Path.GetFileName(pluginfilepaths[i]);
-            }
-
-            pluginfilepaths = null;
-            return pluginfiles;
-        }
-
-        /// <summary>
-        /// Get if plugin is enabled.
-        /// </summary>
-        /// <param name="pluginsenabled">A comma seperated list of enabled plugin assemblies</param>
-        /// <param name="pluginfile">The filename without path of the plugin to be check if it's enabled.</param>
-        /// <returns>true if pluginfile is enabled.</returns>
-        private static bool IsPluginEnabled(string[] pluginsenabled, string pluginfile)
-        {
-            for (int p = 0; p < pluginsenabled.Length; p++)
-            {
-                if (pluginsenabled[p] == pluginfile)
+                if (versionA[i] < 0)
                 {
-                    return true;
+                    return -2;
+                }
+                else if (versionB[i] < 0)
+                {
+                    return -3;
+                }
+
+                if (versionA[i] != versionB[i])
+                {
+                    continu = false;
+                    if (versionA[i] > versionB[i])
+                    {
+                        return 1;
+                    }
+                    else if (versionA[i] < versionB[i])
+                    {
+                        return -1;
+                    }
                 }
             }
 
-            return false;
+            return 0;
         }
 
         /// <summary>
-        /// Check if there is internet connection, if not warn user.
-        /// Uses windows API, other platforms return always true at the moment.
+        /// Parser a string as a version number array with major, minor, release numbers
         /// </summary>
-        /// <remarks>Decreated, used for send to twitter/facebook</remarks>
-        /// <returns>true if there is a connection, otherwise return false</returns>
-        private static bool IsNetworkConnected()
+        /// <returns>Array with version numbers shorts.
+        /// First element is major version number,
+        /// second element is minor version number,
+        /// third element is release version number.</returns>
+        public static short[] ParserVersionString(string versionstring)
         {
-#if windows
-            int desc;
-            if (InternetGetConnectedState(out desc, 0))
+            short[] versionparts = new short[3];
+            char[] splitchr = new char[1];
+            splitchr[0] = '.';
+            if (!string.IsNullOrEmpty(versionstring))
             {
-                return true;
+                string[] stringversionparts = versionstring.Split(splitchr, StringSplitOptions.None);
+                try
+                {
+                    for (int i = 0; i < versionparts.Length; i++)
+                    {
+                        versionparts[i] = Convert.ToInt16(stringversionparts[i]);
+                    }
+                }
+                catch (InvalidCastException invcastexc)
+                {
+                    Log.Write(LogType.exception, invcastexc.Message);
+                }
             }
             else
             {
-                return false;
+                Log.Write(LogType.exception, "No version string to parser.");
             }
-#elif !windows
-            return true;
-#endif
+
+            return versionparts;
         }
 
 #if windows
-        // get network status
-        [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-
         // change working directory as dll search path
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool SetDllDirectory(string pathName);
-
-        // global hotkey
-        ////[System.Runtime.InteropServices.DllImport("user32.dll")]
-        ////private static extern int RegisterHotKey(IntPtr hwnd, int id, int fsModifiers, int vk);
-
-        // unregister global hotkey, always unregister before shutdown.
-        ////[System.Runtime.InteropServices.DllImport("user32.dll")]
-        ////private static extern int UnregisterHotKey(IntPtr hwnd, int id);
 #endif
 
         #endregion Methods

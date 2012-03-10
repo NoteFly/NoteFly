@@ -363,12 +363,12 @@ namespace NoteFly
             this.tbTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbTitle.CausesValidation = false;
             this.tbTitle.ContextMenuStrip = this.contextMenuStripTextActions;
-            this.tbTitle.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbTitle.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.tbTitle.ImeMode = System.Windows.Forms.ImeMode.On;
             this.tbTitle.Location = new System.Drawing.Point(38, 6);
             this.tbTitle.MaxLength = 255;
             this.tbTitle.Name = "tbTitle";
-            this.tbTitle.Size = new System.Drawing.Size(176, 23);
+            this.tbTitle.Size = new System.Drawing.Size(172, 23);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
             this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
@@ -377,7 +377,7 @@ namespace NoteFly
             // lbTextTitle
             // 
             this.lbTextTitle.AutoSize = true;
-            this.lbTextTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTextTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lbTextTitle.Location = new System.Drawing.Point(0, 9);
             this.lbTextTitle.Name = "lbTextTitle";
             this.lbTextTitle.Size = new System.Drawing.Size(34, 20);
@@ -400,7 +400,7 @@ namespace NoteFly
             this.pnlHeadNewNote.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeadNewNote.Location = new System.Drawing.Point(0, 0);
             this.pnlHeadNewNote.Name = "pnlHeadNewNote";
-            this.pnlHeadNewNote.Size = new System.Drawing.Size(284, 40);
+            this.pnlHeadNewNote.Size = new System.Drawing.Size(280, 40);
             this.pnlHeadNewNote.TabIndex = 4;
             this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
@@ -419,11 +419,12 @@ namespace NoteFly
             this.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Location = new System.Drawing.Point(253, 6);
+            this.btnCancel.Location = new System.Drawing.Point(249, 6);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(26, 24);
-            this.btnCancel.TabIndex = 3;
-            this.toolTip.SetToolTip(this.btnCancel, "cancel new note (escape)");
+            this.btnCancel.TabIndex = 8;
+            this.btnCancel.TabStop = false;
+            this.btnCancel.UseCompatibleTextRendering = true;
             this.btnCancel.UseMnemonic = false;
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -442,15 +443,16 @@ namespace NoteFly
             this.btnAddNote.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
             this.btnAddNote.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAddNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNote.Location = new System.Drawing.Point(220, 6);
+            this.btnAddNote.Location = new System.Drawing.Point(216, 6);
             this.btnAddNote.Name = "btnAddNote";
             this.btnAddNote.Size = new System.Drawing.Size(27, 24);
-            this.btnAddNote.TabIndex = 2;
-            this.toolTip.SetToolTip(this.btnAddNote, "accept new note (Ctrl+S)");
+            this.btnAddNote.TabIndex = 7;
+            this.btnAddNote.TabStop = false;
+            this.toolTip.SetToolTip(this.btnAddNote, "t");
+            this.btnAddNote.UseCompatibleTextRendering = true;
             this.btnAddNote.UseMnemonic = false;
             this.btnAddNote.UseVisualStyleBackColor = false;
             this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
-            this.btnAddNote.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.btnAddNote_KeyPress);
             // 
             // toolTip
             // 
@@ -468,7 +470,7 @@ namespace NoteFly
             this.btnFontBigger.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnFontBigger.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnFontBigger.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFontBigger.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFontBigger.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
             this.btnFontBigger.Location = new System.Drawing.Point(163, 3);
             this.btnFontBigger.Name = "btnFontBigger";
             this.btnFontBigger.Size = new System.Drawing.Size(26, 24);
@@ -493,7 +495,7 @@ namespace NoteFly
             this.btnFontSmaller.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnFontSmaller.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnFontSmaller.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFontSmaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFontSmaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F);
             this.btnFontSmaller.Location = new System.Drawing.Point(195, 3);
             this.btnFontSmaller.Name = "btnFontSmaller";
             this.btnFontSmaller.Size = new System.Drawing.Size(26, 24);
@@ -518,7 +520,7 @@ namespace NoteFly
             this.btnTextBulletlist.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnTextBulletlist.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextBulletlist.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextBulletlist.Font = new System.Drawing.Font("Microsoft Sans Serif", 3.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextBulletlist.Font = new System.Drawing.Font("Microsoft Sans Serif", 3.75F);
             this.btnTextBulletlist.Location = new System.Drawing.Point(131, 3);
             this.btnTextBulletlist.Name = "btnTextBulletlist";
             this.btnTextBulletlist.Size = new System.Drawing.Size(26, 24);
@@ -544,7 +546,7 @@ namespace NoteFly
             this.btnTextStriketrough.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnTextStriketrough.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextStriketrough.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextStriketrough.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextStriketrough.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Strikeout);
             this.btnTextStriketrough.Location = new System.Drawing.Point(99, 3);
             this.btnTextStriketrough.Name = "btnTextStriketrough";
             this.btnTextStriketrough.Size = new System.Drawing.Size(26, 24);
@@ -569,7 +571,7 @@ namespace NoteFly
             this.btnTextUnderline.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnTextUnderline.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextUnderline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextUnderline.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextUnderline.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline);
             this.btnTextUnderline.Location = new System.Drawing.Point(67, 3);
             this.btnTextUnderline.Name = "btnTextUnderline";
             this.btnTextUnderline.Size = new System.Drawing.Size(26, 24);
@@ -594,7 +596,7 @@ namespace NoteFly
             this.btnTextItalic.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnTextItalic.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextItalic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextItalic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextItalic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
             this.btnTextItalic.Location = new System.Drawing.Point(35, 3);
             this.btnTextItalic.Name = "btnTextItalic";
             this.btnTextItalic.Size = new System.Drawing.Size(26, 24);
@@ -619,7 +621,7 @@ namespace NoteFly
             this.btnTextBold.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
             this.btnTextBold.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnTextBold.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTextBold.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTextBold.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnTextBold.Location = new System.Drawing.Point(3, 3);
             this.btnTextBold.Name = "btnTextBold";
             this.btnTextBold.Size = new System.Drawing.Size(26, 24);
@@ -642,19 +644,20 @@ namespace NoteFly
             this.rtbNewNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNewNote.ContextMenuStrip = this.contextMenuStripTextActions;
             this.rtbNewNote.DetectUrls = false;
-            this.rtbNewNote.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbNewNote.Font = new System.Drawing.Font("Arial", 12F);
             this.rtbNewNote.ImeMode = System.Windows.Forms.ImeMode.On;
             this.rtbNewNote.Location = new System.Drawing.Point(2, 41);
             this.rtbNewNote.MaxLength = 999999;
             this.rtbNewNote.Name = "rtbNewNote";
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbNewNote.Size = new System.Drawing.Size(280, 166);
+            this.rtbNewNote.Size = new System.Drawing.Size(276, 167);
             this.rtbNewNote.TabIndex = 1;
             this.rtbNewNote.Text = "";
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
             this.rtbNewNote.Leave += new System.EventHandler(this.rtbNote_Leave);
+            this.rtbNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rtbNewNote_KeyUp);
             // 
             // pbResizeGrip
             // 
@@ -662,7 +665,7 @@ namespace NoteFly
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(267, 222);
+            this.pbResizeGrip.Location = new System.Drawing.Point(263, 223);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
@@ -701,12 +704,12 @@ namespace NoteFly
             this.tlpnlFormatbtn.Controls.Add(this.btnFontSmaller, 6, 0);
             this.tlpnlFormatbtn.Controls.Add(this.btnFontBigger, 5, 0);
             this.tlpnlFormatbtn.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
-            this.tlpnlFormatbtn.Location = new System.Drawing.Point(2, 208);
+            this.tlpnlFormatbtn.Location = new System.Drawing.Point(2, 209);
             this.tlpnlFormatbtn.Margin = new System.Windows.Forms.Padding(0);
             this.tlpnlFormatbtn.Name = "tlpnlFormatbtn";
             this.tlpnlFormatbtn.RowCount = 1;
             this.tlpnlFormatbtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpnlFormatbtn.Size = new System.Drawing.Size(278, 30);
+            this.tlpnlFormatbtn.Size = new System.Drawing.Size(274, 30);
             this.tlpnlFormatbtn.TabIndex = 19;
             // 
             // FrmNewNote
@@ -718,7 +721,7 @@ namespace NoteFly
             this.BackColor = System.Drawing.Color.Gold;
             this.CancelButton = this.btnCancel;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(284, 239);
+            this.ClientSize = new System.Drawing.Size(280, 240);
             this.ContextMenuStrip = this.contextMenuStripTextActions;
             this.ControlBox = false;
             this.Controls.Add(this.pbResizeGrip);

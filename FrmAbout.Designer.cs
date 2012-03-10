@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmAbout.Designer.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -35,17 +35,17 @@ namespace NoteFly
         private System.Windows.Forms.Button okButton;
 
         /// <summary>
-        /// name product label
+        /// Name product label
         /// </summary>
         private System.Windows.Forms.Label lblProductName;
 
         /// <summary>
-        /// version label
+        /// Version label
         /// </summary>
         private System.Windows.Forms.Label lblVersion;
 
         /// <summary>
-        /// link to official website
+        /// Link to official website
         /// </summary>
         private System.Windows.Forms.LinkLabel linklblWebsite;
 
@@ -53,6 +53,11 @@ namespace NoteFly
         /// Label with info on how product is licesed.
         /// </summary>
         private System.Windows.Forms.Label lblTextLicense;
+
+        /// <summary>
+        /// tmpUpdateLblProductEffect Timer
+        /// </summary>
+        private System.Windows.Forms.Timer tmpUpdateLblProductEffect;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -89,29 +94,33 @@ namespace NoteFly
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.okButton.Location = new System.Drawing.Point(112, 135);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(111, 26);
             this.okButton.TabIndex = 25;
             this.okButton.Text = "&Close";
+            this.okButton.UseCompatibleTextRendering = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // lblProductName
             // 
             this.lblProductName.AutoSize = true;
-            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductName.BackColor = System.Drawing.Color.Transparent;
+            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold);
             this.lblProductName.ForeColor = System.Drawing.Color.Black;
             this.lblProductName.Location = new System.Drawing.Point(6, 5);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(0, 42);
+            this.lblProductName.Size = new System.Drawing.Size(0, 45);
             this.lblProductName.TabIndex = 26;
+            this.lblProductName.UseCompatibleTextRendering = true;
             this.lblProductName.Click += new System.EventHandler(this.lblProductName_Click);
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.BackColor = System.Drawing.Color.Transparent;
+            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblVersion.ForeColor = System.Drawing.Color.Black;
             this.lblVersion.Location = new System.Drawing.Point(12, 47);
             this.lblVersion.Name = "lblVersion";
@@ -121,19 +130,22 @@ namespace NoteFly
             // linklblWebsite
             // 
             this.linklblWebsite.AutoSize = true;
-            this.linklblWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linklblWebsite.BackColor = System.Drawing.Color.Transparent;
+            this.linklblWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.linklblWebsite.Location = new System.Drawing.Point(10, 140);
             this.linklblWebsite.Name = "linklblWebsite";
-            this.linklblWebsite.Size = new System.Drawing.Size(62, 18);
+            this.linklblWebsite.Size = new System.Drawing.Size(61, 22);
             this.linklblWebsite.TabIndex = 28;
             this.linklblWebsite.TabStop = true;
             this.linklblWebsite.Text = "Website";
+            this.linklblWebsite.UseCompatibleTextRendering = true;
             this.linklblWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklblWebsite_LinkClicked);
             // 
             // lblTextLicense
             // 
             this.lblTextLicense.AutoEllipsis = true;
-            this.lblTextLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextLicense.BackColor = System.Drawing.Color.Transparent;
+            this.lblTextLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.lblTextLicense.ForeColor = System.Drawing.Color.Black;
             this.lblTextLicense.Location = new System.Drawing.Point(10, 74);
             this.lblTextLicense.Name = "lblTextLicense";
@@ -141,6 +153,7 @@ namespace NoteFly
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of Lesser GNU General Public License v" +
                 "ersion3\r\n";
+            this.lblTextLicense.UseCompatibleTextRendering = true;
             // 
             // tmpUpdateLblProductEffect
             // 
@@ -151,6 +164,7 @@ namespace NoteFly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.okButton;
             this.ClientSize = new System.Drawing.Size(235, 171);
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);
@@ -172,7 +186,5 @@ namespace NoteFly
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer tmpUpdateLblProductEffect;
     }
 }

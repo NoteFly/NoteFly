@@ -54,7 +54,7 @@ namespace SkinsEditor
         /// <param name="host">The interface to talk let this plugin talk to NoteFly.</param>
         public FrmSkinEditor(IPlugin.IPluginHost host)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.host = host;
             this.skinaction = skineditormode.browseskins;
             this.LoadAllSkinNames();
@@ -65,7 +65,6 @@ namespace SkinsEditor
         /// </summary>
         private enum skineditormode
         {
-
             /// <summary>
             /// Selecting/viewing a skin.
             /// </summary>
@@ -82,6 +81,9 @@ namespace SkinsEditor
             newskin
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void LoadAllSkinNames()
         {
             this.btnDeleteSkin.Enabled = false;
@@ -334,8 +336,8 @@ namespace SkinsEditor
                 if (this.CheckProperSkinnameTb())
                 {
                     this.tbSkinName.BackColor = SystemColors.Window;
-                    if (!String.IsNullOrEmpty(this.tbPrimaryTexture.Text))
-                    {                        
+                    if (!string.IsNullOrEmpty(this.tbPrimaryTexture.Text))
+                    {
                         if (this.cbxPrimaryTextureLayout.SelectedIndex < 0)
                         {
                             this.lblTextPrimartTextureLayout.ForeColor = Color.DarkRed;
@@ -352,7 +354,7 @@ namespace SkinsEditor
                         {
                             const string COULDNOTWRITESKINS = "Could not write skins file.";
                             MessageBox.Show(COULDNOTWRITESKINS);
-                        }                        
+                        }
 
                         this.host.ReloadAllSkins();
                         this.host.UpdateAllNoteForms();
@@ -632,11 +634,11 @@ namespace SkinsEditor
                     if (res == DialogResult.Yes)
                     {
                         this.skinaction = skineditormode.browseskins;
-                        this.deleteskinnr = this.lbxSkins.SelectedIndex;                        
+                        this.deleteskinnr = this.lbxSkins.SelectedIndex;
                         this.WriteSkinsFile(null, null, null, null, null, null);
                         this.lbxSkins.Items.RemoveAt(this.deleteskinnr);
                         this.deleteskinnr = -1;
-                        this.host.ReloadAllSkins();                        
+                        this.host.ReloadAllSkins();
                     }
 
                     if (this.lbxSkins.Items.Count <= 1)

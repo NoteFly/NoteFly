@@ -1,5 +1,5 @@
 ;  NoteFly a note application.
-;  Copyright (C) 2010-2011  Tom
+;  Copyright (C) 2010-2012  Tom
 ;
 ;  This program is free software: you can redistribute it and/or modify
 ;  it under the terms of the GNU General Public License as published by
@@ -22,12 +22,11 @@
 ;
 
 !define PROJNAME   "NoteFly"
-!define VERSION    "2.5.1"          ; version number: major.minor.release
-!define VERSTATUS  ""               ; alpha, beta, rc, or nothing for final.
+!define VERSION    "3.0.0"          ; version number: major.minor.release
+!define VERSTATUS  "beta1"          ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
 !define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
-!define DEMOPLUGIN "helloworld.dll" ; A demo plugin.
 
 Name "${PROJNAME} ${VERSION} ${VERSTATUS}" ; The name of the installer
 SetCompressor lzma
@@ -188,14 +187,23 @@ Section "main executable (required)"
   File "nyancat.jpg"    ; 4,53 KB
   File "grass.jpg"      ; 9,17 KB
   File "colordrops.jpg" ; 10,0 KB
+
+  ; Gettext library
+  File "Gettext.Cs.dll" ; 15,5 KB
+  
+  ; translations
+  SetOutPath "$INSTDIR\translations\en\"
+  File ".\translations\en\Strings.po"
+  SetOutPath "$INSTDIR\translations\nl\"
+  File ".\translations\nl\Strings.po"
   
   WriteUninstaller "uninstall.exe"
   
 SectionEnd
 
-Section "helloworld demo plugin"
-  SetOutPath "$INSTDIR\plugins"
-  File ".\plugins\${DEMOPLUGIN}"
+Section "Windows firewall rules"
+  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming http (remoteport 80, protocol tcp only) answer for a http requests from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly http" protocol=TCP remoteport=80 localport=rpc-epmap action=allow"'
+  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming dns (remoteport 53, protocol udp only) answer for a dns request from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly dns" protocol=UDP remoteport=53 localport=rpc-epmap action=allow"'
 SectionEnd
 
 Section "Desktop Shortcut (all users)"
@@ -243,36 +251,41 @@ Section "Uninstall"
 
   ; Remove files and uninstaller
   Delete "$INSTDIR\${LANGFILE}"
-  Delete "$INSTDIR\plugins\${DEMOPLUGIN}"
   Delete "$INSTDIR\${APPIPLUGIN}"
   Delete "$INSTDIR\${APPFILE}"
-
+  Delete "$INSTDIR\Gettext.Cs.dll"
+  
   ; skin textures
   Delete "$INSTDIR\nyancat.jpg"
   Delete "$INSTDIR\grass.jpg"
   Delete "$INSTDIR\colordrops.jpg"
-  Delete "$INSTDIR\blackhorse.jpg" ; remove ifexist, in NoteFly 2.5.0 beta1 only.
+  
+  Delete "$INSTDIR\translations\en\Strings.po"
+  RMDir "$INSTDIR\translations\en\"
+  Delete "$INSTDIR\translations\nl\Strings.po"
+  RMDir "$INSTDIR\translations\nl\"
+  RMDir "$INSTDIR\translations\"
   
   ; remove uninstaller
   Delete "$INSTDIR\uninstall.exe"
-    
-  ; Remove plugin directory if empty
-  RMDir "$INSTDIR\plugins\"
-  ; Remove directory if empty
+  
+  ; Remove NoteFly install directory, if empty
   RMDir "$INSTDIR"
 
   IfFileExists "$APPDATA\.NoteFly2" removeadminappdata postremoveadminappdata
   
   removeadminappdata:
   ; This is only going to work for the administrator appdata.
-  MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes and settings from administrator account stored at $APPDATA\.NoteFly2\ ?" IDNO keepsettingnotes
-    Delete "$APPDATA\.NoteFly2\settings.xml"
-    Delete "$APPDATA\.NoteFly2\skins.xml"
-    Delete "$APPDATA\.NoteFly2\debug.log"
-    Delete "$APPDATA\.NoteFly2\*.nfn"
+  MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes settings and plugins from administrator account stored at $APPDATA\NoteFly\ ?" IDNO keepsettingnotes
+    Delete "$APPDATA\NoteFly\notes\*.nfn"
+    ;Delete "$APPDATA\NoteFly\plugins\*.dll"
+    Delete "$APPDATA\NoteFly\settings.xml"
+    Delete "$APPDATA\NoteFly\skins.xml"
+    Delete "$APPDATA\NoteFly\debug.log"
 
     ; Remove directory if empty
-    RMDir "$APPDATA\.NoteFly2"
+    RMDir "$APPDATA\NoteFly"
+    
   postremoveadminappdata:
   keepsettingnotes:
   SetShellVarContext all

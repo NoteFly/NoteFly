@@ -31,6 +31,8 @@
     <ManifestCertificateThumbprint>24C8A072EE1303117FA2C979E510FC5EB55B4C8E</ManifestCertificateThumbprint>
     <ManifestKeyFile>NoteFly_TemporaryKey.pfx</ManifestKeyFile>
     <ReleaseVersion>1.0</ReleaseVersion>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -45,15 +47,13 @@
     <ApplicationVersion>2.5.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkSubset>
-    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;windows</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;windows</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -64,6 +64,7 @@
       </CustomCommands>
     </CustomCommands>
     <LangVersion>ISO-2</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -72,16 +73,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
     <LangVersion>ISO-2</LangVersion>
     <DefineConstants>windows</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gettext.Cs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Design" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -90,6 +94,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmailTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FrmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,26 +127,34 @@
     <Compile Include="FrmNote.Designer.cs">
       <DependentUpon>FrmNote.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPlugins.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPlugins.Designer.cs">
+      <DependentUpon>FrmPlugins.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmSettings.Designer.cs">
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmUpdater.cs">
+    <Compile Include="FrmDownloader.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmUpdater.Designer.cs">
-      <DependentUpon>FrmUpdater.cs</DependentUpon>
+    <Compile Include="FrmDownloader.Designer.cs">
+      <DependentUpon>FrmDownloader.cs</DependentUpon>
     </Compile>
     <Compile Include="GPGVerifWrapper.cs" />
     <Compile Include="HighlightLanguage.cs" />
+    <Compile Include="ImportNotes.cs" />
+    <Compile Include="IOTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="IPTextBox.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IPTextBox.Designer.cs">
-      <DependentUpon>IPTextBox.cs</DependentUpon>
-    </Compile>
+    <Compile Include="KbdListener.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="PluginGrid.cs">
       <SubType>UserControl</SubType>
@@ -147,6 +162,7 @@
     <Compile Include="PluginGrid.Designer.cs">
       <DependentUpon>PluginGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="PluginsManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Notes.cs" />
@@ -155,8 +171,23 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="RTFDirectEdit.cs" />
+    <Compile Include="SearchTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SearchTextBox.Designer.cs">
+      <DependentUpon>SearchTextBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="ShortcutTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Skin.cs" />
+    <Compile Include="Strings.cs">
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="Textfile.cs" />
     <Compile Include="TransparentRichTextBox.cs">
       <SubType>Component</SubType>
@@ -175,30 +206,34 @@
     <EmbeddedResource Include="FrmNote.resx">
       <DependentUpon>FrmNote.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmPlugins.resx">
+      <DependentUpon>FrmPlugins.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmSettings.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="build_translationfile.bat" />
     <None Include="clean_settings.bat" />
     <None Include="icons.res" />
+    <None Include="NoteFly_classdiagram.cd" />
     <None Include="Properties\app.manifest" />
     <Compile Include="SyntaxHighlight.cs" />
+    <Compile Include="HttpUtil.cs" />
+    <Compile Include="FormManager.cs" />
     <Compile Include="XmlUtil.cs" />
+    <Compile Include="ZipStorer.cs" />
     <None Include="Resources\accept.png" />
     <None Include="Resources\cancel.png" />
     <None Include="build_setup.bat" />
-    <None Include="make_archive.bat" />
     <None Include="Resources\hoekje.png" />
     <None Include="Resources\locknote.png" />
     <None Include="strongkey_NoteFly2.pfx" />
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmUpdater.resx">
-      <DependentUpon>FrmUpdater.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IPTextBox.resx">
-      <DependentUpon>IPTextBox.cs</DependentUpon>
+    <EmbeddedResource Include="FrmDownloader.resx">
+      <DependentUpon>FrmDownloader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PluginGrid.resx">
       <DependentUpon>PluginGrid.cs</DependentUpon>
@@ -209,6 +244,9 @@
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\trayicon_yellow.ico" />
+    <EmbeddedResource Include="SearchTextBox.resx">
+      <DependentUpon>SearchTextBox.cs</DependentUpon>
+    </EmbeddedResource>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework Client Profile</ProductName>
@@ -247,6 +285,9 @@
       <Project>{CD4BAEB8-114A-4C3E-8933-DDF9471E48DB}</Project>
       <Name>IPlugin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

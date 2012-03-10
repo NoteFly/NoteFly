@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="Settings.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,36 @@ namespace NoteFly
     /// </summary>
     public struct Settings
     {
+        /// <summary>
+        /// Hotkey for new note uses Alt instead of Shift key as second key.
+        /// </summary>
+        public static bool HotkeysNewNoteAltInsteadShift = false;
+
+        /// <summary>
+        /// The third final key that needs to be pressed for as hotkey for a new note.
+        /// </summary>
+        public static int HotkeysNewNoteKeycode = 112;
+
+        /// <summary>
+        /// Hotkey for manage notes uses Alt instead of Shift key as second key.
+        /// </summary>
+        public static bool HotkeysManageNotesAltInsteadShift = true;
+
+        /// <summary>
+        /// The third final key that needs to be pressed for as hotkey for a manage notes.
+        /// </summary>
+        public static int HotkeysManageNotesKeycode = 113;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static bool HotkeysNotesToFrontAltInsteadShift = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static int HotkeysNotesToFrontKeycode = 160;
+
         /// <summary>
         /// Are notes transparent.
         /// </summary>
@@ -50,6 +80,11 @@ namespace NoteFly
         public static int NotesDefaultSkinnr = 0;
 
         /// <summary>
+        /// Use current date (in current culture, windows language settings) as default title for a new note.
+        /// </summary>
+        public static bool NotesDefaultTitleDate = true;
+
+        /// <summary>
         /// Are tooltip in programme enabled.
         /// </summary>
         public static bool NotesTooltipsEnabled = true;
@@ -65,9 +100,29 @@ namespace NoteFly
         public static bool NotesDeleteRecyclebin = false;
 
         /// <summary>
+        /// The default width of a new note.
+        /// </summary>
+        public static int NotesDefaultWidth = 280;
+
+        /// <summary>
+        /// The default height of a new note.
+        /// </summary>
+        public static int NotesDefaultHeight = 240;
+
+        /// <summary>
+        /// The maximum number of pixels of the title panel height.
+        /// </summary>
+        public static int NotesTitlepanelMaxHeight = 64;
+
+        /// <summary>
+        /// The minimum number of pixels of the title panel height.
+        /// </summary>
+        public static int NotesTitlepanelMinHeight = 32;
+
+        /// <summary>
         /// Number of total notes a warning shows up that are many notes loading.
         /// </summary>
-        public static int NotesWarnlimitTotal = 1234;
+        public static int NotesWarnlimitTotal = 5000;
 
         /// <summary>
         /// Number of visible notes a warning shows up that are many notes being displayed and it recommeded to hide some.
@@ -77,7 +132,7 @@ namespace NoteFly
         /// <summary>
         /// The folder where to save all notes.
         /// </summary>
-        public static string NotesSavepath;
+        public static string NotesSavepath = Program.GetDefaultNotesFolder();
 
         /// <summary>
         /// The action on left clicking on trayicon.
@@ -90,7 +145,7 @@ namespace NoteFly
         /// <summary>
         /// The trayicon fontsize.
         /// </summary>
-        public static float TrayiconFontsize = 8.25f;
+        public static float TrayiconFontsize = 10.00f;
 
         /// <summary>
         /// Display "Create new note" in bold.
@@ -172,7 +227,7 @@ namespace NoteFly
         /// <summary>
         /// The maximum number of characters to apply syntaxcheck on.
         /// </summary>
-        public static int HighlightMaxchars = 10000;
+        public static int HighlightMaxchars = 30000;
 
         /// <summary>
         /// Do HTML highlighting on notes.
@@ -202,7 +257,7 @@ namespace NoteFly
         /// <summary>
         /// Do detect hyperlinks in notes.
         /// </summary>
-        public static bool HighlightHyperlinks = true;
+        public static bool HighlightHyperlinks = false; // FIXME: currenly disable, causing trouble with TransparentRichtTextBox SetColorInRTF
 
         /// <summary>
         /// Do PHP highlighting.
@@ -265,6 +320,31 @@ namespace NoteFly
         public static bool ConfirmDeletenote = true;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static string ManagenotesFontFamily = "Arial";
+
+        /// <summary>
+        /// Display toolstip with note content in FrmManageNotes.
+        /// </summary>
+        public static bool ManagenotesTooltip = true;
+
+        /// <summary>
+        /// The skin for the manage notes window.
+        /// </summary>
+        public static int ManagenotesSkinnr = 1;
+
+        /// <summary>
+        /// The manage notes font size for each row.
+        /// </summary>
+        public static float ManagenotesFontsize = 9;
+
+        /// <summary>
+        /// Search is case senstive in manage notes window.
+        /// </summary>
+        public static bool ManagenotesSearchCasesentive = false;
+
+        /// <summary>
         /// Show expert settings in FrmSettings.
         /// </summary>
         public static bool SettingsExpertEnabled = false;
@@ -292,10 +372,12 @@ namespace NoteFly
         public static int NetworkConnectionTimeout = 8000;
 
         /// <summary>
-        /// Force to use of IPv6.
-        /// Will use ipv6.notefly.org for update checking.
+        /// The prefered IP version used.
+        /// 0 for automatically IPv6 or IPv4.
+        /// 1 for force the use of IPv4
+        /// 2 for force the use of IPv6
         /// </summary>
-        public static bool NetworkConnectionForceipv6 = false;
+        public static int NetworkIPversion = 0;
 
         /// <summary>
         /// Connect via a proxy.
@@ -306,6 +388,16 @@ namespace NoteFly
         /// The address of the proxy server.
         /// </summary>
         public static string NetworkProxyAddress = string.Empty;
+
+        /// <summary>
+        /// The port used of the proxy server.
+        /// </summary>
+        public static int NetworkProxyPort = 80;
+
+        /// <summary>
+        /// Use Gzip for http tranfer
+        /// </summary>
+        public static bool NetworkUseGzip = false;
 
         /// <summary>
         /// The update check interval in days.
@@ -372,7 +464,7 @@ namespace NoteFly
         /// If not the demo note is created, balloontip is showed
         /// and NoteFly version 1.0 notes are ask to are imported if they exist.
         /// </summary>
-        public static bool ProgramFirstrun = false;
+        public static bool ProgramFirstrunned = false;
 
         /// <summary>
         /// Are all windows double buffered.
@@ -380,6 +472,11 @@ namespace NoteFly
         /// But currenlt false because it has serious issues under windows8 beta.
         /// </summary>
         public static bool ProgramFormsDoublebuffered = false;
+
+        /// <summary>
+        /// The culture code of this programme.
+        /// </summary>
+        public static string ProgramLanguage = "en";
 
         /// <summary>
         /// The version of the programme of the last run.
@@ -412,6 +509,6 @@ namespace NoteFly
         /// <summary>
         /// The relative path from the install directory to the folder where plugins are stored in.
         /// </summary>
-        public static string ProgramPluginsFolder = System.IO.Path.Combine(Program.InstallFolder, "plugins");       
+        public static string ProgramPluginsFolder = Program.GetDefaultPluginFolder();
     }
 }

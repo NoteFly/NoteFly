@@ -1,5 +1,6 @@
+@echo off
 REM  NoteFly a note application.
-REM  Copyright (C) 2010-2011  Tom
+REM  Copyright (C) 2010-2012  Tom
 REM
 REM  This program is free software: you can redistribute it and/or modify
 REM  it under the terms of the GNU General Public License as published by
@@ -14,11 +15,10 @@ REM
 REM  You should have received a copy of the GNU General Public License
 REM  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-@echo off
 set path7z="C:\Program Files\7-Zip\7z.exe"
-set VERSION="2.5.1"
+set VERSION="3.0.0"
 REM versionstatus: alpha, beta, rc1, rc2 or nothing for final.
-set VERSIONSTATUS=""
+set VERSIONSTATUS="alpha2"
 
 echo Making zip archive: src_NoteFly_v%VERSION%%VERSIONSTATUS%.zip
 echo 7-zip(7z.exe) should be installed in: %path7z%

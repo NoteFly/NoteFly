@@ -102,7 +102,7 @@ namespace NoteFly
         /// <summary>
         /// ToolStripMenuItem menuSendTo
         /// </summary>
-        private System.Windows.Forms.ToolStripMenuItem menuSendTo;
+        private System.Windows.Forms.ToolStripMenuItem menuActions;
 
         /// <summary>
         /// ToolStripMenuItem menuSendToEmail
@@ -115,10 +115,9 @@ namespace NoteFly
         private System.Windows.Forms.ToolStripMenuItem menuSendToTextfile;
 
         /// <summary>
-        /// ToolStripMenuItem ??? 
-        /// todo: rename
+        /// ToolStripMenuItem menuCopy 
         /// </summary>
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem menuCopy;
 
         /// <summary>
         /// ToolStripMenuItem menuCopySelected
@@ -173,13 +172,13 @@ namespace NoteFly
             this.menuFrmNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuEditNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNoteSkins = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSendTo = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuActions = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSendToTextfile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.menuLockNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuWordWrap = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopySelected = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyContent = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCopyTitle = new System.Windows.Forms.ToolStripMenuItem();
@@ -203,13 +202,15 @@ namespace NoteFly
             this.lblTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
             this.lblTitle.AutoSize = true;
             this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Padding = new System.Windows.Forms.Padding(3, 5, 60, 0);
-            this.lblTitle.Size = new System.Drawing.Size(81, 24);
+            this.lblTitle.Size = new System.Drawing.Size(78, 30);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "?";
+            this.lblTitle.UseCompatibleTextRendering = true;
             this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
             this.lblTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
@@ -235,15 +236,15 @@ namespace NoteFly
             this.menuFrmNoteOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuEditNote,
             this.menuNoteSkins,
-            this.menuSendTo,
+            this.menuActions,
             this.menuOnTop,
             this.menuLockNote,
             this.menuWordWrap,
-            this.toolStripMenuItem1,
+            this.menuCopy,
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 224);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -265,15 +266,15 @@ namespace NoteFly
             this.menuNoteSkins.Text = "S&kin";
             this.menuNoteSkins.DropDownOpening += new System.EventHandler(this.menuNoteSkins_DropDownOpening);
             // 
-            // menuSendTo
+            // menuActions
             // 
-            this.menuSendTo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuActions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuSendToEmail,
             this.menuSendToTextfile});
-            this.menuSendTo.Name = "menuSendTo";
-            this.menuSendTo.Size = new System.Drawing.Size(184, 22);
-            this.menuSendTo.Text = "&Share";
-            this.menuSendTo.DropDownOpening += new System.EventHandler(this.menuSendTo_DropDownOpening);
+            this.menuActions.Name = "menuActions";
+            this.menuActions.Size = new System.Drawing.Size(184, 22);
+            this.menuActions.Text = "&Actions";
+            this.menuActions.DropDownOpening += new System.EventHandler(this.menuSendTo_DropDownOpening);
             // 
             // menuSendToEmail
             // 
@@ -317,15 +318,15 @@ namespace NoteFly
             this.menuWordWrap.Text = "Word wrap";
             this.menuWordWrap.Click += new System.EventHandler(this.menuWordWrap_Click);
             // 
-            // toolStripMenuItem1
+            // menuCopy
             // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuCopy.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuCopySelected,
             this.menuCopyContent,
             this.menuCopyTitle});
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.toolStripMenuItem1.Text = "&Copy";
+            this.menuCopy.Name = "menuCopy";
+            this.menuCopy.Size = new System.Drawing.Size(184, 22);
+            this.menuCopy.Text = "&Copy";
             // 
             // menuCopySelected
             // 
@@ -374,8 +375,9 @@ namespace NoteFly
             this.btnHideNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHideNote.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnHideNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHideNote.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHideNote.Location = new System.Drawing.Point(200, 4);
+            this.btnHideNote.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            this.btnHideNote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnHideNote.Location = new System.Drawing.Point(198, 4);
             this.btnHideNote.Margin = new System.Windows.Forms.Padding(1);
             this.btnHideNote.Name = "btnHideNote";
             this.btnHideNote.Size = new System.Drawing.Size(31, 23);
@@ -413,7 +415,7 @@ namespace NoteFly
             this.rtbNote.ContextMenuStrip = this.menuFrmNoteOptions;
             this.rtbNote.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbNote.DetectUrls = false;
-            this.rtbNote.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbNote.Font = new System.Drawing.Font("Verdana", 10F);
             this.rtbNote.ForeColor = System.Drawing.Color.Black;
             this.rtbNote.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.rtbNote.Location = new System.Drawing.Point(7, 6);
@@ -423,7 +425,7 @@ namespace NoteFly
             this.rtbNote.ReadOnly = true;
             this.rtbNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNote.ShortcutsEnabled = false;
-            this.rtbNote.Size = new System.Drawing.Size(224, 191);
+            this.rtbNote.Size = new System.Drawing.Size(218, 185);
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
             this.rtbNote.Text = "";
@@ -434,7 +436,8 @@ namespace NoteFly
             this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(223, 191);
+            this.pbResizeGrip.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pbResizeGrip.Location = new System.Drawing.Point(222, 191);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
