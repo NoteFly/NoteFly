@@ -103,7 +103,7 @@ namespace NoteFly
         /// <summary>
         /// Create a new instance of FormManager class.
         /// </summary>
-        /// <param name="notes"></param>
+        /// <param name="notes">Reference to notes class.</param>
         public FormManager(Notes notes)
         {
             this.notes = notes;
@@ -115,7 +115,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets whether a FrmNewNote window is open.
+        /// Gets or set a value indicating whether a FrmNewNote window is open.
         /// </summary>
         public bool Frmneweditnoteopen
         {
@@ -265,8 +265,8 @@ namespace NoteFly
         /// <summary>
         /// Handle keys that are pressed to check for system wide shortcut being pressed.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void KeyboardListener_s_KeyEventHandler(object sender, EventArgs e)
         {
             KeyboardListener.UniversalKeyEventArgs eventArgs = (KeyboardListener.UniversalKeyEventArgs)e;

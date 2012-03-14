@@ -964,41 +964,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Write a file with all notes as backup.
-        /// </summary>
-        /// <param name="filenamepath">The filename and path of the notes backup</param>
-        /// <param name="notes">Reference to the notes class.</param>
-        /// <returns>True if writing backup succeeded otherwise false.</returns>
-        public static bool WriteNoteFlyNotesBackupFile(string filenamepath, Notes notes)
-        {
-            bool succeeded = false;
-            try
-            {
-                xmlwrite = new XmlTextWriter(filenamepath, System.Text.Encoding.UTF8);
-                xmlwrite.Formatting = Formatting.Indented;
-                xmlwrite.WriteStartDocument(true); // standalone xml file.
-                xmlwrite.WriteStartElement("backupnotes");
-                xmlwrite.WriteAttributeString("number", notes.CountNotes.ToString());
-                for (int i = 0; i < notes.CountNotes; i++)
-                {
-                    string skinname = notes.GetSkinName(notes.GetNote(i).SkinNr);
-                    string content = notes.GetNote(i).GetContent();
-                    WriteNoteBody(notes.GetNote(i), skinname, content);
-                }
-
-                xmlwrite.WriteEndElement();
-                xmlwrite.WriteEndDocument();
-                succeeded = true;
-            }
-            finally
-            {
-                xmlwrite.Close();
-            }
-
-            return succeeded;
-        }
-
-        /// <summary>
         /// Read all notes from a notes backup file and return a array with all the notes.
         /// </summary>
         /// <param name="notes">Reference to notes class.</param>
@@ -1575,7 +1540,7 @@ namespace NoteFly
         /// <param name="note">The note object.</param>
         /// <param name="skinname">The skinname used by this note.</param>
         /// <param name="content">The note content.</param>
-        private static void WriteNoteBody(Note note, string skinname, string content)
+        public static void WriteNoteBody(Note note, string skinname, string content)
         {
             xmlwrite.WriteStartElement("note");
             xmlwrite.WriteAttributeString("version", NOTEVERSION);

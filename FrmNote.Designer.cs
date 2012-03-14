@@ -428,7 +428,7 @@ namespace NoteFly
             this.rtbNote.Size = new System.Drawing.Size(218, 185);
             this.rtbNote.TabIndex = 3;
             this.rtbNote.TabStop = false;
-            this.rtbNote.Text = "";
+            this.rtbNote.Text = string.Empty;
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             // 
             // pbResizeGrip

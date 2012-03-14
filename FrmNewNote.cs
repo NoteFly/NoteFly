@@ -94,6 +94,7 @@ namespace NoteFly
                 this.note.Tempcontent = string.Empty;
                 this.note.Tempcontent = null;
             }
+					
         }
 
         /// <summary>

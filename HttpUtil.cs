@@ -178,16 +178,15 @@ namespace NoteFly
                 {
                     // set proxy to nothing, otherwise HttpWebRequest has issues, details: https://holyhoehle.wordpress.com/2010/01/12/webrequest-slow/ 
                     request.Proxy = null;
-                    //request.Proxy = GlobalProxySelection.GetEmptyWebProxy();
+                    ////request.Proxy = GlobalProxySelection.GetEmptyWebProxy();
                 }
 
-                //request.AutomaticDecompression = DecompressionMethods.None;
                 if (Settings.NetworkUseGzip)
                 {
                     request.Headers["Accept-Encoding"] = "gzip";
                     request.AutomaticDecompression = DecompressionMethods.GZip;
                 }
-                
+
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(cachesettings);
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
                 request.PreAuthenticate = false;

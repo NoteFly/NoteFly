@@ -78,12 +78,11 @@ namespace NoteFly
                 HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate);
                 if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
                 {
-                    this.lblTextNoInternetConnection.Visible = true;
-                    //Log.Write(LogType.exception, "error request, by tabControlPlugins_SelectedIndexChanged.");
+                    this.SetAvailablePluginsNetwork(false);
                 }
                 else
                 {
-                    this.lblTextNoInternetConnection.Visible = false;
+                    this.SetAvailablePluginsNetwork(true);
                 }
             }
         }  
@@ -100,12 +99,11 @@ namespace NoteFly
             this.lbxAvailablePlugins.Enabled = true;
             if (!xmlUtil.ParserListPlugins(response, PluginsManager.GetIPluginVersion(), this.lbxAvailablePlugins))
             {
-                this.lblTextNoInternetConnection.Visible = true;
-                this.searchtbPlugins.Enabled = false;
+                this.SetAvailablePluginsNetwork(false);
             }
             else
             {
-                this.searchtbPlugins.Enabled = true;
+                this.SetAvailablePluginsNetwork(true);
             }
         }
 
@@ -127,11 +125,11 @@ namespace NoteFly
                     this.ClearPluginDetails();
                     if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
                     {
-                        this.lblTextNoInternetConnection.Visible = true;
+                        this.SetAvailablePluginsNetwork(false);
                     }
                     else
                     {
-                        this.lblTextNoInternetConnection.Visible = false;
+                        this.SetAvailablePluginsNetwork(true);
                     }
                 }
             }
@@ -231,11 +229,11 @@ namespace NoteFly
             this.splitContainerAvailablePlugins.Panel2Collapsed = true;
             if (!httputil_searchplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet)))
             {
-                this.lblTextNoInternetConnection.Visible = true;
+                this.SetAvailablePluginsNetwork(false);
             }
             else
             {
-                this.lblTextNoInternetConnection.Visible = false;
+                this.SetAvailablePluginsNetwork(true);
             }
         }
 
@@ -264,11 +262,26 @@ namespace NoteFly
             HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate);
             if (!httputil_allplugins.Start(new RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
             {
-                this.lblTextNoInternetConnection.Visible = true;
+                this.SetAvailablePluginsNetwork(false);
             }
             else
             {
-                this.lblTextNoInternetConnection.Visible = false;
+                this.SetAvailablePluginsNetwork(true);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isconnected"></param>
+        private void SetAvailablePluginsNetwork(bool isconnected)
+        {
+            this.lblTextNoInternetConnection.Visible = !isconnected;
+            this.searchtbPlugins.Enabled = isconnected;
+            if (!isconnected)
+            {
+                this.lbxAvailablePlugins.Items.Clear();
+                Log.Write(LogType.info, "No network available.");
             }
         }
     }

@@ -94,7 +94,7 @@ namespace NoteFly
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
                         writer = new StreamWriter(fs, Encoding.UTF8);
 
-                        // trying to make turn a incompleet html fragement into a valid html5 document.
+                        // trying to make turn a incompleet html fragement into a valid html document.
                         if (!content.Contains("<!DOCTYPE"))
                         {
                             writer.WriteLine("<!DOCTYPE html>");

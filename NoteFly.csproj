@@ -10,7 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NoteFly</RootNamespace>
     <AssemblyName>NoteFly</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>NoteFly.Program</StartupObject>
     <SignManifests>false</SignManifests>
@@ -47,6 +46,7 @@
     <ApplicationVersion>2.5.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,7 +63,6 @@
         <Command type="BeforeBuild" />
       </CustomCommands>
     </CustomCommands>
-    <LangVersion>ISO-2</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -75,28 +74,31 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <UseVSHostingProcess>true</UseVSHostingProcess>
-    <LangVersion>ISO-2</LangVersion>
     <DefineConstants>windows</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gettext.Cs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Design" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Gettext.Cs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>bin\Release\Gettext.Cs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Package>gtk-dotnet-2.0</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmailTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ExportNotes.cs" />
     <Compile Include="FrmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -294,7 +296,7 @@
     <MonoDevelop>
       <Properties>
         <Policies>
-          <StandardHeader IncludeInNewFiles="False" inheritsSet="GPLv2License" />
+          <StandardHeader inheritsSet="GPLv3License" />
           <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="application/x-resource" />
         </Policies>
         <Deployment.LinuxDeployData generateScript="false" />

@@ -464,7 +464,7 @@ namespace NoteFly
         /// <summary>
         /// Strip forbidden filename characters of a string.
         /// </summary>
-        /// <param name="orgname">the string to strip forbidden filecharacters from.</param>
+        /// <param name="orgname">The string to strip forbidden filecharacters from.</param>
         /// <returns>The filename safe string</returns>
         public string StripForbiddenFilenameChars(string orgname)
         {
@@ -576,6 +576,7 @@ namespace NoteFly
         /// <summary>
         /// Ask and import notes from NoteFly 1.0.x if application data folder of NoteFly 1.0.x exist.
         /// </summary>
+        /// <returns>True if imported done, false if importing notefly 1.0.x notes not nessesary.</returns>
         private bool ImportingNotesNoteFly1()
         {
             bool imported = false;
@@ -619,7 +620,7 @@ namespace NoteFly
         /// <summary>
         /// Create a empty file so this newer NoteFly version knows the application data of NoteFly 1.0.x is imported.
         /// </summary>
-        /// <param name="nf1appdata">Path to NoteFly1 application data folder.</param>
+        /// <param name="folder">Path to NoteFly 1.0.x application data folder.</param>
         private void CreateNotesImportedFlagfile(string folder)
         {
             try
@@ -633,7 +634,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Import NoteFly 2.5.x/2.0.x notes.
         /// </summary>
         private bool ImportingNotesNoteFly2()
         {

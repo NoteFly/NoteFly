@@ -131,8 +131,8 @@ namespace NoteFly
         /// <summary>
         /// Check if logfile larger than 512KB.
         /// </summary>
-        /// <param name="file">the filename and path</param>
-        /// <returns>true if it is larger than 512KB</returns>
+        /// <param name="file">The filename and path.</param>
+        /// <returns>True if it is larger than 512KB.</returns>
         private static bool CheckFileSize(string file)
         {
             if (File.Exists(file))

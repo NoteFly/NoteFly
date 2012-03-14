@@ -11,67 +11,72 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// 
+        /// TabControl tabControlPlugins
         /// </summary>
         private System.Windows.Forms.TabControl tabControlPlugins;
 
         /// <summary>
-        /// 
+        /// TabPage tabPagePluginsAvailable
         /// </summary>
         private System.Windows.Forms.TabPage tabPagePluginsAvailable;
 
         /// <summary>
-        /// 
+        /// TabPage tabPagePluginsInstalled
         /// </summary>
         private System.Windows.Forms.TabPage tabPagePluginsInstalled;
 
         /// <summary>
-        /// 
+        /// PluginGrid pluginGrid
         /// </summary>
         private PluginGrid pluginGrid;
 
         /// <summary>
-        /// 
+        /// SplitContainer splitContainerAvailablePlugins
         /// </summary>
         private System.Windows.Forms.SplitContainer splitContainerAvailablePlugins;
 
         /// <summary>
-        /// 
+        /// Button btnPluginDownload
         /// </summary>
         private System.Windows.Forms.Button btnPluginDownload;
 
         /// <summary>
-        /// 
+        /// Label lblPluginDescription
         /// </summary>
         private System.Windows.Forms.Label lblPluginDescription;
 
         /// <summary>
-        /// 
+        /// Label lblPluginName
         /// </summary>
         private System.Windows.Forms.Label lblPluginName;
 
         /// <summary>
-        /// 
+        /// Label lblPluginVersion
         /// </summary>
         private System.Windows.Forms.Label lblPluginVersion;
 
         /// <summary>
-        /// 
+        /// Label lblTextNoInternetConnection
         /// </summary>
         private System.Windows.Forms.Label lblTextNoInternetConnection;
 
         /// <summary>
-        /// 
+        /// Label lblLicense
         /// </summary>
         private System.Windows.Forms.Label lblLicense;
 
         /// <summary>
-        /// 
+        /// SearchTextBox searchtbPlugins
         /// </summary>
         private SearchTextBox searchtbPlugins;
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// ListBox lbxAvailablePlugins
+        /// </summary>
+        private System.Windows.Forms.ListBox lbxAvailablePlugins;
+
+        /// <summary>
+        /// Clean up any resources being used..</param>
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -173,9 +178,9 @@
             // 
             // splitContainerAvailablePlugins.Panel1
             // 
+            this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.lblTextNoInternetConnection);
             this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.lbxAvailablePlugins);
             this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.searchtbPlugins);
-            this.splitContainerAvailablePlugins.Panel1.Controls.Add(this.lblTextNoInternetConnection);
             this.splitContainerAvailablePlugins.Panel1MinSize = 0;
             // 
             // splitContainerAvailablePlugins.Panel2
@@ -220,10 +225,10 @@
             // lblTextNoInternetConnection
             // 
             this.lblTextNoInternetConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.lblTextNoInternetConnection.Location = new System.Drawing.Point(4, 36);
+            this.lblTextNoInternetConnection.Location = new System.Drawing.Point(4, 48);
             this.lblTextNoInternetConnection.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTextNoInternetConnection.Name = "lblTextNoInternetConnection";
-            this.lblTextNoInternetConnection.Size = new System.Drawing.Size(213, 100);
+            this.lblTextNoInternetConnection.Size = new System.Drawing.Size(213, 129);
             this.lblTextNoInternetConnection.TabIndex = 2;
             this.lblTextNoInternetConnection.Text = "Could not load list with plugins. Internet connection failed.";
             this.lblTextNoInternetConnection.Visible = false;
@@ -304,8 +309,6 @@
 
         }
 
-        #endregion
-
-        private System.Windows.Forms.ListBox lbxAvailablePlugins;
+        #endregion        
     }
 }

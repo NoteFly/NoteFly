@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Notes.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2011  Tom
+//  Copyright (C) 2010-2012  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -62,9 +62,9 @@ namespace NoteFlyTests
         [ClassInitialize]
         public static void MyClassInitialize(TestContext testContext)
         {
-            Settings.NotesWarnLimit = 1000;
-            Settings.NotesSavepath = Program.AppDataFolder;
-            Settings.ProgramFirstrun = true;
+            Settings.NotesWarnlimitVisible = 1000;
+            //Settings.NotesSavepath = Program.AppDataFolder;
+            Settings.ProgramFirstrunned = true;
         }
         #endregion
 
@@ -88,8 +88,8 @@ namespace NoteFlyTests
         public void RemoveNoteTest()
         {
             Notes target = new Notes(false);
-            Note newnote = target.CreateNote("test note", 1, 90, 90, 100, 100);
-            target.AddNote(newnote);
+            target.AddNoteDefaultSettings("test note", 1, 10, 10, 200, 300, "test", true);
+            //target.AddNote(newnote);
             int notelastpos = target.CountNotes;
             target.RemoveNote(notelastpos - 1);
             int exceptedcountnotesnow = notelastpos - 1;
@@ -202,7 +202,7 @@ namespace NoteFlyTests
         /// A test for CreateNote
         /// </summary>
         [TestMethod]
-        public void CreateNoteTest()
+        public void AddNoteDefaultSettingsTest()
         {
             Notes target = new Notes(false);
             string title = "123456789abc";
@@ -211,23 +211,36 @@ namespace NoteFlyTests
             int y = 300;
             int width = 200;
             int height = 100;
-            Note actual = target.CreateNote(title, skinnr, x, y, width, height);
-
+            string content = "some content";
+            bool wordwarp = true;
+            target.AddNoteDefaultSettings(title, skinnr, x, y, width, height, content, wordwarp);
+            Note actual = target.GetNote(target.CountNotes - 1);
             Assert.IsNotNull(actual, "CreateNoteTest failed to create Note object.");
-            if (actual.Title != "123456789abc")
+            if (actual.Title != title)
             {
                 Assert.Fail("Note title not good.");
             }
 
-            if (actual.X != 400 && actual.Y != 300)
+            if (actual.X != x && actual.Y != y)
             {
                 Assert.Fail("Note has wrong X,Y coordinates.");
             }
 
-            if (actual.Width != 200 && actual.Height != 100)
+            if (actual.Width != width && actual.Height != height)
             {
-                Assert.Fail("Note has wrong size");
+                Assert.Fail("Note has wrong size.");
             }
+
+            if (actual.Wordwarp != wordwarp)
+            {
+                Assert.Fail("Note wordwarp not set.");
+            }
+            /*
+            if (!actual.GetContent().Equals(content))
+            {
+                Assert.Fail("Note content not set.");
+            }
+             */
         }
 
         /// <summary>

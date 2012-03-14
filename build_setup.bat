@@ -18,7 +18,7 @@ REM  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 echo strip reloc info.
 
 REM change this path to where Inno StripReloc tool is installed.
-REM "C:\Program Files\StripReloc_v1.13\StripReloc.exe" .\bin\Release\NoteFly.exe
+"C:\Program Files (x86)\StripReloc_v1.13\StripReloc.exe" .\bin\Release\NoteFly.exe
 
 pause
 echo building setup...

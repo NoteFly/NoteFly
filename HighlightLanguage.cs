@@ -226,7 +226,7 @@ namespace NoteFly
         /// Check if keyword is used to set document end or start and then set length of document.
         /// </summary>
         /// <param name="keyword">The keyword to check if the is used by this language as document start or end.</param>
-        /// <param name="curpos">the position in the richtextbox of the keyword.</param>
+        /// <param name="curpos">The position in the richtextbox of the keyword.</param>
         public void CheckSetDocumentPos(string keyword, int curpos)
         {
             keyword = keyword.ToLowerInvariant();

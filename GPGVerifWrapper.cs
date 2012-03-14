@@ -31,22 +31,22 @@ namespace NoteFly
     public sealed class GPGVerifWrapper
     {
         /// <summary>
-        /// The GnuPG signature file extension
+        /// The GnuPG signature file extension.
         /// </summary>
         public const string GPGSIGNATUREEXTENSION = ".sig";
 
         /// <summary>
-        /// GnuPG process
+        /// GnuPG process reference.
         /// </summary>
         private Process gpgproc;
 
         /// <summary>
-        /// output stream
+        /// Output stream.
         /// </summary>
         private string gpgoutput;
 
         /// <summary>
-        /// error stream
+        /// Error stream.
         /// </summary>
         private string gpgerror;
 

@@ -2,15 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Text;
     using System.Windows.Forms;
-    using System.IO;
     using System.Xml;
 
     /// <summary>
     /// Class for importing several other note formats.
     /// </summary>
-    class ImportNotes
+    public class ImportNotes
     {
         /// <summary>
         /// The width of a imported note by default.
@@ -44,6 +44,7 @@
         /// Import a textfile as note content for a new note.
         /// </summary>
         /// <param name="reader">A streamreader to read the note content with</param>
+        /// <param name="rtbNewNote">Reference to the richtedittextbox that gets the imported note content.</param>
         public void ReadTextfile(StreamReader reader, RichTextBox rtbNewNote)
         {
             rtbNewNote.Text = reader.ReadToEnd();
@@ -53,6 +54,7 @@
         /// Import a rtf file as note content for a new note.
         /// </summary>
         /// <param name="reader">Streamreader to read the note content.</param>
+        /// <param name="rtbNewNote">Reference to the richtedittextbox that gets the imported note content.</param>
         public void ReadRTFfile(StreamReader reader, RichTextBox rtbNewNote)
         {
             rtbNewNote.Rtf = reader.ReadToEnd();
@@ -63,6 +65,7 @@
         /// Import a KeyNote note file as note content for a new note.
         /// </summary>
         /// <param name="reader">The streamreader to read the KeyNote.</param>
+        /// <param name="rtbNewNote">Reference to the richtedittextbox that gets the imported note content.</param>
         public void ReadKeyNotefile(StreamReader reader, RichTextBox rtbNewNote)
         {
             uint linenum = 0;
@@ -564,7 +567,7 @@
         /// <summary>
         /// Read a note file from NoteFly 1.0.x and save as a current NoteFly note.
         /// </summary>
-        /// <param name="nf1notefile"></param>
+        /// <param name="nf1notefile">THe filename of the NoteFly 1.0.x note to import.</param>
         public void ReadNoteFly1Note(string nf1notefile)
         {
             string nf1note_title = xmlUtil.GetContentString(nf1notefile, "title");
@@ -597,10 +600,10 @@
         }
 
         /// <summary>
-        /// decode stickies title from UTF32 to UTF8
+        /// Decode stickies title from UTF32 to UTF8
         /// </summary>
-        /// <param name="title_enc">title encoded as UTF-32</param>
-        /// <returns>title string as UTF-8</returns>
+        /// <param name="title_enc">Title encoded as UTF-32</param>
+        /// <returns>Title string as UTF-8</returns>
         private string decode_title(string title_enc)
         {
             StringBuilder title = new StringBuilder();
@@ -617,6 +620,7 @@
         /// <summary>
         /// Set font family and size.
         /// </summary>
+        /// <param name="rtbNewNote">Reference to the richtedittextbox that gets the imported note content.</param>
         private void SetDefaultFontFamilyAndSize(RichTextBox rtbNewNote)
         {
             rtbNewNote.SelectAll();
