@@ -765,7 +765,16 @@ namespace NoteFly
         private void CreateFirstrunNote()
         {
             string title = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
-            string filename = title.Substring(0, LIMITLENFILE) + NOTEEXTENSION;
+            string filename;
+            if (title.Length > LIMITLENFILE)
+            {
+                filename = title.Substring(0, LIMITLENFILE) + NOTEEXTENSION;
+            }
+            else
+            {
+                filename = title.Substring(0, title.Length) + NOTEEXTENSION;
+            }
+
             if (!File.Exists(Path.Combine(Settings.NotesSavepath, filename)))
             {
                 const int DEMONOTEWIDTH = 260;

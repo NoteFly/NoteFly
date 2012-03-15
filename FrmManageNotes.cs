@@ -594,13 +594,23 @@ namespace NoteFly
                     datatable = this.AddDatatableNoteRow(datatable, i);
                 }
             }
-
+            
             // VerticalScrollingOffset is readonly, so we need a bit of 'hacking' to set it.
+            // disabled causes System.RuntimeMethodHandle._InvokeMethodFast to throw exception
+            /*
             if (vertscrolloffset > 0)
             {
-                System.Reflection.PropertyInfo verticalOffset = this.dataGridViewNotes.GetType().GetProperty("VerticalOffset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                verticalOffset.SetValue(this.dataGridViewNotes, vertscrolloffset, null);
+                try
+                {
+                    System.Reflection.PropertyInfo verticalOffset = this.dataGridViewNotes.GetType().GetProperty("VerticalOffset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                    verticalOffset.SetValue(this.dataGridViewNotes, vertscrolloffset, null);
+                }
+                catch (System.Reflection.TargetInvocationException tiexc)
+                {
+                    Log.Write(LogType.exception, tiexc.Message + " stacktrace: " + tiexc.StackTrace);
+                }
             }
+            */
         }
 
         /// <summary>

@@ -1062,46 +1062,46 @@ namespace NoteFly
                     xmlwrite.WriteStartElement("settings");
 
                     // booleans
-                    WriteXMLBool("ConfirmDeletenote", Settings.ConfirmDeletenote);
-                    WriteXMLBool("ConfirmExit", Settings.ConfirmExit);
-                    WriteXMLBool("ConfirmLinkclick", Settings.ConfirmLinkclick);
-                    WriteXMLBool("FontTitleStylebold", Settings.FontTitleStylebold);
-                    WriteXMLBool("HighlightHTML", Settings.HighlightHTML);
-                    WriteXMLBool("HighlightHyperlinks", Settings.HighlightHyperlinks);
-                    WriteXMLBool("HighlightPHP", Settings.HighlightPHP);
-                    WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
-                    WriteXMLBool("HotkeysNewNoteEnabled", Settings.HotkeysNewNoteEnabled);
-                    WriteXMLBool("HotkeysNewNoteAltInsteadShift", Settings.HotkeysNewNoteAltInsteadShift);
-                    WriteXMLBool("HotkeysManageNotesEnabled", Settings.HotkeysManageNotesEnabled);
-                    WriteXMLBool("HotkeysManageNotesAltInsteadShift", Settings.HotkeysManageNotesAltInsteadShift);
-                    WriteXMLBool("HotkeysNotesToFrontEnabled", Settings.HotkeysNotesToFrontEnabled);
-                    WriteXMLBool("HotkeysNotesToFrontAltInsteadShift", Settings.HotkeysNotesToFrontAltInsteadShift);
-                    WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
-                    WriteXMLBool("NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
-                    WriteXMLBool("NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
-                    WriteXMLBool("NotesDeleteRecyclebin", Settings.NotesDeleteRecyclebin);
-                    WriteXMLBool("NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
-                    WriteXMLBool("NotesTransparentRTB", Settings.NotesTransparentRTB);
-                    WriteXMLBool("NotesDefaultRandomSkin", Settings.NotesDefaultRandomSkin);
-                    WriteXMLBool("NotesDefaultTitleDate", Settings.NotesDefaultTitleDate);
-                    WriteXMLBool("ProgramFirstrunned", Settings.ProgramFirstrunned);
-                    WriteXMLBool("ProgramFormsDoublebuffered", Settings.ProgramFormsDoublebuffered);
-                    WriteXMLBool("ProgramLogError", Settings.ProgramLogError);
-                    WriteXMLBool("ProgramLogException", Settings.ProgramLogException);
-                    WriteXMLBool("ProgramLogInfo", Settings.ProgramLogInfo);
-                    WriteXMLBool("ProgramPluginsAllEnabled", Settings.ProgramPluginsAllEnabled);
-                    WriteXMLBool("ProgramSuspressWarnAdmin", Settings.ProgramSuspressWarnAdmin);
-                    WriteXMLBool("SharingEmailEnabled", Settings.SharingEmailEnabled);
-                    WriteXMLBool("SettingsExpertEnabled", Settings.SettingsExpertEnabled);
-                    WriteXMLBool("TrayiconAlternateIcon", Settings.TrayiconAlternateIcon);
-                    WriteXMLBool("TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
-                    WriteXMLBool("TrayiconExitbold", Settings.TrayiconExitbold);
-                    WriteXMLBool("TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
-                    WriteXMLBool("TrayiconSettingsbold", Settings.TrayiconSettingsbold);
-                    WriteXMLBool("UpdateSilentInstall", Settings.UpdateSilentInstall);
-                    WriteXMLBool("UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
-                    WriteXMLBool("ManagenotesSearchCasesentive", Settings.ManagenotesSearchCasesentive);
-                    WriteXMLBool("ManagenotesTooltip", Settings.ManagenotesTooltip);
+                    WriteXMLBool(xmlwrite, "ConfirmDeletenote", Settings.ConfirmDeletenote);
+                    WriteXMLBool(xmlwrite, "ConfirmExit", Settings.ConfirmExit);
+                    WriteXMLBool(xmlwrite, "ConfirmLinkclick", Settings.ConfirmLinkclick);
+                    WriteXMLBool(xmlwrite, "FontTitleStylebold", Settings.FontTitleStylebold);
+                    WriteXMLBool(xmlwrite, "HighlightHTML", Settings.HighlightHTML);
+                    WriteXMLBool(xmlwrite, "HighlightHyperlinks", Settings.HighlightHyperlinks);
+                    WriteXMLBool(xmlwrite, "HighlightPHP", Settings.HighlightPHP);
+                    WriteXMLBool(xmlwrite, "HighlightSQL", Settings.HighlightSQL);
+                    WriteXMLBool(xmlwrite, "HotkeysNewNoteEnabled", Settings.HotkeysNewNoteEnabled);
+                    WriteXMLBool(xmlwrite, "HotkeysNewNoteAltInsteadShift", Settings.HotkeysNewNoteAltInsteadShift);
+                    WriteXMLBool(xmlwrite, "HotkeysManageNotesEnabled", Settings.HotkeysManageNotesEnabled);
+                    WriteXMLBool(xmlwrite, "HotkeysManageNotesAltInsteadShift", Settings.HotkeysManageNotesAltInsteadShift);
+                    WriteXMLBool(xmlwrite, "HotkeysNotesToFrontEnabled", Settings.HotkeysNotesToFrontEnabled);
+                    WriteXMLBool(xmlwrite, "HotkeysNotesToFrontAltInsteadShift", Settings.HotkeysNotesToFrontAltInsteadShift);
+                    WriteXMLBool(xmlwrite, "NetworkProxyEnabled", Settings.NetworkProxyEnabled);
+                    WriteXMLBool(xmlwrite, "NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
+                    WriteXMLBool(xmlwrite, "NotesClosebtnHidenotepermanently", Settings.NotesClosebtnHidenotepermanently);
+                    WriteXMLBool(xmlwrite, "NotesDeleteRecyclebin", Settings.NotesDeleteRecyclebin);
+                    WriteXMLBool(xmlwrite, "NotesTransparencyEnabled", Settings.NotesTransparencyEnabled);
+                    WriteXMLBool(xmlwrite, "NotesTransparentRTB", Settings.NotesTransparentRTB);
+                    WriteXMLBool(xmlwrite, "NotesDefaultRandomSkin", Settings.NotesDefaultRandomSkin);
+                    WriteXMLBool(xmlwrite, "NotesDefaultTitleDate", Settings.NotesDefaultTitleDate);
+                    WriteXMLBool(xmlwrite, "ProgramFirstrunned", Settings.ProgramFirstrunned);
+                    WriteXMLBool(xmlwrite, "ProgramFormsDoublebuffered", Settings.ProgramFormsDoublebuffered);
+                    WriteXMLBool(xmlwrite, "ProgramLogError", Settings.ProgramLogError);
+                    WriteXMLBool(xmlwrite, "ProgramLogException", Settings.ProgramLogException);
+                    WriteXMLBool(xmlwrite, "ProgramLogInfo", Settings.ProgramLogInfo);
+                    WriteXMLBool(xmlwrite, "ProgramPluginsAllEnabled", Settings.ProgramPluginsAllEnabled);
+                    WriteXMLBool(xmlwrite, "ProgramSuspressWarnAdmin", Settings.ProgramSuspressWarnAdmin);
+                    WriteXMLBool(xmlwrite, "SharingEmailEnabled", Settings.SharingEmailEnabled);
+                    WriteXMLBool(xmlwrite, "SettingsExpertEnabled", Settings.SettingsExpertEnabled);
+                    WriteXMLBool(xmlwrite, "TrayiconAlternateIcon", Settings.TrayiconAlternateIcon);
+                    WriteXMLBool(xmlwrite, "TrayiconCreatenotebold", Settings.TrayiconCreatenotebold);
+                    WriteXMLBool(xmlwrite, "TrayiconExitbold", Settings.TrayiconExitbold);
+                    WriteXMLBool(xmlwrite, "TrayiconManagenotesbold", Settings.TrayiconManagenotesbold);
+                    WriteXMLBool(xmlwrite, "TrayiconSettingsbold", Settings.TrayiconSettingsbold);
+                    WriteXMLBool(xmlwrite, "UpdateSilentInstall", Settings.UpdateSilentInstall);
+                    WriteXMLBool(xmlwrite, "UpdatecheckUseGPG", Settings.UpdatecheckUseGPG);
+                    WriteXMLBool(xmlwrite, "ManagenotesSearchCasesentive", Settings.ManagenotesSearchCasesentive);
+                    WriteXMLBool(xmlwrite, "ManagenotesTooltip", Settings.ManagenotesTooltip);
 
                     // integers
                     xmlwrite.WriteElementString("HotkeysNewNoteKeycode", Settings.HotkeysNewNoteKeycode.ToString(numfmtinfo));
@@ -1542,7 +1542,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="element">The element name</param>
         /// <param name="checknode">The node to check</param>
-        private static void WriteXMLBool(string element, bool checknode)
+        private static void WriteXMLBool(XmlTextWriter xmlwrite, string element, bool checknode)
         {
             xmlwrite.WriteStartElement(element);
             if (checknode)
@@ -1567,11 +1567,11 @@ namespace NoteFly
         {
             xmlwrite.WriteStartElement("note");
             xmlwrite.WriteAttributeString("version", NOTEVERSION);
-            WriteXMLBool("visible", note.Visible);
-            WriteXMLBool("ontop", note.Ontop);
-            WriteXMLBool("locked", note.Locked);
-            WriteXMLBool("rollup", note.RolledUp);
-            WriteXMLBool("wordwarp", note.Wordwarp);
+            WriteXMLBool(xmlwrite, "visible", note.Visible);
+            WriteXMLBool(xmlwrite, "ontop", note.Ontop);
+            WriteXMLBool(xmlwrite, "locked", note.Locked);
+            WriteXMLBool(xmlwrite, "rollup", note.RolledUp);
+            WriteXMLBool(xmlwrite, "wordwarp", note.Wordwarp);
             xmlwrite.WriteStartElement("location");
             xmlwrite.WriteElementString("x", note.X.ToString());
             xmlwrite.WriteElementString("y", note.Y.ToString());

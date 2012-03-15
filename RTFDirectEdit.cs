@@ -328,6 +328,24 @@
                         isspecchar = true;
                     }
                 }
+                else if (rtf.Substring(i, 2).Equals(@"\u", StringComparison.Ordinal))
+                {
+                    // check if not unicode control character \uc0 or \uc1
+                    if (rtf[i + 2] != 'c')
+                    {   
+                        // check if at least 4 digits
+                        for (int n = 2; n < 6; n++)
+                        {
+                            Char c = rtf[i + n];
+                            isspecchar = Char.IsDigit(c);
+                            if (!isspecchar)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                                                            
+                }
             }
 
             return isspecchar;

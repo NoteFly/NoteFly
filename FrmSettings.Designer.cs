@@ -716,9 +716,15 @@ namespace NoteFly
             this.chxConfirmExit = new System.Windows.Forms.CheckBox();
             this.tabHotkeys = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelShortcuts = new System.Windows.Forms.TableLayoutPanel();
+            this.shortcutTextBoxNotesToFront = new NoteFly.ShortcutTextBox();
             this.lblTextHotkeyNotesToFront = new System.Windows.Forms.Label();
+            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
             this.lblTextHotkeyNewNote = new System.Windows.Forms.Label();
             this.lblTextHotkeyManageNotes = new System.Windows.Forms.Label();
+            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
+            this.chxHotkeyNewNoteEnabled = new System.Windows.Forms.CheckBox();
+            this.chxHotkeyManageNotesEnabled = new System.Windows.Forms.CheckBox();
+            this.chxHotkeyNotesFrontEnabled = new System.Windows.Forms.CheckBox();
             this.tabAppearance = new System.Windows.Forms.TabPage();
             this.tabctrlAppearance = new System.Windows.Forms.TabControl();
             this.tabAppearanceOverall = new System.Windows.Forms.TabPage();
@@ -784,6 +790,7 @@ namespace NoteFly
             this.tabSharing = new System.Windows.Forms.TabPage();
             this.tabControlSharing = new System.Windows.Forms.TabControl();
             this.tabEmail = new System.Windows.Forms.TabPage();
+            this.tbDefaultEmail = new NoteFly.EmailTextBox();
             this.chxActionsEmailEnabled = new System.Windows.Forms.CheckBox();
             this.chxActionsEmailDefaultaddressSet = new System.Windows.Forms.CheckBox();
             this.tabNetwork = new System.Windows.Forms.TabPage();
@@ -804,6 +811,7 @@ namespace NoteFly
             this.chxProxyEnabled = new System.Windows.Forms.CheckBox();
             this.numProxyPort = new System.Windows.Forms.NumericUpDown();
             this.lblTextAddress = new System.Windows.Forms.Label();
+            this.iptbProxy = new NoteFly.IPTextBox();
             this.lblTextPort = new System.Windows.Forms.Label();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTextNetworkTimeout = new System.Windows.Forms.Label();
@@ -812,11 +820,14 @@ namespace NoteFly
             this.lblTextPreferedIPversion = new System.Windows.Forms.Label();
             this.cbxNetworkIPversion = new System.Windows.Forms.ComboBox();
             this.tabPageGPG = new System.Windows.Forms.TabPage();
+            this.tbGPGPath = new NoteFly.IOTextBox();
             this.btnGPGPathBrowse = new System.Windows.Forms.Button();
             this.lblTextGPGPath = new System.Windows.Forms.Label();
             this.chxCheckUpdatesSignature = new System.Windows.Forms.CheckBox();
             this.lblTextNetworkMiliseconds = new System.Windows.Forms.Label();
             this.tabAdvance = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnResetSettings = new System.Windows.Forms.Button();
             this.btnOpenSettingsFolder = new System.Windows.Forms.Button();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblTextNoteLocation = new System.Windows.Forms.Label();
@@ -828,22 +839,11 @@ namespace NoteFly
             this.chxLogExceptions = new System.Windows.Forms.CheckBox();
             this.lblTextLogging = new System.Windows.Forms.Label();
             this.chxLogDebug = new System.Windows.Forms.CheckBox();
-            this.btnResetSettings = new System.Windows.Forms.Button();
             this.chxLogErrors = new System.Windows.Forms.CheckBox();
+            this.tbNotesSavePath = new NoteFly.IOTextBox();
             this.chxSettingsExpertEnabled = new System.Windows.Forms.CheckBox();
             this.folderBrowseDialogNotessavepath = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogBrowseGPG = new System.Windows.Forms.OpenFileDialog();
-            this.chxHotkeyNewNoteEnabled = new System.Windows.Forms.CheckBox();
-            this.chxHotkeyManageNotesEnabled = new System.Windows.Forms.CheckBox();
-            this.chxHotkeyNotesFrontEnabled = new System.Windows.Forms.CheckBox();
-            this.shortcutTextBoxNotesToFront = new NoteFly.ShortcutTextBox();
-            this.shortcutTextBoxManageNotes = new NoteFly.ShortcutTextBox();
-            this.shortcutTextBoxNewNote = new NoteFly.ShortcutTextBox();
-            this.tbDefaultEmail = new NoteFly.EmailTextBox();
-            this.iptbProxy = new NoteFly.IPTextBox();
-            this.tbGPGPath = new NoteFly.IOTextBox();
-            this.tbNotesSavePath = new NoteFly.IOTextBox();
-            this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControlSettings.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -886,10 +886,10 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.numTimeout)).BeginInit();
             this.tabPageGPG.SuspendLayout();
             this.tabAdvance.SuspendLayout();
+            this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).BeginInit();
-            this.tableLayoutPanel11.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
@@ -1134,6 +1134,20 @@ namespace NoteFly
             this.tableLayoutPanelShortcuts.Size = new System.Drawing.Size(440, 88);
             this.tableLayoutPanelShortcuts.TabIndex = 16;
             // 
+            // shortcutTextBoxNotesToFront
+            // 
+            this.shortcutTextBoxNotesToFront.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxNotesToFront.Location = new System.Drawing.Point(152, 61);
+            this.shortcutTextBoxNotesToFront.Name = "shortcutTextBoxNotesToFront";
+            this.shortcutTextBoxNotesToFront.ShortcutKeyposition = 112;
+            this.shortcutTextBoxNotesToFront.Size = new System.Drawing.Size(202, 22);
+            this.shortcutTextBoxNotesToFront.TabIndex = 14;
+            this.shortcutTextBoxNotesToFront.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNotesToFront.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = false;
+            this.shortcutTextBoxNotesToFront.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxNotesToFront.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
+            // 
             // lblTextHotkeyNotesToFront
             // 
             this.lblTextHotkeyNotesToFront.AutoSize = true;
@@ -1143,6 +1157,20 @@ namespace NoteFly
             this.lblTextHotkeyNotesToFront.Size = new System.Drawing.Size(132, 16);
             this.lblTextHotkeyNotesToFront.TabIndex = 13;
             this.lblTextHotkeyNotesToFront.Text = "Hotkey notes to front:";
+            // 
+            // shortcutTextBoxManageNotes
+            // 
+            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 32);
+            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
+            this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
+            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(202, 22);
+            this.shortcutTextBoxManageNotes.TabIndex = 12;
+            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
+            this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
             // 
             // lblTextHotkeyNewNote
             // 
@@ -1163,6 +1191,59 @@ namespace NoteFly
             this.lblTextHotkeyManageNotes.Size = new System.Drawing.Size(143, 16);
             this.lblTextHotkeyManageNotes.TabIndex = 10;
             this.lblTextHotkeyManageNotes.Text = "Hotkey manage notes:";
+            // 
+            // shortcutTextBoxNewNote
+            // 
+            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
+            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(152, 3);
+            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
+            this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
+            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(202, 22);
+            this.shortcutTextBoxNewNote.TabIndex = 11;
+            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
+            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
+            this.shortcutTextBoxNewNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
+            this.shortcutTextBoxNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
+            // 
+            // chxHotkeyNewNoteEnabled
+            // 
+            this.chxHotkeyNewNoteEnabled.AutoSize = true;
+            this.chxHotkeyNewNoteEnabled.Checked = true;
+            this.chxHotkeyNewNoteEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxHotkeyNewNoteEnabled.Location = new System.Drawing.Point(360, 3);
+            this.chxHotkeyNewNoteEnabled.Name = "chxHotkeyNewNoteEnabled";
+            this.chxHotkeyNewNoteEnabled.Size = new System.Drawing.Size(77, 20);
+            this.chxHotkeyNewNoteEnabled.TabIndex = 15;
+            this.chxHotkeyNewNoteEnabled.Text = "enabled";
+            this.chxHotkeyNewNoteEnabled.UseVisualStyleBackColor = true;
+            this.chxHotkeyNewNoteEnabled.CheckedChanged += new System.EventHandler(this.chxHotkeyNewNoteEnabled_CheckedChanged);
+            // 
+            // chxHotkeyManageNotesEnabled
+            // 
+            this.chxHotkeyManageNotesEnabled.AutoSize = true;
+            this.chxHotkeyManageNotesEnabled.Checked = true;
+            this.chxHotkeyManageNotesEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxHotkeyManageNotesEnabled.Location = new System.Drawing.Point(360, 32);
+            this.chxHotkeyManageNotesEnabled.Name = "chxHotkeyManageNotesEnabled";
+            this.chxHotkeyManageNotesEnabled.Size = new System.Drawing.Size(77, 20);
+            this.chxHotkeyManageNotesEnabled.TabIndex = 16;
+            this.chxHotkeyManageNotesEnabled.Text = "enabled";
+            this.chxHotkeyManageNotesEnabled.UseVisualStyleBackColor = true;
+            this.chxHotkeyManageNotesEnabled.CheckedChanged += new System.EventHandler(this.chxHotkeyManageNotesEnabled_CheckedChanged);
+            // 
+            // chxHotkeyNotesFrontEnabled
+            // 
+            this.chxHotkeyNotesFrontEnabled.AutoSize = true;
+            this.chxHotkeyNotesFrontEnabled.Checked = true;
+            this.chxHotkeyNotesFrontEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chxHotkeyNotesFrontEnabled.Location = new System.Drawing.Point(360, 61);
+            this.chxHotkeyNotesFrontEnabled.Name = "chxHotkeyNotesFrontEnabled";
+            this.chxHotkeyNotesFrontEnabled.Size = new System.Drawing.Size(77, 20);
+            this.chxHotkeyNotesFrontEnabled.TabIndex = 17;
+            this.chxHotkeyNotesFrontEnabled.Text = "enabled";
+            this.chxHotkeyNotesFrontEnabled.UseVisualStyleBackColor = true;
+            this.chxHotkeyNotesFrontEnabled.CheckedChanged += new System.EventHandler(this.chxHotkeyNotesFrontEnabled_CheckedChanged);
             // 
             // tabAppearance
             // 
@@ -1779,9 +1860,9 @@ namespace NoteFly
             this.lblTextTrayiconFont.Location = new System.Drawing.Point(3, 37);
             this.lblTextTrayiconFont.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextTrayiconFont.Name = "lblTextTrayiconFont";
-            this.lblTextTrayiconFont.Size = new System.Drawing.Size(147, 20);
+            this.lblTextTrayiconFont.Size = new System.Drawing.Size(123, 20);
             this.lblTextTrayiconFont.TabIndex = 9;
-            this.lblTextTrayiconFont.Text = "Trayicon menu fontsize:";
+            this.lblTextTrayiconFont.Text = "Trayicon menu font:";
             this.lblTextTrayiconFont.UseCompatibleTextRendering = true;
             // 
             // lblTextFontsizeMenu
@@ -2146,6 +2227,15 @@ namespace NoteFly
             this.tabEmail.Text = "Email";
             this.tabEmail.UseVisualStyleBackColor = true;
             // 
+            // tbDefaultEmail
+            // 
+            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
+            this.tbDefaultEmail.Enabled = false;
+            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
+            this.tbDefaultEmail.Name = "tbDefaultEmail";
+            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
+            this.tbDefaultEmail.TabIndex = 26;
+            // 
             // chxActionsEmailEnabled
             // 
             this.chxActionsEmailEnabled.AutoSize = true;
@@ -2383,7 +2473,7 @@ namespace NoteFly
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.52174F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.47826F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.tableLayoutPanel10.Controls.Add(this.chxProxyEnabled, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.numProxyPort, 3, 1);
             this.tableLayoutPanel10.Controls.Add(this.lblTextAddress, 0, 1);
@@ -2416,7 +2506,7 @@ namespace NoteFly
             // numProxyPort
             // 
             this.numProxyPort.Enabled = false;
-            this.numProxyPort.Location = new System.Drawing.Point(299, 33);
+            this.numProxyPort.Location = new System.Drawing.Point(298, 33);
             this.numProxyPort.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2446,10 +2536,18 @@ namespace NoteFly
             this.lblTextAddress.TabIndex = 29;
             this.lblTextAddress.Text = "address:";
             // 
+            // iptbProxy
+            // 
+            this.iptbProxy.Enabled = false;
+            this.iptbProxy.Location = new System.Drawing.Point(83, 33);
+            this.iptbProxy.Name = "iptbProxy";
+            this.iptbProxy.Size = new System.Drawing.Size(167, 22);
+            this.iptbProxy.TabIndex = 26;
+            // 
             // lblTextPort
             // 
             this.lblTextPort.AutoSize = true;
-            this.lblTextPort.Location = new System.Drawing.Point(257, 35);
+            this.lblTextPort.Location = new System.Drawing.Point(256, 35);
             this.lblTextPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextPort.Name = "lblTextPort";
             this.lblTextPort.Size = new System.Drawing.Size(34, 16);
@@ -2573,6 +2671,13 @@ namespace NoteFly
             this.tabPageGPG.Text = "GnuPG";
             this.tabPageGPG.UseVisualStyleBackColor = true;
             // 
+            // tbGPGPath
+            // 
+            this.tbGPGPath.Location = new System.Drawing.Point(123, 60);
+            this.tbGPGPath.Name = "tbGPGPath";
+            this.tbGPGPath.Size = new System.Drawing.Size(221, 22);
+            this.tbGPGPath.TabIndex = 38;
+            // 
             // btnGPGPathBrowse
             // 
             this.btnGPGPathBrowse.BackColor = System.Drawing.Color.LightGray;
@@ -2640,10 +2745,41 @@ namespace NoteFly
             this.tabAdvance.Text = "Advance";
             this.tabAdvance.UseVisualStyleBackColor = true;
             // 
+            // tableLayoutPanel11
+            // 
+            this.tableLayoutPanel11.ColumnCount = 3;
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.93631F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.0637F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.tableLayoutPanel11.Controls.Add(this.btnResetSettings, 1, 1);
+            this.tableLayoutPanel11.Controls.Add(this.btnOpenSettingsFolder, 1, 0);
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(23, 240);
+            this.tableLayoutPanel11.Name = "tableLayoutPanel11";
+            this.tableLayoutPanel11.RowCount = 2;
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(409, 72);
+            this.tableLayoutPanel11.TabIndex = 41;
+            // 
+            // btnResetSettings
+            // 
+            this.btnResetSettings.AutoSize = true;
+            this.btnResetSettings.BackColor = System.Drawing.Color.LightGray;
+            this.btnResetSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.btnResetSettings.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnResetSettings.Location = new System.Drawing.Point(100, 39);
+            this.btnResetSettings.Name = "btnResetSettings";
+            this.btnResetSettings.Size = new System.Drawing.Size(223, 30);
+            this.btnResetSettings.TabIndex = 21;
+            this.btnResetSettings.Text = "&Reset all settings to default";
+            this.btnResetSettings.UseCompatibleTextRendering = true;
+            this.btnResetSettings.UseVisualStyleBackColor = false;
+            this.btnResetSettings.Click += new System.EventHandler(this.btnResetSettings_Click);
+            // 
             // btnOpenSettingsFolder
             // 
             this.btnOpenSettingsFolder.BackColor = System.Drawing.Color.LightGray;
-            this.btnOpenSettingsFolder.Location = new System.Drawing.Point(101, 3);
+            this.btnOpenSettingsFolder.Location = new System.Drawing.Point(100, 3);
             this.btnOpenSettingsFolder.Name = "btnOpenSettingsFolder";
             this.btnOpenSettingsFolder.Size = new System.Drawing.Size(223, 30);
             this.btnOpenSettingsFolder.TabIndex = 40;
@@ -2801,21 +2937,6 @@ namespace NoteFly
             this.chxLogDebug.UseCompatibleTextRendering = true;
             this.chxLogDebug.UseVisualStyleBackColor = true;
             // 
-            // btnResetSettings
-            // 
-            this.btnResetSettings.AutoSize = true;
-            this.btnResetSettings.BackColor = System.Drawing.Color.LightGray;
-            this.btnResetSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.btnResetSettings.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnResetSettings.Location = new System.Drawing.Point(101, 39);
-            this.btnResetSettings.Name = "btnResetSettings";
-            this.btnResetSettings.Size = new System.Drawing.Size(223, 30);
-            this.btnResetSettings.TabIndex = 21;
-            this.btnResetSettings.Text = "&Reset all settings to default";
-            this.btnResetSettings.UseCompatibleTextRendering = true;
-            this.btnResetSettings.UseVisualStyleBackColor = false;
-            this.btnResetSettings.Click += new System.EventHandler(this.btnResetSettings_Click);
-            // 
             // chxLogErrors
             // 
             this.chxLogErrors.AutoSize = true;
@@ -2830,6 +2951,13 @@ namespace NoteFly
             this.chxLogErrors.Text = "Log user errors.";
             this.chxLogErrors.UseCompatibleTextRendering = true;
             this.chxLogErrors.UseVisualStyleBackColor = true;
+            // 
+            // tbNotesSavePath
+            // 
+            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
+            this.tbNotesSavePath.Name = "tbNotesSavePath";
+            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
+            this.tbNotesSavePath.TabIndex = 39;
             // 
             // chxSettingsExpertEnabled
             // 
@@ -2859,134 +2987,6 @@ namespace NoteFly
             this.openFileDialogBrowseGPG.DefaultExt = "exe";
             this.openFileDialogBrowseGPG.FileName = "gpg.exe";
             this.openFileDialogBrowseGPG.Title = "Select path to gpg.exe";
-            // 
-            // chxHotkeyNewNoteEnabled
-            // 
-            this.chxHotkeyNewNoteEnabled.AutoSize = true;
-            this.chxHotkeyNewNoteEnabled.Checked = true;
-            this.chxHotkeyNewNoteEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxHotkeyNewNoteEnabled.Location = new System.Drawing.Point(360, 3);
-            this.chxHotkeyNewNoteEnabled.Name = "chxHotkeyNewNoteEnabled";
-            this.chxHotkeyNewNoteEnabled.Size = new System.Drawing.Size(77, 20);
-            this.chxHotkeyNewNoteEnabled.TabIndex = 15;
-            this.chxHotkeyNewNoteEnabled.Text = "enabled";
-            this.chxHotkeyNewNoteEnabled.UseVisualStyleBackColor = true;
-            this.chxHotkeyNewNoteEnabled.CheckedChanged += new System.EventHandler(this.chxHotkeyNewNoteEnabled_CheckedChanged);
-            // 
-            // chxHotkeyManageNotesEnabled
-            // 
-            this.chxHotkeyManageNotesEnabled.AutoSize = true;
-            this.chxHotkeyManageNotesEnabled.Checked = true;
-            this.chxHotkeyManageNotesEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxHotkeyManageNotesEnabled.Location = new System.Drawing.Point(360, 32);
-            this.chxHotkeyManageNotesEnabled.Name = "chxHotkeyManageNotesEnabled";
-            this.chxHotkeyManageNotesEnabled.Size = new System.Drawing.Size(77, 20);
-            this.chxHotkeyManageNotesEnabled.TabIndex = 16;
-            this.chxHotkeyManageNotesEnabled.Text = "enabled";
-            this.chxHotkeyManageNotesEnabled.UseVisualStyleBackColor = true;
-            this.chxHotkeyManageNotesEnabled.CheckedChanged += new System.EventHandler(this.chxHotkeyManageNotesEnabled_CheckedChanged);
-            // 
-            // chxHotkeyNotesFrontEnabled
-            // 
-            this.chxHotkeyNotesFrontEnabled.AutoSize = true;
-            this.chxHotkeyNotesFrontEnabled.Checked = true;
-            this.chxHotkeyNotesFrontEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chxHotkeyNotesFrontEnabled.Location = new System.Drawing.Point(360, 61);
-            this.chxHotkeyNotesFrontEnabled.Name = "chxHotkeyNotesFrontEnabled";
-            this.chxHotkeyNotesFrontEnabled.Size = new System.Drawing.Size(77, 20);
-            this.chxHotkeyNotesFrontEnabled.TabIndex = 17;
-            this.chxHotkeyNotesFrontEnabled.Text = "enabled";
-            this.chxHotkeyNotesFrontEnabled.UseVisualStyleBackColor = true;
-            this.chxHotkeyNotesFrontEnabled.CheckedChanged += new System.EventHandler(this.chxHotkeyNotesFrontEnabled_CheckedChanged);
-            // 
-            // shortcutTextBoxNotesToFront
-            // 
-            this.shortcutTextBoxNotesToFront.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxNotesToFront.Location = new System.Drawing.Point(152, 61);
-            this.shortcutTextBoxNotesToFront.Name = "shortcutTextBoxNotesToFront";
-            this.shortcutTextBoxNotesToFront.ShortcutKeyposition = 112;
-            this.shortcutTextBoxNotesToFront.Size = new System.Drawing.Size(202, 22);
-            this.shortcutTextBoxNotesToFront.TabIndex = 14;
-            this.shortcutTextBoxNotesToFront.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxNotesToFront.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = false;
-            this.shortcutTextBoxNotesToFront.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxNotesToFront.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
-            // 
-            // shortcutTextBoxManageNotes
-            // 
-            this.shortcutTextBoxManageNotes.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxManageNotes.Location = new System.Drawing.Point(152, 32);
-            this.shortcutTextBoxManageNotes.Name = "shortcutTextBoxManageNotes";
-            this.shortcutTextBoxManageNotes.ShortcutKeyposition = 112;
-            this.shortcutTextBoxManageNotes.Size = new System.Drawing.Size(202, 22);
-            this.shortcutTextBoxManageNotes.TabIndex = 12;
-            this.shortcutTextBoxManageNotes.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxManageNotes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxManageNotes.UseAltInsteadofShift = false;
-            this.shortcutTextBoxManageNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxManageNotes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
-            // 
-            // shortcutTextBoxNewNote
-            // 
-            this.shortcutTextBoxNewNote.BackColor = System.Drawing.Color.White;
-            this.shortcutTextBoxNewNote.Location = new System.Drawing.Point(152, 3);
-            this.shortcutTextBoxNewNote.Name = "shortcutTextBoxNewNote";
-            this.shortcutTextBoxNewNote.ShortcutKeyposition = 112;
-            this.shortcutTextBoxNewNote.Size = new System.Drawing.Size(202, 22);
-            this.shortcutTextBoxNewNote.TabIndex = 11;
-            this.shortcutTextBoxNewNote.Text = "CTRL + SHIFT + F1";
-            this.shortcutTextBoxNewNote.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.shortcutTextBoxNewNote.UseAltInsteadofShift = false;
-            this.shortcutTextBoxNewNote.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Ingore_hotkeys);
-            this.shortcutTextBoxNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Allow_hotkeys);
-            // 
-            // tbDefaultEmail
-            // 
-            this.tbDefaultEmail.BackColor = System.Drawing.SystemColors.Window;
-            this.tbDefaultEmail.Enabled = false;
-            this.tbDefaultEmail.Location = new System.Drawing.Point(34, 96);
-            this.tbDefaultEmail.Name = "tbDefaultEmail";
-            this.tbDefaultEmail.Size = new System.Drawing.Size(342, 22);
-            this.tbDefaultEmail.TabIndex = 26;
-            // 
-            // iptbProxy
-            // 
-            this.iptbProxy.Enabled = false;
-            this.iptbProxy.Location = new System.Drawing.Point(83, 33);
-            this.iptbProxy.Name = "iptbProxy";
-            this.iptbProxy.Size = new System.Drawing.Size(168, 22);
-            this.iptbProxy.TabIndex = 26;
-            // 
-            // tbGPGPath
-            // 
-            this.tbGPGPath.Location = new System.Drawing.Point(123, 60);
-            this.tbGPGPath.Name = "tbGPGPath";
-            this.tbGPGPath.Size = new System.Drawing.Size(221, 22);
-            this.tbGPGPath.TabIndex = 38;
-            // 
-            // tbNotesSavePath
-            // 
-            this.tbNotesSavePath.Location = new System.Drawing.Point(22, 50);
-            this.tbNotesSavePath.Name = "tbNotesSavePath";
-            this.tbNotesSavePath.Size = new System.Drawing.Size(317, 22);
-            this.tbNotesSavePath.TabIndex = 39;
-            // 
-            // tableLayoutPanel11
-            // 
-            this.tableLayoutPanel11.ColumnCount = 3;
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.93631F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.0637F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
-            this.tableLayoutPanel11.Controls.Add(this.btnResetSettings, 1, 1);
-            this.tableLayoutPanel11.Controls.Add(this.btnOpenSettingsFolder, 1, 0);
-            this.tableLayoutPanel11.Location = new System.Drawing.Point(23, 240);
-            this.tableLayoutPanel11.Name = "tableLayoutPanel11";
-            this.tableLayoutPanel11.RowCount = 2;
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(409, 72);
-            this.tableLayoutPanel11.TabIndex = 41;
             // 
             // FrmSettings
             // 
@@ -3069,12 +3069,12 @@ namespace NoteFly
             this.tabPageGPG.PerformLayout();
             this.tabAdvance.ResumeLayout(false);
             this.tabAdvance.PerformLayout();
+            this.tableLayoutPanel11.ResumeLayout(false);
+            this.tableLayoutPanel11.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitVisible)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWarnLimitTotal)).EndInit();
-            this.tableLayoutPanel11.ResumeLayout(false);
-            this.tableLayoutPanel11.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
