@@ -25,32 +25,50 @@ namespace NoteFly
     public struct Settings
     {
         /// <summary>
-        /// Hotkey for new note uses Alt instead of Shift key as second key.
+        /// New note hotkey enabled.
         /// </summary>
-        public static bool HotkeysNewNoteAltInsteadShift = false;
+        public static bool HotkeysNewNoteEnabled = true;
 
         /// <summary>
-        /// The third final key that needs to be pressed for as hotkey for a new note.
+        /// New note hotkey use alt as second key.
+        /// </summary>
+        public static bool HotkeysNewNoteAltInsteadShift = true;
+
+        /// <summary>
+        /// New note hotkey final key.
+        /// Default key: N
         /// </summary>
         public static int HotkeysNewNoteKeycode = 112;
 
         /// <summary>
-        /// Hotkey for manage notes uses Alt instead of Shift key as second key.
+        /// Manage notes hotkey enabled.
+        /// </summary>
+        public static bool HotkeysManageNotesEnabled = true;
+
+        /// <summary>
+        /// Manage notes hotkey use alt as second key.
         /// </summary>
         public static bool HotkeysManageNotesAltInsteadShift = true;
 
         /// <summary>
-        /// The third final key that needs to be pressed for as hotkey for a manage notes.
+        /// Manage notes hotkey final key.
+        /// Default key: M
         /// </summary>
         public static int HotkeysManageNotesKeycode = 113;
 
         /// <summary>
-        /// 
+        /// Notes to front hotkey enabled.
         /// </summary>
-        public static bool HotkeysNotesToFrontAltInsteadShift = false;
+        public static bool HotkeysNotesToFrontEnabled = true;
 
         /// <summary>
-        /// 
+        /// Notes to front hotkey use alt as second key.
+        /// </summary>
+        public static bool HotkeysNotesToFrontAltInsteadShift = true;
+
+        /// <summary>
+        /// Notes to front hotkey final key.
+        /// Default key: F
         /// </summary>
         public static int HotkeysNotesToFrontKeycode = 160;
 
@@ -192,7 +210,7 @@ namespace NoteFly
 		/// <summary>
         /// The default font family of notes content.
         /// </summary>
-        public static string FontTitleFamily = "?";
+        public static string FontTitleFamily = "FreeMono";
 #endif
         /// <summary>
         /// The notes title font size.
@@ -208,17 +226,33 @@ namespace NoteFly
         /// The default font family of notes content.
         /// </summary>
         public static string FontContentFamily = "Arial";
+
+        /// <summary>
+        /// The font of the trayicon menu.
+        /// </summary>
+        public static string FontTrayicon = "Arial";
 #elif linux
         /// <summary>
         /// The default font family of notes content.
         /// </summary>
         public static string FontContentFamily = "FreeMono";
+
+        /// <summary>
+        /// The font of the trayicon menu.
+        /// </summary>
+        public static string FontTrayicon = "FreeMono";
 #else
         /// <summary>
         /// The default font family of notes content.
         /// </summary>
-        public static string FontContentFamily = "?";
+        public static string FontContentFamily = "FreeMono";
+        
+        /// <summary>
+        /// The font of the trayicon menu.
+        /// </summary>
+        public static string FontTrayicon = "FreeMono";
 #endif
+
         /// <summary>
         /// The default font size of notes content.
         /// </summary>

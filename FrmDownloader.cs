@@ -68,6 +68,9 @@ namespace NoteFly
         /// </summary>
         private const string ZIPEXTENSION = ".zip";
 
+        /// <summary>
+        /// List of file extension to unzip.
+        /// </summary>
         private string[] unzipextensions = new string[] { ".dll" };
 
         /// <summary>
@@ -88,16 +91,16 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Download is compleet event.
-        /// </summary>
-        [Description("Download is compleet.")]
-        public event DownloadCompleetHandler AllDownloadsCompleted;
-
-        /// <summary>
         /// DownloadCompleet delegate
         /// </summary>
         /// <param name="newfiles">String array with all new files locations.</param>
         public delegate void DownloadCompleetHandler(string[] newfiles);
+
+        /// <summary>
+        /// Download is compleet event.
+        /// </summary>
+        [Description("Download is compleet.")]
+        public event DownloadCompleetHandler AllDownloadsCompleted;
 
         /// <summary>
         /// Begin downloading a file.
@@ -189,7 +192,7 @@ namespace NoteFly
         /// <summary>
         /// Set the title of this form.
         /// </summary>
-        /// <param name="title"></param>
+        /// <param name="title">The new title prefix of this form</param>
         private void SetFormTitle(string title)
         {
             StringBuilder sbtitle = new StringBuilder(title);
@@ -358,7 +361,7 @@ namespace NoteFly
         /// <summary>
         /// Decompress zip archive file.
         /// </summary>
-        /// <param name="zipfilename"></param>
+        /// <param name="zipfilename">The zip file filename</param>
         /// <param name="extensions">The extension of file in the zipfile that are unzipped</param>
         private bool DecompressZipFile(string zipfile, string[] extensions)
         {

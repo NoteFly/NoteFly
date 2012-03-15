@@ -23,12 +23,10 @@ namespace NoteFly
     using System.Collections.Generic;
     using System.Data;
     using System.Drawing;
-    using System.Globalization;
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows.Forms;
-    using System.Xml;
 
     /// <summary>
     /// Manage notes window

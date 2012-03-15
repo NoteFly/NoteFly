@@ -31,8 +31,7 @@ namespace NoteFly
     /// </summary>
     public class Notes : IPlugin.IPluginHost
     {
-        #region Fields (4)
-
+        #region Fields (5)
         /// <summary>
         /// The note extension
         /// </summary>
@@ -382,10 +381,10 @@ namespace NoteFly
                 }
             }
 
-#if DEBUG
+            #if DEBUG
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
             stopwatch.Start();
-#endif
+            #endif
             string[] notefilespath = Directory.GetFiles(Settings.NotesSavepath, "*" + NOTEEXTENSION, SearchOption.TopDirectoryOnly);
             string[] notefiles = new string[notefilespath.Length];
             for (int i = 0; i < notefilespath.Length; i++)
@@ -394,16 +393,16 @@ namespace NoteFly
             }
 
             notefilespath = null;
-#if DEBUG
+            #if DEBUG
             stopwatch.Stop();
             Log.Write(LogType.info, "Notes search time:  " + stopwatch.ElapsedTicks.ToString() + " ticks");
-#endif
+            #endif
             int numloadingnotes = this.CheckLimitNotesTotal(notefiles.Length);
             this.notes.Capacity = numloadingnotes;
-#if DEBUG
+            #if DEBUG
             stopwatch.Reset();
             stopwatch.Start();
-#endif
+            #endif
 
             int numvisiblenotes = 0;
             bool warnlimitvisiblenotesshowed = false;
@@ -433,14 +432,14 @@ namespace NoteFly
                 }
             }
 
-#if DEBUG
+            #if DEBUG
             stopwatch.Stop();
             Log.Write(LogType.info, "Notes load time: " + stopwatch.ElapsedMilliseconds.ToString() + " ms");
-#endif
+            #endif
             if (!hasbeenfirstrun)
             {
                 this.ImportingNotesNoteFly2();
-                this.ImportingNotesNoteFly1();                
+                this.ImportingNotesNoteFly1();
                 this.CreateFirstrunNote();
             }
         }
@@ -580,13 +579,13 @@ namespace NoteFly
         private bool ImportingNotesNoteFly1()
         {
             bool imported = false;
-#if windows
+            #if windows
             string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly");
-#elif linux
+            #elif linux
             string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly");
-#endif
+            #endif
             if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE))))
-            {                
+            { 
                 DialogResult resdoimport = MessageBox.Show(Strings.T("Do you want to import the notes from NoteFly 1.0.x?\nPress cancel to ask this again next time."),
                     Strings.T("Import from NoteFly 1.0.x"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (resdoimport == DialogResult.Yes)
@@ -597,7 +596,7 @@ namespace NoteFly
                     ImportNotes importnotes = new ImportNotes(this);
                     string nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
                     while (File.Exists(nf1notefile))
-                    {                        
+                    {
                         nf1notefile = Path.Combine(nf1notesavepath, noteid + ".xml");
                         importnotes.ReadNoteFly1Note(nf1notefile);
                         noteid++;
@@ -639,11 +638,11 @@ namespace NoteFly
         private bool ImportingNotesNoteFly2()
         {
             bool imported = false;
-#if windows
+            #if windows
             string nf2appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly2");
-#elif linux
+            #elif linux
             string nf2appdata = Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
-#endif
+            #endif
             if (Directory.Exists(nf2appdata) && (!File.Exists(Path.Combine(nf2appdata, IMPORTEDFLAGFILE))))
             {
                 DialogResult resdlg = MessageBox.Show(Strings.T("Do you want to import the notes from NoteFly 2.5.x?\nPress cancel to ask this again next time."),
@@ -670,7 +669,7 @@ namespace NoteFly
                         Log.Write(LogType.info, "Done importing notes from NoteFly 2.5.x");
                         this.LoadNotes(true, false);
                         this.CreateNotesImportedFlagfile(nf2appdata);
-                    }                    
+                    }
                 }
                 else if (resdlg == DialogResult.No)
                 {
@@ -766,7 +765,8 @@ namespace NoteFly
         private void CreateFirstrunNote()
         {
             string title = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
-            if (!File.Exists(Path.Combine(Settings.NotesSavepath, this.GetNoteFilename(title))))
+            string filename = title.Substring(0, LIMITLENFILE) + NOTEEXTENSION;
+            if (!File.Exists(Path.Combine(Settings.NotesSavepath, filename)))
             {
                 const int DEMONOTEWIDTH = 260;
                 const int DEMONOTEHEIGHT = 220;
@@ -825,7 +825,6 @@ namespace NoteFly
 
             return addsucceeded;
         }
-
         #endregion Methods
     }
 }

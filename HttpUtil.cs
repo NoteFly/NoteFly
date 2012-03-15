@@ -23,7 +23,6 @@ namespace NoteFly
     using System.ComponentModel;
     using System.IO;
     using System.Net;
-    using System.Text;
 
     /// <summary>
     /// Http utily class

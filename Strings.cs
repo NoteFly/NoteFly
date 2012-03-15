@@ -20,14 +20,9 @@
 namespace NoteFly
 {
     using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Diagnostics;
     using System.Globalization;
     using System.IO;
-    using System.Reflection;
     using System.Text;
-    using System.Threading;
 
     /// <summary>
     /// Strings class, used to lookup translations with GNU Gettext

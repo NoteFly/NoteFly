@@ -74,9 +74,10 @@ namespace NoteFly
             Strings.TranslateForm(this);
             this.SetFormTitle(Settings.SettingsExpertEnabled);
             this.tabControlSettings_SelectedIndexChanged(null, null);
+            this.LoadCbxLanguage();
             this.LoadCbxActionLeftclick();
             this.LoadCbxFonts();
-            this.LoadCbxLanguage();
+            this.LoadCbxSkins();            
             this.SetControlsBySettings();
         }
 
@@ -174,10 +175,13 @@ namespace NoteFly
                 Settings.ProgramLanguage = this.GetLanguageCode(this.cbxLanguage.SelectedIndex);
 
                 // tab: Hotkeys
+                Settings.HotkeysNewNoteEnabled = this.chxHotkeyNewNoteEnabled.Checked;
                 Settings.HotkeysNewNoteAltInsteadShift = this.shortcutTextBoxNewNote.UseAltInsteadofShift;
                 Settings.HotkeysNewNoteKeycode = this.shortcutTextBoxNewNote.ShortcutKeyposition;
+                Settings.HotkeysManageNotesEnabled = this.chxHotkeyManageNotesEnabled.Checked;
                 Settings.HotkeysManageNotesAltInsteadShift = this.shortcutTextBoxManageNotes.UseAltInsteadofShift;
                 Settings.HotkeysManageNotesKeycode = this.shortcutTextBoxManageNotes.ShortcutKeyposition;
+                Settings.HotkeysNotesToFrontEnabled = this.chxHotkeyNotesFrontEnabled.Checked;
                 Settings.HotkeysNotesToFrontAltInsteadShift = this.shortcutTextBoxNotesToFront.UseAltInsteadofShift;
                 Settings.HotkeysNotesToFrontKeycode = this.shortcutTextBoxNotesToFront.ShortcutKeyposition;
 
@@ -202,6 +206,7 @@ namespace NoteFly
                 Settings.FontTextdirection = this.cbxTextDirection.SelectedIndex;
 
                 // tab: Appearance, trayicon
+                Settings.FontTrayicon = this.cbxFontTrayicon.SelectedItem.ToString();
                 Settings.TrayiconFontsize = (float)this.numTrayiconFontsize.Value;
                 Settings.TrayiconCreatenotebold = this.chxTrayiconBoldNewnote.Checked;
                 Settings.TrayiconManagenotesbold = this.chxTrayiconBoldManagenotes.Checked;
@@ -539,18 +544,27 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Fill combobox list with fonts
+        /// Fill combobox that are use to select a font with fontnames.
         /// </summary>
         private void LoadCbxFonts()
         {
+            this.cbxFontNoteTitle.Items.Clear();
+            this.cbxFontNoteContent.Items.Clear();
+            this.cbxFontTrayicon.Items.Clear();
             foreach (FontFamily oneFontFamily in FontFamily.Families)
             {
                 this.cbxFontNoteTitle.Items.Add(oneFontFamily.Name);
                 this.cbxFontNoteContent.Items.Add(oneFontFamily.Name);
+                this.cbxFontTrayicon.Items.Add(oneFontFamily.Name);
             }
+        }
 
+        /// <summary>
+        /// Fill the combobox that are use to select a skin with skinnames.
+        /// </summary>
+        private void LoadCbxSkins()
+        {
             this.cbxDefaultSkin.Items.AddRange(this.notes.GetSkinsNames());
-
             this.cbxManageNotesSkin.Items.AddRange(this.notes.GetSkinsNames());
         }
 
@@ -640,10 +654,13 @@ namespace NoteFly
             this.SetComboBoxSelectedIndex(this.cbxActionLeftclick, Settings.TrayiconLeftclickaction);
 
             // tab: Hotkeys
+            this.chxHotkeyNewNoteEnabled.Checked = Settings.HotkeysNewNoteEnabled;
             this.shortcutTextBoxNewNote.UseAltInsteadofShift = Settings.HotkeysNewNoteAltInsteadShift;
             this.shortcutTextBoxNewNote.ShortcutKeyposition = Settings.HotkeysNewNoteKeycode;
+            this.chxHotkeyManageNotesEnabled.Checked = Settings.HotkeysManageNotesEnabled;
             this.shortcutTextBoxManageNotes.UseAltInsteadofShift = Settings.HotkeysManageNotesAltInsteadShift;
             this.shortcutTextBoxManageNotes.ShortcutKeyposition = Settings.HotkeysManageNotesKeycode;
+            this.chxHotkeyNotesFrontEnabled.Checked = Settings.HotkeysNotesToFrontEnabled;
             this.shortcutTextBoxNotesToFront.UseAltInsteadofShift = Settings.HotkeysNotesToFrontAltInsteadShift;
             this.shortcutTextBoxNotesToFront.ShortcutKeyposition = Settings.HotkeysNotesToFrontKeycode;
 
@@ -660,8 +677,7 @@ namespace NoteFly
             this.chxUseDateAsDefaultTitle.Checked = Settings.NotesDefaultTitleDate;
 
             // tab: Appearance, fonts
-            this.SetUpDownSpinnerValue(this.numFontSizeTitle, Settings.FontTitleSize);
-            this.cbxFontNoteContent.SelectedValue = Settings.FontContentFamily;
+            this.SetUpDownSpinnerValue(this.numFontSizeTitle, Settings.FontTitleSize);            
             this.SetUpDownSpinnerValue(this.numFontSizeContent, Settings.FontContentSize);
             this.SetComboBoxSelectedIndex(this.cbxTextDirection, Settings.FontTextdirection);
             this.cbxFontNoteContent.Text = Settings.FontContentFamily;
@@ -670,6 +686,7 @@ namespace NoteFly
 
             // tab: Appearance, trayicon
             this.SetUpDownSpinnerValue(this.numTrayiconFontsize, Settings.TrayiconFontsize);
+            this.cbxFontTrayicon.Text = Settings.FontTrayicon;
             this.chxTrayiconBoldNewnote.Checked = Settings.TrayiconCreatenotebold;
             this.chxTrayiconBoldManagenotes.Checked = Settings.TrayiconManagenotesbold;
             this.chxTrayiconBoldSettings.Checked = Settings.TrayiconSettingsbold;
@@ -1119,6 +1136,39 @@ namespace NoteFly
             procInfo.UseShellExecute = true;
             System.Diagnostics.Process.Start(procInfo);
             this.btnOpenSettingsFolder.Enabled = true;
+        }        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxHotkeyNewNoteEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            this.shortcutTextBoxNewNote.Enabled = this.chxHotkeyNewNoteEnabled.Checked;
+            this.lblTextHotkeyNewNote.Enabled = this.chxHotkeyNewNoteEnabled.Checked;
+        }        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxHotkeyManageNotesEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            this.shortcutTextBoxManageNotes.Enabled = this.chxHotkeyManageNotesEnabled.Checked;
+            this.lblTextHotkeyManageNotes.Enabled = this.chxHotkeyManageNotesEnabled.Checked;
+        }        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxHotkeyNotesFrontEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            this.shortcutTextBoxNotesToFront.Enabled = this.chxHotkeyNotesFrontEnabled.Checked;
+            this.lblTextHotkeyNotesToFront.Enabled = this.chxHotkeyNotesFrontEnabled.Checked;
         }
 
         #endregion Methods

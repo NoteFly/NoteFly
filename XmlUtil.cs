@@ -32,7 +32,6 @@ namespace NoteFly
     public sealed class xmlUtil
     {
         #region Fields (5)
-
         /// <summary>
         /// Skin file.
         /// </summary>
@@ -70,10 +69,10 @@ namespace NoteFly
         /// <returns>return node content as string, empty if not found</returns>
         public static string GetContentString(string filename, string nodename)
         {
-#if DEBUG
+            #if DEBUG
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
             stopwatch.Start();
-#endif
+            #endif
             try
             {
                 xmlread = new XmlTextReader(filename);
@@ -100,10 +99,10 @@ namespace NoteFly
                     {
                         string xmlnodecontent = string.Empty;
                         xmlnodecontent = xmlread.ReadElementContentAsString();
-#if DEBUG
+                        #if DEBUG
                         stopwatch.Stop();
                         Log.Write(LogType.info, "Read content time:  " + stopwatch.ElapsedTicks + " ticks"); // blocking display time ~200ms/7
-#endif
+                        #endif
                         return xmlnodecontent;
                     }
                 }
@@ -112,9 +111,9 @@ namespace NoteFly
             {
                 xmlread.Close();
             }
-#if DEBUG
+            #if DEBUG
             stopwatch.Stop();
-#endif
+            #endif
             return string.Empty;
         }
 
@@ -295,7 +294,7 @@ namespace NoteFly
                                     detailsplugin[4] = xmlplugin.ReadElementContentAsString();
                                     break;
                             }
-                        }                        
+                        }
                     }
                 }
             }
@@ -402,11 +401,20 @@ namespace NoteFly
                         case "HighlightSQL":
                             Settings.HighlightSQL = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "HotkeysNewNoteEnabled":
+                            Settings.HotkeysNewNoteEnabled = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "HotkeysNewNoteAltInsteadShift":
                             Settings.HotkeysNewNoteAltInsteadShift = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "HotkeysManageNotesEnabled":
+                            Settings.HotkeysManageNotesEnabled = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "HotkeysManageNotesAltInsteadShift":
                             Settings.HotkeysManageNotesAltInsteadShift = xmlread.ReadElementContentAsBoolean();
+                            break;
+                        case "HotkeysNotesToFrontEnabled":
+                            Settings.HotkeysNotesToFrontEnabled = xmlread.ReadElementContentAsBoolean();
                             break;
                         case "HotkeysNotesToFrontAltInsteadShift":
                             Settings.HotkeysNotesToFrontAltInsteadShift = xmlread.ReadElementContentAsBoolean();
@@ -601,8 +609,14 @@ namespace NoteFly
                         case "HighlightSQLColorField":
                             Settings.HighlightSQLColorField = xmlread.ReadElementContentAsString();
                             break;
+                        case "FontTitleFamily":
+                            Settings.FontTitleFamily = xmlread.ReadElementContentAsString();
+                            break;
                         case "FontContentFamily":
                             Settings.FontContentFamily = xmlread.ReadElementContentAsString();
+                            break;
+                        case "FontTrayicon":
+                            Settings.FontTrayicon = xmlread.ReadElementContentAsString();
                             break;
                         case "ProgramLastrunVersion":
                             Settings.ProgramLastrunVersion = xmlread.ReadElementContentAsString();
@@ -620,9 +634,6 @@ namespace NoteFly
                             break;
                         case "ProgramPluginsDllexclude":
                             Settings.ProgramPluginsDllexclude = xmlread.ReadElementContentAsString();
-                            break;
-                        case "FontTitleFamily":
-                            Settings.FontTitleFamily = xmlread.ReadElementContentAsString();
                             break;
                         case "SharingEmailDefaultadres":
                             Settings.SharingEmailDefaultadres = xmlread.ReadElementContentAsString();
@@ -836,15 +847,18 @@ namespace NoteFly
             Settings.ConfirmDeletenote = true;
             Settings.ConfirmExit = false;
             Settings.ConfirmLinkclick = true;
-#if windows
+            #if windows
             Settings.FontContentFamily = "Arial";
             Settings.FontTitleFamily = "Arial";
-#elif linux
+            Settings.FontTrayicon = "Arial";
+            #elif linux
             Settings.FontContentFamily = "FreeMono";
             Settings.FontTitleFamily = "FreeMono";
+            Settings.FontTrayicon = "FreeMono";
 #else
-            Settings.FontContentFamily = "?";
-            Settings.FontTitleFamily = "?";
+            Settings.FontContentFamily = "FreeMono";
+            Settings.FontTitleFamily = "FreeMono";
+            Settings.FontTrayicon = "FreeMono";
 #endif
             Settings.FontContentSize = 11;
             Settings.FontTextdirection = 0;
@@ -865,10 +879,13 @@ namespace NoteFly
             Settings.HighlightSQL = false;
             Settings.HighlightSQLColorValidstatement = "#7FCE35";
             Settings.HighlightSQLColorField = "#B16DFF";
+            Settings.HotkeysNewNoteEnabled = true;
             Settings.HotkeysNewNoteAltInsteadShift = true;
             Settings.HotkeysNewNoteKeycode = 78; // N
+            Settings.HotkeysManageNotesEnabled = true;
             Settings.HotkeysManageNotesAltInsteadShift = true;
             Settings.HotkeysManageNotesKeycode = 77; // M
+            Settings.HotkeysNotesToFrontEnabled = true;
             Settings.HotkeysNotesToFrontAltInsteadShift = true;
             Settings.HotkeysNotesToFrontKeycode = 70; // F
             Settings.NetworkConnectionTimeout = 8000;
@@ -878,7 +895,7 @@ namespace NoteFly
             Settings.NotesTooltipsEnabled = true;
             Settings.NotesClosebtnHidenotepermanently = true;
             Settings.NotesDefaultRandomSkin = false;
-            Settings.NotesDefaultSkinnr = 0; // default skin: yellow
+            Settings.NotesDefaultSkinnr = 0; // default first skin, normally yellow
             Settings.NotesDefaultHeight = 240;
             Settings.NotesDefaultWidth = 280;
             Settings.NotesDefaultTitleDate = true;
@@ -946,7 +963,7 @@ namespace NoteFly
                 xmlwrite = new System.Xml.XmlTextWriter(Path.Combine(Settings.NotesSavepath, note.Filename), System.Text.Encoding.UTF8);
                 xmlwrite.Formatting = System.Xml.Formatting.Indented;
                 xmlwrite.WriteStartDocument(true); // standalone xml file.
-                WriteNoteBody(note, skinname, content);
+                WriteNoteBody(xmlwrite, note, skinname, content);
                 xmlwrite.WriteEndDocument();
                 succeeded = true;
             }
@@ -956,8 +973,11 @@ namespace NoteFly
             }
             finally
             {
-                xmlwrite.Flush();
-                xmlwrite.Close();
+                if (xmlwrite != null)
+                {
+                    xmlwrite.Flush();
+                    xmlwrite.Close();
+                }
             }
 
             return succeeded;
@@ -1050,8 +1070,11 @@ namespace NoteFly
                     WriteXMLBool("HighlightHyperlinks", Settings.HighlightHyperlinks);
                     WriteXMLBool("HighlightPHP", Settings.HighlightPHP);
                     WriteXMLBool("HighlightSQL", Settings.HighlightSQL);
+                    WriteXMLBool("HotkeysNewNoteEnabled", Settings.HotkeysNewNoteEnabled);
                     WriteXMLBool("HotkeysNewNoteAltInsteadShift", Settings.HotkeysNewNoteAltInsteadShift);
+                    WriteXMLBool("HotkeysManageNotesEnabled", Settings.HotkeysManageNotesEnabled);
                     WriteXMLBool("HotkeysManageNotesAltInsteadShift", Settings.HotkeysManageNotesAltInsteadShift);
+                    WriteXMLBool("HotkeysNotesToFrontEnabled", Settings.HotkeysNotesToFrontEnabled);
                     WriteXMLBool("HotkeysNotesToFrontAltInsteadShift", Settings.HotkeysNotesToFrontAltInsteadShift);
                     WriteXMLBool("NetworkProxyEnabled", Settings.NetworkProxyEnabled);
                     WriteXMLBool("NotesTooltipEnabled", Settings.NotesTooltipsEnabled);
@@ -1123,6 +1146,7 @@ namespace NoteFly
                     xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
                     xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                     xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
+                    xmlwrite.WriteElementString("FontTrayicon", Settings.FontTrayicon);
                     xmlwrite.WriteElementString("ProgramLanguage", Settings.ProgramLanguage);
                     xmlwrite.WriteElementString("ProgramLastrunVersion", Settings.ProgramLastrunVersion);
                     xmlwrite.WriteElementString("ProgramPluginsFolder", Settings.ProgramPluginsFolder);
@@ -1157,7 +1181,6 @@ namespace NoteFly
         {
             // HEX color
             return System.Drawing.ColorTranslator.FromHtml(colorstring);
-
             // DECIMAL color, commented out in favor of HEX notation for speed.
             ////string[] parts = new string[3];
             ////parts = colorstring.Split(',');
@@ -1540,7 +1563,7 @@ namespace NoteFly
         /// <param name="note">The note object.</param>
         /// <param name="skinname">The skinname used by this note.</param>
         /// <param name="content">The note content.</param>
-        public static void WriteNoteBody(Note note, string skinname, string content)
+        public static void WriteNoteBody(XmlTextWriter xmlwrite, Note note, string skinname, string content)
         {
             xmlwrite.WriteStartElement("note");
             xmlwrite.WriteAttributeString("version", NOTEVERSION);
@@ -1589,7 +1612,6 @@ namespace NoteFly
 
             return content;
         }
-
         #endregion Methods
     }
 }

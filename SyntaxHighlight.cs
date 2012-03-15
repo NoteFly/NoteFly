@@ -300,7 +300,7 @@ namespace NoteFly
                 if (rtb.TextLength < Settings.HighlightMaxchars)
                 {
                     maxpos = rtb.TextLength;
-                }
+                } 
 
                 int lastpos = 0;
                 for (int i = cursorpos - 2; i > 0; i--) // -2 for line ending length

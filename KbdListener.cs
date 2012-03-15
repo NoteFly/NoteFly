@@ -314,7 +314,8 @@ namespace NoteFly
                     {
                             unsafe
                             {
-                                uint dwSize, receivedBytes;
+                                uint dwSize = 0;
+                                uint receivedBytes;
                                 uint sizeof_RAWINPUTHEADER = (uint)(sizeof(RAWINPUTHEADER));
 
                                 // Find out the size of the buffer we have to provide

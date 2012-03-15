@@ -18,7 +18,6 @@
 namespace IPlugin
 {
     using System;
-    using System.Reflection;
     using System.Windows.Forms;
 
     /// <summary>

@@ -20,7 +20,6 @@
 namespace NoteFly
 {
     using System;
-    using System.Text;
     using System.Windows.Forms;
 
     /// <summary>
@@ -283,17 +282,17 @@ namespace NoteFly
                         this.altpressed = true;
 
                         // Ctrl + Alt + KEY
-                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && Settings.HotkeysNewNoteAltInsteadShift)
+                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && Settings.HotkeysNewNoteAltInsteadShift && Settings.HotkeysNewNoteEnabled)
                         {
                             this.OpenNewNote();
                             this.ResetAllModifierKeys();
                         }
-                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && Settings.HotkeysManageNotesAltInsteadShift)
+                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && Settings.HotkeysManageNotesAltInsteadShift && Settings.HotkeysManageNotesEnabled)
                         {
                             this.OpenFrmManageNotes();
                             this.ResetAllModifierKeys();
                         }
-                        else if (eventArgs.KeyValue == Settings.HotkeysNotesToFrontKeycode && Settings.HotkeysNotesToFrontAltInsteadShift)
+                        else if (eventArgs.KeyValue == Settings.HotkeysNotesToFrontKeycode && Settings.HotkeysNotesToFrontAltInsteadShift && Settings.HotkeysNotesToFrontEnabled)
                         {
                             this.notes.BringToFrontNotes();
                             this.notes.BringToFrontNotes();
@@ -305,17 +304,17 @@ namespace NoteFly
                         this.shiftpressed = true;
 
                         // Ctrl + Shift + KEY
-                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && !Settings.HotkeysNewNoteAltInsteadShift)
+                        if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && !Settings.HotkeysNewNoteAltInsteadShift && Settings.HotkeysNewNoteEnabled)
                         {
                             this.OpenNewNote();
                             this.ResetAllModifierKeys();
                         }
-                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && !Settings.HotkeysManageNotesAltInsteadShift)
+                        else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && !Settings.HotkeysManageNotesAltInsteadShift && Settings.HotkeysManageNotesEnabled)
                         {
                             this.OpenFrmManageNotes();
                             this.ResetAllModifierKeys();
                         }
-                        else if (eventArgs.KeyValue == Settings.HotkeysNotesToFrontKeycode && !Settings.HotkeysNotesToFrontAltInsteadShift)
+                        else if (eventArgs.KeyValue == Settings.HotkeysNotesToFrontKeycode && !Settings.HotkeysNotesToFrontAltInsteadShift && Settings.HotkeysNotesToFrontEnabled)
                         {
                             this.notes.BringToFrontNotes();
                             this.notes.BringToFrontNotes();

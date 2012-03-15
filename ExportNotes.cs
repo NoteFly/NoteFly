@@ -20,7 +20,6 @@
 namespace NoteFly
 {
     using System;
-    using System.Collections.Generic;
     using System.Text;
     using System.Xml;
     using System.IO;
@@ -37,6 +36,10 @@ namespace NoteFly
         /// </summary>
         private Notes notes;
 
+        /// <summary>
+        /// Creating a new instance of ExportNotes class.
+        /// </summary>
+        /// <param name="notes"></param>
         public ExportNotes(Notes notes)
         {
             this.notes = notes;
@@ -63,7 +66,7 @@ namespace NoteFly
                 {
                     string skinname = this.notes.GetSkinName(notes.GetNote(i).SkinNr);
                     string content = this.notes.GetNote(i).GetContent();
-                    xmlUtil.WriteNoteBody(this.notes.GetNote(i), skinname, content);
+                    xmlUtil.WriteNoteBody(xmlwrite, this.notes.GetNote(i), skinname, content);
                 }
 
                 xmlwrite.WriteEndElement();
@@ -74,6 +77,7 @@ namespace NoteFly
             {
                 if (xmlwrite != null)
                 {
+                    xmlwrite.Flush();
                     xmlwrite.Close();
                 }
             }
@@ -119,7 +123,7 @@ namespace NoteFly
                     }
 
                     writer.Write("\"");
-                    writer.Write(this.encode_title(curnote.Title));
+                    writer.Write(this.EncodeTitle(curnote.Title));
                     writer.Write("\",\"");
                     writer.Write(unixtimestr);
                     writer.Write("\",\"");
@@ -209,11 +213,11 @@ namespace NoteFly
                     // TODO figure out rel_position
                     writer.Write("rel_position=9A9999999979E53F0AD7A3703D0ABF3F40010000DC000000F1\r\n");
                     writer.Write("add_appearance=00000000000000000000000000\r\n");
-                    string hexyear = this.fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(2, 2) + this.fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(0, 2);
-                    string hexmonth = this.fillstrleadzeros(dtnotenow.Month.ToString("X"), 2);
-                    string hexday = this.fillstrleadzeros(dtnotenow.Day.ToString("X"), 2);
-                    string hexhour = this.fillstrleadzeros(dtnotenow.Hour.ToString("X"), 2);
-                    string hexmin = this.fillstrleadzeros(dtnotenow.Minute.ToString("X"), 2);
+                    string hexyear = this.Fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(2, 2) + this.Fillstrleadzeros(dtnotenow.Year.ToString("X"), 4).Substring(0, 2);
+                    string hexmonth = this.Fillstrleadzeros(dtnotenow.Month.ToString("X"), 2);
+                    string hexday = this.Fillstrleadzeros(dtnotenow.Day.ToString("X"), 2);
+                    string hexhour = this.Fillstrleadzeros(dtnotenow.Hour.ToString("X"), 2);
+                    string hexmin = this.Fillstrleadzeros(dtnotenow.Minute.ToString("X"), 2);
                     writer.Write("creation=" + hexyear + hexmonth + "000400" + hexday + "00" + hexhour + "00" + hexmin + "00040068018A\r\n");
 
                     pnotesfilenames[i] = pnotesfilenamenote.ToString();
@@ -243,7 +247,7 @@ namespace NoteFly
         /// <param name="str">The string to add leading zero's to</param>
         /// <param name="len">The length</param>
         /// <returns>A string of with the given length</returns>
-        private string fillstrleadzeros(string str, int len)
+        private string Fillstrleadzeros(string str, int len)
         {
             while (str.Length < len)
             {
@@ -258,7 +262,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="title">The title of the note encoded</param>
         /// <returns>The title encoded as hexdecimal</returns>
-        private string encode_title(string title)
+        private string EncodeTitle(string title)
         {
             StringBuilder title_enc = new StringBuilder();
             for (int i = 0; i < title.Length; i++)

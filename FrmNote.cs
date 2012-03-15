@@ -37,22 +37,22 @@ namespace NoteFly
         private const int MINVISIBLESIZE = 5;
 
         /// <summary>
-        /// is form movind
+        /// Is form moving.
         /// </summary>
         private bool moving = false;
 
         /// <summary>
-        /// reference to note object
+        /// Reference to note object.
         /// </summary>
         private Note note;
 
         /// <summary>
-        /// reference to notes object
+        /// Reference to notes object.
         /// </summary>
         private Notes notes;
 
         /// <summary>
-        /// the old position of the note.
+        /// The old position of the note.
         /// </summary>
         private Point oldp;
 
@@ -68,8 +68,8 @@ namespace NoteFly
         /// <summary>
         /// Initializes a new instance of the FrmNote class.
         /// </summary>
-        /// <param name="notes">notes class</param>
-        /// <param name="note">note data class.</param>
+        /// <param name="notes">Notes class</param>
+        /// <param name="note">Note data class.</param>
         public FrmNote(Notes notes, Note note)
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
@@ -646,7 +646,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// pnlHead the grab area of the note is selected.
+        /// The area in pnlHead is selected and dragged.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
