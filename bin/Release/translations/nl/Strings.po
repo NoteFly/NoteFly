@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the 3.0.x package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-03-08 13:44:33+0000\n"
+"PO-Revision-Date: 2012-03-16 13:21:34+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,7 +20,7 @@ msgid "Start NoteFly on logon."
 msgstr "Start NoteFly bij het aanmelden."
 
 msgid "Confirm shutdown of NoteFly"
-msgstr "Bevestif afsluiten NoteFly"
+msgstr "Bevestig afsluiten NoteFly"
 
 msgid "Hotkeys"
 msgstr "Sneltoetsen"
@@ -62,10 +62,10 @@ msgid "Highlight"
 msgstr "Highlight"
 
 msgid "Highlight SQL text between quotes. (Beta)"
-msgstr ""
+msgstr "Highlight SQL tekst tussen quotes. (Beta)"
 
 msgid "Highlight PHP text between <?php and ?>. (Beta)"
-msgstr ""
+msgstr "Highlight PHP tekst tussen <?php en ?>. (Beta)"
 
 msgid "Make hyperlinks clickable."
 msgstr "Maak hyperlinks klikbaar."
@@ -531,6 +531,8 @@ msgid ""
 "There are many notes visible.\n"
 "Hide some notes to make loading faster."
 msgstr ""
+"Er zijn veel notities zichtbaar.\n"
+"Verberg enkele notities om het laden sneller te maken."
 
 #: PluginGrid.cs:156
 msgid "version:"
@@ -562,6 +564,8 @@ msgid ""
 "Which is not recommended for security.\n"
 "Press OK if your understand the risks of running as administrator and want to hide this message in the future."
 msgstr ""
+"U draait {0} als verhoogde administrator wat niet aanbevolen wordt voor de beveiliging.\n"
+"Druk op Oke als je dit beveiligings risco begrijpt en dit bericht in het vervolg wilt verbergen."
 
 #: Program.cs:282
 msgid "Elevated administrator"
@@ -629,7 +633,7 @@ msgstr "Afsluiten"
 
 #: TrayIcon.cs:229
 msgid "You can access {0} functions with this trayicon."
-msgstr ""
+msgstr "Je kunt de functies van {0} via dit systeemvak icoontje benaderen."
 
 #: TrayIcon.cs:325
 msgid "confirm exit"

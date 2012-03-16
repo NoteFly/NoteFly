@@ -371,7 +371,7 @@ namespace NoteFly
                 const int MAXDEPTHSETTINGSFILE = 4;
                 xmlread = new XmlTextReader(settingsfilepath);
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
-                xmlread.ProhibitDtd = true; // TODO gives decreated warning in vs2010.
+                xmlread.ProhibitDtd = true; // gives decreated warning in vs2010.
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)

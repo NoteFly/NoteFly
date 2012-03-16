@@ -177,42 +177,7 @@
                         }
                     }
 
-                    // todo import TomBoy note formatting
-                    /*                    
-                    for (int i = 0; i < formattype.Count; i++)
-                    {
-                        rtbNewNote.Select(formatstartpos[i], formatlen[i]);
-                        switch (formattype[i])
-                        {
-                            case "bold":
-                                this.btnTextBold_Click(null, null);
-                                break;
-                            case "italic":
-                                this.btnTextItalic_Click(null, null);
-                                break;
-                            case "strikethrough":
-                                this.btnTextStriketrough_Click(null, null);
-                                break;
-                            case "list":
-                                this.btnTextBulletlist_Click(null, null);
-                                break;
-                            case "size:huge":
-                                this.btnFontBigger_Click(null, null);
-                                this.btnFontBigger_Click(null, null);
-                                break;
-                            case "size:small":
-                                this.btnFontSmaller_Click(null, null);
-                                this.btnFontSmaller_Click(null, null);
-                                break;
-                            case "link:internal":
-                                // broken link because notefly does not have linking between notes but still make it underlined as reference that is was there.
-                                this.btnTextUnderline_Click(null, null);
-                                break;
-                        }
-                    }
-                    
-                    rtbNewNote.Select(0, 0);
-                    */
+                    // todo import TomBoy note formatting, currently NoteFly only imports it as plain text.
                 }
             }
         }

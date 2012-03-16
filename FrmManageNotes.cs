@@ -871,8 +871,7 @@ namespace NoteFly
                         int notepos = this.GetNoteposBySelrow(e.RowIndex);
                         if (notepos >= 0)
                         {
-                            // todo GetContent() is wrong for this but works for now. Add GetContentPreview() that has limited disk read.
-                            //string content = this.notes.GetNote(notepos).GetContent();
+                            // todo GetContent() is not good because it can take long to read all content but it works for now.
                             RichTextBox rtb = new RichTextBox();
                             rtb.Rtf = this.notes.GetNote(notepos).GetContent();
                             string content = rtb.Text;
@@ -880,32 +879,6 @@ namespace NoteFly
                             GC.Collect();
                             int startpos = 0;
                             string startcontentplainhint = string.Empty;
-                            /*
-                            const string startcontentplainhint = @"\viewkind";
-                            int startpos = content.IndexOf(startcontentplainhint);
-
-                            for (int i = content.Length - 1; i > startpos; i--)
-                            {
-                                if (content[i] == '\\')
-                                {
-                                    for (int p = 0; p < 20; p++)
-                                    {
-                                        int endpos = i + p;
-                                        if (endpos >= content.Length - 1)
-                                        {
-                                            break;
-                                        }
-
-                                        // || content[endpos] == '\r' || content[endpos] == '\n'
-                                        if (content[endpos] == ' ')
-                                        {
-                                            content.Remove(i, p);
-                                        }
-                                    }
-                                }
-                            }
-                            */
-
                             try
                             {
                                 int lencontentpreview = content.Length - startpos - startcontentplainhint.Length;

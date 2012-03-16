@@ -119,7 +119,17 @@ namespace NoteFly
             this.icon.ContextMenuStrip.ShowImageMargin = false;
             this.icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);
             FontStyle menufontstyle = FontStyle.Regular;
-
+            Font menufont;
+            try
+            {
+                menufont = new Font(Settings.FontTrayicon, Settings.TrayiconFontsize, menufontstyle);
+            }
+            catch (ArgumentException argexc)
+            {
+                Log.Write(LogType.exception, argexc.Message);
+                menufont = new Font("Arial", 10, menufontstyle);
+            }
+            
             // MenuNewNote
             this.menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuNewNote.Name = "MenuNewNote";
@@ -130,7 +140,7 @@ namespace NoteFly
                 menufontstyle = FontStyle.Bold;
             }
 
-            this.menuNewNote.Font = new Font(Settings.FontTrayicon, Settings.TrayiconFontsize, menufontstyle);
+            this.menuNewNote.Font = new Font(menufont.FontFamily.Name, menufont.SizeInPoints, menufontstyle);
             this.menuNewNote.Click += new System.EventHandler(this.MenuNewNote_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuNewNote);
 
@@ -148,7 +158,7 @@ namespace NoteFly
                 menufontstyle = FontStyle.Regular;
             }
 
-            this.menuManageNotes.Font = new Font(Settings.FontTrayicon, Settings.TrayiconFontsize, menufontstyle);
+            this.menuManageNotes.Font = new Font(menufont.FontFamily.Name, menufont.SizeInPoints, menufontstyle);
             this.menuManageNotes.Click += new System.EventHandler(this.MenuManageNotes_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuManageNotes);
 
@@ -166,7 +176,7 @@ namespace NoteFly
                 menufontstyle = FontStyle.Regular;
             }
 
-            this.menuSettings.Font = new Font(Settings.FontTrayicon, Settings.TrayiconFontsize, menufontstyle);
+            this.menuSettings.Font = new Font(menufont.FontFamily.Name, menufont.SizeInPoints, menufontstyle);
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuSettings);
 
@@ -175,7 +185,7 @@ namespace NoteFly
             this.menuPlugins.Name = "MenuPlugins";
             this.menuPlugins.Size = new System.Drawing.Size(144, 22);
             this.menuPlugins.Text = Strings.T("&Plugins");
-            this.menuPlugins.Font = new Font(Settings.FontTrayicon, Settings.TrayiconFontsize, FontStyle.Regular);
+            this.menuPlugins.Font = new Font(menufont.FontFamily.Name, menufont.SizeInPoints, FontStyle.Regular);
             this.menuPlugins.Click += new System.EventHandler(this.MenuPlugins_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuPlugins);
 
@@ -188,7 +198,7 @@ namespace NoteFly
                     {
                         ToolStripItem toolstripitem = PluginsManager.EnabledPlugins[p].InitTrayIconMenu();
                         toolstripitem.Size = new System.Drawing.Size(144, 22);
-                        toolstripitem.Font = new Font(Settings.FontTrayicon, Settings.TrayiconFontsize, FontStyle.Regular);
+                        toolstripitem.Font = new Font(menufont.FontFamily.Name, menufont.SizeInPoints, FontStyle.Regular);
                         this.icon.ContextMenuStrip.Items.Add(toolstripitem);
                     }
                 }
@@ -199,7 +209,7 @@ namespace NoteFly
             this.menuAbout.Name = "MenuAbout";
             this.menuAbout.Size = new System.Drawing.Size(144, 22);
             this.menuAbout.Text = Strings.T("About");
-            this.menuAbout.Font = new Font(Settings.FontTrayicon, Settings.TrayiconFontsize, FontStyle.Regular);
+            this.menuAbout.Font = new Font(menufont.FontFamily.Name, menufont.SizeInPoints, FontStyle.Regular);
             this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuAbout);
 
@@ -217,7 +227,7 @@ namespace NoteFly
                 menufontstyle = FontStyle.Regular;
             }
 
-            this.menuExit.Font = new Font(Settings.FontTrayicon, Settings.TrayiconFontsize, menufontstyle);
+            this.menuExit.Font = new Font(menufont.FontFamily.Name, menufont.SizeInPoints, menufontstyle);
             this.menuExit.Click += new System.EventHandler(this.MenuExit_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuExit);
 

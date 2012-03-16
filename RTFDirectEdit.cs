@@ -322,7 +322,6 @@
             {
                 if (rtf.Substring(i, 2).Equals(@"\'", StringComparison.Ordinal))
                 {
-                    // todo check if two character are HEX characters in a better way
                     if (rtf.Substring(i + 2, 1).IndexOfAny(this.hexchars) >= 0 && rtf.Substring(i + 3, 1).IndexOfAny(this.hexchars) >= 0)
                     {
                         isspecchar = true;

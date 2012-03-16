@@ -23,7 +23,7 @@
 
 !define PROJNAME   "NoteFly"
 !define VERSION    "3.0.0"          ; version number: major.minor.release
-!define VERSTATUS  "beta1"          ; alpha, beta, rc, or nothing for final.
+!define VERSTATUS  ""               ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
 !define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
@@ -201,10 +201,10 @@ Section "main executable (required)"
   
 SectionEnd
 
-Section "Windows firewall rules"
-  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming http (remoteport 80, protocol tcp only) answer for a http requests from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly http" protocol=TCP remoteport=80 localport=rpc-epmap action=allow"'
-  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow incoming dns (remoteport 53, protocol udp only) answer for a dns request from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly dns" protocol=UDP remoteport=53 localport=rpc-epmap action=allow"'
-SectionEnd
+;Section "Windows firewall rules"
+;  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow http (remoteport 80, protocol tcp only) answer for a http requests from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly http" protocol=TCP remoteport=80 localport=rpc-epmap action=allow"'
+;  Exec '"netsh advfirewall firewall add rule dir=in program="$INSTDIR\NoteFly.exe" description="Allow dns (remoteport 53, protocol udp only) answer for a dns request from NoteFly. Do not use privileged ports for the incoming traffic." name="NoteFly dns" protocol=UDP remoteport=53 localport=rpc-epmap action=allow"'
+;SectionEnd
 
 Section "Desktop Shortcut (all users)"
 SetShellVarContext all
