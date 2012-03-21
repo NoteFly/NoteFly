@@ -81,7 +81,7 @@ namespace NoteFly
 
             if (this.dataGridViewNotes.RowCount > 0)
             {
-                if ((bool)this.dataGridViewNotes.Rows[0].Cells["visible"].Value == true)
+                if ((bool)this.dataGridViewNotes.Rows[0].Cells[2].Value == true) // fixme
                 {
                     this.btnShowSelectedNotes.Text = Strings.T("&hide selected");
                 }
@@ -439,15 +439,15 @@ namespace NoteFly
                 int notepos = this.GetNoteposBySelrow(e.RowIndex);
                 if (notepos >= 0)
                 {
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["title"].Value = this.notes.GetNote(notepos).Title;
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
-                    if (this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[1].Value = this.notes.GetNote(notepos).Title;
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[3].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[3].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
+                    if (this.dataGridViewNotes.Rows[e.RowIndex].Cells[3].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
                     {
-                        this.dataGridViewNotes.Rows[e.RowIndex].Cells["skin"].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
+                        this.dataGridViewNotes.Rows[e.RowIndex].Cells[3].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
                     }
 
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells["visible"].Value = this.notes.GetNote(notepos).Visible;
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[2].Value = this.notes.GetNote(notepos).Visible;
 
                     if ((e.RowIndex == this.dataGridViewNotes.RowCount - 1) || (this.prevrownr < this.secondprevrownr))
                     {
@@ -621,12 +621,28 @@ namespace NoteFly
         {
             DataTable datatable = new DataTable();
             this.dataGridViewNotes.DataSource = datatable;
-            datatable.Columns.Add(Strings.T("nr"), typeof(string)); // col 0
+            string colnr = "nr";
+            string coltitle = "title";
+            string colvisible = "visible";
+            string colskin ="skin";
+            try
+            {
+                colnr = Strings.T("nr");
+                coltitle = Strings.T("title");
+                colvisible = Strings.T("visible");
+                colskin = Strings.T("skin");
+            }
+            catch (Exception exc)
+            {
+                Log.Write(LogType.exception, exc.Message);
+            }
+
+            datatable.Columns.Add(colnr, typeof(string)); // col 0
             datatable.Columns[0].AutoIncrement = true;
             datatable.Columns[0].Unique = true;
-            datatable.Columns.Add(Strings.T("title"), typeof(string)); // col 1
-            datatable.Columns.Add(Strings.T("visible"), typeof(bool)); // col 2
-            datatable.Columns.Add(Strings.T("skin"), typeof(string)); // col 3
+            datatable.Columns.Add(coltitle, typeof(string)); // col 1
+            datatable.Columns.Add(colvisible, typeof(bool)); // col 2
+            datatable.Columns.Add(colskin, typeof(string)); // col 3
             datatable.DefaultView.AllowEdit = true;
             datatable.DefaultView.AllowNew = false;
             if (this.dataGridViewNotes.Columns[0] != null)
