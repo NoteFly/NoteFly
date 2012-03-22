@@ -16,7 +16,7 @@ REM  You should have received a copy of the GNU General Public License
 REM  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set path7z="C:\Program Files\7-Zip\7z.exe"
-set VERSION="3.0.0"
+set VERSION="3.0.1"
 REM versionstatus: alpha, beta, rc1, rc2 or nothing for final.
 set VERSIONSTATUS=""
 

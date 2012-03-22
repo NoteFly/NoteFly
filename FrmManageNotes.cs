@@ -354,7 +354,7 @@ namespace NoteFly
         {
             if (e.RowIndex >= 0)
             {
-                if ((bool)this.dataGridViewNotes.Rows[e.RowIndex].Cells["visible"].Value == true)
+                if ((bool)this.dataGridViewNotes.Rows[e.RowIndex].Cells[2].Value == true)
                 {
                     this.btnShowSelectedNotes.Text = Strings.T("&hide selected");
                 }

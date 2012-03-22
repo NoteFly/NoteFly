@@ -2,13 +2,16 @@
 # This file is distributed under the same license as the 3.0.x package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-03-16 13:21:34+0000\n"
+"PO-Revision-Date: 2012-03-22 14:16+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: 3.0.x\n"
+"POT-Creation-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
 
 msgid "Move deleted notes to recycle bin."
 msgstr "Verplaats verwijderde notite naar de prullenbak"
@@ -165,9 +168,10 @@ msgstr "&Verberg notitie"
 
 #: FrmAbout.cs:50
 msgid "Version "
-msgstr "Versie"
+msgstr "Versie "
 
-#: FrmAbout.cs:62 TrayIcon.cs:203
+#: FrmAbout.cs:62
+#: TrayIcon.cs:203
 msgid "About"
 msgstr "Over"
 
@@ -187,11 +191,15 @@ msgstr "Download fout:"
 msgid "oh no.. {0} crashed."
 msgstr "oh nee {0} is gecrasht."
 
-#: FrmManageNotes.cs:88 FrmManageNotes.cs:520 FrmManageNotes.cs:554
+#: FrmManageNotes.cs:88
+#: FrmManageNotes.cs:520
+#: FrmManageNotes.cs:554
 msgid "&hide selected"
 msgstr "Ver&berg geselecteerde"
 
-#: FrmManageNotes.cs:92 FrmManageNotes.cs:97 FrmManageNotes.cs:525
+#: FrmManageNotes.cs:92
+#: FrmManageNotes.cs:97
+#: FrmManageNotes.cs:525
 #: FrmManageNotes.cs:558
 msgid "&show selected"
 msgstr "toon ge&selecteerde"
@@ -236,7 +244,8 @@ msgstr "zichtbaar"
 msgid "skin"
 msgstr "skin"
 
-#: FrmManageNotes.cs:864 FrmManageNotes.cs:885
+#: FrmManageNotes.cs:864
+#: FrmManageNotes.cs:885
 msgid "Transparency level not a integer or double."
 msgstr "Transparatie niveau is geen integer of double."
 
@@ -272,7 +281,8 @@ msgstr "Voer a.u.b. wat in."
 msgid "Could not write note."
 msgstr "Kan notitie niet wegschrijven."
 
-#: FrmNewNote.cs:897 FrmNewNote.cs:1245
+#: FrmNewNote.cs:897
+#: FrmNewNote.cs:1245
 msgid "There is no text on the clipboard."
 msgstr "Er is geen tekst op het klembord."
 
@@ -332,7 +342,8 @@ msgstr "licensie:"
 msgid "Downloading plugin.."
 msgstr "Downloaden plugin.."
 
-#: FrmSettings.cs:105 FrmSettings.cs:106
+#: FrmSettings.cs:105
+#: FrmSettings.cs:106
 msgid ""
 "Directory does not exist.\n"
 "Please choice a valid directory."
@@ -554,7 +565,9 @@ msgstr "uitgeschakelen"
 msgid "enable"
 msgstr "inschakelen"
 
-#: PluginsManager.cs:226 PluginsManager.cs:258 PluginsManager.cs:320
+#: PluginsManager.cs:226
+#: PluginsManager.cs:258
+#: PluginsManager.cs:320
 msgid "unknown"
 msgstr "onbekend"
 
@@ -683,3 +696,4 @@ msgstr "Algemeen"
 
 msgid "Sharing"
 msgstr "Delen"
+
