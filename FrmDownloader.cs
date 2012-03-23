@@ -122,8 +122,17 @@ namespace NoteFly
         /// <param name="storefolder">The folder to save all the files to.</param>
         /// <returns>True if downloading succesfully started.</returns>
         public bool BeginDownload(string[] downloads, string storefolder)
-        {
-            this.storefolder = storefolder;
+        {            
+            DirectoryInfo pluginsdirinfo = new DirectoryInfo(storefolder);
+            if (pluginsdirinfo.Attributes == FileAttributes.System)
+            {
+                Log.Write(LogType.exception, "The plugin folder is not allowed to be a system directory.");               
+            }
+            else
+            {
+                this.storefolder = storefolder;
+            }
+
             this.downloads = downloads;
             this.numdownloadscompleet = 0;
             string downloadurl = Program.ChangeUrlIPVersion(downloads[0]);

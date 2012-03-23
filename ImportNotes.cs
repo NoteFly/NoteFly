@@ -530,6 +530,102 @@
         }
 
         /// <summary>
+        /// Read a DeskNotes Data XML file.
+        /// </summary>
+        /// <param name="file"></param>
+        public void ReadDeskNotesXmlFile(string file)
+        {
+            XmlTextReader reader = null;
+            try
+            {
+                reader = new XmlTextReader(file);
+                int notenr = 0;
+                while (reader.Read())
+                {                    
+                    if (reader.Name == "DeskNote")
+                    {
+                        notenr++;
+                        bool ontop = false;
+                        bool visible = true;
+                        try
+                        {
+                            ontop = Convert.ToBoolean(reader.GetAttribute("d2p1:onTop"));
+                            visible = !Convert.ToBoolean(reader.GetAttribute("d2p1:hidden"));
+                        }
+                        catch
+                        {
+                            Log.Write(LogType.exception, "Cannot read or convert d2p1:onTop and/or d2p1:hidden.");
+                        }
+                       
+                        Note newnote = new Note(this.notes, this.notes.GetNoteFilename("DeskNotes" + notenr));
+                        newnote.X = 10;
+                        newnote.Y = 10;
+                        newnote.Width = DEFAULTIMPORTNOTEWIDTH;
+                        newnote.Height = DEFAULTIMPORTNOTEHEIGHT;
+                        newnote.Title = "DeskNotes" + notenr;
+                        newnote.Visible = visible;
+                        newnote.Ontop = ontop;
+
+                        XmlReader notepartreader = reader.ReadSubtree();
+                        while (notepartreader.Read())
+                        {
+                            switch (notepartreader.Name)
+                            {
+                                case "x":
+                                    newnote.X = notepartreader.ReadElementContentAsInt();
+                                    break;
+                                case "y":
+                                    newnote.Y = notepartreader.ReadElementContentAsInt();
+                                    break;
+                                case "width":
+                                    newnote.Width = notepartreader.ReadElementContentAsInt();
+                                    break;
+                                case "height":
+                                    newnote.Height = notepartreader.ReadElementContentAsInt();
+                                    break;
+                                case "LastModificationTime":
+                                    if (Settings.NotesDefaultTitleDate)
+                                    {                                        
+                                        newnote.Title = notepartreader.ReadElementContentAsString();
+                                        try
+                                        {
+                                            DateTime dt = DateTime.Parse(newnote.Title);
+                                            newnote.Title = dt.ToShortDateString() + " " + dt.ToShortTimeString();
+                                        }
+                                        catch
+                                        {
+                                            Log.Write(LogType.exception, "Cannot figure out LastModificationTime as DateTime in DeskNotes note");
+                                        }
+                                    }
+                                    break;
+                                case "text":
+                                    newnote.Tempcontent = notepartreader.ReadElementContentAsString();
+                                    break;
+                            }
+                        }
+
+                        xmlUtil.WriteNote(newnote, this.notes.GetSkinName(Settings.NotesDefaultSkinnr), newnote.Tempcontent);                        
+                    }
+                }
+
+                this.notes.LoadNotes(true, false);
+            }
+            catch (InvalidOperationException invopexc)
+            {
+                Log.Write(LogType.exception, invopexc.Message);
+            }
+            finally
+            {
+
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+            }
+
+        }
+
+        /// <summary>
         /// Read a note file from NoteFly 1.0.x and save as a current NoteFly note.
         /// </summary>
         /// <param name="nf1notefile">THe filename of the NoteFly 1.0.x note to import.</param>
@@ -565,10 +661,10 @@
         }
 
         /// <summary>
-        /// Decode stickies title from UTF32 to UTF8
+        /// Decode stickies title from UTF32 to UTF16
         /// </summary>
         /// <param name="title_enc">Title encoded as UTF-32</param>
-        /// <returns>Title string as UTF-8</returns>
+        /// <returns>Title string as UTF-16</returns>
         private string decode_title(string title_enc)
         {
             StringBuilder title = new StringBuilder();

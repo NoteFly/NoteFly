@@ -288,6 +288,9 @@ namespace NoteFly
                     case 4:
                         importnote.ReadCintaNotesXMLFile(this.openImportFileDialog.FileName);
                         break;
+                    case 5:
+                        importnote.ReadDeskNotesXmlFile(this.openImportFileDialog.FileName);
+                        break;
                 }
 
                 this.Resetdatagrid();
@@ -317,7 +320,7 @@ namespace NoteFly
                     int notepos = this.GetNoteposBySelrow(selrow.Index);
                     if (notepos >= 0)
                     {
-                        selrow.Cells["visible"].Value = !this.notes.GetNote(notepos).Visible;
+                        selrow.Cells[2].Value = !this.notes.GetNote(notepos).Visible;
                         this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
                         if (this.notes.GetNote(notepos).Visible)
                         {

@@ -428,7 +428,7 @@ namespace NoteFly
             // openImportFileDialog
             // 
             this.openImportFileDialog.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb|" +
-                "CintaNotes xml export|*.xml";
+                "CintaNotes xml export|*.xml|DeskNotes file|*.xml";
             // 
             // FrmManageNotes
             // 
