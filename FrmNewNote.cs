@@ -615,6 +615,14 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            StringBuilder sbfilter = new StringBuilder();
+            sbfilter.Append("Plain text file(*.txt)|*.txt|");
+            sbfilter.Append("RTF file(*.rtf)|*.rtf|");
+            sbfilter.Append("KeyNote NF note (*.knt)|*.knt|");
+            sbfilter.Append("TomBoy note(*.note)|*.note|");
+            sbfilter.Append("MicroSE note(*.not)|*.not|");
+            sbfilter.Append("QuickPad note(*.qpn)|*.qpn");
+            this.openNoteFileDialog.Filter = sbfilter.ToString();            
             DialogResult dlgresopennote = this.openNoteFileDialog.ShowDialog();
             if (dlgresopennote == DialogResult.OK)
             {
@@ -641,6 +649,9 @@ namespace NoteFly
                                 break;
                             case 5:
                                 importnote.ReadMicroSENotefile(reader, this.tbTitle, this.rtbNewNote);
+                                break;
+                            case 6:
+                                importnote.ReadQuickpadFile(reader, this.tbTitle, this.rtbNewNote);
                                 break;
                         }
                     }

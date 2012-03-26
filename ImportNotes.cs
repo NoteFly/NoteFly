@@ -51,6 +51,23 @@
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="rtbNewNote"></param>
+        public void ReadQuickpadFile(StreamReader reader, TextBox tbTitle, RichTextBox rtbNewNote)
+        {
+            string firstline = reader.ReadLine();
+            if (firstline.Length > 255)
+            {
+                firstline = firstline.Substring(0, 255);
+            }
+
+            tbTitle.Text = firstline;
+            rtbNewNote.Text = reader.ReadToEnd();
+        }
+
+        /// <summary>
         /// Import a rtf file as note content for a new note.
         /// </summary>
         /// <param name="reader">Streamreader to read the note content.</param>

@@ -676,8 +676,6 @@ namespace NoteFly
             // 
             // openNoteFileDialog
             // 
-            this.openNoteFileDialog.Filter = "Plain text file (*.txt)|*.txt|PNotes note(*.pnote)|*.pnote|KeyNote NF note (*.knt" +
-                ")|*.knt|TomBoy note(*.note)|*.note|MicroSE Note(*.not)|*.not";
             this.openNoteFileDialog.Title = "import single (note)file";
             // 
             // tlpnlFormatbtn
