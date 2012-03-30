@@ -573,7 +573,7 @@ namespace NoteFly
                 if (!string.IsNullOrEmpty(downloadurl))
                 {
                     StringBuilder sbmsg = new StringBuilder();
-                    sbmsg.AppendLine(Strings.T("There's a new version availible."));
+                    sbmsg.AppendLine(Strings.T("There's a new version of {0} available.", Program.AssemblyTitle));
                     sbmsg.Append(Strings.T("Your version:"));
                     sbmsg.AppendLine(" " + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
                     sbmsg.Append(Strings.T("New version:"));
