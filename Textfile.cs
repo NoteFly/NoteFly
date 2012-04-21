@@ -63,9 +63,9 @@ namespace NoteFly
         /// Initializes a new instance of the Textfile class.
         /// </summary>
         /// <param name="writetype">The TextfileWriteType.</param>
-        /// <param name="filename">the filename</param>
-        /// <param name="title">the title of the textfile</param>
-        /// <param name="content">the content of the textfile</param>
+        /// <param name="filename">The filename</param>
+        /// <param name="title">The title of the textfile</param>
+        /// <param name="content">The content of the textfile</param>
         public Textfile(TextfileWriteType writetype, string filename, string title, string content)
         {
             FileStream fs = null;

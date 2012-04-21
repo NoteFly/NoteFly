@@ -114,7 +114,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets or set a value indicating whether a FrmNewNote window is open.
+        /// Gets or sets a value indicating whether a FrmNewNote window is open.
         /// </summary>
         public bool Frmneweditnoteopen
         {
@@ -130,7 +130,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whetherr FrmManageNotes datagridview needs to be redrawn.
+        /// Gets or sets a value indicating whether FrmManageNotes datagridview needs to be redrawn.
         /// </summary>
         public bool FrmManageNotesNeedUpdate
         {
@@ -247,7 +247,8 @@ namespace NoteFly
         /// <summary>
         /// Check whether a form can be created.
         /// </summary>
-        /// <param name="form">True if form may be created.</param>
+        /// <param name="form">The form to check.</param>
+        /// <returns>True if form may be created.</returns>
         private bool AllowCreateForm(Form form)
         {
             if (form == null || form.IsDisposed)

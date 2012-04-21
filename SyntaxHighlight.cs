@@ -206,7 +206,6 @@ namespace NoteFly
                 }
             }
 
-            //rtb.ResumeLayout();
             if (!string.IsNullOrEmpty(rtf))
             {
                 int prevtextlen = rtb.TextLength;
@@ -303,7 +302,8 @@ namespace NoteFly
                 } 
 
                 int lastpos = 0;
-                for (int i = cursorpos - 2; i > 0; i--) // -2 for line ending length
+                // -2 for line ending length
+                for (int i = cursorpos - 2; i > 0; i--) 
                 {
                     if (rtb.Text[i] == ' ' || rtb.Text[i] == '\n' || rtb.Text[i] == '\r')
                     {

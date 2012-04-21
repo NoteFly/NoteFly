@@ -360,6 +360,5 @@ namespace NoteFly
             this.components.Dispose();
             Application.Exit();
         }
-
     }
 }

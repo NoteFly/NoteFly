@@ -30,12 +30,12 @@ namespace NoteFly
     public class HttpUtil
     {
         /// <summary>
-        /// url of http request, immutable
+        /// Url of http request, immutable.
         /// </summary>
         private readonly string url;
 
         /// <summary>
-        /// cache settings of http request, immutable
+        /// Cache settings of http request, immutable.
         /// </summary>
         private readonly System.Net.Cache.RequestCacheLevel cachesettings;
 
@@ -70,6 +70,7 @@ namespace NoteFly
         /// <summary>
         /// Create a new Http request only if DownloadCompleet event is assigned.
         /// </summary>
+        /// <param name="workcompleethandler">The RunWorkerCompletedEventHandler</param>
         /// <returns>True if http background worker succesfully started</returns>
         public bool Start(RunWorkerCompletedEventHandler workcompleethandler)
         {
@@ -150,6 +151,9 @@ namespace NoteFly
         /// <summary>
         /// Create a WebRequest object
         /// </summary>
+        /// <param name="url">Http request url.</param>
+        /// <param name="cachesettings">Http cache settings</param>
+        /// <returns>A new httpwebrequest object.</returns>
         private HttpWebRequest CreateHttpWebRequest(string url, System.Net.Cache.RequestCacheLevel cachesettings)
         {
             System.Net.ServicePointManager.Expect100Continue = false;

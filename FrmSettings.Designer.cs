@@ -678,6 +678,81 @@ namespace NoteFly
         private ShortcutTextBox shortcutTextBoxNewNote;
 
         /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextHotkeyNotesToFront;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private ShortcutTextBox shortcutTextBoxNotesToFront;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxNetworkIPversion;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextNetworkTimeout;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextPreferedIPversion;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.NumericUpDown numTimeout;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnOpenSettingsFolder;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxLoadPlugins;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbxFontTrayicon;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Label lblTextTrayiconFont;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxHotkeyNewNoteEnabled;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxHotkeyManageNotesEnabled;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.CheckBox chxHotkeyNotesFrontEnabled;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -1673,7 +1748,6 @@ namespace NoteFly
             // 
             // cbxFontNoteContent
             // 
-            this.cbxFontNoteContent.AccessibleDescription = "";
             this.cbxFontNoteContent.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
             this.tableLayoutPanelNotes.SetColumnSpan(this.cbxFontNoteContent, 3);
             this.cbxFontNoteContent.DropDownHeight = 140;
@@ -1764,7 +1838,6 @@ namespace NoteFly
             // 
             // cbxFontNoteTitle
             // 
-            this.cbxFontNoteTitle.AccessibleDescription = "";
             this.cbxFontNoteTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
             this.tableLayoutPanelNotes.SetColumnSpan(this.cbxFontNoteTitle, 3);
             this.cbxFontNoteTitle.DropDownHeight = 140;
@@ -1790,7 +1863,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = "";
+            this.lblTextDirection.AccessibleDescription = string.Empty;
             this.lblTextDirection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -3080,22 +3153,6 @@ namespace NoteFly
 
         }
 
-        #endregion        
-
-        private System.Windows.Forms.Label lblTextHotkeyNotesToFront;
-        private ShortcutTextBox shortcutTextBoxNotesToFront;
-        private System.Windows.Forms.ComboBox cbxNetworkIPversion;
-        private System.Windows.Forms.Label lblTextNetworkTimeout;
-        private System.Windows.Forms.Label lblTextPreferedIPversion;
-        private System.Windows.Forms.NumericUpDown numTimeout;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
-        private System.Windows.Forms.Button btnOpenSettingsFolder;
-        private System.Windows.Forms.CheckBox chxLoadPlugins;
-        private System.Windows.Forms.ComboBox cbxFontTrayicon;
-        private System.Windows.Forms.Label lblTextTrayiconFont;
-        private System.Windows.Forms.CheckBox chxHotkeyNewNoteEnabled;
-        private System.Windows.Forms.CheckBox chxHotkeyManageNotesEnabled;
-        private System.Windows.Forms.CheckBox chxHotkeyNotesFrontEnabled;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
+        #endregion
     }
 }

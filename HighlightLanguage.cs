@@ -75,11 +75,11 @@ namespace NoteFly
         /// Initializes a new instance of the HighlightLanguage class.
         /// </summary>
         /// <param name="name">The name of the language</param>
-        /// <param name="commentline">how a comment line is marked in this language</param>
-        /// <param name="commentstart">how comments start is marked in this language</param>
-        /// <param name="commentend">how comments end is marked in this language</param>
-        /// <param name="docstartstr">how the document of this language start</param>
-        /// <param name="docendstr"> how the document of this language end</param>
+        /// <param name="commentline">How a comment line is marked in this language</param>
+        /// <param name="commentstart">How comments start is marked in this language</param>
+        /// <param name="commentend">How comments end is marked in this language</param>
+        /// <param name="docstartstr">How the document of this language start</param>
+        /// <param name="docendstr">How the document of this language end</param>
         /// <param name="keywords">The keywords to highlight on</param>
         public HighlightLanguage(string name, string commentline, string commentstart, string commentend, string docstartstr, string docendstr, string[] keywords)
         {

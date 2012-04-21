@@ -41,8 +41,8 @@ namespace NoteFly
         /// s_KeyEventHandler(null,new KeyEventArgs(key,msg)) However, in case one of the registered
         /// subscribers throws an exception, execution of the non-executed subscribers is cancelled.
         /// </remarks>
-        /// <param name="key"></param>
-        /// <param name="msg"></param>
+        /// <param name="key">key</param>
+        /// <param name="msg">msg</param>
         private void KeyHandler(ushort key, uint msg)
         {
             if (this.s_KeyEventHandler != null)
@@ -58,8 +58,6 @@ namespace NoteFly
                         // This is a static class, therefore null is passed as the object reference
                         sink(null, new UniversalKeyEventArgs(key, msg));
                     }
-
-                    // You can add some meaningful code to this catch block.
                     catch
                     {
                         Log.Write(LogType.exception, "KeyHandler unknown exception");
@@ -184,7 +182,6 @@ namespace NoteFly
                 /// 
                 /// </summary>
                 public void* hwndTarget;
-
             }
 
             /// <summary>
@@ -211,7 +208,6 @@ namespace NoteFly
                 /// 
                 /// </summary>
                 public void* wParam;
-
             }
 
             /// <summary>
@@ -253,7 +249,6 @@ namespace NoteFly
                 /// 
                 /// </summary>
                 public uint ExtraInformation;
-
             }
             #endregion
 
@@ -274,7 +269,7 @@ namespace NoteFly
                 cp.Y = 0x7FFFFFFF;
                 cp.Height = 0;
                 cp.Width = 0;
-                //cp.Parent = parent.Handle;
+                ////cp.Parent = parent.Handle;
                 cp.Style = WS_CLIPCHILDREN;
 
                 // Create the actual invisible window
@@ -297,7 +292,10 @@ namespace NoteFly
                             throw new Win32Exception(err, "ListeningWindow::RegisterRawInputDevices");
                         }
                     }
-                    catch { throw; }
+                    catch 
+                    {
+                        throw; 
+                    }
                 }
             }
     
@@ -316,7 +314,7 @@ namespace NoteFly
                             {
                                 uint dwSize = 0;
                                 uint receivedBytes;
-                                uint sizeof_RAWINPUTHEADER = (uint)(sizeof(RAWINPUTHEADER));
+                                uint sizeof_RAWINPUTHEADER = (uint)sizeof(RAWINPUTHEADER);
 
                                 // Find out the size of the buffer we have to provide
                                 int res = GetRawInputData(m.LParam.ToPointer(), RID_INPUT, null, &dwSize, sizeof_RAWINPUTHEADER);
@@ -327,7 +325,7 @@ namespace NoteFly
                                     byte* lpb = stackalloc byte[(int)dwSize];
 
                                     // ... get the data
-                                    receivedBytes = (uint)GetRawInputData((RAWINPUTHKEYBOARD*)(m.LParam.ToPointer()), RID_INPUT, lpb, &dwSize, sizeof_RAWINPUTHEADER);
+                                    receivedBytes = (uint)GetRawInputData((RAWINPUTHKEYBOARD*)m.LParam.ToPointer(), RID_INPUT, lpb, &dwSize, sizeof_RAWINPUTHEADER);
                                     if (receivedBytes == dwSize)
                                     {
                                         RAWINPUTHKEYBOARD* keybData = (RAWINPUTHKEYBOARD*)lpb;
@@ -373,18 +371,17 @@ namespace NoteFly
             // In case you want to have a comprehensive overview of calling conventions follow the next link:
             // http://www.codeproject.com/cpp/calling_conventions_demystified.asp
 
-            [DllImport("User32.dll", CharSet = CharSet.Ansi,SetLastError = true)]
-            [return : MarshalAs(UnmanagedType.Bool)]
+            [DllImport("User32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern unsafe bool RegisterRawInputDevices(RAWINPUTDEV* rawInputDevices, uint numDevices, uint size);
 
-            [DllImport("User32.dll",CharSet = CharSet.Ansi, SetLastError = true)]
-            [return : MarshalAs(UnmanagedType.I4)]
+            [DllImport("User32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.I4)]
             internal static extern unsafe int GetRawInputData(void* hRawInput,
                 uint uiCommand,
                 byte* pData,
                 uint* pcbSize,
-                uint cbSizeHeader
-                );
+                uint cbSizeHeader);
 
             #endregion
         }

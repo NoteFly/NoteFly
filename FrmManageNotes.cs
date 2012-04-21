@@ -33,7 +33,7 @@ namespace NoteFly
     /// </summary>
     public sealed partial class FrmManageNotes : Form
     {
-        #region Fields (8)
+        #region Fields (5)
 
         /// <summary>
         /// Constant for the fixed width of the number note colum in datagridview1.
@@ -60,6 +60,11 @@ namespace NoteFly
         /// </summary>
         private int secondprevrownr = -2;
 
+        private const int colindexnr = 0;
+        private const int colindextitle = 1;
+        private const int colindexvisible = 2;
+        private const int colindexskin = 3;
+
         #endregion Fields
 
         #region Constructors (1)
@@ -81,7 +86,7 @@ namespace NoteFly
 
             if (this.dataGridViewNotes.RowCount > 0)
             {
-                if ((bool)this.dataGridViewNotes.Rows[0].Cells[2].Value == true) // fixme
+                if ((bool)this.dataGridViewNotes.Rows[0].Cells[colindexvisible].Value == true)
                 {
                     this.btnShowSelectedNotes.Text = Strings.T("&hide selected");
                 }
@@ -177,20 +182,16 @@ namespace NoteFly
                 {
                     case 1:
                         exportnotes.WriteNoteFlyNotesBackupFile(this.saveExportFileDialog.FileName);
-                        ////xmlUtil.WriteNoteFlyNotesBackupFile(this.saveExportFileDialog.FileName, this.notes);
                         break;
                     case 2:
                         exportnotes.WriteStickiesCSVBackupfile(this.saveExportFileDialog.FileName);
-                        ////this.WriteStickiesCSVBackupfile(this.saveExportFileDialog.FileName);
                         break;
                     case 3:
                         exportnotes.WritePNotesBackupfile(this.saveExportFileDialog.FileName);
-                        ////this.WritePNotesBackupfile(this.saveExportFileDialog.FileName);
                         break;
                 }
             }
         }
-
 
         /// <summary>
         /// Close form
@@ -234,7 +235,7 @@ namespace NoteFly
                         {
                             sbdeleteselectednotes.AppendLine(Strings.T("And more notes."));
                         }
-                   }
+                    }
 
                     DialogResult deleteres = MessageBox.Show(sbdeleteselectednotes.ToString(), Strings.T("delete?"), MessageBoxButtons.YesNo);
                     if (deleteres == DialogResult.Yes)
@@ -259,7 +260,6 @@ namespace NoteFly
 
             this.Resetdatagrid();
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
-            //this.notes.FrmManageNotesNeedUpdate = true;
             Application.DoEvents();
         }
 
@@ -302,7 +302,7 @@ namespace NoteFly
                     this.btnNoteDelete.Enabled = true;
                 }
             }
-        }        
+        }
 
         /// <summary>
         /// Toggle visibility selected notes.
@@ -320,7 +320,7 @@ namespace NoteFly
                     int notepos = this.GetNoteposBySelrow(selrow.Index);
                     if (notepos >= 0)
                     {
-                        selrow.Cells[2].Value = !this.notes.GetNote(notepos).Visible;
+                        selrow.Cells[colindexvisible].Value = !this.notes.GetNote(notepos).Visible;
                         this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
                         if (this.notes.GetNote(notepos).Visible)
                         {
@@ -345,7 +345,6 @@ namespace NoteFly
             }
 
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
-            //this.notes.FrmManageNotesNeedUpdate = false;
         }
 
         /// <summary>
@@ -357,7 +356,7 @@ namespace NoteFly
         {
             if (e.RowIndex >= 0)
             {
-                if ((bool)this.dataGridViewNotes.Rows[e.RowIndex].Cells[2].Value == true)
+                if ((bool)this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexvisible].Value == true)
                 {
                     this.btnShowSelectedNotes.Text = Strings.T("&hide selected");
                 }
@@ -387,7 +386,7 @@ namespace NoteFly
                 if (notepos >= 0)
                 {
                     this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
-                    this.dataGridViewNotes.Rows[row].Cells[2].Value = !(bool)this.dataGridViewNotes.Rows[row].Cells[2].Value;
+                    this.dataGridViewNotes.Rows[row].Cells[colindexvisible].Value = !(bool)this.dataGridViewNotes.Rows[row].Cells[colindexvisible].Value;
                     if (this.notes.GetNote(notepos).Visible)
                     {
                         this.notes.GetNote(notepos).CreateForm();
@@ -434,7 +433,7 @@ namespace NoteFly
             if (Program.Formmanager.FrmManageNotesNeedUpdate)
             {
                 if (this.dataGridViewNotes.RowCount != this.notes.CountNotes && !this.searchTextBoxNotes.IsKeywordEntered)
-                { 
+                {
                     this.DrawNotesGrid();
                     this.SetDataGridViewColumsWidth();
                 }
@@ -442,15 +441,15 @@ namespace NoteFly
                 int notepos = this.GetNoteposBySelrow(e.RowIndex);
                 if (notepos >= 0)
                 {
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[1].Value = this.notes.GetNote(notepos).Title;
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[3].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[3].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
-                    if (this.dataGridViewNotes.Rows[e.RowIndex].Cells[3].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindextitle].Value = this.notes.GetNote(notepos).Title;
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexskin].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexskin].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
+                    if (this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexskin].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
                     {
-                        this.dataGridViewNotes.Rows[e.RowIndex].Cells[3].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
+                        this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexskin].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
                     }
 
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[2].Value = this.notes.GetNote(notepos).Visible;
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexvisible].Value = this.notes.GetNote(notepos).Visible;
 
                     if ((e.RowIndex == this.dataGridViewNotes.RowCount - 1) || (this.prevrownr < this.secondprevrownr))
                     {
@@ -508,10 +507,6 @@ namespace NoteFly
                     string filepath = Path.Combine(Settings.NotesSavepath, filename);
                     if (Settings.NotesDeleteRecyclebin)
                     {
-                        // On older FAT file systems (typically Windows 98 and prior), it is located in Drive:\RECYCLED.
-                        // In the NTFS filesystem (Windows 2000, XP, NT) it is Drive:\RECYCLER. 
-                        // On Windows Vista and Windows 7 it is Drive:\$Recycle.Bin folder.
-                        // The actual location of the Recycle Bin is in another hidden folder, also at the system root, called RECYCLER
 #if windows
                         if (IsWOW64Process())
                         {
@@ -532,25 +527,43 @@ namespace NoteFly
                             SHFileOperation_x86(ref fs);
                         }
 #elif linux
-                        // trashfolder = ~/.local/share/Trash/files
+                        // move file to trash folder, located: ~/.local/share/Trash/files
                         string trashfolder = System.Environment.GetEnvironmentVariable("HOME") +"/.local/share/Trash/files/";
                         if (!Directory.Exists(trashfolder))
                         {
                             Directory.CreateDirectory(trashfolder);
+                            Log.Write(LogType.info, "Trash folder created: " + trashfolder);
                         }
                         
-                        File.Move(filepath, Path.Combine(trashfolder, filename));
+                        try
+                        {
+                            File.Move(filepath, Path.Combine(trashfolder, filename));
+                        }
+                        catch (IOException ioexc)
+                        {
+                            Log.Write(LogType.exception, ioexc.Message);
+                        }
 #endif
+
                         if (!File.Exists(filepath))
                         {
                             Log.Write(LogType.info, "Moved note to Recyclebin: " + filepath);
                         }
                         else
                         {
-                            Log.Write(LogType.exception, "Could not move note to recyclebin. Try renaming with appending .old to note filename.");
-                            if (!File.Exists(filepath + ".old"))
+                            const string OLDFILEEXTENSION = ".old";
+                            Log.Write(LogType.exception, String.Format("Could not move note to recyclebin. Trying renaming with {0} appended to note filename.", OLDFILEEXTENSION));
+
+                            if (!File.Exists(filepath + OLDFILEEXTENSION))
                             {
-                                File.Move(filepath, filepath + ".old");                                
+                                try
+                                {
+                                    File.Move(filepath, filepath + OLDFILEEXTENSION);
+                                }
+                                catch (IOException ioexc)
+                                {
+                                    Log.Write(LogType.exception, ioexc.Message);
+                                }
                             }
                         }
                     }
@@ -585,7 +598,7 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
-            int vertscrolloffset = this.dataGridViewNotes.VerticalScrollingOffset;
+            ////int vertscrolloffset = this.dataGridViewNotes.VerticalScrollingOffset;
             this.Resetdatagrid();
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
@@ -597,7 +610,7 @@ namespace NoteFly
                     datatable = this.AddDatatableNoteRow(datatable, i);
                 }
             }
-            
+
             // VerticalScrollingOffset is readonly, so we need a bit of 'hacking' to set it.
             // disabled causes System.RuntimeMethodHandle._InvokeMethodFast to throw exception
             /*
@@ -627,7 +640,7 @@ namespace NoteFly
             string colnr = "nr";
             string coltitle = "title";
             string colvisible = "visible";
-            string colskin ="skin";
+            string colskin = "skin";
             try
             {
                 colnr = Strings.T("nr");
@@ -640,22 +653,22 @@ namespace NoteFly
                 Log.Write(LogType.exception, exc.Message);
             }
 
-            datatable.Columns.Add(colnr, typeof(string)); // col 0
-            datatable.Columns[0].AutoIncrement = true;
-            datatable.Columns[0].Unique = true;
-            datatable.Columns.Add(coltitle, typeof(string)); // col 1
-            datatable.Columns.Add(colvisible, typeof(bool)); // col 2
-            datatable.Columns.Add(colskin, typeof(string)); // col 3
+            datatable.Columns.Add(colnr, typeof(string)); // colindexnr
+            datatable.Columns[colindexnr].AutoIncrement = true;
+            datatable.Columns[colindexnr].Unique = true;
+            datatable.Columns.Add(coltitle, typeof(string)); // colindextitle
+            datatable.Columns.Add(colvisible, typeof(bool)); //colindexvisible
+            datatable.Columns.Add(colskin, typeof(string)); // colindexskin
             datatable.DefaultView.AllowEdit = true;
             datatable.DefaultView.AllowNew = false;
-            if (this.dataGridViewNotes.Columns[0] != null)
+            if (this.dataGridViewNotes.Columns[colindexnr] != null)
             {
-                this.dataGridViewNotes.Columns[0].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridViewNotes.Columns[colindexnr].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            if (this.dataGridViewNotes.Columns[2] != null)
+            if (this.dataGridViewNotes.Columns[colindexvisible] != null)
             {
-                this.dataGridViewNotes.Columns[2].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridViewNotes.Columns[colindexvisible].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
             this.dataGridViewNotes.Font = new Font(Settings.ManagenotesFontFamily, Settings.ManagenotesFontsize);
@@ -672,10 +685,10 @@ namespace NoteFly
         private DataTable AddDatatableNoteRow(DataTable datatable, int notepos)
         {
             DataRow dr = datatable.NewRow();
-            dr[0] = notepos + 1; // enduser numbering, start at 1 instead of 0.
-            dr[1] = this.notes.GetNote(notepos).Title;
-            dr[2] = this.notes.GetNote(notepos).Visible;
-            dr[3] = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
+            dr[colindexnr] = notepos + 1; // enduser numbering, start at 1 instead of 0.
+            dr[colindextitle] = this.notes.GetNote(notepos).Title;
+            dr[colindexvisible] = this.notes.GetNote(notepos).Visible;
+            dr[colindexskin] = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
             datatable.Rows.Add(dr);
             return datatable;
         }
@@ -731,7 +744,7 @@ namespace NoteFly
         {
             if (rowindex >= 0)
             {
-                return Convert.ToInt32(this.dataGridViewNotes.Rows[rowindex].Cells[0].Value) - 1; // col: nr
+                return Convert.ToInt32(this.dataGridViewNotes.Rows[rowindex].Cells[colindexnr].Value) - 1;
             }
             else
             {
@@ -842,24 +855,24 @@ namespace NoteFly
             }
 
             int partunit = (this.dataGridViewNotes.Width - COLNOTENRFIXEDWIDTH) / 10;
-            if (this.dataGridViewNotes.Columns[0] != null)
+            if (this.dataGridViewNotes.Columns[colindexnr] != null)
             {
-                this.dataGridViewNotes.Columns[0].Width = 1 * COLNOTENRFIXEDWIDTH;
+                this.dataGridViewNotes.Columns[colindexnr].Width = 1 * COLNOTENRFIXEDWIDTH;
             }
 
-            if (this.dataGridViewNotes.Columns[1] != null)
+            if (this.dataGridViewNotes.Columns[colindextitle] != null)
             {
-                this.dataGridViewNotes.Columns[1].Width = 6 * partunit;
+                this.dataGridViewNotes.Columns[colindextitle].Width = 6 * partunit;
             }
 
-            if (this.dataGridViewNotes.Columns[2] != null)
+            if (this.dataGridViewNotes.Columns[colindexvisible] != null)
             {
-                this.dataGridViewNotes.Columns[2].Width = 1 * partunit;
+                this.dataGridViewNotes.Columns[colindexvisible].Width = 1 * partunit;
             }
 
-            if (this.dataGridViewNotes.Columns[3] != null)
+            if (this.dataGridViewNotes.Columns[colindexskin] != null)
             {
-                this.dataGridViewNotes.Columns[3].Width = 3 * partunit;
+                this.dataGridViewNotes.Columns[colindexskin].Width = 3 * partunit;
             }
         }
 
@@ -880,7 +893,7 @@ namespace NoteFly
         /// <param name="e">DataGridViewCell event arguments</param>
         private void dataGridViewNotes_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (Settings.NotesTooltipsEnabled && Settings.ManagenotesTooltip) 
+            if (Settings.NotesTooltipsEnabled && Settings.ManagenotesTooltip)
             {
                 if (e.ColumnIndex == 1)
                 {
@@ -909,7 +922,7 @@ namespace NoteFly
                                 }
                                 else
                                 {
-                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, lencontentpreview); 
+                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, lencontentpreview);
                                 }
 
                                 content = null;
@@ -924,7 +937,7 @@ namespace NoteFly
                             if (!string.IsNullOrEmpty(contentpreview))
                             {
                                 this.toolTip.InitialDelay = 200;
-                                this.toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);                                
+                                this.toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);
                             }
                         }
                     }
@@ -952,7 +965,7 @@ namespace NoteFly
                     title = this.notes.GetNote(i).Title.ToLowerInvariant();
                     keywords = keywords.ToLowerInvariant();
                 }
-                
+
                 if (title.Contains(keywords))
                 {
                     this.AddDatatableNoteRow(dt, i);
@@ -968,8 +981,8 @@ namespace NoteFly
         /// Searching in notes stopped, show all notes again.
         /// </summary>
         private void searchTextBoxNotes_SearchStop()
-        { 
-            this.DrawNotesGrid(); 
+        {
+            this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
         }
 

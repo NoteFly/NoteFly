@@ -50,7 +50,7 @@ namespace NoteFly
         private bool locked;
 
         /// <summary>
-        /// reference to notes class.
+        /// Reference to notes class.
         /// </summary>
         private Notes notes;
 
@@ -75,7 +75,7 @@ namespace NoteFly
         private int skinNr;
 
         /// <summary>
-        /// temporary content.
+        /// Temporary content.
         /// </summary>
         private string tempcontent;
 

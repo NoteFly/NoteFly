@@ -20,9 +20,9 @@
 namespace NoteFly
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
-    using System.Collections.Generic;
     using System.Text;
 
     /// <summary>
@@ -45,9 +45,8 @@ namespace NoteFly
         /// </summary>
         private static string[] excludedplugindlls;
 
-
         /// <summary>
-        /// Gets
+        /// Gets the installed plugins as array.
         /// </summary>
         public static string[] InstalledPlugins
         {
@@ -156,44 +155,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get all the dll filenames(without full path) in the plugin directory.
-        /// </summary>
-        /// <returns>All dll filenames as string array</returns>
-        private static string[] GetDllFilesPluginFolder()
-        {
-            string[] pluginfiles = Directory.GetFiles(Settings.ProgramPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
-            string[] pluginfilenames = new string[pluginfiles.Length];
-            for (int i = 0; i < pluginfiles.Length; i++)
-            {
-                pluginfilenames[i] = Path.GetFileName(pluginfiles[i]);
-            }
-
-            pluginfiles = null;
-            return pluginfilenames;
-        }
-
-        /// <summary>
-        /// Is the dll files excluded as plugin in the plugin directory.
-        /// </summary>
-        /// <param name="dllfilename">The dll filename without path</param>
-        /// <returns>True if it's excluded</returns>
-        private static bool IsPluginFileExcluded(string dllfilename)
-        {
-            if (excludedplugindlls != null)
-            {
-                for (int i = 0; i < excludedplugindlls.Length; i++)
-                {
-                    if (dllfilename.Equals(excludedplugindlls[i], StringComparison.OrdinalIgnoreCase))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Get the names of all plugins installed.
         /// </summary>
         /// <returns></returns>
@@ -204,7 +165,7 @@ namespace NoteFly
             {
                 Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, installedplugins[i]));
                 string pluginname = GetPluginName(pluginassembly);
-                if (!String.IsNullOrEmpty(pluginname))
+                if (!string.IsNullOrEmpty(pluginname))
                 {
                     pluginsnames.Add(pluginname);
                 }                
@@ -212,7 +173,6 @@ namespace NoteFly
 
             return pluginsnames.ToArray();
         }
-
 
         #region Getting plugin details
 
@@ -363,9 +323,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Get the version information from the IPlugin libery.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Array with version numbers major, minor and release numbers.</returns>
         public static short[] GetIPluginVersion()
         {
             string versionipluginstring = string.Empty;
@@ -414,6 +374,44 @@ namespace NoteFly
 
             Settings.ProgramPluginsEnabled = sbenabledplugin.ToString();
             xmlUtil.WriteSettings();
+        }
+
+        /// <summary>
+        /// Get all the dll filenames(without full path) in the plugin directory.
+        /// </summary>
+        /// <returns>All dll filenames as string array</returns>
+        private static string[] GetDllFilesPluginFolder()
+        {
+            string[] pluginfiles = Directory.GetFiles(Settings.ProgramPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
+            string[] pluginfilenames = new string[pluginfiles.Length];
+            for (int i = 0; i < pluginfiles.Length; i++)
+            {
+                pluginfilenames[i] = Path.GetFileName(pluginfiles[i]);
+            }
+
+            pluginfiles = null;
+            return pluginfilenames;
+        }
+
+        /// <summary>
+        /// Is the dll files excluded as plugin in the plugin directory.
+        /// </summary>
+        /// <param name="dllfilename">The dll filename without path</param>
+        /// <returns>True if it's excluded</returns>
+        private static bool IsPluginFileExcluded(string dllfilename)
+        {
+            if (excludedplugindlls != null)
+            {
+                for (int i = 0; i < excludedplugindlls.Length; i++)
+                {
+                    if (dllfilename.Equals(excludedplugindlls[i], StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

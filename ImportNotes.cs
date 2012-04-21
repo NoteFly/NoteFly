@@ -8,7 +8,7 @@
     using System.Xml;
 
     /// <summary>
-    /// Class for importing several other note formats.
+    /// Class for importing from several different note formats.
     /// </summary>
     public class ImportNotes
     {
@@ -30,9 +30,9 @@
         #region Constructors (1)
 
         /// <summary>
-        /// Creating a new instance of ImportNote class.
+        /// Initializes new instance of ImportNote class.
         /// </summary>
-        /// <param name="notse"></param>
+        /// <param name="notes">Reference to notes class</param>
         public ImportNotes(Notes notes)
         {
             this.notes = notes;
@@ -51,10 +51,11 @@
         }
 
         /// <summary>
-        /// 
+        /// Import a QuickPad note file.
         /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="rtbNewNote"></param>
+        /// <param name="reader">The StreamReader</param>
+        /// <param name="tbTitle">The textbox to set title in.</param>
+        /// <param name="rtbNewNote">The richteditextbox to set note content in.</param>
         public void ReadQuickpadFile(StreamReader reader, TextBox tbTitle, RichTextBox rtbNewNote)
         {
             string firstline = reader.ReadLine();
@@ -136,6 +137,8 @@
         /// </summary>
         /// <param name="reader">The streamreader to read the Tomboy note with.</param>
         /// <param name="tomboynotefile">The Tomboy note file full filepath and filename.</param>
+        /// <param name="tbTitle">The textbox to set the title in.</param>
+        /// <param name="rtbNewNote">The richedittextbox to set the content in.</param>
         public void ReadTomboyfile(StreamReader reader, string tomboynotefile, TextBox tbTitle, RichTextBox rtbNewNote)
         {
             tbTitle.Text = xmlUtil.GetContentString(tomboynotefile, "title");
@@ -150,9 +153,9 @@
                     bool innode = false;
                     int startnodepos = 0;
                     int startcontentnode = int.MaxValue;
-                    //List<int> formatstartpos = new List<int>();
-                    //List<string> formattype = new List<string>();
-                    //List<int> formatlen = new List<int>();
+                    ////List<int> formatstartpos = new List<int>();
+                    ////List<string> formattype = new List<string>();
+                    ////List<int> formatlen = new List<int>();
 
                     for (int i = 0; i < tomboycontent.Length; i++)
                     {
@@ -203,6 +206,8 @@
         /// Import a MicroSE note file as note content for a new note.
         /// </summary>
         /// <param name="reader">The streamreader to read the MicroSE note file with.</param>
+        /// <param name="tbTitle">The textbox to set title in.</param>
+        /// <param name="rtbNewNote">The richedittextbox to set content in.</param>
         public void ReadMicroSENotefile(StreamReader reader, TextBox tbTitle, RichTextBox rtbNewNote)
         {
             bool contentstarted = false;
@@ -284,7 +289,7 @@
         /// <summary>
         /// Read a Stickies notes CSV file.
         /// </summary>
-        /// <param name="file">The stickies CSV file</param>
+        /// <param name="file">The stickies CSV file.</param>
         public void ReadStickiesCSVFile(string file)
         {
             StreamReader reader = null;
@@ -431,6 +436,7 @@
                                 ////nrp.width = rcNote.right - rcNote.left;
                                 ////nrp.height = rcNote.bottom - rcNote.top;
                                 ////WritePrivateProfileStructW(pNote->pFlags->id, IK_RELPOSITION, &nrp, sizeof(nrp), g_NotePaths.DataFile);
+                                ////
                                 ////double d = getDouble(0xAAB1726AAC9CDA3F);
                                 ////MessageBox.Show("test: "+d);
                                 ////double test600 = DoubleFromHexString("AAB1726AAC9CDA3F");
@@ -549,7 +555,7 @@
         /// <summary>
         /// Read a DeskNotes Data XML file.
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="file">The DeskNote file.</param>
         public void ReadDeskNotesXmlFile(string file)
         {
             XmlTextReader reader = null;
@@ -558,7 +564,7 @@
                 reader = new XmlTextReader(file);
                 int notenr = 0;
                 while (reader.Read())
-                {                    
+                {
                     if (reader.Name == "DeskNote")
                     {
                         notenr++;
@@ -573,7 +579,7 @@
                         {
                             Log.Write(LogType.exception, "Cannot read or convert d2p1:onTop and/or d2p1:hidden.");
                         }
-                       
+
                         Note newnote = new Note(this.notes, this.notes.GetNoteFilename("DeskNotes" + notenr));
                         newnote.X = 10;
                         newnote.Y = 10;
@@ -602,7 +608,7 @@
                                     break;
                                 case "LastModificationTime":
                                     if (Settings.NotesDefaultTitleDate)
-                                    {                                        
+                                    {
                                         newnote.Title = notepartreader.ReadElementContentAsString();
                                         try
                                         {
@@ -614,6 +620,7 @@
                                             Log.Write(LogType.exception, "Cannot figure out LastModificationTime as DateTime in DeskNotes note");
                                         }
                                     }
+
                                     break;
                                 case "text":
                                     newnote.Tempcontent = notepartreader.ReadElementContentAsString();
@@ -633,13 +640,11 @@
             }
             finally
             {
-
                 if (reader != null)
                 {
                     reader.Close();
                 }
             }
-
         }
 
         /// <summary>

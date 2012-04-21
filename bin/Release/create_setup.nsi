@@ -22,19 +22,21 @@
 ;
 
 !define PROJNAME   "NoteFly"
-!define VERSION    "3.0.1"          ; version number: major.minor.release
+!define VERSION    "3.0.2"          ; version number: major.minor.release
 !define VERSTATUS  ""               ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
 !define LANGFILE   "langs.xml"      ; lexicon file, for highlighting support.
 
 Name "${PROJNAME} ${VERSION} ${VERSTATUS}" ; The name of the installer
-SetCompressor lzma
+;SetCompressor lzma  ; Compression with lzma causes false positives with some anti-virus software.
+SetCompressor /SOLID zlib
 AllowRootDirInstall false
 CRCCheck on
 InstProgressFlags smooth
 ShowInstDetails show
 SetDatablockOptimize on
+SetOverwrite on
 Icon ".\..\..\Resources\icon_small.ico"
 BrandingText " "
 VIProductVersion "${VERSION}.0"
@@ -43,18 +45,14 @@ VIAddVersionKey "FileDescription" "note taking application"
 VIAddVersionKey "ProductVersion" "${VERSION}.0 ${VERSTATUS}"
 VIAddVersionKey "LegalCopyright" "${PROJNAME}"
 VIAddVersionKey "FileVersion" "${VERSION}.0 ${VERSTATUS}"
-
 ; The file to write
 OutFile ".\${PROJNAME}_v${VERSION}${VERSTATUS}.exe"
-
 ; The default installation directory
 InstallDir $PROGRAMFILES\NoteFly
-
 ; Registry key to check for directory (so if you install again, it will 
 ; overwrite the old one automatically)
 InstallDirRegKey HKLM "Software\NoteFly" "Install_Dir"
-
-; nsis UAC plugin requires launch at user level.
+; Launch the installer as adminsitrator.
 RequestExecutionLevel admin
 
 !include LogicLib.nsh
@@ -159,7 +157,7 @@ Section "main executable (required)"
   SetOverwrite on
   
   KillProcDLL::KillProc "${APPFILE}"
-  ; Simply wait 500ms for a running NoteFly process to close itself then check again if it's running.
+  ; Simply wait 500ms for a running NoteFly process to close itself
   sleep 500
    
   ; Check installation directory 
@@ -272,13 +270,13 @@ Section "Uninstall"
   ; Remove NoteFly install directory, if empty
   RMDir "$INSTDIR"
 
-  IfFileExists "$APPDATA\.NoteFly2" removeadminappdata postremoveadminappdata
+  IfFileExists "$APPDATA\NoteFly" removeadminappdata postremoveadminappdata
   
   removeadminappdata:
   ; This is only going to work for the administrator appdata.
   MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to remove your notes settings and plugins from administrator account stored at $APPDATA\NoteFly\ ?" IDNO keepsettingnotes
+  
     Delete "$APPDATA\NoteFly\notes\*.nfn"
-    ;Delete "$APPDATA\NoteFly\plugins\*.dll"
     Delete "$APPDATA\NoteFly\settings.xml"
     Delete "$APPDATA\NoteFly\skins.xml"
     Delete "$APPDATA\NoteFly\debug.log"

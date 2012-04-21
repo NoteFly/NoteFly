@@ -1,6 +1,6 @@
 ﻿namespace NoteFly
 {
-    partial class SearchTextBox
+    public partial class SearchTextBox
     {
         /// <summary> 
         /// Required designer variable.

@@ -269,7 +269,7 @@ namespace NoteFly
                             {
                                 case "name":
                                     detailsplugin[0] = xmlplugin.ReadElementContentAsString();
-                                    if (!String.IsNullOrEmpty(detailsplugin[0]))
+                                    if (!string.IsNullOrEmpty(detailsplugin[0]))
                                     {
                                         for (int i = 0; i < installedpluginnames.Length; i++)
                                         {
@@ -306,7 +306,7 @@ namespace NoteFly
                 }
             }
 
-            if (!String.IsNullOrEmpty(detailsplugin[0]) && !String.IsNullOrEmpty(detailsplugin[1]))
+            if (!string.IsNullOrEmpty(detailsplugin[0]) && !string.IsNullOrEmpty(detailsplugin[1]))
             {
                 short[] installedpluginversion = PluginsManager.GetPluginVersionByName(detailsplugin[0]);
                 short[] availablepluginversion = Program.ParserVersionString(detailsplugin[1]);
@@ -913,7 +913,6 @@ namespace NoteFly
             Settings.ProgramLogException = true;
             Settings.ProgramLogInfo = false;
             Settings.ProgramPluginsAllEnabled = true;
-            //Settings.ProgramPluginsEnabled = Settings.ProgramPluginsEnabled; // leave as is
             Settings.ProgramPluginsDllexclude = "SQLite3.dll|System.Data.SQLite.DLL|Interop.SpeechLib.dll";
             Settings.ProgramPluginsFolder = Program.GetDefaultPluginFolder();
             Settings.ProgramSuspressWarnAdmin = false;

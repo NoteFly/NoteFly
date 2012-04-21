@@ -2,27 +2,59 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.Drawing;
+    using System.Text;
 
     /// <summary>
     /// Allows RTF text to be edited if it's normal text without formatting.
     /// </summary>
-    class RTFDirectEdit
+    public class RTFDirectEdit
     {
+        /// <summary>
+        /// The RTF start tag
+        /// </summary>
         private const string RTF1DOCTAG = @"{\rtf1";
+
+        /// <summary>
+        /// The RTF document viewkind tag
+        /// </summary>
         private const string VIEWKINDTAG = @"\viewkind";
+
+        /// <summary>
+        /// The RTF colortable tag
+        /// </summary>
         private const string COLORTBLTAG = @"{\colortbl ";
+
+        /// <summary>
+        /// The RTF color format tag
+        /// </summary>
         private const string COLORITEMTAG = @"\cf";
+
+        /// <summary>
+        /// RTF tab character
+        /// </summary>
         private const string RTFTABTAG = @"\tab";
+
+        /// <summary>
+        /// List with colortable coloritems
+        /// </summary>
         private List<Color> colortblitems = new List<Color>();
+
+        /// <summary>
+        /// Are we at current position in the RTF document buzy with RTF code format or text content.
+        /// </summary>
         private bool rtfformat = true;
+
+        /// <summary>
+        /// Array with hexcharacters (lowercase alpha).
+        /// </summary>
         private char[] hexchars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="newclr"></param>
+        /// <returns></returns>
         public string SetColorInRTF(string rtf, Color newclr, int textpos, int sellentext)
         {
             int prevnrcoloritem = 1;
@@ -170,7 +202,7 @@
                         if (nrcoloritem < 0)
                         {
                             // newclr does not exist as coloritem in colortbl.
-                            newrtf = this.AddColorItem(newrtf, posstartcolortbl, newclr); //newclr.R, newclr.G, newclr.B
+                            newrtf = this.AddColorItem(newrtf, posstartcolortbl, newclr);
                             // new nr coloritem
                             nrcoloritem = this.GetNrcoloritem(newrtf.ToString(), newclr);
                             if (nrcoloritem < 0)
@@ -236,6 +268,7 @@
         /// <summary>
         /// 
         /// </summary>
+        /// <returns>StringBuilder of colortbl.</returns>
         private StringBuilder CreateColortbl(StringBuilder newrtf, Color textcolor)
         {
             // Create color table.
@@ -335,15 +368,14 @@
                         // check if at least 4 digits
                         for (int n = 2; n < 6; n++)
                         {
-                            Char c = rtf[i + n];
-                            isspecchar = Char.IsDigit(c);
+                            char c = rtf[i + n];
+                            isspecchar = char.IsDigit(c);
                             if (!isspecchar)
                             {
                                 break;
                             }
                         }
                     }
-                                                            
                 }
             }
 
@@ -393,28 +425,28 @@
         /// <returns></returns>
         private Color ParserColorItem(string colortblraw)
         {
-            const string redpropertie = "red";
-            const string greenpropertie = "green";
-            const string bluepropertie = "blue";
+            const string REDPROPERTIE = "red";
+            const string GREENPROPERTIE = "green";
+            const string BLUEPROPERTIE = "blue";
             int red = 0;
             int green = 0;
             int blue = 0;
             string[] colorprop = colortblraw.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
             for (int n = 0; n < colorprop.Length; n++)
             {
-                if (colorprop[n].StartsWith(redpropertie))
+                if (colorprop[n].StartsWith(REDPROPERTIE))
                 {
-                    string redstr = colorprop[n].Substring(redpropertie.Length, colorprop[n].Length - redpropertie.Length);
+                    string redstr = colorprop[n].Substring(REDPROPERTIE.Length, colorprop[n].Length - REDPROPERTIE.Length);
                     red = this.IntParseFast(redstr);
                 }
-                else if (colorprop[n].StartsWith(greenpropertie))
+                else if (colorprop[n].StartsWith(GREENPROPERTIE))
                 {
-                    string greenstr = colorprop[n].Substring(greenpropertie.Length, colorprop[n].Length - greenpropertie.Length);
+                    string greenstr = colorprop[n].Substring(GREENPROPERTIE.Length, colorprop[n].Length - GREENPROPERTIE.Length);
                     green = this.IntParseFast(greenstr);
                 }
-                else if (colorprop[n].StartsWith(bluepropertie))
+                else if (colorprop[n].StartsWith(BLUEPROPERTIE))
                 {
-                    string bluestr = colorprop[n].Substring(bluepropertie.Length, colorprop[n].Length - bluepropertie.Length);
+                    string bluestr = colorprop[n].Substring(BLUEPROPERTIE.Length, colorprop[n].Length - BLUEPROPERTIE.Length);
                     blue = this.IntParseFast(bluestr);
                 }
             }
@@ -455,7 +487,6 @@
         private StringBuilder AddColorItem(StringBuilder newrtf, int posstartcolortbl, Color newclr)
         {
             string valeau = "\\red" + newclr.R + "\\green" + newclr.G + "\\blue" + newclr.B + ";";
-            //string valeau = "\\red" + red + "\\green" + green + "\\blue" + blue + ";";
             int p = posstartcolortbl;
             while (newrtf[p] != '}' && p < newrtf.Length)
             {
@@ -487,7 +518,7 @@
         {
             int numlen = 0;
             int pos = startpos + numlen;
-            int maxlen = Int32.MaxValue.ToString().Length;
+            int maxlen = int.MaxValue.ToString().Length;
             while (char.IsDigit(text, pos) && (pos < text.Length && numlen < maxlen))
             {
                 numlen++;

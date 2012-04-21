@@ -33,7 +33,7 @@ namespace NoteFly
         private const string RESTAPIPLUGINSSEARCH = "http://update.notefly.org/REST/plugins/search.php?keyword=";
 
         /// <summary>
-        /// 
+        /// The url to download plugin of the current plugin being selected.
         /// </summary>
         private string currentplugindownloadurl = null;
 

@@ -55,7 +55,7 @@ namespace NoteFly
         private System.Windows.Forms.Label lblTextLicense;
 
         /// <summary>
-        /// tmpUpdateLblProductEffect Timer
+        /// Timer tmpUpdateLblProductEffect 
         /// </summary>
         private System.Windows.Forms.Timer tmpUpdateLblProductEffect;
 

@@ -21,8 +21,6 @@ namespace NoteFly
 {
     using System;
     using System.Globalization;
-    using System.IO;
-    using System.Text;
 
     /// <summary>
     /// Strings class, used to lookup translations with GNU Gettext
@@ -78,26 +76,13 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Overrides the current thread's CurrentUICulture property for all
+        /// Gets or sets the current thread's CurrentUICulture property for all
         /// resource lookups using this strongly typed resource class.
         /// </summary>
         public static System.Globalization.CultureInfo Culture
         {
             get { return resourceCulture; }
             set { resourceCulture = value; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="setting"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        private static string GetSetting(string setting, string defaultValue)
-        {
-            System.Collections.Specialized.NameValueCollection section = (System.Collections.Specialized.NameValueCollection)System.Configuration.ConfigurationManager.GetSection("appSettings");
-            if (section == null) return defaultValue;
-            else return section[setting] ?? defaultValue;
         }
 
         /// <summary>
@@ -191,7 +176,20 @@ namespace NoteFly
                 }
             }
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        private static string GetSetting(string setting, string defaultValue)
+        {
+            System.Collections.Specialized.NameValueCollection section = (System.Collections.Specialized.NameValueCollection)System.Configuration.ConfigurationManager.GetSection("appSettings");
+            if (section == null) return defaultValue;
+            else return section[setting] ?? defaultValue;
+        }
+
         /// <summary>
         /// Recusive method that translate all control in a ControlCollection.
         /// </summary>

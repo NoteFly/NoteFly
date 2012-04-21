@@ -3,7 +3,7 @@
     /// <summary>
     /// FrmPlugins window
     /// </summary>
-    partial class FrmPlugins
+    public partial class FrmPlugins
     {
         /// <summary>
         /// Required designer variable.

@@ -52,8 +52,19 @@ namespace NoteFly
         /// </summary>
         private string[] languagecodes;
 
+        /// <summary>
+        /// Last key from hotkey for new note.
+        /// </summary>
         private int hotkeysnewnotekeycode;
+
+        /// <summary>
+        /// Last key from hotkey for manage notes.
+        /// </summary>
         private int hotkeysmanagenoteskeycode;
+
+        /// <summary>
+        /// Last key from hotkey for notes to front.
+        /// </summary>
         private int hotkeysnotestofront;
 
         #endregion Fields
@@ -77,7 +88,7 @@ namespace NoteFly
             this.LoadCbxLanguage();
             this.LoadCbxActionLeftclick();
             this.LoadCbxFonts();
-            this.LoadCbxSkins();            
+            this.LoadCbxSkins();
             this.SetControlsBySettings();
         }
 

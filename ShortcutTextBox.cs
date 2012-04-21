@@ -59,7 +59,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets the last/final key
         /// </summary>
         [Description("The final key")]
         public int ShortcutKeyposition
@@ -95,7 +95,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets a value indicating whether alt is used instead of shift as second key for the hotkey combination.
         /// </summary>
         [Description("The second key")]
         public bool UseAltInsteadofShift

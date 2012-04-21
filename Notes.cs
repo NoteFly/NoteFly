@@ -198,7 +198,7 @@ namespace NoteFly
         /// <summary>
         /// Gets a note, by position in list
         /// </summary>
-        /// <param name="pos">note position in list notes</param>
+        /// <param name="pos">Note position in list notes</param>
         /// <returns>The Note object</returns>
         public Note GetNote(int pos)
         {
@@ -360,8 +360,8 @@ namespace NoteFly
         /// <summary>
         /// Loads all note files in the NotesSavepath.
         /// </summary>
-        /// <param name="hasbeenfirstrun">true if it is the first run</param>
-        /// <param name="resetpositions">true for reseting all the notes positions</param>
+        /// <param name="hasbeenfirstrun">True if it is the first run.</param>
+        /// <param name="resetpositions">True for reseting all the notes positions.</param>
         public void LoadNotes(bool hasbeenfirstrun, bool resetpositions)
         {
             if (!Directory.Exists(Settings.NotesSavepath))
@@ -586,8 +586,11 @@ namespace NoteFly
             #endif
             if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE))))
             { 
-                DialogResult resdoimport = MessageBox.Show(Strings.T("Do you want to import the notes from NoteFly 1.0.x?\nPress cancel to ask this again next time."),
-                    Strings.T("Import from NoteFly 1.0.x"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult resdoimport = MessageBox.Show(Strings.T(
+                    "Do you want to import the notes from NoteFly 1.0.x?\nPress cancel to ask this again next time."),
+                    Strings.T("Import from NoteFly 1.0.x"),
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
                 if (resdoimport == DialogResult.Yes)
                 {
                     string nf1settingsfile = Path.Combine(nf1appdata, "settings.xml");
@@ -635,6 +638,7 @@ namespace NoteFly
         /// <summary>
         /// Import NoteFly 2.5.x/2.0.x notes.
         /// </summary>
+        /// <returns>True if already imported.</returns>
         private bool ImportingNotesNoteFly2()
         {
             bool imported = false;
@@ -660,9 +664,9 @@ namespace NoteFly
                         {
                             string filename = Path.GetFileName(notefilespath[i]);
                             string notefilepath = Path.Combine(Settings.NotesSavepath, filename);
-                            if (!File.Exists(notefilepath) && !String.IsNullOrEmpty(filename))
+                            if (!File.Exists(notefilepath) && !string.IsNullOrEmpty(filename))
                             {
-                                File.Copy(notefilespath[i], notefilepath);                                
+                                File.Copy(notefilespath[i], notefilepath);
                             }
                         }
 
@@ -675,6 +679,10 @@ namespace NoteFly
                 {
                     this.CreateNotesImportedFlagfile(nf2appdata);
                 }
+            }
+            else
+            {
+                imported = true;
             }
 
             return imported;
@@ -705,18 +713,20 @@ namespace NoteFly
         /// Check if NotesWarnlimitVisible is reached and display warning then.
         /// </summary>
         /// <param name="currentnumber">The number of notes that are currently visible.</param>
-        /// <returns></returns>
+        /// <returns>True if warning limit is exceeded.</returns>
         private bool CheckLimitNotesVisible(int currentnumber)
         {
             if (currentnumber > Settings.NotesWarnlimitVisible)
             {
                 string notes_manynotesvisibletitle = Strings.T("Many notes visible");
-                string notes_manynotesvisible = Strings.T("There are many notes visible.\nHide some notes to make loading faster.");                
+                string notes_manynotesvisible = Strings.T("There are many notes visible.\nHide some notes to make loading faster.");
                 MessageBox.Show(notes_manynotesvisible, notes_manynotesvisibletitle, MessageBoxButtons.YesNo);
                 return true;
             }
-
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -822,6 +832,7 @@ namespace NoteFly
         /// Add a new note the the notes list.
         /// </summary>
         /// <param name="note">The note to be added.</param>
+        /// <returns>True if succesfull added.</returns>
         private bool AddNote(Note note)
         {
             bool addsucceeded = false;

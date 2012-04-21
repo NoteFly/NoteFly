@@ -34,6 +34,16 @@ namespace NoteFly
     public sealed partial class FrmDownloader : Form
     {
         /// <summary>
+        /// GZip extension
+        /// </summary>
+        private const string GZIPEXTENSION = ".gz";
+
+        /// <summary>
+        /// Zip extension
+        /// </summary>
+        private const string ZIPEXTENSION = ".zip";
+
+        /// <summary>
         /// Webclient object
         /// </summary>
         private WebClient webclient;
@@ -57,16 +67,6 @@ namespace NoteFly
         /// The folder to save downloads to.
         /// </summary>
         private string storefolder;
-
-        /// <summary>
-        /// GZip extension
-        /// </summary>
-        private const string GZIPEXTENSION = ".gz";
-
-        /// <summary>
-        /// Zip extension
-        /// </summary>
-        private const string ZIPEXTENSION = ".zip";
 
         /// <summary>
         /// List of file extension to unzip.
@@ -336,6 +336,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="storefolder">The folder where to save the file in.</param>
         /// <param name="url">The url of the file to download.</param>
+        /// <returns>The store path</returns>
         private string GetStoreFilepath(string storefolder, string url)
         {
             string filename = Path.GetFileName(url);

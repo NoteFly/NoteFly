@@ -134,7 +134,7 @@ namespace NoteFly
         {
             get
             {
-                return "";
+                return string.Empty;
             }
         }
 
@@ -151,7 +151,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Reference to Notes class
+        /// Gets a reference to Notes class
         /// </summary>
         public static Notes Notes
         {
@@ -162,7 +162,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Reference to FormManger class
+        /// Gets a reference to FormManger class
         /// </summary>
         public static FormManager Formmanager
         {
@@ -471,6 +471,83 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Find out if the version numbers given as array is higher
+        /// than the required version numbers given as an array.
+        /// </summary>
+        /// <param name="versionA"></param>
+        /// <param name="versionB"></param>
+        /// <returns> -3 if versionB is not valid.
+        /// -2 if versionA is not valid.
+        /// -1 if versionA is lower than versionB, 
+        /// 0 if versionA is equal with versionB,
+        /// 1 if versionA is higher than versionB.</returns>
+        public static int CompareVersions(short[] versionA, short[] versionB)
+        {
+            bool continu = true;
+            for (int i = 0; i < versionA.Length && continu; i++)
+            {
+                if (versionA[i] < 0)
+                {
+                    return -2;
+                }
+                else if (versionB[i] < 0)
+                {
+                    return -3;
+                }
+
+                if (versionA[i] != versionB[i])
+                {
+                    continu = false;
+                    if (versionA[i] > versionB[i])
+                    {
+                        return 1;
+                    }
+                    else if (versionA[i] < versionB[i])
+                    {
+                        return -1;
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Parser a string as a version number array with major, minor, release numbers
+        /// </summary>
+        /// <returns>Array with version numbers shorts.
+        /// First element is major version number,
+        /// second element is minor version number,
+        /// third element is release version number.</returns>
+        public static short[] ParserVersionString(string versionstring)
+        {
+            short[] versionparts = new short[3];
+            char[] splitchr = new char[1];
+            splitchr[0] = '.';
+            if (!string.IsNullOrEmpty(versionstring))
+            {
+                string[] stringversionparts = versionstring.Split(splitchr, StringSplitOptions.None);
+                try
+                {
+                    for (int i = 0; i < versionparts.Length; i++)
+                    {
+                        versionparts[i] = Convert.ToInt16(stringversionparts[i]);
+                    }
+                }
+                catch (InvalidCastException invcastexc)
+                {
+                    Log.Write(LogType.exception, invcastexc.Message);
+                }
+            }
+            else
+            {
+                Log.Write(LogType.exception, "No version string to parser.");
+            }
+
+            return versionparts;
+        }
+
+        /// <summary>
         /// Parser the programme arguments
         /// </summary>
         /// <param name="args"></param>
@@ -774,84 +851,6 @@ namespace NoteFly
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             }
-        }
-
-        /// <summary>
-        /// Find out if the version numbers given as array is higher
-        /// than the required version numbers given as an array.
-        /// </summary>
-        /// <param name="versionA"></param>
-        /// <param name="versionB"></param>
-        /// <returns> -3 if versionB is not valid.
-        /// -2 if versionA is not valid.
-        /// -1 if versionA is lower than versionB, 
-        ///  0 if versionA is equal with versionB,
-        ///  1 if versionA is higher than versionB.</returns>
-        public static int CompareVersions(short[] versionA, short[] versionB)
-        {
-            //int result = 0;
-            bool continu = true;
-            for (int i = 0; i < versionA.Length && continu; i++)
-            {
-                if (versionA[i] < 0)
-                {
-                    return -2;
-                }
-                else if (versionB[i] < 0)
-                {
-                    return -3;
-                }
-
-                if (versionA[i] != versionB[i])
-                {
-                    continu = false;
-                    if (versionA[i] > versionB[i])
-                    {
-                        return 1;
-                    }
-                    else if (versionA[i] < versionB[i])
-                    {
-                        return -1;
-                    }
-                }
-            }
-
-            return 0;
-        }
-
-        /// <summary>
-        /// Parser a string as a version number array with major, minor, release numbers
-        /// </summary>
-        /// <returns>Array with version numbers shorts.
-        /// First element is major version number,
-        /// second element is minor version number,
-        /// third element is release version number.</returns>
-        public static short[] ParserVersionString(string versionstring)
-        {
-            short[] versionparts = new short[3];
-            char[] splitchr = new char[1];
-            splitchr[0] = '.';
-            if (!string.IsNullOrEmpty(versionstring))
-            {
-                string[] stringversionparts = versionstring.Split(splitchr, StringSplitOptions.None);
-                try
-                {
-                    for (int i = 0; i < versionparts.Length; i++)
-                    {
-                        versionparts[i] = Convert.ToInt16(stringversionparts[i]);
-                    }
-                }
-                catch (InvalidCastException invcastexc)
-                {
-                    Log.Write(LogType.exception, invcastexc.Message);
-                }
-            }
-            else
-            {
-                Log.Write(LogType.exception, "No version string to parser.");
-            }
-
-            return versionparts;
         }
 
 #if windows

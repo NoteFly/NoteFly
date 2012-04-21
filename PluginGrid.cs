@@ -228,7 +228,7 @@ namespace NoteFly
                 PluginsManager.EnablePlugin(dllfilename);
             }
 
-            int pos = FindPos(dllfilename);
+            int pos = this.FindPos(dllfilename);
             if (pos >= 0)
             {
                 this.SetPluginStatus(pos, dllfilename);
@@ -265,7 +265,7 @@ namespace NoteFly
         {
             for (int i = 0; i < this.btnPluginsStatus.Length; i++)
             {
-                if ( Convert.ToString(btnPluginsStatus[i].Tag) == dllfilename)
+                if (Convert.ToString(this.btnPluginsStatus[i].Tag) == dllfilename)
                 {
                     return i;
                 }

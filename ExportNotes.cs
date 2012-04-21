@@ -20,14 +20,14 @@
 namespace NoteFly
 {
     using System;
-    using System.Text;
-    using System.Xml;
-    using System.IO;
     using System.Drawing;
     using System.Globalization;
+    using System.IO;
+    using System.Text;
+    using System.Xml;
 
     /// <summary>
-    /// 
+    /// Class for exporting to several different note formats.
     /// </summary>
     public class ExportNotes
     {
@@ -37,9 +37,9 @@ namespace NoteFly
         private Notes notes;
 
         /// <summary>
-        /// Creating a new instance of ExportNotes class.
+        /// Initializes a new instance of ExportNotes class.
         /// </summary>
-        /// <param name="notes"></param>
+        /// <param name="notes">Reference to notes</param>
         public ExportNotes(Notes notes)
         {
             this.notes = notes;
@@ -49,7 +49,6 @@ namespace NoteFly
         /// Write a file with all notes as backup.
         /// </summary>
         /// <param name="filenamepath">The filename and path of the notes backup</param>
-        /// <param name="notes">Reference to the notes class.</param>
         /// <returns>True if writing backup succeeded otherwise false.</returns>
         public bool WriteNoteFlyNotesBackupFile(string filenamepath)
         {
@@ -64,7 +63,7 @@ namespace NoteFly
                 xmlwrite.WriteAttributeString("number", this.notes.CountNotes.ToString());
                 for (int i = 0; i < this.notes.CountNotes; i++)
                 {
-                    string skinname = this.notes.GetSkinName(notes.GetNote(i).SkinNr);
+                    string skinname = this.notes.GetSkinName(this.notes.GetNote(i).SkinNr);
                     string content = this.notes.GetNote(i).GetContent();
                     xmlUtil.WriteNoteBody(xmlwrite, this.notes.GetNote(i), skinname, content);
                 }

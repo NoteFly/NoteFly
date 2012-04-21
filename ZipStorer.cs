@@ -4,11 +4,11 @@
 
 namespace NoteFly
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.IO.Compression;
     using System.Text;
-    using System;
 
     /// <summary>
     /// Unique class for compression/decompression file. Represents a Zip file.
@@ -75,7 +75,7 @@ namespace NoteFly
         // Stream object of storage file
         private Stream ZipFileStream;
         // General comment
-        private string Comment = "";
+        private string Comment = string.Empty;
         // Central dir image
         private byte[] CentralDirImage = null;
         // Existing files in zip
@@ -83,7 +83,7 @@ namespace NoteFly
         // File access for Open method
         private FileAccess Access;
         // Static CRC32 Table
-        private static UInt32[] CrcTable = null;
+        private static uint[] CrcTable = null;
         // Default filename encoder
         private static Encoding DefaultEncoding = Encoding.GetEncoding(437);
         #endregion
@@ -93,10 +93,10 @@ namespace NoteFly
         static ZipStorer()
         {
             // Generate CRC32 table
-            CrcTable = new UInt32[256];
+            CrcTable = new uint[256];
             for (int i = 0; i < CrcTable.Length; i++)
             {
-                UInt32 c = (UInt32)i;
+                uint c = (uint)i;
                 for (int j = 0; j < 8; j++)
                 {
                     if ((c & 1) != 0)
@@ -104,6 +104,7 @@ namespace NoteFly
                     else
                         c >>= 1;
                 }
+
                 CrcTable[i] = c;
             }
         }
@@ -165,7 +166,7 @@ namespace NoteFly
                 throw new InvalidOperationException("Stream cannot seek");
 
             ZipStorer zip = new ZipStorer();
-            //zip.FileName = _filename;
+            ////zip.FileName = _filename;
             zip.ZipFileStream = _stream;
             zip.Access = _access;
 
@@ -183,11 +184,11 @@ namespace NoteFly
         /// <param name="_comment">Comment for stored file</param>        
         public void AddFile(Compression _method, string _pathname, string _filenameInZip, string _comment)
         {
-            if (Access == FileAccess.Read)
+            if (this.Access == FileAccess.Read)
                 throw new InvalidOperationException("Writing is not alowed");
 
             FileStream stream = new FileStream(_pathname, FileMode.Open, FileAccess.Read);
-            AddStream(_method, _filenameInZip, stream, File.GetLastWriteTime(_pathname), _comment);
+            this.AddStream(_method, _filenameInZip, stream, File.GetLastWriteTime(_pathname), _comment);
             stream.Close();
         }
         /// <summary>
@@ -200,15 +201,15 @@ namespace NoteFly
         /// <param name="_comment">Comment for stored file</param>
         public void AddStream(Compression _method, string _filenameInZip, Stream _source, DateTime _modTime, string _comment)
         {
-            if (Access == FileAccess.Read)
+            if (this.Access == FileAccess.Read)
                 throw new InvalidOperationException("Writing is not alowed");
 
             long offset;
-            if (this.Files.Count==0)
+            if (this.Files.Count == 0)
                 offset = 0;
             else
             {
-                ZipFileEntry last = this.Files[this.Files.Count-1];
+                ZipFileEntry last = this.Files[this.Files.Count - 1];
                 offset = last.HeaderOffset + last.HeaderSize;
             }
 
@@ -216,8 +217,8 @@ namespace NoteFly
             ZipFileEntry zfe = new ZipFileEntry();
             zfe.Method = _method;
             zfe.EncodeUTF8 = this.EncodeUTF8;
-            zfe.FilenameInZip = NormalizedFilename(_filenameInZip);
-            zfe.Comment = (_comment == null ? "" : _comment);
+            zfe.FilenameInZip = this.NormalizedFilename(_filenameInZip);
+            zfe.Comment = (_comment == null ? string.Empty : _comment);
 
             // Even though we write the header now, it will have to be rewritten, since we don't know compressed size or crc.
             zfe.Crc32 = 0;  // to be updated later
@@ -225,16 +226,16 @@ namespace NoteFly
             zfe.ModifyTime = _modTime;
 
             // Write local header
-            WriteLocalHeader(ref zfe);
+            this.WriteLocalHeader(ref zfe);
             zfe.FileOffset = (uint)this.ZipFileStream.Position;
 
             // Write file to zip (store)
-            Store(ref zfe, _source);
+            this.Store(ref zfe, _source);
             _source.Close();
 
             this.UpdateCrcAndSizes(ref zfe);
 
-            Files.Add(zfe);
+            this.Files.Add(zfe);
         }
         /// <summary>
         /// Updates central directory (if pertinent) and close the Zip storage
@@ -248,17 +249,17 @@ namespace NoteFly
                 uint centralSize = 0;
 
                 if (this.CentralDirImage != null)
-                    this.ZipFileStream.Write(CentralDirImage, 0, CentralDirImage.Length);
+                    this.ZipFileStream.Write(this.CentralDirImage, 0, this.CentralDirImage.Length);
 
-                for (int i = 0; i < Files.Count; i++)
+                for (int i = 0; i < this.Files.Count; i++)
                 {
                     long pos = this.ZipFileStream.Position;
-                    this.WriteCentralDirRecord(Files[i]);
+                    this.WriteCentralDirRecord(this.Files[i]);
                     centralSize += (uint)(this.ZipFileStream.Position - pos);
                 }
 
                 if (this.CentralDirImage != null)
-                    this.WriteEndRecord(centralSize + (uint)CentralDirImage.Length, centralOffset);
+                    this.WriteEndRecord(centralSize + (uint)this.CentralDirImage.Length, centralOffset);
                 else
                     this.WriteEndRecord(centralSize, centralOffset);
             }
@@ -281,41 +282,41 @@ namespace NoteFly
 
             List<ZipFileEntry> result = new List<ZipFileEntry>();
 
-            for (int pointer = 0; pointer < this.CentralDirImage.Length; )
+            for (int pointer = 0; pointer < this.CentralDirImage.Length;)
             {
-                uint signature = BitConverter.ToUInt32(CentralDirImage, pointer);
+                uint signature = BitConverter.ToUInt32(this.CentralDirImage, pointer);
                 if (signature != 0x02014b50)
                     break;
 
-                bool encodeUTF8 = (BitConverter.ToUInt16(CentralDirImage, pointer + 8) & 0x0800) != 0;
-                ushort method = BitConverter.ToUInt16(CentralDirImage, pointer + 10);
-                uint modifyTime = BitConverter.ToUInt32(CentralDirImage, pointer + 12);
-                uint crc32 = BitConverter.ToUInt32(CentralDirImage, pointer + 16);
-                uint comprSize = BitConverter.ToUInt32(CentralDirImage, pointer + 20);
-                uint fileSize = BitConverter.ToUInt32(CentralDirImage, pointer + 24);
-                ushort filenameSize = BitConverter.ToUInt16(CentralDirImage, pointer + 28);
-                ushort extraSize = BitConverter.ToUInt16(CentralDirImage, pointer + 30);
-                ushort commentSize = BitConverter.ToUInt16(CentralDirImage, pointer + 32);
-                uint headerOffset = BitConverter.ToUInt32(CentralDirImage, pointer + 42);
-                uint headerSize = (uint)( 46 + filenameSize + extraSize + commentSize);
+                bool encodeUTF8 = (BitConverter.ToUInt16(this.CentralDirImage, pointer + 8) & 0x0800) != 0;
+                ushort method = BitConverter.ToUInt16(this.CentralDirImage, pointer + 10);
+                uint modifyTime = BitConverter.ToUInt32(this.CentralDirImage, pointer + 12);
+                uint crc32 = BitConverter.ToUInt32(this.CentralDirImage, pointer + 16);
+                uint comprSize = BitConverter.ToUInt32(this.CentralDirImage, pointer + 20);
+                uint fileSize = BitConverter.ToUInt32(this.CentralDirImage, pointer + 24);
+                ushort filenameSize = BitConverter.ToUInt16(this.CentralDirImage, pointer + 28);
+                ushort extraSize = BitConverter.ToUInt16(this.CentralDirImage, pointer + 30);
+                ushort commentSize = BitConverter.ToUInt16(this.CentralDirImage, pointer + 32);
+                uint headerOffset = BitConverter.ToUInt32(this.CentralDirImage, pointer + 42);
+                uint headerSize = (uint)(46 + filenameSize + extraSize + commentSize);
 
                 Encoding encoder = encodeUTF8 ? Encoding.UTF8 : DefaultEncoding;
 
                 ZipFileEntry zfe = new ZipFileEntry();
                 zfe.Method = (Compression)method;
-                zfe.FilenameInZip = encoder.GetString(CentralDirImage, pointer + 46, filenameSize);
-                zfe.FileOffset = GetFileOffset(headerOffset);
+                zfe.FilenameInZip = encoder.GetString(this.CentralDirImage, pointer + 46, filenameSize);
+                zfe.FileOffset = this.GetFileOffset(headerOffset);
                 zfe.FileSize = fileSize;
                 zfe.CompressedSize = comprSize;
                 zfe.HeaderOffset = headerOffset;
                 zfe.HeaderSize = headerSize;
                 zfe.Crc32 = crc32;
-                zfe.ModifyTime = DosTimeToDateTime(modifyTime);
+                zfe.ModifyTime = this.DosTimeToDateTime(modifyTime);
                 if (commentSize > 0)
-                    zfe.Comment = encoder.GetString(CentralDirImage, pointer + 46 + filenameSize + extraSize, commentSize);
+                    zfe.Comment = encoder.GetString(this.CentralDirImage, pointer + 46 + filenameSize + extraSize, commentSize);
 
                 result.Add(zfe);
-                pointer += (46 + filenameSize + extraSize + commentSize);
+                pointer += 46 + filenameSize + extraSize + commentSize;
             }
 
             return result;
@@ -339,7 +340,7 @@ namespace NoteFly
                 return true;
 
             Stream output = new FileStream(_filename, FileMode.Create, FileAccess.Write);
-            bool result = ExtractFile(_zfe, output);
+            bool result = this.ExtractFile(_zfe, output);
             if (result)
                 output.Close();
 
@@ -386,6 +387,7 @@ namespace NoteFly
                 _stream.Write(buffer, 0, bytesRead);
                 bytesPending -= (uint)bytesRead;
             }
+
             _stream.Flush();
 
             if (_zfe.Method == Compression.Deflate)
@@ -404,11 +406,10 @@ namespace NoteFly
             if (!(_zip.ZipFileStream is FileStream))
                 throw new InvalidOperationException("RemoveEntries is allowed just over streams of type FileStream");
 
-
-            //Get full list of entries
+            // Get full list of entries
             List<ZipFileEntry> fullList = _zip.ReadCentralDir();
 
-            //In order to delete we need to create a copy of the zip file excluding the selected items
+            // In order to delete we need to create a copy of the zip file excluding the selected items
             string tempZipName = Path.GetTempFileName();
             string tempEntryName = Path.GetTempFileName();
 
@@ -426,6 +427,7 @@ namespace NoteFly
                         }
                     }
                 }
+
                 _zip.Close();
                 tempZip.Close();
 
@@ -445,6 +447,7 @@ namespace NoteFly
                 if (File.Exists(tempEntryName))
                     File.Delete(tempEntryName);
             }
+
             return true;
         }
         #endregion
@@ -463,6 +466,7 @@ namespace NoteFly
 
             return (uint)(30 + filenameSize + extraSize + _headerOffset);
         }
+
         /* Local file header:
             local file header signature     4 bytes  (0x04034b50)
             version needed to extract       2 bytes
@@ -485,10 +489,10 @@ namespace NoteFly
             Encoding encoder = _zfe.EncodeUTF8 ? Encoding.UTF8 : DefaultEncoding;
             byte[] encodedFilename = encoder.GetBytes(_zfe.FilenameInZip);
 
-            this.ZipFileStream.Write(new byte[] { 80, 75, 3, 4, 20, 0}, 0, 6); // No extra header
+            this.ZipFileStream.Write(new byte[] { 80, 75, 3, 4, 20, 0 }, 0, 6); // No extra header
             this.ZipFileStream.Write(BitConverter.GetBytes((ushort)(_zfe.EncodeUTF8 ? 0x0800 : 0)), 0, 2); // filename and comment encoding 
             this.ZipFileStream.Write(BitConverter.GetBytes((ushort)_zfe.Method), 0, 2);  // zipping method
-            this.ZipFileStream.Write(BitConverter.GetBytes(DateTimeToDosTime(_zfe.ModifyTime)), 0, 4); // zipping date and time
+            this.ZipFileStream.Write(BitConverter.GetBytes(this.DateTimeToDosTime(_zfe.ModifyTime)), 0, 4); // zipping date and time
             this.ZipFileStream.Write(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0, 12); // unused CRC, un/compressed size, updated later
             this.ZipFileStream.Write(BitConverter.GetBytes((ushort)encodedFilename.Length), 0, 2); // filename length
             this.ZipFileStream.Write(BitConverter.GetBytes((ushort)0), 0, 2); // extra length
@@ -496,6 +500,7 @@ namespace NoteFly
             this.ZipFileStream.Write(encodedFilename, 0, encodedFilename.Length);
             _zfe.HeaderSize = (uint)(this.ZipFileStream.Position - pos);
         }
+
         /* Central directory's File header:
             central file header signature   4 bytes  (0x02014b50)
             version made by                 2 bytes
@@ -528,7 +533,7 @@ namespace NoteFly
             this.ZipFileStream.Write(new byte[] { 80, 75, 1, 2, 23, 0xB, 20, 0 }, 0, 8);
             this.ZipFileStream.Write(BitConverter.GetBytes((ushort)(_zfe.EncodeUTF8 ? 0x0800 : 0)), 0, 2); // filename and comment encoding 
             this.ZipFileStream.Write(BitConverter.GetBytes((ushort)_zfe.Method), 0, 2);  // zipping method
-            this.ZipFileStream.Write(BitConverter.GetBytes(DateTimeToDosTime(_zfe.ModifyTime)), 0, 4);  // zipping date and time
+            this.ZipFileStream.Write(BitConverter.GetBytes(this.DateTimeToDosTime(_zfe.ModifyTime)), 0, 4);  // zipping date and time
             this.ZipFileStream.Write(BitConverter.GetBytes(_zfe.Crc32), 0, 4); // file CRC
             this.ZipFileStream.Write(BitConverter.GetBytes(_zfe.CompressedSize), 0, 4); // compressed file size
             this.ZipFileStream.Write(BitConverter.GetBytes(_zfe.FileSize), 0, 4); // uncompressed file size
@@ -545,6 +550,7 @@ namespace NoteFly
             this.ZipFileStream.Write(encodedFilename, 0, encodedFilename.Length);
             this.ZipFileStream.Write(encodedComment, 0, encodedComment.Length);
         }
+
         /* End of central dir record:
             end of central dir signature    4 bytes  (0x06054b50)
             number of this disk             2 bytes
@@ -567,8 +573,8 @@ namespace NoteFly
             byte[] encodedComment = encoder.GetBytes(this.Comment);
 
             this.ZipFileStream.Write(new byte[] { 80, 75, 5, 6, 0, 0, 0, 0 }, 0, 8);
-            this.ZipFileStream.Write(BitConverter.GetBytes((ushort)Files.Count+ExistingFiles), 0, 2);
-            this.ZipFileStream.Write(BitConverter.GetBytes((ushort)Files.Count+ExistingFiles), 0, 2);
+            this.ZipFileStream.Write(BitConverter.GetBytes((ushort)this.Files.Count + this.ExistingFiles), 0, 2);
+            this.ZipFileStream.Write(BitConverter.GetBytes((ushort)this.Files.Count + this.ExistingFiles), 0, 2);
             this.ZipFileStream.Write(BitConverter.GetBytes(_size), 0, 4);
             this.ZipFileStream.Write(BitConverter.GetBytes(_offset), 0, 4);
             this.ZipFileStream.Write(BitConverter.GetBytes((ushort)encodedComment.Length), 0, 2);
@@ -626,6 +632,7 @@ namespace NoteFly
                 this.Store(ref _zfe, _source);
             }
         }
+
         /* DOS Date and time:
             MS-DOS date. The date is a packed value with the following format. Bits Description 
                 0-4 Day of the month (1–31) 
@@ -640,8 +647,9 @@ namespace NoteFly
         {
             return (uint)(
                 (_dt.Second / 2) | (_dt.Minute << 5) | (_dt.Hour << 11) | 
-                (_dt.Day<<16) | (_dt.Month << 21) | ((_dt.Year - 1980) << 25));
+                (_dt.Day << 16) | (_dt.Month << 21) | ((_dt.Year - 1980) << 25));
         }
+
         private DateTime DosTimeToDateTime(uint _dt)
         {
             return new DateTime(
@@ -703,15 +711,15 @@ namespace NoteFly
                 do
                 {
                     this.ZipFileStream.Seek(-5, SeekOrigin.Current);
-                    UInt32 sig = br.ReadUInt32();
+                    uint sig = br.ReadUInt32();
                     if (sig == 0x06054b50)
                     {
                         this.ZipFileStream.Seek(6, SeekOrigin.Current);
 
-                        UInt16 entries = br.ReadUInt16();
-                        Int32 centralSize = br.ReadInt32();
-                        UInt32 centralDirOffset = br.ReadUInt32();
-                        UInt16 commentSize = br.ReadUInt16();
+                        ushort entries = br.ReadUInt16();
+                        int centralSize = br.ReadInt32();
+                        uint centralDirOffset = br.ReadUInt32();
+                        ushort commentSize = br.ReadUInt16();
 
                         // check if comment field is the very last data in file
                         if (this.ZipFileStream.Position + commentSize != this.ZipFileStream.Length)
@@ -729,7 +737,10 @@ namespace NoteFly
                     }
                 } while (this.ZipFileStream.Position > 0);
             }
-            catch { }
+            catch 
+            {
+                // todo specificate
+            }
 
             return false;
         }
