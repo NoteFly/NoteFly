@@ -258,9 +258,9 @@ namespace NoteFly
 
                 Settings.UpdateSilentInstall = this.chxUpdateSilentInstall.Checked;
 
-                // tab: Network, Proxy                
+                // tab: Network, Proxy
                 Settings.NetworkProxyEnabled = this.chxProxyEnabled.Checked;
-                Settings.NetworkProxyAddress = this.iptbProxy.getIPAddress();
+                Settings.NetworkProxyAddress = this.iptbProxy.GetIPAddress();
                 Settings.NetworkConnectionTimeout = Convert.ToInt32(this.numTimeout.Value);
                 Settings.NetworkIPversion = this.cbxNetworkIPversion.SelectedIndex; 
 
@@ -1180,6 +1180,32 @@ namespace NoteFly
         {
             this.shortcutTextBoxNotesToFront.Enabled = this.chxHotkeyNotesFrontEnabled.Checked;
             this.lblTextHotkeyNotesToFront.Enabled = this.chxHotkeyNotesFrontEnabled.Checked;
+        }
+
+        /// <summary>
+        /// Check if iptbProxy is allowed to have a IPv4 and/or IPv6 address.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbxNetworkIPversion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbxNetworkIPversion.SelectedIndex)
+            {
+                case 0:
+                    this.iptbProxy.UseIPv4addr = true;
+                    this.iptbProxy.UseIPv6addr = true;
+                    break;
+                case 1:
+                    this.iptbProxy.UseIPv4addr = true;
+                    this.iptbProxy.UseIPv6addr = false;
+                    break;
+                case 2:
+                    this.iptbProxy.UseIPv4addr = false;
+                    this.iptbProxy.UseIPv6addr = true;
+                    break;
+            }
+
+            this.iptbProxy.ValidateIP();
         }
 
         #endregion Methods

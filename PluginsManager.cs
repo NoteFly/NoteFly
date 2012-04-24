@@ -31,7 +31,7 @@ namespace NoteFly
     public static class PluginsManager
     {
         /// <summary>
-        /// 
+        /// A list of installed plugins dll filenames
         /// </summary>
         private static List<string> installedplugins = new List<string>();
 
@@ -81,7 +81,7 @@ namespace NoteFly
                 excludedplugindlls = Settings.ProgramPluginsDllexclude.Split('|');
 
                 for (int i = 0; i < dllfiles.Length; i++)
-                {                    
+                {
                     if (!IsPluginFileExcluded(dllfiles[i]))
                     {
                         installedplugins.Add(dllfiles[i]);
@@ -91,7 +91,7 @@ namespace NoteFly
                             {
                                 EnablePlugin(dllfiles[i]);
                             }
-                        }                          
+                        }
                     }
                 }
             }
@@ -168,7 +168,7 @@ namespace NoteFly
                 if (!string.IsNullOrEmpty(pluginname))
                 {
                     pluginsnames.Add(pluginname);
-                }                
+                }
             }
 
             return pluginsnames.ToArray();
@@ -365,7 +365,7 @@ namespace NoteFly
                     }
                     else
                     {
-                        sbenabledplugin.Append("|");                        
+                        sbenabledplugin.Append("|");
                     }
 
                     sbenabledplugin.Append(enabledplugins[i].Filename);

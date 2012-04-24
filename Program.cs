@@ -627,9 +627,55 @@ namespace NoteFly
                         case "-resetsettings":
                             xmlUtil.WriteDefaultSettings();
                             break;
+                        case "-?":
+                            ShowParametersHelp();
+                            break;
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Show help message on supported programme parameters.
+        /// </summary>
+        private static void ShowParametersHelp()
+        {
+            StringBuilder sb = new StringBuilder();
+            const int COLCHARWIDTH = 22;
+            sb.AppendLine(Strings.T("Parameter:".PadRight(COLCHARWIDTH, ' ')) + "Description:");
+            sb.AppendLine("-?".PadRight(COLCHARWIDTH, ' ') + Strings.T("Show this parameters help window."));
+            sb.AppendLine("-disabletransparency".PadRight(COLCHARWIDTH, ' ') + Strings.T("Disable transparency."));
+            sb.AppendLine("-disableplugins".PadRight(COLCHARWIDTH, ' ') + Strings.T("Disable all plugins."));
+            sb.AppendLine("-disablehighlighting".PadRight(COLCHARWIDTH, ' ') + Strings.T("Disable any highlighting in notes."));
+            sb.AppendLine("-disablevisualstyles".PadRight(COLCHARWIDTH, ' ') + Strings.T("Disable XP visual style."));
+            sb.AppendLine("-disablegpg".PadRight(COLCHARWIDTH, ' ') + Strings.T("Disable GnuPG signature checking."));
+            sb.AppendLine("-forcefirstrun".PadRight(COLCHARWIDTH, ' ') + Strings.T("Force a first run."));
+            sb.AppendLine("-logall".PadRight(COLCHARWIDTH, ' ') + Strings.T("Log exceptions, errors and debug messages."));
+            sb.AppendLine("-lognone".PadRight(COLCHARWIDTH, ' ') + Strings.T("Don't log exceptions, errors and debug messages."));
+#if windows
+            sb.AppendLine("-suspressadminwarn".PadRight(COLCHARWIDTH, ' ') + "Supress the warning that NoteFly is running");
+            sb.AppendLine("".PadRight(COLCHARWIDTH, ' ') + Strings.T("with unnecessary administrator privilege."));
+#endif
+            sb.AppendLine("-resetpositions".PadRight(COLCHARWIDTH, ' ') + Strings.T("Reset all positions of visual notes at startup."));
+            sb.AppendLine("-resetsettings".PadRight(COLCHARWIDTH, ' ') + Strings.T("Reset all NoteFly settings to default."));
+            System.Windows.Forms.TextBox tbtexthelp = new System.Windows.Forms.TextBox();
+            tbtexthelp.Font = new System.Drawing.Font("Courier New", 10); // Courier New, every character has the same width.
+            tbtexthelp.Location = new System.Drawing.Point(0, 0);
+            tbtexthelp.Multiline = true;
+            tbtexthelp.Dock = System.Windows.Forms.DockStyle.Fill;
+            tbtexthelp.Text = sb.ToString();
+            System.Windows.Forms.Form frmhelp = new System.Windows.Forms.Form();
+            frmhelp.Width = 600;
+            frmhelp.Height = 380;
+            frmhelp.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            frmhelp.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            frmhelp.ControlBox = true;
+            frmhelp.ShowIcon = false;
+            frmhelp.Controls.Add(tbtexthelp);
+            tbtexthelp.Select(0, 0);
+            frmhelp.Text = string.Format(Strings.T("{0} parameters help", Program.AssemblyTitle));
+            frmhelp.Show();
+            frmhelp.BringToFront();
         }
 
         /// <summary>

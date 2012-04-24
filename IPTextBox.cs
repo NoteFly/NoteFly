@@ -25,7 +25,7 @@ namespace NoteFly
     /// IP address textbox.
     /// With background color ip address validation hint.
     /// </summary>
-    internal partial class IPTextBox : TextBox    
+    internal partial class IPTextBox : TextBox
     {
         /// <summary>
         /// IPAddress object.
@@ -33,10 +33,52 @@ namespace NoteFly
         private System.Net.IPAddress ipaddr;
 
         /// <summary>
+        /// Use a IPv4 address.
+        /// </summary>
+        private bool useipv4addr = true;
+
+        /// <summary>
+        /// Use a IPv6 address
+        /// </summary>
+        private bool useipv6addr = true;
+
+        /// <summary>
+        /// Use a IPv4 address.
+        /// </summary>
+        public bool UseIPv4addr
+        {
+            get
+            {
+                return this.useipv4addr;
+            }
+
+            set
+            {
+                this.useipv4addr = value;
+            }
+        }
+
+        /// <summary>
+        /// Use a IPv6 address
+        /// </summary>
+        public bool UseIPv6addr
+        {
+            get
+            {
+                return this.useipv6addr;
+            }
+
+            set
+            {
+                this.useipv6addr = value;
+            }
+        }
+
+        /// <summary>
         /// Get the IP address
         /// </summary>
         /// <returns></returns>
-        public string getIPAddress()
+        public string GetIPAddress()
         {
             if (this.ipaddr != null)
             {
@@ -45,6 +87,54 @@ namespace NoteFly
             else
             {
                 return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ValidateIP()
+        {
+            bool validipaddr = System.Net.IPAddress.TryParse(this.Text, out this.ipaddr);
+            if (validipaddr)
+            {
+                if (this.getnumofdots() == 3 && this.getnumofdash() == 0)
+                {
+                    // valid IPv4 address
+                    if (this.useipv4addr)
+                    {
+                        this.BackColor = System.Drawing.Color.LightGreen;
+                    }
+                    else
+                    {
+                        // IPv4 address not allowed, but ip valid, orange for "warning".
+                        this.BackColor = System.Drawing.Color.Orange;
+                    }
+                }
+                else if (this.getnumofdots() == 0 && this.getnumofdash() >= 2)
+                {
+                    // valid IPv6 address
+                    if (this.useipv6addr)
+                    {
+                        this.BackColor = System.Drawing.Color.LightGreen;
+                    }
+                    else
+                    {
+                        // IPv6 address not allowed, but ip valid, orange for "warning".
+                        this.BackColor = System.Drawing.Color.Orange;
+                    }
+                }
+            }
+            else
+            {
+                if (this.TextLength > 0)
+                {
+                    this.BackColor = System.Drawing.Color.Salmon;
+                }
+                else
+                {
+                    this.BackColor = System.Drawing.SystemColors.Window;
+                }
             }
         }
 
@@ -60,9 +150,9 @@ namespace NoteFly
             // ':'
             // '.'
             // '0'-'9'
-            // shift, backspace, left, right, delete key
+            // shift, backspace, left, right, delete, end and home key
             // /*
-            if ((k >= 65 && k <= 70) || (k == 186 && e.Shift) || (k == 190 && !e.Shift) || (k >= 48 && k <= 57) || (k == 8 || k == 16 || k == 37 || k == 39 || k == 46))
+            if ((k >= 65 && k <= 70) || (k == 186 && e.Shift) || (k == 190 && !e.Shift) || (k >= 48 && k <= 57) || (k == 8 || k == 16 || k == 37 || k == 39 || k == 46 || k == 35 || k == 36))
             {
                 e.SuppressKeyPress = false;
             }
@@ -80,24 +170,7 @@ namespace NoteFly
         /// <param name="e"></param>
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            bool validipaddr = System.Net.IPAddress.TryParse(this.Text, out this.ipaddr);
-
-            if (validipaddr && (this.getnumofdots() == 3 || this.Text.Contains(":")))
-            {
-                this.BackColor = System.Drawing.Color.LightGreen;                
-            }
-            else
-            {
-                if (this.TextLength > 0)
-                {
-                    this.BackColor = System.Drawing.Color.Salmon;
-                }
-                else
-                {
-                    this.BackColor = System.Drawing.SystemColors.Window;
-                }
-            }
-
+            this.ValidateIP();
             base.OnKeyUp(e);
         }
 
@@ -107,10 +180,29 @@ namespace NoteFly
         /// <returns></returns>
         private int getnumofdots()
         {
+            return this.getnumofchar('.');
+        }
+
+        /// <summary>
+        /// Get the number of dashes in the Text content.
+        /// </summary>
+        /// <returns></returns>
+        private int getnumofdash()
+        {
+            return this.getnumofchar(':');
+        }
+
+        /// <summary>
+        /// Get the number of occurance of a particular character in the Text content.
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private int getnumofchar(char c)
+        {
             int numdots = 0;
             for (int i = 0; i < this.Text.Length; i++)
             {
-                if (this.Text[i] == '.')
+                if (this.Text[i] == c)
                 {
                     numdots++;
                 }
