@@ -126,7 +126,7 @@ namespace NoteFly
             DirectoryInfo pluginsdirinfo = new DirectoryInfo(storefolder);
             if (pluginsdirinfo.Attributes == FileAttributes.System)
             {
-                Log.Write(LogType.exception, "The plugin folder is not allowed to be a system directory.");               
+                Log.Write(LogType.exception, "The plugin folder is not allowed to be a system directory.");
             }
             else
             {
@@ -409,7 +409,7 @@ namespace NoteFly
                     {
                         zip.Close();
                     }
-                }                                
+                }
             }
 
             return succeeded;

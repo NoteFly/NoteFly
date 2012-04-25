@@ -389,7 +389,7 @@ namespace NoteFly
             {
                 for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                 {
-                    PluginsManager.EnabledPlugins[i].HidingNote(this.tempcontent, this.title);                    
+                    PluginsManager.EnabledPlugins[i].HidingNote(this.tempcontent, this.title);
                 }
             }
 

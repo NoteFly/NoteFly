@@ -1,4 +1,5 @@
-﻿// <copyright file="FrmException.cs" company="NoteFly">
+﻿//-----------------------------------------------------------------------
+// <copyright file="FrmException.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2012  Tom
 //
@@ -15,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </copyright>
+//-----------------------------------------------------------------------
 namespace NoteFly
 {
     using System;

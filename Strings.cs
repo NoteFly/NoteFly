@@ -204,10 +204,10 @@ namespace NoteFly
                     {
                         if (controlscollection[i].GetType() == typeof(System.Windows.Forms.TabPage))
                         {
-                            controlscollection[i].Text = GetTranslationControl(controlscollection[i].Text, controlscollection[i].Name);                            
+                            controlscollection[i].Text = GetTranslationControl(controlscollection[i].Text, controlscollection[i].Name);
                         }
 
-                        // Just in case: recusive method is going mad, throw an exception.                        
+                        // Just in case: recusive method is going mad, throw an exception.
                         if (controlnestedlevel <= MAXNESTEDCONTROL)
                         {
                             controlnestedlevel++;
@@ -311,16 +311,16 @@ namespace NoteFly
         /// <param name="controlname"></param>
         private static void AddToPOT(string text, string controlname)
         {
-            string filepathpot = Path.Combine(Path.Combine(Program.InstallFolder, @".\..\"), "Strings.pot");
+            string filepathpot = System.IO.Path.Combine(System.IO.Path.Combine(Program.InstallFolder, @".\..\"), "Strings.pot");
             text = text.Replace("\r\n", "\"\r\nmsgid \""); // multiple lines are split is multiple msgid's.
-            string msgid = new StringBuilder("msgid \"").Append(text).Append("\"").ToString();
+            string msgid = new System.Text.StringBuilder("msgid \"").Append(text).Append("\"").ToString();
             bool isalreadyadded = false;
-            if (File.Exists(filepathpot))
+            if (System.IO.File.Exists(filepathpot))
             {
-                StreamReader reader = null;
+                System.IO.StreamReader reader = null;
                 try
                 {
-                    reader = new StreamReader(filepathpot, Encoding.UTF8);
+                    reader = new System.IO.StreamReader(filepathpot, System.Text.Encoding.UTF8);
                     string line = reader.ReadLine();
                     while (line != null)
                     {
@@ -343,11 +343,11 @@ namespace NoteFly
 
                 if (!isalreadyadded)
                 {
-                    StreamWriter writer = null;
+                    System.IO.StreamWriter writer = null;
                     try
                     {
-                        writer = new StreamWriter(filepathpot, true, Encoding.UTF8);
-                        StringBuilder potfilepart = new StringBuilder();
+                        writer = new System.IO.StreamWriter(filepathpot, true, System.Text.Encoding.UTF8);
+                        System.Text.StringBuilder potfilepart = new System.Text.StringBuilder();
                         potfilepart.AppendLine();
                         potfilepart.Append("# ");
                         potfilepart.AppendLine(controlname);

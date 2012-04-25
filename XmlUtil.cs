@@ -45,7 +45,7 @@ namespace NoteFly
         /// <summary>
         /// The note version
         /// </summary>
-        private const string NOTEVERSION = "3";        
+        private const string NOTEVERSION = "3";
 
         /// <summary>
         /// XmlTextReader object.
@@ -700,6 +700,8 @@ namespace NoteFly
                 Skin curskin = null;
                 int numskins = 0;
                 bool endtag = false;
+                const int MAXNUMSKIN = 255;
+                const int MAXLENSKINNAME = 200;
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)
@@ -718,7 +720,7 @@ namespace NoteFly
                         case "skin":
                             if (endtag)
                             {
-                                const int MAXNUMSKIN = 255;
+                                
                                 if (curskin != null && numskins < MAXNUMSKIN)
                                 {
                                     skins.Add(curskin);
@@ -733,7 +735,7 @@ namespace NoteFly
                             endtag = !endtag;
                             break;
                         case "Name":
-                            const int MAXLENSKINNAME = 200;
+                            
                             string skinname = xmlread.ReadElementContentAsString();
                             if (skinname.Length < MAXLENSKINNAME)
                             {
@@ -777,14 +779,12 @@ namespace NoteFly
                                     }
                                     else
                                     {
-                                        const string TEXTUREIMGFORMUNSUPPORTED = "Texture image format not supported.";
-                                        Log.Write(LogType.error, TEXTUREIMGFORMUNSUPPORTED);
+                                        Log.Write(LogType.error, "Texture image format not supported.");
                                     }
                                 }
                                 else
                                 {
-                                    const string TEXTUREIMAGENOTFOUND = "Texture image not be found, lookt for: ";
-                                    Log.Write(LogType.error, TEXTUREIMAGENOTFOUND + filepathtexture);
+                                    Log.Write(LogType.error, "Texture image not be found, looking for: " + filepathtexture);
                                 }
 
                                 string texturelayout = xmlread.GetAttribute("texturelayout");
@@ -821,8 +821,7 @@ namespace NoteFly
 
                     if (xmlread.Depth > 3)
                     {
-                        const string SKINFILECORRUPT = "Skin file corrupted: ";
-                        throw new ApplicationException(SKINFILECORRUPT + SKINFILE);
+                        throw new ApplicationException("Skin file corrupted: " + SKINFILE);
                     }
                 }
             }
@@ -847,11 +846,11 @@ namespace NoteFly
             Settings.ConfirmDeletenote = true;
             Settings.ConfirmExit = false;
             Settings.ConfirmLinkclick = true;
-            #if windows
+#if windows
             Settings.FontContentFamily = "Arial";
             Settings.FontTitleFamily = "Arial";
             Settings.FontTrayicon = "Arial";
-            #elif linux
+#elif linux
             Settings.FontContentFamily = "FreeMono";
             Settings.FontTitleFamily = "FreeMono";
             Settings.FontTrayicon = "FreeMono";

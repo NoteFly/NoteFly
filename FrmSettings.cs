@@ -238,7 +238,7 @@ namespace NoteFly
                 Settings.HighlightPHP = this.chxHighlightPHP.Checked;
                 Settings.HighlightSQL = this.chxHighlightSQL.Checked;
 
-                // tab: Actions                                
+                // tab: Actions
                 Settings.SharingEmailEnabled = this.chxActionsEmailEnabled.Checked;
                 Settings.SharingEmailDefaultadres = string.Empty;
                 if (this.chxActionsEmailDefaultaddressSet.Checked)
@@ -916,7 +916,8 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Display the last update date.
+        /// Show also the time of the last update if expert settings is enabled.
         /// </summary>
         /// <param name="expertsettings"></param>
         private void SetLastUpdatecheckDate(bool expertsettings)
@@ -1013,20 +1014,14 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// If chxShowTooltips is unchecked then chxManagenotesTooltipContent get disabled and
+        /// if chxShowTooltips is checked then chxManagenotesTooltipContent get enabled.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void chxShowTooltips_CheckStateChanged(object sender, EventArgs e)
         {
-            if (this.chxShowTooltips.Checked)
-            {
-                this.chxManagenotesTooltipContent.Enabled = true;
-            }
-            else
-            {
-                this.chxManagenotesTooltipContent.Enabled = false;
-            }
+            this.chxManagenotesTooltipContent.Enabled = this.chxShowTooltips.Checked;
         }
 
         /// <summary>
@@ -1132,7 +1127,7 @@ namespace NoteFly
             Settings.HotkeysNewNoteKeycode = this.hotkeysnewnotekeycode;
             Settings.HotkeysManageNotesKeycode = this.hotkeysmanagenoteskeycode;
             Settings.HotkeysNotesToFrontKeycode = this.hotkeysnotestofront;
-        }        
+        }
 
         /// <summary>
         /// Open explorer with the NoteFly application data folder.
@@ -1147,10 +1142,10 @@ namespace NoteFly
             procInfo.UseShellExecute = true;
             System.Diagnostics.Process.Start(procInfo);
             this.btnOpenSettingsFolder.Enabled = true;
-        }        
+        }
 
         /// <summary>
-        /// 
+        /// If chxHotkeyNewNoteEnabled is checked then enable shortcutTextBoxNewNote and lblTextHotkeyNewNote.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1158,10 +1153,10 @@ namespace NoteFly
         {
             this.shortcutTextBoxNewNote.Enabled = this.chxHotkeyNewNoteEnabled.Checked;
             this.lblTextHotkeyNewNote.Enabled = this.chxHotkeyNewNoteEnabled.Checked;
-        }        
+        }
 
         /// <summary>
-        /// 
+        /// If chxHotkeyManageNotesEnabled is checked then enable shortcutTextBoxManageNotes and lblTextHotkeyManageNotes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1169,10 +1164,10 @@ namespace NoteFly
         {
             this.shortcutTextBoxManageNotes.Enabled = this.chxHotkeyManageNotesEnabled.Checked;
             this.lblTextHotkeyManageNotes.Enabled = this.chxHotkeyManageNotesEnabled.Checked;
-        }        
+        }
 
         /// <summary>
-        /// 
+        /// If chxHotkeyNotesFrontEnabled is checked then enable shortcutTextBoxNotesToFront and lblTextHotkeyNotesToFront.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

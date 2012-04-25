@@ -29,7 +29,7 @@ namespace NoteFly
     internal partial class IOTextBox : TextBox
     {
         /// <summary>
-        /// 
+        /// Is there text set.
         /// </summary>
         private bool setuptext = false;
 
@@ -51,7 +51,7 @@ namespace NoteFly
                 }
             }
 
-            base.OnKeyDown(e);            
+            base.OnKeyDown(e);
         }
 
         /// <summary>

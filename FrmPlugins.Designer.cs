@@ -103,9 +103,9 @@
             this.pluginGrid = new NoteFly.PluginGrid();
             this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
+            this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.lbxAvailablePlugins = new System.Windows.Forms.ListBox();
             this.searchtbPlugins = new NoteFly.SearchTextBox();
-            this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.lblLicense = new System.Windows.Forms.Label();
             this.lblPluginVersion = new System.Windows.Forms.Label();
             this.lblPluginName = new System.Windows.Forms.Label();
@@ -196,6 +196,16 @@
             this.splitContainerAvailablePlugins.SplitterWidth = 5;
             this.splitContainerAvailablePlugins.TabIndex = 0;
             // 
+            // lblTextNoInternetConnection
+            // 
+            this.lblTextNoInternetConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.lblTextNoInternetConnection.Location = new System.Drawing.Point(4, 48);
+            this.lblTextNoInternetConnection.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTextNoInternetConnection.Name = "lblTextNoInternetConnection";
+            this.lblTextNoInternetConnection.Size = new System.Drawing.Size(213, 129);
+            this.lblTextNoInternetConnection.TabIndex = 2;
+            this.lblTextNoInternetConnection.Visible = false;
+            // 
             // lbxAvailablePlugins
             // 
             this.lbxAvailablePlugins.Dock = System.Windows.Forms.DockStyle.Top;
@@ -221,17 +231,6 @@
             this.searchtbPlugins.TabIndex = 4;
             this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
             this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
-            // 
-            // lblTextNoInternetConnection
-            // 
-            this.lblTextNoInternetConnection.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.lblTextNoInternetConnection.Location = new System.Drawing.Point(4, 48);
-            this.lblTextNoInternetConnection.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblTextNoInternetConnection.Name = "lblTextNoInternetConnection";
-            this.lblTextNoInternetConnection.Size = new System.Drawing.Size(213, 129);
-            this.lblTextNoInternetConnection.TabIndex = 2;
-            this.lblTextNoInternetConnection.Text = "Could not load list with plugins. Internet connection failed.";
-            this.lblTextNoInternetConnection.Visible = false;
             // 
             // lblLicense
             // 

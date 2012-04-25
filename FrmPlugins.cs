@@ -28,8 +28,19 @@ namespace NoteFly
     /// </summary>
     public partial class FrmPlugins : Form
     {
+        /// <summary>
+        /// REST url where to get a list of plugins.
+        /// </summary>
         private const string RESTAPIPLUGINSLIST = "http://update.notefly.org/REST/plugins/list.php";
+
+        /// <summary>
+        /// REST url where to get the detail of a partialer plugin 
+        /// </summary>
         private const string RESTAPIPLUGINDETAILS = "http://update.notefly.org/REST/plugins/details.php?name=";
+
+        /// <summary>
+        /// REST url where to get a list of matching pluginnames searched by a partialer keyword.
+        /// </summary>
         private const string RESTAPIPLUGINSSEARCH = "http://update.notefly.org/REST/plugins/search.php?keyword=";
 
         /// <summary>
@@ -60,7 +71,7 @@ namespace NoteFly
         /// </summary>
         private void SetFormTitle()
         {
-            this.Text = Strings.T("Plugins") + " - " + Program.AssemblyTitle;            
+            this.Text = Strings.T("Plugins") + " - " + Program.AssemblyTitle;
         }
 
         /// <summary>
@@ -85,7 +96,7 @@ namespace NoteFly
                     this.SetAvailablePluginsNetwork(true);
                 }
             }
-        }  
+        }
 
         /// <summary>
         /// Downloading of a list of allplugins is compleet, parser results and display items in chlbxAvailiblePlugins.
@@ -203,7 +214,7 @@ namespace NoteFly
                 this.frmdownloader = new FrmDownloader(Strings.T("Downloading plugin.."));
                 this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(this.downloader_DownloadCompleet);
                 this.frmdownloader.Show();
-                this.frmdownloader.BeginDownload(this.currentplugindownloadurl, Settings.ProgramPluginsFolder);                
+                this.frmdownloader.BeginDownload(this.currentplugindownloadurl, Settings.ProgramPluginsFolder);
             }
         }
 
@@ -212,9 +223,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="newfiles"></param>
         private void downloader_DownloadCompleet(string[] newfiles)
-        {            
+        {
             PluginsManager.LoadPlugins();
-            this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);            
+            this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
         }
 
         /// <summary>
@@ -271,7 +282,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Set a message if network connection failed.
         /// </summary>
         /// <param name="isconnected"></param>
         private void SetAvailablePluginsNetwork(bool isconnected)
@@ -280,6 +291,17 @@ namespace NoteFly
             this.searchtbPlugins.Enabled = isconnected;
             if (!isconnected)
             {
+                string nonetwork = Strings.T("Could not load list with plugins. Internet connection failed.");
+                string proxyused = Strings.T("A proxy is being used.");
+                if (Settings.NetworkProxyEnabled)
+                {
+                    this.lblTextNoInternetConnection.Text = nonetwork + Environment.NewLine + proxyused;
+                }
+                else
+                {
+                    this.lblTextNoInternetConnection.Text = nonetwork;
+                }
+
                 this.lbxAvailablePlugins.Items.Clear();
                 Log.Write(LogType.info, "No network available.");
             }

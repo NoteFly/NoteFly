@@ -284,9 +284,9 @@ namespace NoteFly
         #endregion Getting plugin details
 
         /// <summary>
-        /// 
+        /// Get if a plugin dll file enabled.
         /// </summary>
-        /// <param name="dllfilename"></param>
+        /// <param name="dllfilename">The plugin dll file</param>
         /// <returns></returns>
         public static bool IsPluginEnabled(string dllfilename)
         {
@@ -302,10 +302,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Get the version of a plugin by the plugin name.
         /// </summary>
-        /// <param name="pluginname"></param>
-        /// <returns></returns>
+        /// <param name="pluginname">The name of the plugin</param>
+        /// <returns>An array with the major, minor and release version numbers.</returns>
         public static short[] GetPluginVersionByName(string pluginname)
         {
             short[] pluginversion = new short[3];

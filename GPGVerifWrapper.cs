@@ -77,7 +77,7 @@ namespace NoteFly
                 {
                     Log.Write(LogType.info, "NoteFly OpenPGP public key imported.");
                 }
-            }         
+            }
 
             try
             {
@@ -94,7 +94,7 @@ namespace NoteFly
                     // Currently display GPG result via messagebox, and user required to press yes to launch install.
                     StringBuilder sbmsg = new StringBuilder(this.gpgoutput);
                     sbmsg.AppendLine(this.gpgerror);
-                    sbmsg.AppendLine(Strings.T("Do you want to install the update?"));                    
+                    sbmsg.AppendLine(Strings.T("Do you want to install the update?"));
                     string msgtitle = Strings.T("GnuPG signature check result");
                     System.Windows.Forms.DialogResult dlgsigres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), msgtitle, System.Windows.Forms.MessageBoxButtons.YesNo);
                     if (dlgsigres == System.Windows.Forms.DialogResult.Yes)
@@ -141,7 +141,7 @@ namespace NoteFly
                 }
             }
 #elif linux
-			gpgpath = FindGPGexecutables("usr/bin/");
+            gpgpath = FindGPGexecutables("usr/bin/");
 #endif
 
             return gpgpath;

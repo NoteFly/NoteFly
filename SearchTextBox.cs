@@ -46,13 +46,13 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// SearchStartHandler delegate
         /// </summary>
         /// <param name="keywords"></param>
         public delegate void SearchStartHandler(string keywords);
 
         /// <summary>
-        /// 
+        /// SearchStopHandler delegate
         /// </summary>
         public delegate void SearchStopHandler();
 

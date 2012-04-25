@@ -362,8 +362,8 @@ namespace NoteFly
 
                 // In case you forget this you will run into problems
                 base.WndProc(ref m);
-            }       
-    
+            }
+
             #endregion
     
             #region Private external methods

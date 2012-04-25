@@ -64,7 +64,7 @@ namespace NoteFly
 
             this.cachesettings = cachesettings;
             this.httpthread = new BackgroundWorker();
-            this.httpthread.DoWork += new DoWorkEventHandler(this.httpthread_DoWork);            
+            this.httpthread.DoWork += new DoWorkEventHandler(this.httpthread_DoWork);
         }
 
         /// <summary>

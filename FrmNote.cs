@@ -73,7 +73,7 @@ namespace NoteFly
         public FrmNote(Notes notes, Note note)
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
-            this.InitializeComponent();            
+            this.InitializeComponent();
             this.notes = notes;
             this.note = note;
             this.UpdateForm(false);
@@ -100,7 +100,7 @@ namespace NoteFly
             }
 
             this.SetTopmostNote();
-            this.SetBounds(note.X, note.Y, note.Width, note.Height);            
+            this.SetBounds(note.X, note.Y, note.Width, note.Height);
             this.SetLockedNote();
             this.SetRollupNote();
             this.SetWordwarpNote();

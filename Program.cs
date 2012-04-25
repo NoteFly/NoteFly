@@ -45,7 +45,7 @@ namespace NoteFly
         private static Notes notes;
 
         /// <summary>
-        /// 
+        /// Reference to the FormManager class.
         /// </summary>
         private static FormManager formmanager;
 
@@ -201,7 +201,9 @@ namespace NoteFly
         {
             if (Settings.ConfirmLinkclick && allow_ask)
             {
-                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Are you sure you want to visted: " + uri_text, "Are you sure?", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
+                string confirmlinkvisittext = Strings.T("Are you sure you want to visted: {0}", uri_text);
+                string confirmlinkvisittitle = Strings.T("Are you sure?");
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(confirmlinkvisittext, confirmlinkvisittitle, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
                     Program.LoadURI(uri_text);
@@ -679,10 +681,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Compare the latest version and this programme version,
+        /// if this is a old release ask to update.
         /// </summary>
-        /// <param name="response"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">RunWorkerCompleted event arguments</param>
         private static void UpdateCompareVersion(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
@@ -729,9 +732,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Download update compleet, run update.
+        /// Download compleet, run update.
+        /// This only one setup file so the first element of the array with newfiles is launched.
         /// </summary>
-        /// <param name="newfiles"></param>
+        /// <param name="newfiles">Array with returned new files</param>
         private static void frmupdater_DownloadCompleetSuccesfull(string[] newfiles)
         {
             if (Settings.UpdatecheckUseGPG)
@@ -749,9 +753,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Launch a new process, with parameters if set.
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="file">The file to launch</param>
         private static void ExecDownload(string file)
         {
             ProcessStartInfo procstartinfo = new System.Diagnostics.ProcessStartInfo(file);

@@ -290,7 +290,7 @@ namespace NoteFly
                     if (langendpos >= 0)
                     {
                         langs[i].PosDocumentEnd = langendpos;
-                    }                    
+                    }
                 }
 
                 int cursorpos = rtb.SelectionStart;
