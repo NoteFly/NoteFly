@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: NoteFly 3.0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-27 15:12+0200\n"
-"PO-Revision-Date: 2012-04-27 15:23+0100\n"
+"PO-Revision-Date: 2012-04-27 15:42+0100\n"
 "Last-Translator: \n"
-"Language-Team: English\n"
+"Language-Team: English translation team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,189 +19,189 @@ msgstr ""
 
 #: FrmAbout.cs:50
 msgid "Version "
-msgstr ""
+msgstr "Version "
 
 #: FrmAbout.cs:62
 #: TrayIcon.cs:211
 msgid "About"
-msgstr ""
+msgstr "About"
 
 #: FrmDownloader.cs:247
 msgid "Downloads completed"
-msgstr ""
+msgstr "Downloads completed"
 
 #: FrmDownloader.cs:258
 msgid "Download canceled."
-msgstr ""
+msgstr "Download canceled."
 
 #: FrmDownloader.cs:264
 msgid "Download error:"
-msgstr ""
+msgstr "Download error:"
 
 #: FrmException.cs:39
 #, csharp-format
 msgid "oh no.. {0} crashed."
-msgstr ""
+msgstr "oh no.. {0} crashed."
 
 #: FrmManageNotes.cs:91
 #: FrmManageNotes.cs:328
 #: FrmManageNotes.cs:361
 msgid "&hide selected"
-msgstr ""
+msgstr "&hide selected"
 
 #: FrmManageNotes.cs:95
 #: FrmManageNotes.cs:100
 #: FrmManageNotes.cs:333
 #: FrmManageNotes.cs:365
 msgid "&show selected"
-msgstr ""
+msgstr "&show selected"
 
 #: FrmManageNotes.cs:166
 msgid "Manage notes"
-msgstr ""
+msgstr "Manage notes"
 
 #: FrmManageNotes.cs:215
 msgid "Nothing selected."
-msgstr ""
+msgstr "Nothing selected."
 
 #: FrmManageNotes.cs:224
 msgid "Are you sure you want to delete the selected note(s)?"
-msgstr ""
+msgstr "Are you sure you want to delete the selected note(s)?"
 
 #: FrmManageNotes.cs:236
 msgid "And more notes."
-msgstr ""
+msgstr "And more notes."
 
 #: FrmManageNotes.cs:240
 msgid "delete?"
-msgstr ""
+msgstr "delete?"
 
 #: FrmManageNotes.cs:584
 #, csharp-format
 msgid "Access denied. delete note {0} manually with proper premission."
-msgstr ""
+msgstr "Access denied. delete note {0} manually with proper premission."
 
 #: FrmManageNotes.cs:646
 msgid "nr"
-msgstr ""
+msgstr "nr"
 
 #: FrmManageNotes.cs:647
 msgid "title"
-msgstr ""
+msgstr "title"
 
 #: FrmManageNotes.cs:648
 msgid "visible"
-msgstr ""
+msgstr "visible"
 
 #: FrmManageNotes.cs:649
 msgid "skin"
-msgstr ""
+msgstr "skin"
 
 #: FrmManageNotes.cs:711
 #: FrmManageNotes.cs:732
 msgid "Transparency level not a integer or double."
-msgstr ""
+msgstr "Transparency level not a integer or double."
 
 #: FrmNewNote.cs:134
 msgid "Save editing note (Ctrl+S)"
-msgstr ""
+msgstr "Save editing note (Ctrl+S)"
 
 #: FrmNewNote.cs:135
 msgid "Cancel editing note (escape)"
-msgstr ""
+msgstr "Cancel editing note (escape)"
 
 #: FrmNewNote.cs:139
 msgid "Save new note (Ctrl+S)"
-msgstr ""
+msgstr "Save new note (Ctrl+S)"
 
 #: FrmNewNote.cs:140
 msgid "Cancel new note (escape)"
-msgstr ""
+msgstr "Cancel new note (escape)"
 
 #: FrmNewNote.cs:153
 msgid "edit note"
-msgstr ""
+msgstr "edit note"
 
 #: FrmNewNote.cs:157
 msgid "new note"
-msgstr ""
+msgstr "new note"
 
 #: FrmNewNote.cs:280
 msgid "Please enter some content."
-msgstr ""
+msgstr "Please enter some content."
 
 #: FrmNewNote.cs:298
 msgid "Could not write note."
-msgstr ""
+msgstr "Could not write note."
 
 #: FrmNewNote.cs:694
 #: FrmNewNote.cs:1042
 msgid "There is no text on the clipboard."
-msgstr ""
+msgstr "There is no text on the clipboard."
 
 #: FrmNote.cs:387
 msgid "Note has no title and no content."
-msgstr ""
+msgstr "Note has no title and no content."
 
 #: FrmNote.cs:394
 msgid "Can't launch email client."
-msgstr ""
+msgstr "Can't launch email client."
 
 #: FrmNote.cs:751
 msgid "&Lock note"
-msgstr ""
+msgstr "&Lock note"
 
 #: FrmNote.cs:752
 msgid " (click again to unlock)"
-msgstr ""
+msgstr " (click again to unlock)"
 
 #: FrmNote.cs:778
 msgid "&Roll up"
-msgstr ""
+msgstr "&Roll up"
 
 #: FrmNote.cs:779
 msgid "(click again to Roll Down)"
-msgstr ""
+msgstr "(click again to Roll Down)"
 
 #: FrmNote.cs:826
 msgid "Save note to file"
-msgstr ""
+msgstr "Save note to file"
 
 #: FrmPlugins.cs:74
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: FrmPlugins.cs:178
 msgid "update"
-msgstr ""
+msgstr "update"
 
 #: FrmPlugins.cs:183
 msgid "already installed"
-msgstr ""
+msgstr "already installed"
 
 #: FrmPlugins.cs:189
 msgid "download"
-msgstr ""
+msgstr "download"
 
 #: FrmPlugins.cs:198
 msgid "version: "
-msgstr ""
+msgstr "version: "
 
 #: FrmPlugins.cs:199
 msgid "license: "
-msgstr ""
+msgstr "license: "
 
 #: FrmPlugins.cs:214
 msgid "Downloading plugin.."
-msgstr ""
+msgstr "Downloading plugin.."
 
 #: FrmPlugins.cs:294
 msgid "Could not load list with plugins. Internet connection failed."
-msgstr ""
+msgstr "Could not load list with plugins. Internet connection failed."
 
 #: FrmPlugins.cs:295
 msgid "A proxy is being used."
-msgstr ""
+msgstr "A proxy is being used."
 
 #: FrmSettings.cs:117
 #: FrmSettings.cs:118
@@ -209,234 +209,244 @@ msgid ""
 "Directory does not exist.\n"
 "Please choice a valid directory."
 msgstr ""
+"Directory does not exist.\n"
+"Please choice a valid directory."
 
 #: FrmSettings.cs:145
 msgid "Expert settings"
-msgstr ""
+msgstr "Expert settings"
 
 #: FrmSettings.cs:149
 msgid "Settings"
-msgstr ""
+msgstr "Settings"
 
 #: FrmSettings.cs:163
 msgid "Do nothing"
-msgstr ""
+msgstr "Do nothing"
 
 #: FrmSettings.cs:164
 msgid "Bring notes to front"
-msgstr ""
+msgstr "Bring notes to front"
 
 #: FrmSettings.cs:165
 msgid "New note"
-msgstr ""
+msgstr "New note"
 
 #: FrmSettings.cs:295
 msgid "No rights to add key to registry."
-msgstr ""
+msgstr "No rights to add key to registry."
 
 #: FrmSettings.cs:314
 msgid "Run key in registery does not exist."
-msgstr ""
+msgstr "Run key in registery does not exist."
 
 #: FrmSettings.cs:315
 msgid "Error run key registery missing"
-msgstr ""
+msgstr "Error run key registery missing"
 
 #: FrmSettings.cs:345
 msgid "NoteFly is buzy moving your notes"
-msgstr ""
+msgstr "NoteFly is buzy moving your notes"
 
 #: FrmSettings.cs:378
 msgid "Font size invalid. Minimal 4pt maximum 128pt allowed."
-msgstr ""
+msgstr "Font size invalid. Minimal 4pt maximum 128pt allowed."
 
 #: FrmSettings.cs:379
 msgid "Error invalid fontsize"
-msgstr ""
+msgstr "Error invalid fontsize"
 
 #: FrmSettings.cs:380
 msgid "Please select a font."
-msgstr ""
+msgstr "Please select a font."
 
 #: FrmSettings.cs:381
 msgid "Error no font."
-msgstr ""
+msgstr "Error no font."
 
 #: FrmSettings.cs:384
 msgid "Invalid folder for saving notes folder."
-msgstr ""
+msgstr "Invalid folder for saving notes folder."
 
 #: FrmSettings.cs:385
 msgid "Error invalid notes folder"
-msgstr ""
+msgstr "Error invalid notes folder"
 
 #: FrmSettings.cs:416
 msgid "Settings text direction invalid."
-msgstr ""
+msgstr "Settings text direction invalid."
 
 #: FrmSettings.cs:417
 msgid "Error text direction"
-msgstr ""
+msgstr "Error text direction"
 
 #: FrmSettings.cs:424
 msgid "Given default emailadres is not valid."
-msgstr ""
+msgstr "Given default emailadres is not valid."
 
 #: FrmSettings.cs:425
 msgid "Email adres no valid"
-msgstr ""
+msgstr "Email adres no valid"
 
 #: FrmSettings.cs:432
 msgid "The path to gpg.exe is not valid."
-msgstr ""
+msgstr "The path to gpg.exe is not valid."
 
 #: FrmSettings.cs:433
 msgid "Error not valid gpg path."
-msgstr ""
+msgstr "Error not valid gpg path."
 
 #: FrmSettings.cs:482
 msgid "Please wait"
-msgstr ""
+msgstr "Please wait"
 
 #: FrmSettings.cs:506
 msgid "Are you sure, you want to reset all the settings to default?"
-msgstr ""
+msgstr "Are you sure, you want to reset all the settings to default?"
 
 #: FrmSettings.cs:507
 msgid "Reset settings?"
-msgstr ""
+msgstr "Reset settings?"
 
 #: FrmSettings.cs:632
 msgid "File is marked as system file. Did not move."
-msgstr ""
+msgstr "File is marked as system file. Did not move."
 
 #: FrmSettings.cs:640
 msgid "Error moving note(s)"
-msgstr ""
+msgstr "Error moving note(s)"
 
 #: FrmSettings.cs:641
 msgid "Note file(s) already exist."
-msgstr ""
+msgstr "Note file(s) already exist."
 
 #: GPGVerifWrapper.cs:97
 msgid "Do you want to install the update?"
-msgstr ""
+msgstr "Do you want to install the update?"
 
 #: GPGVerifWrapper.cs:98
 msgid "GnuPG signature check result"
-msgstr ""
+msgstr "GnuPG signature check result"
 
 #: ImportNotes.cs:110
 msgid "import error"
-msgstr ""
+msgstr "import error"
 
 #: ImportNotes.cs:121
 msgid "Cannot find KeyNote NF note content."
-msgstr ""
+msgstr "Cannot find KeyNote NF note content."
 
 #: ImportNotes.cs:147
 msgid "Not a KeyNote NF note."
-msgstr ""
+msgstr "Not a KeyNote NF note."
 
 #: ImportNotes.cs:268
 msgid "Do you want to delete all current notes?"
-msgstr ""
+msgstr "Do you want to delete all current notes?"
 
 #: ImportNotes.cs:269
 #: Program.cs:205
 msgid "Are you sure?"
-msgstr ""
+msgstr "Are you sure?"
 
 #: ImportNotes.cs:377
 msgid "CVS file does not seems to be in the Stickies format."
-msgstr ""
+msgstr "CVS file does not seems to be in the Stickies format."
 
 #: ImportNotes.cs:384
 msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
-msgstr ""
+msgstr "CVS file does not seems to be in the Stickies format, excepting 5 columns."
 
 #: ImportNotes.cs:520
 msgid "Error reading PNotes backup file, incorrect format."
-msgstr ""
+msgstr "Error reading PNotes backup file, incorrect format."
 
 #: Notes.cs:369
 msgid ""
 "Folder with notes does not exist.\n"
 "Do want to load notes from the default notes folder?"
 msgstr ""
+"Folder with notes does not exist.\n"
+"Do want to load notes from the default notes folder?"
 
 #: Notes.cs:370
 msgid "Notes folder doesn't exist"
-msgstr ""
+msgstr "Notes folder doesn't exist"
 
 #: Notes.cs:590
 msgid ""
 "Do you want to import the notes from NoteFly 1.0.x?\n"
 "Press cancel to ask this again next time."
 msgstr ""
+"Do you want to import the notes from NoteFly 1.0.x?\n"
+"Press cancel to ask this again next time."
 
 #: Notes.cs:591
 msgid "Import from NoteFly 1.0.x"
-msgstr ""
+msgstr "Import from NoteFly 1.0.x"
 
 #: Notes.cs:652
 msgid ""
 "Do you want to import the notes from NoteFly 2.5.x?\n"
 "Press cancel to ask this again next time."
 msgstr ""
+"Do you want to import the notes from NoteFly 2.5.x?\n"
+"Press cancel to ask this again next time."
 
 #: Notes.cs:653
 msgid "Import from NoteFly 2.5.x"
-msgstr ""
+msgstr "Import from NoteFly 2.5.x"
 
 #: Notes.cs:700
 msgid "many notes"
-msgstr ""
+msgstr "many notes"
 
 #: Notes.cs:701
 msgid "There are many notes loading this can take a while, do you want to load them all?"
-msgstr ""
+msgstr "There are many notes loading this can take a while, do you want to load them all?"
 
 #: Notes.cs:721
 msgid "Many notes visible"
-msgstr ""
+msgstr "Many notes visible"
 
 #: Notes.cs:722
 msgid ""
 "There are many notes visible.\n"
 "Hide some notes to make loading faster."
 msgstr ""
+"There are many notes visible.\n"
+"Hide some notes to make loading faster."
 
 #: PluginGrid.cs:156
 msgid "version:"
-msgstr ""
+msgstr "version:"
 
 #: PluginGrid.cs:172
 msgid "author:"
-msgstr ""
+msgstr "author:"
 
 #: PluginGrid.cs:188
 msgid "description:"
-msgstr ""
+msgstr "description:"
 
 #: PluginGrid.cs:250
 msgid "disable"
-msgstr ""
+msgstr "disable"
 
 #: PluginGrid.cs:255
 msgid "enable"
-msgstr ""
+msgstr "enable"
 
 #: PluginsManager.cs:186
 #: PluginsManager.cs:218
 #: PluginsManager.cs:280
 msgid "unknown"
-msgstr ""
+msgstr "unknown"
 
 #: Program.cs:204
 #, csharp-format
 msgid "Are you sure you want to visted: {0}"
-msgstr ""
+msgstr "Are you sure you want to visted: {0}"
 
 #: Program.cs:285
 #, csharp-format
@@ -445,141 +455,146 @@ msgid ""
 "Which is not recommended for security.\n"
 "Press OK if your understand the risks of running as administrator and want to hide this message in the future."
 msgstr ""
+"You are now running {0} as elevated Administrator.\n"
+"Which is not recommended for security.\n"
+"Press OK if your understand the risks of running as administrator and want to hide this message in the future."
 
 #: Program.cs:286
 msgid "Elevated administrator"
-msgstr ""
+msgstr "Elevated administrator"
 
 #: Program.cs:311
 msgid ""
 "The programme is already running.\n"
 "Load an other instance? (not recommeded)"
 msgstr ""
+"The programme is already running.\n"
+"Load an other instance? (not recommeded)"
 
 #: Program.cs:312
 msgid "already running"
-msgstr ""
+msgstr "already running"
 
 #: Program.cs:647
 msgid "Parameter:"
-msgstr ""
+msgstr "Parameter:"
 
 #: Program.cs:648
 msgid "Show this parameters help window."
-msgstr ""
+msgstr "Show this parameters help window."
 
 #: Program.cs:649
 msgid "Disable transparency."
-msgstr ""
+msgstr "Disable transparency."
 
 #: Program.cs:650
 msgid "Disable all plugins."
-msgstr ""
+msgstr "Disable all plugins."
 
 #: Program.cs:651
 msgid "Disable any highlighting in notes."
-msgstr ""
+msgstr "Disable any highlighting in notes."
 
 #: Program.cs:652
 msgid "Disable XP visual style."
-msgstr ""
+msgstr "Disable XP visual style."
 
 #: Program.cs:653
 msgid "Disable GnuPG signature checking."
-msgstr ""
+msgstr "Disable GnuPG signature checking."
 
 #: Program.cs:654
 msgid "Force a first run."
-msgstr ""
+msgstr "Force a first run."
 
 #: Program.cs:655
 msgid "Log exceptions, errors and debug messages."
-msgstr ""
+msgstr "Log exceptions, errors and debug messages."
 
 #: Program.cs:656
 msgid "Don't log exceptions, errors and debug messages."
-msgstr ""
+msgstr "Don't log exceptions, errors and debug messages."
 
 #: Program.cs:659
 msgid "with unnecessary administrator privilege."
-msgstr ""
+msgstr "with unnecessary administrator privilege."
 
 #: Program.cs:661
 msgid "Reset all positions of visual notes at startup."
-msgstr ""
+msgstr "Reset all positions of visual notes at startup."
 
 #: Program.cs:662
 msgid "Reset all NoteFly settings to default."
-msgstr ""
+msgstr "Reset all NoteFly settings to default."
 
 #: Program.cs:678
 #, csharp-format
 msgid "{0} parameters help"
-msgstr ""
+msgstr "{0} parameters help"
 
 #: Program.cs:702
 #, csharp-format
 msgid "There's a new version of {0} available."
-msgstr ""
+msgstr "There's a new version of {0} available."
 
 #: Program.cs:703
 msgid "Your version:"
-msgstr ""
+msgstr "Your version:"
 
 #: Program.cs:705
 msgid "New version:"
-msgstr ""
+msgstr "New version:"
 
 #: Program.cs:707
 msgid "Do you want to download and install the new version now?"
-msgstr ""
+msgstr "Do you want to download and install the new version now?"
 
 #: Program.cs:711
 #, csharp-format
 msgid "Downloading {0} update"
-msgstr ""
+msgstr "Downloading {0} update"
 
 #: SearchTextBox.cs:38
 msgid "search:"
-msgstr ""
+msgstr "search:"
 
 #: Textfile.cs:85
 msgid "Title: "
-msgstr ""
+msgstr "Title: "
 
 #: TrayIcon.cs:137
 msgid "&New note"
-msgstr ""
+msgstr "&New note"
 
 #: TrayIcon.cs:151
 msgid "&Manage notes"
-msgstr ""
+msgstr "&Manage notes"
 
 #: TrayIcon.cs:169
 msgid "&Settings"
-msgstr ""
+msgstr "&Settings"
 
 #: TrayIcon.cs:187
 msgid "&Plugins"
-msgstr ""
+msgstr "&Plugins"
 
 #: TrayIcon.cs:220
 msgid "E&xit"
-msgstr ""
+msgstr "E&xit"
 
 #: TrayIcon.cs:237
 #, csharp-format
 msgid "You can access {0} functions with this trayicon."
-msgstr ""
+msgstr "You can access {0} functions with this trayicon."
 
 #: TrayIcon.cs:333
 msgid "confirm exit"
-msgstr ""
+msgstr "confirm exit"
 
 #: TrayIcon.cs:340
 #, csharp-format
 msgid "Are sure you want to exit {0}?"
-msgstr ""
+msgstr "Are sure you want to exit {0}?"
 
 #: TrayIcon.cs:352
 #, csharp-format
@@ -587,248 +602,250 @@ msgid ""
 "A note is still open for editing.\n"
 "Are you sure you want to shutdown {0}?"
 msgstr ""
+"A note is still open for editing.\n"
+"Are you sure you want to shutdown {0}?"
 
 # menuEditNote
 msgid "&Edit note"
-msgstr ""
+msgstr "&Edit note"
 
 # menuNoteSkins
 msgid "S&kin"
-msgstr ""
+msgstr "S&kin"
 
 # menuActions
 msgid "&Actions"
-msgstr ""
+msgstr "&Actions"
 
 # menuOnTop
 msgid "Sticky on &top"
-msgstr ""
+msgstr "Sticky on &top"
 
 # menuWordWrap
 msgid "Word wrap"
-msgstr ""
+msgstr "Word wrap"
 
 # menuCopy
 msgid "&Copy"
-msgstr ""
+msgstr "&Copy"
 
 # menuHideNote
 msgid "&Hide note"
-msgstr ""
+msgstr "&Hide note"
 
 # menuSaveNewNote
 msgid "&Save note"
-msgstr ""
+msgstr "&Save note"
 
 # menuShowtoolbar
 msgid "Show format tools"
-msgstr ""
+msgstr "Show format tools"
 
 # menuPasteTo
 msgid "&Paste to"
-msgstr ""
+msgstr "&Paste to"
 
 # menuImportfile
 msgid "Import.."
-msgstr ""
+msgstr "Import.."
 
 # menuCancelNewNote
 msgid "Canc&el note"
-msgstr ""
+msgstr "Canc&el note"
 
 # chxSettingsExpertEnabled
 msgid "E&xpert settings"
-msgstr ""
+msgstr "E&xpert settings"
 
 # tabGeneral
 msgid "General"
-msgstr ""
+msgstr "General"
 
 # chxNotesDeleteRecyclebin
 msgid "Move deleted notes to recycle bin."
-msgstr ""
+msgstr "Move deleted notes to recycle bin."
 
 # chxConfirmDeletenote
 msgid "Confirm deleting notes."
-msgstr ""
+msgstr "Confirm deleting notes."
 
 # chxStartOnLogin
 msgid "Start NoteFly on logon."
-msgstr ""
+msgstr "Start NoteFly on logon."
 
 # chxLoadPlugins
 msgid "Allow to load plugins"
-msgstr ""
+msgstr "Allow to load plugins"
 
 # chxConfirmExit
 msgid "Confirm shutdown of NoteFly"
-msgstr ""
+msgstr "Confirm shutdown of NoteFly"
 
 # tabHotkeys
 msgid "Hotkeys"
-msgstr ""
+msgstr "Hotkeys"
 
 # tabAppearance
 msgid "Appearance"
-msgstr ""
+msgstr "Appearance"
 
 # tabAppearanceOverall
 msgid "Overall"
-msgstr ""
+msgstr "Overall"
 
 # tabPageFonts
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 # tabPageTrayicon
 msgid "Trayicon"
-msgstr ""
+msgstr "Trayicon"
 
 # chxUseAlternativeTrayicon
 msgid "Use alternative windows7 style/white trayicon."
-msgstr ""
+msgstr "Use alternative windows7 style/white trayicon."
 
 # chxTrayiconBoldExit
 msgid "Display \"Exit\" in bold."
-msgstr ""
+msgstr "Display \"Exit\" in bold."
 
 # chxTrayiconBoldSettings
 msgid "Display \"Settings\" in bold."
-msgstr ""
+msgstr "Display \"Settings\" in bold."
 
 # chxTrayiconBoldManagenotes
 msgid "Display \"Manage notes\" in bold."
-msgstr ""
+msgstr "Display \"Manage notes\" in bold."
 
 # chxTrayiconBoldNewnote
 msgid "Display \"New note\" in bold."
-msgstr ""
+msgstr "Display \"New note\" in bold."
 
 # chxCaseSentiveSearch
 msgid "Use case sentive search."
-msgstr ""
+msgstr "Use case sentive search."
 
 # chxManagenotesTooltipContent
 msgid "Show a tooltip with preview of the note content."
-msgstr ""
+msgstr "Show a tooltip with preview of the note content."
 
 # tabHighlight
 msgid "Highlight"
-msgstr ""
+msgstr "Highlight"
 
 # chxHighlightSQL
 msgid "Highlight SQL text between quotes. (Beta)"
-msgstr ""
+msgstr "Highlight SQL text between quotes. (Beta)"
 
 # chxHighlightPHP
 msgid "Highlight PHP text between <?php and ?>. (Beta)"
-msgstr ""
+msgstr "Highlight PHP text between <?php and ?>. (Beta)"
 
 # chxHighlightHyperlinks
 msgid "Make hyperlinks clickable."
-msgstr ""
+msgstr "Make hyperlinks clickable."
 
 # chxConfirmLink
 msgid "Ask to launch url on click on hyperlink (recommended)."
-msgstr ""
+msgstr "Ask to launch url on click on hyperlink (recommended)."
 
 # chxHighlightHTML
 msgid "Highlight HTML text. (Beta)"
-msgstr ""
+msgstr "Highlight HTML text. (Beta)"
 
 # tabSharing
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 # tabEmail
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 # chxActionsEmailEnabled
 msgid "Enable E-mail in action menu"
-msgstr ""
+msgstr "Enable E-mail in action menu"
 
 # chxActionsEmailDefaultaddressSet
 msgid "Set a default email address to send to: "
-msgstr ""
+msgstr "Set a default email address to send to: "
 
 # tabNetwork
 msgid "Network"
-msgstr ""
+msgstr "Network"
 
 # tabUpdates
 msgid "Updates"
-msgstr ""
+msgstr "Updates"
 
 # chxUpdateSilentInstall
 msgid "Install update setup silently."
-msgstr ""
+msgstr "Install update setup silently."
 
 # btnCheckUpdates
 msgid "Check updates now"
-msgstr ""
+msgstr "Check updates now"
 
 # tabProxy
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 # tabPageGPG
 msgid "GnuPG"
-msgstr ""
+msgstr "GnuPG"
 
 # btnGPGPathBrowse
 msgid "browse"
-msgstr ""
+msgstr "browse"
 
 # lblTextGPGPath
 msgid "Location gpg.exe:"
-msgstr ""
+msgstr "Location gpg.exe:"
 
 # chxCheckUpdatesSignature
 msgid "Verify the signature of downloaded updates."
-msgstr ""
+msgstr "Verify the signature of downloaded updates."
 
 # lblTextNetworkMiliseconds
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 # tabAdvance
 msgid "Advance"
-msgstr ""
+msgstr "Advance"
 
 # lblTextNoteLocation
 msgid "Save notes in:"
-msgstr ""
+msgstr "Save notes in:"
 
 # chxLogExceptions
 msgid "Log exceptions (recommended)."
-msgstr ""
+msgstr "Log exceptions (recommended)."
 
 # lblTextLogging
 msgid "Logging:"
-msgstr ""
+msgstr "Logging:"
 
 # chxLogDebug
 msgid "Log debug info."
-msgstr ""
+msgstr "Log debug info."
 
 # chxLogErrors
 msgid "Log user errors."
-msgstr ""
+msgstr "Log user errors."
 
 # btnCancel
 msgid "&Cancel"
-msgstr ""
+msgstr "&Cancel"
 
 # btnOK
 msgid "&OK"
-msgstr ""
+msgstr "&OK"
 
 # tabPagePluginsInstalled
 msgid "Installed"
-msgstr ""
+msgstr "Installed"
 
 # tabPagePluginsAvailable
 msgid "available"
-msgstr ""
+msgstr "available"
 

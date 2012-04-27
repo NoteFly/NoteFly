@@ -87,8 +87,10 @@ namespace NoteFly
                         break;
                     case TextfileWriteType.exportrtf:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
-                        writer = new StreamWriter(fs, Encoding.UTF8);
+                        writer = new StreamWriter(fs, Encoding.ASCII);
                         writer.Write(content);
+                        // add a null character to the end.of the RTF file.
+                        writer.Write((char)0);
                         break;
                     case TextfileWriteType.exporthtml:
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
