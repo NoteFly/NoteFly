@@ -53,9 +53,10 @@ namespace IPlugin
         /// <param name="y">Y coordinate of the note on the screen</param>
         /// <param name="width">The width of the note.</param>
         /// <param name="height">The height of the note.</param>
+        /// <param name="onlyplaintext">only plaintext</param>
         /// <param name="content">The content of the note.</param>
         /// <param name="wordwarp">Is the note content word warped.</param>
-        void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool wordwarp);
+        void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool onlyplaintext, bool wordwarp);
 
         /// <summary>
         /// Update all notes forms, in case some notefly 

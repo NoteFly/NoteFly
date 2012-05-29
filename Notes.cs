@@ -114,14 +114,44 @@ namespace NoteFly
         /// <param name="height">The height of the note.</param>
         /// <param name="content">The note rtf content.</param>
         /// <param name="wordwarp">Is the note content word warped.</param>
-        public void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool wordwarp)
+        public void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool plaintext, bool wordwarp)
         {
             Note note = this.CreateNoteDefaultSettings(title, skinnr, x, y, width, height, wordwarp);
+            if (plaintext)
+            {
+                note.contenttype = Note.ContentType.text;
+            }
+            else
+            {
+                note.contenttype = Note.ContentType.rtf;
+            }
+
             if (note != null)
             {
                 this.AddNote(note);
                 xmlUtil.WriteNote(note, this.GetSkinName(skinnr), content);
                 note.CreateForm();
+            }
+        }
+
+        /// <summary>
+        /// Write a note with new settings etc.
+        /// Make sure write type of content gets passed to xmlUtil.WriteNote method.
+        /// </summary>
+        /// <param name="note"></param>
+        /// <param name="rtb">TransparentRichTextBox with note content</param>
+        public void UpdateNote(Note note, string content)
+        {
+            bool writecuceeded = false;
+            if (content != null)
+            {
+                writecuceeded = xmlUtil.WriteNote(note, this.GetSkinName(note.SkinNr), content);
+            }
+
+            if (!writecuceeded)
+            {
+                string newnote_exccantwritenote = Strings.T("Could not write note.");
+                throw new ApplicationException(newnote_exccantwritenote);
             }
         }
 
@@ -845,6 +875,7 @@ namespace NoteFly
 
             return addsucceeded;
         }
+
         #endregion Methods
     }
 }

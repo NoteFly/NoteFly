@@ -370,7 +370,7 @@ namespace NoteFly
                             }
 
                             string content = this.RemoveQuotes(parts[poscontent]);
-                            this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, content, true);
+                            this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, content, false, true);
                         }
                         else
                         {
@@ -496,7 +496,7 @@ namespace NoteFly
                         {
                             if (line.Contains("\0"))
                             {
-                                this.notes.AddNoteDefaultSettings(notetitles[notenr], Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent.ToString(), true);
+                                this.notes.AddNoteDefaultSettings(notetitles[notenr], Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent.ToString(), false, true);
 
                                 notecontent = null;
                                 notecontent = new StringBuilder();
@@ -553,8 +553,8 @@ namespace NoteFly
                         int posstartcontent = content.IndexOf("<![CDATA[") + 9;
                         int posendcontent = content.IndexOf("]]>");
                         string plaincontent = content.Substring(posstartcontent, posendcontent - posstartcontent);
-                        string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\f0\\fs20" + plaincontent + "\\par}";
-                        this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent, true);
+                        //string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\f0\\fs20" + plaincontent + "\\par}";
+                        this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, plaincontent, true, true);
                     }
                 }
             }
@@ -647,7 +647,7 @@ namespace NoteFly
                             }
                         }
 
-                        xmlUtil.WriteNote(newnote, this.notes.GetSkinName(Settings.NotesDefaultSkinnr), newnote.Tempcontent);                        
+                        xmlUtil.WriteNote(newnote, this.notes.GetSkinName(Settings.NotesDefaultSkinnr), newnote.Tempcontent); 
                     }
                 }
 
@@ -699,6 +699,7 @@ namespace NoteFly
             string content = xmlUtil.GetContentString(nf1notefile, "content");
             string newcontentrtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n\\viewkind4\\uc1\\pard\\f0\\fs20" + content + "\\ulnone\\par\r\n}\r\n";
             xmlUtil.WriteNote(importnf1note, this.notes.GetSkinName(nf1note_skinnr), newcontentrtf);
+            //this.notes.UpdateNote(note, content);
         }
 
         /// <summary>

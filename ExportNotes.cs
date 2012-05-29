@@ -227,7 +227,19 @@ namespace NoteFly
                     writer.Write(chrstartnotefilename);
                     writer.Write(pnotesfilenames[i] + PNOTESEXTENSION);
                     writer.Write(chrendnotefilename);
-                    writer.Write(this.notes.GetNote(i).GetContent());
+                    if (this.notes.GetNote(i).contenttype == Note.ContentType.text)
+                    {
+                        // Force write as RTF
+                        System.Windows.Forms.RichTextBox rtb = new System.Windows.Forms.RichTextBox();
+                        rtb.Text = this.notes.GetNote(i).GetContent();
+                        writer.Write(rtb.Rtf);
+                        rtb = null;
+                    }
+                    else
+                    {
+                        writer.Write(this.notes.GetNote(i).GetContent());
+                    }
+                    
                     writer.Write(chrenddoc);
                 }
             }
