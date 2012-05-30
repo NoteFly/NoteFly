@@ -427,6 +427,7 @@ namespace NoteFly
             stopwatch.Stop();
             Log.Write(LogType.info, "Notes search time:  " + stopwatch.ElapsedTicks.ToString() + " ticks");
             #endif
+            this.notes.Clear();
             int numloadingnotes = this.CheckLimitNotesTotal(notefiles.Length);
             this.notes.Capacity = numloadingnotes;
             #if DEBUG

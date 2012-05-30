@@ -618,6 +618,18 @@ namespace NoteFly
             if (!this.searchTextBoxNotes.IsKeywordEntered)
             {
                 DataTable datatable = this.CreateDatatable();
+                int numnotefiles =Directory.GetFiles(Settings.NotesSavepath, "*"+Notes.NOTEEXTENSION, SearchOption.TopDirectoryOnly).Length;
+                if (this.notes.CountNotes > numnotefiles)
+                {
+                    Log.Write(LogType.exception, "Note file(s) deleted while programme was running. Reloading all note files.");
+                    while (this.notes.CountNotes > 0)
+                    {
+                        this.notes.GetNote(0).DestroyForm();
+                        this.notes.RemoveNote(0);
+                    }
+                    this.notes.LoadNotes(true, false);
+                }
+
                 for (int i = 0; i < this.notes.CountNotes; i++)
                 {
                     datatable = this.AddDatatableNoteRow(datatable, i);
