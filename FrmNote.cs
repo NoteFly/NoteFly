@@ -81,7 +81,24 @@ namespace NoteFly
             this.lblTitle.Text = note.Title;
 
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
-            this.LoadNoteContent();
+            try
+            {
+                if (string.IsNullOrEmpty(this.note.Tempcontent))
+                {
+                    this.rtbNote.Rtf = note.GetContent();
+                }
+                else
+                {
+                    this.rtbNote.Rtf = this.note.Tempcontent;
+                    this.note.Tempcontent = string.Empty;
+                    this.note.Tempcontent = null;
+                }
+            }
+            catch (ArgumentException argexc)
+            {
+                Log.Write(LogType.exception, "note " + note.Filename + ": " + argexc.Message);
+            }
+
             this.SetTopmostNote();
             this.SetBounds(note.X, note.Y, note.Width, note.Height);
             this.SetLockedNote();
@@ -92,27 +109,16 @@ namespace NoteFly
 
         #endregion Constructors
 
-        #region Properties (2)
+        #region Properties (1)
 
         /// <summary>
-        /// Gets the note content as rich format text.
+        /// Gets the note content as rich text.
         /// </summary>
         public string GetContentRTF
         {
             get
             {
                 return this.rtbNote.Rtf;
-            }
-        }
-
-        /// <summary>
-        /// Gets the note content as plain text.
-        /// </summary>
-        public string GetContentText
-        {
-            get
-            {
-                return this.rtbNote.Text;
             }
         }
 
@@ -212,40 +218,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Loads the note content
-        /// </summary>
-        private void LoadNoteContent()
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(this.note.Tempcontent))
-                {
-                    note.Tempcontent = note.GetContent();
-                }
-
-                switch (note.contenttype)
-                {
-                    case Note.ContentType.rtf:
-                        this.rtbNote.Rtf = note.Tempcontent;
-                        break;
-                    case Note.ContentType.text:
-                        this.rtbNote.Text = note.Tempcontent;
-                        break;
-                    default:
-                        this.rtbNote.Rtf = note.Tempcontent;
-                        break;
-                }
-
-                this.note.Tempcontent = string.Empty;
-                this.note.Tempcontent = null;
-            }
-            catch (ArgumentException argexc)
-            {
-                Log.Write(LogType.exception, "note " + note.Filename + ": " + argexc.Message);
-            }
-        }
-
-        /// <summary>
         /// The user pressed the cross on the note,
         /// Hide the note.
         /// </summary>
@@ -256,14 +228,7 @@ namespace NoteFly
             if (Settings.NotesClosebtnHidenotepermanently)
             {
                 this.note.Visible = false;
-                if (this.note.contenttype == Note.ContentType.text)
-                {
-                    this.notes.UpdateNote(this.note, this.rtbNote.Text);
-                }
-                else
-                {
-                    this.notes.UpdateNote(this.note, this.rtbNote.Rtf);
-                }
+                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNote.Rtf);
             }
 
             this.note.DestroyForm();
@@ -579,14 +544,7 @@ namespace NoteFly
             SyntaxHighlight.DeinitHighlighter();
             if (!this.saveWorker.IsBusy)
             {
-                if (this.note.contenttype == Note.ContentType.text)
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Text);
-                }
-                else
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
-                }
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
 
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.SkinNr));
@@ -603,14 +561,7 @@ namespace NoteFly
             this.SetLockedNote();
             if (!this.saveWorker.IsBusy)
             {
-                if (this.note.contenttype == Note.ContentType.text)
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Text);
-                }
-                else
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
-                }
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -625,14 +576,7 @@ namespace NoteFly
             this.SetRollupNote();
             if (!this.saveWorker.IsBusy)
             {
-                if (this.note.contenttype == Note.ContentType.text)
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Text);
-                }
-                else
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
-                }
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -647,14 +591,7 @@ namespace NoteFly
             this.SetTopmostNote();
             if (!this.saveWorker.IsBusy)
             {
-                if (this.note.contenttype == Note.ContentType.text)
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Text);
-                }
-                else
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
-                }
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -669,14 +606,7 @@ namespace NoteFly
             this.SetWordwarpNote();
             if (!this.saveWorker.IsBusy)
             {
-                if (this.note.contenttype == Note.ContentType.text)
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Text);
-                }
-                else
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
-                }
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -711,14 +641,7 @@ namespace NoteFly
 
             if (!(this.note.Locked && this.saveWorker.IsBusy))
             {
-                if (this.note.contenttype == Note.ContentType.text)
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Text);
-                }
-                else
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
-                }
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
         }
 
@@ -782,14 +705,7 @@ namespace NoteFly
             this.moving = false;
             if (!this.saveWorker.IsBusy)
             {
-                if (this.note.contenttype == Note.ContentType.text)
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Text);
-                }
-                else
-                {
-                    this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
-                }
+                this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
 
             this.pnlHead.BackColor = Color.Transparent;
@@ -816,10 +732,8 @@ namespace NoteFly
             {
                 this.note.X = this.Location.X;
                 this.note.Y = this.Location.Y;
-                //string rtf = (string)e.Argument;
-                //xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), rtf);
-                string content = (string)e.Argument;
-                this.notes.UpdateNote(this.note, content);
+                string rtf = (string)e.Argument;
+                xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), rtf);
             }
             else
             {

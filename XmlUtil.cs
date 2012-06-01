@@ -44,12 +44,8 @@ namespace NoteFly
 
         /// <summary>
         /// The note version
-        /// version 1: plaintext content tag, does not use version attribute.
-        /// version 2: rtf in content tag
-        /// version 3: add saving locked and rollup settings
-        /// version 4: add support for defining type text or rtf content
         /// </summary>
-        private const string NOTEVERSION = "4";
+        private const string NOTEVERSION = "3";
 
         /// <summary>
         /// XmlTextReader object.
@@ -956,7 +952,6 @@ namespace NoteFly
         /// <param name="note">The note object.</param>
         /// <param name="skinname">The skin name of the note.</param>
         /// <param name="content">The note content.</param>
-        /// <param name="saveplaintext">Save the note content as plaintext.</param>
         /// <returns>True on succeeded otherwise false.</returns>
         public static bool WriteNote(Note note, string skinname, string content)
         {
@@ -1435,9 +1430,6 @@ namespace NoteFly
                             note.Width = xmlread.ReadElementContentAsInt();
                             break;
                         case "heigth":
-                            note.Height = xmlread.ReadElementContentAsInt(); // keep to not lost height of notes. But do not write.
-                            break;
-                        case "height":
                             note.Height = xmlread.ReadElementContentAsInt();
                             break;
                         case "x":
@@ -1458,21 +1450,6 @@ namespace NoteFly
                             note.Title = xmlread.ReadElementContentAsString();
                             break;
                         case "content":
-                            if (xmlread.AttributeCount > 0)
-                            {
-                                if (!String.IsNullOrEmpty(xmlread.GetAttribute("type")))
-                                {
-                                    if (xmlread.GetAttribute("type").Equals("text", StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        note.contenttype = Note.ContentType.text;
-                                    }
-                                    else
-                                    {
-                                        note.contenttype = Note.ContentType.rtf;
-                                    }
-                                }
-                            }
-
                             if (note.Visible || setallcontent)
                             {
                                 note.Tempcontent = xmlread.ReadElementContentAsString();
@@ -1599,28 +1576,16 @@ namespace NoteFly
             xmlwrite.WriteEndElement();
             xmlwrite.WriteStartElement("size");
             xmlwrite.WriteElementString("width", Convert.ToString(note.Width));
-            ////xmlwrite.WriteElementString("height", Convert.ToString(note.Height)); // do not write this anymore.
-            xmlwrite.WriteElementString("height", Convert.ToString(note.Height));
+            xmlwrite.WriteElementString("heigth", Convert.ToString(note.Height));
             xmlwrite.WriteEndElement();
             xmlwrite.WriteElementString("skin", skinname);
             xmlwrite.WriteElementString("title", note.Title);
-            xmlwrite.WriteStartElement("content");
-            if (note.contenttype == Note.ContentType.text)
-            {
-                xmlwrite.WriteAttributeString("type", "text");
-            }
-            else
-            {
-                xmlwrite.WriteAttributeString("type", "rtf");
-            }
-
-            xmlwrite.WriteString(content);
-            xmlwrite.WriteEndElement();
+            xmlwrite.WriteElementString("content", content);
             xmlwrite.WriteEndElement();
         }
 
         /// <summary>
-        /// Get the content limited
+        /// Get the content
         /// </summary>
         /// <returns></returns>
         public string GetContentStringLimited(string nodename, int limit)
@@ -1645,7 +1610,6 @@ namespace NoteFly
 
             return content;
         }
-
         #endregion Methods
     }
 }

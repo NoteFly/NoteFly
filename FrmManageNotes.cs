@@ -335,18 +335,7 @@ namespace NoteFly
 
                         this.Resetdatagrid();
                         Application.DoEvents();
-                        Note note = this.notes.GetNote(notepos);
-                        this.notes.UpdateNote(note, note.GetContent());
-                        //if (note.contenttype == Note.ContentType.text)
-                        //{
-                        //    this.notes.UpdateNote(note, note.GetContent());
-                        //}
-                        //else
-                        //{
-                        //    this.notes.UpdateNote(note, note.GetContent());
-                        //}
-                        
-                        //xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
+                        xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
                     }
                 }
             }
@@ -407,9 +396,7 @@ namespace NoteFly
                         this.notes.GetNote(notepos).DestroyForm();
                     }
 
-                    //xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
-                    Note note = this.notes.GetNote(notepos);
-                    this.notes.UpdateNote(note, note.GetContent());
+                    xmlUtil.WriteNote(this.notes.GetNote(notepos), this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr), this.notes.GetNote(notepos).GetContent());
                 }
             }
             catch (ArgumentOutOfRangeException argoutrangeexc)
@@ -922,60 +909,45 @@ namespace NoteFly
             {
                 if (e.ColumnIndex == 1)
                 {
+                    string contentpreview = null;
                     if (e.RowIndex >= 0)
                     {
                         int notepos = this.GetNoteposBySelrow(e.RowIndex);
                         if (notepos >= 0)
                         {
-                            const int MAXLENCONTENTPREVIEW = 100;
-                            string contentpreview = null;
-                            Note note = this.notes.GetNote(notepos);
-                            if (note.contenttype == Note.ContentType.text)
+                            // todo GetContent() is not good because it can take long to read all content but it works for now.
+                            RichTextBox rtb = new RichTextBox();
+                            rtb.Rtf = this.notes.GetNote(notepos).GetContent();
+                            string content = rtb.Text;
+                            rtb.Dispose();
+                            GC.Collect();
+                            int startpos = 0;
+                            string startcontentplainhint = string.Empty;
+                            try
                             {
-                                if (note.GetContent().Length > MAXLENCONTENTPREVIEW)
+                                int lencontentpreview = content.Length - startpos - startcontentplainhint.Length;
+                                const int MAXLENCONTENTPREVIEW = 100;
+                                if (lencontentpreview > MAXLENCONTENTPREVIEW)
                                 {
-                                    contentpreview = note.GetContent().Substring(0, MAXLENCONTENTPREVIEW);
+                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, MAXLENCONTENTPREVIEW);
+                                    contentpreview += "..";
                                 }
                                 else
                                 {
-                                    contentpreview = note.GetContent();
+                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, lencontentpreview);
                                 }
+
+                                content = null;
                             }
-                            else
+                            catch (ArgumentOutOfRangeException argoutrange)
                             {
-                                // todo GetContent() is not good because it can take long to read all content but it works for now.
-                                RichTextBox rtb = new RichTextBox();
-                                rtb.Rtf = note.GetContent();
-                                string content = rtb.Text;
-                                rtb.Dispose();
-                                GC.Collect();
-                                int startpos = 0;
-                                string startcontentplainhint = string.Empty;
-                                try
-                                {
-                                    int lencontentpreview = content.Length - startpos - startcontentplainhint.Length;
-                                    if (lencontentpreview > MAXLENCONTENTPREVIEW)
-                                    {
-                                        contentpreview = content.Substring(startpos + startcontentplainhint.Length, MAXLENCONTENTPREVIEW);
-                                        contentpreview += "..";
-                                    }
-                                    else
-                                    {
-                                        contentpreview = content.Substring(startpos + startcontentplainhint.Length, lencontentpreview);
-                                    }
-
-                                    content = null;
-                                }
-                                catch (ArgumentOutOfRangeException argoutrange)
-                                {
-                                    throw new ApplicationException(argoutrange.Message);
-                                }
+                                throw new ApplicationException(argoutrange.Message);
                             }
 
+                            int tooltiplocx = Cursor.Position.X - this.Location.X;
+                            int tooltiplocy = Cursor.Position.Y - this.Location.Y;
                             if (!string.IsNullOrEmpty(contentpreview))
                             {
-                                int tooltiplocx = Cursor.Position.X - this.Location.X;
-                                int tooltiplocy = Cursor.Position.Y - this.Location.Y;
                                 this.toolTip.InitialDelay = 200;
                                 this.toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);
                             }

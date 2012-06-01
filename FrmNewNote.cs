@@ -30,7 +30,7 @@ namespace NoteFly
     /// </summary>
     public sealed partial class FrmNewNote : Form
     {
-        #region Fields (5)
+        #region Fields (4)
 
         /// <summary>
         /// Margin between format buttons and content.
@@ -41,11 +41,6 @@ namespace NoteFly
         /// Indicated if the form is being moved.
         /// </summary>
         private bool moving = false;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private bool onlyplaintext = true;
 
         /// <summary>
         /// Reference to a new or editing note,
@@ -86,15 +81,17 @@ namespace NoteFly
             this.note = note;
             this.SetColorsForm(this.note.SkinNr);
             this.tbTitle.Text = note.Title;
-            if (note.contenttype == Note.ContentType.text)
+            if (string.IsNullOrEmpty(this.note.Tempcontent))
             {
-                this.onlyplaintext = true;
-                this.rtbNewNote.Text = note.GetContent();
+                this.rtbNewNote.Rtf = note.GetContent();
             }
             else
             {
-                this.onlyplaintext = false;
-                this.rtbNewNote.Rtf = note.GetContent();
+                this.rtbNewNote.Rtf = this.note.Tempcontent;
+
+                // clear memory:
+                this.note.Tempcontent = string.Empty;
+                this.note.Tempcontent = null;
             }
         }
 
@@ -174,7 +171,7 @@ namespace NoteFly
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             Strings.TranslateForm(this);
-            this.Size = new Size(Settings.NotesDefaultWidth, Settings.NotesDefaultHeight); 
+            this.Size = new Size(Settings.NotesDefaultWidth, Settings.NotesDefaultHeight);            
             this.notes = notes;
             this.SetFontSettings();
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
@@ -276,18 +273,12 @@ namespace NoteFly
         {
             if (string.IsNullOrEmpty(this.tbTitle.Text))
             {
-                if (Settings.NotesDefaultTitleDate)
-                {
-                    this.tbTitle.Text = DateTime.Now.ToString();
-                }
-                else
-                {
-                    this.rtbNewNote.Text = Strings.T("Untitled");
-                }
+                this.tbTitle.Text = DateTime.Now.ToString();
             }
             else if (string.IsNullOrEmpty(this.rtbNewNote.Text))
             {
-                this.rtbNewNote.Text = Strings.T("Please enter some content.");
+                string newnote_entercontent = Strings.T("Please enter some content.");
+                this.rtbNewNote.Text = newnote_entercontent;
                 this.rtbNewNote.Focus();
                 this.rtbNewNote.SelectAll();
             }
@@ -296,35 +287,19 @@ namespace NoteFly
                 if (this.note == null)
                 {
                     // new note
-                    string content = null;
-                    if (this.onlyplaintext)
-                    {
-                        content = this.rtbNewNote.Text;
-                    }
-                    else
-                    {
-                        content = this.rtbNewNote.Rtf;
-                    }
-
-                    this.notes.AddNoteDefaultSettings(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height, content, this.onlyplaintext, this.rtbNewNote.WordWrap);
+                    this.notes.AddNoteDefaultSettings(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height, this.rtbNewNote.Rtf, this.rtbNewNote.WordWrap);
                 }
                 else
                 {
                     // editing note, update note
                     this.note.Title = this.tbTitle.Text;
-                    if (this.onlyplaintext)
+                    if (!xmlUtil.WriteNote(this.note, this.notes.GetSkinName(this.note.SkinNr), this.rtbNewNote.Rtf))
                     {
-                        this.note.contenttype = Note.ContentType.text;
-                        this.notes.UpdateNote(this.note, this.rtbNewNote.Text);
-                        this.note.Tempcontent = this.rtbNewNote.Text;
-                    }
-                    else
-                    {
-                        this.note.contenttype = Note.ContentType.rtf;
-                        this.notes.UpdateNote(this.note, this.rtbNewNote.Rtf);
-                        this.note.Tempcontent = this.rtbNewNote.Rtf;
+                        string newnote_exccantwritenote = Strings.T("Could not write note.");
+                        throw new ApplicationException(newnote_exccantwritenote);
                     }
 
+                    this.note.Tempcontent = this.rtbNewNote.Rtf;
                     this.note.Wordwarp = this.rtbNewNote.WordWrap;
                     this.note.CreateForm();
                     if (this.note.Tempcontent != null)
@@ -363,6 +338,8 @@ namespace NoteFly
                 this.note.CreateForm();
             }
 
+            Program.Formmanager.FrmManageNotesNeedUpdate = true;
+            Program.Formmanager.RefreshFrmManageNotes();
             this.Close();
         }
 
@@ -376,7 +353,6 @@ namespace NoteFly
         {
             if (this.checksellen())
             {
-                this.onlyplaintext = false;
                 if (this.rtbNewNote.SelectionFont.Bold)
                 {
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, this.removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Bold));
@@ -399,7 +375,6 @@ namespace NoteFly
         {
             if (this.checksellen())
             {
-                this.onlyplaintext = false;
                 if (this.rtbNewNote.SelectionFont.Italic)
                 {
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, this.removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Italic));
@@ -422,7 +397,6 @@ namespace NoteFly
         {
             if (this.checksellen())
             {
-                this.onlyplaintext = false;
                 if (this.rtbNewNote.SelectionFont.Strikeout)
                 {
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, this.removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Strikeout));
@@ -445,7 +419,6 @@ namespace NoteFly
         {
             if (this.checksellen())
             {
-                this.onlyplaintext = false;
                 if (this.rtbNewNote.SelectionFont.Underline)
                 {
                     this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, this.removestyle(this.rtbNewNote.SelectionFont.Style, FontStyle.Underline));
@@ -468,7 +441,6 @@ namespace NoteFly
         {
             if (this.checksellen())
             {
-                this.onlyplaintext = false;
                 this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints + 1);
             }
 
@@ -484,7 +456,6 @@ namespace NoteFly
         {
             if (this.checksellen())
             {
-                this.onlyplaintext = false;
                 this.ChangeFontSizeSelected(this.rtbNewNote.SelectionFont.SizeInPoints - 1);
             }
 
@@ -652,7 +623,7 @@ namespace NoteFly
             sbfilter.Append("TomBoy note(*.note)|*.note|");
             sbfilter.Append("MicroSE note(*.not)|*.not|");
             sbfilter.Append("QuickPad note(*.qpn)|*.qpn");
-            this.openNoteFileDialog.Filter = sbfilter.ToString();
+            this.openNoteFileDialog.Filter = sbfilter.ToString();            
             DialogResult dlgresopennote = this.openNoteFileDialog.ShowDialog();
             if (dlgresopennote == DialogResult.OK)
             {

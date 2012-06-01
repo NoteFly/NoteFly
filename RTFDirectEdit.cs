@@ -55,11 +55,6 @@ namespace NoteFly
         private const string RTFTABTAG = @"\tab";
 
         /// <summary>
-        /// 
-        /// </summary>
-        private const string RTFFONTSIZETAG = "\fs";
-
-        /// <summary>
         /// List with colortable coloritems
         /// </summary>
         private List<Color> colortblitems = new List<Color>();
@@ -292,60 +287,6 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <returns></returns>
-        public bool IsRTFofPlaintext(string rtf)
-        {
-            int posstartcolortbl = rtf.IndexOf(COLORTBLTAG);
-            this.ParserColorTbl(rtf, posstartcolortbl);
-            if (this.colortblitems.Count > 1)
-            {
-                return false;
-            }
-            else
-            {
-                int posstarttext = rtf.IndexOf(VIEWKINDTAG);
-                string rtftextpart = rtf.Substring(posstarttext, rtf.Length - posstarttext);
-                string[] rtftags = new string[] { 
-                    @"\b",
-                    @"\i", 
-                    @"\ul", 
-                    @"\strike", 
-                    @"\pn" };
-                for (int i = 0; i < rtftags.Length; i++)
-                {
-                    if (rtftextpart.Contains(rtftags[i]))
-                    {
-                        return false;
-                    }
-                }
-
-                int posfontsizetag = rtf.IndexOf(RTFFONTSIZETAG);
-                while (posfontsizetag > 0)
-                {
-                    short numlen = 0;
-                    while (char.IsDigit(rtf, posfontsizetag + RTFFONTSIZETAG.Length + numlen) && numlen < 6)
-                    {
-                        numlen++;
-                    }
-
-                    string fstagcompleet = rtf.Substring(posfontsizetag, RTFFONTSIZETAG.Length + numlen);
-                    int defaultfontsize = Convert.ToInt32(Settings.FontContentSize);
-                    if (!fstagcompleet.Equals(RTFFONTSIZETAG + defaultfontsize.ToString(), StringComparison.Ordinal))
-                    {
-                        return false;
-                    }
-
-                    posfontsizetag = rtf.IndexOf(RTFFONTSIZETAG);
-                }
-
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns>StringBuilder of colortbl.</returns>
         private StringBuilder CreateColortbl(StringBuilder newrtf, Color textcolor)
         {
@@ -478,7 +419,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get number of color items in colortbl
+        /// 
         /// </summary>
         /// <param name="rtf"></param>
         /// <param name="clr"></param>
@@ -541,22 +482,14 @@ namespace NoteFly
         {
             this.colortblitems.Clear();
             int startcoloritem = posstartcolortbl + COLORTBLTAG.Length + 1; // +1 for space
-            if (startcoloritem < rtf.Length)
+            for (int i = startcoloritem; rtf[i] != '}'; i++)
             {
-                for (int i = startcoloritem; rtf[i] != '}'; i++)
+                if (rtf[i] == ';')
                 {
-                    if (rtf[i] == ';')
-                    {
-                        string colortblraw = rtf.Substring(startcoloritem, i - startcoloritem);
-                        startcoloritem = i + 1;
-                        Color coloritem = this.ParserColorItem(colortblraw);
-                        this.colortblitems.Add(coloritem);
-                    }
-
-                    if (i + 1 >= rtf.Length)
-                    {
-                        break;
-                    }
+                    string colortblraw = rtf.Substring(startcoloritem, i - startcoloritem);
+                    startcoloritem = i + 1;
+                    Color coloritem = this.ParserColorItem(colortblraw);
+                    this.colortblitems.Add(coloritem);
                 }
             }
         }

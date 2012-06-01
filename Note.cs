@@ -80,11 +80,6 @@ namespace NoteFly
         private string tempcontent;
 
         /// <summary>
-        /// 
-        /// </summary>
-        public ContentType contenttype = ContentType.rtf;
-
-        /// <summary>
         /// The note title.
         /// </summary>
         private string title;
@@ -108,12 +103,6 @@ namespace NoteFly
         ///  The Y position of the note.
         /// </summary>
         private int y;
-
-        public enum ContentType
-        {
-            text,
-            rtf
-        }
 
         #endregion Fields
 
@@ -428,14 +417,7 @@ namespace NoteFly
             }
             else
             {
-                if (this.contenttype == ContentType.text)
-                {
-                    return this.frmnote.GetContentText;
-                }
-                else
-                {
-                    return this.frmnote.GetContentRTF;
-                }
+                return this.frmnote.GetContentRTF;
             }
         }
 
