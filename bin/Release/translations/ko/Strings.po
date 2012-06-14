@@ -1,0 +1,777 @@
+# Translation of 3.0.3 in Korean
+# This file is distributed under the same license as the 3.0.3 package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2012-06-14 20:49+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: 3.0.3\n"
+"POT-Creation-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+
+msgid "Email"
+msgstr "이메일"
+
+msgid "Enable E-mail in action menu"
+msgstr "이메일 상에서 메뉴 활용하기"
+
+msgid "Set a default email address to send to: "
+msgstr "보내는 이메일 지정하기"
+
+msgid "Network"
+msgstr "네트워크"
+
+msgid "Updates"
+msgstr "업데이트"
+
+msgid "Install update setup silently."
+msgstr "백그라운드에서 업데이트 실행"
+
+msgid "Check updates now"
+msgstr "지금 업데이트 확인하기"
+
+msgid "Proxy"
+msgstr "프록시"
+
+msgid "GnuPG"
+msgstr "GnuPG"
+
+msgid "Location gpg.exe:"
+msgstr "gpg.exe파일의 위치:"
+
+msgid "Verify the signature of downloaded updates."
+msgstr "다운 받은 업데이트 서명의 동기화"
+
+msgid "ms"
+msgstr "ms"
+
+msgid "Advance"
+msgstr "세부사항"
+
+msgid "Save notes in:"
+msgstr "저정하기"
+
+msgid "Log exceptions (recommended)."
+msgstr "예외 기록(추천)"
+
+msgid "Logging:"
+msgstr "기록하기"
+
+msgid "Log debug info."
+msgstr "디버그 정보 기록"
+
+msgid "Log user errors."
+msgstr "사용자 오류 기록"
+
+msgid "&Cancel"
+msgstr "취소"
+
+msgid "&OK"
+msgstr "확인"
+
+msgid "Installed"
+msgstr "설치"
+
+msgid "available"
+msgstr "사용가능"
+
+#: FrmSettings.cs:149
+msgid "Settings"
+msgstr "설정"
+
+#: FrmSettings.cs:163
+msgid "Do nothing"
+msgstr "실행하지 않기"
+
+#: FrmSettings.cs:164
+msgid "Bring notes to front"
+msgstr "노트 맨 앞으로 가겨오기"
+
+#: FrmSettings.cs:165
+msgid "New note"
+msgstr "새 노트"
+
+#: FrmSettings.cs:295
+msgid "No rights to add key to registry."
+msgstr "레지스트리에 새로운 키 추가 권리가 없습니다."
+
+#: FrmSettings.cs:314
+msgid "Run key in registery does not exist."
+msgstr "레지스트리에 실행 키가 존재하지 않습니다."
+
+#: FrmSettings.cs:315
+msgid "Error run key registery missing"
+msgstr "실행 키 레지스트리 없는 오류"
+
+#: FrmSettings.cs:345
+msgid "NoteFly is buzy moving your notes"
+msgstr "노트플라이가 노트를 이동하고 있습니다."
+
+#: FrmSettings.cs:378
+msgid "Font size invalid. Minimal 4pt maximum 128pt allowed."
+msgstr "폰트 크기가 올바르지 않습니다.(허가 : 최소 4pt 최대 128pt.)"
+
+#: FrmSettings.cs:379
+msgid "Error invalid fontsize"
+msgstr "폰트 크기 오류"
+
+#: FrmSettings.cs:380
+msgid "Please select a font."
+msgstr "폰트를 선택하세요."
+
+#: FrmSettings.cs:381
+msgid "Error no font."
+msgstr "없는 폰트입니다."
+
+#: FrmSettings.cs:384
+msgid "Invalid folder for saving notes folder."
+msgstr "노트를 저장할 수 없는 폴더입니다."
+
+#: FrmSettings.cs:385
+msgid "Error invalid notes folder"
+msgstr "잘못된 폴더"
+
+#: FrmSettings.cs:416
+msgid "Settings text direction invalid."
+msgstr "잘못된 문자열 설정입니다."
+
+#: FrmSettings.cs:417
+msgid "Error text direction"
+msgstr "문자열 오류"
+
+#: FrmSettings.cs:424
+msgid "Given default emailadres is not valid."
+msgstr "설정 이메일이 바르지 않습니다."
+
+#: FrmSettings.cs:425
+msgid "Email adres no valid"
+msgstr "잘못된 이메일 주소"
+
+#: FrmSettings.cs:432
+msgid "The path to gpg.exe is not valid."
+msgstr "gpg.exe파일 경로가 올바르지 않습니다."
+
+#: FrmSettings.cs:433
+msgid "Error not valid gpg path."
+msgstr "gpg 경로 오류"
+
+#: FrmSettings.cs:482
+msgid "Please wait"
+msgstr "잠시만 기다리세요."
+
+#: FrmSettings.cs:506
+msgid "Are you sure, you want to reset all the settings to default?"
+msgstr "모든 설정을 초기화하시겠습니까?"
+
+#: FrmSettings.cs:632
+msgid "File is marked as system file. Did not move."
+msgstr "파일이 시스템 파일 표식이 있습니다. 이동하지 못합니다."
+
+#: FrmSettings.cs:640
+msgid "Error moving note(s)"
+msgstr "노트 이동 오류"
+
+#: FrmSettings.cs:641
+msgid "Note file(s) already exist."
+msgstr "노트 파일이 이미 있습니다."
+
+#: GPGVerifWrapper.cs:97
+msgid "Do you want to install the update?"
+msgstr "업데이트를 설치하시겠습니까?"
+
+#: GPGVerifWrapper.cs:98
+msgid "GnuPG signature check result"
+msgstr "GnuPG 서명 확인 결과"
+
+#: ImportNotes.cs:110
+msgid "import error"
+msgstr "불러오기 오류"
+
+#: ImportNotes.cs:121
+msgid "Cannot find KeyNote NF note content."
+msgstr "키노트 NF 노트 컨텐츠를 찾을 수 없습니다."
+
+#: ImportNotes.cs:147
+msgid "Not a KeyNote NF note."
+msgstr "키노트 NF 노트가 아닙니다."
+
+#: ImportNotes.cs:268
+msgid "Do you want to delete all current notes?"
+msgstr "현재 모든 노트를 삭제하시겠습니까?"
+
+#: ImportNotes.cs:269
+#: Program.cs:205
+msgid "Are you sure?"
+msgstr "확실하십니까?"
+
+#: ImportNotes.cs:377
+msgid "CVS file does not seems to be in the Stickies format."
+msgstr "CVS 파일이 Stickies 포멧이 아닌 것 같습니다."
+
+#: ImportNotes.cs:384
+msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
+msgstr "CVS 파일이 세로열 5행을 제외하고, Stickies 포멧이 아닌 것 같습니다"
+
+#: ImportNotes.cs:520
+msgid "Error reading PNotes backup file, incorrect format."
+msgstr "잘못된 포멧, PNotes 백업 파일 읽기 실패."
+
+#: Notes.cs:369
+msgid ""
+"Folder with notes does not exist.\n"
+"Do want to load notes from the default notes folder?"
+msgstr ""
+"폴더에 노트가 없습니다.\n"
+"기본 설정 노트 폴더로 부터 노트를 불러 오시겠습니까?"
+
+#: Notes.cs:370
+msgid "Notes folder doesn't exist"
+msgstr "노트 폴더가 존재하지 않습니다."
+
+#: Notes.cs:590
+msgid ""
+"Do you want to import the notes from NoteFly 1.0.x?\n"
+"Press cancel to ask this again next time."
+msgstr ""
+"노트플라이 1.0.x에서 불러오시겠습니까?\n"
+"다음에 다시 하게겠습니까."
+
+#: Notes.cs:591
+msgid "Import from NoteFly 1.0.x"
+msgstr "노트플라이 1.0.x에서 불러오기"
+
+#: Notes.cs:652
+msgid ""
+"Do you want to import the notes from NoteFly 2.5.x?\n"
+"Press cancel to ask this again next time."
+msgstr ""
+"노트플라이 2.5.x에서 불러오시겠습니까?\n"
+"다음에 다시 하게겠습니까."
+
+#: Notes.cs:653
+msgid "Import from NoteFly 2.5.x"
+msgstr "노트플라이 2.5.x에서 불러오기"
+
+#: Notes.cs:700
+msgid "many notes"
+msgstr "많은 노트들"
+
+#: Notes.cs:701
+msgid "There are many notes loading this can take a while, do you want to load them all?"
+msgstr "한 번에 불러오기에 많은 노트를 실행하셨습니다. 모두 불러오시겠습니까?"
+
+#: Notes.cs:721
+msgid "Many notes visible"
+msgstr "많은 노트 보기"
+
+#: Notes.cs:722
+msgid ""
+"There are many notes visible.\n"
+"Hide some notes to make loading faster."
+msgstr ""
+"보게하기에 많은 노트입니다.\n"
+"몇 개의 노트를 보이지 않게 하면 더 빨리 실행합니다."
+
+#: PluginGrid.cs:156
+msgid "version:"
+msgstr "버전:"
+
+#: PluginGrid.cs:172
+msgid "author:"
+msgstr "글쓴이:"
+
+#: PluginGrid.cs:188
+msgid "description:"
+msgstr "설명:"
+
+#: PluginGrid.cs:250
+msgid "disable"
+msgstr "불가능"
+
+#: PluginGrid.cs:255
+msgid "enable"
+msgstr "가능"
+
+#: PluginsManager.cs:186
+#: PluginsManager.cs:218
+#: PluginsManager.cs:280
+msgid "unknown"
+msgstr "알 수 없음"
+
+#: Program.cs:204
+msgid "Are you sure you want to visted: {0}"
+msgstr "방문하시기를 원하십니까: {0}"
+
+#: Program.cs:285
+msgid ""
+"You are now running {0} as elevated Administrator.\n"
+"Which is not recommended for security.\n"
+"Press OK if your understand the risks of running as administrator and want to hide this message in the future."
+msgstr ""
+"지금 {0}(을)를 보다 높은 관리자 모드로 실행 중 입니다.\n"
+"이것을 보안 상 추천하지 않습니다.\n"
+"관리자 모드로 실행으로 오는 위험을 알고 계시면, 다음에 이 메시지를 숨기시려면 확인을 누르세요."
+
+#: Program.cs:286
+msgid "Elevated administrator"
+msgstr "높은 관리자 모드"
+
+#: Program.cs:311
+msgid ""
+"The programme is already running.\n"
+"Load an other instance? (not recommeded)"
+msgstr ""
+"이 프로그램은 이미 실행 중 입니다.The programme is already running.\n"
+"다른 예시를 부르시겠습니까? (추천하지 않음)"
+
+#: Program.cs:312
+msgid "already running"
+msgstr "이미 실행 중"
+
+#: Program.cs:647
+msgid "Parameter:"
+msgstr "매개변수:"
+
+#: Program.cs:648
+msgid "Show this parameters help window."
+msgstr "이 변수의 도움말 창 보기."
+
+#: Program.cs:649
+msgid "Disable transparency."
+msgstr "투명하게 보지 않기."
+
+#: Program.cs:650
+msgid "Disable all plugins."
+msgstr "모든 플러그인 사용하지 않기."
+
+#: Program.cs:651
+msgid "Disable any highlighting in notes."
+msgstr "노트에서 형광팬 효과 사용하지 않기."
+
+#: Program.cs:652
+msgid "Disable XP visual style."
+msgstr "XP 스타일 사용하지 않기."
+
+#: Program.cs:653
+msgid "Disable GnuPG signature checking."
+msgstr "GnuPG 서명 확인 하지 않기."
+
+#: Program.cs:654
+msgid "Force a first run."
+msgstr "첫 실행 강제로 하기."
+
+#: Program.cs:655
+msgid "Log exceptions, errors and debug messages."
+msgstr "오류나 디버그 메시지 같은 예외 메세지 기록하기."
+
+#: Program.cs:656
+msgid "Don't log exceptions, errors and debug messages."
+msgstr "예외 사항, 오류 및 디버그 메시지를 기록하지 마십시오."
+
+#: Program.cs:659
+msgid "with unnecessary administrator privilege."
+msgstr "관리 인증 필요 없음"
+
+#: Program.cs:661
+msgid "Reset all positions of visual notes at startup."
+msgstr "시작시 보이는 노트 위치 재설정"
+
+#: Program.cs:662
+msgid "Reset all NoteFly settings to default."
+msgstr "노트플라이의 모든 설정 초기화"
+
+#: Program.cs:678
+msgid "{0} parameters help"
+msgstr "{0} 변수 도움말"
+
+#: Program.cs:702
+msgid "There's a new version of {0} available."
+msgstr "실행 가능한 새로운 버전 {0}"
+
+#: Program.cs:703
+msgid "Your version:"
+msgstr "현재 버전:"
+
+#: Program.cs:705
+msgid "New version:"
+msgstr "새 버전:"
+
+#: Program.cs:707
+msgid "Do you want to download and install the new version now?"
+msgstr "지금 새로운 버전으로 다운 받아 설치하시겠습니까?"
+
+#: Program.cs:711
+msgid "Downloading {0} update"
+msgstr "{0} 업데이트 다운 받는 중"
+
+#: SearchTextBox.cs:38
+msgid "search:"
+msgstr "찾기:"
+
+#: Textfile.cs:85
+msgid "Title: "
+msgstr "제목:"
+
+#: TrayIcon.cs:137
+msgid "&New note"
+msgstr "&새 노트"
+
+#: TrayIcon.cs:151
+msgid "&Manage notes"
+msgstr "&노트 관리"
+
+#: TrayIcon.cs:169
+msgid "&Settings"
+msgstr "&설정"
+
+#: TrayIcon.cs:187
+#, fuzzy
+msgid "&Plugins"
+msgstr "플러그인"
+
+#: TrayIcon.cs:220
+msgid "E&xit"
+msgstr "&종료"
+
+#: TrayIcon.cs:237
+msgid "You can access {0} functions with this trayicon."
+msgstr "이 트레이아이콘으로 {0}의 기능을 실행할 수 있습니다."
+
+#: TrayIcon.cs:333
+msgid "confirm exit"
+msgstr "종료 확인"
+
+#: TrayIcon.cs:340
+msgid "Are sure you want to exit {0}?"
+msgstr "{0} 확실히 종료 하시겠습니까?"
+
+#: TrayIcon.cs:352
+msgid ""
+"A note is still open for editing.\n"
+"Are you sure you want to shutdown {0}?"
+msgstr ""
+"아직 편집 중인 노트가 열려있습니다.\n"
+"{0} 확실히 닫으시겠습니까?"
+
+msgid "&Edit note"
+msgstr "&노트 편집"
+
+msgid "S&kin"
+msgstr "&스킨"
+
+msgid "&Actions"
+msgstr "&액션"
+
+msgid "Sticky on &top"
+msgstr "&메모 맨 위에 붙이기"
+
+msgid "Word wrap"
+msgstr "자동 줄 바꿈"
+
+msgid "&Copy"
+msgstr "&복사하기"
+
+msgid "&Hide note"
+msgstr "&노트 숨기기"
+
+msgid "&Save note"
+msgstr "&노트 저장하기"
+
+msgid "Show format tools"
+msgstr "서식 도구 보이기"
+
+msgid "&Paste to"
+msgstr "&여기 붙여넣기"
+
+msgid "Import.."
+msgstr "불러오는 중.."
+
+msgid "Canc&el note"
+msgstr "&노트 취소하기"
+
+msgid "E&xpert settings"
+msgstr "설정 내보네기"
+
+msgid "General"
+msgstr "일반"
+
+msgid "Move deleted notes to recycle bin."
+msgstr "삭제한 노트 휴지통으로 이동."
+
+msgid "Confirm deleting notes."
+msgstr "노트 삭제 확인."
+
+msgid "Start NoteFly on logon."
+msgstr "로그온과 동시에 노트 플라이 시작하기."
+
+msgid "Allow to load plugins"
+msgstr "플러그인 실행 허가"
+
+msgid "Confirm shutdown of NoteFly"
+msgstr "노트플라이 종료 확인"
+
+msgid "Hotkeys"
+msgstr "핫키"
+
+msgid "Appearance"
+msgstr "외형"
+
+msgid "Overall"
+msgstr "종합"
+
+msgid "Notes"
+msgstr "노트"
+
+msgid "Trayicon"
+msgstr "트레이아이콘"
+
+msgid "Use alternative windows7 style/white trayicon."
+msgstr "트레이아이콘 윈도우 7/흰색 스타일로 사용하기."
+
+msgid "Display \"Exit\" in bold."
+msgstr "\"종료\" 진하게 보이기"
+
+msgid "Display \"Settings\" in bold."
+msgstr "\"설정\" 진하게 보이기"
+
+msgid "Display \"Manage notes\" in bold."
+msgstr "\"노트 관리하기\" 진하게 보이기"
+
+msgid "Display \"New note\" in bold."
+msgstr "\"새로운 노트\" 진하게 보이기"
+
+msgid "Use case sentive search."
+msgstr "자세히 찾아보기."
+
+msgid "Show a tooltip with preview of the note content."
+msgstr "노트 컨텐츠 미리보기로 풍선 도움말 보이기."
+
+msgid "Highlight"
+msgstr "형광팬 효과"
+
+msgid "Highlight SQL text between quotes. (Beta)"
+msgstr "따옴표 사이 SQL 문자열 형광팬 효과 보이기. (Beta)"
+
+msgid "Highlight PHP text between <?php and ?>. (Beta)"
+msgstr "PHP 문자열 사이 형광팬 효과 보이기.<?php and ?> (Beta)"
+
+msgid "Make hyperlinks clickable."
+msgstr "하이퍼링크 클릭할 수 있게 하기."
+
+msgid "Ask to launch url on click on hyperlink (recommended)."
+msgstr "하이퍼 링크 클릭시 인터넷 바로가기 확인하기(추천)."
+
+msgid "Highlight HTML text. (Beta)"
+msgstr "HTML 문자열 형광팬 효과 보이기. (Beta)"
+
+msgid "Actions"
+msgstr "액션"
+
+#: FrmAbout.cs:50
+msgid "Version "
+msgstr "버전"
+
+#: FrmAbout.cs:62
+#: TrayIcon.cs:211
+msgid "About"
+msgstr "정보"
+
+#: FrmDownloader.cs:247
+msgid "Downloads completed"
+msgstr "다운로드 성공"
+
+#: FrmDownloader.cs:258
+msgid "Download canceled."
+msgstr "다운로드 실패"
+
+#: FrmDownloader.cs:264
+msgid "Download error:"
+msgstr "다운로드 오류"
+
+#: FrmException.cs:39
+msgid "oh no.. {0} crashed."
+msgstr "오! 노.. {0} 깨짐."
+
+#: FrmManageNotes.cs:91
+#: FrmManageNotes.cs:328
+#: FrmManageNotes.cs:361
+msgid "&hide selected"
+msgstr "&선택한 것 숨기기"
+
+#: FrmManageNotes.cs:95
+#: FrmManageNotes.cs:100
+#: FrmManageNotes.cs:333
+#: FrmManageNotes.cs:365
+msgid "&show selected"
+msgstr "&선택한 것 보이기"
+
+#: FrmManageNotes.cs:166
+msgid "Manage notes"
+msgstr "노트 관리하기"
+
+#: FrmManageNotes.cs:215
+msgid "Nothing selected."
+msgstr "아무것도 선택하지 않기."
+
+#: FrmManageNotes.cs:224
+msgid "Are you sure you want to delete the selected note(s)?"
+msgstr "선택한 노트를 삭제하시겠습니까?"
+
+#: FrmManageNotes.cs:236
+msgid "And more notes."
+msgstr "또 다른 노트."
+
+#: FrmManageNotes.cs:240
+msgid "delete?"
+msgstr "삭제?"
+
+#: FrmManageNotes.cs:584
+msgid "Access denied. delete note {0} manually with proper premission."
+msgstr "접근이 제한되었습니다. {0} 노트를 지울 수 있는 권리로 수동 삭제하세요."
+
+#: FrmManageNotes.cs:646
+msgid "nr"
+msgstr "nr"
+
+#: FrmManageNotes.cs:647
+msgid "title"
+msgstr "제목"
+
+#: FrmManageNotes.cs:648
+msgid "visible"
+msgstr "보임"
+
+#: FrmManageNotes.cs:649
+msgid "skin"
+msgstr "스킨"
+
+#: FrmManageNotes.cs:711
+#: FrmManageNotes.cs:732
+msgid "Transparency level not a integer or double."
+msgstr "투명도 조절할 수 있는 정수나 실수가 아닙니다."
+
+#: FrmNewNote.cs:134
+msgid "Save editing note (Ctrl+S)"
+msgstr "편집 중인 노트 저장하기 (Ctrl+S)"
+
+#: FrmNewNote.cs:135
+msgid "Cancel editing note (escape)"
+msgstr "편집 중인 노트 취소하기(나가기)"
+
+#: FrmNewNote.cs:139
+msgid "Save new note (Ctrl+S)"
+msgstr "새 노트 저장하기 (Ctrl+S)"
+
+#: FrmNewNote.cs:140
+msgid "Cancel new note (escape)"
+msgstr "새로운 노트 취소하기(나가기)"
+
+#: FrmNewNote.cs:153
+msgid "edit note"
+msgstr "노트 편집"
+
+#: FrmNewNote.cs:157
+msgid "new note"
+msgstr "새 노트"
+
+#: FrmNewNote.cs:280
+msgid "Please enter some content."
+msgstr "내용을 입력하세요."
+
+#: FrmNewNote.cs:298
+msgid "Could not write note."
+msgstr "노트를 쓸 수 없습니다."
+
+#: FrmNewNote.cs:694
+#: FrmNewNote.cs:1042
+msgid "There is no text on the clipboard."
+msgstr "클립보드에 내용이 없습니다."
+
+#: FrmNote.cs:387
+msgid "Note has no title and no content."
+msgstr "노트에 제목과 내용이 없습니다."
+
+#: FrmNote.cs:394
+msgid "Can't launch email client."
+msgstr "보내는 이메일에 연결할 수 없습니다."
+
+#: FrmNote.cs:751
+msgid "&Lock note"
+msgstr "&노트 잠금"
+
+#: FrmNote.cs:752
+msgid " (click again to unlock)"
+msgstr "다시 클릭하여 잠금 해제"
+
+#: FrmNote.cs:778
+msgid "&Roll up"
+msgstr "&접어두기"
+
+#: FrmNote.cs:779
+msgid "(click again to Roll Down)"
+msgstr "다시 클릭하여 펼치기"
+
+#: FrmNote.cs:826
+msgid "Save note to file"
+msgstr "다른 파일로 노트 저장하기"
+
+#: FrmPlugins.cs:74
+msgid "Plugins"
+msgstr "플러그인"
+
+#: FrmPlugins.cs:178
+msgid "update"
+msgstr "업데이트"
+
+#: FrmPlugins.cs:183
+msgid "already installed"
+msgstr "이미 설치됨"
+
+#: FrmPlugins.cs:189
+msgid "download"
+msgstr "다운받기"
+
+#: FrmPlugins.cs:198
+msgid "version: "
+msgstr "버전:"
+
+#: FrmPlugins.cs:199
+msgid "license: "
+msgstr "라이센스:"
+
+#: FrmPlugins.cs:214
+msgid "Downloading plugin.."
+msgstr "플러그인 다운받기.."
+
+#: FrmPlugins.cs:294
+msgid "Could not load list with plugins. Internet connection failed."
+msgstr "목록을 플러그인과 함께 불러올 수 없습니다. 인터넷 연결에 실패했습니다."
+
+#: FrmPlugins.cs:295
+msgid "A proxy is being used."
+msgstr "프록시를 사용 중입니다."
+
+#: FrmSettings.cs:117
+#: FrmSettings.cs:118
+msgid ""
+"Directory does not exist.\n"
+"Please choice a valid directory."
+msgstr ""
+"사전이 없습니다.\n"
+"올바른 사전을 선택하세요."
+
+#: FrmSettings.cs:145
+msgid "Expert settings"
+msgstr "설정 내보네기"
+
+msgid "browse"
+msgstr "폴더 찾아보기"
+
+#: FrmSettings.cs:507
+msgid "Reset settings?"
+msgstr "설정을 재설정 하시겠습니까?"
+
