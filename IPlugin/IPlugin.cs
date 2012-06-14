@@ -46,8 +46,8 @@ namespace IPlugin
         /// <summary>
         /// Register plugin
         /// </summary>
-        /// <param name="enabled">Is this plugin enabled.</param>
         /// <param name="file">The plugin file.</param>
+        /// <param name="host">Interface to notefly core.</param>
         void Register(string file, IPluginHost host);
 
         /// <summary>

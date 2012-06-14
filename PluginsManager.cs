@@ -118,12 +118,19 @@ namespace NoteFly
                     {
                         if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
                         {
-                            Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
-                            if (plugintype != null)
+                            // /*
+                            if (curplugintype.FullName.Equals(curplugintype.Namespace + "." + curplugintype.Namespace))
                             {
-                                IPlugin.IPlugin plugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
-                                plugin.Register(dllfilename, NoteFly.Program.Notes);
-                                enabledplugins.Add(plugin);
+                            // */
+                                // Load this plugin class only.
+                                Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
+                                if (plugintype != null)
+                                {
+                                    IPlugin.IPlugin plugin = (IPlugin.IPlugin)Activator.CreateInstance(pluginassembly.GetType(curplugintype.ToString()));
+                                    plugin.Register(dllfilename, NoteFly.Program.Notes);
+                                    enabledplugins.Add(plugin);
+                                }
+                            // /*
                             }
                         }
                     }

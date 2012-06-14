@@ -574,6 +574,127 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Gets the programme title. (for plugins)
+        /// </summary>
+        /// <returns></returns>
+        public string GetAssemblyTitle()
+        {
+            return Program.AssemblyTitle;
+        }
+
+        /// <summary>
+        /// Get programme version.
+        /// Method for plugins
+        /// </summary>
+        /// <returns></returns>
+        public string GetAssemblyVersionAsString()
+        {
+            return Program.AssemblyVersionAsString;
+        }
+
+        /// <summary>
+        /// Get a setting as boolean. (for plugins)
+        /// </summary>
+        /// <param name="settingname"></param>
+        /// <returns></returns>
+        public bool GetBoolSetting(string settingname)
+        {
+            object settingsptr = FindSettings(settingname);
+            if (settingsptr != null)
+            {
+                if (settingsptr is bool)
+                {
+                    return (bool)settingsptr;
+                }
+                else
+                {
+                    Log.Write(LogType.exception, "plugin, requested setting not a boolean, return false for " + settingname);
+                    return false;
+                }
+            }
+            else
+            {
+                Log.Write(LogType.exception, "plugin, requested setting not found.");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Get a setting as integer. (for plugins)
+        /// </summary>
+        /// <param name="settingname"></param>
+        /// <returns></returns>
+        public int GetIntSetting(string settingname)
+        {
+            object settingsptr = FindSettings(settingname);
+            if (settingsptr != null)
+            {
+                if (settingsptr is int)
+                {
+                    return (int)settingsptr;
+                }
+                else
+                {
+                    Log.Write(LogType.exception, "plugin, requested setting not a integer, return -1 for " + settingname);
+                    return -1;
+                }
+            }
+            else
+            {
+                Log.Write(LogType.exception, "plugin, requested setting not found.");
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Get a setting as string. (for plugins)
+        /// </summary>
+        /// <param name="settingname"></param>
+        /// <returns></returns>
+        public string GetStringSetting(string settingname)
+        {
+            object settingsptr = FindSettings(settingname);
+            if (settingsptr != null)
+            {
+                if (settingsptr is string)
+                {
+                    return (string)settingsptr;
+                }
+                else
+                {
+                    Log.Write(LogType.exception, "plugin, requested setting not a string, return null for " + settingname);
+                    return null;
+                }
+            }
+            else
+            {
+                Log.Write(LogType.exception, "plugin, requested setting not found.");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Find a setting in the setting class. (for plugins)
+        /// </summary>
+        /// <param name="settingname"></param>
+        /// <returns></returns>
+        private object FindSettings(string settingname)
+        {
+            Type type = typeof(Settings);
+            System.Reflection.FieldInfo[] fields = type.GetFields();
+            foreach (var field in fields) // Loop through all fields
+            {
+                if (field.Name.Equals(settingname, StringComparison.OrdinalIgnoreCase))
+                {
+                    object settingsptr = field.GetValue(null);
+                    return settingsptr;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Ask and import notes from NoteFly 1.0.x if application data folder of NoteFly 1.0.x exist.
         /// </summary>
         /// <returns>True if imported done, false if importing notefly 1.0.x notes not nessesary.</returns>

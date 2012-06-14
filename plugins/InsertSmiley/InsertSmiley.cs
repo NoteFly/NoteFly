@@ -5,7 +5,7 @@
     /// <summary>
     /// InserSmilet plugin
     /// </summary>
-    public class InsertSmileyplugin : IPlugin.PluginBase
+    public class InsertSmiley : IPlugin.PluginBase
     {
         /// <summary>
         /// Create the buttons for formatting in FrmNewNote.
@@ -17,15 +17,15 @@
 
             Button btnSmile = new Button();
             btnSmile.Name = "smile";
-            btnSmile.Image = InsertSmiley.Properties.Resources.smile;
+            btnSmile.Image = global::InsertSmiley.Properties.Resources.smile;
             btnSmile.SetBounds(0, 0, 26, 22);
             btnSmile.FlatStyle = FlatStyle.Flat;
-            btnSmile.UseCompatibleTextRendering = true;            
+            btnSmile.UseCompatibleTextRendering = true;
             btns[0] = btnSmile;
 
             Button btnSad = new Button();
             btnSad.Name = "sad";
-            btnSad.Image = InsertSmiley.Properties.Resources.sad;
+            btnSad.Image = global::InsertSmiley.Properties.Resources.sad;
             btnSad.SetBounds(0, 0, 26, 22);
             btnSad.FlatStyle = FlatStyle.Flat;
             btnSad.UseCompatibleTextRendering = true;  
@@ -33,7 +33,7 @@
 
             Button btnWink = new Button();
             btnWink.Name = "wink";
-            btnWink.Image = InsertSmiley.Properties.Resources.wink;
+            btnWink.Image = global::InsertSmiley.Properties.Resources.wink;
             btnWink.SetBounds(0, 0, 26, 22);
             btnWink.FlatStyle = FlatStyle.Flat;
             btnWink.UseCompatibleTextRendering = true;
