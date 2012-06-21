@@ -77,25 +77,7 @@ namespace NoteFly
         public string SetColorInRTF(string rtf, Color newclr, int textpos, int sellentext)
         {
             int prevnrcoloritem = 1;
-            int posstartbody = rtf.IndexOf(VIEWKINDTAG);
-            if (posstartbody < 0)
-            {
-                if (rtf.StartsWith(RTF1DOCTAG))
-                {
-                    posstartbody = RTF1DOCTAG.Length;
-                }
-                else
-                {
-                    Log.Write(LogType.exception, "rtf content body not found.");
-                    return rtf;
-                }
-            }
-            else
-            {
-                posstartbody += VIEWKINDTAG.Length;
-            }
-
-            const int EXTRACAP = 40; // tune me
+            const int EXTRACAP = 40; // tune
             StringBuilder newrtf = new StringBuilder(rtf, rtf.Length + EXTRACAP);
             int nrtextchar = 0;
             int drtflen = 0;
@@ -106,6 +88,7 @@ namespace NoteFly
             bool textposdone = false;
             bool isspecchar = false;
             int speccharrtfpos = 0;
+
             int posstartcolortbl = this.FindPosStartColortbl(newrtf.ToString());
             if (posstartcolortbl < 0)
             {
@@ -120,63 +103,58 @@ namespace NoteFly
             }
 
             this.ParserColorTbl(newrtf.ToString(), posstartcolortbl);
-            for (int i = posstartbody; i < rtf.Length; i++)
+            for (int i = this.FindStartPosDoc(rtf); i < rtf.Length; i++)
             {
                 if (this.CheckRTFLevel(rtf, i, rtflevel) == 0)
                 {
                     if (rtf[i] == '\\')
                     {
                         this.rtfformat = true;
-                        bool istabtag = false;
-                        if (i + RTFTABTAG.Length < rtf.Length)
+                        bool istabtag = this.IsRTFTab(i, rtf);
+
+                        if (istabtag)
                         {
-                            if (rtf.Substring(i, RTFTABTAG.Length).Equals(RTFTABTAG, StringComparison.Ordinal))
-                            {
-                                // tab is only 1 character in text.
-                                nrtextchar += 1;
-                                istabtag = true;
-                            }
+                            // tab is only 1 character in text.
+                            nrtextchar += 1;
                         }
-
-                        if (!isspecchar && !istabtag)
+                        else if (!isspecchar) // logical:  && !istabtag
                         {
-                            isspecchar = this.IsSpecialCharRTF(rtf, i);
-                        }
-
-                        if (i + COLORITEMTAG.Length < rtf.Length && !istabtag && !isspecchar)
-                        {
-                            if (rtf.Substring(i, COLORITEMTAG.Length).Equals(COLORITEMTAG, StringComparison.Ordinal))
+                            isspecchar = this.IsRTFSpecialChar(rtf, i);
+                            if (i + COLORITEMTAG.Length < rtf.Length && !isspecchar) // logical: && !istabtag 
                             {
-                                int numlen = this.GetLenDigit(rtf, i + COLORITEMTAG.Length);
-                                if (numlen <= 0)
+                                if (rtf.Substring(i, COLORITEMTAG.Length).Equals(COLORITEMTAG, StringComparison.Ordinal))
                                 {
-                                    return newrtf.ToString();
-                                }
-
-                                if (!overridecoloritem)
-                                {
-                                    string snr = rtf.Substring(i + COLORITEMTAG.Length, numlen);
-                                    prevnrcoloritem = this.IntParseFast(snr);
-                                }
-                                else if (overridecoloritem)
-                                {
-                                    int posstartremove = i + drtflen + insertcoloritemrtf.Length;
-                                    int totallencftag = COLORITEMTAG.Length + numlen;
-                                    if (newrtf[posstartremove + totallencftag] == ' ')
+                                    int numlen = this.GetLenDigit(rtf, i + COLORITEMTAG.Length);
+                                    if (numlen <= 0)
                                     {
-                                        totallencftag += 1; // +1 for space
-                                    }
-
-                                    drtflen -= totallencftag;
-
-                                    try
-                                    {
-                                        newrtf.Remove(posstartremove, totallencftag);
-                                    }
-                                    catch (ArgumentOutOfRangeException argoutrangexc)
-                                    {
-                                        Log.Write(LogType.exception, argoutrangexc.Message);
                                         return newrtf.ToString();
+                                    }
+
+                                    if (!overridecoloritem)
+                                    {
+                                        string snr = rtf.Substring(i + COLORITEMTAG.Length, numlen);
+                                        prevnrcoloritem = this.IntParseFast(snr);
+                                    }
+                                    else if (overridecoloritem)
+                                    {
+                                        int posstartremove = i + drtflen + insertcoloritemrtf.Length;
+                                        int totallencftag = COLORITEMTAG.Length + numlen;
+                                        if (newrtf[posstartremove + totallencftag] == ' ')
+                                        {
+                                            totallencftag += 1; // +1 for space
+                                        }
+
+                                        drtflen -= totallencftag;
+
+                                        try
+                                        {
+                                            newrtf.Remove(posstartremove, totallencftag);
+                                        }
+                                        catch (ArgumentOutOfRangeException argoutrangexc)
+                                        {
+                                            Log.Write(LogType.exception, argoutrangexc.Message);
+                                            return newrtf.ToString();
+                                        }
                                     }
                                 }
                             }
@@ -276,6 +254,51 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        private bool IsRTFTab(int i, string rtf)
+        {
+            if (i + RTFTABTAG.Length < rtf.Length)
+            {
+                if (rtf.Substring(i, RTFTABTAG.Length).Equals(RTFTABTAG, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtf"></param>
+        /// <returns></returns>
+        private int FindStartPosDoc(string rtf)
+        {
+            int posstartbody = rtf.IndexOf(VIEWKINDTAG);
+            if (posstartbody < 0)
+            {
+                if (rtf.StartsWith(RTF1DOCTAG))
+                {
+                    posstartbody = RTF1DOCTAG.Length;
+                }
+                else
+                {
+                    Log.Write(LogType.exception, "rtf content body not found.");
+                    return 0;
+                }
+            }
+            else
+            {
+                posstartbody += VIEWKINDTAG.Length;
+            }
+
+            return posstartbody;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="rtf"></param>
         /// <param name="newclr"></param>
         /// <returns></returns>
@@ -366,7 +389,7 @@ namespace NoteFly
         /// <param name="rtf">The RTF check</param>
         /// <param name="i">The RTF position in where the special character starts</param>
         /// <returns></returns>
-        private bool IsSpecialCharRTF(string rtf, int i)
+        private bool IsRTFSpecialChar(string rtf, int i)
         {
             bool isspecchar = false;
             const int speccharlen = 4;

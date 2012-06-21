@@ -57,7 +57,7 @@ namespace NoteFly
         /// <summary>
         /// Timer tmpUpdateLblProductEffect 
         /// </summary>
-        private System.Windows.Forms.Timer tmpUpdateLblProductEffect;
+        private System.Windows.Forms.Timer tmrUpdateLblProductEffect;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -87,7 +87,7 @@ namespace NoteFly
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
-            this.tmpUpdateLblProductEffect = new System.Windows.Forms.Timer(this.components);
+            this.tmrUpdateLblProductEffect = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // okButton
@@ -155,10 +155,10 @@ namespace NoteFly
                 "ersion3\r\n";
             this.lblTextLicense.UseCompatibleTextRendering = true;
             // 
-            // tmpUpdateLblProductEffect
+            // tmrUpdateLblProductEffect
             // 
-            this.tmpUpdateLblProductEffect.Interval = 30;
-            this.tmpUpdateLblProductEffect.Tick += new System.EventHandler(this.tmpUpdateLblProductEffect_Tick);
+            this.tmrUpdateLblProductEffect.Interval = 30;
+            this.tmrUpdateLblProductEffect.Tick += new System.EventHandler(this.tmpUpdateLblProductEffect_Tick);
             // 
             // FrmAbout
             // 

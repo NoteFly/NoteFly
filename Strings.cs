@@ -195,7 +195,7 @@ namespace NoteFly
         /// </summary>
         private static void TranslateControlCollection(System.Windows.Forms.Control.ControlCollection controlscollection, int controlnestedlevel)
         {
-            const int MAXNESTEDCONTROL = 11;
+            const int MAXNESTEDCONTROL = 12;
             for (int i = 0; i < controlscollection.Count; i++)
             {
                 if (IsTranslatableControl(controlscollection[i]))
@@ -293,8 +293,7 @@ namespace NoteFly
                     control.Name != "btnTextBulletlist" &&
                     control.Name != "btnFontBigger" &&
                     control.Name != "btnFontSmaller" &&
-                    control.Name != "btnHideNote" &&
-                    control.Name != "lblTitle")
+                    control.Name != "btnHideNote")
                 {
                     translatecontrol = true;
                 }

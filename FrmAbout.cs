@@ -80,7 +80,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            this.tmpUpdateLblProductEffect.Stop();
+            this.tmrUpdateLblProductEffect.Stop();
             this.Close();
         }
 
@@ -92,7 +92,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void lblProductName_Click(object sender, EventArgs e)
         {
-            this.tmpUpdateLblProductEffect.Start();
+            this.tmrUpdateLblProductEffect.Start();
             this.DoubleBuffered = true;
         }
 
