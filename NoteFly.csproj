@@ -147,7 +147,7 @@
     <Compile Include="FrmDownloader.Designer.cs">
       <DependentUpon>FrmDownloader.cs</DependentUpon>
     </Compile>
-    <Compile Include="GPGVerifWrapper.cs" />
+    <Compile Include="GPGVerifyWrapper.cs" />
     <Compile Include="HighlightLanguage.cs" />
     <Compile Include="ImportNotes.cs" />
     <Compile Include="IOTextBox.cs">
@@ -173,6 +173,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="RSAVerify.cs" />
     <Compile Include="RTFDirectEdit.cs" />
     <Compile Include="SearchTextBox.cs">
       <SubType>UserControl</SubType>

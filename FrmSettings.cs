@@ -319,7 +319,7 @@ namespace NoteFly
 #endif
                 xmlUtil.WriteSettings();
 
-                if (Settings.NotesSavepath != this.oldnotesavepath)
+                if (!Settings.NotesSavepath.Equals(this.oldnotesavepath, StringComparison.OrdinalIgnoreCase))
                 {
                     for (int i = 0; i < this.notes.CountNotes; i++)
                     {
@@ -385,7 +385,7 @@ namespace NoteFly
                 string settings_invalidfoldersavenotetitle = Strings.T("Error invalid notes folder");
                 Log.Write(LogType.info, settings_invalidfoldersavenote);
                 MessageBox.Show(settings_invalidfoldersavenote, settings_invalidfoldersavenotetitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.tabControlSettings.SelectedTab = this.tabGeneral;
+                this.tabControlSettings.SelectedTab = this.tabAdvance;
             }
             else if (string.IsNullOrEmpty(this.cbxFontNoteContent.Text) == true)
             {
@@ -1200,7 +1200,10 @@ namespace NoteFly
                     break;
             }
 
-            this.iptbProxy.ValidateIP();
+            if (this.iptbProxy.Enabled)
+            {
+                this.iptbProxy.ValidateIP();
+            }
         }
 
         #endregion Methods

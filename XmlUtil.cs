@@ -930,7 +930,7 @@ namespace NoteFly
             Settings.UpdatecheckEverydays = 14; // 0 is disabled.
             Settings.UpdatecheckLastDate = DateTime.Now.ToString();
             Settings.UpdatecheckURL = "http://update.notefly.org/latestversion.xml";
-            GPGVerifWrapper gpgverif = new GPGVerifWrapper();
+            GPGVerifyWrapper gpgverif = new GPGVerifyWrapper();
             if (!string.IsNullOrEmpty(gpgverif.GetGPGPath()) && gpgverif != null)
             {
                 Settings.UpdatecheckGPGPath = gpgverif.GetGPGPath();
@@ -1211,7 +1211,7 @@ namespace NoteFly
         /// <param name="downloadurl">the download url found</param>
         /// <returns>the newest version as integer array, 
         /// any negative valeau(-1 by default) considered as error.</returns>
-        public static short[] ParserLatestVersion(string serverresponse, out string versionquality, out string downloadurl)
+        public static short[] ParserLatestVersion(string serverresponse, out string versionquality, out string downloadurl, out string rsasignature)
         {
             short[] version = new short[3];
             version[0] = -1;
@@ -1219,6 +1219,7 @@ namespace NoteFly
             version[2] = -1;
             versionquality = Program.AssemblyVersionQuality;
             downloadurl = string.Empty;
+            rsasignature = string.Empty;
             if (string.IsNullOrEmpty(serverresponse))
             {
                 return version;
@@ -1282,6 +1283,10 @@ namespace NoteFly
                             {
                                 downloadurl = downloadurlraw;
                             }
+
+                            break;
+                        case "signature":
+                            rsasignature = xmlread.ReadElementContentAsString();
 
                             break;
                         default:

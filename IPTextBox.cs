@@ -20,6 +20,7 @@
 namespace NoteFly
 {
     using System.Windows.Forms;
+    using System.Drawing;
 
     /// <summary>
     /// IP address textbox.
@@ -209,6 +210,28 @@ namespace NoteFly
             }
 
             return numdots;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnEnabledChanged(System.EventArgs e)
+        {
+            if (!this.Enabled)
+            {
+                this.BackColor = SystemColors.Control;
+            }
+            else
+            {
+                this.BackColor = SystemColors.Window;
+                if (this.TextLength > 0)
+                {
+                    this.ValidateIP();
+                }
+            }
+
+            base.OnEnabledChanged(e);
         }
     }
 }

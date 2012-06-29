@@ -37,7 +37,7 @@ namespace NoteFly
     /// </summary>
     public sealed class Program
     {
-        #region Fields (2)
+        #region Fields (5)
 
         /// <summary>
         /// Reference to notes class.
@@ -66,7 +66,7 @@ namespace NoteFly
 
         #endregion Fields
 
-        #region Properties (5)
+        #region Properties (7)
 
         /// <summary>
         /// Gets the application data folder.
@@ -174,7 +174,7 @@ namespace NoteFly
 
         #endregion Properties
 
-        #region Methods (5)
+        #region Methods (21)
 
         /// <summary>
         /// Gets the application version numbers, without the .net 'revision' number, as an array 
@@ -182,7 +182,7 @@ namespace NoteFly
         /// And the .NET 'revision' number is actaully the build number, because this number is changed every build/compile of the program.
         /// (I know this is confuzzing blame the .NET creators.)</remarks>
         /// </summary>
-        /// <returns>a string containing the version number of this application in the form of major.minor.release/'build' number</returns>
+        /// <returns>a string containing the version number of this application in the form of major.minor.release/'dotNET build' number</returns>
         public static short[] GetVersion()
         {
             short[] version = new short[3];
@@ -334,7 +334,7 @@ namespace NoteFly
                 // disable the firstrun the next time.
                 Settings.ProgramFirstrunned = true;
                 Settings.UpdatecheckUseGPG = false;
-                GPGVerifWrapper gpgverif = new GPGVerifWrapper();
+                GPGVerifyWrapper gpgverif = new GPGVerifyWrapper();
                 if (!string.IsNullOrEmpty(gpgverif.GetGPGPath()) && gpgverif != null)
                 {
                     Settings.UpdatecheckGPGPath = gpgverif.GetGPGPath();
@@ -691,8 +691,10 @@ namespace NoteFly
             string response = (string)e.Result;
             short[] thisversion = GetVersion();
             string downloadurl = string.Empty;
+            string rsasignature = string.Empty;
             string latestversionquality = Program.AssemblyVersionQuality;
-            short[] latestversion = xmlUtil.ParserLatestVersion(response, out latestversionquality, out downloadurl);
+            short[] latestversion = xmlUtil.ParserLatestVersion(response, out latestversionquality, out downloadurl, out rsasignature);
+            //RSAVerify rsaverify = new RSAVerify(rsasignature);
             int compareversionsresult = Program.CompareVersions(thisversion, latestversion);
             if (compareversionsresult < 0 || (compareversionsresult == 0 && Program.AssemblyVersionQuality != latestversionquality))
             {
@@ -700,10 +702,10 @@ namespace NoteFly
                 {
                     StringBuilder sbmsg = new StringBuilder();
                     sbmsg.AppendLine(Strings.T("There's a new version of {0} available.", Program.AssemblyTitle));
-                    sbmsg.Append(Strings.T("Your version:"));
-                    sbmsg.AppendLine(" " + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
-                    sbmsg.Append(Strings.T("New version:"));
-                    sbmsg.AppendLine(" " + latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
+                    sbmsg.Append(Strings.T("Your version: "));
+                    sbmsg.AppendLine(Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+                    sbmsg.Append(Strings.T("New version: "));
+                    sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
                     sbmsg.Append(Strings.T("Do you want to download and install the new version now?"));
                     System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                     if (updres == System.Windows.Forms.DialogResult.Yes)
@@ -715,7 +717,7 @@ namespace NoteFly
                         {
                             string[] downloads = new string[2];
                             downloads[0] = downloadurl;
-                            downloads[1] = downloadurl + GPGVerifWrapper.GPGSIGNATUREEXTENSION;
+                            downloads[1] = downloadurl + GPGVerifyWrapper.GPGSIGNATUREEXTENSION;
                             frmupdater.BeginDownload(downloads, System.Environment.GetEnvironmentVariable("TEMP"));
                         }
                         else
@@ -738,9 +740,14 @@ namespace NoteFly
         /// <param name="newfiles">Array with returned new files</param>
         private static void frmupdater_DownloadCompleetSuccesfull(string[] newfiles)
         {
+            //if (rsaverify != null)
+            //{
+            //    rsaverify.CheckFileSignatureAndDisplayErrors(newfiles[0]);
+            //}
+
             if (Settings.UpdatecheckUseGPG)
             {
-                GPGVerifWrapper gpgverif = new GPGVerifWrapper();
+                GPGVerifyWrapper gpgverif = new GPGVerifyWrapper();
                 if (gpgverif.VerifDownload(newfiles[0], newfiles[1]))
                 {
                     ExecDownload(newfiles[0]);

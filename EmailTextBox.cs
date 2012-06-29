@@ -77,5 +77,27 @@ namespace NoteFly
 
             this.setuptext = true;
         }
+
+        /// <summary>
+        /// Change background to inactive control backgroundcolor if control becomes inactive.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnEnabledChanged(System.EventArgs e)
+        {
+            if (!this.Enabled)
+            {
+                this.BackColor = SystemColors.Control;
+            }
+            else
+            {
+                this.BackColor = SystemColors.Window;
+                if (this.TextLength > 0)
+                {
+                    this.OnTextChanged(null);
+                }
+            }
+
+            base.OnEnabledChanged(e);
+        }
     }
 }
