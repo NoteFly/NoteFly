@@ -52,6 +52,8 @@ namespace NoteFly
         /// </summary>
         private Notes notes;
 
+        private RTFDirectEdit rtfdirectedit = new RTFDirectEdit();
+
         /// <summary>
         /// The old position of the mouse while resizing.
         /// </summary>
@@ -359,7 +361,18 @@ namespace NoteFly
                 }
                 else
                 {
-                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
+                    if (this.rtbNewNote.SelectionStart >= 0)
+                    {
+                        //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
+
+                        int pos = this.rtbNewNote.SelectionStart;
+                        int len = this.rtbNewNote.SelectionLength;
+                        this.rtbNewNote.Rtf = this.rtfdirectedit.AddBoldTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
+                        this.rtbNewNote.SelectionStart = pos;
+                        this.rtbNewNote.SelectionLength = len;
+                    }
+
+                    
                 }
             }
 
@@ -381,7 +394,16 @@ namespace NoteFly
                 }
                 else
                 {
-                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
+                    if (this.rtbNewNote.SelectionStart >= 0)
+                    {
+                        //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
+
+                        int pos = this.rtbNewNote.SelectionStart;
+                        int len = this.rtbNewNote.SelectionLength;
+                        this.rtbNewNote.Rtf = this.rtfdirectedit.AddItalicTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
+                        this.rtbNewNote.SelectionStart = pos;
+                        this.rtbNewNote.SelectionLength = len;
+                    }
                 }
             }
 
@@ -403,7 +425,16 @@ namespace NoteFly
                 }
                 else
                 {
-                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
+                    if (this.rtbNewNote.SelectionStart >= 0)
+                    {
+                        //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
+
+                        int pos = this.rtbNewNote.SelectionStart;
+                        int len = this.rtbNewNote.SelectionLength;
+                        this.rtbNewNote.Rtf = this.rtfdirectedit.AddStrikeTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
+                        this.rtbNewNote.SelectionStart = pos;
+                        this.rtbNewNote.SelectionLength = len;
+                    }
                 }
             }
 
@@ -425,7 +456,16 @@ namespace NoteFly
                 }
                 else
                 {
-                    this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
+                    if (this.rtbNewNote.SelectionStart >= 0)
+                    {
+                        //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
+
+                        int pos = this.rtbNewNote.SelectionStart;
+                        int len = this.rtbNewNote.SelectionLength;
+                        this.rtbNewNote.Rtf = this.rtfdirectedit.AddUnderlineTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
+                        this.rtbNewNote.SelectionStart = pos;
+                        this.rtbNewNote.SelectionLength = len;
+                    }
                 }
             }
 
@@ -623,7 +663,7 @@ namespace NoteFly
             sbfilter.Append("TomBoy note(*.note)|*.note|");
             sbfilter.Append("MicroSE note(*.not)|*.not|");
             sbfilter.Append("QuickPad note(*.qpn)|*.qpn");
-            this.openNoteFileDialog.Filter = sbfilter.ToString();            
+            this.openNoteFileDialog.Filter = sbfilter.ToString();
             DialogResult dlgresopennote = this.openNoteFileDialog.ShowDialog();
             if (dlgresopennote == DialogResult.OK)
             {

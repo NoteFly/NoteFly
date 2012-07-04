@@ -400,7 +400,8 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Change the url to force the use of IPv4 or IPv6
+        /// by using only a A or AAAA record.
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
