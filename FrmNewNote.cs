@@ -361,8 +361,6 @@ namespace NoteFly
                 }
                 else
                 {
-                    if (this.rtbNewNote.SelectionStart >= 0)
-                    {
                         //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
 
                         int pos = this.rtbNewNote.SelectionStart;
@@ -370,9 +368,6 @@ namespace NoteFly
                         this.rtbNewNote.Rtf = this.rtfdirectedit.AddBoldTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
                         this.rtbNewNote.SelectionStart = pos;
                         this.rtbNewNote.SelectionLength = len;
-                    }
-
-                    
                 }
             }
 
@@ -394,8 +389,6 @@ namespace NoteFly
                 }
                 else
                 {
-                    if (this.rtbNewNote.SelectionStart >= 0)
-                    {
                         //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
 
                         int pos = this.rtbNewNote.SelectionStart;
@@ -403,7 +396,6 @@ namespace NoteFly
                         this.rtbNewNote.Rtf = this.rtfdirectedit.AddItalicTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
                         this.rtbNewNote.SelectionStart = pos;
                         this.rtbNewNote.SelectionLength = len;
-                    }
                 }
             }
 
@@ -425,8 +417,6 @@ namespace NoteFly
                 }
                 else
                 {
-                    if (this.rtbNewNote.SelectionStart >= 0)
-                    {
                         //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
 
                         int pos = this.rtbNewNote.SelectionStart;
@@ -434,7 +424,6 @@ namespace NoteFly
                         this.rtbNewNote.Rtf = this.rtfdirectedit.AddStrikeTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
                         this.rtbNewNote.SelectionStart = pos;
                         this.rtbNewNote.SelectionLength = len;
-                    }
                 }
             }
 
@@ -456,16 +445,12 @@ namespace NoteFly
                 }
                 else
                 {
-                    if (this.rtbNewNote.SelectionStart >= 0)
-                    {
                         //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
-
                         int pos = this.rtbNewNote.SelectionStart;
                         int len = this.rtbNewNote.SelectionLength;
                         this.rtbNewNote.Rtf = this.rtfdirectedit.AddUnderlineTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
                         this.rtbNewNote.SelectionStart = pos;
                         this.rtbNewNote.SelectionLength = len;
-                    }
                 }
             }
 
@@ -524,7 +509,7 @@ namespace NoteFly
         /// <returns>true if length is larger than 0.</returns>
         private bool checksellen()
         {
-            if (this.rtbNewNote.SelectedText.Length > 0)
+            if (this.rtbNewNote.SelectedText.Length > 0 && this.rtbNewNote.SelectionStart >= 0)
             {
                 return true;
             }
@@ -1085,7 +1070,7 @@ namespace NoteFly
                 MessageBox.Show(newnote_emptyclipboard);
                 Log.Write(LogType.error, newnote_emptyclipboard);
             }
-        }        
+        }
 
         /// <summary>
         /// Key is released in rtbNewNote
@@ -1105,7 +1090,9 @@ namespace NoteFly
             }
             else if (e.Control && e.KeyCode == Keys.V)
             {
-                SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, this.GetSkinnr(), this.notes);               
+                int pos = this.rtbNewNote.SelectionStart;
+                SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, this.GetSkinnr(), this.notes);
+                this.rtbNewNote.SelectionStart = pos;
             }
         }
 

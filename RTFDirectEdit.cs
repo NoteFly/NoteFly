@@ -184,11 +184,44 @@ namespace NoteFly
                     if (rtf[i] == '\\')
                     {
                         this.rtfformat = true;
-                        bool istabtag = this.IsRTFTab(rtf, i);
                         isspecchar = this.IsRTFSpecialChar(rtf, i);
-                        if (istabtag)
+                        if (this.IsRTFTab(rtf, i))
                         {
                             nrtextchar++;
+                        }
+
+                        if (rtf.Length > i + starttag.Length && rtf.Length > i + endtag.Length)
+                        {
+                            if (nrtextchar > textpos && nrtextchar < (textpos + sellentext))
+                            {
+                                int postag = i + drtflen;
+                                if (rtf.Substring(i, endtag.Length).Equals(endtag, StringComparison.Ordinal))
+                                {
+                                    if (rtf[i + endtag.Length] == ' ')
+                                    {
+                                        newrtf.Remove(postag, endtag.Length + 1); // +1 for space
+                                        drtflen -= (endtag.Length + 1);
+                                    }
+                                    else
+                                    {
+                                        newrtf.Remove(postag, endtag.Length);
+                                        drtflen -= endtag.Length;
+                                    }
+                                }
+                                else if (rtf.Substring(i, starttag.Length).Equals(starttag, StringComparison.Ordinal))
+                                {
+                                    if (rtf[i + starttag.Length] == ' ')
+                                    {
+                                        newrtf.Remove(postag, starttag.Length + 1); // +1 for space
+                                        drtflen -= (starttag.Length + 1);
+                                    }
+                                    else
+                                    {
+                                        newrtf.Remove(postag, starttag.Length);
+                                        drtflen -= starttag.Length;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -273,15 +306,17 @@ namespace NoteFly
                 {
                     if (textpos == nrtextchar)
                     {
+                        // todo Don't add begintag before a endtag on same textpos.
+
                         // add begin
                         textstarttagdone = true;
-                        newrtf.Insert(i + drtflen+1, starttag + " ");
+                        newrtf.Insert(i + drtflen + 1, starttag + " ");
                         drtflen = newrtf.Length - rtf.Length;
                     }
                 }
 
             }
-        
+
             return newrtf.ToString();
         }
 
@@ -509,7 +544,7 @@ namespace NoteFly
                 //}
                 //else
                 //{
-                    posstartbody += VIEWKINDTAG.Length;
+                posstartbody += VIEWKINDTAG.Length;
                 //}
             }
 
