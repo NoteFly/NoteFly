@@ -255,10 +255,7 @@ namespace NoteFly
                     speccharrtfpos++;
                 }
 
-                if (rtf[i] == ' ' || rtf[i] == '\r' || rtf[i] == '\n')
-                {
-                    this.rtfformat = false;
-                }
+                this.rtfformat = InRTFFormat(rtf, i, this.rtfformat);
 
                 if (isspecchar)
                 {
@@ -306,12 +303,44 @@ namespace NoteFly
                 {
                     if (textpos == nrtextchar)
                     {
-                        // todo Don't add begintag before a endtag on same textpos.
+                        if (!this.rtfformat)
+                        {
+                            bool wasstarted = false;
+                            int n = 1;
+                            char c = rtf[i + n];
+                            while (c != ' ' && c != '\n' && c != '\r')
+                            {
+                                if (rtf.Substring(i + n, endtag.Length).Equals(endtag, StringComparison.Ordinal))
+                                {
+                                    //System.Windows.Forms.MessageBox.Show("FIXME endtag direct after begintag");
+                                    if (rtf[i + n + endtag.Length] == ' ')
+                                    {
+                                        // remove space too.
+                                        newrtf.Remove(i + n + drtflen, endtag.Length+1); 
+                                    }
+                                    else
+                                    {
+                                        newrtf.Remove(i + n + drtflen, endtag.Length); // todo test
+                                    }
+                                    drtflen -= endtag.Length;
+                                    wasstarted = true;
+                                    break;
+                                }
 
-                        // add begin
-                        textstarttagdone = true;
-                        newrtf.Insert(i + drtflen + 1, starttag + " ");
-                        drtflen = newrtf.Length - rtf.Length;
+                                n++;
+                                c = rtf[i + n];
+                            }
+
+                            if (!wasstarted)
+                            {
+                                textstarttagdone = true;
+                                // add begin
+                                newrtf.Insert(i + drtflen + 1, starttag + " ");
+                                drtflen = newrtf.Length - rtf.Length;
+                            }
+                        }
+
+                        
                     }
                 }
 
@@ -319,6 +348,23 @@ namespace NoteFly
 
             return newrtf.ToString();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtf"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        private bool InRTFFormat(string rtf, int pos, bool rtfformat)
+        {
+            if (rtf[pos] == ' ' || rtf[pos] == '\r' || rtf[pos] == '\n')
+            {
+                rtfformat = false;
+            }
+
+            return rtfformat;
+        }
+
 
         /// <summary>
         /// 
@@ -434,10 +480,7 @@ namespace NoteFly
                         speccharrtfpos++;
                     }
 
-                    if (rtf[i] == ' ' || rtf[i] == '\r' || rtf[i] == '\n')
-                    {
-                        this.rtfformat = false;
-                    }
+                    this.rtfformat = InRTFFormat(rtf, i, this.rtfformat);
 
                     if (textpos == nrtextchar && !textposdone)
                     {
