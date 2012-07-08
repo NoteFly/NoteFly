@@ -172,6 +172,8 @@ namespace NoteFly
             }
         }
 
+        private static RSAVerify rsaverify;
+
         #endregion Properties
 
         #region Methods (21)
@@ -695,7 +697,8 @@ namespace NoteFly
             string rsasignature = string.Empty;
             string latestversionquality = Program.AssemblyVersionQuality;
             short[] latestversion = xmlUtil.ParserLatestVersion(response, out latestversionquality, out downloadurl, out rsasignature);
-            //RSAVerify rsaverify = new RSAVerify(rsasignature);
+            rsaverify = new RSAVerify(rsasignature);
+
             int compareversionsresult = Program.CompareVersions(thisversion, latestversion);
             if (compareversionsresult < 0 || (compareversionsresult == 0 && Program.AssemblyVersionQuality != latestversionquality))
             {
@@ -741,10 +744,13 @@ namespace NoteFly
         /// <param name="newfiles">Array with returned new files</param>
         private static void frmupdater_DownloadCompleetSuccesfull(string[] newfiles)
         {
-            //if (rsaverify != null)
-            //{
-            //    rsaverify.CheckFileSignatureAndDisplayErrors(newfiles[0]);
-            //}
+            if (rsaverify != null)
+            {
+                if (!rsaverify.CheckFileSignatureAndDisplayErrors(newfiles[0]))
+                {
+                    return;
+                }
+            }
 
             if (Settings.UpdatecheckUseGPG)
             {

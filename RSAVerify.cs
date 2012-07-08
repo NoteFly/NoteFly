@@ -3,18 +3,17 @@
 //  NoteFly a note application.
 //  Copyright (C) 2012  Tom
 //
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
+//    http://www.apache.org/licenses/LICENSE-2.0
 //
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
 namespace NoteFly
@@ -27,7 +26,7 @@ namespace NoteFly
 
     /// <summary>
     /// This class can be used to verify a file or string with the NoteFly public key to check 
-    /// if the file or data is really coming from the developer who owns the NoteFly private key.
+    /// if the file or data is really coming from the developer who owns the NoteFly sprivate key.
     /// No encryption, only signature checking is used.
     /// <remarks>
     /// Patent on RSA is waived after 6, 2000.
@@ -39,15 +38,15 @@ namespace NoteFly
         /// <summary>
         /// The RSA NoteFly keysize used.
         /// </summary>
-        private const int rsakeysize = 2048;
+        private const int rsakeysize = 3072;
 
         /// <summary>
         /// The RSA NoteFly public key.
         /// </summary>
-        private const string xmlrsapublickey = "<RSAKeyValue><Modulus>7vgIwkge+r8xMeUN+eSi9SANa6rlzmCH6Z/hjEkb5DKqu/qluPL7f4YVCVIjdz6jf8YEVMdGF2IQGxasDPDeJYdMQ2QSzj3Yjd34VojR4QH5pxUIA8N7eIGnvpOdqrkEUG1l8+3IPjPIRAA9yxthhXSGZ11VW3yrJ9NEJ0iSuRDjUKgbOOrOF2RP9nxmlQK+yRccj+3Ei6MjDYwoEchOn2hhwy4Nr1i17CRPf7247/1HVSRV0a7/s0TNT6a5jj5AU0udFTT9ijmDmipZvJKC+pzl3MPnO8UAdNJiHpurAtni/YuyJ60EGKiUBNtrEI46BN/488PVsD9fqa2rf/oYuQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
+        private const string xmlrsapublickey = "<RSAKeyValue><Modulus>zxrgHdkENFOlcTI0AxDMhLgNzduTikBd1EX9gwWz+vTxgfR3RM2P3M8ImNL6QYk0Sch78wv3zac3pjWINoqpazFBwb1A0jawJUxgftfbEmfDvBuK58f+FOeE4KxYE9za+jZyxCn6bbj/M7cK2wgo8Mhmq/WP9aFUf8dcVcQH+3cqNt56zLSUXHcIdexZwVRv9SbzlY6MtlmRuzKO++O3ersXWuJPf8DJu98bAP2W0B3puPhNtXb6SnBF/FO9BZUDcCYNrJ0IuwyMA1nBm8aFPfok12ohzSAP1r5Hs0yVtmOXucWBdv7lim9jhL1aqXsh0U2aT0zxBaLWZsU7WwX8Iikb4ZEXkTsmBRHhPGfQ81P8zZAlgmmmCC+jLRK93cPZYcH9t6UFcdGgaDAurck9bmB+Mb6bahkv5eiumRbDXixLN3jVIDtOjI2Bg4KvdgYKJskuXpICadF/rC/ZNq7ZtONJ7wrVUu+Q/dRONE3okoCeZjK7JUdlVdWGVGG7fgZj</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
 
         /// <summary>
-        /// signature
+        /// The current RSA signature used.
         /// </summary>
         private string signature = string.Empty;
 
@@ -78,7 +77,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Check a signature for a file and display a error if signature is invalid.
         /// </summary>
         /// <param name="filepath"></param>
         public bool CheckFileSignatureAndDisplayErrors(string filepath)
@@ -97,7 +96,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Check a signature for a hash of a file.
         /// </summary>
         /// <param name="filepath"></param>
         /// <param name="signature"></param>
@@ -107,7 +106,6 @@ namespace NoteFly
             string sha256filehash = this.Sha256file(filepath);
             return this.IsValidSignature(sha256filehash, SHA256.Create());
         }
-
 
         /// <summary>
         /// Check data and with the signature.
@@ -125,7 +123,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Generate a SHA 256 hash for a file.
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
