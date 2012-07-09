@@ -66,12 +66,7 @@ namespace NoteFly
         /// <summary>
         /// The folder to save downloads to.
         /// </summary>
-        private string storefolder;
-
-        /// <summary>
-        /// List of file extension to unzip.
-        /// </summary>
-        private string[] unzipextensions = new string[] { ".dll" };
+        private string storefolder = null;
 
         /// <summary>
         /// Initializes a new instance of the FrmDownloader class.
@@ -122,11 +117,11 @@ namespace NoteFly
         /// <param name="storefolder">The folder to save all the files to.</param>
         /// <returns>True if downloading succesfully started.</returns>
         public bool BeginDownload(string[] downloads, string storefolder)
-        {            
+        {
             DirectoryInfo pluginsdirinfo = new DirectoryInfo(storefolder);
             if (pluginsdirinfo.Attributes == FileAttributes.System)
             {
-                Log.Write(LogType.exception, "The plugin folder is not allowed to be a system directory.");
+                Log.Write(LogType.exception, "The folder is not allowed to be a system directory.");
             }
             else
             {
@@ -137,7 +132,7 @@ namespace NoteFly
             this.numdownloadscompleet = 0;
             string downloadurl = Program.ChangeUrlIPVersion(downloads[0]);
             Uri firstdownload = new Uri(downloadurl);
-            return this.DownloadWebclient(firstdownload);
+            return this.WebclientDownload(firstdownload);
         }
 
         /// <summary>
@@ -176,9 +171,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="uri">The uri of the file to download.</param>
         /// <returns>True if download started succesfully.</returns>
-        private bool DownloadWebclient(Uri uri)
+        private bool WebclientDownload(Uri uri)
         {
-            string newfile = this.GetStoreFilepath(this.storefolder, uri.ToString());
+            string newfile = this.GetStoreFilepath(uri.ToString());
             this.files.Add(newfile);
             try
             {
@@ -232,15 +227,13 @@ namespace NoteFly
             {
                 if (!e.Cancelled)
                 {
-                    this.DecompressFileIfNeeded(this.files[this.numdownloadscompleet]);
-
                     this.numdownloadscompleet++;
                     if (this.numdownloadscompleet < this.downloads.Length)
                     {
                         string downloadurl = Program.ChangeUrlIPVersion(this.downloads[this.numdownloadscompleet]);
                         Uri download = new Uri(downloadurl);
                         this.CreateWebclient();
-                        this.DownloadWebclient(download);
+                        this.WebclientDownload(download);
                     }
                     else
                     {
@@ -271,63 +264,24 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        private void DecompressFileIfNeeded(string file)
+        /// <param name="file"></param>
+        /// <returns>0 for not a know compressed file.
+        /// 1 for a Zip file.
+        /// 2 for GZip file.
+        /// </returns>
+        public int GetFileCompressedkind(string file)
         {
             if (file.EndsWith(ZIPEXTENSION, StringComparison.OrdinalIgnoreCase))
             {
-                if (this.DecompressZipFile(file, this.unzipextensions))
-                {
-                    Log.Write(LogType.info, "Decompressed zip archive: " + file);
-                    if (File.GetAttributes(file) != FileAttributes.System)
-                    {
-                        try
-                        {
-                            File.Delete(file);
-                            Log.Write(LogType.info, "Delete zip archive: " + file);
-                        }
-                        catch (ArgumentException argexc)
-                        {
-                            Log.Write(LogType.exception, argexc.Message);
-                        }
-                        catch (IOException ioexc)
-                        {
-                            Log.Write(LogType.exception, ioexc.Message);
-                        }
-                    }
-                }
-                else
-                {
-                    Log.Write(LogType.exception, "Decompressing zip file " + file + " failed.");
-                }
-            }
+                return 1;
+            } 
             else if (file.EndsWith(GZIPEXTENSION, StringComparison.OrdinalIgnoreCase))
             {
-                string currentfilename = Path.GetFileName(file);
-                string newfilename = currentfilename.Substring(0, currentfilename.Length - GZIPEXTENSION.Length);
-                if (this.DecompressGZipFile(file, Path.Combine(this.storefolder, newfilename)))
-                {
-                    Log.Write(LogType.info, "Decompressed GZip file: " + file);
-                    if (File.GetAttributes(file) != FileAttributes.System)
-                    {
-                        try
-                        {
-                            File.Delete(file);
-                            Log.Write(LogType.info, "Delete GZip file: " + file);
-                        }
-                        catch (ArgumentException argexc)
-                        {
-                            Log.Write(LogType.exception, argexc.Message);
-                        }
-                        catch (IOException ioexc)
-                        {
-                            Log.Write(LogType.exception, ioexc.Message);
-                        }
-                    }
-                }
-                else
-                {
-                    Log.Write(LogType.exception, "Decompressing GZip file " + file + " failed.");
-                }
+                return 2;
+            } 
+            else
+            {
+                return 0;
             }
         }
 
@@ -337,7 +291,7 @@ namespace NoteFly
         /// <param name="storefolder">The folder where to save the file in.</param>
         /// <param name="url">The url of the file to download.</param>
         /// <returns>The store path</returns>
-        private string GetStoreFilepath(string storefolder, string url)
+        private string GetStoreFilepath(string url)
         {
             string filename = Path.GetFileName(url);
             if (filename.Contains("="))
@@ -360,12 +314,12 @@ namespace NoteFly
             }
 
             // does storefolder exists
-            if (!Directory.Exists(storefolder))
+            if (String.IsNullOrEmpty(this.storefolder) || !Directory.Exists(this.storefolder))
             {
-                storefolder = System.Environment.GetEnvironmentVariable("TEMP");
+                this.storefolder = System.Environment.GetEnvironmentVariable("TEMP");
             }
 
-            return Path.Combine(storefolder, filename);
+            return Path.Combine(this.storefolder, filename);
         }
 
         /// <summary>
@@ -373,7 +327,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="zipfilename">The zip file filename</param>
         /// <param name="extensions">The extension of file in the zipfile that are unzipped</param>
-        private bool DecompressZipFile(string zipfile, string[] extensions)
+        public bool DecompressZipFile(string zipfile, string[] extensionstodecompress)
         {
             bool succeeded = false;
             if (Directory.Exists(this.storefolder) && File.Exists(zipfile))
@@ -385,14 +339,14 @@ namespace NoteFly
                     List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
                     foreach (ZipStorer.ZipFileEntry entry in dir)
                     {
-                        for (int i = 0; i < extensions.Length; i++)
+                        for (int i = 0; i < extensionstodecompress.Length; i++)
                         {
-                            if (entry.FilenameInZip.EndsWith(extensions[i]))
+                            if (entry.FilenameInZip.EndsWith(extensionstodecompress[i]))
                             {
                                 // disable plugin for as we are updating.
                                 PluginsManager.DisablePlugin(entry.FilenameInZip);
                                 // extract file
-                                zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip));                                                                
+                                zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip));
                             }
                         }
                     }
@@ -418,12 +372,13 @@ namespace NoteFly
         /// <summary>
         /// Decompress GZip single file.
         /// </summary>
-        private bool DecompressGZipFile(string compressedfile, string decompressedfile)
+        public bool DecompressGZipFile(string compressedfile)
         {
             bool succeeded = false;
             if (File.Exists(compressedfile))
             {
-                using (FileStream inputfilestream = File.Open(compressedfile, FileMode.Open), outputfilestream = File.Create(decompressedfile))
+                string newfilename = compressedfile.Substring(0, compressedfile.Length - GZIPEXTENSION.Length);
+                using (FileStream inputfilestream = File.Open(compressedfile, FileMode.Open), outputfilestream = File.Create(newfilename))
                 {
                     byte[] outputbuffer;
                     using (GZipStream alg = new GZipStream(inputfilestream, CompressionMode.Decompress))

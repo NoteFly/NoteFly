@@ -50,19 +50,42 @@ namespace NoteFly
         /// </summary>
         private string signature = string.Empty;
 
+        private RSACryptoServiceProvider rsaCryptoServiceProvider = null;
+
         /// <summary>
         /// Create a new instance of RSAVerify class.
         /// </summary>
         /// <param name="signature"></param>
-        public RSAVerify(string signature)
+        public RSAVerify()
         {
-            this.signature = signature;
-            // /*
-            if (String.IsNullOrEmpty(signature))
+            this.rsaCryptoServiceProvider = new RSACryptoServiceProvider(rsakeysize);
+        }
+
+        /// <summary>
+        /// Create a new instance of RSAVerify class.
+        /// </summary>
+        /// <param name="signaturedata"></param>
+        public RSAVerify(string signaturedata)
+        {
+            this.rsaCryptoServiceProvider = new RSACryptoServiceProvider(rsakeysize);
+            this.Signature = signaturedata;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Signature
+        {
+            set
             {
-                System.Windows.Forms.MessageBox.Show("No signature used, cannot check intergity of download with RSA.", "no signature", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                if (String.IsNullOrEmpty(value))
+                {
+                    System.Windows.Forms.MessageBox.Show("No signature used cannot check intergity of downloads with RSA.", "no signature", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                    Log.Write(LogType.error, "no signature");
+                }
+
+                this.signature = value;
             }
-            // */
         }
 
         /// <summary>
@@ -99,7 +122,6 @@ namespace NoteFly
         /// Check a signature for a hash of a file.
         /// </summary>
         /// <param name="filepath"></param>
-        /// <param name="signature"></param>
         /// <returns></returns>
         public bool CheckSignatureFilehash(string filepath)
         {
@@ -115,8 +137,7 @@ namespace NoteFly
         /// <returns></returns>
         private bool IsValidSignature(string data, object hashinsignatureused)
         {
-            RSACryptoServiceProvider rsaCryptoServiceProvider = new RSACryptoServiceProvider(rsakeysize);
-            rsaCryptoServiceProvider.FromXmlString(xmlrsapublickey);
+            this.rsaCryptoServiceProvider.FromXmlString(xmlrsapublickey);
             byte[] databytes = Encoding.UTF32.GetBytes(data);
             byte[] signaturebytes = Convert.FromBase64String(signature);
             return rsaCryptoServiceProvider.VerifyData(databytes, hashinsignatureused, signaturebytes);

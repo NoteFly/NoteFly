@@ -214,7 +214,7 @@ namespace NoteFly
 
                         if (!string.IsNullOrEmpty(pluginname) && compversionsresults >= 0)
                         {
-                            lbxAvailablePlugins.Items.Add(pluginname);                            
+                            lbxAvailablePlugins.Items.Add(pluginname);
                         }
                     }
                 }
@@ -252,7 +252,7 @@ namespace NoteFly
                 return null;
             }
 
-            string[] detailsplugin = new string[5];
+            string[] detailsplugin = new string[6];
             XmlTextReader xmlreader = null;
             try
             {
@@ -273,7 +273,7 @@ namespace NoteFly
                                     {
                                         for (int i = 0; i < installedpluginnames.Length; i++)
                                         {
-                                            if (detailsplugin[0].Equals(installedpluginnames[i], StringComparison.Ordinal))
+                                            if (detailsplugin[0].Equals(installedpluginnames[i], StringComparison.OrdinalIgnoreCase))
                                             {
                                                 alreadyinstalled = true;
                                             }
@@ -282,7 +282,7 @@ namespace NoteFly
 
                                     break;
                                 case "version":
-                                    detailsplugin[1] = xmlplugin.ReadElementContentAsString();                                    
+                                    detailsplugin[1] = xmlplugin.ReadElementContentAsString();
                                     break;
                                 case "license":
                                     detailsplugin[2] = xmlplugin.ReadElementContentAsString();
@@ -292,6 +292,9 @@ namespace NoteFly
                                     break;
                                 case "downloadurl":
                                     detailsplugin[4] = xmlplugin.ReadElementContentAsString();
+                                    break;
+                                case "signature":
+                                    detailsplugin[5] = xmlplugin.ReadElementContentAsString();
                                     break;
                             }
                         }

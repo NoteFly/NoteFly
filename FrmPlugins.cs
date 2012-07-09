@@ -22,6 +22,7 @@ namespace NoteFly
     using System;
     using System.ComponentModel;
     using System.Windows.Forms;
+    using System.IO;
 
     /// <summary>
     /// FrmPlugins window
@@ -47,6 +48,11 @@ namespace NoteFly
         /// The url to download plugin of the current plugin being selected.
         /// </summary>
         private string currentplugindownloadurl = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private RSAVerify rsaverif;
 
         /// <summary>
         /// Refence to FrmDownload window.
@@ -199,6 +205,8 @@ namespace NoteFly
                 this.lblLicense.Text = Strings.T("license: ") + detailsplugin[2];
                 this.lblPluginDescription.Text = detailsplugin[3];
                 this.currentplugindownloadurl = detailsplugin[4];
+
+                this.rsaverif = new RSAVerify(detailsplugin[5]);
             }
         }
 
@@ -224,8 +232,56 @@ namespace NoteFly
         /// <param name="newfiles"></param>
         private void downloader_DownloadCompleet(string[] newfiles)
         {
+            if (this.rsaverif != null)
+            {
+                this.rsaverif.CheckFileSignatureAndDisplayErrors(newfiles[0]);
+            }
+
+            if (frmdownloader.GetFileCompressedkind(newfiles[0]) == 1)
+            {
+                string[] unzipextensions = new string[1] { ".dll" };
+                if (frmdownloader.DecompressZipFile(newfiles[0], unzipextensions))
+                {
+                    // decompress succesfully, now delete zip file
+                    this.DeleteNotsysFile(newfiles[0], "Delete zip archive: ");
+                }
+            }
+            else if (frmdownloader.GetFileCompressedkind(newfiles[0]) == 2)
+            {
+                if (frmdownloader.DecompressGZipFile(newfiles[0]))
+                {
+                    // decompress succesfully, now delete gzip file
+                    this.DeleteNotsysFile(newfiles[0], "Delete GZip file: ");
+                }
+            }
+
             PluginsManager.LoadPlugins();
             this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
+        }
+
+        /// <summary>
+        /// Check if file is not a system file, and if it's not then delete the file.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="logdesc"></param>
+        private void DeleteNotsysFile(string file, string logdesc)
+        {
+            if (System.IO.File.GetAttributes(file) != System.IO.FileAttributes.System)
+            {
+                try
+                {
+                    File.Delete(file);
+                    Log.Write(LogType.info, logdesc + file);
+                }
+                catch (ArgumentException argexc)
+                {
+                    Log.Write(LogType.exception, argexc.Message);
+                }
+                catch (IOException ioexc)
+                {
+                    Log.Write(LogType.exception, ioexc.Message);
+                }
+            }
         }
 
         /// <summary>
