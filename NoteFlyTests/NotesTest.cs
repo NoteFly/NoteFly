@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Notes.cs" company="NoteFly">
+// <copyright file="NotesTest.cs" company="NoteFly">
 //  NoteFly a note application.
 //  Copyright (C) 2010-2012  Tom
 //

@@ -154,7 +154,7 @@ namespace NoteFly
             {
                 sbtitle.Append(Strings.T("edit note"));
             }
-            else 
+            else
             {
                 sbtitle.Append(Strings.T("new note"));
             }
@@ -173,7 +173,7 @@ namespace NoteFly
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             Strings.TranslateForm(this);
-            this.Size = new Size(Settings.NotesDefaultWidth, Settings.NotesDefaultHeight);            
+            this.Size = new Size(Settings.NotesDefaultWidth, Settings.NotesDefaultHeight);
             this.notes = notes;
             this.SetFontSettings();
             this.toolTip.Active = Settings.NotesTooltipsEnabled;
@@ -361,13 +361,13 @@ namespace NoteFly
                 }
                 else
                 {
-                        //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
+                    //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
 
-                        int pos = this.rtbNewNote.SelectionStart;
-                        int len = this.rtbNewNote.SelectionLength;
-                        this.rtbNewNote.Rtf = this.rtfdirectedit.AddBoldTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
-                        this.rtbNewNote.SelectionStart = pos;
-                        this.rtbNewNote.SelectionLength = len;
+                    int pos = this.rtbNewNote.SelectionStart;
+                    int len = this.rtbNewNote.SelectionLength;
+                    this.rtbNewNote.Rtf = this.rtfdirectedit.AddBoldTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
+                    this.rtbNewNote.SelectionStart = pos;
+                    this.rtbNewNote.SelectionLength = len;
                 }
             }
 
@@ -389,13 +389,13 @@ namespace NoteFly
                 }
                 else
                 {
-                        //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
+                    //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Italic));
 
-                        int pos = this.rtbNewNote.SelectionStart;
-                        int len = this.rtbNewNote.SelectionLength;
-                        this.rtbNewNote.Rtf = this.rtfdirectedit.AddItalicTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
-                        this.rtbNewNote.SelectionStart = pos;
-                        this.rtbNewNote.SelectionLength = len;
+                    int pos = this.rtbNewNote.SelectionStart;
+                    int len = this.rtbNewNote.SelectionLength;
+                    this.rtbNewNote.Rtf = this.rtfdirectedit.AddItalicTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
+                    this.rtbNewNote.SelectionStart = pos;
+                    this.rtbNewNote.SelectionLength = len;
                 }
             }
 
@@ -417,13 +417,13 @@ namespace NoteFly
                 }
                 else
                 {
-                        //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
+                    //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Strikeout));
 
-                        int pos = this.rtbNewNote.SelectionStart;
-                        int len = this.rtbNewNote.SelectionLength;
-                        this.rtbNewNote.Rtf = this.rtfdirectedit.AddStrikeTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
-                        this.rtbNewNote.SelectionStart = pos;
-                        this.rtbNewNote.SelectionLength = len;
+                    int pos = this.rtbNewNote.SelectionStart;
+                    int len = this.rtbNewNote.SelectionLength;
+                    this.rtbNewNote.Rtf = this.rtfdirectedit.AddStrikeTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
+                    this.rtbNewNote.SelectionStart = pos;
+                    this.rtbNewNote.SelectionLength = len;
                 }
             }
 
@@ -445,12 +445,12 @@ namespace NoteFly
                 }
                 else
                 {
-                        //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
-                        int pos = this.rtbNewNote.SelectionStart;
-                        int len = this.rtbNewNote.SelectionLength;
-                        this.rtbNewNote.Rtf = this.rtfdirectedit.AddUnderlineTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
-                        this.rtbNewNote.SelectionStart = pos;
-                        this.rtbNewNote.SelectionLength = len;
+                    //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Underline));
+                    int pos = this.rtbNewNote.SelectionStart;
+                    int len = this.rtbNewNote.SelectionLength;
+                    this.rtbNewNote.Rtf = this.rtfdirectedit.AddUnderlineTagInRTF(this.rtbNewNote.Rtf, this.rtbNewNote.SelectionStart, this.rtbNewNote.SelectionLength);
+                    this.rtbNewNote.SelectionStart = pos;
+                    this.rtbNewNote.SelectionLength = len;
                 }
             }
 

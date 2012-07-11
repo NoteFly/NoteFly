@@ -234,7 +234,11 @@ namespace NoteFly
         {
             if (this.rsaverif != null)
             {
-                this.rsaverif.CheckFileSignatureAndDisplayErrors(newfiles[0]);
+                if (!this.rsaverif.CheckFileSignatureAndDisplayErrors(newfiles[0]))
+                {
+                    //File.Move(newfiles[0], newfiles[0] + ".invalid");
+                    return;
+                }
             }
 
             if (frmdownloader.GetFileCompressedkind(newfiles[0]) == 1)
@@ -257,6 +261,7 @@ namespace NoteFly
 
             PluginsManager.LoadPlugins();
             this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
+            this.tabControlPlugins.SelectedIndex = 0;
         }
 
         /// <summary>

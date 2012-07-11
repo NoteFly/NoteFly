@@ -310,21 +310,24 @@ namespace NoteFly
                             char c = rtf[i + n];
                             while (c != ' ' && c != '\n' && c != '\r')
                             {
-                                if (rtf.Substring(i + n, endtag.Length).Equals(endtag, StringComparison.Ordinal))
+                                if (i + n + endtag.Length <= rtf.Length)
                                 {
-                                    //System.Windows.Forms.MessageBox.Show("FIXME endtag direct after begintag");
-                                    if (rtf[i + n + endtag.Length] == ' ')
+                                    if (rtf.Substring(i + n, endtag.Length).Equals(endtag, StringComparison.Ordinal))
                                     {
-                                        // remove space too.
-                                        newrtf.Remove(i + n + drtflen, endtag.Length+1); 
+                                        //System.Windows.Forms.MessageBox.Show("FIXME endtag direct after begintag");
+                                        if (rtf[i + n + endtag.Length] == ' ')
+                                        {
+                                            // remove space too.
+                                            newrtf.Remove(i + n + drtflen, endtag.Length + 1);
+                                        }
+                                        else
+                                        {
+                                            newrtf.Remove(i + n + drtflen, endtag.Length); // todo test
+                                        }
+                                        drtflen -= endtag.Length;
+                                        wasstarted = true;
+                                        break;
                                     }
-                                    else
-                                    {
-                                        newrtf.Remove(i + n + drtflen, endtag.Length); // todo test
-                                    }
-                                    drtflen -= endtag.Length;
-                                    wasstarted = true;
-                                    break;
                                 }
 
                                 n++;

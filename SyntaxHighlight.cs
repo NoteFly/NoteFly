@@ -29,7 +29,7 @@ namespace NoteFly
     /// </summary>
     public sealed class SyntaxHighlight
     {
-        #region Fields (9)
+        #region Fields (10)
 
         /// <summary>
         /// The filename with xml description of languages keywords / lexicon 
@@ -323,7 +323,7 @@ namespace NoteFly
                         part = rtb.Text.Substring(lastpos, cursorpos - lastpos);
                     }
 
-                    rtf = CheckSyntaxPart(rtb, rtf, part, cursorpos, lastpos);                    
+                    rtf = CheckSyntaxPart(rtb, rtf, part, cursorpos, lastpos);
                 }
 
                 if (!string.IsNullOrEmpty(rtf))

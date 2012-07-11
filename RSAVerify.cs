@@ -113,7 +113,7 @@ namespace NoteFly
             else
             {
                 Log.Write(LogType.error, "Invalid RSA file hash signature of file " + filepath);
-                System.Windows.Forms.MessageBox.Show("Signature of file is not valid.", "security issue", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                System.Windows.Forms.MessageBox.Show("Signature of file is not valid.", "security issue", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Stop);
                 return false;
             }
         }
