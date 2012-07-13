@@ -105,6 +105,21 @@ namespace NoteFly
         private bool rtfformat = true;
 
         /// <summary>
+        /// 
+        /// </summary>
+        private int drtflen = 0;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int starttagremovedpos = -1;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int endtagremovedpos = -1;
+
+        /// <summary>
         /// Array with hexcharacters (lowercase alpha).
         /// </summary>
         private char[] hexchars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
@@ -158,6 +173,244 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtf"></param>
+        /// <param name="textpos"></param>
+        /// <param name="sellentext"></param>
+        /// <returns></returns>
+        public string RemoveBoldTagsInRTF(string rtf, int textpos, int sellentext)
+        {
+            return this.RemoveTagsInRTF(rtf, textpos, sellentext, RTFBOLDTAG, RTFBOLDENDTAG);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtf"></param>
+        /// <param name="textpos"></param>
+        /// <param name="sellentext"></param>
+        /// <returns></returns>
+        public string RemoveItalicTagsInRTF(string rtf, int textpos, int sellentext)
+        {
+            return this.RemoveTagsInRTF(rtf, textpos, sellentext, RTFITALICTAG, RTFITALICENDTAG);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtf"></param>
+        /// <param name="textpos"></param>
+        /// <param name="sellentext"></param>
+        /// <returns></returns>
+        public string RemoveStrikeTagsInRTF(string rtf, int textpos, int sellentext)
+        {
+            return this.RemoveTagsInRTF(rtf, textpos, sellentext, RTFSTRIKETAG, RTFSTRIKEENDTAG);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtf"></param>
+        /// <param name="textpos"></param>
+        /// <param name="sellentext"></param>
+        /// <returns></returns>
+        public string RemoveUnderlineTagsInRTF(string rtf, int textpos, int sellentext)
+        {
+            return this.RemoveTagsInRTF(rtf, textpos, sellentext, RTFUNDERLINETAG, RTFUNDERLINEENDTAG);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rtf"></param>
+        /// <param name="textpos"></param>
+        /// <param name="sellentext"></param>
+        /// <param name="starttag"></param>
+        /// <param name="endtag"></param>
+        /// <returns></returns>
+        private string RemoveTagsInRTF(string rtf, int textpos, int sellentext, string starttag, string endtag)
+        {
+            this.rtfformat = true;
+            this.drtflen = 0;
+            StringBuilder newrtf = new StringBuilder(rtf, rtf.Length);
+            int rtflevel = 0;
+            int nrtextchar = 0;
+            bool tagstartedbefore = false;
+            bool tagcontineafter = false;
+            bool isspecchar = false;
+            int speccharrtfpos = 0;
+            this.starttagremovedpos = -1;
+            this.endtagremovedpos = -1;
+
+            for (int i = this.FindStartPosDoc(rtf); i < rtf.Length && nrtextchar <= (textpos + sellentext+1); i++)
+            {
+                if (this.CheckRTFLevel(rtf, i, rtflevel) == 0)
+                {
+                    if (rtf[i] == '\\')
+                    {
+                        this.rtfformat = true;
+                        isspecchar = this.IsRTFSpecialChar(rtf, i);
+                        if (this.IsRTFTab(rtf, i))
+                        {
+                            nrtextchar++;
+                        }
+
+                        if (nrtextchar < textpos)
+                        {
+                            if (rtf.Length > (i + starttag.Length) && rtf.Length > (i + endtag.Length))
+                            {
+                                if (rtf.Substring(i, endtag.Length).Equals(endtag, StringComparison.Ordinal))
+                                {
+                                    tagstartedbefore = false;
+                                }
+                                else if (rtf.Substring(i, starttag.Length).Equals(starttag, StringComparison.Ordinal))
+                                {
+                                    tagstartedbefore = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    this.rtfformat = false;
+                }
+
+                if (!this.rtfformat)
+                {
+                    if (nrtextchar < int.MaxValue)
+                    {
+                        nrtextchar++;
+                    }
+                }
+
+                if (isspecchar)
+                {
+                    if (speccharrtfpos == 0)
+                    {
+                        nrtextchar++;
+                    }
+                    else if (speccharrtfpos >= 3)
+                    {
+                        this.rtfformat = false;
+                        isspecchar = false;
+                        speccharrtfpos = 0;
+                    }
+
+                    speccharrtfpos++;
+                }
+
+                this.rtfformat = InRTFFormat(rtf, i, this.rtfformat);
+                if (rtf.Length > (i + starttag.Length) && rtf.Length > (i + endtag.Length))
+                {
+                    if (nrtextchar >= textpos && nrtextchar <= (textpos + sellentext))
+                    {
+                        newrtf = RemoveTag(newrtf, rtf, i, starttag, endtag);
+                        if (this.starttagremovedpos < this.endtagremovedpos)
+                        {
+                            tagcontineafter = true;
+                        }
+                        else if (this.starttagremovedpos > this.endtagremovedpos && this.starttagremovedpos >= 0)
+                        {
+                            tagcontineafter = true;
+                        }
+                        else if (!tagstartedbefore) 
+                        {
+                            {
+                                tagcontineafter = false;
+                            }
+                        }
+                    }
+
+                    if (nrtextchar == textpos && tagstartedbefore)
+                    {
+                        if (rtf[i + 1] == '\\')
+                        {
+                            newrtf.Insert(i + this.drtflen + 1, endtag);
+                            this.drtflen += endtag.Length;
+                        }
+                        else
+                        {
+                            newrtf.Insert(i + this.drtflen + 1, endtag + " ");
+                            this.drtflen += endtag.Length + 1;
+                        }
+
+                        tagstartedbefore = false;
+                        tagcontineafter = true;
+                    }
+                    else if (nrtextchar == (textpos + sellentext))
+                    {
+                        if (tagcontineafter)
+                        {
+                            if (rtf[i + 1] == '\\')
+                            {
+                                newrtf.Insert(i + this.drtflen + 1, starttag);
+                                this.drtflen += starttag.Length;
+                            }
+                            else
+                            {
+                                newrtf.Insert(i + this.drtflen + 1, starttag + " ");
+                                this.drtflen += starttag.Length + 1;
+                            }
+
+                            tagcontineafter = false;
+                        }
+                    }
+                }
+            }
+
+            return newrtf.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newrtf"></param>
+        /// <param name="rtf"></param>
+        /// <param name="i"></param>
+        /// <param name="sellentext"></param>
+        /// <param name="starttag"></param>
+        /// <param name="endtag"></param>
+        /// <returns></returns>
+        private StringBuilder RemoveTag(StringBuilder newrtf, string rtf, int i, string starttag, string endtag)
+        {
+            int postag = i + this.drtflen;
+            if (rtf.Substring(i, endtag.Length).Equals(endtag, StringComparison.Ordinal))
+            {
+                if (rtf[i + endtag.Length] == ' ')
+                {
+                    newrtf.Remove(postag, endtag.Length + 1); // +1 for space
+                    this.drtflen -= (endtag.Length + 1);
+                }
+                else
+                {
+                    newrtf.Remove(postag, endtag.Length);
+                    this.drtflen -= endtag.Length;
+                }
+
+                this.endtagremovedpos = postag; //true;
+            }
+            else if (rtf.Substring(i, starttag.Length).Equals(starttag, StringComparison.Ordinal))
+            {
+                if (rtf[i + starttag.Length] == ' ')
+                {
+                    newrtf.Remove(postag, starttag.Length + 1); // +1 for space
+                    this.drtflen -= (starttag.Length + 1);
+                }
+                else
+                {
+                    newrtf.Remove(postag, starttag.Length);
+                    this.drtflen -= starttag.Length;
+                }
+
+                this.starttagremovedpos = postag;
+            }
+
+            return newrtf;
+        }
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="rtf"></param>
@@ -168,15 +421,14 @@ namespace NoteFly
         /// <returns></returns>
         private string SetTagInRTF(string rtf, int textpos, int sellentext, string starttag, string endtag)
         {
+            this.rtfformat = true;
+            this.drtflen = 0;
             StringBuilder newrtf = new StringBuilder(rtf, rtf.Length + starttag.Length + endtag.Length);
-
             int rtflevel = 0;
             int nrtextchar = 0;
-            this.rtfformat = true;
             bool isspecchar = false;
             bool textstarttagdone = false;
             int speccharrtfpos = 0;
-            int drtflen = 0;
             for (int i = this.FindStartPosDoc(rtf); i < rtf.Length; i++)
             {
                 if (this.CheckRTFLevel(rtf, i, rtflevel) == 0)
@@ -192,35 +444,9 @@ namespace NoteFly
 
                         if (rtf.Length > i + starttag.Length && rtf.Length > i + endtag.Length)
                         {
-                            if (nrtextchar > textpos && nrtextchar < (textpos + sellentext))
+                            if (nrtextchar >= textpos && nrtextchar < (textpos + sellentext))
                             {
-                                int postag = i + drtflen;
-                                if (rtf.Substring(i, endtag.Length).Equals(endtag, StringComparison.Ordinal))
-                                {
-                                    if (rtf[i + endtag.Length] == ' ')
-                                    {
-                                        newrtf.Remove(postag, endtag.Length + 1); // +1 for space
-                                        drtflen -= (endtag.Length + 1);
-                                    }
-                                    else
-                                    {
-                                        newrtf.Remove(postag, endtag.Length);
-                                        drtflen -= endtag.Length;
-                                    }
-                                }
-                                else if (rtf.Substring(i, starttag.Length).Equals(starttag, StringComparison.Ordinal))
-                                {
-                                    if (rtf[i + starttag.Length] == ' ')
-                                    {
-                                        newrtf.Remove(postag, starttag.Length + 1); // +1 for space
-                                        drtflen -= (starttag.Length + 1);
-                                    }
-                                    else
-                                    {
-                                        newrtf.Remove(postag, starttag.Length);
-                                        drtflen -= starttag.Length;
-                                    }
-                                }
+                                newrtf = this.RemoveTag(newrtf, rtf, i, starttag, endtag);
                             }
                         }
                     }
@@ -279,7 +505,7 @@ namespace NoteFly
                     {
                         textstarttagdone = false;
                         // add end
-                        int postag = i + drtflen + 1; // +1 for space
+                        int postag = i + this.drtflen + 1; // +1 for space
                         if (i + 1 < rtf.Length)
                         {
                             if (rtf[i + 1] == '\\')
@@ -289,13 +515,13 @@ namespace NoteFly
                             else
                             {
                                 newrtf.Insert(postag, endtag + " ");
-                                drtflen += 1;
+                                this.drtflen += 1;
                             }
                         }
                         else
                         {
                             newrtf.Insert(postag, endtag + " ");
-                            drtflen += 1;
+                            this.drtflen += 1;
                         }
                     }
                 }
@@ -318,13 +544,14 @@ namespace NoteFly
                                         if (rtf[i + n + endtag.Length] == ' ')
                                         {
                                             // remove space too.
-                                            newrtf.Remove(i + n + drtflen, endtag.Length + 1);
+                                            newrtf.Remove(i + n + this.drtflen, endtag.Length + 1);
                                         }
                                         else
                                         {
-                                            newrtf.Remove(i + n + drtflen, endtag.Length); // todo test
+                                            newrtf.Remove(i + n + this.drtflen, endtag.Length); // todo test
                                         }
-                                        drtflen -= endtag.Length;
+
+                                        this.drtflen -= endtag.Length;
                                         wasstarted = true;
                                         break;
                                     }
@@ -338,12 +565,10 @@ namespace NoteFly
                             {
                                 textstarttagdone = true;
                                 // add begin
-                                newrtf.Insert(i + drtflen + 1, starttag + " ");
-                                drtflen = newrtf.Length - rtf.Length;
+                                newrtf.Insert(i + this.drtflen + 1, starttag + " ");
+                                this.drtflen = newrtf.Length - rtf.Length;
                             }
                         }
-
-                        
                     }
                 }
 

@@ -264,5 +264,99 @@ namespace NoteFlyTests
                 Assert.Fail("not expected rtf");
             }
         }
+
+        [TestMethod]
+        public void UnderlineAndBold()
+        {
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \ul test\b test\ulnone test\b0\par
+}
+";
+            rtf = rtfdirectedit.AddUnderlineTagInRTF(rtf, 0, 8);
+            rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 4, 8);
+            if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf");
+            }
+        }
+
+        [TestMethod]
+        public void ItalicOnAndOffPart()
+        {
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 te\i sttestte\i0 st\par
+}
+";
+            string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 te\i st\i0 test\i te\i0 st\par
+}
+";
+            rtf = rtfdirectedit.AddItalicTagInRTF(rtf, 2, 8); // italic: ..sttestte..
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf");
+            }
+
+            System.Windows.Forms.RichTextBox rtb = new System.Windows.Forms.RichTextBox();
+            rtb.Rtf = rtf;
+            rtb.SelectionStart = 4;
+            rtb.SelectionLength = 4;
+            FontStyle newstyles = rtb.SelectionFont.Style;
+            newstyles -=  FontStyle.Italic;
+            rtb.SelectionFont = new System.Drawing.Font(rtb.SelectionFont.FontFamily, rtb.SelectionFont.SizeInPoints, newstyles);
+            rtf = rtb.Rtf; // italic: ..st....te..
+
+            if (!expectedrtf2.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf");
+            }
+
+        }
+
+        [TestMethod]
+        public void BoldUnderlineAndBoldOff()
+        {
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b test\ul testte\ulnone st\b0\par
+}
+";
+            string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b te\b0 st\ul testte\ulnone st\par
+}
+";
+            string expectedrtf3 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b te\b0 stte\ul stte\ulnone st\par
+}
+";
+
+            rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 0, 12);
+            rtf = rtfdirectedit.AddUnderlineTagInRTF(rtf, 4, 6);
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf, adding underline and bold");
+            }
+
+/*
+            System.Windows.Forms.RichTextBox rtb = new System.Windows.Forms.RichTextBox();
+            rtb.Rtf = rtf;
+            rtb.SelectionStart = 0;
+            rtb.SelectionLength = 12;
+            FontStyle newstyles = rtb.SelectionFont.Style; // FIXME this needs to be addressed in FrmNewNote, removestyle.
+            newstyles -= FontStyle.Bold; // does not work properly!
+            rtb.SelectionFont = new System.Drawing.Font(rtb.SelectionFont.FontFamily, rtb.SelectionFont.SizeInPoints, newstyles);
+            rtf = rtb.Rtf; 
+*/
+            rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 2, 12);
+            if (!expectedrtf2.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf, removal of bold");
+            }
+
+            rtf = rtfdirectedit.RemoveUnderlineTagsInRTF(rtf, 4, 2); // now only ......stte.. should be underlined.
+            if (!expectedrtf3.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf, removal of underline");
+            }
+        }
     }
 }
