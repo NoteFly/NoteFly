@@ -110,16 +110,6 @@ namespace NoteFly
         private int drtflen = 0;
 
         /// <summary>
-        /// 
-        /// </summary>
-        private int starttagremovedpos = -1;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private int endtagremovedpos = -1;
-
-        /// <summary>
         /// Array with hexcharacters (lowercase alpha).
         /// </summary>
         private char[] hexchars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
@@ -233,17 +223,16 @@ namespace NoteFly
         {
             this.rtfformat = true;
             this.drtflen = 0;
-            StringBuilder newrtf = new StringBuilder(rtf, rtf.Length);
+            StringBuilder newrtf = new StringBuilder(rtf);
             int rtflevel = 0;
             int nrtextchar = 0;
-            bool tagstartedbefore = false;
-            bool tagcontineafter = false;
+            bool tagopen = false;
+            bool donebeginpos = false;
+            bool doneendpos = false;
             bool isspecchar = false;
             int speccharrtfpos = 0;
-            this.starttagremovedpos = -1;
-            this.endtagremovedpos = -1;
 
-            for (int i = this.FindStartPosDoc(rtf); i < rtf.Length && nrtextchar <= (textpos + sellentext+1); i++)
+            for (int i = this.FindStartPosDoc(rtf); i < rtf.Length && nrtextchar <= (textpos + sellentext + 1); i++)
             {
                 if (this.CheckRTFLevel(rtf, i, rtflevel) == 0)
                 {
@@ -256,20 +245,7 @@ namespace NoteFly
                             nrtextchar++;
                         }
 
-                        if (nrtextchar < textpos)
-                        {
-                            if (rtf.Length > (i + starttag.Length) && rtf.Length > (i + endtag.Length))
-                            {
-                                if (rtf.Substring(i, endtag.Length).Equals(endtag, StringComparison.Ordinal))
-                                {
-                                    tagstartedbefore = false;
-                                }
-                                else if (rtf.Substring(i, starttag.Length).Equals(starttag, StringComparison.Ordinal))
-                                {
-                                    tagstartedbefore = true;
-                                }
-                            }
-                        }
+                        tagopen = this.CheckTagOpened(tagopen, rtf, i, starttag, endtag);
                     }
                 }
                 else
@@ -306,61 +282,77 @@ namespace NoteFly
                 {
                     if (nrtextchar >= textpos && nrtextchar <= (textpos + sellentext))
                     {
-                        newrtf = RemoveTag(newrtf, rtf, i, starttag, endtag);
-                        if (this.starttagremovedpos < this.endtagremovedpos)
+                        newrtf = this.RemoveTag(newrtf, rtf, i, starttag, endtag);
+                        tagopen = this.CheckTagOpened(tagopen, rtf, i, starttag, endtag);
+                    }
+
+                    if (nrtextchar == textpos && !donebeginpos)
+                    {
+                        if (tagopen)
                         {
-                            tagcontineafter = true;
-                        }
-                        else if (this.starttagremovedpos > this.endtagremovedpos && this.starttagremovedpos >= 0)
-                        {
-                            tagcontineafter = true;
-                        }
-                        else if (!tagstartedbefore) 
-                        {
+                            if (rtf[i] == '\\')
                             {
-                                tagcontineafter = false;
+                                newrtf.Insert(i + this.drtflen + 1, endtag);
+                                this.drtflen += endtag.Length;
+                            }
+                            else
+                            {
+                                newrtf.Insert(i + this.drtflen + 1, endtag + " ");
+                                this.drtflen += endtag.Length + 1;
                             }
                         }
-                    }
 
-                    if (nrtextchar == textpos && tagstartedbefore)
-                    {
-                        if (rtf[i + 1] == '\\')
-                        {
-                            newrtf.Insert(i + this.drtflen + 1, endtag);
-                            this.drtflen += endtag.Length;
-                        }
-                        else
-                        {
-                            newrtf.Insert(i + this.drtflen + 1, endtag + " ");
-                            this.drtflen += endtag.Length + 1;
-                        }
-
-                        tagstartedbefore = false;
-                        tagcontineafter = true;
+                        donebeginpos = true;
                     }
-                    else if (nrtextchar == (textpos + sellentext))
+                    else if (nrtextchar == (textpos + sellentext + 1) && !doneendpos)
                     {
-                        if (tagcontineafter)
+                        // need to be last charcter if has RTFformat on this nrtextchar, that why i + this.drtflen here below and: nrtextchar == (textpos + sellentext + 1)
+                        if (tagopen)
                         {
-                            if (rtf[i + 1] == '\\')
+                            if (rtf[i] == '\\')
                             {
-                                newrtf.Insert(i + this.drtflen + 1, starttag);
+                                newrtf.Insert(i + this.drtflen, starttag);
                                 this.drtflen += starttag.Length;
                             }
                             else
                             {
-                                newrtf.Insert(i + this.drtflen + 1, starttag + " ");
+                                newrtf.Insert(i + this.drtflen, starttag + " ");
                                 this.drtflen += starttag.Length + 1;
                             }
-
-                            tagcontineafter = false;
                         }
+
+                        doneendpos = true;
                     }
                 }
             }
 
             return newrtf.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagopen"></param>
+        /// <param name="rtf"></param>
+        /// <param name="i"></param>
+        /// <param name="starttag"></param>
+        /// <param name="endtag"></param>
+        /// <returns></returns>
+        private bool CheckTagOpened(bool tagopen, string rtf, int i, string starttag, string endtag)
+        {
+            if (rtf.Length > (i + starttag.Length) && rtf.Length > (i + endtag.Length))
+            {
+                if (rtf.Substring(i, endtag.Length).Equals(endtag, StringComparison.Ordinal))
+                {
+                    tagopen = false;
+                }
+                else if (rtf.Substring(i, starttag.Length).Equals(starttag, StringComparison.Ordinal))
+                {
+                    tagopen = true;
+                }
+            }
+
+            return tagopen;
         }
 
         /// <summary>
@@ -388,8 +380,6 @@ namespace NoteFly
                     newrtf.Remove(postag, endtag.Length);
                     this.drtflen -= endtag.Length;
                 }
-
-                this.endtagremovedpos = postag; //true;
             }
             else if (rtf.Substring(i, starttag.Length).Equals(starttag, StringComparison.Ordinal))
             {
@@ -403,8 +393,6 @@ namespace NoteFly
                     newrtf.Remove(postag, starttag.Length);
                     this.drtflen -= starttag.Length;
                 }
-
-                this.starttagremovedpos = postag;
             }
 
             return newrtf;

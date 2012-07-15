@@ -314,6 +314,30 @@ namespace NoteFlyTests
         }
 
         [TestMethod]
+        public void BoldOnAndOff()
+        {
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 test\b test\b0 test\par
+}
+";
+            string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 testtesttest\par
+}
+";
+            rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 4, 4);
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf, adding bold");
+            }
+
+            rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 4, 4);
+            if (!expectedrtf2.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf,  removal of bold");
+            }
+        }
+
+        [TestMethod]
         public void BoldUnderlineAndBoldOff()
         {
             string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
@@ -336,16 +360,6 @@ namespace NoteFlyTests
                 Assert.Fail("not expected rtf, adding underline and bold");
             }
 
-/*
-            System.Windows.Forms.RichTextBox rtb = new System.Windows.Forms.RichTextBox();
-            rtb.Rtf = rtf;
-            rtb.SelectionStart = 0;
-            rtb.SelectionLength = 12;
-            FontStyle newstyles = rtb.SelectionFont.Style; // FIXME this needs to be addressed in FrmNewNote, removestyle.
-            newstyles -= FontStyle.Bold; // does not work properly!
-            rtb.SelectionFont = new System.Drawing.Font(rtb.SelectionFont.FontFamily, rtb.SelectionFont.SizeInPoints, newstyles);
-            rtf = rtb.Rtf; 
-*/
             rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 2, 12);
             if (!expectedrtf2.Equals(rtf, System.StringComparison.Ordinal))
             {
@@ -357,6 +371,82 @@ namespace NoteFlyTests
             {
                 Assert.Fail("not expected rtf, removal of underline");
             }
+        }
+
+        [TestMethod]
+        public void RemoveBoldEnd()
+        {
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
+}
+";
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b testtestt\b0 est\par
+}
+";
+            rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 9, 3); // now only testtestte.. should be bold.
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf, removal of bold");
+            }
+        }
+
+        [TestMethod]
+        public void RemoveBoldAlmostEnd()
+        {
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
+}
+";
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b testtestt\b0 es\b t\b0\par
+}
+";
+            rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 9, 2); // now only testtestt..t should be bold.
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf, removal of bold");
+            }
+        }
+
+        [TestMethod]
+        public void AddUnderlingEnd()
+        {
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
+}
+";
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b testtest\ul test\ulnone\b0\par
+}
+";
+            rtf = rtfdirectedit.AddUnderlineTagInRTF(rtf, 8, 4); 
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf, add underline");
+            }
+        }
+
+        [TestMethod]
+        public void AddBoldMixed()
+        {
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+{\colortbl ;\red0\green0\blue0;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\b test\ul test\b0 test\ulnone\i0\par
+}
+";
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+{\colortbl ;\red0\green0\blue0;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\b test\ul test\b0 test\ulnone\i0\par
+}
+";
+
+            rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 8, 4);
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("not expected rtf, add bold");
+            }
+
         }
     }
 }
