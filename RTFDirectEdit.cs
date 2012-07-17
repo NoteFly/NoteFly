@@ -95,6 +95,11 @@ namespace NoteFly
         private const string RTFUNDERLINEENDTAG = @"\ulnone";
 
         /// <summary>
+        /// 
+        /// </summary>
+        private const int MAXLENRTFTTAG = 10;
+
+        /// <summary>
         /// List with colortable coloritems
         /// </summary>
         private List<Color> colortblitems = new List<Color>();
@@ -286,44 +291,47 @@ namespace NoteFly
                         tagopen = this.CheckTagOpened(tagopen, rtf, i, starttag, endtag);
                     }
 
-                    if (nrtextchar == textpos && !donebeginpos)
-                    {
-                        if (tagopen)
+                        // is begin?
+                        if (nrtextchar == textpos && !donebeginpos)
                         {
-                            if (rtf[i] == '\\')
+                            if (tagopen)
                             {
-                                newrtf.Insert(i + this.drtflen + 1, endtag);
-                                this.drtflen += endtag.Length;
+                                if (rtf[i] == '\\')
+                                {
+                                    newrtf.Insert(i + this.drtflen + 1, endtag);
+                                    this.drtflen += endtag.Length;
+                                }
+                                else
+                                {
+                                    newrtf.Insert(i + this.drtflen + 1, endtag + " ");
+                                    this.drtflen += endtag.Length + 1;
+                                }
                             }
-                            else
-                            {
-                                newrtf.Insert(i + this.drtflen + 1, endtag + " ");
-                                this.drtflen += endtag.Length + 1;
-                            }
-                        }
 
-                        donebeginpos = true;
-                    }
-                    else if (nrtextchar == (textpos + sellentext + 1) && !doneendpos)
-                    {
-                        // need to be last charcter if has RTFformat on this nrtextchar, that why i + this.drtflen here below and: nrtextchar == (textpos + sellentext + 1)
-                        if (tagopen)
+                            donebeginpos = true;
+                        }
+                        // is last?
+                        else if (nrtextchar == (textpos + sellentext + 1) && !doneendpos)
                         {
-                            if (rtf[i] == '\\')
+                            // need to be last charcter if has RTFformat on this nrtextchar, that why i + this.drtflen here below and: nrtextchar == (textpos + sellentext + 1)
+                            if (tagopen)
                             {
-                                newrtf.Insert(i + this.drtflen, starttag);
-                                this.drtflen += starttag.Length;
+                                if (rtf[i] == '\\')
+                                {
+                                    newrtf.Insert(i + this.drtflen, starttag);
+                                    this.drtflen += starttag.Length;
+                                }
+                                else
+                                {
+                                    newrtf.Insert(i + this.drtflen, starttag + " ");
+                                    this.drtflen += starttag.Length + 1;
+                                }
                             }
-                            else
-                            {
-                                newrtf.Insert(i + this.drtflen, starttag + " ");
-                                this.drtflen += starttag.Length + 1;
-                            }
-                        }
 
-                        doneendpos = true;
+                            doneendpos = true;
+                        }
                     }
-                }
+                
             }
 
             return newrtf.ToString();
@@ -372,8 +380,32 @@ namespace NoteFly
             {
                 if (rtf[i + endtag.Length] == ' ')
                 {
-                    newrtf.Remove(postag, endtag.Length + 1); // +1 for space
-                    this.drtflen -= (endtag.Length + 1);
+                    bool rtfformatbefore = false;
+                    int n = i - 1;
+                    while (rtf[n] != ' ' && rtf[n] != ' ' && rtf[n] != '\r')
+                    {
+                        if (rtf[n] == '\\')
+                        {
+                            rtfformatbefore = true;
+                        }
+
+                        n--;
+                        if (n < i - MAXLENRTFTTAG)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (!rtfformatbefore)
+                    {
+                        newrtf.Remove(postag, endtag.Length + 1); // +1 for space
+                        this.drtflen -= (endtag.Length + 1);
+                    }
+                    else
+                    {
+                        newrtf.Remove(postag, endtag.Length); // +1 for space
+                        this.drtflen -= (endtag.Length);
+                    }
                 }
                 else
                 {
@@ -417,6 +449,7 @@ namespace NoteFly
             bool isspecchar = false;
             bool textstarttagdone = false;
             int speccharrtfpos = 0;
+            bool tagopen = false;
             for (int i = this.FindStartPosDoc(rtf); i < rtf.Length; i++)
             {
                 if (this.CheckRTFLevel(rtf, i, rtflevel) == 0)
@@ -487,6 +520,8 @@ namespace NoteFly
                     speccharrtfpos++;
                 }
 
+                tagopen = this.CheckTagOpened(tagopen, rtf, i, starttag, endtag);
+
                 if (textstarttagdone)
                 {
                     if ((textpos + sellentext) == nrtextchar)
@@ -519,6 +554,7 @@ namespace NoteFly
                     {
                         if (!this.rtfformat)
                         {
+                            /*
                             bool wasstarted = false;
                             int n = 1;
                             char c = rtf[i + n];
@@ -546,15 +582,18 @@ namespace NoteFly
                                 }
 
                                 n++;
-                                c = rtf[i + n];
+                                c = rtf[i + n]; // bug
                             }
+                            */
 
-                            if (!wasstarted)
+                        if (!tagopen)
                             {
                                 textstarttagdone = true;
                                 // add begin
                                 newrtf.Insert(i + this.drtflen + 1, starttag + " ");
                                 this.drtflen = newrtf.Length - rtf.Length;
+
+                                tagopen = true;
                             }
                         }
                     }

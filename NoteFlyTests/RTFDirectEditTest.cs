@@ -98,7 +98,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 4, 4);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddBoldTagInRTF(rtf, 4, 4)");
             }
         }
 
@@ -112,7 +112,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 0, 12);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddBoldTagInRTF(rtf, 0, 12)");
             }
         }
 
@@ -131,7 +131,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 10, 1);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddBoldTagInRTF(rtf, 0, 1), AddBoldTagInRTF(rtf, 2, 1), AddBoldTagInRTF(rtf, 4, 1), AddBoldTagInRTF(rtf, 6, 1), AddBoldTagInRTF(rtf, 8, 1 and AddBoldTagInRTF(rtf, 10, 1)");
             }
         }
 
@@ -147,7 +147,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 8, 2);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddBoldTagInRTF(rtf, 0, 2), AddBoldTagInRTF(rtf, 4, 2) and AddBoldTagInRTF(rtf, 8, 2)");
             }
         }
 
@@ -161,7 +161,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddItalicTagInRTF(rtf, 4, 4);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddItalicTagInRTF(rtf, 4, 4)");
             }
         }
 
@@ -175,7 +175,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddItalicTagInRTF(rtf, 0, 12);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddItalicTagInRTF(rtf, 0, 12)");
             }
         }
 
@@ -189,7 +189,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddStrikeTagInRTF(rtf, 4, 4);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddStrikeTagInRTF(rtf, 4, 4)");
             }
         }
 
@@ -203,7 +203,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddStrikeTagInRTF(rtf, 0, 12);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddStrikeTagInRTF(rtf, 0, 12)");
             }
         }
 
@@ -217,7 +217,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddUnderlineTagInRTF(rtf, 4, 4);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddUnderlineTagInRTF(rtf, 4, 4)");
             }
         }
 
@@ -231,7 +231,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddUnderlineTagInRTF(rtf, 0, 12);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddUnderlineTagInRTF(rtf, 0, 12)");
             }
         }
 
@@ -246,7 +246,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.SetColorInRTF(rtf, Color.Blue, 4, 4);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("SetColorInRTF(rtf, Color.Blue, 4, 4)");
             }
         }
 
@@ -261,7 +261,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.SetColorAllRTF(rtf, Color.Green);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("SetColorAllRTF(rtf, Color.Green)");
             }
         }
 
@@ -276,7 +276,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 4, 8);
             if (!expectedrtf.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("AddUnderlineTagInRTF(rtf, 0, 8) and AddBoldTagInRTF(rtf, 4, 8)");
             }
         }
 
@@ -287,28 +287,20 @@ namespace NoteFlyTests
 \viewkind4\uc1\pard\fs24 te\i sttestte\i0 st\par
 }
 ";
+            rtf = rtfdirectedit.AddItalicTagInRTF(rtf, 2, 8); // italic: ..sttestte..
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("AddItalicTagInRTF(rtf, 2, 8)");
+            }
+
             string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 te\i st\i0 test\i te\i0 st\par
 }
 ";
-            rtf = rtfdirectedit.AddItalicTagInRTF(rtf, 2, 8); // italic: ..sttestte..
-            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
-            {
-                Assert.Fail("not expected rtf");
-            }
-
-            System.Windows.Forms.RichTextBox rtb = new System.Windows.Forms.RichTextBox();
-            rtb.Rtf = rtf;
-            rtb.SelectionStart = 4;
-            rtb.SelectionLength = 4;
-            FontStyle newstyles = rtb.SelectionFont.Style;
-            newstyles -=  FontStyle.Italic;
-            rtb.SelectionFont = new System.Drawing.Font(rtb.SelectionFont.FontFamily, rtb.SelectionFont.SizeInPoints, newstyles);
-            rtf = rtb.Rtf; // italic: ..st....te..
-
+            rtf = rtfdirectedit.RemoveItalicTagsInRTF(rtf, 4, 4);
             if (!expectedrtf2.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf");
+                Assert.Fail("RemoveItalicTagsInRTF(rtf, 4, 4)");
             }
 
         }
@@ -320,20 +312,20 @@ namespace NoteFlyTests
 \viewkind4\uc1\pard\fs24 test\b test\b0 test\par
 }
 ";
+            rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 4, 4);
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("AddBoldTagInRTF(rtf, 4, 4)");
+            }
+
             string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 testtesttest\par
 }
 ";
-            rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 4, 4);
-            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
-            {
-                Assert.Fail("not expected rtf, adding bold");
-            }
-
             rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 4, 4);
             if (!expectedrtf2.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf,  removal of bold");
+                Assert.Fail("RemoveBoldTagsInRTF(rtf, 4, 4)");
             }
         }
 
@@ -344,32 +336,32 @@ namespace NoteFlyTests
 \viewkind4\uc1\pard\fs24 \b test\ul testte\ulnone st\b0\par
 }
 ";
-            string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
-\viewkind4\uc1\pard\fs24 \b te\b0 st\ul testte\ulnone st\par
-}
-";
-            string expectedrtf3 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
-\viewkind4\uc1\pard\fs24 \b te\b0 stte\ul stte\ulnone st\par
-}
-";
 
             rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 0, 12);
             rtf = rtfdirectedit.AddUnderlineTagInRTF(rtf, 4, 6);
             if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf, adding underline and bold");
+                Assert.Fail("AddBoldTagInRTF(rtf, 0, 12) and AddUnderlineTagInRTF(rtf, 4, 6)");
             }
 
+            string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b te\b0 st\ul testte\ulnone st\par
+}
+";
             rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 2, 12);
             if (!expectedrtf2.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf, removal of bold");
+                Assert.Fail("RemoveBoldTagsInRTF(rtf, 2, 12)");
             }
 
+            string expectedrtf3 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+\viewkind4\uc1\pard\fs24 \b te\b0 stte\ul stte\ulnone st\par
+}
+";
             rtf = rtfdirectedit.RemoveUnderlineTagsInRTF(rtf, 4, 2); // now only ......stte.. should be underlined.
             if (!expectedrtf3.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf, removal of underline");
+                Assert.Fail("RemoveUnderlineTagsInRTF(rtf, 4, 2)");
             }
         }
 
@@ -387,7 +379,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 9, 3); // now only testtestte.. should be bold.
             if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf, removal of bold");
+                Assert.Fail("RemoveBoldTagsInRTF(rtf, 9, 3)");
             }
         }
 
@@ -405,7 +397,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 9, 2); // now only testtestt..t should be bold.
             if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf, removal of bold");
+                Assert.Fail("RemoveBoldTagsInRTF(rtf, 9, 2)");
             }
         }
 
@@ -420,10 +412,10 @@ namespace NoteFlyTests
 \viewkind4\uc1\pard\fs24 \b testtest\ul test\ulnone\b0\par
 }
 ";
-            rtf = rtfdirectedit.AddUnderlineTagInRTF(rtf, 8, 4); 
+            rtf = rtfdirectedit.AddUnderlineTagInRTF(rtf, 8, 4);
             if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf, add underline");
+                Assert.Fail("AddUnderlineTagInRTF(rtf, 8, 4)");
             }
         }
 
@@ -444,9 +436,29 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 8, 4);
             if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
             {
-                Assert.Fail("not expected rtf, add bold");
+                Assert.Fail("AddBoldTagInRTF(rtf, 8, 4)");
             }
 
+        }
+
+        [TestMethod]
+        public void RemoveBoldOfBoldAndItalic()
+        {
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+{\colortbl ;\red0\green0\blue0;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\b\i testtest\i0\b0 test\par
+}
+";
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+{\colortbl ;\red0\green0\blue0;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\i testtest\i0 test\par
+}
+";
+            rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 4, 8);
+            if (!expectedrtf1.Equals(rtf, System.StringComparison.Ordinal))
+            {
+                Assert.Fail("RemoveBoldTagsInRTF(rtf, 4, 8)");
+            }
         }
     }
 }
