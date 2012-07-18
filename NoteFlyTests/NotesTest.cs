@@ -74,11 +74,11 @@ namespace NoteFlyTests
         [TestMethod]
         public void StripForbiddenFilenameCharsTest()
         {
-            Notes target = new Notes(false);
+            Notes notes = new Notes(false);
             string orgname = "a?b<c>d:e*|f\\g/h";
-            string expected = "abcdefgh";
-            string actual = target.StripForbiddenFilenameChars(orgname);
-            Assert.AreEqual(expected, actual);
+            string expectedfilename = "abcdefgh";
+            string actualfilename = notes.StripForbiddenFilenameChars(orgname);
+            Assert.AreEqual(expectedfilename, actualfilename);
         }
 
         /// <summary>
@@ -87,15 +87,14 @@ namespace NoteFlyTests
         [TestMethod]
         public void RemoveNoteTest()
         {
-            Notes target = new Notes(false);
-            target.AddNoteDefaultSettings("test note", 1, 10, 10, 200, 300, "test", true);
-            //target.AddNote(newnote);
-            int notelastpos = target.CountNotes;
-            target.RemoveNote(notelastpos - 1);
+            Notes notes = new Notes(false);
+            notes.AddNoteDefaultSettings("test note", 1, 10, 10, 200, 300, "test", true);
+            int notelastpos = notes.CountNotes;
+            notes.RemoveNote(notelastpos - 1);
             int exceptedcountnotesnow = notelastpos - 1;
-            if (target.CountNotes != exceptedcountnotesnow)
+            if (notes.CountNotes != exceptedcountnotesnow)
             {
-                Assert.Fail("Number of notes: " + target.CountNotes + ", different then excepted: " + exceptedcountnotesnow);
+                Assert.Fail("Number of notes: " + notes.CountNotes + ", different then excepted: " + exceptedcountnotesnow);
             }
         }
 
@@ -106,7 +105,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void GetSkinsNamesTest()
         {
-            Notes target = new Notes(false);
+            Notes notes = new Notes(false);
             string[] expected = new string[13];
             expected[0] = "yellow";
             expected[1] = "orange";
@@ -121,20 +120,20 @@ namespace NoteFlyTests
             expected[10] = "grass";
             expected[11] = "colordrops";
             expected[12] = "nyancat";
-            string[] actual = target.GetSkinsNames();
-            if (actual.Length == 0)
+            string[] actualskins = notes.GetSkinsNames();
+            if (actualskins.Length == 0)
             {
                 Assert.Fail("Could not get skin names.");
             }
 
-            if (actual.Length > expected.Length)
+            if (actualskins.Length > expected.Length)
             {
                 Assert.Inconclusive("Skins.xml can be modified or test failed because more skins are returned.");
             }
 
-            for (int i = 0; i < actual.Length; i++)
+            for (int i = 0; i < actualskins.Length; i++)
             {
-                if (expected[i].ToString() != actual[i].ToString())
+                if (expected[i].ToString() != actualskins[i].ToString())
                 {
                     Assert.Fail("GetSkinsNamesTest did not produce the excepted result.");
                 }
@@ -160,13 +159,12 @@ namespace NoteFlyTests
         [TestMethod]
         public void GetPrimaryColorTest()
         {
-            Notes target = new Notes(false);
+            Notes notes = new Notes(false);
             int skinnr = 0;
             string hexforegroundcolor = "#FFEF14";
-            Color expected = System.Drawing.ColorTranslator.FromHtml(hexforegroundcolor);
-            Color actual;
-            actual = target.GetPrimaryClr(skinnr);
-            Assert.AreEqual(expected, actual);
+            Color expectedprimarycolor = System.Drawing.ColorTranslator.FromHtml(hexforegroundcolor);
+            Color actualprimarycolor = notes.GetPrimaryClr(skinnr);
+            Assert.AreEqual(expectedprimarycolor, actualprimarycolor);
         }
 
         /// <summary>
@@ -175,13 +173,12 @@ namespace NoteFlyTests
         [TestMethod]
         public void GetSelectColorTest()
         {
-            Notes target = new Notes(false);
+            Notes notes = new Notes(false);
             int skinnr = 0;
-            string hexbackgroundcolor = "#E0D616"; // was #F7A90E
-            Color expected = System.Drawing.ColorTranslator.FromHtml(hexbackgroundcolor);
-            Color actual;
-            actual = target.GetSelectClr(skinnr);
-            Assert.AreEqual(expected, actual);
+            string hexbackgroundcolor = "#E0D616";
+            Color expectedselectcolor = System.Drawing.ColorTranslator.FromHtml(hexbackgroundcolor);
+            Color actualselectcolor = notes.GetSelectClr(skinnr);
+            Assert.AreEqual(expectedselectcolor, actualselectcolor);
         }
 
         /// <summary>
@@ -190,11 +187,11 @@ namespace NoteFlyTests
         [TestMethod]
         public void GetHighlightColorTest()
         {
-            Notes target = new Notes(false);
+            Notes notes = new Notes(false);
             int skinnr = 0; // yellow skin
             string hexhighlightcolor = "#FFED7C";
             Color expected = System.Drawing.ColorTranslator.FromHtml(hexhighlightcolor);
-            Color actual = target.GetHighlightClr(skinnr);
+            Color actual = notes.GetHighlightClr(skinnr);
             Assert.AreEqual(expected, actual);
         }
 
@@ -214,33 +211,14 @@ namespace NoteFlyTests
             string content = "some content";
             bool wordwarp = true;
             target.AddNoteDefaultSettings(title, skinnr, x, y, width, height, content, wordwarp);
-            Note actual = target.GetNote(target.CountNotes - 1);
-            Assert.IsNotNull(actual, "CreateNoteTest failed to create Note object.");
-            if (actual.Title != title)
-            {
-                Assert.Fail("Note title not good.");
-            }
-
-            if (actual.X != x && actual.Y != y)
-            {
-                Assert.Fail("Note has wrong X,Y coordinates.");
-            }
-
-            if (actual.Width != width && actual.Height != height)
-            {
-                Assert.Fail("Note has wrong size.");
-            }
-
-            if (actual.Wordwarp != wordwarp)
-            {
-                Assert.Fail("Note wordwarp not set.");
-            }
-            /*
-            if (!actual.GetContent().Equals(content))
-            {
-                Assert.Fail("Note content not set.");
-            }
-             */
+            Note actualnote = target.GetNote(target.CountNotes - 1);
+            Assert.IsNotNull(actualnote, "CreateNoteTest failed to create Note object.");
+            Assert.AreEqual(title, actualnote.Title, "Note title not good.");
+            Assert.AreEqual(x, actualnote.X, "Wrong X coordinates");
+            Assert.AreEqual(y, actualnote.Y, "Wrong Y coordinates");
+            Assert.AreEqual(width, actualnote.Width, "Wrong width size");
+            Assert.AreEqual(height, actualnote.Height, "Wrong height size");
+            Assert.AreEqual(wordwarp, actualnote.Wordwarp, "Note wordwarp differs.");
         }
 
         /// <summary>
@@ -249,17 +227,46 @@ namespace NoteFlyTests
         [TestMethod]
         public void GenerateRandomSkinnrTest()
         {
-            Notes target = new Notes(false);
-            int n = target.GenerateRandomSkinnr();
-            if (n < 0)
+            Notes notes = new Notes(false);
+            int rndskinnr = notes.GenerateRandomSkinnr();
+            if (rndskinnr < 0)
             {
                 Assert.Fail("Can't smaller than zero.");
             }
 
-            if (n > target.GetSkinsNames().Length)
+            if (rndskinnr > notes.GetSkinsNames().Length)
             {
                 Assert.Fail("Can't choice a skin outside the range. (or if GetSkinsNamesTest failed then this one fails too.)");
             }
+        }
+
+        [TestMethod]
+        public void GetBoolSettingTest()
+        {
+            Notes notes = new Notes(false);
+            bool exceptedsetting = true;
+            Settings.ConfirmExit = exceptedsetting;
+            bool actualsetting = notes.GetBoolSetting("ConfirmExit");
+            Assert.AreEqual(exceptedsetting, actualsetting, "GetBoolSetting(\"ConfirmExit\") failed");
+        }
+
+        [TestMethod]
+        public void GetIntSettingTest()
+        {
+            Notes notes = new Notes(false);
+            int exceptedsetting = 1;
+            Settings.ManagenotesSkinnr = exceptedsetting;
+            int actualsetting = notes.GetIntSetting("ManagenotesSkinnr");
+            Assert.AreEqual(exceptedsetting, actualsetting, "GetIntSetting(\"ManagenotesSkinnr\") failed.");
+        }
+
+        public void GetStringSettingTest()
+        {
+            Notes notes = new Notes(false);
+            string exceptedsetting = "#B16DFF";
+            Settings.HighlightSQLColorField = exceptedsetting;
+            string actualsetting = notes.GetStringSetting("HighlightSQLColorField");
+            Assert.AreEqual(exceptedsetting, actualsetting, "GetStringSetting(\"HighlightSQLColorField\") failed.");
         }
     }
 }

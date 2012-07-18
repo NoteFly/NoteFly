@@ -19,11 +19,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinsEditor", "plugins\Skin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteToSpeech", "plugins\NoteToSpeech\NoteToSpeech.csproj", "{BB60F04F-2C8F-437D-9184-63391FE4A89B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteFlyTests", "NoteFlyTests\NoteFlyTests.csproj", "{4B37B2B2-F376-429F-90F1-E2B65A8B0693}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteFlyVSTests", "NoteFlyTests\NoteFlyVSTests.csproj", "{4B37B2B2-F376-429F-90F1-E2B65A8B0693}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendToTwitter", "plugins\NoteTweet\SendToTwitter.csproj", "{AFB77585-6375-463E-8BB6-1A7B713FE911}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0E7B80BB-DFA8-4280-822A-324F53D3192E}"
+	ProjectSection(SolutionItems) = preProject
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		NoteFly_vs2008.vsmdi = NoteFly_vs2008.vsmdi
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = NoteFly_vs2008.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
