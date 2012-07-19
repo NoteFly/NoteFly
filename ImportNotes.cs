@@ -168,55 +168,113 @@ namespace NoteFly
             {
                 if (xmlreader.Name == "note-content")
                 {
-                    string tomboycontent = xmlreader.ReadInnerXml();
+                    string tomboynotecontent = xmlreader.ReadInnerXml();
                     bool innode = false;
+                    bool begintag = false;
                     int startnodepos = 0;
-                    int startcontentnode = int.MaxValue;
-                    ////List<int> formatstartpos = new List<int>();
-                    ////List<string> formattype = new List<string>();
-                    ////List<int> formatlen = new List<int>();
-
-                    for (int i = 0; i < tomboycontent.Length; i++)
+                    int textpos = 0;
+                    List<string> formattype = new List<string>();
+                    List<bool> formatisbegintag = new List<bool>();
+                    List<int> formatstartpos = new List<int>();
+                    for (int i = 0; i < tomboynotecontent.Length; i++)
                     {
-                        if (tomboycontent[i] == '<')
+                        if (tomboynotecontent[i] == '<' && !innode)
                         {
                             startnodepos = i;
                             innode = true;
-                        }
-                        else if (tomboycontent[i] == '>')
-                        {
-                            string nodenameatt = tomboycontent.Substring(startnodepos, i - startnodepos);
-                            string nodename = string.Empty;
-                            if (nodenameatt.StartsWith("</"))
+                            begintag = true;
+                            if (i + 1 <= tomboynotecontent.Length)
                             {
-                                for (int c = 0; c < nodenameatt.Length; c++)
+                                if (tomboynotecontent[i + 1] == '/')
                                 {
-                                    if (nodenameatt[c] == ' ')
+                                    begintag = false;
+                                }
+                            }
+                        }
+                        else if (tomboynotecontent[i] == '>' && innode)
+                        {
+                            formatisbegintag.Add(begintag);
+                            if (begintag)
+                            {
+                                string tag = tomboynotecontent.Substring(startnodepos + 1, i - startnodepos - 1);
+                                for (int c = 0; c < tag.Length; c++)
+                                {
+                                    if (tag[c] == ' ')
                                     {
-                                        nodename = nodenameatt.Substring(2, c - 2);
-                                        break;
-                                    }
-                                    else if (c == nodenameatt.Length - 1)
-                                    {
-                                        nodename = nodenameatt.Substring(2, nodenameatt.Length - 2);
+                                        formattype.Add(tag.Substring(0, c));
                                         break;
                                     }
                                 }
+
+                                formatstartpos.Add(textpos);
                             }
                             else
                             {
-                                startcontentnode = rtbNewNote.TextLength;
+                                formattype.Add(tomboynotecontent.Substring(startnodepos + 2, i - startnodepos - 2));
+                                formatstartpos.Add(textpos);
                             }
 
                             innode = false;
                         }
                         else if (!innode)
                         {
-                            rtbNewNote.Text = rtbNewNote.Text + tomboycontent[i];
+                            rtbNewNote.Text += tomboynotecontent[i];
+                            textpos++;
                         }
                     }
 
-                    // todo import TomBoy note formatting, currently NoteFly only imports it as plain text.
+                    RTFDirectEdit rtfdirectedit = new RTFDirectEdit();
+                    int poslastbold = int.MaxValue;
+                    int poslastitalic = int.MaxValue;
+                    int poslaststrikethrought = int.MaxValue;
+
+
+                    for (int i = 0; i < formattype.Count; i++)
+                    {
+                        switch (formattype[i])
+                        {
+                            case "bold":
+                                if (formatisbegintag[i])
+                                {
+                                    poslastbold = formatstartpos[i];
+                                }
+                                else if (poslastbold != int.MaxValue)
+                                {
+                                    rtbNewNote.Rtf = rtfdirectedit.AddBoldTagInRTF(rtbNewNote.Rtf, poslastbold, formatstartpos[i] - poslastbold);
+                                }
+
+                                break;
+                            case "italic":
+                                if (formatisbegintag[i])
+                                {
+                                    poslastitalic = formatstartpos[i];
+                                }
+                                else if (poslastitalic != int.MaxValue)
+                                {
+                                    rtbNewNote.Rtf = rtfdirectedit.AddItalicTagInRTF(rtbNewNote.Rtf, poslastitalic, formatstartpos[i] - poslastitalic);
+                                }
+
+                                break;
+                            case "strikethrough":
+                                if (formatisbegintag[i])
+                                {
+                                    poslaststrikethrought = formatstartpos[i];
+                                }
+                                else if (poslaststrikethrought != int.MaxValue)
+                                {
+                                    rtbNewNote.Rtf = rtfdirectedit.AddStrikeTagInRTF(rtbNewNote.Rtf, poslaststrikethrought, formatstartpos[i] - poslaststrikethrought);
+                                }
+
+                                break;
+                            // todo: add support for more tomboy formating
+                            //case "highlight":
+                            //    break;
+                            //case "size:small":
+                            //    break;
+                            //case "size:huge":
+                            //    break;
+                        }
+                    }
                 }
             }
         }
