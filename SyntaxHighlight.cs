@@ -196,13 +196,13 @@ namespace NoteFly
                     }
 
 #if !macos
-                        if (rtb.Text[curpos] == '\n')
+                    if (rtb.Text[curpos] == '\n')
 #elif macos
                     if (rtb.Text[curpos] == '\r')
 #endif
-                        {
-                            commentline = false;
-                        }
+                    {
+                        commentline = false;
+                    }
                 }
             }
 
@@ -379,7 +379,7 @@ namespace NoteFly
             htmlstringpart = false;
             phpstringpart = false;
             currentstringquote = '"';
-            return rtfdirectedit.SetColorAllRTF(rtf, notes.GetTextClr(skinnr));
+            return rtfdirectedit.SetColorAllRTF(rtf, notes.GetTextClr(skinnr), rtb.TextLength);
         }
 
         /// <summary>

@@ -222,11 +222,11 @@ namespace NoteFlyTests
         {
             string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 {\colortbl ;\red0\green128\blue0;}
-\viewkind4\cf1 \uc1\pard\fs24 testtesttest\par
+\viewkind4\cf1 \uc1\pard\fs24 testtesttest\cf1 \par
 }
-";
-            rtf = rtfdirectedit.SetColorAllRTF(rtf, Color.Green);
-            Assert.AreEqual(expectedrtf, rtf, "failed on: SetColorAllRTF(rtf, Color.Green)");
+"; // is this what we expect?
+            rtf = rtfdirectedit.SetColorAllRTF(rtf, Color.Green, 12);
+            Assert.AreEqual(expectedrtf, rtf, "failed on: SetColorAllRTF(rtf, Color.Green, 12)");
         }
 
         [TestMethod]

@@ -772,7 +772,7 @@ namespace NoteFly
                     }
                     else if (textpos + sellentext == nrtextchar)
                     {
-                        string previnsertcoloritemrtf = COLORITEMTAG + prevnrcoloritem + " ";
+                        string previnsertcoloritemrtf = COLORITEMTAG + prevnrcoloritem + " "; // fixme space requered?
                         int prevposcoloritem = i + drtflen + 1 + insertcoloritemrtf.Length;
                         try
                         {
@@ -854,10 +854,11 @@ namespace NoteFly
         /// </summary>
         /// <param name="rtf"></param>
         /// <param name="newclr"></param>
+        /// <param name="textlength"></param>
         /// <returns></returns>
-        public string SetColorAllRTF(string rtf, Color newclr)
+        public string SetColorAllRTF(string rtf, Color newclr, int textlength)
         {
-            return this.SetColorInRTF(rtf, newclr, 0, rtf.Length);
+            return this.SetColorInRTF(rtf, newclr, 0, textlength);
         }
 
         /// <summary>
