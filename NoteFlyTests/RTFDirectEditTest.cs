@@ -74,7 +74,7 @@ namespace NoteFlyTests
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 testtesttest\par
 }
 ";
@@ -91,7 +91,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddBoldTagInRTFTest_middle()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 test\b test\b0 test\par
 }
 ";
@@ -102,7 +102,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddBoldTagInRTFTest_all()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
 }
 ";
@@ -113,7 +113,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddBoldTagInRTFTest_mixed1()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b t\b0 e\b s\b0 t\b t\b0 e\b s\b0 t\b t\b0 e\b s\b0 t\par
 }
 ";
@@ -129,7 +129,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddBoldTagInRTFTest_mixed2()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b te\b0 st\b te\b0 st\b te\b0 st\par
 }
 ";
@@ -142,7 +142,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddItalicTagInRTFTest_middle()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 test\i test\i0 test\par
 }
 ";
@@ -153,7 +153,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddItalicTagInRTFTest_all()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \i testtesttest\i0\par
 }
 ";
@@ -164,7 +164,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddStrikeTagInRTFTest_middle()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 test\strike test\strike0 test\par
 }
 ";
@@ -175,7 +175,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddStrikeTagInRTFTest_all()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \strike testtesttest\strike0\par
 }
 ";
@@ -186,7 +186,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddUnderlineTagInRTFTest_middle()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 test\ul test\ulnone test\par
 }
 ";
@@ -197,7 +197,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddUnderlineTagInRTFTest_all()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \ul testtesttest\ulnone\par
 }
 ";
@@ -208,7 +208,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void SetColorInRTFTest_middleblue()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 {\colortbl ;\red0\green0\blue255;}
 \viewkind4\uc1\pard\fs24 test\cf1 test\cf1 test\par
 }
@@ -220,7 +220,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void SetColorAllRTFTest_green()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 {\colortbl ;\red0\green128\blue0;}
 \viewkind4\cf1 \uc1\pard\fs24 testtesttest\cf1 \par
 }
@@ -232,7 +232,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void UnderlineAndBold()
         {
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \ul test\b test\ulnone test\b0\par
 }
 ";
@@ -244,14 +244,14 @@ namespace NoteFlyTests
         [TestMethod]
         public void ItalicOnAndOffPart()
         {
-            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 te\i sttestte\i0 st\par
 }
 ";
             rtf = rtfdirectedit.AddItalicTagInRTF(rtf, 2, 8); // italic: ..sttestte..
             Assert.AreEqual(expectedrtf1, rtf, "failed on: AddItalicTagInRTF(rtf, 2, 8)");
 
-            string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 te\i st\i0 test\i te\i0 st\par
 }
 ";
@@ -262,14 +262,14 @@ namespace NoteFlyTests
         [TestMethod]
         public void BoldOnAndOff()
         {
-            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 test\b test\b0 test\par
 }
 ";
             rtf = rtfdirectedit.AddBoldTagInRTF(rtf, 4, 4);
             Assert.AreEqual(expectedrtf1, rtf, "failed on: AddBoldTagInRTF(rtf, 4, 4)");
 
-            string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf2 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 testtesttest\par
 }
 ";
@@ -280,7 +280,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void BoldUnderlineAndBoldOff()
         {
-            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf1 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b test\ul testte\ulnone st\b0\par
 }
 ";
@@ -295,7 +295,7 @@ namespace NoteFlyTests
             rtf = rtfdirectedit.RemoveBoldTagsInRTF(rtf, 2, 12);
             Assert.AreEqual(expectedrtf2, rtf, "failed on: RemoveBoldTagsInRTF(rtf, 2, 12)");
 
-            string expectedrtf3 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf3 = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b te\b0 stte\ul stte\ulnone st\par
 }
 ";
@@ -306,11 +306,11 @@ namespace NoteFlyTests
         [TestMethod]
         public void RemoveBoldEnd()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
 }
 ";
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtestt\b0 est\par
 }
 ";
@@ -321,11 +321,11 @@ namespace NoteFlyTests
         [TestMethod]
         public void RemoveBoldAlmostEnd()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
 }
 ";
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtestt\b0 es\b t\b0\par
 }
 ";
@@ -336,11 +336,11 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddUnderlingEnd()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
 }
 ";
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtest\ul test\ulnone\b0\par
 }
 ";
@@ -351,12 +351,12 @@ namespace NoteFlyTests
         [TestMethod]
         public void AddBoldMixed()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 {\colortbl ;\red0\green0\blue0;}
 {\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\b test\ul test\b0 test\ulnone\i0\par
 }
 ";
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 {\colortbl ;\red0\green0\blue0;}
 {\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\b test\ul test\b0 test\ulnone\i0\par
 }
@@ -369,12 +369,12 @@ namespace NoteFlyTests
         [TestMethod]
         public void RemoveBoldOfBoldAndItalic()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 {\colortbl ;\red0\green0\blue0;}
 {\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\b\i testtest\i0\b0 test\par
 }
 ";
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1043{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 {\colortbl ;\red0\green0\blue0;}
 {\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\i testtest\i0 test\par
 }
