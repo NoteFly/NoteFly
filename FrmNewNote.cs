@@ -30,7 +30,7 @@ namespace NoteFly
     /// </summary>
     public sealed partial class FrmNewNote : Form
     {
-        #region Fields (4)
+        #region Fields (5)
 
         /// <summary>
         /// Margin between format buttons and content.
@@ -52,6 +52,9 @@ namespace NoteFly
         /// </summary>
         private Notes notes;
 
+		/// <summary>
+        /// Pointer to rtfdirectedit class.
+        /// </summary>
         private RTFDirectEdit rtfdirectedit = new RTFDirectEdit();
 
         /// <summary>
