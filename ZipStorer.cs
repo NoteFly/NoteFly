@@ -18,11 +18,13 @@ namespace NoteFly
         /// <summary>
         /// Compression method enumeration
         /// </summary>
-        public enum Compression : ushort { 
+        public enum Compression : ushort 
+        {
             /// <summary>Uncompressed storage</summary> 
             Store = 0, 
             /// <summary>Deflate compression method</summary>
-            Deflate = 8 }
+            Deflate = 8
+        }
 
         /// <summary>
         /// Represents an entry in Zip file directory
@@ -31,24 +33,34 @@ namespace NoteFly
         {
             /// <summary>Compression method</summary>
             public Compression Method; 
+
             /// <summary>Full path and filename as stored in Zip</summary>
             public string FilenameInZip;
+
             /// <summary>Original file size</summary>
             public uint FileSize;
+
             /// <summary>Compressed file size</summary>
             public uint CompressedSize;
+
             /// <summary>Offset of header information inside Zip storage</summary>
             public uint HeaderOffset;
+
             /// <summary>Offset of file inside Zip storage</summary>
             public uint FileOffset;
+
             /// <summary>Size of header information</summary>
             public uint HeaderSize;
+
             /// <summary>32-bit checksum of entire file</summary>
             public uint Crc32;
+
             /// <summary>Last modification time of file</summary>
             public DateTime ModifyTime;
+
             /// <summary>User comment for file</summary>
             public string Comment;
+
             /// <summary>True if UTF8 encoding for filename and comments, false if default (CP 437)</summary>
             public bool EncodeUTF8;
 
@@ -63,6 +75,7 @@ namespace NoteFly
         #region Public fields
         /// <summary>True if UTF8 encoding for filename and comments, false if default (CP 437)</summary>
         public bool EncodeUTF8 = false;
+
         /// <summary>Force deflate algotithm even if it inflates the stored file. Off by default.</summary>
         public bool ForceDeflating = false;
         #endregion
@@ -70,20 +83,28 @@ namespace NoteFly
         #region Private fields
         // List of files to store
         private List<ZipFileEntry> Files = new List<ZipFileEntry>();
+
         // Filename of storage file
         private string FileName;
+
         // Stream object of storage file
         private Stream ZipFileStream;
+
         // General comment
         private string Comment = string.Empty;
+
         // Central dir image
         private byte[] CentralDirImage = null;
+
         // Existing files in zip
         private ushort ExistingFiles = 0;
+
         // File access for Open method
         private FileAccess Access;
+
         // Static CRC32 Table
         private static uint[] CrcTable = null;
+
         // Default filename encoder
         private static Encoding DefaultEncoding = Encoding.GetEncoding(437);
         #endregion
@@ -117,18 +138,17 @@ namespace NoteFly
         public static ZipStorer Create(string _filename, string _comment)
         {
             Stream stream = new FileStream(_filename, FileMode.Create, FileAccess.ReadWrite);
-
             ZipStorer zip = Create(stream, _comment);
             zip.Comment = _comment;
             zip.FileName = _filename;
-
             return zip;
         }
+
         /// <summary>
-        /// Method to create a new zip storage in a stream
+        /// Method to create a new zip storage in a stream.
         /// </summary>
-        /// <param name="_stream"></param>
-        /// <param name="_comment"></param>
+        /// <param name="_stream">The zip file stream.</param>
+        /// <param name="_comment">The zip file comment.</param>
         /// <returns>A valid ZipStorer object</returns>
         public static ZipStorer Create(Stream _stream, string _comment)
         {
@@ -136,11 +156,11 @@ namespace NoteFly
             zip.Comment = _comment;
             zip.ZipFileStream = _stream;
             zip.Access = FileAccess.Write;
-
             return zip;
         }
+
         /// <summary>
-        /// Method to open an existing storage file
+        /// Method to open an existing storage file.
         /// </summary>
         /// <param name="_filename">Full path of Zip file to open</param>
         /// <param name="_access">File access mode as used in FileStream constructor</param>
@@ -148,12 +168,11 @@ namespace NoteFly
         public static ZipStorer Open(string _filename, FileAccess _access)
         {
             Stream stream = (Stream)new FileStream(_filename, FileMode.Open, _access == FileAccess.Read ? FileAccess.Read : FileAccess.ReadWrite);
-
             ZipStorer zip = Open(stream, _access);
             zip.FileName = _filename;
-
             return zip;
         }
+
         /// <summary>
         /// Method to open an existing storage from stream
         /// </summary>
@@ -163,15 +182,18 @@ namespace NoteFly
         public static ZipStorer Open(Stream _stream, FileAccess _access)
         {
             if (!_stream.CanSeek && _access != FileAccess.Read)
+            {
                 throw new InvalidOperationException("Stream cannot seek");
+            }
 
             ZipStorer zip = new ZipStorer();
             ////zip.FileName = _filename;
             zip.ZipFileStream = _stream;
             zip.Access = _access;
-
             if (zip.ReadFileInfo())
+            {
                 return zip;
+            }
 
             throw new System.IO.InvalidDataException();
         }
@@ -202,11 +224,15 @@ namespace NoteFly
         public void AddStream(Compression _method, string _filenameInZip, Stream _source, DateTime _modTime, string _comment)
         {
             if (this.Access == FileAccess.Read)
+            {
                 throw new InvalidOperationException("Writing is not alowed");
+            }
 
             long offset;
             if (this.Files.Count == 0)
+            {
                 offset = 0;
+            }
             else
             {
                 ZipFileEntry last = this.Files[this.Files.Count - 1];
@@ -234,9 +260,9 @@ namespace NoteFly
             _source.Close();
 
             this.UpdateCrcAndSizes(ref zfe);
-
             this.Files.Add(zfe);
         }
+
         /// <summary>
         /// Updates central directory (if pertinent) and close the Zip storage
         /// </summary>
@@ -247,9 +273,10 @@ namespace NoteFly
             {
                 uint centralOffset = (uint)this.ZipFileStream.Position;
                 uint centralSize = 0;
-
                 if (this.CentralDirImage != null)
+                {
                     this.ZipFileStream.Write(this.CentralDirImage, 0, this.CentralDirImage.Length);
+                }
 
                 for (int i = 0; i < this.Files.Count; i++)
                 {
@@ -259,9 +286,13 @@ namespace NoteFly
                 }
 
                 if (this.CentralDirImage != null)
+                {
                     this.WriteEndRecord(centralSize + (uint)this.CentralDirImage.Length, centralOffset);
+                }
                 else
+                {
                     this.WriteEndRecord(centralSize, centralOffset);
+                }
             }
 
             if (this.ZipFileStream != null)
@@ -271,6 +302,7 @@ namespace NoteFly
                 this.ZipFileStream = null;
             }
         }
+
         /// <summary>
         /// Read all the file records in the central directory 
         /// </summary>
@@ -278,15 +310,18 @@ namespace NoteFly
         public List<ZipFileEntry> ReadCentralDir()
         {
             if (this.CentralDirImage == null)
+            {
                 throw new InvalidOperationException("Central directory currently does not exist");
+            }
 
             List<ZipFileEntry> result = new List<ZipFileEntry>();
-
             for (int pointer = 0; pointer < this.CentralDirImage.Length;)
             {
                 uint signature = BitConverter.ToUInt32(this.CentralDirImage, pointer);
                 if (signature != 0x02014b50)
+                {
                     break;
+                }
 
                 bool encodeUTF8 = (BitConverter.ToUInt16(this.CentralDirImage, pointer + 8) & 0x0800) != 0;
                 ushort method = BitConverter.ToUInt16(this.CentralDirImage, pointer + 10);
@@ -313,7 +348,9 @@ namespace NoteFly
                 zfe.Crc32 = crc32;
                 zfe.ModifyTime = this.DosTimeToDateTime(modifyTime);
                 if (commentSize > 0)
+                {
                     zfe.Comment = encoder.GetString(this.CentralDirImage, pointer + 46 + filenameSize + extraSize, commentSize);
+                }
 
                 result.Add(zfe);
                 pointer += 46 + filenameSize + extraSize + commentSize;
@@ -321,6 +358,7 @@ namespace NoteFly
 
             return result;
         }
+
         /// <summary>
         /// Copy the contents of a stored file into a physical file
         /// </summary>
@@ -332,23 +370,29 @@ namespace NoteFly
         {
             // Make sure the parent directory exist
             string path = System.IO.Path.GetDirectoryName(_filename);
-
             if (!Directory.Exists(path))
+            {
                 Directory.CreateDirectory(path);
+            }
+
             // Check it is directory. If so, do nothing
             if (Directory.Exists(_filename))
+            {
                 return true;
+            }
 
             Stream output = new FileStream(_filename, FileMode.Create, FileAccess.Write);
             bool result = this.ExtractFile(_zfe, output);
             if (result)
+            {
                 output.Close();
+            }
 
             File.SetCreationTime(_filename, _zfe.ModifyTime);
             File.SetLastWriteTime(_filename, _zfe.ModifyTime);
-            
             return result;
         }
+
         /// <summary>
         /// Copy the contents of a stored file into an opened stream
         /// </summary>
@@ -359,23 +403,33 @@ namespace NoteFly
         public bool ExtractFile(ZipFileEntry _zfe, Stream _stream)
         {
             if (!_stream.CanWrite)
+            {
                 throw new InvalidOperationException("Stream cannot be written");
+            }
 
             // check signature
             byte[] signature = new byte[4];
             this.ZipFileStream.Seek(_zfe.HeaderOffset, SeekOrigin.Begin);
             this.ZipFileStream.Read(signature, 0, 4);
             if (BitConverter.ToUInt32(signature, 0) != 0x04034b50)
+            {
                 return false;
+            }
 
             // Select input stream for inflating or just reading
             Stream inStream;
             if (_zfe.Method == Compression.Store)
+            {
                 inStream = this.ZipFileStream;
+            }
             else if (_zfe.Method == Compression.Deflate)
+            {
                 inStream = new DeflateStream(this.ZipFileStream, CompressionMode.Decompress, true);
+            }
             else
+            {
                 return false;
+            }
 
             // Buffered copy
             byte[] buffer = new byte[16384];
@@ -391,9 +445,13 @@ namespace NoteFly
             _stream.Flush();
 
             if (_zfe.Method == Compression.Deflate)
+            {
                 inStream.Dispose();
+            }
+
             return true;
         }
+
         /// <summary>
         /// Removes one of many files in storage. It creates a new Zip file.
         /// </summary>
@@ -404,19 +462,18 @@ namespace NoteFly
         public static bool RemoveEntries(ref ZipStorer _zip, List<ZipFileEntry> _zfes)
         {
             if (!(_zip.ZipFileStream is FileStream))
+            {
                 throw new InvalidOperationException("RemoveEntries is allowed just over streams of type FileStream");
+            }
 
             // Get full list of entries
             List<ZipFileEntry> fullList = _zip.ReadCentralDir();
-
             // In order to delete we need to create a copy of the zip file excluding the selected items
             string tempZipName = Path.GetTempFileName();
             string tempEntryName = Path.GetTempFileName();
-
             try
             {
                 ZipStorer tempZip = ZipStorer.Create(tempZipName, string.Empty);
-
                 foreach (ZipFileEntry zfe in fullList)
                 {
                     if (!_zfes.Contains(zfe))
@@ -430,10 +487,8 @@ namespace NoteFly
 
                 _zip.Close();
                 tempZip.Close();
-
                 File.Delete(_zip.FileName);
                 File.Move(tempZipName, _zip.FileName);
-
                 _zip = ZipStorer.Open(_zip.FileName, _zip.Access);
             }
             catch
@@ -443,9 +498,14 @@ namespace NoteFly
             finally
             {
                 if (File.Exists(tempZipName))
+                {
                     File.Delete(tempZipName);
+                }
+
                 if (File.Exists(tempEntryName))
+                {
                     File.Delete(tempEntryName);
+                }
             }
 
             return true;
@@ -605,7 +665,6 @@ namespace NoteFly
                 if (bytesRead > 0)
                 {
                     outStream.Write(buffer, 0, bytesRead);
-
                     for (uint i = 0; i < bytesRead; i++)
                     {
                         _zfe.Crc32 = ZipStorer.CrcTable[(_zfe.Crc32 ^ buffer[i]) & 0xFF] ^ (_zfe.Crc32 >> 8);

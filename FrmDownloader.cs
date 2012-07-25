@@ -262,9 +262,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Find out what kind of compression on the file used.
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="file">The compressed file</param>
         /// <returns>0 for not a know compressed file.
         /// 1 for a Zip file.
         /// 2 for GZip file.
@@ -288,7 +288,6 @@ namespace NoteFly
         /// <summary>
         /// Figure out the new file location based on the url and the folder where to save the file in.
         /// </summary>
-        /// <param name="storefolder">The folder where to save the file in.</param>
         /// <param name="url">The url of the file to download.</param>
         /// <returns>The store path</returns>
         private string GetStoreFilepath(string url)
@@ -314,7 +313,7 @@ namespace NoteFly
             }
 
             // does storefolder exists
-            if (String.IsNullOrEmpty(this.storefolder) || !Directory.Exists(this.storefolder))
+            if (string.IsNullOrEmpty(this.storefolder) || !Directory.Exists(this.storefolder))
             {
                 this.storefolder = System.Environment.GetEnvironmentVariable("TEMP");
             }
@@ -325,8 +324,8 @@ namespace NoteFly
         /// <summary>
         /// Decompress zip archive file.
         /// </summary>
-        /// <param name="zipfilename">The zip file filename</param>
-        /// <param name="extensions">The extension of file in the zipfile that are unzipped</param>
+        /// <param name="zipfilename">The zip file filename.</param>
+        /// <param name="extensions">The extension of file in the zipfile that are unzipped.</param>
         public bool DecompressZipFile(string zipfile, string[] extensionstodecompress)
         {
             bool succeeded = false;
@@ -372,6 +371,8 @@ namespace NoteFly
         /// <summary>
         /// Decompress GZip single file.
         /// </summary>
+        /// <param name="compressedfile">The compressed gzip file.</param>
+        /// <returns></returns>
         public bool DecompressGZipFile(string compressedfile)
         {
             bool succeeded = false;

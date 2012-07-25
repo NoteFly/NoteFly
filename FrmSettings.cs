@@ -173,8 +173,8 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (this.CheckAllSettingValid()) {
-
+            if (this.CheckAllSettingValid()) 
+            {
                 // everything looks okay now
                 // tab: General
                 Settings.ConfirmExit = this.chxConfirmExit.Checked;
@@ -768,8 +768,8 @@ namespace NoteFly
         /// <summary>
         /// Set a updownspinner valeau with a double valeau
         /// </summary>
-        /// <param name="numupdownctrl"></param>
-        /// <param name="valeau"></param>
+        /// <param name="numupdownctrl">NumericUpDown control</param>
+        /// <param name="valeau">valeau to set in the NumericUpDown control</param>
         private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, double valeau)
         {
             try
@@ -784,10 +784,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Set a updownspinner valeau with a integer valeau
+        /// Set a updownspinner valeau with a integer valeau.
         /// </summary>
-        /// <param name="numupdownctrl"></param>
-        /// <param name="value"></param>
+        /// <param name="numupdownctrl">NumericUpDown control</param>
+        /// <param name="value">Integer valeau to set in the NumericUpDown control.</param>
         private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, int value)
         {
             decimal valeaudec = Convert.ToDecimal(value);
@@ -798,8 +798,8 @@ namespace NoteFly
         /// Set a updownspinner valeau with a decimal valeau, directly.
         /// Checks if it does not exceed the minimum and maximum value.
         /// </summary>
-        /// <param name="numupdownctrl"></param>
-        /// <param name="valuedec"></param>
+        /// <param name="numupdownctrl">NumericUpDown control</param>
+        /// <param name="valuedec">valeu to set in the NumericUpDown control</param>
         private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, decimal valuedec)
         {
             if (valuedec < numupdownctrl.Minimum)
@@ -820,8 +820,8 @@ namespace NoteFly
         /// Set a combobox selected index.
         /// Check if selectedindex parameter is not bigger than the availible items in the combobox and not negative.
         /// </summary>
-        /// <param name="cbxctrl"></param>
-        /// <param name="selectedindexvalue"></param>
+        /// <param name="cbxctrl">ComboBox control</param>
+        /// <param name="selectedindexvalue">ComboBox selected index</param>
         private void SetComboBoxSelectedIndex(System.Windows.Forms.ComboBox cbxctrl, int selectedindexvalue)
         {
             if (selectedindexvalue < cbxctrl.Items.Count && selectedindexvalue >= 0)
@@ -854,8 +854,8 @@ namespace NoteFly
         /// <summary>
         /// Toggle enabling numProcTransparency.
         /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event argument</param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event argument</param>
         private void chxTransparecy_CheckedChanged(object sender, EventArgs e)
         {
             this.numProcTransparency.Enabled = this.chxTransparecy.Checked;
@@ -864,8 +864,8 @@ namespace NoteFly
         /// <summary>
         /// Requested to manually do an update check.
         /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event argument</param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event argument</param>
         private void btnCheckUpdates_Click(object sender, EventArgs e)
         {
             Settings.UpdatecheckLastDate = Program.UpdateGetLatestVersion();
@@ -881,8 +881,8 @@ namespace NoteFly
         /// <summary>
         /// Show and hide expert settings.
         /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event argument</param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event argument</param>
         private void chxShowExpertSettings_CheckedChanged(object sender, EventArgs e)
         {
             bool expertsettings = this.chxSettingsExpertEnabled.Checked;
@@ -919,7 +919,7 @@ namespace NoteFly
         /// Display the last update date.
         /// Show also the time of the last update if expert settings is enabled.
         /// </summary>
-        /// <param name="expertsettings"></param>
+        /// <param name="expertsettings">Is expert setting being used.</param>
         private void SetLastUpdatecheckDate(bool expertsettings)
         {
             if (expertsettings)
@@ -943,7 +943,7 @@ namespace NoteFly
         /// <summary>
         /// Set the TabPageGPG visible if expertsetting is true otherwise make TabPageGPG not visible.
         /// </summary>
-        /// <param name="expertsettings"></param>
+        /// <param name="expertsettings">Is expert settings being used</param>
         private void SetTabPageGPGVisible(bool expertsettings)
         {
             if (expertsettings)
@@ -1017,8 +1017,8 @@ namespace NoteFly
         /// If chxShowTooltips is unchecked then chxManagenotesTooltipContent get disabled and
         /// if chxShowTooltips is checked then chxManagenotesTooltipContent get enabled.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender event</param>
+        /// <param name="e">Event arguments</param>
         private void chxShowTooltips_CheckStateChanged(object sender, EventArgs e)
         {
             this.chxManagenotesTooltipContent.Enabled = this.chxShowTooltips.Checked;
@@ -1087,8 +1087,8 @@ namespace NoteFly
         /// The selected language in chxLanguage is changed,
         /// change the language of the programme.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void cbxLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.cbxLanguage.SelectedIndex >= 0)
@@ -1104,8 +1104,8 @@ namespace NoteFly
         /// <summary>
         /// While changing hotkey ingore hotkeys pressed.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Key event arguments</param>
         private void Ingore_hotkeys(object sender, KeyEventArgs e)
         {
             this.hotkeysnewnotekeycode = Settings.HotkeysNewNoteKeycode;
@@ -1120,8 +1120,8 @@ namespace NoteFly
         /// <summary>
         /// Changing hotkey ended, allow NoteFly hotkeys again.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Key event arguments</param>
         private void Allow_hotkeys(object sender, KeyEventArgs e)
         {
             Settings.HotkeysNewNoteKeycode = this.hotkeysnewnotekeycode;
@@ -1132,8 +1132,8 @@ namespace NoteFly
         /// <summary>
         /// Open explorer with the NoteFly application data folder.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnOpenSettingsFolder_Click(object sender, EventArgs e)
         {
             this.btnOpenSettingsFolder.Enabled = false;
@@ -1147,8 +1147,8 @@ namespace NoteFly
         /// <summary>
         /// If chxHotkeyNewNoteEnabled is checked then enable shortcutTextBoxNewNote and lblTextHotkeyNewNote.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void chxHotkeyNewNoteEnabled_CheckedChanged(object sender, EventArgs e)
         {
             this.shortcutTextBoxNewNote.Enabled = this.chxHotkeyNewNoteEnabled.Checked;
@@ -1158,8 +1158,8 @@ namespace NoteFly
         /// <summary>
         /// If chxHotkeyManageNotesEnabled is checked then enable shortcutTextBoxManageNotes and lblTextHotkeyManageNotes
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void chxHotkeyManageNotesEnabled_CheckedChanged(object sender, EventArgs e)
         {
             this.shortcutTextBoxManageNotes.Enabled = this.chxHotkeyManageNotesEnabled.Checked;
@@ -1169,8 +1169,8 @@ namespace NoteFly
         /// <summary>
         /// If chxHotkeyNotesFrontEnabled is checked then enable shortcutTextBoxNotesToFront and lblTextHotkeyNotesToFront.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void chxHotkeyNotesFrontEnabled_CheckedChanged(object sender, EventArgs e)
         {
             this.shortcutTextBoxNotesToFront.Enabled = this.chxHotkeyNotesFrontEnabled.Checked;
@@ -1180,11 +1180,11 @@ namespace NoteFly
         /// <summary>
         /// Check if iptbProxy is allowed to have a IPv4 and/or IPv6 address.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void cbxNetworkIPversion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cbxNetworkIPversion.SelectedIndex)
+            switch (this.cbxNetworkIPversion.SelectedIndex)
             {
                 case 0:
                     this.iptbProxy.UseIPv4addr = true;

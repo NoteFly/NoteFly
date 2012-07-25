@@ -84,8 +84,8 @@ namespace NoteFly
         /// Check if tabPagePluginsAvailable is selected, 
         /// if it is then get a list with available all plugins.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void tabControlPlugins_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.tabControlPlugins.SelectedTab == this.tabPagePluginsAvailable)
@@ -107,8 +107,8 @@ namespace NoteFly
         /// <summary>
         /// Downloading of a list of allplugins is compleet, parser results and display items in chlbxAvailiblePlugins.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">RunWorkerCompletedEvent Arguments</param>
         private void httputil_allplugins_DownloadCompleet(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
@@ -127,8 +127,8 @@ namespace NoteFly
         /// <summary>
         /// A plugin is selected, get the details from the selected plugin.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void lbxAvailablePlugins_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.splitContainerAvailablePlugins.Panel2Collapsed = false;
@@ -166,8 +166,8 @@ namespace NoteFly
         /// <summary>
         /// Downloading of plugin details data is compleet, parser data and display plugin details
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">RunWorkerCompleted event arguments</param>
         private void httputil_plugindetail_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
@@ -213,8 +213,8 @@ namespace NoteFly
         /// <summary>
         /// Start download of plugin.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnPluginDownload_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(this.currentplugindownloadurl))
@@ -229,7 +229,7 @@ namespace NoteFly
         /// <summary>
         /// Downloading of plugin(s) compleet.
         /// </summary>
-        /// <param name="newfiles"></param>
+        /// <param name="newfiles">Array of files downloads.</param>
         private void downloader_DownloadCompleet(string[] newfiles)
         {
             if (this.rsaverif != null)
@@ -241,7 +241,7 @@ namespace NoteFly
                 }
             }
 
-            if (frmdownloader.GetFileCompressedkind(newfiles[0]) == 1)
+            if (this.frmdownloader.GetFileCompressedkind(newfiles[0]) == 1)
             {
                 string[] unzipextensions = new string[1] { ".dll" };
                 if (frmdownloader.DecompressZipFile(newfiles[0], unzipextensions))
@@ -250,9 +250,9 @@ namespace NoteFly
                     this.DeleteNotsysFile(newfiles[0], "Delete zip archive: ");
                 }
             }
-            else if (frmdownloader.GetFileCompressedkind(newfiles[0]) == 2)
+            else if (this.frmdownloader.GetFileCompressedkind(newfiles[0]) == 2)
             {
-                if (frmdownloader.DecompressGZipFile(newfiles[0]))
+                if (this.frmdownloader.DecompressGZipFile(newfiles[0]))
                 {
                     // decompress succesfully, now delete gzip file
                     this.DeleteNotsysFile(newfiles[0], "Delete GZip file: ");
@@ -267,8 +267,8 @@ namespace NoteFly
         /// <summary>
         /// Check if file is not a system file, and if it's not then delete the file.
         /// </summary>
-        /// <param name="file"></param>
-        /// <param name="logdesc"></param>
+        /// <param name="file">The file to delete</param>
+        /// <param name="logdesc">log mesage</param>
         private void DeleteNotsysFile(string file, string logdesc)
         {
             if (System.IO.File.GetAttributes(file) != System.IO.FileAttributes.System)
@@ -292,7 +292,7 @@ namespace NoteFly
         /// <summary>
         /// The user request to search, make request for search results.
         /// </summary>
-        /// <param name="keywords"></param>
+        /// <param name="keywords">The keywords</param>
         private void searchtbPlugins_SearchStart(string keywords)
         {
             this.lbxAvailablePlugins.Items.Clear();
@@ -312,8 +312,8 @@ namespace NoteFly
         /// <summary>
         /// Downloading of search results data is compleet, parser searchresult data and list search results
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">RunWorkerCompleted Event Arguments</param>
         private void httputil_searchplugins_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;

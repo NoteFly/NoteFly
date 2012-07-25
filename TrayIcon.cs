@@ -294,7 +294,7 @@ namespace NoteFly
         /// <summary>
         /// Open settings window.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event argument</param>
         private void MenuSettings_Click(object sender, EventArgs e)
         {
@@ -304,8 +304,8 @@ namespace NoteFly
         /// <summary>
         /// Open plugins window.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event argument</param>
         private void MenuPlugins_Click(object sender, EventArgs e)
         {
             this.formmanager.OpenFrmPlugins();
@@ -314,7 +314,7 @@ namespace NoteFly
         /// <summary>
         /// Open about window.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event argument</param>
         private void MenuAbout_Click(object sender, EventArgs e)
         {
@@ -326,7 +326,7 @@ namespace NoteFly
         /// Check if confirm box is needed. 
         /// If confirm box is still open and menuExit_Click event is fired then shutdown application anyway.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event argument</param>
         private void MenuExit_Click(object sender, EventArgs e)
         {

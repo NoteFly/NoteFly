@@ -678,84 +678,84 @@ namespace NoteFly
         private ShortcutTextBox shortcutTextBoxNewNote;
 
         /// <summary>
-        /// 
+        /// Label lblTextHotkeyNotesToFront
         /// </summary>
         private System.Windows.Forms.Label lblTextHotkeyNotesToFront;
 
         /// <summary>
-        /// 
+        /// ShortcutTextBox shortcutTextBoxNotesToFront
         /// </summary>
         private ShortcutTextBox shortcutTextBoxNotesToFront;
 
         /// <summary>
-        /// 
+        /// ComboBox cbxNetworkIPversion
         /// </summary>
         private System.Windows.Forms.ComboBox cbxNetworkIPversion;
 
         /// <summary>
-        /// 
+        /// Label lblTextNetworkTimeout
         /// </summary>
         private System.Windows.Forms.Label lblTextNetworkTimeout;
 
         /// <summary>
-        /// 
+        /// Label lblTextPreferedIPversion
         /// </summary>
         private System.Windows.Forms.Label lblTextPreferedIPversion;
 
         /// <summary>
-        /// 
+        /// NumericUpDown numTimeout
         /// </summary>
         private System.Windows.Forms.NumericUpDown numTimeout;
 
         /// <summary>
-        /// 
+        /// TableLayoutPanel tableLayoutPanel10
         /// </summary>
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
 
         /// <summary>
-        /// 
+        /// Button btnOpenSettingsFolder
         /// </summary>
         private System.Windows.Forms.Button btnOpenSettingsFolder;
 
         /// <summary>
-        /// 
+        /// CheckBox chxLoadPlugins
         /// </summary>
         private System.Windows.Forms.CheckBox chxLoadPlugins;
 
         /// <summary>
-        /// 
+        /// ComboBox cbxFontTrayicon
         /// </summary>
         private System.Windows.Forms.ComboBox cbxFontTrayicon;
 
         /// <summary>
-        /// 
+        /// Label lblTextTrayiconFont
         /// </summary>
         private System.Windows.Forms.Label lblTextTrayiconFont;
 
         /// <summary>
-        /// 
+        /// CheckBox chxHotkeyNewNoteEnabled
         /// </summary>
         private System.Windows.Forms.CheckBox chxHotkeyNewNoteEnabled;
 
         /// <summary>
-        /// 
+        /// CheckBox chxHotkeyManageNotesEnabled
         /// </summary>
         private System.Windows.Forms.CheckBox chxHotkeyManageNotesEnabled;
 
         /// <summary>
-        /// 
+        /// Checkbox chxHotkeyNotesFrontEnabled
         /// </summary>
         private System.Windows.Forms.CheckBox chxHotkeyNotesFrontEnabled;
 
         /// <summary>
-        /// 
+        /// TableLayoutPanel tableLayoutPanel11
         /// </summary>
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
 
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">True if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))

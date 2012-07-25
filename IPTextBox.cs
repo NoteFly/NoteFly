@@ -143,7 +143,7 @@ namespace NoteFly
         /// Character entered.
         /// Allow only IPv4 and IPv6 characters to be added.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">keyevent arguments</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             int k = e.KeyValue;
@@ -178,7 +178,7 @@ namespace NoteFly
         /// <summary>
         /// Get the number of dots in the Text content.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The number of dots</returns>
         private int getnumofdots()
         {
             return this.getnumofchar('.');
@@ -187,7 +187,7 @@ namespace NoteFly
         /// <summary>
         /// Get the number of dashes in the Text content.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The number of dashes</returns>
         private int getnumofdash()
         {
             return this.getnumofchar(':');
@@ -196,8 +196,8 @@ namespace NoteFly
         /// <summary>
         /// Get the number of occurance of a particular character in the Text content.
         /// </summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
+        /// <param name="c">The characters to count</param>
+        /// <returns>The number of chracters</returns>
         private int getnumofchar(char c)
         {
             int numdots = 0;

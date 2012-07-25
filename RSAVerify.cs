@@ -72,13 +72,13 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// The rsa signature
         /// </summary>
         public string Signature
         {
             set
             {
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     System.Windows.Forms.MessageBox.Show("No signature used cannot check intergity of downloads with RSA.", "no signature", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
                     Log.Write(LogType.error, "no signature");
@@ -95,7 +95,7 @@ namespace NoteFly
         {
             get
             {
-                return !String.IsNullOrEmpty(signature);
+                return !string.IsNullOrEmpty(this.signature);
             }
         }
 
@@ -139,8 +139,8 @@ namespace NoteFly
         {
             this.rsaCryptoServiceProvider.FromXmlString(xmlrsapublickey);
             byte[] databytes = Encoding.UTF32.GetBytes(data);
-            byte[] signaturebytes = Convert.FromBase64String(signature);
-            return rsaCryptoServiceProvider.VerifyData(databytes, hashinsignatureused, signaturebytes);
+            byte[] signaturebytes = Convert.FromBase64String(this.signature);
+            return this.rsaCryptoServiceProvider.VerifyData(databytes, hashinsignatureused, signaturebytes);
         }
 
         /// <summary>
@@ -165,6 +165,5 @@ namespace NoteFly
                 }
             }
         }
-
     }
 }

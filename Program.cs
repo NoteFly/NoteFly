@@ -405,8 +405,8 @@ namespace NoteFly
         /// Change the url to force the use of IPv4 or IPv6
         /// by using only a A or AAAA record.
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
+        /// <param name="url">The orginal url used for updating</param>
+        /// <returns>The new url used for updating, use  ipv4. alias for ipv4 only and use ipv6. alias for ipv6 only.</returns>
         public static string ChangeUrlIPVersion(string url)
         {
             switch (Settings.NetworkIPversion)
@@ -555,7 +555,9 @@ namespace NoteFly
         /// <summary>
         /// Parser the programme arguments
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">An array of arguments the check</param>
+        /// <param name="visualstyle">Use XP visual styles on windows.</param>
+        /// <param name="resetpositions">should all visual notes position get reset.</param>
         private static void ParserArguments(string[] args, out bool visualstyle, out bool resetpositions)
         {
             visualstyle = true;
@@ -697,13 +699,12 @@ namespace NoteFly
             string rsasignature = string.Empty;
             string latestversionquality = Program.AssemblyVersionQuality;
             short[] latestversion = xmlUtil.ParserLatestVersion(response, out latestversionquality, out downloadurl, out rsasignature);
-            rsaverify = new RSAVerify(rsasignature);
-
-            int compareversionsresult = Program.CompareVersions(thisversion, latestversion);
-            if (compareversionsresult < 0 || (compareversionsresult == 0 && Program.AssemblyVersionQuality != latestversionquality))
+            int compareversionsresult = Program.CompareVersions(latestversion, thisversion);
+            if (compareversionsresult > 0 || (compareversionsresult == 0 && Program.AssemblyVersionQuality != latestversionquality))
             {
                 if (!string.IsNullOrEmpty(downloadurl))
                 {
+                    rsaverify = new RSAVerify(rsasignature);
                     StringBuilder sbmsg = new StringBuilder();
                     sbmsg.AppendLine(Strings.T("There's a new version of {0} available.", Program.AssemblyTitle));
                     sbmsg.Append(Strings.T("Your version: "));

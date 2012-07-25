@@ -100,7 +100,7 @@ namespace NoteFly
 #endif
 
         /// <summary>
-        /// Create a new instance of FormManager class.
+        /// Create a new instance of <see cref=FormManager /> class.
         /// </summary>
         /// <param name="notes">Reference to notes class.</param>
         public FormManager(Notes notes)

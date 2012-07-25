@@ -10,6 +10,11 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary>
+        /// Label lblTextNopluginsinstalled
+        /// </summary>
+        private System.Windows.Forms.Label lblTextNopluginsinstalled;
+
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
@@ -54,7 +59,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblTextNopluginsinstalled;
     }
 }

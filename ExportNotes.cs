@@ -37,7 +37,7 @@ namespace NoteFly
         private Notes notes;
 
         /// <summary>
-        /// Initializes a new instance of ExportNotes class.
+        /// Initializes a new instance of <see cref="ExportNotes" /> class.
         /// </summary>
         /// <param name="notes">Reference to notes</param>
         public ExportNotes(Notes notes)

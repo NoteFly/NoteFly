@@ -1,15 +1,14 @@
-﻿
-
-namespace NoteFlyTests
+﻿namespace NoteFlyTests
 {
-    using NoteFly;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
     using System.IO;
     using System.Windows.Forms;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NoteFly;
     
     /// <summary>
-    ///This is a test class for ImportNotesTest and is intended
-    ///to contain all ImportNotesTest Unit Tests
+    /// This is a test class for ImportNotesTest and is intended
+    /// to contain all ImportNotesTest Unit Tests
     ///</summary>
     [TestClass()]
     public class ImportNotesTest
@@ -21,8 +20,8 @@ namespace NoteFlyTests
         private static string testnote1;
 
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
+        /// Gets or sets the test context which provides
+        /// information about and functionality for the current test run.
         ///</summary>
         public TestContext TestContext
         {
@@ -37,10 +36,6 @@ namespace NoteFlyTests
         }
 
         #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
         public static void ImportNotesTestInitialize(TestContext testContext)
         {
@@ -67,37 +62,17 @@ namespace NoteFlyTests
             testfile1.Close();
         }
 
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
         #endregion
 
-
         /// <summary>
-        ///A test for ReadTomboyfile
+        /// A test for ReadTomboyfile
         ///</summary>
         [TestMethod()]
         public void ReadTomboyfileTest()
         {
             ImportNotes importnotes = new ImportNotes(notes);
             StreamReader reader = new StreamReader(testnote1, true); 
-           
+
             TextBox tbtitle = new TextBox();
             RichTextBox rtbNewNote = new RichTextBox();
 

@@ -228,7 +228,6 @@ namespace NoteFly
                     int poslastitalic = int.MaxValue;
                     int poslaststrikethrought = int.MaxValue;
 
-
                     for (int i = 0; i < formattype.Count; i++)
                     {
                         switch (formattype[i])

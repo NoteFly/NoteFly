@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the 3.0.2 package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-06-20 12:50+0100\n"
+"PO-Revision-Date: 2012-07-23 15:30+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -446,7 +446,7 @@ msgstr "Downloaden {0} update"
 
 #: SearchTextBox.cs:38
 msgid "search:"
-msgstr "zoek:"
+msgstr "zoeken:"
 
 #: Textfile.cs:85
 msgid "Title: "

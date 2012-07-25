@@ -262,9 +262,9 @@ namespace NoteFly
         /// <summary>
         /// Do a quick syntax check of the last added part of text.
         /// </summary>
-        /// <param name="rtb"></param>
-        /// <param name="skinnr"></param>
-        /// <param name="notes"></param>
+        /// <param name="rtb">RichEditTextbox</param>
+        /// <param name="skinnr">The skinnr</param>
+        /// <param name="notes">Reference to notes</param>
         public static void CheckSyntaxQuick(RichTextBox rtb, int skinnr, Notes notes)
         {
             if (!keywordsinit)
@@ -387,7 +387,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="ishtml">string without spaces. length needs to be >0</param>
         /// <param name="rtb">The richtextbox.</param>
-        /// <param name="posstartpart">the start position in the richtextbox.</param>
+        /// <param name="posstartpart">The start position in the richtextbox.</param>
         /// <param name="langhtml">The html language description.</param>
         private static string ValidatingHtmlPart(string ishtml, RichTextBox rtb, string rtf, int posstartpart, HighlightLanguage langhtml)
         {
@@ -580,8 +580,8 @@ namespace NoteFly
         /// Find out if it is a php keyword.
         /// </summary>
         /// <param name="isphp">A part to be check if this a php keyword.</param>
-        /// <param name="rtb">the richtextbox</param>
-        /// <param name="posstart">the position in rtb where this keyword starts</param>
+        /// <param name="rtb">The richtextbox.</param>
+        /// <param name="posstart">the position in rtb where this keyword starts.</param>
         /// <param name="langphp">The PHP language description.</param>
         private static string ValidatingPhpPart(string isphp, RichTextBox rtb, string rtf, int posstart, HighlightLanguage langphp)
         {
@@ -698,9 +698,9 @@ namespace NoteFly
         /// Find out if it is a sql keyword.
         /// </summary>
         /// <param name="issql">The part to be check.</param>
-        /// <param name="rtb">The richtextbox</param>
+        /// <param name="rtb">The richtextbox.</param>
         /// <param name="posstart">Position where the keyword starts in the richtextbox.</param>
-        /// <param name="langsql">The sql language description</param>
+        /// <param name="langsql">The sql language description.</param>
         private static string ValidatingSqlPart(string issql, RichTextBox rtb, string rtf, int posstart, HighlightLanguage langsql)
         {
             string sqlkeyword;

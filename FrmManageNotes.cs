@@ -552,7 +552,7 @@ namespace NoteFly
                         else
                         {
                             const string OLDFILEEXTENSION = ".old";
-                            Log.Write(LogType.exception, String.Format("Could not move note to recyclebin. Trying renaming with {0} appended to note filename.", OLDFILEEXTENSION));
+                            Log.Write(LogType.exception, string.Format("Could not move note to recyclebin. Trying renaming with {0} appended to note filename.", OLDFILEEXTENSION));
 
                             if (!File.Exists(filepath + OLDFILEEXTENSION))
                             {
@@ -605,7 +605,7 @@ namespace NoteFly
             if (!this.searchTextBoxNotes.IsKeywordEntered)
             {
                 DataTable datatable = this.CreateDatatable();
-                int numnotefiles =Directory.GetFiles(Settings.NotesSavepath, "*"+Notes.NOTEEXTENSION, SearchOption.TopDirectoryOnly).Length;
+                int numnotefiles = Directory.GetFiles(Settings.NotesSavepath, "*" + Notes.NOTEEXTENSION, SearchOption.TopDirectoryOnly).Length;
                 if (this.notes.CountNotes > numnotefiles)
                 {
                     Log.Write(LogType.exception, "Note file(s) deleted while programme was running. Reloading all note files.");
@@ -918,6 +918,7 @@ namespace NoteFly
                             // todo GetContent() is not good because it can take long to read all content but it works for now.
                             RichTextBox rtb = new RichTextBox();
                             rtb.Rtf = this.notes.GetNote(notepos).GetContent();
+                            //xmlUtil.GetContentStringLimited(
                             string content = rtb.Text;
                             rtb.Dispose();
                             GC.Collect();

@@ -65,37 +65,37 @@ namespace NoteFly
         private const string RTFBOLDENDTAG = @"\b0";
 
         /// <summary>
-        /// 
+        /// RTF italic tag
         /// </summary>
         private const string RTFITALICTAG = @"\i";
 
         /// <summary>
-        /// 
+        /// RTF italic endtag
         /// </summary>
         private const string RTFITALICENDTAG = @"\i0";
 
         /// <summary>
-        /// 
+        /// RTF strike tag
         /// </summary>
         private const string RTFSTRIKETAG = @"\strike";
 
         /// <summary>
-        /// 
+        /// RTF strike endtag
         /// </summary>
         private const string RTFSTRIKEENDTAG = @"\strike0";
 
         /// <summary>
-        /// 
+        /// RTF underline tag
         /// </summary>
         private const string RTFUNDERLINETAG = @"\ul";
 
         /// <summary>
-        /// 
+        /// RTF enderline endtag
         /// </summary>
         private const string RTFUNDERLINEENDTAG = @"\ulnone";
 
         /// <summary>
-        /// 
+        /// Maximum length of a RTF tag
         /// </summary>
         private const int MAXLENRTFTTAG = 10;
 
@@ -110,7 +110,7 @@ namespace NoteFly
         private bool rtfformat = true;
 
         /// <summary>
-        /// 
+        /// Different length between orginal RTF and new rtf.
         /// </summary>
         private int drtflen = 0;
 
@@ -120,7 +120,7 @@ namespace NoteFly
         private char[] hexchars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
         /// <summary>
-        /// 
+        /// Make text bold.
         /// </summary>
         /// <param name="rtf"></param>
         /// <param name="textpos"></param>
@@ -132,7 +132,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Make text italic.
         /// </summary>
         /// <param name="rtf"></param>
         /// <param name="textpos"></param>
@@ -144,7 +144,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Make text underline.
         /// </summary>
         /// <param name="rtf"></param>
         /// <param name="textpos"></param>
@@ -156,7 +156,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Make text striketought.
         /// </summary>
         /// <param name="rtf"></param>
         /// <param name="textpos"></param>
@@ -168,7 +168,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Make text bold.
         /// </summary>
         /// <param name="rtf"></param>
         /// <param name="textpos"></param>
@@ -180,7 +180,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Remove italic text.
         /// </summary>
         /// <param name="rtf"></param>
         /// <param name="textpos"></param>
@@ -192,11 +192,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Remove striketought text.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
-        /// <param name="sellentext"></param>
+        /// <param name="rtf">RTF text</param>
+        /// <param name="textpos">The position.</param>
+        /// <param name="sellentext">The select text length.</param>
         /// <returns></returns>
         public string RemoveStrikeTagsInRTF(string rtf, int textpos, int sellentext)
         {
@@ -204,11 +204,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Remove underline text.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
-        /// <param name="sellentext"></param>
+        /// <param name="rtf">RTF text</param>
+        /// <param name="textpos">The text position</param>
+        /// <param name="sellentext">The selected text length</param>
         /// <returns></returns>
         public string RemoveUnderlineTagsInRTF(string rtf, int textpos, int sellentext)
         {
@@ -216,7 +216,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Remove all RTF tag in selected text.
         /// </summary>
         /// <param name="rtf"></param>
         /// <param name="textpos"></param>
@@ -282,7 +282,7 @@ namespace NoteFly
                     speccharrtfpos++;
                 }
 
-                this.rtfformat = InRTFFormat(rtf, i, this.rtfformat);
+                this.rtfformat = this.InRTFFormat(rtf, i, this.rtfformat);
                 if (rtf.Length > (i + starttag.Length) && rtf.Length > (i + endtag.Length))
                 {
                     if (nrtextchar >= textpos && nrtextchar <= (textpos + sellentext))
@@ -331,14 +331,13 @@ namespace NoteFly
                             doneendpos = true;
                         }
                     }
-                
             }
 
             return newrtf.ToString();
         }
 
         /// <summary>
-        /// 
+        /// Check if the RTF tag is open.
         /// </summary>
         /// <param name="tagopen"></param>
         /// <param name="rtf"></param>
@@ -404,7 +403,7 @@ namespace NoteFly
                     else
                     {
                         newrtf.Remove(postag, endtag.Length); // +1 for space
-                        this.drtflen -= (endtag.Length);
+                        this.drtflen -= endtag.Length;
                     }
                 }
                 else
@@ -502,7 +501,7 @@ namespace NoteFly
                     speccharrtfpos++;
                 }
 
-                this.rtfformat = InRTFFormat(rtf, i, this.rtfformat);
+                this.rtfformat = this.InRTFFormat(rtf, i, this.rtfformat);
 
                 if (isspecchar)
                 {
@@ -598,7 +597,6 @@ namespace NoteFly
                         }
                     }
                 }
-
             }
 
             return newrtf.ToString();
@@ -671,7 +669,8 @@ namespace NoteFly
                             // tab is only 1 character in text.
                             nrtextchar += 1;
                         }
-                        else if (i + COLORITEMTAG.Length < rtf.Length && !isspecchar) // logical: && !istabtag 
+                        // logical: && !istabtag 
+                        else if (i + COLORITEMTAG.Length < rtf.Length && !isspecchar) 
                         {
                             if (rtf.Substring(i, COLORITEMTAG.Length).Equals(COLORITEMTAG, StringComparison.Ordinal))
                             {
@@ -735,7 +734,7 @@ namespace NoteFly
                         speccharrtfpos++;
                     }
 
-                    this.rtfformat = InRTFFormat(rtf, i, this.rtfformat);
+                    this.rtfformat = this.InRTFFormat(rtf, i, this.rtfformat);
 
                     if (textpos == nrtextchar && !textposdone)
                     {

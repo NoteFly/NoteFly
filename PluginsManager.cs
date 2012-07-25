@@ -118,10 +118,8 @@ namespace NoteFly
                     {
                         if (curplugintype.IsPublic && !curplugintype.IsAbstract && !curplugintype.IsSealed)
                         {
-                            // /*
                             if (curplugintype.FullName.Equals(curplugintype.Namespace + "." + curplugintype.Namespace))
                             {
-                            // */
                                 // Load this plugin class only.
                                 Type plugintype = pluginassembly.GetType(curplugintype.ToString(), false, true);
                                 if (plugintype != null)
@@ -130,7 +128,6 @@ namespace NoteFly
                                     plugin.Register(dllfilename, NoteFly.Program.Notes);
                                     enabledplugins.Add(plugin);
                                 }
-                            // /*
                             }
                         }
                     }
@@ -145,8 +142,8 @@ namespace NoteFly
         /// <summary>
         /// Disable a plugin
         /// </summary>
-        /// <param name="pluginname"></param>
-        /// <returns>return true if dll filename was found and plugin is disabled.</returns>
+        /// <param name="pluginname">The plugin .dll file filename.</param>
+        /// <returns>Return true if dll filename was found and plugin is disabled.</returns>
         public static bool DisablePlugin(string dllfilename)
         {
             for (int i = 0; i < enabledplugins.Count; i++)

@@ -240,8 +240,9 @@ namespace NoteFly
         /// <summary>
         /// Parser the details of the plugin detail response
         /// </summary>
-        /// <param name="response"></param>
-        /// <param name="pluginsnamesinstalled"></param>
+        /// <param name="response">Parser the xml response</param>
+        /// <param name="pluginsnamesinstalled">The names of the plugins installed.</param>
+        /// <param name="updateavailable">Is a update availible based on parsering of the serverresponse</param>
         /// <returns></returns>
         public static string[] ParserDetailsPlugin(string response, string[] installedpluginnames, out bool alreadyinstalled, out bool updateavailable)
         {
@@ -315,6 +316,7 @@ namespace NoteFly
                 short[] availablepluginversion = Program.ParserVersionString(detailsplugin[1]);
                 if (Program.CompareVersions(availablepluginversion, installedpluginversion) > 0)
                 {
+                    // 1 if availablepluginversion is higher than installedpluginversion
                     updateavailable = true;
                 }
             }
@@ -723,7 +725,6 @@ namespace NoteFly
                         case "skin":
                             if (endtag)
                             {
-                                
                                 if (curskin != null && numskins < MAXNUMSKIN)
                                 {
                                     skins.Add(curskin);
@@ -1211,8 +1212,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="serverresponse"></param>
         /// <param name="versionquality">The latest version quality, e.g: alpha, beta, rc or nothing for final.</param>
-        /// <param name="downloadurl">the download url found</param>
-        /// <returns>the newest version as integer array, 
+        /// <param name="downloadurl">The download url found.</param>
+        /// <param name="rsasignature">RSA signature.</param>
+        /// <returns>The newest version as integer array, 
         /// any negative valeau(-1 by default) considered as error.</returns>
         public static short[] ParserLatestVersion(string serverresponse, out string versionquality, out string downloadurl, out string rsasignature)
         {
@@ -1381,6 +1383,48 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Get the content
+        /// </summary>
+        /// <param name="limittextchars"></param>
+        /// <returns></returns>
+        public string GetContentStringLimited(string file, int limittextchars)
+        {
+            try {
+                xmlread = new XmlTextReader(file);
+            }
+            catch (FileLoadException fileloadexc)
+            {
+                throw new ApplicationException(fileloadexc.Message);
+            }
+            catch (FileNotFoundException filenotfoundexc)
+            {
+                throw new ApplicationException(filenotfoundexc.Message);
+            }
+
+            string content = null;
+            try
+            {
+                char[] buf = new char[limittextchars + 1];
+                while (xmlread.Read())
+                {
+                    if (xmlread.Name == "content")
+                    {
+                        // todo
+                        xmlread.ReadValueChunk(buf, 0, limittextchars);
+                    }
+                }
+
+                content = new string(buf);
+            }
+            finally
+            {
+                xmlread.Close();
+            }
+
+            return content;
+        }
+
+        /// <summary>
         /// Parser a note node in a xml file, 
         /// readnotenum is the number of note node to be parser and returned as note object.
         /// </summary>
@@ -1388,7 +1432,7 @@ namespace NoteFly
         /// <param name="note">the note object to set</param>
         /// <param name="readnotenum">The number occurance of the note node to be parser (first, sencod etc.)</param>
         /// <param name="setallcontent">Force to set the note temporary content variable in the note class even if not visible.</param>
-        /// <returns>a note object</returns>
+        /// <returns>A note object</returns>
         private static Note ParserNoteNode(Notes notes, Note note, int readnotenum, bool setallcontent)
         {
             int curnotenum = -1;
@@ -1592,32 +1636,6 @@ namespace NoteFly
             xmlwrite.WriteEndElement();
         }
 
-        /// <summary>
-        /// Get the content
-        /// </summary>
-        /// <returns></returns>
-        public string GetContentStringLimited(string nodename, int limit)
-        {
-            string content = null;
-            try
-            {
-                while (xmlread.Read())
-                {
-                    if (xmlread.Name == nodename)
-                    {
-                        char[] buf = new char[limit + 1];
-                        xmlread.ReadValueChunk(buf, 0, limit);
-                        content = new string(buf);
-                    }
-                }
-            }
-            finally
-            {
-                xmlread.Close();
-            }
-
-            return content;
-        }
         #endregion Methods
     }
 }

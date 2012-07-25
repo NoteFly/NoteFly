@@ -371,12 +371,12 @@ namespace NoteFly
                 DialogResult result = MessageBox.Show(notes_notefolderdoesnotexist, notes_notefolderdoesnotexisttitle, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.No)
                 {
-                    Log.Write(LogType.error, (notes_notefolderdoesnotexist + " No"));
+                    Log.Write(LogType.error, notes_notefolderdoesnotexist + " No");
                     return;
                 }
                 else
                 {
-                    Log.Write(LogType.error, (notes_notefolderdoesnotexist + " Yes"));
+                    Log.Write(LogType.error, notes_notefolderdoesnotexist + " Yes");
                     Settings.NotesSavepath = Program.GetDefaultNotesFolder();
                 }
             }
@@ -576,7 +576,7 @@ namespace NoteFly
         /// <summary>
         /// Gets the programme title. (for plugins)
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The title of the assembly.</returns>
         public string GetAssemblyTitle()
         {
             return Program.AssemblyTitle;
@@ -586,7 +586,7 @@ namespace NoteFly
         /// Get programme version.
         /// Method for plugins
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Get the assembly version as string</returns>
         public string GetAssemblyVersionAsString()
         {
             return Program.AssemblyVersionAsString;
@@ -595,11 +595,11 @@ namespace NoteFly
         /// <summary>
         /// Get a setting as boolean. (for plugins)
         /// </summary>
-        /// <param name="settingname"></param>
-        /// <returns></returns>
+        /// <param name="settingname">The name of the setting.</param>
+        /// <returns>A boolean setting.</returns>
         public bool GetBoolSetting(string settingname)
         {
-            object settingsptr = FindSettings(settingname);
+            object settingsptr = this.FindSettings(settingname);
             if (settingsptr != null)
             {
                 if (settingsptr is bool)
@@ -622,11 +622,11 @@ namespace NoteFly
         /// <summary>
         /// Get a setting as integer. (for plugins)
         /// </summary>
-        /// <param name="settingname"></param>
-        /// <returns></returns>
+        /// <param name="settingname">The name of the setting.</param>
+        /// <returns>An integer setting</returns>
         public int GetIntSetting(string settingname)
         {
-            object settingsptr = FindSettings(settingname);
+            object settingsptr = this.FindSettings(settingname);
             if (settingsptr != null)
             {
                 if (settingsptr is int)
@@ -649,11 +649,11 @@ namespace NoteFly
         /// <summary>
         /// Get a setting as string. (for plugins)
         /// </summary>
-        /// <param name="settingname"></param>
-        /// <returns></returns>
+        /// <param name="settingname">The name of the setting.</param>
+        /// <returns>An string setting.</returns>
         public string GetStringSetting(string settingname)
         {
-            object settingsptr = FindSettings(settingname);
+            object settingsptr = this.FindSettings(settingname);
             if (settingsptr != null)
             {
                 if (settingsptr is string)
@@ -676,13 +676,14 @@ namespace NoteFly
         /// <summary>
         /// Find a setting in the setting class. (for plugins)
         /// </summary>
-        /// <param name="settingname"></param>
-        /// <returns></returns>
+        /// <param name="settingname">The name of the setting.</param>
+        /// <returns>Return the setting valeau as object</returns>
         private object FindSettings(string settingname)
         {
             Type type = typeof(Settings);
             System.Reflection.FieldInfo[] fields = type.GetFields();
-            foreach (var field in fields) // Loop through all fields
+            // Loop through all fields
+            foreach (var field in fields) 
             {
                 if (field.Name.Equals(settingname, StringComparison.OrdinalIgnoreCase))
                 {

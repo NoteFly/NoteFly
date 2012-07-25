@@ -59,7 +59,7 @@ namespace NoteFly
         {
             this.SuspendLayout();
             this.Controls.Clear();
-            InitializeComponent();
+            this.InitializeComponent();
 
             if (PluginsManager.InstalledPlugins != null)
             {

@@ -107,7 +107,7 @@ namespace NoteFly
         #region Public methods
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="KeyboardListener" /> class.
         /// </summary>
         public KeyboardListener()
         {

@@ -52,7 +52,7 @@ namespace NoteFly
         /// </summary>
         private Notes notes;
 
-		/// <summary>
+        /// <summary>
         /// Pointer to rtfdirectedit class.
         /// </summary>
         private RTFDirectEdit rtfdirectedit = new RTFDirectEdit();
@@ -369,7 +369,6 @@ namespace NoteFly
                 {
                     //this.rtbNewNote.SelectionFont = new System.Drawing.Font(this.rtbNewNote.SelectionFont.FontFamily, this.rtbNewNote.SelectionFont.SizeInPoints, (this.rtbNewNote.SelectionFont.Style | System.Drawing.FontStyle.Bold));
                     this.rtbNewNote.Rtf = this.rtfdirectedit.AddBoldTagInRTF(this.rtbNewNote.Rtf, pos, len);
-                    
                 }
 
                 this.rtbNewNote.SelectionStart = pos;
@@ -902,7 +901,7 @@ namespace NoteFly
         /// Force context menu to show up.
         /// </summary>
         /// <param name="sender">sender object</param>
-        /// <param name="e">Event arguments</param>
+        /// <param name="e">Mouse event arguments</param>
         private void rtbNote_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -1094,9 +1093,9 @@ namespace NoteFly
             }
 
             int pos = this.rtbNewNote.SelectionStart;
-            if (rtbNewNote.TextLength <= 10)
+            if (this.rtbNewNote.TextLength <= 10)
             {
-                SyntaxHighlight.CheckSyntaxFull(rtbNewNote, this.GetSkinnr(), this.notes);
+                SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, this.GetSkinnr(), this.notes);
             }
             else
             {

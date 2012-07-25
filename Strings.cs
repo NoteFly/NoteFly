@@ -239,10 +239,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Get a translation for a particulair control.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="ctrlname"></param>
+        /// <param name="text">Orginele text</param>
+        /// <param name="ctrlname">Control name</param>
         /// <returns></returns>
         private static string GetTranslationControl(string text, string ctrlname)
         {

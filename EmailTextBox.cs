@@ -81,7 +81,7 @@ namespace NoteFly
         /// <summary>
         /// Change background to inactive control backgroundcolor if control becomes inactive.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Event argurments</param>
         protected override void OnEnabledChanged(System.EventArgs e)
         {
             if (!this.Enabled)
