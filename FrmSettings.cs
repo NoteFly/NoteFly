@@ -126,7 +126,7 @@ namespace NoteFly
         /// Cancel button pressed.
         /// Don't save any change made.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -281,41 +281,7 @@ namespace NoteFly
                 Settings.ProgramLogException = this.chxLogExceptions.Checked;
                 Settings.SettingsLastTab = this.tabControlSettings.SelectedIndex;
 #if windows
-                RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                if (key != null)
-                {
-                    if (this.chxStartOnLogin.Checked == true)
-                    {
-                        try
-                        {
-                            key.SetValue(Program.AssemblyTitle, "\"" + Application.ExecutablePath + "\"");
-                        }
-                        catch (UnauthorizedAccessException unauthexc)
-                        {
-                            string nowriterightsregistery = Strings.T("No rights to add key to registry.");
-                            Log.Write(LogType.exception, nowriterightsregistery + unauthexc.Message);
-                            MessageBox.Show(unauthexc.Message);
-                        }
-                        catch (Exception exc)
-                        {
-                            throw new ApplicationException(exc.Message + " " + exc.StackTrace);
-                        }
-                    }
-                    else if (this.chxStartOnLogin.Checked == false)
-                    {
-                        if (key.GetValue(Program.AssemblyTitle, null) != null)
-                        {
-                            key.DeleteValue(Program.AssemblyTitle, false);
-                        }
-                    }
-                }
-                else
-                {
-                    string settings_regkeynotexist = Strings.T("Run key in registery does not exist.");
-                    string settings_regkeynotexisttitle = Strings.T("Error run key registery missing");
-                    Log.Write(LogType.error, settings_regkeynotexist);
-                    MessageBox.Show(settings_regkeynotexist, settings_regkeynotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                this.AddNoteFlyLogon();
 #endif
                 xmlUtil.WriteSettings();
 
@@ -334,16 +300,13 @@ namespace NoteFly
                     try
                     {
                         this.Cursor = Cursors.WaitCursor;
-
                         Thread movenotesthread = new Thread(new ParameterizedThreadStart(this.MoveNotesThread));
                         string[] args = new string[2];
                         args[0] = this.oldnotesavepath;
                         args[1] = Settings.NotesSavepath;
                         movenotesthread.Start(args);
-
                         movenotesthread.Join(300); // if finished within 300ms don't display buzy moving notes message.
                         this.ShowWaitOnThread(movenotesthread, 300, Strings.T("NoteFly is buzy moving your notes"));
-
                         this.notes.LoadNotes(true, false);
                     }
                     finally
@@ -368,10 +331,54 @@ namespace NoteFly
             }
         }
 
+#if windows
+        /// <summary>
+        /// Add a notefly registery key to the run section if this.chxStartOnLogin is checked and not already added to registery.
+        /// </summary>
+        private void AddNoteFlyLogon()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (key != null)
+            {
+                if (this.chxStartOnLogin.Checked)
+                {
+                    try
+                    {
+                        key.SetValue(Program.AssemblyTitle, "\"" + Application.ExecutablePath + "\"");
+                    }
+                    catch (UnauthorizedAccessException unauthexc)
+                    {
+                        string nowriterightsregistery = Strings.T("No rights to add key to registry.");
+                        Log.Write(LogType.exception, nowriterightsregistery + unauthexc.Message);
+                        MessageBox.Show(unauthexc.Message);
+                    }
+                    catch (Exception exc)
+                    {
+                        throw new ApplicationException(exc.Message + " " + exc.StackTrace);
+                    }
+                }
+                else
+                {
+                    if (key.GetValue(Program.AssemblyTitle, null) != null)
+                    {
+                        key.DeleteValue(Program.AssemblyTitle, false);
+                    }
+                }
+            }
+            else
+            {
+                string settings_regkeynotexist = Strings.T("Run key in registery does not exist.");
+                string settings_regkeynotexisttitle = Strings.T("Error run key registery missing");
+                Log.Write(LogType.error, settings_regkeynotexist);
+                MessageBox.Show(settings_regkeynotexist, settings_regkeynotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+#endif
+
         /// <summary>
         /// Check if all settings are valid, if a setting in this form is not correct display a error about it.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if all set settings seems to be valid.</returns>
         private bool CheckAllSettingValid()
         {
             bool allsettingsvalid = false;
@@ -461,7 +468,7 @@ namespace NoteFly
         /// And auto close while done.
         /// </summary>
         /// <param name="worktread">The thread that is doing work while message being showed</param>
-        /// <param name="checktimems">miliseconds to check if workthread is done, is also the minimum show time of the message, if being showed</param>
+        /// <param name="checktimems">Miliseconds to check if workthread is done, is also the minimum show time of the message, if being showed</param>
         /// <param name="message">The message to show</param>
         private void ShowWaitOnThread(Thread worktread, int checktimems, string message)
         {
@@ -497,9 +504,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// reset button clicked.
+        /// Reset button clicked.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnResetSettings_Click(object sender, EventArgs e)
         {
@@ -516,7 +523,7 @@ namespace NoteFly
         /// <summary>
         /// The user de-/selected checking for updates.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void cbxCheckUpdates_CheckedChanged(object sender, EventArgs e)
         {
@@ -580,8 +587,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Move notes files with a seperate the to a other location.
         /// </summary>
+        /// <param name="args">The orginal and new paths as string array.</param>
         private void MoveNotesThread(object args)
         {
             string[] pathsargs = (string[])args;
@@ -677,7 +685,7 @@ namespace NoteFly
 
             // tab: Appearance, notes
             this.chxTransparecy.Checked = Settings.NotesTransparencyEnabled;
-            this.SetUpDownSpinnerValue(this.numProcTransparency, (Settings.NotesTransparencyLevel * 100));
+            this.SetUpDownSpinnerValue(this.numProcTransparency, Settings.NotesTransparencyLevel * 100);
             this.chxShowTooltips.Checked = Settings.NotesTooltipsEnabled;
 
             // tab: Appearance, new note
@@ -688,7 +696,7 @@ namespace NoteFly
             this.chxUseDateAsDefaultTitle.Checked = Settings.NotesDefaultTitleDate;
 
             // tab: Appearance, fonts
-            this.SetUpDownSpinnerValue(this.numFontSizeTitle, Settings.FontTitleSize);            
+            this.SetUpDownSpinnerValue(this.numFontSizeTitle, Settings.FontTitleSize);
             this.SetUpDownSpinnerValue(this.numFontSizeContent, Settings.FontContentSize);
             this.SetComboBoxSelectedIndex(this.cbxTextDirection, Settings.FontTextdirection);
             this.cbxFontNoteContent.Text = Settings.FontContentFamily;
@@ -766,10 +774,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Set a updownspinner valeau with a double valeau
+        /// Set a updownspinner valeau with a double valeau.
         /// </summary>
-        /// <param name="numupdownctrl">NumericUpDown control</param>
-        /// <param name="valeau">valeau to set in the NumericUpDown control</param>
+        /// <param name="numupdownctrl">NumericUpDown control.</param>
+        /// <param name="valeau">Valeau to set in the NumericUpDown control.</param>
         private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, double valeau)
         {
             try
@@ -799,7 +807,7 @@ namespace NoteFly
         /// Checks if it does not exceed the minimum and maximum value.
         /// </summary>
         /// <param name="numupdownctrl">NumericUpDown control</param>
-        /// <param name="valuedec">valeu to set in the NumericUpDown control</param>
+        /// <param name="valuedec">Value to set in the NumericUpDown control</param>
         private void SetUpDownSpinnerValue(System.Windows.Forms.NumericUpDown numupdownctrl, decimal valuedec)
         {
             if (valuedec < numupdownctrl.Minimum)
@@ -1066,7 +1074,7 @@ namespace NoteFly
         /// <summary>
         /// Get the languagecode from the selected index in cbxLanguage.
         /// </summary>
-        /// <param name="cbxLanguageSelectedIndex"></param>
+        /// <param name="cbxLanguageSelectedIndex">The selectedindex in cbxLanguage</param>
         /// <returns>The languagecode return en for english if not found.</returns>
         private string GetLanguageCode(int cbxLanguageSelectedIndex)
         {

@@ -127,7 +127,7 @@ namespace NoteFly
             this.tlpnlPlugins[pluginpos].Controls.Add(lblPluginAuthor, 1, 2);
             this.tlpnlPlugins[pluginpos].Controls.Add(lblTextPluginDescription, 0, 3);
             this.tlpnlPlugins[pluginpos].Controls.Add(lblPluginDescription, 1, 3);
-            this.tlpnlPlugins[pluginpos].Location = new System.Drawing.Point(3, (pluginpos * 100));
+            this.tlpnlPlugins[pluginpos].Location = new System.Drawing.Point(3, pluginpos * 100);
             this.tlpnlPlugins[pluginpos].Name = "tlpnlPlugin";
             this.tlpnlPlugins[pluginpos].RowCount = 4;
             this.tlpnlPlugins[pluginpos].RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));

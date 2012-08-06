@@ -39,7 +39,7 @@ namespace IPlugin
         string Filename { get; }
 
         /// <summary>
-        /// Gets or sets the interface to let a plugin talk to NoteFly.
+        /// Gets the interface to let a plugin talk to NoteFly.
         /// </summary>
         IPluginHost Host { get; }
 
@@ -53,7 +53,7 @@ namespace IPlugin
         /// <summary>
         /// Adds ToolStripItem to the right click submenu share on FrmNote.
         /// </summary>
-        /// <returns>a ToolStripMenuItem</returns>
+        /// <returns>A ToolStripMenuItem</returns>
         ToolStripMenuItem InitFrmNoteShareMenu();
 
         /// <summary>
@@ -66,13 +66,13 @@ namespace IPlugin
         /// <summary>
         /// Executed if settings tab loaded.
         /// </summary>
-        /// <returns>a Tabpage with all components to draw</returns>
+        /// <returns>A Tabpage with all components to draw.</returns>
         TabPage InitShareSettingsTab();
 
         /// <summary>
         /// Create a button in the bottom in FrmNewNote.
         /// </summary>
-        /// <returns>The buttons created in FrmNewNote</returns>
+        /// <returns>The buttons created in FrmNewNote.</returns>
         Button[] InitNoteFormatBtns();
 
         /// <summary>
@@ -104,15 +104,15 @@ namespace IPlugin
         /// </summary>
         /// <param name="rtbnote">The RichTextbox.</param>
         /// <param name="btn">The button is clicked.</param>
-        /// <returns>new content</returns>
+        /// <returns>The new rtf note content</returns>
         string NoteFormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn);
 
         /// <summary>
-        /// Menu item in right click menu FrmNewNote is clicked.d
+        /// Menu item in right click menu FrmNewNote is clicked.
         /// </summary>
         /// <param name="rtbnote">The RichTextbox.</param>
         /// <param name="menuitem">The button is clicked.</param>
-        /// <returns>new content</returns>
+        /// <returns>The new rtf note content</returns>
         string MenuFrmNewNoteClicked(System.Windows.Forms.RichTextBox rtbnote, ToolStripItem menuitem);
 
         /// <summary>

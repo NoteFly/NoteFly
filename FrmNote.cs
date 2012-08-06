@@ -130,7 +130,7 @@ namespace NoteFly
         /// Set some application wide note settings on this note (fonts, transparency, detect hyperlinks etc.) and
         /// do full syntax check on the note content again.
         /// </summary>
-        /// <param name="contentset">boolean if the note rtf content already set.</param>
+        /// <param name="contentset">Boolean if the note rtf content already set.</param>
         public void UpdateForm(bool contentset)
         {
             if (!contentset)
@@ -201,10 +201,10 @@ namespace NoteFly
 
 #if windows
                 this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
-                this.pnlNote.Size = new Size(this.Width, (this.Height - this.pnlHead.Height + 1));
+                this.pnlNote.Size = new Size(this.Width, this.Height - this.pnlHead.Height + 1);
 #elif linux
                 this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
-                this.pnlNote.Size = new Size(this.Width - 6, (this.Height - this.pnlHead.Height - 5));
+                this.pnlNote.Size = new Size(this.Width - 6, this.Height - this.pnlHead.Height - 5);
 #endif
                 this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
                 if (!SyntaxHighlight.KeywordsInitialized)
@@ -259,7 +259,7 @@ namespace NoteFly
         /// <summary>
         /// Copy note content to clipboard.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void menuCopyContent_Click(object sender, EventArgs e)
         {
@@ -326,7 +326,7 @@ namespace NoteFly
             this.pbShowLock = new PictureBox();
             this.pbShowLock.Name = "pbShowLock";
             this.pbShowLock.Size = new Size(16, 16);
-            this.pbShowLock.Location = new Point((this.btnHideNote.Location.X - 24), 8);
+            this.pbShowLock.Location = new Point(this.btnHideNote.Location.X - 24, 8);
             this.pbShowLock.Image = new Bitmap(NoteFly.Properties.Resources.locknote);
             this.pbShowLock.Visible = true;
             this.pbShowLock.MouseDown += new MouseEventHandler(this.pnlHead_MouseDown);
@@ -353,7 +353,7 @@ namespace NoteFly
         /// <summary>
         /// Requested to edit this note.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void menuEditNote_Click(object sender, EventArgs e)
         {
@@ -400,7 +400,7 @@ namespace NoteFly
         /// <summary>
         /// Form got focus, remove transparency.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void FrmNote_Activated(object sender, EventArgs e)
         {
@@ -884,13 +884,13 @@ namespace NoteFly
                     }
                 }
             }
-        }        
+        }
 
         /// <summary>
-        /// 
+        /// The skins dropdown menu is opened.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void menuNoteSkins_DropDownOpening(object sender, EventArgs e)
         {
             this.CreateSkinsMenu(false);

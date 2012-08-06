@@ -92,7 +92,7 @@ namespace IPlugin
         /// <summary>
         /// Executed if settings tab loaded.
         /// </summary>
-        /// <returns>a Tabpage with all components to draw</returns>
+        /// <returns>A tabpage with all components to draw.</returns>
         public virtual TabPage InitShareSettingsTab()
         {
             // by default return nocontrols, override this to create settings share tab controls
@@ -161,7 +161,7 @@ namespace IPlugin
         /// </summary>
         /// <param name="rtbnote">The RichTextbox.</param>
         /// <param name="menuitem">The button is clicked.</param>
-        /// <returns>new content</returns>
+        /// <returns>The new rtf note content</returns>
         public virtual string MenuFrmNewNoteClicked(System.Windows.Forms.RichTextBox rtbnote, ToolStripItem menuitem)
         {
             return rtbnote.Rtf;

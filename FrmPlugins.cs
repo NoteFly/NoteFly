@@ -21,8 +21,8 @@ namespace NoteFly
 {
     using System;
     using System.ComponentModel;
-    using System.Windows.Forms;
     using System.IO;
+    using System.Windows.Forms;
 
     /// <summary>
     /// FrmPlugins window
@@ -50,9 +50,9 @@ namespace NoteFly
         private string currentplugindownloadurl = null;
 
         /// <summary>
-        /// 
+        /// Reference to RSAverify class
         /// </summary>
-        private RSAVerify rsaverif;
+        private RSAVerify rsaverify;
 
         /// <summary>
         /// Refence to FrmDownload window.
@@ -206,7 +206,7 @@ namespace NoteFly
                 this.lblPluginDescription.Text = detailsplugin[3];
                 this.currentplugindownloadurl = detailsplugin[4];
 
-                this.rsaverif = new RSAVerify(detailsplugin[5]);
+                this.rsaverify = new RSAVerify(detailsplugin[5]);
             }
         }
 
@@ -232,11 +232,11 @@ namespace NoteFly
         /// <param name="newfiles">Array of files downloads.</param>
         private void downloader_DownloadCompleet(string[] newfiles)
         {
-            if (this.rsaverif != null)
+            if (this.rsaverify != null)
             {
-                if (!this.rsaverif.CheckFileSignatureAndDisplayErrors(newfiles[0]))
+                if (!this.rsaverify.CheckFileSignatureAndDisplayErrors(newfiles[0]))
                 {
-                    //File.Move(newfiles[0], newfiles[0] + ".invalid");
+                    ////File.Move(newfiles[0], newfiles[0] + ".invalid");
                     return;
                 }
             }
@@ -244,7 +244,7 @@ namespace NoteFly
             if (this.frmdownloader.GetFileCompressedkind(newfiles[0]) == 1)
             {
                 string[] unzipextensions = new string[1] { ".dll" };
-                if (frmdownloader.DecompressZipFile(newfiles[0], unzipextensions))
+                if (this.frmdownloader.DecompressZipFile(newfiles[0], unzipextensions))
                 {
                     // decompress succesfully, now delete zip file
                     this.DeleteNotsysFile(newfiles[0], "Delete zip archive: ");
@@ -268,7 +268,7 @@ namespace NoteFly
         /// Check if file is not a system file, and if it's not then delete the file.
         /// </summary>
         /// <param name="file">The file to delete</param>
-        /// <param name="logdesc">log mesage</param>
+        /// <param name="logdesc">Log mesage</param>
         private void DeleteNotsysFile(string file, string logdesc)
         {
             if (System.IO.File.GetAttributes(file) != System.IO.FileAttributes.System)
@@ -345,7 +345,7 @@ namespace NoteFly
         /// <summary>
         /// Set a message if network connection failed.
         /// </summary>
-        /// <param name="isconnected"></param>
+        /// <param name="isconnected">True if their is a network connection.</param>
         private void SetAvailablePluginsNetwork(bool isconnected)
         {
             this.lblTextNoInternetConnection.Visible = !isconnected;

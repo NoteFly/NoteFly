@@ -41,8 +41,8 @@ namespace NoteFly
         /// s_KeyEventHandler(null,new KeyEventArgs(key,msg)) However, in case one of the registered
         /// subscribers throws an exception, execution of the non-executed subscribers is cancelled.
         /// </remarks>
-        /// <param name="key">key</param>
-        /// <param name="msg">msg</param>
+        /// <param name="key">Key</param>
+        /// <param name="msg">Msg</param>
         private void KeyHandler(ushort key, uint msg)
         {
             if (this.s_KeyEventHandler != null)

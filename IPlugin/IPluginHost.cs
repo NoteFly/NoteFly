@@ -168,36 +168,36 @@ namespace IPlugin
         void LogPluginError(string errormsg);
 
         /// <summary>
-        /// Get the name of the program
+        /// Get the name of the program.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The assembly title.</returns>
         string GetAssemblyTitle();
 
         /// <summary>
         /// Get the version of the program as string, in the form: major.minor.release version numbers
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The assembly version as string</returns>
         string GetAssemblyVersionAsString();
 
         /// <summary>
         /// Get a NoteFly boolean setting.
         /// </summary>
-        /// <param name="settingname"></param>
-        /// <returns></returns>
+        /// <param name="settingname">The setting name to look the valeau for.</param>
+        /// <returns>Boolean setting valeau.</returns>
         bool GetBoolSetting(string settingname);
 
         /// <summary>
         /// Get a NoteFly integer setting.
         /// </summary>
-        /// <param name="settingsname"></param>
-        /// <returns></returns>
+        /// <param name="settingsname">The setting name to look the valaue for.</param>
+        /// <returns>Integer setting valeau.</returns>
         int GetIntSetting(string settingsname);
 
         /// <summary>
         /// Get a NoteFly string setting.
         /// </summary>
-        /// <param name="settingsname"></param>
-        /// <returns></returns>
+        /// <param name="settingsname">The setting name to look the valaue for.</param>
+        /// <returns>String setting valeau.</returns>
         string GetStringSetting(string settingsname);
     }
 }

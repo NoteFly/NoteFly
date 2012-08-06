@@ -398,7 +398,7 @@ namespace NoteFly
                     if (!rtfformatbefore)
                     {
                         newrtf.Remove(postag, endtag.Length + 1); // +1 for space
-                        this.drtflen -= (endtag.Length + 1);
+                        this.drtflen -= endtag.Length + 1;
                     }
                     else
                     {
@@ -417,7 +417,7 @@ namespace NoteFly
                 if (rtf[i + starttag.Length] == ' ')
                 {
                     newrtf.Remove(postag, starttag.Length + 1); // +1 for space
-                    this.drtflen -= (starttag.Length + 1);
+                    this.drtflen -= starttag.Length + 1;
                 }
                 else
                 {
@@ -478,7 +478,7 @@ namespace NoteFly
 
                 if (!this.rtfformat)
                 {
-                    //textstarttagdone = true;
+                    ////textstarttagdone = true;
                     if (nrtextchar < int.MaxValue)
                     {
                         nrtextchar++;
@@ -835,14 +835,7 @@ namespace NoteFly
             }
             else
             {
-                //if (rtf.Length > posstartbody + VIEWKINDTAG.Length + 1)
-                //{
-                //    posstartbody += VIEWKINDTAG.Length + 1; // skip 4 for A4 in \viewkind4
-                //}
-                //else
-                //{
                 posstartbody += VIEWKINDTAG.Length;
-                //}
             }
 
             return posstartbody;

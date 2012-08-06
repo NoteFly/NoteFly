@@ -82,7 +82,7 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Load all skin names into lbxSkins.
         /// </summary>
         private void LoadAllSkinNames()
         {
@@ -621,8 +621,8 @@ namespace SkinsEditor
         /// <summary>
         /// Delete a skin
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnDeleteSkin_Click(object sender, EventArgs e)
         {
             if (this.lbxSkins.SelectedIndex >= 0)

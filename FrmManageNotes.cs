@@ -41,6 +41,26 @@ namespace NoteFly
         private const int COLNOTENRFIXEDWIDTH = 30;
 
         /// <summary>
+        /// Column index of the nr column.
+        /// </summary>
+        private const int COLINDEXNR = 0;
+
+        /// <summary>
+        /// Column index of the title column.
+        /// </summary>
+        private const int COLINDEXTITLE = 1;
+
+        /// <summary>
+        /// Column index of the visible column.
+        /// </summary>
+        private const int COLINDEXVISIBLE = 2;
+
+        /// <summary>
+        /// Column index of the skin column.
+        /// </summary>
+        private const int COLINDEXSKIN = 3;
+
+        /// <summary>
         /// Rereference to notes
         /// </summary>
         private Notes notes;
@@ -59,11 +79,6 @@ namespace NoteFly
         /// The previous of previous painted row number.
         /// </summary>
         private int secondprevrownr = -2;
-
-        private const int colindexnr = 0;
-        private const int colindextitle = 1;
-        private const int colindexvisible = 2;
-        private const int colindexskin = 3;
 
         #endregion Fields
 
@@ -86,7 +101,7 @@ namespace NoteFly
 
             if (this.dataGridViewNotes.RowCount > 0)
             {
-                if ((bool)this.dataGridViewNotes.Rows[0].Cells[colindexvisible].Value == true)
+                if ((bool)this.dataGridViewNotes.Rows[0].Cells[COLINDEXVISIBLE].Value == true)
                 {
                     this.btnShowSelectedNotes.Text = Strings.T("&hide selected");
                 }
@@ -320,7 +335,7 @@ namespace NoteFly
                     int notepos = this.GetNoteposBySelrow(selrow.Index);
                     if (notepos >= 0)
                     {
-                        selrow.Cells[colindexvisible].Value = !this.notes.GetNote(notepos).Visible;
+                        selrow.Cells[COLINDEXVISIBLE].Value = !this.notes.GetNote(notepos).Visible;
                         this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
                         if (this.notes.GetNote(notepos).Visible)
                         {
@@ -356,7 +371,7 @@ namespace NoteFly
         {
             if (e.RowIndex >= 0)
             {
-                if ((bool)this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexvisible].Value == true)
+                if ((bool)this.dataGridViewNotes.Rows[e.RowIndex].Cells[COLINDEXVISIBLE].Value == true)
                 {
                     this.btnShowSelectedNotes.Text = Strings.T("&hide selected");
                 }
@@ -386,7 +401,7 @@ namespace NoteFly
                 if (notepos >= 0)
                 {
                     this.notes.GetNote(notepos).Visible = !this.notes.GetNote(notepos).Visible;
-                    this.dataGridViewNotes.Rows[row].Cells[colindexvisible].Value = !(bool)this.dataGridViewNotes.Rows[row].Cells[colindexvisible].Value;
+                    this.dataGridViewNotes.Rows[row].Cells[COLINDEXVISIBLE].Value = !(bool)this.dataGridViewNotes.Rows[row].Cells[COLINDEXVISIBLE].Value;
                     if (this.notes.GetNote(notepos).Visible)
                     {
                         this.notes.GetNote(notepos).CreateForm();
@@ -441,15 +456,15 @@ namespace NoteFly
                 int notepos = this.GetNoteposBySelrow(e.RowIndex);
                 if (notepos >= 0)
                 {
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindextitle].Value = this.notes.GetNote(notepos).Title;
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexskin].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexskin].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
-                    if (this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexskin].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[COLINDEXTITLE].Value = this.notes.GetNote(notepos).Title;
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[COLINDEXSKIN].Style.BackColor = this.notes.GetPrimaryClr(this.notes.GetNote(notepos).SkinNr);
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[COLINDEXSKIN].Style.ForeColor = this.notes.GetTextClr(this.notes.GetNote(notepos).SkinNr);
+                    if (this.dataGridViewNotes.Rows[e.RowIndex].Cells[COLINDEXSKIN].Value.ToString() != this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr))
                     {
-                        this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexskin].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
+                        this.dataGridViewNotes.Rows[e.RowIndex].Cells[COLINDEXSKIN].Value = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
                     }
 
-                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[colindexvisible].Value = this.notes.GetNote(notepos).Visible;
+                    this.dataGridViewNotes.Rows[e.RowIndex].Cells[COLINDEXVISIBLE].Value = this.notes.GetNote(notepos).Visible;
 
                     if ((e.RowIndex == this.dataGridViewNotes.RowCount - 1) || (this.prevrownr < this.secondprevrownr))
                     {
@@ -666,21 +681,21 @@ namespace NoteFly
             }
 
             datatable.Columns.Add(colnr, typeof(string)); // colindexnr
-            datatable.Columns[colindexnr].AutoIncrement = true;
-            datatable.Columns[colindexnr].Unique = true;
+            datatable.Columns[COLINDEXNR].AutoIncrement = true;
+            datatable.Columns[COLINDEXNR].Unique = true;
             datatable.Columns.Add(coltitle, typeof(string)); // colindextitle
             datatable.Columns.Add(colvisible, typeof(bool)); //colindexvisible
             datatable.Columns.Add(colskin, typeof(string)); // colindexskin
             datatable.DefaultView.AllowEdit = true;
             datatable.DefaultView.AllowNew = false;
-            if (this.dataGridViewNotes.Columns[colindexnr] != null)
+            if (this.dataGridViewNotes.Columns[COLINDEXNR] != null)
             {
-                this.dataGridViewNotes.Columns[colindexnr].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridViewNotes.Columns[COLINDEXNR].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            if (this.dataGridViewNotes.Columns[colindexvisible] != null)
+            if (this.dataGridViewNotes.Columns[COLINDEXVISIBLE] != null)
             {
-                this.dataGridViewNotes.Columns[colindexvisible].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dataGridViewNotes.Columns[COLINDEXVISIBLE].CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
             this.dataGridViewNotes.Font = new Font(Settings.ManagenotesFontFamily, Settings.ManagenotesFontsize);
@@ -697,10 +712,10 @@ namespace NoteFly
         private DataTable AddDatatableNoteRow(DataTable datatable, int notepos)
         {
             DataRow dr = datatable.NewRow();
-            dr[colindexnr] = notepos + 1; // enduser numbering, start at 1 instead of 0.
-            dr[colindextitle] = this.notes.GetNote(notepos).Title;
-            dr[colindexvisible] = this.notes.GetNote(notepos).Visible;
-            dr[colindexskin] = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
+            dr[COLINDEXNR] = notepos + 1; // enduser numbering, start at 1 instead of 0.
+            dr[COLINDEXTITLE] = this.notes.GetNote(notepos).Title;
+            dr[COLINDEXVISIBLE] = this.notes.GetNote(notepos).Visible;
+            dr[COLINDEXSKIN] = this.notes.GetSkinName(this.notes.GetNote(notepos).SkinNr);
             datatable.Rows.Add(dr);
             return datatable;
         }
@@ -756,7 +771,7 @@ namespace NoteFly
         {
             if (rowindex >= 0)
             {
-                return Convert.ToInt32(this.dataGridViewNotes.Rows[rowindex].Cells[colindexnr].Value) - 1;
+                return Convert.ToInt32(this.dataGridViewNotes.Rows[rowindex].Cells[COLINDEXNR].Value) - 1;
             }
             else
             {
@@ -867,24 +882,24 @@ namespace NoteFly
             }
 
             int partunit = (this.dataGridViewNotes.Width - COLNOTENRFIXEDWIDTH) / 10;
-            if (this.dataGridViewNotes.Columns[colindexnr] != null)
+            if (this.dataGridViewNotes.Columns[COLINDEXNR] != null)
             {
-                this.dataGridViewNotes.Columns[colindexnr].Width = 1 * COLNOTENRFIXEDWIDTH;
+                this.dataGridViewNotes.Columns[COLINDEXNR].Width = 1 * COLNOTENRFIXEDWIDTH;
             }
 
-            if (this.dataGridViewNotes.Columns[colindextitle] != null)
+            if (this.dataGridViewNotes.Columns[COLINDEXTITLE] != null)
             {
-                this.dataGridViewNotes.Columns[colindextitle].Width = 6 * partunit;
+                this.dataGridViewNotes.Columns[COLINDEXTITLE].Width = 6 * partunit;
             }
 
-            if (this.dataGridViewNotes.Columns[colindexvisible] != null)
+            if (this.dataGridViewNotes.Columns[COLINDEXVISIBLE] != null)
             {
-                this.dataGridViewNotes.Columns[colindexvisible].Width = 1 * partunit;
+                this.dataGridViewNotes.Columns[COLINDEXVISIBLE].Width = 1 * partunit;
             }
 
-            if (this.dataGridViewNotes.Columns[colindexskin] != null)
+            if (this.dataGridViewNotes.Columns[COLINDEXSKIN] != null)
             {
-                this.dataGridViewNotes.Columns[colindexskin].Width = 3 * partunit;
+                this.dataGridViewNotes.Columns[COLINDEXSKIN].Width = 3 * partunit;
             }
         }
 

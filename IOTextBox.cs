@@ -36,7 +36,7 @@ namespace NoteFly
         /// <summary>
         /// Avoid illegal path characters
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Keyboard event arguments</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             char[] forbiddenpathchars = Path.GetInvalidPathChars();
@@ -58,7 +58,7 @@ namespace NoteFly
         /// Check file path or path if it exists,
         /// only after IOTextBox is been created.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         protected override void OnTextChanged(System.EventArgs e)
         {
             if (this.setuptext)
@@ -80,7 +80,7 @@ namespace NoteFly
         /// <summary>
         /// Change background to inactive control backgroundcolor if control becomes inactive.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments</param>
         protected override void OnEnabledChanged(System.EventArgs e)
         {
             if (!this.Enabled)

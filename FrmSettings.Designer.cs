@@ -1821,7 +1821,7 @@ namespace NoteFly
             // 
             // lblTextDirection
             // 
-            this.lblTextDirection.AccessibleDescription = "";
+            this.lblTextDirection.AccessibleDescription = string.Empty;
             this.lblTextDirection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTextDirection.AutoSize = true;
             this.lblTextDirection.ImeMode = System.Windows.Forms.ImeMode.NoControl;

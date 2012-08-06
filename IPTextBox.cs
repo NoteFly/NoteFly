@@ -19,8 +19,8 @@
 //-----------------------------------------------------------------------
 namespace NoteFly
 {
-    using System.Windows.Forms;
     using System.Drawing;
+    using System.Windows.Forms;
 
     /// <summary>
     /// IP address textbox.
@@ -44,7 +44,7 @@ namespace NoteFly
         private bool useipv6addr = true;
 
         /// <summary>
-        /// Use a IPv4 address.
+        /// Gets or sets a value indicating a IPv4 address is used.
         /// </summary>
         public bool UseIPv4addr
         {
@@ -60,7 +60,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Use a IPv6 address
+        /// Gets or sets a value indicating whether a IPv6 address is used.
         /// </summary>
         public bool UseIPv6addr
         {
@@ -78,7 +78,7 @@ namespace NoteFly
         /// <summary>
         /// Get the IP address
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The IP address as string or empty string if no address entered</returns>
         public string GetIPAddress()
         {
             if (this.ipaddr != null)
@@ -168,11 +168,33 @@ namespace NoteFly
         /// <summary>
         /// Validate ip address on key up.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Keyboard event arguments</param>
         protected override void OnKeyUp(KeyEventArgs e)
         {
             this.ValidateIP();
             base.OnKeyUp(e);
+        }
+
+        /// <summary>
+        /// Revalidate ip address on enable/disable change of this control.
+        /// </summary>
+        /// <param name="e">Event arguments</param>
+        protected override void OnEnabledChanged(System.EventArgs e)
+        {
+            if (!this.Enabled)
+            {
+                this.BackColor = SystemColors.Control;
+            }
+            else
+            {
+                this.BackColor = SystemColors.Window;
+                if (this.TextLength > 0)
+                {
+                    this.ValidateIP();
+                }
+            }
+
+            base.OnEnabledChanged(e);
         }
 
         /// <summary>
@@ -212,26 +234,6 @@ namespace NoteFly
             return numdots;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnEnabledChanged(System.EventArgs e)
-        {
-            if (!this.Enabled)
-            {
-                this.BackColor = SystemColors.Control;
-            }
-            else
-            {
-                this.BackColor = SystemColors.Window;
-                if (this.TextLength > 0)
-                {
-                    this.ValidateIP();
-                }
-            }
 
-            base.OnEnabledChanged(e);
-        }
     }
 }

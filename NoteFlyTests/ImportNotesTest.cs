@@ -9,29 +9,38 @@
     /// <summary>
     /// This is a test class for ImportNotesTest and is intended
     /// to contain all ImportNotesTest Unit Tests
-    ///</summary>
+    /// </summary>
     [TestClass()]
     public class ImportNotesTest
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private static string testnote1;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private TestContext testContextInstance;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private Notes notes = new Notes(false);
-
-        private static string testnote1;
 
         /// <summary>
         /// Gets or sets the test context which provides
         /// information about and functionality for the current test run.
-        ///</summary>
+        /// </summary>
         public TestContext TestContext
         {
             get
             {
-                return testContextInstance;
+                return this.testContextInstance;
             }
             set
             {
-                testContextInstance = value;
+                this.testContextInstance = value;
             }
         }
 
@@ -66,11 +75,11 @@
 
         /// <summary>
         /// A test for ReadTomboyfile
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void ReadTomboyfileTest()
         {
-            ImportNotes importnotes = new ImportNotes(notes);
+            ImportNotes importnotes = new ImportNotes(this.notes);
             StreamReader reader = new StreamReader(testnote1, true); 
 
             TextBox tbtitle = new TextBox();

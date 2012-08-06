@@ -129,9 +129,9 @@ namespace NoteFly
         #region Methods (30)
 
         /// <summary>
-        /// 
+        /// Set the tooltips for the add note and cancel note buttons.
         /// </summary>
-        /// <param name="editnote"></param>
+        /// <param name="editnote">True if this form is used for note editing and not creating a new note.</param>
         private void SetTooltipAddCancelBtns(bool editnote)
         {
             if (editnote)
@@ -149,7 +149,7 @@ namespace NoteFly
         /// <summary>
         /// Set the form title.
         /// </summary>
-        /// <param name="editnote"></param>
+        /// <param name="editnote">True if this form is used for note editing and not creating a new note.</param>
         private void SetFormTitle(bool editnote)
         {
             StringBuilder sbtitle = new StringBuilder();
@@ -272,7 +272,7 @@ namespace NoteFly
         /// <summary>
         /// User pressed the accept note button. Note will now be saved.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnAddNote_Click(object sender, EventArgs e)
         {
@@ -333,7 +333,7 @@ namespace NoteFly
         /// <summary>
         /// User pressed the cancel button, all things typed in FrmNewNote window will be lost.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -710,7 +710,7 @@ namespace NoteFly
         /// <summary>
         /// Pasting text as note content.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void pastTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -900,7 +900,7 @@ namespace NoteFly
         /// <summary>
         /// Force context menu to show up.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Mouse event arguments</param>
         private void rtbNote_MouseClick(object sender, MouseEventArgs e)
         {
@@ -941,7 +941,7 @@ namespace NoteFly
         /// <summary>
         /// Toggle toolbar buttons.
         /// </summary>
-        /// <param name="enabled">true if toolbar should be enabled.</param>
+        /// <param name="enabled">True if toolbar should be enabled.</param>
         private void SetToolbarEnabled(bool enabled)
         {
             this.btnTextBold.Enabled = enabled;

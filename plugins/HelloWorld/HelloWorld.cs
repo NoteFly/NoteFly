@@ -22,7 +22,7 @@
         /// <summary>
         /// Menu clicked
         /// </summary>
-        /// <param name="rtbnote">use the content of rtbnote for the note content, 
+        /// <param name="rtbnote">Use the content of rtbnote for the note content, 
         /// this way note content does not have to be read again from disk.</param>
         /// <param name="title">The title of the note</param>
         public override void ShareMenuClicked(System.Windows.Forms.RichTextBox rtbnote, string title)
