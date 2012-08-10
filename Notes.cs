@@ -682,6 +682,7 @@ namespace NoteFly
         {
             Type type = typeof(Settings);
             System.Reflection.FieldInfo[] fields = type.GetFields();
+
             // Loop through all fields
             foreach (var field in fields) 
             {
@@ -782,6 +783,7 @@ namespace NoteFly
                     {
                         const string NF2_NOTEEXTENSION = ".nfn";
                         string[] notefilespath = Directory.GetFiles(nf2notessavepath, "*" + NF2_NOTEEXTENSION, SearchOption.TopDirectoryOnly);
+
                         // import notes by simple copy them over since note file format is not changed in notefly 3.0.x
                         for (int i = 0; i < notefilespath.Length; i++)
                         {

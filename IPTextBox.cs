@@ -92,7 +92,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Check if the ip address in the text propertie is valid.
+        /// And set the backgroundcolor of this control if text contains a valid ip address to LightGreen.
+        /// And if the text contains an invalid ip address to Salmon.
         /// </summary>
         public void ValidateIP()
         {
@@ -233,7 +235,5 @@ namespace NoteFly
 
             return numdots;
         }
-
-
     }
 }

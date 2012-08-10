@@ -40,6 +40,16 @@ namespace NoteFly
         #region Fields (5)
 
         /// <summary>
+        /// The default folder name in which notes are stored in application data folder.
+        /// </summary>
+        private const string DEFAULTNOTESFOLDERNAME = "notes";
+
+        /// <summary>
+        /// The default folder name in which plugins are stored in application data folder.
+        /// </summary>
+        private const string DEFAULTPLUGINSFOLDERNAME = "plugins";
+
+        /// <summary>
         /// Reference to notes class.
         /// </summary>
         private static Notes notes;
@@ -55,14 +65,9 @@ namespace NoteFly
         private static TrayIcon trayicon;
 
         /// <summary>
-        /// The default folder name in which notes are stored in application data folder.
+        /// 
         /// </summary>
-        private const string DEFAULTNOTESFOLDERNAME = "notes";
-
-        /// <summary>
-        /// The default folder name in which plugins are stored in application data folder.
-        /// </summary>
-        private const string DEFAULTPLUGINSFOLDERNAME = "plugins";
+        private static RSAVerify rsaverify;
 
         #endregion Fields
 
@@ -172,8 +177,6 @@ namespace NoteFly
             }
         }
 
-        private static RSAVerify rsaverify;
-
         #endregion Properties
 
         #region Methods (21)
@@ -184,7 +187,7 @@ namespace NoteFly
         /// And the .NET 'revision' number is actaully the build number, because this number is changed every build/compile of the program.
         /// (I know this is confuzzing blame the .NET creators.)</remarks>
         /// </summary>
-        /// <returns>a string containing the version number of this application in the form of major.minor.release/'dotNET build' number</returns>
+        /// <returns>A string containing the version number of this application in the form of major.minor.release/'dotNET build' number.</returns>
         public static short[] GetVersion()
         {
             short[] version = new short[3];
@@ -197,7 +200,7 @@ namespace NoteFly
         /// <summary>
         /// If set ask the user if the want to load the link.
         /// </summary>
-        /// <param name="uri_text">the uniform resource location</param>
+        /// <param name="uri_text">The uniform resource location.</param>
         /// <param name="allow_ask">Allow to ask user if it wants to visit a url.</param>
         public static void LoadLink(string uri_text, bool allow_ask)
         {
@@ -373,7 +376,7 @@ namespace NoteFly
         /// Get the default notes folder for this programme.
         /// If the folder does not exists create it.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The default notes save path as string.</returns>
         public static string GetDefaultNotesFolder()
         {
             string notesfolder = Path.Combine(Program.AppDataFolder, DEFAULTNOTESFOLDERNAME);
@@ -389,7 +392,7 @@ namespace NoteFly
         /// Get the default plugins folder for this programme.
         /// If the folder does not exists create it.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The default plugin folder.</returns>
         public static string GetDefaultPluginFolder()
         {
             string pluginsfolder = Path.Combine(Program.AppDataFolder, DEFAULTPLUGINSFOLDERNAME);
@@ -479,9 +482,9 @@ namespace NoteFly
         /// Find out if the version numbers given as array is higher
         /// than the required version numbers given as an array.
         /// </summary>
-        /// <param name="versionA"></param>
-        /// <param name="versionB"></param>
-        /// <returns> -3 if versionB is not valid.
+        /// <param name="versionA">A version as array.with major, minor and release numbers</param>
+        /// <param name="versionB">A version as array with major, minor and release numbers</param>
+        /// <returns> -3 If versionB is not valid.
         /// -2 if versionA is not valid.
         /// -1 if versionA is lower than versionB, 
         /// 0 if versionA is equal with versionB,
@@ -520,6 +523,7 @@ namespace NoteFly
         /// <summary>
         /// Parser a string as a version number array with major, minor, release numbers
         /// </summary>
+        /// <param name="versionstring">An string with a version.</param>
         /// <returns>Array with version numbers shorts.
         /// First element is major version number,
         /// second element is minor version number,
@@ -557,7 +561,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="args">An array of arguments the check</param>
         /// <param name="visualstyle">Use XP visual styles on windows.</param>
-        /// <param name="resetpositions">should all visual notes position get reset.</param>
+        /// <param name="resetpositions">Should all visual notes position get reset.</param>
         private static void ParserArguments(string[] args, out bool visualstyle, out bool resetpositions)
         {
             visualstyle = true;
@@ -661,7 +665,7 @@ namespace NoteFly
             sb.AppendLine("-lognone".PadRight(COLCHARWIDTH, ' ') + Strings.T("Don't log exceptions, errors and debug messages."));
 #if windows
             sb.AppendLine("-suspressadminwarn".PadRight(COLCHARWIDTH, ' ') + "Supress the warning that NoteFly is running");
-            sb.AppendLine("".PadRight(COLCHARWIDTH, ' ') + Strings.T("with unnecessary administrator privilege."));
+            sb.AppendLine(string.Empty.PadRight(COLCHARWIDTH, ' ') + Strings.T("with unnecessary administrator privilege."));
 #endif
             sb.AppendLine("-resetpositions".PadRight(COLCHARWIDTH, ' ') + Strings.T("Reset all positions of visual notes at startup."));
             sb.AppendLine("-resetsettings".PadRight(COLCHARWIDTH, ' ') + Strings.T("Reset all NoteFly settings to default."));

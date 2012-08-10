@@ -97,6 +97,12 @@ namespace NoteFly
             }
         }
 
+#if windows
+        // get network status
+        [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
+        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
+#endif
+
         /// <summary>
         /// Http background worker thread reading stream
         /// and writing to memory in string.
@@ -201,12 +207,6 @@ namespace NoteFly
 
             return request;
         }
-
-#if windows
-        // get network status
-        [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
-        private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-#endif
 
         /// <summary>
         /// Check if there is internet connection, if not warn user.

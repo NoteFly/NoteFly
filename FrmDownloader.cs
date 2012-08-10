@@ -136,6 +136,110 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Find out what kind of compression on the file used.
+        /// </summary>
+        /// <param name="file">The compressed file</param>
+        /// <returns>0 for not a know compressed file.
+        /// 1 for a Zip file.
+        /// 2 for GZip file.
+        /// </returns>
+        public int GetFileCompressedkind(string file)
+        {
+            if (file.EndsWith(ZIPEXTENSION, StringComparison.OrdinalIgnoreCase))
+            {
+                return 1;
+            }
+            else if (file.EndsWith(GZIPEXTENSION, StringComparison.OrdinalIgnoreCase))
+            {
+                return 2;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Decompress zip archive file.
+        /// </summary>
+        /// <param name="zipfile">The zip file full filepath.</param>
+        /// <param name="extensionstodecompress">The extension of file in the zipfile that are unzipped.</param>
+        public bool DecompressZipFile(string zipfile, string[] extensionstodecompress)
+        {
+            bool succeeded = false;
+            if (Directory.Exists(this.storefolder) && File.Exists(zipfile))
+            {
+                ZipStorer zip = null;
+                try
+                {
+                    zip = ZipStorer.Open(zipfile, FileAccess.Read);
+                    List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
+                    foreach (ZipStorer.ZipFileEntry entry in dir)
+                    {
+                        for (int i = 0; i < extensionstodecompress.Length; i++)
+                        {
+                            if (entry.FilenameInZip.EndsWith(extensionstodecompress[i]))
+                            {
+                                // disable plugin for as we are updating.
+                                PluginsManager.DisablePlugin(entry.FilenameInZip);
+
+                                // extract file
+                                zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip));
+                            }
+                        }
+                    }
+
+                    succeeded = true;
+                }
+                catch (Exception)
+                {
+                    succeeded = false;
+                }
+                finally
+                {
+                    if (zip != null)
+                    {
+                        zip.Close();
+                    }
+                }
+            }
+
+            return succeeded;
+        }
+
+        /// <summary>
+        /// Decompress GZip single file.
+        /// </summary>
+        /// <param name="compressedfile">The compressed gzip file.</param>
+        /// <returns></returns>
+        public bool DecompressGZipFile(string compressedfile)
+        {
+            bool succeeded = false;
+            if (File.Exists(compressedfile))
+            {
+                string newfilename = compressedfile.Substring(0, compressedfile.Length - GZIPEXTENSION.Length);
+                using (FileStream inputfilestream = File.Open(compressedfile, FileMode.Open), outputfilestream = File.Create(newfilename))
+                {
+                    byte[] outputbuffer;
+                    using (GZipStream alg = new GZipStream(inputfilestream, CompressionMode.Decompress))
+                    {
+                        outputbuffer = new byte[inputfilestream.Length];
+                        int counter;
+                        while ((counter = alg.Read(outputbuffer, 0, outputbuffer.Length)) != 0)
+                        {
+                            outputfilestream.Write(outputbuffer, 0, counter);
+                        }
+                    }
+
+                    outputbuffer = null;
+                    succeeded = true;
+                }
+            }
+
+            return succeeded;
+        }
+
+        /// <summary>
         /// Create a new webclient.
         /// </summary>
         /// <returns>True if created succesfully.</returns>
@@ -262,30 +366,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Find out what kind of compression on the file used.
-        /// </summary>
-        /// <param name="file">The compressed file</param>
-        /// <returns>0 for not a know compressed file.
-        /// 1 for a Zip file.
-        /// 2 for GZip file.
-        /// </returns>
-        public int GetFileCompressedkind(string file)
-        {
-            if (file.EndsWith(ZIPEXTENSION, StringComparison.OrdinalIgnoreCase))
-            {
-                return 1;
-            } 
-            else if (file.EndsWith(GZIPEXTENSION, StringComparison.OrdinalIgnoreCase))
-            {
-                return 2;
-            } 
-            else
-            {
-                return 0;
-            }
-        }
-
-        /// <summary>
         /// Figure out the new file location based on the url and the folder where to save the file in.
         /// </summary>
         /// <param name="url">The url of the file to download.</param>
@@ -319,85 +399,6 @@ namespace NoteFly
             }
 
             return Path.Combine(this.storefolder, filename);
-        }
-
-        /// <summary>
-        /// Decompress zip archive file.
-        /// </summary>
-        /// <param name="zipfilename">The zip file filename.</param>
-        /// <param name="extensions">The extension of file in the zipfile that are unzipped.</param>
-        public bool DecompressZipFile(string zipfile, string[] extensionstodecompress)
-        {
-            bool succeeded = false;
-            if (Directory.Exists(this.storefolder) && File.Exists(zipfile))
-            {
-                ZipStorer zip = null;
-                try
-                {
-                    zip = ZipStorer.Open(zipfile, FileAccess.Read);
-                    List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
-                    foreach (ZipStorer.ZipFileEntry entry in dir)
-                    {
-                        for (int i = 0; i < extensionstodecompress.Length; i++)
-                        {
-                            if (entry.FilenameInZip.EndsWith(extensionstodecompress[i]))
-                            {
-                                // disable plugin for as we are updating.
-                                PluginsManager.DisablePlugin(entry.FilenameInZip);
-                                // extract file
-                                zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip));
-                            }
-                        }
-                    }
-
-                    succeeded = true;
-                }
-                catch (Exception)
-                {
-                    succeeded = false;
-                }
-                finally
-                {
-                    if (zip != null)
-                    {
-                        zip.Close();
-                    }
-                }
-            }
-
-            return succeeded;
-        }
-
-        /// <summary>
-        /// Decompress GZip single file.
-        /// </summary>
-        /// <param name="compressedfile">The compressed gzip file.</param>
-        /// <returns></returns>
-        public bool DecompressGZipFile(string compressedfile)
-        {
-            bool succeeded = false;
-            if (File.Exists(compressedfile))
-            {
-                string newfilename = compressedfile.Substring(0, compressedfile.Length - GZIPEXTENSION.Length);
-                using (FileStream inputfilestream = File.Open(compressedfile, FileMode.Open), outputfilestream = File.Create(newfilename))
-                {
-                    byte[] outputbuffer;
-                    using (GZipStream alg = new GZipStream(inputfilestream, CompressionMode.Decompress))
-                    {
-                        outputbuffer = new byte[inputfilestream.Length];
-                        int counter;
-                        while ((counter = alg.Read(outputbuffer, 0, outputbuffer.Length)) != 0)
-                        {
-                            outputfilestream.Write(outputbuffer, 0, counter);
-                        }
-                    }
-
-                    outputbuffer = null;
-                    succeeded = true;
-                }
-            }
-
-            return succeeded;
         }
     }
 }

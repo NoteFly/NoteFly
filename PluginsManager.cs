@@ -161,7 +161,7 @@ namespace NoteFly
         /// <summary>
         /// Get the names of all plugins installed.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An array with installed plugin names.</returns>
         public static string[] GetInstalledPlugins()
         {
             List<string> pluginsnames = new List<string>();
@@ -291,7 +291,7 @@ namespace NoteFly
         /// Get if a plugin dll file enabled.
         /// </summary>
         /// <param name="dllfilename">The plugin dll file</param>
-        /// <returns></returns>
+        /// <returns>True if plugin is enabled.</returns>
         public static bool IsPluginEnabled(string dllfilename)
         {
             for (int i = 0; i < enabledplugins.Count; i++)

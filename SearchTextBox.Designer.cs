@@ -8,32 +8,32 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// 
+        /// TextBox tbKeywords
         /// </summary>
         private System.Windows.Forms.TextBox tbKeywords;
 
         /// <summary>
-        /// 
+        /// Label lblTextSearch
         /// </summary>
         private System.Windows.Forms.Label lblTextSearch;
 
         /// <summary>
-        /// 
+        /// Timer timerStartAutoSearch
         /// </summary>
         private System.Windows.Forms.Timer timerStartAutoSearch;
 
         /// <summary>
-        /// 
+        /// TableLayoutPanel tableLayoutPnlSearchbox
         /// </summary>
         private System.Windows.Forms.TableLayoutPanel tableLayoutPnlSearchbox;
 
         /// <summary>
-        /// 
+        /// Button btnKeywordClear
         /// </summary>
         private System.Windows.Forms.Button btnKeywordClear;
 
         /// <summary>
-        /// 
+        /// ToolTip toolTips
         /// </summary>
         private System.Windows.Forms.ToolTip toolTips;
 

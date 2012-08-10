@@ -20,9 +20,9 @@ namespace NoteFly
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
-    using System.Security.Cryptography;
     using System.IO;
+    using System.Security.Cryptography;
+    using System.Text;
 
     /// <summary>
     /// This class can be used to verify a file or string with the NoteFly public key to check 
@@ -38,41 +38,43 @@ namespace NoteFly
         /// <summary>
         /// The RSA NoteFly keysize used.
         /// </summary>
-        private const int rsakeysize = 3072;
+        private const int RSAKETSIZE = 3072;
 
         /// <summary>
         /// The RSA NoteFly public key.
         /// </summary>
-        private const string xmlrsapublickey = "<RSAKeyValue><Modulus>zxrgHdkENFOlcTI0AxDMhLgNzduTikBd1EX9gwWz+vTxgfR3RM2P3M8ImNL6QYk0Sch78wv3zac3pjWINoqpazFBwb1A0jawJUxgftfbEmfDvBuK58f+FOeE4KxYE9za+jZyxCn6bbj/M7cK2wgo8Mhmq/WP9aFUf8dcVcQH+3cqNt56zLSUXHcIdexZwVRv9SbzlY6MtlmRuzKO++O3ersXWuJPf8DJu98bAP2W0B3puPhNtXb6SnBF/FO9BZUDcCYNrJ0IuwyMA1nBm8aFPfok12ohzSAP1r5Hs0yVtmOXucWBdv7lim9jhL1aqXsh0U2aT0zxBaLWZsU7WwX8Iikb4ZEXkTsmBRHhPGfQ81P8zZAlgmmmCC+jLRK93cPZYcH9t6UFcdGgaDAurck9bmB+Mb6bahkv5eiumRbDXixLN3jVIDtOjI2Bg4KvdgYKJskuXpICadF/rC/ZNq7ZtONJ7wrVUu+Q/dRONE3okoCeZjK7JUdlVdWGVGG7fgZj</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
+        private const string XMLRSAPUBLICKEY = "<RSAKeyValue><Modulus>zxrgHdkENFOlcTI0AxDMhLgNzduTikBd1EX9gwWz+vTxgfR3RM2P3M8ImNL6QYk0Sch78wv3zac3pjWINoqpazFBwb1A0jawJUxgftfbEmfDvBuK58f+FOeE4KxYE9za+jZyxCn6bbj/M7cK2wgo8Mhmq/WP9aFUf8dcVcQH+3cqNt56zLSUXHcIdexZwVRv9SbzlY6MtlmRuzKO++O3ersXWuJPf8DJu98bAP2W0B3puPhNtXb6SnBF/FO9BZUDcCYNrJ0IuwyMA1nBm8aFPfok12ohzSAP1r5Hs0yVtmOXucWBdv7lim9jhL1aqXsh0U2aT0zxBaLWZsU7WwX8Iikb4ZEXkTsmBRHhPGfQ81P8zZAlgmmmCC+jLRK93cPZYcH9t6UFcdGgaDAurck9bmB+Mb6bahkv5eiumRbDXixLN3jVIDtOjI2Bg4KvdgYKJskuXpICadF/rC/ZNq7ZtONJ7wrVUu+Q/dRONE3okoCeZjK7JUdlVdWGVGG7fgZj</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
 
         /// <summary>
         /// The current RSA signature used.
         /// </summary>
         private string signature = string.Empty;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private RSACryptoServiceProvider rsaCryptoServiceProvider = null;
 
         /// <summary>
-        /// Create a new instance of RSAVerify class.
+        /// Initializes a new instance of the <see cref="RSAVerify" /> class.
         /// </summary>
-        /// <param name="signature"></param>
         public RSAVerify()
         {
-            this.rsaCryptoServiceProvider = new RSACryptoServiceProvider(rsakeysize);
+            this.rsaCryptoServiceProvider = new RSACryptoServiceProvider(RSAKETSIZE);
         }
 
         /// <summary>
-        /// Create a new instance of RSAVerify class.
+        /// Initializes a new instance of the <see cref="RSAVerify" /> class.
         /// </summary>
-        /// <param name="signaturedata"></param>
+        /// <param name="signaturedata">An RSA signature for data.</param>
         public RSAVerify(string signaturedata)
         {
-            this.rsaCryptoServiceProvider = new RSACryptoServiceProvider(rsakeysize);
+            this.rsaCryptoServiceProvider = new RSACryptoServiceProvider(RSAKETSIZE);
             this.Signature = signaturedata;
         }
 
         /// <summary>
-        /// The rsa signature
+        /// Sets the rsa signature.
         /// </summary>
         public string Signature
         {
@@ -89,7 +91,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Check if their is a signature
+        /// Gets a value indicating whether their is a signature.
         /// </summary>
         public bool IsSignatureSet
         {
@@ -102,7 +104,8 @@ namespace NoteFly
         /// <summary>
         /// Check a signature for a file and display a error if signature is invalid.
         /// </summary>
-        /// <param name="filepath"></param>
+        /// <param name="filepath">The full file path to the file to check the signature from.</param>
+        /// <returns>True if RSA signature of hash of file is valid for a file.</returns>
         public bool CheckFileSignatureAndDisplayErrors(string filepath)
         {
             if (this.CheckSignatureFilehash(filepath))
@@ -121,8 +124,8 @@ namespace NoteFly
         /// <summary>
         /// Check a signature for a hash of a file.
         /// </summary>
-        /// <param name="filepath"></param>
-        /// <returns></returns>
+        /// <param name="filepath">The full file path to the file to check the signature from the hash of the file.</param>
+        /// <returns>True if the hash of the file is valid by the signature</returns>
         public bool CheckSignatureFilehash(string filepath)
         {
             string sha256filehash = this.Sha256file(filepath);
@@ -132,12 +135,12 @@ namespace NoteFly
         /// <summary>
         /// Check data and with the signature.
         /// </summary>
-        /// <param name="data"></param>
-        /// <param name="signature"></param>
-        /// <returns></returns>
+        /// <param name="data">The data to check the signature from.</param>
+        /// <param name="signature">The signature of the data.</param>
+        /// <returns>True if the signature is valid for the data.</returns>
         private bool IsValidSignature(string data, object hashinsignatureused)
         {
-            this.rsaCryptoServiceProvider.FromXmlString(xmlrsapublickey);
+            this.rsaCryptoServiceProvider.FromXmlString(XMLRSAPUBLICKEY);
             byte[] databytes = Encoding.UTF32.GetBytes(data);
             byte[] signaturebytes = Convert.FromBase64String(this.signature);
             return this.rsaCryptoServiceProvider.VerifyData(databytes, hashinsignatureused, signaturebytes);
@@ -146,8 +149,8 @@ namespace NoteFly
         /// <summary>
         /// Generate a SHA 256 hash for a file.
         /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
+        /// <param name="file">The full file path to create the hash from.</param>
+        /// <returns>The SHA256 hash as string</returns>
         private string Sha256file(string file)
         {
             using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))

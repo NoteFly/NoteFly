@@ -31,6 +31,25 @@ namespace NoteFly
 
         #endregion
 
+        #region Public methods
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyboardListener" /> class.
+        /// </summary>
+        public KeyboardListener()
+        {
+            ListeningWindow.KeyDelegate aKeyDelegate = new ListeningWindow.KeyDelegate(this.KeyHandler);
+            s_Listener = new ListeningWindow(aKeyDelegate);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// For every application thread that is interested in keyboard events
+        /// an EventHandler can be added to this variable
+        /// </summary>
+        public event EventHandler s_KeyEventHandler;
+
         #region Private methods
         /// <summary>
         /// The function that will handle all keyboard activity signaled by the ListeningWindow.
@@ -94,25 +113,6 @@ namespace NoteFly
                 this.m_Msg = aMsg;
                 this.m_Key = aKey;
             }
-        }    
-
-        /// <summary>
-        /// For every application thread that is interested in keyboard events
-        /// an EventHandler can be added to this variable
-        /// </summary>
-        public event EventHandler s_KeyEventHandler;
-
-        #endregion
-
-        #region Public methods
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="KeyboardListener" /> class.
-        /// </summary>
-        public KeyboardListener()
-        {
-            ListeningWindow.KeyDelegate aKeyDelegate = new ListeningWindow.KeyDelegate(this.KeyHandler);
-            s_Listener = new ListeningWindow(aKeyDelegate);
         }
 
         #endregion

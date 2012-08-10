@@ -49,7 +49,7 @@ namespace NoteFly
         #region Constructors (1)
 
         /// <summary>
-        /// Initializes new instance of ImportNote class.
+        ///Initializes a new instance of the <see cref="ImportNotes" /> class.
         /// </summary>
         /// <param name="notes">Reference to notes class</param>
         public ImportNotes(Notes notes)
@@ -266,12 +266,12 @@ namespace NoteFly
 
                                 break;
                             // todo: add support for more tomboy formating
-                            //case "highlight":
-                            //    break;
-                            //case "size:small":
-                            //    break;
-                            //case "size:huge":
-                            //    break;
+                            ////case "highlight":
+                            ////    break;
+                            ////case "size:small":
+                            ////    break;
+                            ////case "size:huge":
+                            ////    break;
                         }
                     }
                 }

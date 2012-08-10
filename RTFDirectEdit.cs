@@ -122,10 +122,10 @@ namespace NoteFly
         /// <summary>
         /// Make text bold.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
-        /// <param name="sellentext"></param>
-        /// <returns></returns>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext">The selected length to make bold.</param>
+        /// <returns>The rtf stream with new bold formatting.</returns>
         public string AddBoldTagInRTF(string rtf, int textpos, int sellentext)
         {
             return this.SetTagInRTF(rtf, textpos, sellentext, RTFBOLDTAG, RTFBOLDENDTAG);
@@ -134,10 +134,10 @@ namespace NoteFly
         /// <summary>
         /// Make text italic.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
-        /// <param name="sellentext"></param>
-        /// <returns></returns>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext">The selected length to make italic.</param>
+        /// <returns>The rtf stream with new italic formatting.</returns>
         public string AddItalicTagInRTF(string rtf, int textpos, int sellentext)
         {
             return this.SetTagInRTF(rtf, textpos, sellentext, RTFITALICTAG, RTFITALICENDTAG);
@@ -146,10 +146,10 @@ namespace NoteFly
         /// <summary>
         /// Make text underline.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
-        /// <param name="sellentext"></param>
-        /// <returns></returns>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext">The selected length to make underline.</param>
+        /// <returns>The rtf stream with new underline formatting.</returns>
         public string AddUnderlineTagInRTF(string rtf, int textpos, int sellentext)
         {
             return this.SetTagInRTF(rtf, textpos, sellentext, RTFUNDERLINETAG, RTFUNDERLINEENDTAG);
@@ -158,22 +158,22 @@ namespace NoteFly
         /// <summary>
         /// Make text striketought.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
-        /// <param name="sellentext"></param>
-        /// <returns></returns>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext">The selected length to make striketought.</param>
+        /// <returns>The rtf stream with new striketought formatting.</returns>
         public string AddStrikeTagInRTF(string rtf, int textpos, int sellentext)
         {
             return this.SetTagInRTF(rtf, textpos, sellentext, RTFSTRIKETAG, RTFSTRIKEENDTAG);
         }
 
         /// <summary>
-        /// Make text bold.
+        /// Remove text bold.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
-        /// <param name="sellentext"></param>
-        /// <returns></returns>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext">The selected length to remove bold formatting from.</param>
+        /// <returns>The rtf stream without bold formatting.</returns>
         public string RemoveBoldTagsInRTF(string rtf, int textpos, int sellentext)
         {
             return this.RemoveTagsInRTF(rtf, textpos, sellentext, RTFBOLDTAG, RTFBOLDENDTAG);
@@ -182,10 +182,10 @@ namespace NoteFly
         /// <summary>
         /// Remove italic text.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
-        /// <param name="sellentext"></param>
-        /// <returns></returns>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext">The selected length to remove italic formatting from.</param>
+        /// <returns>The new rtf stream without italic formatting.</returns>
         public string RemoveItalicTagsInRTF(string rtf, int textpos, int sellentext)
         {
             return this.RemoveTagsInRTF(rtf, textpos, sellentext, RTFITALICTAG, RTFITALICENDTAG);
@@ -194,10 +194,10 @@ namespace NoteFly
         /// <summary>
         /// Remove striketought text.
         /// </summary>
-        /// <param name="rtf">RTF text</param>
-        /// <param name="textpos">The position.</param>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
         /// <param name="sellentext">The select text length.</param>
-        /// <returns></returns>
+        /// <returns>The new rtf stream without striketought formatting.</returns>
         public string RemoveStrikeTagsInRTF(string rtf, int textpos, int sellentext)
         {
             return this.RemoveTagsInRTF(rtf, textpos, sellentext, RTFSTRIKETAG, RTFSTRIKEENDTAG);
@@ -206,24 +206,24 @@ namespace NoteFly
         /// <summary>
         /// Remove underline text.
         /// </summary>
-        /// <param name="rtf">RTF text</param>
-        /// <param name="textpos">The text position</param>
-        /// <param name="sellentext">The selected text length</param>
-        /// <returns></returns>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext">The selected text length.</param>
+        /// <returns>The new rtf stream.</returns>
         public string RemoveUnderlineTagsInRTF(string rtf, int textpos, int sellentext)
         {
             return this.RemoveTagsInRTF(rtf, textpos, sellentext, RTFUNDERLINETAG, RTFUNDERLINEENDTAG);
         }
 
         /// <summary>
-        /// Remove all RTF tag in selected text.
+        /// Remove all RTF tags in selected text.
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
-        /// <param name="sellentext"></param>
-        /// <param name="starttag"></param>
-        /// <param name="endtag"></param>
-        /// <returns></returns>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext">The selected text length.</param>
+        /// <param name="starttag">The RTF starttag to remove.</param>
+        /// <param name="endtag">The RTF endtag to remove. Should be of the same kind as RTF starttag.</param>
+        /// <returns>The new rtf stream.</returns>
         private string RemoveTagsInRTF(string rtf, int textpos, int sellentext, string starttag, string endtag)
         {
             this.rtfformat = true;
@@ -340,7 +340,7 @@ namespace NoteFly
         /// Check if the RTF tag is open.
         /// </summary>
         /// <param name="tagopen"></param>
-        /// <param name="rtf"></param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="i"></param>
         /// <param name="starttag"></param>
         /// <param name="endtag"></param>
@@ -365,13 +365,13 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="newrtf"></param>
-        /// <param name="rtf"></param>
+        /// <param name="newrtf">The new rtf stream.</param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="i"></param>
         /// <param name="sellentext"></param>
         /// <param name="starttag"></param>
         /// <param name="endtag"></param>
-        /// <returns></returns>
+        /// <returns>The new rtf stream as stringbuilder.</returns>
         private StringBuilder RemoveTag(StringBuilder newrtf, string rtf, int i, string starttag, string endtag)
         {
             int postag = i + this.drtflen;
@@ -432,8 +432,8 @@ namespace NoteFly
         /// <summary>
         ///
         /// </summary>
-        /// <param name="rtf"></param>
-        /// <param name="textpos"></param>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="textpos">The text position.</param>
         /// <param name="sellentext"></param>
         /// <param name="starttag"></param>
         /// <param name="endtag"></param>
@@ -605,9 +605,9 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rtf"></param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="pos"></param>
-        /// <returns></returns>
+        /// <returns>True if document at pos is in rtf formating code.</returns>
         private bool InRTFFormat(string rtf, int pos, bool rtfformat)
         {
             if (rtf[pos] == ' ' || rtf[pos] == '\r' || rtf[pos] == '\n')
@@ -622,7 +622,10 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="newclr"></param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext"></param>
         /// <returns></returns>
         public string SetColorInRTF(string rtf, Color newclr, int textpos, int sellentext)
         {
@@ -799,7 +802,9 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="i"></param>
+        /// <returns>True if rtf at position i is RTF tab code.</returns>
         private bool IsRTFTab(string rtf, int i)
         {
             if (i + RTFTABTAG.Length < rtf.Length)
@@ -816,7 +821,7 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rtf"></param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <returns></returns>
         private int FindStartPosDoc(string rtf)
         {
@@ -844,10 +849,10 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rtf"></param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="newclr"></param>
         /// <param name="textlength"></param>
-        /// <returns></returns>
+        /// <returns>The new rtf stream.</returns>
         public string SetColorAllRTF(string rtf, Color newclr, int textlength)
         {
             return this.SetColorInRTF(rtf, newclr, 0, textlength);
@@ -856,6 +861,8 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="newrtf"></param>
+        /// <param name="textcolor"></param>
         /// <returns>StringBuilder of colortbl.</returns>
         private StringBuilder CreateColortbl(StringBuilder newrtf, Color textcolor)
         {
@@ -871,8 +878,8 @@ namespace NoteFly
         /// Check if rtf contains a new level or depth document level has been gone up.
         /// Escape \ characters are not a new rtf level.
         /// </summary>
-        /// <param name="rtf">The RTF text</param>
-        /// <param name="i">THe position in RTF</param>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="i">The position in RTF</param>
         /// <param name="rtflevel">Current RTF depth level.</param>
         /// <returns>New RTF depth level.</returns>
         private int CheckRTFLevel(string rtf, int i, int rtflevel)
@@ -932,7 +939,7 @@ namespace NoteFly
         /// <summary>
         /// Is the RTF part at a position a RTF special chracter escaping.
         /// </summary>
-        /// <param name="rtf">The RTF check</param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="i">The RTF position in where the special character starts</param>
         /// <returns></returns>
         private bool IsRTFSpecialChar(string rtf, int i)
@@ -990,7 +997,7 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rtf"></param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="clr"></param>
         /// <returns>-1 if not found</returns>
         private int GetNrcoloritem(string rtf, Color clr)
@@ -1046,7 +1053,8 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rtf"></param>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="posstartcolortbl"></param>
         private void ParserColorTbl(string rtf, int posstartcolortbl)
         {
             this.colortblitems.Clear();
@@ -1066,11 +1074,9 @@ namespace NoteFly
         /// <summary>
         /// Add a color to the RTF colortbl.
         /// </summary>
-        /// <param name="rtf">The RTF</param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="posstartcolortbl">The position of start of colortbl in RTF.</param>
-        /// <param name="red">Red valeau (0-255)</param>
-        /// <param name="green">Green valeau (0-255)</param>
-        /// <param name="blue">Blue valeau (0-255)</param>
+        /// <param name="newclr"></param>
         /// <returns>The new RTF with the color add to the colortbl.</returns>
         private StringBuilder AddColorItem(StringBuilder newrtf, int posstartcolortbl, Color newclr)
         {
@@ -1089,7 +1095,7 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rtf"></param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <returns></returns>
         private int FindPosStartColortbl(string rtf)
         {
