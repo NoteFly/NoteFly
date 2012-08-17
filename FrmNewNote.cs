@@ -1093,20 +1093,13 @@ namespace NoteFly
             }
 
             int pos = this.rtbNewNote.SelectionStart;
-            if (this.rtbNewNote.TextLength <= 10)
+            if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter || e.KeyValue == 190)
+            {
+                SyntaxHighlight.CheckSyntaxQuick(this.rtbNewNote, this.GetSkinnr(), this.notes);
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
             {
                 SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, this.GetSkinnr(), this.notes);
-            }
-            else
-            {
-                if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter || e.KeyValue == 190)
-                {
-                    SyntaxHighlight.CheckSyntaxQuick(this.rtbNewNote, this.GetSkinnr(), this.notes);
-                }
-                else if (e.Control && e.KeyCode == Keys.V)
-                {
-                    SyntaxHighlight.CheckSyntaxFull(this.rtbNewNote, this.GetSkinnr(), this.notes);
-                }
             }
 
             this.rtbNewNote.SelectionStart = pos;

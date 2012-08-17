@@ -33,7 +33,7 @@ namespace NoteFly
         private static object resourceManLock = new object();
 
         /// <summary>
-        /// 
+        /// Resource manager
         /// </summary>
         private static System.Resources.ResourceManager resourceMan;
 
@@ -43,20 +43,21 @@ namespace NoteFly
         private static System.Globalization.CultureInfo resourceCulture;
 
         /// <summary>
-        /// 
+        /// The po filename without extension
         /// </summary>
         public const string ResourceName = "Strings";
 
         /// <summary>
-        /// 
+        /// The folder where all translations are stored in.
         /// </summary>
-        private static string resourcesDir = GetSetting("ResourcesDir", "translations");
+        public const string RESOURCESDIR = "translations";
 
         /// <summary>
-        /// 
+        /// Path to resource within the transation folder.
         /// </summary>
-        private static string fileFormat = GetSetting("ResourcesFileFormat", "{{culture}}/{{resource}}.po");
+        private const string FILEFORMAT = "{{culture}}/{{resource}}.po";
 
+        /*
         /// <summary>
         /// Gets or sets Resources directory used to retrieve files from.
         /// </summary>
@@ -74,6 +75,7 @@ namespace NoteFly
             get { return fileFormat; }
             set { fileFormat = value; }
         }
+        */
 
         /// <summary>
         /// Gets or sets the current thread's CurrentUICulture property for all
@@ -98,8 +100,8 @@ namespace NoteFly
                     {
                         if (object.ReferenceEquals(resourceMan, null))
                         {
-                            string directory = resourcesDir;
-                            global::Gettext.Cs.GettextResourceManager mgr = new global::Gettext.Cs.GettextResourceManager(ResourceName, directory, fileFormat);
+                            string directory = RESOURCESDIR;
+                            global::Gettext.Cs.GettextResourceManager mgr = new global::Gettext.Cs.GettextResourceManager(ResourceName, directory, FILEFORMAT);
                             resourceMan = mgr;
                         }
                     }
@@ -175,19 +177,6 @@ namespace NoteFly
                     TranslateToolStripItemCollection(form.ContextMenuStrip.Items);
                 }
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="setting"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        private static string GetSetting(string setting, string defaultValue)
-        {
-            System.Collections.Specialized.NameValueCollection section = (System.Collections.Specialized.NameValueCollection)System.Configuration.ConfigurationManager.GetSection("appSettings");
-            if (section == null) return defaultValue;
-            else return section[setting] ?? defaultValue;
         }
 
         /// <summary>
@@ -365,7 +354,7 @@ namespace NoteFly
             }
             else
             {
-                //throw new ApplicationException("Please run build_translationfile.bat first.");
+                throw new ApplicationException("Please run build_translationfile.bat first.");
             }
         }
 #endif

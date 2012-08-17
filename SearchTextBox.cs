@@ -131,7 +131,7 @@ namespace NoteFly
         /// 
         /// </summary>
         private void ResetAutoSearchDelay()
-        {            
+        {
             this.timerStartAutoSearch.Stop();
             this.tbKeywords.BackColor = SystemColors.Window;
             this.timerStartAutoSearch.Start();

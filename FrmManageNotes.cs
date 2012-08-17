@@ -1017,7 +1017,7 @@ namespace NoteFly
                             // todo GetContent() is not good because it can take long to read all content but it works for now.
                             RichTextBox rtb = new RichTextBox();
                             rtb.Rtf = this.notes.GetNote(notepos).GetContent();
-                            //xmlUtil.GetContentStringLimited(
+                            ////xmlUtil.GetContentStringLimited(
                             string content = rtb.Text;
                             rtb.Dispose();
                             GC.Collect();

@@ -269,15 +269,19 @@ namespace NoteFly
         {
             if (!keywordsinit)
             {
-                Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this, watchout memory use.");
+                Log.Write(LogType.error, "Keywords not initialized as they should already have. Hotfixing this.");
                 InitHighlighter();
             }
+
 
             // check if highlighting is enabled at all.
             if (langs.Count > 0)
             {
                 for (int i = 0; i < langs.Count; i++)
                 {
+                    langs[i].PosDocumentStart = int.MaxValue;
+                    langs[i].PosDocumentEnd = int.MaxValue;
+
                     // find out start position of language
                     int langstartpos = rtb.Text.IndexOf(langs[i].DocumentStartStr);
                     if (langstartpos >= 0)
@@ -285,7 +289,7 @@ namespace NoteFly
                         langs[i].PosDocumentStart = langstartpos;
                     }
 
-                    // find out end position of language, if not default is int.Max
+                    // find out end position of language
                     int langendpos = rtb.Text.LastIndexOf(langs[i].DocumentEndStr);
                     if (langendpos >= 0)
                     {

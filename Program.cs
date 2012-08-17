@@ -737,7 +737,18 @@ namespace NoteFly
                 }
                 else
                 {
-                    throw new ApplicationException("Downloadurl is unexcepted unknown.");
+                    if (Settings.NetworkIPversion == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format("Network error, make sure you have a working {0} connection.", "IPv4"), "network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    }
+                    else if (Settings.NetworkIPversion == 2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format("Network error, make sure you have a working {0} connection.", "IPv6"), "network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Downloadurl is unexcepted unknown", "Network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    }
                 }
             }
         }
