@@ -340,7 +340,7 @@ namespace NoteFlyTests
 \viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
 }
 ";
-            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang"+Properties.Settings.Default.rtflangused+@"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            string expectedrtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtest\ul test\ulnone\b0\par
 }
 ";

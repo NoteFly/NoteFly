@@ -62,7 +62,7 @@ namespace NoteFly
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">is disposing</param>
+        /// <param name="disposing">Is disposing</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (this.components != null))

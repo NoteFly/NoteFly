@@ -34,12 +34,12 @@ namespace NoteFly
         private FormManager formmanager;
 
         /// <summary>
-        /// container that holds some objects.
+        /// Container that holds some objects.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// indicated wheter confirm exit is showed.
+        /// Indicated wheter confirm exit is showed.
         /// </summary>
         private bool confirmexitshowed = false;
 
@@ -84,15 +84,15 @@ namespace NoteFly
         private ToolStripMenuItem menuExit;
 
         /// <summary>
-        /// Initializes a new instance of the TrayIcon class. 
+        /// Initializes a new instance of the TrayIcon class.
         /// New trayicon in the systray.
         /// </summary>
-        /// <param name="formmanager">reference to FormManager class.</param>
+        /// <param name="formmanager">Reference to FormManager class.</param>
         public TrayIcon(FormManager formmanager)
         {
             this.formmanager = formmanager;
             this.components = new System.ComponentModel.Container();
-            
+
             // Start building icon and icon contextmenu
             this.icon = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -254,7 +254,7 @@ namespace NoteFly
         /// If actionleftclick is 1 actived all notes.
         /// If actionleftclick is 2 create a new note.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void Icon_Click(object sender, MouseEventArgs e)
         {
@@ -274,7 +274,7 @@ namespace NoteFly
         /// <summary>
         /// Open new note window.
         /// </summary>
-        /// <param name="sender">sender object</param>
+        /// <param name="sender">Sender object</param>
         /// <param name="e">Event argument</param>
         private void MenuNewNote_Click(object sender, EventArgs e)
         {
@@ -282,10 +282,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// open manage notes window
+        /// Open manage notes window.
         /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="e">event argument</param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event argument</param>
         private void MenuManageNotes_Click(object sender, EventArgs e)
         {
             this.formmanager.OpenFrmManageNotes();

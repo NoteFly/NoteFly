@@ -49,7 +49,7 @@ namespace NoteFly
         private WebClient webclient;
 
         /// <summary>
-        /// number of downloads that FrmDownloader has compleeted.
+        /// Number of downloads that FrmDownloader has compleeted.
         /// </summary>
         private int numdownloadscompleet = 0;
 
@@ -211,7 +211,7 @@ namespace NoteFly
         /// Decompress GZip single file.
         /// </summary>
         /// <param name="compressedfile">The compressed gzip file.</param>
-        /// <returns></returns>
+        /// <returns>True if succeeded to decompress GZip file.</returns>
         public bool DecompressGZipFile(string compressedfile)
         {
             bool succeeded = false;

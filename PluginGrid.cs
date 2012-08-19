@@ -92,9 +92,9 @@ namespace NoteFly
         /// <summary>
         /// Draw details of a plugin.
         /// </summary>
-        /// <param name="pluginpos">The positio of the plugin in allplugins array</param>
-        /// <param name="pluginenabled">Is the plugin enabled</param>
-        /// <param name="filename">The filename of the plugin assebly</param>
+        /// <param name="pluginpos">The position of the plugin in allplugins array.</param>
+        /// <param name="pluginenabled">The dll filename of the plugin assemble.</param>
+        /// <param name="gridwith">The width of the plugingrid control.</param>
         private void DrawPluginDetails(int pluginpos, string dllfilename, int gridwith)
         {
             System.Reflection.Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, dllfilename));
@@ -241,9 +241,9 @@ namespace NoteFly
         /// <summary>
         /// Update the plugin status if it enabled or disabled.
         /// </summary>
-        /// <param name="pluginpos">The position in tablelayout</param>
+        /// <param name="pluginpos">The position in tablelayout.</param>
         private void SetPluginStatus(int pluginpos, string dllfilename)
-        {            
+        {
             if (PluginsManager.IsPluginEnabled(dllfilename))
             {
                 this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.WhiteSmoke;
@@ -259,13 +259,13 @@ namespace NoteFly
         /// <summary>
         /// Find the position of a plugin dll filename in the tlpnlPlugins
         /// </summary>
-        /// <param name="dllfilename"></param>
-        /// <returns></returns>
+        /// <param name="dllfilename">The dll filename</param>
+        /// <returns>The position in tlpnlPlugins (counted from the top).</returns>
         private int FindPos(string dllfilename)
         {
             for (int i = 0; i < this.btnPluginsStatus.Length; i++)
             {
-                if (Convert.ToString(this.btnPluginsStatus[i].Tag) == dllfilename)
+                if (Convert.ToString(this.btnPluginsStatus[i].Tag).Equals(dllfilename, StringComparison.OrdinalIgnoreCase))
                 {
                     return i;
                 }

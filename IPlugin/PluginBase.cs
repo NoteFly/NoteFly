@@ -48,7 +48,7 @@ namespace IPlugin
         }
 
         /// <summary>
-        /// Gets or sets the interface to let the plugin talk to NoteFly.
+        /// Gets the interface to let the plugin talk to NoteFly.
         /// </summary>
         public IPluginHost Host
         {
@@ -63,7 +63,7 @@ namespace IPlugin
         /// string name, string author, string description, string version, 
         /// </summary>
         /// <param name="file">The plugin file.</param>
-        /// <param name="name">Is the plugin name.</param>
+        /// <param name="host">Reference to the IPluginHost interface.</param>
         public void Register(string file, IPluginHost host)
         {
             this.file = file;

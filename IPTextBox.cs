@@ -44,7 +44,7 @@ namespace NoteFly
         private bool useipv6addr = true;
 
         /// <summary>
-        /// Gets or sets a value indicating a IPv4 address is used.
+        /// Gets or sets a value indicating whether a IPv4 address is used.
         /// </summary>
         public bool UseIPv4addr
         {
@@ -145,7 +145,7 @@ namespace NoteFly
         /// Character entered.
         /// Allow only IPv4 and IPv6 characters to be added.
         /// </summary>
-        /// <param name="e">keyevent arguments</param>
+        /// <param name="e">Keyevent arguments</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             int k = e.KeyValue;
@@ -154,7 +154,6 @@ namespace NoteFly
             // '.'
             // '0'-'9'
             // shift, backspace, left, right, delete, end and home key
-            // /*
             if ((k >= 65 && k <= 70) || (k == 186 && e.Shift) || (k == 190 && !e.Shift) || (k >= 48 && k <= 57) || (k == 8 || k == 16 || k == 37 || k == 39 || k == 46 || k == 35 || k == 36))
             {
                 e.SuppressKeyPress = false;
@@ -163,7 +162,7 @@ namespace NoteFly
             {
                 e.SuppressKeyPress = true;
             }
-            // */
+
             base.OnKeyDown(e);
         }
 

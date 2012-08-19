@@ -800,10 +800,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Is there a RTF tab code at a position in a RTF stream.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
-        /// <param name="i"></param>
+        /// <param name="i">Position with the rtf stream to look for a tab rtf character.</param>
         /// <returns>True if rtf at position i is RTF tab code.</returns>
         private bool IsRTFTab(string rtf, int i)
         {
@@ -819,10 +819,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Find the start of the RTF document content
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
-        /// <returns></returns>
+        /// <returns>The position after viewkind rtftag in the rtf stream.</returns>
         private int FindStartPosDoc(string rtf)
         {
             int posstartbody = rtf.IndexOf(VIEWKINDTAG);
@@ -847,11 +847,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Set all rtf text to a particulair color.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
-        /// <param name="newclr"></param>
-        /// <param name="textlength"></param>
+        /// <param name="newclr">The color to use for all text in the rtf stream.</param>
+        /// <param name="textlength">The length of the real text in the rtf stream.</param>
         /// <returns>The new rtf stream.</returns>
         public string SetColorAllRTF(string rtf, Color newclr, int textlength)
         {
@@ -859,10 +859,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Create a colortable in the rtf stream.
         /// </summary>
-        /// <param name="newrtf"></param>
-        /// <param name="textcolor"></param>
+        /// <param name="newrtf">The rtf stream.</param>
+        /// <param name="textcolor">The textcolor to add to the color table rtf stream.</param>
         /// <returns>StringBuilder of colortbl.</returns>
         private StringBuilder CreateColortbl(StringBuilder newrtf, Color textcolor)
         {
@@ -941,7 +941,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
         /// <param name="i">The RTF position in where the special character starts</param>
-        /// <returns></returns>
+        /// <returns>True if there is a special character RTF code at position i.</returns>
         private bool IsRTFSpecialChar(string rtf, int i)
         {
             bool isspecchar = false;
@@ -980,8 +980,8 @@ namespace NoteFly
         /// <summary>
         /// Converts a string to integer, optimization.
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">An nummeric string.</param>
+        /// <returns>An integer.</returns>
         private int IntParseFast(string value)
         {
             int result = 0;

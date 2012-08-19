@@ -70,7 +70,7 @@ namespace NoteFly
         /// Initializes a new instance of the FrmNewNote class for editing a exist note.
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
-        /// <param name="note">the note to edit.</param>
+        /// <param name="note">The note to edit.</param>
         /// <param name="locfrmnewnote">The location of the FrmNewNote should get.</param>
         /// <param name="sizefrmnewnote">The size of the FrnNewNote should get.</param>
         /// <param name="wordwrap">Wrap words that exceeded the width of the richedittext control.</param>

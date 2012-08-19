@@ -65,7 +65,7 @@ namespace NoteFly
         private static TrayIcon trayicon;
 
         /// <summary>
-        /// 
+        /// Reference to RSAVerify class.
         /// </summary>
         private static RSAVerify rsaverify;
 
@@ -739,11 +739,11 @@ namespace NoteFly
                 {
                     if (Settings.NetworkIPversion == 1)
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format("Network error, make sure you have a working {0} connection.", "IPv4"), "network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show(string.Format("Network error, make sure you have a working {0} connection.", "IPv4"), "network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                     }
                     else if (Settings.NetworkIPversion == 2)
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format("Network error, make sure you have a working {0} connection.", "IPv6"), "network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show(string.Format("Network error, make sure you have a working {0} connection.", "IPv6"), "network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                     }
                     else
                     {

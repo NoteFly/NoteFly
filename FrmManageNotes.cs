@@ -201,7 +201,6 @@ namespace NoteFly
         }
 #endif
 
-
         #region Methods (20)
 
         /// <summary>

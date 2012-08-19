@@ -48,7 +48,7 @@ namespace NoteFly
         /// <summary>
         /// SearchStartHandler delegate
         /// </summary>
-        /// <param name="keywords"></param>
+        /// <param name="keywords">The keywords type to lookup as pluginname</param>
         public delegate void SearchStartHandler(string keywords);
 
         /// <summary>

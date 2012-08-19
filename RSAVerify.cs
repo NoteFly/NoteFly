@@ -51,7 +51,7 @@ namespace NoteFly
         private string signature = string.Empty;
 
         /// <summary>
-        /// 
+        /// RSACryptoServiceProvider
         /// </summary>
         private RSACryptoServiceProvider rsaCryptoServiceProvider = null;
 

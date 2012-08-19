@@ -28,21 +28,6 @@ namespace NoteFly
     public static class Strings
     {
         /// <summary>
-        /// 
-        /// </summary>
-        private static object resourceManLock = new object();
-
-        /// <summary>
-        /// Resource manager
-        /// </summary>
-        private static System.Resources.ResourceManager resourceMan;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private static System.Globalization.CultureInfo resourceCulture;
-
-        /// <summary>
         /// The po filename without extension
         /// </summary>
         public const string ResourceName = "Strings";
@@ -56,6 +41,21 @@ namespace NoteFly
         /// Path to resource within the transation folder.
         /// </summary>
         private const string FILEFORMAT = "{{culture}}/{{resource}}.po";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static object resourceManLock = new object();
+
+        /// <summary>
+        /// Resource manager
+        /// </summary>
+        private static System.Resources.ResourceManager resourceMan;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static System.Globalization.CultureInfo resourceCulture;
 
         /*
         /// <summary>
@@ -114,6 +114,7 @@ namespace NoteFly
         /// <summary>
         /// Looks up a localized string; used to mark string for translation as well.
         /// </summary>
+        /// <param name="t">The string to translate.</param>
         public static string T(string t)
         {
             return T(null, t);
@@ -122,6 +123,8 @@ namespace NoteFly
         /// <summary>
         /// Looks up a localized string; used to mark string for translation as well.
         /// </summary>
+        /// <param name="info">CultureInfo object.</param>
+        /// <param name="t">The string to translate.</param>
         public static string T(CultureInfo info, string t)
         {
             if (string.IsNullOrEmpty(t)) return t;
@@ -132,6 +135,8 @@ namespace NoteFly
         /// <summary>
         /// Looks up a localized string and formats it with the parameters provided; used to mark string for translation as well.
         /// </summary>
+        /// <param name="t">The string to translate</param>
+        /// <param name="parameters">Parameters to be placed in the string</param>
         public static string T(string t, params object[] parameters)
         {
             return T(null, t, parameters);
@@ -140,6 +145,10 @@ namespace NoteFly
         /// <summary>
         /// Looks up a localized string and formats it with the parameters provided; used to mark string for translation as well.
         /// </summary>
+        /// <param name="info">CultureInfo object.</param>
+        /// <param name="t">The string to translate.</param>
+        /// <param name="parameters">Parameters in the string.</param>
+        /// <rereturns>The translated string with orginal parameters.</rereturns>
         public static string T(CultureInfo info, string t, params object[] parameters)
         {
             if (string.IsNullOrEmpty(t)) return t;
@@ -149,6 +158,8 @@ namespace NoteFly
         /// <summary>
         /// Marks a string for future translation, does not translate it now.
         /// </summary>
+        /// <param name="t">The string to mark for future translation</param>
+        /// <returns>Orignal string</returns>
         public static string M(string t)
         {
             return t;
@@ -157,6 +168,8 @@ namespace NoteFly
         /// <summary>
         /// Returns the resource set available for the specified culture.
         /// </summary>
+        /// <param name="culture">CultureInfo object</param>
+        /// <returns>ResourceSet of culture</returns>
         public static System.Resources.ResourceSet GetResourceSet(CultureInfo culture)
         {
             return ResourceManager.GetResourceSet(culture, true, true);
@@ -165,7 +178,7 @@ namespace NoteFly
         /// <summary>
         /// Translate all controls and toolstrip contextmenu of the given form.
         /// </summary>
-        /// <param name="form"></param>
+        /// <param name="form">The form to translate</param>
         public static void TranslateForm(System.Windows.Forms.Form form)
         {
             int controlnestedlevel = 1;
@@ -182,6 +195,8 @@ namespace NoteFly
         /// <summary>
         /// Recusive method that translate all control in a ControlCollection.
         /// </summary>
+        /// <param name="controlscollection">Collection of controls to translate.</param>
+        /// <param name="controlnestedlevel">Depth level of the control on the form.</param>
         private static void TranslateControlCollection(System.Windows.Forms.Control.ControlCollection controlscollection, int controlnestedlevel)
         {
             const int MAXNESTEDCONTROL = 12;
@@ -218,7 +233,7 @@ namespace NoteFly
         /// <summary>
         /// Translate the toolstripitemcollection.
         /// </summary>
-        /// <param name="toolstripitemcollection"></param>
+        /// <param name="toolstripitemcollection">Collection of toolstripitems to translate.</param>
         private static void TranslateToolStripItemCollection(System.Windows.Forms.ToolStripItemCollection toolstripitemcollection)
         {
             for (int i = 0; i < toolstripitemcollection.Count; i++)
@@ -254,8 +269,8 @@ namespace NoteFly
         /// <summary>
         /// Get if the control should be translated.
         /// </summary>
-        /// <param name="control"></param>
-        /// <returns></returns>
+        /// <param name="control">Control to check name and type from</param>
+        /// <returns>True if control text should be translated</returns>
         private static bool IsTranslatableControl(System.Windows.Forms.Control control)
         {
             bool translatecontrol = false;

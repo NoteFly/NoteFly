@@ -81,31 +81,49 @@ namespace NoteFly
         #endregion
 
         #region Private fields
-        // List of files to store
+        /// <summary>
+        /// List of files to store
+        /// </summary>
         private List<ZipFileEntry> Files = new List<ZipFileEntry>();
 
-        // Filename of storage file
+        /// <summary>
+        /// Filename of storage file
+        /// </summary>
         private string FileName;
 
-        // Stream object of storage file
+        /// <summary>
+        /// Stream object of storage file
+        /// </summary>
         private Stream ZipFileStream;
 
-        // General comment
+        /// <summary>
+        /// General comment
+        /// </summary>
         private string Comment = string.Empty;
 
-        // Central dir image
+        /// <summary>
+        /// Central dir image
+        /// </summary>
         private byte[] CentralDirImage = null;
 
-        // Existing files in zip
+        /// <summary>
+        /// Existing files in zip
+        /// </summary>
         private ushort ExistingFiles = 0;
 
-        // File access for Open method
+        /// <summary>
+        /// File access for Open method
+        /// </summary>
         private FileAccess Access;
 
-        // Static CRC32 Table
+        /// <summary>
+        /// Static CRC32 Table
+        /// </summary>
         private static uint[] CrcTable = null;
 
-        // Default filename encoder
+        /// <summary>
+        /// Default filename encoder
+        /// </summary>
         private static Encoding DefaultEncoding = Encoding.GetEncoding(437);
         #endregion
 
@@ -640,7 +658,12 @@ namespace NoteFly
             this.ZipFileStream.Write(BitConverter.GetBytes((ushort)encodedComment.Length), 0, 2);
             this.ZipFileStream.Write(encodedComment, 0, encodedComment.Length);
         }
-        // Copies all source file into storage file
+
+        /// <summary>
+        /// Copies all source file into storage file
+        /// </summary>
+        /// <param name="_zfe"></param>
+        /// <param name="_source"></param>
         private void Store(ref ZipFileEntry _zfe, Stream _source)
         {
             byte[] buffer = new byte[16384];

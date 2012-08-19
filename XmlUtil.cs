@@ -27,7 +27,7 @@ namespace NoteFly
     using System.Xml;
 
     /// <summary>
-    /// xmlUtil class, for saving and parsering xml.
+    /// XmlUtil class, for saving and parsering xml.
     /// </summary>
     public sealed class xmlUtil
     {
@@ -66,7 +66,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="filename">The filename and path to search in.</param>
         /// <param name="nodename">The node name to lookup.</param>
-        /// <returns>return node content as string, empty if not found</returns>
+        /// <returns>Return node content as string, empty if not found.</returns>
         public static string GetContentString(string filename, string nodename)
         {
             #if DEBUG
@@ -168,7 +168,7 @@ namespace NoteFly
         /// <param name="response">The server response.</param>
         /// <param name="ipluginversionparts">The Iplugin version as array with major, minor, release numbers</param>
         /// <param name="lbxAvailablePlugins">ListBox with availible plugins</param>
-        /// <returns></returns>
+        /// <returns>True if parsering of response succeeded.</returns>
         public static bool ParserListPlugins(string response, short[] ipluginversionparts, System.Windows.Forms.ListBox lbxAvailablePlugins)
         {
             if (string.IsNullOrEmpty(response))
@@ -241,9 +241,10 @@ namespace NoteFly
         /// Parser the details of the plugin detail response
         /// </summary>
         /// <param name="response">Parser the xml response</param>
-        /// <param name="pluginsnamesinstalled">The names of the plugins installed.</param>
+        /// <param name="installedpluginnames">The names of the plugins installed.</param>
+        /// <param name="alreadyinstalled">Is the plugin to get details from already installed.</param>
         /// <param name="updateavailable">Is a update availible based on parsering of the serverresponse</param>
-        /// <returns></returns>
+        /// <returns>Array of strings with details from the plugin.</returns>
         public static string[] ParserDetailsPlugin(string response, string[] installedpluginnames, out bool alreadyinstalled, out bool updateavailable)
         {
             alreadyinstalled = false;
@@ -327,7 +328,7 @@ namespace NoteFly
         /// <summary>
         /// Load a note file.
         /// </summary>
-        /// <param name="notes">reference to notes class.</param>
+        /// <param name="notes">Reference to notes class.</param>
         /// <param name="notefilename">The note filename.</param>
         /// <returns>An note object.</returns>
         public static Note LoadNoteFile(Notes notes, string notefilename)
@@ -1210,7 +1211,7 @@ namespace NoteFly
         /// Get the new version as a integer array with first major
         /// second valeau the minor version and the third valeau being the release version.
         /// </summary>
-        /// <param name="serverresponse"></param>
+        /// <param name="serverresponse">The server reponse stream.</param>
         /// <param name="versionquality">The latest version quality, e.g: alpha, beta, rc or nothing for final.</param>
         /// <param name="downloadurl">The download url found.</param>
         /// <param name="rsasignature">RSA signature.</param>
@@ -1320,8 +1321,8 @@ namespace NoteFly
         /// <summary>
         /// Return a array of keywords used for the prgramming language we are doing a syntax check on.
         /// </summary>
-        /// <param name="file">the file to parser.</param>
-        /// <param name="name">the language to lookup.</param>
+        /// <param name="file">The file to parser.</param>
+        /// <param name="name">The language to lookup.</param>
         /// <returns>HighlightLanguage object.</returns>
         public static HighlightLanguage ParserLanguageLexical(string file, string name)
         {
@@ -1383,13 +1384,15 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the content
+        /// Get the content.
         /// </summary>
-        /// <param name="limittextchars"></param>
-        /// <returns></returns>
-        public string GetContentStringLimited(string file, int limittextchars)
+        /// <param name="file">The file to load as xml file.</param>
+        /// <param name="limittextchars">The limit on how many characters to read at most with the content node of the xmlfile.</param>
+        /// <returns>The valeau of the content node in the xml file limited to the amount of characters given by limittextchars.</returns>
+        public static string GetContentStringLimited(string file, int limittextchars)
         {
-            try {
+            try
+            {
                 xmlread = new XmlTextReader(file);
             }
             catch (FileLoadException fileloadexc)
@@ -1425,11 +1428,40 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Write the note node with properties.
+        /// </summary>
+        /// <param name="note">The note object.</param>
+        /// <param name="skinname">The skinname used by this note.</param>
+        /// <param name="content">The note content.</param>
+        public static void WriteNoteBody(XmlTextWriter xmlwrite, Note note, string skinname, string content)
+        {
+            xmlwrite.WriteStartElement("note");
+            xmlwrite.WriteAttributeString("version", NOTEVERSION);
+            WriteXMLBool(xmlwrite, "visible", note.Visible);
+            WriteXMLBool(xmlwrite, "ontop", note.Ontop);
+            WriteXMLBool(xmlwrite, "locked", note.Locked);
+            WriteXMLBool(xmlwrite, "rollup", note.RolledUp);
+            WriteXMLBool(xmlwrite, "wordwarp", note.Wordwarp);
+            xmlwrite.WriteStartElement("location");
+            xmlwrite.WriteElementString("x", note.X.ToString());
+            xmlwrite.WriteElementString("y", note.Y.ToString());
+            xmlwrite.WriteEndElement();
+            xmlwrite.WriteStartElement("size");
+            xmlwrite.WriteElementString("width", Convert.ToString(note.Width));
+            xmlwrite.WriteElementString("heigth", Convert.ToString(note.Height));
+            xmlwrite.WriteEndElement();
+            xmlwrite.WriteElementString("skin", skinname);
+            xmlwrite.WriteElementString("title", note.Title);
+            xmlwrite.WriteElementString("content", content);
+            xmlwrite.WriteEndElement();
+        }
+
+        /// <summary>
         /// Parser a note node in a xml file, 
         /// readnotenum is the number of note node to be parser and returned as note object.
         /// </summary>
-        /// <param name="notes">pointer to notes</param>
-        /// <param name="note">the note object to set</param>
+        /// <param name="notes">Reference to notes class.</param>
+        /// <param name="note">The note object to set.</param>
         /// <param name="readnotenum">The number occurance of the note node to be parser (first, sencod etc.)</param>
         /// <param name="setallcontent">Force to set the note temporary content variable in the note class even if not visible.</param>
         /// <returns>A note object</returns>
@@ -1590,6 +1622,7 @@ namespace NoteFly
         /// <summary>
         /// Write 1 value for true and 0 for false.
         /// </summary>
+        /// <param name="xmlwrite">XmlTextWriter object.</param>
         /// <param name="element">The element name</param>
         /// <param name="checknode">The node to check</param>
         private static void WriteXMLBool(XmlTextWriter xmlwrite, string element, bool checknode)
@@ -1604,35 +1637,6 @@ namespace NoteFly
                 xmlwrite.WriteString("0");
             }
 
-            xmlwrite.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Write the note node with properties.
-        /// </summary>
-        /// <param name="note">The note object.</param>
-        /// <param name="skinname">The skinname used by this note.</param>
-        /// <param name="content">The note content.</param>
-        public static void WriteNoteBody(XmlTextWriter xmlwrite, Note note, string skinname, string content)
-        {
-            xmlwrite.WriteStartElement("note");
-            xmlwrite.WriteAttributeString("version", NOTEVERSION);
-            WriteXMLBool(xmlwrite, "visible", note.Visible);
-            WriteXMLBool(xmlwrite, "ontop", note.Ontop);
-            WriteXMLBool(xmlwrite, "locked", note.Locked);
-            WriteXMLBool(xmlwrite, "rollup", note.RolledUp);
-            WriteXMLBool(xmlwrite, "wordwarp", note.Wordwarp);
-            xmlwrite.WriteStartElement("location");
-            xmlwrite.WriteElementString("x", note.X.ToString());
-            xmlwrite.WriteElementString("y", note.Y.ToString());
-            xmlwrite.WriteEndElement();
-            xmlwrite.WriteStartElement("size");
-            xmlwrite.WriteElementString("width", Convert.ToString(note.Width));
-            xmlwrite.WriteElementString("heigth", Convert.ToString(note.Height));
-            xmlwrite.WriteEndElement();
-            xmlwrite.WriteElementString("skin", skinname);
-            xmlwrite.WriteElementString("title", note.Title);
-            xmlwrite.WriteElementString("content", content);
             xmlwrite.WriteEndElement();
         }
 

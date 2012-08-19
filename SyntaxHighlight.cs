@@ -273,7 +273,6 @@ namespace NoteFly
                 InitHighlighter();
             }
 
-
             // check if highlighting is enabled at all.
             if (langs.Count > 0)
             {
@@ -372,9 +371,10 @@ namespace NoteFly
         /// Make the whole text the default font color.
         /// </summary>
         /// <param name="rtb">The richedit control that hold the note content.</param>
-        /// <param name="rtf">the RTF text</param>
+        /// <param name="rtf">The RTF text</param>
         /// <param name="skinnr">The skin number of the current note.</param>
         /// <param name="notes">Reference to notes class.</param>
+        /// <returns>The new rtf stream</returns>
         private static string ResetHighlighting(RichTextBox rtb, string rtf, int skinnr, Notes notes)
         {
             comment = false;
@@ -389,10 +389,12 @@ namespace NoteFly
         /// <summary>
         /// Highlight some text part on html split by spaces.
         /// </summary>
-        /// <param name="ishtml">string without spaces. length needs to be >0</param>
+        /// <param name="ishtml">String without spaces. length needs to be >0</param>
         /// <param name="rtb">The richtextbox.</param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="posstartpart">The start position in the richtextbox.</param>
         /// <param name="langhtml">The html language description.</param>
+        /// <returns>The new rtf stream</returns>
         private static string ValidatingHtmlPart(string ishtml, RichTextBox rtb, string rtf, int posstartpart, HighlightLanguage langhtml)
         {
             ishtml = ishtml.ToLowerInvariant();
@@ -510,8 +512,10 @@ namespace NoteFly
         /// </summary>
         /// <param name="htmlattribute">Attribute of the HTML node to validate</param>
         /// <param name="rtb">Richtextbox with note content</param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="attributestartpos">Startposition of the attribute within the htmlpart.</param>
         /// <param name="langhtml">The html language description.</param>
+        /// <returns>The new rtf stream</returns>
         private static string ValidateHTMLAttribute(string htmlattribute, RichTextBox rtb, string rtf, int attributestartpos, HighlightLanguage langhtml)
         {
             if (htmlattribute == "/" || htmlattribute.Length < 1)
@@ -585,8 +589,10 @@ namespace NoteFly
         /// </summary>
         /// <param name="isphp">A part to be check if this a php keyword.</param>
         /// <param name="rtb">The richtextbox.</param>
-        /// <param name="posstart">the position in rtb where this keyword starts.</param>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="posstart">The position in rtb where this keyword starts.</param>
         /// <param name="langphp">The PHP language description.</param>
+        /// <returns>The new rtf stream.</returns>
         private static string ValidatingPhpPart(string isphp, RichTextBox rtb, string rtf, int posstart, HighlightLanguage langphp)
         {
             int posvar = -1;
@@ -703,8 +709,10 @@ namespace NoteFly
         /// </summary>
         /// <param name="issql">The part to be check.</param>
         /// <param name="rtb">The richtextbox.</param>
+        /// <param name="rtf">The rtf stream.</param>
         /// <param name="posstart">Position where the keyword starts in the richtextbox.</param>
         /// <param name="langsql">The sql language description.</param>
+        /// <returns>The new rtf stream.</returns>
         private static string ValidatingSqlPart(string issql, RichTextBox rtb, string rtf, int posstart, HighlightLanguage langsql)
         {
             string sqlkeyword;

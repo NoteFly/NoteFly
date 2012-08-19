@@ -773,8 +773,7 @@ namespace NoteFly
             #endif
             if (Directory.Exists(nf2appdata) && (!File.Exists(Path.Combine(nf2appdata, IMPORTEDFLAGFILE))))
             {
-                DialogResult resdlg = MessageBox.Show(Strings.T("Do you want to import the notes from NoteFly 2.5.x?\nPress cancel to ask this again next time."),
-                    Strings.T("Import from NoteFly 2.5.x"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult resdlg = MessageBox.Show(Strings.T("Do you want to import the notes from NoteFly 2.5.x?\nPress cancel to ask this again next time."), Strings.T("Import from NoteFly 2.5.x"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (resdlg == DialogResult.Yes)
                 {
                     string nf2settingsfile = Path.Combine(nf2appdata, "settings.xml");

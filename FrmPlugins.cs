@@ -60,7 +60,7 @@ namespace NoteFly
         private FrmDownloader frmdownloader;
 
         /// <summary>
-        /// Initialize a new instance of FrmPlugins class.
+        /// Initializes a new instance of the <see cref="FrmPlugins" /> class.
         /// </summary>
         public FrmPlugins()
         {

@@ -22,7 +22,7 @@
 ;
 
 !define PROJNAME   "NoteFly"
-!define VERSION    "3.0.2"          ; version number: major.minor.release
+!define VERSION    "3.0.3"          ; version number: major.minor.release
 !define VERSTATUS  ""               ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
@@ -194,6 +194,8 @@ Section "main executable (required)"
   File ".\translations\en\Strings.po"
   SetOutPath "$INSTDIR\translations\nl\"
   File ".\translations\nl\Strings.po"
+  SetOutPath "$INSTDIR\translations\ko\"
+  File ".\translations\ko\Strings.po"
   
   WriteUninstaller "uninstall.exe"
   

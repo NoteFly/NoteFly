@@ -49,7 +49,7 @@ namespace NoteFly
         #region Constructors (1)
 
         /// <summary>
-        ///Initializes a new instance of the <see cref="ImportNotes" /> class.
+        /// Initializes a new instance of the <see cref="ImportNotes" /> class.
         /// </summary>
         /// <param name="notes">Reference to notes class</param>
         public ImportNotes(Notes notes)

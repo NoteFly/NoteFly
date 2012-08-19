@@ -105,7 +105,7 @@ namespace NoteFly
         /// <summary>
         /// Load a plugin.
         /// </summary>
-        /// <param name="dllfile">The current list with loaded plugins</param>
+        /// <param name="dllfilename">The current list with loaded plugins</param>
         public static void EnablePlugin(string dllfilename)
         {
             try
@@ -142,7 +142,7 @@ namespace NoteFly
         /// <summary>
         /// Disable a plugin
         /// </summary>
-        /// <param name="pluginname">The plugin .dll file filename.</param>
+        /// <param name="dllfilename">The plugin .dll file filename.</param>
         /// <returns>Return true if dll filename was found and plugin is disabled.</returns>
         public static bool DisablePlugin(string dllfilename)
         {
