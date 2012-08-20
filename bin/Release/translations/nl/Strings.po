@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the 3.0.2 package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-07-23 15:30+0100\n"
+"PO-Revision-Date: 2012-08-20 03:01+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,8 +12,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Dutch translation team\n"
-"X-Poedit-Language: Dutch\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"Language: nl\n"
 
 #: Program.cs:204
 msgid "Are you sure you want to visted: {0}"
@@ -62,7 +62,7 @@ msgid "Advance"
 msgstr "Geavanceerd"
 
 msgid "Save notes in:"
-msgstr "Sla notitie op in:"
+msgstr "Sla notities op in:"
 
 msgid "Log exceptions (recommended)."
 msgstr "Log programma fouten (aanbovelen)."
@@ -104,7 +104,8 @@ msgid "Make hyperlinks clickable."
 msgstr "Maak hyperlinks klikbaar."
 
 msgid "Ask to launch url on click on hyperlink (recommended)."
-msgstr "Vraag voor het opstarten van een url bij klik van een hyperlink (aanbevolen)."
+msgstr ""
+"Vraag voor het opstarten van een url bij klik van een hyperlink (aanbevolen)."
 
 msgid "Highlight HTML text. (Beta)"
 msgstr "Highlight HTML tekst. (Beta)"
@@ -244,8 +245,7 @@ msgstr "Niet een KeyNote NF notitie."
 msgid "Do you want to delete all current notes?"
 msgstr "Wil je alle huidige notities verwijderen?"
 
-#: ImportNotes.cs:269
-#: Program.cs:205
+#: ImportNotes.cs:269 Program.cs:205
 msgid "Are you sure?"
 msgstr "Weet je het zeker?"
 
@@ -254,8 +254,10 @@ msgid "CVS file does not seems to be in the Stickies format."
 msgstr "CSV bestand lijkt niet in het Stickies formaat te zijn."
 
 #: ImportNotes.cs:384
-msgid "CVS file does not seems to be in the Stickies format, excepting 5 columns."
-msgstr "CSV bestand lijkt niet in het Stickies formaat te zijn, verwacht 5 kolomen."
+msgid ""
+"CVS file does not seems to be in the Stickies format, excepting 5 columns."
+msgstr ""
+"CSV bestand lijkt niet in het Stickies formaat te zijn, verwacht 5 kolomen."
 
 #: ImportNotes.cs:520
 msgid "Error reading PNotes backup file, incorrect format."
@@ -302,8 +304,12 @@ msgid "many notes"
 msgstr "veel notities"
 
 #: Notes.cs:701
-msgid "There are many notes loading this can take a while, do you want to load them all?"
-msgstr "Er zijn notitie die geladen moeten worden dit kan even duren, wil je ze allemaal laden?"
+msgid ""
+"There are many notes loading this can take a while, do you want to load them "
+"all?"
+msgstr ""
+"Er zijn notitie die geladen moeten worden dit kan even duren, wil je ze "
+"allemaal laden?"
 
 #: Notes.cs:721
 msgid "Many notes visible"
@@ -337,9 +343,7 @@ msgstr "uitgeschakelen"
 msgid "enable"
 msgstr "inschakelen"
 
-#: PluginsManager.cs:186
-#: PluginsManager.cs:218
-#: PluginsManager.cs:280
+#: PluginsManager.cs:186 PluginsManager.cs:218 PluginsManager.cs:280
 msgid "unknown"
 msgstr "onbekend"
 
@@ -347,10 +351,13 @@ msgstr "onbekend"
 msgid ""
 "You are now running {0} as elevated Administrator.\n"
 "Which is not recommended for security.\n"
-"Press OK if your understand the risks of running as administrator and want to hide this message in the future."
+"Press OK if your understand the risks of running as administrator and want "
+"to hide this message in the future."
 msgstr ""
-"U draait {0} als verhoogde administrator wat niet aanbevolen wordt voor de beveiliging.\n"
-"Druk op Oke als je dit beveiligings risco begrijpt en dit bericht in het vervolg wilt verbergen."
+"U draait {0} als verhoogde administrator wat niet aanbevolen wordt voor de "
+"beveiliging.\n"
+"Druk op Oke als je dit beveiligings risco begrijpt en dit bericht in het "
+"vervolg wilt verbergen."
 
 #: Program.cs:286
 msgid "Elevated administrator"
@@ -586,8 +593,7 @@ msgstr "Gebruik hoofdletter gevoelig zoeken."
 msgid "Version "
 msgstr "Versie "
 
-#: FrmAbout.cs:62
-#: TrayIcon.cs:211
+#: FrmAbout.cs:62 TrayIcon.cs:211
 msgid "About"
 msgstr "Over"
 
@@ -607,15 +613,11 @@ msgstr "Download fout:"
 msgid "oh no.. {0} crashed."
 msgstr "oh nee {0} is gecrasht."
 
-#: FrmManageNotes.cs:91
-#: FrmManageNotes.cs:328
-#: FrmManageNotes.cs:361
+#: FrmManageNotes.cs:91 FrmManageNotes.cs:328 FrmManageNotes.cs:361
 msgid "&hide selected"
 msgstr "Ver&berg geselecteerde"
 
-#: FrmManageNotes.cs:95
-#: FrmManageNotes.cs:100
-#: FrmManageNotes.cs:333
+#: FrmManageNotes.cs:95 FrmManageNotes.cs:100 FrmManageNotes.cs:333
 #: FrmManageNotes.cs:365
 msgid "&show selected"
 msgstr "toon ge&selecteerde"
@@ -642,7 +644,8 @@ msgstr "verwijder?"
 
 #: FrmManageNotes.cs:584
 msgid "Access denied. delete note {0} manually with proper premission."
-msgstr "Toegang geweigert. Verwijder nottiie {0} handmatig met juiste permissie."
+msgstr ""
+"Toegang geweigert. Verwijder nottiie {0} handmatig met juiste permissie."
 
 #: FrmManageNotes.cs:646
 msgid "nr"
@@ -660,8 +663,7 @@ msgstr "zichtbaar"
 msgid "skin"
 msgstr "skin"
 
-#: FrmManageNotes.cs:711
-#: FrmManageNotes.cs:732
+#: FrmManageNotes.cs:711 FrmManageNotes.cs:732
 msgid "Transparency level not a integer or double."
 msgstr "Transparatie niveau is geen integer of double."
 
@@ -697,8 +699,7 @@ msgstr "Voer a.u.b. wat in."
 msgid "Could not write note."
 msgstr "Kan notitie niet wegschrijven."
 
-#: FrmNewNote.cs:694
-#: FrmNewNote.cs:1042
+#: FrmNewNote.cs:694 FrmNewNote.cs:1042
 msgid "There is no text on the clipboard."
 msgstr "Er is geen tekst op het klembord."
 
@@ -766,12 +767,10 @@ msgstr "Kan lijst met plugins niet laden. Internet verbinding mislukt."
 msgid "A proxy is being used."
 msgstr "Een proxy is in gebruik."
 
-#: FrmSettings.cs:117
-#: FrmSettings.cs:118
+#: FrmSettings.cs:117 FrmSettings.cs:118
 msgid ""
 "Directory does not exist.\n"
 "Please choice a valid directory."
 msgstr ""
 "Map bestaat niet.\n"
 "Kies een geldige map."
-

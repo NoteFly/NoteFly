@@ -58,6 +58,7 @@ RequestExecutionLevel admin
 !include LogicLib.nsh
 !include WordFunc.nsh
 !include FileFunc.nsh
+!include nsProcess.nsh
 
 Function .onInit
 
@@ -93,7 +94,7 @@ Function .onInit
     Abort
   ${EndIf}
   
-  #check if administrator.
+  # check if administrator.
     userInfo::getAccountType
     pop $0
     strCmp $0 "Admin" +3
@@ -112,6 +113,21 @@ Function GetDotNETVersion
   Pop $1
   Exch $0
 FunctionEnd
+
+!macro StopRunningNoteFly
+  ${nsProcess::KillProcess} "${APPFILE}" $R0
+  sleep 300
+  ${if} $R0 == '0'
+    detailprint "Warning, terminated running ${APPFILE} process."
+    sleep 500
+  ${elseif} $R0 == '603'
+    ;detailprint "Good, no instance of application running."
+  ${else}
+    detailprint "Error, terminated process failed. (return code: $R0)"
+  ${endif}
+  
+  ${nsProcess::Unload}
+!macroend
 
 !macro BadPathsCheck
 StrCpy $R0 $INSTDIR "" -2
@@ -155,10 +171,8 @@ UninstPage instfiles
 Section "main executable (required)"
   SectionIn RO
   SetOverwrite on
-  
-  KillProcDLL::KillProc "${APPFILE}"
-  ; Simply wait 500ms for a running NoteFly process to close itself
-  sleep 500
+
+  !insertmacro StopRunningNoteFly
    
   ; Check installation directory 
   !insertmacro BadPathsCheck
@@ -238,10 +252,8 @@ SectionEnd
 ; Uninstaller
 Section "Uninstall"  
 
-   KillProcDLL::KillProc "${APPFILE}"
-   ; Simply wait 800ms for a running NoteFly process to close itself.
-   sleep 800
-   
+  !insertmacro StopRunningNoteFly
+  
   ; Check installation directory 
   !insertmacro BadPathsCheck
 
@@ -260,10 +272,13 @@ Section "Uninstall"
   Delete "$INSTDIR\grass.jpg"
   Delete "$INSTDIR\colordrops.jpg"
   
-  Delete "$INSTDIR\translations\en\Strings.po"
-  RMDir "$INSTDIR\translations\en\"
+  ; translations
+  Delete "$INSTDIR\translations\ko\Strings.po"
+  RMDir "$INSTDIR\translations\ko\"
   Delete "$INSTDIR\translations\nl\Strings.po"
   RMDir "$INSTDIR\translations\nl\"
+  Delete "$INSTDIR\translations\en\Strings.po"
+  RMDir "$INSTDIR\translations\en\"
   RMDir "$INSTDIR\translations\"
   
   ; remove uninstaller

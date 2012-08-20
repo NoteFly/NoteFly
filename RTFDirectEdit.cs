@@ -339,11 +339,11 @@ namespace NoteFly
         /// <summary>
         /// Check if the RTF tag is open.
         /// </summary>
-        /// <param name="tagopen"></param>
+        /// <param name="tagopen">True if tag open.</param>
         /// <param name="rtf">The rtf stream.</param>
-        /// <param name="i"></param>
-        /// <param name="starttag"></param>
-        /// <param name="endtag"></param>
+        /// <param name="i">Position in the rtf stream.</param>
+        /// <param name="starttag">RTF start tag.</param>
+        /// <param name="endtag">RTF end tag.</param>
         /// <returns></returns>
         private bool CheckTagOpened(bool tagopen, string rtf, int i, string starttag, string endtag)
         {
@@ -363,14 +363,14 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Remove RTF tags, between position i for length of sellentext.
         /// </summary>
         /// <param name="newrtf">The new rtf stream.</param>
         /// <param name="rtf">The rtf stream.</param>
-        /// <param name="i"></param>
-        /// <param name="sellentext"></param>
-        /// <param name="starttag"></param>
-        /// <param name="endtag"></param>
+        /// <param name="i">Position the rtf stream.</param>
+        /// <param name="sellentext">Selected text length.</param>
+        /// <param name="starttag">RTF start tag.</param>
+        /// <param name="endtag">RTF end tag.</param>
         /// <returns>The new rtf stream as stringbuilder.</returns>
         private StringBuilder RemoveTag(StringBuilder newrtf, string rtf, int i, string starttag, string endtag)
         {
@@ -430,14 +430,14 @@ namespace NoteFly
         }
 
         /// <summary>
-        ///
+        /// Add a RTF start- and endtag to the RTF stream
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
-        /// <param name="textpos">The text position.</param>
-        /// <param name="sellentext"></param>
-        /// <param name="starttag"></param>
-        /// <param name="endtag"></param>
-        /// <returns></returns>
+        /// <param name="textpos">The text position where to add the starttag</param>
+        /// <param name="sellentext">The length of the text after the starttag to add the RTF end tag.</param>
+        /// <param name="starttag">The RTF start tag to add.</param>
+        /// <param name="endtag">The RTF end tag to add.</param>
+        /// <returns>The new rtf stream.</returns>
         private string SetTagInRTF(string rtf, int textpos, int sellentext, string starttag, string endtag)
         {
             this.rtfformat = true;
@@ -553,45 +553,12 @@ namespace NoteFly
                     {
                         if (!this.rtfformat)
                         {
-                            /*
-                            bool wasstarted = false;
-                            int n = 1;
-                            char c = rtf[i + n];
-                            while (c != ' ' && c != '\n' && c != '\r')
-                            {
-                                if (i + n + endtag.Length <= rtf.Length)
-                                {
-                                    if (rtf.Substring(i + n, endtag.Length).Equals(endtag, StringComparison.Ordinal))
-                                    {
-                                        //System.Windows.Forms.MessageBox.Show("FIXME endtag direct after begintag");
-                                        if (rtf[i + n + endtag.Length] == ' ')
-                                        {
-                                            // remove space too.
-                                            newrtf.Remove(i + n + this.drtflen, endtag.Length + 1);
-                                        }
-                                        else
-                                        {
-                                            newrtf.Remove(i + n + this.drtflen, endtag.Length); // todo test
-                                        }
-
-                                        this.drtflen -= endtag.Length;
-                                        wasstarted = true;
-                                        break;
-                                    }
-                                }
-
-                                n++;
-                                c = rtf[i + n]; // bug
-                            }
-                            */
-
-                        if (!tagopen)
+                            if (!tagopen)
                             {
                                 textstarttagdone = true;
                                 // add begin
                                 newrtf.Insert(i + this.drtflen + 1, starttag + " ");
                                 this.drtflen = newrtf.Length - rtf.Length;
-
                                 tagopen = true;
                             }
                         }
@@ -603,11 +570,12 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Figure out if the RTF stream is at position pos still in RTF format mode or
+        /// is displaying the text from the RTF stream.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
-        /// <param name="pos"></param>
-        /// <returns>True if document at pos is in rtf formating code.</returns>
+        /// <param name="pos">The position to check.</param>
+        /// <returns>True if document at pos is in rtf formating mode.</returns>
         private bool InRTFFormat(string rtf, int pos, bool rtfformat)
         {
             if (rtf[pos] == ' ' || rtf[pos] == '\r' || rtf[pos] == '\n')
@@ -620,13 +588,13 @@ namespace NoteFly
 
 
         /// <summary>
-        /// 
+        /// The color of text in the RTF stream,
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
-        /// <param name="newclr"></param>
+        /// <param name="newclr">The color to give the text.</param>
         /// <param name="textpos">The text position.</param>
-        /// <param name="sellentext"></param>
-        /// <returns></returns>
+        /// <param name="sellentext">The text length to color.</param>
+        /// <returns>The new RTF stream.</returns>
         public string SetColorInRTF(string rtf, Color newclr, int textpos, int sellentext)
         {
             const int EXTRACAP = 40; // tune
@@ -819,7 +787,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Find the start of the RTF document content
+        /// Find the start of the RTF document content.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
         /// <returns>The position after viewkind rtftag in the rtf stream.</returns>
@@ -995,7 +963,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Get the position of a color in the current colortbl.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
         /// <param name="clr"></param>
@@ -1014,10 +982,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Parser a string with a coloritem from the colortbl in the RTF stream as a color object.
         /// </summary>
-        /// <param name="colortblitemraw"></param>
-        /// <returns></returns>
+        /// <param name="colortblitemraw">An string with the coloritem.</param>
+        /// <returns>An color object.</returns>
         private Color ParserColorItem(string colortblraw)
         {
             const string REDPROPERTIE = "red";
@@ -1051,10 +1019,11 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Parser the colortbl in the RTF stream at position posstartcolortbl. 
+        /// Put all coloritems in the list colortblitems.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
-        /// <param name="posstartcolortbl"></param>
+        /// <param name="posstartcolortbl">Position of where the colortbl starts.</param>
         private void ParserColorTbl(string rtf, int posstartcolortbl)
         {
             this.colortblitems.Clear();
@@ -1076,7 +1045,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
         /// <param name="posstartcolortbl">The position of start of colortbl in RTF.</param>
-        /// <param name="newclr"></param>
+        /// <param name="newclr">The new color to add to the colortbl.</param>
         /// <returns>The new RTF with the color add to the colortbl.</returns>
         private StringBuilder AddColorItem(StringBuilder newrtf, int posstartcolortbl, Color newclr)
         {
@@ -1093,10 +1062,10 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Find the start position of the colortbl in the RTF stream.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
-        /// <returns></returns>
+        /// <returns>The position in the RTF.</returns>
         private int FindPosStartColortbl(string rtf)
         {
             return rtf.IndexOf(COLORTBLTAG, RTF1DOCTAG.Length, StringComparison.Ordinal);
