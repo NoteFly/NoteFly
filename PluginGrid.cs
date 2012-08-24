@@ -93,7 +93,7 @@ namespace NoteFly
         /// Draw details of a plugin.
         /// </summary>
         /// <param name="pluginpos">The position of the plugin in allplugins array.</param>
-        /// <param name="pluginenabled">The dll filename of the plugin assemble.</param>
+        /// <param name="dllfilename">The dll filename of the plugin assemble.</param>
         /// <param name="gridwith">The width of the plugingrid control.</param>
         private void DrawPluginDetails(int pluginpos, string dllfilename, int gridwith)
         {
@@ -242,6 +242,7 @@ namespace NoteFly
         /// Update the plugin status if it enabled or disabled.
         /// </summary>
         /// <param name="pluginpos">The position in tablelayout.</param>
+        /// <param name="dllfilename">The dll filename to check if it's enabled.</param>
         private void SetPluginStatus(int pluginpos, string dllfilename)
         {
             if (PluginsManager.IsPluginEnabled(dllfilename))

@@ -368,7 +368,6 @@ namespace NoteFly
         /// <param name="newrtf">The new rtf stream.</param>
         /// <param name="rtf">The rtf stream.</param>
         /// <param name="i">Position the rtf stream.</param>
-        /// <param name="sellentext">Selected text length.</param>
         /// <param name="starttag">RTF start tag.</param>
         /// <param name="endtag">RTF end tag.</param>
         /// <returns>The new rtf stream as stringbuilder.</returns>
@@ -575,6 +574,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
         /// <param name="pos">The position to check.</param>
+        /// <param name="rtfformat">The current rtf status, in rtf formating if true</param>
         /// <returns>True if document at pos is in rtf formating mode.</returns>
         private bool InRTFFormat(string rtf, int pos, bool rtfformat)
         {
@@ -984,7 +984,7 @@ namespace NoteFly
         /// <summary>
         /// Parser a string with a coloritem from the colortbl in the RTF stream as a color object.
         /// </summary>
-        /// <param name="colortblitemraw">An string with the coloritem.</param>
+        /// <param name="colortblraw">An string with a coloritem for the RTF colortbl.</param>
         /// <returns>An color object.</returns>
         private Color ParserColorItem(string colortblraw)
         {
@@ -1043,7 +1043,7 @@ namespace NoteFly
         /// <summary>
         /// Add a color to the RTF colortbl.
         /// </summary>
-        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="newrtf">The rtf stream.</param>
         /// <param name="posstartcolortbl">The position of start of colortbl in RTF.</param>
         /// <param name="newclr">The new color to add to the colortbl.</param>
         /// <returns>The new RTF with the color add to the colortbl.</returns>

@@ -1430,6 +1430,7 @@ namespace NoteFly
         /// <summary>
         /// Write the note node with properties.
         /// </summary>
+        /// <param name="xmlwrite">The XmlTextWriter object to write with.</param>
         /// <param name="note">The note object.</param>
         /// <param name="skinname">The skinname used by this note.</param>
         /// <param name="content">The note content.</param>

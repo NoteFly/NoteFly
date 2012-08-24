@@ -26,9 +26,10 @@ namespace NoteFly
 
     /// <summary>
     /// This class can be used to verify a file or string with the NoteFly public key to check 
-    /// if the file or data is really coming from the developer who owns the NoteFly sprivate key.
-    /// No encryption, only signature checking is used.
+    /// if the file or data is really coming from the developer who owns the NoteFly private key.
     /// <remarks>
+    /// No RSA encryption is being used, only RSA signature checking is used.
+    /// 
     /// Patent on RSA is waived after 6, 2000.
     /// source: http://www.rsa.com/rsalabs/node.asp?id=2322
     /// </remarks>
@@ -136,7 +137,7 @@ namespace NoteFly
         /// Check data and with the signature.
         /// </summary>
         /// <param name="data">The data to check the signature from.</param>
-        /// <param name="signature">The signature of the data.</param>
+        /// <param name="hashinsignatureused">The signature of the hash.</param>
         /// <returns>True if the signature is valid for the data.</returns>
         private bool IsValidSignature(string data, object hashinsignatureused)
         {

@@ -104,6 +104,8 @@ namespace NoteFly
         /// Initializes a new instance of the FrmNewNote class for a new note.
         /// </summary>
         /// <param name="notes">The class with access to all notes.</param>
+        /// <param name="deltaX">X position change from center screen position to show form.</param>
+        /// <param name="deltaY">Y position change from center screen position to show form.</param>
         public FrmNewNote(Notes notes, int deltaX, int deltaY)
         {
             this.ConstructFrmNewNote(notes);

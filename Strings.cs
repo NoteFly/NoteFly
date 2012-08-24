@@ -148,7 +148,7 @@ namespace NoteFly
         /// <param name="info">CultureInfo object.</param>
         /// <param name="t">The string to translate.</param>
         /// <param name="parameters">Parameters in the string.</param>
-        /// <rereturns>The translated string with orginal parameters.</rereturns>
+        /// <returns>The translated string with orginal parameters.</returns>
         public static string T(CultureInfo info, string t, params object[] parameters)
         {
             if (string.IsNullOrEmpty(t)) return t;
