@@ -56,10 +56,20 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmSmileyChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSmileyChooser.Designer.cs">
+      <DependentUpon>FrmSmileyChooser.cs</DependentUpon>
+    </Compile>
     <Compile Include="InsertSmiley.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmSmileyChooser.resx">
+      <DependentUpon>FrmSmileyChooser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -117,6 +127,27 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\confuzzed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\liar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\schok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\omg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\angel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mad.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
