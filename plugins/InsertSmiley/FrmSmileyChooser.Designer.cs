@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.flowLayoutPnlSmileys = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnSmileyWink = new System.Windows.Forms.Button();
-            this.btnSmileyOmg = new System.Windows.Forms.Button();
-            this.btnSmileyDance = new System.Windows.Forms.Button();
+            this.btnSmileyOh = new System.Windows.Forms.Button();
+            this.btnSmileyCool = new System.Windows.Forms.Button();
+            this.btnSmileyCry = new System.Windows.Forms.Button();
             this.btnSmileyConfuzzed = new System.Windows.Forms.Button();
             this.btnSmileySmile = new System.Windows.Forms.Button();
             this.btnSmileySad = new System.Windows.Forms.Button();
-            this.btnSmileyLair = new System.Windows.Forms.Button();
             this.btnSmileyMad = new System.Windows.Forms.Button();
-            this.btnSmileyAngel = new System.Windows.Forms.Button();
+            this.btnSmileyLol = new System.Windows.Forms.Button();
+            this.btnSmileyWink = new System.Windows.Forms.Button();
             this.flowLayoutPnlSmileys.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,15 +45,15 @@
             // 
             this.flowLayoutPnlSmileys.BackColor = System.Drawing.Color.White;
             this.flowLayoutPnlSmileys.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyWink);
-            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyOmg);
-            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyDance);
+            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyOh);
+            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyCool);
+            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyCry);
             this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyConfuzzed);
             this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileySmile);
             this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileySad);
-            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyLair);
             this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyMad);
-            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyAngel);
+            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyLol);
+            this.flowLayoutPnlSmileys.Controls.Add(this.btnSmileyWink);
             this.flowLayoutPnlSmileys.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPnlSmileys.ForeColor = System.Drawing.Color.Black;
             this.flowLayoutPnlSmileys.Location = new System.Drawing.Point(0, 0);
@@ -62,55 +62,55 @@
             this.flowLayoutPnlSmileys.Size = new System.Drawing.Size(168, 120);
             this.flowLayoutPnlSmileys.TabIndex = 0;
             // 
-            // btnSmileyWink
+            // btnSmileyOh
             // 
-            this.btnSmileyWink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSmileyWink.Image = global::InsertSmiley.Properties.Resources.wink;
-            this.btnSmileyWink.Location = new System.Drawing.Point(1, 1);
-            this.btnSmileyWink.Margin = new System.Windows.Forms.Padding(1);
-            this.btnSmileyWink.Name = "btnSmileyWink";
-            this.btnSmileyWink.Size = new System.Drawing.Size(53, 37);
-            this.btnSmileyWink.TabIndex = 0;
-            this.btnSmileyWink.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSmileyWink.UseCompatibleTextRendering = true;
-            this.btnSmileyWink.UseMnemonic = false;
-            this.btnSmileyWink.UseVisualStyleBackColor = true;
-            this.btnSmileyWink.Click += new System.EventHandler(this.btnSmileyChoice_Click);
+            this.btnSmileyOh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSmileyOh.Image = global::InsertSmiley.Properties.Resources.smiley_oh;
+            this.btnSmileyOh.Location = new System.Drawing.Point(1, 1);
+            this.btnSmileyOh.Margin = new System.Windows.Forms.Padding(1);
+            this.btnSmileyOh.Name = "btnSmileyOh";
+            this.btnSmileyOh.Size = new System.Drawing.Size(53, 37);
+            this.btnSmileyOh.TabIndex = 0;
+            this.btnSmileyOh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSmileyOh.UseCompatibleTextRendering = true;
+            this.btnSmileyOh.UseMnemonic = false;
+            this.btnSmileyOh.UseVisualStyleBackColor = true;
+            this.btnSmileyOh.Click += new System.EventHandler(this.btnSmileyChoice_Click);
             // 
-            // btnSmileyOmg
+            // btnSmileyCool
             // 
-            this.btnSmileyOmg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSmileyOmg.Image = global::InsertSmiley.Properties.Resources.omg;
-            this.btnSmileyOmg.Location = new System.Drawing.Point(56, 1);
-            this.btnSmileyOmg.Margin = new System.Windows.Forms.Padding(1);
-            this.btnSmileyOmg.Name = "btnSmileyOmg";
-            this.btnSmileyOmg.Size = new System.Drawing.Size(53, 37);
-            this.btnSmileyOmg.TabIndex = 1;
-            this.btnSmileyOmg.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSmileyOmg.UseCompatibleTextRendering = true;
-            this.btnSmileyOmg.UseMnemonic = false;
-            this.btnSmileyOmg.UseVisualStyleBackColor = true;
-            this.btnSmileyOmg.Click += new System.EventHandler(this.btnSmileyChoice_Click);
+            this.btnSmileyCool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSmileyCool.Image = global::InsertSmiley.Properties.Resources.smiley_cool;
+            this.btnSmileyCool.Location = new System.Drawing.Point(56, 1);
+            this.btnSmileyCool.Margin = new System.Windows.Forms.Padding(1);
+            this.btnSmileyCool.Name = "btnSmileyCool";
+            this.btnSmileyCool.Size = new System.Drawing.Size(53, 37);
+            this.btnSmileyCool.TabIndex = 1;
+            this.btnSmileyCool.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSmileyCool.UseCompatibleTextRendering = true;
+            this.btnSmileyCool.UseMnemonic = false;
+            this.btnSmileyCool.UseVisualStyleBackColor = true;
+            this.btnSmileyCool.Click += new System.EventHandler(this.btnSmileyChoice_Click);
             // 
-            // btnSmileyDance
+            // btnSmileyCry
             // 
-            this.btnSmileyDance.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSmileyDance.Image = global::InsertSmiley.Properties.Resources.dance;
-            this.btnSmileyDance.Location = new System.Drawing.Point(111, 1);
-            this.btnSmileyDance.Margin = new System.Windows.Forms.Padding(1);
-            this.btnSmileyDance.Name = "btnSmileyDance";
-            this.btnSmileyDance.Size = new System.Drawing.Size(53, 37);
-            this.btnSmileyDance.TabIndex = 2;
-            this.btnSmileyDance.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSmileyDance.UseCompatibleTextRendering = true;
-            this.btnSmileyDance.UseMnemonic = false;
-            this.btnSmileyDance.UseVisualStyleBackColor = true;
-            this.btnSmileyDance.Click += new System.EventHandler(this.btnSmileyChoice_Click);
+            this.btnSmileyCry.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSmileyCry.Image = global::InsertSmiley.Properties.Resources.smiley_cry;
+            this.btnSmileyCry.Location = new System.Drawing.Point(111, 1);
+            this.btnSmileyCry.Margin = new System.Windows.Forms.Padding(1);
+            this.btnSmileyCry.Name = "btnSmileyCry";
+            this.btnSmileyCry.Size = new System.Drawing.Size(53, 37);
+            this.btnSmileyCry.TabIndex = 2;
+            this.btnSmileyCry.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSmileyCry.UseCompatibleTextRendering = true;
+            this.btnSmileyCry.UseMnemonic = false;
+            this.btnSmileyCry.UseVisualStyleBackColor = true;
+            this.btnSmileyCry.Click += new System.EventHandler(this.btnSmileyChoice_Click);
             // 
             // btnSmileyConfuzzed
             // 
             this.btnSmileyConfuzzed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSmileyConfuzzed.Image = global::InsertSmiley.Properties.Resources.confuzzed;
+            this.btnSmileyConfuzzed.Image = global::InsertSmiley.Properties.Resources.smiley_confuzzed;
             this.btnSmileyConfuzzed.Location = new System.Drawing.Point(1, 40);
             this.btnSmileyConfuzzed.Margin = new System.Windows.Forms.Padding(1);
             this.btnSmileyConfuzzed.Name = "btnSmileyConfuzzed";
@@ -125,7 +125,7 @@
             // btnSmileySmile
             // 
             this.btnSmileySmile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSmileySmile.Image = global::InsertSmiley.Properties.Resources.smile;
+            this.btnSmileySmile.Image = global::InsertSmiley.Properties.Resources.smiley_smile;
             this.btnSmileySmile.Location = new System.Drawing.Point(56, 40);
             this.btnSmileySmile.Margin = new System.Windows.Forms.Padding(1);
             this.btnSmileySmile.Name = "btnSmileySmile";
@@ -140,7 +140,7 @@
             // btnSmileySad
             // 
             this.btnSmileySad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSmileySad.Image = global::InsertSmiley.Properties.Resources.sad;
+            this.btnSmileySad.Image = global::InsertSmiley.Properties.Resources.smiley_sad;
             this.btnSmileySad.Location = new System.Drawing.Point(111, 40);
             this.btnSmileySad.Margin = new System.Windows.Forms.Padding(1);
             this.btnSmileySad.Name = "btnSmileySad";
@@ -152,50 +152,50 @@
             this.btnSmileySad.UseVisualStyleBackColor = true;
             this.btnSmileySad.Click += new System.EventHandler(this.btnSmileyChoice_Click);
             // 
-            // btnSmileyLair
-            // 
-            this.btnSmileyLair.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSmileyLair.Image = global::InsertSmiley.Properties.Resources.liar;
-            this.btnSmileyLair.Location = new System.Drawing.Point(1, 79);
-            this.btnSmileyLair.Margin = new System.Windows.Forms.Padding(1);
-            this.btnSmileyLair.Name = "btnSmileyLair";
-            this.btnSmileyLair.Size = new System.Drawing.Size(53, 37);
-            this.btnSmileyLair.TabIndex = 6;
-            this.btnSmileyLair.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSmileyLair.UseCompatibleTextRendering = true;
-            this.btnSmileyLair.UseMnemonic = false;
-            this.btnSmileyLair.UseVisualStyleBackColor = true;
-            this.btnSmileyLair.Click += new System.EventHandler(this.btnSmileyChoice_Click);
-            // 
             // btnSmileyMad
             // 
             this.btnSmileyMad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSmileyMad.Image = global::InsertSmiley.Properties.Resources.mad;
-            this.btnSmileyMad.Location = new System.Drawing.Point(56, 79);
+            this.btnSmileyMad.Image = global::InsertSmiley.Properties.Resources.smiley_mad;
+            this.btnSmileyMad.Location = new System.Drawing.Point(1, 79);
             this.btnSmileyMad.Margin = new System.Windows.Forms.Padding(1);
             this.btnSmileyMad.Name = "btnSmileyMad";
             this.btnSmileyMad.Size = new System.Drawing.Size(53, 37);
-            this.btnSmileyMad.TabIndex = 7;
+            this.btnSmileyMad.TabIndex = 6;
             this.btnSmileyMad.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSmileyMad.UseCompatibleTextRendering = true;
             this.btnSmileyMad.UseMnemonic = false;
             this.btnSmileyMad.UseVisualStyleBackColor = true;
             this.btnSmileyMad.Click += new System.EventHandler(this.btnSmileyChoice_Click);
             // 
-            // btnSmileyAngel
+            // btnSmileyLol
             // 
-            this.btnSmileyAngel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSmileyAngel.Image = global::InsertSmiley.Properties.Resources.angel;
-            this.btnSmileyAngel.Location = new System.Drawing.Point(111, 79);
-            this.btnSmileyAngel.Margin = new System.Windows.Forms.Padding(1);
-            this.btnSmileyAngel.Name = "btnSmileyAngel";
-            this.btnSmileyAngel.Size = new System.Drawing.Size(53, 37);
-            this.btnSmileyAngel.TabIndex = 8;
-            this.btnSmileyAngel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSmileyAngel.UseCompatibleTextRendering = true;
-            this.btnSmileyAngel.UseMnemonic = false;
-            this.btnSmileyAngel.UseVisualStyleBackColor = true;
-            this.btnSmileyAngel.Click += new System.EventHandler(this.btnSmileyChoice_Click);
+            this.btnSmileyLol.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSmileyLol.Image = global::InsertSmiley.Properties.Resources.smiley_lol;
+            this.btnSmileyLol.Location = new System.Drawing.Point(56, 79);
+            this.btnSmileyLol.Margin = new System.Windows.Forms.Padding(1);
+            this.btnSmileyLol.Name = "btnSmileyLol";
+            this.btnSmileyLol.Size = new System.Drawing.Size(53, 37);
+            this.btnSmileyLol.TabIndex = 7;
+            this.btnSmileyLol.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSmileyLol.UseCompatibleTextRendering = true;
+            this.btnSmileyLol.UseMnemonic = false;
+            this.btnSmileyLol.UseVisualStyleBackColor = true;
+            this.btnSmileyLol.Click += new System.EventHandler(this.btnSmileyChoice_Click);
+            // 
+            // btnSmileyWink
+            // 
+            this.btnSmileyWink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSmileyWink.Image = global::InsertSmiley.Properties.Resources.smiley_wink;
+            this.btnSmileyWink.Location = new System.Drawing.Point(111, 79);
+            this.btnSmileyWink.Margin = new System.Windows.Forms.Padding(1);
+            this.btnSmileyWink.Name = "btnSmileyWink";
+            this.btnSmileyWink.Size = new System.Drawing.Size(53, 37);
+            this.btnSmileyWink.TabIndex = 8;
+            this.btnSmileyWink.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSmileyWink.UseCompatibleTextRendering = true;
+            this.btnSmileyWink.UseMnemonic = false;
+            this.btnSmileyWink.UseVisualStyleBackColor = true;
+            this.btnSmileyWink.Click += new System.EventHandler(this.btnSmileyChoice_Click);
             // 
             // FrmSmileyChooser
             // 
@@ -224,13 +224,13 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPnlSmileys;
         private System.Windows.Forms.Button btnSmileySmile;
         private System.Windows.Forms.Button btnSmileySad;
-        private System.Windows.Forms.Button btnSmileyWink;
+        private System.Windows.Forms.Button btnSmileyOh;
         private System.Windows.Forms.Button btnSmileyConfuzzed;
-        private System.Windows.Forms.Button btnSmileyLair;
         private System.Windows.Forms.Button btnSmileyMad;
-        private System.Windows.Forms.Button btnSmileyOmg;
-        private System.Windows.Forms.Button btnSmileyDance;
-        private System.Windows.Forms.Button btnSmileyAngel;
+        private System.Windows.Forms.Button btnSmileyLol;
+        private System.Windows.Forms.Button btnSmileyCool;
+        private System.Windows.Forms.Button btnSmileyCry;
+        private System.Windows.Forms.Button btnSmileyWink;
 
 
     }

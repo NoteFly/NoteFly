@@ -60,65 +60,65 @@ namespace InsertSmiley.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap angel {
+        internal static System.Drawing.Bitmap smiley_confuzzed {
             get {
-                object obj = ResourceManager.GetObject("angel", resourceCulture);
+                object obj = ResourceManager.GetObject("smiley_confuzzed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap confuzzed {
+        internal static System.Drawing.Bitmap smiley_cool {
             get {
-                object obj = ResourceManager.GetObject("confuzzed", resourceCulture);
+                object obj = ResourceManager.GetObject("smiley_cool", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap dance {
+        internal static System.Drawing.Bitmap smiley_cry {
             get {
-                object obj = ResourceManager.GetObject("dance", resourceCulture);
+                object obj = ResourceManager.GetObject("smiley_cry", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap liar {
+        internal static System.Drawing.Bitmap smiley_lol {
             get {
-                object obj = ResourceManager.GetObject("liar", resourceCulture);
+                object obj = ResourceManager.GetObject("smiley_lol", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap mad {
+        internal static System.Drawing.Bitmap smiley_mad {
             get {
-                object obj = ResourceManager.GetObject("mad", resourceCulture);
+                object obj = ResourceManager.GetObject("smiley_mad", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap omg {
+        internal static System.Drawing.Bitmap smiley_oh {
             get {
-                object obj = ResourceManager.GetObject("omg", resourceCulture);
+                object obj = ResourceManager.GetObject("smiley_oh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap sad {
+        internal static System.Drawing.Bitmap smiley_sad {
             get {
-                object obj = ResourceManager.GetObject("sad", resourceCulture);
+                object obj = ResourceManager.GetObject("smiley_sad", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap smile {
+        internal static System.Drawing.Bitmap smiley_smile {
             get {
-                object obj = ResourceManager.GetObject("smile", resourceCulture);
+                object obj = ResourceManager.GetObject("smiley_smile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap wink {
+        internal static System.Drawing.Bitmap smiley_wink {
             get {
-                object obj = ResourceManager.GetObject("wink", resourceCulture);
+                object obj = ResourceManager.GetObject("smiley_wink", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
