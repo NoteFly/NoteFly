@@ -16,17 +16,6 @@ namespace NoteFly
     public class ZipStorer : IDisposable
     {
         /// <summary>
-        /// Compression method enumeration
-        /// </summary>
-        public enum Compression : ushort 
-        {
-            /// <summary>Uncompressed storage</summary> 
-            Store = 0, 
-            /// <summary>Deflate compression method</summary>
-            Deflate = 8
-        }
-
-        /// <summary>
         /// Represents an entry in Zip file directory
         /// </summary>
         public struct ZipFileEntry
@@ -122,6 +111,18 @@ namespace NoteFly
         private static uint[] CrcTable = null;
 
         /// <summary>
+        /// Compression method enumeration
+        /// </summary>
+        public enum Compression : ushort
+        {
+            /// <summary>Uncompressed storage</summary> 
+            Store = 0,
+
+            /// <summary>Deflate compression method</summary>
+            Deflate = 8
+        }
+
+        /// <summary>
         /// Default filename encoder
         /// </summary>
         private static Encoding DefaultEncoding = Encoding.GetEncoding(437);
@@ -147,6 +148,7 @@ namespace NoteFly
                 CrcTable[i] = c;
             }
         }
+
         /// <summary>
         /// Method to create a new storage file
         /// </summary>
@@ -215,13 +217,14 @@ namespace NoteFly
 
             throw new System.IO.InvalidDataException();
         }
+
         /// <summary>
         /// Add full contents of a file into the Zip storage
         /// </summary>
         /// <param name="_method">Compression method</param>
         /// <param name="_pathname">Full path of file to add to Zip storage</param>
         /// <param name="_filenameInZip">Filename and path as desired in Zip directory</param>
-        /// <param name="_comment">Comment for stored file</param>        
+        /// <param name="_comment">Comment for stored file</param>
         public void AddFile(Compression _method, string _pathname, string _filenameInZip, string _comment)
         {
             if (this.Access == FileAccess.Read)
@@ -231,6 +234,7 @@ namespace NoteFly
             this.AddStream(_method, _filenameInZip, stream, File.GetLastWriteTime(_pathname), _comment);
             stream.Close();
         }
+
         /// <summary>
         /// Add full contents of a stream into the Zip storage
         /// </summary>
@@ -243,7 +247,7 @@ namespace NoteFly
         {
             if (this.Access == FileAccess.Read)
             {
-                throw new InvalidOperationException("Writing is not alowed");
+                throw new InvalidOperationException("Writing to zipfile is not alowed");
             }
 
             long offset;
@@ -397,6 +401,11 @@ namespace NoteFly
             if (Directory.Exists(_filename))
             {
                 return true;
+            }
+
+            if (File.Exists(_filename))
+            {
+                return false;
             }
 
             Stream output = new FileStream(_filename, FileMode.Create, FileAccess.Write);
@@ -777,10 +786,13 @@ namespace NoteFly
             int pos = filename.IndexOf(':');
             if (pos >= 0)
                 filename = filename.Remove(0, pos + 1);
-
             return filename.Trim('/');
         }
-        // Reads the end-of-central-directory record
+
+        /// <summary>
+        ///  Reads the end-of-central-directory record.
+        /// </summary>
+        /// <returns></returns>
         private bool ReadFileInfo()
         {
             if (this.ZipFileStream.Length < 22)

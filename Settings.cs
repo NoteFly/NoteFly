@@ -207,7 +207,7 @@ namespace NoteFly
         /// </summary>
         public static string FontTitleFamily = "FreeMono";
 #else
-		/// <summary>
+        /// <summary>
         /// The default font family of notes content.
         /// </summary>
         public static string FontTitleFamily = "FreeMono";

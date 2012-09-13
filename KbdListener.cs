@@ -157,6 +157,25 @@ namespace NoteFly
             private KeyDelegate m_KeyHandler = null;
             #endregion
 
+            #region Private external methods
+
+            // In case you want to have a comprehensive overview of calling conventions follow the next link:
+            // http://www.codeproject.com/cpp/calling_conventions_demystified.asp
+
+            [DllImport("User32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            internal static extern unsafe bool RegisterRawInputDevices(RAWINPUTDEV* rawInputDevices, uint numDevices, uint size);
+
+            [DllImport("User32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.I4)]
+            internal static extern unsafe int GetRawInputData(void* hRawInput,
+                uint uiCommand,
+                byte* pData,
+                uint* pcbSize,
+                uint cbSizeHeader);
+
+            #endregion
+
             #region Unsafe types
             /// <summary>
             /// 
@@ -363,25 +382,6 @@ namespace NoteFly
                 // In case you forget this you will run into problems
                 base.WndProc(ref m);
             }
-
-            #endregion
-    
-            #region Private external methods
-
-            // In case you want to have a comprehensive overview of calling conventions follow the next link:
-            // http://www.codeproject.com/cpp/calling_conventions_demystified.asp
-
-            [DllImport("User32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern unsafe bool RegisterRawInputDevices(RAWINPUTDEV* rawInputDevices, uint numDevices, uint size);
-
-            [DllImport("User32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.I4)]
-            internal static extern unsafe int GetRawInputData(void* hRawInput,
-                uint uiCommand,
-                byte* pData,
-                uint* pcbSize,
-                uint cbSizeHeader);
 
             #endregion
         }

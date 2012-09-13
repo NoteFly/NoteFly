@@ -43,13 +43,11 @@ namespace NoteFly
         /// </summary>
         private TableLayoutPanel[] tlpnlPlugins;
 
-        //private Label lblTextNopluginsinstalled;
-
         /// <summary>
         /// Initializes a new instance of the PluginGrid class.
         /// </summary>
         public PluginGrid()
-        {          
+        {
         }
 
         /// <summary>

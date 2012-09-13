@@ -63,11 +63,6 @@ namespace NoteFly
         private int newnotedeltaY = 0;
 
         /// <summary>
-        /// Is the creation of a new note being showed, so double left clicking isnt creating two notes at once.
-        /// </summary>
-        ////private bool frmnewnoteshowed = false;
-
-        /// <summary>
         /// Used for warning if new note is still open on shutdown application.
         /// </summary>
         private bool frmneweditnoteopen = false;

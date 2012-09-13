@@ -17,18 +17,18 @@
         /// <summary>
         /// Creating a new instance of FrmSmileyChooser class.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="inssm"></param>
-        /// <param name="insertposition"></param>
-        /// <param name="rtf"></param>
+        /// <param name="x">X coordinate of mouse click.</param>
+        /// <param name="y">Y coordinate of mouse click.</param>
+        /// <param name="rtb">The RicheditTextbox control.</param>
+        /// <param name="insertposition">The position where to add RTF.</param>
+        /// <param name="rtf">The current RTF stream.</param>
         public FrmSmileyChooser(int x, int y, RichTextBox rtb, int insertposition, string rtf)
         {
             this.rtf = rtf;
             this.rtb = rtb;
             this.insertposition = insertposition;
             InitializeComponent();
-            if (x > (this.Width/2) && y > (this.Height/2))
+            if (x > (this.Width / 2) && y > (this.Height / 2))
             {
                 this.btnSmileySmile.Select();
                 if ((x > (Screen.PrimaryScreen.WorkingArea.Width - (this.Width / 2))) || (y > (Screen.PrimaryScreen.WorkingArea.Height - (this.Height / 2))))
@@ -49,8 +49,8 @@
         /// <summary>
         /// Gets the RTF pic tag for a smiley image.
         /// </summary>
-        /// <param name="smileybtnname"></param>
-        /// <returns></returns>
+        /// <param name="smileybtnname">The button name of the smiley button clicked</param>
+        /// <returns>The RTF stream part to insert.</returns>
         private string GetSmileyRTFImage(string smileybtnname)
         {
             const string BTNPREFIXNAME = "btnSmiley";
@@ -188,10 +188,10 @@ f70001d2f800000000000000000000000000000000000000000000000000000000000000000000
         }
 
         /// <summary>
-        /// 
+        /// An smiley image is choicen add the smiley image to the RTF stream of the RicheditTextBox.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnSmileyChoice_Click(object sender, EventArgs e)
         {
             Button btnsmiley = (Button)sender;

@@ -712,6 +712,7 @@ namespace NoteFly
                         this.notes.GetNote(0).DestroyForm();
                         this.notes.RemoveNote(0);
                     }
+
                     this.notes.LoadNotes(true, false);
                 }
 
@@ -1015,7 +1016,16 @@ namespace NoteFly
                         {
                             // todo GetContent() is not good because it can take long to read all content but it works for now.
                             RichTextBox rtb = new RichTextBox();
-                            rtb.Rtf = this.notes.GetNote(notepos).GetContent();
+                            try
+                            {
+                                rtb.Rtf = this.notes.GetNote(notepos).GetContent();
+                            }
+                            catch (ArgumentException argexc)
+                            {
+                                Log.Write(LogType.exception, argexc.Message + ", caused by note nr. " + notepos);
+                                return;
+                            }
+
                             ////xmlUtil.GetContentStringLimited(
                             string content = rtb.Text;
                             rtb.Dispose();

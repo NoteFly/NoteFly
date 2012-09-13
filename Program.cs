@@ -771,7 +771,7 @@ namespace NoteFly
             if (Settings.UpdatecheckUseGPG)
             {
                 GPGVerifyWrapper gpgverif = new GPGVerifyWrapper();
-                if (gpgverif.VerifDownload(newfiles[0], newfiles[1]))
+                if (gpgverif.VerifyDownload(newfiles[0], newfiles[1]))
                 {
                     ExecDownload(newfiles[0]);
                 }

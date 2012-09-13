@@ -416,9 +416,10 @@ namespace NoteFly
                             {
                                 width = Convert.ToInt32(this.RemoveQuotes(parts[poswidth]));
                             }
-                            catch (InvalidCastException)
+                            catch (InvalidCastException invcastexc)
                             {
                                 width = 200;
+                                Log.Write(LogType.exception, invcastexc.Message);
                             }
 
                             if (width <= 0)

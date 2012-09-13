@@ -184,7 +184,14 @@ namespace NoteFly
                                 PluginsManager.DisablePlugin(entry.FilenameInZip);
 
                                 // extract file
-                                zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip));
+                                if (zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip)))
+                                {
+                                    Log.Write(LogType.info, "Exctracting " + entry.FilenameInZip + " succeeded.");
+                                } 
+                                else
+                                {
+                                    Log.Write(LogType.exception, "Exctracting " + entry.FilenameInZip + " failed.");
+                                }
                             }
                         }
                     }

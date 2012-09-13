@@ -586,7 +586,6 @@ namespace NoteFly
             return rtfformat;
         }
 
-
         /// <summary>
         /// The color of text in the RTF stream,
         /// </summary>

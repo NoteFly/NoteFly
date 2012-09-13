@@ -57,26 +57,6 @@ namespace NoteFly
         /// </summary>
         private static System.Globalization.CultureInfo resourceCulture;
 
-        /*
-        /// <summary>
-        /// Gets or sets Resources directory used to retrieve files from.
-        /// </summary>
-        public static string ResourcesDirectory
-        {
-            get { return resourcesDir; }
-            set { resourcesDir = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets Format of the file based on culture and resource name.
-        /// </summary>
-        public static string FileFormat
-        {
-            get { return fileFormat; }
-            set { fileFormat = value; }
-        }
-        */
-
         /// <summary>
         /// Gets or sets the current thread's CurrentUICulture property for all
         /// resource lookups using this strongly typed resource class.
@@ -285,6 +265,7 @@ namespace NoteFly
                 controltype == typeof(System.Windows.Forms.ToolTip) ||
                 controltype == typeof(System.Windows.Forms.LinkLabel) ||
                 controltype == typeof(System.Windows.Forms.TabControl) ||
+                controltype == typeof(System.Windows.Forms.TableLayoutPanel) ||
                 controltype == typeof(SearchTextBox))
             {
                 // blacklist control name

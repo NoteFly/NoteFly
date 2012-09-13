@@ -234,9 +234,8 @@ namespace NoteFly
         {
             if (this.rsaverify != null)
             {
-                if (!this.rsaverify.CheckFileSignatureAndDisplayErrors(newfiles[0]))
+                if (!this.rsaverify.CheckFileSignatureAndDisplayErrors(newfiles[0]) || !File.Exists(newfiles[0]))
                 {
-                    ////File.Move(newfiles[0], newfiles[0] + ".invalid");
                     return;
                 }
             }
@@ -327,7 +326,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The user wants to sto searching, get the list of all plugins again.
+        /// The user wants to stop searching, get the list of all plugins again.
         /// </summary>
         private void searchtbPlugins_SearchStop()
         {

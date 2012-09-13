@@ -21,11 +21,9 @@
             btnOpenChooser.Name = "smileychooser";
             btnOpenChooser.Image = global::InsertSmiley.Properties.Resources.smiley_smile;
             btnOpenChooser.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            //btnOpenChooser.
             btnOpenChooser.SetBounds(0, 0, 26, 22);
             btnOpenChooser.FlatStyle = FlatStyle.Flat;
             btnOpenChooser.UseCompatibleTextRendering = true;
-            //btnOpenChooser.Te
             btns[0] = btnOpenChooser;
             return btns;
         }

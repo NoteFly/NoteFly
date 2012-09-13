@@ -56,7 +56,7 @@ namespace NoteFly
         /// <param name="file">The path to the local file that was downloaded</param>
         /// <param name="sigfile">The path to the signature file.</param>
         /// <returns>True if user allows install, signature valid.</returns>
-        public bool VerifDownload(string file, string sigfile)
+        public bool VerifyDownload(string file, string sigfile)
         {
             bool allowlaunch = false;
 
@@ -173,7 +173,7 @@ namespace NoteFly
         /// <returns>THe path to the Program files folder.</returns>
         private string GetProgramFilesx86()
         {
-            if (8 == IntPtr.Size || (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+            if (IntPtr.Size == 8 || (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
                 return Environment.GetEnvironmentVariable("ProgramFiles(x86)");
             }

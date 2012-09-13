@@ -63,8 +63,7 @@ namespace NoteFlyTests
         public static void MyClassInitialize(TestContext testContext)
         {
             Settings.NotesWarnlimitVisible = 1000;
-            //Settings.NotesSavepath = Program.AppDataFolder;
-            Settings.ProgramFirstrunned = true;
+            ////Settings.ProgramFirstrunned = true;
         }
         #endregion
 
@@ -240,6 +239,9 @@ namespace NoteFlyTests
             }
         }
 
+        /// <summary>
+        /// Test GetBoolSetting method.
+        /// </summary>
         [TestMethod]
         public void GetBoolSettingTest()
         {
@@ -250,6 +252,9 @@ namespace NoteFlyTests
             Assert.AreEqual(exceptedsetting, actualsetting, "GetBoolSetting(\"ConfirmExit\") failed");
         }
 
+        /// <summary>
+        /// Test GetIntSetting method.
+        /// </summary>
         [TestMethod]
         public void GetIntSettingTest()
         {
@@ -260,6 +265,9 @@ namespace NoteFlyTests
             Assert.AreEqual(exceptedsetting, actualsetting, "GetIntSetting(\"ManagenotesSkinnr\") failed.");
         }
 
+        /// <summary>
+        /// Test GetStringSetting method.
+        /// </summary>
         public void GetStringSettingTest()
         {
             Notes notes = new Notes(false);

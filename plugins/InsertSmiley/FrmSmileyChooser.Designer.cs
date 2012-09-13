@@ -8,6 +8,64 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPnlSmileys;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSmileySmile;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSmileySad;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSmileyOh;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSmileyConfuzzed;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSmileyMad;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSmileyLol;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSmileyCool;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSmileyCry;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private System.Windows.Forms.Button btnSmileyWink;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -15,8 +73,9 @@
         {
             if (disposing && (components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -221,16 +280,7 @@
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPnlSmileys;
-        private System.Windows.Forms.Button btnSmileySmile;
-        private System.Windows.Forms.Button btnSmileySad;
-        private System.Windows.Forms.Button btnSmileyOh;
-        private System.Windows.Forms.Button btnSmileyConfuzzed;
-        private System.Windows.Forms.Button btnSmileyMad;
-        private System.Windows.Forms.Button btnSmileyLol;
-        private System.Windows.Forms.Button btnSmileyCool;
-        private System.Windows.Forms.Button btnSmileyCry;
-        private System.Windows.Forms.Button btnSmileyWink;
+
 
 
     }

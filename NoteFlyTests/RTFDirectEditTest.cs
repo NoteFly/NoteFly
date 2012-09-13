@@ -25,9 +25,9 @@ namespace NoteFlyTests
     using System.Drawing;
     
     /// <summary>
-    ///This is a test class for RTFDirectEditTest and is intended
-    ///to contain all RTFDirectEditTest Unit Tests
-    ///</summary>
+    /// This is a test class for RTFDirectEditTest and is intended
+    /// to contain all RTFDirectEditTest Unit Tests
+    /// </summary>
     [TestClass()]
     public class RTFDirectEditTest
     {
@@ -38,9 +38,9 @@ namespace NoteFlyTests
         private TestContext testContextInstance;
 
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
+        /// Gets or sets the test context which provides
+        /// information about and functionality for the current test run.
+        /// </summary>
         public TestContext TestContext
         {
             get
@@ -54,10 +54,8 @@ namespace NoteFlyTests
         }
 
         #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
+        // You can use the following additional attributes as you write your tests:
+        // Use ClassInitialize to run code before running the first test in the class
         //[ClassInitialize()]
         //public static void MyClassInitialize(TestContext testContext)
         //{
@@ -126,6 +124,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, rtf, "failed on: AddBoldTagInRTF(rtf, 0, 1), AddBoldTagInRTF(rtf, 2, 1), AddBoldTagInRTF(rtf, 4, 1), AddBoldTagInRTF(rtf, 6, 1), AddBoldTagInRTF(rtf, 8, 1 and AddBoldTagInRTF(rtf, 10, 1)");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void AddBoldTagInRTFTest_mixed2()
         {
@@ -139,6 +140,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddBoldTagInRTF(rtf, 0, 2), AddBoldTagInRTF(rtf, 4, 2) and AddBoldTagInRTF(rtf, 8, 2)");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void AddItalicTagInRTFTest_middle()
         {
@@ -306,7 +310,7 @@ namespace NoteFlyTests
         [TestMethod]
         public void RemoveBoldEnd()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            this.rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
 }
 ";
@@ -314,14 +318,14 @@ namespace NoteFlyTests
 \viewkind4\uc1\pard\fs24 \b testtestt\b0 est\par
 }
 ";
-            rtf = this.rtfdirectedit.RemoveBoldTagsInRTF(rtf, 9, 3); // now only testtestte.. should be bold.
+            this.rtf = this.rtfdirectedit.RemoveBoldTagsInRTF(rtf, 9, 3); // now only testtestte.. should be bold.
             Assert.AreEqual(expectedrtf, rtf, "failed on: RemoveBoldTagsInRTF(rtf, 9, 3)");
         }
 
         [TestMethod]
         public void RemoveBoldAlmostEnd()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            this.rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
 }
 ";
@@ -329,14 +333,14 @@ namespace NoteFlyTests
 \viewkind4\uc1\pard\fs24 \b testtestt\b0 es\b t\b0\par
 }
 ";
-            rtf = this.rtfdirectedit.RemoveBoldTagsInRTF(rtf, 9, 2); // now only testtestt..t should be bold.
+            this.rtf = this.rtfdirectedit.RemoveBoldTagsInRTF(rtf, 9, 2); // now only testtestt..t should be bold.
             Assert.AreEqual(expectedrtf, rtf, "failed on: RemoveBoldTagsInRTF(rtf, 9, 2)");
         }
 
         [TestMethod]
         public void AddUnderlingEnd()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            this.rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 \b testtesttest\b0\par
 }
 ";
@@ -344,14 +348,14 @@ namespace NoteFlyTests
 \viewkind4\uc1\pard\fs24 \b testtest\ul test\ulnone\b0\par
 }
 ";
-            rtf = this.rtfdirectedit.AddUnderlineTagInRTF(rtf, 8, 4);
+            this.rtf = this.rtfdirectedit.AddUnderlineTagInRTF(rtf, 8, 4);
             Assert.AreEqual(expectedrtf, rtf, "failed on: AddUnderlineTagInRTF(rtf, 8, 4)");
         }
 
         [TestMethod]
         public void AddBoldMixed()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            this.rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 {\colortbl ;\red0\green0\blue0;}
 {\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\b test\ul test\b0 test\ulnone\i0\par
 }
@@ -362,14 +366,14 @@ namespace NoteFlyTests
 }
 ";
 
-            rtf = this.rtfdirectedit.AddBoldTagInRTF(rtf, 8, 4);
+            this.rtf = this.rtfdirectedit.AddBoldTagInRTF(rtf, 8, 4);
             Assert.AreEqual(expectedrtf, rtf, "failed on: AddBoldTagInRTF(rtf, 8, 4)");
         }
 
         [TestMethod]
         public void RemoveBoldOfBoldAndItalic()
         {
-            rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+            this.rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 {\colortbl ;\red0\green0\blue0;}
 {\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\b\i testtest\i0\b0 test\par
 }
@@ -379,7 +383,7 @@ namespace NoteFlyTests
 {\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\cf1\i\fs24 test\i testtest\i0 test\par
 }
 ";
-            rtf = this.rtfdirectedit.RemoveBoldTagsInRTF(rtf, 4, 8);
+            this.rtf = this.rtfdirectedit.RemoveBoldTagsInRTF(rtf, 4, 8);
             Assert.AreEqual(expectedrtf, rtf, "failed on: RemoveBoldTagsInRTF(rtf, 4, 8)");
         }
     }
