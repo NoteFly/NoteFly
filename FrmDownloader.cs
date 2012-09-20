@@ -164,6 +164,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="zipfile">The zip file full filepath.</param>
         /// <param name="extensionstodecompress">The extension of file in the zipfile that are unzipped.</param>
+        /// <returns>True if decompress zipfile succeeded.</returns>
         public bool DecompressZipFile(string zipfile, string[] extensionstodecompress)
         {
             bool succeeded = false;

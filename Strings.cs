@@ -95,6 +95,7 @@ namespace NoteFly
         /// Looks up a localized string; used to mark string for translation as well.
         /// </summary>
         /// <param name="t">The string to translate.</param>
+        /// <returns>A translated string</returns>
         public static string T(string t)
         {
             return T(null, t);
@@ -105,9 +106,14 @@ namespace NoteFly
         /// </summary>
         /// <param name="info">CultureInfo object.</param>
         /// <param name="t">The string to translate.</param>
+        /// <returns>An translated string.</returns>
         public static string T(CultureInfo info, string t)
         {
-            if (string.IsNullOrEmpty(t)) return t;
+            if (string.IsNullOrEmpty(t))
+            {
+                return t;
+            }
+
             string translated = ResourceManager.GetString(t, info ?? resourceCulture);
             return string.IsNullOrEmpty(translated) ? t : translated;
         }
@@ -115,8 +121,9 @@ namespace NoteFly
         /// <summary>
         /// Looks up a localized string and formats it with the parameters provided; used to mark string for translation as well.
         /// </summary>
-        /// <param name="t">The string to translate</param>
-        /// <param name="parameters">Parameters to be placed in the string</param>
+        /// <param name="t">The string to translate.</param>
+        /// <param name="parameters">Parameters to be placed in the string.</param>
+        /// <returns>An translated string.</returns>
         public static string T(string t, params object[] parameters)
         {
             return T(null, t, parameters);
@@ -131,7 +138,11 @@ namespace NoteFly
         /// <returns>The translated string with orginal parameters.</returns>
         public static string T(CultureInfo info, string t, params object[] parameters)
         {
-            if (string.IsNullOrEmpty(t)) return t;
+            if (string.IsNullOrEmpty(t))
+            {
+                return t;
+            }
+
             return string.Format(T(info, t), parameters);
         }
 
@@ -291,8 +302,8 @@ namespace NoteFly
         /// <summary>
         /// Add translation with control comment to pot file / translation template.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="controlname"></param>
+        /// <param name="text">Text to be translated.</param>
+        /// <param name="controlname">Controlname of the control containing the text.</param>
         private static void AddToPOT(string text, string controlname)
         {
             string filepathpot = System.IO.Path.Combine(System.IO.Path.Combine(Program.InstallFolder, @".\..\"), "Strings.pot");

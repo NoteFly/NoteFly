@@ -29,7 +29,7 @@ namespace NoteFly
     public sealed partial class PluginGrid : UserControl
     {
         /// <summary>
-        /// 
+        /// The minimum width of the control.
         /// </summary>
         private const int MINWITH = 50;
 
@@ -62,7 +62,7 @@ namespace NoteFly
             if (PluginsManager.InstalledPlugins != null)
             {
                 if (PluginsManager.InstalledPlugins.Length == 0)
-                {                    
+                {
                     this.lblTextNopluginsinstalled.Visible = true;
                 }
                 else
@@ -71,7 +71,7 @@ namespace NoteFly
                 }
 
                 this.btnPluginsStatus = new Button[PluginsManager.InstalledPlugins.Length];
-                this.tlpnlPlugins = new TableLayoutPanel[PluginsManager.InstalledPlugins.Length];                
+                this.tlpnlPlugins = new TableLayoutPanel[PluginsManager.InstalledPlugins.Length];
                 width -= 150;
                 if (width < MINWITH)
                 {

@@ -540,7 +540,11 @@ namespace NoteFly
         #endregion
 
         #region Private methods
-        // Calculate the file offset by reading the corresponding local header
+        /// <summary>
+        /// Calculate the file offset by reading the corresponding local header
+        /// </summary>
+        /// <param name="_headerOffset">File pointer offset</param>
+        /// <returns></returns>
         private uint GetFileOffset(uint _headerOffset)
         {
             byte[] buffer = new byte[2];
@@ -554,22 +558,26 @@ namespace NoteFly
             return (uint)(30 + filenameSize + extraSize + _headerOffset);
         }
 
-        /* Local file header:
-            local file header signature     4 bytes  (0x04034b50)
-            version needed to extract       2 bytes
-            general purpose bit flag        2 bytes
-            compression method              2 bytes
-            last mod file time              2 bytes
-            last mod file date              2 bytes
-            crc-32                          4 bytes
-            compressed size                 4 bytes
-            uncompressed size               4 bytes
-            filename length                 2 bytes
-            extra field length              2 bytes
-
-            filename (variable size)
-            extra field (variable size)
-        */
+        /// <summary>
+        /// <para>
+        /// Local file header:
+        /// local file header signature     4 bytes  (0x04034b50)
+        /// version needed to extract       2 bytes
+        /// general purpose bit flag        2 bytes
+        /// compression method              2 bytes
+        /// last mod file time              2 bytes
+        /// last mod file date              2 bytes
+        /// crc-32                          4 bytes
+        /// compressed size                 4 bytes
+        /// uncompressed size               4 bytes
+        /// filename length                 2 bytes
+        /// extra field length              2 bytes
+        ///
+        /// filename (variable size)
+        /// extra field (variable size)
+        /// </para>
+        /// </summary>
+        /// <param name="_zfe"></param>
         private void WriteLocalHeader(ref ZipFileEntry _zfe)
         {
             long pos = this.ZipFileStream.Position;
@@ -588,29 +596,30 @@ namespace NoteFly
             _zfe.HeaderSize = (uint)(this.ZipFileStream.Position - pos);
         }
 
-        /* Central directory's File header:
-            central file header signature   4 bytes  (0x02014b50)
-            version made by                 2 bytes
-            version needed to extract       2 bytes
-            general purpose bit flag        2 bytes
-            compression method              2 bytes
-            last mod file time              2 bytes
-            last mod file date              2 bytes
-            crc-32                          4 bytes
-            compressed size                 4 bytes
-            uncompressed size               4 bytes
-            filename length                 2 bytes
-            extra field length              2 bytes
-            file comment length             2 bytes
-            disk number start               2 bytes
-            internal file attributes        2 bytes
-            external file attributes        4 bytes
-            relative offset of local header 4 bytes
-
-            filename (variable size)
-            extra field (variable size)
-            file comment (variable size)
-        */
+        /// <summary>
+        /// Central directory's File header:
+        /// central file header signature   4 bytes  (0x02014b50)
+        /// version made by                 2 bytes
+        /// version needed to extract       2 bytes
+        /// general purpose bit flag        2 bytes
+        /// compression method              2 bytes
+        /// last mod file time              2 bytes
+        /// last mod file date              2 bytes
+        /// crc-32                          4 bytes
+        /// compressed size                 4 bytes
+        /// uncompressed size               4 bytes
+        /// filename length                 2 bytes
+        /// extra field length              2 bytes
+        /// file comment length             2 bytes
+        /// disk number start               2 bytes
+        /// internal file attributes        2 bytes
+        /// external file attributes        4 bytes
+        /// relative offset of local header 4 bytes
+        ///
+        /// filename (variable size)
+        /// extra field (variable size)
+        /// file comment (variable size)
+        /// </summary>
         private void WriteCentralDirRecord(ZipFileEntry _zfe)
         {
             Encoding encoder = _zfe.EncodeUTF8 ? Encoding.UTF8 : DefaultEncoding;
@@ -638,22 +647,25 @@ namespace NoteFly
             this.ZipFileStream.Write(encodedComment, 0, encodedComment.Length);
         }
 
-        /* End of central dir record:
-            end of central dir signature    4 bytes  (0x06054b50)
-            number of this disk             2 bytes
-            number of the disk with the
-            start of the central directory  2 bytes
-            total number of entries in
-            the central dir on this disk    2 bytes
-            total number of entries in
-            the central dir                 2 bytes
-            size of the central directory   4 bytes
-            offset of start of central
-            directory with respect to
-            the starting disk number        4 bytes
-            zipfile comment length          2 bytes
-            zipfile comment (variable size)
-        */
+        /// <summary>
+        ///  End of central dir record:
+        /// end of central dir signature    4 bytes  (0x06054b50)
+        /// number of this disk             2 bytes
+        /// number of the disk with the
+        /// start of the central directory  2 bytes
+        /// total number of entries in
+        /// the central dir on this disk    2 bytes
+        /// total number of entries in
+        /// the central dir                 2 bytes
+        /// size of the central directory   4 bytes
+        /// offset of start of central
+        /// directory with respect to
+        /// the starting disk number        4 bytes
+        /// zipfile comment length          2 bytes
+        /// zipfile comment (variable size)
+        /// </summary>
+        /// <param name="_size"></param>
+        /// <param name="_offset"></param>
         private void WriteEndRecord(uint _size, uint _offset)
         {
             Encoding encoder = this.EncodeUTF8 ? Encoding.UTF8 : DefaultEncoding;
@@ -724,16 +736,21 @@ namespace NoteFly
             }
         }
 
-        /* DOS Date and time:
-            MS-DOS date. The date is a packed value with the following format. Bits Description 
-                0-4 Day of the month (1–31) 
-                5-8 Month (1 = January, 2 = February, and so on) 
-                9-15 Year offset from 1980 (add 1980 to get actual year) 
-            MS-DOS time. The time is a packed value with the following format. Bits Description 
-                0-4 Second divided by 2 
-                5-10 Minute (0–59) 
-                11-15 Hour (0–23 on a 24-hour clock) 
-        */
+        /// <summary>
+        /// <para>
+        /// DOS Date and time:
+        /// MS-DOS date. The date is a packed value with the following format. Bits Description 
+        ///     0-4 Day of the month (1–31) 
+        ///     5-8 Month (1 = January, 2 = February, and so on) 
+        ///     9-15 Year offset from 1980 (add 1980 to get actual year) 
+        /// MS-DOS time. The time is a packed value with the following format. Bits Description 
+        ///     0-4 Second divided by 2 
+        ///     5-10 Minute (0–59) 
+        ///     11-15 Hour (0–23 on a 24-hour clock) 
+        /// </para>
+        /// </summary>
+        /// <param name="_dt"></param>
+        /// <returns></returns>
         private uint DateTimeToDosTime(DateTime _dt)
         {
             return (uint)(
@@ -741,6 +758,11 @@ namespace NoteFly
                 (_dt.Day << 16) | (_dt.Month << 21) | ((_dt.Year - 1980) << 25));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_dt"></param>
+        /// <returns></returns>
         private DateTime DosTimeToDateTime(uint _dt)
         {
             return new DateTime(
@@ -752,18 +774,21 @@ namespace NoteFly
                 (int)(_dt & 31) * 2);
         }
 
-        /* CRC32 algorithm
-          The 'magic number' for the CRC is 0xdebb20e3.  
-          The proper CRC pre and post conditioning
-          is used, meaning that the CRC register is
-          pre-conditioned with all ones (a starting value
-          of 0xffffffff) and the value is post-conditioned by
-          taking the one's complement of the CRC residual.
-          If bit 3 of the general purpose flag is set, this
-          field is set to zero in the local header and the correct
-          value is put in the data descriptor and in the central
-          directory.
-        */
+        /// <summary>
+        /// <para>
+        ///  CRC32 algorithm
+        /// The 'magic number' for the CRC is 0xdebb20e3.  
+        /// The proper CRC pre and post conditioning
+        /// is used, meaning that the CRC register is
+        /// pre-conditioned with all ones (a starting value
+        /// of 0xffffffff) and the value is post-conditioned by
+        /// taking the one's complement of the CRC residual.
+        /// If bit 3 of the general purpose flag is set, this
+        /// field is set to zero in the local header and the correct
+        /// value is put in the data descriptor and in the central
+        /// directory.</para>
+        /// </summary>
+        /// <param name="_zfe"></param>
         private void UpdateCrcAndSizes(ref ZipFileEntry _zfe)
         {
             long lastPos = this.ZipFileStream.Position;  // remember position
@@ -778,7 +803,12 @@ namespace NoteFly
 
             this.ZipFileStream.Position = lastPos;  // restore position
         }
-        // Replaces backslashes with slashes to store in zip header
+
+        /// <summary>
+        /// Replaces backslashes with slashes to store in zip header.
+        /// </summary>
+        /// <param name="_filename"></param>
+        /// <returns></returns>
         private string NormalizedFilename(string _filename)
         {
             string filename = _filename.Replace('\\', '/');

@@ -216,6 +216,198 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Set all rtf text to a particulair color.
+        /// </summary>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="newclr">The color to use for all text in the rtf stream.</param>
+        /// <param name="textlength">The length of the real text in the rtf stream.</param>
+        /// <returns>The new rtf stream.</returns>
+        public string SetColorAllRTF(string rtf, Color newclr, int textlength)
+        {
+            return this.SetColorInRTF(rtf, newclr, 0, textlength);
+        }
+
+        /// <summary>
+        /// The color of text in the RTF stream,
+        /// </summary>
+        /// <param name="rtf">The rtf stream.</param>
+        /// <param name="newclr">The color to give the text.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="sellentext">The text length to color.</param>
+        /// <returns>The new RTF stream.</returns>
+        public string SetColorInRTF(string rtf, Color newclr, int textpos, int sellentext)
+        {
+            const int EXTRACAP = 40; // tune
+            StringBuilder newrtf = new StringBuilder(rtf, rtf.Length + EXTRACAP);
+
+            int prevnrcoloritem = 1;
+            int nrtextchar = 0;
+            int drtflen = 0;
+            string insertcoloritemrtf = null;
+            bool overridecoloritem = false;
+            int rtflevel = 0;
+            this.rtfformat = true;
+            bool textposdone = false;
+            bool isspecchar = false;
+            int speccharrtfpos = 0;
+
+            int posstartcolortbl = this.FindPosStartColortbl(newrtf.ToString());
+            if (posstartcolortbl < 0)
+            {
+                // create colortbl, because it doesn't exist.
+                newrtf = this.CreateColortbl(newrtf, newclr);
+                posstartcolortbl = this.FindPosStartColortbl(newrtf.ToString());
+                if (posstartcolortbl < 0)
+                {
+                    Log.Write(LogType.exception, "Cannot create colortbl.");
+                    return newrtf.ToString();
+                }
+            }
+
+            this.ParserColorTbl(newrtf.ToString(), posstartcolortbl);
+            for (int i = this.FindStartPosDoc(rtf); i < rtf.Length; i++)
+            {
+                if (this.CheckRTFLevel(rtf, i, rtflevel) == 0)
+                {
+                    if (rtf[i] == '\\')
+                    {
+                        this.rtfformat = true;
+                        bool istabtag = this.IsRTFTab(rtf, i);
+                        isspecchar = this.IsRTFSpecialChar(rtf, i);
+
+                        if (istabtag)
+                        {
+                            // tab is only 1 character in text.
+                            nrtextchar += 1;
+                        }
+                        // logical: && !istabtag 
+                        else if (i + COLORITEMTAG.Length < rtf.Length && !isspecchar)
+                        {
+                            if (rtf.Substring(i, COLORITEMTAG.Length).Equals(COLORITEMTAG, StringComparison.Ordinal))
+                            {
+                                int numlen = this.GetLenDigit(rtf, i + COLORITEMTAG.Length);
+                                if (numlen <= 0)
+                                {
+                                    return newrtf.ToString();
+                                }
+
+                                if (!overridecoloritem)
+                                {
+                                    string snr = rtf.Substring(i + COLORITEMTAG.Length, numlen);
+                                    prevnrcoloritem = this.IntParseFast(snr);
+                                }
+                                else if (overridecoloritem)
+                                {
+                                    int posstartremove = i + drtflen + insertcoloritemrtf.Length;
+                                    int totallencftag = COLORITEMTAG.Length + numlen;
+                                    if (newrtf[posstartremove + totallencftag] == ' ')
+                                    {
+                                        totallencftag += 1; // +1 for space
+                                    }
+
+                                    drtflen -= totallencftag;
+
+                                    try
+                                    {
+                                        newrtf.Remove(posstartremove, totallencftag);
+                                    }
+                                    catch (ArgumentOutOfRangeException argoutrangexc)
+                                    {
+                                        Log.Write(LogType.exception, argoutrangexc.Message);
+                                        return newrtf.ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (!this.rtfformat)
+                    {
+                        if (nrtextchar < int.MaxValue)
+                        {
+                            nrtextchar++;
+                        }
+                    }
+
+                    if (isspecchar)
+                    {
+                        if (speccharrtfpos == 0)
+                        {
+                            nrtextchar++;
+                        }
+                        else if (speccharrtfpos >= 3)
+                        {
+                            this.rtfformat = false;
+                            isspecchar = false;
+                            speccharrtfpos = 0;
+                        }
+
+                        speccharrtfpos++;
+                    }
+
+                    this.rtfformat = this.InRTFFormat(rtf, i, this.rtfformat);
+
+                    if (textpos == nrtextchar && !textposdone)
+                    {
+                        textposdone = true;
+                        int nrcoloritem = 1;
+                        nrcoloritem = this.GetNrcoloritem(newrtf.ToString(), newclr);
+                        if (nrcoloritem < 0)
+                        {
+                            // newclr does not exist as coloritem in colortbl.
+                            newrtf = this.AddColorItem(newrtf, posstartcolortbl, newclr);
+                            // new nr coloritem
+                            nrcoloritem = this.GetNrcoloritem(newrtf.ToString(), newclr);
+                            if (nrcoloritem < 0)
+                            {
+                                Log.Write(LogType.exception, "Can't add coloritem to colortbl.");
+                                return newrtf.ToString();
+                            }
+                        }
+
+                        drtflen = newrtf.Length - rtf.Length;
+                        insertcoloritemrtf = COLORITEMTAG + nrcoloritem + " ";
+                        int poscoloritem = i + drtflen + 1; // +1 for space
+                        try
+                        {
+                            newrtf.Insert(poscoloritem, insertcoloritemrtf);
+                        }
+                        catch (ArgumentOutOfRangeException argoutrangeexc)
+                        {
+                            Log.Write(LogType.exception, argoutrangeexc.Message);
+                            return newrtf.ToString();
+                        }
+
+                        overridecoloritem = true;
+                    }
+                    else if (textpos + sellentext == nrtextchar)
+                    {
+                        string previnsertcoloritemrtf = COLORITEMTAG + prevnrcoloritem + " "; // fixme space requered?
+                        int prevposcoloritem = i + drtflen + 1 + insertcoloritemrtf.Length;
+                        try
+                        {
+                            newrtf.Insert(prevposcoloritem, previnsertcoloritemrtf);
+                        }
+                        catch (ArgumentOutOfRangeException argoutrangeexc)
+                        {
+                            Log.Write(LogType.exception, argoutrangeexc.Message);
+                            return newrtf.ToString();
+                        }
+
+                        overridecoloritem = false;
+                        break;
+                    }
+                }
+                else
+                {
+                    this.rtfformat = false;
+                }
+            }
+
+            return newrtf.ToString();
+        }
+
+        /// <summary>
         /// Remove all RTF tags in selected text.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
@@ -344,7 +536,7 @@ namespace NoteFly
         /// <param name="i">Position in the rtf stream.</param>
         /// <param name="starttag">RTF start tag.</param>
         /// <param name="endtag">RTF end tag.</param>
-        /// <returns></returns>
+        /// <returns>True if tag still in open state.</returns>
         private bool CheckTagOpened(bool tagopen, string rtf, int i, string starttag, string endtag)
         {
             if (rtf.Length > (i + starttag.Length) && rtf.Length > (i + endtag.Length))
@@ -587,186 +779,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// The color of text in the RTF stream,
-        /// </summary>
-        /// <param name="rtf">The rtf stream.</param>
-        /// <param name="newclr">The color to give the text.</param>
-        /// <param name="textpos">The text position.</param>
-        /// <param name="sellentext">The text length to color.</param>
-        /// <returns>The new RTF stream.</returns>
-        public string SetColorInRTF(string rtf, Color newclr, int textpos, int sellentext)
-        {
-            const int EXTRACAP = 40; // tune
-            StringBuilder newrtf = new StringBuilder(rtf, rtf.Length + EXTRACAP);
-
-            int prevnrcoloritem = 1;
-            int nrtextchar = 0;
-            int drtflen = 0;
-            string insertcoloritemrtf = null;
-            bool overridecoloritem = false;
-            int rtflevel = 0;
-            this.rtfformat = true;
-            bool textposdone = false;
-            bool isspecchar = false;
-            int speccharrtfpos = 0;
-
-            int posstartcolortbl = this.FindPosStartColortbl(newrtf.ToString());
-            if (posstartcolortbl < 0)
-            {
-                // create colortbl, because it doesn't exist.
-                newrtf = this.CreateColortbl(newrtf, newclr);
-                posstartcolortbl = this.FindPosStartColortbl(newrtf.ToString());
-                if (posstartcolortbl < 0)
-                {
-                    Log.Write(LogType.exception, "Cannot create colortbl.");
-                    return newrtf.ToString();
-                }
-            }
-
-            this.ParserColorTbl(newrtf.ToString(), posstartcolortbl);
-            for (int i = this.FindStartPosDoc(rtf); i < rtf.Length; i++)
-            {
-                if (this.CheckRTFLevel(rtf, i, rtflevel) == 0)
-                {
-                    if (rtf[i] == '\\')
-                    {
-                        this.rtfformat = true;
-                        bool istabtag = this.IsRTFTab(rtf, i);
-                        isspecchar = this.IsRTFSpecialChar(rtf, i);
-
-                        if (istabtag)
-                        {
-                            // tab is only 1 character in text.
-                            nrtextchar += 1;
-                        }
-                        // logical: && !istabtag 
-                        else if (i + COLORITEMTAG.Length < rtf.Length && !isspecchar) 
-                        {
-                            if (rtf.Substring(i, COLORITEMTAG.Length).Equals(COLORITEMTAG, StringComparison.Ordinal))
-                            {
-                                int numlen = this.GetLenDigit(rtf, i + COLORITEMTAG.Length);
-                                if (numlen <= 0)
-                                {
-                                    return newrtf.ToString();
-                                }
-
-                                if (!overridecoloritem)
-                                {
-                                    string snr = rtf.Substring(i + COLORITEMTAG.Length, numlen);
-                                    prevnrcoloritem = this.IntParseFast(snr);
-                                }
-                                else if (overridecoloritem)
-                                {
-                                    int posstartremove = i + drtflen + insertcoloritemrtf.Length;
-                                    int totallencftag = COLORITEMTAG.Length + numlen;
-                                    if (newrtf[posstartremove + totallencftag] == ' ')
-                                    {
-                                        totallencftag += 1; // +1 for space
-                                    }
-
-                                    drtflen -= totallencftag;
-
-                                    try
-                                    {
-                                        newrtf.Remove(posstartremove, totallencftag);
-                                    }
-                                    catch (ArgumentOutOfRangeException argoutrangexc)
-                                    {
-                                        Log.Write(LogType.exception, argoutrangexc.Message);
-                                        return newrtf.ToString();
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (!this.rtfformat)
-                    {
-                        if (nrtextchar < int.MaxValue)
-                        {
-                            nrtextchar++;
-                        }
-                    }
-
-                    if (isspecchar)
-                    {
-                        if (speccharrtfpos == 0)
-                        {
-                            nrtextchar++;
-                        }
-                        else if (speccharrtfpos >= 3)
-                        {
-                            this.rtfformat = false;
-                            isspecchar = false;
-                            speccharrtfpos = 0;
-                        }
-
-                        speccharrtfpos++;
-                    }
-
-                    this.rtfformat = this.InRTFFormat(rtf, i, this.rtfformat);
-
-                    if (textpos == nrtextchar && !textposdone)
-                    {
-                        textposdone = true;
-                        int nrcoloritem = 1;
-                        nrcoloritem = this.GetNrcoloritem(newrtf.ToString(), newclr);
-                        if (nrcoloritem < 0)
-                        {
-                            // newclr does not exist as coloritem in colortbl.
-                            newrtf = this.AddColorItem(newrtf, posstartcolortbl, newclr);
-                            // new nr coloritem
-                            nrcoloritem = this.GetNrcoloritem(newrtf.ToString(), newclr);
-                            if (nrcoloritem < 0)
-                            {
-                                Log.Write(LogType.exception, "Can't add coloritem to colortbl.");
-                                return newrtf.ToString();
-                            }
-                        }
-
-                        drtflen = newrtf.Length - rtf.Length;
-                        insertcoloritemrtf = COLORITEMTAG + nrcoloritem + " ";
-                        int poscoloritem = i + drtflen + 1; // +1 for space
-                        try
-                        {
-                            newrtf.Insert(poscoloritem, insertcoloritemrtf);
-                        }
-                        catch (ArgumentOutOfRangeException argoutrangeexc)
-                        {
-                            Log.Write(LogType.exception, argoutrangeexc.Message);
-                            return newrtf.ToString();
-                        }
-
-                        overridecoloritem = true;
-                    }
-                    else if (textpos + sellentext == nrtextchar)
-                    {
-                        string previnsertcoloritemrtf = COLORITEMTAG + prevnrcoloritem + " "; // fixme space requered?
-                        int prevposcoloritem = i + drtflen + 1 + insertcoloritemrtf.Length;
-                        try
-                        {
-                            newrtf.Insert(prevposcoloritem, previnsertcoloritemrtf);
-                        }
-                        catch (ArgumentOutOfRangeException argoutrangeexc)
-                        {
-                            Log.Write(LogType.exception, argoutrangeexc.Message);
-                            return newrtf.ToString();
-                        }
-
-                        overridecoloritem = false;
-                        break;
-                    }
-                }
-                else
-                {
-                    this.rtfformat = false;
-                }
-            }
-
-            return newrtf.ToString();
-        }
-
-        /// <summary>
         /// Is there a RTF tab code at a position in a RTF stream.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
@@ -811,18 +823,6 @@ namespace NoteFly
             }
 
             return posstartbody;
-        }
-
-        /// <summary>
-        /// Set all rtf text to a particulair color.
-        /// </summary>
-        /// <param name="rtf">The rtf stream.</param>
-        /// <param name="newclr">The color to use for all text in the rtf stream.</param>
-        /// <param name="textlength">The length of the real text in the rtf stream.</param>
-        /// <returns>The new rtf stream.</returns>
-        public string SetColorAllRTF(string rtf, Color newclr, int textlength)
-        {
-            return this.SetColorInRTF(rtf, newclr, 0, textlength);
         }
 
         /// <summary>
@@ -912,8 +912,8 @@ namespace NoteFly
         private bool IsRTFSpecialChar(string rtf, int i)
         {
             bool isspecchar = false;
-            const int speccharlen = 4;
-            if (i + speccharlen < rtf.Length)
+            const int SPECCHARLEN = 4;
+            if (i + SPECCHARLEN < rtf.Length)
             {
                 if (rtf.Substring(i, 2).Equals(@"\'", StringComparison.Ordinal))
                 {
@@ -965,8 +965,8 @@ namespace NoteFly
         /// Get the position of a color in the current colortbl.
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
-        /// <param name="clr"></param>
-        /// <returns>-1 if not found</returns>
+        /// <param name="clr">Color object</param>
+        /// <returns>Returns -1 if coloritem in colortbl is not found.</returns>
         private int GetNrcoloritem(string rtf, Color clr)
         {
             for (int i = 0; i < this.colortblitems.Count; i++)

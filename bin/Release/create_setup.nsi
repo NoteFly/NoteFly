@@ -14,15 +14,11 @@
 ;  You should have received a copy of the GNU General Public License
 ;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;
-; Special notice: the used KillProcDLL sourcecode/libery is NOT covered under GPL.
-; KillProcDLL (by DITMan) sourcecode license is as follows:
-;  The original source file for the KILL_PROC_BY_NAME function is provided, the file is: exam28.cpp, and it MUST BE in this zip file.
-;  You can redistribute this archive if you do it without changing anything on it, otherwise you're NOT allowed to do so.
-;  You may use this source code in any of your projects, while you keep all the files intact, otherwise you CAN NOT use this code.
+; change: using nsProcess instead of  KillProcDLL (by DITMan) nsis plugin
 ;
 
 !define PROJNAME   "NoteFly"
-!define VERSION    "3.0.3"          ; version number: major.minor.release
+!define VERSION    "3.0.4"          ; version number: major.minor.release
 !define VERSTATUS  ""               ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
@@ -112,6 +108,13 @@ Function GetDotNETVersion
   StrCpy $0 "not found"
   Pop $1
   Exch $0
+FunctionEnd
+
+Function CompileAsm
+  sleep 200
+; "%windir%\Microsoft.NET\Framework\v2.0.50727\ngen.exe" "C:\Program Files (x86)\NoteFly\NoteFly.exe" /nologo /verbose
+  Exec '"$%windir%\Microsoft.NET\Framework\v2.0.50727\ngen.exe" "$INSTDIR\${APPFILE}" /nologo /verbose'
+  sleep 200
 FunctionEnd
 
 !macro StopRunningNoteFly
@@ -245,6 +248,16 @@ ${If} $R0 == '5'
 ${Else}
   CreateShortCut "$SMPROGRAMS\${PROJNAME}\${PROJNAME}.lnk" "$INSTDIR\${APPFILE}" "" "$INSTDIR\${APPFILE}" 0 ; large icon
 ${EndIf}
+SectionEnd
+
+Section "Compile main assembly"
+   DetailPrint "start compiling NoteFly.exe, ngen=$%windir%\Microsoft.NET\Framework\v2.0.50727\ngen.exe"
+   ${Locate} "$%windir%\Microsoft.NET\Framework\v2.0.50727\" "/L=F /G=0 /M=ngen.exe" "CompileAsm"
+   IfErrors 0 +3
+   DetailPrint "Cannot compile main assembly."
+   goto end
+   DetailPrint "Compiling main assembly succeeded."
+   end:
 SectionEnd
 
 ;--------------------------------

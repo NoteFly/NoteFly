@@ -355,13 +355,13 @@ namespace NoteFly
             this.dataGridViewNotes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewNotes.Size = new System.Drawing.Size(590, 320);
             this.dataGridViewNotes.TabIndex = 19;
-            this.dataGridViewNotes.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dataGridView1_Scroll);
-            this.dataGridViewNotes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            this.dataGridViewNotes.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
-            this.dataGridViewNotes.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
+            this.dataGridViewNotes.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dataGridViewNotes_Scroll);
+            this.dataGridViewNotes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewNotes_CellDoubleClick);
+            this.dataGridViewNotes.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewNotes_ColumnHeaderMouseClick);
+            this.dataGridViewNotes.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridViewNotes_RowPostPaint);
             this.dataGridViewNotes.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewNotes_CellMouseEnter);
             this.dataGridViewNotes.MouseLeave += new System.EventHandler(this.dataGridViewNotes_MouseLeave);
-            this.dataGridViewNotes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridViewNotes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewNotes_CellClick);
             // 
             // pnlContent
             // 

@@ -484,7 +484,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="versionA">A version as array.with major, minor and release numbers</param>
         /// <param name="versionB">A version as array with major, minor and release numbers</param>
-        /// <returns> -3 If versionB is not valid.
+        /// <returns>Returns -3 if versionB is not valid.
         /// -2 if versionA is not valid.
         /// -1 if versionA is lower than versionB, 
         /// 0 if versionA is equal with versionB,

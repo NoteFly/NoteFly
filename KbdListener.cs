@@ -94,17 +94,17 @@ namespace NoteFly
         public class UniversalKeyEventArgs : KeyEventArgs
         {
             /// <summary>
-            /// 
+            /// keymessage
             /// </summary>
             public readonly uint m_Msg;
 
             /// <summary>
-            /// 
+            /// keycode
             /// </summary>
             public readonly ushort m_Key;
 
             /// <summary>
-            /// 
+            /// New instance of an universal key event argument object
             /// </summary>
             /// <param name="aKey"></param>
             /// <param name="aMsg"></param>
@@ -125,7 +125,7 @@ namespace NoteFly
         {
             #region Declarations
             /// <summary>
-            /// 
+            /// Key delegate
             /// </summary>
             /// <param name="key"></param>
             /// <param name="msg"></param>
@@ -142,17 +142,17 @@ namespace NoteFly
                 RIM_TYPEKEYBOARD    = 1;
 
             /// <summary>
-            /// 
+            /// Previous key message.
             /// </summary>
             private uint m_PrevMessage = 0;
 
             /// <summary>
-            /// 
+            /// Previous control key.
             /// </summary>
             private ushort m_PrevControlKey = 0;
 
             /// <summary>
-            /// 
+            /// Key delegate
             /// </summary>
             private KeyDelegate m_KeyHandler = null;
             #endregion
@@ -168,17 +168,13 @@ namespace NoteFly
 
             [DllImport("User32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.I4)]
-            internal static extern unsafe int GetRawInputData(void* hRawInput,
-                uint uiCommand,
-                byte* pData,
-                uint* pcbSize,
-                uint cbSizeHeader);
+            internal static extern unsafe int GetRawInputData(void* hRawInput, uint uiCommand, byte* pData, uint* pcbSize, uint cbSizeHeader);
 
             #endregion
 
             #region Unsafe types
             /// <summary>
-            /// 
+            /// RAWINPUTDEV struct
             /// </summary>
             internal unsafe struct RAWINPUTDEV 
             {
@@ -204,12 +200,12 @@ namespace NoteFly
             }
 
             /// <summary>
-            /// 
+            /// RAWINPUTHEADER struct
             /// </summary>
             internal unsafe struct RAWINPUTHEADER 
             {
                 /// <summary>
-                /// 
+                /// Input type
                 /// </summary>
                 public uint dwType;
 
@@ -219,12 +215,12 @@ namespace NoteFly
                 public uint dwSize;
 
                 /// <summary>
-                /// 
+                /// input hardware device pointer
                 /// </summary>
                 public void* hDevice;
 
                 /// <summary>
-                /// 
+                /// parameter pointer
                 /// </summary>
                 public void* wParam;
             }
@@ -272,7 +268,7 @@ namespace NoteFly
             #endregion
 
             /// <summary>
-            /// 
+            /// Creating an new listening window instance.
             /// </summary>
             /// <param name="keyHandlerFunction"></param>
             public ListeningWindow(KeyDelegate keyHandlerFunction)

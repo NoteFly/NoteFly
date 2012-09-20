@@ -226,40 +226,6 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Check the syntax of a part of the text with the enabled languages.
-        /// </summary>
-        /// <param name="rtb">The RichTextBox control</param>
-        /// <param name="rtf">The RTF text</param>
-        /// <param name="part">The part of text to check</param>
-        /// <param name="curpos">The current position in the text</param>
-        /// <param name="lastpos">The position of where the part started in the text of the RichTextBox</param>
-        /// <returns>The new RTF text syntax highlighted</returns>
-        private static string CheckSyntaxPart(RichTextBox rtb, string rtf, string part, int curpos, int lastpos)
-        {
-            for (int i = 0; i < langs.Count; i++)
-            {
-                langs[i].CheckSetDocumentPos(part, curpos);
-                if (curpos >= langs[i].PosDocumentStart && curpos <= langs[i].PosDocumentEnd)
-                {
-                    switch (langs[i].Name)
-                    {
-                        case "html":
-                            rtf = ValidatingHtmlPart(part, rtb, rtf, lastpos, langs[i]);
-                            break;
-                        case "php":
-                            rtf = ValidatingPhpPart(part, rtb, rtf, lastpos, langs[i]);
-                            break;
-                        case "sql":
-                            rtf = ValidatingSqlPart(part, rtb, rtf, lastpos, langs[i]);
-                            break;
-                    }
-                }
-            }
-
-            return rtf;
-        }
-
-        /// <summary>
         /// Do a quick syntax check of the last added part of text.
         /// </summary>
         /// <param name="rtb">RichEditTextbox</param>
@@ -343,6 +309,40 @@ namespace NoteFly
 
                 rtb.SelectionStart = cursorpos;
             }
+        }
+
+        /// <summary>
+        /// Check the syntax of a part of the text with the enabled languages.
+        /// </summary>
+        /// <param name="rtb">The RichTextBox control</param>
+        /// <param name="rtf">The RTF text</param>
+        /// <param name="part">The part of text to check</param>
+        /// <param name="curpos">The current position in the text</param>
+        /// <param name="lastpos">The position of where the part started in the text of the RichTextBox</param>
+        /// <returns>The new RTF text syntax highlighted</returns>
+        private static string CheckSyntaxPart(RichTextBox rtb, string rtf, string part, int curpos, int lastpos)
+        {
+            for (int i = 0; i < langs.Count; i++)
+            {
+                langs[i].CheckSetDocumentPos(part, curpos);
+                if (curpos >= langs[i].PosDocumentStart && curpos <= langs[i].PosDocumentEnd)
+                {
+                    switch (langs[i].Name)
+                    {
+                        case "html":
+                            rtf = ValidatingHtmlPart(part, rtb, rtf, lastpos, langs[i]);
+                            break;
+                        case "php":
+                            rtf = ValidatingPhpPart(part, rtb, rtf, lastpos, langs[i]);
+                            break;
+                        case "sql":
+                            rtf = ValidatingSqlPart(part, rtb, rtf, lastpos, langs[i]);
+                            break;
+                    }
+                }
+            }
+
+            return rtf;
         }
 
         /// <summary>

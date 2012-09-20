@@ -25,6 +25,7 @@ namespace NoteFly
     using System.IO;
     using System.Net;
     using System.Xml;
+    using System.Text;
 
     /// <summary>
     /// XmlUtil class, for saving and parsering xml.
@@ -56,7 +57,7 @@ namespace NoteFly
         /// XmlTextWriter object.
         /// </summary>
         private static XmlTextWriter xmlwrite = null;
-        
+
         #endregion Fields
 
         #region Methods (11)
@@ -69,10 +70,10 @@ namespace NoteFly
         /// <returns>Return node content as string, empty if not found.</returns>
         public static string GetContentString(string filename, string nodename)
         {
-            #if DEBUG
+#if DEBUG
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
             stopwatch.Start();
-            #endif
+#endif
             try
             {
                 xmlread = new XmlTextReader(filename);
@@ -91,18 +92,35 @@ namespace NoteFly
                 throw new ApplicationException("XmlTextReader object is null.");
             }
 
+            xmlread.ProhibitDtd = true;
+            xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filename);
+
             try
             {
                 while (xmlread.Read())
                 {
                     if (xmlread.Name == nodename)
                     {
-                        string xmlnodecontent = string.Empty;
+                        string xmlnodecontent;
                         xmlnodecontent = xmlread.ReadElementContentAsString();
-                        #if DEBUG
+                        /*
+                        const int charbuffersize = 32;
+                        StringBuilder sbxmlnodecontent = new StringBuilder();
+                        int countchr = 0;
+                        char[] buffer = new Char[charbuffersize];
+                        xmlread.MoveToContent();
+                        while ((countchr = xmlread.ReadChars(buffer, 0, charbuffersize)) > 0)
+                        {
+                            sbxmlnodecontent.Append(new string(buffer, 0, countchr));
+                            Array.Clear(buffer, 0, charbuffersize);
+                        }
+                         */
+
+#if DEBUG
                         stopwatch.Stop();
                         Log.Write(LogType.info, "Read content time:  " + stopwatch.ElapsedTicks + " ticks"); // blocking display time ~200ms/7
-                        #endif
+#endif
+                        //return sbxmlnodecontent.ToString();
                         return xmlnodecontent;
                     }
                 }
@@ -111,9 +129,9 @@ namespace NoteFly
             {
                 xmlread.Close();
             }
-            #if DEBUG
+#if DEBUG
             stopwatch.Stop();
-            #endif
+#endif
             return string.Empty;
         }
 
@@ -143,6 +161,8 @@ namespace NoteFly
                 throw new ApplicationException("XmlTextReader object is null.");
             }
 
+            xmlread.ProhibitDtd = true;
+            xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filename);
             try
             {
                 while (xmlread.Read())
@@ -340,8 +360,10 @@ namespace NoteFly
             }
 
             Note note = new Note(notes, notefilename);
-            xmlread = new XmlTextReader(Path.Combine(Settings.NotesSavepath, notefilename));
+            string notefilepath = Path.Combine(Settings.NotesSavepath, notefilename);
+            xmlread = new XmlTextReader(notefilepath);
             xmlread.ProhibitDtd = true;
+            xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), notefilepath);
             try
             {
                 note = ParserNoteNode(notes, note, 0, false);
@@ -378,6 +400,7 @@ namespace NoteFly
                 xmlread = new XmlTextReader(settingsfilepath);
                 xmlread.EntityHandling = EntityHandling.ExpandCharEntities;
                 xmlread.ProhibitDtd = true; // gives decreated warning in vs2010.
+                xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), settingsfilepath);
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)
@@ -519,7 +542,7 @@ namespace NoteFly
                             break;
                         case "HotkeysNotesToFrontKeycode":
                             Settings.HotkeysNotesToFrontKeycode = xmlread.ReadElementContentAsInt();
-                            break;                        
+                            break;
                         case "TrayiconFontsize":
                             Settings.TrayiconFontsize = xmlread.ReadElementContentAsFloat();
                             break;
@@ -703,6 +726,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(skinfilepath);
                 xmlread.ProhibitDtd = true;
+                xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), skinfilepath);
                 Skin curskin = null;
                 int numskins = 0;
                 bool endtag = false;
@@ -740,7 +764,7 @@ namespace NoteFly
                             endtag = !endtag;
                             break;
                         case "Name":
-                            
+
                             string skinname = xmlread.ReadElementContentAsString();
                             if (skinname.Length < MAXLENSKINNAME)
                             {
@@ -945,7 +969,7 @@ namespace NoteFly
             {
                 Settings.UpdatecheckUseGPG = false;
             }
-            
+
             xmlUtil.WriteSettings();
             xmlUtil.CheckFile(Path.Combine(Program.AppDataFolder, SETTINGSFILE));
             return true;
@@ -999,6 +1023,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(filepath);
                 xmlread.ProhibitDtd = true;
+                //xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filepath);
                 bool endnode = false;
                 while (xmlread.Read())
                 {
@@ -1025,6 +1050,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(filepath);
                 xmlread.ProhibitDtd = true;
+                //xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filepath);
                 Note importnote = new Note(notes, notes.GetNoteFilename("import" + i));
                 try
                 {
@@ -1235,6 +1261,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(new System.IO.StringReader(serverresponse));
                 xmlread.ProhibitDtd = true;
+                xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), "http://*");
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)
@@ -1384,16 +1411,16 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Get the content.
+        /// Get the content node a note node
         /// </summary>
-        /// <param name="file">The file to load as xml file.</param>
+        /// <param name="notefilepath">The file to load as xml file.</param>
         /// <param name="limittextchars">The limit on how many characters to read at most with the content node of the xmlfile.</param>
         /// <returns>The valeau of the content node in the xml file limited to the amount of characters given by limittextchars.</returns>
-        public static string GetContentStringLimited(string file, int limittextchars)
+        public static string GetContentStringLimited(string notefilepath, int limittextchars)
         {
             try
             {
-                xmlread = new XmlTextReader(file);
+                xmlread = new XmlTextReader(notefilepath);
             }
             catch (FileLoadException fileloadexc)
             {
@@ -1404,27 +1431,73 @@ namespace NoteFly
                 throw new ApplicationException(filenotfoundexc.Message);
             }
 
-            string content = null;
+            StringBuilder sbcontent = new StringBuilder();
+            const int buffersize = 10;
+            //int chrsread = 0;
             try
             {
-                char[] buf = new char[limittextchars + 1];
                 while (xmlread.Read())
                 {
                     if (xmlread.Name == "content")
                     {
-                        // todo
-                        xmlread.ReadValueChunk(buf, 0, limittextchars);
+                        xmlread.MoveToContent();
+                        int countchr = 0;
+                        char[] buf = new char[buffersize];
+                        bool rtftagopen = false;
+                        int rtflevel = 0;
+                        bool stopread = false;
+                        while ((countchr = xmlread.ReadChars(buf, 0, buffersize)) > 0 && !stopread)
+                        {
+                            for (int i = 0; i < buf.Length; i++)
+                            {
+                                if (buf[i] == '\\')
+                                {
+                                    rtftagopen = true;
+                                }
+
+                                if (!rtftagopen && rtflevel == 1 && buf[i] != '{' && buf[i] != '}')
+                                {
+                                    if (i >= 1)
+                                    {
+                                        if (buf[i] != '\n' && buf[i - 1] != '}')
+                                        {
+                                            sbcontent.Append(buf[i]);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        sbcontent.Append(buf[i]);
+                                    }
+
+                                    if (sbcontent.Length >= limittextchars)
+                                    {
+                                        stopread = true;
+                                    }
+                                }
+
+                                if (buf[i] == ' ' || buf[i] == '\n' || buf[i] == '\r')
+                                {
+                                    rtftagopen = false;
+                                }
+                                else if (buf[i] == '{')
+                                {
+                                    rtflevel++;
+                                }
+                                else if (buf[i] == '}')
+                                {
+                                    rtflevel--;
+                                }
+                            }
+                        }
                     }
                 }
-
-                content = new string(buf);
             }
             finally
             {
                 xmlread.Close();
             }
 
-            return content;
+            return sbcontent.ToString();
         }
 
         /// <summary>

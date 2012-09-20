@@ -128,7 +128,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Reset the timer to start a search lookup.
         /// </summary>
         private void ResetAutoSearchDelay()
         {
@@ -138,7 +138,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Do a search
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>

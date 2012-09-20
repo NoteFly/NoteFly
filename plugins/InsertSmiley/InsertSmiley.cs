@@ -37,7 +37,6 @@
         /// <returns>The new note content as RTF.</returns>
         public override string NoteFormatBtnClicked(System.Windows.Forms.RichTextBox rtbnote, Button btn)
         {
-            
             if (btn.Name.Equals("smileychooser", System.StringComparison.Ordinal))
             {
                 int docend = rtbnote.Rtf.LastIndexOf(@"\par");

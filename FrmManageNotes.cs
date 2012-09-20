@@ -450,7 +450,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">DataGridViewCell event arguments</param>
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewNotes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -513,7 +513,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">DataGridViewCellMouse event arguments</param>
-        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void dataGridViewNotes_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             this.Resetdatagrid();
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
@@ -525,7 +525,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">DataGridViewRowPostPaint event arguments</param>
-        private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        private void dataGridViewNotes_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             // detect and update add/delete notes, then redraw all notes
             if (Program.Formmanager.FrmManageNotesNeedUpdate)
@@ -567,7 +567,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Scroll event arguments</param>
-        private void dataGridView1_Scroll(object sender, ScrollEventArgs e)
+        private void dataGridViewNotes_Scroll(object sender, ScrollEventArgs e)
         {
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
@@ -783,7 +783,7 @@ namespace NoteFly
             }
 
             this.dataGridViewNotes.Font = new Font(Settings.ManagenotesFontFamily, Settings.ManagenotesFontsize);
-            this.dataGridViewNotes.RowPostPaint += new DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
+            this.dataGridViewNotes.RowPostPaint += new DataGridViewRowPostPaintEventHandler(this.dataGridViewNotes_RowPostPaint);
             return datatable;
         }
 
@@ -992,7 +992,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">DataGridViewCellEvent Arguments</param>
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewNotes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.ToggleVisibilityNote(e.RowIndex);
         }
@@ -1014,45 +1014,9 @@ namespace NoteFly
                         int notepos = this.GetNoteposBySelrow(e.RowIndex);
                         if (notepos >= 0)
                         {
-                            // todo GetContent() is not good because it can take long to read all content but it works for now.
-                            RichTextBox rtb = new RichTextBox();
-                            try
-                            {
-                                rtb.Rtf = this.notes.GetNote(notepos).GetContent();
-                            }
-                            catch (ArgumentException argexc)
-                            {
-                                Log.Write(LogType.exception, argexc.Message + ", caused by note nr. " + notepos);
-                                return;
-                            }
-
-                            ////xmlUtil.GetContentStringLimited(
-                            string content = rtb.Text;
-                            rtb.Dispose();
-                            GC.Collect();
-                            int startpos = 0;
-                            string startcontentplainhint = string.Empty;
-                            try
-                            {
-                                int lencontentpreview = content.Length - startpos - startcontentplainhint.Length;
-                                const int MAXLENCONTENTPREVIEW = 100;
-                                if (lencontentpreview > MAXLENCONTENTPREVIEW)
-                                {
-                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, MAXLENCONTENTPREVIEW);
-                                    contentpreview += "..";
-                                }
-                                else
-                                {
-                                    contentpreview = content.Substring(startpos + startcontentplainhint.Length, lencontentpreview);
-                                }
-
-                                content = null;
-                            }
-                            catch (ArgumentOutOfRangeException argoutrange)
-                            {
-                                throw new ApplicationException(argoutrange.Message);
-                            }
-
+                            const int MAXLENCONTENTPREVIEW = 100;
+                            string notefile = Path.Combine(Settings.NotesSavepath, this.notes.GetNote(notepos).Filename);
+                            contentpreview = xmlUtil.GetContentStringLimited(notefile, MAXLENCONTENTPREVIEW);
                             int tooltiplocx = Cursor.Position.X - this.Location.X;
                             int tooltiplocy = Cursor.Position.Y - this.Location.Y;
                             if (!string.IsNullOrEmpty(contentpreview))
@@ -1122,7 +1086,7 @@ namespace NoteFly
 
 #if windows
         /// <summary>
-        /// 
+        /// SHFILEOPSTRUCT_x86 struct
         /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 1)]
         private struct SHFILEOPSTRUCT_x86
@@ -1171,7 +1135,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// SHFILEOPSTRUCT_x64 struct
         /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         private struct SHFILEOPSTRUCT_x64
