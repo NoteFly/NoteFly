@@ -160,6 +160,7 @@ namespace NoteFly
             FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.newnotedeltaX, this.newnotedeltaY);
             this.ChangeDeltaPositionNewNote();
             frmnewnote.Show();
+            frmnewnote.Activate();
             this.frmneweditnoteopen = true;
         }
 
@@ -176,8 +177,9 @@ namespace NoteFly
             else
             {
                 this.frmmanagenotes.WindowState = FormWindowState.Normal;
-                this.frmmanagenotes.Activate();
             }
+
+            this.frmmanagenotes.Activate();
         }
 
         /// <summary>
@@ -193,8 +195,9 @@ namespace NoteFly
             else
             {
                 this.frmsettings.WindowState = FormWindowState.Normal;
-                this.frmsettings.Activate();
             }
+
+            this.frmsettings.Activate();
         }
 
         /// <summary>
@@ -210,8 +213,9 @@ namespace NoteFly
             else
             {
                 this.frmplugins.WindowState = FormWindowState.Normal;
-                this.frmplugins.Activate();
             }
+
+            this.frmplugins.Activate();
         }
 
         /// <summary>
@@ -227,8 +231,9 @@ namespace NoteFly
             else
             {
                 this.frmabout.WindowState = FormWindowState.Normal;
-                this.frmabout.Activate();
             }
+
+            this.frmabout.Activate();
         }
 
         /// <summary>
@@ -272,7 +277,6 @@ namespace NoteFly
                 if (eventArgs.KeyData == Keys.ControlKey || this.controlpressed)
                 {
                     this.controlpressed = true;
-
                     if (eventArgs.KeyData == Keys.Alt || eventArgs.KeyData == Keys.Menu || this.altpressed)
                     {
                         this.altpressed = true;

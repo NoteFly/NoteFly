@@ -149,6 +149,7 @@ namespace NoteFly
         protected override void OnKeyDown(KeyEventArgs e)
         {
             int k = e.KeyValue;
+
             // 'a'-'f'
             // ':'
             // '.'

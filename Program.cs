@@ -80,9 +80,9 @@ namespace NoteFly
         {
             get
             {
-                const string appdatafolder = "NoteFly";
+                const string APPDATAFOLDER = "NoteFly";
 #if windows
-                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), appdatafolder);
+                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), APPDATAFOLDER);
 #elif linux
                 if (System.Environment.GetEnvironmentVariable("HOME") != null)
                 {

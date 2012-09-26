@@ -10,8 +10,19 @@
 
     public partial class FrmSmileyChooser : Form
     {
+        /// <summary>
+        /// The current RTF stream.
+        /// </summary>
         private string rtf;
+
+        /// <summary>
+        /// The position where to add RTF.
+        /// </summary>
         private int insertposition = int.MaxValue;
+
+        /// <summary>
+        /// Pointer to richformattextbox
+        /// </summary>
         private RichTextBox rtb;
 
         /// <summary>
@@ -200,6 +211,11 @@ f70001d2f800000000000000000000000000000000000000000000000000000000000000000000
             this.Close();
         }
 
+        /// <summary>
+        /// The FrmSmileyChooser lost focus, e.g. click beside it. Close the window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FrmSmileyChooser_Deactivate(object sender, EventArgs e)
         {
             this.Close();

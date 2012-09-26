@@ -33,10 +33,13 @@ namespace NoteFlyTests
     public class ImportNotesTest
     {
         /// <summary>
-        /// 
+        /// NoteFly test note file
         /// </summary>
         private static string testnote1;
 
+        /// <summary>
+        /// CSV test import file 
+        /// </summary>
         private static string testcsvfile;
 
         /// <summary>
@@ -59,6 +62,7 @@ namespace NoteFlyTests
             {
                 return this.testContextInstance;
             }
+
             set
             {
                 this.testContextInstance = value;
@@ -66,6 +70,10 @@ namespace NoteFlyTests
         }
 
         #region Additional test attributes
+        /// <summary>
+        /// Initialize unit tests for ImportNotes class.
+        /// </summary>
+        /// <param name="testContext"></param>
         [ClassInitialize()]
         public static void ImportNotesTestInitialize(TestContext testContext)
         {
@@ -150,11 +158,11 @@ This is a \b test\b0  tomboy \strike file\strike0  \i note\i0 .\par
             importnotes.ReadStickiesCSVFile(testcsvfile);
             Assert.AreEqual(2, this.notes.CountNotes, "Not excepted number of notes imported.");
 
-            string exceptedrtfnote1 = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang" + Properties.Settings.Default.rtflangused + "{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\n{\\colortbl ;\\red0\\green0\\blue0;}\n{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\qr\\cf1\\f0\\fs20 test1\\par\n}";
+            string exceptedrtfnote1 = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang" + Properties.Settings.Default.rtflangused + "{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}\r\n{\\colortbl ;\\red0\\green0\\blue0;}\r\n{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\qr\\cf1\\f0\\fs20 test1\\par\r\n}\r\n";
             string currentrtfnote1 = this.notes.GetNote(0).GetContent();
             Assert.AreEqual(currentrtfnote1, exceptedrtfnote1, "RTF import went wrong.");
 
-            string exceptedrtfnote2 = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang" + Properties.Settings.Default.rtflangused + "{\\fonttbl{\\f0\\fnil Verdana;}{\\f1\\fnil\\fcharset0 Verdana;}}\n{\\colortbl ;\\red0\\green0\\blue0;}\n{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\cf1\\f0\\fs20  \\f1 test\\b test\\b0 test2\\par\\f0\n}";
+            string exceptedrtfnote2 = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang" + Properties.Settings.Default.rtflangused + "{\\fonttbl{\\f0\\fnil Verdana;}{\\f1\\fnil\\fcharset0 Verdana;}}\r\n{\\colortbl ;\\red0\\green0\\blue0;}\r\n{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\cf1\\f0\\fs20  \\f1 test\\b test\\b0 test2\\par\r\n}\r\n"; // \\f0
             string currentrtfnote2 = this.notes.GetNote(1).GetContent();
             Assert.AreEqual(currentrtfnote2, exceptedrtfnote2, "RTF import note 2 went wrong.");
 

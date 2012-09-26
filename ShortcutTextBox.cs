@@ -42,19 +42,19 @@ namespace NoteFly
         /// <summary>
         /// Is alt key used previously instead of shift key as second key of the shortcut.
         /// </summary>
-        private bool prev_altinsteadofshift = false;
+        private bool previousaltinsteadofshift = false;
 
         /// <summary>
         /// The previously last key of the shortcut.
         /// </summary>
-        private Keys prev_key = Keys.F1;
+        private Keys previouskey = Keys.F1;
 
         /// <summary>
         /// Creating a new instance of ShortcutTextBox class.
         /// </summary>
         public ShortcutTextBox()
         {
-            this.TextAlign = HorizontalAlignment.Center;            
+            this.TextAlign = HorizontalAlignment.Center;
             //this.setcontent();
         }
 
@@ -83,7 +83,7 @@ namespace NoteFly
             {
                 try
                 {
-                    this.key = (Keys)value;                    
+                    this.key = (Keys)value;
                 }
                 catch
                 {
@@ -113,9 +113,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Key pressed down in this control.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Key eveny arguments</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             e.SuppressKeyPress = true; // prevent typing
@@ -132,7 +132,7 @@ namespace NoteFly
             else
             {
                 this.altinsteadofshift = e.Alt;
-                this.setcontent();                
+                this.setcontent();
             }
 
             this.SelectionStart = this.TextLength;
@@ -140,28 +140,28 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Key released in this control.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Key event arguments</param>
         protected override void OnKeyUp(KeyEventArgs e)
-        {            
-            this.key = this.prev_key;
-            this.altinsteadofshift = this.prev_altinsteadofshift;
+        {
+            this.key = this.previouskey;
+            this.altinsteadofshift = this.previousaltinsteadofshift;
             this.setcontent();
             base.OnKeyUp(e);
         }
 
         /// <summary>
-        /// 
+        /// Set the text in this control based on the pressed shortcut.
         /// </summary>
         private void setcontent()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("CTRL + ");
             
-            if (this.altinsteadofshift)  
+            if (this.altinsteadofshift)
             {
-                sb.Append("ALT + ");                
+                sb.Append("ALT + ");
             }
             else
             {
@@ -171,15 +171,15 @@ namespace NoteFly
             if (this.IsModifierKey(this.key))
             {
                 this.BackColor = System.Drawing.Color.LightYellow;
-                sb.Append("?");                
+                sb.Append("?");
             }
             else
             {
                 sb.Append(this.key.ToString());
                 this.BackColor = System.Drawing.Color.White;
 
-                this.prev_altinsteadofshift = this.altinsteadofshift;
-                this.prev_key = this.key;
+                this.previousaltinsteadofshift = this.altinsteadofshift;
+                this.previouskey = this.key;
             }
             
             this.Text = sb.ToString();

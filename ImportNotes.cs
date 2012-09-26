@@ -227,6 +227,9 @@ namespace NoteFly
                     int poslastbold = int.MaxValue;
                     int poslastitalic = int.MaxValue;
                     int poslaststrikethrought = int.MaxValue;
+                    int poslastsizesmall = int.MaxValue;
+                    int poslastsizelarge = int.MaxValue;
+                    int poslastsizehuge = int.MaxValue;
 
                     for (int i = 0; i < formattype.Count; i++)
                     {
@@ -265,13 +268,43 @@ namespace NoteFly
                                 }
 
                                 break;
-                            // todo: add support for more tomboy formating
-                            ////case "highlight":
-                            ////    break;
-                            ////case "size:small":
-                            ////    break;
-                            ////case "size:huge":
-                            ////    break;
+
+                            case "size:small":
+                                if (formatisbegintag[i])
+                                {
+                                    poslastsizesmall = formatstartpos[i];
+                                }
+                                else if (poslastsizehuge != int.MaxValue)
+                                {
+                                    int textlen = formatstartpos[i] - poslastsizesmall;
+                                    rtbNewNote.Rtf = rtfdirectedit.SetSizeTagInRtf(rtbNewNote.Rtf, poslastsizesmall, textlen, 9);
+                                }
+
+                                break;
+                            case "size:large":
+                                if (formatisbegintag[i])
+                                {
+                                    poslastsizelarge = formatstartpos[i];
+                                }
+                                else if (poslastsizelarge != int.MaxValue)
+                                {
+                                    int textlen = formatstartpos[i] - poslastsizelarge;
+                                    rtbNewNote.Rtf = rtfdirectedit.SetSizeTagInRtf(rtbNewNote.Rtf, poslastsizesmall, textlen, 14);
+                                }
+
+                                break;
+                            case "size:huge":
+                                if (formatisbegintag[i])
+                                {
+                                    poslastsizehuge = formatstartpos[i];
+                                }
+                                else if (poslastsizehuge != int.MaxValue)
+                                {
+                                    int textlen = formatstartpos[i] - poslastsizelarge;
+                                    rtbNewNote.Rtf = rtfdirectedit.SetSizeTagInRtf(rtbNewNote.Rtf, poslastsizesmall, textlen, 16);
+                                }
+
+                                break;
                         }
                     }
                 }
@@ -505,6 +538,7 @@ namespace NoteFly
                                 int poseq = line.IndexOf('=') + 1;
                                 string positionenc = line.Substring(poseq, line.Length - poseq);
                                 Log.Write(LogType.info, "pnote rel_position=" + positionenc);
+
                                 // TODO figure out how to get the position of the pnote, pnotes sourcecode:
                                 ////sz = GetScreenMetrics();
                                 ////save current relational position
@@ -528,7 +562,7 @@ namespace NoteFly
                                 ////    System.Globalization.NumberStyles.HexNumber);
                                 ////}
                                 ////double d = BitConverter.ToDouble(b, 0);
-                                ////MessageBox.Show("result: "+d);    
+                                ////MessageBox.Show("result: "+d);
                             }
                             else if (line.StartsWith("creation="))
                             {
@@ -608,10 +642,12 @@ namespace NoteFly
                     {
                         string title = reader.GetAttribute("title");
                         string content = reader.ReadInnerXml();
-                        int posstartcontent = content.IndexOf("<![CDATA[") + 9;
+                        const string JAVASCRIPTCDATA = "<![CDATA[";
+                        int posstartcontent = content.IndexOf(JAVASCRIPTCDATA) + JAVASCRIPTCDATA.Length;
                         int posendcontent = content.IndexOf("]]>");
                         string plaincontent = content.Substring(posstartcontent, posendcontent - posstartcontent);
-                        string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1043{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\f0\\fs20" + plaincontent + "\\par}";
+                        const string langcode = "1043";
+                        string notecontent = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang" + langcode + "{\\fonttbl{\\f0\\fnil\\fcharset0 Verdana;}}{\\*\\generator Msftedit 5.41.21.2510;}\\viewkind4\\uc1\\pard\\f0\\fs20" + plaincontent + "\\par}";
                         this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, notecontent, true);
                     }
                 }

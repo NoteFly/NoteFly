@@ -353,6 +353,7 @@ namespace NoteFly
         /// <param name="posstart">The start position in the text to start coloring from.</param>
         /// <param name="len">The lenght of text to color.</param>
         /// <param name="hexcolor">The color the text should get.</param>
+        /// <returns>The new RTF content of the note.</returns>
         private static string ColorText(RichTextBox rtb, string rtf, int posstart, int len, string hexcolor)
         {
             Color color = xmlUtil.ConvToClr(hexcolor);

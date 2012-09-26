@@ -228,6 +228,22 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Set the font size in RTF.
+        /// </summary>
+        /// <param name="rtf">The RTF stream.</param>
+        /// <param name="textpos">The text position.</param>
+        /// <param name="seltextlen">The selected text length.</param>
+        /// <param name="fontsize">The new font size.</param>
+        /// <returns></returns>
+        public string SetSizeTagInRtf(string rtf, int textpos, int seltextlen, int fontsize)
+        {
+            string fontsizestarttag = "\fs" + fontsize.ToString();
+            string fontsizeendtag = "\fs12"; // todo find the font size of before and set that back.
+            this.SetTagInRTF(rtf, textpos, seltextlen, fontsizestarttag, fontsizeendtag);
+            return rtf;
+        }
+
+        /// <summary>
         /// The color of text in the RTF stream,
         /// </summary>
         /// <param name="rtf">The rtf stream.</param>
@@ -237,9 +253,8 @@ namespace NoteFly
         /// <returns>The new RTF stream.</returns>
         public string SetColorInRTF(string rtf, Color newclr, int textpos, int sellentext)
         {
-            const int EXTRACAP = 40; // tune
+            const int EXTRACAP = 40;
             StringBuilder newrtf = new StringBuilder(rtf, rtf.Length + EXTRACAP);
-
             int prevnrcoloritem = 1;
             int nrtextchar = 0;
             int drtflen = 0;
@@ -280,7 +295,6 @@ namespace NoteFly
                             // tab is only 1 character in text.
                             nrtextchar += 1;
                         }
-                        // logical: && !istabtag 
                         else if (i + COLORITEMTAG.Length < rtf.Length && !isspecchar)
                         {
                             if (rtf.Substring(i, COLORITEMTAG.Length).Equals(COLORITEMTAG, StringComparison.Ordinal))
@@ -356,6 +370,7 @@ namespace NoteFly
                         {
                             // newclr does not exist as coloritem in colortbl.
                             newrtf = this.AddColorItem(newrtf, posstartcolortbl, newclr);
+
                             // new nr coloritem
                             nrcoloritem = this.GetNrcoloritem(newrtf.ToString(), newclr);
                             if (nrcoloritem < 0)
@@ -502,7 +517,6 @@ namespace NoteFly
 
                             donebeginpos = true;
                         }
-                        // is last?
                         else if (nrtextchar == (textpos + sellentext + 1) && !doneendpos)
                         {
                             // need to be last charcter if has RTFformat on this nrtextchar, that why i + this.drtflen here below and: nrtextchar == (textpos + sellentext + 1)
@@ -669,7 +683,6 @@ namespace NoteFly
 
                 if (!this.rtfformat)
                 {
-                    ////textstarttagdone = true;
                     if (nrtextchar < int.MaxValue)
                     {
                         nrtextchar++;
@@ -717,6 +730,7 @@ namespace NoteFly
                     if ((textpos + sellentext) == nrtextchar)
                     {
                         textstarttagdone = false;
+
                         // add end
                         int postag = i + this.drtflen + 1; // +1 for space
                         if (i + 1 < rtf.Length)
@@ -747,6 +761,7 @@ namespace NoteFly
                             if (!tagopen)
                             {
                                 textstarttagdone = true;
+
                                 // add begin
                                 newrtf.Insert(i + this.drtflen + 1, starttag + " ");
                                 this.drtflen = newrtf.Length - rtf.Length;
@@ -955,7 +970,7 @@ namespace NoteFly
             int length = value.Length;
             for (int i = 0; i < length; i++)
             {
-                result = 10 * result + (value[i] - 48);
+                result = (10 * result) + (value[i] - 48);
             }
 
             return result;

@@ -7,6 +7,9 @@
     /// </summary>
     public class InsertSmiley : IPlugin.PluginBase
     {
+        /// <summary>
+        /// Smiley chooser form.
+        /// </summary>
         private FrmSmileyChooser chooser;
 
         /// <summary>
@@ -46,7 +49,5 @@
 
             return rtbnote.Rtf;
         }
-
-
     }
 }

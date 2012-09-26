@@ -5,7 +5,6 @@
     /// </summary>
     public partial class FrmSkinEditor
     {
-
         /// <summary>
         /// ColorDialog colordlg
         /// </summary>

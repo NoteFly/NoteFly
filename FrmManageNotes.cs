@@ -768,7 +768,7 @@ namespace NoteFly
             datatable.Columns[COLINDEXNR].AutoIncrement = true;
             datatable.Columns[COLINDEXNR].Unique = true;
             datatable.Columns.Add(coltitle, typeof(string)); // colindextitle
-            datatable.Columns.Add(colvisible, typeof(bool)); //colindexvisible
+            datatable.Columns.Add(colvisible, typeof(bool)); // colindexvisible
             datatable.Columns.Add(colskin, typeof(string)); // colindexskin
             datatable.DefaultView.AllowEdit = true;
             datatable.DefaultView.AllowNew = false;
@@ -1092,28 +1092,28 @@ namespace NoteFly
         private struct SHFILEOPSTRUCT_x86
         {
             /// <summary>
-            /// 
+            /// pointer or handle
             /// </summary>
             public IntPtr hwnd;
 
             /// <summary>
-            /// 
+            /// Enum for the file operation
             /// </summary>
             [MarshalAs(UnmanagedType.U4)]
             public FileOperationType wFunc;
 
             /// <summary>
-            /// 
+            /// from path
             /// </summary>
             public string pFrom;
 
             /// <summary>
-            /// 
+            /// desitionation path
             /// </summary>
             public string pTo;
 
             /// <summary>
-            /// 
+            /// File operation flag
             /// </summary>
             public FileOperationFlags fFlags;
 
@@ -1141,28 +1141,28 @@ namespace NoteFly
         private struct SHFILEOPSTRUCT_x64
         {
             /// <summary>
-            /// 
+            /// pointer or a handle.
             /// </summary>
             public IntPtr hwnd;
 
             /// <summary>
-            /// 
+            /// File operation type.
             /// </summary>
             [MarshalAs(UnmanagedType.U4)]
             public FileOperationType wFunc;
 
             /// <summary>
-            /// 
+            /// From path
             /// </summary>
             public string pFrom;
 
             /// <summary>
-            /// 
+            /// destination path.
             /// </summary>
             public string pTo;
 
             /// <summary>
-            /// 
+            /// File operation flag.
             /// </summary>
             public FileOperationFlags fFlags;
 

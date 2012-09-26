@@ -24,8 +24,8 @@ namespace NoteFly
     using System.Globalization;
     using System.IO;
     using System.Net;
-    using System.Xml;
     using System.Text;
+    using System.Xml;
 
     /// <summary>
     /// XmlUtil class, for saving and parsering xml.
@@ -1023,7 +1023,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(filepath);
                 xmlread.ProhibitDtd = true;
-                //xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filepath);
+                ////xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filepath);
                 bool endnode = false;
                 while (xmlread.Read())
                 {
@@ -1050,7 +1050,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(filepath);
                 xmlread.ProhibitDtd = true;
-                //xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filepath);
+                ////xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filepath);
                 Note importnote = new Note(notes, notes.GetNoteFilename("import" + i));
                 try
                 {
@@ -1432,8 +1432,7 @@ namespace NoteFly
             }
 
             StringBuilder sbcontent = new StringBuilder();
-            const int buffersize = 10;
-            //int chrsread = 0;
+            const int BUFFERSIZE = 10;
             try
             {
                 while (xmlread.Read())
@@ -1442,11 +1441,11 @@ namespace NoteFly
                     {
                         xmlread.MoveToContent();
                         int countchr = 0;
-                        char[] buf = new char[buffersize];
+                        char[] buf = new char[BUFFERSIZE];
                         bool rtftagopen = false;
                         int rtflevel = 0;
                         bool stopread = false;
-                        while ((countchr = xmlread.ReadChars(buf, 0, buffersize)) > 0 && !stopread)
+                        while ((countchr = xmlread.ReadChars(buf, 0, BUFFERSIZE)) > 0 && !stopread)
                         {
                             for (int i = 0; i < buf.Length; i++)
                             {

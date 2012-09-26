@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------
 namespace NoteFly
 {
-#if windows
+    #if windows
 
     using System;
     using System.ComponentModel;
@@ -123,23 +123,30 @@ namespace NoteFly
         /// </summary>
         private class ListeningWindow : NativeWindow
         {
-            #region Declarations
             /// <summary>
-            /// Key delegate
+            /// 
             /// </summary>
-            /// <param name="key"></param>
-            /// <param name="msg"></param>
-            public delegate void KeyDelegate(ushort key, uint msg);
+            private const int WS_CLIPCHILDREN = 0x02000000;
 
             /// <summary>
             /// 
             /// </summary>
-            private const int 
-                WS_CLIPCHILDREN        = 0x02000000,
-                WM_INPUT            = 0x00FF,
-                RIDEV_INPUTSINK        = 0x00000100,
-                RID_INPUT            = 0x10000003,
-                RIM_TYPEKEYBOARD    = 1;
+            private const int WM_INPUT = 0x00FF;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            private const int RIDEV_INPUTSINK = 0x00000100;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            private const int RID_INPUT = 0x10000003;
+
+            /// <summary>
+            /// 
+            /// </summary>
+            private const int RIM_TYPEKEYBOARD = 1;
 
             /// <summary>
             /// Previous key message.
@@ -155,6 +162,13 @@ namespace NoteFly
             /// Key delegate
             /// </summary>
             private KeyDelegate m_KeyHandler = null;
+
+            /// <summary>
+            /// Key delegate
+            /// </summary>
+            /// <param name="key"></param>
+            /// <param name="msg"></param>
+            public delegate void KeyDelegate(ushort key, uint msg);
             #endregion
 
             #region Private external methods
@@ -315,6 +329,7 @@ namespace NoteFly
             }
     
             #region Private methods
+
             /// <summary>
             /// 
             /// </summary>
@@ -333,7 +348,6 @@ namespace NoteFly
 
                                 // Find out the size of the buffer we have to provide
                                 int res = GetRawInputData(m.LParam.ToPointer(), RID_INPUT, null, &dwSize, sizeof_RAWINPUTHEADER);
-                        
                                 if (res == 0)
                                 {
                                     // Allocate a buffer and ...
@@ -381,7 +395,7 @@ namespace NoteFly
 
             #endregion
         }
-        #endregion
     }
-#endif
+
+    #endif
 }

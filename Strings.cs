@@ -43,7 +43,7 @@ namespace NoteFly
         private const string FILEFORMAT = "{{culture}}/{{resource}}.po";
 
         /// <summary>
-        /// 
+        /// Lock object to make only one ResourceManager being accessed at the same time.
         /// </summary>
         private static object resourceManLock = new object();
 
@@ -53,7 +53,7 @@ namespace NoteFly
         private static System.Resources.ResourceManager resourceMan;
 
         /// <summary>
-        /// 
+        /// CultureInfo object
         /// </summary>
         private static System.Globalization.CultureInfo resourceCulture;
 
@@ -238,7 +238,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="text">Orginele text</param>
         /// <param name="ctrlname">Control name</param>
-        /// <returns></returns>
+        /// <returns>The text translation of the text properties of the control.</returns>
         private static string GetTranslationControl(string text, string ctrlname)
         {
             if (!string.IsNullOrEmpty(text))
