@@ -240,7 +240,7 @@ namespace NoteFly
             }
         }
 
-                /// <summary>
+        /// <summary>
         /// Add leadings zero to string till string is a fixed length
         /// </summary>
         /// <param name="str">The string to add leading zero's to</param>

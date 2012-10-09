@@ -59,6 +59,11 @@ namespace NoteFly
         private ToolStripMenuItem menuNewNote;
 
         /// <summary>
+        /// Create a new note from clipboard.
+        /// </summary>
+        private ToolStripMenuItem menuNewNoteClipboard;
+
+        /// <summary>
         /// Manage notes menu option
         /// </summary>
         private ToolStripMenuItem menuManageNotes;
@@ -96,8 +101,10 @@ namespace NoteFly
             // Start building icon and icon contextmenu
             this.icon = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(menuTrayIcon_Opening);
             this.menuTrayIcon.AllowDrop = false;
             this.menuNewNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNewNoteClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.menuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,7 +136,7 @@ namespace NoteFly
                 Log.Write(LogType.exception, argexc.Message);
                 menufont = new Font("Arial", 10, menufontstyle);
             }
-            
+
             // MenuNewNote
             this.menuNewNote.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuNewNote.Name = "MenuNewNote";
@@ -143,6 +150,16 @@ namespace NoteFly
             this.menuNewNote.Font = new Font(menufont.FontFamily.Name, menufont.SizeInPoints, menufontstyle);
             this.menuNewNote.Click += new System.EventHandler(this.MenuNewNote_Click);
             this.icon.ContextMenuStrip.Items.Add(this.menuNewNote);
+
+            this.menuNewNoteClipboard.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            //this.menuNewNoteClipboard.Enabled = Clipboard.ContainsText();
+            this.menuNewNoteClipboard.Visible = Clipboard.ContainsText();
+            this.menuNewNoteClipboard.Name = "MenuNewNoteClipboard";
+            this.menuNewNoteClipboard.Size = new Size(144, 22);
+            this.menuNewNoteClipboard.Text = Strings.T("&New note from clipboard");
+            this.menuNewNoteClipboard.Font = new Font(menufont.FontFamily.Name, menufont.SizeInPoints, FontStyle.Regular);
+            this.menuNewNoteClipboard.Click += new EventHandler(menuNewNoteClipboard_Click);
+            this.icon.ContextMenuStrip.Items.Add(this.menuNewNoteClipboard);
 
             // MenuManageNotes
             this.menuManageNotes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -266,9 +283,30 @@ namespace NoteFly
                 }
                 else if (Settings.TrayiconLeftclickaction == 2)
                 {
-                    this.formmanager.OpenNewNote();
+                    this.formmanager.OpenNewNote(false);
                 }
             }
+        }
+
+        /// <summary>
+        /// Trayicon menu is being openened.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuTrayIcon_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //this.menuNewNoteClipboard.Enabled = Clipboard.ContainsText();
+            this.menuNewNoteClipboard.Visible = Clipboard.ContainsText();
+        }
+
+        /// <summary>
+        /// Open new note window with content set from clipboard text.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuNewNoteClipboard_Click(object sender, EventArgs e)
+        {
+            this.formmanager.OpenNewNote(true);
         }
 
         /// <summary>
@@ -278,7 +316,7 @@ namespace NoteFly
         /// <param name="e">Event argument</param>
         private void MenuNewNote_Click(object sender, EventArgs e)
         {
-            this.formmanager.OpenNewNote();
+            this.formmanager.OpenNewNote(false);
         }
 
         /// <summary>

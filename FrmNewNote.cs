@@ -106,7 +106,7 @@ namespace NoteFly
         /// <param name="notes">The class with access to all notes.</param>
         /// <param name="deltaX">X position change from center screen position to show form.</param>
         /// <param name="deltaY">Y position change from center screen position to show form.</param>
-        public FrmNewNote(Notes notes, int deltaX, int deltaY)
+        public FrmNewNote(Notes notes, int deltaX, int deltaY, bool contentclipboard)
         {
             this.ConstructFrmNewNote(notes);
             this.SetFormTitle(false);
@@ -123,6 +123,11 @@ namespace NoteFly
             {
                 // The string returned by the ToShortDateString method is culture-sensitive.
                 this.tbTitle.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
+            }
+
+            if (contentclipboard)
+            {
+                this.rtbNewNote.Text = Clipboard.GetText();
             }
         }
 

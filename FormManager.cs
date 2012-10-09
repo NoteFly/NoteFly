@@ -152,12 +152,24 @@ namespace NoteFly
             }
         }
 
+        /*
         /// <summary>
-        /// Create a new note.
+        /// Create a new note 
+        /// Do not set content note with text from clipboard.
         /// </summary>
         public void OpenNewNote()
         {
-            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.newnotedeltaX, this.newnotedeltaY);
+            this.OpenNewNote(false);
+        }
+         */
+
+        /// <summary>
+        /// Create a new note.
+        /// </summary>
+        /// <param name="contentclipboard">Set content with text from clipboard</param>
+        public void OpenNewNote(bool contentclipboard)
+        {
+            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.newnotedeltaX, this.newnotedeltaY, contentclipboard);
             this.ChangeDeltaPositionNewNote();
             frmnewnote.Show();
             frmnewnote.Activate();
@@ -284,7 +296,7 @@ namespace NoteFly
                         // Ctrl + Alt + KEY
                         if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && Settings.HotkeysNewNoteAltInsteadShift && Settings.HotkeysNewNoteEnabled)
                         {
-                            this.OpenNewNote();
+                            this.OpenNewNote(false);
                             this.ResetAllModifierKeys();
                         }
                         else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && Settings.HotkeysManageNotesAltInsteadShift && Settings.HotkeysManageNotesEnabled)
@@ -306,7 +318,7 @@ namespace NoteFly
                         // Ctrl + Shift + KEY
                         if (eventArgs.KeyValue == Settings.HotkeysNewNoteKeycode && !Settings.HotkeysNewNoteAltInsteadShift && Settings.HotkeysNewNoteEnabled)
                         {
-                            this.OpenNewNote();
+                            this.OpenNewNote(false);
                             this.ResetAllModifierKeys();
                         }
                         else if (eventArgs.KeyValue == Settings.HotkeysManageNotesKeycode && !Settings.HotkeysManageNotesAltInsteadShift && Settings.HotkeysManageNotesEnabled)
@@ -349,7 +361,9 @@ namespace NoteFly
         /// </summary>
         private void ChangeDeltaPositionNewNote()
         {
-            if (this.newnotedeltaX < 100 && this.newnotedeltaY < 100)
+            const int DELTAMAXX = 100;
+            const int DELTAMAXY = 100; 
+            if (this.newnotedeltaX < DELTAMAXX && this.newnotedeltaY < DELTAMAXY)
             {
                 this.newnotedeltaX += 10;
                 this.newnotedeltaY += 10;
