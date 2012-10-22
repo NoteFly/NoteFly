@@ -155,8 +155,8 @@ namespace NoteFly
         /// <summary>
         /// Method to create a new storage file
         /// </summary>
-        /// <param name="filename">Full path of Zip file to create</param>
-        /// <param name="comment">General comment for Zip file</param>
+        /// <param name="zipfilename">Full path of Zip file to create</param>
+        /// <param name="zipcomment">General comment for Zip file</param>
         /// <returns>A valid ZipStorer object</returns>
         public static ZipStorer Create(string zipfilename, string zipcomment)
         {
@@ -579,7 +579,7 @@ namespace NoteFly
         /// extra field (variable size)
         /// </para>
         /// </summary>
-        /// <param name="_zfe"></param>
+        /// <param name="zfe"></param>
         private void WriteLocalHeader(ref ZipFileEntry zfe)
         {
             long pos = this.zipfilestream.Position;
@@ -666,8 +666,8 @@ namespace NoteFly
         /// zipfile comment length          2 bytes
         /// zipfile comment (variable size)
         /// </summary>
-        /// <param name="_size"></param>
-        /// <param name="_offset"></param>
+        /// <param name="size"></param>
+        /// <param name="offset"></param>
         private void WriteEndRecord(uint size, uint offset)
         {
             Encoding encoder = this.EncodeUTF8 ? Encoding.UTF8 : DefaultEncoding;
@@ -685,8 +685,8 @@ namespace NoteFly
         /// <summary>
         /// Copies all source file into storage file
         /// </summary>
-        /// <param name="_zfe"></param>
-        /// <param name="_source"></param>
+        /// <param name="zfe"></param>
+        /// <param name="source"></param>
         private void Store(ref ZipFileEntry zfe, Stream source)
         {
             byte[] buffer = new byte[16384];
@@ -751,7 +751,7 @@ namespace NoteFly
         ///     11-15 Hour (0–23 on a 24-hour clock) 
         /// </para>
         /// </summary>
-        /// <param name="_dt"></param>
+        /// <param name="dtdostime"></param>
         /// <returns></returns>
         private uint DateTimeToDosTime(DateTime dtdostime)
         {
@@ -763,7 +763,7 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="_dt"></param>
+        /// <param name="dtdostime"></param>
         /// <returns></returns>
         private DateTime DosTimeToDateTime(uint dtdostime)
         {
@@ -790,7 +790,7 @@ namespace NoteFly
         /// value is put in the data descriptor and in the central
         /// directory.</para>
         /// </summary>
-        /// <param name="_zfe"></param>
+        /// <param name="zfe"></param>
         private void UpdateCrcAndSizes(ref ZipFileEntry zfe)
         {
             long lastPos = this.zipfilestream.Position;  // remember position
@@ -809,7 +809,7 @@ namespace NoteFly
         /// <summary>
         /// Replaces backslashes with slashes to store in zip header.
         /// </summary>
-        /// <param name="_filename"></param>
+        /// <param name="zipfilename"></param>
         /// <returns></returns>
         private string NormalizedFilename(string zipfilename)
         {

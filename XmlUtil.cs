@@ -579,6 +579,9 @@ namespace NoteFly
                         case "NotesTitlepanelMinHeight":
                             Settings.NotesTitlepanelMinHeight = xmlread.ReadElementContentAsInt();
                             break;
+                        case "NotesTooltipPreviewlength":
+                            Settings.NotesTooltipPreviewlength = xmlread.ReadElementContentAsInt();
+                            break;
                         case "NotesWarnlimitTotal":
                             Settings.NotesWarnlimitTotal = xmlread.ReadElementContentAsInt();
                             break;
@@ -1148,6 +1151,7 @@ namespace NoteFly
                     xmlwrite.WriteElementString("NotesDefaultHeight", Settings.NotesDefaultHeight.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesTitlepanelMaxHeight", Settings.NotesTitlepanelMaxHeight.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesTitlepanelMinHeight", Settings.NotesTitlepanelMinHeight.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("NotesTooltipPreviewlength", Settings.NotesTooltipPreviewlength.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesWarnlimitTotal", Settings.NotesWarnlimitTotal.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("NotesWarnlimitVisible", Settings.NotesWarnlimitVisible.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));

@@ -141,5 +141,10 @@ namespace IPlugin
         /// <param name="content">The note content.</param>
         /// <param name="title">The note title.</param>
         void HidingNote(string content, string title);
+
+        /// <summary>
+        /// Executed if NoteFly is first runned with a new version.
+        /// </summary>
+        void ProgramUpgraded();
     }
 }

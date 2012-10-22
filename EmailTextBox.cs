@@ -21,6 +21,7 @@ namespace NoteFly
 {
     using System.Drawing;
     using System.Windows.Forms;
+    using System;
 
     /// <summary>
     /// EmailTextBox control
@@ -82,7 +83,7 @@ namespace NoteFly
         /// Change background to inactive control backgroundcolor if control becomes inactive.
         /// </summary>
         /// <param name="e">Event argurments</param>
-        protected override void OnEnabledChanged(System.EventArgs e)
+        protected override void OnEnabledChanged(EventArgs e)
         {
             if (!this.Enabled)
             {

@@ -152,17 +152,6 @@ namespace NoteFly
             }
         }
 
-        /*
-        /// <summary>
-        /// Create a new note 
-        /// Do not set content note with text from clipboard.
-        /// </summary>
-        public void OpenNewNote()
-        {
-            this.OpenNewNote(false);
-        }
-         */
-
         /// <summary>
         /// Create a new note.
         /// </summary>

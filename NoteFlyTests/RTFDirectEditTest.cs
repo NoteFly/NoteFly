@@ -31,60 +31,27 @@ namespace NoteFlyTests
     [TestClass()]
     public class RTFDirectEditTest
     {
+        /// <summary>
+        /// The current rtf stream
+        /// </summary>
         private string rtf;
 
+        /// <summary>
+        /// Reference to the RTFDirectEdit class
+        /// </summary>
         private RTFDirectEdit rtfdirectedit = new RTFDirectEdit();
 
-        private TestContext testContextInstance;
-
         /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
+        /// run code before running each test 
         /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // You can use the following additional attributes as you write your tests:
-        // Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //    this.rtfdirectedit = new RTFDirectEdit();
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
         [TestInitialize()]
-        public void MyTestInitialize()
+        public void RTFDirextEditTestInitialize()
         {
             this.rtf = @"{\rtf1\ansi\ansicpg1252\deff0\deflang" + Properties.Settings.Default.rtflangused + @"{\fonttbl{\f0\fnil\fcharset0 Arial;}}
 \viewkind4\uc1\pard\fs24 testtesttest\par
 }
 ";
         }
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
 
         [TestMethod]
         public void AddBoldTagInRTFTest_middle()
@@ -228,7 +195,7 @@ namespace NoteFlyTests
 {\colortbl ;\red0\green128\blue0;}
 \viewkind4\cf1 \uc1\pard\fs24 testtesttest\cf1 \par
 }
-"; // is this what we expect?
+";
             this.rtf = this.rtfdirectedit.SetColorAllRTF(this.rtf, Color.Green, 12);
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: SetColorAllRTF(rtf, Color.Green, 12)");
         }

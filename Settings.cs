@@ -108,6 +108,11 @@ namespace NoteFly
         public static bool NotesTooltipsEnabled = true;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static int NotesTooltipPreviewlength = 100;
+
+        /// <summary>
         /// Hide notes permanently on closing them.
         /// </summary>
         public static bool NotesClosebtnHidenotepermanently = true;

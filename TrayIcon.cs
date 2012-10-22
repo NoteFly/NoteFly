@@ -291,8 +291,8 @@ namespace NoteFly
         /// <summary>
         /// Trayicon menu is being openened.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void menuTrayIcon_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //this.menuNewNoteClipboard.Enabled = Clipboard.ContainsText();
@@ -302,8 +302,8 @@ namespace NoteFly
         /// <summary>
         /// Open new note window with content set from clipboard text.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void menuNewNoteClipboard_Click(object sender, EventArgs e)
         {
             this.formmanager.OpenNewNote(true);

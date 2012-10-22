@@ -356,6 +356,14 @@ namespace NoteFly
                 Settings.ProgramLastrunVersion = Program.AssemblyVersionAsString;
                 xmlUtil.WriteSettings();
                 Log.Write(LogType.info, "Updated ProgramLastrunVersion setting.");
+
+                if (PluginsManager.EnabledPlugins != null)
+                {
+                    for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
+                    {
+                        PluginsManager.EnabledPlugins[p].ProgramUpgraded();
+                    }
+                }
             }
 
             if (Settings.UpdatecheckEverydays > 0)

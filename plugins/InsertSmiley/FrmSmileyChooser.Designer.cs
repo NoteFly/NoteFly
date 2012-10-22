@@ -1,6 +1,6 @@
 ﻿namespace InsertSmiley
 {
-    partial class FrmSmileyChooser
+    public partial class FrmSmileyChooser
     {
         /// <summary>
         /// Required designer variable.

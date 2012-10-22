@@ -1014,9 +1014,8 @@ namespace NoteFly
                         int notepos = this.GetNoteposBySelrow(e.RowIndex);
                         if (notepos >= 0)
                         {
-                            const int MAXLENCONTENTPREVIEW = 100;
                             string notefile = Path.Combine(Settings.NotesSavepath, this.notes.GetNote(notepos).Filename);
-                            contentpreview = xmlUtil.GetContentStringLimited(notefile, MAXLENCONTENTPREVIEW);
+                            contentpreview = xmlUtil.GetContentStringLimited(notefile, Settings.NotesTooltipPreviewlength);
                             int tooltiplocx = Cursor.Position.X - this.Location.X;
                             int tooltiplocy = Cursor.Position.Y - this.Location.Y;
                             if (!string.IsNullOrEmpty(contentpreview))

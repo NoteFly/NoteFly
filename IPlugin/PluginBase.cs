@@ -206,5 +206,12 @@ namespace IPlugin
         {
             // by default do nothing, override this to do someting.
         }
+
+        /// <summary>
+        /// Executed if NoteFly is first runned with a new version.
+        /// </summary>
+        public virtual void ProgramUpgraded()
+        {
+        }
     }
 }
