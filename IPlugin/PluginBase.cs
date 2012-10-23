@@ -212,6 +212,47 @@ namespace IPlugin
         /// </summary>
         public virtual void ProgramUpgraded()
         {
+            // by default do nothing, override this to do someting.
+        }
+
+        /// <summary>
+        /// Get a additional filter for the save all notes to file in the manage notes window.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string ExportNotesDlgFilter()
+        {
+            return String.Empty;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filtername"></param>
+        /// <returns>True if handled</returns>
+        public virtual bool ExportNotesFile(string filtername)
+        {
+            return false;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public virtual string ImportNotesDlgFilter()
+        {
+            return String.Empty;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filtername"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public virtual bool ImportNotesFile(string filtername, string file)
+        {
+            return false;
         }
     }
 }

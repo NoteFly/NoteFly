@@ -378,17 +378,7 @@ namespace NoteFly
                     this.notes.GetNote(i).DestroyForm();
                 }
 
-                while (this.notes.CountNotes > 0)
-                {
-                    try
-                    {
-                        this.notes.RemoveNote(0);
-                    }
-                    catch (Exception)
-                    {
-                        break;
-                    }
-                }
+                this.notes.ClearAllNotes();
             }
 
             xmlUtil.ReadNoteFlyNotesBackupFile(this.notes, file);

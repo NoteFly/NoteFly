@@ -143,8 +143,35 @@ namespace IPlugin
         void HidingNote(string content, string title);
 
         /// <summary>
-        /// Executed if NoteFly is first runned with a new version.
+        /// Executed if NoteFly is first runned with a newer version.
         /// </summary>
         void ProgramUpgraded();
+
+        /// <summary>
+        /// Get a additional filters for the save all notes to file in the manage notes window.
+        /// </summary>
+        /// <returns></returns>
+        string ExportNotesDlgFilter();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filtername"></param>
+        /// <returns>True if handled by plugin</returns>
+        bool ExportNotesFile(string filtername);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        string ImportNotesDlgFilter();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filtername"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        bool ImportNotesFile(string filtername, string file);
     }
 }

@@ -272,20 +272,46 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnBackAllNotes_Click(object sender, EventArgs e)
         {
-            DialogResult savebackupdlgres = this.saveExportFileDialog.ShowDialog();
+            SaveFileDialog sfdlgexportnotes = new SaveFileDialog();
+            sfdlgexportnotes.Title = Strings.T("Export all notes");
+            sfdlgexportnotes.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb";
+            sfdlgexportnotes.OverwritePrompt = true;
+            DialogResult savebackupdlgres = sfdlgexportnotes.ShowDialog();
+            if (PluginsManager.EnabledPlugins != null)
+            {
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
+                {
+                    sfdlgexportnotes.Filter += PluginsManager.EnabledPlugins[p].ExportNotesDlgFilter();
+                }
+            }
+
             if (savebackupdlgres == DialogResult.OK)
             {
                 ExportNotes exportnotes = new ExportNotes(this.notes);
-                switch (this.saveExportFileDialog.FilterIndex)
+                switch (sfdlgexportnotes.FilterIndex)
                 {
                     case 1:
-                        exportnotes.WriteNoteFlyNotesBackupFile(this.saveExportFileDialog.FileName);
+                        exportnotes.WriteNoteFlyNotesBackupFile(sfdlgexportnotes.FileName);
                         break;
                     case 2:
-                        exportnotes.WriteStickiesCSVBackupfile(this.saveExportFileDialog.FileName);
+                        exportnotes.WriteStickiesCSVBackupfile(sfdlgexportnotes.FileName);
                         break;
                     case 3:
-                        exportnotes.WritePNotesBackupfile(this.saveExportFileDialog.FileName);
+                        exportnotes.WritePNotesBackupfile(sfdlgexportnotes.FileName);
+                        break;
+                    default:
+                        // something else let's check plugins
+                        if (PluginsManager.EnabledPlugins != null)
+                        {
+                            for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
+                            {
+                                if (PluginsManager.EnabledPlugins[p].ExportNotesFile(sfdlgexportnotes.Filter))
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
                         break;
                 }
             }
@@ -368,33 +394,60 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnRestoreAllNotes_Click(object sender, EventArgs e)
         {
-            DialogResult openbackupdlgres = this.openImportFileDialog.ShowDialog();
+            OpenFileDialog ofdlgimportnotes = new OpenFileDialog();
+            ofdlgimportnotes.Title = Strings.T("import notes");
+            ofdlgimportnotes.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb|CintaNotes xml export|*.xml|DeskNotes file|*.xml";
+            ofdlgimportnotes.CheckFileExists = true;
+            ofdlgimportnotes.CheckPathExists = true;
+            if (PluginsManager.EnabledPlugins != null)
+            {
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
+                {
+                    ofdlgimportnotes.Filter += PluginsManager.EnabledPlugins[p].ImportNotesDlgFilter();
+                }
+            }
+
+            DialogResult openbackupdlgres = ofdlgimportnotes.ShowDialog();
             if (openbackupdlgres == DialogResult.OK)
             {
                 ImportNotes importnote = new ImportNotes(this.notes);
-                switch (this.openImportFileDialog.FilterIndex)
+                switch (ofdlgimportnotes.FilterIndex)
                 {
                     case 1:
-                        importnote.ReadNoteFlyBackupFile(this.openImportFileDialog.FileName);
+                        importnote.ReadNoteFlyBackupFile(ofdlgimportnotes.FileName);
                         break;
                     case 2:
-                        importnote.ReadStickiesCSVFile(this.openImportFileDialog.FileName);
+                        importnote.ReadStickiesCSVFile(ofdlgimportnotes.FileName);
                         break;
                     case 3:
-                        importnote.ReadPNotesBackupFile(this.openImportFileDialog.FileName);
+                        importnote.ReadPNotesBackupFile(ofdlgimportnotes.FileName);
                         break;
                     case 4:
-                        importnote.ReadCintaNotesXMLFile(this.openImportFileDialog.FileName);
+                        importnote.ReadCintaNotesXMLFile(ofdlgimportnotes.FileName);
                         break;
                     case 5:
-                        importnote.ReadDeskNotesXmlFile(this.openImportFileDialog.FileName);
+                        importnote.ReadDeskNotesXmlFile(ofdlgimportnotes.FileName);
+                        break;
+                    default:
+                        if (PluginsManager.EnabledPlugins != null)
+                        {
+                            for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
+                            {
+                                if (PluginsManager.EnabledPlugins[p].ImportNotesFile(ofdlgimportnotes.Filter, ofdlgimportnotes.FileName))
+                                {
+                                    this.btnNoteDelete.Enabled = false;
+                                    this.notes.ClearAllNotes();
+                                    break;
+                                }
+                            }
+                        }
+
                         break;
                 }
 
                 this.Resetdatagrid();
                 this.DrawNotesGrid();
                 this.SetDataGridViewColumsWidth();
-
                 if (this.notes.CountNotes > 0)
                 {
                     this.btnNoteDelete.Enabled = true;

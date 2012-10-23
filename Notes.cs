@@ -760,7 +760,28 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Clear all notes from memory of notefly.
+        /// </summary>
+        public void ClearAllNotes()
+        {
+            while (this.CountNotes > 0)
+            {
+                try
+                {
+                    this.RemoveNote(0);
+                }
+                catch (Exception)
+                {
+                    break;
+                }
+            }
+
+            this.LoadNotes(false, false);
+        }
+
+        /// <summary>
         /// Import NoteFly 2.5.x/2.0.x notes.
+        /// to be move to importnotes class.
         /// </summary>
         /// <returns>True if already imported.</returns>
         private bool ImportingNotesNoteFly2()
