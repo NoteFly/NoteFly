@@ -225,7 +225,7 @@ namespace IPlugin
         }
 
         /// <summary>
-        /// 
+        /// Export notes file.
         /// </summary>
         /// <param name="filtername"></param>
         /// <returns>True if handled</returns>
@@ -234,9 +234,8 @@ namespace IPlugin
             return false;
         }
 
-
         /// <summary>
-        /// 
+        /// Get a additional filter for the import notes from a file in the manage notes window.
         /// </summary>
         /// <returns></returns>
         public virtual string ImportNotesDlgFilter()
@@ -245,7 +244,7 @@ namespace IPlugin
         }
 
         /// <summary>
-        /// 
+        /// Import notes file.
         /// </summary>
         /// <param name="filtername"></param>
         /// <param name="file"></param>
@@ -253,6 +252,28 @@ namespace IPlugin
         public virtual bool ImportNotesFile(string filtername, string file)
         {
             return false;
+        }
+
+        /// <summary>
+        /// Initializes syntax highlighter language defintion.
+        /// </summary>
+        public virtual string[] InitHighlightLanguage()
+        {
+            string[] args = null;
+            return args;
+        }
+
+        /// <summary>
+        /// Validate syntax part.
+        /// </summary>
+        /// <param name="part"></param>
+        /// <param name="rtb"></param>
+        /// <param name="rtf"></param>
+        /// <param name="lastpos"></param>
+        /// <returns></returns>
+        public virtual string ValidateSyntaxPart(string part, RichTextBox rtb, string rtf, int lastpos)
+        {
+            return rtf;
         }
     }
 }

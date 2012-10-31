@@ -29,7 +29,7 @@ namespace IPlugin
     /// <summary>
     /// Plugin interface
     /// status: DRAFT (Subject to change)
-    /// revision: 7
+    /// revision: 8
     /// </summary>
     public interface IPlugin
     {
@@ -173,5 +173,14 @@ namespace IPlugin
         /// <param name="file"></param>
         /// <returns></returns>
         bool ImportNotesFile(string filtername, string file);
+
+        /// <summary>
+        /// Validate syntax part
+        /// </summary>
+        /// <param name="part"></param>
+        /// <param name="rtb"></param>
+        /// <param name="rtf"></param>
+        /// <param name="lastpos"></param>
+        string ValidateSyntaxPart(string part, RichTextBox rtb, string rtf, int lastpos);
     }
 }

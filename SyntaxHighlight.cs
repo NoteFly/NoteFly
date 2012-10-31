@@ -62,9 +62,14 @@ namespace NoteFly
         private static bool htmlstringpart = false;
 
         /// <summary>
-        /// Is the highlighter on a PHP string part. 
+        /// Is the highlighter on a PHP string part.
         /// </summary>
         private static bool phpstringpart = false;
+
+        /// <summary>
+        /// Are we in a sql field.
+        /// </summary>
+        private static bool sqlfieldopen = false;
 
         /// <summary>
         /// What is the character (usually quote) used to start the string part with.
@@ -84,7 +89,6 @@ namespace NoteFly
         #endregion Fields
 
         #region Properties (1)
-
         /// <summary>
         /// Gets a value indicating whether highlighting keywords are initialized.
         /// </summary>
@@ -314,12 +318,12 @@ namespace NoteFly
         /// <summary>
         /// Check the syntax of a part of the text with the enabled languages.
         /// </summary>
-        /// <param name="rtb">The RichTextBox control</param>
+        /// <param name="rtb">The RichTextBox control.</param>
         /// <param name="rtf">The RTF text</param>
-        /// <param name="part">The part of text to check</param>
-        /// <param name="curpos">The current position in the text</param>
-        /// <param name="lastpos">The position of where the part started in the text of the RichTextBox</param>
-        /// <returns>The new RTF text syntax highlighted</returns>
+        /// <param name="part">The space seperated part of text to check.</param>
+        /// <param name="curpos">The current position in the text.</param>
+        /// <param name="lastpos">The position of where the part started in the text of the RichTextBox.</param>
+        /// <returns>The new RTF text syntax highlighted.</returns>
         private static string CheckSyntaxPart(RichTextBox rtb, string rtf, string part, int curpos, int lastpos)
         {
             for (int i = 0; i < langs.Count; i++)
@@ -339,6 +343,14 @@ namespace NoteFly
                             rtf = ValidatingSqlPart(part, rtb, rtf, lastpos, langs[i]);
                             break;
                     }
+                }
+            }
+
+            if (PluginsManager.EnabledPlugins != null)
+            {
+                for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
+                {
+                    PluginsManager.EnabledPlugins[p].ValidateSyntaxPart(part, rtb, rtf, lastpos);
                 }
             }
 
@@ -717,17 +729,24 @@ namespace NoteFly
         private static string ValidatingSqlPart(string issql, RichTextBox rtb, string rtf, int posstart, HighlightLanguage langsql)
         {
             string sqlkeyword;
+            bool continufield = sqlfieldopen;
             if (issql.Length > 0)
             {
-                // check sql field
-                if (issql[0] == '`')
+                for (int i = 0; i < issql.Length; i++)
                 {
-                    for (int i = 1; i < issql.Length; i++)
+                    if (issql[i] == '`')
                     {
-                        if (issql[i] == '`')
+                        sqlfieldopen = !sqlfieldopen;
+                        if (sqlfieldopen)
                         {
-                            rtf = ColorText(rtb, rtf, posstart, i + 1, Settings.HighlightSQLColorField);
+                            continufield = true;
                         }
+                    }
+
+                    if (continufield && !sqlfieldopen)
+                    {
+                        continufield = false;
+                        rtf = ColorText(rtb, rtf, posstart, i + 1, Settings.HighlightSQLColorField);
                     }
                 }
 
@@ -751,9 +770,12 @@ namespace NoteFly
             }
 
             // check if keyword is known SQL statement
-            if (langsql.FindKeyword(sqlkeyword.ToLower()))
+            if (!string.IsNullOrEmpty(sqlkeyword))
             {
-                rtf = ColorText(rtb, rtf, posstart, issql.Length, Settings.HighlightSQLColorValidstatement);
+                if (langsql.FindKeyword(sqlkeyword.ToLower()))
+                {
+                    rtf = ColorText(rtb, rtf, posstart, issql.Length, Settings.HighlightSQLColorValidstatement);
+                }
             }
 
             return rtf;

@@ -26,6 +26,8 @@ namespace NoteFly
     using System.Net;
     using System.Text;
     using System.Xml;
+    using System.Security;
+    using System.Security.Permissions;
 
     /// <summary>
     /// XmlUtil class, for saving and parsering xml.
@@ -93,8 +95,6 @@ namespace NoteFly
             }
 
             xmlread.ProhibitDtd = true;
-            xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filename);
-
             try
             {
                 while (xmlread.Read())
@@ -103,18 +103,6 @@ namespace NoteFly
                     {
                         string xmlnodecontent;
                         xmlnodecontent = xmlread.ReadElementContentAsString();
-                        /*
-                        const int charbuffersize = 32;
-                        StringBuilder sbxmlnodecontent = new StringBuilder();
-                        int countchr = 0;
-                        char[] buffer = new Char[charbuffersize];
-                        xmlread.MoveToContent();
-                        while ((countchr = xmlread.ReadChars(buffer, 0, charbuffersize)) > 0)
-                        {
-                            sbxmlnodecontent.Append(new string(buffer, 0, countchr));
-                            Array.Clear(buffer, 0, charbuffersize);
-                        }
-                         */
 
 #if DEBUG
                         stopwatch.Stop();
@@ -162,7 +150,6 @@ namespace NoteFly
             }
 
             xmlread.ProhibitDtd = true;
-            xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filename);
             try
             {
                 while (xmlread.Read())
@@ -1026,7 +1013,7 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(filepath);
                 xmlread.ProhibitDtd = true;
-                ////xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filepath);
+                xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), filepath);
                 bool endnode = false;
                 while (xmlread.Read())
                 {
@@ -1265,7 +1252,6 @@ namespace NoteFly
             {
                 xmlread = new XmlTextReader(new System.IO.StringReader(serverresponse));
                 xmlread.ProhibitDtd = true;
-                xmlread.XmlResolver = new XmlSecureResolver(new XmlUrlResolver(), "http://*");
                 while (xmlread.Read())
                 {
                     switch (xmlread.Name)

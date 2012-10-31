@@ -288,6 +288,7 @@ namespace NoteFly
             if (savebackupdlgres == DialogResult.OK)
             {
                 ExportNotes exportnotes = new ExportNotes(this.notes);
+                Log.Write(LogType.info, "Writing notes backup to: " + sfdlgexportnotes.FileName);
                 switch (sfdlgexportnotes.FilterIndex)
                 {
                     case 1:
@@ -411,6 +412,7 @@ namespace NoteFly
             if (openbackupdlgres == DialogResult.OK)
             {
                 ImportNotes importnote = new ImportNotes(this.notes);
+                Log.Write(LogType.info, "importing " + ofdlgimportnotes.FileName);
                 switch (ofdlgimportnotes.FilterIndex)
                 {
                     case 1:
