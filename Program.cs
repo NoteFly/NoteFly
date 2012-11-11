@@ -714,6 +714,7 @@ namespace NoteFly
             int compareversionsresult = Program.CompareVersions(latestversion, thisversion);
             if (compareversionsresult > 0 || (compareversionsresult == 0 && Program.AssemblyVersionQuality != latestversionquality))
             {
+                Log.Write(LogType.info, "Update check done. New version available.");
                 if (!string.IsNullOrEmpty(downloadurl))
                 {
                     rsaverify = new RSAVerify(rsasignature);
@@ -745,19 +746,30 @@ namespace NoteFly
                 }
                 else
                 {
+                    string networkerrortitle = Strings.T("Network error");
                     if (Settings.NetworkIPversion == 1)
                     {
-                        System.Windows.Forms.MessageBox.Show(string.Format("Network error, make sure you have a working {0} connection.", "IPv4"), "network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        string noworkingipv4 = Strings.T("Network error, make sure you have a working {0} connection.", "IPv4");
+                        Log.Write(LogType.error, noworkingipv4);
+                        System.Windows.Forms.MessageBox.Show(noworkingipv4, networkerrortitle, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                     }
                     else if (Settings.NetworkIPversion == 2)
                     {
-                        System.Windows.Forms.MessageBox.Show(string.Format("Network error, make sure you have a working {0} connection.", "IPv6"), "network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        string noworkingipv6 = Strings.T("Network error, make sure you have a working {0} connection.", "IPv6");
+                        Log.Write(LogType.error, noworkingipv6);
+                        System.Windows.Forms.MessageBox.Show(noworkingipv6, networkerrortitle, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("Downloadurl is unexcepted unknown", "Network error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        string downloadurlunset = Strings.T("Downloadurl is of new vesion is not set.");
+                        Log.Write(LogType.exception, downloadurlunset);
+                        System.Windows.Forms.MessageBox.Show(downloadurlunset, networkerrortitle, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                     }
                 }
+            }
+            else
+            {
+                Log.Write(LogType.info, "Update check done. You have the latest version.");
             }
         }
 

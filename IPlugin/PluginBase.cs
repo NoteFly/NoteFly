@@ -275,5 +275,22 @@ namespace IPlugin
         {
             return rtf;
         }
+
+        /// <summary>
+        /// Initizilazting loading of a note.
+        /// </summary>
+        public virtual void InitLoadNote(string title, int width, int height, int locx, int locy)
+        {
+            // by default do nothing, override this to do someting.
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public virtual TabPage InitTabFrmSettings()
+        {
+            return null;
+        }
     }
 }

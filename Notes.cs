@@ -421,6 +421,15 @@ namespace NoteFly
                     }
                 }
 
+                if (PluginsManager.EnabledPlugins != null)
+                {
+                    for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
+                    {
+
+                        PluginsManager.EnabledPlugins[p].InitLoadNote(note.Title, note.Width, note.Height, note.X, note.Y);
+                    }
+                }
+
                 this.AddNote(note);
                 if (note.Visible)
                 {

@@ -108,7 +108,7 @@ namespace NoteFly
         public static bool NotesTooltipsEnabled = true;
 
         /// <summary>
-        /// 
+        /// Length of the tooltip preview
         /// </summary>
         public static int NotesTooltipPreviewlength = 100;
 
@@ -359,7 +359,7 @@ namespace NoteFly
         public static bool ConfirmDeletenote = true;
 
         /// <summary>
-        /// 
+        /// Font used in the manages notes window.
         /// </summary>
         public static string ManagenotesFontFamily = "Arial";
 

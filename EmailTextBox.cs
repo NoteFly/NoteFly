@@ -19,9 +19,9 @@
 //-----------------------------------------------------------------------
 namespace NoteFly
 {
+    using System;
     using System.Drawing;
     using System.Windows.Forms;
-    using System;
 
     /// <summary>
     /// EmailTextBox control

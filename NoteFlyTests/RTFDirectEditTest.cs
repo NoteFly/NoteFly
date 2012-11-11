@@ -19,10 +19,10 @@
 //-----------------------------------------------------------------------
 namespace NoteFlyTests
 {
-    using NoteFly;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.Text;
     using System.Drawing;
+    using System.Text;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NoteFly;
     
     /// <summary>
     /// This is a test class for RTFDirectEditTest and is intended
@@ -53,6 +53,9 @@ namespace NoteFlyTests
 ";
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddBoldTagInRTFTest_middle()
         {
@@ -64,6 +67,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddBoldTagInRTF(rtf, 4, 4)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddBoldTagInRTFTest_all()
         {
@@ -75,6 +81,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddBoldTagInRTF(rtf, 0, 12)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddBoldTagInRTFTest_mixed1()
         {
@@ -92,7 +101,7 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        /// 
+        /// Test
         /// </summary>
         [TestMethod]
         public void AddBoldTagInRTFTest_mixed2()
@@ -108,7 +117,7 @@ namespace NoteFlyTests
         }
 
         /// <summary>
-        /// 
+        /// Test
         /// </summary>
         [TestMethod]
         public void AddItalicTagInRTFTest_middle()
@@ -121,6 +130,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddItalicTagInRTF(rtf, 4, 4)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddItalicTagInRTFTest_all()
         {
@@ -132,6 +144,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddItalicTagInRTF(rtf, 0, 12)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddStrikeTagInRTFTest_middle()
         {
@@ -143,6 +158,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddStrikeTagInRTF(rtf, 4, 4)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddStrikeTagInRTFTest_all()
         {
@@ -154,6 +172,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddStrikeTagInRTF(rtf, 0, 12)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddUnderlineTagInRTFTest_middle()
         {
@@ -165,6 +186,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddUnderlineTagInRTF(rtf, 4, 4)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddUnderlineTagInRTFTest_all()
         {
@@ -176,6 +200,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddUnderlineTagInRTF(rtf, 0, 12)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void SetColorInRTFTest_middleblue()
         {
@@ -188,6 +215,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: SetColorInRTF(rtf, Color.Blue, 4, 4)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void SetColorAllRTFTest_green()
         {
@@ -200,6 +230,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: SetColorAllRTF(rtf, Color.Green, 12)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void UnderlineAndBold()
         {
@@ -212,6 +245,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, this.rtf, "failed on: AddUnderlineTagInRTF(rtf, 0, 8) AddBoldTagInRTF(rtf, 4, 8)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void ItalicOnAndOffPart()
         {
@@ -230,6 +266,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf2, this.rtf, "failed on: RemoveItalicTagsInRTF(rtf, 4, 4)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void BoldOnAndOff()
         {
@@ -248,6 +287,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf2, this.rtf, "failed on: RemoveBoldTagsInRTF(rtf, 4, 4)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void BoldUnderlineAndBoldOff()
         {
@@ -274,6 +316,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf3, this.rtf, "failed on: RemoveUnderlineTagsInRTF(rtf, 4, 2)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void RemoveBoldEnd()
         {
@@ -289,6 +334,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, rtf, "failed on: RemoveBoldTagsInRTF(rtf, 9, 3)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void RemoveBoldAlmostEnd()
         {
@@ -304,6 +352,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, rtf, "failed on: RemoveBoldTagsInRTF(rtf, 9, 2)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddUnderlingEnd()
         {
@@ -319,6 +370,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, rtf, "failed on: AddUnderlineTagInRTF(rtf, 8, 4)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void AddBoldMixed()
         {
@@ -337,6 +391,9 @@ namespace NoteFlyTests
             Assert.AreEqual(expectedrtf, rtf, "failed on: AddBoldTagInRTF(rtf, 8, 4)");
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [TestMethod]
         public void RemoveBoldOfBoldAndItalic()
         {

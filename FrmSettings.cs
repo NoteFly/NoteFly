@@ -84,6 +84,7 @@ namespace NoteFly
             this.notes = notes;
             Strings.TranslateForm(this);
             this.SetFormTitle(Settings.SettingsExpertEnabled);
+            this.AddPluginsSettingsTabs();
             this.tabControlSettings_SelectedIndexChanged(null, null);
             this.LoadCbxLanguage();
             this.LoadCbxActionLeftclick();
@@ -131,6 +132,24 @@ namespace NoteFly
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// Add settings tab to this settings window from a plugin.
+        /// </summary>
+        private void AddPluginsSettingsTabs()
+        {
+            if (PluginsManager.EnabledPlugins != null)
+            {
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                {
+                    TabPage tabsettings = PluginsManager.EnabledPlugins[i].InitTabFrmSettings();
+                    if (tabsettings != null)
+                    {
+                        this.tabControlSettings.TabPages.Add(tabsettings);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -451,7 +470,7 @@ namespace NoteFly
                     {
                         if (!PluginsManager.EnabledPlugins[i].SaveSettingsTab())
                         {
-                            this.tabControlSettings.SelectedTab = this.tabSharing;
+                            //this.tabControlSettings.SelectedTab = this.tabSharing; // todo select plugin tab with error
                             return false;
                         }
                     }
@@ -979,18 +998,24 @@ namespace NoteFly
         {
             if (this.tabControlSettings.SelectedTab == this.tabSharing)
             {
+                // remove all plugins share tabs except the non-plugin email tab.
+                for (int i = 0; i < this.tabControlSharing.TabCount; i++)
+                {
+                    if (this.tabControlSharing.Controls[i] != this.tabEmail)
+                    {
+                        this.tabControlSharing.Controls.RemoveAt(i);
+                    }
+                }
+
+                // add plugin share tabs
                 if (PluginsManager.EnabledPlugins != null)
                 {
-                    while (this.tabControlSharing.TabCount > 1)
-                    {
-                        this.tabControlSharing.Controls.RemoveAt(1);
-                    }
-
                     for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                     {
-                        if (PluginsManager.EnabledPlugins[i].InitShareSettingsTab() != null)
+                        TabPage tabsharesettings = PluginsManager.EnabledPlugins[i].InitShareSettingsTab();
+                        if (tabsharesettings != null)
                         {
-                            this.tabControlSharing.Controls.Add(PluginsManager.EnabledPlugins[i].InitShareSettingsTab());
+                            this.tabControlSharing.TabPages.Add(tabsharesettings);
                         }
                     }
                 }

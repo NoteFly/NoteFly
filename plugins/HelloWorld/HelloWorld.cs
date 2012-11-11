@@ -44,8 +44,24 @@
             lblhello.AutoSize = true;
             lblhello.Location = new Point(30, 40);
             lblhello.Visible = true;
-            lblhello.Parent = newtab;
 
+            newtab.Controls.Add(lblhello);
+            return newtab;
+        }
+
+        public override TabPage InitTabFrmSettings()
+        {
+            TabPage newtab = new TabPage("HelloWorld");
+            newtab.BackColor = Color.Yellow;
+
+            Label lbltest = new Label();
+            lbltest.Text = "Test for a tabpage on FrmSettings.";
+            lbltest.AutoSize = true;
+            lbltest.Location = new Point(30, 40);
+            lbltest.Visible = true;
+            //lbltest.Parent = newtab;
+
+            newtab.Controls.Add(lbltest);
             return newtab;
         }
     }

@@ -1301,7 +1301,7 @@ namespace NoteFly
                         case "downloadurl":
                             string downloadurlraw = xmlread.ReadElementContentAsString().Trim();
                             const int DOWNLOADURLMINLEN = 10; // "http://a.b".Length = 10
-                            const int DOWNLOADURLMAXLEN = 512;
+                            const int DOWNLOADURLMAXLEN = 1024;
                             if ((downloadurlraw.Length >= DOWNLOADURLMINLEN) && (downloadurlraw.Length <= DOWNLOADURLMAXLEN))
                             {
                                 downloadurl = downloadurlraw;
@@ -1331,7 +1331,6 @@ namespace NoteFly
                 }
             }
 
-            Log.Write(LogType.info, "update check done.");
             return version;
         }
 

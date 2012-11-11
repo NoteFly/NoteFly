@@ -143,9 +143,13 @@ namespace NoteFly
                 for (int j = 0; j < 8; j++)
                 {
                     if ((c & 1) != 0)
+                    {
                         c = 3988292384 ^ (c >> 1);
+                    }
                     else
+                    {
                         c >>= 1;
+                    }
                 }
 
                 crctable[i] = c;

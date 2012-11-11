@@ -17,48 +17,40 @@
         /// </summary>
         private System.Windows.Forms.Button btnSmileySmile;
 
-
         /// <summary>
         /// 
         /// </summary>
         private System.Windows.Forms.Button btnSmileySad;
-
 
         /// <summary>
         /// 
         /// </summary>
         private System.Windows.Forms.Button btnSmileyOh;
 
-
         /// <summary>
         /// 
         /// </summary>
         private System.Windows.Forms.Button btnSmileyConfuzzed;
-
 
         /// <summary>
         /// 
         /// </summary>
         private System.Windows.Forms.Button btnSmileyMad;
 
-
         /// <summary>
         /// 
         /// </summary>
         private System.Windows.Forms.Button btnSmileyLol;
-
 
         /// <summary>
         /// 
         /// </summary>
         private System.Windows.Forms.Button btnSmileyCool;
 
-
         /// <summary>
         /// 
         /// </summary>
         private System.Windows.Forms.Button btnSmileyCry;
-
 
         /// <summary>
         /// 

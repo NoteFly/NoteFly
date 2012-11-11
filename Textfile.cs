@@ -89,6 +89,7 @@ namespace NoteFly
                         fs = new FileStream(filename, FileMode.OpenOrCreate);
                         writer = new StreamWriter(fs, Encoding.ASCII);
                         writer.Write(content);
+
                         // add a null character to the end.of the RTF file.
                         writer.Write((char)0);
                         break;

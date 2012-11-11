@@ -1,10 +1,10 @@
 ﻿namespace NoteFlyTests
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
-    using NoteFly;
+    using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NoteFly;
 
     /// <summary>
     /// Summary description for ProgramTest

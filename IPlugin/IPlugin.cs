@@ -154,20 +154,20 @@ namespace IPlugin
         string ExportNotesDlgFilter();
 
         /// <summary>
-        /// 
+        /// Export all notes to a signle file.
         /// </summary>
         /// <param name="filtername"></param>
         /// <returns>True if handled by plugin</returns>
         bool ExportNotesFile(string filtername);
 
         /// <summary>
-        /// 
+        /// Add open dialog filters to the import notes window
         /// </summary>
         /// <returns></returns>
         string ImportNotesDlgFilter();
 
         /// <summary>
-        /// 
+        /// Import notes backup/archive file.
         /// </summary>
         /// <param name="filtername"></param>
         /// <param name="file"></param>
@@ -182,5 +182,22 @@ namespace IPlugin
         /// <param name="rtf"></param>
         /// <param name="lastpos"></param>
         string ValidateSyntaxPart(string part, RichTextBox rtb, string rtf, int lastpos);
+
+        /// <summary>
+        /// Initizilazting loading of a note.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="locx"></param>
+        /// <param name="locy"></param>
+        void InitLoadNote(string title, int width, int height, int locx, int locy);
+
+        /// <summary>
+        /// Add a tab on initizilazting form settings 
+        /// </summary>
+        /// <returns></returns>
+        TabPage InitTabFrmSettings();
+
     }
 }
