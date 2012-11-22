@@ -29,7 +29,7 @@ namespace IPlugin
     /// <summary>
     /// Plugin interface
     /// status: DRAFT (Subject to change)
-    /// revision: 8
+    /// revision: 9
     /// </summary>
     public interface IPlugin
     {
@@ -199,5 +199,16 @@ namespace IPlugin
         /// <returns></returns>
         TabPage InitTabFrmSettings();
 
+        /// <summary>
+        /// Export the note content save file dialog filter
+        /// </summary>
+        string ExportNoteContentDlgFilter();
+
+        /// <summary>
+        /// Export the note content via save note as file options with send to.menu.
+        /// </summary>
+        /// <param name="rtb">The richTextBox with note content</param>
+        /// <returns></returns>
+        bool ExportNoteContent(RichTextBox rtb);
     }
 }

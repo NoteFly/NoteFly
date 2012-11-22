@@ -614,11 +614,19 @@ namespace NoteFly
                             Settings.ProgramLogInfo = true;
                             break;
 
-                        // Turn all logging features off at startup. 
+                        // Turn all logging features off at startup.
                         case "-lognone":
                             Settings.ProgramLogException = false;
                             Settings.ProgramLogError = false;
                             Settings.ProgramLogInfo = false;
+                            break;
+
+                        // Override the fontsize of the trayicon, managenotes and default size in note content to 14 pt.
+                        case "-bigfonts":
+                            Settings.TrayiconFontsize = 14;
+                            Settings.ManagenotesFontsize = 14;
+                            Settings.FontContentSize = 14;
+                            Settings.FontTitleSize = 18;
                             break;
 
                         // turn off xp visual style.
@@ -646,6 +654,7 @@ namespace NoteFly
                         case "-resetsettings":
                             xmlUtil.WriteDefaultSettings();
                             break;
+
                         case "-?":
                             ShowParametersHelp();
                             break;

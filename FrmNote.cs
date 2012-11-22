@@ -516,7 +516,17 @@ namespace NoteFly
                 curtsi.Checked = false;
             }
 
-            ToolStripMenuItem tsi = (ToolStripMenuItem)sender;
+            ToolStripMenuItem tsi = null;
+            try
+            {
+                tsi = (ToolStripMenuItem)sender;
+            }
+            catch (InvalidCastException invcastexc)
+            {
+                Log.Write(LogType.exception, invcastexc.Message);
+                return;
+            }
+
             tsi.Checked = true;
             this.note.SkinNr = this.notes.GetSkinNr(tsi.Text);
             this.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
@@ -825,6 +835,26 @@ namespace NoteFly
             sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
             sfdlg.Title = Strings.T("Save note to file");
             sfdlg.Filter = "Textfile (*.txt)|*.txt|RichTextFormat file (*.rtf)|*.rtf|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
+            if (PluginsManager.EnabledPlugins != null) 
+            {
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                {
+                    string dlgfilter =  PluginsManager.EnabledPlugins[i].ExportNoteContentDlgFilter();
+                    if (dlgfilter != null)
+                    {
+                        try
+                        {
+                            sfdlg.Filter += dlgfilter;
+                        }
+                        catch (ArgumentException argexc)
+                        {
+                            MessageBox.Show( "Bad plugin export notecontent filter");
+                            Log.Write(LogType.exception, "Bad plugin export notecontent filter");
+                        }
+                    }
+                }
+            }
+
             if (sfdlg.ShowDialog() == DialogResult.OK)
             {
                 string logmsg = "Note saved to ";
@@ -845,6 +875,23 @@ namespace NoteFly
                     case 4:
                         new Textfile(TextfileWriteType.exportphp, sfdlg.FileName, this.note.Title, this.rtbNote.Text);
                         Log.Write(LogType.info, logmsg + "phpfile.");
+                        break;
+                    default:
+                        if (PluginsManager.EnabledPlugins != null)
+                        {
+                            bool handled = false;
+                            for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                            {
+                                PluginsManager.EnabledPlugins[i].ExportNoteContent(this.rtbNote);
+                                handled = true;
+                            }
+
+                            if (!handled)
+                            {
+                                Log.Write(LogType.exception, "No plugin handled the selected filter.");
+                            }
+                        }
+
                         break;
                 }
             }

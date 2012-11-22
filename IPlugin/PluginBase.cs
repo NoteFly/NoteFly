@@ -292,5 +292,23 @@ namespace IPlugin
         {
             return null;
         }
+
+        /// <summary>
+        /// Export the note content save file dialog filter
+        /// </summary>
+        public virtual string ExportNoteContentDlgFilter()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Export the note content via save note as file options with send to.menu.
+        /// </summary>
+        /// <param name="rtb">The richTextBox with note content</param>
+        /// <returns></returns>
+        public virtual bool ExportNoteContent(RichTextBox rtb)
+        {
+            return false;
+        }
     }
 }
