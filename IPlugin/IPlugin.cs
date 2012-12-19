@@ -210,5 +210,12 @@ namespace IPlugin
         /// <param name="rtb">The richTextBox with note content</param>
         /// <returns></returns>
         bool ExportNoteContent(RichTextBox rtb);
+
+        /// <summary>
+        /// Start plugin actions on search in Manage notes window.
+        /// </summary>
+        /// <param name="keyword"></param>
+        void ManageNotesSearch(string keyword);
+
     }
 }

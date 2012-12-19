@@ -49,6 +49,10 @@
             return newtab;
         }
 
+        /// <summary>
+        /// Add test label.
+        /// </summary>
+        /// <returns></returns>
         public override TabPage InitTabFrmSettings()
         {
             TabPage newtab = new TabPage("HelloWorld");
@@ -59,10 +63,18 @@
             lbltest.AutoSize = true;
             lbltest.Location = new Point(30, 40);
             lbltest.Visible = true;
-            //lbltest.Parent = newtab;
 
             newtab.Controls.Add(lbltest);
             return newtab;
+        }
+
+        /// <summary>
+        /// Add filter for .test files.
+        /// </summary>
+        /// <returns></returns>
+        public override string ExportNoteContentDlgFilter()
+        {
+            return "|test text file (*.test)|*.test";
         }
     }
 }

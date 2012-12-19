@@ -1111,6 +1111,14 @@ namespace NoteFly
                 }
             }
 
+            if (PluginsManager.EnabledPlugins != null)
+            {
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                {
+                    PluginsManager.EnabledPlugins[i].ManageNotesSearch(keywords);
+                }
+            }
+
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
             this.dataGridViewNotes.DataSource = dt;
             this.SetDataGridViewColumsWidth();

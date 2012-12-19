@@ -218,7 +218,7 @@ namespace NoteFly
                 if (rtb.TextLength != prevtextlen)
                 {
                     Log.Write(LogType.exception, "rtf editing failed. rtb.TextLength=" + rtb.TextLength + " prevtextlen=" + prevtextlen);
-                    rtb.Rtf = prevrtf;
+                    //rtb.Rtf = prevrtf;
                 }
             }
 

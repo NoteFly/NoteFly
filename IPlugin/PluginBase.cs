@@ -310,5 +310,14 @@ namespace IPlugin
         {
             return false;
         }
+
+        /// <summary>
+        /// Start plugin actions on search in Manage notes window.
+        /// </summary>
+        /// <param name="keyword"></param>
+        public virtual void ManageNotesSearch(string keyword)
+        {
+            // do nothing
+        }
     }
 }
