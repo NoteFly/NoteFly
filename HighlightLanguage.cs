@@ -98,7 +98,7 @@ namespace NoteFly
                 }
                 catch (System.ArgumentException)
                 {
-                    throw new System.ApplicationException("Same item in highlight lexicon file not allowed, keyword:" + keywords[i]);
+                    Log.Write(LogType.error, "Dublicated keyword " + keywords[i] + " in highlight lexicon file.");
                 }
             }
         }

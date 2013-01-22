@@ -274,6 +274,11 @@ namespace NoteFly
         public static bool HighlightHTML = false;
 
         /// <summary>
+        /// Make highlighting slower by removing keyword language lexicon after use, but clears more memory.
+        /// </summary>
+        public static bool HighlightClearLexiconMemory = false;
+
+        /// <summary>
         /// The HTML comment color
         /// </summary>
         public static string HighlightHTMLColorComment = "#B200FF";

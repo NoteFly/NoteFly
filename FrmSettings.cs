@@ -256,6 +256,7 @@ namespace NoteFly
                 Settings.HighlightHTML = this.chxHighlightHTML.Checked;
                 Settings.HighlightPHP = this.chxHighlightPHP.Checked;
                 Settings.HighlightSQL = this.chxHighlightSQL.Checked;
+                Settings.HighlightClearLexiconMemory = this.chxLexiconMemory.Checked;
 
                 // tab: Actions
                 Settings.SharingEmailEnabled = this.chxActionsEmailEnabled.Checked;
@@ -743,6 +744,7 @@ namespace NoteFly
             this.chxHighlightPHP.Checked = Settings.HighlightPHP;
             this.chxHighlightSQL.Checked = Settings.HighlightSQL;
             this.chxConfirmLink.Checked = Settings.ConfirmLinkclick;
+            this.chxLexiconMemory.Checked = Settings.HighlightClearLexiconMemory;
 
             // tab: Sharing
             this.tbDefaultEmail.Text = Settings.SharingEmailDefaultadres;
@@ -938,6 +940,7 @@ namespace NoteFly
             this.chxLogErrors.Visible = expertsettings;
             this.chxLogExceptions.Visible = expertsettings;
             this.btnOpenSettingsFolder.Visible = expertsettings;
+            this.chxLexiconMemory.Visible = expertsettings;
             this.SetLastUpdatecheckDate(expertsettings);
             this.SetTabPageGPGVisible(expertsettings);
         }

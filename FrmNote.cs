@@ -511,6 +511,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void menuNoteSkins_skin_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             foreach (ToolStripMenuItem curtsi in this.menuNoteSkins.DropDownItems)
             {
                 curtsi.Checked = false;
@@ -551,12 +552,17 @@ namespace NoteFly
             }
 
             SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
-            SyntaxHighlight.DeinitHighlighter();
+            if (Settings.HighlightClearLexiconMemory)
+            {
+                SyntaxHighlight.DeinitHighlighter();
+            }
+
             if (!this.saveWorker.IsBusy)
             {
                 this.saveWorker.RunWorkerAsync(this.rtbNote.Rtf);
             }
 
+            Cursor.Current = Cursors.Default;
             Log.Write(LogType.info, "Note " + this.note.Filename + " skin changed to " + this.notes.GetSkinName(this.note.SkinNr));
         }
 

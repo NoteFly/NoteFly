@@ -408,6 +408,9 @@ namespace NoteFly
                         case "HighlightHTML":
                             Settings.HighlightHTML = xmlread.ReadElementContentAsBoolean();
                             break;
+                        case "HighlightClearLexiconMemory":
+                            Settings.HighlightClearLexiconMemory = xmlread.ReadElementContentAsBoolean();
+                            break;
                         case "HighlightHyperlinks":
                             Settings.HighlightHyperlinks = xmlread.ReadElementContentAsBoolean();
                             break;
@@ -884,6 +887,7 @@ namespace NoteFly
             Settings.FontTitleStylebold = true;
             Settings.HighlightMaxchars = 30000;
             Settings.HighlightHTML = false;
+            Settings.HighlightClearLexiconMemory = false;
             Settings.HighlightHTMLColorComment = "#B200FF";
             Settings.HighlightHTMLColorInvalid = "#FF0000";
             Settings.HighlightHTMLColorValid = "#0026FF";
@@ -1086,6 +1090,7 @@ namespace NoteFly
                     WriteXMLBool(xmlwrite, "ConfirmLinkclick", Settings.ConfirmLinkclick);
                     WriteXMLBool(xmlwrite, "FontTitleStylebold", Settings.FontTitleStylebold);
                     WriteXMLBool(xmlwrite, "HighlightHTML", Settings.HighlightHTML);
+                    WriteXMLBool(xmlwrite, "HighlightClearLexiconMemory", Settings.HighlightClearLexiconMemory);
                     WriteXMLBool(xmlwrite, "HighlightHyperlinks", Settings.HighlightHyperlinks);
                     WriteXMLBool(xmlwrite, "HighlightPHP", Settings.HighlightPHP);
                     WriteXMLBool(xmlwrite, "HighlightSQL", Settings.HighlightSQL);
