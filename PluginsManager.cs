@@ -150,6 +150,7 @@ namespace NoteFly
             {
                 if (enabledplugins[i].Filename.Equals(dllfilename, StringComparison.Ordinal))
                 {
+                    enabledplugins[i].Unregister();
                     enabledplugins.RemoveAt(i);
                     return true;
                 }

@@ -51,6 +51,11 @@ namespace IPlugin
         void Register(string file, IPluginHost host);
 
         /// <summary>
+        /// Plugin is being disabled.
+        /// </summary>
+        void Unregister();
+
+        /// <summary>
         /// Adds ToolStripItem to the right click submenu share on FrmNote.
         /// </summary>
         /// <returns>A ToolStripMenuItem</returns>

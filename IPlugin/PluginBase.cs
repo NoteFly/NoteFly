@@ -71,6 +71,14 @@ namespace IPlugin
         }
 
         /// <summary>
+        /// Plugin is being disabled.
+        /// </summary>
+        public void Unregister()
+        {
+            // by default do nothing, override this to do someting.
+        }
+
+        /// <summary>
         /// Adds ToolStripItem to the right click submenu share on FrmNote.
         /// </summary>
         /// <returns>The ToolStripMenuItem to add to the Share submenu</returns>
