@@ -49,6 +49,11 @@ namespace SkinsEditor
         private IPlugin.IPluginHost host;
 
         /// <summary>
+        /// Delta point
+        /// </summary>
+        private Point oldp;
+
+        /// <summary>
         /// Creating a new instance of the FrmSkinsEditor.
         /// </summary>
         /// <param name="host">The interface to talk let this plugin talk to NoteFly.</param>
@@ -575,23 +580,53 @@ namespace SkinsEditor
             TextBox tbclr = (TextBox)sender;
             if (this.CheckProperHTMLColorTb(tbclr))
             {
+                bool invalidcolor = false;
+                Color clr = Color.Transparent;
                 int what = Convert.ToInt32(tbclr.Tag);
-                Color clr = System.Drawing.ColorTranslator.FromHtml(tbclr.Text);
+                try
+                {
+                    clr = System.Drawing.ColorTranslator.FromHtml(tbclr.Text);
+                }
+                catch (Exception exc)
+                {
+                    invalidcolor = true;
+                }
+
                 switch (what)
                 {
                     case 1:
-                        this.pnlClrPrimary.BackColor = clr;
+                        this.setControlColorExample(invalidcolor, clr, this.tbPrimaryColor, this.pnlClrPrimary);
                         break;
                     case 2:
-                        this.pnlClrSelecting.BackColor = clr;
+                        this.setControlColorExample(invalidcolor, clr, this.tbSelectingColor, this.pnlClrSelecting);
                         break;
                     case 3:
-                        this.pnlClrHighlight.BackColor = clr;
+                        this.setControlColorExample(invalidcolor, clr, this.tbHighlightingColor, this.pnlClrHighlight);
                         break;
                     case 4:
-                        this.pnlClrText.BackColor = clr;
+                        this.setControlColorExample(invalidcolor, clr, this.tbTextColor, this.pnlClrText);
                         break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="invalidcolor"></param>
+        /// <param name="clr"></param>
+        /// <param name="colorinputtextbox"></param>
+        /// <param name="exmplepanel"></param>
+        private void setControlColorExample(bool invalidcolor, Color clr, TextBox colorinputtextbox, Panel exmplepanel)
+        {
+            if (invalidcolor)
+            {
+                colorinputtextbox.BackColor = Color.LightSalmon;
+            }
+            else
+            {
+                colorinputtextbox.BackColor = SystemColors.Window;
+                exmplepanel.BackColor = clr;
             }
         }
 
@@ -652,5 +687,92 @@ namespace SkinsEditor
                 }
             }
         }
+
+        /// <summary>
+        /// Close window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClose_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.pnlHead.BackColor = Color.LightGray;
+                this.oldp = e.Location;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                int dpx = e.Location.X - this.oldp.X;
+                int dpy = e.Location.Y - this.oldp.Y;
+#if linux
+                // limit the moving of this note under mono/linux so this note cannot move uncontrolled a lot.
+                const int movelimit = 8;
+                if (dpx > movelimit)
+                {
+                    dpx = movelimit;
+                }
+                else if (dpx < -movelimit)
+                {
+                    dpx = -movelimit;
+                }
+
+                if (dpy > movelimit)
+                {
+                    dpy = movelimit;
+                }
+                else if (dpy < -movelimit)
+                {
+                    dpy = -movelimit;
+                }
+#endif
+                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.pnlHead.BackColor = Color.DarkGray;
+        }
+
+        private void pbResizeGrip_MouseDown(object sender, MouseEventArgs e)
+        {
+            // todo
+        }
+
+        private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Cursor = Cursors.SizeNWSE;
+                this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
+            }
+
+            this.Cursor = Cursors.Default;
+        }
+
     }
 }
