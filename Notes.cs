@@ -606,7 +606,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="settingname">The name of the setting.</param>
         /// <returns>A boolean setting.</returns>
-        public bool GetBoolSetting(string settingname)
+        public bool GetSettingBool(string settingname)
         {
             object settingsptr = this.FindSettings(settingname);
             if (settingsptr != null)
@@ -633,7 +633,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="settingname">The name of the setting.</param>
         /// <returns>An integer setting</returns>
-        public int GetIntSetting(string settingname)
+        public int GetSettingInt(string settingname)
         {
             object settingsptr = this.FindSettings(settingname);
             if (settingsptr != null)
@@ -656,11 +656,38 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Get a setting as float. (for plugins)
+        /// </summary>
+        /// <param name="settingname">The name of the setting.</param>
+        /// <returns>An float setting</returns>
+        public float GetSettingFloat(string settingname)
+        {
+            object settingsptr = this.FindSettings(settingname);
+            if (settingsptr != null)
+            {
+                if (settingsptr is float)
+                {
+                    return (float)settingsptr;
+                }
+                else
+                {
+                    Log.Write(LogType.exception, "plugin, requested setting not a float, return -1 for " + settingname);
+                    return -1;
+                }
+            }
+            else
+            {
+                Log.Write(LogType.exception, "plugin, requested setting not found.");
+                return -1;
+            }
+        }
+
+        /// <summary>
         /// Get a setting as string. (for plugins)
         /// </summary>
         /// <param name="settingname">The name of the setting.</param>
         /// <returns>An string setting.</returns>
-        public string GetStringSetting(string settingname)
+        public string GetSettingString(string settingname)
         {
             object settingsptr = this.FindSettings(settingname);
             if (settingsptr != null)

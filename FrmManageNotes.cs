@@ -237,22 +237,23 @@ namespace NoteFly
             this.BackColor = this.notes.GetPrimaryClr(Settings.ManagenotesSkinnr);
             this.pnlHead.BackColor = this.notes.GetPrimaryClr(Settings.ManagenotesSkinnr);
             this.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
-
             this.btnShowSelectedNotes.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
             this.btnNoteDelete.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
             this.btnRestoreAllNotes.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
             this.btnBackAllNotes.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
-
             this.btnShowSelectedNotes.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
             this.btnNoteDelete.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
             this.btnRestoreAllNotes.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
             this.btnBackAllNotes.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
-
             if (this.notes.GetPrimaryTexture(Settings.ManagenotesSkinnr) != null)
             {
                 this.BackgroundImage = this.notes.GetPrimaryTexture(Settings.ManagenotesSkinnr);
                 this.BackgroundImageLayout = this.notes.GetPrimaryTextureLayout(Settings.ManagenotesSkinnr);
-                this.pnlHead.BackColor = Color.Transparent;
+                this.pnlContent.BackColor = Color.Transparent;
+            }
+            else
+            {
+                this.BackgroundImage = null;
             }
         }
 

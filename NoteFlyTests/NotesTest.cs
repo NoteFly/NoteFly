@@ -248,7 +248,7 @@ namespace NoteFlyTests
             Notes notes = new Notes(false);
             bool exceptedsetting = true;
             Settings.ConfirmExit = exceptedsetting;
-            bool actualsetting = notes.GetBoolSetting("ConfirmExit");
+            bool actualsetting = notes.GetSettingBool("ConfirmExit");
             Assert.AreEqual(exceptedsetting, actualsetting, "GetBoolSetting(\"ConfirmExit\") failed");
         }
 
@@ -261,7 +261,7 @@ namespace NoteFlyTests
             Notes notes = new Notes(false);
             int exceptedsetting = 1;
             Settings.ManagenotesSkinnr = exceptedsetting;
-            int actualsetting = notes.GetIntSetting("ManagenotesSkinnr");
+            int actualsetting = notes.GetSettingInt("ManagenotesSkinnr");
             Assert.AreEqual(exceptedsetting, actualsetting, "GetIntSetting(\"ManagenotesSkinnr\") failed.");
         }
 
@@ -273,7 +273,7 @@ namespace NoteFlyTests
             Notes notes = new Notes(false);
             string exceptedsetting = "#B16DFF";
             Settings.HighlightSQLColorField = exceptedsetting;
-            string actualsetting = notes.GetStringSetting("HighlightSQLColorField");
+            string actualsetting = notes.GetSettingString("HighlightSQLColorField");
             Assert.AreEqual(exceptedsetting, actualsetting, "GetStringSetting(\"HighlightSQLColorField\") failed.");
         }
     }

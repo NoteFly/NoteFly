@@ -69,7 +69,7 @@ namespace IPlugin
         /// <returns>A string array of all skin names loaded.</returns>
         string[] GetSkinsNames();
 
-        /// <summary>        
+        /// <summary>
         /// Get the skin position in the list belong to a skinname.
         /// </summary>
         /// <param name="skinname">The name of the skin to get the position from</param>
@@ -130,7 +130,7 @@ namespace IPlugin
         /// </summary>
         /// <param name="skinnr">The skin position</param>
         /// <returns>The primart texture imagelayout</returns>
-        ImageLayout GetPrimaryTextureLayout(int skinnr);        
+        ImageLayout GetPrimaryTextureLayout(int skinnr);
 
         /// <summary>
         /// Remove all skins and load them all again from skins.xml.
@@ -182,22 +182,29 @@ namespace IPlugin
         /// <summary>
         /// Get a NoteFly boolean setting.
         /// </summary>
-        /// <param name="settingname">The setting name to look the valeau for.</param>
-        /// <returns>Boolean setting valeau.</returns>
-        bool GetBoolSetting(string settingname);
+        /// <param name="settingname">The setting name to look the value for.</param>
+        /// <returns>Boolean setting value.</returns>
+        bool GetSettingBool(string settingname);
 
         /// <summary>
         /// Get a NoteFly integer setting.
         /// </summary>
-        /// <param name="settingsname">The setting name to look the valaue for.</param>
-        /// <returns>Integer setting valeau.</returns>
-        int GetIntSetting(string settingsname);
+        /// <param name="settingsname">The setting name to look the value for.</param>
+        /// <returns>Integer setting value.</returns>
+        int GetSettingInt(string settingsname);
+
+        /// <summary>
+        /// Get a NoteFly float setting.
+        /// </summary>
+        /// <param name="settingsname">The setting name to look the value for.</param>
+        /// <returns>Float setting value.</returns>
+        float GetSettingFloat(string settingsname);
 
         /// <summary>
         /// Get a NoteFly string setting.
         /// </summary>
-        /// <param name="settingsname">The setting name to look the valaue for.</param>
-        /// <returns>String setting valeau.</returns>
-        string GetStringSetting(string settingsname);
+        /// <param name="settingsname">The setting name to look the value for.</param>
+        /// <returns>String setting value.</returns>
+        string GetSettingString(string settingsname);
     }
 }

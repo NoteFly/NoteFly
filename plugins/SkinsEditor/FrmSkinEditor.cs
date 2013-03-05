@@ -36,8 +36,6 @@ namespace SkinsEditor
         /// </summary>
         private int editskinnr = -1;
 
-        private int deleteskinnr = -1;
-
         /// <summary>
         /// The action that skin editor is performing
         /// </summary>
@@ -62,7 +60,36 @@ namespace SkinsEditor
             this.InitializeComponent();
             this.host = host;
             this.skinaction = skineditormode.browseskins;
+            this.SetSkin(this.host.GetSettingInt("ManagenotesSkinnr"));
             this.LoadAllSkinNames();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SetSkin(int skinnr)
+        {
+            this.BackColor = this.host.GetPrimaryClr(skinnr);
+            this.pnlHead.BackColor = this.host.GetPrimaryClr(skinnr);
+            this.ForeColor = this.host.GetTextClr(skinnr);
+            this.btnDeleteSkin.BackColor = this.host.GetPrimaryClr(skinnr);
+            this.btnDeleteSkin.FlatAppearance.MouseDownBackColor = this.host.GetSelectClr(skinnr);
+            this.btnNewSkin.BackColor = this.host.GetPrimaryClr(skinnr);
+            this.btnNewSkin.FlatAppearance.MouseDownBackColor = this.host.GetSelectClr(skinnr);
+            this.btnEditskin.BackColor = this.host.GetPrimaryClr(skinnr);
+            this.btnEditskin.FlatAppearance.MouseDownBackColor = this.host.GetSelectClr(skinnr);
+            this.btnSaveSkin.BackColor = this.host.GetPrimaryClr(skinnr);
+            this.btnSaveSkin.FlatAppearance.MouseDownBackColor = this.host.GetSelectClr(skinnr);
+            if (this.host.GetPrimaryTexture(skinnr) != null)
+            {
+                this.BackgroundImage = this.host.GetPrimaryTexture(skinnr);
+                this.BackgroundImageLayout = this.host.GetPrimaryTextureLayout(skinnr);
+                this.pnlContent.BackColor = Color.Transparent;
+            }
+            else
+            {
+                this.BackgroundImage = null;
+            }
         }
 
         /// <summary>
@@ -94,10 +121,6 @@ namespace SkinsEditor
             this.btnDeleteSkin.Enabled = false;
             this.lbxSkins.Items.Clear();
             this.lbxSkins.Items.AddRange(this.host.GetSkinsNames());
-            if (this.lbxSkins.Items.Count > 1)
-            {
-                this.btnDeleteSkin.Enabled = true;
-            }
         }
 
         /// <summary>
@@ -131,46 +154,6 @@ namespace SkinsEditor
         private string ClrToHtmlHexClr(Color clr)
         {
             return string.Format("#{0:X2}{1:X2}{2:X2}", clr.R, clr.G, clr.B);
-        }
-
-        /// <summary>
-        /// Select primary color.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void btnPickPrimaryColor_Click(object sender, EventArgs e)
-        {
-            this.SetTbHexcolor(this.tbPrimaryColor);
-        }
-
-        /// <summary>
-        /// Select selecting color.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void btnSelectingColor_Click(object sender, EventArgs e)
-        {
-            this.SetTbHexcolor(this.tbSelectingColor);
-        }
-
-        /// <summary>
-        /// Select highlight color.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void btnHighlightColor_Click(object sender, EventArgs e)
-        {
-            this.SetTbHexcolor(this.tbHighlightingColor);
-        }
-
-        /// <summary>
-        /// Select text color.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void btnTextColor_Click(object sender, EventArgs e)
-        {
-            this.SetTbHexcolor(this.tbTextColor);
         }
 
         /// <summary>
@@ -215,15 +198,66 @@ namespace SkinsEditor
                 this.skinaction = skineditormode.browseskins;
                 this.btnEditskin.Text = "&edit skins";
                 this.btnNewSkin.Text = "&new skin";
+                this.btnDeleteSkin.Enabled = true;
                 this.btnEditskin.Enabled = true;
                 this.btnNewSkin.Enabled = true;
                 this.SetFieldsEnabled(false);
                 this.SetFieldBySelectSkin(this.lbxSkins.SelectedIndex);
+                this.DisplayPreviewNote(this.lbxSkins.SelectedIndex);
             }
             else
             {
+                this.btnDeleteSkin.Enabled = false;
                 this.btnEditskin.Enabled = false;
             }
+        }
+
+        /// <summary>
+        /// Show a preview of a note with a skin given by the skinnr.
+        /// </summary>
+        private void DisplayPreviewNote(int skinnr)
+        {
+            FontStyle titlestyle = FontStyle.Regular;
+            if (this.host.GetSettingBool("FontTitleStylebold"))
+            {
+                titlestyle = FontStyle.Bold;
+            }
+
+            this.lblPreviewNoteTitle.ForeColor = this.host.GetTextClr(skinnr);
+            this.lblPreviewNoteTitle.Font = new Font(this.host.GetSettingString("FontTitleFamily"), this.host.GetSettingFloat("FontTitleSize"), titlestyle);
+            this.lblPreviewNoteContent.ForeColor = this.host.GetTextClr(skinnr);
+            this.lblPreviewNoteContent.Font = new Font(this.host.GetSettingString("FontContentFamily"), this.host.GetSettingFloat("FontContentSize"));
+            if (this.host.GetPrimaryTexture(skinnr) != null)
+            {
+                this.pnlPreviewNoteWindow.BackgroundImage = this.host.GetPrimaryTexture(skinnr);
+                this.pnlPreviewNoteWindow.BackgroundImageLayout = this.host.GetPrimaryTextureLayout(skinnr);
+                this.pnlPreviewNoteHead.BackColor = Color.Transparent;
+                this.pnlPreviewNoteContent.BackColor = Color.Transparent;
+            }
+            else
+            {
+                this.pnlPreviewNoteWindow.BackgroundImage = null;
+                this.pnlPreviewNoteHead.BackColor = this.host.GetPrimaryClr(skinnr);
+                this.pnlPreviewNoteContent.BackColor = this.host.GetPrimaryClr(skinnr);
+            }
+
+            if (this.lblPreviewNoteTitle.Height + this.lblPreviewNoteTitle.Location.Y >= this.pnlHead.Height)
+            {
+                if (this.lblPreviewNoteTitle.Height < this.host.GetSettingInt("NotesTitlepanelMaxHeight"))
+                {
+                    this.pnlPreviewNoteHead.Height = this.lblPreviewNoteTitle.Height;
+                }
+                else
+                {
+                    this.pnlPreviewNoteHead.Height = this.host.GetSettingInt("NotesTitlepanelMaxHeight");
+                }
+            }
+            else
+            {
+                this.pnlPreviewNoteHead.Height = this.host.GetSettingInt("NotesTitlepanelMinHeight");
+            }
+
+            this.gbxPreview.Visible = true;
         }
 
         /// <summary>
@@ -240,11 +274,10 @@ namespace SkinsEditor
             this.tbPrimaryTexture.Enabled = enabled;
             this.cbxPrimaryTextureLayout.Enabled = enabled;
             this.btnBrowsePrimaryTexture.Enabled = enabled;
-            this.btnPickPrimaryColor.Enabled = enabled;
-            this.btnPickSelectingColor.Enabled = enabled;
-            this.btnPickHighlightColor.Enabled = enabled;
-            this.btnPickTextColor.Enabled = enabled;
-
+            this.pnlClrPrimary.Enabled = enabled;
+            this.pnlClrSelecting.Enabled = enabled;
+            this.pnlClrHighlight.Enabled = enabled;
+            this.pnlClrText.Enabled = enabled;
             this.btnSaveSkin.Enabled = enabled;
         }
 
@@ -259,11 +292,14 @@ namespace SkinsEditor
             this.tbHighlightingColor.Clear();
             this.tbTextColor.Clear();
             this.tbPrimaryTexture.Clear();
-            this.cbxPrimaryTextureLayout.SelectedIndex = -1;
             this.pnlClrPrimary.BackColor = Color.White;
             this.pnlClrSelecting.BackColor = Color.White;
             this.pnlClrHighlight.BackColor = Color.White;
             this.pnlClrText.BackColor = Color.White;
+            this.cbxPrimaryTextureLayout.SelectedIndex = -1;
+            this.btnEditskin.Enabled = false;
+            this.btnDeleteSkin.Enabled = false;
+            this.gbxPreview.Visible = false;
         }
 
         /// <summary>
@@ -355,7 +391,7 @@ namespace SkinsEditor
                     this.cbxPrimaryTextureLayout.ForeColor = SystemColors.WindowText;
                     if (this.CheckAllTbColorsAndSetErrors())
                     {
-                        if (!this.WriteSkinsFile(this.tbSkinName.Text, this.tbPrimaryTexture.Text, this.tbPrimaryColor.Text, this.tbSelectingColor.Text, this.tbHighlightingColor.Text, this.tbTextColor.Text))
+                        if (!this.WriteSkinsFile(this.tbSkinName.Text, this.tbPrimaryTexture.Text, this.tbPrimaryColor.Text, this.tbSelectingColor.Text, this.tbHighlightingColor.Text, this.tbTextColor.Text, -1))
                         {
                             const string COULDNOTWRITESKINS = "Could not write skins file.";
                             MessageBox.Show(COULDNOTWRITESKINS);
@@ -390,8 +426,9 @@ namespace SkinsEditor
         /// <summary>
         /// Writes the skins file to disk to with all NoteFly skins.
         /// </summary>
+        /// <param name="deleteskinnr">Don't write this skinnr so it's deleted from skins.xml.</param>
         /// <returns>true if writing skins file was succesfull.</returns>
-        private bool WriteSkinsFile(string skinname, string skinprimarytexture, string skinprimary, string skinselect, string skinhighlight, string skintext)
+        private bool WriteSkinsFile(string skinname, string skinprimarytexture, string skinprimary, string skinselect, string skinhighlight, string skintext, int deleteskinnr)
         {
             bool succeed = false;
             string skinsfilepath = this.host.GetSkinsFile();
@@ -422,7 +459,7 @@ namespace SkinsEditor
 
                         this.WriteSkinBody(xmlwriter, skinname, skinprimary, skinprimarytexture, newimglayout, skinselect, skinhighlight, skintext);
                     }
-                    else if (i != this.deleteskinnr)
+                    else if (i != deleteskinnr)
                     {
                         string name = this.host.GetSkinName(i);
                         string primaryclr = this.ClrToHtmlHexClr(this.host.GetPrimaryClr(i));
@@ -660,20 +697,21 @@ namespace SkinsEditor
         /// <param name="e">Event arguments</param>
         private void btnDeleteSkin_Click(object sender, EventArgs e)
         {
-            if (this.lbxSkins.SelectedIndex >= 0)
+            int skinnr = this.lbxSkins.SelectedIndex;
+            if (skinnr >= 0)
             {
                 if (this.lbxSkins.Items.Count > 1)
                 {
                     this.btnDeleteSkin.Enabled = true;
-                    DialogResult res = MessageBox.Show("Do you want to delete this skin?", "delete skin", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    string skinname = this.host.GetSkinName(skinnr);
+                    DialogResult res = MessageBox.Show("Do you want to delete the "+skinname+" skin?", "delete skin", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (res == DialogResult.Yes)
                     {
                         this.skinaction = skineditormode.browseskins;
-                        this.deleteskinnr = this.lbxSkins.SelectedIndex;
-                        this.WriteSkinsFile(null, null, null, null, null, null);
-                        this.lbxSkins.Items.RemoveAt(this.deleteskinnr);
-                        this.deleteskinnr = -1;
+                        this.WriteSkinsFile(null, null, null, null, null, null, skinnr);
+                        this.lbxSkins.Items.RemoveAt(skinnr);
                         this.host.ReloadAllSkins();
+                        this.ClearFields();
                     }
 
                     if (this.lbxSkins.Items.Count <= 1)
@@ -689,16 +727,6 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// Close window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnClose_Click_1(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="sender"></param>
@@ -707,7 +735,8 @@ namespace SkinsEditor
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.pnlHead.BackColor = Color.LightGray;
+                int skinnr = this.host.GetSettingInt("ManagenotesSkinnr");
+                this.pnlHead.BackColor = this.host.GetSelectClr(skinnr);
                 this.oldp = e.Location;
             }
         }
@@ -755,14 +784,25 @@ namespace SkinsEditor
         /// <param name="e"></param>
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
-            this.pnlHead.BackColor = Color.DarkGray;
+            int skinnr = this.host.GetSettingInt("ManagenotesSkinnr");
+            this.pnlHead.BackColor = this.host.GetPrimaryClr(skinnr);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbResizeGrip_MouseDown(object sender, MouseEventArgs e)
         {
             // todo
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -772,6 +812,78 @@ namespace SkinsEditor
             }
 
             this.Cursor = Cursors.Default;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlPreviewNoteHead_MouseDown(object sender, MouseEventArgs e)
+        {
+            int skinnr = this.lbxSkins.SelectedIndex;
+            if (skinnr >= 0)
+            {
+                this.pnlPreviewNoteHead.BackColor = this.host.GetSelectClr(skinnr);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlPreviewNoteHead_MouseUp(object sender, MouseEventArgs e)
+        {
+            int skinnr = this.lbxSkins.SelectedIndex;
+            if (skinnr >= 0)
+            {
+                this.DisplayPreviewNote(skinnr);
+            }
+        }
+
+        private void pnlClrPrimary_Click(object sender, EventArgs e)
+        {
+            this.SetTbHexcolor(this.tbPrimaryColor);
+        }
+
+        private void pnlClrSelecting_Click(object sender, EventArgs e)
+        {
+            this.SetTbHexcolor(this.tbSelectingColor);
+        }
+
+        private void pnlClrHighlight_Click(object sender, EventArgs e)
+        {
+            this.SetTbHexcolor(this.tbHighlightingColor);
+        }
+
+        private void pnlClrText_Click(object sender, EventArgs e)
+        {
+            this.SetTbHexcolor(this.tbTextColor);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BackNormalCusors(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void HandEnabled(object sender, MouseEventArgs e)
+        {
+            if (Cursor.Current == Cursors.Hand)
+            {
+                return;
+            }
+
+            Control ctrl = (Control)sender;
+            if (ctrl.Enabled)
+            {
+                Cursor.Current = Cursors.Hand;
+            }
         }
 
     }
