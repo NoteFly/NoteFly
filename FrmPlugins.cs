@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FrmPlugins.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2012  Tom
+//  Copyright (C) 2010-2013  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -23,31 +23,41 @@ namespace NoteFly
     using System.ComponentModel;
     using System.IO;
     using System.Windows.Forms;
+    using System.Threading;
+    using System.Text;
+    using System.Xml;
 
     /// <summary>
     /// FrmPlugins window
     /// </summary>
     public partial class FrmPlugins : Form
     {
+        private const string RESTAPIDOMAIN = "http://www.notefly.org.test1";
+
         /// <summary>
         /// REST url where to get a list of plugins.
         /// </summary>
-        private const string RESTAPIPLUGINSLIST = "http://update.notefly.org/REST/plugins/list.php";
+        private const string RESTAPIPLUGINSLIST = RESTAPIDOMAIN + "/REST/plugins/list.php";
 
         /// <summary>
         /// REST url where to get the detail of a partialer plugin 
         /// </summary>
-        private const string RESTAPIPLUGINDETAILS = "http://update.notefly.org/REST/plugins/details.php?name=";
+        private const string RESTAPIPLUGINDETAILS = RESTAPIDOMAIN + "/REST/plugins/details.php?name=";
 
         /// <summary>
         /// REST url where to get a list of matching pluginnames searched by a partialer keyword.
         /// </summary>
-        private const string RESTAPIPLUGINSSEARCH = "http://update.notefly.org/REST/plugins/search.php?keyword=";
+        private const string RESTAPIPLUGINSSEARCH = RESTAPIDOMAIN+"/REST/plugins/search.php?keyword=";
 
         /// <summary>
         /// The url to download plugin of the current plugin being selected.
         /// </summary>
         private string currentplugindownloadurl = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private short[] latestpluginversion;
 
         /// <summary>
         /// Reference to RSAverify class
@@ -92,7 +102,7 @@ namespace NoteFly
             {
                 this.lblTextNoInternetConnection.Visible = false;
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
-                HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate);
+                HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate, null);
                 if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
                 {
                     this.SetAvailablePluginsNetwork(false);
@@ -101,6 +111,10 @@ namespace NoteFly
                 {
                     this.SetAvailablePluginsNetwork(true);
                 }
+            }
+            else if (this.tabControlPlugins.SelectedTab == this.tabPagePluginsUpdate)
+            {
+                this.CheckPluginsUpdates();
             }
         }
 
@@ -140,6 +154,7 @@ namespace NoteFly
                 {
                     HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.Revalidate);
                     this.ClearPluginDetails();
+                    this.lblPluginName.Text = Strings.T("loading");
                     if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
                     {
                         this.SetAvailablePluginsNetwork(false);
@@ -295,7 +310,7 @@ namespace NoteFly
         private void searchtbPlugins_SearchStart(string keywords)
         {
             this.lbxAvailablePlugins.Items.Clear();
-            HttpUtil httputil_searchplugins = new HttpUtil(RESTAPIPLUGINSSEARCH + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Revalidate);
+            HttpUtil httputil_searchplugins = new HttpUtil(RESTAPIPLUGINSSEARCH + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Revalidate, null);
             this.ClearPluginDetails();
             this.splitContainerAvailablePlugins.Panel2Collapsed = true;
             if (!httputil_searchplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet)))
@@ -351,20 +366,78 @@ namespace NoteFly
             this.searchtbPlugins.Enabled = isconnected;
             if (!isconnected)
             {
-                string nonetwork = Strings.T("Could not load list with plugins. Internet connection failed.");
-                string proxyused = Strings.T("A proxy is being used.");
+                string nointernetconnectionmessage = Strings.T("Could not load list with plugins. Internet connection failed.");
                 if (Settings.NetworkProxyEnabled)
                 {
-                    this.lblTextNoInternetConnection.Text = nonetwork + Environment.NewLine + proxyused;
-                }
-                else
-                {
-                    this.lblTextNoInternetConnection.Text = nonetwork;
+                    nointernetconnectionmessage += Environment.NewLine + Strings.T("A proxy is being used.");
                 }
 
+                this.lblTextNoInternetConnection.Text = nointernetconnectionmessage;
+                Log.Write(LogType.info, nointernetconnectionmessage);
                 this.lbxAvailablePlugins.Items.Clear();
-                Log.Write(LogType.info, "No network available.");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void CheckPluginsUpdates()
+        {
+            chxlbxPluginUpdates.Items.Clear();
+            string[] installedpluginsnames = PluginsManager.GetInstalledPlugins();
+            for (int i = 0; i < installedpluginsnames.Length; i++)
+            {
+                string pluginname = installedpluginsnames[i];
+                //PluginsManager.EnabledPlugins[i]
+                string requesturl = RESTAPIPLUGINDETAILS + pluginname;
+                HttpUtil httputil = new HttpUtil(requesturl, System.Net.Cache.RequestCacheLevel.Revalidate, null);
+                if (httputil.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_compleet)))
+                {
+                    Thread.Sleep(10);
+                    short[] currentpluginversion = PluginsManager.GetPluginVersionByName(pluginname);
+                    if (this.latestpluginversion != null)
+                    {
+                        if (Program.CompareVersions(this.latestpluginversion, currentpluginversion) > 0)
+                        {
+                            // plugin update available.
+                            chxlbxPluginUpdates.Items.Add(pluginname, true);
+                        }
+                    }
+                }
+            }
+
+            this.latestpluginversion = null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void httputil_plugindetail_compleet(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            string result = (string)e.Result;
+            if (result == null)
+            {
+                return;
+            }
+            if (result.Length < 1)
+            {
+                return;
+            }
+
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(result);
+            XmlNodeList xmlnodelist = xmldoc.SelectNodes("/plugindetails/plugin/version");
+            if (xmlnodelist.Count < 1)
+            {
+                // not found
+                return;
+            }
+
+            string versionstr = xmlnodelist.Item(0).InnerText;
+            short[] version = Program.ParserVersionString(versionstr);
+            this.latestpluginversion = version;
         }
     }
 }

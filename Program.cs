@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="Program.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2012  Tom
+//  Copyright (C) 2010-2013  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -477,7 +477,7 @@ namespace NoteFly
         /// <returns>Datetime aof latest update check as string</returns>
         public static string UpdateGetLatestVersion()
         {
-            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore, null);
             if (!http_updateversion.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(UpdateCompareVersion)))
             {
                 Log.Write(LogType.error, "No network connection");

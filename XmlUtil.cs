@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // <copyright file="XmlUtil.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2010-2012  Tom
+//  Copyright (C) 2010-2013  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -1353,9 +1353,10 @@ namespace NoteFly
             string commentend = null;
             string documentstart = null;
             string documentend = null;
+            string filepath = Path.Combine(Program.InstallFolder, file);
             try
             {
-                xmlread = new XmlTextReader(Path.Combine(Program.InstallFolder, file));
+                xmlread = new XmlTextReader(filepath);
                 xmlread.ProhibitDtd = true;
                 bool readsubnodes = false;
                 while (xmlread.Read())
@@ -1390,7 +1391,7 @@ namespace NoteFly
             }
             catch (FileNotFoundException)
             {
-                Log.Write(LogType.exception, "File " + file + " not found.");
+                Log.Write(LogType.exception, "File " + filepath + " not found.");
                 Settings.HighlightHTML = false;
                 Settings.HighlightPHP = false;
                 Settings.HighlightSQL = false;

@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="HttpUtil.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2012  Tom
+//  Copyright (C) 2012-2013  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -39,6 +39,8 @@ namespace NoteFly
         /// </summary>
         private readonly System.Net.Cache.RequestCacheLevel cachesettings;
 
+        private readonly string postdata;
+
         /// <summary>
         /// HTTP backgroundworker thread
         /// </summary>
@@ -49,8 +51,9 @@ namespace NoteFly
         /// </summary>
         /// <param name="url">The url of the request to make</param>
         /// <param name="cachesettings">The cache settings (important note: this is always NoCacheNoStore under Mono)</param>
+        /// <param name="postdata">POST data for a POST Http request.</param>
         /// <returns></returns>
-        public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings)
+        public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings, string postdata)
         {
             url = Program.ChangeUrlIPVersion(url);
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
@@ -62,9 +65,27 @@ namespace NoteFly
                 Log.Write(LogType.exception, "Invalid url.");
             }
 
+            if (!String.IsNullOrEmpty(postdata))
+            {
+                this.postdata = postdata;
+            }
+            else
+            {
+                this.postdata = null;
+            }
+            
             this.cachesettings = cachesettings;
             this.httpthread = new BackgroundWorker();
             this.httpthread.DoWork += new DoWorkEventHandler(this.httpthread_DoWork);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the HttpUtil class. Using no http POST.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="cachesettings"></param>
+        public HttpUtil(string url, System.Net.Cache.RequestCacheLevel cachesettings) : this(url, cachesettings, null)
+        {
         }
 
         /// <summary>
@@ -171,7 +192,15 @@ namespace NoteFly
             try
             {
                 request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-                request.Method = "GET";
+                if (this.postdata == null)
+                {
+                    request.Method = "GET";
+                }
+                else
+                {
+                    request.Method = "POST";
+                }
+                
                 request.ContentType = "text/xml";
                 request.ProtocolVersion = HttpVersion.Version11; // HTTP 1.1 is required, required sending host header for notefly.org
                 request.UserAgent = Program.AssemblyTitle + " " + Program.AssemblyVersionAsString;
@@ -199,6 +228,15 @@ namespace NoteFly
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(cachesettings);
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
                 request.PreAuthenticate = false;
+
+                if (this.postdata != null)
+                {
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    byte[] data = this.GetBytes(this.postdata);
+                    request.ContentLength = data.Length;
+                    Stream stream = request.GetRequestStream();
+                    stream.Write(data, 0, data.Length);
+                }
             }
             catch (System.Net.WebException webexc)
             {
@@ -206,6 +244,13 @@ namespace NoteFly
             }
 
             return request;
+        }
+
+        private byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
         }
 
         /// <summary>

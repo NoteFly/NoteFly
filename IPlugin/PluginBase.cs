@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="PluginBase.cs" company="NoteFly">
-// Copyright 2011-2012 Tom
+// Copyright 2011-2013 Tom
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.

@@ -100,29 +100,35 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlugins));
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
-            this.pluginGrid = new NoteFly.PluginGrid();
             this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.lbxAvailablePlugins = new System.Windows.Forms.ListBox();
-            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.lblLicense = new System.Windows.Forms.Label();
             this.lblPluginVersion = new System.Windows.Forms.Label();
             this.lblPluginName = new System.Windows.Forms.Label();
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
+            this.tabPagePluginsUpdate = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.chxlbxPluginUpdates = new System.Windows.Forms.CheckedListBox();
+            this.btnCheckUpdates = new System.Windows.Forms.Button();
+            this.pluginGrid = new NoteFly.PluginGrid();
+            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.tabControlPlugins.SuspendLayout();
             this.tabPagePluginsInstalled.SuspendLayout();
             this.tabPagePluginsAvailable.SuspendLayout();
             this.splitContainerAvailablePlugins.Panel1.SuspendLayout();
             this.splitContainerAvailablePlugins.Panel2.SuspendLayout();
             this.splitContainerAvailablePlugins.SuspendLayout();
+            this.tabPagePluginsUpdate.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlPlugins
             // 
             this.tabControlPlugins.Controls.Add(this.tabPagePluginsInstalled);
             this.tabControlPlugins.Controls.Add(this.tabPagePluginsAvailable);
+            this.tabControlPlugins.Controls.Add(this.tabPagePluginsUpdate);
             this.tabControlPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlPlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControlPlugins.Location = new System.Drawing.Point(0, 0);
@@ -144,18 +150,6 @@
             this.tabPagePluginsInstalled.TabIndex = 1;
             this.tabPagePluginsInstalled.Text = "Installed";
             this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
-            // 
-            // pluginGrid
-            // 
-            this.pluginGrid.AutoScroll = true;
-            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
-            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
-            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
-            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
-            this.pluginGrid.TabIndex = 0;
             // 
             // tabPagePluginsAvailable
             // 
@@ -219,19 +213,6 @@
             this.lbxAvailablePlugins.TabIndex = 5;
             this.lbxAvailablePlugins.SelectedIndexChanged += new System.EventHandler(this.lbxAvailablePlugins_SelectedIndexChanged);
             // 
-            // searchtbPlugins
-            // 
-            this.searchtbPlugins.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.searchtbPlugins.Enabled = false;
-            this.searchtbPlugins.Location = new System.Drawing.Point(0, 327);
-            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
-            this.searchtbPlugins.MaximumSize = new System.Drawing.Size(220, 30);
-            this.searchtbPlugins.Name = "searchtbPlugins";
-            this.searchtbPlugins.Size = new System.Drawing.Size(220, 30);
-            this.searchtbPlugins.TabIndex = 4;
-            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
-            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
-            // 
             // lblLicense
             // 
             this.lblLicense.ForeColor = System.Drawing.Color.Black;
@@ -282,6 +263,71 @@
             this.btnPluginDownload.Visible = false;
             this.btnPluginDownload.Click += new System.EventHandler(this.btnPluginDownload_Click);
             // 
+            // tabPagePluginsUpdate
+            // 
+            this.tabPagePluginsUpdate.Controls.Add(this.label1);
+            this.tabPagePluginsUpdate.Controls.Add(this.chxlbxPluginUpdates);
+            this.tabPagePluginsUpdate.Controls.Add(this.btnCheckUpdates);
+            this.tabPagePluginsUpdate.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePluginsUpdate.Name = "tabPagePluginsUpdate";
+            this.tabPagePluginsUpdate.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePluginsUpdate.Size = new System.Drawing.Size(480, 365);
+            this.tabPagePluginsUpdate.TabIndex = 2;
+            this.tabPagePluginsUpdate.Text = "updates";
+            this.tabPagePluginsUpdate.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(159, 16);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Available plugin updates:";
+            // 
+            // chxlbxPluginUpdates
+            // 
+            this.chxlbxPluginUpdates.FormattingEnabled = true;
+            this.chxlbxPluginUpdates.Location = new System.Drawing.Point(6, 56);
+            this.chxlbxPluginUpdates.Name = "chxlbxPluginUpdates";
+            this.chxlbxPluginUpdates.Size = new System.Drawing.Size(454, 225);
+            this.chxlbxPluginUpdates.TabIndex = 1;
+            // 
+            // btnCheckUpdates
+            // 
+            this.btnCheckUpdates.Enabled = false;
+            this.btnCheckUpdates.Location = new System.Drawing.Point(70, 323);
+            this.btnCheckUpdates.Name = "btnCheckUpdates";
+            this.btnCheckUpdates.Size = new System.Drawing.Size(265, 34);
+            this.btnCheckUpdates.TabIndex = 0;
+            this.btnCheckUpdates.Text = "Install updates";
+            this.btnCheckUpdates.UseVisualStyleBackColor = true;
+            // 
+            // pluginGrid
+            // 
+            this.pluginGrid.AutoScroll = true;
+            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
+            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
+            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
+            this.pluginGrid.TabIndex = 0;
+            // 
+            // searchtbPlugins
+            // 
+            this.searchtbPlugins.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.searchtbPlugins.Enabled = false;
+            this.searchtbPlugins.Location = new System.Drawing.Point(0, 327);
+            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
+            this.searchtbPlugins.MaximumSize = new System.Drawing.Size(220, 30);
+            this.searchtbPlugins.Name = "searchtbPlugins";
+            this.searchtbPlugins.Size = new System.Drawing.Size(220, 30);
+            this.searchtbPlugins.TabIndex = 4;
+            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
+            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
+            // 
             // FrmPlugins
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -304,10 +350,19 @@
             this.splitContainerAvailablePlugins.Panel2.ResumeLayout(false);
             this.splitContainerAvailablePlugins.Panel2.PerformLayout();
             this.splitContainerAvailablePlugins.ResumeLayout(false);
+            this.tabPagePluginsUpdate.ResumeLayout(false);
+            this.tabPagePluginsUpdate.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion        
+
+        private System.Windows.Forms.TabPage tabPagePluginsUpdate;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckedListBox chxlbxPluginUpdates;
+        private System.Windows.Forms.Button btnCheckUpdates;
+
+
     }
 }

@@ -1,6 +1,6 @@
 @echo off
 REM  NoteFly a note application.
-REM  Copyright (C) 2012  Tom
+REM  Copyright (C) 2012-2013  Tom
 REM
 REM  This program is free software: you can redistribute it and/or modify
 REM  it under the terms of the GNU General Public License as published by

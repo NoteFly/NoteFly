@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NoteFly")]
 [assembly: AssemblyProduct("IPlugin")]
-[assembly: AssemblyCopyright("Copyright ©  2011 NoteFly")]
+[assembly: AssemblyCopyright("Copyright ©  2011-2013 NoteFly")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormManager.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2012  Tom
+//  Copyright (C) 2012-2013  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by

@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="RSAVerify.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2012  Tom
+//  Copyright (C) 2012-2013  Tom
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
