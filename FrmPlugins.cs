@@ -26,6 +26,7 @@ namespace NoteFly
     using System.Threading;
     using System.Text;
     using System.Xml;
+    using System.Collections.Generic;
 
     /// <summary>
     /// FrmPlugins window
@@ -37,27 +38,27 @@ namespace NoteFly
         /// <summary>
         /// REST url where to get a list of plugins.
         /// </summary>
-        private const string RESTAPIPLUGINSLIST = RESTAPIDOMAIN + "/REST/plugins/list.php";
+        private const string RESTAPIPLUGINSLIST = "/REST/plugins/list.php";
 
         /// <summary>
         /// REST url where to get the detail of a partialer plugin 
         /// </summary>
-        private const string RESTAPIPLUGINDETAILS = RESTAPIDOMAIN + "/REST/plugins/details.php?name=";
+        private const string RESTAPIPLUGINDETAILS = "/REST/plugins/details.php?name=";
 
         /// <summary>
         /// REST url where to get a list of matching pluginnames searched by a partialer keyword.
         /// </summary>
-        private const string RESTAPIPLUGINSSEARCH = RESTAPIDOMAIN+"/REST/plugins/search.php?keyword=";
+        private const string RESTAPIPLUGINSSEARCH = "/REST/plugins/search.php?keyword=";
+
+        /// <summary>
+        /// REST url where to get several versions of plugins in xml (with a http POST request).
+        /// </summary>
+        private const string RESTAPIPLUGINVERSION = "/REST/plugins/version.php"; 
 
         /// <summary>
         /// The url to download plugin of the current plugin being selected.
         /// </summary>
         private string currentplugindownloadurl = null;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private short[] latestpluginversion;
 
         /// <summary>
         /// Reference to RSAverify class
@@ -80,6 +81,7 @@ namespace NoteFly
             this.SetFormTitle();
             Strings.TranslateForm(this);
             this.pluginGrid.Enabled = Settings.ProgramPluginsAllEnabled;
+            this.CheckPluginsUpdates();
         }
 
         /// <summary>
@@ -102,7 +104,7 @@ namespace NoteFly
             {
                 this.lblTextNoInternetConnection.Visible = false;
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
-                HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate, null);
+                HttpUtil httputil_allplugins = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate, null);
                 if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
                 {
                     this.SetAvailablePluginsNetwork(false);
@@ -111,10 +113,6 @@ namespace NoteFly
                 {
                     this.SetAvailablePluginsNetwork(true);
                 }
-            }
-            else if (this.tabControlPlugins.SelectedTab == this.tabPagePluginsUpdate)
-            {
-                this.CheckPluginsUpdates();
             }
         }
 
@@ -152,7 +150,7 @@ namespace NoteFly
                 string pluginname = this.lbxAvailablePlugins.SelectedItem.ToString();
                 if (!string.IsNullOrEmpty(pluginname))
                 {
-                    HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.Revalidate);
+                    HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.Revalidate);
                     this.ClearPluginDetails();
                     this.lblPluginName.Text = Strings.T("loading");
                     if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
@@ -310,7 +308,7 @@ namespace NoteFly
         private void searchtbPlugins_SearchStart(string keywords)
         {
             this.lbxAvailablePlugins.Items.Clear();
-            HttpUtil httputil_searchplugins = new HttpUtil(RESTAPIPLUGINSSEARCH + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Revalidate, null);
+            HttpUtil httputil_searchplugins = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINSSEARCH + System.Web.HttpUtility.UrlEncode(keywords), System.Net.Cache.RequestCacheLevel.Revalidate, null);
             this.ClearPluginDetails();
             this.splitContainerAvailablePlugins.Panel2Collapsed = true;
             if (!httputil_searchplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_searchplugins_DownloadCompleet)))
@@ -345,7 +343,7 @@ namespace NoteFly
         /// </summary>
         private void searchtbPlugins_SearchStop()
         {
-            HttpUtil httputil_allplugins = new HttpUtil(RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate);
+            HttpUtil httputil_allplugins = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate);
             if (!httputil_allplugins.Start(new RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
             {
                 this.SetAvailablePluginsNetwork(false);
@@ -383,30 +381,25 @@ namespace NoteFly
         /// </summary>
         private void CheckPluginsUpdates()
         {
-            chxlbxPluginUpdates.Items.Clear();
             string[] installedpluginsnames = PluginsManager.GetInstalledPlugins();
+            StringBuilder sbplugins = new StringBuilder("plugins=");
             for (int i = 0; i < installedpluginsnames.Length; i++)
             {
-                string pluginname = installedpluginsnames[i];
-                //PluginsManager.EnabledPlugins[i]
-                string requesturl = RESTAPIPLUGINDETAILS + pluginname;
-                HttpUtil httputil = new HttpUtil(requesturl, System.Net.Cache.RequestCacheLevel.Revalidate, null);
-                if (httputil.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_compleet)))
+                if (i != 0)
                 {
-                    Thread.Sleep(10);
-                    short[] currentpluginversion = PluginsManager.GetPluginVersionByName(pluginname);
-                    if (this.latestpluginversion != null)
-                    {
-                        if (Program.CompareVersions(this.latestpluginversion, currentpluginversion) > 0)
-                        {
-                            // plugin update available.
-                            chxlbxPluginUpdates.Items.Add(pluginname, true);
-                        }
-                    }
+                    sbplugins.Append(",");
                 }
+
+                sbplugins.Append(System.Web.HttpUtility.UrlEncode(installedpluginsnames[i]));
             }
 
-            this.latestpluginversion = null;
+            if (sbplugins.Length < 1)
+            {
+                return;
+            }
+
+            HttpUtil httputil = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINVERSION, System.Net.Cache.RequestCacheLevel.Revalidate, sbplugins.ToString());
+            httputil.Start(new RunWorkerCompletedEventHandler(this.httputil_pluginsversions_compleet));
         }
 
         /// <summary>
@@ -414,13 +407,14 @@ namespace NoteFly
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void httputil_plugindetail_compleet(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        private void httputil_pluginsversions_compleet(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             string result = (string)e.Result;
             if (result == null)
             {
                 return;
             }
+
             if (result.Length < 1)
             {
                 return;
@@ -428,16 +422,98 @@ namespace NoteFly
 
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.LoadXml(result);
-            XmlNodeList xmlnodelist = xmldoc.SelectNodes("/plugindetails/plugin/version");
-            if (xmlnodelist.Count < 1)
+            List<string> pluginsnamesupdate = new List<string>();
+            XmlNodeList xmlnodelist = xmldoc.SelectNodes("/plugins/plugin");
+            foreach (XmlNode xmlnode in xmlnodelist) 
             {
-                // not found
-                return;
+                if (xmlnode.ChildNodes.Count > 1)
+                {
+                    string pluginname = "";
+                    short[] pluginversion = new short[3];
+                    for (int i = 0; i < xmlnode.ChildNodes.Count; i++)
+                    {
+                        if (xmlnode.ChildNodes[i].Name == "name")
+                        {
+                            pluginname = xmlnode.ChildNodes[i].InnerText;
+                        }
+                        else if (xmlnode.ChildNodes[i].Name == "version")
+                        {
+                            pluginversion = Program.ParserVersionString(xmlnode.ChildNodes[i].InnerText);
+                        }
+                    }
+
+                    short[] currentpluginversion = PluginsManager.GetPluginVersionByName(pluginname);
+                    if (Program.CompareVersions(pluginversion, currentpluginversion) > 0)
+                    {
+                        // new update
+                        pluginsnamesupdate.Add(pluginname);
+                    }
+                }
+                else
+                {
+                    if (xmlnode.ChildNodes.Count == 1)
+                    {
+                        string errormessage = xmlnode.ChildNodes[0].InnerText;
+                        MessageBox.Show(errormessage);
+                    }
+                }
+
+                if (pluginsnamesupdate.Count > 0) 
+                {
+                    TabPage tabpageupdateplugins = this.CreatePluginUpdateTab(pluginsnamesupdate.ToArray());
+                    this.tabControlPlugins.TabPages.Add(tabpageupdateplugins);
+                    this.tabControlPlugins.SelectedTab = tabpageupdateplugins;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pluginsnames"></param>
+        /// <returns></returns>
+        private TabPage CreatePluginUpdateTab(string[] pluginsnames)
+        {
+            TabPage tabpage = new TabPage("updates");
+            tabpage.Name = "tabControlPlugins";
+
+            TableLayoutPanel tablelayoutpnl = new TableLayoutPanel();
+            tablelayoutpnl.Name = "tableLayoutUpdatePluginsTab";
+            tablelayoutpnl.Dock = System.Windows.Forms.DockStyle.Fill;
+            tablelayoutpnl.SetBounds(0, 0, this.tabControlPlugins.ClientRectangle.Width, this.tabControlPlugins.ClientRectangle.Height);
+            tablelayoutpnl.ColumnCount = 3;
+            tablelayoutpnl.RowCount = 5;
+            tablelayoutpnl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            tablelayoutpnl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            tablelayoutpnl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+
+            Label lbltextpluginupdates = new Label();
+            lbltextpluginupdates.Text = "Available plugin updates:";
+            lbltextpluginupdates.Dock = System.Windows.Forms.DockStyle.Fill;
+            tablelayoutpnl.Controls.Add(lbltextpluginupdates, 1, 1);
+
+            CheckedListBox chxlbxplugins = new CheckedListBox();
+            chxlbxplugins.Name = "chxlbxPluginUpdates";
+            chxlbxplugins.Dock = System.Windows.Forms.DockStyle.Fill;
+            for (int i = 0; i < pluginsnames.Length; i++)
+            {
+                chxlbxplugins.Items.Add(pluginsnames[i], true);
             }
 
-            string versionstr = xmlnodelist.Item(0).InnerText;
-            short[] version = Program.ParserVersionString(versionstr);
-            this.latestpluginversion = version;
+            tablelayoutpnl.Controls.Add(chxlbxplugins, 1, 2);
+
+            Button btnupdateplugins = new Button();
+            btnupdateplugins.Text = "Update selected plugins";
+            btnupdateplugins.Dock = System.Windows.Forms.DockStyle.Fill;
+            tablelayoutpnl.Controls.Add(btnupdateplugins, 1, 3);
+
+            tabpage.Controls.Add(tablelayoutpnl);
+            return tabpage;
         }
     }
 }

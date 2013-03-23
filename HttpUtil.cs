@@ -228,11 +228,10 @@ namespace NoteFly
                 request.CachePolicy = new System.Net.Cache.RequestCachePolicy(cachesettings);
                 request.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
                 request.PreAuthenticate = false;
-
                 if (this.postdata != null)
                 {
                     request.ContentType = "application/x-www-form-urlencoded";
-                    byte[] data = this.GetBytes(this.postdata);
+                    byte[] data = System.Text.Encoding.UTF8.GetBytes(this.postdata); // utf-8 on server.
                     request.ContentLength = data.Length;
                     Stream stream = request.GetRequestStream();
                     stream.Write(data, 0, data.Length);
@@ -244,13 +243,6 @@ namespace NoteFly
             }
 
             return request;
-        }
-
-        private byte[] GetBytes(string str)
-        {
-            byte[] bytes = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
         }
 
         /// <summary>
