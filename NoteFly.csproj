@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -31,8 +31,6 @@
     <ManifestCertificateThumbprint>24C8A072EE1303117FA2C979E510FC5EB55B4C8E</ManifestCertificateThumbprint>
     <ManifestKeyFile>NoteFly_TemporaryKey.pfx</ManifestKeyFile>
     <ReleaseVersion>1.0</ReleaseVersion>
-    <TargetFrameworkSubset>
-    </TargetFrameworkSubset>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>

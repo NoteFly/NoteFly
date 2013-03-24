@@ -82,7 +82,7 @@ namespace NoteFly
             try
             {
                 System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --verify-files " + sigfile);
-                procInfo.CreateNoWindow = true;
+                //procInfo.CreateNoWindow = true;
                 procInfo.UseShellExecute = false;
                 procInfo.RedirectStandardInput = true;
                 procInfo.RedirectStandardOutput = true;

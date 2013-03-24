@@ -980,3 +980,7 @@ msgstr ""
 # menuHideNote
 msgid "&Hide note"
 msgstr ""
+
+# chxLexiconMemory
+msgid "Clear lexicon memory after highlighting. (not recommeded)"
+msgstr ""

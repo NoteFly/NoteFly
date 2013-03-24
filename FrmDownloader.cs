@@ -187,11 +187,11 @@ namespace NoteFly
                                 // extract file
                                 if (zip.ExtractFile(entry, Path.Combine(this.storefolder, entry.FilenameInZip)))
                                 {
-                                    Log.Write(LogType.info, "Exctracting " + entry.FilenameInZip + " succeeded.");
+                                    Log.Write(LogType.info, "Extracting " + entry.FilenameInZip + " succeeded.");
                                 } 
                                 else
                                 {
-                                    Log.Write(LogType.exception, "Exctracting " + entry.FilenameInZip + " failed.");
+                                    Log.Write(LogType.exception, "Extracting " + entry.FilenameInZip + " failed.");
                                 }
                             }
                         }
