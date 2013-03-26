@@ -326,7 +326,7 @@ namespace NoteFly
                         args[1] = Settings.NotesSavepath;
                         movenotesthread.Start(args);
                         movenotesthread.Join(300); // if finished within 300ms don't display buzy moving notes message.
-                        this.ShowWaitOnThread(movenotesthread, 300, Strings.T("NoteFly is buzy moving your notes"));
+                        this.ShowWaitOnThread(movenotesthread, 300, Strings.T("{0} is buzy moving your notes", Program.AssemblyTitle));
                         this.notes.LoadNotes(true, false);
                     }
                     finally

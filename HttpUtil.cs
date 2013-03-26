@@ -253,7 +253,6 @@ namespace NoteFly
         /// <returns>true if there is a connection, otherwise return false</returns>
         private bool IsNetworkConnected()
         {
-            return true; // debug
 #if windows
             int desc;
             if (InternetGetConnectedState(out desc, 0))

@@ -61,22 +61,17 @@ namespace NoteFly
         private string currentplugindownloadurl = null;
 
         /// <summary>
-        /// 
-        /// </summary>
-        private TabPage tabpageUpdatePlugins;
-
-        /// <summary>
-        /// 
+        /// Names of plugins to update.
         /// </summary>
         private List<string> pluginsupdatenames;
         
         /// <summary>
-        /// 
+        /// Download urls of plugins.
         /// </summary>
         private Dictionary<string, string> pluginupdatedownloads;
 
         /// <summary>
-        /// 
+        /// Reference to checkedlistbox of plugins to update.
         /// </summary>
         private CheckedListBox chxlbxplugins;
 
@@ -397,33 +392,33 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Check plugins on updates.
         /// </summary>
         private void CheckPluginsUpdates()
         {
             string[] installedpluginsnames = PluginsManager.GetInstalledPlugins();
-            StringBuilder sbplugins = new StringBuilder("plugins=");
+            StringBuilder sbpluginspostsparam = new StringBuilder("plugins=");
             for (int i = 0; i < installedpluginsnames.Length; i++)
             {
                 if (i != 0)
                 {
-                    sbplugins.Append(",");
+                    sbpluginspostsparam.Append(",");
                 }
 
-                sbplugins.Append(System.Web.HttpUtility.UrlEncode(installedpluginsnames[i]));
+                sbpluginspostsparam.Append(System.Web.HttpUtility.UrlEncode(installedpluginsnames[i]));
             }
 
-            if (sbplugins.Length < 1)
+            if (sbpluginspostsparam.Length < 1)
             {
                 return;
             }
 
-            HttpUtil httputil = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINVERSION, System.Net.Cache.RequestCacheLevel.Revalidate, sbplugins.ToString());
+            HttpUtil httputil = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINVERSION, System.Net.Cache.RequestCacheLevel.Revalidate, sbpluginspostsparam.ToString());
             httputil.Start(new RunWorkerCompletedEventHandler(this.httputil_pluginsversions_compleet));
         }
 
         /// <summary>
-        /// 
+        /// Parser results of versions requested plugins, and create tabpage if plugin update(s) are available.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -449,8 +444,8 @@ namespace NoteFly
             {
                 if (xmlnode.ChildNodes.Count > 1)
                 {
-                    string pluginname = "";
-                    string downloadurl = "";
+                    string pluginname = string.Empty;
+                    string downloadurl = string.Empty;
                     short[] pluginversion = new short[3];
                     for (int i = 0; i < xmlnode.ChildNodes.Count; i++)
                     {
@@ -496,17 +491,16 @@ namespace NoteFly
 
             if (this.pluginupdatedownloads.Count > 0)
             {
-                this.tabpageUpdatePlugins = this.CreatePluginUpdateTab();
-                this.tabControlPlugins.TabPages.Add(this.tabpageUpdatePlugins);
-                this.tabControlPlugins.SelectedTab = this.tabpageUpdatePlugins;
+                TabPage tabpageUpdatePlugins = this.CreatePluginUpdateTab();
+                this.tabControlPlugins.TabPages.Add(tabpageUpdatePlugins);
+                this.tabControlPlugins.SelectedTab = tabpageUpdatePlugins;
             }
         }
 
         /// <summary>
-        /// 
+        /// Create a plugin update tab
         /// </summary>
-        /// <param name="pluginsnames"></param>
-        /// <returns></returns>
+        /// <returns>TabPage with list of plugins to update</returns>
         private TabPage CreatePluginUpdateTab()
         {
             TabPage tabpage = new TabPage(Strings.T("updates"));

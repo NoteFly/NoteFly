@@ -854,8 +854,9 @@ namespace NoteFly
                         }
                         catch (ArgumentException argexc)
                         {
-                            MessageBox.Show( "Bad plugin export notecontent filter");
-                            Log.Write(LogType.exception, "Bad plugin export notecontent filter");
+                            string badpluginfilter = Strings.T("Bad plugin export notecontent filter selected.");
+                            MessageBox.Show(badpluginfilter);
+                            Log.Write(LogType.exception, badpluginfilter + argexc.StackTrace);
                         }
                     }
                 }

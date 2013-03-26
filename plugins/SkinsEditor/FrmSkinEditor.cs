@@ -704,7 +704,7 @@ namespace SkinsEditor
                 {
                     this.btnDeleteSkin.Enabled = true;
                     string skinname = this.host.GetSkinName(skinnr);
-                    DialogResult res = MessageBox.Show("Do you want to delete the "+skinname+" skin?", "delete skin", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult res = MessageBox.Show("Do you want to delete the " + skinname + " skin?", "delete skin", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (res == DialogResult.Yes)
                     {
                         this.skinaction = skineditormode.browseskins;
