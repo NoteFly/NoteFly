@@ -33,7 +33,10 @@ namespace NoteFly
     /// </summary>
     public partial class FrmPlugins : Form
     {
-        private const string RESTAPIDOMAIN = "http://www.notefly.org.test1";
+        /// <summary>
+        /// REST server domain
+        /// </summary>
+        private const string RESTAPIDOMAIN = "http://update.notefly.org";
 
         /// <summary>
         /// REST url where to get a list of plugins.

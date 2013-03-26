@@ -144,6 +144,27 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Gets operating system running this program.
+        /// </summary>
+        public static int GetOsPlatform
+        {
+            get
+            {
+                int platfromid = -1;
+                try
+                {
+                    platfromid = (int)Environment.OSVersion.Platform;
+                }
+                catch (InvalidCastException invcastexc)
+                {
+                    Log.Write(LogType.exception, invcastexc.StackTrace);
+                }
+
+                return platfromid;
+            }
+        }
+
+        /// <summary>
         /// Gets the folder where NoteFly is installed.
         /// Folder where assebly is located.
         /// </summary>
@@ -477,7 +498,13 @@ namespace NoteFly
         /// <returns>Datetime aof latest update check as string</returns>
         public static string UpdateGetLatestVersion()
         {
-            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore, null);
+            string ospostparam = null;
+            if (!String.IsNullOrEmpty(Program.GetOsPlatform))
+            {
+                ospostparam = "os=" + System.Web.HttpUtility.UrlEncode(Program.GetOsPlatform);
+            }
+
+            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore, ospostparam);
             if (!http_updateversion.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(UpdateCompareVersion)))
             {
                 Log.Write(LogType.error, "No network connection");
@@ -734,7 +761,7 @@ namespace NoteFly
                     sbmsg.Append(Strings.T("New version: "));
                     sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
                     sbmsg.Append(Strings.T("Do you want to download and install the new version now?"));
-                    System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), "update available", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
+                    System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), Strings.T("update available"), System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                     if (updres == System.Windows.Forms.DialogResult.Yes)
                     {
                         FrmDownloader frmupdater = new FrmDownloader(string.Format(Strings.T("Downloading {0} update"), Program.AssemblyTitle));
