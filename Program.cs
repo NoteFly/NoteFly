@@ -498,12 +498,7 @@ namespace NoteFly
         /// <returns>Datetime aof latest update check as string</returns>
         public static string UpdateGetLatestVersion()
         {
-            string ospostparam = null;
-            if (!String.IsNullOrEmpty(Program.GetOsPlatform))
-            {
-                ospostparam = "os=" + System.Web.HttpUtility.UrlEncode(Program.GetOsPlatform);
-            }
-
+            string ospostparam = "os=" + System.Web.HttpUtility.UrlEncode(Program.GetOsPlatform.ToString());
             HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore, ospostparam);
             if (!http_updateversion.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(UpdateCompareVersion)))
             {
