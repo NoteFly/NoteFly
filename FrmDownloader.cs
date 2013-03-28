@@ -286,6 +286,11 @@ namespace NoteFly
         private bool WebclientDownload(Uri uri)
         {
             string newfile = this.GetStoreFilepath(uri.ToString());
+            if (String.IsNullOrEmpty(newfile))
+            {
+                return false;
+            }
+
             this.files.Add(newfile);
             try
             {
@@ -393,11 +398,7 @@ namespace NoteFly
             // is new filename properly extracted from url
             if (string.IsNullOrEmpty(filename) || filename.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
             {
-#if windows
-                filename = "NoteFly_update.exe";
-#elif linux
-                filename = "NoteFly_update.deb";
-#endif
+                Log.Write(LogType.exception, "Filename download unknow.");
             }
 
             // does storefolder exists

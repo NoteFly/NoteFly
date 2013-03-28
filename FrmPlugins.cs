@@ -89,6 +89,11 @@ namespace NoteFly
         private FrmDownloader frmdownloader;
 
         /// <summary>
+        /// 
+        /// </summary>
+        private int textloadingdots = 0;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FrmPlugins" /> class.
         /// </summary>
         public FrmPlugins()
@@ -122,14 +127,17 @@ namespace NoteFly
             {
                 this.lblTextNoInternetConnection.Visible = false;
                 this.splitContainerAvailablePlugins.Panel2Collapsed = true;
-                HttpUtil httputil_allplugins = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate, null);
-                if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
+                if (!this.searchtbPlugins.IsKeywordEntered)
                 {
-                    this.SetAvailablePluginsNetwork(false);
-                }
-                else
-                {
-                    this.SetAvailablePluginsNetwork(true);
+                    HttpUtil httputil_allplugins = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINSLIST, System.Net.Cache.RequestCacheLevel.Revalidate, null);
+                    if (!httputil_allplugins.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(this.httputil_allplugins_DownloadCompleet)))
+                    {
+                        this.SetAvailablePluginsNetwork(false);
+                    }
+                    else
+                    {
+                        this.SetAvailablePluginsNetwork(true);
+                    }
                 }
             }
         }
@@ -170,7 +178,8 @@ namespace NoteFly
                 {
                     HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.Revalidate);
                     this.ClearPluginDetails();
-                    this.lblPluginName.Text = Strings.T("loading");
+
+                    this.timerTextUpdater.Start();
                     if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
                     {
                         this.SetAvailablePluginsNetwork(false);
@@ -202,9 +211,11 @@ namespace NoteFly
         private void httputil_plugindetail_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
+            this.timerTextUpdater.Stop();
             bool alreadyinstalled = false;
             bool updateavailable = false;
             string[] detailsplugin = xmlUtil.ParserDetailsPlugin(response, PluginsManager.GetInstalledPlugins(), out alreadyinstalled, out updateavailable);
+            this.ClearPluginDetails();
             if (detailsplugin != null)
             {
                 if (alreadyinstalled)
@@ -238,6 +249,10 @@ namespace NoteFly
                 this.currentplugindownloadurl = detailsplugin[4];
 
                 this.rsaverify = new RSAVerify(detailsplugin[5]);
+            }
+            else
+            {
+                this.lblPluginDescription.Text = Strings.T("Could not load plugins details, please check if your network connection is still working.");
             }
         }
 
@@ -571,6 +586,28 @@ namespace NoteFly
             this.frmdownloader.Show();
             this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(this.downloader_DownloadCompleet);
             this.frmdownloader.BeginDownload(newupdateplugindownloads.ToArray(), Settings.ProgramPluginsFolder);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerTextUpdater_Tick(object sender, EventArgs e)
+        {
+            const int MAXTEXTLOADINGDOTS = 5;
+            StringBuilder text = new StringBuilder(Strings.T("Loading"));
+            for (int i = 0; i < this.textloadingdots; i++)
+            {
+                text.Append(".");
+            }
+
+            this.lblPluginName.Text = text.ToString();
+            this.textloadingdots++;
+            if (this.textloadingdots > MAXTEXTLOADINGDOTS)
+            {
+                this.textloadingdots = 0;
+            }
         }
     }
 }

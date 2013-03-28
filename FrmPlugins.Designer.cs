@@ -97,20 +97,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlugins));
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
-            this.pluginGrid = new NoteFly.PluginGrid();
             this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.lbxAvailablePlugins = new System.Windows.Forms.ListBox();
-            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.lblLicense = new System.Windows.Forms.Label();
             this.lblPluginVersion = new System.Windows.Forms.Label();
             this.lblPluginName = new System.Windows.Forms.Label();
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
+            this.timerTextUpdater = new System.Windows.Forms.Timer(this.components);
+            this.pluginGrid = new NoteFly.PluginGrid();
+            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.tabControlPlugins.SuspendLayout();
             this.tabPagePluginsInstalled.SuspendLayout();
             this.tabPagePluginsAvailable.SuspendLayout();
@@ -144,18 +146,6 @@
             this.tabPagePluginsInstalled.TabIndex = 1;
             this.tabPagePluginsInstalled.Text = "Installed";
             this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
-            // 
-            // pluginGrid
-            // 
-            this.pluginGrid.AutoScroll = true;
-            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
-            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
-            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
-            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
-            this.pluginGrid.TabIndex = 0;
             // 
             // tabPagePluginsAvailable
             // 
@@ -219,19 +209,6 @@
             this.lbxAvailablePlugins.TabIndex = 5;
             this.lbxAvailablePlugins.SelectedIndexChanged += new System.EventHandler(this.lbxAvailablePlugins_SelectedIndexChanged);
             // 
-            // searchtbPlugins
-            // 
-            this.searchtbPlugins.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.searchtbPlugins.Enabled = false;
-            this.searchtbPlugins.Location = new System.Drawing.Point(0, 327);
-            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
-            this.searchtbPlugins.MaximumSize = new System.Drawing.Size(220, 30);
-            this.searchtbPlugins.Name = "searchtbPlugins";
-            this.searchtbPlugins.Size = new System.Drawing.Size(220, 30);
-            this.searchtbPlugins.TabIndex = 4;
-            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
-            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
-            // 
             // lblLicense
             // 
             this.lblLicense.ForeColor = System.Drawing.Color.Black;
@@ -282,6 +259,36 @@
             this.btnPluginDownload.Visible = false;
             this.btnPluginDownload.Click += new System.EventHandler(this.btnPluginDownload_Click);
             // 
+            // timerTextUpdater
+            // 
+            this.timerTextUpdater.Interval = 200;
+            this.timerTextUpdater.Tick += new System.EventHandler(this.timerTextUpdater_Tick);
+            // 
+            // pluginGrid
+            // 
+            this.pluginGrid.AutoScroll = true;
+            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
+            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
+            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
+            this.pluginGrid.TabIndex = 0;
+            // 
+            // searchtbPlugins
+            // 
+            this.searchtbPlugins.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.searchtbPlugins.Enabled = false;
+            this.searchtbPlugins.Location = new System.Drawing.Point(0, 327);
+            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
+            this.searchtbPlugins.MaximumSize = new System.Drawing.Size(220, 30);
+            this.searchtbPlugins.Name = "searchtbPlugins";
+            this.searchtbPlugins.Size = new System.Drawing.Size(220, 30);
+            this.searchtbPlugins.TabIndex = 4;
+            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
+            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
+            // 
             // FrmPlugins
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -309,6 +316,8 @@
         }
 
         #endregion        
+
+        private System.Windows.Forms.Timer timerTextUpdater;
 
     }
 }
