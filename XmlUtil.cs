@@ -868,19 +868,25 @@ namespace NoteFly
             Settings.ConfirmDeletenote = true;
             Settings.ConfirmExit = false;
             Settings.ConfirmLinkclick = true;
-#if windows
-            Settings.FontContentFamily = "Arial";
-            Settings.FontTitleFamily = "Arial";
-            Settings.FontTrayicon = "Arial";
-#elif linux
-            Settings.FontContentFamily = "FreeMono";
-            Settings.FontTitleFamily = "FreeMono";
-            Settings.FontTrayicon = "FreeMono";
-#else
-            Settings.FontContentFamily = "FreeMono";
-            Settings.FontTitleFamily = "FreeMono";
-            Settings.FontTrayicon = "FreeMono";
-#endif
+            if (Program.CurrentOS == Program.OS.WINDOWS)
+            {
+                Settings.FontContentFamily = "Arial";
+                Settings.FontTitleFamily = "Arial";
+                Settings.FontTrayicon = "Arial";
+            }
+            else if (Program.CurrentOS == Program.OS.LINUX)
+            {
+                Settings.FontContentFamily = "FreeMono";
+                Settings.FontTitleFamily = "FreeMono";
+                Settings.FontTrayicon = "FreeMono";
+            }
+            else if (Program.CurrentOS == Program.OS.MACOS)
+            {
+                Settings.FontContentFamily = "Helvetica";
+                Settings.FontTitleFamily = "Helvetica";
+                Settings.FontTrayicon = "Helvetica";
+            }
+
             Settings.FontContentSize = 11;
             Settings.FontTextdirection = 0;
             Settings.FontTitleSize = 14;

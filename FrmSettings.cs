@@ -26,9 +26,6 @@ namespace NoteFly
     using System.Text;
     using System.Threading;
     using System.Windows.Forms;
-#if windows
-    using Microsoft.Win32;
-#endif
 
     /// <summary>
     /// Setting window.
@@ -300,11 +297,12 @@ namespace NoteFly
                 Settings.ProgramLogInfo = this.chxLogDebug.Checked;
                 Settings.ProgramLogException = this.chxLogExceptions.Checked;
                 Settings.SettingsLastTab = this.tabControlSettings.SelectedIndex;
-#if windows
-                this.AddNoteFlyLogon();
-#endif
-                xmlUtil.WriteSettings();
+                if (Program.CurrentOS == Program.OS.WINDOWS)
+                {
+                    this.AddNoteFlyLogon();
+                }
 
+                xmlUtil.WriteSettings();
                 if (!Settings.NotesSavepath.Equals(this.oldnotesavepath, StringComparison.OrdinalIgnoreCase))
                 {
                     for (int i = 0; i < this.notes.CountNotes; i++)
@@ -351,13 +349,12 @@ namespace NoteFly
             }
         }
 
-#if windows
         /// <summary>
         /// Add a notefly registery key to the run section if this.chxStartOnLogin is checked and not already added to registery.
         /// </summary>
         private void AddNoteFlyLogon()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {
                 if (this.chxStartOnLogin.Checked)
@@ -393,7 +390,6 @@ namespace NoteFly
                 MessageBox.Show(settings_regkeynotexist, settings_regkeynotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-#endif
 
         /// <summary>
         /// Check if all settings are valid, if a setting in this form is not correct display a error about it.
@@ -683,9 +679,11 @@ namespace NoteFly
             this.chxSettingsExpertEnabled.Checked = Settings.SettingsExpertEnabled;
 
             // tab: General
-#if windows
-            this.chxStartOnLogin.Checked = this.GetStartOnLogon();
-#endif
+            if (Program.CurrentOS == Program.OS.WINDOWS)
+            {
+                this.chxStartOnLogin.Checked = this.GetStartOnLogon();
+            }
+
             this.chxConfirmExit.Checked = Settings.ConfirmExit;
             this.chxConfirmDeletenote.Checked = Settings.ConfirmDeletenote;
             this.chxNotesDeleteRecyclebin.Checked = Settings.NotesDeleteRecyclebin;
@@ -859,7 +857,6 @@ namespace NoteFly
             }
         }
 
-#if windows
         /// <summary>
         /// Gets if notefly is used to run at logon.
         /// </summary>
@@ -867,7 +864,7 @@ namespace NoteFly
         private bool GetStartOnLogon()
         {
             bool startonlogon = false;
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             if (key != null)
             {
                 if (key.GetValue(Program.AssemblyTitle, null) != null)
@@ -878,7 +875,6 @@ namespace NoteFly
 
             return startonlogon;
         }
-#endif
 
         /// <summary>
         /// Toggle enabling numProcTransparency.

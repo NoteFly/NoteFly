@@ -31,6 +31,7 @@ namespace NoteFly
     using System.Reflection;
     using System.Text;
     using System.Threading;
+    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Program class, main entry application.
@@ -69,9 +70,31 @@ namespace NoteFly
         /// </summary>
         private static RSAVerify rsaverify;
 
+        /// <summary>
+        /// The current operating system running this program
+        /// </summary>
+        private static OS currentos;
+
+        /// <summary>
+        /// A more simplified enumeration of PlatformID enum,
+        /// not targetting versions of a operating system.
+        /// </summary>
+        public enum OS { WINDOWS, MACOS, LINUX, UNKNOWN };
+
         #endregion Fields
 
         #region Properties (7)
+
+        /// <summary>
+        /// Get the current operating system running this program
+        /// </summary>
+        public static OS CurrentOS
+        {
+            get
+            {
+                return currentos;
+            }
+        }
 
         /// <summary>
         /// Gets the application data folder.
@@ -81,20 +104,25 @@ namespace NoteFly
             get
             {
                 const string APPDATAFOLDER = "NoteFly";
-#if windows
-                return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), APPDATAFOLDER);
-#elif linux
-                if (System.Environment.GetEnvironmentVariable("HOME") != null)
+                if (Program.currentos == OS.WINDOWS)
                 {
-                    return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ("."+appdatafolder));
+                    return Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), APPDATAFOLDER);
+                }
+                else if (Program.currentos == OS.LINUX || Program.currentos == OS.MACOS)
+                {
+                    if (System.Environment.GetEnvironmentVariable("HOME") != null)
+                    {
+                        return Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ("." + APPDATAFOLDER));
+                    }
+                    else
+                    {
+                        throw new ApplicationException("Can't find home folder for storing notefly settings.");
+                    }
                 }
                 else
                 {
-                    throw new ApplicationException("Can't find home folder for storing notefly settings.\nRunning on wrong platform?");
+                    throw new ApplicationException("unsupported platform.");
                 }
-#elif macos
-                return "???";
-#endif
             }
         }
 
@@ -140,27 +168,6 @@ namespace NoteFly
             get
             {
                 return string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Gets operating system running this program.
-        /// </summary>
-        public static int GetOsPlatform
-        {
-            get
-            {
-                int platfromid = -1;
-                try
-                {
-                    platfromid = (int)Environment.OSVersion.Platform;
-                }
-                catch (InvalidCastException invcastexc)
-                {
-                    Log.Write(LogType.exception, invcastexc.StackTrace);
-                }
-
-                return platfromid;
             }
         }
 
@@ -259,22 +266,24 @@ namespace NoteFly
              * %SystemDrive% is required by NET framework.
              * Plugin developers should not rely on environment variables. 
              */
-#if windows
-            System.Collections.IDictionary environmentVariables = Environment.GetEnvironmentVariables();
-            foreach (System.Collections.DictionaryEntry de in environmentVariables)
+            Program.LoadPlatformOs();
+            if (Program.CurrentOS == OS.WINDOWS)
             {
-                string currentvariable = de.Key.ToString();
-                if (!currentvariable.Equals("APPDATA", StringComparison.OrdinalIgnoreCase) &&
-                    !currentvariable.Equals("SystemRoot", StringComparison.OrdinalIgnoreCase) &&
-                    !currentvariable.Equals("SystemDrive", StringComparison.OrdinalIgnoreCase) &&
-                    !currentvariable.Equals("TEMP", StringComparison.OrdinalIgnoreCase))
+                System.Collections.IDictionary environmentVariables = Environment.GetEnvironmentVariables();
+                foreach (System.Collections.DictionaryEntry de in environmentVariables)
                 {
-                    Environment.SetEnvironmentVariable(de.Key.ToString(), null);
+                    string currentvariable = de.Key.ToString();
+                    if (!currentvariable.Equals("APPDATA", StringComparison.OrdinalIgnoreCase) &&
+                        !currentvariable.Equals("SystemRoot", StringComparison.OrdinalIgnoreCase) &&
+                        !currentvariable.Equals("SystemDrive", StringComparison.OrdinalIgnoreCase) &&
+                        !currentvariable.Equals("TEMP", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Environment.SetEnvironmentVariable(de.Key.ToString(), null);
+                    }
                 }
-            }
 
-            SetDllDirectory(string.Empty); // removes current working directory as dll search path, but requires kernel32.dll by itself to be looked up.
-#endif
+                SetDllDirectory(string.Empty); // removes current working directory as dll search path, but requires kernel32.dll by itself to be looked up.
+            }
 
 #if DEBUG
             Stopwatch stopwatch = new Stopwatch();
@@ -300,36 +309,38 @@ namespace NoteFly
             bool visualstyle;
             bool resetpositions;
             ParserArguments(args, out visualstyle, out resetpositions);
-#if windows
-            if (!Settings.ProgramSuspressWarnAdmin)
+            if (Program.CurrentOS == OS.WINDOWS)
             {
-                // Security measure, show warning if runned with dangerous administrator rights.
-                System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
-                System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
-                if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
+                if (!Settings.ProgramSuspressWarnAdmin)
                 {
-                    string program_runasadministrator = Strings.T("You are now running {0} as elevated Administrator.\nWhich is not recommended for security.\nPress OK if your understand the risks of running as administrator and want to hide this message in the future.", Program.AssemblyTitle);
-                    string program_runasadministratortitle = Strings.T("Elevated administrator");
-                    System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show(program_runasadministrator, program_runasadministratortitle, System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Warning);
-                    if (dlganswer == System.Windows.Forms.DialogResult.OK)
+                    // Security measure, show warning if runned with dangerous administrator rights.
+                    System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                    System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
+                    if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
                     {
-                        Settings.ProgramSuspressWarnAdmin = true;
-                        if (!System.IO.Directory.Exists(Program.AppDataFolder))
+                        string program_runasadministrator = Strings.T("You are now running {0} as elevated Administrator.\nWhich is not recommended for security.\nPress OK if your understand the risks of running as administrator and want to hide this message in the future.", Program.AssemblyTitle);
+                        string program_runasadministratortitle = Strings.T("Elevated administrator");
+                        System.Windows.Forms.DialogResult dlganswer = System.Windows.Forms.MessageBox.Show(program_runasadministrator, program_runasadministratortitle, System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Warning);
+                        if (dlganswer == System.Windows.Forms.DialogResult.OK)
                         {
-                            Directory.CreateDirectory(Program.AppDataFolder);
-                        }
+                            Settings.ProgramSuspressWarnAdmin = true;
+                            if (!System.IO.Directory.Exists(Program.AppDataFolder))
+                            {
+                                Directory.CreateDirectory(Program.AppDataFolder);
+                            }
 
-                        xmlUtil.WriteSettings();
+                            xmlUtil.WriteSettings();
+                        }
                     }
                 }
             }
-#endif
 
             if (visualstyle)
             {
-#if windows
-                System.Windows.Forms.Application.EnableVisualStyles();
-#endif
+                if (Program.CurrentOS == OS.WINDOWS)
+                {
+                    System.Windows.Forms.Application.EnableVisualStyles();
+                }
             }
 
             if (Program.CheckInstancesRunning() > 1)
@@ -346,7 +357,6 @@ namespace NoteFly
 
             SyntaxHighlight.InitHighlighter();
             notes = new Notes(resetpositions);
-
             if (Settings.ProgramPluginsAllEnabled)
             {
                 PluginsManager.LoadPlugins();
@@ -498,8 +508,9 @@ namespace NoteFly
         /// <returns>Datetime aof latest update check as string</returns>
         public static string UpdateGetLatestVersion()
         {
-            string ospostparam = "os=" + System.Web.HttpUtility.UrlEncode(Program.GetOsPlatform.ToString());
-            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore, ospostparam);
+            string postparam = "os=";
+            postparam += System.Web.HttpUtility.UrlEncode(Enum.GetName(typeof(Program.OS), Program.currentos));
+            HttpUtil http_updateversion = new HttpUtil(Settings.UpdatecheckURL, System.Net.Cache.RequestCacheLevel.NoCacheNoStore, postparam);
             if (!http_updateversion.Start(new System.ComponentModel.RunWorkerCompletedEventHandler(UpdateCompareVersion)))
             {
                 Log.Write(LogType.error, "No network connection");
@@ -587,6 +598,79 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Figure out the operating system that is running this program.
+        /// </summary>
+        private static void LoadPlatformOs()
+        {
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Win32NT:
+                case PlatformID.Win32S:
+                case PlatformID.Win32Windows:
+                case PlatformID.WinCE:
+                    Program.currentos = OS.WINDOWS;
+                    break;
+                case PlatformID.MacOSX:
+                    Program.currentos = OS.MACOS;
+                    break;
+                case PlatformID.Unix:
+                    // For historical reasons, Mono reports OSX as Unix, not MacOSX.so additional checks are needed.
+                    if (Program.IsRunningOnMac())
+                    {
+                        Program.currentos = OS.MACOS;
+                    }
+                    else
+                    {
+                        Program.currentos = OS.LINUX;
+                    }
+
+                    break;
+                default:
+                    Program.currentos = OS.UNKNOWN;
+                    break;
+            }
+        }
+
+        //From Managed.Windows.Forms/XplatUI
+        [DllImport("libc")]
+        private static extern int uname(IntPtr buf);
+
+        /// <summary>
+        /// Figure out if this is a MacOS operating system running this programme by using uname.
+        /// </summary>
+        /// <returns></returns>
+        private static bool IsRunningOnMac()
+        {
+            IntPtr buf = IntPtr.Zero;
+            try
+            {
+                buf = Marshal.AllocHGlobal(8192);
+                // This is a hacktastic way of getting sysname from uname ()
+                if (uname(buf) == 0)
+                {
+                    string os = Marshal.PtrToStringAnsi(buf);
+                    if (os == "Darwin")
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                Log.Write(LogType.exception, "Problem detecting if unix platform is MacOS or not.");
+            }
+            finally
+            {
+                if (buf != IntPtr.Zero)
+                {
+                    Marshal.FreeHGlobal(buf);
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Parser the programme arguments
         /// </summary>
         /// <param name="args">An array of arguments the check</param>
@@ -665,12 +749,10 @@ namespace NoteFly
                             Settings.UpdatecheckUseGPG = false;
                             break;
 
-#if windows
                         // don't show a warning if notefly is running with administrator priveledges
                         case "-suspressadminwarn":
                             Settings.ProgramSuspressWarnAdmin = true;
                             break;
-#endif
 
                         // overwrite settings file with default settings.
                         case "-resetsettings":
@@ -702,10 +784,12 @@ namespace NoteFly
             sb.AppendLine("-forcefirstrun".PadRight(COLCHARWIDTH, ' ') + Strings.T("Force a first run."));
             sb.AppendLine("-logall".PadRight(COLCHARWIDTH, ' ') + Strings.T("Log exceptions, errors and debug messages."));
             sb.AppendLine("-lognone".PadRight(COLCHARWIDTH, ' ') + Strings.T("Don't log exceptions, errors and debug messages."));
-#if windows
-            sb.AppendLine("-suspressadminwarn".PadRight(COLCHARWIDTH, ' ') + "Supress the warning that NoteFly is running");
-            sb.AppendLine(string.Empty.PadRight(COLCHARWIDTH, ' ') + Strings.T("with unnecessary administrator privilege."));
-#endif
+            if (Program.CurrentOS == OS.WINDOWS)
+            {
+                sb.AppendLine("-suspressadminwarn".PadRight(COLCHARWIDTH, ' ') + "Supress the warning that NoteFly is running");
+                sb.AppendLine(string.Empty.PadRight(COLCHARWIDTH, ' ') + Strings.T("with unnecessary administrator privilege."));
+            }
+
             sb.AppendLine("-resetpositions".PadRight(COLCHARWIDTH, ' ') + Strings.T("Reset all positions of visual notes at startup."));
             sb.AppendLine("-resetsettings".PadRight(COLCHARWIDTH, ' ') + Strings.T("Reset all NoteFly settings to default."));
             System.Windows.Forms.TextBox tbtexthelp = new System.Windows.Forms.TextBox();
@@ -984,11 +1068,9 @@ namespace NoteFly
             }
         }
 
-#if windows
         // change working directory as dll search path
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool SetDllDirectory(string pathName);
-#endif
 
         #endregion Methods
     }

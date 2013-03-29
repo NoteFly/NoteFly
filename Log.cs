@@ -102,11 +102,17 @@ namespace NoteFly
             {
                 line.AppendLine(message.Substring(0, MSGMAXLEN));
             }
-#if windows
-            string errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), DEBUGLOGFILENAME);
-#elif linux
-            string errorlog = "/tmp/"+DEBUGLOGFILENAME;
-#endif
+
+            string errorlog = string.Empty;
+            if (Program.CurrentOS == Program.OS.WINDOWS) 
+            {
+                errorlog = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), DEBUGLOGFILENAME);
+            }
+            else if (Program.CurrentOS == Program.OS.LINUX)
+            {
+                errorlog = "/tmp/" + DEBUGLOGFILENAME;
+            }
+
             try
             {
                 errorlog = Path.Combine(Program.AppDataFolder, DEBUGLOGFILENAME);

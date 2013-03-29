@@ -64,9 +64,6 @@ namespace NoteFly
         /// </summary>
         private System.Windows.Forms.TabPage tabGeneral;
 
-#if windows
-
-#endif
         /// <summary>
         /// CheckBox chxConfirmLink
         /// </summary>

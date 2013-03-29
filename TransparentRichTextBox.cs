@@ -28,7 +28,6 @@ namespace NoteFly
     /// </summary>
     public class TransparentRichTextBox : RichTextBox
     {
-#if windows
         /// <summary>
         /// Override createParams to add support for a transparant background image.
         /// </summary>
@@ -39,10 +38,13 @@ namespace NoteFly
                 CreateParams prams = base.CreateParams;
                 if (Settings.NotesTransparentRTB)
                 {
-                    if (LoadLibrary("msftedit.dll") != IntPtr.Zero)
+                    if (Program.CurrentOS == Program.OS.WINDOWS)
                     {
-                        prams.ExStyle |= 0x020; // transparent
-                        prams.ClassName = "RICHEDIT50W";
+                        if (LoadLibrary("msftedit.dll") != IntPtr.Zero)
+                        {
+                            prams.ExStyle |= 0x020; // transparent
+                            prams.ClassName = "RICHEDIT50W";
+                        }
                     }
                 }
 
@@ -52,6 +54,5 @@ namespace NoteFly
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr LoadLibrary(string lpFileName);
-#endif
     }
 }

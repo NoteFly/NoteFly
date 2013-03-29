@@ -199,13 +199,17 @@ namespace NoteFly
                     this.pnlHead.Height = Settings.NotesTitlepanelMinHeight;
                 }
 
-#if windows
-                this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
-                this.pnlNote.Size = new Size(this.Width, this.Height - this.pnlHead.Height + 1);
-#elif linux
-                this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
-                this.pnlNote.Size = new Size(this.Width - 6, this.Height - this.pnlHead.Height - 5);
-#endif
+                if (Program.CurrentOS == Program.OS.WINDOWS)
+                {
+                    this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
+                    this.pnlNote.Size = new Size(this.Width, this.Height - this.pnlHead.Height + 1);
+                }
+                else if (Program.CurrentOS == Program.OS.LINUX) 
+                {
+                    this.pnlNote.Location = new Point(0, this.pnlHead.Height - 1);
+                    this.pnlNote.Size = new Size(this.Width - 6, this.Height - this.pnlHead.Height - 5);
+                }
+
                 this.rtbNote.DetectUrls = Settings.HighlightHyperlinks;
                 if (!SyntaxHighlight.KeywordsInitialized)
                 {
@@ -307,11 +311,13 @@ namespace NoteFly
                         tsi.Checked = false;
                     }
 
-#if windows
-                    // FIXME: Setting backcolor of a ToolStripMenuItem did not work under Mono.
-                    tsi.BackColor = this.notes.GetPrimaryClr(i);
-                    tsi.ForeColor = this.notes.GetTextClr(i);
-#endif
+                    if (Program.CurrentOS == Program.OS.WINDOWS)
+                    {
+                        // FIXME: Setting backcolor of a ToolStripMenuItem did not work under Mono.
+                        tsi.BackColor = this.notes.GetPrimaryClr(i);
+                        tsi.ForeColor = this.notes.GetTextClr(i);
+                    }
+
                     tsi.Click += new EventHandler(this.menuNoteSkins_skin_Click);
                     this.menuNoteSkins.DropDownItems.Add(tsi);
                 }

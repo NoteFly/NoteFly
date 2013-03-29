@@ -201,22 +201,12 @@ namespace NoteFly
         /// 1 is right to left.
         /// </summary>
         public static int FontTextdirection = 0;
-#if windows
+
         /// <summary>
         /// The font family of the title of notes.
         /// </summary>
         public static string FontTitleFamily = "Arial";
-#elif linux
-        /// <summary>
-        /// The default font family of notes content.
-        /// </summary>
-        public static string FontTitleFamily = "FreeMono";
-#else
-        /// <summary>
-        /// The default font family of notes content.
-        /// </summary>
-        public static string FontTitleFamily = "FreeMono";
-#endif
+
         /// <summary>
         /// The notes title font size.
         /// </summary>
@@ -226,7 +216,7 @@ namespace NoteFly
         /// Display the notes title in bold.
         /// </summary>
         public static bool FontTitleStylebold = true;
-#if windows
+
         /// <summary>
         /// The default font family of notes content.
         /// </summary>
@@ -236,27 +226,6 @@ namespace NoteFly
         /// The font of the trayicon menu.
         /// </summary>
         public static string FontTrayicon = "Arial";
-#elif linux
-        /// <summary>
-        /// The default font family of notes content.
-        /// </summary>
-        public static string FontContentFamily = "FreeMono";
-
-        /// <summary>
-        /// The font of the trayicon menu.
-        /// </summary>
-        public static string FontTrayicon = "FreeMono";
-#else
-        /// <summary>
-        /// The default font family of notes content.
-        /// </summary>
-        public static string FontContentFamily = "FreeMono";
-        
-        /// <summary>
-        /// The font of the trayicon menu.
-        /// </summary>
-        public static string FontTrayicon = "FreeMono";
-#endif
 
         /// <summary>
         /// The default font size of notes content.

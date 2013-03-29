@@ -122,27 +122,29 @@ namespace NoteFly
         public string GetGPGPath()
         {
             string gpgpath = string.Empty;
-#if windows
-            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("HKEY_LOCAL_MACHINE\\SOFTWARE\\GNU\\GnuPG", false);
-            if (key != null)
-            {
-                string gpginstallpath = (string)key.GetValue("Install Directory");
-                gpgpath = this.FindGPGexecutables(gpginstallpath);
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(this.GetProgramFilesx86()))
+            if (Program.CurrentOS == Program.OS.WINDOWS) {
+                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("HKEY_LOCAL_MACHINE\\SOFTWARE\\GNU\\GnuPG", false);
+                if (key != null)
                 {
-                    string gpginstallpath = Path.Combine(Path.Combine(this.GetProgramFilesx86(), "GNU"), "GnuPG");
-                    if (Directory.Exists(gpginstallpath))
+                    string gpginstallpath = (string)key.GetValue("Install Directory");
+                    gpgpath = this.FindGPGexecutables(gpginstallpath);
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(this.GetProgramFilesx86()))
                     {
-                        gpgpath = this.FindGPGexecutables(gpginstallpath);
+                        string gpginstallpath = Path.Combine(Path.Combine(this.GetProgramFilesx86(), "GNU"), "GnuPG");
+                        if (Directory.Exists(gpginstallpath))
+                        {
+                            gpgpath = this.FindGPGexecutables(gpginstallpath);
+                        }
                     }
                 }
             }
-#elif linux
-            gpgpath = FindGPGexecutables("usr/bin/");
-#endif
+            else if (Program.CurrentOS == Program.OS.LINUX)
+            {
+                gpgpath = FindGPGexecutables("/usr/bin/gpg");
+            }
 
             return gpgpath;
         }
@@ -154,7 +156,7 @@ namespace NoteFly
         /// <returns>The full path to the gpg executable, empty string if gpg executable not found.</returns>
         private string FindGPGexecutables(string gpginstallpath)
         {
-            string[] gpgfilenames = new string[] { "gpg.exe", "gpg2.exe" };
+            string[] gpgfilenames = new string[] { "gpg.exe", "gpg2.exe", "gpg" };
             for (int i = 0; i < gpgfilenames.Length; i++)
             {
                 if (File.Exists(Path.Combine(gpginstallpath, gpgfilenames[i])))
@@ -166,11 +168,10 @@ namespace NoteFly
             return string.Empty;
         }
 
-#if windows
         /// <summary>
         /// Get the path to program files, for 32bits applications.
         /// </summary>
-        /// <returns>THe path to the Program files folder.</returns>
+        /// <returns>The path to the Program files folder.</returns>
         private string GetProgramFilesx86()
         {
             if (IntPtr.Size == 8 || (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
@@ -180,7 +181,6 @@ namespace NoteFly
 
             return Environment.GetEnvironmentVariable("ProgramFiles");
         }
-#endif
 
         /// <summary>
         /// Reader thread for standard output of gpg.exe

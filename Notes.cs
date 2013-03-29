@@ -739,11 +739,16 @@ namespace NoteFly
         private bool ImportingNotesNoteFly1()
         {
             bool imported = false;
-            #if windows
-            string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly");
-            #elif linux
-            string nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly");
-            #endif
+            string nf1appdata = string.Empty;
+            if (Program.CurrentOS == Program.OS.WINDOWS)
+            {
+                nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly");
+            }
+            else if (Program.CurrentOS == Program.OS.LINUX)
+            {
+                nf1appdata = Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly");
+            }
+
             if (Directory.Exists(nf1appdata) && (!File.Exists(Path.Combine(nf1appdata, IMPORTEDFLAGFILE))))
             { 
                 DialogResult resdoimport = MessageBox.Show(Strings.T(
@@ -823,11 +828,16 @@ namespace NoteFly
         private bool ImportingNotesNoteFly2()
         {
             bool imported = false;
-            #if windows
-            string nf2appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly2");
-            #elif linux
-            string nf2appdata = Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
-            #endif
+            string nf2appdata = string.Empty;
+            if (Program.CurrentOS == Program.OS.WINDOWS)
+            {
+                nf2appdata = Path.Combine(System.Environment.GetEnvironmentVariable("APPDATA"), ".NoteFly2");
+            }
+            else if (Program.CurrentOS == Program.OS.LINUX)
+            {
+                nf2appdata = Path.Combine(System.Environment.GetEnvironmentVariable("HOME"), ".NoteFly2");
+            }
+
             if (Directory.Exists(nf2appdata) && (!File.Exists(Path.Combine(nf2appdata, IMPORTEDFLAGFILE))))
             {
                 DialogResult resdlg = MessageBox.Show(Strings.T("Do you want to import the notes from NoteFly 2.5.x?\nPress cancel to ask this again next time."), Strings.T("Import from NoteFly 2.5.x"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);

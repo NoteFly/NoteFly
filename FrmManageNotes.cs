@@ -135,7 +135,6 @@ namespace NoteFly
 
         #endregion Constructors
 
-#if windows
         /// <summary>
         /// Possible flags for the SHFileOperation method.
         /// </summary>
@@ -199,7 +198,6 @@ namespace NoteFly
             /// </summary>
             FO_RENAME = 0x0004,
         }
-#endif
 
         #region Methods (20)
 
@@ -212,7 +210,6 @@ namespace NoteFly
             this.secondprevrownr = -2;
         }
 
-#if windows
         [DllImport("shell32.dll", CharSet = CharSet.Auto, EntryPoint = "SHFileOperation")]
         private static extern int SHFileOperation_x86(ref SHFILEOPSTRUCT_x86 FileOp);
 
@@ -227,7 +224,6 @@ namespace NoteFly
         {
             return IntPtr.Size == 8;
         }
-#endif
 
         /// <summary>
         /// Set the skin for the FrmManageNotes form.
@@ -661,43 +657,46 @@ namespace NoteFly
                     string filepath = Path.Combine(Settings.NotesSavepath, filename);
                     if (Settings.NotesDeleteRecyclebin)
                     {
-#if windows
-                        if (IsWOW64Process())
+                        if (Program.CurrentOS == Program.OS.WINDOWS)
                         {
-                            SHFILEOPSTRUCT_x64 fs = new SHFILEOPSTRUCT_x64();
-                            fs.wFunc = FileOperationType.FO_DELETE;
-                            // Important to double-terminate the string.
-                            fs.pFrom = filepath + '\0' + '\0';
-                            fs.fFlags = FileOperationFlags.FOF_ALLOWUNDO | FileOperationFlags.FOF_NOCONFIRMATION | FileOperationFlags.FOF_WANTNUKEWARNING;
-                            SHFileOperation_x64(ref fs);
+                            if (IsWOW64Process())
+                            {
+                                SHFILEOPSTRUCT_x64 fs = new SHFILEOPSTRUCT_x64();
+                                fs.wFunc = FileOperationType.FO_DELETE;
+                                // Important to double-terminate the string.
+                                fs.pFrom = filepath + '\0' + '\0';
+                                fs.fFlags = FileOperationFlags.FOF_ALLOWUNDO | FileOperationFlags.FOF_NOCONFIRMATION | FileOperationFlags.FOF_WANTNUKEWARNING;
+                                SHFileOperation_x64(ref fs);
+                            }
+                            else
+                            {
+                                SHFILEOPSTRUCT_x86 fs = new SHFILEOPSTRUCT_x86();
+                                fs.wFunc = FileOperationType.FO_DELETE;
+                                // important to double-terminate the string.
+                                fs.pFrom = filepath + '\0' + '\0';
+                                fs.fFlags = FileOperationFlags.FOF_ALLOWUNDO | FileOperationFlags.FOF_NOCONFIRMATION | FileOperationFlags.FOF_WANTNUKEWARNING;
+                                SHFileOperation_x86(ref fs);
+                            }
                         }
-                        else
+                        else if (Program.CurrentOS == Program.OS.LINUX)
                         {
-                            SHFILEOPSTRUCT_x86 fs = new SHFILEOPSTRUCT_x86();
-                            fs.wFunc = FileOperationType.FO_DELETE;
-                            // important to double-terminate the string.
-                            fs.pFrom = filepath + '\0' + '\0';
-                            fs.fFlags = FileOperationFlags.FOF_ALLOWUNDO | FileOperationFlags.FOF_NOCONFIRMATION | FileOperationFlags.FOF_WANTNUKEWARNING;
-                            SHFileOperation_x86(ref fs);
+                            // move file to trash folder, located: ~/.local/share/Trash/files
+                            string trashfolder = System.Environment.GetEnvironmentVariable("HOME") + "/.local/share/Trash/files/";
+                            if (!Directory.Exists(trashfolder))
+                            {
+                                Directory.CreateDirectory(trashfolder);
+                                Log.Write(LogType.info, "Trash folder created: " + trashfolder);
+                            }
+
+                            try
+                            {
+                                File.Move(filepath, Path.Combine(trashfolder, filename));
+                            }
+                            catch (IOException ioexc)
+                            {
+                                Log.Write(LogType.exception, ioexc.Message);
+                            }
                         }
-#elif linux
-                        // move file to trash folder, located: ~/.local/share/Trash/files
-                        string trashfolder = System.Environment.GetEnvironmentVariable("HOME") +"/.local/share/Trash/files/";
-                        if (!Directory.Exists(trashfolder))
-                        {
-                            Directory.CreateDirectory(trashfolder);
-                            Log.Write(LogType.info, "Trash folder created: " + trashfolder);
-                        }
-                        
-                        try
-                        {
-                            File.Move(filepath, Path.Combine(trashfolder, filename));
-                        }
-                        catch (IOException ioexc)
-                        {
-                            Log.Write(LogType.exception, ioexc.Message);
-                        }
-#endif
 
                         if (!File.Exists(filepath))
                         {
@@ -1147,7 +1146,6 @@ namespace NoteFly
 
         #endregion Methods
 
-#if windows
         /// <summary>
         /// SHFILEOPSTRUCT_x86 struct
         /// </summary>
@@ -1245,6 +1243,5 @@ namespace NoteFly
             /// </summary>
             public string lpszProgressTitle;
         }
-#endif
     }
 }

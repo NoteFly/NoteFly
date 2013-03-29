@@ -118,11 +118,9 @@ namespace NoteFly
             }
         }
 
-#if windows
         // get network status
         [System.Runtime.InteropServices.DllImport("wininet.dll", EntryPoint = "InternetGetConnectedState")]
         private static extern bool InternetGetConnectedState(out int description, int ReservedValue);
-#endif
 
         /// <summary>
         /// Http background worker thread reading stream
@@ -253,19 +251,22 @@ namespace NoteFly
         /// <returns>true if there is a connection, otherwise return false</returns>
         private bool IsNetworkConnected()
         {
-#if windows
-            int desc;
-            if (InternetGetConnectedState(out desc, 0))
+            if (Program.CurrentOS == Program.OS.WINDOWS)
             {
-                return true;
+                int desc;
+                if (InternetGetConnectedState(out desc, 0))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                return false;
+                return true;
             }
-#elif !windows
-            return true;
-#endif
         }
     }
 }

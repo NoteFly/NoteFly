@@ -6,8 +6,6 @@
 //-----------------------------------------------------------------------
 namespace NoteFly
 {
-    #if windows
-
     using System;
     using System.ComponentModel;
     using System.Runtime.InteropServices;
@@ -396,6 +394,4 @@ namespace NoteFly
             #endregion
         }
     }
-
-    #endif
 }

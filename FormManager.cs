@@ -72,7 +72,6 @@ namespace NoteFly
         /// </summary>
         private bool frmmanagenotesneedupdate = false;
 
-#if windows
         /// <summary>
         /// Reference to KeyboardListener class.
         /// </summary>
@@ -92,7 +91,6 @@ namespace NoteFly
         /// Is alt being pressd.
         /// </summary>
         private bool altpressed = false;
-#endif
 
         /// <summary>
         /// Create a new instance of <see cref=FormManager /> class.
@@ -102,10 +100,11 @@ namespace NoteFly
         {
             this.notes = notes;
 
-#if windows
-            this.keylister = new KeyboardListener();
-            this.keylister.s_KeyEventHandler += new EventHandler(this.KeyboardListener_s_KeyEventHandler);
-#endif
+            //if (Program.OS == OS.)
+            //{
+                this.keylister = new KeyboardListener();
+                this.keylister.s_KeyEventHandler += new EventHandler(this.KeyboardListener_s_KeyEventHandler);
+            //}
         }
 
         /// <summary>
@@ -262,7 +261,6 @@ namespace NoteFly
             }
         }
 
-#if windows
         /// <summary>
         /// Handle keys that are pressed to check for system wide shortcut being pressed.
         /// </summary>
@@ -343,7 +341,6 @@ namespace NoteFly
             this.shiftpressed = false;
             this.altpressed = false;
         }
-#endif
 
         /// <summary>
         /// Change the delta position of FrmNewNote.
