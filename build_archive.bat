@@ -1,6 +1,6 @@
 @echo off
 REM  NoteFly a note application.
-REM  Copyright (C) 2010-2012  Tom
+REM  Copyright (C) 2010-2013  Tom
 REM
 REM  This program is free software: you can redistribute it and/or modify
 REM  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ echo 7-zip(7z.exe) should be installed in: %path7z%
 pause
 IF NOT EXIST %path7z% GOTO NO7ZDIR
 
-%path7z% a -tzip "%cd%\bin\Release\src_NoteFly_v%VERSION%%VERSIONSTATUS%.zip" -r %cd%\*.cs %cd%\*.resx %cd%\*.config %cd%\*.sh %cd%\deb_control_script %cd%\license.txt %cd%\*.desktop %cd%\*.sln %cd%\*.csproj %cd%\*.eqconfig %cd%\*.png %cd%\*.ico %cd%\*.bat %cd%\*.xsd %cd%\*.manifest %cd%\*.nsi %cd%\*.settings %cd%\*.in
+%path7z% a -tzip "%cd%\bin\Release\src_NoteFly_v%VERSION%%VERSIONSTATUS%.zip" -r %cd%\*.cs %cd%\*.resx %cd%\*.config %cd%\*.sh %cd%\deb_control_script %cd%\license.txt %cd%\*.desktop %cd%\*.sln %cd%\*.csproj %cd%\*.eqconfig %cd%\*.png %cd%\*.ico %cd%\*.bat %cd%\*.xsd %cd%\*.nsi %cd%\*.settings %cd%\*.in
 
 echo done.
 pause
