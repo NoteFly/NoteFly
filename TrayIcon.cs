@@ -93,35 +93,39 @@ namespace NoteFly
         /// New trayicon in the systray.
         /// </summary>
         /// <param name="formmanager">Reference to FormManager class.</param>
-        public TrayIcon(FormManager formmanager)
-        {
-            this.formmanager = formmanager;
-            this.components = new System.ComponentModel.Container();
+        public TrayIcon (FormManager formmanager)
+		{
+			this.formmanager = formmanager;
+			this.components = new System.ComponentModel.Container ();
 
-            // Start building icon and icon contextmenu
-            this.icon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.menuTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(menuTrayIcon_Opening);
-            this.menuTrayIcon.AllowDrop = false;
-            this.menuNewNote = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuNewNoteClipboard = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuManageNotes = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPlugins = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.icon.ContextMenuStrip = this.menuTrayIcon;
-            if (Settings.TrayiconAlternateIcon)
-            {
-                this.icon.Icon = new Icon(NoteFly.Properties.Resources.trayicon_white, NoteFly.Properties.Resources.trayicon_white.Size);
-            }
-            else
-            {
-                this.icon.Icon = new Icon(NoteFly.Properties.Resources.trayicon_yellow, NoteFly.Properties.Resources.trayicon_yellow.Size);
-            }
+			// Start building icon and icon contextmenu
+			this.icon = new System.Windows.Forms.NotifyIcon (this.components);
+			this.menuTrayIcon = new System.Windows.Forms.ContextMenuStrip (this.components);
+			this.menuTrayIcon.Opening += new System.ComponentModel.CancelEventHandler (menuTrayIcon_Opening);
+			this.menuTrayIcon.AllowDrop = false;
+			this.menuNewNote = new System.Windows.Forms.ToolStripMenuItem ();
+			this.menuNewNoteClipboard = new System.Windows.Forms.ToolStripMenuItem ();
+			this.menuManageNotes = new System.Windows.Forms.ToolStripMenuItem ();
+			this.menuPlugins = new System.Windows.Forms.ToolStripMenuItem ();
+			this.menuSettings = new System.Windows.Forms.ToolStripMenuItem ();
+			this.menuAbout = new System.Windows.Forms.ToolStripMenuItem ();
+			this.menuExit = new System.Windows.Forms.ToolStripMenuItem ();
+			this.icon.ContextMenuStrip = this.menuTrayIcon;
+			if (Program.CurrentOS == Program.OS.WINDOWS) {
+					if (Settings.TrayiconAlternateIcon) {
+							this.icon.Icon = new Icon (NoteFly.Properties.Resources.trayicon_white, NoteFly.Properties.Resources.trayicon_white.Size);
+					} else {
+							this.icon.Icon = new Icon (NoteFly.Properties.Resources.trayicon_yellow, NoteFly.Properties.Resources.trayicon_yellow.Size);
+					}
+			} else {
+				Bitmap bm = NoteFly.Properties.Resources.trayicon_yellow_altformat;
+				Icon trayicon = Icon.FromHandle(bm.GetHicon());
+				this.icon.Icon = trayicon;
+			}
 
             this.icon.MouseClick += new MouseEventHandler(this.Icon_Click);
             this.icon.Visible = true;
+			this.icon.Icon.InitializeLifetimeService();
             this.icon.ContextMenuStrip.Name = "MenuTrayIcon";
             this.icon.ContextMenuStrip.ShowImageMargin = false;
             this.icon.ContextMenuStrip.Size = new System.Drawing.Size(145, 114);

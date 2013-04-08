@@ -119,5 +119,15 @@ namespace NoteFly.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap trayicon_yellow_altformat {
+            get {
+                object obj = ResourceManager.GetObject("trayicon_yellow_altformat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

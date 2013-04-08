@@ -103,6 +103,7 @@ namespace NoteFly
         {
             get
             {
+				Program.LoadPlatformOs();
                 const string APPDATAFOLDER = "NoteFly";
                 if (Program.currentos == OS.WINDOWS)
                 {
@@ -408,6 +409,8 @@ namespace NoteFly
             }
 
             SyntaxHighlight.DeinitHighlighter();
+
+			//ApplicationContext appcontext = new ApplicationContext();
             System.Windows.Forms.Application.Run();
         }
 
