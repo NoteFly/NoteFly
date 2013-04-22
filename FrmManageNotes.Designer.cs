@@ -150,7 +150,7 @@ namespace NoteFly
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(564, 2);
+            this.btnClose.Location = new System.Drawing.Point(564, 3);
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(32, 23);
@@ -172,7 +172,7 @@ namespace NoteFly
             this.pnlHead.Controls.Add(this.btnClose);
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
-            this.pnlHead.Size = new System.Drawing.Size(600, 30);
+            this.pnlHead.Size = new System.Drawing.Size(600, 32);
             this.pnlHead.TabIndex = 8;
             this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
@@ -362,6 +362,7 @@ namespace NoteFly
             this.pnlContent.Controls.Add(this.dataGridViewNotes);
             this.pnlContent.Controls.Add(this.pbResizeGrip);
             this.pnlContent.Location = new System.Drawing.Point(0, 29);
+            this.pnlContent.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Size = new System.Drawing.Size(600, 371);
             this.pnlContent.TabIndex = 20;
@@ -402,8 +403,9 @@ namespace NoteFly
             // 
             this.searchTextBoxNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchTextBoxNotes.Location = new System.Drawing.Point(439, 3);
+            this.searchTextBoxNotes.Margin = new System.Windows.Forms.Padding(3, 3, 8, 3);
             this.searchTextBoxNotes.Name = "searchTextBoxNotes";
-            this.searchTextBoxNotes.Size = new System.Drawing.Size(157, 28);
+            this.searchTextBoxNotes.Size = new System.Drawing.Size(152, 28);
             this.searchTextBoxNotes.TabIndex = 22;
             this.toolTip.SetToolTip(this.searchTextBoxNotes, "Search on title");
             this.searchTextBoxNotes.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchTextBoxNotes_SearchStart);

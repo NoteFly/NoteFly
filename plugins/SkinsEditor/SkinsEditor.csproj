@@ -64,11 +64,18 @@
     <Compile Include="FrmSkinEditor.Designer.cs">
       <DependentUpon>FrmSkinEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotePreview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NotePreview.Designer.cs">
+      <DependentUpon>NotePreview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Skin.cs" />
     <Compile Include="SkinsEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -84,6 +91,9 @@
   <ItemGroup>
     <EmbeddedResource Include="FrmSkinEditor.resx">
       <DependentUpon>FrmSkinEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotePreview.resx">
+      <DependentUpon>NotePreview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

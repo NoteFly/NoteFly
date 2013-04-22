@@ -199,27 +199,17 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
             this.pnlContent = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.splitContainerContent = new System.Windows.Forms.SplitContainer();
-            this.gbxPreview = new System.Windows.Forms.GroupBox();
-            this.pnlPreviewNoteWindow = new System.Windows.Forms.Panel();
-            this.pnlPreviewNoteHead = new System.Windows.Forms.Panel();
-            this.btnPreviewNoteBtnClose = new System.Windows.Forms.Button();
-            this.lblPreviewNoteTitle = new System.Windows.Forms.Label();
-            this.pnlPreviewNoteContent = new System.Windows.Forms.Panel();
-            this.lblPreviewNoteContent = new System.Windows.Forms.Label();
-            this.picboxPreviewNoteResizegrid = new System.Windows.Forms.PictureBox();
+            this.notePreview1 = new NoteSkinPreview();
             this.pnlHead.SuspendLayout();
             this.pnlContent.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             this.splitContainerContent.Panel1.SuspendLayout();
             this.splitContainerContent.Panel2.SuspendLayout();
             this.splitContainerContent.SuspendLayout();
-            this.gbxPreview.SuspendLayout();
-            this.pnlPreviewNoteWindow.SuspendLayout();
-            this.pnlPreviewNoteHead.SuspendLayout();
-            this.pnlPreviewNoteContent.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picboxPreviewNoteResizegrid)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileTextureDialog
@@ -350,11 +340,12 @@
             // btnEditskin
             // 
             this.btnEditskin.BackColor = System.Drawing.Color.Silver;
+            this.btnEditskin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnEditskin.Enabled = false;
             this.btnEditskin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditskin.Location = new System.Drawing.Point(311, 3);
+            this.btnEditskin.Location = new System.Drawing.Point(401, 3);
             this.btnEditskin.Name = "btnEditskin";
-            this.btnEditskin.Size = new System.Drawing.Size(153, 23);
+            this.btnEditskin.Size = new System.Drawing.Size(194, 21);
             this.btnEditskin.TabIndex = 46;
             this.btnEditskin.Text = "&edit skin";
             this.btnEditskin.UseCompatibleTextRendering = true;
@@ -376,10 +367,11 @@
             // btnNewSkin
             // 
             this.btnNewSkin.BackColor = System.Drawing.Color.Silver;
+            this.btnNewSkin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnNewSkin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNewSkin.Location = new System.Drawing.Point(166, 3);
+            this.btnNewSkin.Location = new System.Drawing.Point(202, 3);
             this.btnNewSkin.Name = "btnNewSkin";
-            this.btnNewSkin.Size = new System.Drawing.Size(139, 23);
+            this.btnNewSkin.Size = new System.Drawing.Size(193, 21);
             this.btnNewSkin.TabIndex = 45;
             this.btnNewSkin.Text = "&new skin";
             this.btnNewSkin.UseCompatibleTextRendering = true;
@@ -487,12 +479,13 @@
             // btnDeleteSkin
             // 
             this.btnDeleteSkin.BackColor = System.Drawing.Color.Silver;
+            this.btnDeleteSkin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDeleteSkin.Enabled = false;
             this.btnDeleteSkin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteSkin.ForeColor = System.Drawing.Color.DarkRed;
             this.btnDeleteSkin.Location = new System.Drawing.Point(3, 3);
             this.btnDeleteSkin.Name = "btnDeleteSkin";
-            this.btnDeleteSkin.Size = new System.Drawing.Size(157, 23);
+            this.btnDeleteSkin.Size = new System.Drawing.Size(193, 21);
             this.btnDeleteSkin.TabIndex = 55;
             this.btnDeleteSkin.Text = "&delete skin";
             this.btnDeleteSkin.UseCompatibleTextRendering = true;
@@ -565,16 +558,31 @@
             // pnlContent
             // 
             this.pnlContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlContent.Controls.Add(this.tableLayoutPanel1);
             this.pnlContent.Controls.Add(this.pbResizeGrip);
             this.pnlContent.Controls.Add(this.splitContainerContent);
-            this.pnlContent.Controls.Add(this.btnNewSkin);
-            this.pnlContent.Controls.Add(this.btnDeleteSkin);
-            this.pnlContent.Controls.Add(this.btnEditskin);
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContent.Location = new System.Drawing.Point(0, 30);
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Size = new System.Drawing.Size(600, 349);
             this.pnlContent.TabIndex = 59;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.4F));
+            this.tableLayoutPanel1.Controls.Add(this.btnDeleteSkin, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnNewSkin, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnEditskin, 2, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(598, 27);
+            this.tableLayoutPanel1.TabIndex = 60;
             // 
             // pbResizeGrip
             // 
@@ -582,14 +590,13 @@
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbResizeGrip.Image = global::SkinsEditor.Properties.Resources.hoekje;
-            this.pbResizeGrip.Location = new System.Drawing.Point(582, 329);
+            this.pbResizeGrip.Location = new System.Drawing.Point(582, 332);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";
             this.pbResizeGrip.Size = new System.Drawing.Size(17, 18);
             this.pbResizeGrip.TabIndex = 58;
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
-            this.pbResizeGrip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseDown);
             // 
             // splitContainerContent
             // 
@@ -607,7 +614,7 @@
             // 
             // splitContainerContent.Panel2
             // 
-            this.splitContainerContent.Panel2.Controls.Add(this.gbxPreview);
+            this.splitContainerContent.Panel2.Controls.Add(this.notePreview1);
             this.splitContainerContent.Panel2.Controls.Add(this.lblTextSkinname);
             this.splitContainerContent.Panel2.Controls.Add(this.btnSaveSkin);
             this.splitContainerContent.Panel2.Controls.Add(this.tbPrimaryColor);
@@ -632,103 +639,12 @@
             this.splitContainerContent.SplitterDistance = 117;
             this.splitContainerContent.TabIndex = 59;
             // 
-            // gbxPreview
+            // notePreview1
             // 
-            this.gbxPreview.Controls.Add(this.pnlPreviewNoteWindow);
-            this.gbxPreview.Location = new System.Drawing.Point(267, 86);
-            this.gbxPreview.Name = "gbxPreview";
-            this.gbxPreview.Size = new System.Drawing.Size(197, 189);
-            this.gbxPreview.TabIndex = 58;
-            this.gbxPreview.TabStop = false;
-            this.gbxPreview.Text = "preview";
-            this.gbxPreview.Visible = false;
-            // 
-            // pnlPreviewNoteWindow
-            // 
-            this.pnlPreviewNoteWindow.BackColor = System.Drawing.Color.Transparent;
-            this.pnlPreviewNoteWindow.Controls.Add(this.pnlPreviewNoteHead);
-            this.pnlPreviewNoteWindow.Controls.Add(this.pnlPreviewNoteContent);
-            this.pnlPreviewNoteWindow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPreviewNoteWindow.Location = new System.Drawing.Point(3, 16);
-            this.pnlPreviewNoteWindow.Name = "pnlPreviewNoteWindow";
-            this.pnlPreviewNoteWindow.Size = new System.Drawing.Size(191, 170);
-            this.pnlPreviewNoteWindow.TabIndex = 2;
-            // 
-            // pnlPreviewNoteHead
-            // 
-            this.pnlPreviewNoteHead.BackColor = System.Drawing.Color.Transparent;
-            this.pnlPreviewNoteHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlPreviewNoteHead.Controls.Add(this.btnPreviewNoteBtnClose);
-            this.pnlPreviewNoteHead.Controls.Add(this.lblPreviewNoteTitle);
-            this.pnlPreviewNoteHead.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlPreviewNoteHead.Location = new System.Drawing.Point(0, 0);
-            this.pnlPreviewNoteHead.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlPreviewNoteHead.Name = "pnlPreviewNoteHead";
-            this.pnlPreviewNoteHead.Size = new System.Drawing.Size(191, 30);
-            this.pnlPreviewNoteHead.TabIndex = 1;
-            this.pnlPreviewNoteHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlPreviewNoteHead_MouseDown);
-            this.pnlPreviewNoteHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlPreviewNoteHead_MouseUp);
-            // 
-            // btnPreviewNoteBtnClose
-            // 
-            this.btnPreviewNoteBtnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnPreviewNoteBtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPreviewNoteBtnClose.Location = new System.Drawing.Point(152, 3);
-            this.btnPreviewNoteBtnClose.Name = "btnPreviewNoteBtnClose";
-            this.btnPreviewNoteBtnClose.Size = new System.Drawing.Size(32, 23);
-            this.btnPreviewNoteBtnClose.TabIndex = 1;
-            this.btnPreviewNoteBtnClose.Text = "X";
-            this.btnPreviewNoteBtnClose.UseVisualStyleBackColor = true;
-            // 
-            // lblPreviewNoteTitle
-            // 
-            this.lblPreviewNoteTitle.AutoSize = true;
-            this.lblPreviewNoteTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPreviewNoteTitle.Location = new System.Drawing.Point(3, 5);
-            this.lblPreviewNoteTitle.Name = "lblPreviewNoteTitle";
-            this.lblPreviewNoteTitle.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.lblPreviewNoteTitle.Size = new System.Drawing.Size(67, 18);
-            this.lblPreviewNoteTitle.TabIndex = 0;
-            this.lblPreviewNoteTitle.Text = "example";
-            this.lblPreviewNoteTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlPreviewNoteHead_MouseDown);
-            this.lblPreviewNoteTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlPreviewNoteHead_MouseUp);
-            // 
-            // pnlPreviewNoteContent
-            // 
-            this.pnlPreviewNoteContent.BackColor = System.Drawing.Color.Transparent;
-            this.pnlPreviewNoteContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlPreviewNoteContent.Controls.Add(this.lblPreviewNoteContent);
-            this.pnlPreviewNoteContent.Controls.Add(this.picboxPreviewNoteResizegrid);
-            this.pnlPreviewNoteContent.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlPreviewNoteContent.Location = new System.Drawing.Point(0, 30);
-            this.pnlPreviewNoteContent.Name = "pnlPreviewNoteContent";
-            this.pnlPreviewNoteContent.Size = new System.Drawing.Size(191, 140);
-            this.pnlPreviewNoteContent.TabIndex = 0;
-            // 
-            // lblPreviewNoteContent
-            // 
-            this.lblPreviewNoteContent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPreviewNoteContent.Location = new System.Drawing.Point(6, 9);
-            this.lblPreviewNoteContent.Name = "lblPreviewNoteContent";
-            this.lblPreviewNoteContent.Size = new System.Drawing.Size(173, 118);
-            this.lblPreviewNoteContent.TabIndex = 61;
-            this.lblPreviewNoteContent.Text = "Test test test test test test test test test test test  test test test test test " +
-                "test test test test test \r\n";
-            // 
-            // picboxPreviewNoteResizegrid
-            // 
-            this.picboxPreviewNoteResizegrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.picboxPreviewNoteResizegrid.BackColor = System.Drawing.Color.Transparent;
-            this.picboxPreviewNoteResizegrid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.picboxPreviewNoteResizegrid.Image = global::SkinsEditor.Properties.Resources.hoekje;
-            this.picboxPreviewNoteResizegrid.Location = new System.Drawing.Point(176, 123);
-            this.picboxPreviewNoteResizegrid.Margin = new System.Windows.Forms.Padding(0);
-            this.picboxPreviewNoteResizegrid.Name = "picboxPreviewNoteResizegrid";
-            this.picboxPreviewNoteResizegrid.Size = new System.Drawing.Size(17, 18);
-            this.picboxPreviewNoteResizegrid.TabIndex = 60;
-            this.picboxPreviewNoteResizegrid.TabStop = false;
+            this.notePreview1.Location = new System.Drawing.Point(252, 83);
+            this.notePreview1.Name = "notePreview1";
+            this.notePreview1.Size = new System.Drawing.Size(212, 197);
+            this.notePreview1.TabIndex = 58;
             // 
             // FrmSkinEditor
             // 
@@ -746,18 +662,13 @@
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();
             this.pnlContent.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
             this.splitContainerContent.Panel1.ResumeLayout(false);
             this.splitContainerContent.Panel1.PerformLayout();
             this.splitContainerContent.Panel2.ResumeLayout(false);
             this.splitContainerContent.Panel2.PerformLayout();
             this.splitContainerContent.ResumeLayout(false);
-            this.gbxPreview.ResumeLayout(false);
-            this.pnlPreviewNoteWindow.ResumeLayout(false);
-            this.pnlPreviewNoteHead.ResumeLayout(false);
-            this.pnlPreviewNoteHead.PerformLayout();
-            this.pnlPreviewNoteContent.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picboxPreviewNoteResizegrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -770,13 +681,8 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.PictureBox pbResizeGrip;
         private System.Windows.Forms.SplitContainer splitContainerContent;
-        private System.Windows.Forms.GroupBox gbxPreview;
-        private System.Windows.Forms.Panel pnlPreviewNoteContent;
-        private System.Windows.Forms.Panel pnlPreviewNoteHead;
-        private System.Windows.Forms.Label lblPreviewNoteTitle;
-        private System.Windows.Forms.Button btnPreviewNoteBtnClose;
-        private System.Windows.Forms.Panel pnlPreviewNoteWindow;
-        private System.Windows.Forms.PictureBox picboxPreviewNoteResizegrid;
-        private System.Windows.Forms.Label lblPreviewNoteContent;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private NoteSkinPreview NotePreview;
+        private NoteSkinPreview notePreview1;
     }
 }
