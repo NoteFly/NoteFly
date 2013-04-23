@@ -76,8 +76,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Skin.cs" />
+    <Compile Include="SkinFactory.cs" />
     <Compile Include="SkinsEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkinsFilehandling.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\IPlugin\IPlugin.csproj">
@@ -136,6 +138,6 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(SolutionDir)bin\Release\plugins\"
-copy $(TargetDir)$(TargetFileName) $(SolutionDir)bin\Release\plugins\</PostBuildEvent>
+copy $(TargetDir)$(TargetFileName) %25appdata%25\NoteFly\plugins\</PostBuildEvent>
   </PropertyGroup>
 </Project>

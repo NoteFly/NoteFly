@@ -37,7 +37,7 @@ namespace SkinsEditor
         private int editskinnr = -1;
 
         /// <summary>
-        /// 
+        /// The current skin being created or edited.
         /// </summary>
         private Skin skin;
 
@@ -67,11 +67,11 @@ namespace SkinsEditor
             this.InitializeComponent();
             this.SetSkin(this.host.GetSettingInt("ManagenotesSkinnr"));
             this.notePreview1.Host = this.host;
-            this.LoadAllSkinNames();
+            this.LoadAllSkinNames();            
         }
 
         /// <summary>
-        /// 
+        /// Set the skin of this form.
         /// </summary>
         private void SetSkin(int skinnr)
         {
@@ -140,16 +140,6 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// Convert color object to HTML hex color.
-        /// </summary>
-        /// <param name="clr">A color object.</param>
-        /// <returns>A HTML hex color as string.</returns>
-        private string ClrToHtmlHexClr(Color clr)
-        {
-            return string.Format("#{0:X2}{1:X2}{2:X2}", clr.R, clr.G, clr.B);
-        }
-
-        /// <summary>
         /// Fill in fields by from a skin from selected skin position.
         /// </summary>
         /// <param name="skinnr">The skin position</param>
@@ -161,6 +151,7 @@ namespace SkinsEditor
             this.tbHighlightingColor.Text = this.ClrToHtmlHexClr(this.skin.HighlightClr);
             this.tbTextColor.Text = this.ClrToHtmlHexClr(this.skin.TextClr);
             this.tbPrimaryTexture.Text = this.skin.PrimaryTexture;
+            this.chxUseTexture.Checked = !string.IsNullOrEmpty(this.skin.PrimaryTexture);
             ImageLayout imglayout =  this.skin.PrimaryTextureLayout;
             switch (imglayout)
             {
@@ -178,6 +169,7 @@ namespace SkinsEditor
                     break;
             }
 
+            this.notePreview1.Visible = true;
             this.notePreview1.DrawNoteSkinPreview(this.skin);
         }
 
@@ -192,14 +184,14 @@ namespace SkinsEditor
             if (skinnr >= 0)
             {
                 this.skinaction = skineditormode.browseskins;
-                this.btnEditskin.Text = "&edit skins";
-                this.btnNewSkin.Text = "&new skin";
+                //this.btnEditskin.Text = "&edit skin";
+                //this.btnNewSkin.Text = "&new skin";
                 this.btnDeleteSkin.Enabled = true;
                 this.btnEditskin.Enabled = true;
                 this.btnNewSkin.Enabled = true;
                 this.SetFieldsEnabled(false);
 
-                this.skin = this.CreateSkin(skinnr);
+                this.skin = SkinFactory.GetSkin(this.host, skinnr);
                 this.SetFieldsCurrentSkin();
             }
             else
@@ -210,19 +202,13 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Convert color object to HTML hex color.
         /// </summary>
-        /// <param name="skinnr"></param>
-        private Skin CreateSkin(int skinnr) {
-            Skin skin = new Skin();
-            skin.Name = this.host.GetSkinName(skinnr);
-            skin.PrimaryClr = this.host.GetPrimaryClr(skinnr);
-            skin.SelectClr = this.host.GetSelectClr(skinnr);
-            skin.HighlightClr = this.host.GetHighlightClr(skinnr);
-            skin.TextClr = this.host.GetTextClr(skinnr);
-            skin.PrimaryTexture = this.host.GetPrimaryTextureFile(skinnr);
-            skin.PrimaryTextureLayout = this.host.GetPrimaryTextureLayout(skinnr);
-            return skin;
+        /// <param name="clr">A color object.</param>
+        /// <returns>A HTML hex color as string.</returns>
+        private string ClrToHtmlHexClr(Color clr)
+        {
+            return string.Format("#{0:X2}{1:X2}{2:X2}", clr.R, clr.G, clr.B);
         }
 
         /// <summary>
@@ -230,7 +216,8 @@ namespace SkinsEditor
         /// </summary>
         /// <param name="tb"></param>
         /// <returns></returns>
-        private Color ParserColorHexColor(string hexcolor) {
+        private Color HtmlHexClrToClr(string hexcolor)
+        {
             Color clr = Color.Transparent;
             try
             {
@@ -255,6 +242,7 @@ namespace SkinsEditor
             this.tbSelectingColor.Enabled = enabled;
             this.tbHighlightingColor.Enabled = enabled;
             this.tbTextColor.Enabled = enabled;
+            this.chxUseTexture.Enabled = enabled;
             this.tbPrimaryTexture.Enabled = enabled;
             this.cbxPrimaryTextureLayout.Enabled = enabled;
             this.btnBrowsePrimaryTexture.Enabled = enabled;
@@ -280,25 +268,14 @@ namespace SkinsEditor
             this.pnlClrSelecting.BackColor = Color.White;
             this.pnlClrHighlight.BackColor = Color.White;
             this.pnlClrText.BackColor = Color.White;
-            this.cbxPrimaryTextureLayout.SelectedIndex = -1;
-            this.btnEditskin.Enabled = false;
-            this.btnDeleteSkin.Enabled = false;
-        }
-
-        /// <summary>
-        /// Set all fields background back to normal (no error).
-        /// </summary>
-        private void SetAllFieldBackgroundNormal()
-        {
             this.tbPrimaryColor.BackColor = SystemColors.Window;
             this.tbSelectingColor.BackColor = SystemColors.Window;
             this.tbHighlightingColor.BackColor = SystemColors.Window;
             this.tbTextColor.BackColor = SystemColors.Window;
-            if (this.lbxSkins.SelectedIndex >= 0)
-            {
-                this.skin = this.CreateSkin(this.lbxSkins.SelectedIndex);
-                this.SetFieldsCurrentSkin();
-            }
+            this.cbxPrimaryTextureLayout.SelectedIndex = -1;
+            this.btnEditskin.Enabled = false;
+            this.btnDeleteSkin.Enabled = false;
+            this.notePreview1.Visible = false;
         }
 
         /// <summary>
@@ -311,13 +288,17 @@ namespace SkinsEditor
             this.SetFieldsEnabled(true);
             if (this.skinaction == skineditormode.editskin)
             {
+                // cancel edit skin
                 this.SetFieldsEnabled(false);
                 this.btnEditskin.Text = "&edit skin";
-                this.SetAllFieldBackgroundNormal();
+                this.ClearFields();
                 this.skinaction = skineditormode.browseskins;
+                this.skin = SkinFactory.GetSkin(this.host, this.editskinnr);
+                this.SetFieldsCurrentSkin();                    
             }
             else
             {
+                this.btnNewSkin.Text = "&new skin";
                 this.btnEditskin.Text = "cancel &edit skin";
                 this.skinaction = skineditormode.editskin;
                 this.editskinnr = this.lbxSkins.SelectedIndex;
@@ -331,13 +312,15 @@ namespace SkinsEditor
         /// <param name="e">Event arguments</param>
         private void btnNewSkin_Click(object sender, EventArgs e)
         {
+            this.notePreview1.Visible = false;
+            this.SetFieldsEnabled(false);
+            this.ClearFields();
             if (this.skinaction == skineditormode.newskin)
             {
+                // cancel new skin
                 this.btnEditskin.Enabled = true;
                 this.btnNewSkin.Text = "&new skin";
-                this.SetFieldsEnabled(false);
                 this.ClearFields();
-                this.SetAllFieldBackgroundNormal();
                 this.skinaction = skineditormode.browseskins;
                 this.lbxSkins_SelectedIndexChanged(null, null);
             }
@@ -347,8 +330,8 @@ namespace SkinsEditor
                 this.btnEditskin.Enabled = false;
                 this.btnEditskin.Text = "&edit skin";
                 this.btnNewSkin.Text = "cancel &new skin";
+                this.skin = SkinFactory.CreateDefaultNewSkin();
                 this.SetFieldsEnabled(true);
-                this.ClearFields();
                 this.skinaction = skineditormode.newskin;
             }
         }
@@ -386,18 +369,25 @@ namespace SkinsEditor
                             // Create skin object
                             Skin newsking = new Skin();
                             skin.Name = this.tbSkinName.Text;
-                            skin.PrimaryClr = this.ParserColorHexColor(this.tbPrimaryColor.Text);
-                            skin.SelectClr = this.ParserColorHexColor(this.tbSelectingColor.Text);
-                            skin.HighlightClr = this.ParserColorHexColor(this.tbHighlightingColor.Text);
-                            skin.TextClr = this.ParserColorHexColor(this.tbTextColor.Text);
+                            skin.PrimaryClr = this.HtmlHexClrToClr(this.tbPrimaryColor.Text);
+                            skin.SelectClr = this.HtmlHexClrToClr(this.tbSelectingColor.Text);
+                            skin.HighlightClr = this.HtmlHexClrToClr(this.tbHighlightingColor.Text);
+                            skin.TextClr = this.HtmlHexClrToClr(this.tbTextColor.Text);
                             skin.PrimaryTexture = this.tbPrimaryTexture.Text;
                             skin.PrimaryTextureLayout = ImageLayout.Tile;
-                            this.WriteSkinsFileNewSkin(skin);
+
+                            if (!SkinsFilehandling.WriteSkinsFileNewSkin(this.host, skin))
+                            {
+                                this.host.LogPluginError("Could not write new skin.");
+                            }
                         }
                         else if (this.skinaction == skineditormode.editskin)
                         {
                             this.btnEditskin.Text = "&edit skin";
-                            this.WriteSkinsFileEditSkin(this.editskinnr, this.skin);
+                            if (!SkinsFilehandling.WriteSkinsFileEditSkin(this.host, this.editskinnr, this.skin))
+                            {
+                                this.host.LogPluginError("Could not save edited skin.");
+                            }
                         }
 
                         this.host.ReloadAllSkins();
@@ -413,142 +403,6 @@ namespace SkinsEditor
                     this.tbSkinName.BackColor = Color.Red;
                 }
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private XmlTextWriter WriteSkinFileHeader()
-        {
-            string skinsfilepath = this.host.GetSkinsFile();
-            XmlTextWriter xmltextwriter = null;
-            xmltextwriter = new XmlTextWriter(skinsfilepath, Encoding.UTF8);
-            xmltextwriter.Formatting = Formatting.Indented;
-            xmltextwriter.WriteStartDocument(true);
-            xmltextwriter.WriteStartElement("skins");
-            return xmltextwriter;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="xmltextwriter"></param>
-        /// <returns></returns>
-        private XmlTextWriter WriteSkinFileFooter(XmlTextWriter xmltextwriter)
-        {
-            xmltextwriter.WriteEndElement();
-            xmltextwriter.WriteEndDocument();
-            return xmltextwriter;
-        }
-
-        /// <summary>
-        /// Writes the skins file to disk to with all NoteFly skins.
-        /// </summary>
-        /// <param name="editskin"></param>
-        /// <returns>true if writing skins file was succesfull.</returns>
-        private bool WriteSkinsFileEditSkin(int editskinnr, Skin editskin)
-        {
-            XmlTextWriter xmlwriter = null;
-            bool succeed = false;
-            try
-            {
-                xmlwriter = this.WriteSkinFileHeader();
-                for (int i = 0; i < this.host.CountSkins; i++)
-                {
-                    Skin currentskin = null;
-                    if (editskinnr == i)
-                    {
-                        currentskin = editskin;
-                    }
-                    else
-                    {
-                        currentskin = this.CreateSkin(i);
-                    }
-
-                    this.WriteSkin(xmlwriter, currentskin);
-                }
-
-                xmlwriter = this.WriteSkinFileFooter(xmlwriter);
-                succeed = true;
-            }
-            finally
-            {
-                if (xmlwriter != null)
-                {
-                    xmlwriter.Close();
-                }
-            }
-
-            return succeed;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="newskin"></param>
-        /// <returns></returns>
-        private bool WriteSkinsFileNewSkin(Skin newskin)
-        {
-            XmlTextWriter xmlwriter = null;
-            bool succeed = false;
-            try
-            {
-                xmlwriter = this.WriteSkinFileHeader();
-                for (int i = 0; i < this.host.CountSkins; i++)
-                {
-                    Skin currentskin = this.CreateSkin(i);
-                    this.WriteSkin(xmlwriter, currentskin);
-                }
-
-                this.WriteSkin(xmlwriter, newskin);
-                xmlwriter = this.WriteSkinFileFooter(xmlwriter);
-                succeed = true;
-            }
-            finally
-            {
-                if (xmlwriter != null)
-                {
-                    xmlwriter.Close();
-                }
-            }
-
-            return succeed;
-        }
-
-        /// <summary>
-        /// Write a skin xml element
-        /// </summary>
-        /// <param name="xmlwriter">The xmlwriter</param>
-        /// <param name="currentskin"></param>
-        private void WriteSkin(XmlWriter xmlwriter, Skin currentskin)
-        {
-            xmlwriter.WriteStartElement("skin");
-            xmlwriter.WriteElementString("Name", currentskin.Name);
-            xmlwriter.WriteStartElement("PrimaryClr");
-            if (!string.IsNullOrEmpty(currentskin.PrimaryTexture))
-            {
-                xmlwriter.WriteAttributeString("texture", currentskin.PrimaryTexture);
-                string texturelayout = "tile";
-                try
-                {
-                    texturelayout = Enum.GetName(Type.GetType("string"), currentskin.PrimaryTextureLayout).ToLowerInvariant();
-                }
-                catch (Exception exc)
-                {
-                    this.host.LogPluginError("texture layout: "+exc.Message);
-                    texturelayout = "tile";
-                }
-
-                xmlwriter.WriteAttributeString("texturelayout", texturelayout);
-            }
-
-            xmlwriter.WriteString(this.ClrToHtmlHexClr(currentskin.PrimaryClr));
-            xmlwriter.WriteEndElement();
-            xmlwriter.WriteElementString("SelectClr", this.ClrToHtmlHexClr(currentskin.SelectClr));
-            xmlwriter.WriteElementString("HighlightClr", this.ClrToHtmlHexClr(currentskin.HighlightClr));
-            xmlwriter.WriteElementString("TextClr", this.ClrToHtmlHexClr(currentskin.TextClr));
-            xmlwriter.WriteEndElement();
         }
 
         /// <summary>
@@ -633,7 +487,7 @@ namespace SkinsEditor
             {
                 int what = Convert.ToInt32(tbclr.Tag);
                 bool invalidcolor = false;
-                Color clr = this.ParserColorHexColor(tbclr.Text);
+                Color clr = this.HtmlHexClrToClr(tbclr.Text);
                 if (clr == Color.Transparent)
                 {
                     invalidcolor = true;
@@ -697,6 +551,10 @@ namespace SkinsEditor
                 }
 
                 this.tbPrimaryTexture.Text = this.openFileTextureDialog.FileName;
+                if (File.Exists(this.openFileTextureDialog.FileName))
+                {
+                    this.SetFieldsCurrentSkin();
+                }
             }
         }
 
@@ -718,8 +576,15 @@ namespace SkinsEditor
                     if (res == DialogResult.Yes)
                     {
                         this.skinaction = skineditormode.browseskins;
-                        //this.WriteSkinsFile(null, null, null, null, null, null, skinnr);
-                        this.lbxSkins.Items.RemoveAt(skinnr);
+                        if (SkinsFilehandling.WriteSkinsFileDeleteSkin(this.host, skinnr))
+                        {
+                            this.lbxSkins.Items.RemoveAt(skinnr);
+                        }
+                        else
+                        {
+                            this.host.LogPluginError("Could not delete skin.");
+                        }
+
                         this.host.ReloadAllSkins();
                         this.ClearFields();
                     }
@@ -901,6 +766,50 @@ namespace SkinsEditor
             {
                 Cursor.Current = Cursors.Hand;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbSkinName_TextChanged(object sender, EventArgs e)
+        {
+            this.skin.Name = tbSkinName.Text;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbPrimaryTexture_TextChanged(object sender, EventArgs e)
+        {
+            this.skin.PrimaryTexture = this.tbPrimaryTexture.Text;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxUseTexture_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.chxUseTexture.Checked)
+            {
+                this.skin.PrimaryTexture = this.tbPrimaryTexture.Text;
+            }
+            else
+            {
+                this.skin.PrimaryTexture = null;
+            }
+
+            if (this.skinaction == (skineditormode.newskin | skineditormode.editskin))
+            {
+                this.tbPrimaryTexture.Enabled = this.chxUseTexture.Checked;
+            }
+
+            this.notePreview1.DrawNoteSkinPreview(this.skin);
         }
     }
 }

@@ -202,6 +202,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.splitContainerContent = new System.Windows.Forms.SplitContainer();
+            this.chxUseTexture = new System.Windows.Forms.CheckBox();
             this.notePreview1 = new NoteSkinPreview();
             this.pnlHead.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -218,9 +219,9 @@
             // 
             // lbxSkins
             // 
-            this.lbxSkins.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbxSkins.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbxSkins.FormattingEnabled = true;
             this.lbxSkins.Location = new System.Drawing.Point(0, 21);
             this.lbxSkins.Name = "lbxSkins";
@@ -253,8 +254,8 @@
             // 
             // tbPrimaryTexture
             // 
-            this.tbPrimaryTexture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbPrimaryTexture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPrimaryTexture.Enabled = false;
             this.tbPrimaryTexture.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbPrimaryTexture.Location = new System.Drawing.Point(128, 56);
@@ -262,6 +263,7 @@
             this.tbPrimaryTexture.Name = "tbPrimaryTexture";
             this.tbPrimaryTexture.Size = new System.Drawing.Size(255, 22);
             this.tbPrimaryTexture.TabIndex = 53;
+            this.tbPrimaryTexture.TextChanged += new System.EventHandler(this.tbPrimaryTexture_TextChanged);
             // 
             // lblTextPrimaryTexture
             // 
@@ -282,9 +284,9 @@
             this.pnlClrText.Name = "pnlClrText";
             this.pnlClrText.Size = new System.Drawing.Size(21, 21);
             this.pnlClrText.TabIndex = 51;
+            this.pnlClrText.Click += new System.EventHandler(this.pnlClrText_Click);
             this.pnlClrText.MouseLeave += new System.EventHandler(this.BackNormalCusors);
             this.pnlClrText.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HandEnabled);
-            this.pnlClrText.Click += new System.EventHandler(this.pnlClrText_Click);
             // 
             // pnlClrHighlight
             // 
@@ -296,9 +298,9 @@
             this.pnlClrHighlight.Name = "pnlClrHighlight";
             this.pnlClrHighlight.Size = new System.Drawing.Size(21, 21);
             this.pnlClrHighlight.TabIndex = 50;
+            this.pnlClrHighlight.Click += new System.EventHandler(this.pnlClrHighlight_Click);
             this.pnlClrHighlight.MouseLeave += new System.EventHandler(this.BackNormalCusors);
             this.pnlClrHighlight.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HandEnabled);
-            this.pnlClrHighlight.Click += new System.EventHandler(this.pnlClrHighlight_Click);
             // 
             // pnlClrSelecting
             // 
@@ -310,9 +312,9 @@
             this.pnlClrSelecting.Name = "pnlClrSelecting";
             this.pnlClrSelecting.Size = new System.Drawing.Size(21, 21);
             this.pnlClrSelecting.TabIndex = 49;
+            this.pnlClrSelecting.Click += new System.EventHandler(this.pnlClrSelecting_Click);
             this.pnlClrSelecting.MouseLeave += new System.EventHandler(this.BackNormalCusors);
             this.pnlClrSelecting.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HandEnabled);
-            this.pnlClrSelecting.Click += new System.EventHandler(this.pnlClrSelecting_Click);
             // 
             // pnlClrPrimary
             // 
@@ -324,14 +326,14 @@
             this.pnlClrPrimary.Name = "pnlClrPrimary";
             this.pnlClrPrimary.Size = new System.Drawing.Size(21, 21);
             this.pnlClrPrimary.TabIndex = 48;
+            this.pnlClrPrimary.Click += new System.EventHandler(this.pnlClrPrimary_Click);
             this.pnlClrPrimary.MouseLeave += new System.EventHandler(this.BackNormalCusors);
             this.pnlClrPrimary.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HandEnabled);
-            this.pnlClrPrimary.Click += new System.EventHandler(this.pnlClrPrimary_Click);
             // 
             // lblTextSkinname
             // 
             this.lblTextSkinname.AutoSize = true;
-            this.lblTextSkinname.Location = new System.Drawing.Point(21, 28);
+            this.lblTextSkinname.Location = new System.Drawing.Point(21, 11);
             this.lblTextSkinname.Name = "lblTextSkinname";
             this.lblTextSkinname.Size = new System.Drawing.Size(60, 13);
             this.lblTextSkinname.TabIndex = 30;
@@ -354,15 +356,16 @@
             // 
             // tbSkinName
             // 
-            this.tbSkinName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSkinName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSkinName.Enabled = false;
             this.tbSkinName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbSkinName.Location = new System.Drawing.Point(128, 25);
+            this.tbSkinName.Location = new System.Drawing.Point(128, 6);
             this.tbSkinName.MaxLength = 200;
             this.tbSkinName.Name = "tbSkinName";
             this.tbSkinName.Size = new System.Drawing.Size(145, 22);
             this.tbSkinName.TabIndex = 31;
+            this.tbSkinName.TextChanged += new System.EventHandler(this.tbSkinName_TextChanged);
             // 
             // btnNewSkin
             // 
@@ -495,7 +498,7 @@
             // lblTextPrimartTextureLayout
             // 
             this.lblTextPrimartTextureLayout.AutoSize = true;
-            this.lblTextPrimartTextureLayout.Location = new System.Drawing.Point(21, 86);
+            this.lblTextPrimartTextureLayout.Location = new System.Drawing.Point(21, 91);
             this.lblTextPrimartTextureLayout.Name = "lblTextPrimartTextureLayout";
             this.lblTextPrimartTextureLayout.Size = new System.Drawing.Size(77, 13);
             this.lblTextPrimartTextureLayout.TabIndex = 56;
@@ -510,7 +513,7 @@
             "Tiled",
             "Centred",
             "Screted"});
-            this.cbxPrimaryTextureLayout.Location = new System.Drawing.Point(128, 83);
+            this.cbxPrimaryTextureLayout.Location = new System.Drawing.Point(128, 88);
             this.cbxPrimaryTextureLayout.MaxDropDownItems = 3;
             this.cbxPrimaryTextureLayout.Name = "cbxPrimaryTextureLayout";
             this.cbxPrimaryTextureLayout.Size = new System.Drawing.Size(118, 21);
@@ -527,8 +530,8 @@
             this.pnlHead.Name = "pnlHead";
             this.pnlHead.Size = new System.Drawing.Size(600, 30);
             this.pnlHead.TabIndex = 58;
-            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // btnClose
@@ -600,9 +603,9 @@
             // 
             // splitContainerContent
             // 
-            this.splitContainerContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainerContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainerContent.Location = new System.Drawing.Point(7, 32);
             this.splitContainerContent.Name = "splitContainerContent";
             // 
@@ -614,6 +617,7 @@
             // 
             // splitContainerContent.Panel2
             // 
+            this.splitContainerContent.Panel2.Controls.Add(this.chxUseTexture);
             this.splitContainerContent.Panel2.Controls.Add(this.notePreview1);
             this.splitContainerContent.Panel2.Controls.Add(this.lblTextSkinname);
             this.splitContainerContent.Panel2.Controls.Add(this.btnSaveSkin);
@@ -638,6 +642,18 @@
             this.splitContainerContent.Size = new System.Drawing.Size(588, 312);
             this.splitContainerContent.SplitterDistance = 117;
             this.splitContainerContent.TabIndex = 59;
+            // 
+            // chxUseTexture
+            // 
+            this.chxUseTexture.AutoSize = true;
+            this.chxUseTexture.Enabled = false;
+            this.chxUseTexture.Location = new System.Drawing.Point(128, 34);
+            this.chxUseTexture.Name = "chxUseTexture";
+            this.chxUseTexture.Size = new System.Drawing.Size(80, 17);
+            this.chxUseTexture.TabIndex = 59;
+            this.chxUseTexture.Text = "Use texture";
+            this.chxUseTexture.UseVisualStyleBackColor = true;
+            this.chxUseTexture.CheckedChanged += new System.EventHandler(this.chxUseTexture_CheckedChanged);
             // 
             // notePreview1
             // 
@@ -682,7 +698,7 @@
         private System.Windows.Forms.PictureBox pbResizeGrip;
         private System.Windows.Forms.SplitContainer splitContainerContent;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private NoteSkinPreview NotePreview;
         private NoteSkinPreview notePreview1;
+        private System.Windows.Forms.CheckBox chxUseTexture;
     }
 }
