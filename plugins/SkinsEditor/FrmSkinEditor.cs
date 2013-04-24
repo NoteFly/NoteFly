@@ -82,8 +82,8 @@ namespace SkinsEditor
             this.btnDeleteSkin.FlatAppearance.MouseDownBackColor = this.host.GetSelectClr(skinnr);
             this.btnNewSkin.BackColor = this.host.GetPrimaryClr(skinnr);
             this.btnNewSkin.FlatAppearance.MouseDownBackColor = this.host.GetSelectClr(skinnr);
-            this.btnEditskin.BackColor = this.host.GetPrimaryClr(skinnr);
-            this.btnEditskin.FlatAppearance.MouseDownBackColor = this.host.GetSelectClr(skinnr);
+            this.btnEditSkin.BackColor = this.host.GetPrimaryClr(skinnr);
+            this.btnEditSkin.FlatAppearance.MouseDownBackColor = this.host.GetSelectClr(skinnr);
             this.btnSaveSkin.BackColor = this.host.GetPrimaryClr(skinnr);
             this.btnSaveSkin.FlatAppearance.MouseDownBackColor = this.host.GetSelectClr(skinnr);
             if (this.host.GetPrimaryTexture(skinnr) != null)
@@ -130,6 +130,46 @@ namespace SkinsEditor
         }
 
         /// <summary>
+        /// Set the mode of the editor.
+        /// </summary>
+        /// <param name="newmode"></param>
+        private void setEditorMode(skineditormode newmode)
+        {
+            switch (newmode)
+            {
+                case skineditormode.browseskins:
+                    this.btnEditSkin.Text = "&edit skin";
+                    this.btnNewSkin.Text = "&new skin";
+                    this.btnNewSkin.Enabled = true;
+                    this.btnEditSkin.Enabled = true;
+                    this.btnDeleteSkin.Enabled = true;
+                    this.SetFieldsEnabled(false);
+                    this.skin = SkinFactory.GetSkin(this.host, this.lbxSkins.SelectedIndex);
+                    this.SetFieldsCurrentSkin();
+                    break;
+                case skineditormode.editskin:
+                    this.btnEditSkin.Text = "cancel &edit skin";
+                    this.btnNewSkin.Text = "&new skin";
+                    this.editskinnr = this.lbxSkins.SelectedIndex;
+                    this.SetFieldsEnabled(true);
+                    this.btnNewSkin.Enabled = false;
+                    this.skin = SkinFactory.GetSkin(this.host, this.editskinnr);
+                    this.SetFieldsCurrentSkin();
+                    break;
+                case skineditormode.newskin:
+                    this.btnEditSkin.Text = "&edit skin";
+                    this.btnNewSkin.Text = "cancel &new skin";
+                    this.ClearFields();
+                    this.btnEditSkin.Enabled = false;
+                    this.skin = SkinFactory.CreateDefaultNewSkin();
+                    this.SetFieldsEnabled(true);
+                    break;
+            }
+
+            this.skinaction = newmode;
+        }
+
+        /// <summary>
         /// Closed the skin editor form.
         /// </summary>
         /// <param name="sender">Sender object</param>
@@ -146,10 +186,10 @@ namespace SkinsEditor
         private void SetFieldsCurrentSkin()
         {
             this.tbSkinName.Text = this.skin.Name;
-            this.tbPrimaryColor.Text = this.ClrToHtmlHexClr(this.skin.PrimaryClr);
-            this.tbSelectingColor.Text = this.ClrToHtmlHexClr(this.skin.SelectClr);
-            this.tbHighlightingColor.Text = this.ClrToHtmlHexClr(this.skin.HighlightClr);
-            this.tbTextColor.Text = this.ClrToHtmlHexClr(this.skin.TextClr);
+            this.tbPrimaryColor.Text = SkinFactory.ClrObjToHtmlHexClr(this.skin.PrimaryClr);
+            this.tbSelectingColor.Text = SkinFactory.ClrObjToHtmlHexClr(this.skin.SelectClr);
+            this.tbHighlightingColor.Text = SkinFactory.ClrObjToHtmlHexClr(this.skin.HighlightClr);
+            this.tbTextColor.Text = SkinFactory.ClrObjToHtmlHexClr(this.skin.TextClr);
             this.tbPrimaryTexture.Text = this.skin.PrimaryTexture;
             this.chxUseTexture.Checked = !string.IsNullOrEmpty(this.skin.PrimaryTexture);
             ImageLayout imglayout =  this.skin.PrimaryTextureLayout;
@@ -180,55 +220,7 @@ namespace SkinsEditor
         /// <param name="e">Event arguments</param>
         private void lbxSkins_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int skinnr = this.lbxSkins.SelectedIndex;
-            if (skinnr >= 0)
-            {
-                this.skinaction = skineditormode.browseskins;
-                //this.btnEditskin.Text = "&edit skin";
-                //this.btnNewSkin.Text = "&new skin";
-                this.btnDeleteSkin.Enabled = true;
-                this.btnEditskin.Enabled = true;
-                this.btnNewSkin.Enabled = true;
-                this.SetFieldsEnabled(false);
-
-                this.skin = SkinFactory.GetSkin(this.host, skinnr);
-                this.SetFieldsCurrentSkin();
-            }
-            else
-            {
-                this.btnDeleteSkin.Enabled = false;
-                this.btnEditskin.Enabled = false;
-            }
-        }
-
-        /// <summary>
-        /// Convert color object to HTML hex color.
-        /// </summary>
-        /// <param name="clr">A color object.</param>
-        /// <returns>A HTML hex color as string.</returns>
-        private string ClrToHtmlHexClr(Color clr)
-        {
-            return string.Format("#{0:X2}{1:X2}{2:X2}", clr.R, clr.G, clr.B);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="tb"></param>
-        /// <returns></returns>
-        private Color HtmlHexClrToClr(string hexcolor)
-        {
-            Color clr = Color.Transparent;
-            try
-            {
-                clr = ColorTranslator.FromHtml(hexcolor);
-            }
-            catch (Exception)
-            {
-                this.host.LogPluginInfo("invalid hexcolor: " + hexcolor);
-            }
-
-            return clr;
+            this.setEditorMode(skineditormode.browseskins);
         }
 
         /// <summary>
@@ -273,7 +265,7 @@ namespace SkinsEditor
             this.tbHighlightingColor.BackColor = SystemColors.Window;
             this.tbTextColor.BackColor = SystemColors.Window;
             this.cbxPrimaryTextureLayout.SelectedIndex = -1;
-            this.btnEditskin.Enabled = false;
+            this.btnEditSkin.Enabled = false;
             this.btnDeleteSkin.Enabled = false;
             this.notePreview1.Visible = false;
         }
@@ -285,54 +277,32 @@ namespace SkinsEditor
         /// <param name="e">Event arguments</param>
         private void btnEditskin_Click(object sender, EventArgs e)
         {
-            this.SetFieldsEnabled(true);
             if (this.skinaction == skineditormode.editskin)
             {
                 // cancel edit skin
-                this.SetFieldsEnabled(false);
-                this.btnEditskin.Text = "&edit skin";
-                this.ClearFields();
-                this.skinaction = skineditormode.browseskins;
-                this.skin = SkinFactory.GetSkin(this.host, this.editskinnr);
-                this.SetFieldsCurrentSkin();                    
+                this.setEditorMode(skineditormode.browseskins);
             }
             else
             {
-                this.btnNewSkin.Text = "&new skin";
-                this.btnEditskin.Text = "cancel &edit skin";
-                this.skinaction = skineditormode.editskin;
-                this.editskinnr = this.lbxSkins.SelectedIndex;
+                this.setEditorMode(skineditormode.editskin);
             }
         }
 
         /// <summary>
-        /// requested to create new skin.
+        /// Requested to create new skin.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void btnNewSkin_Click(object sender, EventArgs e)
         {
-            this.notePreview1.Visible = false;
-            this.SetFieldsEnabled(false);
-            this.ClearFields();
             if (this.skinaction == skineditormode.newskin)
             {
                 // cancel new skin
-                this.btnEditskin.Enabled = true;
-                this.btnNewSkin.Text = "&new skin";
-                this.ClearFields();
-                this.skinaction = skineditormode.browseskins;
-                this.lbxSkins_SelectedIndexChanged(null, null);
+                this.setEditorMode(skineditormode.browseskins);
             }
             else
             {
-                this.lbxSkins.ClearSelected();
-                this.btnEditskin.Enabled = false;
-                this.btnEditskin.Text = "&edit skin";
-                this.btnNewSkin.Text = "cancel &new skin";
-                this.skin = SkinFactory.CreateDefaultNewSkin();
-                this.SetFieldsEnabled(true);
-                this.skinaction = skineditormode.newskin;
+                this.setEditorMode(skineditormode.newskin);
             }
         }
 
@@ -366,24 +336,22 @@ namespace SkinsEditor
                         {
                             this.lbxSkins.Items.Add(this.tbSkinName.Text);
                             this.btnNewSkin.Text = "&new skin";
-                            // Create skin object
-                            Skin newsking = new Skin();
-                            skin.Name = this.tbSkinName.Text;
-                            skin.PrimaryClr = this.HtmlHexClrToClr(this.tbPrimaryColor.Text);
-                            skin.SelectClr = this.HtmlHexClrToClr(this.tbSelectingColor.Text);
-                            skin.HighlightClr = this.HtmlHexClrToClr(this.tbHighlightingColor.Text);
-                            skin.TextClr = this.HtmlHexClrToClr(this.tbTextColor.Text);
-                            skin.PrimaryTexture = this.tbPrimaryTexture.Text;
-                            skin.PrimaryTextureLayout = ImageLayout.Tile;
+                            this.skin.Name = this.tbSkinName.Text;
+                            this.skin.PrimaryClr = SkinFactory.HtmlHexClrToClrObj(this.host, this.tbPrimaryColor.Text);
+                            this.skin.SelectClr = SkinFactory.HtmlHexClrToClrObj(this.host, this.tbSelectingColor.Text);
+                            this.skin.HighlightClr = SkinFactory.HtmlHexClrToClrObj(this.host, this.tbHighlightingColor.Text);
+                            this.skin.TextClr = SkinFactory.HtmlHexClrToClrObj(this.host, this.tbTextColor.Text);
+                            this.skin.PrimaryTexture = this.tbPrimaryTexture.Text;
+                            this.skin.PrimaryTextureLayout = ImageLayout.Tile; // todo
 
-                            if (!SkinsFilehandling.WriteSkinsFileNewSkin(this.host, skin))
+                            if (!SkinsFilehandling.WriteSkinsFileNewSkin(this.host, this.skin))
                             {
                                 this.host.LogPluginError("Could not write new skin.");
                             }
                         }
                         else if (this.skinaction == skineditormode.editskin)
                         {
-                            this.btnEditskin.Text = "&edit skin";
+                            this.btnEditSkin.Text = "&edit skin";
                             if (!SkinsFilehandling.WriteSkinsFileEditSkin(this.host, this.editskinnr, this.skin))
                             {
                                 this.host.LogPluginError("Could not save edited skin.");
@@ -485,27 +453,31 @@ namespace SkinsEditor
             TextBox tbclr = (TextBox)sender;
             if (this.CheckProperHTMLColorTb(tbclr))
             {
-                int what = Convert.ToInt32(tbclr.Tag);
+                int tbnr = Convert.ToInt32(tbclr.Tag);
                 bool invalidcolor = false;
-                Color clr = this.HtmlHexClrToClr(tbclr.Text);
+                Color clr = SkinFactory.HtmlHexClrToClrObj(this.host, tbclr.Text);
                 if (clr == Color.Transparent)
                 {
                     invalidcolor = true;
                 }
 
-                switch (what)
+                switch (tbnr)
                 {
                     case 1:
                         this.setControlColorExample(invalidcolor, clr, this.tbPrimaryColor, this.pnlClrPrimary);
+                        this.skin.PrimaryClr = clr;
                         break;
                     case 2:
                         this.setControlColorExample(invalidcolor, clr, this.tbSelectingColor, this.pnlClrSelecting);
+                        this.skin.SelectClr = clr;
                         break;
                     case 3:
                         this.setControlColorExample(invalidcolor, clr, this.tbHighlightingColor, this.pnlClrHighlight);
+                        this.skin.HighlightClr = clr;
                         break;
                     case 4:
                         this.setControlColorExample(invalidcolor, clr, this.tbTextColor, this.pnlClrText);
+                        this.skin.TextClr = clr;
                         break;
                 }
             }
@@ -628,7 +600,7 @@ namespace SkinsEditor
                 int dpx = e.Location.X - this.oldp.X;
                 int dpy = e.Location.Y - this.oldp.Y;
 
-                // limit the moving of this note under mono/linux so this note cannot move uncontrolled a lot.
+                // Limit the moving of this note under mono/linux so this note cannot move uncontrolled a lot.
                 const int movelimit = 8;
                 if (dpx > movelimit)
                 {
@@ -653,7 +625,7 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// 'Titlebar' releases.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -664,7 +636,7 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Resizing skineditor.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -684,63 +656,35 @@ namespace SkinsEditor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void pnlClrPrimary_Click(object sender, EventArgs e)
+        private void ShowColorDlg(object sender, EventArgs e)
         {
             DialogResult dlgres = this.colordlg.ShowDialog();
             if (dlgres == DialogResult.OK)
             {
-                this.skin.PrimaryClr = this.colordlg.Color;
-                SetFieldsCurrentSkin();
+                Panel pnl = (Panel)sender;
+                int pnlnr = Convert.ToInt32(pnl.Tag);
+                switch (pnlnr)
+                {
+                    case 1:
+                        this.skin.PrimaryClr = this.colordlg.Color;
+                        break;
+                    case 2:
+                        this.skin.SelectClr = this.colordlg.Color;
+                        break;
+                    case 3:
+                        this.skin.HighlightClr = this.colordlg.Color;
+                        break;
+                    case 4:
+                        this.skin.TextClr = this.colordlg.Color;
+                        break;
+                }
+
+                this.SetFieldsCurrentSkin();
             }
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pnlClrSelecting_Click(object sender, EventArgs e)
-        {
-            DialogResult dlgres = this.colordlg.ShowDialog();
-            if (dlgres == DialogResult.OK)
-            {
-                this.skin.SelectClr = this.colordlg.Color;
-                SetFieldsCurrentSkin();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pnlClrHighlight_Click(object sender, EventArgs e)
-        {
-            DialogResult dlgres = this.colordlg.ShowDialog();
-            if (dlgres == DialogResult.OK)
-            {
-                this.skin.HighlightClr = this.colordlg.Color;
-                SetFieldsCurrentSkin();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pnlClrText_Click(object sender, EventArgs e)
-        {
-            DialogResult dlgres = this.colordlg.ShowDialog();
-            if (dlgres == DialogResult.OK)
-            {
-                this.skin.TextClr = this.colordlg.Color;
-                SetFieldsCurrentSkin();
-            }
-        }
-
-        /// <summary>
-        /// 
+        /// Set the cursor back to normal.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -750,7 +694,7 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Set the cursor to hand.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -769,13 +713,16 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Set the current skin name.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void tbSkinName_TextChanged(object sender, EventArgs e)
         {
-            this.skin.Name = tbSkinName.Text;
+            if (this.CheckProperSkinnameTb())
+            {
+                this.skin.Name = tbSkinName.Text;
+            }
         }
 
         /// <summary>
@@ -785,7 +732,10 @@ namespace SkinsEditor
         /// <param name="e"></param>
         private void tbPrimaryTexture_TextChanged(object sender, EventArgs e)
         {
-            this.skin.PrimaryTexture = this.tbPrimaryTexture.Text;
+            if (this.CheckProperHTMLColorTb(this.tbPrimaryColor))
+            {
+                this.skin.PrimaryTexture = this.tbPrimaryTexture.Text;
+            }                
         }
 
         /// <summary>

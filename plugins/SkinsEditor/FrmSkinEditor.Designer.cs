@@ -73,7 +73,7 @@
         /// <summary>
         /// 
         /// </summary>
-        private System.Windows.Forms.Button btnEditskin;
+        private System.Windows.Forms.Button btnEditSkin;
 
         /// <summary>
         /// 
@@ -180,7 +180,7 @@
             this.pnlClrSelecting = new System.Windows.Forms.Panel();
             this.pnlClrPrimary = new System.Windows.Forms.Panel();
             this.lblTextSkinname = new System.Windows.Forms.Label();
-            this.btnEditskin = new System.Windows.Forms.Button();
+            this.btnEditSkin = new System.Windows.Forms.Button();
             this.tbSkinName = new System.Windows.Forms.TextBox();
             this.btnNewSkin = new System.Windows.Forms.Button();
             this.lblTextPrimarycolor = new System.Windows.Forms.Label();
@@ -284,7 +284,8 @@
             this.pnlClrText.Name = "pnlClrText";
             this.pnlClrText.Size = new System.Drawing.Size(21, 21);
             this.pnlClrText.TabIndex = 51;
-            this.pnlClrText.Click += new System.EventHandler(this.pnlClrText_Click);
+            this.pnlClrText.Tag = "4";
+            this.pnlClrText.Click += new System.EventHandler(this.ShowColorDlg);
             this.pnlClrText.MouseLeave += new System.EventHandler(this.BackNormalCusors);
             this.pnlClrText.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HandEnabled);
             // 
@@ -298,7 +299,8 @@
             this.pnlClrHighlight.Name = "pnlClrHighlight";
             this.pnlClrHighlight.Size = new System.Drawing.Size(21, 21);
             this.pnlClrHighlight.TabIndex = 50;
-            this.pnlClrHighlight.Click += new System.EventHandler(this.pnlClrHighlight_Click);
+            this.pnlClrHighlight.Tag = "3";
+            this.pnlClrHighlight.Click += new System.EventHandler(this.ShowColorDlg);
             this.pnlClrHighlight.MouseLeave += new System.EventHandler(this.BackNormalCusors);
             this.pnlClrHighlight.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HandEnabled);
             // 
@@ -312,7 +314,8 @@
             this.pnlClrSelecting.Name = "pnlClrSelecting";
             this.pnlClrSelecting.Size = new System.Drawing.Size(21, 21);
             this.pnlClrSelecting.TabIndex = 49;
-            this.pnlClrSelecting.Click += new System.EventHandler(this.pnlClrSelecting_Click);
+            this.pnlClrSelecting.Tag = "2";
+            this.pnlClrSelecting.Click += new System.EventHandler(this.ShowColorDlg);
             this.pnlClrSelecting.MouseLeave += new System.EventHandler(this.BackNormalCusors);
             this.pnlClrSelecting.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HandEnabled);
             // 
@@ -326,7 +329,8 @@
             this.pnlClrPrimary.Name = "pnlClrPrimary";
             this.pnlClrPrimary.Size = new System.Drawing.Size(21, 21);
             this.pnlClrPrimary.TabIndex = 48;
-            this.pnlClrPrimary.Click += new System.EventHandler(this.pnlClrPrimary_Click);
+            this.pnlClrPrimary.Tag = "1";
+            this.pnlClrPrimary.Click += new System.EventHandler(this.ShowColorDlg);
             this.pnlClrPrimary.MouseLeave += new System.EventHandler(this.BackNormalCusors);
             this.pnlClrPrimary.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HandEnabled);
             // 
@@ -339,20 +343,20 @@
             this.lblTextSkinname.TabIndex = 30;
             this.lblTextSkinname.Text = "Skin name:";
             // 
-            // btnEditskin
+            // btnEditSkin
             // 
-            this.btnEditskin.BackColor = System.Drawing.Color.Silver;
-            this.btnEditskin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnEditskin.Enabled = false;
-            this.btnEditskin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditskin.Location = new System.Drawing.Point(401, 3);
-            this.btnEditskin.Name = "btnEditskin";
-            this.btnEditskin.Size = new System.Drawing.Size(194, 21);
-            this.btnEditskin.TabIndex = 46;
-            this.btnEditskin.Text = "&edit skin";
-            this.btnEditskin.UseCompatibleTextRendering = true;
-            this.btnEditskin.UseVisualStyleBackColor = false;
-            this.btnEditskin.Click += new System.EventHandler(this.btnEditskin_Click);
+            this.btnEditSkin.BackColor = System.Drawing.Color.Silver;
+            this.btnEditSkin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnEditSkin.Enabled = false;
+            this.btnEditSkin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditSkin.Location = new System.Drawing.Point(401, 3);
+            this.btnEditSkin.Name = "btnEditSkin";
+            this.btnEditSkin.Size = new System.Drawing.Size(194, 21);
+            this.btnEditSkin.TabIndex = 46;
+            this.btnEditSkin.Text = "&edit skin";
+            this.btnEditSkin.UseCompatibleTextRendering = true;
+            this.btnEditSkin.UseVisualStyleBackColor = false;
+            this.btnEditSkin.Click += new System.EventHandler(this.btnEditskin_Click);
             // 
             // tbSkinName
             // 
@@ -578,7 +582,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.4F));
             this.tableLayoutPanel1.Controls.Add(this.btnDeleteSkin, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnNewSkin, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnEditskin, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnEditSkin, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";

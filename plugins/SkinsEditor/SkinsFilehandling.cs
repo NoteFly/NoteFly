@@ -188,15 +188,19 @@ namespace SkinsEditor
             {
                 xmlwriter.WriteAttributeString("texture", currentskin.PrimaryTexture);
                 string texturelayout = "tile";
-                texturelayout = Enum.GetName(Type.GetType("string"), currentskin.PrimaryTextureLayout).ToLowerInvariant();
+                if (currentskin.PrimaryTextureLayout != null)
+                {
+                    //texturelayout = Enum.GetName(typeof(currentskin), currentskin.PrimaryTextureLayout).ToLowerInvariant();
+                }
+                
                 xmlwriter.WriteAttributeString("texturelayout", texturelayout);
             }
 
-            xmlwriter.WriteString(SkinFactory.ClrToHtmlHexClr(currentskin.PrimaryClr));
+            xmlwriter.WriteString(SkinFactory.ClrObjToHtmlHexClr(currentskin.PrimaryClr));
             xmlwriter.WriteEndElement();
-            xmlwriter.WriteElementString("SelectClr", SkinFactory.ClrToHtmlHexClr(currentskin.SelectClr));
-            xmlwriter.WriteElementString("HighlightClr", SkinFactory.ClrToHtmlHexClr(currentskin.HighlightClr));
-            xmlwriter.WriteElementString("TextClr", SkinFactory.ClrToHtmlHexClr(currentskin.TextClr));
+            xmlwriter.WriteElementString("SelectClr", SkinFactory.ClrObjToHtmlHexClr(currentskin.SelectClr));
+            xmlwriter.WriteElementString("HighlightClr", SkinFactory.ClrObjToHtmlHexClr(currentskin.HighlightClr));
+            xmlwriter.WriteElementString("TextClr", SkinFactory.ClrObjToHtmlHexClr(currentskin.TextClr));
             xmlwriter.WriteEndElement();
         }
     }

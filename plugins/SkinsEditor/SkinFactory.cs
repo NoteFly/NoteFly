@@ -61,11 +61,31 @@ namespace SkinsEditor
         /// <summary>
         /// Convert color object to HTML hex color string.
         /// </summary>
-        /// <param name="clr">A color object.</param>
+        /// <param name="clrobj">A color object.</param>
         /// <returns>A HTML hex color as string.</returns>
-        public static string ClrToHtmlHexClr(Color clr)
+        public static string ClrObjToHtmlHexClr(Color clrobj)
         {
-            return string.Format("#{0:X2}{1:X2}{2:X2}", clr.R, clr.G, clr.B);
+            return string.Format("#{0:X2}{1:X2}{2:X2}", clrobj.R, clrobj.G, clrobj.B);
+        }
+
+        /// <summary>
+        /// Convert HTML hex color string to a color object.
+        /// </summary>
+        /// <param name="tb"></param>
+        /// <returns></returns>
+        public static Color HtmlHexClrToClrObj(IPlugin.IPluginHost host, string hexcolor)
+        {
+            Color clr = Color.Transparent;
+            try
+            {
+                clr = ColorTranslator.FromHtml(hexcolor);
+            }
+            catch (Exception)
+            {
+                host.LogPluginError("Invalid html hex color: " + hexcolor);
+            }
+
+            return clr;
         }
     }
 }
