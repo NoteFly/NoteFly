@@ -1037,6 +1037,27 @@ namespace NoteFly
             return addsucceeded;
         }
 
+        /// <summary>
+        /// Get install folder of program 
+        /// Wrapper method for plugins.
+        /// </summary>
+        /// <returns></returns>
+        public string GetInstallFolder()
+        {
+            return Program.InstallFolder;
+        }
+
+        /// <summary>
+        /// Get operating system this program is running on
+        /// Wrapper method for plugins.
+        /// </summary>
+        /// <returns>Enum value as string.</returns>
+        public string GetOS()
+        {
+            string os = Enum.GetName(Program.CurrentOS.GetType(), Program.CurrentOS);
+            return os;
+        }
+
         #endregion Methods
     }
 }

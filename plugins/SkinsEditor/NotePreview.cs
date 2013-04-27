@@ -19,6 +19,9 @@
 //-----------------------------------------------------------------------
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
+using System.Reflection;
+using System;
 
 namespace SkinsEditor
 {
@@ -67,9 +70,22 @@ namespace SkinsEditor
             this.lblPreviewNoteTitle.Font = new Font(this.host.GetSettingString("FontTitleFamily"), this.host.GetSettingFloat("FontTitleSize"), titlestyle);
             this.lblPreviewNoteContent.ForeColor = skin.TextClr;
             this.lblPreviewNoteContent.Font = new Font(this.host.GetSettingString("FontContentFamily"), this.host.GetSettingFloat("FontContentSize"));
+            bool useprimarytexture = false;
             if (!string.IsNullOrEmpty(skin.PrimaryTexture))
             {
-                this.pnlPreviewNoteWindow.BackgroundImage = Image.FromFile(skin.PrimaryTexture);
+                if (File.Exists(skin.PrimaryTexture))
+                {
+                    this.pnlPreviewNoteWindow.BackgroundImage = Image.FromFile(skin.PrimaryTexture);
+                    useprimarytexture  = true;
+                }
+                else if (File.Exists(this.host.GetInstallFolder() + skin.PrimaryTexture))
+                {
+                    this.pnlPreviewNoteWindow.BackgroundImage = Image.FromFile(this.host.GetInstallFolder() + skin.PrimaryTexture);
+                    useprimarytexture = true;
+                }
+            }    
+
+            if (useprimarytexture) {
                 this.pnlPreviewNoteWindow.BackgroundImageLayout = skin.PrimaryTextureLayout;
                 this.pnlPreviewNoteHead.BackColor = Color.Transparent;
                 this.pnlPreviewNoteContent.BackColor = Color.Transparent;

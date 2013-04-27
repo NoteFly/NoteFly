@@ -206,5 +206,17 @@ namespace IPlugin
         /// <param name="settingsname">The setting name to look the value for.</param>
         /// <returns>String setting value.</returns>
         string GetSettingString(string settingsname);
+
+        /// <summary>
+        /// Get the installation folder.
+        /// </summary>
+        /// <returns></returns>
+        string GetInstallFolder();
+
+        /// <summary>
+        /// Get the operating system where this program is running on.
+        /// </summary>
+        /// <returns></returns>
+        string GetOS();
     }
 }

@@ -23,6 +23,7 @@ namespace SkinsEditor
     using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
+    using System.Reflection;
     using System.Text;
     using System.Xml;
 
@@ -187,10 +188,14 @@ namespace SkinsEditor
             if (!string.IsNullOrEmpty(currentskin.PrimaryTexture))
             {
                 xmlwriter.WriteAttributeString("texture", currentskin.PrimaryTexture);
-                string texturelayout = "tile";
-                if (currentskin.PrimaryTextureLayout != null)
+                string texturelayout;
+                try
                 {
-                    //texturelayout = Enum.GetName(typeof(currentskin), currentskin.PrimaryTextureLayout).ToLowerInvariant();
+                    texturelayout = Enum.GetName(currentskin.PrimaryTextureLayout.GetType(), currentskin.PrimaryTextureLayout);
+                }
+                catch (Exception)
+                {
+                    texturelayout = "tile";
                 }
                 
                 xmlwriter.WriteAttributeString("texturelayout", texturelayout);

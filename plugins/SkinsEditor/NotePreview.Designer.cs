@@ -77,13 +77,11 @@
             this.pnlPreviewNoteHead.Name = "pnlPreviewNoteHead";
             this.pnlPreviewNoteHead.Size = new System.Drawing.Size(200, 31);
             this.pnlPreviewNoteHead.TabIndex = 1;
-            //this.pnlPreviewNoteHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlPreviewNoteHead_MouseDown);
-            //this.pnlPreviewNoteHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlPreviewNoteHead_MouseUp);
             // 
             // btnPreviewNoteBtnClose
             // 
-            this.btnPreviewNoteBtnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPreviewNoteBtnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.btnPreviewNoteBtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPreviewNoteBtnClose.Location = new System.Drawing.Point(164, 3);
             this.btnPreviewNoteBtnClose.Name = "btnPreviewNoteBtnClose";
@@ -117,14 +115,14 @@
             // 
             // lblPreviewNoteContent
             // 
-            this.lblPreviewNoteContent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPreviewNoteContent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPreviewNoteContent.Location = new System.Drawing.Point(6, 9);
             this.lblPreviewNoteContent.Name = "lblPreviewNoteContent";
             this.lblPreviewNoteContent.Size = new System.Drawing.Size(182, 118);
             this.lblPreviewNoteContent.TabIndex = 61;
             this.lblPreviewNoteContent.Text = "Test test test test test test test test test test test  test test test test test " +
-                "test test test test test \r\n";
+    "test test test test test \r\n";
             // 
             // picboxPreviewNoteResizegrid
             // 

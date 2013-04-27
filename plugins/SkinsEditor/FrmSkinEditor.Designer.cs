@@ -345,7 +345,7 @@
             // 
             // btnEditSkin
             // 
-            this.btnEditSkin.BackColor = System.Drawing.Color.Silver;
+            this.btnEditSkin.BackColor = System.Drawing.Color.Transparent;
             this.btnEditSkin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnEditSkin.Enabled = false;
             this.btnEditSkin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -373,7 +373,7 @@
             // 
             // btnNewSkin
             // 
-            this.btnNewSkin.BackColor = System.Drawing.Color.Silver;
+            this.btnNewSkin.BackColor = System.Drawing.Color.Transparent;
             this.btnNewSkin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnNewSkin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNewSkin.Location = new System.Drawing.Point(202, 3);
@@ -396,7 +396,7 @@
             // 
             // btnSaveSkin
             // 
-            this.btnSaveSkin.BackColor = System.Drawing.Color.Silver;
+            this.btnSaveSkin.BackColor = System.Drawing.Color.Transparent;
             this.btnSaveSkin.Enabled = false;
             this.btnSaveSkin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveSkin.Location = new System.Drawing.Point(128, 233);
@@ -485,7 +485,7 @@
             // 
             // btnDeleteSkin
             // 
-            this.btnDeleteSkin.BackColor = System.Drawing.Color.Silver;
+            this.btnDeleteSkin.BackColor = System.Drawing.Color.Transparent;
             this.btnDeleteSkin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDeleteSkin.Enabled = false;
             this.btnDeleteSkin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -596,7 +596,6 @@
             this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbResizeGrip.BackColor = System.Drawing.Color.Transparent;
             this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbResizeGrip.Image = global::SkinsEditor.Properties.Resources.hoekje;
             this.pbResizeGrip.Location = new System.Drawing.Point(582, 332);
             this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
             this.pbResizeGrip.Name = "pbResizeGrip";

@@ -232,6 +232,7 @@ namespace NoteFly
         {
             this.BackColor = this.notes.GetPrimaryClr(Settings.ManagenotesSkinnr);
             this.pnlHead.BackColor = this.notes.GetPrimaryClr(Settings.ManagenotesSkinnr);
+            this.pnlHead.BackColor = Color.Transparent;
             this.ForeColor = this.notes.GetTextClr(Settings.ManagenotesSkinnr);
             this.btnShowSelectedNotes.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
             this.btnNoteDelete.FlatAppearance.MouseOverBackColor = this.notes.GetHighlightClr(Settings.ManagenotesSkinnr);
