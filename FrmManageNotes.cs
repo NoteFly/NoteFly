@@ -335,9 +335,10 @@ namespace NoteFly
         {
             if (this.dataGridViewNotes.SelectedRows.Count <= 0)
             {
-                string managenotes_nothingselected = Strings.T("Nothing selected.");
-                Log.Write(LogType.info, managenotes_nothingselected);
-                MessageBox.Show(managenotes_nothingselected);
+                string managenotes_nothingselectedtitle = Strings.T("Nothing selected");
+                string managenotes_nonoteselected = Strings.T("There is no note selected.");
+                Log.Write(LogType.info, managenotes_nothingselectedtitle);
+                MessageBox.Show(managenotes_nonoteselected, managenotes_nothingselectedtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -345,13 +346,11 @@ namespace NoteFly
                 {
                     StringBuilder sbdeleteselectednotes = new StringBuilder();
                     sbdeleteselectednotes.AppendLine(Strings.T("Are you sure you want to delete the selected note(s)?"));
-
                     const int MAXNUMTITLESHOW = 15;
                     for (int i = 0; i < this.dataGridViewNotes.SelectedRows.Count && i < MAXNUMTITLESHOW; i++)
                     {
                         int rowindex = this.dataGridViewNotes.SelectedRows[i].Index;
-                        string title = this.notes.GetNote(this.GetNoteposBySelrow(rowindex)).Title;
-
+                        string title = this.GetShortTitle(this.notes.GetNote(this.GetNoteposBySelrow(rowindex)).Title);
                         sbdeleteselectednotes.Append("- ");
                         sbdeleteselectednotes.AppendLine(title);
                         if (i == MAXNUMTITLESHOW - 1)
@@ -360,7 +359,7 @@ namespace NoteFly
                         }
                     }
 
-                    DialogResult deleteres = MessageBox.Show(sbdeleteselectednotes.ToString(), Strings.T("delete?"), MessageBoxButtons.YesNo);
+                    DialogResult deleteres = MessageBox.Show(sbdeleteselectednotes.ToString(), Strings.T("delete?"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (deleteres == DialogResult.Yes)
                     {
                         this.DeleteNotesSelectedRowsGrid(this.dataGridViewNotes.SelectedRows);
@@ -384,6 +383,27 @@ namespace NoteFly
             this.Resetdatagrid();
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
             Application.DoEvents();
+        }
+
+        /// <summary>
+        /// Get a shorted title if title is too long.
+        /// </summary>
+        /// <param name="title">The current title</param>
+        /// <returns>A shorter title if title is a certain length.</returns>
+        private string GetShortTitle(string title)
+        {
+            string shorttitle;
+            const int MAXTITLELENGTH = 70;
+            if (title.Length > MAXTITLELENGTH)
+            {
+                shorttitle = title.Substring(0, MAXTITLELENGTH) + "..";
+            }
+            else
+            {
+                shorttitle = title;
+            }
+
+            return shorttitle;
         }
 
         /// <summary>

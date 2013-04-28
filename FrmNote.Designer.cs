@@ -211,8 +211,8 @@ namespace NoteFly
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "?";
             this.lblTitle.UseCompatibleTextRendering = true;
-            this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lblTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // pnlHead
@@ -227,8 +227,8 @@ namespace NoteFly
             this.pnlHead.Name = "pnlHead";
             this.pnlHead.Size = new System.Drawing.Size(240, 32);
             this.pnlHead.TabIndex = 1;
-            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // menuFrmNoteOptions
@@ -339,8 +339,8 @@ namespace NoteFly
             // menuCopyContent
             // 
             this.menuCopyContent.Name = "menuCopyContent";
-            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.C)));
+            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.C)));
             this.menuCopyContent.Size = new System.Drawing.Size(189, 22);
             this.menuCopyContent.Text = "content";
             this.menuCopyContent.Click += new System.EventHandler(this.menuCopyContent_Click);
@@ -348,8 +348,8 @@ namespace NoteFly
             // menuCopyTitle
             // 
             this.menuCopyTitle.Name = "menuCopyTitle";
-            this.menuCopyTitle.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
-                        | System.Windows.Forms.Keys.C)));
+            this.menuCopyTitle.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.C)));
             this.menuCopyTitle.Size = new System.Drawing.Size(189, 22);
             this.menuCopyTitle.Text = "title";
             this.menuCopyTitle.Click += new System.EventHandler(this.menuCopyTitle_Click);
@@ -376,6 +376,7 @@ namespace NoteFly
             this.btnHideNote.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnHideNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHideNote.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            this.btnHideNote.ForeColor = System.Drawing.Color.Black;
             this.btnHideNote.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnHideNote.Location = new System.Drawing.Point(198, 4);
             this.btnHideNote.Margin = new System.Windows.Forms.Padding(1);
@@ -390,9 +391,9 @@ namespace NoteFly
             // 
             // pnlNote
             // 
-            this.pnlNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlNote.BackColor = System.Drawing.Color.Transparent;
             this.pnlNote.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlNote.ContextMenuStrip = this.menuFrmNoteOptions;
@@ -407,9 +408,9 @@ namespace NoteFly
             // 
             this.rtbNote.AccessibleDescription = "Note content";
             this.rtbNote.AccessibleRole = System.Windows.Forms.AccessibleRole.Document;
-            this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNote.CausesValidation = false;
             this.rtbNote.ContextMenuStrip = this.menuFrmNoteOptions;
@@ -481,10 +482,10 @@ namespace NoteFly
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TransparencyKey = System.Drawing.SystemColors.Control;
-            this.Deactivate += new System.EventHandler(this.FrmNote_Deactivate);
             this.Activated += new System.EventHandler(this.FrmNote_Activated);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmNote_FormClosed);
+            this.Deactivate += new System.EventHandler(this.FrmNote_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmNote_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmNote_FormClosed);
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();
             this.menuFrmNoteOptions.ResumeLayout(false);
