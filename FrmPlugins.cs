@@ -74,11 +74,6 @@ namespace NoteFly
         private Dictionary<string, string> pluginupdatedownloads;
 
         /// <summary>
-        /// Reference to checkedlistbox of plugins to update.
-        /// </summary>
-        private CheckedListBox chxlbxplugins;
-
-        /// <summary>
         /// Reference to RSAverify class
         /// </summary>
         private RSAVerify rsaverify;
@@ -100,6 +95,7 @@ namespace NoteFly
         {
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
+            this.SetTabPageUpdatesVisible(false);
             this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
             this.SetFormTitle();
             Strings.TranslateForm(this);
@@ -509,59 +505,14 @@ namespace NoteFly
 
             if (this.pluginupdatedownloads.Count > 0)
             {
-                TabPage tabpageUpdatePlugins = this.CreatePluginUpdateTab();
-                this.tabControlPlugins.TabPages.Add(tabpageUpdatePlugins);
-                this.tabControlPlugins.SelectedTab = tabpageUpdatePlugins;
+                this.SetTabPageUpdatesVisible(true);
+                for (int i = 0; i < this.pluginsupdatenames.Count; i++)
+                {
+                    this.chxlbxPluginUpdates.Items.Add(pluginsupdatenames[i], true);
+                }
+
+                this.tabControlPlugins.SelectedTab = this.tabPagePluginsUpdates;
             }
-        }
-
-        /// <summary>
-        /// Create a plugin update tab
-        /// </summary>
-        /// <returns>TabPage with list of plugins to update</returns>
-        private TabPage CreatePluginUpdateTab()
-        {
-            TabPage tabpage = new TabPage(Strings.T("updates"));
-            tabpage.Name = "tabControlPlugins";
-
-            TableLayoutPanel tablelayoutpnl = new TableLayoutPanel();
-            tablelayoutpnl.Name = "tableLayoutUpdatePluginsTab";
-            tablelayoutpnl.Dock = System.Windows.Forms.DockStyle.Fill;
-            tablelayoutpnl.SetBounds(0, 0, this.tabControlPlugins.ClientRectangle.Width, this.tabControlPlugins.ClientRectangle.Height);
-            tablelayoutpnl.ColumnCount = 3;
-            tablelayoutpnl.RowCount = 5;
-            tablelayoutpnl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            tablelayoutpnl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            tablelayoutpnl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            tablelayoutpnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-
-            Label lbltextpluginupdates = new Label();
-            lbltextpluginupdates.Text = Strings.T("Available plugin updates:");
-            lbltextpluginupdates.Dock = System.Windows.Forms.DockStyle.Fill;
-            tablelayoutpnl.Controls.Add(lbltextpluginupdates, 1, 1);
-
-            this.chxlbxplugins = new CheckedListBox();
-            this.chxlbxplugins.Name = "chxlbxPluginUpdates";
-            this.chxlbxplugins.Dock = System.Windows.Forms.DockStyle.Fill;
-            for (int i = 0; i < this.pluginsupdatenames.Count; i++)
-            {
-                this.chxlbxplugins.Items.Add(pluginsupdatenames[i], true);
-            }
-
-            tablelayoutpnl.Controls.Add(this.chxlbxplugins, 1, 2);
-
-            Button btnupdateplugins = new Button();
-            btnupdateplugins.Text = Strings.T("Update selected plugins");
-            btnupdateplugins.Dock = System.Windows.Forms.DockStyle.Fill;
-            tablelayoutpnl.Controls.Add(btnupdateplugins, 1, 3);
-            btnupdateplugins.Click += new EventHandler(btnupdateplugins_Click);
-
-            tabpage.Controls.Add(tablelayoutpnl);
-            return tabpage;
         }
 
         /// <summary>
@@ -573,11 +524,11 @@ namespace NoteFly
         {
             this.frmdownloader = new FrmDownloader(Strings.T("Updating plugins.."));
             List<string> newupdateplugindownloads = new List<string>();
-            for (int i = 0; i < this.chxlbxplugins.Items.Count; i++)
+            for (int i = 0; i < this.chxlbxPluginUpdates.Items.Count; i++)
             {
-                if (this.chxlbxplugins.GetItemChecked(i))
+                if (this.chxlbxPluginUpdates.GetItemChecked(i))
                 {
-                    string pluginname = this.chxlbxplugins.Items[i].ToString();
+                    string pluginname = this.chxlbxPluginUpdates.Items[i].ToString();
                     string plugindownload = this.pluginupdatedownloads[pluginname];
                     newupdateplugindownloads.Add(plugindownload);
                 }
@@ -611,6 +562,22 @@ namespace NoteFly
             if (this.textloadingdots > MAXTEXTLOADINGDOTS)
             {
                 this.textloadingdots = 0;
+            }
+        }
+
+        /// <summary>
+        /// Set the this.tabPagePluginsUpdates visible or invisible.
+        /// </summary>
+        /// <param name="showupdatetab">showupdatetab</param>
+        private void SetTabPageUpdatesVisible(bool showupdatetab)
+        {
+            if ((showupdatetab) && (!this.tabControlPlugins.TabPages.Contains(this.tabPagePluginsUpdates)))
+            {
+                this.tabControlPlugins.TabPages.Add(this.tabPagePluginsUpdates);    
+            }
+            else if (this.tabControlPlugins.TabPages.Contains(this.tabPagePluginsUpdates)) 
+            {
+                this.tabControlPlugins.TabPages.Remove(this.tabPagePluginsUpdates);
             }
         }
     }

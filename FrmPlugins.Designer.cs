@@ -11,71 +11,6 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// TabControl tabControlPlugins
-        /// </summary>
-        private System.Windows.Forms.TabControl tabControlPlugins;
-
-        /// <summary>
-        /// TabPage tabPagePluginsAvailable
-        /// </summary>
-        private System.Windows.Forms.TabPage tabPagePluginsAvailable;
-
-        /// <summary>
-        /// TabPage tabPagePluginsInstalled
-        /// </summary>
-        private System.Windows.Forms.TabPage tabPagePluginsInstalled;
-
-        /// <summary>
-        /// PluginGrid pluginGrid
-        /// </summary>
-        private PluginGrid pluginGrid;
-
-        /// <summary>
-        /// SplitContainer splitContainerAvailablePlugins
-        /// </summary>
-        private System.Windows.Forms.SplitContainer splitContainerAvailablePlugins;
-
-        /// <summary>
-        /// Button btnPluginDownload
-        /// </summary>
-        private System.Windows.Forms.Button btnPluginDownload;
-
-        /// <summary>
-        /// Label lblPluginDescription
-        /// </summary>
-        private System.Windows.Forms.Label lblPluginDescription;
-
-        /// <summary>
-        /// Label lblPluginName
-        /// </summary>
-        private System.Windows.Forms.Label lblPluginName;
-
-        /// <summary>
-        /// Label lblPluginVersion
-        /// </summary>
-        private System.Windows.Forms.Label lblPluginVersion;
-
-        /// <summary>
-        /// Label lblTextNoInternetConnection
-        /// </summary>
-        private System.Windows.Forms.Label lblTextNoInternetConnection;
-
-        /// <summary>
-        /// Label lblLicense
-        /// </summary>
-        private System.Windows.Forms.Label lblLicense;
-
-        /// <summary>
-        /// SearchTextBox searchtbPlugins
-        /// </summary>
-        private SearchTextBox searchtbPlugins;
-
-        /// <summary>
-        /// ListBox lbxAvailablePlugins
-        /// </summary>
-        private System.Windows.Forms.ListBox lbxAvailablePlugins;
-
-        /// <summary>
         /// Clean up any resources being used..</param>
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -99,9 +34,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlugins));
-            this.tabControlPlugins = new System.Windows.Forms.TabControl();
-            this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
-            this.pluginGrid = new NoteFly.PluginGrid();
+            this.timerTextUpdater = new System.Windows.Forms.Timer(this.components);
             this.tabPagePluginsAvailable = new System.Windows.Forms.TabPage();
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
@@ -112,52 +45,28 @@
             this.lblPluginName = new System.Windows.Forms.Label();
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
-            this.timerTextUpdater = new System.Windows.Forms.Timer(this.components);
-            this.tabControlPlugins.SuspendLayout();
-            this.tabPagePluginsInstalled.SuspendLayout();
+            this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
+            this.pluginGrid = new NoteFly.PluginGrid();
+            this.tabControlPlugins = new System.Windows.Forms.TabControl();
+            this.tabPagePluginsUpdates = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.chxlbxPluginUpdates = new System.Windows.Forms.CheckedListBox();
+            this.btnupdateplugins = new System.Windows.Forms.Button();
+            this.lbltextpluginupdates = new System.Windows.Forms.Label();
             this.tabPagePluginsAvailable.SuspendLayout();
             this.splitContainerAvailablePlugins.Panel1.SuspendLayout();
             this.splitContainerAvailablePlugins.Panel2.SuspendLayout();
             this.splitContainerAvailablePlugins.SuspendLayout();
+            this.tabPagePluginsInstalled.SuspendLayout();
+            this.tabControlPlugins.SuspendLayout();
+            this.tabPagePluginsUpdates.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControlPlugins
+            // timerTextUpdater
             // 
-            this.tabControlPlugins.Controls.Add(this.tabPagePluginsInstalled);
-            this.tabControlPlugins.Controls.Add(this.tabPagePluginsAvailable);
-            this.tabControlPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControlPlugins.Location = new System.Drawing.Point(0, 0);
-            this.tabControlPlugins.Margin = new System.Windows.Forms.Padding(4);
-            this.tabControlPlugins.Name = "tabControlPlugins";
-            this.tabControlPlugins.SelectedIndex = 0;
-            this.tabControlPlugins.Size = new System.Drawing.Size(488, 394);
-            this.tabControlPlugins.TabIndex = 0;
-            this.tabControlPlugins.SelectedIndexChanged += new System.EventHandler(this.tabControlPlugins_SelectedIndexChanged);
-            // 
-            // tabPagePluginsInstalled
-            // 
-            this.tabPagePluginsInstalled.Controls.Add(this.pluginGrid);
-            this.tabPagePluginsInstalled.Location = new System.Drawing.Point(4, 25);
-            this.tabPagePluginsInstalled.Margin = new System.Windows.Forms.Padding(53, 4, 53, 4);
-            this.tabPagePluginsInstalled.Name = "tabPagePluginsInstalled";
-            this.tabPagePluginsInstalled.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPagePluginsInstalled.Size = new System.Drawing.Size(480, 365);
-            this.tabPagePluginsInstalled.TabIndex = 1;
-            this.tabPagePluginsInstalled.Text = "Installed";
-            this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
-            // 
-            // pluginGrid
-            // 
-            this.pluginGrid.AutoScroll = true;
-            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
-            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
-            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
-            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
-            this.pluginGrid.TabIndex = 0;
+            this.timerTextUpdater.Interval = 200;
+            this.timerTextUpdater.Tick += new System.EventHandler(this.timerTextUpdater_Tick);
             // 
             // tabPagePluginsAvailable
             // 
@@ -284,10 +193,106 @@
             this.btnPluginDownload.Visible = false;
             this.btnPluginDownload.Click += new System.EventHandler(this.btnPluginDownload_Click);
             // 
-            // timerTextUpdater
+            // tabPagePluginsInstalled
             // 
-            this.timerTextUpdater.Interval = 200;
-            this.timerTextUpdater.Tick += new System.EventHandler(this.timerTextUpdater_Tick);
+            this.tabPagePluginsInstalled.Controls.Add(this.pluginGrid);
+            this.tabPagePluginsInstalled.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePluginsInstalled.Margin = new System.Windows.Forms.Padding(53, 4, 53, 4);
+            this.tabPagePluginsInstalled.Name = "tabPagePluginsInstalled";
+            this.tabPagePluginsInstalled.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPagePluginsInstalled.Size = new System.Drawing.Size(480, 365);
+            this.tabPagePluginsInstalled.TabIndex = 1;
+            this.tabPagePluginsInstalled.Text = "Installed";
+            this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
+            // 
+            // pluginGrid
+            // 
+            this.pluginGrid.AutoScroll = true;
+            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
+            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
+            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
+            this.pluginGrid.TabIndex = 0;
+            // 
+            // tabControlPlugins
+            // 
+            this.tabControlPlugins.Controls.Add(this.tabPagePluginsInstalled);
+            this.tabControlPlugins.Controls.Add(this.tabPagePluginsAvailable);
+            this.tabControlPlugins.Controls.Add(this.tabPagePluginsUpdates);
+            this.tabControlPlugins.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlPlugins.Location = new System.Drawing.Point(0, 0);
+            this.tabControlPlugins.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControlPlugins.Name = "tabControlPlugins";
+            this.tabControlPlugins.SelectedIndex = 0;
+            this.tabControlPlugins.Size = new System.Drawing.Size(488, 394);
+            this.tabControlPlugins.TabIndex = 0;
+            this.tabControlPlugins.SelectedIndexChanged += new System.EventHandler(this.tabControlPlugins_SelectedIndexChanged);
+            // 
+            // tabPagePluginsUpdates
+            // 
+            this.tabPagePluginsUpdates.Controls.Add(this.tableLayoutPanel1);
+            this.tabPagePluginsUpdates.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePluginsUpdates.Name = "tabPagePluginsUpdates";
+            this.tabPagePluginsUpdates.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePluginsUpdates.Size = new System.Drawing.Size(480, 365);
+            this.tabPagePluginsUpdates.TabIndex = 2;
+            this.tabPagePluginsUpdates.Text = "updates";
+            this.tabPagePluginsUpdates.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.07173F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.80169F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.33755F));
+            this.tableLayoutPanel1.Controls.Add(this.chxlbxPluginUpdates, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.btnupdateplugins, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.lbltextpluginupdates, 1, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.26415F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.73585F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 208F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(474, 359);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // chxlbxPluginUpdates
+            // 
+            this.chxlbxPluginUpdates.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chxlbxPluginUpdates.FormattingEnabled = true;
+            this.chxlbxPluginUpdates.Location = new System.Drawing.Point(45, 58);
+            this.chxlbxPluginUpdates.Name = "chxlbxPluginUpdates";
+            this.chxlbxPluginUpdates.Size = new System.Drawing.Size(376, 202);
+            this.chxlbxPluginUpdates.TabIndex = 0;
+            // 
+            // btnupdateplugins
+            // 
+            this.btnupdateplugins.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnupdateplugins.Location = new System.Drawing.Point(45, 266);
+            this.btnupdateplugins.Name = "btnupdateplugins";
+            this.btnupdateplugins.Size = new System.Drawing.Size(376, 30);
+            this.btnupdateplugins.TabIndex = 1;
+            this.btnupdateplugins.Text = "Update selected plugins";
+            this.btnupdateplugins.UseVisualStyleBackColor = true;
+            this.btnupdateplugins.Click += new System.EventHandler(this.btnupdateplugins_Click);
+            // 
+            // lbltextpluginupdates
+            // 
+            this.lbltextpluginupdates.AutoSize = true;
+            this.lbltextpluginupdates.Location = new System.Drawing.Point(45, 34);
+            this.lbltextpluginupdates.Name = "lbltextpluginupdates";
+            this.lbltextpluginupdates.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lbltextpluginupdates.Size = new System.Drawing.Size(159, 20);
+            this.lbltextpluginupdates.TabIndex = 2;
+            this.lbltextpluginupdates.Text = "Available plugin updates:";
             // 
             // FrmPlugins
             // 
@@ -304,13 +309,16 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmPlugins";
-            this.tabControlPlugins.ResumeLayout(false);
-            this.tabPagePluginsInstalled.ResumeLayout(false);
             this.tabPagePluginsAvailable.ResumeLayout(false);
             this.splitContainerAvailablePlugins.Panel1.ResumeLayout(false);
             this.splitContainerAvailablePlugins.Panel2.ResumeLayout(false);
             this.splitContainerAvailablePlugins.Panel2.PerformLayout();
             this.splitContainerAvailablePlugins.ResumeLayout(false);
+            this.tabPagePluginsInstalled.ResumeLayout(false);
+            this.tabControlPlugins.ResumeLayout(false);
+            this.tabPagePluginsUpdates.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -318,6 +326,24 @@
         #endregion        
 
         private System.Windows.Forms.Timer timerTextUpdater;
+        private System.Windows.Forms.TabPage tabPagePluginsAvailable;
+        private System.Windows.Forms.SplitContainer splitContainerAvailablePlugins;
+        private System.Windows.Forms.Label lblTextNoInternetConnection;
+        private System.Windows.Forms.ListBox lbxAvailablePlugins;
+        private SearchTextBox searchtbPlugins;
+        private System.Windows.Forms.Label lblLicense;
+        private System.Windows.Forms.Label lblPluginVersion;
+        private System.Windows.Forms.Label lblPluginName;
+        private System.Windows.Forms.Label lblPluginDescription;
+        private System.Windows.Forms.Button btnPluginDownload;
+        private System.Windows.Forms.TabPage tabPagePluginsInstalled;
+        private PluginGrid pluginGrid;
+        private System.Windows.Forms.TabControl tabControlPlugins;
+        private System.Windows.Forms.TabPage tabPagePluginsUpdates;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.CheckedListBox chxlbxPluginUpdates;
+        private System.Windows.Forms.Button btnupdateplugins;
+        private System.Windows.Forms.Label lbltextpluginupdates;
 
     }
 }
