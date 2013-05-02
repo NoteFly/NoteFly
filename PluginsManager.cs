@@ -77,7 +77,7 @@ namespace NoteFly
             if (Directory.Exists(Settings.ProgramPluginsFolder))
             {
                 string[] enabledpluginsfilenames = Settings.ProgramPluginsEnabled.Split('|');
-                string[] dllfiles = GetDllFilesPluginFolder();
+                string[] dllfiles = GetDllFilesFolder(Settings.ProgramPluginsFolder);
                 excludedplugindlls = Settings.ProgramPluginsDllexclude.Split('|');
 
                 for (int i = 0; i < dllfiles.Length; i++)
@@ -385,9 +385,9 @@ namespace NoteFly
         /// Get all the dll filenames(without full path) in the plugin directory.
         /// </summary>
         /// <returns>All dll filenames as string array</returns>
-        private static string[] GetDllFilesPluginFolder()
+        private static string[] GetDllFilesFolder(string folder)
         {
-            string[] pluginfiles = Directory.GetFiles(Settings.ProgramPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
+            string[] pluginfiles = Directory.GetFiles(folder, "*.dll", SearchOption.TopDirectoryOnly);
             string[] pluginfilenames = new string[pluginfiles.Length];
             for (int i = 0; i < pluginfiles.Length; i++)
             {
@@ -417,6 +417,50 @@ namespace NoteFly
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static void UpdatePluginReplaceFiles()
+        {
+            string pluginupdatefolder = Path.Combine(Settings.ProgramPluginsFolder, "new");
+            if (Directory.Exists(pluginupdatefolder))
+            {
+                string[] newplugins = GetDllFilesFolder(pluginupdatefolder);
+                for (int i = 0; i < newplugins.Length; i++)
+                {
+                    if (File.GetAttributes(Path.Combine(pluginupdatefolder, newplugins[i])) == FileAttributes.System)
+                    {
+                        continue;
+                    }
+
+                    bool removeoldplugin = false;
+                    if (File.Exists(Path.Combine(Settings.ProgramPluginsFolder, newplugins[i])))
+                    {
+                        // create backup old plugin version
+                        File.Move(Path.Combine(Settings.ProgramPluginsFolder, newplugins[i]), Path.Combine(Settings.ProgramPluginsFolder, newplugins[i] + ".bak"));
+                        removeoldplugin = true;
+                    }
+
+                    // install new plugin
+                    try
+                    {
+                        File.Move(Path.Combine(pluginupdatefolder, newplugins[i]), Path.Combine(Settings.ProgramPluginsFolder, newplugins[i]));
+                    }
+                    catch (Exception ex)
+                    {
+                        removeoldplugin = false;
+                        Log.Write(LogType.exception, ex.Message);
+                    }
+
+                    if (removeoldplugin)
+                    {
+                        // delete backup
+                        File.Delete(Path.Combine(Settings.ProgramPluginsFolder, newplugins[i] + ".bak"));
+                    }
+                }
+            }
         }
     }
 }

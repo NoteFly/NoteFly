@@ -585,7 +585,11 @@ namespace NoteFly
 
             this.frmdownloader.Show();
             this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(this.downloader_DownloadCompleet);
-            this.frmdownloader.BeginDownload(newupdateplugindownloads.ToArray(), Settings.ProgramPluginsFolder);
+            if (!Directory.Exists(Path.Combine(Settings.ProgramPluginsFolder,"new"))) {
+                Directory.CreateDirectory(Path.Combine(Settings.ProgramPluginsFolder,"new"));
+            }
+
+            this.frmdownloader.BeginDownload(newupdateplugindownloads.ToArray(), Path.Combine(Settings.ProgramPluginsFolder,"new"));
         }
 
         /// <summary>

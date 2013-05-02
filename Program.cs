@@ -360,6 +360,7 @@ namespace NoteFly
             notes = new Notes(resetpositions);
             if (Settings.ProgramPluginsAllEnabled)
             {
+                PluginsManager.UpdatePluginReplaceFiles();
                 PluginsManager.LoadPlugins();
             }
 

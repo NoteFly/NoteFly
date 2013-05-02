@@ -160,6 +160,10 @@ namespace NoteFly
             lblPluginVersion.Name = "lblPluginVersion";
             lblPluginVersion.TabIndex = 7;
             lblPluginVersion.Text = PluginsManager.GetPluginVersion(pluginassembly);
+            if (File.Exists(Path.Combine(Path.Combine(Settings.ProgramPluginsFolder, "new"), dllfilename)))
+            {
+                lblPluginVersion.Text += " " + Strings.T("(restart {0} to update)", Program.AssemblyTitle);
+            }
             
             // lblTextPluginAuthor
             lblTextPluginAuthor.AutoSize = true;
@@ -243,14 +247,31 @@ namespace NoteFly
         /// <param name="dllfilename">The dll filename to check if it's enabled.</param>
         private void SetPluginStatus(int pluginpos, string dllfilename)
         {
+            bool pluginupdateavailable = File.Exists(Path.Combine(Path.Combine(Settings.ProgramPluginsFolder, "new"), dllfilename));
             if (PluginsManager.IsPluginEnabled(dllfilename))
             {
-                this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.WhiteSmoke;
+                if (pluginupdateavailable)
+                {
+                    this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.LightGoldenrodYellow;
+                }
+                else
+                {
+                    this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.WhiteSmoke;
+                }
+                
                 this.btnPluginsStatus[pluginpos].Text = Strings.T("disable"); 
             }
             else
             {
-                this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.LightGray;
+                if (pluginupdateavailable)
+                {
+                    this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.Khaki;
+                }
+                else
+                {
+                    this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.LightGray;
+                }
+                
                 this.btnPluginsStatus[pluginpos].Text = Strings.T("enable");
             }
         }
