@@ -306,7 +306,17 @@ namespace NoteFly
 
             PluginsManager.LoadPlugins();
             this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
-            this.tabControlPlugins.SelectedIndex = 0;
+            if (File.Exists(Path.Combine(Path.Combine(Settings.ProgramPluginsFolder, "new"), newfiles[0])))
+            {
+                // updating plugin
+                // todo
+                //this.btnPluginDownload.Text = Strings.T("Restart {0}", Program.AssemblyTitle);
+            }
+            else
+            {
+                // new plugin download
+                this.tabControlPlugins.SelectedIndex = 0;
+            }
         }
 
         /// <summary>
@@ -558,6 +568,7 @@ namespace NoteFly
             btnupdateplugins.Text = Strings.T("Update selected plugins");
             btnupdateplugins.Dock = System.Windows.Forms.DockStyle.Fill;
             tablelayoutpnl.Controls.Add(btnupdateplugins, 1, 3);
+            btnupdateplugins.Enabled = true;
             btnupdateplugins.Click += new EventHandler(btnupdateplugins_Click);
 
             tabpage.Controls.Add(tablelayoutpnl);
@@ -572,6 +583,8 @@ namespace NoteFly
         private void btnupdateplugins_Click(object sender, EventArgs e)
         {
             this.frmdownloader = new FrmDownloader(Strings.T("Updating plugins.."));
+            Button btnupdateplugins = (Button)sender;
+            btnupdateplugins.Enabled = false;
             List<string> newupdateplugindownloads = new List<string>();
             for (int i = 0; i < this.chxlbxplugins.Items.Count; i++)
             {
