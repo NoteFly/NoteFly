@@ -66,14 +66,14 @@ namespace NoteFly
         private static TrayIcon trayicon;
 
         /// <summary>
-        /// Reference to RSAVerify class.
-        /// </summary>
-        private static RSAVerify rsaverify;
-
-        /// <summary>
         /// The current operating system running this program
         /// </summary>
         private static OS currentos;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static string updateprogramrsasignature;
 
         /// <summary>
         /// A more simplified enumeration of PlatformID enum,
@@ -103,7 +103,7 @@ namespace NoteFly
         {
             get
             {
-				Program.LoadPlatformOs();
+                Program.LoadPlatformOs();
                 const string APPDATAFOLDER = "NoteFly";
                 if (Program.currentos == OS.WINDOWS)
                 {
@@ -411,7 +411,7 @@ namespace NoteFly
 
             SyntaxHighlight.DeinitHighlighter();
 
-			//ApplicationContext appcontext = new ApplicationContext();
+            //ApplicationContext appcontext = new ApplicationContext();
             System.Windows.Forms.Application.Run();
         }
 
@@ -830,13 +830,14 @@ namespace NoteFly
             string rsasignature = string.Empty;
             string latestversionquality = Program.AssemblyVersionQuality;
             short[] latestversion = xmlUtil.ParserLatestVersion(response, out latestversionquality, out downloadurl, out rsasignature);
+            Program.updateprogramrsasignature = rsasignature;
+
             int compareversionsresult = Program.CompareVersions(latestversion, thisversion);
             if (compareversionsresult > 0 || (compareversionsresult == 0 && Program.AssemblyVersionQuality != latestversionquality))
             {
                 Log.Write(LogType.info, "Update check done. New version available.");
                 if (!string.IsNullOrEmpty(downloadurl))
                 {
-                    rsaverify = new RSAVerify(rsasignature);
                     StringBuilder sbmsg = new StringBuilder();
                     sbmsg.AppendLine(Strings.T("There's a new version of {0} available.", Program.AssemblyTitle));
                     sbmsg.Append(Strings.T("Your version: "));
@@ -847,19 +848,19 @@ namespace NoteFly
                     System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), Strings.T("update available"), System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
                     if (updres == System.Windows.Forms.DialogResult.Yes)
                     {
-                        FrmDownloader frmupdater = new FrmDownloader(string.Format(Strings.T("Downloading {0} update"), Program.AssemblyTitle));
-                        frmupdater.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(frmupdater_DownloadCompleetSuccesfull);
-                        frmupdater.Show();
+                        FrmDownloader frmdownloader = new FrmDownloader(string.Format(Strings.T("Downloading {0} update"), Program.AssemblyTitle));
+                        frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(frmupdater_DownloadCompleetSuccesfull);
+                        frmdownloader.Show();
                         if (Settings.UpdatecheckUseGPG)
                         {
                             string[] downloads = new string[2];
                             downloads[0] = downloadurl;
                             downloads[1] = downloadurl + GPGVerifyWrapper.GPGSIGNATUREEXTENSION;
-                            frmupdater.BeginDownload(downloads, System.Environment.GetEnvironmentVariable("TEMP"));
+                            frmdownloader.BeginDownload(downloads, Program.GetTempFolder());
                         }
                         else
                         {
-                            frmupdater.BeginDownload(downloadurl, System.Environment.GetEnvironmentVariable("TEMP"));
+                            frmdownloader.BeginDownload(downloadurl, Program.GetTempFolder());
                         }
                     }
                 }
@@ -899,12 +900,15 @@ namespace NoteFly
         /// <param name="newfiles">Array with returned new files</param>
         private static void frmupdater_DownloadCompleetSuccesfull(string[] newfiles)
         {
-            if (rsaverify != null)
+            if (newfiles.Length < 1)
             {
-                if (!rsaverify.CheckFileSignatureAndDisplayErrors(newfiles[0]))
-                {
-                    return;
-                }
+                throw new Exception("No files downloaded");
+            }
+
+            RSAVerify rsaverify = new RSAVerify();
+            if (!rsaverify.CheckFileSignatureAndDisplayErrors(newfiles[0], Program.updateprogramrsasignature))
+            {
+                return;
             }
 
             if (Settings.UpdatecheckUseGPG)
@@ -1027,6 +1031,30 @@ namespace NoteFly
             }
 
             return instances;
+        }
+
+        /// <summary>
+        /// Get the operating system temp folder.
+        /// </summary>
+        /// <returns></returns>
+        private static string GetTempFolder()
+        {
+            string tempfolder = System.Environment.GetEnvironmentVariable("TEMP");
+            switch (currentos)
+            {
+                case OS.WINDOWS:
+                    tempfolder = System.Environment.GetEnvironmentVariable("TEMP");
+                    break;
+                case OS.MACOS:
+                    // /tmp is a symbolic link to /private/tmp on macos.
+                    tempfolder = "/private/tmp";
+                    break;
+                case OS.LINUX:
+                    tempfolder = "/tmp";
+                    break;
+            }
+
+            return tempfolder;
         }
 
         /// <summary>

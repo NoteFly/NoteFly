@@ -100,7 +100,7 @@ namespace NoteFly
         {
             this.notes = notes;
 
-			if (Program.CurrentOS == Program.OS.WINDOWS)
+            if (Program.CurrentOS == Program.OS.WINDOWS)
             {
                 this.keylister = new KeyboardListener();
                 this.keylister.s_KeyEventHandler += new EventHandler(this.KeyboardListener_s_KeyEventHandler);

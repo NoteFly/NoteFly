@@ -20,13 +20,12 @@
 namespace NoteFly
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
-    using System.Windows.Forms;
-    using System.Threading;
     using System.Text;
+    using System.Windows.Forms;
     using System.Xml;
-    using System.Collections.Generic;
 
     /// <summary>
     /// FrmPlugins window
@@ -56,27 +55,22 @@ namespace NoteFly
         /// <summary>
         /// REST url where to get several versions of plugins in xml (with a http POST request).
         /// </summary>
-        private const string RESTAPIPLUGINVERSION = "/REST/plugins/version.php"; 
+        private const string RESTAPIPLUGINVERSION = "/REST/plugins/version.php";
 
         /// <summary>
-        /// The url to download plugin of the current plugin being selected.
+        /// 
         /// </summary>
-        private string currentplugindownloadurl = null;
+        private DownloadDetailsPlugin selectedplugindetails;
 
         /// <summary>
-        /// Names of plugins to update.
+        /// 
         /// </summary>
-        private List<string> pluginsupdatenames;
-        
-        /// <summary>
-        /// Download urls of plugins.
-        /// </summary>
-        private Dictionary<string, string> pluginupdatedownloads;
+        private List<DownloadDetailsPlugin> updatableplugins;
 
         /// <summary>
-        /// Reference to RSAverify class
+        /// 
         /// </summary>
-        private RSAVerify rsaverify;
+        private List<int> updatedplugins;
 
         /// <summary>
         /// Refence to FrmDownload window.
@@ -165,26 +159,28 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void lbxAvailablePlugins_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.splitContainerAvailablePlugins.Panel2Collapsed = false;
-            this.btnPluginDownload.Visible = false;
             if (this.lbxAvailablePlugins.SelectedIndex >= 0)
             {
+                this.splitContainerAvailablePlugins.Panel2Collapsed = false;
+                this.btnPluginDownload.Visible = false;
                 string pluginname = this.lbxAvailablePlugins.SelectedItem.ToString();
-                if (!string.IsNullOrEmpty(pluginname))
+                if (string.IsNullOrEmpty(pluginname))
                 {
-                    HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.Revalidate);
-                    this.ClearPluginDetails();
-
-                    this.timerTextUpdater.Start();
-                    if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
-                    {
-                        this.SetAvailablePluginsNetwork(false);
-                    }
-                    else
-                    {
-                        this.SetAvailablePluginsNetwork(true);
-                    }
+                    Log.Write(LogType.error, "Empty plugin name.");
+                    return;
                 }
+
+                HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.Revalidate);
+                this.ClearPluginDetails();
+                this.timerTextUpdater.Start();
+                if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
+                {
+                    this.SetAvailablePluginsNetwork(false);
+                }
+                else
+                {
+                    this.SetAvailablePluginsNetwork(true);
+                }   
             }
         }
 
@@ -208,19 +204,24 @@ namespace NoteFly
         {
             string response = (string)e.Result;
             this.timerTextUpdater.Stop();
-            bool alreadyinstalled = false;
-            bool updateavailable = false;
-            string[] detailsplugin = xmlUtil.ParserDetailsPlugin(response, PluginsManager.GetInstalledPlugins(), out alreadyinstalled, out updateavailable);
             this.ClearPluginDetails();
-            if (detailsplugin != null)
+            this.selectedplugindetails = xmlUtil.ParserDetailsPlugin(response);
+            if (this.selectedplugindetails != null)
             {
-                if (alreadyinstalled)
+                if (this.selectedplugindetails.IsInstalledPlugin())
                 {
                     this.btnPluginDownload.Enabled = false;
-                    if (updateavailable)
+                    if (this.selectedplugindetails.IsNewerVersion())
                     {
-                        this.btnPluginDownload.Text = Strings.T("update");
-                        this.btnPluginDownload.Enabled = true;
+                        this.btnPluginDownload.Text = Strings.T("needs update");
+                        if (this.updatableplugins.Count < 1)
+                        {
+                            this.updatableplugins.Add(this.selectedplugindetails);
+                            this.chxlbxPluginUpdates.Items.Clear();
+                            this.chxlbxPluginUpdates.Items.Add(this.selectedplugindetails.Name);
+                        }
+
+                        this.SetTabPageUpdatesVisible(true);
                     }
                     else
                     {
@@ -233,18 +234,15 @@ namespace NoteFly
                     this.btnPluginDownload.Text = Strings.T("download");
                 }
 
-                if (!string.IsNullOrEmpty(detailsplugin[4]) && Uri.IsWellFormedUriString(detailsplugin[4], UriKind.Absolute))
+                if (!string.IsNullOrEmpty(this.selectedplugindetails.DownloadUrl) && Uri.IsWellFormedUriString(this.selectedplugindetails.DownloadUrl, UriKind.Absolute))
                 {
                     this.btnPluginDownload.Visible = true;
                 }
 
-                this.lblPluginName.Text = detailsplugin[0];
-                this.lblPluginVersion.Text = Strings.T("version: ") + detailsplugin[1];
-                this.lblLicense.Text = Strings.T("license: ") + detailsplugin[2];
-                this.lblPluginDescription.Text = detailsplugin[3];
-                this.currentplugindownloadurl = detailsplugin[4];
-
-                this.rsaverify = new RSAVerify(detailsplugin[5]);
+                this.lblPluginName.Text = this.selectedplugindetails.Name;
+                this.lblPluginVersion.Text = Strings.T("version: ") + this.selectedplugindetails.Version;
+                this.lblLicense.Text = Strings.T("license: ") + this.selectedplugindetails.LicenseType;
+                this.lblPluginDescription.Text = this.selectedplugindetails.Description;
             }
             else
             {
@@ -259,50 +257,94 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnPluginDownload_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(this.currentplugindownloadurl))
-            {
+            if (this.selectedplugindetails != null) 
+            {             
                 this.frmdownloader = new FrmDownloader(Strings.T("Downloading plugin.."));
                 this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(this.downloader_DownloadCompleet);
                 this.frmdownloader.Show();
-                this.frmdownloader.BeginDownload(this.currentplugindownloadurl, Settings.ProgramPluginsFolder);
+                this.frmdownloader.BeginDownload(this.selectedplugindetails.DownloadUrl, Settings.ProgramPluginsFolder);
             }
         }
 
         /// <summary>
-        /// Downloading of plugin(s) compleet.
+        /// Downloading of plugin compleet.
         /// </summary>
         /// <param name="newfiles">Array of files downloads.</param>
-        private void downloader_DownloadCompleet(string[] newfiles)
+        private void downloader_DownloadCompleet(string[] newpluginfile)
         {
-            if (this.rsaverify != null)
+            RSAVerify rsaverify = new RSAVerify();
+            if (!rsaverify.CheckFileSignatureAndDisplayErrors(newpluginfile[0], this.selectedplugindetails.Signature))
             {
-                if (!this.rsaverify.CheckFileSignatureAndDisplayErrors(newfiles[0]) || !File.Exists(newfiles[0]))
-                {
-                    return;
-                }
+                return;
             }
 
-            if (this.frmdownloader.GetFileCompressedkind(newfiles[0]) == 1)
-            {
-                string[] unzipextensions = new string[1] { ".dll" };
-                if (this.frmdownloader.DecompressZipFile(newfiles[0], unzipextensions))
-                {
-                    // decompress succesfully, now delete zip file
-                    this.DeleteNotsysFile(newfiles[0], "Delete zip archive: ");
-                }
-            }
-            else if (this.frmdownloader.GetFileCompressedkind(newfiles[0]) == 2)
-            {
-                if (this.frmdownloader.DecompressGZipFile(newfiles[0]))
-                {
-                    // decompress succesfully, now delete gzip file
-                    this.DeleteNotsysFile(newfiles[0], "Delete GZip file: ");
-                }
-            }
-
+            this.DecompressDownload(newpluginfile[0]);
             PluginsManager.LoadPlugins();
             this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
-            this.tabControlPlugins.SelectedIndex = 0;
+            //this.tabControlPlugins.SelectedIndex = 0;            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newpluginfile"></param>
+        private void DownloadUpdatesPluginsCompleet(string[] compressedpluginfiles)
+        {
+            bool updatesinstalled = false;
+            RSAVerify rsaverify = new RSAVerify();
+            for (int i = 0; i < compressedpluginfiles.Length; i++)
+            {
+                int pluginposition = this.updatedplugins[i];
+                if (rsaverify.CheckFileSignatureAndDisplayErrors(compressedpluginfiles[i], this.updatableplugins[pluginposition].Signature))
+                {
+                    this.DecompressDownload(compressedpluginfiles[i]);
+                    updatesinstalled = true;
+                }
+            }
+
+            for (int p = this.updatedplugins.Count - 1; p >= 0; p--)
+            {
+                this.chxlbxPluginUpdates.Items.RemoveAt(p);
+            }
+
+            if (updatesinstalled)
+            {
+                PluginsManager.LoadPlugins();
+                this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
+                this.btnRestartProgram.Visible = true;
+            }
+
+            if (this.chxlbxPluginUpdates.Items.Count > 0)
+            {
+                this.btnupdateplugins.Enabled = true;
+            }
+
+            this.chxlbxPluginUpdates.Enabled = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newfiles"></param>
+        private void DecompressDownload(string compressedpluginfile)
+        {
+            if (this.frmdownloader.GetFileCompressedkind(compressedpluginfile) == 1)
+            {
+                string[] unzipextensions = new string[1] { ".dll" };
+                if (this.frmdownloader.DecompressZipFile(compressedpluginfile, unzipextensions))
+                {
+                    // decompress succesfully, now delete zip file
+                    this.DeleteNotsysFile(compressedpluginfile, "Delete zip archive: ");
+                }
+            }
+            else if (this.frmdownloader.GetFileCompressedkind(compressedpluginfile) == 2)
+            {
+                if (this.frmdownloader.DecompressGZipFile(compressedpluginfile))
+                {
+                    // decompress succesfully, now delete gzip file
+                    this.DeleteNotsysFile(compressedpluginfile, "Delete GZip file: ");
+                }
+            }
         }
 
         /// <summary>
@@ -432,7 +474,8 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Parser results of versions requested plugins, and create tabpage if plugin update(s) are available.
+        /// Parser results of versions requested plugins, and set tabpage with plugin update visible
+        /// if there are plugin update(s) are available.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -449,41 +492,40 @@ namespace NoteFly
                 return;
             }
 
+            this.updatableplugins = new List<DownloadDetailsPlugin>();
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.LoadXml(result);
-            this.pluginsupdatenames = new List<string>();
-            this.pluginupdatedownloads = new Dictionary<string, string>();
             XmlNodeList xmlnodelist = xmldoc.SelectNodes("/plugins/plugin");
             foreach (XmlNode xmlnode in xmlnodelist) 
             {
                 if (xmlnode.ChildNodes.Count > 1)
                 {
-                    string pluginname = string.Empty;
-                    string downloadurl = string.Empty;
-                    short[] pluginversion = new short[3];
+                    DownloadDetailsPlugin downloaddetailsplugin = new DownloadDetailsPlugin();
                     for (int i = 0; i < xmlnode.ChildNodes.Count; i++)
                     {
                         if (xmlnode.ChildNodes[i].Name == "name")
                         {
-                            pluginname = xmlnode.ChildNodes[i].InnerText;
+                            downloaddetailsplugin.Name = xmlnode.ChildNodes[i].InnerText;
                         }
                         else if (xmlnode.ChildNodes[i].Name == "version")
                         {
-                            pluginversion = Program.ParserVersionString(xmlnode.ChildNodes[i].InnerText);
+                            downloaddetailsplugin.Version = xmlnode.ChildNodes[i].InnerText;
                         }
                         else if (xmlnode.ChildNodes[i].Name == "downloadurl")
                         {
-                            downloadurl = xmlnode.ChildNodes[i].InnerText;
+                            downloaddetailsplugin.DownloadUrl = xmlnode.ChildNodes[i].InnerText;
+                        }
+                        else if (xmlnode.ChildNodes[i].Name == "signature")
+                        {
+                            downloaddetailsplugin.Signature = xmlnode.ChildNodes[i].InnerText;
                         }
                     }
 
-                    short[] currentpluginversion = PluginsManager.GetPluginVersionByName(pluginname);
-                    if (Program.CompareVersions(pluginversion, currentpluginversion) > 0)
+                    if (downloaddetailsplugin.IsInstalledPlugin())
                     {
-                        if (!String.IsNullOrEmpty(downloadurl))
+                        if (downloaddetailsplugin.IsNewerVersion())
                         {
-                            this.pluginsupdatenames.Add(pluginname);
-                            this.pluginupdatedownloads.Add(pluginname, downloadurl);
+                            this.updatableplugins.Add(downloaddetailsplugin);
                         }
                     }
                 }
@@ -503,15 +545,16 @@ namespace NoteFly
                 }
             }
 
-            if (this.pluginupdatedownloads.Count > 0)
+            if (this.updatableplugins.Count > 0)
             {
                 this.SetTabPageUpdatesVisible(true);
-                for (int i = 0; i < this.pluginsupdatenames.Count; i++)
-                {
-                    this.chxlbxPluginUpdates.Items.Add(pluginsupdatenames[i], true);
-                }
-
                 this.tabControlPlugins.SelectedTab = this.tabPagePluginsUpdates;
+            }
+
+            const bool updateplugindefaultchecked = true;
+            for (int i = 0; i < this.updatableplugins.Count; i++)
+            {
+                this.chxlbxPluginUpdates.Items.Add(this.updatableplugins[i].Name, updateplugindefaultchecked);
             }
         }
 
@@ -522,25 +565,51 @@ namespace NoteFly
         /// <param name="e"></param>
         private void btnupdateplugins_Click(object sender, EventArgs e)
         {
+            this.btnupdateplugins.Enabled = false;
+            this.updatedplugins = new List<int>();
             this.frmdownloader = new FrmDownloader(Strings.T("Updating plugins.."));
-            List<string> newupdateplugindownloads = new List<string>();
+            this.chxlbxPluginUpdates.Enabled = false;
             for (int i = 0; i < this.chxlbxPluginUpdates.Items.Count; i++)
             {
                 if (this.chxlbxPluginUpdates.GetItemChecked(i))
                 {
-                    string pluginname = this.chxlbxPluginUpdates.Items[i].ToString();
-                    string plugindownload = this.pluginupdatedownloads[pluginname];
-                    newupdateplugindownloads.Add(plugindownload);
+                    // checked for update plugin
+                    if (this.updatableplugins[i] == null)
+                    {
+                        continue;
+                    }
+
+                    this.updatedplugins.Add(i);
                 }
+
             }
 
             this.frmdownloader.Show();
-            this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(this.downloader_DownloadCompleet);
-            if (!Directory.Exists(Path.Combine(Settings.ProgramPluginsFolder,"new"))) {
+            this.frmdownloader.AllDownloadsCompleted += new FrmDownloader.DownloadCompleetHandler(this.DownloadUpdatesPluginsCompleet);
+            if (!Directory.Exists(Path.Combine(Settings.ProgramPluginsFolder,"new"))) 
+            {
                 Directory.CreateDirectory(Path.Combine(Settings.ProgramPluginsFolder,"new"));
             }
 
-            this.frmdownloader.BeginDownload(newupdateplugindownloads.ToArray(), Path.Combine(Settings.ProgramPluginsFolder,"new"));
+            string[] alldownloadurls = this.GetAllDownloadUrls(updatedplugins.ToArray());
+            this.frmdownloader.BeginDownload(alldownloadurls, Path.Combine(Settings.ProgramPluginsFolder, "new"));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="updatedplugins"></param>
+        /// <returns></returns>
+        private string[] GetAllDownloadUrls(int[] updatedplugins)
+        {
+            string[] alldownloadurls = new string[updatedplugins.Length];
+            for (int i = 0; i < updatedplugins.Length; i++)
+            {
+                int pluginposition = updatedplugins[i];
+                alldownloadurls[i] = this.updatableplugins[pluginposition].DownloadUrl;
+            }
+
+            return alldownloadurls;
         }
 
         /// <summary>
@@ -575,10 +644,20 @@ namespace NoteFly
             {
                 this.tabControlPlugins.TabPages.Add(this.tabPagePluginsUpdates);    
             }
-            else if (this.tabControlPlugins.TabPages.Contains(this.tabPagePluginsUpdates)) 
+            else if ((!showupdatetab) && this.tabControlPlugins.TabPages.Contains(this.tabPagePluginsUpdates)) 
             {
                 this.tabControlPlugins.TabPages.Remove(this.tabPagePluginsUpdates);
             }
+        }
+
+        /// <summary>
+        /// Restart this programme
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnRestartProgram_Click(object sender, EventArgs e)
+        {             
+            Application.Restart();
         }
     }
 }

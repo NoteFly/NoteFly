@@ -252,16 +252,14 @@ namespace NoteFly
         /// <param name="alreadyinstalled">Is the plugin to get details from already installed.</param>
         /// <param name="updateavailable">Is a update availible based on parsering of the serverresponse</param>
         /// <returns>Array of strings with details from the plugin.</returns>
-        public static string[] ParserDetailsPlugin(string response, string[] installedpluginnames, out bool alreadyinstalled, out bool updateavailable)
+        public static DownloadDetailsPlugin ParserDetailsPlugin(string response)
         {
-            alreadyinstalled = false;
-            updateavailable = false;
             if (string.IsNullOrEmpty(response))
             {
                 return null;
             }
 
-            string[] detailsplugin = new string[6];
+            DownloadDetailsPlugin downloaddetailsplugin = new DownloadDetailsPlugin();
             XmlTextReader xmlreader = null;
             try
             {
@@ -277,33 +275,22 @@ namespace NoteFly
                             switch (xmlplugin.Name)
                             {
                                 case "name":
-                                    detailsplugin[0] = xmlplugin.ReadElementContentAsString();
-                                    if (!string.IsNullOrEmpty(detailsplugin[0]))
-                                    {
-                                        for (int i = 0; i < installedpluginnames.Length; i++)
-                                        {
-                                            if (detailsplugin[0].Equals(installedpluginnames[i], StringComparison.OrdinalIgnoreCase))
-                                            {
-                                                alreadyinstalled = true;
-                                            }
-                                        }
-                                    }
-
+                                    downloaddetailsplugin.Name = xmlplugin.ReadElementContentAsString();
                                     break;
                                 case "version":
-                                    detailsplugin[1] = xmlplugin.ReadElementContentAsString();
+                                    downloaddetailsplugin.Version = xmlplugin.ReadElementContentAsString();
                                     break;
                                 case "license":
-                                    detailsplugin[2] = xmlplugin.ReadElementContentAsString();
+                                    downloaddetailsplugin.LicenseType = xmlplugin.ReadElementContentAsString();
                                     break;
                                 case "description":
-                                    detailsplugin[3] = xmlplugin.ReadElementContentAsString();
+                                    downloaddetailsplugin.Description = xmlplugin.ReadElementContentAsString();
                                     break;
                                 case "downloadurl":
-                                    detailsplugin[4] = xmlplugin.ReadElementContentAsString();
+                                    downloaddetailsplugin.DownloadUrl = xmlplugin.ReadElementContentAsString();
                                     break;
                                 case "signature":
-                                    detailsplugin[5] = xmlplugin.ReadElementContentAsString();
+                                    downloaddetailsplugin.Signature = xmlplugin.ReadElementContentAsString();
                                     break;
                             }
                         }
@@ -318,18 +305,7 @@ namespace NoteFly
                 }
             }
 
-            if (!string.IsNullOrEmpty(detailsplugin[0]) && !string.IsNullOrEmpty(detailsplugin[1]))
-            {
-                short[] installedpluginversion = PluginsManager.GetPluginVersionByName(detailsplugin[0]);
-                short[] availablepluginversion = Program.ParserVersionString(detailsplugin[1]);
-                if (Program.CompareVersions(availablepluginversion, installedpluginversion) > 0)
-                {
-                    // 1 if availablepluginversion is higher than installedpluginversion
-                    updateavailable = true;
-                }
-            }
-
-            return detailsplugin;
+            return downloaddetailsplugin;
         }
 
         /// <summary>

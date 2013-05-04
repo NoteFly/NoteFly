@@ -92,6 +92,7 @@
     <Reference Include="System.Drawing.Design" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DownloadDetailsPlugin.cs" />
     <Compile Include="EmailTextBox.cs">
       <SubType>Component</SubType>
     </Compile>

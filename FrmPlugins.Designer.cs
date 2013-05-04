@@ -39,20 +39,21 @@
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.lbxAvailablePlugins = new System.Windows.Forms.ListBox();
-            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.lblLicense = new System.Windows.Forms.Label();
             this.lblPluginVersion = new System.Windows.Forms.Label();
             this.lblPluginName = new System.Windows.Forms.Label();
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
             this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
-            this.pluginGrid = new NoteFly.PluginGrid();
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsUpdates = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.chxlbxPluginUpdates = new System.Windows.Forms.CheckedListBox();
             this.btnupdateplugins = new System.Windows.Forms.Button();
             this.lbltextpluginupdates = new System.Windows.Forms.Label();
+            this.btnRestartProgram = new System.Windows.Forms.Button();
+            this.pluginGrid = new NoteFly.PluginGrid();
+            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.tabPagePluginsAvailable.SuspendLayout();
             this.splitContainerAvailablePlugins.Panel1.SuspendLayout();
             this.splitContainerAvailablePlugins.Panel2.SuspendLayout();
@@ -130,19 +131,6 @@
             this.lbxAvailablePlugins.TabIndex = 5;
             this.lbxAvailablePlugins.SelectedIndexChanged += new System.EventHandler(this.lbxAvailablePlugins_SelectedIndexChanged);
             // 
-            // searchtbPlugins
-            // 
-            this.searchtbPlugins.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.searchtbPlugins.Enabled = false;
-            this.searchtbPlugins.Location = new System.Drawing.Point(0, 327);
-            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
-            this.searchtbPlugins.MaximumSize = new System.Drawing.Size(220, 30);
-            this.searchtbPlugins.Name = "searchtbPlugins";
-            this.searchtbPlugins.Size = new System.Drawing.Size(220, 30);
-            this.searchtbPlugins.TabIndex = 4;
-            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
-            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
-            // 
             // lblLicense
             // 
             this.lblLicense.ForeColor = System.Drawing.Color.Black;
@@ -205,18 +193,6 @@
             this.tabPagePluginsInstalled.Text = "Installed";
             this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
             // 
-            // pluginGrid
-            // 
-            this.pluginGrid.AutoScroll = true;
-            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
-            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
-            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
-            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
-            this.pluginGrid.TabIndex = 0;
-            // 
             // tabControlPlugins
             // 
             this.tabControlPlugins.Controls.Add(this.tabPagePluginsInstalled);
@@ -252,15 +228,17 @@
             this.tableLayoutPanel1.Controls.Add(this.chxlbxPluginUpdates, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.btnupdateplugins, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.lbltextpluginupdates, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnRestartProgram, 1, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.26415F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.73585F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 208F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
+            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.72727F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.27273F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 196F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(474, 359);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
@@ -268,17 +246,18 @@
             // 
             this.chxlbxPluginUpdates.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chxlbxPluginUpdates.FormattingEnabled = true;
-            this.chxlbxPluginUpdates.Location = new System.Drawing.Point(45, 58);
+            this.chxlbxPluginUpdates.Location = new System.Drawing.Point(42, 47);
+            this.chxlbxPluginUpdates.Margin = new System.Windows.Forms.Padding(0);
             this.chxlbxPluginUpdates.Name = "chxlbxPluginUpdates";
-            this.chxlbxPluginUpdates.Size = new System.Drawing.Size(376, 202);
+            this.chxlbxPluginUpdates.Size = new System.Drawing.Size(382, 196);
             this.chxlbxPluginUpdates.TabIndex = 0;
             // 
             // btnupdateplugins
             // 
             this.btnupdateplugins.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnupdateplugins.Location = new System.Drawing.Point(45, 266);
+            this.btnupdateplugins.Location = new System.Drawing.Point(45, 246);
             this.btnupdateplugins.Name = "btnupdateplugins";
-            this.btnupdateplugins.Size = new System.Drawing.Size(376, 30);
+            this.btnupdateplugins.Size = new System.Drawing.Size(376, 29);
             this.btnupdateplugins.TabIndex = 1;
             this.btnupdateplugins.Text = "Update selected plugins";
             this.btnupdateplugins.UseVisualStyleBackColor = true;
@@ -287,12 +266,48 @@
             // lbltextpluginupdates
             // 
             this.lbltextpluginupdates.AutoSize = true;
-            this.lbltextpluginupdates.Location = new System.Drawing.Point(45, 34);
+            this.lbltextpluginupdates.Location = new System.Drawing.Point(45, 25);
             this.lbltextpluginupdates.Name = "lbltextpluginupdates";
             this.lbltextpluginupdates.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.lbltextpluginupdates.Size = new System.Drawing.Size(159, 20);
             this.lbltextpluginupdates.TabIndex = 2;
             this.lbltextpluginupdates.Text = "Available plugin updates:";
+            // 
+            // btnRestartProgram
+            // 
+            this.btnRestartProgram.Location = new System.Drawing.Point(45, 281);
+            this.btnRestartProgram.Name = "btnRestartProgram";
+            this.btnRestartProgram.Size = new System.Drawing.Size(376, 31);
+            this.btnRestartProgram.TabIndex = 3;
+            this.btnRestartProgram.Text = "Restart";
+            this.btnRestartProgram.UseVisualStyleBackColor = true;
+            this.btnRestartProgram.Visible = false;
+            this.btnRestartProgram.Click += new System.EventHandler(this.btnRestartProgram_Click);
+            // 
+            // pluginGrid
+            // 
+            this.pluginGrid.AutoScroll = true;
+            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
+            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
+            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
+            this.pluginGrid.TabIndex = 0;
+            // 
+            // searchtbPlugins
+            // 
+            this.searchtbPlugins.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.searchtbPlugins.Enabled = false;
+            this.searchtbPlugins.Location = new System.Drawing.Point(0, 327);
+            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
+            this.searchtbPlugins.MaximumSize = new System.Drawing.Size(220, 30);
+            this.searchtbPlugins.Name = "searchtbPlugins";
+            this.searchtbPlugins.Size = new System.Drawing.Size(220, 30);
+            this.searchtbPlugins.TabIndex = 4;
+            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
+            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
             // 
             // FrmPlugins
             // 
@@ -344,6 +359,7 @@
         private System.Windows.Forms.CheckedListBox chxlbxPluginUpdates;
         private System.Windows.Forms.Button btnupdateplugins;
         private System.Windows.Forms.Label lbltextpluginupdates;
+        private System.Windows.Forms.Button btnRestartProgram;
 
     }
 }
