@@ -569,6 +569,9 @@ namespace NoteFly
                         case "UpdatecheckEverydays":
                             Settings.UpdatecheckEverydays = xmlread.ReadElementContentAsInt();
                             break;
+                        case "UpdatecheckPluginsEverydays":
+                            Settings.UpdatecheckPluginsEverydays = xmlread.ReadElementContentAsInt();
+                            break;
                         case "HighlightMaxchars":
                             Settings.HighlightMaxchars = xmlread.ReadElementContentAsInt();
                             break;
@@ -650,6 +653,9 @@ namespace NoteFly
                             break;
                         case "UpdatecheckLastDate":
                             Settings.UpdatecheckLastDate = xmlread.ReadElementContentAsString();
+                            break;
+                        case "UpdatecheckPluginsLastDate":
+                            Settings.UpdatecheckPluginsLastDate = xmlread.ReadElementContentAsString();
                             break;
                         case "UpdatecheckURL":
                             Settings.UpdatecheckURL = xmlread.ReadElementContentAsString();
@@ -925,7 +931,7 @@ namespace NoteFly
             Settings.SharingEmailEnabled = true;
             Settings.SharingEmailDefaultadres = string.Empty;
             Settings.TrayiconAlternateIcon = false;
-            Settings.TrayiconFontsize = 10.00f; // default .net: 8.25f; but made bigger (and more) for a little more readablity
+            Settings.TrayiconFontsize = 10.00f; // default 8.25 pt. but made bigger for a bit more readablity.
             Settings.TrayiconLeftclickaction = 1;
             Settings.TrayiconCreatenotebold = true;
             Settings.TrayiconExitbold = false;
@@ -935,6 +941,8 @@ namespace NoteFly
             Settings.UpdatecheckEverydays = 14; // 0 is disabled.
             Settings.UpdatecheckLastDate = DateTime.Now.ToString();
             Settings.UpdatecheckURL = "http://update.notefly.org/latestversion.xml";
+            Settings.UpdatecheckPluginsEverydays = 3;
+            Settings.UpdatecheckPluginsLastDate = DateTime.Now.ToString();
             GPGVerifyWrapper gpgverif = new GPGVerifyWrapper();
             if (!string.IsNullOrEmpty(gpgverif.GetGPGPath()) && gpgverif != null)
             {
@@ -1131,6 +1139,7 @@ namespace NoteFly
                     xmlwrite.WriteElementString("TrayiconFontsize", Settings.TrayiconFontsize.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("TrayiconLeftclickaction", Settings.TrayiconLeftclickaction.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("UpdatecheckEverydays", Settings.UpdatecheckEverydays.ToString(numfmtinfo));
+                    xmlwrite.WriteElementString("UpdatecheckPluginsEverydays", Settings.UpdatecheckPluginsEverydays.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("HighlightMaxchars", Settings.HighlightMaxchars.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("SettingsLastTab", Settings.SettingsLastTab.ToString(numfmtinfo));
                     xmlwrite.WriteElementString("ManagenotesFontsize", Settings.ManagenotesFontsize.ToString(numfmtinfo));
@@ -1151,6 +1160,7 @@ namespace NoteFly
                     xmlwrite.WriteElementString("UpdatecheckGPGPath", Settings.UpdatecheckGPGPath);
                     xmlwrite.WriteElementString("UpdatecheckLastDate", Settings.UpdatecheckLastDate.ToString());
                     xmlwrite.WriteElementString("UpdatecheckURL", Settings.UpdatecheckURL.ToString());
+                    xmlwrite.WriteElementString("UpdatecheckPluginsLastDate", Settings.UpdatecheckPluginsLastDate.ToString());
                     xmlwrite.WriteElementString("FontContentFamily", Settings.FontContentFamily);
                     xmlwrite.WriteElementString("FontTitleFamily", Settings.FontTitleFamily);
                     xmlwrite.WriteElementString("FontTrayicon", Settings.FontTrayicon);

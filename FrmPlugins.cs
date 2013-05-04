@@ -58,17 +58,22 @@ namespace NoteFly
         private const string RESTAPIPLUGINVERSION = "/REST/plugins/version.php";
 
         /// <summary>
-        /// 
+        /// Are plugin updates checkd by default
+        /// </summary>
+        private const bool PLUGINUPDATECHECKEDDEFAULT = true;
+
+        /// <summary>
+        /// The current selected plugin on the available plugins tabpage.
         /// </summary>
         private DownloadDetailsPlugin selectedplugindetails;
 
         /// <summary>
-        /// 
+        /// All the plugins that can be updated.
         /// </summary>
         private List<DownloadDetailsPlugin> updatableplugins;
 
         /// <summary>
-        /// 
+        /// Plugins positions in updatableplugins list that are being updated.
         /// </summary>
         private List<int> updatedplugins;
 
@@ -78,7 +83,7 @@ namespace NoteFly
         private FrmDownloader frmdownloader;
 
         /// <summary>
-        /// 
+        /// Number of dots after the loading text.
         /// </summary>
         private int textloadingdots = 0;
 
@@ -94,7 +99,14 @@ namespace NoteFly
             this.SetFormTitle();
             Strings.TranslateForm(this);
             this.pluginGrid.Enabled = Settings.ProgramPluginsAllEnabled;
-            this.CheckPluginsUpdates();
+            if (this.IsUpdatecheckPluginNeeded())
+            {
+                if (this.CheckPluginsUpdates()) 
+                {
+                    Settings.UpdatecheckPluginsLastDate = DateTime.Now.ToString();
+                    xmlUtil.WriteSettings();
+                }                
+            }
         }
 
         /// <summary>
@@ -103,6 +115,25 @@ namespace NoteFly
         private void SetFormTitle()
         {
             this.Text = Strings.T("Plugins") + " - " + Program.AssemblyTitle;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private bool IsUpdatecheckPluginNeeded()
+        {
+            bool pluginupdatecheckneeded = false;
+            if (Settings.UpdatecheckPluginsEverydays > 0)
+            {
+                DateTime lastupdateplugins = DateTime.Parse(Settings.UpdatecheckPluginsLastDate);
+                if (lastupdateplugins.AddDays(Settings.UpdatecheckPluginsEverydays) <= DateTime.Now)
+                {
+                    pluginupdatecheckneeded = true;
+                }
+            }
+
+            return pluginupdatecheckneeded;
         }
 
         /// <summary>
@@ -214,14 +245,17 @@ namespace NoteFly
                     if (this.selectedplugindetails.IsNewerVersion())
                     {
                         this.btnPluginDownload.Text = Strings.T("needs update");
-                        if (this.updatableplugins.Count < 1)
+                        if (this.updatableplugins == null)
                         {
-                            this.updatableplugins.Add(this.selectedplugindetails);
-                            this.chxlbxPluginUpdates.Items.Clear();
-                            this.chxlbxPluginUpdates.Items.Add(this.selectedplugindetails.Name);
+                            this.updatableplugins = new List<DownloadDetailsPlugin>();
                         }
 
-                        this.SetTabPageUpdatesVisible(true);
+                        if (!this.UpdateablePluginsContainsPlugin(this.selectedplugindetails))
+                        {
+                            this.updatableplugins.Add(this.selectedplugindetails);
+                            this.chxlbxPluginUpdates.Items.Add(this.selectedplugindetails.Name, PLUGINUPDATECHECKEDDEFAULT);
+                            this.SetTabPageUpdatesVisible(true);
+                        }
                     }
                     else
                     {
@@ -248,6 +282,24 @@ namespace NoteFly
             {
                 this.lblPluginDescription.Text = Strings.T("Could not load plugins details, please check if your network connection is still working.");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pluginname"></param>
+        /// <returns></returns>
+        private bool UpdateablePluginsContainsPlugin(DownloadDetailsPlugin plugin)
+        {
+            for (int i = 0; i < this.updatableplugins.Count; i++)
+            {
+                if (this.updatableplugins[i].Name.Equals(plugin.Name, StringComparison.InvariantCultureIgnoreCase) && this.updatableplugins[i].DownloadUrl == plugin.DownloadUrl)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -281,11 +333,11 @@ namespace NoteFly
             this.DecompressDownload(newpluginfile[0]);
             PluginsManager.LoadPlugins();
             this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
-            //this.tabControlPlugins.SelectedIndex = 0;            
+            this.tabControlPlugins.SelectedTab = this.tabPagePluginsInstalled;
         }
 
         /// <summary>
-        /// 
+        /// Downloading of plugin updates has been compleeted.
         /// </summary>
         /// <param name="newpluginfile"></param>
         private void DownloadUpdatesPluginsCompleet(string[] compressedpluginfiles)
@@ -323,7 +375,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Decompress the downloaded file.
         /// </summary>
         /// <param name="newfiles"></param>
         private void DecompressDownload(string compressedpluginfile)
@@ -450,7 +502,7 @@ namespace NoteFly
         /// <summary>
         /// Check plugins on updates.
         /// </summary>
-        private void CheckPluginsUpdates()
+        private bool CheckPluginsUpdates()
         {
             string[] installedpluginsnames = PluginsManager.GetInstalledPlugins();
             StringBuilder sbpluginspostsparam = new StringBuilder("plugins=");
@@ -466,11 +518,18 @@ namespace NoteFly
 
             if (sbpluginspostsparam.Length < 1)
             {
-                return;
+                return true;
             }
 
             HttpUtil httputil = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINVERSION, System.Net.Cache.RequestCacheLevel.Revalidate, sbpluginspostsparam.ToString());
-            httputil.Start(new RunWorkerCompletedEventHandler(this.httputil_pluginsversions_compleet));
+            if (httputil.Start(new RunWorkerCompletedEventHandler(this.httputil_pluginsversions_compleet)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -551,15 +610,14 @@ namespace NoteFly
                 this.tabControlPlugins.SelectedTab = this.tabPagePluginsUpdates;
             }
 
-            const bool updateplugindefaultchecked = true;
             for (int i = 0; i < this.updatableplugins.Count; i++)
             {
-                this.chxlbxPluginUpdates.Items.Add(this.updatableplugins[i].Name, updateplugindefaultchecked);
+                this.chxlbxPluginUpdates.Items.Add(this.updatableplugins[i].Name, PLUGINUPDATECHECKEDDEFAULT);
             }
         }
 
         /// <summary>
-        /// 
+        /// Button clicked to update plugins.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -596,7 +654,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Gets a array with all downloadurls in the updatableplugins list.
         /// </summary>
         /// <param name="updatedplugins"></param>
         /// <returns></returns>
@@ -613,7 +671,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Update the number of dots in after the loading text.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -658,6 +716,33 @@ namespace NoteFly
         private void btnRestartProgram_Click(object sender, EventArgs e)
         {             
             Application.Restart();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chxlbxPluginUpdates_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (e.NewValue == CheckState.Checked)
+            {
+                this.btnupdateplugins.Enabled = true;
+            } 
+            else 
+            {
+                bool anychecked = false;
+                for (int i = 0; i < this.chxlbxPluginUpdates.Items.Count; i++)
+                {
+                    if (this.chxlbxPluginUpdates.GetItemChecked(i) && e.Index != i)
+                    {
+                        anychecked = true;
+                        break;
+                    }
+                }
+
+                this.btnupdateplugins.Enabled = anychecked;
+            }
         }
     }
 }

@@ -435,7 +435,7 @@ namespace NoteFly
         public static string UpdatecheckGPGKeyserver = string.Empty;
 
         /// <summary>
-        /// Use GnuGP to verif the downloaded update.
+        /// Use GnuGP to verify the downloaded update.
         /// </summary>
         public static bool UpdatecheckUseGPG = false;
 
@@ -455,6 +455,16 @@ namespace NoteFly
         /// Passes /S parameter to NSIS installer.
         /// </summary>
         public static bool UpdateSilentInstall = false;
+
+        /// <summary>
+         /// The update plugins check interval in days of all plugins.
+        /// </summary>
+        public static int UpdatecheckPluginsEverydays = 3;
+
+        /// <summary>
+        /// The datatime of last update check of all plugins.
+        /// </summary>
+        public static string UpdatecheckPluginsLastDate = "1-1-1970 00:00:00";
 
         /// <summary>
         /// Log debug info.

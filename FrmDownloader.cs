@@ -118,6 +118,11 @@ namespace NoteFly
         /// <returns>True if downloading succesfully started.</returns>
         public bool BeginDownload(string[] downloads, string storefolder)
         {
+            if (downloads.Length == 0)
+            {
+                return false;
+            }
+
             DirectoryInfo pluginsdirinfo = new DirectoryInfo(storefolder);
             if (pluginsdirinfo.Attributes == FileAttributes.System)
             {

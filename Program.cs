@@ -346,9 +346,9 @@ namespace NoteFly
 
             if (Program.CheckInstancesRunning() > 1)
             {
-                string program_alreadyrunning = Strings.T("The programme is already running.\nLoad an other instance? (not recommeded)");
+                string program_alreadyrunning = Strings.T("{0} is already running.\nLoad an other instance? (not recommeded)", Program.AssemblyTitle);
                 string program_alreadyrunningtitle = Strings.T("already running");
-                System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(program_alreadyrunning, program_alreadyrunningtitle, System.Windows.Forms.MessageBoxButtons.YesNo);
+                System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(program_alreadyrunning, program_alreadyrunningtitle, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Exclamation);
                 if (dlgres == System.Windows.Forms.DialogResult.No)
                 {
                     // shutdown by don't continuing this Main method
@@ -410,8 +410,6 @@ namespace NoteFly
             }
 
             SyntaxHighlight.DeinitHighlighter();
-
-            //ApplicationContext appcontext = new ApplicationContext();
             System.Windows.Forms.Application.Run();
         }
 
@@ -491,7 +489,14 @@ namespace NoteFly
             catch (ArgumentException)
             {
                 culture = System.Globalization.CultureInfo.GetCultureInfo("en");
-                Log.Write(LogType.error, string.Format("Langecode {0} not recognised.", languagecode));
+                if (languagecode.Length > 4)
+                {
+                    Log.Write(LogType.error, string.Format("Langecode not recognised."));
+                }
+                else
+                {
+                    Log.Write(LogType.error, string.Format("Langecode {0} not recognised.", languagecode));
+                }
             }
 
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
@@ -974,7 +979,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Unhandled exceptions occur
+        /// Unhandled exceptions occur.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="args">UnhandledExceptionEvent arguments</param>
@@ -985,7 +990,7 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// Unhandled thread exceptions occur
+        /// Unhandled thread exceptions occur.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="treadargs">ThreadExceptionEvent arguments</param>
