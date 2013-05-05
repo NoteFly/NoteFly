@@ -293,7 +293,7 @@ namespace NoteFly
         {
             for (int i = 0; i < this.updatableplugins.Count; i++)
             {
-                if (this.updatableplugins[i].Name.Equals(plugin.Name, StringComparison.InvariantCultureIgnoreCase) && this.updatableplugins[i].DownloadUrl == plugin.DownloadUrl)
+                if (this.updatableplugins[i].DownloadUrl == plugin.DownloadUrl)
                 {
                     return true;
                 }
@@ -714,8 +714,26 @@ namespace NoteFly
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnRestartProgram_Click(object sender, EventArgs e)
-        {             
-            Application.Restart();
+        {
+            bool continuerestart = false;
+            if (Program.Formmanager.Frmneweditnoteopen)
+            {
+                DialogResult dlgrescontinu = MessageBox.Show(Strings.T("A note is still open for editing continue restarting {0} now? The unsaved note change will be lost.", Program.AssemblyTitle), "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (dlgrescontinu == System.Windows.Forms.DialogResult.Yes)
+                {
+                    continuerestart = true;
+                }
+            }
+            else
+            {
+                continuerestart = true;
+            }
+
+            if (continuerestart) 
+            {
+                Program.DisposeTrayicon();
+                Application.Restart();
+            }            
         }
 
         /// <summary>

@@ -507,8 +507,16 @@ namespace NoteFly
         /// </summary>
         public static void RestartTrayicon()
         {
-            trayicon.Dispose();
+            Program.DisposeTrayicon();
             trayicon = new TrayIcon(formmanager);
+        }
+
+        /// <summary>
+        ///  Dispose the trayicon
+        /// </summary>
+        public static void DisposeTrayicon()
+        {
+            trayicon.Dispose();
         }
 
         /// <summary>

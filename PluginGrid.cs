@@ -252,7 +252,7 @@ namespace NoteFly
             {
                 if (pluginupdateavailable)
                 {
-                    this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.LightGoldenrodYellow;
+                    this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.Gold;
                 }
                 else
                 {
@@ -265,7 +265,7 @@ namespace NoteFly
             {
                 if (pluginupdateavailable)
                 {
-                    this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.Khaki;
+                    this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.SandyBrown;
                 }
                 else
                 {

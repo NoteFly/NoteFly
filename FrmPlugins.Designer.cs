@@ -39,14 +39,12 @@
             this.splitContainerAvailablePlugins = new System.Windows.Forms.SplitContainer();
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.lbxAvailablePlugins = new System.Windows.Forms.ListBox();
-            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.lblLicense = new System.Windows.Forms.Label();
             this.lblPluginVersion = new System.Windows.Forms.Label();
             this.lblPluginName = new System.Windows.Forms.Label();
             this.lblPluginDescription = new System.Windows.Forms.Label();
             this.btnPluginDownload = new System.Windows.Forms.Button();
             this.tabPagePluginsInstalled = new System.Windows.Forms.TabPage();
-            this.pluginGrid = new NoteFly.PluginGrid();
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsUpdates = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -54,6 +52,8 @@
             this.btnupdateplugins = new System.Windows.Forms.Button();
             this.lbltextpluginupdates = new System.Windows.Forms.Label();
             this.btnRestartProgram = new System.Windows.Forms.Button();
+            this.pluginGrid = new NoteFly.PluginGrid();
+            this.searchtbPlugins = new NoteFly.SearchTextBox();
             this.tabPagePluginsAvailable.SuspendLayout();
             this.splitContainerAvailablePlugins.Panel1.SuspendLayout();
             this.splitContainerAvailablePlugins.Panel2.SuspendLayout();
@@ -131,19 +131,6 @@
             this.lbxAvailablePlugins.TabIndex = 5;
             this.lbxAvailablePlugins.SelectedIndexChanged += new System.EventHandler(this.lbxAvailablePlugins_SelectedIndexChanged);
             // 
-            // searchtbPlugins
-            // 
-            this.searchtbPlugins.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.searchtbPlugins.Enabled = false;
-            this.searchtbPlugins.Location = new System.Drawing.Point(0, 327);
-            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
-            this.searchtbPlugins.MaximumSize = new System.Drawing.Size(220, 30);
-            this.searchtbPlugins.Name = "searchtbPlugins";
-            this.searchtbPlugins.Size = new System.Drawing.Size(220, 30);
-            this.searchtbPlugins.TabIndex = 4;
-            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
-            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
-            // 
             // lblLicense
             // 
             this.lblLicense.ForeColor = System.Drawing.Color.Black;
@@ -205,18 +192,6 @@
             this.tabPagePluginsInstalled.TabIndex = 1;
             this.tabPagePluginsInstalled.Text = "Installed";
             this.tabPagePluginsInstalled.UseVisualStyleBackColor = true;
-            // 
-            // pluginGrid
-            // 
-            this.pluginGrid.AutoScroll = true;
-            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
-            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
-            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
-            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
-            this.pluginGrid.Name = "pluginGrid";
-            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
-            this.pluginGrid.TabIndex = 0;
             // 
             // tabControlPlugins
             // 
@@ -303,15 +278,42 @@
             // 
             // btnRestartProgram
             // 
+            this.btnRestartProgram.BackColor = System.Drawing.Color.Transparent;
+            this.btnRestartProgram.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRestartProgram.Location = new System.Drawing.Point(45, 281);
             this.btnRestartProgram.Name = "btnRestartProgram";
             this.btnRestartProgram.Size = new System.Drawing.Size(376, 31);
             this.btnRestartProgram.TabIndex = 3;
             this.btnRestartProgram.Text = "&Restart";
             this.btnRestartProgram.UseCompatibleTextRendering = true;
-            this.btnRestartProgram.UseVisualStyleBackColor = true;
+            this.btnRestartProgram.UseVisualStyleBackColor = false;
             this.btnRestartProgram.Visible = false;
             this.btnRestartProgram.Click += new System.EventHandler(this.btnRestartProgram_Click);
+            // 
+            // pluginGrid
+            // 
+            this.pluginGrid.AutoScroll = true;
+            this.pluginGrid.BackColor = System.Drawing.Color.Transparent;
+            this.pluginGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginGrid.Location = new System.Drawing.Point(4, 4);
+            this.pluginGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.pluginGrid.MinimumSize = new System.Drawing.Size(10, 10);
+            this.pluginGrid.Name = "pluginGrid";
+            this.pluginGrid.Size = new System.Drawing.Size(472, 357);
+            this.pluginGrid.TabIndex = 0;
+            // 
+            // searchtbPlugins
+            // 
+            this.searchtbPlugins.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.searchtbPlugins.Enabled = false;
+            this.searchtbPlugins.Location = new System.Drawing.Point(0, 327);
+            this.searchtbPlugins.Margin = new System.Windows.Forms.Padding(4);
+            this.searchtbPlugins.MaximumSize = new System.Drawing.Size(220, 30);
+            this.searchtbPlugins.Name = "searchtbPlugins";
+            this.searchtbPlugins.Size = new System.Drawing.Size(220, 30);
+            this.searchtbPlugins.TabIndex = 4;
+            this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
+            this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
             // 
             // FrmPlugins
             // 
