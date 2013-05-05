@@ -335,6 +335,11 @@ namespace NoteFly
                     Program.Formmanager.FrmManageNotesNeedUpdate = true;
                 }
 
+                if (Settings.ProgramPluginsAllEnabled)
+                {
+                    PluginsManager.LoadPlugins();
+                }
+
                 SyntaxHighlight.InitHighlighter();
                 this.notes.UpdateAllNoteForms();
                 Program.RestartTrayicon();

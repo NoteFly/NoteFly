@@ -536,8 +536,8 @@ namespace NoteFly
         /// Parser results of versions requested plugins, and set tabpage with plugin update visible
         /// if there are plugin update(s) are available.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void httputil_pluginsversions_compleet(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             string result = (string)e.Result;
@@ -559,28 +559,45 @@ namespace NoteFly
             {
                 if (xmlnode.ChildNodes.Count > 1)
                 {
+                    bool minversionipluginokay = true;
                     DownloadDetailsPlugin downloaddetailsplugin = new DownloadDetailsPlugin();
-                    for (int i = 0; i < xmlnode.ChildNodes.Count; i++)
+                    for (int i = 0; (i < xmlnode.ChildNodes.Count && minversionipluginokay); i++)
                     {
-                        if (xmlnode.ChildNodes[i].Name == "name")
+                        switch (xmlnode.ChildNodes[i].Name)
                         {
-                            downloaddetailsplugin.Name = xmlnode.ChildNodes[i].InnerText;
-                        }
-                        else if (xmlnode.ChildNodes[i].Name == "version")
-                        {
-                            downloaddetailsplugin.Version = xmlnode.ChildNodes[i].InnerText;
-                        }
-                        else if (xmlnode.ChildNodes[i].Name == "downloadurl")
-                        {
-                            downloaddetailsplugin.DownloadUrl = xmlnode.ChildNodes[i].InnerText;
-                        }
-                        else if (xmlnode.ChildNodes[i].Name == "signature")
-                        {
-                            downloaddetailsplugin.Signature = xmlnode.ChildNodes[i].InnerText;
+                            case "name":
+                                downloaddetailsplugin.Name = xmlnode.ChildNodes[i].InnerText;
+                                break;
+                            case "version":
+                                downloaddetailsplugin.Version = xmlnode.ChildNodes[i].InnerText;
+                                break;
+                            case "downloadurl":
+                                downloaddetailsplugin.DownloadUrl = xmlnode.ChildNodes[i].InnerText;
+                                break;
+                            case "signature":
+                                downloaddetailsplugin.Signature = xmlnode.ChildNodes[i].InnerText;
+                                break;
+                            case "minversioniplugin":
+                                short[] pluginipluginversionneeded = new short[] { 0,0,0};
+                                try 
+                                {
+                                    pluginipluginversionneeded = Program.ParserVersionString(xmlnode.ChildNodes[i].InnerText);
+                                } 
+                                catch (Exception) 
+                                {
+                                    Log.Write(LogType.error, "Server returned unknown minversioniplugin.");
+                                }
+
+                                if (Program.CompareVersions(pluginipluginversionneeded, PluginsManager.GetIPluginVersion()) > 1)
+                                {
+                                    minversionipluginokay = false;
+                                }
+
+                                break;
                         }
                     }
 
-                    if (downloaddetailsplugin.IsInstalledPlugin())
+                    if (downloaddetailsplugin.IsInstalledPlugin() && minversionipluginokay)
                     {
                         if (downloaddetailsplugin.IsNewerVersion())
                         {
@@ -619,8 +636,8 @@ namespace NoteFly
         /// <summary>
         /// Button clicked to update plugins.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnupdateplugins_Click(object sender, EventArgs e)
         {
             this.btnupdateplugins.Enabled = false;
@@ -656,8 +673,8 @@ namespace NoteFly
         /// <summary>
         /// Gets a array with all downloadurls in the updatableplugins list.
         /// </summary>
-        /// <param name="updatedplugins"></param>
-        /// <returns></returns>
+        /// <param name="updatedplugins">Array with positions in updateableplugins list to be updated.</param>
+        /// <returns>Array with all download urls of plugins to be updated.</returns>
         private string[] GetAllDownloadUrls(int[] updatedplugins)
         {
             string[] alldownloadurls = new string[updatedplugins.Length];
@@ -673,8 +690,8 @@ namespace NoteFly
         /// <summary>
         /// Update the number of dots in after the loading text.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void timerTextUpdater_Tick(object sender, EventArgs e)
         {
             const int MAXTEXTLOADINGDOTS = 5;
@@ -695,7 +712,7 @@ namespace NoteFly
         /// <summary>
         /// Set the this.tabPagePluginsUpdates visible or invisible.
         /// </summary>
-        /// <param name="showupdatetab">showupdatetab</param>
+        /// <param name="showupdatetab">True if update tab is visible.</param>
         private void SetTabPageUpdatesVisible(bool showupdatetab)
         {
             if ((showupdatetab) && (!this.tabControlPlugins.TabPages.Contains(this.tabPagePluginsUpdates)))
@@ -711,8 +728,8 @@ namespace NoteFly
         /// <summary>
         /// Restart this programme
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void btnRestartProgram_Click(object sender, EventArgs e)
         {
             bool continuerestart = false;
@@ -733,14 +750,15 @@ namespace NoteFly
             {
                 Program.DisposeTrayicon();
                 Application.Restart();
-            }            
+            }
         }
 
         /// <summary>
-        /// 
+        /// An plugin in the updatable plugin checkboxlistbox is check or unchecked.
+        /// Disable the btnupdateplugins button if no plugin is checked.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void chxlbxPluginUpdates_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if (e.NewValue == CheckState.Checked)

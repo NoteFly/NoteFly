@@ -540,7 +540,7 @@ namespace NoteFly
         /// Find out if the version numbers given as array is higher
         /// than the required version numbers given as an array.
         /// </summary>
-        /// <param name="versionA">A version as array.with major, minor and release numbers</param>
+        /// <param name="versionA">A version as array with major, minor and release numbers</param>
         /// <param name="versionB">A version as array with major, minor and release numbers</param>
         /// <returns>Returns -3 if versionB is not valid.
         /// -2 if versionA is not valid.

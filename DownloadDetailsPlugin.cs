@@ -154,9 +154,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Get if this a plugin that is installed.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if a plugin with this name is installed.</returns>
         public bool IsInstalledPlugin()
         {
             if (string.IsNullOrEmpty(this.name))
@@ -178,9 +178,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Get if this plugindetails is of newer version than installed.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if newer DownloadDetailsPlugin version is newer than installed.</returns>
         public bool IsNewerVersion()
         {
             if (string.IsNullOrEmpty(this.name) || string.IsNullOrEmpty(this.version))
