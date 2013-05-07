@@ -267,6 +267,7 @@ namespace NoteFly
                 if (this.chxCheckUpdates.Checked)
                 {
                     Settings.UpdatecheckEverydays = Convert.ToInt32(this.numUpdateCheckDays.Value);
+                    Settings.UpdatecheckPluginsEverydays = Convert.ToInt32(this.numUpdateCheckPluginsDays.Value);
                 }
                 else
                 {
@@ -549,6 +550,7 @@ namespace NoteFly
         private void cbxCheckUpdates_CheckedChanged(object sender, EventArgs e)
         {
             this.numUpdateCheckDays.Enabled = this.chxCheckUpdates.Checked;
+            this.numUpdateCheckPluginsDays.Enabled = this.chxCheckUpdates.Checked;
         }
 
         /// <summary>
@@ -763,12 +765,15 @@ namespace NoteFly
             {
                 this.chxCheckUpdates.Checked = true;
                 this.SetUpDownSpinnerValue(this.numUpdateCheckDays, Settings.UpdatecheckEverydays);
+                this.SetUpDownSpinnerValue(this.numUpdateCheckPluginsDays, Settings.UpdatecheckPluginsEverydays);
                 this.numUpdateCheckDays.Enabled = true;
+                this.numUpdateCheckPluginsDays.Enabled = true;
             }
             else
             {
                 this.chxCheckUpdates.Checked = false;
                 this.numUpdateCheckDays.Enabled = false;
+                this.numUpdateCheckPluginsDays.Enabled = false;
             }
 
             this.chxUpdateSilentInstall.Checked = Settings.UpdateSilentInstall;

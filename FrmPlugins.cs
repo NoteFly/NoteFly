@@ -88,6 +88,11 @@ namespace NoteFly
         private int textloadingdots = 0;
 
         /// <summary>
+        /// 
+        /// </summary>
+        private DateTime lastrequesttime;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FrmPlugins" /> class.
         /// </summary>
         public FrmPlugins()
@@ -192,6 +197,12 @@ namespace NoteFly
         {
             if (this.lbxAvailablePlugins.SelectedIndex >= 0)
             {
+                if (this.RateLimitRequest())
+                {
+                    return;
+                }
+
+                this.lastrequesttime = DateTime.Now;
                 this.splitContainerAvailablePlugins.Panel2Collapsed = false;
                 this.btnPluginDownload.Visible = false;
                 string pluginname = this.lbxAvailablePlugins.SelectedItem.ToString();
@@ -213,6 +224,25 @@ namespace NoteFly
                     this.SetAvailablePluginsNetwork(true);
                 }   
             }
+        }
+
+        /// <summary>
+        /// Check if request is not too fast after previous one.
+        /// Avoid REST api silently refuses to answer.
+        /// </summary>
+        /// <returns>True if request is too fast.</returns>
+        private bool RateLimitRequest()
+        {
+            const int MINDIFFREQTIME = 400;
+            if (this.lastrequesttime != null)
+            {
+                if (this.lastrequesttime.AddMilliseconds(MINDIFFREQTIME).CompareTo(DateTime.Now) > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
