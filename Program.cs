@@ -29,9 +29,9 @@ namespace NoteFly
     using System.Diagnostics;
     using System.IO;
     using System.Reflection;
+    using System.Runtime.InteropServices;
     using System.Text;
     using System.Threading;
-    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Program class, main entry application.
@@ -1116,6 +1116,22 @@ namespace NoteFly
         // change working directory as dll search path
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool SetDllDirectory(string pathName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string GetNewPluginFolder(bool createnotexist)
+        {
+            const string NEWPLUGINSFOLDERNAME = "new";
+            string newpluginfolder = Path.Combine(Settings.ProgramPluginsFolder, NEWPLUGINSFOLDERNAME);
+            if (!Directory.Exists(newpluginfolder) && createnotexist)
+            {
+                Directory.CreateDirectory(Path.Combine(Settings.ProgramPluginsFolder, NEWPLUGINSFOLDERNAME));
+            }
+
+            return newpluginfolder;
+        }
 
         #endregion Methods
     }

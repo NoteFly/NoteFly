@@ -160,7 +160,7 @@ namespace NoteFly
             lblPluginVersion.Name = "lblPluginVersion";
             lblPluginVersion.TabIndex = 7;
             lblPluginVersion.Text = PluginsManager.GetPluginVersion(pluginassembly);
-            if (File.Exists(Path.Combine(Path.Combine(Settings.ProgramPluginsFolder, "new"), dllfilename)))
+            if (File.Exists(Path.Combine(Program.GetNewPluginFolder(false), dllfilename)))
             {
                 lblPluginVersion.Text += " " + Strings.T("(restart {0} to update)", Program.AssemblyTitle);
             }
@@ -247,7 +247,7 @@ namespace NoteFly
         /// <param name="dllfilename">The dll filename to check if it's enabled.</param>
         private void SetPluginStatus(int pluginpos, string dllfilename)
         {
-            bool pluginupdateavailable = File.Exists(Path.Combine(Path.Combine(Settings.ProgramPluginsFolder, "new"), dllfilename));
+            bool pluginupdateavailable = File.Exists(Path.Combine(Program.GetNewPluginFolder(false), dllfilename));
             if (PluginsManager.IsPluginEnabled(dllfilename))
             {
                 if (pluginupdateavailable)

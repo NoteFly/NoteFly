@@ -424,7 +424,7 @@ namespace NoteFly
         /// </summary>
         public static void UpdatePluginReplaceFiles()
         {
-            string pluginupdatefolder = Path.Combine(Settings.ProgramPluginsFolder, "new");
+            string pluginupdatefolder = Program.GetNewPluginFolder(false);
             if (Directory.Exists(pluginupdatefolder))
             {
                 string[] newplugins = GetDllFilesFolder(pluginupdatefolder);
