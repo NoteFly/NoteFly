@@ -15,9 +15,7 @@ REM
 REM  You should have received a copy of the GNU General Public License
 REM  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-REM "FrmAbout.cs" "FrmDownloader.cs" "FrmException.cs" "FrmManageNotes.cs" "FrmNewNote.cs" "FrmNote.cs" "FrmPlugins.cs" "FrmSettings.cs" "PluginGrid.cs" "SearchTextBox.cs" "Notes.cs" "PluginsManager.cs" "Program.cs" "TrayIcon.cs" "XmlUtil.cs"
 echo Extracting translations of sourcecode.
-
 xgettext --from-code=UTF-8 *.cs -k --add-location --keyword=T --language=C# -o .\bin\Strings.pot --copyright-holder="NoteFly"
 
 echo finished

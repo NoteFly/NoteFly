@@ -1,5 +1,5 @@
 ;  NoteFly a note application.
-;  Copyright (C) 2010-2012  Tom
+;  Copyright (C) 2010-2013  Tom
 ;
 ;  This program is free software: you can redistribute it and/or modify
 ;  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 ;
 
 !define PROJNAME   "NoteFly"
-!define VERSION    "3.0.4"          ; version number: major.minor.release
+!define VERSION    "3.0.5"          ; version number: major.minor.release
 !define VERSTATUS  ""               ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.

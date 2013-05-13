@@ -1118,7 +1118,7 @@ namespace NoteFly
         private static extern bool SetDllDirectory(string pathName);
 
         /// <summary>
-        /// 
+        /// Get the plugin folder for plugins update to be stored in temperary.
         /// </summary>
         /// <returns></returns>
         public static string GetNewPluginFolder(bool createnotexist)
