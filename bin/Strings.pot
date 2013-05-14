@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-13 21:33+0200\n"
+"POT-Creation-Date: 2013-05-14 19:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,7 +84,7 @@ msgstr ""
 
 #: FrmManageNotes.cs:758
 #, csharp-format
-msgid "Access denied. delete note {0} manually with proper premission."
+msgid "Access denied. delete note {0} manually with proper permission."
 msgstr ""
 
 #: FrmManageNotes.cs:833
@@ -232,10 +232,14 @@ msgid ""
 "note change will be lost."
 msgstr ""
 
-#: FrmSettings.cs:115 FrmSettings.cs:116
+#: FrmSettings.cs:115
 msgid ""
 "Directory does not exist.\n"
-"Please choice a valid directory."
+"Please choose a valid directory."
+msgstr ""
+
+#: FrmSettings.cs:116
+msgid "Directory does not exist."
 msgstr ""
 
 #: FrmSettings.cs:161
@@ -260,7 +264,7 @@ msgstr ""
 
 #: FrmSettings.cs:328
 #, csharp-format
-msgid "{0} is buzy moving your notes"
+msgid "{0} is busy moving your notes."
 msgstr ""
 
 #: FrmSettings.cs:374
@@ -268,11 +272,11 @@ msgid "No rights to add key to registry."
 msgstr ""
 
 #: FrmSettings.cs:393
-msgid "Run key in registery does not exist."
+msgid "Run key in registry does not exist."
 msgstr ""
 
 #: FrmSettings.cs:394
-msgid "Error run key registery missing"
+msgid "Error run key registry missing"
 msgstr ""
 
 #: FrmSettings.cs:407
@@ -280,7 +284,7 @@ msgid "Font size invalid. Minimal 4pt maximum 128pt allowed."
 msgstr ""
 
 #: FrmSettings.cs:408
-msgid "Error invalid fontsize"
+msgid "Error invalid font size"
 msgstr ""
 
 #: FrmSettings.cs:409
@@ -308,11 +312,11 @@ msgid "Error text direction"
 msgstr ""
 
 #: FrmSettings.cs:454
-msgid "Given default emailadres is not valid."
+msgid "Given email address as default email address is not valid."
 msgstr ""
 
 #: FrmSettings.cs:455
-msgid "Email adres no valid"
+msgid "email address invalid"
 msgstr ""
 
 #: FrmSettings.cs:462
@@ -376,12 +380,12 @@ msgid "Are you sure?"
 msgstr ""
 
 #: ImportNotes.cs:458
-msgid "CVS file does not seems to be in the Stickies format."
+msgid "CSV file does not seems to be in the Stickies format."
 msgstr ""
 
 #: ImportNotes.cs:465
 msgid ""
-"CVS file does not seems to be in the Stickies format, excepting 5 columns."
+"CSV file does not seems to be in the Stickies format, expecting 5 columns."
 msgstr ""
 
 #: ImportNotes.cs:602
@@ -489,7 +493,7 @@ msgstr ""
 #, csharp-format
 msgid ""
 "{0} is already running.\n"
-"Load an other instance? (not recommeded)"
+"Load another instance? (not recommended)"
 msgstr ""
 
 #: Program.cs:350
@@ -645,6 +649,38 @@ msgid ""
 "Are you sure you want to shutdown {0}?"
 msgstr ""
 
+# menuSaveNewNote
+msgid "&Save note"
+msgstr ""
+
+# menuShowtoolbar
+msgid "Show format tools"
+msgstr ""
+
+# menuWordWarp
+msgid "Word wrap"
+msgstr ""
+
+# menuStickyOnTop
+msgid "Sticky on &top"
+msgstr ""
+
+# menuCopy
+msgid "&Copy"
+msgstr ""
+
+# menuPasteTo
+msgid "&Paste to"
+msgstr ""
+
+# menuImportfile
+msgid "Import.."
+msgstr ""
+
+# menuCancelNewNote
+msgid "Cance&l note"
+msgstr ""
+
 # menuEditNote
 msgid "&Edit note"
 msgstr ""
@@ -655,18 +691,6 @@ msgstr ""
 
 # menuActions
 msgid "&Actions"
-msgstr ""
-
-# menuOnTop
-msgid "Sticky on &top"
-msgstr ""
-
-# menuWordWrap
-msgid "Word wrap"
-msgstr ""
-
-# menuCopy
-msgid "&Copy"
 msgstr ""
 
 # menuHideNote
@@ -814,11 +838,11 @@ msgid "Trayicon menu font:"
 msgstr ""
 
 # lblTextFontsizeMenu
-msgid "Trayicon menu fontsize:"
+msgid "Trayicon menu font size:"
 msgstr ""
 
 # chxUseAlternativeTrayicon
-msgid "Use alternative windows7 style/white trayicon."
+msgid "Use alternative white trayicon."
 msgstr ""
 
 # chxTrayiconBoldExit
@@ -838,7 +862,7 @@ msgid "Display \"New note\" in bold."
 msgstr ""
 
 # lbTextManagesnotesFontSize
-msgid "Manage notes fontsize:"
+msgid "Manage notes font size:"
 msgstr ""
 
 # lblTextSkinManagenotes
@@ -846,7 +870,7 @@ msgid "Manage notes skin:"
 msgstr ""
 
 # chxCaseSentiveSearch
-msgid "Use case sentive search."
+msgid "Use case sensitive search."
 msgstr ""
 
 # chxManagenotesTooltipContent
@@ -858,7 +882,7 @@ msgid "Highlight"
 msgstr ""
 
 # chxLexiconMemory
-msgid "Clear lexicon memory after highlighting. (not recommeded)"
+msgid "Clear lexicon memory after highlighting. (not recommended)"
 msgstr ""
 
 # chxHighlightSQL
@@ -1035,24 +1059,4 @@ msgstr ""
 
 # tabPagePluginsAvailable
 msgid "available"
-msgstr ""
-
-# menuSaveNewNote
-msgid "&Save note"
-msgstr ""
-
-# menuShowtoolbar
-msgid "Show format tools"
-msgstr ""
-
-# menuPasteTo
-msgid "&Paste to"
-msgstr ""
-
-# menuImportfile
-msgid "Import.."
-msgstr ""
-
-# menuCancelNewNote
-msgid "Canc&el note"
 msgstr ""

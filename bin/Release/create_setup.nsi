@@ -213,6 +213,8 @@ Section "main executable (required)"
   File ".\translations\nl\Strings.po"
   SetOutPath "$INSTDIR\translations\ko\"
   File ".\translations\ko\Strings.po"
+  SetOutPath "$INSTDIR\translations\sv\"
+  File ".\translations\sv\Strings.po"
   
   WriteUninstaller "uninstall.exe"
   
@@ -294,6 +296,8 @@ Section "Uninstall"
   RMDir "$INSTDIR\translations\nl\"
   Delete "$INSTDIR\translations\en\Strings.po"
   RMDir "$INSTDIR\translations\en\"
+  Delete "$INSTDIR\translations\sv\Strings.po"
+  RMDir "$INSTDIR\translations\sv\"
   RMDir "$INSTDIR\translations\"
   
   ; remove uninstaller

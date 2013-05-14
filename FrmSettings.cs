@@ -112,8 +112,8 @@ namespace NoteFly
                 }
                 else
                 {
-                    string settings_dirdoesnotexist = Strings.T("Directory does not exist.\nPlease choice a valid directory.");
-                    string settings_dirdoesnotexisttitle = Strings.T("Directory does not exist.\nPlease choice a valid directory.");
+                    string settings_dirdoesnotexist = Strings.T("Directory does not exist.\nPlease choose a valid directory.");
+                    string settings_dirdoesnotexisttitle = Strings.T("Directory does not exist.");
                     Log.Write(LogType.info, settings_dirdoesnotexist);
                     MessageBox.Show(settings_dirdoesnotexist, settings_dirdoesnotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -324,8 +324,8 @@ namespace NoteFly
                         args[0] = this.oldnotesavepath;
                         args[1] = Settings.NotesSavepath;
                         movenotesthread.Start(args);
-                        movenotesthread.Join(300); // if finished within 300ms don't display buzy moving notes message.
-                        this.ShowWaitOnThread(movenotesthread, 300, Strings.T("{0} is buzy moving your notes", Program.AssemblyTitle));
+                        movenotesthread.Join(300); // if finished within 300ms don't display busy moving notes message.
+                        this.ShowWaitOnThread(movenotesthread, 300, Strings.T("{0} is busy moving your notes.", Program.AssemblyTitle));
                         this.notes.LoadNotes(true, false);
                     }
                     finally
@@ -390,8 +390,8 @@ namespace NoteFly
             }
             else
             {
-                string settings_regkeynotexist = Strings.T("Run key in registery does not exist.");
-                string settings_regkeynotexisttitle = Strings.T("Error run key registery missing");
+                string settings_regkeynotexist = Strings.T("Run key in registry does not exist.");
+                string settings_regkeynotexisttitle = Strings.T("Error run key registry missing");
                 Log.Write(LogType.error, settings_regkeynotexist);
                 MessageBox.Show(settings_regkeynotexist, settings_regkeynotexisttitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -405,7 +405,7 @@ namespace NoteFly
         {
             bool allsettingsvalid = false;
             string settings_invalidfontsize = Strings.T("Font size invalid. Minimal 4pt maximum 128pt allowed.");
-            string settings_invalidfontsizetitle = Strings.T("Error invalid fontsize");
+            string settings_invalidfontsizetitle = Strings.T("Error invalid font size");
             string settings_nofont = Strings.T("Please select a font.");
             string settings_nofonttitle = Strings.T("Error no font.");
             if (!Directory.Exists(this.tbNotesSavePath.Text))
@@ -451,8 +451,8 @@ namespace NoteFly
             else if (!this.tbDefaultEmail.IsValidEmailAddress() && this.chxActionsEmailDefaultaddressSet.Checked)
             {
                 this.tabControlSettings.SelectedTab = this.tabSharing;
-                string settings_emailnotvalid = Strings.T("Given default emailadres is not valid.");
-                string settings_emailnotvalidtitle = Strings.T("Email adres no valid");
+                string settings_emailnotvalid = Strings.T("Given email address as default email address is not valid.");
+                string settings_emailnotvalidtitle = Strings.T("email address invalid");
                 Log.Write(LogType.error, settings_emailnotvalid);
                 MessageBox.Show(settings_emailnotvalid, settings_emailnotvalidtitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

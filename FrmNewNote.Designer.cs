@@ -251,7 +251,7 @@ namespace NoteFly
             this.menuImportfile,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(181, 180);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(181, 202);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -304,8 +304,8 @@ namespace NoteFly
             // menuCopyContent
             // 
             this.menuCopyContent.Name = "menuCopyContent";
-            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.C)));
+            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.C)));
             this.menuCopyContent.Size = new System.Drawing.Size(189, 22);
             this.menuCopyContent.Text = "content";
             // 
@@ -351,7 +351,7 @@ namespace NoteFly
             this.menuCancelNewNote.Name = "menuCancelNewNote";
             this.menuCancelNewNote.ShortcutKeyDisplayString = "Escape";
             this.menuCancelNewNote.Size = new System.Drawing.Size(180, 22);
-            this.menuCancelNewNote.Text = "Canc&el note";
+            this.menuCancelNewNote.Text = "Cance&l note";
             this.menuCancelNewNote.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // tbTitle
@@ -371,8 +371,8 @@ namespace NoteFly
             this.tbTitle.Size = new System.Drawing.Size(172, 23);
             this.tbTitle.TabIndex = 0;
             this.tbTitle.WordWrap = false;
-            this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             this.tbTitle.Enter += new System.EventHandler(this.tbTitle_Enter);
+            this.tbTitle.Leave += new System.EventHandler(this.tbTitle_Leave);
             // 
             // lbTextTitle
             // 
@@ -385,8 +385,8 @@ namespace NoteFly
             this.lbTextTitle.Text = "Title:";
             this.lbTextTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lbTextTitle.UseCompatibleTextRendering = true;
-            this.lbTextTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.lbTextTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
+            this.lbTextTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.lbTextTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseUp);
             // 
             // pnlHeadNewNote
@@ -402,8 +402,8 @@ namespace NoteFly
             this.pnlHeadNewNote.Name = "pnlHeadNewNote";
             this.pnlHeadNewNote.Size = new System.Drawing.Size(280, 40);
             this.pnlHeadNewNote.TabIndex = 4;
-            this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.pnlHeadNewNote.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseDown);
+            this.pnlHeadNewNote.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseMove);
             this.pnlHeadNewNote.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHeadNewNote_MouseUp);
             // 
             // btnCancel
@@ -637,9 +637,9 @@ namespace NoteFly
             // rtbNewNote
             // 
             this.rtbNewNote.AcceptsTab = true;
-            this.rtbNewNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbNewNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbNewNote.BackColor = System.Drawing.Color.Khaki;
             this.rtbNewNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbNewNote.ContextMenuStrip = this.contextMenuStripTextActions;
@@ -652,12 +652,12 @@ namespace NoteFly
             this.rtbNewNote.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbNewNote.Size = new System.Drawing.Size(276, 167);
             this.rtbNewNote.TabIndex = 1;
-            this.rtbNewNote.Text = string.Empty;
+            this.rtbNewNote.Text = "";
             this.rtbNewNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
             this.rtbNewNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rtbNote_MouseClick);
             this.rtbNewNote.Enter += new System.EventHandler(this.rtbNote_Enter);
-            this.rtbNewNote.Leave += new System.EventHandler(this.rtbNote_Leave);
             this.rtbNewNote.KeyUp += new System.Windows.Forms.KeyEventHandler(this.rtbNewNote_KeyUp);
+            this.rtbNewNote.Leave += new System.EventHandler(this.rtbNote_Leave);
             // 
             // pbResizeGrip
             // 
@@ -680,8 +680,8 @@ namespace NoteFly
             // 
             // tlpnlFormatbtn
             // 
-            this.tlpnlFormatbtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlpnlFormatbtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tlpnlFormatbtn.AutoSize = true;
             this.tlpnlFormatbtn.BackColor = System.Drawing.Color.Transparent;
             this.tlpnlFormatbtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -734,8 +734,8 @@ namespace NoteFly
             this.Name = "FrmNewNote";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TransparencyKey = System.Drawing.Color.LightPink;
-            this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.Activated += new System.EventHandler(this.frmNewNote_Activated);
+            this.Deactivate += new System.EventHandler(this.frmNewNote_Deactivate);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmNewNote_KeyDown);
             this.contextMenuStripTextActions.ResumeLayout(false);
             this.pnlHeadNewNote.ResumeLayout(false);

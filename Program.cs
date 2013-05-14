@@ -346,7 +346,7 @@ namespace NoteFly
 
             if (Program.CheckInstancesRunning() > 1)
             {
-                string program_alreadyrunning = Strings.T("{0} is already running.\nLoad an other instance? (not recommeded)", Program.AssemblyTitle);
+                string program_alreadyrunning = Strings.T("{0} is already running.\nLoad another instance? (not recommended)", Program.AssemblyTitle);
                 string program_alreadyrunningtitle = Strings.T("already running");
                 System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(program_alreadyrunning, program_alreadyrunningtitle, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Exclamation);
                 if (dlgres == System.Windows.Forms.DialogResult.No)

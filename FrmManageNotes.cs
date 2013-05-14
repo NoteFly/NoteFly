@@ -755,7 +755,7 @@ namespace NoteFly
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    string managenotes_msgaccessdenied = Strings.T("Access denied. delete note {0} manually with proper premission.", filename);
+                    string managenotes_msgaccessdenied = Strings.T("Access denied. delete note {0} manually with proper permission.", filename);
                     Log.Write(LogType.error, managenotes_msgaccessdenied);
                     MessageBox.Show(managenotes_msgaccessdenied);
                 }

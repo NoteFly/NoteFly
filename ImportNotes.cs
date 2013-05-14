@@ -455,14 +455,14 @@ namespace NoteFly
                         }
                         else
                         {
-                            string managenotes_notstickies = Strings.T("CVS file does not seems to be in the Stickies format.");
+                            string managenotes_notstickies = Strings.T("CSV file does not seems to be in the Stickies format.");
                             Log.Write(LogType.error, managenotes_notstickies);
                             MessageBox.Show(managenotes_notstickies);
                         }
                     }
                     else if (linenr != 1)
                     {
-                        string managenotes_notstickies = Strings.T("CVS file does not seems to be in the Stickies format, excepting 5 columns.");
+                        string managenotes_notstickies = Strings.T("CSV file does not seems to be in the Stickies format, expecting 5 columns.");
                         Log.Write(LogType.error, managenotes_notstickies);
                         MessageBox.Show(managenotes_notstickies);
                     }
