@@ -22,9 +22,7 @@ namespace SkinsEditor
     using System;
     using System.Drawing;
     using System.IO;
-    using System.Text;
     using System.Windows.Forms;
-    using System.Xml;
 
     /// <summary>
     /// Skin editor form
@@ -86,16 +84,12 @@ namespace SkinsEditor
             this.ForeColor = this.host.GetTextClr(skinnr);
             this.btnClose.ForeColor = this.host.GetTextClr(skinnr);
             this.btnDeleteSkin.ForeColor = this.host.GetTextClr(skinnr);
-            //this.btnDeleteSkin.BackColor = this.host.GetPrimaryClr(skinnr);
             this.btnDeleteSkin.FlatAppearance.MouseDownBackColor = this.host.GetHighlightClr(skinnr);
             this.btnNewSkin.ForeColor = this.host.GetTextClr(skinnr);
-            //this.btnNewSkin.BackColor = this.host.GetPrimaryClr(skinnr);
             this.btnNewSkin.FlatAppearance.MouseDownBackColor = this.host.GetHighlightClr(skinnr);
             this.btnEditSkin.ForeColor = this.host.GetTextClr(skinnr);
-            //this.btnEditSkin.BackColor = this.host.GetPrimaryClr(skinnr);
             this.btnEditSkin.FlatAppearance.MouseDownBackColor = this.host.GetHighlightClr(skinnr);
             this.btnSaveSkin.ForeColor = this.host.GetTextClr(skinnr);
-            //this.btnSaveSkin.BackColor = this.host.GetPrimaryClr(skinnr);
             this.btnSaveSkin.FlatAppearance.MouseDownBackColor = this.host.GetHighlightClr(skinnr);
             if (this.host.GetPrimaryTexture(skinnr) != null)
             {
@@ -155,23 +149,30 @@ namespace SkinsEditor
                     this.btnEditSkin.Enabled = true;
                     this.btnDeleteSkin.Enabled = true;
                     this.SetFieldsEnabled(false);
-                    this.skin = SkinFactory.GetSkin(this.host, this.lbxSkins.SelectedIndex);
-                    this.SetFieldsCurrentSkin();
+                    if (this.lbxSkins.SelectedIndex >= 0)
+                    {
+                        this.skin = SkinFactory.GetSkin(this.host, this.lbxSkins.SelectedIndex);
+                        this.SetFieldsCurrentSkin();
+                    }
                     break;
                 case skineditormode.editskin:
                     this.btnEditSkin.Text = "cancel &edit skin";
                     this.btnNewSkin.Text = "&new skin";
-                    this.editskinnr = this.lbxSkins.SelectedIndex;
-                    this.SetFieldsEnabled(true);
+                    this.btnEditSkin.Enabled = true;
                     this.btnNewSkin.Enabled = false;
+                    this.btnDeleteSkin.Enabled = false;
+                    this.editskinnr = this.lbxSkins.SelectedIndex;
                     this.skin = SkinFactory.GetSkin(this.host, this.editskinnr);
                     this.SetFieldsCurrentSkin();
+                    this.SetFieldsEnabled(true);
                     break;
                 case skineditormode.newskin:
                     this.btnEditSkin.Text = "&edit skin";
                     this.btnNewSkin.Text = "cancel &new skin";
-                    this.ClearFields();
+                    this.btnNewSkin.Enabled = true;
                     this.btnEditSkin.Enabled = false;
+                    this.btnDeleteSkin.Enabled = false;
+                    this.ClearFields();
                     this.skin = SkinFactory.CreateDefaultNewSkin();
                     this.SetFieldsEnabled(true);
                     break;
@@ -257,6 +258,8 @@ namespace SkinsEditor
             this.pnlClrHighlight.Enabled = enabled;
             this.pnlClrText.Enabled = enabled;
             this.btnSaveSkin.Enabled = enabled;
+
+            this.lbxSkins.Enabled = !enabled;
         }
 
         /// <summary>
@@ -313,7 +316,6 @@ namespace SkinsEditor
             if (this.skinaction == skineditormode.newskin)
             {
                 // cancel new skin
-                this.lbxSkins.SelectedIndex = this.editskinnr;
                 this.setEditorMode(skineditormode.browseskins);
             }
             else
