@@ -20,8 +20,6 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
-using System;
 
 namespace SkinsEditor
 {
@@ -36,7 +34,12 @@ namespace SkinsEditor
         private IPlugin.IPluginHost host;
 
         /// <summary>
-        /// 
+        /// Reference to current skin.
+        /// </summary>
+        private Skin skin;
+
+        /// <summary>
+        /// Creating a new instance of NoteSkinPreview UserControl.
         /// </summary>
         public NoteSkinPreview()
         {
@@ -66,6 +69,7 @@ namespace SkinsEditor
                 titlestyle = FontStyle.Bold;
             }
 
+            this.skin = skin;
             this.lblPreviewNoteTitle.ForeColor = skin.TextClr;
             this.lblPreviewNoteTitle.Font = new Font(this.host.GetSettingString("FontTitleFamily"), this.host.GetSettingFloat("FontTitleSize"), titlestyle);
             this.lblPreviewNoteContent.ForeColor = skin.TextClr;
@@ -116,6 +120,34 @@ namespace SkinsEditor
             this.pnlPreviewNoteContent.Location = new Point(0, this.pnlPreviewNoteHead.Height);
             this.pnlPreviewNoteContent.Size = new Size(200, 172 - this.pnlPreviewNoteHead.Height);
             this.gbxPreviewNote.Visible = true;
+        }
+
+        /// <summary>
+        /// pnlPreviewNoteHead mouse is pressed for demo drag.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
+        private void pnlPreviewNoteHead_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.pnlPreviewNoteHead.BackColor = this.skin.SelectClr;
+        }
+
+        /// <summary>
+        /// pnlPreviewNoteHead mouse is released for end demo dragging
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
+        private void pnlPreviewNoteHead_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (string.IsNullOrEmpty(skin.PrimaryTexture))
+            {
+                this.pnlPreviewNoteHead.BackColor = this.skin.PrimaryClr;
+            }
+            else
+            {
+                this.pnlPreviewNoteHead.BackColor = Color.Transparent;
+            }
+            
         }
     }
 }

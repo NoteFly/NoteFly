@@ -25,9 +25,9 @@ namespace SkinsEditor
     using System.Windows.Forms;
 
     /// <summary>
-    /// Skin editor form
+    /// Skins editor form
     /// </summary>
-    public sealed partial class FrmSkinEditor : Form
+    public sealed partial class FrmSkinsEditor : Form
     {
         /// <summary>
         /// The skin position that is currently being edited.
@@ -40,7 +40,7 @@ namespace SkinsEditor
         private Skin skin;
 
         /// <summary>
-        /// The action that skin editor is performing
+        /// The action that skins editor is performing
         /// </summary>
         private skineditormode skinaction;
 
@@ -58,7 +58,7 @@ namespace SkinsEditor
         /// Creating a new instance of the FrmSkinsEditor.
         /// </summary>
         /// <param name="host">The interface to talk let this plugin talk to NoteFly.</param>
-        public FrmSkinEditor(IPlugin.IPluginHost host)
+        public FrmSkinsEditor(IPlugin.IPluginHost host)
         {
             this.host = host;
             this.skinaction = skineditormode.browseskins;
@@ -71,6 +71,7 @@ namespace SkinsEditor
         /// <summary>
         /// Set the skin for the FrmSkinEditor form.
         /// </summary>
+        /// <param name="skinnr">The skin number position.</param>
         private void SetSkin(int skinnr)
         {
             if (skinnr < 0)
@@ -104,7 +105,7 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// The current mode of the skin editor.
+        /// The current mode of the skins editor.
         /// </summary>
         private enum skineditormode
         {
@@ -137,9 +138,10 @@ namespace SkinsEditor
         /// <summary>
         /// Set the mode of the editor.
         /// </summary>
-        /// <param name="newmode"></param>
+        /// <param name="newmode">The new mode of the skinseditor.</param>
         private void setEditorMode(skineditormode newmode)
         {
+            this.skinaction = newmode;
             switch (newmode)
             {
                 case skineditormode.browseskins:
@@ -163,8 +165,8 @@ namespace SkinsEditor
                     this.btnDeleteSkin.Enabled = false;
                     this.editskinnr = this.lbxSkins.SelectedIndex;
                     this.skin = SkinFactory.GetSkin(this.host, this.editskinnr);
-                    this.SetFieldsCurrentSkin();
                     this.SetFieldsEnabled(true);
+                    this.SetFieldsCurrentSkin();
                     break;
                 case skineditormode.newskin:
                     this.btnEditSkin.Text = "&edit skin";
@@ -177,12 +179,10 @@ namespace SkinsEditor
                     this.SetFieldsEnabled(true);
                     break;
             }
-
-            this.skinaction = newmode;
         }
 
         /// <summary>
-        /// Closed the skin editor form.
+        /// Closed the skins editor form.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
@@ -204,22 +204,20 @@ namespace SkinsEditor
             this.tbTextColor.Text = SkinFactory.ClrObjToHtmlHexClr(this.skin.TextClr);
             this.tbPrimaryTexture.Text = this.skin.PrimaryTexture;
             this.chxUseTexture.Checked = !string.IsNullOrEmpty(this.skin.PrimaryTexture);
-            ImageLayout imglayout =  this.skin.PrimaryTextureLayout;
-            switch (imglayout)
+            if (this.skinaction != skineditormode.browseskins)
             {
-                case ImageLayout.Tile:
-                    this.cbxPrimaryTextureLayout.SelectedIndex = 0;
-                    break;
-                case ImageLayout.Center:
-                    this.cbxPrimaryTextureLayout.SelectedIndex = 1;
-                    break;
-                case ImageLayout.Stretch:
-                    this.cbxPrimaryTextureLayout.SelectedIndex = 2;
-                    break;
-                default:
-                    this.cbxPrimaryTextureLayout.SelectedIndex = 0;
-                    break;
+                this.chxUseTexture_CheckedChanged(null, null);
             }
+
+            string texturelayout = Enum.GetName(this.skin.PrimaryTextureLayout.GetType(), this.skin.PrimaryTextureLayout);
+            for (int i = 0; i < this.cbxPrimaryTextureLayout.Items.Count; i++)
+            {
+                if (this.cbxPrimaryTextureLayout.Items[i].ToString().Equals(texturelayout, StringComparison.Ordinal))
+                {
+                    this.cbxPrimaryTextureLayout.SelectedIndex = i;
+                    break;
+                }
+            }  
 
             this.notePreview1.Visible = true;
             this.notePreview1.DrawNoteSkinPreview(this.skin);
@@ -248,16 +246,19 @@ namespace SkinsEditor
             this.tbPrimaryColor.Enabled = enabled;
             this.tbSelectingColor.Enabled = enabled;
             this.tbHighlightingColor.Enabled = enabled;
-            this.tbTextColor.Enabled = enabled;
-            this.chxUseTexture.Enabled = enabled;
-            this.tbPrimaryTexture.Enabled = enabled;
-            this.cbxPrimaryTextureLayout.Enabled = enabled;
-            this.btnBrowsePrimaryTexture.Enabled = enabled;
+            this.tbTextColor.Enabled = enabled;           
             this.pnlClrPrimary.Enabled = enabled;
             this.pnlClrSelecting.Enabled = enabled;
             this.pnlClrHighlight.Enabled = enabled;
             this.pnlClrText.Enabled = enabled;
             this.btnSaveSkin.Enabled = enabled;
+            this.chxUseTexture.Enabled = enabled;
+            if (!enabled)
+            {
+                this.tbPrimaryTexture.Enabled = false;
+                this.btnBrowsePrimaryTexture.Enabled = false;
+                this.cbxPrimaryTextureLayout.Enabled = false;
+            }
 
             this.lbxSkins.Enabled = !enabled;
         }
@@ -273,6 +274,7 @@ namespace SkinsEditor
             this.tbHighlightingColor.Clear();
             this.tbTextColor.Clear();
             this.tbPrimaryTexture.Clear();
+            this.chxUseTexture.Checked = false;
             this.pnlClrPrimary.BackColor = Color.White;
             this.pnlClrSelecting.BackColor = Color.White;
             this.pnlClrHighlight.BackColor = Color.White;
@@ -317,6 +319,7 @@ namespace SkinsEditor
             {
                 // cancel new skin
                 this.setEditorMode(skineditormode.browseskins);
+                this.tbSkinName.BackColor = SystemColors.Window;
             }
             else
             {
@@ -360,8 +363,7 @@ namespace SkinsEditor
                             this.skin.HighlightClr = SkinFactory.HtmlHexClrToClrObj(this.host, this.tbHighlightingColor.Text);
                             this.skin.TextClr = SkinFactory.HtmlHexClrToClrObj(this.host, this.tbTextColor.Text);
                             this.skin.PrimaryTexture = this.tbPrimaryTexture.Text;
-                            this.skin.PrimaryTextureLayout = ImageLayout.Tile; // todo
-
+                            this.cbxPrimaryTextureLayout_SelectedIndexChanged(null, null);
                             if (!SkinsFilehandling.WriteSkinsFileNewSkin(this.host, this.skin))
                             {
                                 this.host.LogPluginError("Could not write new skin.");
@@ -417,6 +419,18 @@ namespace SkinsEditor
                 return false;
             }
 
+            if (this.skinaction == skineditormode.newskin)
+            {
+                string[] skinnames = this.host.GetSkinsNames();
+                for (int i = 0; i < skinnames.Length; i++)
+                {
+                    if (this.tbSkinName.Text.Equals(skinnames[i], StringComparison.Ordinal))
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return true;
         }
 
@@ -464,7 +478,7 @@ namespace SkinsEditor
         /// Parser the textbox HTML hex color content as a color object and set
         /// panels right as preview of the color.
         /// </summary>
-        /// <param name="sender">Sender object, should be a textbox</param>
+        /// <param name="sender">Sender object, textbox</param>
         /// <param name="e">Event arguments</param>
         private void ParserAsPreviewColor(object sender, EventArgs e)
         {
@@ -502,12 +516,12 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Set the panel with a example of the HEX color set in colorinputtextbox.
         /// </summary>
-        /// <param name="invalidcolor"></param>
-        /// <param name="clr"></param>
-        /// <param name="colorinputtextbox"></param>
-        /// <param name="exmplepanel"></param>
+        /// <param name="invalidcolor">The color to set the textbox in case it's invalid HEX color.</param>
+        /// <param name="clr">The color to set the panel with the example of the HEX color in the colorinputtextbox</param>
+        /// <param name="colorinputtextbox">The colorinputtextbox with a HEX color valeu</param>
+        /// <param name="exmplepanel">The panel to show the color example in.</param>
         private void setControlColorExample(bool invalidcolor, Color clr, TextBox colorinputtextbox, Panel exmplepanel)
         {
             if (invalidcolor)
@@ -549,24 +563,37 @@ namespace SkinsEditor
                 }
 
                 if (skinfolder.Equals(defaulttexturefolder, strcomp))
-                {                    
-                    FileInfo fileinfotexture = new FileInfo( this.openFileTextureDialog.FileName);
-                    this.tbPrimaryTexture.Text = fileinfotexture.Name;
+                {
+                    try
+                    {
+                        FileInfo fileinfotexture = new FileInfo(this.openFileTextureDialog.FileName);
+                        // only filename
+                        this.tbPrimaryTexture.Text = fileinfotexture.Name;
+                        this.skin.PrimaryTexture = fileinfotexture.Name;
+                    }
+                    catch (Exception)
+                    {
+                        this.tbPrimaryTexture.BackColor = Color.Red;
+                    }
                 }
                 else
                 {
+                    if (!File.Exists(this.openFileTextureDialog.FileName))
+                    {
+                        this.tbPrimaryTexture.BackColor = Color.Red;
+                    }
+
+                    // full file path
                     this.tbPrimaryTexture.Text = this.openFileTextureDialog.FileName;
+                    this.skin.PrimaryTexture = this.openFileTextureDialog.FileName;
                 }
-                
-                if (File.Exists(this.openFileTextureDialog.FileName))
-                {
-                    this.SetFieldsCurrentSkin();
-                }
+
+                this.notePreview1.DrawNoteSkinPreview(this.skin);
             }
         }
 
         /// <summary>
-        /// Delete a skin
+        /// Delete a skin.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
@@ -609,10 +636,10 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Start dragging the FrmSkinsEditor.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
         private void pnlHead_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -624,10 +651,10 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Dragging the FrmSkinsEditor.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
         private void pnlHead_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -662,8 +689,8 @@ namespace SkinsEditor
         /// <summary>
         /// 'Titlebar' releases.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
         private void pnlHead_MouseUp(object sender, MouseEventArgs e)
         {
             int skinnr = this.host.GetSettingInt("ManagenotesSkinnr");
@@ -681,8 +708,8 @@ namespace SkinsEditor
         /// <summary>
         /// Resizing skineditor.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
         private void pbResizeGrip_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -695,10 +722,10 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// Open a color dialog for selecing a color.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void ShowColorDlg(object sender, EventArgs e)
         {
             DialogResult dlgres = this.colordlg.ShowDialog();
@@ -729,8 +756,8 @@ namespace SkinsEditor
         /// <summary>
         /// Set the cursor back to normal.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
         private void BackNormalCusors(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.Default;
@@ -739,8 +766,8 @@ namespace SkinsEditor
         /// <summary>
         /// Set the cursor to hand.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Mouse event arguments</param>
         private void HandEnabled(object sender, MouseEventArgs e)
         {
             if (Cursor.Current == Cursors.Hand)
@@ -758,8 +785,8 @@ namespace SkinsEditor
         /// <summary>
         /// Set the current skin name.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void tbSkinName_TextChanged(object sender, EventArgs e)
         {
             if (this.CheckProperSkinnameTb())
@@ -769,10 +796,10 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// New primary texture set.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void tbPrimaryTexture_TextChanged(object sender, EventArgs e)
         {
             if (this.CheckProperHTMLColorTb(this.tbPrimaryColor))
@@ -782,10 +809,11 @@ namespace SkinsEditor
         }
 
         /// <summary>
-        /// 
+        /// chxUseTexture is checked or unchecked.
+        /// Enable or disable tbPrimaryTexture, cbxPrimaryTextureLayout and btnBrowsePrimaryTexture.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void chxUseTexture_CheckedChanged(object sender, EventArgs e)
         {
             if (this.skinaction != skineditormode.browseskins)
@@ -805,6 +833,29 @@ namespace SkinsEditor
             }
 
             this.notePreview1.DrawNoteSkinPreview(this.skin);
+        }
+
+        /// <summary>
+        /// Other texture image layout selected.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
+        private void cbxPrimaryTextureLayout_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.cbxPrimaryTextureLayout.SelectedIndex >= 0)
+            {
+                try
+                {
+                    this.skin.PrimaryTextureLayout = (ImageLayout)Enum.Parse(typeof(ImageLayout), this.cbxPrimaryTextureLayout.Items[this.cbxPrimaryTextureLayout.SelectedIndex].ToString());
+                }
+                catch (ArgumentException argexc)
+                {
+                    this.host.LogPluginError(argexc.Message);
+                    this.skin.PrimaryTextureLayout = ImageLayout.Tile;
+                }
+
+                this.notePreview1.DrawNoteSkinPreview(this.skin);
+            }
         }
     }
 }

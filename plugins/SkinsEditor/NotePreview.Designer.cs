@@ -77,6 +77,8 @@
             this.pnlPreviewNoteHead.Name = "pnlPreviewNoteHead";
             this.pnlPreviewNoteHead.Size = new System.Drawing.Size(200, 31);
             this.pnlPreviewNoteHead.TabIndex = 1;
+            this.pnlPreviewNoteHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlPreviewNoteHead_MouseDown);
+            this.pnlPreviewNoteHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlPreviewNoteHead_MouseUp);
             // 
             // btnPreviewNoteBtnClose
             // 

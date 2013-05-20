@@ -58,11 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmSkinEditor.cs">
+    <Compile Include="FrmSkinsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmSkinEditor.Designer.cs">
-      <DependentUpon>FrmSkinEditor.cs</DependentUpon>
+    <Compile Include="FrmSkinsEditor.Designer.cs">
+      <DependentUpon>FrmSkinsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="NotePreview.cs">
       <SubType>UserControl</SubType>
@@ -91,8 +91,8 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FrmSkinEditor.resx">
-      <DependentUpon>FrmSkinEditor.cs</DependentUpon>
+    <EmbeddedResource Include="FrmSkinsEditor.resx">
+      <DependentUpon>FrmSkinsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NotePreview.resx">
       <DependentUpon>NotePreview.cs</DependentUpon>

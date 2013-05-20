@@ -30,7 +30,7 @@ namespace SkinsEditor
         /// <summary>
         /// Reference to the skineditor form.
         /// </summary>
-        private FrmSkinEditor skineditor;
+        private FrmSkinsEditor skineditor;
 
         /// <summary>
         /// Create the ToolStripMenuItem for the skin editor.
@@ -39,8 +39,8 @@ namespace SkinsEditor
         public override ToolStripItem InitTrayIconMenu()
         {
             ToolStripItem menutrayicon = new ToolStripMenuItem();
-            menutrayicon.Text = "Skin editor";
-            menutrayicon.Name = "menuSkinEditor";
+            menutrayicon.Text = "Skins Editor";
+            menutrayicon.Name = "menuSkinsEditor";
             menutrayicon.Click += new EventHandler(this.menutrayicon_Click);
             return menutrayicon;
         }
@@ -54,7 +54,7 @@ namespace SkinsEditor
         {
             if (this.skineditor == null || this.skineditor.IsDisposed)
             {
-                this.skineditor = new FrmSkinEditor(this.Host);
+                this.skineditor = new FrmSkinsEditor(this.Host);
             }
             else
             {
