@@ -257,7 +257,7 @@ namespace NoteFly
             StringBuilder newrtf = new StringBuilder(rtf, rtf.Length + EXTRACAP);
             int prevnrcoloritem = 1;
             int nrtextchar = 0;
-            int drtflen = 0;
+            this.drtflen = 0;
             string insertcoloritemrtf = null;
             bool overridecoloritem = false;
             int rtflevel = 0;
@@ -312,7 +312,7 @@ namespace NoteFly
                                 }
                                 else if (overridecoloritem)
                                 {
-                                    int posstartremove = i + drtflen + insertcoloritemrtf.Length;
+                                    int posstartremove = i + this.drtflen + insertcoloritemrtf.Length;
                                     int totallencftag = COLORITEMTAG.Length + numlen;
                                     if (newrtf[posstartremove + totallencftag] == ' ')
                                     {
@@ -360,9 +360,9 @@ namespace NoteFly
                     }
 
                     this.rtfformat = this.InRTFFormat(rtf, i, this.rtfformat);
-
                     if (textpos == nrtextchar && !textposdone)
                     {
+                        // add begintag \cfX?
                         textposdone = true;
                         int nrcoloritem = 1;
                         nrcoloritem = this.GetNrcoloritem(newrtf.ToString(), newclr);
@@ -380,9 +380,9 @@ namespace NoteFly
                             }
                         }
 
-                        drtflen = newrtf.Length - rtf.Length;
+                        this.drtflen = newrtf.Length - rtf.Length;
                         insertcoloritemrtf = COLORITEMTAG + nrcoloritem + " ";
-                        int poscoloritem = i + drtflen + 1; // +1 for space
+                        int poscoloritem = i + this.drtflen + 1; // +1 for space
                         try
                         {
                             newrtf.Insert(poscoloritem, insertcoloritemrtf);
@@ -397,8 +397,9 @@ namespace NoteFly
                     }
                     else if (textpos + sellentext == nrtextchar)
                     {
-                        string previnsertcoloritemrtf = COLORITEMTAG + prevnrcoloritem + " "; // fixme space requered?
-                        int prevposcoloritem = i + drtflen + 1 + insertcoloritemrtf.Length;
+                        // add endtag \cfX?
+                        string previnsertcoloritemrtf = COLORITEMTAG + prevnrcoloritem + " "; // fixme space required?
+                        int prevposcoloritem = i + this.drtflen + 1 + insertcoloritemrtf.Length;
                         try
                         {
                             newrtf.Insert(prevposcoloritem, previnsertcoloritemrtf);
