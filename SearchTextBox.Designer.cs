@@ -32,11 +32,6 @@
         /// </summary>
         private System.Windows.Forms.Button btnKeywordClear;
 
-        /// <summary>
-        /// ToolTip toolTips
-        /// </summary>
-        private System.Windows.Forms.ToolTip toolTips;
-
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
@@ -65,15 +60,14 @@
             this.timerStartAutoSearch = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPnlSearchbox = new System.Windows.Forms.TableLayoutPanel();
             this.btnKeywordClear = new System.Windows.Forms.Button();
-            this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPnlSearchbox.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbKeywords
             // 
-            this.tbKeywords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbKeywords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbKeywords.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbKeywords.Location = new System.Drawing.Point(54, 3);
             this.tbKeywords.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
@@ -128,15 +122,10 @@
             this.btnKeywordClear.Size = new System.Drawing.Size(23, 22);
             this.btnKeywordClear.TabIndex = 2;
             this.btnKeywordClear.Text = "X";
-            this.toolTips.SetToolTip(this.btnKeywordClear, "stop search");
             this.btnKeywordClear.UseMnemonic = false;
             this.btnKeywordClear.UseVisualStyleBackColor = false;
             this.btnKeywordClear.Visible = false;
             this.btnKeywordClear.Click += new System.EventHandler(this.btnKeywordClear_Click);
-            // 
-            // toolTips
-            // 
-            this.toolTips.Active = false;
             // 
             // SearchTextBox
             // 

@@ -163,12 +163,17 @@ namespace NoteFly
         /// <summary>
         /// Gets the application version quality.
         /// alpha(=bugs for sure), beta(=bugs are likely), rc(=more testing still needed) or nothing for final(=ready for production)
+        /// "b" quick rerelease of current version to address a version number issue only.  
         /// </summary>
         public static string AssemblyVersionQuality
         {
             get
             {
                 return string.Empty;
+                //return "b";
+                //return "rc";
+                //return "beta";
+                //return "alpha";
             }
         }
 
@@ -841,7 +846,7 @@ namespace NoteFly
             short[] thisversion = GetVersion();
             string downloadurl = string.Empty;
             string rsasignature = string.Empty;
-            string latestversionquality = Program.AssemblyVersionQuality;
+            string latestversionquality = string.Empty;
             short[] latestversion = xmlUtil.ParserLatestVersion(response, out latestversionquality, out downloadurl, out rsasignature);
             Program.updateprogramrsasignature = rsasignature;
 
@@ -858,7 +863,7 @@ namespace NoteFly
                     sbmsg.Append(Strings.T("New version: "));
                     sbmsg.AppendLine(latestversion[0] + "." + latestversion[1] + "." + latestversion[2] + " " + latestversionquality);
                     sbmsg.Append(Strings.T("Do you want to download and install the new version now?"));
-                    System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), Strings.T("update available"), System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);
+                    System.Windows.Forms.DialogResult updres = System.Windows.Forms.MessageBox.Show(sbmsg.ToString(), Strings.T("update available"), System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Asterisk);                    
                     if (updres == System.Windows.Forms.DialogResult.Yes)
                     {
                         FrmDownloader frmdownloader = new FrmDownloader(string.Format(Strings.T("Downloading {0} update"), Program.AssemblyTitle));

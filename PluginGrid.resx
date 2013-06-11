@@ -130,13 +130,10 @@
     <value>3, 14</value>
   </data>
   <data name="lblTextNopluginsinstalled.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 13</value>
+    <value>0, 13</value>
   </data>
   <data name="lblTextNopluginsinstalled.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="lblTextNopluginsinstalled.Text" xml:space="preserve">
-    <value>Their are no plugins installed.</value>
   </data>
   <data name="&gt;&gt;lblTextNopluginsinstalled.Name" xml:space="preserve">
     <value>lblTextNopluginsinstalled</value>

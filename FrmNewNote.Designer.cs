@@ -70,11 +70,6 @@ namespace NoteFly
         private System.Windows.Forms.ToolStripMenuItem menuCancelNewNote;
 
         /// <summary>
-        /// Tooltip toolTip
-        /// </summary>
-        private System.Windows.Forms.ToolTip toolTip;
-
-        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -221,7 +216,6 @@ namespace NoteFly
             this.pnlHeadNewNote = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddNote = new System.Windows.Forms.Button();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnFontBigger = new System.Windows.Forms.Button();
             this.btnFontSmaller = new System.Windows.Forms.Button();
             this.btnTextBulletlist = new System.Windows.Forms.Button();
@@ -251,7 +245,7 @@ namespace NoteFly
             this.menuImportfile,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(181, 202);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(181, 180);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -448,15 +442,10 @@ namespace NoteFly
             this.btnAddNote.Size = new System.Drawing.Size(27, 24);
             this.btnAddNote.TabIndex = 7;
             this.btnAddNote.TabStop = false;
-            this.toolTip.SetToolTip(this.btnAddNote, "t");
             this.btnAddNote.UseCompatibleTextRendering = true;
             this.btnAddNote.UseMnemonic = false;
             this.btnAddNote.UseVisualStyleBackColor = false;
             this.btnAddNote.Click += new System.EventHandler(this.btnAddNote_Click);
-            // 
-            // toolTip
-            // 
-            this.toolTip.AutomaticDelay = 100;
             // 
             // btnFontBigger
             // 
@@ -477,7 +466,6 @@ namespace NoteFly
             this.btnFontBigger.TabIndex = 17;
             this.btnFontBigger.TabStop = false;
             this.btnFontBigger.Text = "A";
-            this.toolTip.SetToolTip(this.btnFontBigger, "Bigger text (Ctrl+shift+>)");
             this.btnFontBigger.UseCompatibleTextRendering = true;
             this.btnFontBigger.UseMnemonic = false;
             this.btnFontBigger.UseVisualStyleBackColor = false;
@@ -502,7 +490,6 @@ namespace NoteFly
             this.btnFontSmaller.TabIndex = 16;
             this.btnFontSmaller.TabStop = false;
             this.btnFontSmaller.Text = "A";
-            this.toolTip.SetToolTip(this.btnFontSmaller, "Smaller text (Ctrl+shift+<)");
             this.btnFontSmaller.UseCompatibleTextRendering = true;
             this.btnFontSmaller.UseMnemonic = false;
             this.btnFontSmaller.UseVisualStyleBackColor = false;
@@ -528,7 +515,6 @@ namespace NoteFly
             this.btnTextBulletlist.TabStop = false;
             this.btnTextBulletlist.Text = "• aaa\r\n• bbb";
             this.btnTextBulletlist.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.toolTip.SetToolTip(this.btnTextBulletlist, "Bullit list (Ctrl+shift+L)");
             this.btnTextBulletlist.UseCompatibleTextRendering = true;
             this.btnTextBulletlist.UseMnemonic = false;
             this.btnTextBulletlist.UseVisualStyleBackColor = false;
@@ -553,7 +539,6 @@ namespace NoteFly
             this.btnTextStriketrough.TabIndex = 12;
             this.btnTextStriketrough.TabStop = false;
             this.btnTextStriketrough.Text = "S";
-            this.toolTip.SetToolTip(this.btnTextStriketrough, "Striketrough text (Ctrl+T)");
             this.btnTextStriketrough.UseCompatibleTextRendering = true;
             this.btnTextStriketrough.UseMnemonic = false;
             this.btnTextStriketrough.UseVisualStyleBackColor = false;
@@ -578,7 +563,6 @@ namespace NoteFly
             this.btnTextUnderline.TabIndex = 14;
             this.btnTextUnderline.TabStop = false;
             this.btnTextUnderline.Text = "U";
-            this.toolTip.SetToolTip(this.btnTextUnderline, "Underline text (Ctrl+U)");
             this.btnTextUnderline.UseCompatibleTextRendering = true;
             this.btnTextUnderline.UseMnemonic = false;
             this.btnTextUnderline.UseVisualStyleBackColor = false;
@@ -603,7 +587,6 @@ namespace NoteFly
             this.btnTextItalic.TabIndex = 11;
             this.btnTextItalic.TabStop = false;
             this.btnTextItalic.Text = "i";
-            this.toolTip.SetToolTip(this.btnTextItalic, "Italic text (Ctrl+I)");
             this.btnTextItalic.UseCompatibleTextRendering = true;
             this.btnTextItalic.UseMnemonic = false;
             this.btnTextItalic.UseVisualStyleBackColor = false;
@@ -628,7 +611,6 @@ namespace NoteFly
             this.btnTextBold.TabIndex = 10;
             this.btnTextBold.TabStop = false;
             this.btnTextBold.Text = "B";
-            this.toolTip.SetToolTip(this.btnTextBold, "Bold text (Ctrl+B)");
             this.btnTextBold.UseCompatibleTextRendering = true;
             this.btnTextBold.UseMnemonic = false;
             this.btnTextBold.UseVisualStyleBackColor = false;

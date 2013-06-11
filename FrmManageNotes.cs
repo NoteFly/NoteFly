@@ -75,6 +75,8 @@ namespace NoteFly
         /// </summary>
         private int prevrownr = -1;
 
+        private ToolTip tooltip;
+
         /// <summary>
         /// The previous of previous painted row number.
         /// </summary>
@@ -93,6 +95,7 @@ namespace NoteFly
             this.DoubleBuffered = Settings.ProgramFormsDoublebuffered;
             this.InitializeComponent();
             this.SetFormTitle();
+            this.SetFormTooltips();
             Strings.TranslateForm(this);
             this.notes = notes;
             this.SetSkin();
@@ -260,6 +263,34 @@ namespace NoteFly
         private void SetFormTitle()
         {
             this.Text = Strings.T("Manage notes") + " - " + Program.AssemblyTitle;
+        }
+
+        /// <summary>
+        /// Set all form tooltips if tooltips are enabled.
+        /// </summary>
+        private void SetFormTooltips()
+        {
+            if (Settings.NotesTooltipsEnabled)
+            {
+                if (this.tooltip == null)
+                {
+                    this.tooltip = new ToolTip(this.components);
+                    this.tooltip.SetToolTip(this.btnShowSelectedNotes, Strings.T("Show or hide the selected notes."));
+                    this.tooltip.SetToolTip(this.btnNoteDelete, Strings.T("Delete the selected notes."));
+                    this.tooltip.SetToolTip(this.btnRestoreAllNotes, Strings.T("Restore notes from a backup file."));
+                    this.tooltip.SetToolTip(this.btnBackAllNotes, Strings.T("Backup all notes to a single backup file."));
+                    this.tooltip.SetToolTip(this.btnClose, Strings.T("Close"));
+                    this.searchTextBoxNotes.SetControlTooltip(tooltip);
+                }
+            }
+            else
+            {
+                if (this.tooltip != null)
+                {
+                    this.tooltip.Active = false;
+                    this.tooltip.Dispose();
+                }  
+            }            
         }
 
         /// <summary>
@@ -632,6 +663,8 @@ namespace NoteFly
                         this.prevrownr = e.RowIndex;
                     }
                 }
+
+                this.SetFormTooltips();
             }
         }
 
@@ -775,7 +808,6 @@ namespace NoteFly
             ////int vertscrolloffset = this.dataGridViewNotes.VerticalScrollingOffset;
             this.Resetdatagrid();
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
-            this.toolTip.Active = Settings.NotesTooltipsEnabled;
             if (!this.searchTextBoxNotes.IsKeywordEntered)
             {
                 DataTable datatable = this.CreateDatatable();
@@ -1082,6 +1114,12 @@ namespace NoteFly
         {
             if (Settings.NotesTooltipsEnabled && Settings.ManagenotesTooltip)
             {
+                if (this.tooltip == null)
+                {
+                    Log.Write(LogType.exception, "tooltip object was null.");
+                    this.SetFormTooltips();
+                }
+
                 if (e.ColumnIndex == 1)
                 {
                     string contentpreview = null;
@@ -1096,15 +1134,15 @@ namespace NoteFly
                             int tooltiplocy = Cursor.Position.Y - this.Location.Y;
                             if (!string.IsNullOrEmpty(contentpreview))
                             {
-                                this.toolTip.InitialDelay = 200;
-                                this.toolTip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);
+                                this.tooltip.InitialDelay = 200;
+                                this.tooltip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);                                
                             }
                         }
                     }
                 }
                 else
                 {
-                    this.toolTip.Hide(this);
+                    this.tooltip.Hide(this);
                 }
             }
         }
@@ -1162,7 +1200,10 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void dataGridViewNotes_MouseLeave(object sender, EventArgs e)
         {
-            this.toolTip.Hide(this);
+            if (this.tooltip != null)
+            {
+                this.tooltip.Hide(this);
+            }
         }
 
         #endregion Methods

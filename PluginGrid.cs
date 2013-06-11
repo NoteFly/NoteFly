@@ -43,6 +43,8 @@ namespace NoteFly
         /// </summary>
         private TableLayoutPanel[] tlpnlPlugins;
 
+        private ToolTip tooltip;
+
         /// <summary>
         /// Initializes a new instance of the PluginGrid class.
         /// </summary>
@@ -83,8 +85,30 @@ namespace NoteFly
                     this.DrawPluginDetails(i, PluginsManager.InstalledPlugins[i], width);
                 }
             }
+            else
+            {
+                this.lblTextNopluginsinstalled.Text = Strings.T("Their are no plugins installed.");
+            }
 
             this.ResumeLayout();
+        }
+
+        /// <summary>
+        /// Set the tooltips for this control
+        /// </summary>
+        public void SetControlTooltip(ToolTip tooltip)
+        {
+            this.tooltip = tooltip;
+            if (this.btnPluginsStatus.Length != PluginsManager.InstalledPlugins.Length)
+            {
+                Log.Write(LogType.exception, "Number of buttons plugins not equal to number of installed buttons, abort SetButtonTooltip");
+                return;
+            }
+
+            for (int i = 0; i < PluginsManager.InstalledPlugins.Length; i++)
+            {
+                this.SetButtonTooltip(this.btnPluginsStatus[i], PluginsManager.IsPluginEnabled(PluginsManager.InstalledPlugins[i]));
+            }
         }
 
         /// <summary>
@@ -259,7 +283,8 @@ namespace NoteFly
                     this.tlpnlPlugins[pluginpos].BackColor = System.Drawing.Color.WhiteSmoke;
                 }
                 
-                this.btnPluginsStatus[pluginpos].Text = Strings.T("disable"); 
+                this.btnPluginsStatus[pluginpos].Text = Strings.T("disable");
+                this.SetButtonTooltip(this.btnPluginsStatus[pluginpos], true);
             }
             else
             {
@@ -273,6 +298,37 @@ namespace NoteFly
                 }
                 
                 this.btnPluginsStatus[pluginpos].Text = Strings.T("enable");
+                this.SetButtonTooltip(this.btnPluginsStatus[pluginpos], false);
+            }
+        }
+
+        /// <summary>
+        /// Set the tooltip of the enable and disable plugin button.
+        /// </summary>
+        /// <param name="btn"></param>
+        /// <param name="pluginenabled"></param>
+        private void SetButtonTooltip(Button btn, bool pluginenabled)
+        {
+            if (Settings.NotesTooltipsEnabled)
+            {
+                if (this.tooltip == null)
+                {
+                    return;
+                }
+
+                this.tooltip.Active = true;
+                if (pluginenabled)
+                {
+                    this.tooltip.SetToolTip(btn, Strings.T("Click to disable this plugin."));
+                }
+                else
+                {
+                    this.tooltip.SetToolTip(btn, Strings.T("Click to enable this plugin."));
+                }
+            }
+            else if (this.tooltip != null)
+            {
+                this.tooltip.Active = false;
             }
         }
 

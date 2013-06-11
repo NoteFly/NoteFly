@@ -37,12 +37,20 @@ namespace NoteFly
             this.InitializeComponent();
             this.lblTextSearch.Text = Strings.T("search:");
             this.tableLayoutPnlSearchbox.ColumnCount = 2;
-            if (Settings.NotesTooltipsEnabled)
+            this.btnKeywordClear.ForeColor = Color.Black;
+        }
+
+        /// <summary>
+        /// Set the tooltips for this control
+        /// </summary>
+        public void SetControlTooltip(ToolTip tooltip)
+        {
+            if (tooltip == null)
             {
-                this.toolTips.Active = true;
+                return;
             }
 
-            this.btnKeywordClear.ForeColor = Color.Black;
+            tooltip.SetToolTip(this.btnKeywordClear, Strings.T("stop search"));
         }
 
         /// <summary>

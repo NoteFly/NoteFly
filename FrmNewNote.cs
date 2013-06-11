@@ -57,6 +57,8 @@ namespace NoteFly
         /// </summary>
         private RTFDirectEdit rtfdirectedit = new RTFDirectEdit();
 
+        private ToolTip tooltip;
+
         /// <summary>
         /// The old position of the mouse while resizing.
         /// </summary>
@@ -78,7 +80,7 @@ namespace NoteFly
         {
             this.ConstructFrmNewNote(notes);
             this.SetFormTitle(true);
-            this.SetTooltipAddCancelBtns(true);
+            this.SetFormTooltips(true);
             this.Location = locfrmnewnote;
             this.Size = sizefrmnewnote;
             this.rtbNewNote.WordWrap = wordwrap;
@@ -110,7 +112,7 @@ namespace NoteFly
         {
             this.ConstructFrmNewNote(notes);
             this.SetFormTitle(false);
-            this.SetTooltipAddCancelBtns(false);
+            this.SetFormTooltips(false);
             this.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width / 2) - (this.Width / 2) + deltaX, (Screen.PrimaryScreen.WorkingArea.Height / 2) - (this.Height / 2) + deltaY);
             this.note = null;
             if (Settings.NotesDefaultRandomSkin)
@@ -136,24 +138,6 @@ namespace NoteFly
         #region Methods (30)
 
         /// <summary>
-        /// Set the tooltips for the add note and cancel note buttons.
-        /// </summary>
-        /// <param name="editnote">True if this form is used for note editing and not creating a new note.</param>
-        private void SetTooltipAddCancelBtns(bool editnote)
-        {
-            if (editnote)
-            {
-                this.toolTip.SetToolTip(this.btnAddNote, Strings.T("Save editing note (Ctrl+S)"));
-                this.toolTip.SetToolTip(this.btnCancel, Strings.T("Cancel editing note (escape)"));
-            }
-            else
-            {
-                this.toolTip.SetToolTip(this.btnAddNote, Strings.T("Save new note (Ctrl+S)"));
-                this.toolTip.SetToolTip(this.btnCancel, Strings.T("Cancel new note (escape)"));
-            }
-        }
-
-        /// <summary>
         /// Set the form title.
         /// </summary>
         /// <param name="editnote">True if this form is used for note editing and not creating a new note.</param>
@@ -175,6 +159,42 @@ namespace NoteFly
         }
 
         /// <summary>
+        /// Set all form tooltips if tooltips are enabled.
+        /// </summary>
+        private void SetFormTooltips(bool editnote)
+        {
+            if (Settings.NotesTooltipsEnabled)
+            {
+                this.tooltip = new ToolTip(this.components);
+                if (editnote)
+                {
+                    this.tooltip.SetToolTip(this.btnAddNote, Strings.T("Save editing note (Ctrl+S)"));
+                    this.tooltip.SetToolTip(this.btnCancel, Strings.T("Cancel editing note (escape)"));
+                }
+                else
+                {
+                    this.tooltip.SetToolTip(this.btnAddNote, Strings.T("Save new note (Ctrl+S)"));
+                    this.tooltip.SetToolTip(this.btnCancel, Strings.T("Cancel new note (escape)"));
+                }
+
+                this.tooltip.SetToolTip(this.btnTextBold, Strings.T("Bold text (Ctrl+B)"));
+                this.tooltip.SetToolTip(this.btnTextItalic, Strings.T("Italic text (Ctrl+I)"));
+                this.tooltip.SetToolTip(this.btnTextUnderline, Strings.T("Underline text (Ctrl+U)"));
+                this.tooltip.SetToolTip(this.btnTextBulletlist, Strings.T("Bullit list (Ctrl+shift+L)"));
+                this.tooltip.SetToolTip(this.btnFontBigger, Strings.T("Bigger text (Ctrl+shift+>)"));
+                this.tooltip.SetToolTip(this.btnFontSmaller, Strings.T("Smaller text (Ctrl+shift+<)"));
+            }
+            else
+            {
+                if (this.tooltip != null)
+                {
+                    this.tooltip.Active = false;
+                    this.tooltip.Dispose();
+                }  
+            }
+        }
+
+        /// <summary>
         /// Initialize components FrmNewNote, set font, tooltip and richtextbox settings
         /// </summary>
         /// <param name="notes">Reference to notes class.</param>
@@ -186,7 +206,6 @@ namespace NoteFly
             this.Size = new Size(Settings.NotesDefaultWidth, Settings.NotesDefaultHeight);
             this.notes = notes;
             this.SetFontSettings();
-            this.toolTip.Active = Settings.NotesTooltipsEnabled;
             this.rtbNewNote.DetectUrls = Settings.HighlightHyperlinks;
             this.tbTitle.Select();
         }

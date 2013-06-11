@@ -57,6 +57,8 @@ namespace NoteFly
         /// </summary>
         private static System.Globalization.CultureInfo resourceCulture;
 
+        private static System.Windows.Forms.ToolTip currenttooltip;
+
         /// <summary>
         /// Gets or sets the current thread's CurrentUICulture property for all
         /// resource lookups using this strongly typed resource class.
@@ -190,7 +192,7 @@ namespace NoteFly
         /// <param name="controlnestedlevel">Depth level of the control on the form.</param>
         private static void TranslateControlCollection(System.Windows.Forms.Control.ControlCollection controlscollection, int controlnestedlevel)
         {
-            const int MAXNESTEDCONTROL = 12;
+            const int MAXNESTEDCONTROL = 16;
             for (int i = 0; i < controlscollection.Count; i++)
             {
                 if (IsTranslatableControl(controlscollection[i]))
@@ -203,14 +205,15 @@ namespace NoteFly
                         }
 
                         // Just in case: recusive method is going mad, throw an exception.
-                        if (controlnestedlevel <= MAXNESTEDCONTROL)
+                        if (controlnestedlevel > MAXNESTEDCONTROL)
                         {
-                            controlnestedlevel++;
-                            TranslateControlCollection(controlscollection[i].Controls, controlnestedlevel);
+                            string excnestedtoodeep = Strings.T("translating error: cannot translate controls more than {0} nested levels deep.", MAXNESTEDCONTROL);
+                            throw new ApplicationException(excnestedtoodeep);
                         }
                         else
                         {
-                            throw new ApplicationException("Translateting controls more than " + MAXNESTEDCONTROL + " nested levels deep not allowed.");
+                            controlnestedlevel++;
+                            TranslateControlCollection(controlscollection[i].Controls, controlnestedlevel);
                         }
                     }
                     else

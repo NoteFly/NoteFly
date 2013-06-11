@@ -2624,7 +2624,7 @@ namespace NoteFly
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.52174F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.47826F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel10.Controls.Add(this.chxProxyEnabled, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.numProxyPort, 3, 1);
             this.tableLayoutPanel10.Controls.Add(this.lblTextAddress, 0, 1);
@@ -2657,7 +2657,7 @@ namespace NoteFly
             // numProxyPort
             // 
             this.numProxyPort.Enabled = false;
-            this.numProxyPort.Location = new System.Drawing.Point(278, 33);
+            this.numProxyPort.Location = new System.Drawing.Point(276, 33);
             this.numProxyPort.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -2693,7 +2693,7 @@ namespace NoteFly
             this.iptbProxy.Enabled = false;
             this.iptbProxy.Location = new System.Drawing.Point(76, 33);
             this.iptbProxy.Name = "iptbProxy";
-            this.iptbProxy.Size = new System.Drawing.Size(154, 22);
+            this.iptbProxy.Size = new System.Drawing.Size(152, 22);
             this.iptbProxy.TabIndex = 26;
             this.iptbProxy.UseIPv4addr = true;
             this.iptbProxy.UseIPv6addr = true;
@@ -2701,7 +2701,7 @@ namespace NoteFly
             // lblTextPort
             // 
             this.lblTextPort.AutoSize = true;
-            this.lblTextPort.Location = new System.Drawing.Point(236, 35);
+            this.lblTextPort.Location = new System.Drawing.Point(234, 35);
             this.lblTextPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.lblTextPort.Name = "lblTextPort";
             this.lblTextPort.Size = new System.Drawing.Size(34, 16);
@@ -2802,10 +2802,6 @@ namespace NoteFly
             this.tableLayoutPanel9.SetColumnSpan(this.cbxNetworkIPversion, 2);
             this.cbxNetworkIPversion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxNetworkIPversion.FormattingEnabled = true;
-            this.cbxNetworkIPversion.Items.AddRange(new object[] {
-            "IPv4 or IPv6",
-            "Force IPv4",
-            "Force IPv6"});
             this.cbxNetworkIPversion.Location = new System.Drawing.Point(159, 33);
             this.cbxNetworkIPversion.Name = "cbxNetworkIPversion";
             this.cbxNetworkIPversion.Size = new System.Drawing.Size(130, 24);
@@ -2905,7 +2901,7 @@ namespace NoteFly
             this.tableLayoutPanel11.ColumnCount = 3;
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.93631F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.0637F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
             this.tableLayoutPanel11.Controls.Add(this.btnResetSettings, 1, 1);
             this.tableLayoutPanel11.Controls.Add(this.btnOpenSettingsFolder, 1, 0);
             this.tableLayoutPanel11.Location = new System.Drawing.Point(23, 240);
@@ -2924,7 +2920,7 @@ namespace NoteFly
             this.btnResetSettings.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnResetSettings.Location = new System.Drawing.Point(94, 39);
             this.btnResetSettings.Name = "btnResetSettings";
-            this.btnResetSettings.Size = new System.Drawing.Size(209, 30);
+            this.btnResetSettings.Size = new System.Drawing.Size(207, 30);
             this.btnResetSettings.TabIndex = 21;
             this.btnResetSettings.Text = "&Reset all settings to default";
             this.btnResetSettings.UseCompatibleTextRendering = true;
@@ -2936,7 +2932,7 @@ namespace NoteFly
             this.btnOpenSettingsFolder.BackColor = System.Drawing.Color.LightGray;
             this.btnOpenSettingsFolder.Location = new System.Drawing.Point(94, 3);
             this.btnOpenSettingsFolder.Name = "btnOpenSettingsFolder";
-            this.btnOpenSettingsFolder.Size = new System.Drawing.Size(209, 30);
+            this.btnOpenSettingsFolder.Size = new System.Drawing.Size(207, 30);
             this.btnOpenSettingsFolder.TabIndex = 40;
             this.btnOpenSettingsFolder.Text = "open settings folder";
             this.btnOpenSettingsFolder.UseVisualStyleBackColor = false;

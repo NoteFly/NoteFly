@@ -88,9 +88,14 @@ namespace NoteFly
         private int textloadingdots = 0;
 
         /// <summary>
-        /// 
+        /// The time the last request was made.
         /// </summary>
         private DateTime lastrequesttime;
+
+        /// <summary>
+        /// The tooltips of FrmPlugins.
+        /// </summary>
+        private ToolTip tooltip;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrmPlugins" /> class.
@@ -102,6 +107,7 @@ namespace NoteFly
             this.SetTabPageUpdatesVisible(false);
             this.pluginGrid.DrawAllPluginsDetails(this.tabPagePluginsInstalled.ClientRectangle.Width);
             this.SetFormTitle();
+            this.SetFormTooltips();
             Strings.TranslateForm(this);
             this.pluginGrid.Enabled = Settings.ProgramPluginsAllEnabled;
             if (this.IsUpdatecheckPluginNeeded())
@@ -120,6 +126,27 @@ namespace NoteFly
         private void SetFormTitle()
         {
             this.Text = Strings.T("Plugins") + " - " + Program.AssemblyTitle;
+        }
+
+        /// <summary>
+        /// Set all form tooltips if tooltips are enabled.
+        /// </summary>
+        private void SetFormTooltips()
+        {
+            if (Settings.NotesTooltipsEnabled)
+            {
+                this.tooltip = new ToolTip(this.components);
+                this.searchtbPlugins.SetControlTooltip(this.tooltip);
+                this.pluginGrid.SetControlTooltip(this.tooltip);
+            }
+            else
+            {
+                if (this.tooltip != null)
+                {
+                    this.tooltip.Active = false;
+                    this.tooltip.Dispose();
+                }
+            }
         }
 
         /// <summary>

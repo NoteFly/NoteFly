@@ -42,7 +42,7 @@ namespace NoteFly
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components;
 
         /// <summary>
         /// Button btnRestoreAllNotes
@@ -78,11 +78,6 @@ namespace NoteFly
         /// Panel pnlContent
         /// </summary>
         private System.Windows.Forms.Panel pnlContent;
-
-        /// <summary>
-        /// Tooltip tooltip
-        /// </summary>
-        private System.Windows.Forms.ToolTip toolTip;
 
         /// <summary>
         /// TableLayoutPanel tableLayoutPanelButtons
@@ -134,7 +129,6 @@ namespace NoteFly
             this.dataGridViewNotes = new System.Windows.Forms.DataGridView();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.tableLayoutPanelButtons = new System.Windows.Forms.TableLayoutPanel();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.searchTextBoxNotes = new NoteFly.SearchTextBox();
             this.pnlHead.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
@@ -156,7 +150,6 @@ namespace NoteFly
             this.btnClose.Size = new System.Drawing.Size(32, 23);
             this.btnClose.TabIndex = 0;
             this.btnClose.Text = "X";
-            this.toolTip.SetToolTip(this.btnClose, "Close");
             this.btnClose.UseCompatibleTextRendering = true;
             this.btnClose.UseMnemonic = false;
             this.btnClose.UseVisualStyleBackColor = false;
@@ -164,8 +157,8 @@ namespace NoteFly
             // 
             // pnlHead
             // 
-            this.pnlHead.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlHead.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlHead.BackColor = System.Drawing.Color.Orange;
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlHead.Controls.Add(this.lbTextWindowTitle);
@@ -174,8 +167,8 @@ namespace NoteFly
             this.pnlHead.Name = "pnlHead";
             this.pnlHead.Size = new System.Drawing.Size(600, 32);
             this.pnlHead.TabIndex = 8;
-            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.pnlHead.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // lbTextWindowTitle
@@ -187,8 +180,8 @@ namespace NoteFly
             this.lbTextWindowTitle.Size = new System.Drawing.Size(111, 20);
             this.lbTextWindowTitle.TabIndex = 1;
             this.lbTextWindowTitle.Text = "Manage notes";
-            this.lbTextWindowTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lbTextWindowTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.lbTextWindowTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
             this.lbTextWindowTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // pbResizeGrip
@@ -219,7 +212,6 @@ namespace NoteFly
             this.btnRestoreAllNotes.Size = new System.Drawing.Size(103, 28);
             this.btnRestoreAllNotes.TabIndex = 15;
             this.btnRestoreAllNotes.Text = "&import";
-            this.toolTip.SetToolTip(this.btnRestoreAllNotes, "Restore notes from a backup file");
             this.btnRestoreAllNotes.UseCompatibleTextRendering = true;
             this.btnRestoreAllNotes.UseVisualStyleBackColor = false;
             this.btnRestoreAllNotes.Click += new System.EventHandler(this.btnRestoreAllNotes_Click);
@@ -237,7 +229,6 @@ namespace NoteFly
             this.btnShowSelectedNotes.Size = new System.Drawing.Size(103, 28);
             this.btnShowSelectedNotes.TabIndex = 16;
             this.btnShowSelectedNotes.Text = "&show selected";
-            this.toolTip.SetToolTip(this.btnShowSelectedNotes, "Show or hide the selected notes");
             this.btnShowSelectedNotes.UseCompatibleTextRendering = true;
             this.btnShowSelectedNotes.UseVisualStyleBackColor = false;
             this.btnShowSelectedNotes.Click += new System.EventHandler(this.btnShowSelectedNotes_Click);
@@ -255,7 +246,6 @@ namespace NoteFly
             this.btnNoteDelete.Size = new System.Drawing.Size(103, 28);
             this.btnNoteDelete.TabIndex = 17;
             this.btnNoteDelete.Text = "&delete selected";
-            this.toolTip.SetToolTip(this.btnNoteDelete, "Delete the selected notes");
             this.btnNoteDelete.UseCompatibleTextRendering = true;
             this.btnNoteDelete.UseVisualStyleBackColor = false;
             this.btnNoteDelete.Click += new System.EventHandler(this.btnNoteDelete_Click);
@@ -273,7 +263,6 @@ namespace NoteFly
             this.btnBackAllNotes.Size = new System.Drawing.Size(103, 28);
             this.btnBackAllNotes.TabIndex = 18;
             this.btnBackAllNotes.Text = "&export all";
-            this.toolTip.SetToolTip(this.btnBackAllNotes, "Backup all notes to a single backup file");
             this.btnBackAllNotes.UseCompatibleTextRendering = true;
             this.btnBackAllNotes.UseVisualStyleBackColor = false;
             this.btnBackAllNotes.Click += new System.EventHandler(this.btnBackAllNotes_Click);
@@ -289,9 +278,9 @@ namespace NoteFly
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Blue;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
             this.dataGridViewNotes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewNotes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             this.dataGridViewNotes.BackgroundColor = System.Drawing.Color.Gainsboro;
             this.dataGridViewNotes.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
@@ -343,19 +332,19 @@ namespace NoteFly
             this.dataGridViewNotes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewNotes.Size = new System.Drawing.Size(590, 320);
             this.dataGridViewNotes.TabIndex = 19;
-            this.dataGridViewNotes.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dataGridViewNotes_Scroll);
+            this.dataGridViewNotes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewNotes_CellClick);
             this.dataGridViewNotes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewNotes_CellDoubleClick);
+            this.dataGridViewNotes.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewNotes_CellMouseEnter);
             this.dataGridViewNotes.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewNotes_ColumnHeaderMouseClick);
             this.dataGridViewNotes.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridViewNotes_RowPostPaint);
-            this.dataGridViewNotes.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewNotes_CellMouseEnter);
+            this.dataGridViewNotes.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dataGridViewNotes_Scroll);
             this.dataGridViewNotes.MouseLeave += new System.EventHandler(this.dataGridViewNotes_MouseLeave);
-            this.dataGridViewNotes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewNotes_CellClick);
             // 
             // pnlContent
             // 
-            this.pnlContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlContent.BackColor = System.Drawing.Color.Transparent;
             this.pnlContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlContent.Controls.Add(this.tableLayoutPanelButtons);
@@ -369,8 +358,8 @@ namespace NoteFly
             // 
             // tableLayoutPanelButtons
             // 
-            this.tableLayoutPanelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanelButtons.ColumnCount = 5;
             this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -392,13 +381,6 @@ namespace NoteFly
             this.tableLayoutPanelButtons.Size = new System.Drawing.Size(599, 34);
             this.tableLayoutPanelButtons.TabIndex = 21;
             // 
-            // toolTip
-            // 
-            this.toolTip.AutomaticDelay = 100;
-            this.toolTip.AutoPopDelay = 500;
-            this.toolTip.InitialDelay = 200;
-            this.toolTip.ReshowDelay = 20;
-            // 
             // searchTextBoxNotes
             // 
             this.searchTextBoxNotes.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -407,7 +389,6 @@ namespace NoteFly
             this.searchTextBoxNotes.Name = "searchTextBoxNotes";
             this.searchTextBoxNotes.Size = new System.Drawing.Size(152, 28);
             this.searchTextBoxNotes.TabIndex = 22;
-            this.toolTip.SetToolTip(this.searchTextBoxNotes, "Search on title");
             this.searchTextBoxNotes.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchTextBoxNotes_SearchStart);
             this.searchTextBoxNotes.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchTextBoxNotes_SearchStop);
             // 
@@ -429,8 +410,8 @@ namespace NoteFly
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
-            this.Deactivate += new System.EventHandler(this.frmManageNotes_Deactivate);
             this.Activated += new System.EventHandler(this.frmManageNotes_Activated);
+            this.Deactivate += new System.EventHandler(this.frmManageNotes_Deactivate);
             this.pnlHead.ResumeLayout(false);
             this.pnlHead.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).EndInit();
@@ -442,5 +423,6 @@ namespace NoteFly
         }
 
         #endregion
+
     }
 }

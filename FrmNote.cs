@@ -61,6 +61,8 @@ namespace NoteFly
         /// </summary>
         private PictureBox pbShowLock;
 
+        private ToolTip tooltip;
+
         #endregion Fields
 
         #region Constructors (1)
@@ -79,7 +81,6 @@ namespace NoteFly
             this.UpdateForm(false);
             Strings.TranslateForm(this);
             this.lblTitle.Text = note.Title;
-
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             try
             {
@@ -179,7 +180,6 @@ namespace NoteFly
                 }
 
                 this.menuSendToEmail.Enabled = Settings.SharingEmailEnabled;
-                this.toolTip.Active = Settings.NotesTooltipsEnabled;
             }
             else
             {
@@ -216,8 +216,29 @@ namespace NoteFly
                     SyntaxHighlight.InitHighlighter();
                 }
 
+                this.SetFormTooltips();
                 this.CreateSkinsMenu(true);
                 SyntaxHighlight.CheckSyntaxFull(this.rtbNote, this.note.SkinNr, this.notes);
+            }
+        }
+
+        /// <summary>
+        /// Set all form tooltips if tooltips are enabled.
+        /// </summary>
+        private void SetFormTooltips()
+        {
+            if (Settings.NotesTooltipsEnabled)
+            {
+                this.tooltip = new ToolTip(this.components);
+                this.tooltip.SetToolTip(this.btnHideNote, Strings.T("Hide this note"));
+            }
+            else
+            {
+                if (this.tooltip != null)
+                {
+                    this.tooltip.Active = false;
+                    this.tooltip.Dispose();
+                }                
             }
         }
 

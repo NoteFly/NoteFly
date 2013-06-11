@@ -85,6 +85,7 @@ namespace NoteFly
             this.tabControlSettings_SelectedIndexChanged(null, null);
             this.LoadCbxLanguage();
             this.LoadCbxActionLeftclick();
+            this.LoadCbxNetworkIPversion();
             this.LoadCbxFonts();
             this.LoadCbxSkins();
             this.SetControlsBySettings();
@@ -179,6 +180,17 @@ namespace NoteFly
             this.cbxActionLeftclick.Items.Add(Strings.T("Do nothing"));
             this.cbxActionLeftclick.Items.Add(Strings.T("Bring notes to front"));
             this.cbxActionLeftclick.Items.Add(Strings.T("New note"));
+        }
+        
+        /// <summary>
+        /// Loads CbxNetworkIPversion
+        /// </summary>
+        private void LoadCbxNetworkIPversion()
+        {
+            this.cbxNetworkIPversion.Items.Clear();
+            this.cbxNetworkIPversion.Items.Add(Strings.T("Use IPv4 or IPv6"));
+            this.cbxNetworkIPversion.Items.Add(Strings.T("Force use IPv4"));
+            this.cbxNetworkIPversion.Items.Add(Strings.T("Force use IPv6"));
         }
 
         /// <summary>
@@ -332,10 +344,10 @@ namespace NoteFly
                     {
                         this.Cursor = Cursors.Default;
                     }
-
-                    Program.Formmanager.FrmManageNotesNeedUpdate = true;
                 }
 
+                Program.Formmanager.FrmManageNotesNeedUpdate = true;
+                Program.Formmanager.RefreshFrmManageNotes();
                 if (Settings.ProgramPluginsAllEnabled)
                 {
                     PluginsManager.LoadPlugins();
