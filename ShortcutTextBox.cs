@@ -55,7 +55,6 @@ namespace NoteFly
         public ShortcutTextBox()
         {
             this.TextAlign = HorizontalAlignment.Center;
-            //this.setcontent();
         }
 
         /// <summary>

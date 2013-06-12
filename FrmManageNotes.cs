@@ -75,6 +75,9 @@ namespace NoteFly
         /// </summary>
         private int prevrownr = -1;
 
+        /// <summary>
+        /// The tooltip.
+        /// </summary>
         private ToolTip tooltip;
 
         /// <summary>
@@ -274,7 +277,7 @@ namespace NoteFly
             {
                 if (this.tooltip == null)
                 {
-                    this.tooltip = new ToolTip(this.components);
+                    this.tooltip = new ToolTip();
                     this.tooltip.SetToolTip(this.btnShowSelectedNotes, Strings.T("Show or hide the selected notes."));
                     this.tooltip.SetToolTip(this.btnNoteDelete, Strings.T("Delete the selected notes."));
                     this.tooltip.SetToolTip(this.btnRestoreAllNotes, Strings.T("Restore notes from a backup file."));

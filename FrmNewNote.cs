@@ -57,6 +57,9 @@ namespace NoteFly
         /// </summary>
         private RTFDirectEdit rtfdirectedit = new RTFDirectEdit();
 
+        /// <summary>
+        /// The tooltip.
+        /// </summary>
         private ToolTip tooltip;
 
         /// <summary>
@@ -108,6 +111,7 @@ namespace NoteFly
         /// <param name="notes">The class with access to all notes.</param>
         /// <param name="deltaX">X position change from center screen position to show form.</param>
         /// <param name="deltaY">Y position change from center screen position to show form.</param>
+        /// <param name="contentclipboard"></param>
         public FrmNewNote(Notes notes, int deltaX, int deltaY, bool contentclipboard)
         {
             this.ConstructFrmNewNote(notes);
@@ -161,6 +165,7 @@ namespace NoteFly
         /// <summary>
         /// Set all form tooltips if tooltips are enabled.
         /// </summary>
+        /// <param name="editnote"></param>
         private void SetFormTooltips(bool editnote)
         {
             if (Settings.NotesTooltipsEnabled)
@@ -180,6 +185,7 @@ namespace NoteFly
                 this.tooltip.SetToolTip(this.btnTextBold, Strings.T("Bold text (Ctrl+B)"));
                 this.tooltip.SetToolTip(this.btnTextItalic, Strings.T("Italic text (Ctrl+I)"));
                 this.tooltip.SetToolTip(this.btnTextUnderline, Strings.T("Underline text (Ctrl+U)"));
+                this.tooltip.SetToolTip(this.btnTextStriketrough, Strings.T("Striketrough text (Ctr+T)"));
                 this.tooltip.SetToolTip(this.btnTextBulletlist, Strings.T("Bullit list (Ctrl+shift+L)"));
                 this.tooltip.SetToolTip(this.btnFontBigger, Strings.T("Bigger text (Ctrl+shift+>)"));
                 this.tooltip.SetToolTip(this.btnFontSmaller, Strings.T("Smaller text (Ctrl+shift+<)"));

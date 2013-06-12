@@ -62,6 +62,9 @@ namespace NoteFly
         /// </summary>
         private PictureBox pbShowLock;
 
+        /// <summary>
+        /// The tooltip.
+        /// </summary>
         private ToolTip tooltip;
 
         #endregion Fields
@@ -81,7 +84,7 @@ namespace NoteFly
             this.note = note;
             this.UpdateForm(false);
             Strings.TranslateForm(this);
-            this.lblTitle.Text = note.Title;
+            this.lblNoteTitle.Text = note.Title;
             this.rtbNote.BackColor = notes.GetPrimaryClr(note.SkinNr);
             try
             {
@@ -154,10 +157,10 @@ namespace NoteFly
                     this.Opacity = 1.0;
                 }
 
-                this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
+                this.lblNoteTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
                 if (Settings.FontTitleStylebold)
                 {
-                    this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
+                    this.lblNoteTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Bold);
                 }
                 else
                 {
@@ -166,17 +169,17 @@ namespace NoteFly
                         Settings.FontTitleSize = 6;
                     }
 
-                    this.lblTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
+                    this.lblNoteTitle.Font = new Font(Settings.FontTitleFamily, Settings.FontTitleSize, FontStyle.Regular);
                 }
 
                 if (Settings.FontTextdirection == 0)
                 {
-                    this.lblTitle.RightToLeft = RightToLeft.No;
+                    this.lblNoteTitle.RightToLeft = RightToLeft.No;
                     this.rtbNote.RightToLeft = RightToLeft.No;
                 }
                 else if (Settings.FontTextdirection == 1)
                 {
-                    this.lblTitle.RightToLeft = RightToLeft.Yes;
+                    this.lblNoteTitle.RightToLeft = RightToLeft.Yes;
                     this.rtbNote.RightToLeft = RightToLeft.Yes;
                 }
 
@@ -184,11 +187,11 @@ namespace NoteFly
             }
             else
             {
-                if (this.lblTitle.Height + this.lblTitle.Location.Y >= this.pnlHead.Height)
+                if (this.lblNoteTitle.Height + this.lblNoteTitle.Location.Y >= this.pnlHead.Height)
                 {
-                    if (this.lblTitle.Height < Settings.NotesTitlepanelMaxHeight)
+                    if (this.lblNoteTitle.Height < Settings.NotesTitlepanelMaxHeight)
                     {
-                        this.pnlHead.Height = this.lblTitle.Height;
+                        this.pnlHead.Height = this.lblNoteTitle.Height;
                     }
                     else
                     {
@@ -302,9 +305,9 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void menuCopyTitle_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(this.lblTitle.Text))
+            if (!string.IsNullOrEmpty(this.lblNoteTitle.Text))
             {
-                Clipboard.SetText(this.lblTitle.Text);
+                Clipboard.SetText(this.lblNoteTitle.Text);
             }
         }
 
@@ -398,17 +401,17 @@ namespace NoteFly
         private void menuSendToEmail_Click(object sender, EventArgs e)
         {
             string emailnote = System.Web.HttpUtility.UrlEncode(this.rtbNote.Text).Replace("+", " ");
-            string emailtitle = System.Web.HttpUtility.UrlEncode(this.lblTitle.Text);
+            string emailtitle = System.Web.HttpUtility.UrlEncode(this.lblNoteTitle.Text);
 
             try
             {
                 if (!string.IsNullOrEmpty(emailtitle) && (!string.IsNullOrEmpty(emailnote)))
                 {
-                    System.Diagnostics.Process.Start("mailto:" + Settings.SharingEmailDefaultadres + "?subject=" + this.lblTitle.Text + "&body=" + emailnote);
+                    System.Diagnostics.Process.Start("mailto:" + Settings.SharingEmailDefaultadres + "?subject=" + this.lblNoteTitle.Text + "&body=" + emailnote);
                 }
                 else if (!string.IsNullOrEmpty(emailtitle))
                 {
-                    System.Diagnostics.Process.Start("mailto:" + Settings.SharingEmailDefaultadres + "?subject=" + this.lblTitle.Text);
+                    System.Diagnostics.Process.Start("mailto:" + Settings.SharingEmailDefaultadres + "?subject=" + this.lblNoteTitle.Text);
                 }
                 else
                 {
@@ -571,7 +574,7 @@ namespace NoteFly
 
             this.pnlHead.BackColor = Color.Transparent;
             this.rtbNote.BackColor = this.notes.GetPrimaryClr(this.note.SkinNr);
-            this.lblTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
+            this.lblNoteTitle.ForeColor = this.notes.GetTextClr(this.note.SkinNr);
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
             Program.Formmanager.RefreshFrmManageNotes();
             if (!SyntaxHighlight.KeywordsInitialized)

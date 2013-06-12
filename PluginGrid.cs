@@ -43,6 +43,9 @@ namespace NoteFly
         /// </summary>
         private TableLayoutPanel[] tlpnlPlugins;
 
+        /// <summary>
+        /// The tooltip.
+        /// </summary>
         private ToolTip tooltip;
 
         /// <summary>

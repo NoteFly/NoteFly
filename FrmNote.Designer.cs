@@ -32,7 +32,7 @@ namespace NoteFly
         /// <summary>
         /// Label lblTitle
         /// </summary>
-        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblNoteTitle;
 
         /// <summary>
         /// Panel pnlHead
@@ -162,7 +162,7 @@ namespace NoteFly
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblNoteTitle = new System.Windows.Forms.Label();
             this.pnlHead = new System.Windows.Forms.Panel();
             this.menuFrmNoteOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuEditNote = new System.Windows.Forms.ToolStripMenuItem();
@@ -190,24 +190,24 @@ namespace NoteFly
             ((System.ComponentModel.ISupportInitialize)(this.pbResizeGrip)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblTitle
+            // lblNoteTitle
             // 
-            this.lblTitle.AccessibleDescription = "Note title";
-            this.lblTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(3, 5, 60, 0);
-            this.lblTitle.Size = new System.Drawing.Size(78, 30);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "?";
-            this.lblTitle.UseCompatibleTextRendering = true;
-            this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
-            this.lblTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
-            this.lblTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
+            this.lblNoteTitle.AccessibleDescription = "Note title";
+            this.lblNoteTitle.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.lblNoteTitle.AutoSize = true;
+            this.lblNoteTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblNoteTitle.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.lblNoteTitle.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblNoteTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblNoteTitle.Name = "lblNoteTitle";
+            this.lblNoteTitle.Padding = new System.Windows.Forms.Padding(3, 5, 60, 0);
+            this.lblNoteTitle.Size = new System.Drawing.Size(78, 30);
+            this.lblNoteTitle.TabIndex = 0;
+            this.lblNoteTitle.Text = "?";
+            this.lblNoteTitle.UseCompatibleTextRendering = true;
+            this.lblNoteTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.lblNoteTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
+            this.lblNoteTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseUp);
             // 
             // pnlHead
             // 
@@ -215,7 +215,7 @@ namespace NoteFly
             this.pnlHead.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlHead.ContextMenuStrip = this.menuFrmNoteOptions;
             this.pnlHead.Controls.Add(this.btnHideNote);
-            this.pnlHead.Controls.Add(this.lblTitle);
+            this.pnlHead.Controls.Add(this.lblNoteTitle);
             this.pnlHead.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHead.Location = new System.Drawing.Point(0, 0);
             this.pnlHead.Name = "pnlHead";
@@ -238,7 +238,7 @@ namespace NoteFly
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 224);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 

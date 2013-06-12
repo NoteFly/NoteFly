@@ -102,6 +102,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnBrowse_Click(object sender, EventArgs e)
         {
+            this.folderBrowseDialogNotessavepath.Description = Strings.T("Select a folder to store the all the notes files in");
             DialogResult dlgresult = this.folderBrowseDialogNotessavepath.ShowDialog();
             if (dlgresult == DialogResult.OK)
             {
@@ -1060,6 +1061,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void btnGPGPathBrowse_Click(object sender, EventArgs e)
         {
+            this.openFileDialogBrowseGPG.Title = Strings.T("Select path to the gpg.exe file.");
             DialogResult dlggpgresult = this.openFileDialogBrowseGPG.ShowDialog();
             if (dlggpgresult == DialogResult.OK)
             {

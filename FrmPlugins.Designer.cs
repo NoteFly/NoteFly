@@ -49,7 +49,7 @@
             this.pluginGrid = new NoteFly.PluginGrid();
             this.tabControlPlugins = new System.Windows.Forms.TabControl();
             this.tabPagePluginsUpdates = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutpnlPluginUpdates = new System.Windows.Forms.TableLayoutPanel();
             this.chxlbxPluginUpdates = new System.Windows.Forms.CheckedListBox();
             this.btnupdateplugins = new System.Windows.Forms.Button();
             this.lbltextpluginupdates = new System.Windows.Forms.Label();
@@ -61,7 +61,7 @@
             this.tabPagePluginsInstalled.SuspendLayout();
             this.tabControlPlugins.SuspendLayout();
             this.tabPagePluginsUpdates.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutpnlPluginUpdates.SuspendLayout();
             this.SuspendLayout();
             // 
             // timerTextUpdater
@@ -236,7 +236,7 @@
             // 
             // tabPagePluginsUpdates
             // 
-            this.tabPagePluginsUpdates.Controls.Add(this.tableLayoutPanel1);
+            this.tabPagePluginsUpdates.Controls.Add(this.tableLayoutpnlPluginUpdates);
             this.tabPagePluginsUpdates.Location = new System.Drawing.Point(4, 25);
             this.tabPagePluginsUpdates.Name = "tabPagePluginsUpdates";
             this.tabPagePluginsUpdates.Padding = new System.Windows.Forms.Padding(3);
@@ -245,28 +245,28 @@
             this.tabPagePluginsUpdates.Text = "updates";
             this.tabPagePluginsUpdates.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // tableLayoutpnlPluginUpdates
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.07173F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.80169F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.33755F));
-            this.tableLayoutPanel1.Controls.Add(this.chxlbxPluginUpdates, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnupdateplugins, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.lbltextpluginupdates, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnRestartProgram, 1, 4);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.72727F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.27273F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 196F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(474, 359);
-            this.tableLayoutPanel1.TabIndex = 2;
+            this.tableLayoutpnlPluginUpdates.ColumnCount = 3;
+            this.tableLayoutpnlPluginUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.07173F));
+            this.tableLayoutpnlPluginUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.80169F));
+            this.tableLayoutpnlPluginUpdates.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.33755F));
+            this.tableLayoutpnlPluginUpdates.Controls.Add(this.chxlbxPluginUpdates, 1, 2);
+            this.tableLayoutpnlPluginUpdates.Controls.Add(this.btnupdateplugins, 1, 3);
+            this.tableLayoutpnlPluginUpdates.Controls.Add(this.lbltextpluginupdates, 1, 1);
+            this.tableLayoutpnlPluginUpdates.Controls.Add(this.btnRestartProgram, 1, 4);
+            this.tableLayoutpnlPluginUpdates.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutpnlPluginUpdates.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutpnlPluginUpdates.Name = "tableLayoutpnlPluginUpdates";
+            this.tableLayoutpnlPluginUpdates.RowCount = 6;
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.72727F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.27273F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 196F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutpnlPluginUpdates.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutpnlPluginUpdates.Size = new System.Drawing.Size(474, 359);
+            this.tableLayoutpnlPluginUpdates.TabIndex = 2;
             // 
             // chxlbxPluginUpdates
             // 
@@ -338,8 +338,8 @@
             this.tabPagePluginsInstalled.ResumeLayout(false);
             this.tabControlPlugins.ResumeLayout(false);
             this.tabPagePluginsUpdates.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutpnlPluginUpdates.ResumeLayout(false);
+            this.tableLayoutpnlPluginUpdates.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -361,7 +361,7 @@
         private PluginGrid pluginGrid;
         private System.Windows.Forms.TabControl tabControlPlugins;
         private System.Windows.Forms.TabPage tabPagePluginsUpdates;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutpnlPluginUpdates;
         private System.Windows.Forms.CheckedListBox chxlbxPluginUpdates;
         private System.Windows.Forms.Button btnupdateplugins;
         private System.Windows.Forms.Label lbltextpluginupdates;

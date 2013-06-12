@@ -32,7 +32,7 @@ namespace NoteFly
         /// <summary>
         /// The OK button
         /// </summary>
-        private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.Button btnCloseAbout;
 
         /// <summary>
         /// Name product label
@@ -82,7 +82,7 @@ namespace NoteFly
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.okButton = new System.Windows.Forms.Button();
+            this.btnCloseAbout = new System.Windows.Forms.Button();
             this.lblProductName = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
@@ -90,18 +90,18 @@ namespace NoteFly
             this.tmrUpdateLblProductEffect = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // okButton
+            // btnCloseAbout
             // 
-            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.okButton.Location = new System.Drawing.Point(112, 135);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(111, 26);
-            this.okButton.TabIndex = 25;
-            this.okButton.Text = "&Close";
-            this.okButton.UseCompatibleTextRendering = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+            this.btnCloseAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCloseAbout.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCloseAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.btnCloseAbout.Location = new System.Drawing.Point(112, 135);
+            this.btnCloseAbout.Name = "btnCloseAbout";
+            this.btnCloseAbout.Size = new System.Drawing.Size(111, 26);
+            this.btnCloseAbout.TabIndex = 25;
+            this.btnCloseAbout.Text = "&Close";
+            this.btnCloseAbout.UseCompatibleTextRendering = true;
+            this.btnCloseAbout.Click += new System.EventHandler(this.okButton_Click);
             // 
             // lblProductName
             // 
@@ -152,7 +152,7 @@ namespace NoteFly
             this.lblTextLicense.Size = new System.Drawing.Size(222, 58);
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of Lesser GNU General Public License v" +
-                "ersion3\r\n";
+    "ersion3\r\n";
             this.lblTextLicense.UseCompatibleTextRendering = true;
             // 
             // tmrUpdateLblProductEffect
@@ -164,13 +164,13 @@ namespace NoteFly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.okButton;
+            this.CancelButton = this.btnCloseAbout;
             this.ClientSize = new System.Drawing.Size(235, 171);
             this.Controls.Add(this.lblTextLicense);
             this.Controls.Add(this.linklblWebsite);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblProductName);
-            this.Controls.Add(this.okButton);
+            this.Controls.Add(this.btnCloseAbout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

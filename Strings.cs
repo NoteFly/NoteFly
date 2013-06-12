@@ -57,8 +57,6 @@ namespace NoteFly
         /// </summary>
         private static System.Globalization.CultureInfo resourceCulture;
 
-        private static System.Windows.Forms.ToolTip currenttooltip;
-
         /// <summary>
         /// Gets or sets the current thread's CurrentUICulture property for all
         /// resource lookups using this strongly typed resource class.
@@ -280,6 +278,7 @@ namespace NoteFly
                 controltype == typeof(System.Windows.Forms.LinkLabel) ||
                 controltype == typeof(System.Windows.Forms.TabControl) ||
                 controltype == typeof(System.Windows.Forms.TableLayoutPanel) ||
+                controltype == typeof(System.Windows.Forms.Panel) ||
                 controltype == typeof(SearchTextBox))
             {
                 // blacklist control name
@@ -292,7 +291,8 @@ namespace NoteFly
                     control.Name != "btnTextBulletlist" &&
                     control.Name != "btnFontBigger" &&
                     control.Name != "btnFontSmaller" &&
-                    control.Name != "btnHideNote")
+                    control.Name != "btnHideNote" &&
+                    control.Name != "lblNoteTitle")
                 {
                     translatecontrol = true;
                 }
