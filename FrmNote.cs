@@ -22,6 +22,7 @@ namespace NoteFly
     using System;
     using System.ComponentModel;
     using System.Drawing;
+    using System.Text;
     using System.Windows.Forms;
 
     /// <summary>
@@ -867,7 +868,12 @@ namespace NoteFly
             sfdlg.OverwritePrompt = true;
             sfdlg.FileName = this.notes.StripForbiddenFilenameChars(this.note.Title);
             sfdlg.Title = Strings.T("Save note to file");
-            sfdlg.Filter = "Textfile (*.txt)|*.txt|RichTextFormat file (*.rtf)|*.rtf|Webpage (*.htm)|*.htm|PHP file (*.php)|*.php";
+            StringBuilder sbfilter = new StringBuilder();
+            sbfilter.Append(Strings.T("Textfile (*.txt)")).Append("|*.txt|");
+            sbfilter.Append(Strings.T("RichTextFormat file (*.rtf)")).Append("|*.rtf|");
+            sbfilter.Append(Strings.T("Webpage (*.htm)")).Append("|*.htm|");
+            sbfilter.Append(Strings.T("PHP file (*.php)")).Append("|*.php");
+            sfdlg.Filter = sbfilter.ToString();
             if (PluginsManager.EnabledPlugins != null) 
             {
                 for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)

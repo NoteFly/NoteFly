@@ -18,7 +18,7 @@
 ;
 
 !define PROJNAME   "NoteFly"
-!define VERSION    "3.0.5"          ; version number: major.minor.release
+!define VERSION    "3.0.6"          ; version number: major.minor.release
 !define VERSTATUS  ""               ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
@@ -215,6 +215,8 @@ Section "main executable (required)"
   File ".\translations\ko\Strings.po"
   SetOutPath "$INSTDIR\translations\sv\"
   File ".\translations\sv\Strings.po"
+  SetOutPath "$INSTDIR\translations\el\"
+  File ".\translations\el\Strings.po"
   
   WriteUninstaller "uninstall.exe"
   
@@ -294,10 +296,12 @@ Section "Uninstall"
   RMDir "$INSTDIR\translations\ko\"
   Delete "$INSTDIR\translations\nl\Strings.po"
   RMDir "$INSTDIR\translations\nl\"
-  Delete "$INSTDIR\translations\en\Strings.po"
-  RMDir "$INSTDIR\translations\en\"
   Delete "$INSTDIR\translations\sv\Strings.po"
   RMDir "$INSTDIR\translations\sv\"
+  Delete "$INSTDIR\translations\el\Strings.po"
+  RMDir "$INSTDIR\translations\el\"
+  Delete "$INSTDIR\translations\en\Strings.po"
+  RMDir "$INSTDIR\translations\en\"
   RMDir "$INSTDIR\translations\"
   
   ; remove uninstaller

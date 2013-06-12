@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-11 19:44+0200\n"
+"POT-Creation-Date: 2013-06-12 09:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,12 +41,12 @@ msgstr ""
 msgid "oh no.. {0} crashed."
 msgstr ""
 
-#: FrmManageNotes.cs:109 FrmManageNotes.cs:530 FrmManageNotes.cs:563
+#: FrmManageNotes.cs:109 FrmManageNotes.cs:540 FrmManageNotes.cs:573
 msgid "&hide selected"
 msgstr ""
 
-#: FrmManageNotes.cs:113 FrmManageNotes.cs:118 FrmManageNotes.cs:535
-#: FrmManageNotes.cs:567
+#: FrmManageNotes.cs:113 FrmManageNotes.cs:118 FrmManageNotes.cs:545
+#: FrmManageNotes.cs:577
 msgid "&show selected"
 msgstr ""
 
@@ -78,52 +78,72 @@ msgstr ""
 msgid "Export all notes"
 msgstr ""
 
-#: FrmManageNotes.cs:369
+#: FrmManageNotes.cs:307 FrmManageNotes.cs:454
+msgid "NoteFly backup"
+msgstr ""
+
+#: FrmManageNotes.cs:308 FrmManageNotes.cs:455
+msgid "Stickies CSV stored notes"
+msgstr ""
+
+#: FrmManageNotes.cs:309 FrmManageNotes.cs:456
+msgid "PNotes full backup"
+msgstr ""
+
+#: FrmManageNotes.cs:373
 msgid "Nothing selected"
 msgstr ""
 
-#: FrmManageNotes.cs:370
+#: FrmManageNotes.cs:374
 msgid "There is no note selected."
 msgstr ""
 
-#: FrmManageNotes.cs:379
+#: FrmManageNotes.cs:383
 msgid "Are you sure you want to delete the selected note(s)?"
 msgstr ""
 
-#: FrmManageNotes.cs:389
+#: FrmManageNotes.cs:393
 msgid "And more notes."
 msgstr ""
 
-#: FrmManageNotes.cs:393
+#: FrmManageNotes.cs:397
 msgid "delete?"
 msgstr ""
 
-#: FrmManageNotes.cs:448
+#: FrmManageNotes.cs:452
 msgid "import notes"
 msgstr ""
 
-#: FrmManageNotes.cs:791
+#: FrmManageNotes.cs:457
+msgid "CintaNotes xml export"
+msgstr ""
+
+#: FrmManageNotes.cs:458
+msgid "DeskNotes file"
+msgstr ""
+
+#: FrmManageNotes.cs:801
 #, csharp-format
 msgid "Access denied. delete note {0} manually with proper permission."
 msgstr ""
 
-#: FrmManageNotes.cs:865
+#: FrmManageNotes.cs:875
 msgid "nr"
 msgstr ""
 
-#: FrmManageNotes.cs:866
+#: FrmManageNotes.cs:876
 msgid "title"
 msgstr ""
 
-#: FrmManageNotes.cs:867
+#: FrmManageNotes.cs:877
 msgid "visible"
 msgstr ""
 
-#: FrmManageNotes.cs:868
+#: FrmManageNotes.cs:878
 msgid "skin"
 msgstr ""
 
-#: FrmManageNotes.cs:930 FrmManageNotes.cs:951
+#: FrmManageNotes.cs:940 FrmManageNotes.cs:961
 msgid "Transparency level not a integer or double."
 msgstr ""
 
@@ -183,43 +203,87 @@ msgstr ""
 msgid "Could not write note."
 msgstr ""
 
-#: FrmNewNote.cs:755 FrmNewNote.cs:1103
+#: FrmNewNote.cs:680
+msgid "Plain text file (*.txt)"
+msgstr ""
+
+#: FrmNewNote.cs:681
+msgid "RTF file (*.rtf)"
+msgstr ""
+
+#: FrmNewNote.cs:682
+msgid "KeyNote NF note (*.knt)"
+msgstr ""
+
+#: FrmNewNote.cs:683
+msgid "TomBoy note (*.note)"
+msgstr ""
+
+#: FrmNewNote.cs:684
+msgid "MicroSE note (*.not)"
+msgstr ""
+
+#: FrmNewNote.cs:685
+msgid "QuickPad note (*.qpn)"
+msgstr ""
+
+#: FrmNewNote.cs:687
+msgid "import single (note)file"
+msgstr ""
+
+#: FrmNewNote.cs:757 FrmNewNote.cs:1105
 msgid "There is no text on the clipboard."
 msgstr ""
 
-#: FrmNote.cs:233
+#: FrmNote.cs:234
 msgid "Hide this note"
 msgstr ""
 
-#: FrmNote.cs:414
+#: FrmNote.cs:415
 msgid "Note has no title and no content."
 msgstr ""
 
-#: FrmNote.cs:421
+#: FrmNote.cs:422
 msgid "Can't launch email client."
 msgstr ""
 
-#: FrmNote.cs:794
+#: FrmNote.cs:795
 msgid "&Lock note"
 msgstr ""
 
-#: FrmNote.cs:795
+#: FrmNote.cs:796
 msgid " (click again to unlock)"
 msgstr ""
 
-#: FrmNote.cs:821
+#: FrmNote.cs:822
 msgid "&Roll up"
 msgstr ""
 
-#: FrmNote.cs:822
+#: FrmNote.cs:823
 msgid "(click again to Roll Down)"
 msgstr ""
 
-#: FrmNote.cs:869
+#: FrmNote.cs:870
 msgid "Save note to file"
 msgstr ""
 
-#: FrmNote.cs:884
+#: FrmNote.cs:872
+msgid "Textfile (*.txt)"
+msgstr ""
+
+#: FrmNote.cs:873
+msgid "RichTextFormat file (*.rtf)"
+msgstr ""
+
+#: FrmNote.cs:874
+msgid "Webpage (*.htm)"
+msgstr ""
+
+#: FrmNote.cs:875
+msgid "PHP file (*.php)"
+msgstr ""
+
+#: FrmNote.cs:890
 msgid "Bad plugin export notecontent filter selected."
 msgstr ""
 
@@ -732,40 +796,24 @@ msgid ""
 "Are you sure you want to shutdown {0}?"
 msgstr ""
 
-# menuEditNote
-msgid "&Edit note"
-msgstr ""
-
-# menuNoteSkins
-msgid "S&kin"
-msgstr ""
-
-# menuActions
-msgid "&Actions"
-msgstr ""
-
-# menuOnTop
-msgid "Sticky on &top"
-msgstr ""
-
-# menuWordWrap
-msgid "Word wrap"
-msgstr ""
-
-# menuCopy
-msgid "&Copy"
-msgstr ""
-
-# menuHideNote
-msgid "&Hide note"
-msgstr ""
-
 # menuSaveNewNote
 msgid "&Save note"
 msgstr ""
 
 # menuShowtoolbar
 msgid "Show format tools"
+msgstr ""
+
+# menuWordWarp
+msgid "Word wrap"
+msgstr ""
+
+# menuStickyOnTop
+msgid "Sticky on &top"
+msgstr ""
+
+# menuCopy
+msgid "&Copy"
 msgstr ""
 
 # menuPasteTo
@@ -778,6 +826,22 @@ msgstr ""
 
 # menuCancelNewNote
 msgid "Cance&l note"
+msgstr ""
+
+# menuEditNote
+msgid "&Edit note"
+msgstr ""
+
+# menuNoteSkins
+msgid "S&kin"
+msgstr ""
+
+# menuActions
+msgid "&Actions"
+msgstr ""
+
+# menuHideNote
+msgid "&Hide note"
 msgstr ""
 
 # chxSettingsExpertEnabled

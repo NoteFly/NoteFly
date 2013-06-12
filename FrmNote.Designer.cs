@@ -181,9 +181,9 @@ namespace NoteFly
             this.menuHideNote = new System.Windows.Forms.ToolStripMenuItem();
             this.btnHideNote = new System.Windows.Forms.Button();
             this.pnlNote = new System.Windows.Forms.Panel();
+            this.rtbNote = new NoteFly.TransparentRichTextBox();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
             this.saveWorker = new System.ComponentModel.BackgroundWorker();
-            this.rtbNote = new NoteFly.TransparentRichTextBox();
             this.pnlHead.SuspendLayout();
             this.menuFrmNoteOptions.SuspendLayout();
             this.pnlNote.SuspendLayout();
@@ -238,7 +238,7 @@ namespace NoteFly
             this.menuRollUp,
             this.menuHideNote});
             this.menuFrmNoteOptions.Name = "contextMenuStripNoteOptions";
-            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 202);
+            this.menuFrmNoteOptions.Size = new System.Drawing.Size(185, 224);
             this.menuFrmNoteOptions.Text = "-menu-";
             this.menuFrmNoteOptions.Opening += new System.ComponentModel.CancelEventHandler(this.menuFrmNoteOptions_Opening);
             // 
@@ -397,26 +397,6 @@ namespace NoteFly
             this.pnlNote.Size = new System.Drawing.Size(240, 209);
             this.pnlNote.TabIndex = 4;
             // 
-            // pbResizeGrip
-            // 
-            this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
-            this.pbResizeGrip.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pbResizeGrip.Location = new System.Drawing.Point(222, 191);
-            this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
-            this.pbResizeGrip.Name = "pbResizeGrip";
-            this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
-            this.pbResizeGrip.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pbResizeGrip.TabIndex = 4;
-            this.pbResizeGrip.TabStop = false;
-            this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
-            this.pbResizeGrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseUp);
-            // 
-            // saveWorker
-            // 
-            this.saveWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
-            // 
             // rtbNote
             // 
             this.rtbNote.AccessibleDescription = "Note content";
@@ -444,6 +424,26 @@ namespace NoteFly
             this.rtbNote.TabStop = false;
             this.rtbNote.Text = "";
             this.rtbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbNote_LinkClicked);
+            // 
+            // pbResizeGrip
+            // 
+            this.pbResizeGrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbResizeGrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbResizeGrip.Image = global::NoteFly.Properties.Resources.hoekje;
+            this.pbResizeGrip.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pbResizeGrip.Location = new System.Drawing.Point(222, 191);
+            this.pbResizeGrip.Margin = new System.Windows.Forms.Padding(0);
+            this.pbResizeGrip.Name = "pbResizeGrip";
+            this.pbResizeGrip.Size = new System.Drawing.Size(16, 16);
+            this.pbResizeGrip.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbResizeGrip.TabIndex = 4;
+            this.pbResizeGrip.TabStop = false;
+            this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
+            this.pbResizeGrip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseUp);
+            // 
+            // saveWorker
+            // 
+            this.saveWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.SavePos_DoWork);
             // 
             // FrmNote
             // 

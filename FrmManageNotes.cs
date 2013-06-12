@@ -303,7 +303,11 @@ namespace NoteFly
         {
             SaveFileDialog sfdlgexportnotes = new SaveFileDialog();
             sfdlgexportnotes.Title = Strings.T("Export all notes");
-            sfdlgexportnotes.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb";
+            StringBuilder sbfilter = new StringBuilder();
+            sbfilter.Append(Strings.T("NoteFly backup")).Append("|*.nfbak|");
+            sbfilter.Append(Strings.T("Stickies CSV stored notes")).Append("|*.csv|");
+            sbfilter.Append(Strings.T("PNotes full backup")).Append("|*.pnfb");
+            sfdlgexportnotes.Filter = sbfilter.ToString();
             sfdlgexportnotes.OverwritePrompt = true;
             DialogResult savebackupdlgres = sfdlgexportnotes.ShowDialog();
             if (PluginsManager.EnabledPlugins != null)
@@ -446,7 +450,13 @@ namespace NoteFly
         {
             OpenFileDialog ofdlgimportnotes = new OpenFileDialog();
             ofdlgimportnotes.Title = Strings.T("import notes");
-            ofdlgimportnotes.Filter = "NoteFly backup|*.nfbak|Stickies CSV stored notes|*.csv|PNotes full backup|*.pnfb|CintaNotes xml export|*.xml|DeskNotes file|*.xml";
+            StringBuilder sbfilter = new StringBuilder();
+            sbfilter.Append(Strings.T("NoteFly backup")).Append("|*.nfbak|");
+            sbfilter.Append(Strings.T("Stickies CSV stored notes")).Append("|*.csv|");
+            sbfilter.Append(Strings.T("PNotes full backup")).Append("|*.pnfb|");
+            sbfilter.Append(Strings.T("CintaNotes xml export")).Append("|*.xml|");
+            sbfilter.Append(Strings.T("DeskNotes file")).Append("|*.xml");
+            ofdlgimportnotes.Filter = sbfilter.ToString();
             ofdlgimportnotes.CheckFileExists = true;
             ofdlgimportnotes.CheckPathExists = true;
             if (PluginsManager.EnabledPlugins != null)

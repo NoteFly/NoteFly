@@ -140,11 +140,6 @@ namespace NoteFly
         private System.Windows.Forms.Button btnTextBulletlist;
 
         /// <summary>
-        /// OpenFileDialog openNoteFileDialog
-        /// </summary>
-        private System.Windows.Forms.OpenFileDialog openNoteFileDialog;
-
-        /// <summary>
         /// TableLayoutPanel tableLayoutPanelFormatbtn
         /// </summary>
         private System.Windows.Forms.TableLayoutPanel tlpnlFormatbtn;
@@ -225,7 +220,6 @@ namespace NoteFly
             this.btnTextBold = new System.Windows.Forms.Button();
             this.rtbNewNote = new System.Windows.Forms.RichTextBox();
             this.pbResizeGrip = new System.Windows.Forms.PictureBox();
-            this.openNoteFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tlpnlFormatbtn = new System.Windows.Forms.TableLayoutPanel();
             this.contextMenuStripTextActions.SuspendLayout();
             this.pnlHeadNewNote.SuspendLayout();
@@ -655,10 +649,6 @@ namespace NoteFly
             this.pbResizeGrip.TabIndex = 15;
             this.pbResizeGrip.TabStop = false;
             this.pbResizeGrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbResizeGrip_MouseMove);
-            // 
-            // openNoteFileDialog
-            // 
-            this.openNoteFileDialog.Title = "import single (note)file";
             // 
             // tlpnlFormatbtn
             // 

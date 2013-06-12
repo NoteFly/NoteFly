@@ -675,25 +675,27 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OpenFileDialog ofdlgimportnote = new OpenFileDialog();
             StringBuilder sbfilter = new StringBuilder();
-            sbfilter.Append("Plain text file(*.txt)|*.txt|");
-            sbfilter.Append("RTF file(*.rtf)|*.rtf|");
-            sbfilter.Append("KeyNote NF note (*.knt)|*.knt|");
-            sbfilter.Append("TomBoy note(*.note)|*.note|");
-            sbfilter.Append("MicroSE note(*.not)|*.not|");
-            sbfilter.Append("QuickPad note(*.qpn)|*.qpn");
-            this.openNoteFileDialog.Filter = sbfilter.ToString();
-            DialogResult dlgresopennote = this.openNoteFileDialog.ShowDialog();
+            sbfilter.Append(Strings.T("Plain text file (*.txt)")).Append("|*.txt|");
+            sbfilter.Append(Strings.T("RTF file (*.rtf)")).Append("|*.rtf|");
+            sbfilter.Append(Strings.T("KeyNote NF note (*.knt)")).Append("|*.knt|");
+            sbfilter.Append(Strings.T("TomBoy note (*.note)")).Append("|*.note|");
+            sbfilter.Append(Strings.T("MicroSE note (*.not)")).Append("|*.not|");
+            sbfilter.Append(Strings.T("QuickPad note (*.qpn)")).Append("|*.qpn");
+            ofdlgimportnote.Filter = sbfilter.ToString();
+            ofdlgimportnote.Title = Strings.T("import single (note)file");
+            DialogResult dlgresopennote = ofdlgimportnote.ShowDialog();
             if (dlgresopennote == DialogResult.OK)
             {
                 StreamReader reader = null;
                 try
                 {
-                    if (File.Exists(this.openNoteFileDialog.FileName))
+                    if (File.Exists(ofdlgimportnote.FileName))
                     {
-                        reader = new StreamReader(this.openNoteFileDialog.FileName, true); // detect encoding
+                        reader = new StreamReader(ofdlgimportnote.FileName, true); // detect encoding
                         ImportNotes importnote = new ImportNotes(this.notes);
-                        switch (this.openNoteFileDialog.FilterIndex)
+                        switch (ofdlgimportnote.FilterIndex)
                         {
                             case 1:
                                 importnote.ReadTextfile(reader, this.rtbNewNote);
@@ -705,7 +707,7 @@ namespace NoteFly
                                 importnote.ReadKeyNotefile(reader, this.rtbNewNote);
                                 break;
                             case 4:
-                                importnote.ReadTomboyfile(reader, this.openNoteFileDialog.FileName, this.tbTitle, this.rtbNewNote);
+                                importnote.ReadTomboyfile(reader, ofdlgimportnote.FileName, this.tbTitle, this.rtbNewNote);
                                 break;
                             case 5:
                                 importnote.ReadMicroSENotefile(reader, this.tbTitle, this.rtbNewNote);
