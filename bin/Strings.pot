@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NoteFly 3.0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-12 21:46+0200\n"
-"PO-Revision-Date: 2013-06-12 21:48+0100\n"
+"POT-Creation-Date: 2013-06-13 01:00+0200\n"
+"PO-Revision-Date: 2013-06-13 01:02+0100\n"
 "Last-Translator: \n"
-"Language-Team: English <releases@notefly.oth>\n"
+"Language-Team: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -807,6 +807,42 @@ msgid ""
 "Are you sure you want to shutdown {0}?"
 msgstr ""
 
+# menuEditNote
+msgid "&Edit note"
+msgstr ""
+
+# menuNoteSkins
+msgid "S&kin"
+msgstr ""
+
+# menuSendToEmail
+msgid "E-&mail"
+msgstr ""
+
+# menuSendToTextfile
+msgid "Save &file"
+msgstr ""
+
+# menuOnTop
+msgid "Sticky on &top"
+msgstr ""
+
+# menuWordWrap
+msgid "Word wrap"
+msgstr ""
+
+# menuCopySelected
+msgid "selected text"
+msgstr ""
+
+# menuCopyContent
+msgid "content"
+msgstr ""
+
+# menuHideNote
+msgid "&Hide note"
+msgstr ""
+
 # lbTextTitle
 msgid "Title:"
 msgstr ""
@@ -819,44 +855,12 @@ msgstr ""
 msgid "Show format tools"
 msgstr ""
 
-# menuWordWarp
-msgid "Word wrap"
-msgstr ""
-
-# menuStickyOnTop
-msgid "Sticky on &top"
-msgstr ""
-
-# menuCopy
-msgid "&Copy"
-msgstr ""
-
-# menuPasteTo
-msgid "&Paste to"
-msgstr ""
-
 # menuImportfile
 msgid "Import.."
 msgstr ""
 
 # menuCancelNewNote
 msgid "Cance&l note"
-msgstr ""
-
-# menuEditNote
-msgid "&Edit note"
-msgstr ""
-
-# menuNoteSkins
-msgid "S&kin"
-msgstr ""
-
-# menuActions
-msgid "&Actions"
-msgstr ""
-
-# menuHideNote
-msgid "&Hide note"
 msgstr ""
 
 # btnRestoreAllNotes

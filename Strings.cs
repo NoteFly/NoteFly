@@ -230,7 +230,16 @@ namespace NoteFly
         {
             for (int i = 0; i < toolstripitemcollection.Count; i++)
             {
-                toolstripitemcollection[i].Text = GetTranslationControl(toolstripitemcollection[i].Text, toolstripitemcollection[i].Name);
+                System.Windows.Forms.ToolStripMenuItem menuitem = (System.Windows.Forms.ToolStripMenuItem)toolstripitemcollection[i];
+                if (menuitem.DropDownItems.Count > 0)
+                {
+                    for (int n = 0; n < menuitem.DropDownItems.Count; n++)
+                    {
+                        toolstripitemcollection[i].Text = GetTranslationControl(menuitem.DropDownItems[n].Text, menuitem.DropDownItems[n].Name);
+                    }
+                }
+
+                toolstripitemcollection[i].Text = GetTranslationControl(menuitem.Text, menuitem.Name);
             }
         }
 
