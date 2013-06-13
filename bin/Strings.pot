@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NoteFly 3.0.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-13 01:00+0200\n"
-"PO-Revision-Date: 2013-06-13 01:02+0100\n"
+"PO-Revision-Date: 2013-06-13 10:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: English\n"
 "MIME-Version: 1.0\n"
@@ -183,7 +183,7 @@ msgid "Underline text (Ctrl+U)"
 msgstr ""
 
 #: FrmNewNote.cs:188
-msgid "Striketrough text (Ctr+T)"
+msgid "Striketrough text (Ctrl+T)"
 msgstr ""
 
 #: FrmNewNote.cs:189
