@@ -28,12 +28,22 @@ namespace NoteFly
     /// </summary>
     public sealed partial class FrmAbout : Form
     {
-        #region Fields (1)
+        #region Fields (3)
 
         /// <summary>
         /// Constant project website uri.
         /// </summary>
         private const string NOTEFLYWEBSITEURI = "http://www.notefly.org/";
+
+        /// <summary>
+        /// All the moving authors labels.
+        /// </summary>
+        private MovingAuthorLabel[] movinglabels;
+
+        /// <summary>
+        /// Delta point
+        /// </summary>
+        private Point oldp;
 
         #endregion Fields 
 
@@ -48,6 +58,21 @@ namespace NoteFly
             this.SetFormTitle();
             this.lblProductName.Text = Program.AssemblyTitle;
             this.lblVersion.Text = string.Format(Strings.T("Version ") + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+
+            this.movinglabels = new MovingAuthorLabel[] {
+                 new MovingAuthorLabel(Strings.T("Developed"), 100),
+                 new MovingAuthorLabel("by D9ping", 120),
+                 new MovingAuthorLabel(Strings.T("Greek translation"), 160),
+                 new MovingAuthorLabel("by geogeo.gr", 180),
+                 new MovingAuthorLabel(Strings.T("Korea translation"), 220),
+                 new MovingAuthorLabel("by zest", 240),
+                 new MovingAuthorLabel("May your notes", 340),
+                 new MovingAuthorLabel("come in handy..", 360)
+            };
+            for (int i = 0; i < this.movinglabels.Length; i++)
+            {
+                this.pnlAuthors.Controls.Add(this.movinglabels[i]);
+            }
         }
 
         #endregion Constructors 
@@ -60,6 +85,7 @@ namespace NoteFly
         private void SetFormTitle()
         {
             this.Text = Strings.T("About") + " - " + Program.AssemblyTitle;
+            this.lbTextWindowTitle.Text = Strings.T("About");
         }
 
         /// <summary>
@@ -80,7 +106,7 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void okButton_Click(object sender, EventArgs e)
         {
-            this.tmrUpdateLblProductEffect.Stop();
+            this.tmrUpdate.Stop();
             this.Close();
         }
 
@@ -92,17 +118,51 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void lblProductName_Click(object sender, EventArgs e)
         {
-            this.tmrUpdateLblProductEffect.Start();
+            this.tmrUpdate.Start();
             this.DoubleBuffered = true;
         }
 
         /// <summary>
-        /// Update color effect on lblProductName.
+        /// A moving label.
+        /// </summary>
+        public class MovingAuthorLabel : Label
+        {
+            private const int speed = 1;
+
+            public MovingAuthorLabel(string text, int startposy)
+            {
+                this.Text = text;
+                this.Location = new System.Drawing.Point(0, startposy);
+                this.AutoSize = true;
+                this.AutoEllipsis = true;
+            }
+
+            public void MoveUp() {
+                if (this.Location.Y > speed)
+                {
+                    this.Location = new System.Drawing.Point(this.Location.X, this.Location.Y - speed);
+                }
+                else
+                {
+                    this.Visible = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Update moving labels.
         /// </summary>
         /// <param name="sender">Sender object</param>
         /// <param name="e">Event arguments</param>
         private void tmpUpdateLblProductEffect_Tick(object sender, EventArgs e)
         {
+            
+            for (int i = 0; i < this.movinglabels.Length; i++)
+            {
+                this.movinglabels[i].MoveUp();
+            }
+
+            /*
             const int MAXDARK = 250;
             byte red = this.lblProductName.ForeColor.R;
             byte blue = this.lblProductName.ForeColor.B;
@@ -133,7 +193,56 @@ namespace NoteFly
             }
 
             this.lblProductName.ForeColor = Color.FromArgb(red, green, blue);
-            ////this.BackColor = Color.FromArgb(128, 250 - green, 250 - blue);
+            */
+        }
+
+        /// <summary>
+        /// The start of dragging this window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.oldp = e.Location;
+            }
+        }
+
+        /// <summary>
+        /// Dragging this window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pnlHead_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                int dpx = e.Location.X - this.oldp.X;
+                int dpy = e.Location.Y - this.oldp.Y;
+#if linux
+                // limit the moving of this note under mono/linux so this note cannot move uncontrolled a lot.
+                const int movelimit = 8;
+                if (dpx > movelimit)
+                {
+                    dpx = movelimit;
+                }
+                else if (dpx < -movelimit)
+                {
+                    dpx = -movelimit;
+                }
+
+                if (dpy > movelimit)
+                {
+                    dpy = movelimit;
+                }
+                else if (dpy < -movelimit)
+                {
+                    dpy = -movelimit;
+                }
+#endif
+                this.Location = new Point(this.Location.X + dpx, this.Location.Y + dpy);
+            }
         }
 
         #endregion Methods

@@ -57,7 +57,7 @@ namespace NoteFly
         /// <summary>
         /// Timer tmpUpdateLblProductEffect 
         /// </summary>
-        private System.Windows.Forms.Timer tmrUpdateLblProductEffect;
+        private System.Windows.Forms.Timer tmrUpdate;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -87,44 +87,66 @@ namespace NoteFly
             this.lblVersion = new System.Windows.Forms.Label();
             this.linklblWebsite = new System.Windows.Forms.LinkLabel();
             this.lblTextLicense = new System.Windows.Forms.Label();
-            this.tmrUpdateLblProductEffect = new System.Windows.Forms.Timer(this.components);
+            this.tmrUpdate = new System.Windows.Forms.Timer(this.components);
+            this.tableLayoutPanelAboutWindow = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlHead = new System.Windows.Forms.Panel();
+            this.lbTextWindowTitle = new System.Windows.Forms.Label();
+            this.pnlAuthors = new System.Windows.Forms.Panel();
+            this.tableLayoutPanelAboutWindow.SuspendLayout();
+            this.pnlHead.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCloseAbout
             // 
-            this.btnCloseAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCloseAbout.BackColor = System.Drawing.Color.Gray;
+            this.tableLayoutPanelAboutWindow.SetColumnSpan(this.btnCloseAbout, 2);
             this.btnCloseAbout.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCloseAbout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCloseAbout.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnCloseAbout.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.btnCloseAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.btnCloseAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.btnCloseAbout.Location = new System.Drawing.Point(112, 135);
+            this.btnCloseAbout.ForeColor = System.Drawing.Color.White;
+            this.btnCloseAbout.Location = new System.Drawing.Point(170, 237);
+            this.btnCloseAbout.Margin = new System.Windows.Forms.Padding(0, 2, 6, 6);
             this.btnCloseAbout.Name = "btnCloseAbout";
-            this.btnCloseAbout.Size = new System.Drawing.Size(111, 26);
+            this.btnCloseAbout.Size = new System.Drawing.Size(162, 30);
             this.btnCloseAbout.TabIndex = 25;
             this.btnCloseAbout.Text = "&Close";
             this.btnCloseAbout.UseCompatibleTextRendering = true;
+            this.btnCloseAbout.UseVisualStyleBackColor = false;
             this.btnCloseAbout.Click += new System.EventHandler(this.okButton_Click);
             // 
             // lblProductName
             // 
+            this.lblProductName.AutoEllipsis = true;
             this.lblProductName.AutoSize = true;
             this.lblProductName.BackColor = System.Drawing.Color.Transparent;
-            this.lblProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold);
-            this.lblProductName.ForeColor = System.Drawing.Color.Black;
-            this.lblProductName.Location = new System.Drawing.Point(6, 5);
+            this.tableLayoutPanelAboutWindow.SetColumnSpan(this.lblProductName, 2);
+            this.lblProductName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblProductName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblProductName.Font = new System.Drawing.Font("Impact", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductName.ForeColor = System.Drawing.Color.Gold;
+            this.lblProductName.Location = new System.Drawing.Point(3, 40);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(0, 45);
+            this.lblProductName.Size = new System.Drawing.Size(221, 80);
             this.lblProductName.TabIndex = 26;
             this.lblProductName.UseCompatibleTextRendering = true;
             this.lblProductName.Click += new System.EventHandler(this.lblProductName_Click);
             // 
             // lblVersion
             // 
-            this.lblVersion.AutoSize = true;
+            this.lblVersion.AutoEllipsis = true;
             this.lblVersion.BackColor = System.Drawing.Color.Transparent;
-            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.lblVersion.ForeColor = System.Drawing.Color.Black;
-            this.lblVersion.Location = new System.Drawing.Point(12, 47);
+            this.tableLayoutPanelAboutWindow.SetColumnSpan(this.lblVersion, 2);
+            this.lblVersion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblVersion.Location = new System.Drawing.Point(12, 120);
+            this.lblVersion.Margin = new System.Windows.Forms.Padding(12, 0, 3, 0);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(0, 16);
+            this.lblVersion.Size = new System.Drawing.Size(212, 58);
             this.lblVersion.TabIndex = 27;
             // 
             // linklblWebsite
@@ -132,7 +154,9 @@ namespace NoteFly
             this.linklblWebsite.AutoSize = true;
             this.linklblWebsite.BackColor = System.Drawing.Color.Transparent;
             this.linklblWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.linklblWebsite.Location = new System.Drawing.Point(10, 140);
+            this.linklblWebsite.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.linklblWebsite.Location = new System.Drawing.Point(10, 239);
+            this.linklblWebsite.Margin = new System.Windows.Forms.Padding(10, 4, 3, 0);
             this.linklblWebsite.Name = "linklblWebsite";
             this.linklblWebsite.Size = new System.Drawing.Size(61, 22);
             this.linklblWebsite.TabIndex = 28;
@@ -145,46 +169,114 @@ namespace NoteFly
             // 
             this.lblTextLicense.AutoEllipsis = true;
             this.lblTextLicense.BackColor = System.Drawing.Color.Transparent;
-            this.lblTextLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.lblTextLicense.ForeColor = System.Drawing.Color.Black;
-            this.lblTextLicense.Location = new System.Drawing.Point(10, 74);
+            this.tableLayoutPanelAboutWindow.SetColumnSpan(this.lblTextLicense, 2);
+            this.lblTextLicense.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTextLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTextLicense.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblTextLicense.Location = new System.Drawing.Point(8, 178);
+            this.lblTextLicense.Margin = new System.Windows.Forms.Padding(8, 0, 3, 0);
             this.lblTextLicense.Name = "lblTextLicense";
-            this.lblTextLicense.Size = new System.Drawing.Size(222, 58);
+            this.lblTextLicense.Size = new System.Drawing.Size(216, 57);
             this.lblTextLicense.TabIndex = 30;
             this.lblTextLicense.Text = "This programme is released under the terms of Lesser GNU General Public License v" +
     "ersion3\r\n";
             this.lblTextLicense.UseCompatibleTextRendering = true;
             // 
-            // tmrUpdateLblProductEffect
+            // tmrUpdate
             // 
-            this.tmrUpdateLblProductEffect.Interval = 30;
-            this.tmrUpdateLblProductEffect.Tick += new System.EventHandler(this.tmpUpdateLblProductEffect_Tick);
+            this.tmrUpdate.Enabled = true;
+            this.tmrUpdate.Interval = 17;
+            this.tmrUpdate.Tick += new System.EventHandler(this.tmpUpdateLblProductEffect_Tick);
+            // 
+            // tableLayoutPanelAboutWindow
+            // 
+            this.tableLayoutPanelAboutWindow.ColumnCount = 3;
+            this.tableLayoutPanelAboutWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.66666F));
+            this.tableLayoutPanelAboutWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.33333F));
+            this.tableLayoutPanelAboutWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+            this.tableLayoutPanelAboutWindow.Controls.Add(this.lblTextLicense, 0, 3);
+            this.tableLayoutPanelAboutWindow.Controls.Add(this.lblProductName, 0, 1);
+            this.tableLayoutPanelAboutWindow.Controls.Add(this.btnCloseAbout, 1, 4);
+            this.tableLayoutPanelAboutWindow.Controls.Add(this.lblVersion, 0, 2);
+            this.tableLayoutPanelAboutWindow.Controls.Add(this.linklblWebsite, 0, 4);
+            this.tableLayoutPanelAboutWindow.Controls.Add(this.pnlHead, 0, 0);
+            this.tableLayoutPanelAboutWindow.Controls.Add(this.pnlAuthors, 2, 1);
+            this.tableLayoutPanelAboutWindow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelAboutWindow.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelAboutWindow.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanelAboutWindow.Name = "tableLayoutPanelAboutWindow";
+            this.tableLayoutPanelAboutWindow.RowCount = 5;
+            this.tableLayoutPanelAboutWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelAboutWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 57.97102F));
+            this.tableLayoutPanelAboutWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.02898F));
+            this.tableLayoutPanelAboutWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
+            this.tableLayoutPanelAboutWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanelAboutWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelAboutWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelAboutWindow.Size = new System.Drawing.Size(338, 273);
+            this.tableLayoutPanelAboutWindow.TabIndex = 31;
+            // 
+            // pnlHead
+            // 
+            this.pnlHead.BackColor = System.Drawing.Color.Gray;
+            this.tableLayoutPanelAboutWindow.SetColumnSpan(this.pnlHead, 3);
+            this.pnlHead.Controls.Add(this.lbTextWindowTitle);
+            this.pnlHead.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlHead.Location = new System.Drawing.Point(1, 1);
+            this.pnlHead.Margin = new System.Windows.Forms.Padding(1);
+            this.pnlHead.Name = "pnlHead";
+            this.pnlHead.Size = new System.Drawing.Size(336, 38);
+            this.pnlHead.TabIndex = 31;
+            this.pnlHead.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseDown);
+            this.pnlHead.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlHead_MouseMove);
+            // 
+            // lbTextWindowTitle
+            // 
+            this.lbTextWindowTitle.AutoSize = true;
+            this.lbTextWindowTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTextWindowTitle.Location = new System.Drawing.Point(11, 8);
+            this.lbTextWindowTitle.Name = "lbTextWindowTitle";
+            this.lbTextWindowTitle.Size = new System.Drawing.Size(0, 20);
+            this.lbTextWindowTitle.TabIndex = 0;
+            // 
+            // pnlAuthors
+            // 
+            this.pnlAuthors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlAuthors.Location = new System.Drawing.Point(230, 43);
+            this.pnlAuthors.Name = "pnlAuthors";
+            this.tableLayoutPanelAboutWindow.SetRowSpan(this.pnlAuthors, 2);
+            this.pnlAuthors.Size = new System.Drawing.Size(105, 132);
+            this.pnlAuthors.TabIndex = 32;
             // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.DimGray;
             this.CancelButton = this.btnCloseAbout;
-            this.ClientSize = new System.Drawing.Size(235, 171);
-            this.Controls.Add(this.lblTextLicense);
-            this.Controls.Add(this.linklblWebsite);
-            this.Controls.Add(this.lblVersion);
-            this.Controls.Add(this.lblProductName);
-            this.Controls.Add(this.btnCloseAbout);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.ClientSize = new System.Drawing.Size(338, 273);
+            this.Controls.Add(this.tableLayoutPanelAboutWindow);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmAbout";
-            this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About";
+            this.tableLayoutPanelAboutWindow.ResumeLayout(false);
+            this.tableLayoutPanelAboutWindow.PerformLayout();
+            this.pnlHead.ResumeLayout(false);
+            this.pnlHead.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelAboutWindow;
+        private System.Windows.Forms.Panel pnlHead;
+        private System.Windows.Forms.Label lbTextWindowTitle;
+        private System.Windows.Forms.Panel pnlAuthors;
     }
 }
