@@ -1126,6 +1126,11 @@ namespace NoteFly
         /// <returns>The languagecode return en for english if not found.</returns>
         private string GetLanguageCode(int cbxLanguageSelectedIndex)
         {
+            if (this.languagecodes == null)
+            {
+                return "en";
+            }
+
             if (cbxLanguageSelectedIndex < this.languagecodes.Length && cbxLanguageSelectedIndex >= 0)
             {
                 string languageisocode = this.languagecodes[cbxLanguageSelectedIndex];

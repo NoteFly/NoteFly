@@ -373,7 +373,7 @@ namespace NoteFly
             }
             else
             {
-                throw new ApplicationException("Please run build_translationfile.bat first.");
+                throw new ApplicationException("Please run build_translationfile.bat or build_translationfile.sh first.");
             }
         }
 #endif

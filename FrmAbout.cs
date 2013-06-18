@@ -60,14 +60,10 @@ namespace NoteFly
             this.lblVersion.Text = string.Format(Strings.T("Version ") + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
 
             this.movinglabels = new MovingAuthorLabel[] {
-                 new MovingAuthorLabel(Strings.T("Developed"), 100),
-                 new MovingAuthorLabel("by D9ping", 120),
-                 new MovingAuthorLabel(Strings.T("Greek translation"), 160),
-                 new MovingAuthorLabel("by geogeo.gr", 180),
-                 new MovingAuthorLabel(Strings.T("Korea translation"), 220),
-                 new MovingAuthorLabel("by zest", 240),
-                 new MovingAuthorLabel("May your notes", 340),
-                 new MovingAuthorLabel("come in handy..", 360)
+                 new MovingAuthorLabel(Strings.T("Developed\nby") + " D9ping", 100),
+                 new MovingAuthorLabel(Strings.T("Greek translation\nby") + " geogeo.gr", 160),
+                 new MovingAuthorLabel(Strings.T("Korea translation\nby") + " zest", 220),
+                 new MovingAuthorLabel("May your notes,\ncome in handy..", 300)
             };
             for (int i = 0; i < this.movinglabels.Length; i++)
             {
@@ -129,6 +125,11 @@ namespace NoteFly
         {
             private const int speed = 1;
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="text"></param>
+            /// <param name="startposy"></param>
             public MovingAuthorLabel(string text, int startposy)
             {
                 this.Text = text;
@@ -137,6 +138,9 @@ namespace NoteFly
                 this.AutoEllipsis = true;
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
             public void MoveUp() {
                 if (this.Location.Y > speed)
                 {
