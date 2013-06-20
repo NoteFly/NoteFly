@@ -62,7 +62,7 @@ namespace NoteFly
             this.movinglabels = new MovingAuthorLabel[] {
                  new MovingAuthorLabel(Strings.T("Developed\nby") + " D9ping", 100),
                  new MovingAuthorLabel(Strings.T("Greek translation\nby") + " geogeo.gr", 160),
-                 new MovingAuthorLabel(Strings.T("Korea translation\nby") + " zest", 220),
+                 new MovingAuthorLabel(Strings.T("Korean translation\nby") + " zest", 220),
                  new MovingAuthorLabel("May your notes,\ncome in handy..", 300)
             };
             for (int i = 0; i < this.movinglabels.Length; i++)

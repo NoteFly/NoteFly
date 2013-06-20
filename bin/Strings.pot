@@ -34,7 +34,7 @@ msgstr ""
 
 #: FrmAbout.cs:67
 msgid ""
-"Korea translation\n"
+"Korean translation\n"
 "by"
 msgstr ""
 

@@ -157,6 +157,6 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(SolutionDir)bin\Release\plugins\"
-copy $(TargetDir)$(TargetFileName) $(SolutionDir)bin\Release\plugins\</PostBuildEvent>
+copy $(TargetDir)$(TargetFileName) %25appdata%25\NoteFly\plugins\</PostBuildEvent>
   </PropertyGroup>
 </Project>
