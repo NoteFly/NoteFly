@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the 3.0.6 package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-06-20 14:56:03+0000\n"
+"PO-Revision-Date: 2013-06-23 22:35:26+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,118 +15,124 @@ msgid ""
 "Korean translation\n"
 "by"
 msgstr ""
+"koreanska översättning\n"
+"genom"
 
 #: FrmAbout.cs:65
 msgid ""
 "Greek translation\n"
 "by"
 msgstr ""
+"grekiska översättningen\n"
+"genom"
 
 #: FrmAbout.cs:63
 msgid ""
 "Developed\n"
 "by"
 msgstr ""
+"Utvecklad\n"
+"genom"
 
 #: FrmNewNote.cs:188
 msgid "Striketrough text (Ctrl+T)"
-msgstr ""
+msgstr "Striketrough text (Ctrl+T)"
 
 msgid "E-&mail"
-msgstr ""
+msgstr "E-post"
 
 msgid "Save &file"
-msgstr ""
+msgstr "Spara &file"
 
 msgid "selected text"
-msgstr ""
+msgstr "markerad text"
 
 msgid "content"
-msgstr ""
+msgstr "innehåll"
 
 #: FrmSettings.cs:1064
 msgid "Select path to the gpg.exe file."
-msgstr ""
+msgstr "Välj sökväg till gpg.exe filen."
 
 #: FrmSettings.cs:105
 msgid "Select a folder to store the all the notes files in"
-msgstr ""
+msgstr "Välj en mapp att spara alla anteckningar filerna i"
 
 msgid "&import"
-msgstr ""
+msgstr "&importera"
 
 msgid "&delete selected"
-msgstr ""
+msgstr "&radera vald"
 
 msgid "&export all"
-msgstr ""
+msgstr "&exportera alla"
 
 msgid "Title:"
-msgstr ""
+msgstr "Titel:"
 
 #: FrmManageNotes.cs:310 FrmManageNotes.cs:457
 msgid "NoteFly backup"
-msgstr ""
+msgstr "NoteFly säkerhetskopiera"
 
 #: FrmManageNotes.cs:311 FrmManageNotes.cs:458
 msgid "Stickies CSV stored notes"
-msgstr ""
+msgstr "Stickies CSV lagrade anteckningar"
 
 #: FrmManageNotes.cs:312 FrmManageNotes.cs:459
 msgid "PNotes full backup"
-msgstr ""
+msgstr "PNotes fullständig säkerhetskopia"
 
 #: FrmManageNotes.cs:460
 msgid "CintaNotes xml export"
-msgstr ""
+msgstr "CintaNotes xml export"
 
 #: FrmManageNotes.cs:461
 msgid "DeskNotes file"
-msgstr ""
+msgstr "DeskNotes fil"
 
 #: FrmNewNote.cs:686
 msgid "Plain text file (*.txt)"
-msgstr ""
+msgstr "Textfil (*. Txt)"
 
 #: FrmNewNote.cs:687
 msgid "RTF file (*.rtf)"
-msgstr ""
+msgstr "RTF-fil (*. Rtf)"
 
 #: FrmNewNote.cs:688
 msgid "KeyNote NF note (*.knt)"
-msgstr ""
+msgstr "KeyNote NF anteckningar (*. knt)"
 
 #: FrmNewNote.cs:689
 msgid "TomBoy note (*.note)"
-msgstr ""
+msgstr "TomBoy anteckningar (*.note)"
 
 #: FrmNewNote.cs:690
 msgid "MicroSE note (*.not)"
-msgstr ""
+msgstr "MicroSE anteckningar (*.not)"
 
 #: FrmNewNote.cs:691
 msgid "QuickPad note (*.qpn)"
-msgstr ""
+msgstr "QuickPad QuickPad (*.qpn)"
 
 #: FrmNewNote.cs:693
 msgid "import single (note)file"
-msgstr ""
+msgstr "import enda (not) fil"
 
 #: FrmNote.cs:875
 msgid "Textfile (*.txt)"
-msgstr ""
+msgstr "Textfil (*.txt)"
 
 #: FrmNote.cs:876
 msgid "RichTextFormat file (*.rtf)"
-msgstr ""
+msgstr "RichTextFormat fil (*.rtf)"
 
 #: FrmNote.cs:877
 msgid "Webpage (*.htm)"
-msgstr ""
+msgstr "Webbsida (*.htm)"
 
 #: FrmNote.cs:878
 msgid "PHP file (*.php)"
-msgstr ""
+msgstr "PHP-fil (*.php)"
 
 msgid "Log user errors."
 msgstr "Logg fel."
@@ -298,11 +304,11 @@ msgstr "sök:"
 
 #: SearchTextBox.cs:53
 msgid "stop search"
-msgstr ""
+msgstr "stoppa sökningen"
 
 #: Strings.cs:208
 msgid "translating error: cannot translate controls more than {0} nested levels deep."
-msgstr ""
+msgstr "översätta fel: kan inte översätta kontrollerna mer än {0} kapslade nivåer djupt."
 
 #: Textfile.cs:105
 msgid "Title: "
@@ -558,19 +564,19 @@ msgstr "dagar."
 
 #: FrmManageNotes.cs:282
 msgid "Delete the selected notes."
-msgstr ""
+msgstr "Ta bort de markerade noterna."
 
 #: FrmManageNotes.cs:283
 msgid "Restore notes from a backup file."
-msgstr ""
+msgstr "Återställa anteckningar från en säkerhetskopia."
 
 #: FrmManageNotes.cs:284
 msgid "Backup all notes to a single backup file."
-msgstr ""
+msgstr "Säkerhetskopiera alla anteckningar till en enda backup-fil."
 
 #: FrmManageNotes.cs:285
 msgid "Close"
-msgstr ""
+msgstr "Stäng"
 
 #: FrmManageNotes.cs:308
 msgid "Export all notes"
@@ -650,27 +656,27 @@ msgstr "Avbryt ny anteckning (escape)"
 
 #: FrmNewNote.cs:185
 msgid "Bold text (Ctrl+B)"
-msgstr ""
+msgstr "Fet text (Ctrl + B)"
 
 #: FrmNewNote.cs:186
 msgid "Italic text (Ctrl+I)"
-msgstr ""
+msgstr "Kursiv text (Ctrl + I)"
 
 #: FrmNewNote.cs:187
 msgid "Underline text (Ctrl+U)"
-msgstr ""
+msgstr "Understruken text (Ctrl + U)"
 
 #: FrmNewNote.cs:189
 msgid "Bullit list (Ctrl+shift+L)"
-msgstr ""
+msgstr "Bullit lista (Ctrl + Skift + L)"
 
 #: FrmNewNote.cs:190
 msgid "Bigger text (Ctrl+shift+>)"
-msgstr ""
+msgstr "Större text (Ctrl + Shift +>)"
 
 #: FrmNewNote.cs:191
 msgid "Smaller text (Ctrl+shift+<)"
-msgstr ""
+msgstr "Mindre text (Ctrl + Shift + <)"
 
 #: FrmNewNote.cs:317
 msgid "Please enter some content."
@@ -686,7 +692,7 @@ msgstr "Det finns ingen text på klippbordet."
 
 #: FrmNote.cs:237
 msgid "Hide this note"
-msgstr ""
+msgstr "Dölj denna anmärkning"
 
 #: FrmNote.cs:418
 msgid "Note has no title and no content."
@@ -806,15 +812,15 @@ msgstr "Ny anteckning"
 
 #: FrmSettings.cs:192
 msgid "Use IPv4 or IPv6"
-msgstr ""
+msgstr "Använd IPv4 eller IPv6"
 
 #: FrmSettings.cs:193
 msgid "Force use IPv4"
-msgstr ""
+msgstr "Tvinga använda IPv4"
 
 #: FrmSettings.cs:194
 msgid "Force use IPv6"
-msgstr ""
+msgstr "Tvinga använda IPv6"
 
 #: FrmSettings.cs:341
 msgid "{0} is busy moving your notes."
@@ -1002,7 +1008,7 @@ msgstr ""
 
 #: PluginGrid.cs:93
 msgid "Their are no plugins installed."
-msgstr ""
+msgstr "Deras finns inga installerade plugins."
 
 #: PluginGrid.cs:181
 msgid "version:"
@@ -1030,11 +1036,11 @@ msgstr "aktiverar"
 
 #: PluginGrid.cs:325
 msgid "Click to disable this plugin."
-msgstr ""
+msgstr "Klicka för att stänga denna plugin."
 
 #: PluginGrid.cs:329
 msgid "Click to enable this plugin."
-msgstr ""
+msgstr "Klicka för att aktivera denna plugin."
 
 #: PluginsManager.cs:191 PluginsManager.cs:223 PluginsManager.cs:285
 msgid "unknown"
@@ -1050,6 +1056,9 @@ msgid ""
 "Which is not recommended for security.\n"
 "Press OK if your understand the risks of running as administrator and want to hide this message in the future."
 msgstr ""
+"Du kör nu {0} som förhöjt administratör.\n"
+"Vilket inte rekommenderas för säkerheten.\n"
+"Tryck på OK om du förstår riskerna med att köra som administratör och vill dölja det här meddelandet i framtiden."
 
 #: Program.cs:328
 msgid "Elevated administrator"
@@ -1093,7 +1102,7 @@ msgstr "Inaktivera XP visuella style."
 
 #: FrmManageNotes.cs:281
 msgid "Show or hide the selected notes."
-msgstr ""
+msgstr "Visa eller dölja markerade anteckningarna."
 
 #: FrmAbout.cs:60
 msgid "Version "
