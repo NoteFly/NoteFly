@@ -335,14 +335,7 @@ namespace NoteFly
                         }
                     }
 
-                    if (!this.rtfformat)
-                    {
-                        if (nrtextchar < int.MaxValue)
-                        {
-                            nrtextchar++;
-                        }
-                    }
-
+                    nrtextchar = this.NextTextChar(nrtextchar);
                     if (isspecchar)
                     {
                         if (speccharrtfpos == 0)
@@ -421,6 +414,23 @@ namespace NoteFly
             }
 
             return newrtf.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nrtextchar"></param>
+        /// <returns></returns>
+        private int NextTextChar(int nrtextchar) {
+            if (!this.rtfformat)
+            {
+                if (nrtextchar < int.MaxValue)
+                {
+                    nrtextchar++;
+                }
+            }
+
+            return nrtextchar;
         }
 
         /// <summary>
@@ -682,14 +692,7 @@ namespace NoteFly
                     this.rtfformat = false;
                 }
 
-                if (!this.rtfformat)
-                {
-                    if (nrtextchar < int.MaxValue)
-                    {
-                        nrtextchar++;
-                    }
-                }
-
+                nrtextchar = this.NextTextChar(nrtextchar);
                 if (isspecchar)
                 {
                     if (speccharrtfpos == 0)
