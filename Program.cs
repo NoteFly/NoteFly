@@ -314,7 +314,10 @@ namespace NoteFly
 #endif
             bool visualstyle;
             bool resetpositions;
-            ParserArguments(args, out visualstyle, out resetpositions);
+            bool newnote = false;
+            string newnotetitle;
+            string newnotecontent;
+            ParserArguments(args, out visualstyle, out resetpositions, out newnote, out newnotetitle, out newnotecontent);
             if (Program.CurrentOS == OS.WINDOWS)
             {
                 if (!Settings.ProgramSuspressWarnAdmin)
@@ -412,6 +415,16 @@ namespace NoteFly
                     Settings.UpdatecheckLastDate = UpdateGetLatestVersion();
                     xmlUtil.WriteSettings();
                 }
+            }
+
+            if (newnote)
+            {
+                formmanager.OpenNewNote(newnotetitle, newnotecontent);
+            }
+            else
+            {
+                newnotetitle = null;
+                newnotecontent = null;
             }
 
             SyntaxHighlight.DeinitHighlighter();
@@ -698,16 +711,39 @@ namespace NoteFly
         /// <param name="args">An array of arguments the check</param>
         /// <param name="visualstyle">Use XP visual styles on windows.</param>
         /// <param name="resetpositions">Should all visual notes position get reset.</param>
-        private static void ParserArguments(string[] args, out bool visualstyle, out bool resetpositions)
+        private static void ParserArguments(string[] args, out bool visualstyle, out bool resetpositions, out bool newnote, out string newnotetitle, out string newnotecontent)
         {
             visualstyle = true;
             resetpositions = false;
-
+            newnote = false;
+            newnotetitle = string.Empty;
+            newnotecontent = string.Empty;
+            bool setnewnotetitle = false;
+            bool setnewnotecontent = false;
+            bool setprogramlanguage = false;
             // override settings with supported parameters
             if (System.Environment.GetCommandLineArgs().Length > 1)
             {
                 foreach (string arg in args)
                 {
+                    if (setnewnotetitle)
+                    {
+                        newnotetitle = arg;
+                        setnewnotetitle = false;
+                        continue;
+                    }
+                    else if (setnewnotecontent)
+                    {
+                        newnotecontent = arg;
+                        setnewnotecontent = false;
+                        continue;
+                    }
+                    else if (setprogramlanguage)
+                    {
+                        Program.SetCulture(arg);
+                        continue;
+                    }
+
                     switch (arg)
                     {
                         // Forces the programme to setup the first run notefly info again.
@@ -781,6 +817,26 @@ namespace NoteFly
                             xmlUtil.WriteDefaultSettings();
                             break;
 
+                        case "-disableupdatecheck":
+                            Settings.UpdatecheckEverydays = 0;
+                            break;
+
+                        case "-setlanguage":
+                            setprogramlanguage = true;
+                            break;
+
+                        case "-newnote":
+                            newnote = true;
+                            break;
+
+                        case "-title":
+                            setnewnotetitle = true;
+                            break;
+
+                        case "-content":
+                            setnewnotecontent = true;
+                            break;
+
                         case "-?":
                             ShowParametersHelp();
                             break;
@@ -796,7 +852,7 @@ namespace NoteFly
         {
             StringBuilder sb = new StringBuilder();
             const int COLCHARWIDTH = 22;
-            sb.AppendLine(Strings.T("Parameter:".PadRight(COLCHARWIDTH, ' ')) + "Description:");
+            sb.AppendLine(Strings.T("Parameter:".PadRight(COLCHARWIDTH, ' ')) + Strings.T("Description:"));
             sb.AppendLine("-?".PadRight(COLCHARWIDTH, ' ') + Strings.T("Show this parameters help window."));
             sb.AppendLine("-disabletransparency".PadRight(COLCHARWIDTH, ' ') + Strings.T("Disable transparency."));
             sb.AppendLine("-disableplugins".PadRight(COLCHARWIDTH, ' ') + Strings.T("Disable all plugins."));
@@ -806,6 +862,10 @@ namespace NoteFly
             sb.AppendLine("-forcefirstrun".PadRight(COLCHARWIDTH, ' ') + Strings.T("Force a first run."));
             sb.AppendLine("-logall".PadRight(COLCHARWIDTH, ' ') + Strings.T("Log exceptions, errors and debug messages."));
             sb.AppendLine("-lognone".PadRight(COLCHARWIDTH, ' ') + Strings.T("Don't log exceptions, errors and debug messages."));
+            sb.AppendLine("-newnote".PadRight(COLCHARWIDTH, ' ') + Strings.T("Immediately open a new note after startup."));
+            sb.AppendLine("-title".PadRight(COLCHARWIDTH, ' ') + Strings.T("Set title new note."));
+            sb.AppendLine("-content".PadRight(COLCHARWIDTH, ' ') + Strings.T("Set content new note."));
+            sb.AppendLine("-setlanguage".PadRight(COLCHARWIDTH, ' ') + Strings.T("Set the language(ISO 639-1) of the programme."));
             if (Program.CurrentOS == OS.WINDOWS)
             {
                 sb.AppendLine("-suspressadminwarn".PadRight(COLCHARWIDTH, ' ') + "Supress the warning that NoteFly is running");

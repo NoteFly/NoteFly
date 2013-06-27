@@ -157,7 +157,29 @@ namespace NoteFly
         /// <param name="contentclipboard">Set content with text from clipboard</param>
         public void OpenNewNote(bool contentclipboard)
         {
-            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.newnotedeltaX, this.newnotedeltaY, contentclipboard);
+            string newcontent = string.Empty;
+            if (contentclipboard)
+            {
+                newcontent = Clipboard.GetText();
+            }
+
+            this.OpenNewNote(string.Empty, newcontent);
+        }
+
+        /// <summary>
+        /// Create a new note.
+        /// </summary>
+        /// <param name="contentclipboard">Set content with text from clipboard</param>
+        public void OpenNewNote(string title, string content)
+        {
+            const int TITLEMAXLENGTH = 255;
+            if (title.Length > TITLEMAXLENGTH)
+            {
+                Log.Write(LogType.error, "New note title too long, limited to " + TITLEMAXLENGTH + " characters.");
+                title = title.Remove(TITLEMAXLENGTH);
+            }
+
+            FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.newnotedeltaX, this.newnotedeltaY, title, content);
             this.ChangeDeltaPositionNewNote();
             frmnewnote.Show();
             frmnewnote.Activate();

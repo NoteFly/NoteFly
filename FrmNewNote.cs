@@ -112,7 +112,7 @@ namespace NoteFly
         /// <param name="deltaX">X position change from center screen position to show form.</param>
         /// <param name="deltaY">Y position change from center screen position to show form.</param>
         /// <param name="contentclipboard"></param>
-        public FrmNewNote(Notes notes, int deltaX, int deltaY, bool contentclipboard)
+        public FrmNewNote(Notes notes, int deltaX, int deltaY, string newtitle, string newcontent)
         {
             this.ConstructFrmNewNote(notes);
             this.SetFormTitle(false);
@@ -125,15 +125,22 @@ namespace NoteFly
             }
 
             this.SetColorsForm(Settings.NotesDefaultSkinnr);
-            if (Settings.NotesDefaultTitleDate)
+            if (!string.IsNullOrEmpty(newtitle))
             {
-                // The string returned by the ToShortDateString method is culture-sensitive.
-                this.tbTitle.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
+                this.tbTitle.Text = newtitle;
             }
-
-            if (contentclipboard)
+            else
             {
-                this.rtbNewNote.Text = Clipboard.GetText();
+                if (Settings.NotesDefaultTitleDate)
+                {
+                    // The string returned by the ToShortDateString method is culture-sensitive.
+                    this.tbTitle.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
+                }
+            }
+             
+            if (!string.IsNullOrEmpty(newcontent))
+            {
+                this.rtbNewNote.Text = newcontent;
             }
         }
 
