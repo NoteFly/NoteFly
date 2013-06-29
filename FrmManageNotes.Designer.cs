@@ -337,7 +337,6 @@ namespace NoteFly
             this.dataGridViewNotes.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewNotes_ColumnHeaderMouseClick);
             this.dataGridViewNotes.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridViewNotes_RowPostPaint);
             this.dataGridViewNotes.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dataGridViewNotes_Scroll);
-            this.dataGridViewNotes.MouseLeave += new System.EventHandler(this.dataGridViewNotes_MouseLeave);
             // 
             // pnlContent
             // 

@@ -85,6 +85,11 @@ namespace NoteFly
         /// </summary>
         private int secondprevrownr = -2;
 
+        /// <summary>
+        /// The previous row the tooltip was showed
+        /// </summary>
+        private int prevrowtooltip = -1;
+
         #endregion Fields
 
         #region Constructors (1)
@@ -278,6 +283,7 @@ namespace NoteFly
                 if (this.tooltip == null)
                 {
                     this.tooltip = new ToolTip();
+                    //this.tooltip.AutoPopDelay
                     this.tooltip.SetToolTip(this.btnShowSelectedNotes, Strings.T("Show or hide the selected notes."));
                     this.tooltip.SetToolTip(this.btnNoteDelete, Strings.T("Delete the selected notes."));
                     this.tooltip.SetToolTip(this.btnRestoreAllNotes, Strings.T("Restore notes from a backup file."));
@@ -676,8 +682,6 @@ namespace NoteFly
                         this.prevrownr = e.RowIndex;
                     }
                 }
-
-                this.SetFormTooltips();
             }
         }
 
@@ -688,6 +692,11 @@ namespace NoteFly
         /// <param name="e">Scroll event arguments</param>
         private void dataGridViewNotes_Scroll(object sender, ScrollEventArgs e)
         {
+            if (this.tooltip != null)
+            {
+                this.tooltip.Hide(this);
+            }
+
             if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
             {
                 Program.Formmanager.FrmManageNotesNeedUpdate = true;
@@ -997,6 +1006,11 @@ namespace NoteFly
                 this.Size = new Size(this.PointToClient(MousePosition).X, this.PointToClient(MousePosition).Y);
             }
 
+            if (this.tooltip != null)
+            {
+                this.tooltip.Hide(this);
+            }
+
             this.Cursor = Cursors.Default;
         }
 
@@ -1023,6 +1037,11 @@ namespace NoteFly
             {
                 this.pnlHead.BackColor = this.notes.GetSelectClr(Settings.ManagenotesSkinnr);
                 this.oldp = e.Location;
+            }
+
+            if (this.tooltip != null)
+            {
+                this.tooltip.Hide(this);
             }
         }
 
@@ -1129,14 +1148,13 @@ namespace NoteFly
             {
                 if (this.tooltip == null)
                 {
-                    Log.Write(LogType.exception, "tooltip object was null.");
                     this.SetFormTooltips();
                 }
 
                 if (e.ColumnIndex == 1)
                 {
                     string contentpreview = null;
-                    if (e.RowIndex >= 0)
+                    if (e.RowIndex >= 0 && this.prevrowtooltip != e.RowIndex)
                     {
                         int notepos = this.GetNoteposBySelrow(e.RowIndex);
                         if (notepos >= 0)
@@ -1147,14 +1165,15 @@ namespace NoteFly
                             int tooltiplocy = Cursor.Position.Y - this.Location.Y;
                             if (!string.IsNullOrEmpty(contentpreview))
                             {
-                                this.tooltip.InitialDelay = 200;
-                                this.tooltip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy), 2000);                                
+                                this.prevrowtooltip = e.RowIndex;
+                                this.tooltip.Show(contentpreview, this, new Point(tooltiplocx, tooltiplocy)); 
                             }
                         }
                     }
                 }
                 else
                 {
+                    this.prevrowtooltip = -1;
                     this.tooltip.Hide(this);
                 }
             }
@@ -1203,20 +1222,6 @@ namespace NoteFly
         {
             this.DrawNotesGrid();
             this.SetDataGridViewColumsWidth();
-        }
-
-        /// <summary>
-        /// The mouse leaves the datagridviewnotes control,
-        /// hide the tooltip with note content preview.
-        /// </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="e">Event arguments</param>
-        private void dataGridViewNotes_MouseLeave(object sender, EventArgs e)
-        {
-            if (this.tooltip != null)
-            {
-                this.tooltip.Hide(this);
-            }
         }
 
         #endregion Methods
