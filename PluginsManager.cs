@@ -422,12 +422,19 @@ namespace NoteFly
         /// <summary>
         /// 
         /// </summary>
-        public static void UpdatePluginReplaceFiles()
+        /// <returns></returns>
+        public static bool UpdatePluginReplaceFiles()
         {
+            bool pluginstoupdate = false;
             string pluginupdatefolder = Program.GetNewPluginFolder(false);
             if (Directory.Exists(pluginupdatefolder))
             {
                 string[] newplugins = GetDllFilesFolder(pluginupdatefolder);
+                if (newplugins.Length > 0)
+                {
+                    pluginstoupdate = true;
+                }
+
                 for (int i = 0; i < newplugins.Length; i++)
                 {
                     if (File.GetAttributes(Path.Combine(pluginupdatefolder, newplugins[i])) == FileAttributes.System)
@@ -461,6 +468,8 @@ namespace NoteFly
                     }
                 }
             }
+
+            return pluginstoupdate;
         }
     }
 }

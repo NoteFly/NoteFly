@@ -241,7 +241,7 @@ namespace NoteFly
 
                 HttpUtil httputil_plugindetail = new HttpUtil(RESTAPIDOMAIN + RESTAPIPLUGINDETAILS + System.Web.HttpUtility.UrlEncode(pluginname), System.Net.Cache.RequestCacheLevel.Revalidate);
                 this.ClearPluginDetails();
-                this.timerTextUpdater.Start();
+                this.timerTextUpdaterLoading.Start();
                 if (!httputil_plugindetail.Start(new RunWorkerCompletedEventHandler(this.httputil_plugindetail_DownloadCompleet)))
                 {
                     this.SetAvailablePluginsNetwork(false);
@@ -291,7 +291,7 @@ namespace NoteFly
         private void httputil_plugindetail_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
-            this.timerTextUpdater.Stop();
+            this.timerTextUpdaterLoading.Stop();
             this.ClearPluginDetails();
             this.selectedplugindetails = xmlUtil.ParserDetailsPlugin(response);
             if (this.selectedplugindetails != null)
@@ -831,6 +831,16 @@ namespace NoteFly
 
                 this.btnupdateplugins.Enabled = anychecked;
             }
+        }
+
+        /// <summary>
+        /// More info plugin clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linklblPluginMoreInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {     
+            Program.LoadLink("http://www.notefly.org/plugindetails?name=" + Uri.EscapeUriString(this.selectedplugindetails.Name), false);
         }
     }
 }

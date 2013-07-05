@@ -240,7 +240,7 @@ namespace NoteFly
         {
             if (Settings.ConfirmLinkclick && allow_ask)
             {
-                string confirmlinkvisittext = Strings.T("Are you sure you want to visted: {0}", uri_text);
+                string confirmlinkvisittext = Strings.T("Are you sure you want to visit: {0}", uri_text);
                 string confirmlinkvisittitle = Strings.T("Are you sure?");
                 System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(confirmlinkvisittext, confirmlinkvisittitle, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question);
                 if (result == System.Windows.Forms.DialogResult.Yes)
@@ -351,24 +351,33 @@ namespace NoteFly
                     System.Windows.Forms.Application.EnableVisualStyles();
                 }
             }
+            
+            SyntaxHighlight.InitHighlighter();
+            notes = new Notes(resetpositions);
 
-            if (Program.CheckInstancesRunning() > 1)
+            bool pluginsupdated = false;
+            if (Settings.ProgramPluginsAllEnabled)
             {
-                string program_alreadyrunning = Strings.T("{0} is already running.\nLoad another instance? (not recommended)", Program.AssemblyTitle);
-                string program_alreadyrunningtitle = Strings.T("already running");
-                System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(program_alreadyrunning, program_alreadyrunningtitle, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Exclamation);
-                if (dlgres == System.Windows.Forms.DialogResult.No)
+                pluginsupdated = PluginsManager.UpdatePluginReplaceFiles();
+            }
+
+            if (!pluginsupdated)
+            {
+                if (Program.CheckInstancesRunning() > 1)
                 {
-                    // shutdown by don't continuing this Main method
-                    return;
+                    string program_alreadyrunning = Strings.T("{0} is already running.\nLoad another instance? (not recommended)", Program.AssemblyTitle);
+                    string program_alreadyrunningtitle = Strings.T("already running");
+                    System.Windows.Forms.DialogResult dlgres = System.Windows.Forms.MessageBox.Show(program_alreadyrunning, program_alreadyrunningtitle, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Exclamation);
+                    if (dlgres == System.Windows.Forms.DialogResult.No)
+                    {
+                        // shutdown by don't continue this Main method
+                        return;
+                    }
                 }
             }
 
-            SyntaxHighlight.InitHighlighter();
-            notes = new Notes(resetpositions);
             if (Settings.ProgramPluginsAllEnabled)
             {
-                PluginsManager.UpdatePluginReplaceFiles();
                 PluginsManager.LoadPlugins();
             }
 
