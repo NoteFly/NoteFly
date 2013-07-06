@@ -301,7 +301,9 @@ namespace NoteFly
                     control.Name != "btnFontBigger" &&
                     control.Name != "btnFontSmaller" &&
                     control.Name != "btnHideNote" &&
-                    control.Name != "lblNoteTitle")
+                    control.Name != "lblNoteTitle" &&
+                    control.Name != "lblProductName" &&
+                    control.Name != "lblProductVersion")
                 {
                     translatecontrol = true;
                 }

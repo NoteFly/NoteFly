@@ -49,6 +49,7 @@
             this.lblTextNoInternetConnection = new System.Windows.Forms.Label();
             this.lbxAvailablePlugins = new System.Windows.Forms.ListBox();
             this.searchtbPlugins = new NoteFly.SearchTextBox();
+            this.linklblPluginMoreInfo = new System.Windows.Forms.LinkLabel();
             this.lblLicense = new System.Windows.Forms.Label();
             this.lblPluginVersion = new System.Windows.Forms.Label();
             this.lblPluginName = new System.Windows.Forms.Label();
@@ -218,6 +219,7 @@
             // 
             // splitContainerAvailablePlugins.Panel2
             // 
+            this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.linklblPluginMoreInfo);
             this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.lblLicense);
             this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.lblPluginVersion);
             this.splitContainerAvailablePlugins.Panel2.Controls.Add(this.lblPluginName);
@@ -265,6 +267,18 @@
             this.searchtbPlugins.SearchStart += new NoteFly.SearchTextBox.SearchStartHandler(this.searchtbPlugins_SearchStart);
             this.searchtbPlugins.SearchStop += new NoteFly.SearchTextBox.SearchStopHandler(this.searchtbPlugins_SearchStop);
             // 
+            // linklblPluginMoreInfo
+            // 
+            this.linklblPluginMoreInfo.AutoSize = true;
+            this.linklblPluginMoreInfo.Location = new System.Drawing.Point(168, 276);
+            this.linklblPluginMoreInfo.Name = "linklblPluginMoreInfo";
+            this.linklblPluginMoreInfo.Size = new System.Drawing.Size(63, 16);
+            this.linklblPluginMoreInfo.TabIndex = 4;
+            this.linklblPluginMoreInfo.TabStop = true;
+            this.linklblPluginMoreInfo.Text = "more info";
+            this.linklblPluginMoreInfo.Visible = false;
+            this.linklblPluginMoreInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linklblPluginMoreInfo_LinkClicked);
+            // 
             // lblLicense
             // 
             this.lblLicense.ForeColor = System.Drawing.Color.Black;
@@ -290,9 +304,8 @@
             this.lblPluginName.Location = new System.Drawing.Point(9, 15);
             this.lblPluginName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPluginName.Name = "lblPluginName";
-            this.lblPluginName.Size = new System.Drawing.Size(112, 29);
+            this.lblPluginName.Size = new System.Drawing.Size(0, 29);
             this.lblPluginName.TabIndex = 1;
-            this.lblPluginName.Text = "Loading..";
             // 
             // lblPluginDescription
             // 
@@ -301,7 +314,6 @@
             this.lblPluginDescription.Name = "lblPluginDescription";
             this.lblPluginDescription.Size = new System.Drawing.Size(220, 186);
             this.lblPluginDescription.TabIndex = 0;
-            this.lblPluginDescription.Text = "Getting plugin details from the internet.";
             // 
             // btnPluginDownload
             // 
@@ -366,6 +378,7 @@
         private System.Windows.Forms.Button btnupdateplugins;
         private System.Windows.Forms.Label lbltextpluginupdates;
         private System.Windows.Forms.Button btnRestartProgram;
+        private System.Windows.Forms.LinkLabel linklblPluginMoreInfo;
 
     }
 }

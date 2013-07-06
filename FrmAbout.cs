@@ -57,18 +57,19 @@ namespace NoteFly
             this.InitializeComponent();
             this.SetFormTitle();
             this.lblProductName.Text = Program.AssemblyTitle;
-            this.lblVersion.Text = string.Format(Strings.T("Version ") + Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
-
+            this.lblProductVersion.Text = Strings.T("Version {0}",  Program.AssemblyVersionAsString + " " + Program.AssemblyVersionQuality);
+            Strings.TranslateForm(this);
             this.movinglabels = new MovingAuthorLabel[] {
                  new MovingAuthorLabel(Strings.T("Developed\nby") + " D9ping", 100),
                  new MovingAuthorLabel(Strings.T("Greek translation\nby") + " geogeo.gr", 160),
                  new MovingAuthorLabel(Strings.T("Korean translation\nby") + " zest", 220),
                  new MovingAuthorLabel("May your notes,\ncome in handy..", 300)
             };
+
             for (int i = 0; i < this.movinglabels.Length; i++)
             {
                 this.pnlAuthors.Controls.Add(this.movinglabels[i]);
-            }
+            }           
         }
 
         #endregion Constructors 
@@ -160,44 +161,15 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void tmpUpdateLblProductEffect_Tick(object sender, EventArgs e)
         {
-            
+            if (this.movinglabels == null)
+            {
+                return;
+            }
+
             for (int i = 0; i < this.movinglabels.Length; i++)
             {
                 this.movinglabels[i].MoveUp();
             }
-
-            /*
-            const int MAXDARK = 250;
-            byte red = this.lblProductName.ForeColor.R;
-            byte blue = this.lblProductName.ForeColor.B;
-            byte green = this.lblProductName.ForeColor.G;
-            if (red < MAXDARK && green <= 5)
-            {
-                red += 5;
-                if (blue > 5)
-                {
-                    blue -= 5;
-                }
-            }
-            else if (green < MAXDARK && blue <= 5)
-            {
-                green += 5;
-                if (red > 5)
-                {
-                    red -= 5;
-                }
-            }
-            else if (blue < MAXDARK && red <= 5)
-            {
-                blue += 5;
-                if (green > 5)
-                {
-                    green -= 5;
-                }
-            }
-
-            this.lblProductName.ForeColor = Color.FromArgb(red, green, blue);
-            */
         }
 
         /// <summary>

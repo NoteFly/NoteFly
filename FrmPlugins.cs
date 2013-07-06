@@ -58,6 +58,11 @@ namespace NoteFly
         private const string RESTAPIPLUGINVERSION = "/REST/plugins/version.php";
 
         /// <summary>
+        /// 
+        /// </summary>
+        private const string PLUGINMOREINFOURL = "http://www.notefly.org/plugindetails?name=";
+
+        /// <summary>
         /// Are plugin updates checkd by default
         /// </summary>
         private const bool PLUGINUPDATECHECKEDDEFAULT = true;
@@ -118,6 +123,9 @@ namespace NoteFly
                     xmlUtil.WriteSettings();
                 }                
             }
+
+            this.linklblPluginMoreInfo.Text = Strings.T("more info");
+            this.lblPluginDescription.Text = Strings.T("Getting plugin details from the internet.");
         }
 
         /// <summary>
@@ -281,6 +289,7 @@ namespace NoteFly
             this.lblLicense.ResetText();
             this.lblPluginVersion.ResetText();
             this.lblPluginDescription.ResetText();
+            this.linklblPluginMoreInfo.Visible = false;
         }
 
         /// <summary>
@@ -334,10 +343,16 @@ namespace NoteFly
                 this.lblPluginVersion.Text = Strings.T("version: ") + this.selectedplugindetails.Version;
                 this.lblLicense.Text = Strings.T("license: ") + this.selectedplugindetails.LicenseType;
                 this.lblPluginDescription.Text = this.selectedplugindetails.Description;
+                this.linklblPluginMoreInfo.Visible = true;
+                if (Settings.NotesTooltipsEnabled)
+                {
+                    this.tooltip.SetToolTip(this.linklblPluginMoreInfo, Strings.T("visit: {0}", PLUGINMOREINFOURL + Uri.EscapeUriString(this.selectedplugindetails.Name)));
+                }
             }
             else
             {
                 this.lblPluginDescription.Text = Strings.T("Could not load plugins details, please check if your network connection is still working.");
+                this.linklblPluginMoreInfo.Visible = false;
             }
         }
 
@@ -839,8 +854,16 @@ namespace NoteFly
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void linklblPluginMoreInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {     
-            Program.LoadLink("http://www.notefly.org/plugindetails?name=" + Uri.EscapeUriString(this.selectedplugindetails.Name), false);
+        {
+            if (this.selectedplugindetails == null)
+            {
+                return;
+            }
+
+            if (!String.IsNullOrEmpty(this.selectedplugindetails.Name))
+            {
+                Program.LoadLink(PLUGINMOREINFOURL + Uri.EscapeUriString(this.selectedplugindetails.Name), false);
+            }
         }
     }
 }
