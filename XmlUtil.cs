@@ -334,6 +334,7 @@ namespace NoteFly
             finally
             {
                 xmlread.Close();
+                note = null;
             }
 
             return note;
@@ -1529,84 +1530,92 @@ namespace NoteFly
         {
             int curnotenum = -1;
             bool endnode = false;
-            while (xmlread.Read())
+            try
             {
-                if (xmlread.Name != string.Empty)
+                while (xmlread.Read())
                 {
-                    switch (xmlread.Name)
+                    if (xmlread.Name != string.Empty)
                     {
-                        case "note":
-                            if (!endnode)
-                            {
-                                curnotenum++;
-                            }
+                        switch (xmlread.Name)
+                        {
+                            case "note":
+                                if (!endnode)
+                                {
+                                    curnotenum++;
+                                }
 
-                            if (curnotenum < readnotenum)
-                            {
-                                xmlread.Skip();
-                            }
-                            else if (curnotenum > readnotenum)
-                            {
-                                return note;
-                            }
-                            else
-                            {
-                                endnode = !endnode;
-                            }
+                                if (curnotenum < readnotenum)
+                                {
+                                    xmlread.Skip();
+                                }
+                                else if (curnotenum > readnotenum)
+                                {
+                                    return note;
+                                }
+                                else
+                                {
+                                    endnode = !endnode;
+                                }
 
-                            break;
-                        case "visible":
-                            note.Visible = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "locked":
-                            note.Locked = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "ontop":
-                            note.Ontop = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "rollup":
-                            note.RolledUp = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "wordwarp":
-                            note.Wordwarp = xmlread.ReadElementContentAsBoolean();
-                            break;
-                        case "width":
-                            note.Width = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "heigth":
-                            note.Height = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "x":
-                            note.X = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "y":
-                            note.Y = xmlread.ReadElementContentAsInt();
-                            break;
-                        case "skin":
-                            int skinnr = notes.GetSkinNr(xmlread.ReadElementContentAsString());
-                            if (skinnr >= 0)
-                            {
-                                note.SkinNr = skinnr;
-                            }
+                                break;
+                            case "visible":
+                                note.Visible = xmlread.ReadElementContentAsBoolean();
+                                break;
+                            case "locked":
+                                note.Locked = xmlread.ReadElementContentAsBoolean();
+                                break;
+                            case "ontop":
+                                note.Ontop = xmlread.ReadElementContentAsBoolean();
+                                break;
+                            case "rollup":
+                                note.RolledUp = xmlread.ReadElementContentAsBoolean();
+                                break;
+                            case "wordwarp":
+                                note.Wordwarp = xmlread.ReadElementContentAsBoolean();
+                                break;
+                            case "width":
+                                note.Width = xmlread.ReadElementContentAsInt();
+                                break;
+                            case "heigth":
+                                note.Height = xmlread.ReadElementContentAsInt();
+                                break;
+                            case "x":
+                                note.X = xmlread.ReadElementContentAsInt();
+                                break;
+                            case "y":
+                                note.Y = xmlread.ReadElementContentAsInt();
+                                break;
+                            case "skin":
+                                int skinnr = notes.GetSkinNr(xmlread.ReadElementContentAsString());
+                                if (skinnr >= 0)
+                                {
+                                    note.SkinNr = skinnr;
+                                }
 
-                            break;
-                        case "title":
-                            note.Title = xmlread.ReadElementContentAsString();
-                            break;
-                        case "content":
-                            if (note.Visible || setallcontent)
-                            {
-                                note.Tempcontent = xmlread.ReadElementContentAsString();
-                            }
+                                break;
+                            case "title":
+                                note.Title = xmlread.ReadElementContentAsString();
+                                break;
+                            case "content":
+                                if (note.Visible || setallcontent)
+                                {
+                                    note.Tempcontent = xmlread.ReadElementContentAsString();
+                                }
 
-                            break;
-                    }
+                                break;
+                        }
 
-                    if (xmlread.Depth > 5)
-                    {
-                        throw new ApplicationException("note file corrupted");
+                        if (xmlread.Depth > 5)
+                        {
+                            throw new ApplicationException("note file corrupted");
+                        }
                     }
                 }
+            }
+            catch (SecurityException)
+            {
+                Log.Write(LogType.error, "No permission to read file: " + xmlread.BaseURI);
+                note = null;
             }
 
             return note;

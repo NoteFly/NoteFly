@@ -351,9 +351,6 @@ namespace NoteFly
                     System.Windows.Forms.Application.EnableVisualStyles();
                 }
             }
-            
-            SyntaxHighlight.InitHighlighter();
-            notes = new Notes(resetpositions);
 
             bool pluginsupdated = false;
             if (Settings.ProgramPluginsAllEnabled)
@@ -380,6 +377,9 @@ namespace NoteFly
             {
                 PluginsManager.LoadPlugins();
             }
+            
+            SyntaxHighlight.InitHighlighter();
+            notes = new Notes(resetpositions);
 
             formmanager = new FormManager(notes);
             trayicon = new TrayIcon(formmanager);

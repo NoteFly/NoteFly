@@ -411,6 +411,11 @@ namespace NoteFly
             for (int i = 0; i < numloadingnotes; i++)
             {
                 Note note = xmlUtil.LoadNoteFile(this, notefiles[i]);
+                if (note == null)
+                {
+                    continue;
+                }
+
                 if (resetpositions)
                 {
                     note.Y = 10;

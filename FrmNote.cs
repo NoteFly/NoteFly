@@ -461,6 +461,11 @@ namespace NoteFly
         /// <param name="e">FormClosedEvent arguments</param>
         private void FrmNote_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (Program.Formmanager == null)
+            {
+                return;
+            }
+
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
             Program.Formmanager.RefreshFrmManageNotes();
         }
