@@ -110,12 +110,12 @@ Function GetDotNETVersion
   Exch $0
 FunctionEnd
 
-Function CompileAsm
-  sleep 200
+;Function CompileAsm
+;  sleep 200
 ; "%windir%\Microsoft.NET\Framework\v2.0.50727\ngen.exe" "C:\Program Files (x86)\NoteFly\NoteFly.exe" /nologo /verbose
-  Exec '"$%windir%\Microsoft.NET\Framework\v2.0.50727\ngen.exe" "$INSTDIR\${APPFILE}" /nologo /verbose'
-  sleep 200
-FunctionEnd
+;  Exec '"$%windir%\Microsoft.NET\Framework\v2.0.50727\ngen.exe" "$INSTDIR\${APPFILE}" /nologo /verbose'
+;  sleep 200
+;FunctionEnd
 
 !macro StopRunningNoteFly
   ${nsProcess::KillProcess} "${APPFILE}" $R0
