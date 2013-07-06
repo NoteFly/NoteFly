@@ -321,7 +321,7 @@ namespace NoteFly
         private static void AddToPOT(string text, string controlname)
         {
             string filepathpot = System.IO.Path.Combine(System.IO.Path.Combine(Program.InstallFolder, @".\..\"), "Strings.pot");
-            text = text.Replace("\r\n", "\"\r\nmsgid \""); // multiple lines are split is multiple msgid's.
+            text = text.Replace("\n", "\"\nmsgid \""); // multiple lines are split is multiple msgid's.
             string msgid = new System.Text.StringBuilder("msgid \"").Append(text).Append("\"").ToString();
             bool isalreadyadded = false;
             if (System.IO.File.Exists(filepathpot))
