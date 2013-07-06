@@ -2,15 +2,66 @@
 # This file is distributed under the same license as the 3.0.6 package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-06-23 22:35:26+0000\n"
+"PO-Revision-Date: 2013-07-06 17:25+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/0.1\n"
-"Project-Id-Version: 3.0.6\n"
+"X-Generator: Poedit 1.5.7\n"
+"Project-Id-Version: NoteFly 3.0.6\n"
+"POT-Creation-Date: \n"
+"Last-Translator: Tom <root@d9ping.nl>\n"
+"Language-Team: D9ping\n"
+"Language: Swedisch\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
-#: FrmAbout.cs:67
+msgid "&Close"
+msgstr "Stäng"
+
+msgid "Website"
+msgstr "hemsida"
+
+#: Program.cs:243
+msgid "Are you sure you want to visit: {0}"
+msgstr "Är du säker på att du vill besöka: {0}"
+
+#: Program.cs:864
+msgid "Description:"
+msgstr "Beskrivning: "
+
+#: Program.cs:874
+msgid "Immediately open a new note after startup."
+msgstr "Omedelbart öppna en ny anteckning efter uppstart."
+
+#: Program.cs:875
+msgid "Set title new note."
+msgstr "Ange titel ny anteckning."
+
+#: Program.cs:876
+msgid "Set content new note."
+msgstr "Ställ innehållet ny anteckning."
+
+#: Program.cs:877
+msgid "Set the language(ISO 639-1) of the programme."
+msgstr "Ställ in språk (ISO 639-1) av programmet."
+
+#: FrmPlugins.cs:127
+msgid "more info"
+msgstr "mer info"
+
+#: FrmPlugins.cs:128
+msgid "Getting plugin details from the internet."
+msgstr "Komma plugin detaljer från internet."
+
+#: FrmPlugins.cs:349
+msgid "visit: {0}"
+msgstr "besök: {0}"
+
+#: FrmAbout.cs:60
+msgid "Version {0}"
+msgstr "Version {0}"
+
+#: FrmAbout.cs:65
 msgid ""
 "Korean translation\n"
 "by"
@@ -18,7 +69,7 @@ msgstr ""
 "koreanska översättning\n"
 "genom"
 
-#: FrmAbout.cs:65
+#: FrmAbout.cs:64
 msgid ""
 "Greek translation\n"
 "by"
@@ -34,7 +85,7 @@ msgstr ""
 "Utvecklad\n"
 "genom"
 
-#: FrmNewNote.cs:188
+#: FrmNewNote.cs:195
 msgid "Striketrough text (Ctrl+T)"
 msgstr "Striketrough text (Ctrl+T)"
 
@@ -70,67 +121,67 @@ msgstr "&exportera alla"
 msgid "Title:"
 msgstr "Titel:"
 
-#: FrmManageNotes.cs:310 FrmManageNotes.cs:457
+#: FrmManageNotes.cs:316 FrmManageNotes.cs:463
 msgid "NoteFly backup"
 msgstr "NoteFly säkerhetskopiera"
 
-#: FrmManageNotes.cs:311 FrmManageNotes.cs:458
+#: FrmManageNotes.cs:317 FrmManageNotes.cs:464
 msgid "Stickies CSV stored notes"
 msgstr "Stickies CSV lagrade anteckningar"
 
-#: FrmManageNotes.cs:312 FrmManageNotes.cs:459
+#: FrmManageNotes.cs:318 FrmManageNotes.cs:465
 msgid "PNotes full backup"
 msgstr "PNotes fullständig säkerhetskopia"
 
-#: FrmManageNotes.cs:460
+#: FrmManageNotes.cs:466
 msgid "CintaNotes xml export"
 msgstr "CintaNotes xml export"
 
-#: FrmManageNotes.cs:461
+#: FrmManageNotes.cs:467
 msgid "DeskNotes file"
 msgstr "DeskNotes fil"
 
-#: FrmNewNote.cs:686
+#: FrmNewNote.cs:693
 msgid "Plain text file (*.txt)"
 msgstr "Textfil (*. Txt)"
 
-#: FrmNewNote.cs:687
+#: FrmNewNote.cs:694
 msgid "RTF file (*.rtf)"
 msgstr "RTF-fil (*. Rtf)"
 
-#: FrmNewNote.cs:688
+#: FrmNewNote.cs:695
 msgid "KeyNote NF note (*.knt)"
 msgstr "KeyNote NF anteckningar (*. knt)"
 
-#: FrmNewNote.cs:689
+#: FrmNewNote.cs:696
 msgid "TomBoy note (*.note)"
 msgstr "TomBoy anteckningar (*.note)"
 
-#: FrmNewNote.cs:690
+#: FrmNewNote.cs:697
 msgid "MicroSE note (*.not)"
 msgstr "MicroSE anteckningar (*.not)"
 
-#: FrmNewNote.cs:691
+#: FrmNewNote.cs:698
 msgid "QuickPad note (*.qpn)"
 msgstr "QuickPad QuickPad (*.qpn)"
 
-#: FrmNewNote.cs:693
+#: FrmNewNote.cs:700
 msgid "import single (note)file"
 msgstr "import enda (not) fil"
 
-#: FrmNote.cs:875
+#: FrmNote.cs:880
 msgid "Textfile (*.txt)"
 msgstr "Textfil (*.txt)"
 
-#: FrmNote.cs:876
+#: FrmNote.cs:881
 msgid "RichTextFormat file (*.rtf)"
 msgstr "RichTextFormat fil (*.rtf)"
 
-#: FrmNote.cs:877
+#: FrmNote.cs:882
 msgid "Webpage (*.htm)"
 msgstr "Webbsida (*.htm)"
 
-#: FrmNote.cs:878
+#: FrmNote.cs:883
 msgid "PHP file (*.php)"
 msgstr "PHP-fil (*.php)"
 
@@ -230,71 +281,71 @@ msgstr "Loggning:"
 msgid "Log debug info."
 msgstr "Logga debug info."
 
-#: Program.cs:805
+#: Program.cs:870
 msgid "Disable GnuPG signature checking."
 msgstr "Inaktivera GnuPG signatur kontroll."
 
-#: Program.cs:806
+#: Program.cs:871
 msgid "Force a first run."
 msgstr "Tvinga en första start."
 
-#: Program.cs:807
+#: Program.cs:872
 msgid "Log exceptions, errors and debug messages."
 msgstr "Log undantag, fel felsökningsinformation meddelanden."
 
-#: Program.cs:808
+#: Program.cs:873
 msgid "Don't log exceptions, errors and debug messages."
 msgstr "Logga inte undantag, fel och felsöka meddelanden info."
 
-#: Program.cs:812
+#: Program.cs:881
 msgid "with unnecessary administrator privilege."
 msgstr "med onödiga administratörsbehörighet."
 
-#: Program.cs:815
+#: Program.cs:884
 msgid "Reset all positions of visual notes at startup."
 msgstr "Återställ alla positioner visuella anteckningar vid uppstart."
 
-#: Program.cs:816
+#: Program.cs:885
 msgid "Reset all NoteFly settings to default."
 msgstr "Återställ alla NoteFly inställningar till standard."
 
-#: Program.cs:832
+#: Program.cs:901
 msgid "{0} parameters help"
 msgstr "{0} parametrar hjälper"
 
-#: Program.cs:860
+#: Program.cs:929
 msgid "There's a new version of {0} available."
 msgstr "Det finns en ny version av {0} tillgängligt."
 
-#: Program.cs:861
+#: Program.cs:930
 msgid "Your version: "
 msgstr "Din version:"
 
-#: Program.cs:863
+#: Program.cs:932
 msgid "New version: "
 msgstr "Ny version:"
 
-#: Program.cs:865
+#: Program.cs:934
 msgid "Do you want to download and install the new version now?"
 msgstr "Vill du ladda ner och installera den nya versionen nu?"
 
-#: Program.cs:866
+#: Program.cs:935
 msgid "update available"
 msgstr "Uppdatering tillgänglig"
 
-#: Program.cs:869
+#: Program.cs:938
 msgid "Downloading {0} update"
 msgstr "Nerladdning {0} uppdatering"
 
-#: Program.cs:887
+#: Program.cs:956
 msgid "Network error"
 msgstr "Nätverksanslutning fel"
 
-#: Program.cs:890 Program.cs:896
+#: Program.cs:959 Program.cs:965
 msgid "Network error, make sure you have a working {0} connection."
 msgstr "Nätverk fel, se till att du har en fungerande {0} anslutning."
 
-#: Program.cs:902
+#: Program.cs:971
 msgid "Downloadurl is of new vesion is not set."
 msgstr "Downloadurl är av ny vesion är inte inställd."
 
@@ -307,8 +358,12 @@ msgid "stop search"
 msgstr "stoppa sökningen"
 
 #: Strings.cs:208
-msgid "translating error: cannot translate controls more than {0} nested levels deep."
-msgstr "översätta fel: kan inte översätta kontrollerna mer än {0} kapslade nivåer djupt."
+msgid ""
+"translating error: cannot translate controls more than {0} nested levels "
+"deep."
+msgstr ""
+"översätta fel: kan inte översätta kontrollerna mer än {0} kapslade nivåer "
+"djupt."
 
 #: Textfile.cs:105
 msgid "Title: "
@@ -562,131 +617,131 @@ msgstr "Uppdateringar"
 msgid "days."
 msgstr "dagar."
 
-#: FrmManageNotes.cs:282
+#: FrmManageNotes.cs:288
 msgid "Delete the selected notes."
 msgstr "Ta bort de markerade noterna."
 
-#: FrmManageNotes.cs:283
+#: FrmManageNotes.cs:289
 msgid "Restore notes from a backup file."
 msgstr "Återställa anteckningar från en säkerhetskopia."
 
-#: FrmManageNotes.cs:284
+#: FrmManageNotes.cs:290
 msgid "Backup all notes to a single backup file."
 msgstr "Säkerhetskopiera alla anteckningar till en enda backup-fil."
 
-#: FrmManageNotes.cs:285
+#: FrmManageNotes.cs:291
 msgid "Close"
 msgstr "Stäng"
 
-#: FrmManageNotes.cs:308
+#: FrmManageNotes.cs:314
 msgid "Export all notes"
 msgstr "Exportera alla anteckningar"
 
-#: FrmManageNotes.cs:376
+#: FrmManageNotes.cs:382
 msgid "Nothing selected"
 msgstr "Inget markerat"
 
-#: FrmManageNotes.cs:377
+#: FrmManageNotes.cs:383
 msgid "There is no note selected."
 msgstr "Det finns ingen anteckning valt."
 
-#: FrmManageNotes.cs:386
+#: FrmManageNotes.cs:392
 msgid "Are you sure you want to delete the selected note(s)?"
 msgstr "Är du säker på att du vill ta bort de markerade anteckningarna?"
 
-#: FrmManageNotes.cs:396
+#: FrmManageNotes.cs:402
 msgid "And more notes."
 msgstr "Och fler anteckningar."
 
-#: FrmManageNotes.cs:400
+#: FrmManageNotes.cs:406
 msgid "delete?"
 msgstr "radera?"
 
-#: FrmManageNotes.cs:455
+#: FrmManageNotes.cs:461
 msgid "import notes"
 msgstr "Importera anteckningar"
 
-#: FrmManageNotes.cs:804
+#: FrmManageNotes.cs:813
 msgid "Access denied. delete note {0} manually with proper permission."
 msgstr "Åtkomst nekad. radera note {0} manuellt med vederbörligt tillstånd."
 
-#: FrmManageNotes.cs:878
+#: FrmManageNotes.cs:887
 msgid "nr"
 msgstr "nr"
 
-#: FrmManageNotes.cs:879
+#: FrmManageNotes.cs:888
 msgid "title"
 msgstr "titel"
 
-#: FrmManageNotes.cs:880
+#: FrmManageNotes.cs:889
 msgid "visible"
 msgstr "synlig"
 
-#: FrmManageNotes.cs:881
+#: FrmManageNotes.cs:890
 msgid "skin"
 msgstr "skin"
 
-#: FrmManageNotes.cs:943 FrmManageNotes.cs:964
+#: FrmManageNotes.cs:952 FrmManageNotes.cs:973
 msgid "Transparency level not a integer or double."
 msgstr "Öppenhet nivån inte ett heltal eller double."
 
-#: FrmNewNote.cs:153
+#: FrmNewNote.cs:160
 msgid "edit note"
 msgstr "redigera anteckning"
 
-#: FrmNewNote.cs:157
+#: FrmNewNote.cs:164
 msgid "new note"
 msgstr "ny anteckning"
 
-#: FrmNewNote.cs:176
+#: FrmNewNote.cs:183
 msgid "Save editing note (Ctrl+S)"
 msgstr "Spara redigering note (Ctrl + S)"
 
-#: FrmNewNote.cs:177
+#: FrmNewNote.cs:184
 msgid "Cancel editing note (escape)"
 msgstr "Avbryt redigering note (escape)"
 
-#: FrmNewNote.cs:181
+#: FrmNewNote.cs:188
 msgid "Save new note (Ctrl+S)"
 msgstr "Spara ny anteckning (Ctrl + S)"
 
-#: FrmNewNote.cs:182
+#: FrmNewNote.cs:189
 msgid "Cancel new note (escape)"
 msgstr "Avbryt ny anteckning (escape)"
 
-#: FrmNewNote.cs:185
+#: FrmNewNote.cs:192
 msgid "Bold text (Ctrl+B)"
 msgstr "Fet text (Ctrl + B)"
 
-#: FrmNewNote.cs:186
+#: FrmNewNote.cs:193
 msgid "Italic text (Ctrl+I)"
 msgstr "Kursiv text (Ctrl + I)"
 
-#: FrmNewNote.cs:187
+#: FrmNewNote.cs:194
 msgid "Underline text (Ctrl+U)"
 msgstr "Understruken text (Ctrl + U)"
 
-#: FrmNewNote.cs:189
+#: FrmNewNote.cs:196
 msgid "Bullit list (Ctrl+shift+L)"
 msgstr "Bullit lista (Ctrl + Skift + L)"
 
-#: FrmNewNote.cs:190
+#: FrmNewNote.cs:197
 msgid "Bigger text (Ctrl+shift+>)"
 msgstr "Större text (Ctrl + Shift +>)"
 
-#: FrmNewNote.cs:191
+#: FrmNewNote.cs:198
 msgid "Smaller text (Ctrl+shift+<)"
 msgstr "Mindre text (Ctrl + Shift + <)"
 
-#: FrmNewNote.cs:317
+#: FrmNewNote.cs:324
 msgid "Please enter some content."
 msgstr "Ange en del innehåll."
 
-#: FrmNewNote.cs:335
+#: FrmNewNote.cs:342
 msgid "Could not write note."
 msgstr "Det gick inte att skriva anteckning."
 
-#: FrmNewNote.cs:763 FrmNewNote.cs:1111
+#: FrmNewNote.cs:770 FrmNewNote.cs:1118
 msgid "There is no text on the clipboard."
 msgstr "Det finns ingen text på klippbordet."
 
@@ -702,81 +757,91 @@ msgstr "Obs har ingen titel och inget innehåll."
 msgid "Can't launch email client."
 msgstr "Kan inte starta e-postklient."
 
-#: FrmNote.cs:798
+#: FrmNote.cs:803
 msgid "&Lock note"
 msgstr "&Lås note"
 
-#: FrmNote.cs:799
+#: FrmNote.cs:804
 msgid " (click again to unlock)"
 msgstr " (klicka igen för att låsa upp)"
 
-#: FrmNote.cs:825
+#: FrmNote.cs:830
 msgid "&Roll up"
 msgstr "&Rulla ihop"
 
-#: FrmNote.cs:826
+#: FrmNote.cs:831
 msgid "(click again to Roll Down)"
 msgstr "(klicka igen för att rulla ner)"
 
-#: FrmNote.cs:873
+#: FrmNote.cs:878
 msgid "Save note to file"
 msgstr "Save not till fil"
 
-#: FrmNote.cs:893
+#: FrmNote.cs:898
 msgid "Bad plugin export notecontent filter selected."
 msgstr "Bad plugin export note innehåll filter valda."
 
-#: FrmPlugins.cs:128
+#: FrmPlugins.cs:136
 msgid "Plugins"
 msgstr "Plugins"
 
-#: FrmPlugins.cs:304
+#: FrmPlugins.cs:313
 msgid "needs update"
 msgstr "needs update"
 
-#: FrmPlugins.cs:319
+#: FrmPlugins.cs:328
 msgid "already installed"
 msgstr "redan installerad"
 
-#: FrmPlugins.cs:325
+#: FrmPlugins.cs:334
 msgid "download"
 msgstr "ladda"
 
-#: FrmPlugins.cs:334
+#: FrmPlugins.cs:343
 msgid "version: "
 msgstr "version: "
 
-#: FrmPlugins.cs:335
+#: FrmPlugins.cs:344
 msgid "license: "
 msgstr "licens: "
 
-#: FrmPlugins.cs:340
-msgid "Could not load plugins details, please check if your network connection is still working."
-msgstr "Kunde inte ladda plugins detaljer, vänligen kontrollera om din nätverksanslutning är fortfarande arbetar."
+#: FrmPlugins.cs:354
+msgid ""
+"Could not load plugins details, please check if your network connection is "
+"still working."
+msgstr ""
+"Kunde inte ladda plugins detaljer, vänligen kontrollera om din "
+"nätverksanslutning är fortfarande arbetar."
 
-#: FrmPlugins.cs:371
+#: FrmPlugins.cs:386
 msgid "Downloading plugin.."
 msgstr "Nedladdning av plugin.."
 
-#: FrmPlugins.cs:547
+#: FrmPlugins.cs:562
 msgid "Could not load list with plugins. Internet connection failed."
-msgstr "Det gick inte att läsa in listan med plugins. Internet-anslutning misslyckades."
+msgstr ""
+"Det gick inte att läsa in listan med plugins. Internet-anslutning "
+"misslyckades."
 
-#: FrmPlugins.cs:550
+#: FrmPlugins.cs:565
 msgid "A proxy is being used."
 msgstr "En proxy används."
 
-#: FrmPlugins.cs:702
+#: FrmPlugins.cs:717
 msgid "Updating plugins.."
 msgstr "Uppdatering plugins .."
 
-#: FrmPlugins.cs:750
+#: FrmPlugins.cs:765
 msgid "Loading"
 msgstr "Laddar"
 
-#: FrmPlugins.cs:790
-msgid "A note is still open for editing continue restarting {0} now? The unsaved note change will be lost."
-msgstr "En anteckning är fortfarande öppen för redigering fortsätter starta {0} nu? Den osparade notera förändringen kommer att förloras."
+#: FrmPlugins.cs:805
+msgid ""
+"A note is still open for editing continue restarting {0} now? The unsaved "
+"note change will be lost."
+msgstr ""
+"En anteckning är fortfarande öppen för redigering fortsätter starta {0} nu? "
+"Den osparade notera förändringen kommer att förloras."
 
 #: FrmSettings.cs:117
 msgid ""
@@ -943,7 +1008,8 @@ msgid "CSV file does not seems to be in the Stickies format."
 msgstr "CSV-filen inte verkar vara i Stickies format."
 
 #: ImportNotes.cs:465
-msgid "CSV file does not seems to be in the Stickies format, expecting 5 columns."
+msgid ""
+"CSV file does not seems to be in the Stickies format, expecting 5 columns."
 msgstr "CSV-fil inte verkar vara i Stickies format, väntade fem kolumner."
 
 #: ImportNotes.cs:602
@@ -962,7 +1028,7 @@ msgstr ""
 msgid "Notes folder doesn't exist"
 msgstr "Anteckningar mappen existerar inte"
 
-#: Notes.cs:755
+#: Notes.cs:760
 msgid ""
 "Do you want to import the notes from NoteFly 1.0.x?\n"
 "Press cancel to ask this again next time."
@@ -970,11 +1036,11 @@ msgstr ""
 "Vill du importera anteckningar från NoteFly 1.0.x?\n"
 "Tryck avbryt för att fråga detta igen nästa gång."
 
-#: Notes.cs:756
+#: Notes.cs:761
 msgid "Import from NoteFly 1.0.x"
 msgstr "Importera från NoteFly 1.0.x"
 
-#: Notes.cs:843
+#: Notes.cs:848
 msgid ""
 "Do you want to import the notes from NoteFly 2.5.x?\n"
 "Press cancel to ask this again next time."
@@ -982,23 +1048,27 @@ msgstr ""
 "Vill du importera anteckningar från NoteFly 2.5.x?\n"
 "Tryck avbryt för att fråga detta igen nästa gång."
 
-#: Notes.cs:843
+#: Notes.cs:848
 msgid "Import from NoteFly 2.5.x"
 msgstr "Import från NoteFly 2.5.x"
 
-#: Notes.cs:891
+#: Notes.cs:896
 msgid "many notes"
 msgstr "många anteckningar"
 
-#: Notes.cs:892
-msgid "There are many notes loading this can take a while, do you want to load them all?"
-msgstr "Det finns många anteckningar loading detta kan ta en stund, vill du läsa in dem alla?"
+#: Notes.cs:897
+msgid ""
+"There are many notes loading this can take a while, do you want to load them "
+"all?"
+msgstr ""
+"Det finns många anteckningar loading detta kan ta en stund, vill du läsa in "
+"dem alla?"
 
-#: Notes.cs:912
+#: Notes.cs:917
 msgid "Many notes visible"
 msgstr "Många anteckningar synliga"
 
-#: Notes.cs:913
+#: Notes.cs:918
 msgid ""
 "There are many notes visible.\n"
 "Hide some notes to make loading faster."
@@ -1046,25 +1116,23 @@ msgstr "Klicka för att aktivera denna plugin."
 msgid "unknown"
 msgstr "obekant"
 
-#: Program.cs:243
-msgid "Are you sure you want to visted: {0}"
-msgstr "Är du säker på att du vill besökta: {0}"
-
-#: Program.cs:327
+#: Program.cs:330
 msgid ""
 "You are now running {0} as elevated Administrator.\n"
 "Which is not recommended for security.\n"
-"Press OK if your understand the risks of running as administrator and want to hide this message in the future."
+"Press OK if your understand the risks of running as administrator and want "
+"to hide this message in the future."
 msgstr ""
 "Du kör nu {0} som förhöjt administratör.\n"
 "Vilket inte rekommenderas för säkerheten.\n"
-"Tryck på OK om du förstår riskerna med att köra som administratör och vill dölja det här meddelandet i framtiden."
+"Tryck på OK om du förstår riskerna med att köra som administratör och vill "
+"dölja det här meddelandet i framtiden."
 
-#: Program.cs:328
+#: Program.cs:331
 msgid "Elevated administrator"
 msgstr "Förhöjda administratör"
 
-#: Program.cs:354
+#: Program.cs:365
 msgid ""
 "{0} is already running.\n"
 "Load another instance? (not recommended)"
@@ -1072,43 +1140,39 @@ msgstr ""
 "{0} är redan igång.\n"
 "Ladda annan instans? (rekommenderas inte)"
 
-#: Program.cs:355
+#: Program.cs:366
 msgid "already running"
 msgstr "redan igång"
 
-#: Program.cs:799
+#: Program.cs:864
 msgid "Parameter:"
 msgstr "Parameter:"
 
-#: Program.cs:800
+#: Program.cs:865
 msgid "Show this parameters help window."
 msgstr "Visa parametrar hjälpfönstret."
 
-#: Program.cs:801
+#: Program.cs:866
 msgid "Disable transparency."
 msgstr "Inaktivera insyn."
 
-#: Program.cs:802
+#: Program.cs:867
 msgid "Disable all plugins."
 msgstr "Inaktivera alla plugins."
 
-#: Program.cs:803
+#: Program.cs:868
 msgid "Disable any highlighting in notes."
 msgstr "Inaktivera någon markering i noter."
 
-#: Program.cs:804
+#: Program.cs:869
 msgid "Disable XP visual style."
 msgstr "Inaktivera XP visuella style."
 
-#: FrmManageNotes.cs:281
+#: FrmManageNotes.cs:287
 msgid "Show or hide the selected notes."
 msgstr "Visa eller dölja markerade anteckningarna."
 
-#: FrmAbout.cs:60
-msgid "Version "
-msgstr "Version "
-
-#: FrmAbout.cs:86 FrmAbout.cs:87 TrayIcon.cs:232
+#: FrmAbout.cs:84 FrmAbout.cs:85 TrayIcon.cs:232
 msgid "About"
 msgstr "Omkring"
 
@@ -1128,15 +1192,15 @@ msgstr "Ladda fel"
 msgid "oh no.. {0} crashed."
 msgstr "oh nej .. {0} kraschade."
 
-#: FrmManageNotes.cs:112 FrmManageNotes.cs:543 FrmManageNotes.cs:576
+#: FrmManageNotes.cs:117 FrmManageNotes.cs:549 FrmManageNotes.cs:582
 msgid "&hide selected"
 msgstr "gömma vald"
 
-#: FrmManageNotes.cs:116 FrmManageNotes.cs:121 FrmManageNotes.cs:548
-#: FrmManageNotes.cs:580
+#: FrmManageNotes.cs:121 FrmManageNotes.cs:126 FrmManageNotes.cs:554
+#: FrmManageNotes.cs:586
 msgid "&show selected"
 msgstr "vi&sa vald"
 
-#: FrmManageNotes.cs:268
+#: FrmManageNotes.cs:273
 msgid "Manage notes"
 msgstr "Hantera anteckningar"

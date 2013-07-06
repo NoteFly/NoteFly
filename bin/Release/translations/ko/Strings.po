@@ -2,21 +2,72 @@
 # This file is distributed under the same license as the 3.0.6 package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-06-20 14:56:20+0000\n"
+"PO-Revision-Date: 2013-07-06 17:26+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/0.1\n"
-"Project-Id-Version: 3.0.6\n"
+"X-Generator: Poedit 1.5.7\n"
+"Project-Id-Version: NoteFly 3.0.6\n"
+"POT-Creation-Date: \n"
+"Last-Translator: Tom <root@d9ping.nl>\n"
+"Language-Team: Zest\n"
+"Language: Korean\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
-#: FrmAbout.cs:67
+msgid "&Close"
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+#: Program.cs:243
+msgid "Are you sure you want to visit: {0}"
+msgstr ""
+
+#: Program.cs:864
+msgid "Description:"
+msgstr ""
+
+#: Program.cs:874
+msgid "Immediately open a new note after startup."
+msgstr ""
+
+#: Program.cs:875
+msgid "Set title new note."
+msgstr ""
+
+#: Program.cs:876
+msgid "Set content new note."
+msgstr ""
+
+#: Program.cs:877
+msgid "Set the language(ISO 639-1) of the programme."
+msgstr ""
+
+#: FrmPlugins.cs:127
+msgid "more info"
+msgstr ""
+
+#: FrmPlugins.cs:128
+msgid "Getting plugin details from the internet."
+msgstr ""
+
+#: FrmPlugins.cs:349
+msgid "visit: {0}"
+msgstr ""
+
+#: FrmAbout.cs:60
+msgid "Version {0}"
+msgstr ""
+
+#: FrmAbout.cs:65
 msgid ""
 "Korean translation\n"
 "by"
 msgstr ""
 
-#: FrmAbout.cs:65
+#: FrmAbout.cs:64
 msgid ""
 "Greek translation\n"
 "by"
@@ -28,7 +79,7 @@ msgid ""
 "by"
 msgstr ""
 
-#: FrmNewNote.cs:188
+#: FrmNewNote.cs:195
 msgid "Striketrough text (Ctrl+T)"
 msgstr ""
 
@@ -64,67 +115,67 @@ msgstr ""
 msgid "Title:"
 msgstr ""
 
-#: FrmManageNotes.cs:310 FrmManageNotes.cs:457
+#: FrmManageNotes.cs:316 FrmManageNotes.cs:463
 msgid "NoteFly backup"
 msgstr ""
 
-#: FrmManageNotes.cs:311 FrmManageNotes.cs:458
+#: FrmManageNotes.cs:317 FrmManageNotes.cs:464
 msgid "Stickies CSV stored notes"
 msgstr ""
 
-#: FrmManageNotes.cs:312 FrmManageNotes.cs:459
+#: FrmManageNotes.cs:318 FrmManageNotes.cs:465
 msgid "PNotes full backup"
 msgstr ""
 
-#: FrmManageNotes.cs:460
+#: FrmManageNotes.cs:466
 msgid "CintaNotes xml export"
 msgstr ""
 
-#: FrmManageNotes.cs:461
+#: FrmManageNotes.cs:467
 msgid "DeskNotes file"
 msgstr ""
 
-#: FrmNewNote.cs:686
+#: FrmNewNote.cs:693
 msgid "Plain text file (*.txt)"
 msgstr ""
 
-#: FrmNewNote.cs:687
+#: FrmNewNote.cs:694
 msgid "RTF file (*.rtf)"
 msgstr ""
 
-#: FrmNewNote.cs:688
+#: FrmNewNote.cs:695
 msgid "KeyNote NF note (*.knt)"
 msgstr ""
 
-#: FrmNewNote.cs:689
+#: FrmNewNote.cs:696
 msgid "TomBoy note (*.note)"
 msgstr ""
 
-#: FrmNewNote.cs:690
+#: FrmNewNote.cs:697
 msgid "MicroSE note (*.not)"
 msgstr ""
 
-#: FrmNewNote.cs:691
+#: FrmNewNote.cs:698
 msgid "QuickPad note (*.qpn)"
 msgstr ""
 
-#: FrmNewNote.cs:693
+#: FrmNewNote.cs:700
 msgid "import single (note)file"
 msgstr ""
 
-#: FrmNote.cs:875
+#: FrmNote.cs:880
 msgid "Textfile (*.txt)"
 msgstr ""
 
-#: FrmNote.cs:876
+#: FrmNote.cs:881
 msgid "RichTextFormat file (*.rtf)"
 msgstr ""
 
-#: FrmNote.cs:877
+#: FrmNote.cs:882
 msgid "Webpage (*.htm)"
 msgstr ""
 
-#: FrmNote.cs:878
+#: FrmNote.cs:883
 msgid "PHP file (*.php)"
 msgstr ""
 
@@ -224,71 +275,71 @@ msgstr "기록하기"
 msgid "Log debug info."
 msgstr "디버그 정보 기록"
 
-#: Program.cs:805
+#: Program.cs:870
 msgid "Disable GnuPG signature checking."
 msgstr "GnuPG 서명 확인 하지 않기."
 
-#: Program.cs:806
+#: Program.cs:871
 msgid "Force a first run."
 msgstr "첫 실행 강제로 하기."
 
-#: Program.cs:807
+#: Program.cs:872
 msgid "Log exceptions, errors and debug messages."
 msgstr "오류나 디버그 메시지 같은 예외 메세지 기록하기."
 
-#: Program.cs:808
+#: Program.cs:873
 msgid "Don't log exceptions, errors and debug messages."
 msgstr "예외 사항, 오류 및 디버그 메시지를 기록하지 마십시오."
 
-#: Program.cs:812
+#: Program.cs:881
 msgid "with unnecessary administrator privilege."
 msgstr "관리 인증 필요 없음"
 
-#: Program.cs:815
+#: Program.cs:884
 msgid "Reset all positions of visual notes at startup."
 msgstr "시작시 보이는 노트 위치 재설정"
 
-#: Program.cs:816
+#: Program.cs:885
 msgid "Reset all NoteFly settings to default."
 msgstr "노트플라이의 모든 설정 초기화"
 
-#: Program.cs:832
+#: Program.cs:901
 msgid "{0} parameters help"
 msgstr "{0} 변수 도움말"
 
-#: Program.cs:860
+#: Program.cs:929
 msgid "There's a new version of {0} available."
 msgstr "실행 가능한 새로운 버전 {0}"
 
-#: Program.cs:861
+#: Program.cs:930
 msgid "Your version: "
 msgstr ""
 
-#: Program.cs:863
+#: Program.cs:932
 msgid "New version: "
 msgstr ""
 
-#: Program.cs:865
+#: Program.cs:934
 msgid "Do you want to download and install the new version now?"
 msgstr "지금 새로운 버전으로 다운 받아 설치하시겠습니까?"
 
-#: Program.cs:866
+#: Program.cs:935
 msgid "update available"
 msgstr ""
 
-#: Program.cs:869
+#: Program.cs:938
 msgid "Downloading {0} update"
 msgstr "{0} 업데이트 다운 받는 중"
 
-#: Program.cs:887
+#: Program.cs:956
 msgid "Network error"
 msgstr ""
 
-#: Program.cs:890 Program.cs:896
+#: Program.cs:959 Program.cs:965
 msgid "Network error, make sure you have a working {0} connection."
 msgstr ""
 
-#: Program.cs:902
+#: Program.cs:971
 msgid "Downloadurl is of new vesion is not set."
 msgstr ""
 
@@ -301,7 +352,9 @@ msgid "stop search"
 msgstr ""
 
 #: Strings.cs:208
-msgid "translating error: cannot translate controls more than {0} nested levels deep."
+msgid ""
+"translating error: cannot translate controls more than {0} nested levels "
+"deep."
 msgstr ""
 
 #: Textfile.cs:105
@@ -556,131 +609,131 @@ msgstr "업데이트"
 msgid "days."
 msgstr ""
 
-#: FrmManageNotes.cs:282
+#: FrmManageNotes.cs:288
 msgid "Delete the selected notes."
 msgstr ""
 
-#: FrmManageNotes.cs:283
+#: FrmManageNotes.cs:289
 msgid "Restore notes from a backup file."
 msgstr ""
 
-#: FrmManageNotes.cs:284
+#: FrmManageNotes.cs:290
 msgid "Backup all notes to a single backup file."
 msgstr ""
 
-#: FrmManageNotes.cs:285
+#: FrmManageNotes.cs:291
 msgid "Close"
 msgstr ""
 
-#: FrmManageNotes.cs:308
+#: FrmManageNotes.cs:314
 msgid "Export all notes"
 msgstr ""
 
-#: FrmManageNotes.cs:376
+#: FrmManageNotes.cs:382
 msgid "Nothing selected"
 msgstr ""
 
-#: FrmManageNotes.cs:377
+#: FrmManageNotes.cs:383
 msgid "There is no note selected."
 msgstr ""
 
-#: FrmManageNotes.cs:386
+#: FrmManageNotes.cs:392
 msgid "Are you sure you want to delete the selected note(s)?"
 msgstr "선택한 노트를 삭제하시겠습니까?"
 
-#: FrmManageNotes.cs:396
+#: FrmManageNotes.cs:402
 msgid "And more notes."
 msgstr "또 다른 노트."
 
-#: FrmManageNotes.cs:400
+#: FrmManageNotes.cs:406
 msgid "delete?"
 msgstr "삭제?"
 
-#: FrmManageNotes.cs:455
+#: FrmManageNotes.cs:461
 msgid "import notes"
 msgstr ""
 
-#: FrmManageNotes.cs:804
+#: FrmManageNotes.cs:813
 msgid "Access denied. delete note {0} manually with proper permission."
 msgstr ""
 
-#: FrmManageNotes.cs:878
+#: FrmManageNotes.cs:887
 msgid "nr"
 msgstr "nr"
 
-#: FrmManageNotes.cs:879
+#: FrmManageNotes.cs:888
 msgid "title"
 msgstr "제목"
 
-#: FrmManageNotes.cs:880
+#: FrmManageNotes.cs:889
 msgid "visible"
 msgstr "보임"
 
-#: FrmManageNotes.cs:881
+#: FrmManageNotes.cs:890
 msgid "skin"
 msgstr "스킨"
 
-#: FrmManageNotes.cs:943 FrmManageNotes.cs:964
+#: FrmManageNotes.cs:952 FrmManageNotes.cs:973
 msgid "Transparency level not a integer or double."
 msgstr "투명도 조절할 수 있는 정수나 실수가 아닙니다."
 
-#: FrmNewNote.cs:153
+#: FrmNewNote.cs:160
 msgid "edit note"
 msgstr "노트 편집"
 
-#: FrmNewNote.cs:157
+#: FrmNewNote.cs:164
 msgid "new note"
 msgstr "새 노트"
 
-#: FrmNewNote.cs:176
+#: FrmNewNote.cs:183
 msgid "Save editing note (Ctrl+S)"
 msgstr "편집 중인 노트 저장하기 (Ctrl+S)"
 
-#: FrmNewNote.cs:177
+#: FrmNewNote.cs:184
 msgid "Cancel editing note (escape)"
 msgstr "편집 중인 노트 취소하기(나가기)"
 
-#: FrmNewNote.cs:181
+#: FrmNewNote.cs:188
 msgid "Save new note (Ctrl+S)"
 msgstr "새 노트 저장하기 (Ctrl+S)"
 
-#: FrmNewNote.cs:182
+#: FrmNewNote.cs:189
 msgid "Cancel new note (escape)"
 msgstr "새로운 노트 취소하기(나가기)"
 
-#: FrmNewNote.cs:185
+#: FrmNewNote.cs:192
 msgid "Bold text (Ctrl+B)"
 msgstr ""
 
-#: FrmNewNote.cs:186
+#: FrmNewNote.cs:193
 msgid "Italic text (Ctrl+I)"
 msgstr ""
 
-#: FrmNewNote.cs:187
+#: FrmNewNote.cs:194
 msgid "Underline text (Ctrl+U)"
 msgstr ""
 
-#: FrmNewNote.cs:189
+#: FrmNewNote.cs:196
 msgid "Bullit list (Ctrl+shift+L)"
 msgstr ""
 
-#: FrmNewNote.cs:190
+#: FrmNewNote.cs:197
 msgid "Bigger text (Ctrl+shift+>)"
 msgstr ""
 
-#: FrmNewNote.cs:191
+#: FrmNewNote.cs:198
 msgid "Smaller text (Ctrl+shift+<)"
 msgstr ""
 
-#: FrmNewNote.cs:317
+#: FrmNewNote.cs:324
 msgid "Please enter some content."
 msgstr "내용을 입력하세요."
 
-#: FrmNewNote.cs:335
+#: FrmNewNote.cs:342
 msgid "Could not write note."
 msgstr "노트를 쓸 수 없습니다."
 
-#: FrmNewNote.cs:763 FrmNewNote.cs:1111
+#: FrmNewNote.cs:770 FrmNewNote.cs:1118
 msgid "There is no text on the clipboard."
 msgstr "클립보드에 내용이 없습니다."
 
@@ -696,80 +749,84 @@ msgstr "노트에 제목과 내용이 없습니다."
 msgid "Can't launch email client."
 msgstr "보내는 이메일에 연결할 수 없습니다."
 
-#: FrmNote.cs:798
+#: FrmNote.cs:803
 msgid "&Lock note"
 msgstr "&노트 잠금"
 
-#: FrmNote.cs:799
+#: FrmNote.cs:804
 msgid " (click again to unlock)"
 msgstr "다시 클릭하여 잠금 해제"
 
-#: FrmNote.cs:825
+#: FrmNote.cs:830
 msgid "&Roll up"
 msgstr "&접어두기"
 
-#: FrmNote.cs:826
+#: FrmNote.cs:831
 msgid "(click again to Roll Down)"
 msgstr "다시 클릭하여 펼치기"
 
-#: FrmNote.cs:873
+#: FrmNote.cs:878
 msgid "Save note to file"
 msgstr "다른 파일로 노트 저장하기"
 
-#: FrmNote.cs:893
+#: FrmNote.cs:898
 msgid "Bad plugin export notecontent filter selected."
 msgstr ""
 
-#: FrmPlugins.cs:128
+#: FrmPlugins.cs:136
 msgid "Plugins"
 msgstr "플러그인"
 
-#: FrmPlugins.cs:304
+#: FrmPlugins.cs:313
 msgid "needs update"
 msgstr ""
 
-#: FrmPlugins.cs:319
+#: FrmPlugins.cs:328
 msgid "already installed"
 msgstr "이미 설치됨"
 
-#: FrmPlugins.cs:325
+#: FrmPlugins.cs:334
 msgid "download"
 msgstr "다운받기"
 
-#: FrmPlugins.cs:334
+#: FrmPlugins.cs:343
 msgid "version: "
 msgstr "버전:"
 
-#: FrmPlugins.cs:335
+#: FrmPlugins.cs:344
 msgid "license: "
 msgstr "라이센스:"
 
-#: FrmPlugins.cs:340
-msgid "Could not load plugins details, please check if your network connection is still working."
+#: FrmPlugins.cs:354
+msgid ""
+"Could not load plugins details, please check if your network connection is "
+"still working."
 msgstr ""
 
-#: FrmPlugins.cs:371
+#: FrmPlugins.cs:386
 msgid "Downloading plugin.."
 msgstr "플러그인 다운받기.."
 
-#: FrmPlugins.cs:547
+#: FrmPlugins.cs:562
 msgid "Could not load list with plugins. Internet connection failed."
 msgstr "목록을 플러그인과 함께 불러올 수 없습니다. 인터넷 연결에 실패했습니다."
 
-#: FrmPlugins.cs:550
+#: FrmPlugins.cs:565
 msgid "A proxy is being used."
 msgstr "프록시를 사용 중입니다."
 
-#: FrmPlugins.cs:702
+#: FrmPlugins.cs:717
 msgid "Updating plugins.."
 msgstr ""
 
-#: FrmPlugins.cs:750
+#: FrmPlugins.cs:765
 msgid "Loading"
 msgstr ""
 
-#: FrmPlugins.cs:790
-msgid "A note is still open for editing continue restarting {0} now? The unsaved note change will be lost."
+#: FrmPlugins.cs:805
+msgid ""
+"A note is still open for editing continue restarting {0} now? The unsaved "
+"note change will be lost."
 msgstr ""
 
 #: FrmSettings.cs:117
@@ -935,7 +992,8 @@ msgid "CSV file does not seems to be in the Stickies format."
 msgstr ""
 
 #: ImportNotes.cs:465
-msgid "CSV file does not seems to be in the Stickies format, expecting 5 columns."
+msgid ""
+"CSV file does not seems to be in the Stickies format, expecting 5 columns."
 msgstr ""
 
 #: ImportNotes.cs:602
@@ -954,7 +1012,7 @@ msgstr ""
 msgid "Notes folder doesn't exist"
 msgstr "노트 폴더가 존재하지 않습니다."
 
-#: Notes.cs:755
+#: Notes.cs:760
 msgid ""
 "Do you want to import the notes from NoteFly 1.0.x?\n"
 "Press cancel to ask this again next time."
@@ -962,11 +1020,11 @@ msgstr ""
 "노트플라이 1.0.x에서 불러오시겠습니까?\n"
 "다음에 다시 하게겠습니까."
 
-#: Notes.cs:756
+#: Notes.cs:761
 msgid "Import from NoteFly 1.0.x"
 msgstr "노트플라이 1.0.x에서 불러오기"
 
-#: Notes.cs:843
+#: Notes.cs:848
 msgid ""
 "Do you want to import the notes from NoteFly 2.5.x?\n"
 "Press cancel to ask this again next time."
@@ -974,23 +1032,25 @@ msgstr ""
 "노트플라이 2.5.x에서 불러오시겠습니까?\n"
 "다음에 다시 하게겠습니까."
 
-#: Notes.cs:843
+#: Notes.cs:848
 msgid "Import from NoteFly 2.5.x"
 msgstr "노트플라이 2.5.x에서 불러오기"
 
-#: Notes.cs:891
+#: Notes.cs:896
 msgid "many notes"
 msgstr "많은 노트들"
 
-#: Notes.cs:892
-msgid "There are many notes loading this can take a while, do you want to load them all?"
+#: Notes.cs:897
+msgid ""
+"There are many notes loading this can take a while, do you want to load them "
+"all?"
 msgstr "한 번에 불러오기에 많은 노트를 실행하셨습니다. 모두 불러오시겠습니까?"
 
-#: Notes.cs:912
+#: Notes.cs:917
 msgid "Many notes visible"
 msgstr "많은 노트 보기"
 
-#: Notes.cs:913
+#: Notes.cs:918
 msgid ""
 "There are many notes visible.\n"
 "Hide some notes to make loading faster."
@@ -1038,67 +1098,61 @@ msgstr ""
 msgid "unknown"
 msgstr "알 수 없음"
 
-#: Program.cs:243
-msgid "Are you sure you want to visted: {0}"
-msgstr "방문하시기를 원하십니까: {0}"
-
-#: Program.cs:327
+#: Program.cs:330
 msgid ""
 "You are now running {0} as elevated Administrator.\n"
 "Which is not recommended for security.\n"
-"Press OK if your understand the risks of running as administrator and want to hide this message in the future."
+"Press OK if your understand the risks of running as administrator and want "
+"to hide this message in the future."
 msgstr ""
 "지금 {0}(을)를 보다 높은 관리자 모드로 실행 중 입니다.\n"
 "이것을 보안 상 추천하지 않습니다.\n"
-"관리자 모드로 실행으로 오는 위험을 알고 계시면, 다음에 이 메시지를 숨기시려면 확인을 누르세요."
+"관리자 모드로 실행으로 오는 위험을 알고 계시면, 다음에 이 메시지를 숨기시려"
+"면 확인을 누르세요."
 
-#: Program.cs:328
+#: Program.cs:331
 msgid "Elevated administrator"
 msgstr "높은 관리자 모드"
 
-#: Program.cs:354
+#: Program.cs:365
 msgid ""
 "{0} is already running.\n"
 "Load another instance? (not recommended)"
 msgstr ""
 
-#: Program.cs:355
+#: Program.cs:366
 msgid "already running"
 msgstr "이미 실행 중"
 
-#: Program.cs:799
+#: Program.cs:864
 msgid "Parameter:"
 msgstr "매개변수:"
 
-#: Program.cs:800
+#: Program.cs:865
 msgid "Show this parameters help window."
 msgstr "이 변수의 도움말 창 보기."
 
-#: Program.cs:801
+#: Program.cs:866
 msgid "Disable transparency."
 msgstr "투명하게 보지 않기."
 
-#: Program.cs:802
+#: Program.cs:867
 msgid "Disable all plugins."
 msgstr "모든 플러그인 사용하지 않기."
 
-#: Program.cs:803
+#: Program.cs:868
 msgid "Disable any highlighting in notes."
 msgstr "노트에서 형광팬 효과 사용하지 않기."
 
-#: Program.cs:804
+#: Program.cs:869
 msgid "Disable XP visual style."
 msgstr "XP 스타일 사용하지 않기."
 
-#: FrmManageNotes.cs:281
+#: FrmManageNotes.cs:287
 msgid "Show or hide the selected notes."
 msgstr ""
 
-#: FrmAbout.cs:60
-msgid "Version "
-msgstr "버전"
-
-#: FrmAbout.cs:86 FrmAbout.cs:87 TrayIcon.cs:232
+#: FrmAbout.cs:84 FrmAbout.cs:85 TrayIcon.cs:232
 msgid "About"
 msgstr "정보"
 
@@ -1118,15 +1172,15 @@ msgstr "다운로드 오류"
 msgid "oh no.. {0} crashed."
 msgstr "오! 노.. {0} 깨짐."
 
-#: FrmManageNotes.cs:112 FrmManageNotes.cs:543 FrmManageNotes.cs:576
+#: FrmManageNotes.cs:117 FrmManageNotes.cs:549 FrmManageNotes.cs:582
 msgid "&hide selected"
 msgstr "&선택한 것 숨기기"
 
-#: FrmManageNotes.cs:116 FrmManageNotes.cs:121 FrmManageNotes.cs:548
-#: FrmManageNotes.cs:580
+#: FrmManageNotes.cs:121 FrmManageNotes.cs:126 FrmManageNotes.cs:554
+#: FrmManageNotes.cs:586
 msgid "&show selected"
 msgstr "&선택한 것 보이기"
 
-#: FrmManageNotes.cs:268
+#: FrmManageNotes.cs:273
 msgid "Manage notes"
 msgstr "노트 관리하기"

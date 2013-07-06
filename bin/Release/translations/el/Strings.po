@@ -2,15 +2,64 @@
 # This file is distributed under the same license as the 3.0.6 package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-06-20 14:55:43+0000\n"
+"PO-Revision-Date: 2013-07-06 17:24+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/0.1\n"
-"Project-Id-Version: 3.0.6\n"
+"X-Generator: Poedit 1.5.7\n"
+"Project-Id-Version: NoteFly 3.0.6\n"
+"POT-Creation-Date: \n"
+"Last-Translator: Tom <root@d9ping.nl>\n"
+"Language-Team: geogeo.gr\n"
 
-#: FrmAbout.cs:67
+msgid "&Close"
+msgstr "κοντά"
+
+msgid "Website"
+msgstr "δικτυακός τόπος"
+
+#: Program.cs:243
+msgid "Are you sure you want to visit: {0}"
+msgstr "Είστε σίγουροι ότι θέλετε να επισκεφθείτε: {0}"
+
+#: Program.cs:864
+msgid "Description:"
+msgstr "Περιγραφή:"
+
+#: Program.cs:874
+msgid "Immediately open a new note after startup."
+msgstr "Αμέσως ανοίξει μια νέα σημείωση μετά την εκκίνηση."
+
+#: Program.cs:875
+msgid "Set title new note."
+msgstr "Ρυθμίστε τον τίτλο νέα σημείωση."
+
+#: Program.cs:876
+msgid "Set content new note."
+msgstr "Ορισμός νέου περιεχομένου σημείωμα."
+
+#: Program.cs:877
+msgid "Set the language(ISO 639-1) of the programme."
+msgstr "Ρύθμιση της γλώσσας (ISO 639-1) του προγράμματος."
+
+#: FrmPlugins.cs:127
+msgid "more info"
+msgstr "περισσότερες πληροφορίες"
+
+#: FrmPlugins.cs:128
+msgid "Getting plugin details from the internet."
+msgstr "Να πάρει λεπτομέρειες plugin από το διαδίκτυο."
+
+#: FrmPlugins.cs:349
+msgid "visit: {0}"
+msgstr "επισκεφθείτε την ιστοσελίδα: {0}"
+
+#: FrmAbout.cs:60
+msgid "Version {0}"
+msgstr "Έκδοση {0}"
+
+#: FrmAbout.cs:65
 msgid ""
 "Korean translation\n"
 "by"
@@ -18,7 +67,7 @@ msgstr ""
 "Κορέας μετάφραση\n"
 "με "
 
-#: FrmAbout.cs:65
+#: FrmAbout.cs:64
 msgid ""
 "Greek translation\n"
 "by"
@@ -34,7 +83,7 @@ msgstr ""
 "Ανάπτυξη\n"
 "με "
 
-#: FrmNewNote.cs:188
+#: FrmNewNote.cs:195
 msgid "Striketrough text (Ctrl+T)"
 msgstr "Διακριτό κείμενο (Ctrl+T)"
 
@@ -70,67 +119,67 @@ msgstr "Ε&ξαγωγή όλων"
 msgid "Title:"
 msgstr "Τίτλος:"
 
-#: FrmManageNotes.cs:310 FrmManageNotes.cs:457
+#: FrmManageNotes.cs:316 FrmManageNotes.cs:463
 msgid "NoteFly backup"
 msgstr "Αρχεία ασφαλείας NoteFly"
 
-#: FrmManageNotes.cs:311 FrmManageNotes.cs:458
+#: FrmManageNotes.cs:317 FrmManageNotes.cs:464
 msgid "Stickies CSV stored notes"
 msgstr "Αποθ. σημειώσεις Stickies CSV"
 
-#: FrmManageNotes.cs:312 FrmManageNotes.cs:459
+#: FrmManageNotes.cs:318 FrmManageNotes.cs:465
 msgid "PNotes full backup"
 msgstr "Πλήρες αντ. ασφαλείας PNotes"
 
-#: FrmManageNotes.cs:460
+#: FrmManageNotes.cs:466
 msgid "CintaNotes xml export"
 msgstr "Εξαγωγή CintaNotes xml"
 
-#: FrmManageNotes.cs:461
+#: FrmManageNotes.cs:467
 msgid "DeskNotes file"
 msgstr "Αρχεία DeskNotes"
 
-#: FrmNewNote.cs:686
+#: FrmNewNote.cs:693
 msgid "Plain text file (*.txt)"
 msgstr "Αρχείο απλού κειμένου (*.txt)"
 
-#: FrmNewNote.cs:687
+#: FrmNewNote.cs:694
 msgid "RTF file (*.rtf)"
 msgstr "Αρχείο RTF (*.rtf)"
 
-#: FrmNewNote.cs:688
+#: FrmNewNote.cs:695
 msgid "KeyNote NF note (*.knt)"
 msgstr "Σημείωμα KeyNote NF (*.knt)"
 
-#: FrmNewNote.cs:689
+#: FrmNewNote.cs:696
 msgid "TomBoy note (*.note)"
 msgstr "Σημείωμα TomBoy (*.note)"
 
-#: FrmNewNote.cs:690
+#: FrmNewNote.cs:697
 msgid "MicroSE note (*.not)"
 msgstr "Σημείωμα MicroSE (*.not)"
 
-#: FrmNewNote.cs:691
+#: FrmNewNote.cs:698
 msgid "QuickPad note (*.qpn)"
 msgstr "Σημείωμα QuickPad (*.qpn)"
 
-#: FrmNewNote.cs:693
+#: FrmNewNote.cs:700
 msgid "import single (note)file"
 msgstr "Εισαγωγή μεμονωμένου αρχείου (σημείωμα)"
 
-#: FrmNote.cs:875
+#: FrmNote.cs:880
 msgid "Textfile (*.txt)"
 msgstr "Αρχείο κειμένου (*.txt)"
 
-#: FrmNote.cs:876
+#: FrmNote.cs:881
 msgid "RichTextFormat file (*.rtf)"
 msgstr "Αρχείο μορφής εμπλουτισμένου κειμένου (*.rtf)"
 
-#: FrmNote.cs:877
+#: FrmNote.cs:882
 msgid "Webpage (*.htm)"
 msgstr "Ιστοσελίδα (*.htm)"
 
-#: FrmNote.cs:878
+#: FrmNote.cs:883
 msgid "PHP file (*.php)"
 msgstr "Αρχείο PHP (*.php)"
 
@@ -230,71 +279,72 @@ msgstr "Καταγραφή:"
 msgid "Log debug info."
 msgstr "Μητρώο πληροφοριών εντοπισμού σφαλμάτων"
 
-#: Program.cs:805
+#: Program.cs:870
 msgid "Disable GnuPG signature checking."
 msgstr "Απενεργοποίηση ελέγχου υπογραφής από GnuPG."
 
-#: Program.cs:806
+#: Program.cs:871
 msgid "Force a first run."
 msgstr "Ισχύει στην πρώτη εκτέλεση."
 
-#: Program.cs:807
+#: Program.cs:872
 msgid "Log exceptions, errors and debug messages."
 msgstr "Καταγραφής εξαιρέσεων, σφαλμάτων και εντοπισμού σφαλμάτων μηνυμάτων."
 
-#: Program.cs:808
+#: Program.cs:873
 msgid "Don't log exceptions, errors and debug messages."
-msgstr "Να μην καταγράφονται εξαιρέσεις, σφάλματα και εντοπισμοί σφαλμάτων μηνυμάτων."
+msgstr ""
+"Να μην καταγράφονται εξαιρέσεις, σφάλματα και εντοπισμοί σφαλμάτων μηνυμάτων."
 
-#: Program.cs:812
+#: Program.cs:881
 msgid "with unnecessary administrator privilege."
 msgstr "με περιττά προνόμια διαχειριστή."
 
-#: Program.cs:815
+#: Program.cs:884
 msgid "Reset all positions of visual notes at startup."
 msgstr "Επαναφορά όλων των θέσεων ορατών σημειώσεων κατά την εκκίνηση."
 
-#: Program.cs:816
+#: Program.cs:885
 msgid "Reset all NoteFly settings to default."
 msgstr "Επαναφορά όλων των ρυθμίσεων του NoteFly  στις προεπιλεγμένες."
 
-#: Program.cs:832
+#: Program.cs:901
 msgid "{0} parameters help"
 msgstr "Βοήθεια παραμέτρων του {0}"
 
-#: Program.cs:860
+#: Program.cs:929
 msgid "There's a new version of {0} available."
 msgstr "Υπάρχει διαθέσιμη μια νέα έκδοση του {0}."
 
-#: Program.cs:861
+#: Program.cs:930
 msgid "Your version: "
 msgstr "Η έκδοσή σας:"
 
-#: Program.cs:863
+#: Program.cs:932
 msgid "New version: "
 msgstr "Νέα έκδοση:"
 
-#: Program.cs:865
+#: Program.cs:934
 msgid "Do you want to download and install the new version now?"
 msgstr "Θέλετε να κατεβάσετε και να εγκαταστήσετε τη νέα έκδοση τώρα;"
 
-#: Program.cs:866
+#: Program.cs:935
 msgid "update available"
 msgstr "Διαθέσιμη ενημέρωση"
 
-#: Program.cs:869
+#: Program.cs:938
 msgid "Downloading {0} update"
 msgstr "Λήψη ενημέρωσης {0}"
 
-#: Program.cs:887
+#: Program.cs:956
 msgid "Network error"
 msgstr "Σφάλμα δικτύου"
 
-#: Program.cs:890 Program.cs:896
+#: Program.cs:959 Program.cs:965
 msgid "Network error, make sure you have a working {0} connection."
 msgstr "Σφάλμα δικτύου. Βεβαιωθείτε ότι έχετε μια ενεργή σύνδεση {0}."
 
-#: Program.cs:902
+#: Program.cs:971
 msgid "Downloadurl is of new vesion is not set."
 msgstr "Η διεύθυνση url για λήψη της νέας έκδοσης, δεν έχει οριστεί."
 
@@ -307,8 +357,12 @@ msgid "stop search"
 msgstr "διακοπή αναζήτησης"
 
 #: Strings.cs:208
-msgid "translating error: cannot translate controls more than {0} nested levels deep."
-msgstr "Σφάλμα μετάφρασης: δεν μπορούν να ελεγχθούν περισσότερα από {0} ένθετα επίπεδα βάθος."
+msgid ""
+"translating error: cannot translate controls more than {0} nested levels "
+"deep."
+msgstr ""
+"Σφάλμα μετάφρασης: δεν μπορούν να ελεγχθούν περισσότερα από {0} ένθετα "
+"επίπεδα βάθος."
 
 #: Textfile.cs:105
 msgid "Title: "
@@ -536,7 +590,8 @@ msgid "Make hyperlinks clickable."
 msgstr "Να έχουν οι υπερσύνδεσμοι δυνατότητα επιλογής"
 
 msgid "Ask to launch url on click on hyperlink (recommended)."
-msgstr "Ερώτηση για άνοιγμα διεύθυνσης url σε κλικ σε υπερσύνδεσμο (συνιστάται)."
+msgstr ""
+"Ερώτηση για άνοιγμα διεύθυνσης url σε κλικ σε υπερσύνδεσμο (συνιστάται)."
 
 msgid "Highlight HTML text between <html ..> and </html> (Beta)"
 msgstr "Επισήμανση κειμένου HTML μεταξύ <html ..> και </html> (Δοκιμαστικά)"
@@ -562,131 +617,133 @@ msgstr "Ενημερώσεις"
 msgid "days."
 msgstr "ημέρες"
 
-#: FrmManageNotes.cs:282
+#: FrmManageNotes.cs:288
 msgid "Delete the selected notes."
 msgstr "Διαγραφή των επιλεγμένων σημειώσεων."
 
-#: FrmManageNotes.cs:283
+#: FrmManageNotes.cs:289
 msgid "Restore notes from a backup file."
 msgstr "Επαναφορά σημειώσεων από αρχείο ασφαλείας."
 
-#: FrmManageNotes.cs:284
+#: FrmManageNotes.cs:290
 msgid "Backup all notes to a single backup file."
 msgstr "Εξασφάλιση όλων των σημειώσεων σε ένα αρχείο ασφαλείας."
 
-#: FrmManageNotes.cs:285
+#: FrmManageNotes.cs:291
 msgid "Close"
 msgstr "Κλείσιμο"
 
-#: FrmManageNotes.cs:308
+#: FrmManageNotes.cs:314
 msgid "Export all notes"
 msgstr "Εξαγωγή όλων των σημειώσεων"
 
-#: FrmManageNotes.cs:376
+#: FrmManageNotes.cs:382
 msgid "Nothing selected"
 msgstr "Δεν επιλέχθηκε τίποτα"
 
-#: FrmManageNotes.cs:377
+#: FrmManageNotes.cs:383
 msgid "There is no note selected."
 msgstr "Δεν υπάρχει επιλεγμένη σημείωση."
 
-#: FrmManageNotes.cs:386
+#: FrmManageNotes.cs:392
 msgid "Are you sure you want to delete the selected note(s)?"
 msgstr "Είστε βέβαιος ότι θέλετε να διαγράψετε τα επιλεγμένα σημειώματα;"
 
-#: FrmManageNotes.cs:396
+#: FrmManageNotes.cs:402
 msgid "And more notes."
 msgstr "Κι άλλες σημειώσεις."
 
-#: FrmManageNotes.cs:400
+#: FrmManageNotes.cs:406
 msgid "delete?"
 msgstr "Διαγραφή;"
 
-#: FrmManageNotes.cs:455
+#: FrmManageNotes.cs:461
 msgid "import notes"
 msgstr "Εισαγωγή σημειώσεων"
 
-#: FrmManageNotes.cs:804
+#: FrmManageNotes.cs:813
 msgid "Access denied. delete note {0} manually with proper permission."
-msgstr "Δεν επιτρέπεται η πρόσβαση. Διαγραφή της σημείωσης {0} χειροκίνητα με την κατάλληλη άδεια."
+msgstr ""
+"Δεν επιτρέπεται η πρόσβαση. Διαγραφή της σημείωσης {0} χειροκίνητα με την "
+"κατάλληλη άδεια."
 
-#: FrmManageNotes.cs:878
+#: FrmManageNotes.cs:887
 msgid "nr"
 msgstr "Α/Α"
 
-#: FrmManageNotes.cs:879
+#: FrmManageNotes.cs:888
 msgid "title"
 msgstr "Τίτλος"
 
-#: FrmManageNotes.cs:880
+#: FrmManageNotes.cs:889
 msgid "visible"
 msgstr "Ορατή"
 
-#: FrmManageNotes.cs:881
+#: FrmManageNotes.cs:890
 msgid "skin"
 msgstr "Εμφάνιση"
 
-#: FrmManageNotes.cs:943 FrmManageNotes.cs:964
+#: FrmManageNotes.cs:952 FrmManageNotes.cs:973
 msgid "Transparency level not a integer or double."
 msgstr "Το επίπεδο διαφάνειας δεν είναι ακέραιος ή διπλός."
 
-#: FrmNewNote.cs:153
+#: FrmNewNote.cs:160
 msgid "edit note"
 msgstr "επεξεργασία σημείωσης"
 
-#: FrmNewNote.cs:157
+#: FrmNewNote.cs:164
 msgid "new note"
 msgstr "νέα σημείωση"
 
-#: FrmNewNote.cs:176
+#: FrmNewNote.cs:183
 msgid "Save editing note (Ctrl+S)"
 msgstr "Αποθήκευση επεξεργασίας σημειώματος (Ctrl+S)"
 
-#: FrmNewNote.cs:177
+#: FrmNewNote.cs:184
 msgid "Cancel editing note (escape)"
 msgstr "Ακύρωση επεξεργασίας σημειώματος (Esc)"
 
-#: FrmNewNote.cs:181
+#: FrmNewNote.cs:188
 msgid "Save new note (Ctrl+S)"
 msgstr "Αποθήκευση νέας σημείωσης (Ctrl+S)"
 
-#: FrmNewNote.cs:182
+#: FrmNewNote.cs:189
 msgid "Cancel new note (escape)"
 msgstr "Ακύρωση νέας σημείωσης (Esc)"
 
-#: FrmNewNote.cs:185
+#: FrmNewNote.cs:192
 msgid "Bold text (Ctrl+B)"
 msgstr "Έντονο κείμενο (Ctrl+B)"
 
-#: FrmNewNote.cs:186
+#: FrmNewNote.cs:193
 msgid "Italic text (Ctrl+I)"
 msgstr "Πλάγιο κείμενο (Ctrl+I)"
 
-#: FrmNewNote.cs:187
+#: FrmNewNote.cs:194
 msgid "Underline text (Ctrl+U)"
 msgstr "Υπογραμμισμένο κείμενο (Ctrl+U)"
 
-#: FrmNewNote.cs:189
+#: FrmNewNote.cs:196
 msgid "Bullit list (Ctrl+shift+L)"
 msgstr "Δημιουργία λίστας (Ctrl+shift+L)"
 
-#: FrmNewNote.cs:190
+#: FrmNewNote.cs:197
 msgid "Bigger text (Ctrl+shift+>)"
 msgstr "Μεγαλύτερο κείμενο (Ctrl+shift+>)"
 
-#: FrmNewNote.cs:191
+#: FrmNewNote.cs:198
 msgid "Smaller text (Ctrl+shift+<)"
 msgstr "Μικρότερο κείμενο (Ctrl+shift+<)"
 
-#: FrmNewNote.cs:317
+#: FrmNewNote.cs:324
 msgid "Please enter some content."
 msgstr "Παρακαλώ εισάγετε κάποιο περιεχόμενο."
 
-#: FrmNewNote.cs:335
+#: FrmNewNote.cs:342
 msgid "Could not write note."
 msgstr "Δεν ήταν δυνατή η εγγραφή σημείωσης."
 
-#: FrmNewNote.cs:763 FrmNewNote.cs:1111
+#: FrmNewNote.cs:770 FrmNewNote.cs:1118
 msgid "There is no text on the clipboard."
 msgstr "Δεν υπάρχει κείμενο στο Πρόχειρο."
 
@@ -700,83 +757,95 @@ msgstr "Το σημείωμα δεν έχει τίτλο και περιεχόμ
 
 #: FrmNote.cs:425
 msgid "Can't launch email client."
-msgstr "Δεν ήταν δυνατή η εκκίνηση του προγράμματος ηλεκτρονικής αλληλογραφίας."
+msgstr ""
+"Δεν ήταν δυνατή η εκκίνηση του προγράμματος ηλεκτρονικής αλληλογραφίας."
 
-#: FrmNote.cs:798
+#: FrmNote.cs:803
 msgid "&Lock note"
 msgstr "Κ&λείδωμα σημείωσης"
 
-#: FrmNote.cs:799
+#: FrmNote.cs:804
 msgid " (click again to unlock)"
 msgstr " (κλικ ξανά για ξεκλείδωμα)"
 
-#: FrmNote.cs:825
+#: FrmNote.cs:830
 msgid "&Roll up"
 msgstr "&Τύλιγμα"
 
-#: FrmNote.cs:826
+#: FrmNote.cs:831
 msgid "(click again to Roll Down)"
 msgstr " (κλικ ξανά για ξετύλιγμα)"
 
-#: FrmNote.cs:873
+#: FrmNote.cs:878
 msgid "Save note to file"
 msgstr "Αποθήκευση σημείωσης σε αρχείο"
 
-#: FrmNote.cs:893
+#: FrmNote.cs:898
 msgid "Bad plugin export notecontent filter selected."
 msgstr "Κακή επιλογή φίλτρου προσθέτου εξαγωγής περιεχομένου σημείωσης."
 
-#: FrmPlugins.cs:128
+#: FrmPlugins.cs:136
 msgid "Plugins"
 msgstr "Πρόσθετα"
 
-#: FrmPlugins.cs:304
+#: FrmPlugins.cs:313
 msgid "needs update"
 msgstr "χρειάζεται ενημέρωση"
 
-#: FrmPlugins.cs:319
+#: FrmPlugins.cs:328
 msgid "already installed"
 msgstr "είναι ήδη εγκατεστημένο"
 
-#: FrmPlugins.cs:325
+#: FrmPlugins.cs:334
 msgid "download"
 msgstr "Λήψη"
 
-#: FrmPlugins.cs:334
+#: FrmPlugins.cs:343
 msgid "version: "
 msgstr "Έκδοση: "
 
-#: FrmPlugins.cs:335
+#: FrmPlugins.cs:344
 msgid "license: "
 msgstr "Άδεια χρήσης:"
 
-#: FrmPlugins.cs:340
-msgid "Could not load plugins details, please check if your network connection is still working."
-msgstr "Δεν ήταν δυνατή η φόρτωση λεπτομερειών των πρόσθετων. Παρακαλώ ελέγξτε εάν η σύνδεση δικτύου σας είναι σε λειτουργία."
+#: FrmPlugins.cs:354
+msgid ""
+"Could not load plugins details, please check if your network connection is "
+"still working."
+msgstr ""
+"Δεν ήταν δυνατή η φόρτωση λεπτομερειών των πρόσθετων. Παρακαλώ ελέγξτε εάν η "
+"σύνδεση δικτύου σας είναι σε λειτουργία."
 
-#: FrmPlugins.cs:371
+#: FrmPlugins.cs:386
 msgid "Downloading plugin.."
 msgstr "Λήψη πρόσθετου..."
 
-#: FrmPlugins.cs:547
+#: FrmPlugins.cs:562
 msgid "Could not load list with plugins. Internet connection failed."
-msgstr "Δεν ήταν δυνατή η φόρτωση της λίστας με τα πρόσθετα. Απέτυχε η σύνδεση στο διαδίκτυο."
+msgstr ""
+"Δεν ήταν δυνατή η φόρτωση της λίστας με τα πρόσθετα. Απέτυχε η σύνδεση στο "
+"διαδίκτυο."
 
-#: FrmPlugins.cs:550
+#: FrmPlugins.cs:565
 msgid "A proxy is being used."
 msgstr "Χρησιμοποιείται διακομιστής μεσολάβησης."
 
-#: FrmPlugins.cs:702
+#: FrmPlugins.cs:717
 msgid "Updating plugins.."
 msgstr "Ενημέρωση προσθέτων..."
 
-#: FrmPlugins.cs:750
+#: FrmPlugins.cs:765
 msgid "Loading"
 msgstr "Φόρτωση"
 
-#: FrmPlugins.cs:790
-msgid "A note is still open for editing continue restarting {0} now? The unsaved note change will be lost."
-msgstr "Ένα σημείωμα είναι ακόμα ανοιχτό για επεξεργασία. Εάν συνεχίσετε την επανεκκίνηση του {0} τώρα, οι αλλαγές της σημείωσης που δεν αποθηκεύτηκαν, θα χαθούν."
+#: FrmPlugins.cs:805
+msgid ""
+"A note is still open for editing continue restarting {0} now? The unsaved "
+"note change will be lost."
+msgstr ""
+"Ένα σημείωμα είναι ακόμα ανοιχτό για επεξεργασία. Εάν συνεχίσετε την "
+"επανεκκίνηση του {0} τώρα, οι αλλαγές της σημείωσης που δεν αποθηκεύτηκαν, "
+"θα χαθούν."
 
 #: FrmSettings.cs:117
 msgid ""
@@ -872,7 +941,9 @@ msgstr "Σφάλμα κατεύθυνσης κειμένου"
 
 #: FrmSettings.cs:467
 msgid "Given email address as default email address is not valid."
-msgstr "Η δεδομένη διεύθυνση email ως προεπιλεγμένη διεύθυνση email, δεν είναι έγκυρη."
+msgstr ""
+"Η δεδομένη διεύθυνση email ως προεπιλεγμένη διεύθυνση email, δεν είναι "
+"έγκυρη."
 
 #: FrmSettings.cs:468
 msgid "email address invalid"
@@ -892,7 +963,9 @@ msgstr "Παρακαλώ περιμένετε"
 
 #: FrmSettings.cs:548
 msgid "Are you sure, you want to reset all the settings to default?"
-msgstr "Είστε βέβαιος ότι θέλετε να επαναφέρετε όλες τις ρυθμίσεις στις προεπιλεγμένες τιμές;"
+msgstr ""
+"Είστε βέβαιος ότι θέλετε να επαναφέρετε όλες τις ρυθμίσεις στις "
+"προεπιλεγμένες τιμές;"
 
 #: FrmSettings.cs:549
 msgid "Reset settings?"
@@ -900,7 +973,8 @@ msgstr "Επαναφορά των ρυθμίσεων;"
 
 #: FrmSettings.cs:676
 msgid "File is marked as system file. Did not move."
-msgstr "Το αρχείο έχει επισημανθεί ως αρχείο συστήματος. Δεν μπορεί να μετακινηθεί."
+msgstr ""
+"Το αρχείο έχει επισημανθεί ως αρχείο συστήματος. Δεν μπορεί να μετακινηθεί."
 
 #: FrmSettings.cs:684
 msgid "Error moving note(s)"
@@ -943,8 +1017,10 @@ msgid "CSV file does not seems to be in the Stickies format."
 msgstr "Το αρχείο CSV δεν φαίνεται να είναι σε μορφή Stickies."
 
 #: ImportNotes.cs:465
-msgid "CSV file does not seems to be in the Stickies format, expecting 5 columns."
-msgstr "Το αρχείο CSV δεν φαίνεται να είναι σε μορφή Stickies. Αναμένονται 5 στήλες."
+msgid ""
+"CSV file does not seems to be in the Stickies format, expecting 5 columns."
+msgstr ""
+"Το αρχείο CSV δεν φαίνεται να είναι σε μορφή Stickies. Αναμένονται 5 στήλες."
 
 #: ImportNotes.cs:602
 msgid "Error reading PNotes backup file, incorrect format."
@@ -962,7 +1038,7 @@ msgstr ""
 msgid "Notes folder doesn't exist"
 msgstr "Ο φάκελος σημειώσεων δεν υπάρχει"
 
-#: Notes.cs:755
+#: Notes.cs:760
 msgid ""
 "Do you want to import the notes from NoteFly 1.0.x?\n"
 "Press cancel to ask this again next time."
@@ -970,11 +1046,11 @@ msgstr ""
 "Θέλετε να εισαγάγετε τις σημειώσεις από το NoteFly 1.0.x?\n"
 "Πατήστε Άκυρο για επανάληψη αυτής της ερώτησης την επόμενη φορά."
 
-#: Notes.cs:756
+#: Notes.cs:761
 msgid "Import from NoteFly 1.0.x"
 msgstr "Εισαγωγή από NoteFly 1.0.x"
 
-#: Notes.cs:843
+#: Notes.cs:848
 msgid ""
 "Do you want to import the notes from NoteFly 2.5.x?\n"
 "Press cancel to ask this again next time."
@@ -982,25 +1058,27 @@ msgstr ""
 "Θέλετε να εισαγάγετε τις σημειώσεις από το NoteFly 2.5.x?\n"
 "Πατήστε Άκυρο για επανάληψη αυτής της ερώτησης την επόμενη φορά."
 
-#: Notes.cs:843
+#: Notes.cs:848
 msgid "Import from NoteFly 2.5.x"
 msgstr "Εισαγωγή από NoteFly 2.5.x"
 
-#: Notes.cs:891
+#: Notes.cs:896
 msgid "many notes"
 msgstr "Πολλές σημειώσεις"
 
-#: Notes.cs:892
-msgid "There are many notes loading this can take a while, do you want to load them all?"
+#: Notes.cs:897
+msgid ""
+"There are many notes loading this can take a while, do you want to load them "
+"all?"
 msgstr ""
 "Υπάρχουν πολλές σημειώσεις για φόρτωση. Αυτό μπορεί να αργήσει λίγο.\n"
 "Θέλετε να τις φορτώσετε όλες;"
 
-#: Notes.cs:912
+#: Notes.cs:917
 msgid "Many notes visible"
 msgstr "Πολλές σημειώσεις ορατές"
 
-#: Notes.cs:913
+#: Notes.cs:918
 msgid ""
 "There are many notes visible.\n"
 "Hide some notes to make loading faster."
@@ -1048,25 +1126,23 @@ msgstr "Κάντε κλικ για ενεργοποίηση αυτού του π
 msgid "unknown"
 msgstr "άγνωστο"
 
-#: Program.cs:243
-msgid "Are you sure you want to visted: {0}"
-msgstr "Είστε βέβαιος ότι θέλετε να επισκεφθείτε το {0};"
-
-#: Program.cs:327
+#: Program.cs:330
 msgid ""
 "You are now running {0} as elevated Administrator.\n"
 "Which is not recommended for security.\n"
-"Press OK if your understand the risks of running as administrator and want to hide this message in the future."
+"Press OK if your understand the risks of running as administrator and want "
+"to hide this message in the future."
 msgstr ""
 "Εκτελείτε τώρα το {0} με αναβαθμισμένα δικαιώματα διαχειριστή.\n"
 "Αυτό δεν συνιστάται για λόγους ασφαλείας.\n"
-"Πατήστε OK αν κατανοείτε τους κινδύνους να λειτουργείτε ως διαχειριστής και θέλετε να μην εμφανίζεται αυτό το μήνυμα στο μέλλον."
+"Πατήστε OK αν κατανοείτε τους κινδύνους να λειτουργείτε ως διαχειριστής και "
+"θέλετε να μην εμφανίζεται αυτό το μήνυμα στο μέλλον."
 
-#: Program.cs:328
+#: Program.cs:331
 msgid "Elevated administrator"
 msgstr "Αναβαθμισμένα δικαιώματα διαχειριστή"
 
-#: Program.cs:354
+#: Program.cs:365
 msgid ""
 "{0} is already running.\n"
 "Load another instance? (not recommended)"
@@ -1074,43 +1150,39 @@ msgstr ""
 "Το {0} είναι ήδη σε λειτουργία.\n"
 "Έναρξη κι άλλης παρουσίας; (δεν συνιστάται)"
 
-#: Program.cs:355
+#: Program.cs:366
 msgid "already running"
 msgstr "Εκτελείται ήδη"
 
-#: Program.cs:799
+#: Program.cs:864
 msgid "Parameter:"
 msgstr "Παράμετρος:"
 
-#: Program.cs:800
+#: Program.cs:865
 msgid "Show this parameters help window."
 msgstr "Εμφάνιση παραθύρου βοήθειας αυτής της παραμέτρου."
 
-#: Program.cs:801
+#: Program.cs:866
 msgid "Disable transparency."
 msgstr "Απενεργοποίηση διαφάνειας."
 
-#: Program.cs:802
+#: Program.cs:867
 msgid "Disable all plugins."
 msgstr "Απενεργοποίηση όλων των πρόσθετων."
 
-#: Program.cs:803
+#: Program.cs:868
 msgid "Disable any highlighting in notes."
 msgstr "Απενεργοποίηση επισημάνσεων στις σημειώσεις."
 
-#: Program.cs:804
+#: Program.cs:869
 msgid "Disable XP visual style."
 msgstr "Απενεργοποίηση οπτικού στυλ ΧΡ."
 
-#: FrmManageNotes.cs:281
+#: FrmManageNotes.cs:287
 msgid "Show or hide the selected notes."
 msgstr "Εμφάνιση ή απόκρυψη των επιλεγμένων σημειώσεων."
 
-#: FrmAbout.cs:60
-msgid "Version "
-msgstr "Έκδοση"
-
-#: FrmAbout.cs:86 FrmAbout.cs:87 TrayIcon.cs:232
+#: FrmAbout.cs:84 FrmAbout.cs:85 TrayIcon.cs:232
 msgid "About"
 msgstr "Περί"
 
@@ -1130,15 +1202,15 @@ msgstr "Σφάλμα λήψης:"
 msgid "oh no.. {0} crashed."
 msgstr "Αχ όχι... Το {0} κατέρρευσε."
 
-#: FrmManageNotes.cs:112 FrmManageNotes.cs:543 FrmManageNotes.cs:576
+#: FrmManageNotes.cs:117 FrmManageNotes.cs:549 FrmManageNotes.cs:582
 msgid "&hide selected"
 msgstr "&Απόκρυψη επιλεγμένου"
 
-#: FrmManageNotes.cs:116 FrmManageNotes.cs:121 FrmManageNotes.cs:548
-#: FrmManageNotes.cs:580
+#: FrmManageNotes.cs:121 FrmManageNotes.cs:126 FrmManageNotes.cs:554
+#: FrmManageNotes.cs:586
 msgid "&show selected"
 msgstr "Εμ&φάνιση επιλεγμένου"
 
-#: FrmManageNotes.cs:268
+#: FrmManageNotes.cs:273
 msgid "Manage notes"
 msgstr "Διαχείριση σημειώσεων"
