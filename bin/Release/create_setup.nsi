@@ -18,7 +18,7 @@
 ;
 
 !define PROJNAME   "NoteFly"
-!define VERSION    "3.0.6"          ; version number: major.minor.release
+!define VERSION    "3.0.7"          ; version number: major.minor.release
 !define VERSTATUS  ""               ; alpha, beta, rc, or nothing for final.
 !define APPFILE    "NoteFly.exe"    ; main executable.
 !define APPIPLUGIN "IPlugin.dll"    ; plugin interface for plugin support.
