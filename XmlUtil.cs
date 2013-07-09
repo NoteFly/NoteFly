@@ -334,7 +334,6 @@ namespace NoteFly
             finally
             {
                 xmlread.Close();
-                note = null;
             }
 
             return note;
