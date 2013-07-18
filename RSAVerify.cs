@@ -19,9 +19,7 @@
 namespace NoteFly
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Security;
     using System.Security.Cryptography;
     using System.Text;
 
@@ -39,7 +37,7 @@ namespace NoteFly
         /// <summary>
         /// The RSA NoteFly keysize used.
         /// </summary>
-        private const int RSAKETSIZE = 3072;
+        private const int RSAKEYSIZE = 3072;
 
         /// <summary>
         /// The RSA NoteFly public key.
@@ -56,7 +54,7 @@ namespace NoteFly
         /// </summary>
         public RSAVerify()
         {
-            this.rsaCryptoServiceProvider = new RSACryptoServiceProvider(RSAKETSIZE);
+            this.rsaCryptoServiceProvider = new RSACryptoServiceProvider(RSAKEYSIZE);
         }
 
         /// <summary>

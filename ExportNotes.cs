@@ -89,7 +89,7 @@ namespace NoteFly
         /// </summary>
         /// <param name="filename">The full path and filename to write the CSV formatted stickies
         /// compatible file format.</param>
-        public void WriteStickiesCSVBackupfile(string filename)
+        public void WriteStickiesCSVBackupFile(string filename)
         {
             FileStream fs = null;
             StreamWriter writer = null;
@@ -148,7 +148,7 @@ namespace NoteFly
         /// Currently without working title, position, last change.
         /// </summary>
         /// <param name="filename">Filename of the file to write</param>
-        public void WritePNotesBackupfile(string filename)
+        public void WritePNotesBackupFile(string filename)
         {
             FileStream fs = null;
             StreamWriter writer = null;
@@ -193,7 +193,7 @@ namespace NoteFly
 
                     writer.Write("data=");
 
-                    // FIXME data= ise ingored and datetime is choicen as title instead.
+                    // FIXME data= is ignored, datetime is the title instead.
                     for (int c = 0; c < title.Length; c++)
                     {
                         int titlechr = title[c];

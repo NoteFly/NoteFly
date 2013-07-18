@@ -337,10 +337,10 @@ namespace NoteFly
                         exportnotes.WriteNoteFlyNotesBackupFile(sfdlgexportnotes.FileName);
                         break;
                     case 2:
-                        exportnotes.WriteStickiesCSVBackupfile(sfdlgexportnotes.FileName);
+                        exportnotes.WriteStickiesCSVBackupFile(sfdlgexportnotes.FileName);
                         break;
                     case 3:
-                        exportnotes.WritePNotesBackupfile(sfdlgexportnotes.FileName);
+                        exportnotes.WritePNotesBackupFile(sfdlgexportnotes.FileName);
                         break;
                     default:
                         // something else let's check plugins
