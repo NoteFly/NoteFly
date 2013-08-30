@@ -405,8 +405,6 @@ namespace NoteFly
             stopwatch.Start();
             #endif
 
-            int numvisiblenotes = 0;
-            bool warnlimitvisiblenotesshowed = false;
             const int MARGINBETWEENNOTES = 4;
             for (int i = 0; i < numloadingnotes; i++)
             {
@@ -426,25 +424,7 @@ namespace NoteFly
                     }
                 }
 
-                if (PluginsManager.EnabledPlugins != null)
-                {
-                    for (int p = 0; p < PluginsManager.EnabledPlugins.Count; p++)
-                    {
-
-                        PluginsManager.EnabledPlugins[p].InitLoadNote(note.Title, note.Width, note.Height, note.X, note.Y);
-                    }
-                }
-
                 this.AddNote(note);
-                if (note.Visible)
-                {
-                    if (!warnlimitvisiblenotesshowed) 
-                    {
-                        warnlimitvisiblenotesshowed = this.CheckLimitNotesVisible(numvisiblenotes);
-                    }
-
-                    note.CreateForm();
-                }
             }
 
             #if DEBUG
@@ -456,6 +436,27 @@ namespace NoteFly
                 this.ImportingNotesNoteFly2();
                 this.ImportingNotesNoteFly1();
                 this.CreateFirstrunNote();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowNotesVisible()
+        {
+            int numvisiblenotes = 0;
+            bool warnlimitvisiblenotesshowed = false;
+            foreach (Note note in this.notes) 
+            {
+                if (note.Visible)
+                {
+                    if (!warnlimitvisiblenotesshowed)
+                    {
+                        warnlimitvisiblenotesshowed = this.CheckLimitNotesVisible(numvisiblenotes);
+                    }
+
+                    note.CreateForm();
+                }
             }
         }
 
@@ -814,6 +815,7 @@ namespace NoteFly
             {
                 try
                 {
+                    this.GetNote(0).DestroyForm();
                     this.RemoveNote(0);
                 }
                 catch (Exception)
@@ -821,8 +823,6 @@ namespace NoteFly
                     break;
                 }
             }
-
-            this.LoadNotes(false, false);
         }
 
         /// <summary>
@@ -991,8 +991,6 @@ namespace NoteFly
                 Note demonote = this.CreateNoteDefaultSettings(title, 0, noteposx, noteposy, DEMONOTEWIDTH, DEMONOTEHEIGHT, true);
                 xmlUtil.WriteNote(demonote, this.GetSkinName(demonote.SkinNr), notecontent);
                 this.AddNote(demonote);
-                demonote.CreateForm();
-                demonote.BringNoteToFront();
             }
             else
             {

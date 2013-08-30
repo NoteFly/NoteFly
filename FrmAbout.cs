@@ -140,7 +140,7 @@ namespace NoteFly
             }
 
             /// <summary>
-            /// 
+            /// Move the label up.
             /// </summary>
             public void MoveUp() {
                 if (this.Location.Y > speed)

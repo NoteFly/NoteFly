@@ -551,6 +551,8 @@ namespace NoteFly
             if (dlgres == DialogResult.Yes)
             {
                 xmlUtil.WriteDefaultSettings();
+                // override first runned setting to true, so people are not annoyed with demo note and tooltip again.
+                Settings.ProgramFirstrunned = true;
                 this.SetControlsBySettings();
             }
         }

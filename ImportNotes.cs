@@ -373,16 +373,12 @@ namespace NoteFly
                     return;
                 }
 
-                for (int i = 0; i < this.notes.CountNotes; i++)
-                {
-                    this.notes.GetNote(i).DestroyForm();
-                }
-
                 this.notes.ClearAllNotes();
             }
 
             xmlUtil.ReadNoteFlyNotesBackupFile(this.notes, file);
             this.notes.LoadNotes(true, false);
+            this.notes.ShowNotesVisible();
         }
 
         /// <summary>
@@ -735,7 +731,9 @@ namespace NoteFly
                     }
                 }
 
+                this.notes.ClearAllNotes();
                 this.notes.LoadNotes(true, false);
+                this.notes.ShowNotesVisible();
             }
             catch (InvalidOperationException invopexc)
             {

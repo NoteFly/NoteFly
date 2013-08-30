@@ -372,15 +372,15 @@ namespace NoteFly
                     }
                 }
             }
-
+            
+            SyntaxHighlight.InitHighlighter();
+            Program.notes = new Notes(resetpositions);
             if (Settings.ProgramPluginsAllEnabled)
             {
                 PluginsManager.LoadPlugins();
             }
-            
-            SyntaxHighlight.InitHighlighter();
-            notes = new Notes(resetpositions);
 
+            Program.notes.ShowNotesVisible();
             formmanager = new FormManager(notes);
             trayicon = new TrayIcon(formmanager);
 
@@ -1194,7 +1194,8 @@ namespace NoteFly
         /// <summary>
         /// Get the plugin folder for plugins update to be stored in temperary.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="createnotexist">Create plugin update folder if not exist.</param>
+        /// <returns>The path to the update plugin folder.</returns>
         public static string GetNewPluginFolder(bool createnotexist)
         {
             const string NEWPLUGINSFOLDERNAME = "new";

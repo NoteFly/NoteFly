@@ -99,7 +99,6 @@ namespace NoteFly
         public FormManager(Notes notes)
         {
             this.notes = notes;
-
             if (Program.CurrentOS == Program.OS.WINDOWS)
             {
                 this.keylister = new KeyboardListener();
@@ -169,7 +168,7 @@ namespace NoteFly
         /// <summary>
         /// Create a new note.
         /// </summary>
-        /// <param name="contentclipboard">Set content with text from clipboard</param>
+        /// <param name="contentclipboard">Set content with text from clipboard.</param>
         public void OpenNewNote(string title, string content)
         {
             const int TITLEMAXLENGTH = 255;
@@ -351,6 +350,10 @@ namespace NoteFly
                 {
                     this.ResetAllModifierKeys();
                 }
+            }
+            else
+            {
+                this.ResetAllModifierKeys();
             }
         }
 

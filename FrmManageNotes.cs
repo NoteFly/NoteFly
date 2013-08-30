@@ -283,7 +283,6 @@ namespace NoteFly
                 if (this.tooltip == null)
                 {
                     this.tooltip = new ToolTip();
-                    //this.tooltip.AutoPopDelay
                     this.tooltip.SetToolTip(this.btnShowSelectedNotes, Strings.T("Show or hide the selected notes."));
                     this.tooltip.SetToolTip(this.btnNoteDelete, Strings.T("Delete the selected notes."));
                     this.tooltip.SetToolTip(this.btnRestoreAllNotes, Strings.T("Restore notes from a backup file."));
@@ -827,7 +826,6 @@ namespace NoteFly
         /// </summary>
         private void DrawNotesGrid()
         {
-            ////int vertscrolloffset = this.dataGridViewNotes.VerticalScrollingOffset;
             this.Resetdatagrid();
             Program.Formmanager.FrmManageNotesNeedUpdate = true;
             if (!this.searchTextBoxNotes.IsKeywordEntered)
@@ -837,13 +835,9 @@ namespace NoteFly
                 if (this.notes.CountNotes > numnotefiles)
                 {
                     Log.Write(LogType.exception, "Note file(s) deleted while programme was running. Reloading all note files.");
-                    while (this.notes.CountNotes > 0)
-                    {
-                        this.notes.GetNote(0).DestroyForm();
-                        this.notes.RemoveNote(0);
-                    }
-
+                    this.notes.ClearAllNotes();
                     this.notes.LoadNotes(true, false);
+                    this.notes.ShowNotesVisible();
                 }
 
                 for (int i = 0; i < this.notes.CountNotes; i++)
@@ -851,23 +845,6 @@ namespace NoteFly
                     datatable = this.AddDatatableNoteRow(datatable, i);
                 }
             }
-
-            // VerticalScrollingOffset is readonly, so we need a bit of 'hacking' to set it.
-            // disabled causes System.RuntimeMethodHandle._InvokeMethodFast to throw exception
-            /*
-            if (vertscrolloffset > 0)
-            {
-                try
-                {
-                    System.Reflection.PropertyInfo verticalOffset = this.dataGridViewNotes.GetType().GetProperty("VerticalOffset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                    verticalOffset.SetValue(this.dataGridViewNotes, vertscrolloffset, null);
-                }
-                catch (System.Reflection.TargetInvocationException tiexc)
-                {
-                    Log.Write(LogType.exception, tiexc.Message + " stacktrace: " + tiexc.StackTrace);
-                }
-            }
-            */
         }
 
         /// <summary>

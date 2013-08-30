@@ -27,10 +27,10 @@ namespace NoteFly
             public string FilenameInZip;
 
             /// <summary>Original file size</summary>
-            public uint FileSize;
+            public long FileSize;
 
             /// <summary>Compressed file size</summary>
-            public uint CompressedSize;
+            public long CompressedSize;
 
             /// <summary>Offset of header information inside Zip storage</summary>
             public uint HeaderOffset;
@@ -468,12 +468,12 @@ namespace NoteFly
             // Buffered copy
             byte[] buffer = new byte[16384];
             this.zipfilestream.Seek(zfe.FileOffset, SeekOrigin.Begin);
-            uint bytesPending = zfe.FileSize;
+            long bytesPending = zfe.FileSize;
             while (bytesPending > 0)
             {
                 int bytesRead = inStream.Read(buffer, 0, (int)Math.Min(bytesPending, buffer.Length));
                 stream.Write(buffer, 0, bytesRead);
-                bytesPending -= (uint)bytesRead;
+                bytesPending -= (long)bytesRead;
             }
 
             stream.Flush();

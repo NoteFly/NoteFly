@@ -65,7 +65,6 @@ namespace NoteFly
             if (this.s_KeyEventHandler != null)
             {
                 Delegate[] delegates = this.s_KeyEventHandler.GetInvocationList();
-
                 foreach (Delegate del in delegates)
                 {
                     EventHandler sink = (EventHandler)del;

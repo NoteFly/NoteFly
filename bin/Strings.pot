@@ -1295,3 +1295,8 @@ msgstr ""
 # linklblWebsite
 msgid "Website"
 msgstr ""
+
+# lblTextLicense
+msgid "This programme is released under the terms of Lesser GNU General Public License version3"
+msgid ""
+msgstr ""

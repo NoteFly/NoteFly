@@ -143,7 +143,7 @@ namespace NoteFly
         /// Disable a plugin
         /// </summary>
         /// <param name="dllfilename">The plugin .dll file filename.</param>
-        /// <returns>Return true if dll filename was found and plugin is disabled.</returns>
+        /// <returns>Return true if dll filename was found and plugin is disabled succesfully.</returns>
         public static bool DisablePlugin(string dllfilename)
         {
             for (int i = 0; i < enabledplugins.Count; i++)
@@ -295,6 +295,11 @@ namespace NoteFly
         /// <returns>True if plugin is enabled.</returns>
         public static bool IsPluginEnabled(string dllfilename)
         {
+            if (enabledplugins == null)
+            {
+                return false;
+            }
+
             for (int i = 0; i < enabledplugins.Count; i++)
             {
                 if (enabledplugins[i].Filename.Equals(dllfilename, StringComparison.Ordinal))

@@ -107,6 +107,9 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		AMDCaProjectFile = M:\Public\sourcecode\Projects_Csharp\notefly\CodeAnalyst\NoteFly.caw
 	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		version = 1.0
 		StartupItem = NoteFly.csproj

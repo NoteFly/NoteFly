@@ -29,7 +29,7 @@ namespace IPlugin
     /// <summary>
     /// Plugin interface
     /// status: DRAFT (Subject to change)
-    /// revision: 9
+    /// revision: 10
     /// </summary>
     public interface IPlugin
     {
@@ -189,16 +189,6 @@ namespace IPlugin
         string ValidateSyntaxPart(string part, RichTextBox rtb, string rtf, int lastpos);
 
         /// <summary>
-        /// Initizilazting loading of a note.
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="locx"></param>
-        /// <param name="locy"></param>
-        void InitLoadNote(string title, int width, int height, int locx, int locy);
-
-        /// <summary>
         /// Add a tab on initizilazting form settings 
         /// </summary>
         /// <returns></returns>
@@ -221,6 +211,5 @@ namespace IPlugin
         /// </summary>
         /// <param name="keyword"></param>
         void ManageNotesSearch(string keyword);
-
     }
 }
