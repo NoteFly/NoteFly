@@ -388,6 +388,14 @@ namespace NoteFly
         /// <param name="e">Event arguments</param>
         private void menuEditNote_Click(object sender, EventArgs e)
         {
+            if (PluginsManager.EnabledPlugins != null)
+            {
+                for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                {
+                    PluginsManager.EnabledPlugins[i].EditingNote(this.note.Filename);
+                }
+            }
+
             FrmNewNote frmnewnote = new FrmNewNote(this.notes, this.note, this.Location, this.Size, this.rtbNote.WordWrap);
             frmnewnote.Show();
             this.note.DestroyForm();

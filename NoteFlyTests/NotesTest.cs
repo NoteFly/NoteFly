@@ -134,7 +134,7 @@ namespace NoteFlyTests
             {
                 if (expected[i].ToString() != actualskins[i].ToString())
                 {
-                    Assert.Fail("GetSkinsNamesTest did not produce the excepted result.");
+                    Assert.Fail("GetSkinsNamesTest did not produce the excepted result. excepted skin name: " + expected[i].ToString() + " actual skin name: " + actualskins[i].ToString());
                 }
             }
         }

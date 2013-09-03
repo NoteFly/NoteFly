@@ -726,6 +726,14 @@ namespace NoteFly
             for (int r = deletenotepos.Count - 1; r >= 0; r--)
             {
                 string filename = this.notes.GetNote(deletenotepos[r]).Filename;
+                if (PluginsManager.EnabledPlugins != null)
+                {
+                    for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
+                    {
+                        PluginsManager.EnabledPlugins[i].DeletingNote(filename);
+                    }
+                }
+
                 try
                 {
                     this.notes.GetNote(deletenotepos[r]).DestroyForm();

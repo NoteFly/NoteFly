@@ -134,6 +134,18 @@ namespace IPlugin
         void SavingNote(string content, string title);
 
         /// <summary>
+        /// A note file is deleted within NoteFly.
+        /// </summary>
+        /// <param name="filename">The note filename.</param>
+        void DeletingNote(string filename);
+
+        /// <summary>
+        /// A note file is being edited.
+        /// </summary>
+        /// <param name="filename"></param>
+        void EditingNote(string filename);
+
+        /// <summary>
         /// Executed if a note is made visible.
         /// </summary>
         /// <param name="content">The note content.</param>

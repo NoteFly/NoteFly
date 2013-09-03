@@ -346,10 +346,7 @@ namespace NoteFly
                     this.note.Tempcontent = this.rtbNewNote.Rtf;
                     this.note.Wordwarp = this.rtbNewNote.WordWrap;
                     this.note.CreateForm();
-                    if (this.note.Tempcontent != null)
-                    {
-                        this.note.Tempcontent = null;
-                    }
+                    this.note.Tempcontent = null;
                 }
 
                 if (PluginsManager.EnabledPlugins != null)

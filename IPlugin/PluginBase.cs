@@ -196,6 +196,24 @@ namespace IPlugin
         }
 
         /// <summary>
+        /// A note file is deleted within NoteFly.
+        /// </summary>
+        /// <param name="filename"></param>
+        public virtual void DeletingNote(string filename)
+        {
+            // by default do nothing, override this to do someting.
+        }
+
+        /// <summary>
+        /// A note file is being edited.
+        /// </summary>
+        /// <param name="filename"></param>
+        public virtual void EditingNote(string filename)
+        {
+            // by default do nothing, override this to do someting.
+        }
+
+        /// <summary>
         /// Executed if a note is made visible.
         /// </summary>
         /// <param name="content">The note content.</param>
