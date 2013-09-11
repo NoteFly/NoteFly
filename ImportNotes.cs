@@ -447,6 +447,7 @@ namespace NoteFly
                             }
 
                             string content = this.RemoveQuotes(parts[poscontent]);
+                            //this.notes.CreateNoteDefaultSettings()
                             this.notes.AddNoteDefaultSettings(title, Settings.NotesDefaultSkinnr, 10, 10, DEFAULTIMPORTNOTEWIDTH, DEFAULTIMPORTNOTEHEIGHT, content, true);
                         }
                         else

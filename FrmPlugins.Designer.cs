@@ -244,6 +244,7 @@
             // lbxAvailablePlugins
             // 
             this.lbxAvailablePlugins.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lbxAvailablePlugins.Enabled = false;
             this.lbxAvailablePlugins.FormattingEnabled = true;
             this.lbxAvailablePlugins.ItemHeight = 16;
             this.lbxAvailablePlugins.Items.AddRange(new object[] {

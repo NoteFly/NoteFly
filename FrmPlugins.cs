@@ -241,6 +241,12 @@ namespace NoteFly
                 this.splitContainerAvailablePlugins.Panel2Collapsed = false;
                 this.btnPluginDownload.Visible = false;
                 string pluginname = this.lbxAvailablePlugins.SelectedItem.ToString();
+                if (pluginname == "Loading...")
+                {
+                    Log.Write(LogType.error, "Should not select plugin yet.");
+                    return;
+                }
+
                 if (string.IsNullOrEmpty(pluginname))
                 {
                     Log.Write(LogType.error, "Empty plugin name.");
@@ -300,6 +306,11 @@ namespace NoteFly
         private void httputil_plugindetail_DownloadCompleet(object sender, RunWorkerCompletedEventArgs e)
         {
             string response = (string)e.Result;
+            if (String.IsNullOrEmpty(response))
+            {
+                return;
+            }
+
             this.timerTextUpdaterLoading.Stop();
             this.ClearPluginDetails();
             this.selectedplugindetails = xmlUtil.ParserDetailsPlugin(response);

@@ -190,7 +190,7 @@ namespace IPlugin
         /// </summary>
         /// <param name="content">A note object with details.</param>
         /// <param name="title">The note title.</param>
-        public virtual void SavingNote(string content, string title)
+        public virtual void SavingNote(string filename, string content, string title)
         {
             // by default do nothing, override this to do someting.
         }

@@ -131,7 +131,7 @@ namespace IPlugin
         /// </summary>
         /// <param name="content">The note content.</param>
         /// <param name="title">The note title.</param>
-        void SavingNote(string content, string title);
+        void SavingNote(string filename, string content, string title);
 
         /// <summary>
         /// A note file is deleted within NoteFly.

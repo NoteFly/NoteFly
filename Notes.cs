@@ -104,46 +104,19 @@ namespace NoteFly
         #region Methods (21)
 
         /// <summary>
-        /// Add a new default note to the notes list
+        /// Add a new note the the notes list.
         /// </summary>
-        /// <param name="title">The title the note.</param>
-        /// <param name="skinnr">The skinnr</param>
-        /// <param name="x">The X location of the note.</param>
-        /// <param name="y">The Y location of the note.</param>
-        /// <param name="width">The width of the note.</param>
-        /// <param name="height">The height of the note.</param>
-        /// <param name="content">The note rtf content.</param>
-        /// <param name="wordwarp">Is the note content word warped.</param>
-        public void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool wordwarp)
+        /// <param name="note">The note to be added.</param>
+        /// <returns>True if succesfull added.</returns>
+        public bool AddNote(Note note)
         {
-            Note note = this.CreateNoteDefaultSettings(title, skinnr, x, y, width, height, wordwarp);
-            if (note != null)
+            if (note == null)
             {
-                this.AddNote(note);
-                xmlUtil.WriteNote(note, this.GetSkinName(skinnr), content);
-                note.CreateForm();
+                return false;
             }
-        }
 
-        /// <summary>
-        /// Bring all notes to front of all other windows.
-        /// </summary>
-        public void BringToFrontNotes()
-        {
-            for (int i = 0; i < this.notes.Count; i++)
-            {
-                if (this.notes[i].Visible)
-                {
-                    if (this.notes[i] == null)
-                    {
-                        throw new ApplicationException("Note object is null.");
-                    }
-                    else
-                    {
-                        this.notes[i].BringNoteToFront();
-                    }
-                }
-            }
+            this.notes.Add(note);
+            return true;
         }
 
         /// <summary>
@@ -167,12 +140,57 @@ namespace NoteFly
             newnote.Visible = true; // default
             newnote.Wordwarp = wordwarp;
             newnote.Title = title;
-            newnote.SkinNr = skinnr;  
+            newnote.SkinNr = skinnr;
             newnote.X = x;
             newnote.Y = y;
             newnote.Width = width;
             newnote.Height = height;
             return newnote;
+        }
+
+        /// <summary>
+        /// Add a new default note to the notes list
+        /// </summary>
+        /// <param name="title">The title the note.</param>
+        /// <param name="skinnr">The skinnr</param>
+        /// <param name="x">The X location of the note.</param>
+        /// <param name="y">The Y location of the note.</param>
+        /// <param name="width">The width of the note.</param>
+        /// <param name="height">The height of the note.</param>
+        /// <param name="content">The note rtf content.</param>
+        /// <param name="wordwarp">Is the note content word warped.</param>
+        public Note AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool wordwarp)
+        {
+            Note note = this.CreateNoteDefaultSettings(title, skinnr, x, y, width, height, wordwarp);
+            if (note != null)
+            {
+                this.AddNote(note);
+                xmlUtil.WriteNote(note, this.GetSkinName(skinnr), content);
+                note.CreateForm();
+            }
+
+            return note;
+        }
+
+        /// <summary>
+        /// Bring all notes to front of all other windows.
+        /// </summary>
+        public void BringToFrontNotes()
+        {
+            for (int i = 0; i < this.notes.Count; i++)
+            {
+                if (this.notes[i].Visible)
+                {
+                    if (this.notes[i] == null)
+                    {
+                        throw new ApplicationException("Note object is null.");
+                    }
+                    else
+                    {
+                        this.notes[i].BringNoteToFront();
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -1020,24 +1038,6 @@ namespace NoteFly
 
             Log.Write(LogType.error, "Can't get color. type:" + type + " skinnr:" + skinnr);
             return Color.White;
-        }
-
-        /// <summary>
-        /// Add a new note the the notes list.
-        /// </summary>
-        /// <param name="note">The note to be added.</param>
-        /// <returns>True if succesfull added.</returns>
-        private bool AddNote(Note note)
-        {
-            bool addsucceeded = false;
-            int prevnumnotes = this.CountNotes;
-            this.notes.Add(note);
-            if (prevnumnotes != this.CountNotes)
-            {
-                addsucceeded = true;
-            }
-
-            return addsucceeded;
         }
 
         /// <summary>

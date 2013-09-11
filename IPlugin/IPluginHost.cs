@@ -55,7 +55,7 @@ namespace IPlugin
         /// <param name="height">The height of the note.</param>
         /// <param name="content">The content of the note.</param>
         /// <param name="wordwarp">Is the note content word warped.</param>
-        void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool wordwarp);
+        //  void AddNoteDefaultSettings(string title, int skinnr, int x, int y, int width, int height, string content, bool wordwarp);
 
         /// <summary>
         /// Update all notes forms, in case some notefly 

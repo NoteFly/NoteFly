@@ -331,7 +331,7 @@ namespace NoteFly
                 if (this.note == null)
                 {
                     // new note
-                    this.notes.AddNoteDefaultSettings(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height, this.rtbNewNote.Rtf, this.rtbNewNote.WordWrap);
+                    this.note = this.notes.AddNoteDefaultSettings(this.tbTitle.Text, Settings.NotesDefaultSkinnr, this.Location.X, this.Location.Y, this.Width, this.Height, this.rtbNewNote.Rtf, this.rtbNewNote.WordWrap);
                 }
                 else
                 {
@@ -353,10 +353,10 @@ namespace NoteFly
                 {
                     for (int i = 0; i < PluginsManager.EnabledPlugins.Count; i++)
                     {
-                        PluginsManager.EnabledPlugins[i].SavingNote(this.rtbNewNote.Rtf, this.tbTitle.Text);
+                        PluginsManager.EnabledPlugins[i].SavingNote(this.note.Filename, this.rtbNewNote.Rtf, this.note.Title);
                     }
                 }
-
+                
                 Program.Formmanager.Frmneweditnoteopen = false;
                 SyntaxHighlight.DeinitHighlighter();
                 Program.Formmanager.FrmManageNotesNeedUpdate = true;

@@ -968,9 +968,10 @@ namespace NoteFly
         /// <returns>The position of the note in the list. -1 if error.</returns>
         private int GetNoteposBySelrow(int rowindex)
         {
-            if (rowindex >= 0)
+            if (rowindex >= 0 && this.dataGridViewNotes.RowCount > 0)
             {
-                return Convert.ToInt32(this.dataGridViewNotes.Rows[rowindex].Cells[COLINDEXNR].Value) - 1;
+                object cellval = this.dataGridViewNotes.Rows[rowindex].Cells[COLINDEXNR].Value;
+                return Convert.ToInt32(cellval) - 1;
             }
             else
             {

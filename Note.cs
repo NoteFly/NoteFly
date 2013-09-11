@@ -361,6 +361,12 @@ namespace NoteFly
         /// </summary>
         public void CreateForm()
         {
+            if (this.frmnote != null)
+            {
+                this.frmnote.Show();
+                return;
+            }
+
             this.frmnote = new FrmNote(this.notes, this);
             this.visible = true;
             this.frmnote.Show();

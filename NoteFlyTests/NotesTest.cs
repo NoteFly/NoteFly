@@ -22,6 +22,7 @@ namespace NoteFlyTests
     using System.Drawing;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NoteFly;
+    using System.IO;
     
     /// <summary>
     /// This is a test class for Notes and is intended
@@ -104,6 +105,12 @@ namespace NoteFlyTests
         [TestMethod]
         public void GetSkinsNamesTest()
         {
+            string pathskinsfile = Path.Combine(Program.AppDataFolder, xmlUtil.SKINFILE);
+            if (File.Exists(pathskinsfile))
+            {
+                File.Delete(Path.Combine(Program.AppDataFolder, xmlUtil.SKINFILE));
+            }
+
             Notes notes = new Notes(false);
             string[] expected = new string[13];
             expected[0] = "yellow";
