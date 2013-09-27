@@ -122,10 +122,14 @@ namespace NoteFly
         /// <param name="gridwith">The width of the plugingrid control.</param>
         private void DrawPluginDetails(int pluginpos, string dllfilename, int gridwith)
         {
-            System.Reflection.Assembly pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, dllfilename));
-            if (pluginassembly == null)
+            System.Reflection.Assembly pluginassembly = null;
+            try
             {
-                return;
+                pluginassembly = System.Reflection.Assembly.LoadFrom(Path.Combine(Settings.ProgramPluginsFolder, dllfilename));
+            }
+            catch (BadImageFormatException badimgformat)
+            {
+                Log.Write(LogType.exception, badimgformat.Message);
             }
 
             this.tlpnlPlugins[pluginpos] = new System.Windows.Forms.TableLayoutPanel();
@@ -170,7 +174,14 @@ namespace NoteFly
             lblPluginTitle.Name = "lblPluginTitle";
             lblPluginTitle.Size = new System.Drawing.Size(232, 25);
             lblPluginTitle.TabIndex = 1;
-            lblPluginTitle.Text = PluginsManager.GetPluginName(pluginassembly);
+            if (pluginassembly != null)
+            {
+                lblPluginTitle.Text = PluginsManager.GetPluginName(pluginassembly);
+            }
+            else
+            {
+                lblPluginTitle.Text = dllfilename;
+            }
  
             // lblTextPluginVersion
             lblTextPluginVersion.AutoSize = true;
@@ -186,12 +197,16 @@ namespace NoteFly
             lblPluginVersion.Location = new System.Drawing.Point(102, 37);
             lblPluginVersion.Name = "lblPluginVersion";
             lblPluginVersion.TabIndex = 7;
-            lblPluginVersion.Text = PluginsManager.GetPluginVersion(pluginassembly);
+            if (pluginassembly != null)
+            {
+                lblPluginVersion.Text = PluginsManager.GetPluginVersion(pluginassembly);
+            }
+
             if (File.Exists(Path.Combine(Program.GetNewPluginFolder(false), dllfilename)))
             {
                 lblPluginVersion.Text += " " + Strings.T("(restart {0} to update)", Program.AssemblyTitle);
             }
-            
+
             // lblTextPluginAuthor
             lblTextPluginAuthor.AutoSize = true;
             lblTextPluginAuthor.Location = new System.Drawing.Point(3, 53);
@@ -206,7 +221,10 @@ namespace NoteFly
             lblPluginAuthor.Location = new System.Drawing.Point(102, 53);
             lblPluginAuthor.Name = "lblPluginAuthor";
             lblPluginAuthor.TabIndex = 9;
-            lblPluginAuthor.Text = PluginsManager.GetPluginAuthor(pluginassembly);
+            if (pluginassembly != null)
+            {
+                lblPluginAuthor.Text = PluginsManager.GetPluginAuthor(pluginassembly);
+            }
 
             // lblTextPluginDescription
             lblTextPluginDescription.AutoSize = true;
@@ -222,7 +240,14 @@ namespace NoteFly
             lblPluginDescription.Location = new System.Drawing.Point(102, 70);
             lblPluginDescription.Name = "lblPluginDescription";
             lblPluginDescription.TabIndex = 11;
-            lblPluginDescription.Text = PluginsManager.GetPluginDescription(pluginassembly);
+            if (pluginassembly != null)
+            {
+                lblPluginDescription.Text = PluginsManager.GetPluginDescription(pluginassembly);
+            }
+            else 
+            {
+                lblPluginDescription.Text = Strings.T("Failed Loading the {0} file.", dllfilename);
+            }
 
             this.btnPluginsStatus[pluginpos].Location = new System.Drawing.Point(230, 20);
             this.btnPluginsStatus[pluginpos].Name = "btnTogglePluginStatus" + pluginpos;
