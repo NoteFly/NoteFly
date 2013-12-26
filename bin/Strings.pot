@@ -1300,3 +1300,25 @@ msgstr ""
 msgid "This programme is released under the terms of Lesser GNU General Public License version3"
 msgid ""
 msgstr ""
+
+# lblTextLicense
+msgid "This programme is released under the terms of Lesser GNU General Public License version3"
+msgid ""
+msgstr ""
+
+# menuActions
+msgid "Bestand opslaan"
+msgstr ""
+
+# menuCopy
+msgid "titel"
+msgstr ""
+
+# lblTextLicense
+msgid "This programme is released under the terms of Lesser GNU General Public License version3"
+msgid ""
+msgstr ""
+
+# lbTextWindowTitle
+msgid "Over"
+msgstr ""

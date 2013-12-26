@@ -158,9 +158,9 @@ namespace NoteFly
         }
 
         /// <summary>
-        /// 
+        /// Check if there is a update check for the plugins needed.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true if Settings.UpdatecheckPluginsLastDate + Settings.UpdatecheckPluginsEverydays more than current datetime.</returns>
         private bool IsUpdatecheckPluginNeeded()
         {
             bool pluginupdatecheckneeded = false;

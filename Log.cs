@@ -49,6 +49,10 @@ namespace NoteFly
     /// </summary>
     public sealed class Log
     {
+        private const int MAXREPEATEDMESSAGE = 16;
+        private static int repeatedmessage = 0;
+        private static int prevmessagehashcode;
+
         /// <summary>
         /// The debug log filename.
         /// </summary>
@@ -72,6 +76,21 @@ namespace NoteFly
             else if (!Settings.ProgramLogException && typemsg == LogType.exception)
             {
                 return;
+            }
+
+            if (message.GetHashCode() == prevmessagehashcode)
+            {
+                repeatedmessage++;
+                if (repeatedmessage > Log.MAXREPEATEDMESSAGE)
+                {
+                    System.Windows.Forms.MessageBox.Show("logging aborted due to repeating messages.");
+                    return;
+                }
+            }
+            else
+            {
+                repeatedmessage = 0;
+                prevmessagehashcode = message.GetHashCode();
             }
 
             StringBuilder line = new StringBuilder(DateTime.Now.ToString());
