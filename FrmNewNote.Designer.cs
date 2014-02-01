@@ -239,7 +239,7 @@ namespace NoteFly
             this.menuImportfile,
             this.menuCancelNewNote});
             this.contextMenuStripTextActions.Name = "contextMenuStrip1";
-            this.contextMenuStripTextActions.Size = new System.Drawing.Size(181, 180);
+            this.contextMenuStripTextActions.Size = new System.Drawing.Size(181, 202);
             this.contextMenuStripTextActions.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextActions_Opening);
             // 
             // menuSaveNewNote
@@ -292,15 +292,16 @@ namespace NoteFly
             // menuCopyContent
             // 
             this.menuCopyContent.Name = "menuCopyContent";
-            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.C)));
-            this.menuCopyContent.Size = new System.Drawing.Size(189, 22);
+            this.menuCopyContent.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.menuCopyContent.Size = new System.Drawing.Size(168, 22);
             this.menuCopyContent.Text = "content";
             // 
             // menuCopyTitle
             // 
             this.menuCopyTitle.Name = "menuCopyTitle";
-            this.menuCopyTitle.Size = new System.Drawing.Size(189, 22);
+            this.menuCopyTitle.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.C)));
+            this.menuCopyTitle.Size = new System.Drawing.Size(168, 22);
             this.menuCopyTitle.Text = "title";
             // 
             // menuPasteTo
@@ -315,14 +316,17 @@ namespace NoteFly
             // contentToolStripMenuItem
             // 
             this.contentToolStripMenuItem.Name = "contentToolStripMenuItem";
-            this.contentToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.contentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.contentToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.contentToolStripMenuItem.Text = "content";
             this.contentToolStripMenuItem.Click += new System.EventHandler(this.pastTextToolStripMenuItem_Click);
             // 
             // titleToolStripMenuItem
             // 
             this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
-            this.titleToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.titleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
+            this.titleToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.titleToolStripMenuItem.Text = "title";
             this.titleToolStripMenuItem.Click += new System.EventHandler(this.titleToolStripMenuItem_Click);
             // 

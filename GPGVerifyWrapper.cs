@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="GPGVerifWrapper.cs" company="NoteFly">
 //  NoteFly a note application.
-//  Copyright (C) 2011-2013  Tom
+//  Copyright (C) 2011-2014  Tom
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -31,9 +31,9 @@ namespace NoteFly
     public sealed class GPGVerifyWrapper
     {
         /// <summary>
-        /// The GnuPG signature file extension.
+        /// The GnuPG clearsign signature file extension.
         /// </summary>
-        public const string GPGSIGNATUREEXTENSION = ".sig";
+        public const string GPGSIGNATUREEXTENSION = ".asc";
 
         /// <summary>
         /// GnuPG process reference.
@@ -61,7 +61,7 @@ namespace NoteFly
             bool allowlaunch = false;
 
             // import NoteFly public key if needed.
-            bool publickeyadded = this.IsGPGNoteFlyPublicKeyAdded();
+            bool publickeyadded = this.HasOpenPGPNoteFly();
             if (!publickeyadded)
             {
                 Log.Write(LogType.error, "NoteFly OpenPGP public key missing. Trying to import now.");
@@ -210,18 +210,21 @@ namespace NoteFly
         /// Check if the NoteFly public key is added to the GPG keyring.
         /// </summary>
         /// <returns>True if notefly public key is added.</returns>
-        private bool IsGPGNoteFlyPublicKeyAdded()
+        private bool HasOpenPGPNoteFly()
         {
-            System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --list-public-keys --with-colons");
-            procInfo.CreateNoWindow = true;
-            procInfo.UseShellExecute = false;
-            procInfo.RedirectStandardInput = true;
-            procInfo.RedirectStandardOutput = true;
-            procInfo.RedirectStandardError = true;
-            this.gpgproc = System.Diagnostics.Process.Start(procInfo);
+            System.Diagnostics.ProcessStartInfo procStartInfo = new System.Diagnostics.ProcessStartInfo(Settings.UpdatecheckGPGPath, " --list-public-keys --with-colons");
+            procStartInfo.CreateNoWindow = true;
+            procStartInfo.UseShellExecute = false;
+            procStartInfo.RedirectStandardInput = true;
+            procStartInfo.RedirectStandardOutput = true;
+            procStartInfo.RedirectStandardError = true;
+            this.gpgproc = System.Diagnostics.Process.Start(procStartInfo);
             int gpgprocexitcode = this.StartGPGReadingThreads();
             if (gpgprocexitcode == 0 && string.IsNullOrEmpty(this.gpgerror))
             {
+
+
+                /*
                 int column = 0;
                 int line = 0;
                 int posstartlinerecord = int.MaxValue;
@@ -230,7 +233,9 @@ namespace NoteFly
                 ////bool fingerprintmatch = false;
                 ////int posstartpubdesc = int.MaxValue;
                 const string PUBKEYRECORD = "pub";
-                const string FINGERPRINTPUBNOTEFLY = "78987488B43F047E";
+                const string FINGERPRINTPUBNOTEFLY = "C42F9FC093304722";
+                // new: const string FINGERPRINTPUBNOTEFLY = "45FAF81DFACC22362AC3EEBB7D3041C8899AC368";
+
                 ////const string PUBKEYNOTEFLYDESCRIPTION = "NoteFly <releases@notefly.org>";
                 // parser the output
                 for (int i = 0; i < this.gpgoutput.Length; i++)
@@ -303,18 +308,66 @@ namespace NoteFly
                         }
                     }
                 }
+                 */
             }
 
             return false;
         }
 
         /// <summary>
+        /// Check the GNU Privay Guard keyring if it contains a openpgp key.
+        /// </summary>
+        /// <param name="gpgoutput"></param>
+        /// <param name="keyid"></param>
+        /// <param name="keyfingerprint"></param>
+        /// <param name="keyname"></param>
+        /// <param name="keyemail"></param>
+        /// <returns></returns>
+        private bool CheckKeyringKey(string gpgoutput, string keyid, string keyfingerprint, string keyname, string keyemail)
+        {
+            StringReader reader = new StringReader(gpgoutput);
+            string line = reader.ReadLine();
+            char[] splitdelimiterchars = { ':' };
+            while (!String.IsNullOrEmpty(line))
+            {
+                if (line.StartsWith("pub:", StringComparison.Ordinal))
+                {
+                    string[] lineparts = line.Split(splitdelimiterchars, StringSplitOptions.None);
+                    string currentkeystatus = lineparts[1];
+                    string currentkeystrength = lineparts[2];
+                    string currentkeyid = lineparts[4];
+                    string currentkeyvalidfrom = lineparts[5];
+                    string currentkeyvalidtill = lineparts[6];
+
+                    // todo
+                }
+                else if (line.StartsWith("uid:", StringComparison.Ordinal))
+                {
+                    string[] lineparts = line.Split(splitdelimiterchars, StringSplitOptions.None);
+                    string currentkeystatus = lineparts[1];
+                    string currentkeycreationtime = lineparts[5];
+                    string currentkeyfingerprint = lineparts[7];
+                    string currentkeynameandemail = lineparts[9];
+
+                    // todo
+                }
+
+                // Get next line
+                line = reader.ReadLine(); 
+            }
+
+            reader.Close();
+            return false;
+        }
+
+        /// <summary>
         /// Get the NoteFly OpenPGP Public Key from a key server
+        /// Current key 93304722 valid till 2018-01-01(yyyy-mm-dd).
         /// </summary>
         private void GetGPGNoteFlyPublicKey()
         {
             StringBuilder gpgrecvkeycommandarg = new StringBuilder();
-            gpgrecvkeycommandarg.Append(" --recv-keys 2F9532C8");
+            gpgrecvkeycommandarg.Append(" --recv-keys 93304722");
             if (!string.IsNullOrEmpty(Settings.UpdatecheckGPGKeyserver.Trim()))
             {
                 gpgrecvkeycommandarg.Append(" --keyserver ");
